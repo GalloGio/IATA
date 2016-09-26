@@ -192,48 +192,45 @@
                                 <tr>
                                     <th>Contact name</th>
                                     <td>
-                                        IATA Travel Agencies
-                                        <!-- <input type="type" class="user-input text" value="IATA Travel Agencies"> -->
-                                    </td>
+                                                                                    IATA Travel Agencies
+                                                                            </td>
                                 </tr>
                                 <tr>
                                     <th>Job Title</th>
                                     <td>
-                                        Lorem ipsum dolor
-                                        <!-- <input type="type" class="user-input text" value="Lorem ipsum dolor"> -->
-                                    </td>
+                                                                                    Lorem ipsum dolor
+                                                                            </td>
                                 </tr>
                                 <tr>
                                     <th>Company/Organization</th>
                                     <td>
-                                        IATA Travel Agencies
-                                        <!-- <input type="type" class="user-input text" value="IATA Travel Agencies"> -->
-                                    </td>
+                                                                                    IATA Travel Agencies
+                                                                            </td>
                                 </tr>
                                 <tr>
                                     <th>Address</th>
                                     <td>
-                                        800 Square Victoria<br>
-                                        Montreal, QC H2K 3V7<br>
-                                        Canada
-                                    </td>
+                                                                                    800 Square Victoria<br>
+                                            Montreal, QC H2K 3V7<br>
+                                            Canada
+                                                                            </td>
                                 </tr>
                                 <tr>
                                     <th>Phone</th>
                                     <td>
-                                        +1 514 874-0202
-                                    </td>
+                                                                                    +1 514 874-0202
+                                                                            </td>
                                 </tr>
                                 <tr>
                                     <th>Email</th>
                                     <td>
-                                        <a href="mailto:debonol@iata.org">debonol@iata.org</a>
-                                    </td>
+                                                                                    <a href="mailto:debonol@iata.org">debonol@iata.org</a>
+                                                                            </td>
                                 </tr>
                             </table>
                             <div class="footer-actions text-right">
-                                <a href="#" class="button secondary"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit billing information</a>
-                            </div>
+                                                                    <a href="#" class="button secondary"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit billing information</a>
+                                                            </div>
                         </dd>
                         <dt class="accordion-title is-open" data-index="2">Terms and conditions</dt>
                         <dd class="accordion-panel is-open" data-index="2">
@@ -254,19 +251,26 @@
         <div class="field-group radio inline">
             <div class="radio-box">
                 <div class="custom-user-input radio">
-                    <input class="user-input radio" type="radio" name="" id="" value="creditCard" checked>
-                    <label class="custom-radio" for=""><i class="icon"></i></label>
+                    <input class="user-input radio" type="radio" name="payment-method" id="payment-method-card" value="creditCard" checked>
+                    <label class="custom-radio" for="payment-method-card"><i class="icon"></i></label>
                 </div>
-                <label class="input-label" for="">Credit card</label>
+                <label class="input-label" for="payment-method-card">Credit card</label>
             </div>
             <div class="radio-box">
                 <div class="custom-user-input radio">
-                    <input class="user-input radio" type="radio" name="" id="" value="ich">
-                    <label class="custom-radio" for=""><i class="icon"></i></label>
+                    <input class="user-input radio" type="radio" name="payment-method" id="payment-method-ich" value="ich">
+                    <label class="custom-radio" for="payment-method-ich"><i class="icon"></i></label>
                 </div>
-                <label class="input-label" for="">ICH</label>
+                <label class="input-label" for="payment-method-ich">ICH</label>
             </div>
-        </div>
+                            <div class="radio-box">
+                    <div class="custom-user-input radio">
+                        <input class="user-input radio" type="radio" name="payment-method" id="payment-method-bank" value="bank">
+                        <label class="custom-radio" for="payment-method-bank"><i class="icon"></i></label>
+                    </div>
+                    <label class="input-label" for="payment-method-bank">Bank transfer</label>
+                </div>
+                    </div>
     </div>
     
     <div class="payment-method-container">
@@ -282,10 +286,10 @@
                     <div class="field-group radio">
                         <div class="radio-box">
                             <div class="custom-user-input radio">
-                                <input class="user-input radio" type="radio" name="-card-type" id="-saved-card-1" checked>
-                                <label class="custom-radio" for="-saved-card-1"><i class="icon"></i></label>
+                                <input class="user-input radio" type="radio" name="payment-method-card-type" id="payment-method-card-saved-card-1" checked>
+                                <label class="custom-radio" for="payment-method-card-saved-card-1"><i class="icon"></i></label>
                             </div>
-                            <label class="input-label" for="-saved-card-1">
+                            <label class="input-label" for="payment-method-card-saved-card-1">
                                 <span class="card-image">
                                     <img src="assets/img/components/icons/credit-card/Visa.png" alt="VISA">
                                 </span>
@@ -312,10 +316,10 @@
                     <div class="field-group radio">
                         <div class="radio-box">
                             <div class="custom-user-input radio">
-                                <input class="user-input radio" type="radio" name="-card-type" id="-saved-card-2">
-                                <label class="custom-radio" for="-saved-card-2"><i class="icon"></i></label>
+                                <input class="user-input radio" type="radio" name="payment-method-card-type" id="payment-method-card-saved-card-2">
+                                <label class="custom-radio" for="payment-method-card-saved-card-2"><i class="icon"></i></label>
                             </div>
-                            <label class="input-label" for="-saved-card-2">
+                            <label class="input-label" for="payment-method-card-saved-card-2">
                                 <span class="card-image">
                                     <img src="assets/img/components/icons/credit-card/MasterCard.png" alt="MASTERCARD">
                                 </span>
@@ -342,10 +346,10 @@
                     <div class="field-group radio">
                         <div class="radio-box">
                             <div class="custom-user-input radio">
-                                <input class="user-input radio" type="radio" name="-card-type" id="-saved-card-3">
-                                <label class="custom-radio" for="-saved-card-3"><i class="icon"></i></label>
+                                <input class="user-input radio" type="radio" name="payment-method-card-type" id="payment-method-card-saved-card-3">
+                                <label class="custom-radio" for="payment-method-card-saved-card-3"><i class="icon"></i></label>
                             </div>
-                            <label class="input-label" for="-saved-card-3">
+                            <label class="input-label" for="payment-method-card-saved-card-3">
                                 <span class="card-image">
                                     <img src="assets/img/components/icons/credit-card/AmericanExpress.png" alt="AMEX">
                                 </span>
@@ -373,7 +377,16 @@
             <a class="icon plus js-open-modal" data-target-modal="#js-modal-add-credit-card" href="#">Add card</a>
         </div>
     </div>
-</div>                        </dd>
+    
+            <div class="payment-method-container bank is-hidden">
+            <div class="alert note">
+                <div class="alert-message">
+                    <p>if you want to pay by bank transfer, please contact email@email.com.</p>
+                    <div class="text-right"><a href="" class="button secondary">Back to  account details</a></div>
+                </div>
+            </div>
+        </div>
+    </div>                        </dd>
                     </dl>
                 </div>
                 
@@ -434,7 +447,7 @@
                             </tr>
                         </table>
                     </div>
-                    <div class="footer-actions">
+                    <div class="footer-actions" id="js-method-bank-transfer">
                         <ul class="list actions">
                             <li><a class="text-link" href="#">Cancel</a></li>
                             <li><a class="button" href="#">Submit payment</a></li>
