@@ -4,6 +4,7 @@
  * Change log:
  *   20160826-sl: move ebcSetup out to IECEBC_Utility, add isSubscriptionRenewable
  *   20160923-sl: payment support: add queried fields from billingAccount, add rereadSubscription
+ *   20160926-sl: change subscription getter to use ebcSubscriptionProductCharge and EBC_Setup
  *
  **/
 
@@ -104,7 +105,7 @@ public class vfIECEBC extends IECPageController {
 	{
 		// nullify also subscription dependent properties, so getters will update them
 		// start from the least dependent properties
-		//ebcSubscriptionProductChargeList = null;
+		ebcSubscriptionProductCharge = null;
 		subscription = null;
 		productRatePlan = null;
 		
@@ -115,10 +116,32 @@ public class vfIECEBC extends IECPageController {
 	// EBC Subscription of the current user
 	// this is the subscription related to the Pay As You Go or Prepaid Subscription Plan
 	// that is currently active for this user.
-	// initial version: rely on the assumption that the Zuora__Subscription__r.Product_Rate_Plan_Information__c point to the correct EBC Product Rate Plan.
+	// new version: use SubcriptionProductCharge to search subscription related to EBC Product Rate Plan
+	// with the new version, we can avoid using Subscription.Product_Rate_Plan_Information__r.Product_Rate_Plan__c
+	// to get into the EBC Product Rate Plan. 
 	public static Zuora__Subscription__c subscription {
 		get {
-			if (subscription == null) {
+			if (subscription == null) 
+			{
+				Zuora__SubscriptionProductCharge__c ebcSpc = ebcSubscriptionProductCharge;
+				if (ebcSpc != null && ebcSpc.Zuora__Subscription__c != null)
+				{
+					subscription = ebcSpc.Zuora__Subscription__r;
+				}
+			}
+			
+			return subscription;
+		}
+		private set;
+	} // end of subscription
+	
+	
+	/*
+	// OLD version: rely on the assumption that the Zuora__Subscription__r.Product_Rate_Plan_Information__c point to the correct EBC Product Rate Plan.
+
+	private static Zuora__Subscription__c subscriptionOLD {
+		get {
+			if (subscriptionOLD == null) {
 				List<Zuora__Subscription__c> subsList = [SELECT Id, Name
 														 	 , Zuora__AutoRenew__c
 															 , Zuora__NextRenewalDate__c
@@ -149,14 +172,181 @@ public class vfIECEBC extends IECPageController {
 														 LIMIT 1
 														];
 				if (subsList.size() > 0) {
-					subscription = subsList[0];
+					subscriptionOLD = subsList[0];
 				}
 			}
 			
-			return subscription;
+			return subscriptionOLD;
 		}
 		private set;
 	} // end of subscription
+	*/
+	
+	
+	// ========================================================================
+	// current Zuora__SubscriptionProductCharge__c list related to the current EBC Subscription 
+	// retrieved based on the expected product rate plan for EBC Subscription
+	// the process: search for the ebcPrepaidSubscription first, if there is none, then search for pay as you go.
+	private static Zuora__SubscriptionProductCharge__c ebcSubscriptionProductCharge
+	{
+		get{
+			if (ebcSubscriptionProductCharge == null)
+			{
+				Zuora__SubscriptionProductCharge__c ebcSpc = null;
+				List<Zuora__SubscriptionProductCharge__c> spcList = ebcPrepaidSubscriptionProductChargeList;
+				if (spcList.size() > 0) {
+					ebcSpc = spcList[0];
+				} else {
+					spcList = ebcPayAsYouGoSubscriptionProductChargeList;
+					if (spcList.size() > 0) {
+						ebcSpc = spcList[0];
+					}
+				}
+				ebcSubscriptionProductCharge = ebcSpc;
+			}
+			
+			return ebcSubscriptionProductCharge;
+		}
+		private set;
+	} // end of ebcSubscriptionProductCharge
+	
+	
+	// prepaid subscription use the Subscription TermEndDate
+	// note that Zuora__Subscription__r.Product_Rate_Plan_Information__r.Product_Rate_Plan__r fields are included to maintain compatibility with older code
+	private static List<Zuora__SubscriptionProductCharge__c> ebcPrepaidSubscriptionProductChargeList
+	{
+		get{
+			Set<Id> ebcProductRatePlanIdSet = new Set<Id>();
+			ebcProductRatePlanIdSet.addAll(IECEBC_Utility.ebcNonMemberProductRatePlanIdList);
+			ebcProductRatePlanIdSet.addAll(IECEBC_Utility.ebcMemberProductRatePlanIdList);
+			
+			List<Zuora__SubscriptionProductCharge__c> subscriptionProductChargeList = [select Id
+				, Zuora__Product__c, Zuora__Product__r.Name
+				, Zuora__Price__c
+				, Zuora__ProductDescription__c 
+				, Zuora__ProductName__c
+				, Product_Rate_Plan_Charge__c
+				, Product_Rate_Plan_Charge__r.Name
+				, Product_Rate_Plan_Charge__r.zqu__ProductRatePlan__c
+				, Product_Rate_Plan_Charge__r.zqu__ProductRatePlan__r.Id
+				, Product_Rate_Plan_Charge__r.zqu__ProductRatePlan__r.Name
+				, Product_Rate_Plan_Charge__r.zqu__ProductRatePlan__r.zqu__Description__c
+				, Product_Rate_Plan_Charge__r.zqu__ProductRatePlan__r.EBC_SubscriptionType__c
+				, Product_Rate_Plan_Charge__r.zqu__ProductRatePlan__r.EBC_Cost_Per_Email__c
+				, Product_Rate_Plan_Charge__r.zqu__ProductRatePlan__r.EBC_Currency_Cost_Per_Email__c
+				, Product_Rate_Plan_Charge__r.zqu__ProductRatePlan__r.EBC_PrePaid_Emails__c
+				, Zuora__EffectiveEndDate__c
+				
+				, Zuora__Subscription__c
+				, Zuora__Subscription__r.Id
+				, Zuora__Subscription__r.Name
+				, Zuora__Subscription__r.Zuora__AutoRenew__c
+				, Zuora__Subscription__r.Zuora__NextRenewalDate__c
+				, Zuora__Subscription__r.Zuora__Status__c
+				, Zuora__Subscription__r.Zuora__SubscriptionEndDate__c
+				, Zuora__Subscription__r.Zuora__TermEndDate__c
+				
+				, Zuora__Subscription__r.Product_Rate_Plan_Information__r.Product_Rate_Plan__c
+				, Zuora__Subscription__r.Product_Rate_Plan_Information__r.Product_Rate_Plan__r.Id
+				, Zuora__Subscription__r.Product_Rate_Plan_Information__r.Product_Rate_Plan__r.Name
+				, Zuora__Subscription__r.Product_Rate_Plan_Information__r.Product_Rate_Plan__r.zqu__Description__c
+				, Zuora__Subscription__r.Product_Rate_Plan_Information__r.Product_Rate_Plan__r.EBC_SubscriptionType__c
+				, Zuora__Subscription__r.Product_Rate_Plan_Information__r.Product_Rate_Plan__r.EBC_Cost_Per_Email__c
+				, Zuora__Subscription__r.Product_Rate_Plan_Information__r.Product_Rate_Plan__r.EBC_Currency_Cost_Per_Email__c
+				, Zuora__Subscription__r.Product_Rate_Plan_Information__r.Product_Rate_Plan__r.EBC_PrePaid_Emails__c
+				
+				from Zuora__SubscriptionProductCharge__c 
+				//where Zuora__Subscription__c = : subscription.Id
+				//	and Product_Rate_Plan_Charge__c = : productRatePlan.Id];
+					
+				 Where ( Zuora__Subscription__r.Zuora__CustomerAccount__c = :billingAccount.Id) 
+					 AND (
+						 (Zuora__Subscription__r.Zuora__TermEndDate__c >=  TODAY) 
+						 OR (Zuora__Subscription__r.Zuora__TermEndDate__c = NULL)
+						 
+						 //OR (Product_Rate_Plan_Information__r.Product_Rate_Plan__r.EBC_SubscriptionType__c = : EBC_PRODUCT_RATE_PLAN_SUBSCRIPTION_TYPE_PAY_AS_YOU_GO)
+					 )
+					 AND (Zuora__Subscription__r.Zuora__SubscriptionStartDate__c <=  TODAY) 
+					 AND (Zuora__Subscription__r.Zuora__Status__c = 'Active')
+					 //AND (Product_Rate_Plan_Information__r.Related_Product_Information__r.Related_Product_Category__r.Name = :IECConstants.ProductCategory_SF_EBROADCAST)
+					 
+					 AND Product_Rate_Plan_Charge__r.zqu__ProductRatePlan__r.Id in :  ebcProductRatePlanIdSet
+				 ORDER BY Zuora__Subscription__r.Zuora__Status__c ASC
+					 , Zuora__Subscription__r.Zuora__TermEndDate__c DESC NULLS FIRST
+					 , Zuora__Subscription__r.Zuora__TermStartDate__c DESC
+				 ];
+				
+				
+			//subscriptionProductCharge = (subscriptionProductChargeList.size() == 0) ? null : subscriptionProductChargeList[0];
+			return subscriptionProductChargeList;
+		}
+	} // end ebcPrepaidSubscriptionProductChargeList getter
+	
+	
+	
+	// the pay as you go subscription ignores the subscriptionTermEndDate
+	// note that Zuora__Subscription__r.Product_Rate_Plan_Information__r.Product_Rate_Plan__r fields are included to maintain compatibility with older code
+	private static List<Zuora__SubscriptionProductCharge__c> ebcPayAsYouGoSubscriptionProductChargeList
+	{
+		get{
+			Set<Id> ebcProductRatePlanIdSet = new Set<Id>();
+			ebcProductRatePlanIdSet.add(IECEBC_Utility.ebcSetup.Member_Pay_As_You_Go_Plan__c);
+			ebcProductRatePlanIdSet.add(IECEBC_Utility.ebcSetup.Non_Member_Pay_As_You_Go_Plan__c);
+			
+			List<Zuora__SubscriptionProductCharge__c> subscriptionProductChargeList = [select Id
+				, Zuora__Product__c, Zuora__Product__r.Name
+				, Zuora__Price__c
+				, Zuora__ProductDescription__c 
+				, Zuora__ProductName__c
+				, Product_Rate_Plan_Charge__c
+				, Product_Rate_Plan_Charge__r.Name
+				, Product_Rate_Plan_Charge__r.zqu__ProductRatePlan__c
+				, Product_Rate_Plan_Charge__r.zqu__ProductRatePlan__r.Id
+				, Product_Rate_Plan_Charge__r.zqu__ProductRatePlan__r.Name
+				, Product_Rate_Plan_Charge__r.zqu__ProductRatePlan__r.zqu__Description__c
+				, Product_Rate_Plan_Charge__r.zqu__ProductRatePlan__r.EBC_SubscriptionType__c
+				, Product_Rate_Plan_Charge__r.zqu__ProductRatePlan__r.EBC_Cost_Per_Email__c
+				, Product_Rate_Plan_Charge__r.zqu__ProductRatePlan__r.EBC_Currency_Cost_Per_Email__c
+				, Product_Rate_Plan_Charge__r.zqu__ProductRatePlan__r.EBC_PrePaid_Emails__c
+				, Zuora__EffectiveEndDate__c
+				
+				, Zuora__Subscription__c
+				, Zuora__Subscription__r.Id
+				, Zuora__Subscription__r.Name
+				, Zuora__Subscription__r.Zuora__AutoRenew__c
+				, Zuora__Subscription__r.Zuora__NextRenewalDate__c
+				, Zuora__Subscription__r.Zuora__Status__c
+				, Zuora__Subscription__r.Zuora__SubscriptionEndDate__c
+				, Zuora__Subscription__r.Zuora__TermEndDate__c
+				
+				, Zuora__Subscription__r.Product_Rate_Plan_Information__r.Product_Rate_Plan__c
+				, Zuora__Subscription__r.Product_Rate_Plan_Information__r.Product_Rate_Plan__r.Id
+				, Zuora__Subscription__r.Product_Rate_Plan_Information__r.Product_Rate_Plan__r.Name
+				, Zuora__Subscription__r.Product_Rate_Plan_Information__r.Product_Rate_Plan__r.zqu__Description__c
+				, Zuora__Subscription__r.Product_Rate_Plan_Information__r.Product_Rate_Plan__r.EBC_SubscriptionType__c
+				, Zuora__Subscription__r.Product_Rate_Plan_Information__r.Product_Rate_Plan__r.EBC_Cost_Per_Email__c
+				, Zuora__Subscription__r.Product_Rate_Plan_Information__r.Product_Rate_Plan__r.EBC_Currency_Cost_Per_Email__c
+				, Zuora__Subscription__r.Product_Rate_Plan_Information__r.Product_Rate_Plan__r.EBC_PrePaid_Emails__c
+				
+				from Zuora__SubscriptionProductCharge__c 
+				//where Zuora__Subscription__c = : subscription.Id
+				//	and Product_Rate_Plan_Charge__c = : productRatePlan.Id];
+					
+				 Where ( Zuora__Subscription__r.Zuora__CustomerAccount__c = :billingAccount.Id) 
+					 AND (Zuora__Subscription__r.Zuora__SubscriptionStartDate__c <=  TODAY) 
+					 AND (Zuora__Subscription__r.Zuora__Status__c = 'Active')
+					 //AND (Product_Rate_Plan_Information__r.Related_Product_Information__r.Related_Product_Category__r.Name = :IECConstants.ProductCategory_SF_EBROADCAST)
+					 
+					 AND Product_Rate_Plan_Charge__r.zqu__ProductRatePlan__r.Id in :  ebcProductRatePlanIdSet
+				 ORDER BY Zuora__Subscription__r.Zuora__Status__c ASC
+					 , Zuora__Subscription__r.Zuora__TermEndDate__c DESC NULLS FIRST
+					 , Zuora__Subscription__r.Zuora__TermStartDate__c DESC
+				 ];
+						
+			return subscriptionProductChargeList;
+		}
+	} // end ebcPayAsYouGoSubscriptionProductChargeList getter
+	
 	
 	
 	// ========================================================================
@@ -193,12 +383,17 @@ public class vfIECEBC extends IECPageController {
 		set;
 	}
 */	
+	
+	// ========================================================================
+	// EBC Product Rate Plan, should we one of the EBC Subscription Rate Plans 
+	// (pay as you go, and those prepaids, as defined in the EBC_Setup)
 	public static zqu__ProductRatePlan__c  productRatePlan {
 		get { 
 			if (productRatePlan == null) { 
 				//System.debug(subscriptionInfo.oSubscription.Product_Rate_Plan_Information__r.Product_Rate_Plan__c);
 				//productRatePlan = [Select Id, Name, EBC_SubscriptionType__c, EBC_Currency_Cost_Per_Email__c, EBC_PrePaid_Emails__c From zqu__ProductRatePlan__c  Where Id = :subscriptionInfo.oSubscription.Product_Rate_Plan_Information__r.Product_Rate_Plan__c];
-				productRatePlan = subscription.Product_Rate_Plan_Information__r.Product_Rate_Plan__r;
+				//productRatePlan = subscription.Product_Rate_Plan_Information__r.Product_Rate_Plan__r;
+				productRatePlan = ebcSubscriptionProductCharge.Product_Rate_Plan_Charge__r.zqu__ProductRatePlan__r;
 			}
 			
 			return productRatePlan;
