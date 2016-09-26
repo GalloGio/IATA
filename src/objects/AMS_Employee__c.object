@@ -56,17 +56,40 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
+        <fullName>Account_Role__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Account Role</label>
+        <referenceTo>AMS_Account_Role__c</referenceTo>
+        <relationshipLabel>Agency Employees (AMS)</relationshipLabel>
+        <relationshipName>Agency_Employees_AMS</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Account__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Account</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Agency Employees (AMS)</relationshipLabel>
+        <relationshipName>Agency_Employees_AMS</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>Agency__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
         <label>Agency</label>
         <referenceTo>AMS_Agency__c</referenceTo>
         <relationshipLabel>Agency Employees (AMS)</relationshipLabel>
         <relationshipName>Agency_Employees</relationshipName>
-        <relationshipOrder>0</relationshipOrder>
-        <reparentableMasterDetail>true</reparentableMasterDetail>
+        <required>false</required>
         <trackTrending>false</trackTrending>
-        <type>MasterDetail</type>
-        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+        <type>Lookup</type>
     </fields>
     <fields>
         <fullName>Contact__c</fullName>
@@ -251,13 +274,21 @@ Z :</inlineHelpText>
         <type>Picklist</type>
     </fields>
     <fields>
+        <fullName>Migration_Executed__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Migration Executed</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Person__c</fullName>
         <externalId>false</externalId>
         <label>Person</label>
         <referenceTo>AMS_Person__c</referenceTo>
         <relationshipLabel>Agency Employees (AMS)</relationshipLabel>
         <relationshipName>Agency_Employees</relationshipName>
-        <relationshipOrder>1</relationshipOrder>
+        <relationshipOrder>0</relationshipOrder>
         <reparentableMasterDetail>true</reparentableMasterDetail>
         <trackTrending>false</trackTrending>
         <type>MasterDetail</type>

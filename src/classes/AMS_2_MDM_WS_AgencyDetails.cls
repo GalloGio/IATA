@@ -5,24 +5,15 @@ public class AMS_2_MDM_WS_AgencyDetails {
     
     public class HTTP_Port {
 
-        //DEV
         //public String endpoint_x = AMS_SAP_Settings__c.getOrgDefaults().Web_Service_endpoint__c + '?senderParty=&senderService=SFDC&receiverParty=&receiverService=&interface=SI_SFDC_AgenciesData_OB&interfaceNamespace=http%3A%2F%2Fiata.com%2Fxi%2FSFDC%2FMDM%2FWID5700_AgencyDetails%2F';
-        //QA / PRE-PROD
-        public String endpoint_x = AMS_SAP_Settings__c.getOrgDefaults().Web_Service_endpoint__c + '?senderParty=&senderService=SFDC&receiverParty=&receiverService=&interface=SI_SFDC_AgenciesData_OB&interfaceNamespace=http://iata.com/xi/COMMON/MDM/WID5700_AgencyDetails/';
-                
-        
+        public String endpoint_x = AMS_SAP_Settings__c.getOrgDefaults().Web_Service_endpoint__c + '?senderParty=&senderService=SFDC&receiverParty=&receiverService=&interface=SI_SFDC_AgenciesData_OB&interfaceNamespace=http%3A%2F%2Fiata.com%2Fxi%2FCOMMON%2FMDM%2FWID5700_AgencyDetails%2F';
         public Map<String,String> inputHttpHeaders_x;
         public Map<String,String> outputHttpHeaders_x;
         public String clientCertName_x;
         public String clientCert_x;
         public String clientCertPasswd_x;
         public Integer timeout_x;
-        
-        //QA
-        //private String[] ns_map_type_info = new String[]{'http://iata.com/xi/SFDC/MDM/WID5700_AgencyDetails/','AMS_2_MDM_WS_AgencyDetails'};
-        //
-        private String[] ns_map_type_info = new String[]{'http://iata.com/xi/COMMON/MDM/WID5700_AgencyDetails/','AMS_2_MDM_WS_AgencyDetails'};
-        
+        private String[] ns_map_type_info = new String[]{'http://iata.com/xi/SFDC/MDM/WID5700_AgencyDetails/','AMS_2_MDM_WS_AgencyDetails'};
 
         
         private DOM.XmlNode populateDoc(DOM.Document doc,String s){

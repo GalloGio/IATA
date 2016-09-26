@@ -1,6 +1,7 @@
 @isTest
-private class AccountNoDuplicateBranchTest 
-///asdasdasdasdasdasd
+private class AccountNoDuplicateBranchTest {
+
+
  static testMethod void noParentButReasonForCreationIsCreatedByCustomer() {
                 
                 ID standardRT =Schema.SObjectType.Account.RecordTypeInfosByName.get('Standard Account').RecordTypeId ;

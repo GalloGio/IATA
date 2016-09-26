@@ -1,10 +1,8 @@
 {
-    "Agency": [
+    "Account": [
         {
-            "AMS Agency Name": "Name",
-            "Legal Name 2": "Legal_Name_2__c",
-            "Legal Name 3": "Legal_Name_3__c",
-            "Trading Name 1": "Trading_Name_1__c"
+            "Account Name": "Name",
+            "Trading Name": "TradeName__c"
         }
     ],
     "Address": [

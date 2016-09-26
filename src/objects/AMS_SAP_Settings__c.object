@@ -4,6 +4,51 @@
     <description>Stores default setting values to communicate with MDM (SAP PI)</description>
     <enableFeeds>false</enableFeeds>
     <fields>
+        <fullName>AIMS1_CRON_EXP__c</fullName>
+        <defaultValue>&quot;0 0 * * * ?&quot;</defaultValue>
+        <description>Chrono setup for AIMS1 Countries</description>
+        <externalId>false</externalId>
+        <label>AIMS1_CRON_EXP</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AIMS2_CRON_EXP__c</fullName>
+        <defaultValue>&quot;0 5 * * * ?&quot;</defaultValue>
+        <description>Chrono setup for AIMS2 Countries</description>
+        <externalId>false</externalId>
+        <label>AIMS2_CRON_EXP</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AIMS3_CRON_EXP__c</fullName>
+        <defaultValue>&quot;0 10 * * * ?&quot;</defaultValue>
+        <description>Chrono setup for AIMS3 Countries</description>
+        <externalId>false</externalId>
+        <label>AIMS3_CRON_EXP</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Active__c</fullName>
+        <defaultValue>true</defaultValue>
+        <description>enables or disables the integration&apos;s with SAP PI</description>
+        <externalId>false</externalId>
+        <label>Active</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Batch_Size__c</fullName>
         <description>Batch Size to be used when sending agency lists to MDM</description>
         <externalId>false</externalId>
@@ -14,6 +59,16 @@
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Copy_Right_Message__c</fullName>
+        <description>Copy Right Message</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Copy Right Message</inlineHelpText>
+        <label>Copy Right Message</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
     </fields>
     <fields>
         <fullName>Encryption_Algorythm__c</fullName>
@@ -35,6 +90,20 @@
         <required>true</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Sales_Order_Batch_Size__c</fullName>
+        <defaultValue>500</defaultValue>
+        <description>Sales Order Batch Size</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Sales Order Batch Size</inlineHelpText>
+        <label>Sales Order Batch Size</label>
+        <precision>18</precision>
+        <required>true</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
         <unique>false</unique>
     </fields>
     <fields>
@@ -65,10 +134,19 @@
     </fields>
     <fields>
         <fullName>Web_Service_endpoint__c</fullName>
-        <defaultValue>&quot;https://sapws.iata.org/XISOAPAdapter/MessageServlet&quot;</defaultValue>
-        <description>Endpoint of the MDM (SAP PI) web service</description>
+        <description>Endpoint for SAP PI web service
+
+Environment	Used on SFDC - Web URL 
+DEV - https://pixid.iata.org/XISOAPAdapter/MessageServlet
+QA - https://pixiq.iata.org/XISOAPAdapter/MessageServlet
+PRE-PROD - https://pixis.iata.org/XISOAPAdapter/MessageServlet</description>
         <externalId>false</externalId>
-        <inlineHelpText>Endpoint of the MDM (SAP PI) web service</inlineHelpText>
+        <inlineHelpText>Endpoint for SAP PI web service
+
+Environment	Used on SFDC - Web URL 
+DEV - https://pixid.iata.org/XISOAPAdapter/MessageServlet
+QA - https://pixiq.iata.org/XISOAPAdapter/MessageServlet
+PRE-PROD - https://pixis.iata.org/XISOAPAdapter/MessageServlet</inlineHelpText>
         <label>Web Service endpoint</label>
         <length>255</length>
         <required>true</required>

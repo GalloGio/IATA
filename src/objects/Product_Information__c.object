@@ -142,6 +142,21 @@
         <label>All</label>
         <language>en_US</language>
     </listViews>
+    <listViews>
+        <fullName>GSS</fullName>
+        <columns>NAME</columns>
+        <columns>Product_Audience__c</columns>
+        <columns>Related_Product__c</columns>
+        <columns>Related_Product_Category__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>NAME</field>
+            <operation>contains</operation>
+            <value>GSS</value>
+        </filters>
+        <label>GSS</label>
+        <language>en_US</language>
+    </listViews>
     <nameField>
         <label>Product Information Name</label>
         <type>Text</type>

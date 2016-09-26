@@ -176,11 +176,9 @@
     </layoutSections>
     <relatedLists>
         <excludeButtons>New</excludeButtons>
-        <fields>AMS_Agency__c.IATACode__c</fields>
+        <fields>Agency__c</fields>
         <fields>isManager__c</fields>
         <fields>Title__c</fields>
-        <fields>AMS_Agency__c.Last_synchronization__c</fields>
-        <fields>AMS_Agency__c.Legacy_System__c</fields>
         <fields>NAME</fields>
         <relatedList>AMS_Employee__c.Person__c</relatedList>
     </relatedLists>

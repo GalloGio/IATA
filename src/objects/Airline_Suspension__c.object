@@ -1166,7 +1166,7 @@
         <active>true</active>
         <description>Block &quot;Participates in IATA Governance Group&quot; once the field IATA Member is &quot;No&quot;.</description>
         <errorConditionFormula>AND (
-
+  NOT(ISPICKVAL ( ICH_participant__c ,&quot;&quot;)),
   IATA_member__c = &apos;No&apos;,
   NOT( INCLUDES( Participates_in_IATA_Governance_Groups__c, &apos;Not Applicable&apos; ))
 )</errorConditionFormula>

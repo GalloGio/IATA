@@ -86,9 +86,7 @@
         <style>CustomLinks</style>
     </layoutSections>
     <relatedLists>
-        <fields>AMS_Agency__c.NAME</fields>
-        <fields>AMS_Agency__c.IATACode__c</fields>
-        <fields>AMS_Agency__c.Company_Type__c</fields>
+        <fields>Agency__c</fields>
         <relatedList>AMS_Agency_Segment__c.Segment__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>

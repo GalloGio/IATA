@@ -351,7 +351,7 @@
 
      </apex:pageBlockSection>
      
-     <apex:pageBlockSection columns="1" id="SectionSix" rendered="{!amsOfficeType == 'HO'}" collapsible="false">
+     <apex:pageBlockSection columns="1" id="SectionSix" collapsible="false">
             <apex:facet name="header">
                 <apex:outputpanel >
                     {!$Label.ISSP_AMS_Step3_6_Other_Info}
@@ -359,20 +359,19 @@
                 </apex:outputpanel>                       
             </apex:facet>
             
-            
             <apex:outputText value="{!$Label.ISSP_AMS_If_Approved_Gross_Amnt}" style="font-weight:bold"/>
             <apex:outputText label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Gross_Amnt_First_year__c.Label}" value="{!newForm.ISSP_AMS_Gross_Amnt_First_year__c} {!newForm.CurrencyIsoCode}"/>                 
             <apex:outputText label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Gross_Amnt_Second_year__c.Label}" value="{!newForm.ISSP_AMS_Gross_Amnt_Second_year__c} {!newForm.CurrencyIsoCode}"/>
-            <apex:outputText label="{!$Label.ISSP_AMS_Step3_IATA_Reg_Cargo_Agent}" value="{!IF(newForm.ISSP_AMS_IATA_Registered_Cargo_Agent__c=='Yes', $Label.ISSP_Yes, $Label.ISSP_No)}"/>
+            <apex:outputText label="{!$Label.ISSP_AMS_Step3_IATA_Reg_Cargo_Agent}" value="{!IF(newForm.ISSP_AMS_IATA_Registered_Cargo_Agent__c=='Yes', $Label.ISSP_Yes, $Label.ISSP_No)}" rendered="{!amsOfficeType == 'HO'}"/>
             <apex:outputField rendered="{!newForm.ISSP_AMS_IATA_Registered_Cargo_Agent__c == 'Yes'}" label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.IATA_Cargo_Code__c.Label}" value="{!newForm.IATA_Cargo_Code__c}"/>
-            <apex:outputField label="{!$Label.ISSP_AMS_Step3_Indicate_GDSs}" value="{!newForm.ISSP_AMS_GDS_with_signed_contract__c}"/>
+            <apex:outputField label="{!$Label.ISSP_AMS_Step3_Indicate_GDSs}" value="{!newForm.ISSP_AMS_GDS_with_signed_contract__c}" rendered="{!amsOfficeType == 'HO'}"/>
 
         </apex:pageBlockSection>
         
         <apex:pageBlockSection columns="1" id="SectionSeven" rendered="{!OR(AND(countryCheckList.Statement_of_International_Sales__c, amsOfficeType == 'HO'),AND(countryCheckList.Statement_of_International_Sales_Branch__c, amsOfficeType != 'HO'))}" collapsible="false">
             <apex:facet name="header">
                 <apex:outputpanel >
-                    {!IF(amsOfficeType == 'HO', $Label.ISSP_AMS_International_Sales,$Label.ISSP_AMS_International_Sales_Branch)}
+                    {!$Label.ISSP_AMS_International_Sales}
                     <apex:commandButton styleclass="btn btn-default" action="{!goToStep3Section7}" value="{!$Label.ISSP_EditSection}" id="Edit-Section7" style="float:right"/>
                 </apex:outputpanel>                       
             </apex:facet>

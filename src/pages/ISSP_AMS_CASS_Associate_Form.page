@@ -742,7 +742,7 @@
                                 </td></tr>
                             <tr><td class="modalrow">
                                 <apex:outputText value="{!IF(isocountry.Local_language_Agency_details_required__c, txtLocalAgencyDetailsFirstNameENG, $ObjectType.Contact.fields.FirstName.Label)}" /><br/>
-                                <apex:inputField value="{!newContact.First_name__c}" />
+                                <apex:inputField value="{!newContact.First_name__c}" required="true"/>
                                 </td></tr>
                             <apex:outputText rendered="{!isocountry.Local_language_Agency_details_required__c}">
                             <tr><td class="modalrow">

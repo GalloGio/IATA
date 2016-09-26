@@ -73,9 +73,9 @@ private class clsICHProcessImplementationTest {
 
         Priority_Mapping__c pm1 = new Priority_Mapping__c();
         pm1.Application__c = 'SIS Help Desk' ;
-        pm1.Case_Classification__c = 'User Access Issue' ;
-        pm1.Case_Reason__c = 'User password is disabled' ;
-        pm1.Case_Type__c = 'Problem / Issue' ;
+        pm1.Case_Classification__c = 'Output File Issue' ;
+        pm1.Case_Reason__c = 'Other' ;
+        pm1.Case_Type__c = 'SIS Technical Problem' ;
         pm1.Priority__c = 'Priority 3 (Minor)' ;
         insert pm1;
 
@@ -217,7 +217,7 @@ private class clsICHProcessImplementationTest {
         Case aCase2 = new Case();
 
         aCase2.Subject = 'thats it';
-        aCase2.description = 'Case Area: SIS IATA Alpha/Numeric Code: LH-220 Company: Lufthansa Contact Name: Application Support Email: hamapplicationsudfgdgpport.lrs@dlh.de Phone: +49 40 5070-65515  Subject: test webemail2 Description: Dear SIS HelpDesk, please see attached Word document for detailed error description. Case Type: General Question  Case Classification: System Related  Case Defect/Issue: System Related Question  Browser type: Internet Explorer 7';
+        aCase2.description = 'Case Area: SIS IATA Alpha/Numeric Code: LH-220 Company: Lufthansa Contact Name: Application Support Email: hamapplicationsudfgdgpport.lrs@dlh.de Phone: +49 40 5070-65515  Subject: test webemail2 Description: Dear SIS HelpDesk, please see attached Word document for detailed error description. Case Type: SIS Technical Problem  Case Classification: System Related  Case Defect/Issue: System Related Question  Browser type: Internet Explorer 7';
         aCase2.SuppliedEmail = 'afarak@iata.org';
         theCases.add(aCase2);
 

@@ -85,8 +85,8 @@ trigger trgCaseIFAP on Case (before insert, before update) {
                     IFAP_BusinessRules.setCountryAreaAndISOCode(newCase, accountMap);
 
                 // validate the Agent Type
-                if (!IFAP_BusinessRules.isAgentTypeValid(newCase, contactMap))
-                    newCase.addError('The contact\'s Agent Type is not valid.');
+                /*if (!IFAP_BusinessRules.isAgentTypeValid(newCase, contactMap))
+                    newCase.addError('The contact\'s Agent Type is not valid.');*/
 
                 // validate the Agent Code if the financial review type is not 'New'
                 if (newCase.Financial_Review_Type__c != 'New applications')
@@ -281,6 +281,11 @@ trigger trgCaseIFAP on Case (before insert, before update) {
                 if (updatedCase.Financial_Review_Result__c <> oldCase.Financial_Review_Result__c && !isIfapAuthorizedUser && !currentUserProfile.Name.toLowerCase().contains('system administrator')) {
                     updatedCase.addError('Your user does not have the permission to change the Financial Review Result field.');
                 }
+
+                //when case has an OSCAR attached must synchronize fields
+                if(updatedCase.Oscar__c != null)
+                    AMS_Utils.syncOSCARwithIFAP(oldCase, updatedCase);
+
             }
         }
     }

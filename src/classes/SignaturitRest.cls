@@ -51,6 +51,81 @@ public with sharing class SignaturitRest {
         }
     }
 
+    /**
+        Get the info related to an email from Signaturit server, it includes the list of events
+    **/
+    public static MailInfoResponse getMailInfo( Tracked_Email__c trackedEmail) {
+        try {
+            HttpRequest req = new HttpRequest();
+            req.setMethod('GET');
+            req.setHeader('Authorization','Bearer ' + getToken(trackedEmail) );
+            req.setEndpoint( ENDPOINT + 'emails/' + trackedEmail.Signaturit_Id__c + '.json');
+            req.setTimeout(120000);
+
+            HttpResponse res;
+            Http http = new Http();
+            if(!Test.isRunningTest()) res = http.send(req);
+
+            String jsonStr = !Test.isRunningTest() ? res.getBody() : TESTSTRING ;
+            jsonStr = jsonStr.replace('"date"','"date_x"');
+            System.debug(jsonstr);
+            JSONParser parser = JSON.createParser(jsonStr);
+            return (MailInfoResponse)parser.readValueAs(MailInfoResponse.class);
+        } catch (Exception e) {
+            System.debug('ERROR in SignaturitRest.getMailInfo(' + trackedEmail + ') : ' + e);
+            return null;
+        }
+    }
+
+    /**
+        get the events for a particular email from signaturit and insert them in Salesforce
+    **/
+    public static void updateEventList( Tracked_Email__c trackedEmail) {
+        MailInfoResponse response = SignaturitRest.getMailInfo(trackedEmail);
+
+        // get events from all certificates, it is grouped by recipient to remove duplicities
+        map<String,list<EventDataInfoResponse>> mapEvents = new map<String,list<EventDataInfoResponse>>();
+        for ( CertificateInfoResponse certificate: response.certificates) {
+            mapEvents.put(certificate.recipient_email, certificate.events);
+        }
+
+        // creates a list of Tracked_Email_Event__c ready to insert in the Tracked_Email__c record
+        EventDataInfoResponse lastEvent = null;
+        list<Tracked_Email_Event__c> listNewEvents = new list<Tracked_Email_Event__c>();
+        for (String mail: mapEvents.keyset() ) {
+            for (EventDataInfoResponse ev: mapEvents.get(mail) ) {
+                listNewEvents.add( new Tracked_Email_Event__c(
+                    Timestamp__c = ev.getDate(),
+                    Status__c = ev.type,
+                    Parent__c  = trackedEmail.id
+                ));
+                if (lastEvent==null || lastEvent.getDate() <= ev.getDate()) {
+                    lastEvent = ev;
+                }
+            }
+        }
+
+        System.debug('updateEventList listNewEvents: ' + listNewEvents);
+
+        if ( !listNewEvents.isEmpty() ) {
+            Savepoint sp = Database.setSavepoint();
+            try {
+                list<Tracked_Email_Event__c> listEvents = [Select Id from Tracked_Email_Event__c where Parent__c = :trackedEmail.Id ];
+                if ( !listEvents.isEmpty() ) {
+                    delete listEvents;
+                }
+                insert listNewEvents;
+                trackedEmail.Status__c = lastEvent.type;
+                update trackedEmail;
+                System.debug('SignaturitRest.updateEventList ' + trackedEmail.Id + ': INSERTED ' + listEvents.size() + ' EVENTS');
+
+            } catch (Exception e) {
+                System.debug('ERROR SignaturitRest.updateEventList ' + trackedEmail.Id + ': ' + e.getMessage());
+                Database.rollback(sp);
+            }
+        }
+    }
+
     public static String getToken(Tracked_Email__c trackedEmail) {
         try {
             Sender_Tracked_Emails__c te =  Sender_Tracked_Emails__c.getValues(trackedEmail.FromName__c);
@@ -84,6 +159,32 @@ public with sharing class SignaturitRest {
         String created_at;
         public String recipient_email;
         public String recipient_name;
+    }
+
+    public class MailInfoResponse {
+        public String id;
+        public String created_at;
+        public CertificateInfoResponse[] certificates;
+    }
+
+    public class CertificateInfoResponse {
+		public String created_at;
+		public EventDataInfoResponse [] events;
+		public String id;
+		public EventDataInfoResponse last_event;
+		public String recipient_email;
+		public String recipient_name;
+
+	}
+
+    public class EventDataInfoResponse {
+        public String date_x;
+        public String created_at;
+        public String type;
+
+        public DateTime getDate() {
+            return SignaturitRestEvents.parseDateString(date_x);
+        }
     }
 
 }

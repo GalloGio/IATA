@@ -19,6 +19,7 @@
         <apex:pageBlockSection title="Checklist to be completed before the Local Group meeting" columns="1">
             <apex:inputField value="{!lm.Date_Legal_Requested_to_Sign_off_Agenda__c}" />
             <apex:inputField value="{!lm.Date_Legal_Signed_off_Agenda__c}"/>
+            <apex:inputField value="{!lm.Date_Legal_REJECTED_the_agenda__c}"/>
         </apex:pageBlockSection>
         
         

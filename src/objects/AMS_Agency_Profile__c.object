@@ -56,17 +56,28 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
+        <fullName>Account__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Account</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Agency Profiles</relationshipLabel>
+        <relationshipName>Agency_Profiles</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>Agency__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
         <label>Agency</label>
         <referenceTo>AMS_Agency__c</referenceTo>
         <relationshipLabel>Agency Profiles</relationshipLabel>
         <relationshipName>Agency_Profiles</relationshipName>
-        <relationshipOrder>0</relationshipOrder>
-        <reparentableMasterDetail>true</reparentableMasterDetail>
+        <required>false</required>
         <trackTrending>false</trackTrending>
-        <type>MasterDetail</type>
-        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+        <type>Lookup</type>
     </fields>
     <fields>
         <fullName>GR_Code__c</fullName>
@@ -966,6 +977,6 @@ TR- % Tour Packages</inlineHelpText>
     </nameField>
     <pluralLabel>Agency Profiles</pluralLabel>
     <searchLayouts/>
-    <sharingModel>ControlledByParent</sharingModel>
+    <sharingModel>ReadWrite</sharingModel>
     <startsWith>Vowel</startsWith>
 </CustomObject>

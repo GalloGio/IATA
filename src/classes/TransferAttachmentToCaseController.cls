@@ -1,4 +1,4 @@
-public  class  TransferAttachmentToCaseController {
+public with sharing class TransferAttachmentToCaseController {
     public Case sourceCase {get; set;}
     public Case targetCase {get; set;}
     public list<CaseWrapper> lstRelatedCases {get; set;}
@@ -85,15 +85,15 @@ public  class  TransferAttachmentToCaseController {
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,Label.Select_one_Attachment));
             return;
         }
-       
+        
         // check if there is any target case selected
         list<CaseWrapper> listTargetCaseSelected = getTargetCaseSelected();
         if (listTargetCaseSelected.isEmpty() ) {
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,Label.Select_one_Case));
             return;
         }
-         
-         for(CaseWrapper cw : listTargetCaseSelected  ){
+        
+        for(CaseWrapper cw : listTargetCaseSelected  ){
                      if(sourceCase.id == cw.caserecord.id ){
                      ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'You selected the same source case as destination, please reselect a proper case'));
                         return;
@@ -101,6 +101,7 @@ public  class  TransferAttachmentToCaseController {
                      }
              
          
+        
         // list of attachments to be created
         list<Attachment> lstNewAttachments = new list<Attachment>();
         //list<Archived_Attachment__c> lstNewArchived = new list<Archived_Attachment__c>();
@@ -117,6 +118,7 @@ public  class  TransferAttachmentToCaseController {
                     Attachment newAtt = attach.fileAttachment.clone();
                     newAtt.Body = attach.fileAttachment.Body;
                     newAtt.ParentId = cw.CaseRecord.Id;
+                    newAtt.OwnerId = UserInfo.getUserId();//added by MGO INC254433
                     lstNewAttachments.add(newAtt);
                 }
                 /*
@@ -130,8 +132,6 @@ public  class  TransferAttachmentToCaseController {
                 // if it is an amazon file, clone it and do the copy to amazon
                 if (attach.getIsAmazon() ) {
                     AmazonFile newAtt = attach.transfer(cw.CaseRecord.Id);
-                   //   ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.INFO,'' +newAtt  ));
-        //  return;
                     if ( newAtt == null ) {
                         errors++;
                     } else {
@@ -149,7 +149,6 @@ public  class  TransferAttachmentToCaseController {
                 } else {
                     errors ++;
                     System.debug('ERROR inserting attachment ' + String.ValueOf(sr.getErrors()));
-                    //throw new transformationException('normal attach ' + sr.getErrors() );
                 }
             }
         }
@@ -160,8 +159,7 @@ public  class  TransferAttachmentToCaseController {
                     success ++;
                 } else {
                     errors ++;
-                   // throw new transformationException('lstNewAmazon attach ' + sr.getErrors() );
-                   System.debug('ERROR inserting attachment ' + String.ValueOf(sr.getErrors()));
+                    System.debug('ERROR inserting attachment ' + String.ValueOf(sr.getErrors()));
                 }
             }
         }
@@ -170,6 +168,7 @@ public  class  TransferAttachmentToCaseController {
         message = message.replace('{0}', String.ValueOf(success));
         message = message.replace('{1}', String.ValueOf(errors));
         message = message.replace('{2}', String.ValueOf(sourceCase.Id));
+                        
         ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.INFO,message));
     }
         

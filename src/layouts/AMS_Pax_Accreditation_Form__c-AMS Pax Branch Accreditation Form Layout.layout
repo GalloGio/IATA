@@ -150,7 +150,7 @@
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
-        <label>Agency Details in Local Language (China)</label>
+        <label>Agency Details (In Local Language)</label>
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -375,7 +375,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h8E000000NC6g</masterLabel>
+        <masterLabel>00hw000000i1DdI</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

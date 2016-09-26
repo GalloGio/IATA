@@ -56,15 +56,28 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
-        <fullName>Child_Agency__c</fullName>
+        <fullName>Child_Account__c</fullName>
         <deleteConstraint>Restrict</deleteConstraint>
+        <description>Child account in hierarchy relationship</description>
         <externalId>false</externalId>
-        <inlineHelpText>Child agency in relationship</inlineHelpText>
-        <label>Child Agency</label>
+        <inlineHelpText>Child account in hierarchy relationship</inlineHelpText>
+        <label>Child Account</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>AMS Agencies relationships</relationshipLabel>
+        <relationshipName>AMS_Agencies_relationships</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Child_Agency__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Agency (AMS)</label>
         <referenceTo>AMS_Agency__c</referenceTo>
-        <relationshipLabel>Parent Agencies</relationshipLabel>
-        <relationshipName>AMS_Agencies_parentships1</relationshipName>
-        <required>true</required>
+        <relationshipLabel>AMS Agencies relationships</relationshipLabel>
+        <relationshipName>AMS_Agencies_relationships</relationshipName>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -86,7 +99,7 @@
         <referenceTo>AMS_Agencies_Hierarchy__c</referenceTo>
         <relationshipLabel>Agency relationships</relationshipLabel>
         <relationshipName>AMS_Agencies_relationships</relationshipName>
-        <relationshipOrder>1</relationshipOrder>
+        <relationshipOrder>0</relationshipOrder>
         <reparentableMasterDetail>true</reparentableMasterDetail>
         <trackTrending>false</trackTrending>
         <type>MasterDetail</type>
@@ -155,18 +168,30 @@
         <type>Picklist</type>
     </fields>
     <fields>
-        <fullName>Parent_agency__c</fullName>
+        <fullName>Parent_Account__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Parent account in relationship</description>
         <externalId>false</externalId>
-        <inlineHelpText>Parent agency in relationship</inlineHelpText>
-        <label>Parent agency</label>
-        <referenceTo>AMS_Agency__c</referenceTo>
-        <relationshipLabel>Child Agencies</relationshipLabel>
-        <relationshipName>AMS_Agencies_parentships</relationshipName>
-        <relationshipOrder>0</relationshipOrder>
-        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <inlineHelpText>Parent account in relationship</inlineHelpText>
+        <label>Parent Account</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>AMS Agencies relationships (Parent Account)</relationshipLabel>
+        <relationshipName>AMS_Agencies_relationships1</relationshipName>
+        <required>false</required>
         <trackTrending>false</trackTrending>
-        <type>MasterDetail</type>
-        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Parent_agency__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Agency (AMS)</label>
+        <referenceTo>AMS_Agency__c</referenceTo>
+        <relationshipLabel>AMS Agencies relationships (Agency (AMS))</relationshipLabel>
+        <relationshipName>AMS_Agencies_relationships1</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
     </fields>
     <fields>
         <fullName>Relationship_details__c</fullName>

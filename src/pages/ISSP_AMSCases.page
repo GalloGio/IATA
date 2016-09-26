@@ -98,7 +98,7 @@
                         <a href="#"><apex:outputLink value="{!$Label.ISSP_PKB_URL}{!CASE(displayLanguage, 'ar', 'ar', 'fr', 'fr', 'it', 'it', 'de', 'de', 'es', 'es', 'pt_BR', 'pt_BR', 'ja', 'ja', 'ko', 'ko', 'in', 'in', 'th', 'th', 'vi', 'vi', 'zh_CN', 'zh_CN', 'en_US')}/How_To/Customer-Portal-Troubleshooting/?l={!CASE(displayLanguage, 'ar', 'ar', 'fr', 'fr', 'it', 'it', 'de', 'de', 'es', 'es', 'pt_BR', 'pt_BR', 'ja', 'ja', 'ko', 'ko', 'in', 'in', 'th', 'th', 'vi', 'vi', 'zh_CN', 'zh_CN', 'en_US')}" rendered="{!$Site.RegistrationEnabled}" target="_blank">{!$Label.ISSP_Article}</apex:outputLink></a>
                     </td>
                     <td style="vertical-align:bottom" class="{!IF(AND(isEligableForChange,isoCountry.Enable_Notice_of_Change__c),'',(IF(!isoCountry.Enable_Notice_of_Change__c,'none','moveup')))}">
-                        <apex:outputText escape="false" value="{!$Label.ISSP_AMS_Step0_Minor_Changes}" rendered="{!AND(isoCountry.Enable_Notice_of_Change__c,bIsAdmin)}"/>
+                        <apex:outputText escape="false" value="{!$Label.ISSP_AMS_Step0_Minor_Changes}" rendered="{!AND(isoCountry.Enable_Notice_of_Change__c,isoCountry.Enable_Minor_Changes_from_Portal__c,bIsAdmin)}"/>
                     </td>
             </tr>
             <tr>
@@ -115,6 +115,7 @@
                 </td>
                 <td style="vertical-align:top" class="{!IF(AND(isEligableForChange,isoCountry.Enable_Notice_of_Change__c),'',(IF(!isoCountry.Enable_Notice_of_Change__c,'movetableup','moveup')))}">
             <apex:pageBlock >
+                
             <apex:pageBlockTable value="{!AMSDraftCases}" var="MyAMSCases" styleClass="table" rendered="{!NOT(IsEmpty)}">
             <apex:column headerValue="{!$ObjectType.Case.fields.CaseNumber.label}" rendered="{!NOT(AND(isoCountry.Enable_Notice_of_Change__c==false,NOT(BEGINS(MyAMSCases.Reason1__c, 'New'))))}">
                 <apex:outputLink value="/ISSP_AMS_Accreditation?caseId={!MyAMSCases.Id}&step=2" rendered="{!BEGINS(MyAMSCases.Reason1__c, 'New')}">{!MyAMSCases.CaseNumber}</apex:outputLink>

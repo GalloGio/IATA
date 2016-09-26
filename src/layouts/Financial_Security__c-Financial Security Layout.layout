@@ -76,6 +76,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Financial_Security_Validation__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Minimumrelease__c</field>
             </layoutItems>
         </layoutColumns>

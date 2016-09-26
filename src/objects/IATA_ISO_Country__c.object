@@ -90,6 +90,20 @@
         <unique>true</unique>
     </fields>
     <fields>
+        <fullName>AMS_Default_State__c</fullName>
+        <description>Some countries don&apos;t have ISO State Mandatory.
+This field will store, for these countries a reference (text) to the &quot;Default&quot; state.
+When generating the IATA Code, if the iso state is empty in the accreditation, we will use this field to search in the range table, which have always a state.
+Default state must NOT be set for countries that have it mandatory (US, Canada, Australia)</description>
+        <externalId>false</externalId>
+        <label>AMS Default State</label>
+        <length>10</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>AMS_Pilot_Country__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
@@ -1598,6 +1612,15 @@
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>EU Country</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Enable_Minor_Changes_from_Portal__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Enable change code generation and account update when portal users make minor changes to their Agency account information - Phone, FAX, Trade Name etc. (For OSCAR Enabled countries)</inlineHelpText>
+        <label>Enable Minor Changes from Portal</label>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>

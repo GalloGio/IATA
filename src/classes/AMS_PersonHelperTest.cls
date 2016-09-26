@@ -1,5 +1,18 @@
 @isTest
 public class AMS_PersonHelperTest {
+
+    public static testmethod void testUpdateContactInfo(){
+
+        Contact c = new Contact(FirstName = 'Test', LastName = 'Contact');
+        insert c;
+
+        List<Contact> cons = [select Id from contact];
+
+        Set<ID> contactIDS = new Set<Id>{cons[0].id};
+
+        AMS_PersonHelper.updateContactInfo(contactIDS);
+        
+    }
 /*
     public static testmethod void testEnsure0to1ContactLookup(){
         Account a = new Account(Name='Test Account');

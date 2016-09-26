@@ -268,6 +268,19 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Product_Line__c</fullName>
+        <defaultValue>&apos;GAD&apos;</defaultValue>
+        <description>Product Line to create isolation between GAD, PAL, CAL ASL</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Product Line to create isolation between GAD, PAL, CAL ASL</inlineHelpText>
+        <label>Product Line</label>
+        <length>5</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Related_Contact__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <description>The related contact</description>

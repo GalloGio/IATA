@@ -573,7 +573,7 @@ Field update of user &apos;Treasury Dashboard User&apos; = True</description>
             <operation>notEqual</operation>
             <value>Treasury Dashboard</value>
         </criteriaItems>
-        <triggerType>onCreateOnly</triggerType>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
         <fullName>Notify contact of application Access granted</fullName>

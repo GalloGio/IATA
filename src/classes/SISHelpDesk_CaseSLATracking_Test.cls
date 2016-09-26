@@ -53,9 +53,9 @@ private class SISHelpDesk_CaseSLATracking_Test {
        // case1.SuppliedEmail = 'email@noemail.com';
         case1.classification__c = 'Application Error';
         case1.Classification_SIS__c = 'Application Error'; 
-        case1.Type = 'Problem / Issue';
+        case1.Type = 'SIS Technical Problem';
         case1.Defect_Issue__c = 'SIS Solution is not working';     
-        case1.Description = 'Case Area: SIS Case Classification: Application Error Case Type: Problem / Issue Case Defect/Issue: SIS Solution is not working';
+        case1.Description = 'Case Area: SIS Case Classification: Application Error Case Type: SIS Technical Problem Case Defect/Issue: SIS Solution is not working';
         case1.RecordTypeId = sisHelpDeskCaseRecordTypeID;
         
         Case case2 = new Case();
@@ -65,9 +65,9 @@ private class SISHelpDesk_CaseSLATracking_Test {
       //  case2.SuppliedEmail = 'email@noemail.com';
         case2.classification__c = 'Application Error';
         case2.Classification_SIS__c = 'Application Error'; 
-        case2.Type = 'Problem / Issue';
+        case2.Type = 'SIS Technical Problem';
         case2.Defect_Issue__c = 'Alerts are not / incorrectly delivered';
-        case2.Description = 'Case Area: SIS Case Classification: Application Error Case Type: Problem / Issue Case Defect/Issue: Alerts are not / incorrectly delivered';
+        case2.Description = 'Case Area: SIS Case Classification: Application Error Case Type: SIS Technical Problem Case Defect/Issue: Alerts are not / incorrectly delivered';
         case2.RecordTypeId = sisHelpDeskCaseRecordTypeID;
         
         Case case3 = new Case();
@@ -77,9 +77,9 @@ private class SISHelpDesk_CaseSLATracking_Test {
         //case3.SuppliedEmail = 'email@noemail.com';
         case3.classification__c = 'New Feature';
         case3.Classification_SIS__c = 'New Feature'; 
-        case3.Type = 'Feature Request';
-        case3.Defect_Issue__c = 'New Feature Request';   
-        case3.Description = 'Case Area: SIS Case Classification: New Feature Case Type: Feature Request Case Defect/Issue: New Feature Request';
+        case3.Type = 'SIS Feature Request';
+        case3.Defect_Issue__c = 'Request a New Feature';   
+        case3.Description = 'Case Area: SIS Case Classification: New Feature Case Type: SIS Feature Request Case Defect/Issue: Request a New Feature';
         case3.RecordTypeId = sisHelpDeskCaseRecordTypeID;
         
         Case case4 = new Case();
@@ -89,8 +89,8 @@ private class SISHelpDesk_CaseSLATracking_Test {
       //  case4.SuppliedEmail = 'email@noemail.com';
         case4.Description = 'Case Area: SIS';        
         case4.Classification_SIS__c = 'New Feature'; 
-        case4.Type = 'Feature Request';
-        case4.Defect_Issue__c = 'New Feature Request';
+        case4.Type = 'SIS Feature Request';
+        case4.Defect_Issue__c = 'Request a New Feature';
         case4.RecordTypeId = sisHelpDeskCaseRecordTypeID;
         
         List<Case> caseInserList = new List<Case>{case1, case2, case3};

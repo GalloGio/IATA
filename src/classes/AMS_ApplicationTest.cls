@@ -29,15 +29,15 @@ public class AMS_ApplicationTest {
 
                 System.runAs(u) {
                 	Test.startTest();
-                	system.assertEquals(true,schema.sObjectType.AMS_Agency__c.isCreateable());
-                	system.assertEquals(true,schema.sObjectType.AMS_Agency__c.isAccessible());
-                	system.assertEquals(true,schema.sObjectType.AMS_Agency__c.isUpdateable());
+                	system.assertEquals(true,schema.sObjectType.Account.isCreateable());
+                	system.assertEquals(true,schema.sObjectType.Account.isAccessible());
+                	system.assertEquals(true,schema.sObjectType.Account.isUpdateable());
                 	//system.assertEquals(true,schema.sObjectType.AMS_Agency__c.isDeletable());
                 	Test.stopTest();
                 }
 	}
 
-	@isTest static void userWithoutPermissionSet() {
+	/*AMSFTS @isTest static void userWithoutPermissionSet() {
 		Profile pro = [SELECT Id, Name FROM Profile WHERE Name = 'Standard User'];
                 User u = new User();
                 u.FirstName = 'Test';
@@ -56,12 +56,12 @@ public class AMS_ApplicationTest {
 
                 System.runAs(u) {
                 	Test.startTest();
-                	system.assertEquals(false,schema.sObjectType.AMS_Agency__c.isCreateable());
-                	system.assertEquals(false,schema.sObjectType.AMS_Agency__c.isAccessible());
-                	system.assertEquals(false,schema.sObjectType.AMS_Agency__c.isUpdateable());
+                	system.assertEquals(false,schema.sObjectType.Account.isCreateable());
+                	system.assertEquals(false,schema.sObjectType.Account.isAccessible());
+                	system.assertEquals(false,schema.sObjectType.Account.isUpdateable());
                 	//system.assertEquals(false,schema.sObjectType.AMS_Agency__c.isDeletable());
                 	Test.stopTest();
 
                 }
-	}
+	}*/
 }

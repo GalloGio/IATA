@@ -1,7 +1,9 @@
 @isTest
 public class AMS_EmployeeHelperTest{
 
+    /* #AMSFTS is not used anymore
     public static testmethod void testEnsure0to1ContactLookup(){
+       
         Account acc = new Account(Name='Test Account');
         insert acc ;
         Contact c = new Contact(LastName = 'Test Contact', AccountId = acc.Id);
@@ -17,8 +19,8 @@ public class AMS_EmployeeHelperTest{
 
         Map<string, Id>  agenciesRT = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'AMS_Agency__c'}).get('AMS_Agency__c');
 
-        AMS_Agency__c a = new AMS_Agency__c(Country__c = ctry.id, Name='Test Agency', Account__c=acc.Id, RecordTypeId = agenciesRT.get('PASSENGER'));
-        insert a;
+        //AMS_Agency__c a = new AMS_Agency__c(Country__c = ctry.id, Name='Test Agency', Account__c=acc.Id, RecordTypeId = agenciesRT.get('PASSENGER'));
+        //insert a;
 
         Test.startTest();
         
@@ -49,7 +51,8 @@ public class AMS_EmployeeHelperTest{
         
     }
     
-    
+    */
+    // #AMSFTS moved into AMS_AccountRoleTest class
     public static testmethod void testAddContactIfEmpty(){
         Account acc = new Account(Name='Test Account');
         insert acc ;
@@ -57,7 +60,7 @@ public class AMS_EmployeeHelperTest{
         insert c;
         Contact c2 = new Contact(LastName = 'Test Contact 2', AccountId = acc.Id);
         insert c2;
-        AMS_Person__c p = new AMS_Person__c(Lastname__c = 'Test Contact');
+        AMS_Person__c p = new AMS_Person__c(Lastname__c = 'Test Contact', legacy_system__c ='WEBSTAR', DOB__c = Date.newInstance(2000, 1, 1), Email__c = 'testing@test.com');
         insert p;
         AMS_Person__c p2 = new AMS_Person__c(Lastname__c = 'Test Contact 2');
         insert p2;
@@ -70,6 +73,11 @@ public class AMS_EmployeeHelperTest{
 
         AMS_Agency__c a = new AMS_Agency__c(Country__c = ctry.id, RecordTypeId = agenciesRT.get('PASSENGER'), Name='Test Agency', Account__c=acc.Id);
         insert a;
+        
+        List<AMS_Account_Role__c> newRoles = new List<AMS_Account_Role__c>();
+        newRoles.add(new AMS_Account_Role__c(Person__c = p.id, Account__c = acc.Id, Simplex__c='12345'));
+        newRoles.add(new AMS_Account_Role__c(Person__c = p2.id, Account__c = acc.Id, Simplex__c='12346'));
+        insert newRoles;
         
         Test.startTest();
         
@@ -119,6 +127,7 @@ public class AMS_EmployeeHelperTest{
         
     }
     
+    /* #AMSFTS not used anymore
     public static testmethod void testCheckMax1ManagerPerAgency(){
         IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US')  ;
         insert ctry ;
@@ -171,5 +180,5 @@ public class AMS_EmployeeHelperTest{
         //system.assertEquals(3,employees.size());
         
     }
-    
+    */
 }

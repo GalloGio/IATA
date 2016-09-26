@@ -1039,6 +1039,11 @@ Please check for ICH membership under www.iata.org/ich.</inlineHelpText>
                 <controllingFieldValues>ICCS</controllingFieldValues>
             </picklistValues>
             <picklistValues>
+                <fullName>FDS_TDSUP</fullName>
+                <default>false</default>
+                <controllingFieldValues>ICCS</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
                 <fullName>GSSA_ANUAL</fullName>
                 <default>false</default>
                 <controllingFieldValues>BSP</controllingFieldValues>
@@ -1145,11 +1150,6 @@ Please check for ICH membership under www.iata.org/ich.</inlineHelpText>
                 <controllingFieldValues>BSP</controllingFieldValues>
                 <controllingFieldValues>CASS</controllingFieldValues>
                 <controllingFieldValues>Coding/MITA</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Treasury Dashboard Set-up Fee (800964)</fullName>
-                <default>false</default>
-                <controllingFieldValues>ICCS</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>TSF_ADPX</fullName>
@@ -1394,6 +1394,7 @@ Treasury Dashboard Set-up Fee (800964) : 3500</inlineHelpText>
                 <controllingFieldValues>BSPFEE_ADMIN</controllingFieldValues>
                 <controllingFieldValues>CASFEE_DGRR1</controllingFieldValues>
                 <controllingFieldValues>CASFEE_DGRTR</controllingFieldValues>
+                <controllingFieldValues>FDS_TDPMS</controllingFieldValues>
                 <controllingFieldValues>GSSA_ANUAL</controllingFieldValues>
                 <controllingFieldValues>IBCS_YEAR</controllingFieldValues>
                 <controllingFieldValues>NOIATA_ANUAL</controllingFieldValues>
@@ -1403,6 +1404,7 @@ Treasury Dashboard Set-up Fee (800964) : 3500</inlineHelpText>
                 <fullName>1000.00</fullName>
                 <default>false</default>
                 <controllingFieldValues>CASFEE_DGRR2</controllingFieldValues>
+                <controllingFieldValues>FDS_TDPMS</controllingFieldValues>
                 <controllingFieldValues>IBCS_JOINA</controllingFieldValues>
                 <controllingFieldValues>IBCS_JOINF</controllingFieldValues>
                 <controllingFieldValues>IBCS_SWICH</controllingFieldValues>
@@ -1416,7 +1418,7 @@ Treasury Dashboard Set-up Fee (800964) : 3500</inlineHelpText>
                 <fullName>3000.00</fullName>
                 <default>false</default>
                 <controllingFieldValues>BSPFEE_JOINS</controllingFieldValues>
-                <controllingFieldValues>Treasury Dashboard Set-up Fee (800964)</controllingFieldValues>
+                <controllingFieldValues>FDS_TDSUP</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>3400.00</fullName>
@@ -1427,7 +1429,7 @@ Treasury Dashboard Set-up Fee (800964) : 3500</inlineHelpText>
                 <default>false</default>
                 <controllingFieldValues>CASFEE_JOIN</controllingFieldValues>
                 <controllingFieldValues>FDS_TDPMS</controllingFieldValues>
-                <controllingFieldValues>Treasury Dashboard Set-up Fee (800964)</controllingFieldValues>
+                <controllingFieldValues>FDS_TDSUP</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>4000.00</fullName>

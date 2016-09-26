@@ -13,8 +13,8 @@ trigger FinancialSecurityHandler on Financial_Security__c (after delete, after i
         
         
     } else if (Trigger.isUpdate) {
-        
-        if (Trigger.isBefore) {
+        // exclude system administrator profile
+        if (Trigger.isBefore && userinfo.getProfileId() != '00e20000000h0gFAAQ') {
             
             FinancialSecurityUtil.HandleFSBeforeUpdate(Trigger.newMap, Trigger.oldMap);
             

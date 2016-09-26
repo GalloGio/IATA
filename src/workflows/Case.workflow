@@ -14150,10 +14150,6 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <type>Alert</type>
         </actions>
         <actions>
-            <name>IFAP_Update_Is_Complaint</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
             <name>Reset_Mass_Case_Creation_Email_Send_c</name>
             <type>FieldUpdate</type>
         </actions>
@@ -14201,10 +14197,6 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <fullName>IFAP FA Letter Sent Status change</fullName>
         <actions>
             <name>IFAP_FA_Letter_Sent_Status_change</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>IFAP_Update_Is_Complaint</name>
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>

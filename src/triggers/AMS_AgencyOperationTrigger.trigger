@@ -3,7 +3,7 @@ this trigger is in cahrge of setting agency Operations is country changed
 */
 trigger AMS_AgencyOperationTrigger on AMS_Agency__c (after insert, after update) {
 
-    Id rtpax = Schema.SObjectType.AMS_Agency__c.getRecordTypeInfosByName().get('PASSENGER').getRecordTypeId();
+  /*  Id rtpax = Schema.SObjectType.AMS_Agency__c.getRecordTypeInfosByName().get('PASSENGER').getRecordTypeId();
     Id rtcargo  =  Schema.SObjectType.AMS_Agency__c.getRecordTypeInfosByName().get('CARGO').getRecordTypeId();
   if(Trigger.isUpdate){
         AMS_AgencyUpdateHelper.agencyUpdate(Trigger.new);
@@ -12,16 +12,16 @@ trigger AMS_AgencyOperationTrigger on AMS_Agency__c (after insert, after update)
         for(AMS_Agency__c ag: Trigger.new){
             accountIds.add(ag.Account__c);
         }
-        AMS_AgencyHelper.updateAccounts(Trigger.oldMap, Trigger.newMap, accountIds);
+        //AMS_AgencyHelper.updateAccounts(Trigger.oldMap, Trigger.newMap, accountIds);
     }
         
         
     //Operations assignment update:
     //we want to set all operation to a dedicated Operation based on their Countries
     List<AMS_Agency__c > operationHelpercandidate = new List<AMS_Agency__c >();
-    /*
+    
         //cannot be working on creation because need to have a primary address linled
-    */
+    
     if(Trigger.isInsert)
         for(AMS_Agency__c  ag:Trigger.new){
             if(ag.Country__c!=null && ag.IATACode__c !=null ){
@@ -41,5 +41,5 @@ trigger AMS_AgencyOperationTrigger on AMS_Agency__c (after insert, after update)
     if(operationHelpercandidate.size()>0){
         system.debug('[AMS_AgencyTrigger] updating Operation for '+operationHelpercandidate.size()+' Agencies');
         AMS_AgencyHelper.updateAgenciesOperations(operationHelpercandidate);
-    }
+    }*/
 }

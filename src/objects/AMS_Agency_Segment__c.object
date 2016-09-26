@@ -56,17 +56,29 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
+        <fullName>Account__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Account</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Agency Segments (AMS)</relationshipLabel>
+        <relationshipName>Agency_Segments_AMS</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>Agency__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
         <inlineHelpText>Please select the agencz for relationship</inlineHelpText>
         <label>Agency</label>
         <referenceTo>AMS_Agency__c</referenceTo>
+        <relationshipLabel>Agency Segments (AMS)</relationshipLabel>
         <relationshipName>AMS_Agency_Areas</relationshipName>
-        <relationshipOrder>0</relationshipOrder>
-        <reparentableMasterDetail>true</reparentableMasterDetail>
+        <required>false</required>
         <trackTrending>false</trackTrending>
-        <type>MasterDetail</type>
-        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+        <type>Lookup</type>
     </fields>
     <fields>
         <fullName>Assignation_Type__c</fullName>
@@ -98,7 +110,7 @@
         <referenceTo>AMS_Segment__c</referenceTo>
         <relationshipLabel>Agency Segments (AMS)</relationshipLabel>
         <relationshipName>AMS_Agency_Segment</relationshipName>
-        <relationshipOrder>1</relationshipOrder>
+        <relationshipOrder>0</relationshipOrder>
         <reparentableMasterDetail>true</reparentableMasterDetail>
         <trackTrending>false</trackTrending>
         <type>MasterDetail</type>

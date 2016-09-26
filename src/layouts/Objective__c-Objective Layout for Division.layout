@@ -63,11 +63,11 @@
                 <field>Unit_Type__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Required</behavior>
+                <behavior>Edit</behavior>
                 <field>Initial__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Required</behavior>
+                <behavior>Edit</behavior>
                 <field>Current__c</field>
             </layoutItems>
             <layoutItems>

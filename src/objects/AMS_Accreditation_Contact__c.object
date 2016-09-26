@@ -57,6 +57,20 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
+        <fullName>AMSPerson__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Link to AMS Person to support AMS-1206 requirements. This field will contain the AMS Person object that gets created after the Accreditation processing is completed.</description>
+        <externalId>false</externalId>
+        <label>AMS Person</label>
+        <referenceTo>AMS_Person__c</referenceTo>
+        <relationshipLabel>AMS Accreditation Contacts</relationshipLabel>
+        <relationshipName>AMS_Accreditation_Contacts</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>AMS_ContactId__c</fullName>
         <externalId>false</externalId>
         <label>AMS ContactId</label>
@@ -68,6 +82,20 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>AMS_Employee_Role__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Potential link between the Accreditation Contact and an AMS Account Role for Company Employee. This is required because the synchronization of the Staging Data to Master Data occurs more than once before the Agency becomes accrediated.</description>
+        <externalId>false</externalId>
+        <label>AMS Employee Role</label>
+        <referenceTo>AMS_Account_Role__c</referenceTo>
+        <relationshipLabel>AMS Accreditation Contacts</relationshipLabel>
+        <relationshipName>AMS_Accreditation_Contacts</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>AMS_OwnershipId__c</fullName>
         <externalId>false</externalId>
         <label>AMS OwnershipId</label>
@@ -77,6 +105,20 @@
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AMS_Ownership_Role__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Potential link between the Accreditation Contact and an AMS Account Role for Company Owner. This is required because the synchronization of the Staging Data to Master Data occurs more than once before the Agency becomes accreditated.</description>
+        <externalId>false</externalId>
+        <label>AMS Ownership Role</label>
+        <referenceTo>AMS_Account_Role__c</referenceTo>
+        <relationshipLabel>AMS Accreditation Contacts (AMS Ownership Role)</relationshipLabel>
+        <relationshipName>AMS_Accreditation_Contacts1</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
     </fields>
     <fields>
         <fullName>AMS_Pax_Accreditation_Form__c</fullName>
@@ -155,7 +197,7 @@
         <fullName>AddressStreet__c</fullName>
         <externalId>false</externalId>
         <label>Street</label>
-        <length>80</length>
+        <length>255</length>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
@@ -261,6 +303,20 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Company__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>This is a lookup the owner company</description>
+        <externalId>false</externalId>
+        <label>Company</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Owner companies</relationshipLabel>
+        <relationshipName>AMS_Accreditation_Contacts2</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>Contact_Id__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
@@ -268,6 +324,20 @@
         <referenceTo>Contact</referenceTo>
         <relationshipLabel>AMS Accreditation Contacts</relationshipLabel>
         <relationshipName>AMS_Accreditation_Contacts</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Contact__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Link to Contact to support AMS-1206 requirements. This field will contain the Contact object that gets created after the Accreditation processing is completed.</description>
+        <externalId>false</externalId>
+        <label>Contact</label>
+        <referenceTo>Contact</referenceTo>
+        <relationshipLabel>AMS Accreditation Contacts</relationshipLabel>
+        <relationshipName>AMS_Accreditation_Contacts1</relationshipName>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -344,7 +414,7 @@
         <externalId>false</externalId>
         <label>First name</label>
         <length>80</length>
-        <required>true</required>
+        <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
@@ -371,6 +441,19 @@
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
         <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>ISO_Country__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>ISO Country</label>
+        <referenceTo>IATA_ISO_Country__c</referenceTo>
+        <relationshipLabel>AMS Accreditation Contacts</relationshipLabel>
+        <relationshipName>AMS_Accreditation_Contacts_Countries</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
     </fields>
     <fields>
         <fullName>Job_title__c</fullName>
@@ -408,7 +491,7 @@
     <fields>
         <fullName>Local_First_name__c</fullName>
         <externalId>false</externalId>
-        <label>First Name (Chinese)</label>
+        <label>First Name</label>
         <length>80</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -419,8 +502,19 @@
     <fields>
         <fullName>Local_Last_Name__c</fullName>
         <externalId>false</externalId>
-        <label>Last Name (Chinese)</label>
+        <label>Last Name</label>
         <length>80</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Mailing_State__c</fullName>
+        <externalId>false</externalId>
+        <label>Mailing State</label>
+        <length>100</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -475,6 +569,19 @@
         <trackTrending>false</trackTrending>
         <type>Number</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Person_AMS__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Person (AMS)</label>
+        <referenceTo>AMS_Person__c</referenceTo>
+        <relationshipLabel>AMS Accreditation Contacts (Person (AMS))</relationshipLabel>
+        <relationshipName>AMS_Accreditation_Contacts_Persons</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
     </fields>
     <fields>
         <fullName>PhoneNational__c</fullName>
@@ -577,6 +684,15 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Prev_Job1_To__c</fullName>
+        <externalId>false</externalId>
+        <label>To*</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
         <fullName>Prev_Job2_Address__c</fullName>
         <externalId>false</externalId>
         <label>Address *</label>
@@ -636,6 +752,15 @@
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Prev_Job2_To__c</fullName>
+        <externalId>false</externalId>
+        <label>To*</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
     </fields>
     <fields>
         <fullName>Registration_number__c</fullName>

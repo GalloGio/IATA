@@ -22,10 +22,6 @@
                 <field>Amount</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>New_Business_Booking__c</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Required</behavior>
                 <field>CurrencyIsoCode</field>
             </layoutItems>

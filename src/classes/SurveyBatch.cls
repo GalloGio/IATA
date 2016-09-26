@@ -64,11 +64,14 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
     // Looking for cases closed yesterday in order to send the survey email
     ContactIds = new Set<Id>();
     templates = new Map<String, Id>();
+    
     Date startd = Test.isRunningTest() ? Date.today() : Date.today().addDays(-1);
     Date endd = Test.isRunningTest() ? Date.today().addDays(1) : Date.today();
-
-    //For testing: Date startd =  Date.today() ;
-    //For testing: Date endd =  Date.today().addDays(1) ;
+  
+    /*For testing:
+    Date startd =  Date.today();
+    Date endd =  Date.today().addDays(1);
+    */
 
     if (ClosedDate != null) {
       startd =  ClosedDate;
@@ -114,8 +117,8 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
                                Reason, CaseNumber, Owner.Name, Owner.LastName, Owner.FirstName, Contact.Name,
                                Contact.Email, Contact.HasOptedOutOfEmail, Contact.Instant_Survey_opt_out__c, Account.Name, Account.Status__c,
                                Contact.Instant_Survey_Last_feedback_received__c, Contact.Instant_Survey_Last_survey_sent__c,
-                               WhoClosedCase__r.UserRole.Name, Contact.Account.IATA_ISO_Country__r.Case_BSP_Country__c
-
+                               WhoClosedCase__r.UserRole.Name, Contact.Account.IATA_ISO_Country__r.Case_BSP_Country__c,
+							   WhoClosedCase__r.Profile.Name
                                FROM Case
                                WHERE ClosedDate > :startd AND ClosedDate < :endd
                                AND ContactId <> NULL AND Contact.Email <> NULL
@@ -135,12 +138,13 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
     // #################### PART 2 #######################
     // Looking for cases closed yesterday in order to send the survey email
 
-
     startd = Test.isRunningTest() ? Date.today() : Date.today().addDays(-1);
     endd = Test.isRunningTest() ? Date.today().addDays(1) : Date.today();
-
-    //For testing: Date startd =  Date.today() ;
-    //For testing: Date endd =  Date.today().addDays(1) ;
+  
+    /*For testing:   
+     startd =  Date.today();
+     endd = Date.today().addDays(1);
+     */
 
     if (CreatedDate != null) {
       startd =  CreatedDate;
@@ -168,7 +172,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 
     system.debug(LoggingLevel.error, '##### lstCaseIds.size() = ' + lstCaseIds.size());
 
-    casesToBeProcessed.addAll([SELECT Id, Status, Subject, Customer_recovery__c, RecordTypeId, OwnerId, Region__c
+    casesToBeProcessed.addAll([SELECT Id, Status, Subject, Customer_recovery__c, RecordTypeId, OwnerId, Region__c, WhoClosedCase__r.Profile.Name, WhoClosedCase__r.UserRole.Name
                                FROM Case
                                WHERE Id IN :lstCaseIds
                                AND RecordType.DeveloperName IN :lstRecordTypesInScope]);
@@ -265,7 +269,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 
     UtilityCS__c sender = UtilityCS__c.getInstance('SurveyEmailSender');
     if (!Test.isRunningTest() && sender != null)  email.setOrgWideEmailAddressId(sender.value__c);
-    email.setBccAddresses(new list<string> {'facciol@iata.org', 'oueidatg@iata.org', 'rovedaa@iata.org'});
+    email.setBccAddresses(new list<string> {'oueidatg@iata.org', 'rovedaa@iata.org'});
     email.setPlainTextBody(log);
     email.setSubject('Instant survey email batch');
     Messaging.sendEmail(new list<Messaging.SingleEmailMessage> {email});
@@ -280,7 +284,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 
     // Send an email to the Apex job's submitter notifying of job completion.
     Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-    String[] toAddresses = new String[] {'buzdugac@iata.org', 'garciam@iata.org'};
+    String[] toAddresses = new String[] {'garciam@iata.org'};
     mail.setToAddresses(toAddresses);
     mail.setSubject('Instant Survey Customer Recovery batch status: ' + a.Status);
     mail.setPlainTextBody ('The batch process that processes the Instant Surveys with a score between 0 and 4 processed ' + a.TotalJobItems + ' survey batches (containing up to 10 surveys each) with ' + a.NumberOfErrors + ' failures.');
@@ -310,7 +314,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
       system.debug(LoggingLevel.error, '################### ESAMINO CASE ' + c.Subject + ' - ' + c.id);
 
       String RoleName = c.WhoClosedCase__r.UserRole.Name != null ? c.WhoClosedCase__r.UserRole.Name : 'none';
-
+      String ProfileName = c.WhoClosedCase__r.Profile.Name != null ? c.WhoClosedCase__r.Profile.Name : 'none';
 
       // Using the country data from the contact's account and not from the  AccountCountry anymore, to minimize the risk of select the wrong language
       String AccountCountry = '';
@@ -329,11 +333,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 
 
       /****** Clicktools Workflow_AM_CX_.... *****/
-      if(RoleName.contains('Distribution - Airline Coding & MITA'))
-      {
-        template = templates.get('Clicktools_Contact_Email_CX_CODING_EN');
-      }
-      else if (/*1*/ c.RecordType.DeveloperName == 'ProcessEuropeSCE' &&
+      if (/*1*/ c.RecordType.DeveloperName == 'ProcessEuropeSCE' &&
                 /*2 aggregate the country for all the Clicktools AM_CX*/
                 /*3*/!c.Contact.Email.contains('@iata.org') &&
                 !c.Contact.Email.contains('@salesforce.com') &&
@@ -622,7 +622,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
         (c.Type_of_customer__c != 'Third Party' && c.Type_of_customer__c != 'Legal Entities' && c.Type_of_customer__c != 'Global Distribution System (GDS)' &&
          c.Type_of_customer__c != 'Partner' && c.Type_of_customer__c != 'IATA Employee' && c.Type_of_customer__c != 'DPC' &&
          c.Type_of_customer__c != 'Non-IATA Travel Agent' && c.Type_of_customer__c != 'Auditors' && c.Type_of_customer__c != 'General Public') &&
-         c.Type_of_customer__c != 'Airport Authorities' &&
+         c.Type_of_customer__c != 'Airport Authorities' && c.Type_of_customer__c != 'Government Agencies' &&
         (c.Origin != 'Agent Financial Review Notification' && c.Origin != 'Airline Participation' && c.Origin != 'Airline Suspension' &&
          c.Origin != 'AIRS' && c.Origin != 'Code Transfers and Mergers' && c.Origin != 'Customer Portal' &&
          c.Origin != 'Email' && c.Origin != 'Fax' && c.Origin != 'Funds Management' &&
@@ -643,9 +643,17 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
         countersMap.put(c.Region__c, ++n);
 
     system.debug('RoleName ------>> ' + RoleName);
-    system.debug('userroleid ------>> ' + userroleid);
+    system.debug('ProfileName ------>> ' + ProfileName);
     
-        if (
+        if(RoleName.contains('Distribution - Airline Coding & MITA')){
+          template = templates.get('Clicktools_Contact_Email_CX_CODING_EN');            
+        } 
+        
+        else if (ProfileName.contains('FDS ICCS Administrator') || ProfileName.contains('FDS ICCS User')){
+          template = templates.get('Clicktools_Contact_Email_CX_ICCS_EN2');   
+        } 
+    
+        else if (
           RoleName.contains('China & N. Asia Customer Service') &&
           c.Region__c == 'China & North Asia' &&
           AccountCountry == 'People\'s Republic of China'
@@ -853,9 +861,11 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 
         if (
           //if the contact has received at least one survey request in the last week no email will be sent
+          /*INC246478
           (c.Contact.Instant_Survey_Last_feedback_received__c == null &&
            c.Contact.Instant_Survey_Last_survey_sent__c > dateTime.now().addDays(-7))
           ||
+          */
           //if the contact answered to one survey in the last month no email will be sent
           (c.Contact.Instant_Survey_Last_feedback_received__c != null &&
            c.Contact.Instant_Survey_Last_feedback_received__c > c.Contact.Instant_Survey_Last_survey_sent__c &&
@@ -869,8 +879,8 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
           spamAvoidedlog += c.id + ', ';
           //continue;
           // FEATURE ANTI SPAM IS TEMPORARILY DEACTIVATED. I JUST WANT TO HAVE DETAILED LOG ON WHICH EMAIL WOULD NOT BE SENT
-          c.Instant_Survey_Last_survey_sent__c = date.today();
-          MyEmailToBeSent.add(new Email(c, template));
+          //c.Instant_Survey_Last_survey_sent__c = date.today();
+          //MyEmailToBeSent.add(new Email(c, template));
           ContactIds.add(c.contactid);
           /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         } else {
@@ -945,6 +955,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
     List<Case> lstCasesToUpdate = new List<Case>();
 
     for (Case c : scope) {
+      String RoleName = c.WhoClosedCase__r.UserRole.Name != null ? c.WhoClosedCase__r.UserRole.Name : 'none';
       system.debug(LoggingLevel.error, '#### case ' + c.Subject + '; Region: ' + c.Region__c + '; c.RecordTypeId: ' + c.RecordTypeId + '; cond2: ' + mapComplaintQueueNamePerRegion.get(c.Region__c) + '; cond3: ' + mapComplaintQueuesPerName.get(mapComplaintQueueNamePerRegion.get(c.Region__c)));
       // Only handle cases for the defined regions; if the case region is not mapped to a complaint queue then the case is out of scope
       if (c.Region__c != null &&
@@ -955,7 +966,11 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
         c.Customer_recovery__c = true ;
         c.Status = 'Customer Recovery';
         c.RecordTypeId = RT_ComplaintIDFS_Id;
-        c.OwnerId = mapComplaintQueuesPerName.get(mapComplaintQueueNamePerRegion.get(c.Region__c));
+              
+        if(RoleName.contains('Distribution - Airline Coding & MITA'))
+            c.OwnerId = Label.SurveyCustomerRecoveriesAnnFARRELL;
+        else
+        	c.OwnerId = mapComplaintQueuesPerName.get(mapComplaintQueueNamePerRegion.get(c.Region__c));
 
         lstCasesToUpdate.add(c);
       }

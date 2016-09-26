@@ -80,6 +80,16 @@
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Date_Legal_REJECTED_the_agenda__c</fullName>
+        <description>Enhancement to allow legal rejecting the agenda. Notification will be automatically sent to the meeting Responsible</description>
+        <externalId>false</externalId>
+        <label>Date Legal REJECTED the agenda</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
         <fullName>Date_Legal_REJECTED_the_minutes__c</fullName>
         <description>Enhancement to allow legal rejecting the minutes. Notification will be automatically sent to the meeting Responsible</description>
         <externalId>false</externalId>

@@ -68,6 +68,19 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Account__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Account</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Addresses (AMS)</relationshipLabel>
+        <relationshipName>Addresses_AMS</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>Address_1__c</fullName>
         <externalId>false</externalId>
         <label>Address 1</label>
@@ -142,17 +155,16 @@
     </fields>
     <fields>
         <fullName>Agency__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
         <label>Agency</label>
         <referenceTo>AMS_Agency__c</referenceTo>
         <relationshipLabel>Addresses (AMS)</relationshipLabel>
         <relationshipName>Addresses</relationshipName>
-        <relationshipOrder>0</relationshipOrder>
-        <reparentableMasterDetail>true</reparentableMasterDetail>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
-        <type>MasterDetail</type>
-        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+        <type>Lookup</type>
     </fields>
     <fields>
         <fullName>City__c</fullName>
@@ -317,6 +329,15 @@
         <type>Phone</type>
     </fields>
     <fields>
+        <fullName>Send_to_External_System__c</fullName>
+        <externalId>false</externalId>
+        <formula>OR(INCLUDES(Address_Type__c, &apos;Mailing&apos;), INCLUDES(Address_Type__c, &apos;Sales Office&apos;), INCLUDES(Address_Type__c, &apos;Registred&apos;))</formula>
+        <label>Send to External System</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Site_type__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>AO=Admin. Off;BR=Branch Off;CS=Cargo Sales Off;EB=ERSP Branch;EP=ERSP Parent;ES=European STP;ET=ERSP linked to TID;HO=Head off;SA=Specific Sales Activity;SE=Special Event;SP=Service Provider;ST=Satellite Ticket Printer;TD=Ticket Delivery Off;WH=Warehouse</inlineHelpText>
@@ -464,5 +485,5 @@
     </nameField>
     <pluralLabel>Addresses (AMS)</pluralLabel>
     <searchLayouts/>
-    <sharingModel>ControlledByParent</sharingModel>
+    <sharingModel>ReadWrite</sharingModel>
 </CustomObject>

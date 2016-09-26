@@ -19,6 +19,7 @@
  *
  * See the Apex Language Reference for more information about Testing and Code Coverage.
  */
+ 
 @isTest
 public class  AMS_SettlementsAndOperationLoaderTest{
 

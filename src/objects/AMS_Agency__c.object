@@ -543,6 +543,46 @@ WSPN-Worldspan</inlineHelpText>
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>IsDirtyToAccount__c</fullName>
+        <description>Set of values in Agency that were not present on Account</description>
+        <externalId>false</externalId>
+        <formula>AND ( NOT(ISBLANK(Account__c)) , 
+
+OR ( 
+
+AND ( ISBLANK(Account__r.Cargo_Agency__c) ,NOT(ISBLANK(Cargo_Agency__c ))) , 
+AND ( ISBLANK(Account__r.A_Code__c) ,NOT(ISBLANK(A_Code__c ))) , 
+AND ( ISBLANK(Account__r.C_Code__c ) ,NOT(ISBLANK(C_Code__c ))) , 
+AND ( ISBLANK(Account__r.Check_Digit__c ) ,NOT(ISBLANK(Chk_Dgt__c ))) , 
+AND ( ISBLANK(TEXT(Account__r.Company_Type__c)) , NOT(ISBLANK(TEXT(Company_Type__c))) ), 
+AND ( ISBLANK(Account__r.GDS__c) , NOT(ISBLANK(GDS__c)) ), 
+AND ( ISBLANK(Account__r.Location_Category__c) , NOT(ISBLANK(Location_Category__c)) ), 
+AND ( ISBLANK(Account__r.Iso_State__c ) ,NOT(ISBLANK(Iso_State__c ))) , 
+AND ( ISBLANK(Account__r.Last_Inspection_Date__c ) ,NOT(ISBLANK(Last_Inspection_Date__c ))) , 
+AND ( ISBLANK(Account__r.Last_synchronization__c ) ,NOT(ISBLANK(Last_synchronization__c ))) , 
+AND ( ISBLANK(TEXT(Account__r.Location_Class__c)) , NOT(ISBLANK(TEXT(Location_Class__c))) ), 
+AND ( ISBLANK(Account__r.N_Code__c ) ,NOT(ISBLANK(N_Code__c ))) , 
+AND ( ISBLANK(Account__r.Operation__c ) ,NOT(ISBLANK(DPC_Operation__c ))) , 
+AND ( ISBLANK(Account__r.Organization_Last_Change_Date__c ) ,NOT(ISBLANK(Organization_Last_Change_Date__c ))) , 
+AND ( ISBLANK(Account__r.Original_Approval_DAte__c ) ,NOT(ISBLANK(Original_Approval_DAte__c ))) , 
+AND ( ISBLANK(Account__r.Phone_Number__c ) ,NOT(ISBLANK(Phone_Number__c ))) , 
+AND ( ISBLANK(Account__r.Phone_Number_Int__c ) ,NOT(ISBLANK(Phone_Number_Int__c ))) , 
+AND ( ISBLANK(Account__r.Phone_Number_STD__c ) ,NOT(ISBLANK(Phone_Number_STD__c ))) , 
+AND ( ISBLANK(Account__r.Primary_address__c ) ,NOT(ISBLANK(Primary_address__c ))) , 
+AND ( ISBLANK(Account__r.Expiry_Date__c ) ,NOT(ISBLANK(Recert_Expiry_Date__c ))) , 
+AND ( ISBLANK(Account__r.STD_Code__c ) ,NOT(ISBLANK(STD_Code__c ))) , 
+AND ( ISBLANK(Account__r.Unique_ID__c ) ,NOT(ISBLANK(Unique_ID__c)) ), 
+AND ( ISBLANK(Account__r.Abbreviated_name__c) ,NOT(ISBLANK(Abbreviated_name__c)) ) 
+) 
+
+)</formula>
+        <inlineHelpText>Set of values in Agency that were not present on Account. If there is field on the account that is empty but it&apos;s not empty on the Agency, this flag will be true and we should migrate the appropriate data</inlineHelpText>
+        <label>IsDirtyToAccount</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Iso_State__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
@@ -923,21 +963,6 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
-    </fields>
-    <fields>
-        <fullName>NPrimaryAddresses__c</fullName>
-        <externalId>false</externalId>
-        <label>NPrimaryAddresses</label>
-        <summaryFilterItems>
-            <field>AMS_Address__c.Address_1__c</field>
-            <operation>equals</operation>
-            <value>Primary</value>
-        </summaryFilterItems>
-        <summaryForeignKey>AMS_Address__c.Agency__c</summaryForeignKey>
-        <summaryOperation>count</summaryOperation>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Summary</type>
     </fields>
     <fields>
         <fullName>N_Code__c</fullName>

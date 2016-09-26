@@ -6,7 +6,7 @@ global class AMSIntegrationServices {
 
 
 /**
-    Thids web service will assign agency Programs. It will create new programssbased on ame if needed
+    This web service will assign agency Programs. It will create new programssbased on ame if needed
     
     */
     webservice static boolean assignAgency2Programs(String agId, String[] programsName){
@@ -21,12 +21,12 @@ global class AMSIntegrationServices {
                 programs.put(c.Label__c.toLowerCase() ,c);
             system.debug('[assignAgency2Programs]found existing prgms '+programs.size());
             //get the agency to process
-            Ams_agency__c agt = [select Id from Ams_agency__c  where Id = :agId];
+            Account agt = [select Id from Account  where Id = :agId];
             
             system.debug('[assignAgency2Programs] found agt  '+(agt!=null));
             //use to be sure we won 't save twice agencies segement
             Map<String, AMS_Agency_Segment__c> agencySegments = new Map<String, AMS_Agency_Segment__c>();
-            for(AMS_Agency_Segment__c c:[select Name, Id, Segment__c  from AMS_Agency_Segment__c where Agency__c = :agId and Segment__c in (select Id from AMS_Segment__c where RecordTypeId = :programRT)])
+            for(AMS_Agency_Segment__c c:[select Name, Id, Segment__c  from AMS_Agency_Segment__c where Account__c = :agId and Segment__c in (select Id from AMS_Segment__c where RecordTypeId = :programRT)])
                 agencySegments.put(c.Segment__c  ,c);
             system.debug('[assignAgency2Programs]found assinged pgms for agt '+(agencySegments.size()));
             //use to save new agency segments
@@ -36,7 +36,7 @@ global class AMSIntegrationServices {
             for(String pName:programsName){
                 //only add new agSeg is not already exisitng
                 if(programs.get(pName.toLowerCase())!=null && agencySegments.get(programs.get(pName.toLowerCase()).Id) ==null){
-                    newAgencySegments.put(pName, new AMS_Agency_Segment__c(Agency__c =agId,Segment__c = programs.get(pName.toLowerCase()).Id));
+                    newAgencySegments.put(pName, new AMS_Agency_Segment__c(Account__c =agId,Segment__c = programs.get(pName.toLowerCase()).Id));
                 }
                 else if(programs.get(pName.toLowerCase())==null && newProgramsPerNme.get(pName.toLowerCase())==null) {
                     AMS_Segment__c  s = new AMS_Segment__c (RecordtypeId =programRT  ,Label__c = pName );
@@ -49,7 +49,7 @@ global class AMSIntegrationServices {
             //insert new Programs
             insert newPrograms;
             for(AMS_Segment__c p:newPrograms)
-                newAgencySegments.put(p.Label__c , new AMS_Agency_Segment__c(Agency__c =agId,Segment__c = p.Id));
+                newAgencySegments.put(p.Label__c , new AMS_Agency_Segment__c(Account__c =agId,Segment__c = p.Id));
             system.debug('[assignAgency2Programs] total  pgm assignmnet '+(newAgencySegments.size()));                
             insert newAgencySegments.values();
         }catch(Exception e){
@@ -65,16 +65,15 @@ global class AMSIntegrationServices {
     webservice static Boolean updateAccountIrregularities(String agencyId, Integer irregulaties){
         Boolean result = false;
         system.debug('[AMSIntegrationServices.updateAccountIregularities 1 ] FRequest for account from AGT '+agencyId);
-        List<AMS_Agency__c> acc = [select id, Company_Type__c, Account__r.Id, Account__r.Accumulated_Irregularities__c from AMS_Agency__c where id = :agencyId];
-        if(acc.size() == 0 || acc.get(0).Account__r == null){
-            system.debug('Failed to find Account from agency  '+agencyId);
+        List<Account> acc = [select Id, Company_Type__c, Accumulated_Irregularities__c from Account where id = :agencyId];
+        if(acc.size() == 0){
+            system.debug('Failed to find Account  '+agencyId);
             return result;
         }
-        AMS_Agency__c theAgency = acc.get(0);
-        Account theAccount = acc.get(0).Account__r;
-        theAccount.Accumulated_Irregularities__c = irregulaties;
+        Account theAgency = acc.get(0);
+        theAgency.Accumulated_Irregularities__c = irregulaties;
         try{
-            update theAccount;
+            update theAgency;
            
         }catch(DmlException e){
              system.debug('Failed to update account '+e.getMessage());
@@ -92,16 +91,15 @@ global class AMSIntegrationServices {
     webservice static Boolean updateAccountShortName(String agencyId, String shortname){
         Boolean result = false;
         system.debug('[AMSIntegrationServices.updateAccountShortName1 ] Request for account from AGT '+agencyId);
-        List<AMS_Agency__c> acc = [select id, Company_Type__c, Account__r.Id, Account__r.Short_Name__c from AMS_Agency__c where id = :agencyId];
-        if(acc.size() == 0 || acc.get(0).Account__r == null){
-            system.debug('Failed to find Account from agency  '+agencyId);
+        List<Account> acc = [select id, Company_Type__c, Short_Name__c from Account where id = :agencyId];
+        if(acc.size() == 0){
+            system.debug('Failed to find Account  '+agencyId);
             return result;
         }
-        AMS_Agency__c theAgency = acc.get(0);
-        Account theAccount = acc.get(0).Account__r;
-        theAccount.Short_Name__c= shortname;
+        Account theAgency = acc.get(0);
+        theAgency.Short_Name__c= shortname;
         try{
-            update theAccount;
+            update theAgency;
            
         }catch(DmlException e){
              system.debug('Failed to update account '+e.getMessage());
@@ -113,41 +111,34 @@ global class AMSIntegrationServices {
 
 
 
+
+
+
   /**
     This WS is used to update account fields from Agency Id.
     It is looking for the Acocunt and try top update specific fields.
     USED for GDP Fields
     */
-    webservice static Boolean updateAccountGDPData(String agencyId, String Company_Type, Boolean GDP_Opt_In, String GDP_Location_Type , String languageOfCorrespondance){
+    webservice static Boolean updateAccountGDPData(String accountId, String GDP_Location_Type ){
         Boolean result = false;
-    system.debug('[AMSIntegrationServices.updateAccountGDPData 1 ] FRequest for account from AGT '+agencyId);
-        List<AMS_Agency__c> acc = [select id, Company_Type__c, Account__r.Id, Account__r.GDP_Opt_In__c, Account__r.GDP_Location_Type__c, Account__r.Incorporation_Type__c from AMS_Agency__c where id = :agencyId];
-        if(acc.size() == 0 || acc.get(0).Account__r == null){
-            system.debug('Failed to find Account from agency  '+agencyId);
-            return result;
-        }
-        AMS_Agency__c theAgency = acc.get(0);
-        Account theAccount = acc.get(0).Account__r;
-        theAccount.GDP_Opt_In__c = GDP_Opt_In;
-        theAccount.Preferred_Language__c= languageOfCorrespondance ;
-        if(GDP_Location_Type != null && GDP_Location_Type != ''){
+        Account theAgency = [select id, Company_Type__c, GDP_Opt_In__c, GDP_Location_Type__c, Incorporation_Type__c from Account where id = :accountId];
+      
+         if(GDP_Location_Type != null && GDP_Location_Type != ''){
+            system.debug('[AMSIntegrationServices.updateAccountGDPData] WS called with Location Type to set '+GDP_Location_Type );
             String t = GDP_Location_Type;
             t = t.replace('LOCTYP','');
             List<GDP_Reference_Table__c> loc = [select id from GDP_Reference_Table__c where Table__c=: 'LOCTYP' and Code__c =:t];
-
             if(loc.size() == 0){
-                 system.debug('Failed to find location with name '+t);
+                 system.debug('[AMSIntegrationServices.updateAccountGDPData]Failed to find location with name '+t);
                  //return result;
             }else
-                theAccount.GDP_Location_Type__c = loc.get(0).Id;
+                theAgency.GDP_Location_Type__c = loc.get(0).Id;
         }
-
+        
         try{
-            update theAccount;
-            if(theAgency.Company_Type__c != Company_Type){
-                theAgency.Company_Type__c = Company_Type;
-                update theAgency;
-            }
+
+            update theAgency;
+            
         }catch(DmlException e){
          system.debug('Failed to update account '+e.getMessage());
             return result;
@@ -167,20 +158,19 @@ global class AMSIntegrationServices {
     webservice static Boolean updateAccountGDPData2(String agencyId, String Company_Type, Boolean GDP_Opt_In, String GDP_Location_Type , String languageOfCorrespondance, String Tax2, String PaxAndCargo ){
         Boolean result = false;
         system.debug('[AMSIntegrationServices.updateAccountGDPData2] FRequest for account from AGT '+agencyId);
-        List<AMS_Agency__c> acc = [select id, Company_Type__c, Account__r.Tax_ID_2__c ,  Account__r.Passenger_And_Cargo__c ,  Account__r.Id, Account__r.GDP_Opt_In__c, Account__r.GDP_Location_Type__c, Account__r.Incorporation_Type__c from AMS_Agency__c where id = :agencyId];
-        if(acc.size() == 0 || acc.get(0).Account__r == null){
-            system.debug('[AMSIntegrationServices.updateAccountGDPData2]Failed to find Account from agency  '+agencyId);
+        List<Account> acc = [select id, Company_Type__c, Tax_ID_2__c, Passenger_And_Cargo__c, GDP_Opt_In__c, GDP_Location_Type__c, Incorporation_Type__c from Account where id = :agencyId];
+        if(acc.size() == 0){
+            system.debug('[AMSIntegrationServices.updateAccountGDPData2]Failed to find Account '+agencyId);
             return result;
         }else
-            system.debug('[AMSIntegrationServices.updateAccountGDPData2] Find  Account from agency  '+acc.get(0).Account__r.Id);
+            system.debug('[AMSIntegrationServices.updateAccountGDPData2] Find  Account '+acc.get(0).Id);
 
 
-        AMS_Agency__c theAgency = acc.get(0);
-        Account theAccount = acc.get(0).Account__r;
-        theAccount.GDP_Opt_In__c = GDP_Opt_In;
-        theAccount.Preferred_Language__c= languageOfCorrespondance ;
-        theAccount.Tax_ID_2__c = Tax2;
-        theAccount.Passenger_And_Cargo__c = PaxAndCargo ;
+        Account theAgency = acc.get(0);
+        theAgency.GDP_Opt_In__c = GDP_Opt_In;
+        theAgency.Preferred_Language__c= languageOfCorrespondance ;
+        theAgency.Tax_ID_2__c = Tax2;
+        theAgency.Passenger_And_Cargo__c = PaxAndCargo ;
         if(GDP_Location_Type != null && GDP_Location_Type != ''){
             system.debug('[AMSIntegrationServices.updateAccountGDPData2] WS called with Location Type to set '+GDP_Location_Type );
             String t = GDP_Location_Type;
@@ -190,22 +180,21 @@ global class AMSIntegrationServices {
                  system.debug('[AMSIntegrationServices.updateAccountGDPData2]Failed to find location with name '+t);
                  //return result;
             }else
-                theAccount.GDP_Location_Type__c = loc.get(0).Id;
+                theAgency.GDP_Location_Type__c = loc.get(0).Id;
         }
 
         try{
             system.debug('[AMSIntegrationServices.updateAccountGDPData2]Updating Account');
-            update theAccount;
-            if(theAgency.Company_Type__c != Company_Type){
+            if(theAgency.Company_Type__c != Company_Type)
                 theAgency.Company_Type__c = Company_Type;
-                system.debug('[AMSIntegrationServices.updateAccountGDPData2]Updating Agency');
-                update theAgency;
-            }
+
+            update theAgency;
+
         }catch(DmlException e){
              system.debug('[AMSIntegrationServices.updateAccountGDPData2]Failed to update account '+e.getMessage());
             return result;
         }
-        system.debug('[AMSIntegrationServices.updateAccountGDPData2]Complete Acocunt update for FDP fields');
+        system.debug('[AMSIntegrationServices.updateAccountGDPData2]Complete Account update for FDP fields');
         result = true;
         return result;
     }
@@ -218,29 +207,28 @@ global class AMSIntegrationServices {
     webservice static Boolean updateAccountGDPData3(String agencyId, String Company_Type, Boolean GDP_Opt_In, String GDP_Location_Type , String languageOfCorrespondance, String PaxAndCargo, String Tax2, String BSPCassCode,String TicketingManagerln,String TicketingManagerfn,String locManagerln,String locManagerfn){
         Boolean result = false;
         system.debug('[AMSIntegrationServices.updateAccountGDPData2] FRequest for account from AGT '+agencyId);
-        List<AMS_Agency__c> acc = [select id, Company_Type__c,     Account__r.BSP_CASS_Code__c, Account__r.Ticketing_Agent_First_Name__c, Account__r.Ticketing_Agent_Last_Name__c ,  Account__r.Tax_ID_2__c ,  Account__r.Passenger_And_Cargo__c ,  Account__r.Id, Account__r.GDP_Opt_In__c, Account__r.GDP_Location_Type__c, Account__r.Incorporation_Type__c from AMS_Agency__c where id = :agencyId];
+        List<Account> acc = [select id, Company_Type__c, BSP_CASS_Code__c, Ticketing_Agent_First_Name__c, Ticketing_Agent_Last_Name__c, Tax_ID_2__c, Passenger_And_Cargo__c, GDP_Opt_In__c, GDP_Location_Type__c, Incorporation_Type__c from Account where id = :agencyId];
         //List<Ams_Person__c>  ticketingEmployees = [select First_Name__c, Lastname__c from Ams_Person__c where Id in (select Person__c from AMS_Employee__c where isTicketingAgent__c = true and Agency__c  = :agencyId) order by LastModifiedDate desc  ];
         
-        if(acc.size() == 0 || acc.get(0).Account__r == null){
-            system.debug('[AMSIntegrationServices.updateAccountGDPData2]Failed to find Account from agency  '+agencyId);
+        if(acc.size() == 0){
+            system.debug('[AMSIntegrationServices.updateAccountGDPData2]Failed to find Account '+agencyId);
             return result;
         }else
-            system.debug('[AMSIntegrationServices.updateAccountGDPData2] Find  Account from agency  '+acc.get(0).Account__r.Id);
+            system.debug('[AMSIntegrationServices.updateAccountGDPData2] Find  Account '+acc.get(0).Id);
 
 
-        AMS_Agency__c theAgency = acc.get(0);
-        Account theAccount = acc.get(0).Account__r;
-        theAccount.GDP_Opt_In__c = GDP_Opt_In;
-        theAccount.Preferred_Language__c= languageOfCorrespondance ;
-        theAccount.Tax_ID_2__c = Tax2;
-        theAccount.BSP_CASS_Code__c = BSPCassCode;
-        theAccount.Passenger_And_Cargo__c = PaxAndCargo ;
-       // if(ticketingEmployees!=null && ticketingEmployees.size()>0){
-            theAccount.Ticketing_Agent_First_Name__c =  TicketingManagerfn;
-            theAccount.Ticketing_Agent_Last_Name__c =  TicketingManagerln;
-            theAccount.Manager_First_Name__c=  locManagerfn;
-            theAccount.Manager_Last_Name__c=  locManagerln;
-       // }
+        Account theAgency = acc.get(0);
+        theAgency.GDP_Opt_In__c = GDP_Opt_In;
+        theAgency.Preferred_Language__c= languageOfCorrespondance ;
+        theAgency.Tax_ID_2__c = Tax2;
+        theAgency.BSP_CASS_Code__c = BSPCassCode;
+        theAgency.Passenger_And_Cargo__c = PaxAndCargo ;
+       
+        theAgency.Ticketing_Agent_First_Name__c =  TicketingManagerfn;
+        theAgency.Ticketing_Agent_Last_Name__c =  TicketingManagerln;
+        theAgency.Manager_First_Name__c=  locManagerfn;
+        theAgency.Manager_Last_Name__c=  locManagerln;
+       
         if(GDP_Location_Type != null && GDP_Location_Type != ''){
             system.debug('[AMSIntegrationServices.updateAccountGDPData2] WS called with Location Type to set '+GDP_Location_Type );
             String t = GDP_Location_Type;
@@ -250,17 +238,17 @@ global class AMSIntegrationServices {
                  system.debug('[AMSIntegrationServices.updateAccountGDPData2]Failed to find location with name '+t);
                  //return result;
             }else
-                theAccount.GDP_Location_Type__c = loc.get(0).Id;
+                theAgency.GDP_Location_Type__c = loc.get(0).Id;
         }
 
         try{
-            system.debug('[AMSIntegrationServices.updateAccountGDPData2]Updating Account');
-            update theAccount;
-            if(theAgency.Company_Type__c != Company_Type){
+
+            if(theAgency.Company_Type__c != Company_Type)
                 theAgency.Company_Type__c = Company_Type;
-                system.debug('[AMSIntegrationServices.updateAccountGDPData2]Updating Agency');
-                update theAgency;
-            }
+
+            system.debug('[AMSIntegrationServices.updateAccountGDPData2]Updating Agency');
+            update theAgency;
+            
         }catch(DmlException e){
              system.debug('[AMSIntegrationServices.updateAccountGDPData2]Failed to update account '+e.getMessage());
             return result;
@@ -280,19 +268,18 @@ global class AMSIntegrationServices {
     webservice static Boolean updateAccountGDPDataWithLegacyData2(String legacyId, String legacySystem, String Company_Type, Boolean GDP_Opt_In, String GDP_Location_Type, String languageOfCorrespondance, String Tax2, String PaxAndCargo ){
         Boolean result = false;
 
-        List<AMS_Agency__c> acc = [select id, Company_Type__c, Account__r.Id, Account__r.GDP_Opt_In__c, Account__r.GDP_Location_Type__c, Account__r.Incorporation_Type__c
-                                    from AMS_Agency__c where Legacy_External_ID__c = :legacyId and Legacy_System__c = :legacySystem];
+        List<Account> acc = [select id, Company_Type__c, GDP_Opt_In__c, GDP_Location_Type__c, Incorporation_Type__c
+                                    from Account where (AIMS_ID__c = :legacyId OR WebStar_ID__c =:legacyId) and Source_System__c = :legacySystem];
         
-        if(acc.size() == 0 || acc.get(0).Account__r == null){
+        if(acc.size() == 0){
             system.debug('Failed to find Agency with ID  '+legacyId );
             return result;
         }
-        AMS_Agency__c theAgency = acc.get(0);
-        Account theAccount = acc.get(0).Account__r;
-        theAccount.GDP_Opt_In__c = GDP_Opt_In;
-        theAccount.Preferred_Language__c= languageOfCorrespondance ;
-        theAccount.Tax_ID_2__c = Tax2;
-        theAccount.Passenger_And_Cargo__c = PaxAndCargo ;
+        Account theAgency = acc.get(0);
+        theAgency.GDP_Opt_In__c = GDP_Opt_In;
+        theAgency.Preferred_Language__c= languageOfCorrespondance ;
+        theAgency.Tax_ID_2__c = Tax2;
+        theAgency.Passenger_And_Cargo__c = PaxAndCargo ;
         system.debug('############### GDP_Location_Type = '+GDP_Location_Type);
         if(GDP_Location_Type != null && GDP_Location_Type != ''){
             String t = GDP_Location_Type;
@@ -303,15 +290,15 @@ global class AMSIntegrationServices {
                 system.debug('Failed to find location type for  '+t+'\n query: [select id from GDP_Reference_Table__c where Table__c=: LOCTYP and Code__c = "'+t+'"]');
                 return result;
             }
-            theAccount.GDP_Location_Type__c = loc.get(0).Id;   
+            theAgency.GDP_Location_Type__c = loc.get(0).Id;   
         }
 
         try{
-            update theAccount;
-            if(theAgency.Company_Type__c != Company_Type){
+            if(theAgency.Company_Type__c != Company_Type)
                 theAgency.Company_Type__c = Company_Type;
-                update theAgency;
-            }
+
+            update theAgency;
+            
         }catch(DmlException e){
             system.debug('Failed to update account '+e.getMessage());
             return result;
@@ -328,17 +315,17 @@ global class AMSIntegrationServices {
     webservice static Boolean updateAccountGDPDataWithLegacyData(String legacyId, String legacySystem, String Company_Type, Boolean GDP_Opt_In, String GDP_Location_Type, String languageOfCorrespondance ){
         Boolean result = false;
 
-        List<AMS_Agency__c> acc = [select id, Company_Type__c, Account__r.Id, Account__r.GDP_Opt_In__c, Account__r.GDP_Location_Type__c, Account__r.Incorporation_Type__c
-                                    from AMS_Agency__c where Legacy_External_ID__c = :legacyId and Legacy_System__c = :legacySystem];
+        List<Account> acc = [select id, Company_Type__c, GDP_Opt_In__c, GDP_Location_Type__c, Incorporation_Type__c
+                                    from Account where (AIMS_ID__c = :legacyId OR WebStar_ID__c =:legacyId) and Source_System__c = :legacySystem];
         
-        if(acc.size() == 0 || acc.get(0).Account__r == null){
+        if(acc.size() == 0){
             system.debug('Failed to find Agency with ID  '+legacyId );
             return result;
         }
-        AMS_Agency__c theAgency = acc.get(0);
-        Account theAccount = acc.get(0).Account__r;
-        theAccount.GDP_Opt_In__c = GDP_Opt_In;
-        theAccount.Preferred_Language__c= languageOfCorrespondance ;
+        Account theAgency = acc.get(0);
+        //Account theAccount = acc.get(0).Account__r;
+        theAgency.GDP_Opt_In__c = GDP_Opt_In;
+        theAgency.Preferred_Language__c= languageOfCorrespondance ;
         system.debug('############### GDP_Location_Type = '+GDP_Location_Type);
         if(GDP_Location_Type != null && GDP_Location_Type != ''){
             String t = GDP_Location_Type;
@@ -349,15 +336,15 @@ global class AMSIntegrationServices {
                 system.debug('Failed to find location type for  '+t+'\n query: [select id from GDP_Reference_Table__c where Table__c=: LOCTYP and Code__c = "'+t+'"]');
                 return result;
             }
-            theAccount.GDP_Location_Type__c = loc.get(0).Id;   
+            theAgency.GDP_Location_Type__c = loc.get(0).Id;   
         }
 
         try{
-            update theAccount;
-            if(theAgency.Company_Type__c != Company_Type){
+            if(theAgency.Company_Type__c != Company_Type)
                 theAgency.Company_Type__c = Company_Type;
-                update theAgency;
-            }
+
+            update theAgency;
+            
         }catch(DmlException e){
             system.debug('Failed to update account '+e.getMessage());
             return result;
@@ -369,11 +356,11 @@ global class AMSIntegrationServices {
     /*
     Force system to assign an Agency to a list of Operation, not only based on Agency Trigger
     */
-    private static Boolean assignAgencyToOperations(AMS_Agency__c theAgency ,List<AMS_Operation__c> ops ){
+    private static Boolean assignAgencyToOperations(Account theAgency ,List<AMS_Operation__c> ops ){
         try{
             List<AMS_Agency_Operations__c> agOps = new List<AMS_Agency_Operations__c>();
             for(AMS_Operation__c op:ops){
-                AMS_Agency_Operations__c  ao = new AMS_Agency_Operations__c(Agency__c = theAgency.Id, Operation__c =op.Id);
+                AMS_Agency_Operations__c  ao = new AMS_Agency_Operations__c(Account__c = theAgency.Id, Operation__c =op.Id);
                 agOps.add(ao);
             }
             insert agOps ;
@@ -392,19 +379,18 @@ global class AMSIntegrationServices {
     webservice static Boolean assignAgencyPerDPC(String agencyId, String isoCountryId){
         Boolean result = false;
 
-        List<AMS_Agency__c> acc = [select id, DPC_Operation__c,RecordtypeId from AMS_Agency__c where id = :agencyId];
+        List<Account> acc = [select id, Operation__c,RecordtypeId, Sector__c from Account where id = :agencyId];
         
         if(acc.size() == 0)
             return result;
 
-        AMS_Agency__c theAgency = acc.get(0);
+        Account theAgency = acc.get(0);
         
-        //based on Agency RT, we check for the selected Operations
-        Map<string, Id> agencyRT  =  TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'AMS_Agency__c'}).get('AMS_Agency__c');
+        //based on Account Sector, we check for the selected Operations
         List<AMS_Operation__c> ops =null;
-        if(theAgency .recordtypeId ==agencyRT.get('CARGO'))
+        if(theAgency.Sector__c == 'Cargo Agent')
            ops = [select id from AMS_Operation__c where CASS_Operations__c ='' and Country__c = :isoCountryId];
-        else 
+        else if(theAgency.Sector__c == 'Travel Agent')
            ops = [select id from AMS_Operation__c where CASS_Operations__c !='' and Country__c = :isoCountryId];
 
         if(ops.size() == 0)
@@ -420,20 +406,19 @@ global class AMSIntegrationServices {
     webservice static Boolean assignAgencyPerDPCandLegacyIDs(String agencylegacyId, String legacySystem, String isoCountryId){
         Boolean result = false;
 
-        List<AMS_Agency__c> acc = [select id, DPC_Operation__c, RecordTypeId
-                                    from AMS_Agency__c where Legacy_External_ID__c = :agencylegacyId and Legacy_System__c = :legacySystem];
+        List<Account> acc = [select id, Operation__c, RecordTypeId, Sector__c
+                                    from Account where (AIMS_ID__c = :agencylegacyId OR WebStar_ID__c =:agencylegacyId) and Source_System__c = :legacySystem];
         
         if(acc.size() == 0)
             return result;
 
-        AMS_Agency__c theAgency = acc.get(0);
+        Account theAgency = acc.get(0);
 
-        //based on Agency RT, we check for the selected Operations
-        Map<string, Id> agencyRT  =  TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'AMS_Agency__c'}).get('AMS_Agency__c');
+        //based on Account Sector, we check for the selected Operations
         List<AMS_Operation__c> ops =null;
-        if(theAgency.recordtypeId ==agencyRT.get('CARGO'))
+        if(theAgency.Sector__c == 'Cargo Agent')
            ops = [select id from AMS_Operation__c where CASS_Operations__c ='' and Country__c = :isoCountryId];
-        else 
+        else if(theAgency.Sector__c == 'Travel Agent')
            ops = [select id from AMS_Operation__c where CASS_Operations__c !='' and Country__c = :isoCountryId];
 
         if(ops.size() == 0)
@@ -451,13 +436,13 @@ global class AMSIntegrationServices {
     webservice static Boolean assignAgencyPerSettlement(String agencyId, String isoCountryId, String Settlement, Boolean isCass){
         Boolean result = false;
 
-        List<AMS_Agency__c> acc = [select id, DPC_Operation__c
-                                    from AMS_Agency__c where id = :agencyId];
+        List<Account> acc = [select id, Operation__c
+                                    from Account where id = :agencyId];
         
         if(acc.size() == 0)
             return result;
 
-        AMS_Agency__c theAgency = acc.get(0);
+        Account theAgency = acc.get(0);
 
         Id rtId;
         if(isCass)
@@ -470,7 +455,7 @@ global class AMSIntegrationServices {
         if(op.size() == 0)
             return result;
 
-        theAgency.DPC_Operation__c = op.get(0).id;
+        theAgency.Operation__c = op.get(0).id;
 
         try{
             update theAgency;
@@ -485,10 +470,11 @@ global class AMSIntegrationServices {
     webservice static Boolean assignAgencyPerSettlementandLegacyIDs(String agencylegacyId, String legacySystem, String isoCountryId, String Settlement, Boolean isCass){
         Boolean result = false;
 
-        List<AMS_Agency__c> acc = [select id, DPC_Operation__c from AMS_Agency__c where Legacy_External_ID__c = :agencylegacyId and Legacy_System__c = :legacySystem];
+        List<Account> acc = [select id, Operation__c from Account where (AIMS_ID__c = :agencylegacyId OR WebStar_ID__c =:agencylegacyId) and Source_System__c = :legacySystem];
+
         if(acc.size() == 0)
             return result;
-        AMS_Agency__c theAgency = acc.get(0);
+        Account theAgency = acc.get(0);
         Id rtId;
         if(isCass)
             rtId = [Select Id From RecordType where sobjecttype = 'AMS_Settlement_System__c' and name = 'CASS'].id;
@@ -497,7 +483,7 @@ global class AMSIntegrationServices {
         List<AMS_Operation__c> op = [select id from AMS_Operation__c where Settlement__c IN (select id from AMS_Settlement_System__c where Name = :Settlement and recordTypeId = :rtId) and Country__c = :isoCountryId];
         if(op.size() == 0)
             return result;
-        theAgency.DPC_Operation__c = op.get(0).id;
+        theAgency.Operation__c = op.get(0).id;
         try{
             update theAgency;
         }catch(DmlException e){
@@ -566,5 +552,16 @@ global class AMSIntegrationServices {
            query = query + '  and createddate >=  '+selectedDate;
        return  database.countQuery(query);
     }
+    
+    
+    /**
+        return the number of Agencies UNSYNCHRONIZED [optional since a selected date].
+    */
+    /*
+    webservice static void dstActivityLogger(  String legacySystem, Integer succesRecords, Integer failedRecords,long time2process,String runningMode ){
+       AMS_DST_Sync_log__c log = new AMS_DST_Sync_log__c(Log_system__c = legacySystem, Log_time__c = Datetime.now(), Success_records__c=succesRecords, Error_Records__c =failedRecords, Mode__c = runningMode, Time_to_proceed__c  = time2process);
+       insert log;
+    }
+    */
        
 }

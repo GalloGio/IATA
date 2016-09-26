@@ -61,9 +61,9 @@
         <type>TextArea</type>
     </fields>
     <fields>
-        <fullName>ISSP_AMS_HelpText_jp__c</fullName>
+        <fullName>ISSP_AMS_HelpText_ja__c</fullName>
         <externalId>false</externalId>
-        <label>Contextual Help Text (jp)</label>
+        <label>Contextual Help Text (ja)</label>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>TextArea</type>

@@ -1,4 +1,4 @@
-<apex:page standardController="AMS_Agency__c" extensions="AMSAgencyKPIController" showHeader="false" sidebar="false">
+<apex:page standardController="Account" extensions="AMSAgencyKPIController" showHeader="false" sidebar="false">
   <!-- Begin Default Content REMOVE THIS -->
 <style>
   head {
@@ -9,12 +9,12 @@ body .bPageBlock .pbBody .labelCol, body .bPageBlock .pbBody .dataCol, body .bPa
     padding-bottom: 2px;
 }
 </style>
-<apex:pageBlock rendered="{!NOT(isBranch)}">
+<apex:pageBlock rendered="{!AND(NOT(isBranch),OR(HO != null, ag != null))}">
 <apex:pageBlockSection >
       <apex:outputText value="{!HO.Name}" label="Legal Name"/><apex:outputText value="{!HO.RecordType.Name}" label="Record Type"/><!--<apex:outputText value="{!HQ.Primary_address__r.Address_1__c}"/>-->
-      <apex:outputText value="{!HO.IATACode__c}"/><apex:outputText value="{!HO.Primary_address__r.Country__r.Name}" label="Country"/>
-      <apex:outputText value="{!HO.Agency_Status__c}" label="Agency Status/Reason"/><!--<apex:outputText value="{!HQ.Primary_address__r.City__c}"/>-->
-      <apex:outputText value="{!HO.Trading_Name_1__c}"/><!--<apex:outputText value="{!HQ.Primary_address__r.AMS_ZipCode__c}"/>-->
+      <apex:outputText value="{!HO.IATACode__c}"/><apex:outputText value="{!HO.IATA_ISO_Country__r.Name}" label="Country"/>
+      <apex:outputText value="{!HO.Status__c}" label="Agency Status/Reason"/><!--<apex:outputText value="{!HQ.Primary_address__r.City__c}"/>-->
+      <apex:outputText value="{!HO.TradeName__c}"/><!--<apex:outputText value="{!HQ.Primary_address__r.AMS_ZipCode__c}"/>-->
       <apex:outputText value="{!HO.Accumulated_Irregularities__c}"/><apex:outputText value="" label="Financial Security - Amount"/>
               
               
@@ -35,9 +35,10 @@ body .bPageBlock .pbBody .labelCol, body .bPageBlock .pbBody .dataCol, body .bPa
 <apex:pageBlock rendered="{!isBranch}">
 <apex:pageBlockSection >
       <apex:outputText value="{!ag.Name}" label="Legal Name"/><apex:outputText value="{!ag.RecordType.Name}" label="Record Type"/>
-      <apex:outputText value="{!ag.IATACode__c}"/><apex:outputText value="{!ag.Primary_address__r.Country__r.Name}" label="Country"/>
-      <apex:outputText value="{!ag.Agency_Status__c}" label="Agency Status/Reason"/>
-      <apex:outputText value="{!ag.Trading_Name_1__c}"/>
+      <!--<apex:outputText value="{!ag.IATACode__c}"/><apex:outputText value="{!ag.IATA_ISO_Country__r.Name}" label="Country"/>-->
+      <apex:outputText value="{!ag.IATACode__c}"/><apex:outputText value="{!ag.IATA_ISO_Country__r.Name}" label="Country"/>
+      <apex:outputText value="{!ag.Status__c}" label="Agency Status/Reason"/>
+      <apex:outputText value="{!ag.TradeName__c}"/>
       <apex:outputText value="{!HO.Accumulated_Irregularities__c}" label="Head Office Accumulated Irregularities"/><apex:outputText value="" label="Head Office Financial Security - Amount"/>
 </apex:pageBlockSection>
 </apex:pageBlock>
