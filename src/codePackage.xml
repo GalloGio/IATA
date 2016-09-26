@@ -20,6 +20,7 @@
         <members>*</members>
         <name>AuraDefinitionBundle</name>
     </types>
+
     <types>
         <members>*</members>
         <name>Layout</name>

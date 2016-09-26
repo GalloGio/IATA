@@ -1,20 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
+
     <types>
         <members>*</members>
-        <name>CustomLabel</name>
+        <name>Report</name>
     </types>
     <types>
         <members>*</members>
-        <name>GlobalPicklist</name>
+        <name>PermissionSet</name>
     </types>
     <types>
         <members>*</members>
-        <name>Group</name>
+        <name>Profile</name>
     </types>
     <types>
         <members>*</members>
-        <name>StaticResource</name>
+        <name>ReportType</name>
     </types>
+
     <version>37.0</version>
 </Package>
