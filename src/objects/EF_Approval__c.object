@@ -21,6 +21,10 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -68,7 +72,6 @@
         <externalId>false</externalId>
         <globalPicklist>EF_Currency</globalPicklist>
         <label>Billing Currency</label>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -124,7 +127,6 @@
         <externalId>false</externalId>
         <globalPicklist>EF_Frequency</globalPicklist>
         <label>Billing Frequency</label>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -157,7 +159,6 @@
         <externalId>false</externalId>
         <globalPicklist>EF_Payment_Terms</globalPicklist>
         <label>Payment Terms</label>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -190,7 +191,6 @@
         <externalId>false</externalId>
         <globalPicklist>EF_Currency</globalPicklist>
         <label>Payment Currency</label>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -200,7 +200,6 @@
         <externalId>false</externalId>
         <globalPicklist>EF_Payment_Method</globalPicklist>
         <label>Payment Method</label>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -221,7 +220,6 @@
         <externalId>false</externalId>
         <globalPicklist>EF_Status</globalPicklist>
         <label>Status</label>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>

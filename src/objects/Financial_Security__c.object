@@ -2446,6 +2446,6 @@ NOT( ISPICKVAL(  Security_Type__c  , &quot;Financial Guarantee&quot;) )
         <protected>false</protected>
         <showsLocation>false</showsLocation>
         <showsStatus>false</showsStatus>
-        <url>https://composer.congamerge.com?sessionId={!API.Session_ID}&amp;serverUrl={!API.Partner_Server_URL_290}&amp;id={!Financial_Security__c.Id}&amp;fp0=1&amp;ds1=0&amp;ds5=0&amp;LG3=2&amp;OFN=IATA+Notification+Letter+-+{!Financial_Security__c.IATA_code__c}&amp;ds4=0&amp;ReportId=00O20000003q4lt</url>
+        <url>https://www.appextremes.com/apps/Conga/pointMerge.aspx?sessionId={!API.Session_ID}&amp;serverUrl={!API.Partner_Server_URL_80}&amp;id={!Financial_Security__c.Id}&amp;fp0=1&amp;ds1=0&amp;ds5=0&amp;LG3=2&amp;OFN=IATA+Notification+Letter+-+{!Financial_Security__c.IATA_code__c}&amp;ds4=0&amp;ReportId=00O20000003q4lt</url>
     </webLinks>
 </CustomObject>
