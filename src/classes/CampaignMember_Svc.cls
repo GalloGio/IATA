@@ -3,12 +3,15 @@ public class CampaignMember_Svc
 
     //Generate renewal Order
     public static void generateRenewalOrder(String campaignId,List<CampaignMember> campaignMembers){
-        system.debug('generateRenewalOrder CALLED');
+        //system.debug('generateRenewalOrder CALLED');
         set<Id> contactIds = new set<Id>();
         for(CampaignMember cm : campaignMembers){
             contactIds.add(cm.ContactId);
         }
-        system.debug('set contactIds ' + contactIds);
+        //*** remove deleted contact
+        for (Contact c : [select Id from Contact where Id in :contactIds and IsDeleted = true])
+            contactIds.remove(c.Id);
+        //system.debug('set contactIds ' + contactIds);
         generateRenewalOrder(campaignId, contactIds);
 
     }
@@ -19,13 +22,38 @@ public class CampaignMember_Svc
         //get the list of campaign member product base on the contact Id
         map<Id,List<Campaign_Member_Product__c>> contactId_campaignMemberPrd = new campaignMemberProduct_sel().getCampaignMemberPrdByContactId(campaignId,contactIds);
         map<Id,List<Campaign_Member_Product__c>> contactId_newCampaignMemberPrd = new map<Id,List<Campaign_Member_Product__c>>();
+        map<Id, Campaign_Member_Product__c> productId_newCampaignMemberPrd = new map<Id, Campaign_Member_Product__c>();
 
         //Get the last version of product form campaign product object
         map<Id,Id> old_NewProds = new CampaignProduct_Sel().getLastVersionProductIdById(campaignId);
+        set<Id> prodIds = new set<Id>();
+        Map<String, String> mapProduct_Version = new Map<String, String>();
         
         //Make sure that the contact do not have duplicated product
         for(Id contactId : contactId_campaignMemberPrd.keySet()){
-            
+            if (contactId_campaignMemberPrd.containsKey(contactId))
+            {
+                productId_newCampaignMemberPrd.clear();
+                mapProduct_Version.clear();
+                for (Campaign_Member_Product__c cmp : contactId_campaignMemberPrd.get(contactId))
+                {
+                    Id newVersion = old_NewProds.get(cmp.Product__c);
+                    String strActivity = String.valueOf(cmp.Product__r.SAP_Material_Number__c).left(4);
+                    String strVersion = String.valueOf(cmp.Product__r.SAP_Material_Number__c).right(2);
+                    prodIds.add(newVersion);
+                    if (!productId_newCampaignMemberPrd.containsKey(newVersion) ||
+                        (mapProduct_Version.containsKey(strActivity) && mapProduct_Version.get(strActivity) < strVersion))
+                    {
+                        cmp.Product__c = newVersion;
+                        productId_newCampaignMemberPrd.put(newVersion, cmp);
+                        mapProduct_Version.put(strActivity, strVersion);
+                    }
+                    //else
+                        //productId_newCampaignMemberPrd.get(newVersion).Quantity__c += cmp.Quantity__c;
+                }
+                contactId_newCampaignMemberPrd.put(contactId, productId_newCampaignMemberPrd.values());
+            }
+            /*
             List<Campaign_Member_Product__c> lstMemberProds = contactId_campaignMemberPrd.get(contactId);
 
             //get the list of campaign member product base on the product new version
@@ -80,7 +108,7 @@ public class CampaignMember_Svc
                     contactId_newCampaignMemberPrd.get(contactId).add(cmpsByVersion[0]);
                 }
                     
-            }
+            }*/
 
         }
 
@@ -90,13 +118,13 @@ public class CampaignMember_Svc
         map<Id,Order> contactId_Order = createOrderbyContactId(campaignId,contactId_newCampaignMemberPrd.keySet());
 
         //get the list of all products
-        set<Id> prodIds = new set<Id>();
+        /*set<Id> prodIds = new set<Id>();
         for(id contactId : contactId_newCampaignMemberPrd.keySet()){
             List<Campaign_Member_Product__c> lstCmp = contactId_newCampaignMemberPrd.get(contactId);
             for(Campaign_Member_Product__c cmp : lstCmp){
                 prodIds.add(cmp.Product__c);
             }
-        }
+        }*/
 
         //Create Items for each order
         //get the map of order Id base on the Order
