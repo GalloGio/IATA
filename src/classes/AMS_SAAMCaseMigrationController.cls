@@ -6,7 +6,7 @@ public class AMS_SAAMCaseMigrationController {
     private String ALL_NOT_FROM_PORTAL = 'All SAAM Cases not from Portal';
 
     private final Integer PAGE_SIZE = 50; //max size: 1000
-    private final Integer RECORD_LIMIT = 2100; //prevent view state limit, if you increase page size, decrease limit
+    private final Integer RECORD_LIMIT = 1000; //prevent view state limit, if you increase page size, decrease limit
     private final Id SAAMCaseRecType = Schema.SObjectType.Case.getRecordTypeInfosByName().get('SAAM').getRecordTypeId();
 
     public String caseNumbers   { get; set; }
@@ -29,13 +29,15 @@ public class AMS_SAAMCaseMigrationController {
         get {
             if(pageQueries == null){
                 pageQueries = new Map<String, String> {
-                    'SPECIFIC_CASES_QUERY' => 'SELECT Id, CaseNumber, OSCAR__c , OSCAR__r.Id ' + caseFieldsStr + ' , Account.IATACode__c ,  Contact.Email, Account.Category__c,Account.Location_Class__c,Account.ParentId,Account.Location_Type__c FROM CASE WHERE OSCAR__c = \'\' and ParentId = \'\' and CaseNumber In :caseNumberList and RecordTypeId = :SAAMCaseRecType and isCLosed = false',
+
+                    'SPECIFIC_CASES_QUERY' => 'SELECT Id, CaseNumber, OSCAR__c , OSCAR__r.Id ' + caseFieldsStr + ' , Account.IATACode__c ,  Contact.Email, Account.Category__c,Account.Location_Class__c,Account.ParentId,Account.Location_Type__c FROM CASE WHERE OSCAR__c = \'\' and CaseNumber In :caseNumberList and RecordTypeId = :SAAMCaseRecType and isCLosed = false and status != \'Draft\' and CaseArea__c = \'Accreditation Process\' and BSPCountry__c not in (\'Bangladesh\',\'Brazil\',\'Hong Kong (SAR), China\',\'South Africa\',\'Turkey\',\'United States\') and Reason1__c in (\'New BR / IP\' ,\'New BR Abroad\' ,\'New HO\',\'Manage Changes / Major\',\'CHL - Change of Location\',\'CHO / CHS – Change of Ownership / Legal Status\',\'CHN - Change of Name\',\'CHC – Change of Shareholding\') and OwnerId not in :queueRecycle',
                 
-                    'ALL_CASES_QUERY' => 'SELECT Id, CaseNumber , OSCAR__c , OSCAR__r.Id' + caseFieldsStr + ' , Account.IATACode__c , Contact.Email, Account.Category__c,Account.Location_Class__c,Account.ParentId,Account.Location_Type__c FROM CASE WHERE OSCAR__c = \'\' and RecordTypeId = :SAAMCaseRecType and isCLosed = false  ',
+                    'ALL_CASES_QUERY' => 'SELECT Id, CaseNumber , OSCAR__c , OSCAR__r.Id' + caseFieldsStr + ' , Account.IATACode__c , Contact.Email, Account.Category__c,Account.Location_Class__c,Account.ParentId,Account.Location_Type__c FROM CASE WHERE OSCAR__c = \'\' and RecordTypeId = :SAAMCaseRecType and isCLosed = false and status != \'Draft\' and CaseArea__c = \'Accreditation Process\' and BSPCountry__c not in (\'Bangladesh\',\'Brazil\',\'Hong Kong (SAR), China\',\'South Africa\',\'Turkey\',\'United States\') and Reason1__c in (\'New BR / IP\' ,\'New BR Abroad\' ,\'New HO\',\'Manage Changes / Major\',\'CHL - Change of Location\',\'CHO / CHS – Change of Ownership / Legal Status\',\'CHN - Change of Name\',\'CHC – Change of Shareholding\') and OwnerId not in :queueRecycle',
                 
-                    'ALL_FROM_PORTAL_QUERY' => 'SELECT Id, CaseNumber, OSCAR__c , OSCAR__r.Id ' + caseFieldsStr + ' , Account.IATACode__c , Contact.Email, Account.Category__c,Account.Location_Class__c,Account.ParentId,Account.Location_Type__c  FROM CASE WHERE Id IN :SAAMCaseWithAccreditations ',
+                    'ALL_FROM_PORTAL_QUERY' => 'SELECT Id, CaseNumber, OSCAR__c , OSCAR__r.Id ' + caseFieldsStr + ' , Account.IATACode__c , Contact.Email, Account.Category__c,Account.Location_Class__c,Account.ParentId,Account.Location_Type__c  FROM CASE WHERE OSCAR__c = \'\' and Id IN :SAAMCaseWithAccreditations and RecordTypeId = :SAAMCaseRecType and isCLosed = false and status != \'Draft\' and CaseArea__c = \'Accreditation Process\' and BSPCountry__c not in (\'Bangladesh\',\'Brazil\',\'Hong Kong (SAR), China\',\'South Africa\',\'Turkey\',\'United States\') and Reason1__c in (\'New BR / IP\' ,\'New BR Abroad\' ,\'New HO\',\'Manage Changes / Major\',\'CHL - Change of Location\',\'CHO / CHS – Change of Ownership / Legal Status\',\'CHN - Change of Name\',\'CHC – Change of Shareholding\') and OwnerId not in :queueRecycle',
                 
-                    'ALL_NOT_FROM_PORTAL_QUERY' => 'SELECT Id, CaseNumber, OSCAR__r.Id ' +  caseFieldsStr + ' , Account.IATACode__c , Contact.Email, Account.Category__c,Account.Location_Class__c,Account.ParentId,Account.Location_Type__c  FROM CASE WHERE OSCAR__c = \'\' and RecordTypeId = :SAAMCaseRecType and isCLosed = false and ParentId = \'\' and Id not in :SAAMCaseWithAccreditations '
+                    'ALL_NOT_FROM_PORTAL_QUERY' => 'SELECT Id, CaseNumber, OSCAR__r.Id ' +  caseFieldsStr + ' , Account.IATACode__c , Contact.Email, Account.Category__c,Account.Location_Class__c,Account.ParentId,Account.Location_Type__c  FROM CASE WHERE OSCAR__c = \'\' and Id not in :SAAMCaseWithAccreditations and RecordTypeId = :SAAMCaseRecType and isCLosed = false and status != \'Draft\' and CaseArea__c = \'Accreditation Process\' and BSPCountry__c not in (\'Bangladesh\',\'Brazil\',\'Hong Kong (SAR), China\',\'South Africa\',\'Turkey\',\'United States\') and Reason1__c in (\'New BR / IP\' ,\'New BR Abroad\' ,\'New HO\',\'Manage Changes / Major\',\'CHL - Change of Location\',\'CHO / CHS – Change of Ownership / Legal Status\',\'CHN - Change of Name\',\'CHC – Change of Shareholding\') and OwnerId not in :queueRecycle'
+                
                 };
 
                 System.debug(loggingLevel.INFO, '____ [cls AMS_SAAMCaseMigrationController - pageQueries] pageQueries - ' + pageQueries);
@@ -58,7 +60,8 @@ public class AMS_SAAMCaseMigrationController {
                 Case.Status,
                 Case.RecordType__c,
                 Case.Reason1__c,
-                Case.AccountId
+                Case.AccountId,
+                Case.BSPCountry__c
                 
             };
         }
@@ -206,6 +209,11 @@ public class AMS_SAAMCaseMigrationController {
 
     public void search() {
 
+        Map<id,Group> aMap = new Map<id,Group>([select Id from Group where Type = 'Queue' and Name like '%recycle%']);
+
+        Set<Id> queueRecycle = aMap.keyset();
+
+
         if(!(searchOption == SPECIFIC_CASES || searchOption == ALL_FROM_PORTAL || searchOption == ALL_NOT_FROM_PORTAL || searchOption == ALL_CASES)){
             ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, 'Not a valid option, please choose a valid option.'));
             return;
@@ -218,6 +226,8 @@ public class AMS_SAAMCaseMigrationController {
 
             System.debug('Search option is:' + pageQueriesOption.get(searchOption) + '_QUERY');
 
+            System.debug('Performing query:' + pageQueries.get(pageQueriesOption.get(searchOption) + '_QUERY'));
+            
             for(Case c : Database.query(pageQueries.get(pageQueriesOption.get(searchOption) + '_QUERY'))){
 
                 cases.add(new AMS_MigrationToolHelper.CaseContainer(c,isFromPortal(c)));
@@ -226,6 +236,7 @@ public class AMS_SAAMCaseMigrationController {
 
         if(searchOption == ALL_CASES){
 
+            System.debug('Performing query:' + pageQueries.get(pageQueriesOption.get(searchOption) + '_QUERY'));
 /*
             for(Case c : Database.query(pageQueries.get(pageQueriesOption.get(searchOption) + '_QUERY'))){
 
