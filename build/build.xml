@@ -44,7 +44,8 @@
 
 <target name="deployCodeProd"> 
 
-      <antcallback target="deployLabelFolder" />
+
+      <antcallback target="deployStaticResource" />
   
   </target> 
 
@@ -74,9 +75,42 @@
 
       
       <antcallback target="deployCodeLocal" />
+      <antcallback target="deployTemplate" />
+  
+  </target> 
+
+
+
+<target name="deployTemplate"> 
+  <echo level="info">creating new folder</echo>
+  <antcallback target="deldir" />
+   <mkdir dir="${basedir}/Code"/>
+  
+      <for list="${object.listfolders}" param="param" >
+        <sequential>
+             <mkdir dir="${basedir}/Code/@{param}"/>
+       </sequential>
+     </for>
+
+     <echo level="info">moving files</echo>
+      
+      <for list="${listEmailTemplateFolders}" param="param" delimiter=",">
+        <sequential>
+          <move todir="${basedir}/Code/@{param}">
+            <fileset dir="${basedir}/src/@{param}">
+            </fileset>
+          </move>
+       </sequential>
+     </for>
+
+ <move file="${basedir}/src/templatePackage.xml" tofile="${basedir}/Code/package.xml"/>  
+
+      
+      <antcallback target="deployCodeLocal" />
       <antcallback target="deployWorkflows" />
   
   </target> 
+
 
 <target name="deployLabelsOnly"> 
   <echo level="info">creating new label folder</echo>
