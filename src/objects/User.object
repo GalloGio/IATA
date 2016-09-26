@@ -2696,8 +2696,10 @@ try{
  sforce.connection.sessionId=&apos;{!GETSESSIONID()}&apos;;
 
 
+
 if(r == true)
 {
+
     var a = sforce.apex.execute(&quot;ProvisionKaviAccess&quot;,&quot;EnableInternalUserKaviAccess&quot;,{userId:&quot;{!User.Id}&quot;,profileName:&quot;{!User.Profile_Name__c}&quot;, isKaviInternalUser:&quot;{!User.Is_Kavi_Internal_User__c}&quot;});
 
     alert(a);

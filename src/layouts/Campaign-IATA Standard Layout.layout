@@ -232,6 +232,10 @@
         <fields>Total_Amount__c</fields>
         <relatedList>Order.Campaign__c</relatedList>
     </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>IEC_Renewal_notice_log__c.Campaign__c</relatedList>
+    </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>true</showHighlightsPanel>
     <showInteractionLogPanel>true</showInteractionLogPanel>
