@@ -38,15 +38,6 @@
         <name>CustomObject</name>
     </types>
 	<types>
-        <members>EF_Airline_Edit</members>
-        <members>EF_Client_Edit</members>
-        <members>EF_Contract_Creation</members>
-        <members>EF_Contract_Update</members>
-        <members>EF_Management</members>
-        <members>EF_Staff</members>
-        <name>PermissionSet</name>
-    </types>
-	<types>
         <members>*</members>
         <name>CustomTab</name>
     </types>
