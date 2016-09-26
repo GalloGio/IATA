@@ -8,16 +8,5 @@
         <members>*</members>
         <name>Workflow</name>
     </types>
-	<types>
-        <members>E_F_Services/EF_Doc_Expired_Notification</members>
-		<members>E_F_Services/EF_Contract_Rejected</members>
-        <members>E_F_Services/EF_Contract_Approval_Request</members>
-        <members>E_F_Services/EF_Contract_Approved</members>
-		<members>E_F_Services/EF_Billing_Agreement_Rejected</members>
-        <members>E_F_Services/EF_Billing_Agreement_Approval_Request</members>
-        <members>E_F_Services/EF_Billing_Agreement_Approved</members>
-        <members>unfiled$public/EF_Contact_Deactivation_Notification</members>
-        <name>EmailTemplate</name>
-    </types>
     <version>37.0</version>
 </Package>
