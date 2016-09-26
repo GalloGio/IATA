@@ -264,7 +264,7 @@ public with sharing class IFAP_BusinessRules {
         return false;
     }
 
-    public static Boolean IsStatusCanBeSelected(Boolean isOnCaseCreation, Boolean isUpdateFromWS, Case UpdatedCase, Case OldCase, Profile currentUserProfile, Boolean isAuthorizedUser) {
+    public static Boolean IsStatusCanBeSelected(Boolean isOnCaseCreation, Case UpdatedCase, Case OldCase, Profile currentUserProfile, Boolean isAuthorizedUser) {
 
         String caseStatus = UpdatedCase.Status;
 
@@ -281,10 +281,12 @@ public with sharing class IFAP_BusinessRules {
         }
 
         //Allow any status change coming from webservice that will have a user that is not a sys admin making the change(UPDATE WEBSERVICE CODE TO SURE ALL THE UPDATES FROM WS SET THE FIELD IS_COMPLAINT ON THE CASE to TRUE)
+        /*
         if (isUpdateFromWS) {
             system.debug('*** WEBSERVICE BYPASS ***');
             return true;
         }
+        */
 
         if (isOnCaseCreation) {
 

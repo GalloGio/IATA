@@ -224,6 +224,18 @@
         <fields>NAME</fields>
         <relatedList>Campaign_Member_Product__c.Campaign__c</relatedList>
     </relatedLists>
+    <relatedLists>
+        <fields>ORDERS.ORDER_NUMBER</fields>
+        <fields>ORDERS.STATUS</fields>
+        <fields>SALES.ACCOUNT.NAME</fields>
+        <fields>ORDER.BILL_TO_CONTACT</fields>
+        <fields>Total_Amount__c</fields>
+        <relatedList>Order.Campaign__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>IEC_Renewal_notice_log__c.Campaign__c</relatedList>
+    </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>true</showHighlightsPanel>
     <showInteractionLogPanel>true</showInteractionLogPanel>
