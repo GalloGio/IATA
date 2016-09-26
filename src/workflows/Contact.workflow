@@ -13,32 +13,6 @@
         <template>ISS_Portal/Notify_Admin_of_user_creationVF</template>
     </alerts>
     <alerts>
-        <fullName>EF_Email_Notification_On_Client_EF_Contact_Deactivation</fullName>
-        <ccEmails>efs@iata.org</ccEmails>
-        <description>E&amp;F : Email Notification On Client E&amp;F Contact Deactivation</description>
-        <protected>false</protected>
-        <recipients>
-            <recipient>EF_Client_Users_Group</recipient>
-            <type>group</type>
-        </recipients>
-        <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
-        <template>unfiled$public/EF_Contact_Deactivation_Notification</template>
-    </alerts>
-    <alerts>
-        <fullName>EF_Email_Notification_On_Operator_EF_Contact_Deactivation</fullName>
-        <ccEmails>efs@iata.org</ccEmails>
-        <description>E&amp;F : Email Notification On Operator E&amp;F Contact Deactivation</description>
-        <protected>false</protected>
-        <recipients>
-            <recipient>EF_Operator_Users_Group</recipient>
-            <type>group</type>
-        </recipients>
-        <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
-        <template>unfiled$public/EF_Contact_Deactivation_Notification</template>
-    </alerts>
-    <alerts>
         <fullName>ISSP_BSPCASS_Payment_contact</fullName>
         <description>ISSP_BSPCASS Payment contact</description>
         <protected>false</protected>
@@ -183,6 +157,15 @@
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>Marketing_Opt_out</fullName>
+        <field>Marketing_Communications_Opt_in__c</field>
+        <literalValue>0</literalValue>
+        <name>Marketing Opt out</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>New_user_portal</fullName>
         <field>Notification_Template__c</field>
         <formula>&quot;NT-0033&quot;</formula>
@@ -221,6 +204,16 @@
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>STD_Opt_out</fullName>
+        <description>STD Opt out</description>
+        <field>HasOptedOutOfEmail</field>
+        <literalValue>1</literalValue>
+        <name>STD Opt out</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>Switch_to_standard_contact_RT</fullName>
         <field>RecordTypeId</field>
         <lookupValue>Standard_Contact</lookupValue>
@@ -240,56 +233,6 @@
         <operation>Literal</operation>
         <protected>false</protected>
     </fieldUpdates>
-    <rules>
-        <fullName>E%26F %3A Notification On Client Contact Deactivation</fullName>
-        <actions>
-            <name>EF_Email_Notification_On_Client_EF_Contact_Deactivation</name>
-            <type>Alert</type>
-        </actions>
-        <active>true</active>
-        <criteriaItems>
-            <field>Contact.Status__c</field>
-            <operation>equals</operation>
-            <value>Left Company / Relocated,Retired,Inactive</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Contact.EF_Status__c</field>
-            <operation>equals</operation>
-            <value>Active</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.EF_Type__c</field>
-            <operation>equals</operation>
-            <value>E&amp;F Client</value>
-        </criteriaItems>
-        <description>Notification of deactivated client E&amp;F contact</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>E%26F %3A Notification On Operator Contact Deactivation</fullName>
-        <actions>
-            <name>EF_Email_Notification_On_Operator_EF_Contact_Deactivation</name>
-            <type>Alert</type>
-        </actions>
-        <active>true</active>
-        <criteriaItems>
-            <field>Contact.EF_Status__c</field>
-            <operation>equals</operation>
-            <value>Active</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Contact.Status__c</field>
-            <operation>equals</operation>
-            <value>Left Company / Relocated,Retired,Inactive</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.EF_Type__c</field>
-            <operation>equals</operation>
-            <value>E&amp;F Operator</value>
-        </criteriaItems>
-        <description>Notification of deactivated operator E&amp;F contact</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
     <rules>
         <fullName>Email Status Update</fullName>
         <actions>
@@ -506,6 +449,25 @@
         </criteriaItems>
         <description>This is used to automatically check the read-only field &apos;InvoiceWorks Customer&apos; when a Contact is created by one of the users with IW Profiles</description>
         <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>Key contact Opt out</fullName>
+        <actions>
+            <name>Marketing_Opt_out</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>STD_Opt_out</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Contact.Account_Management_Key_Contact__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <description>Automatically Opt out all Key contact</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
         <fullName>SIS HelpDesk - Assign SIS recordtype when new contact source system is SIS</fullName>
