@@ -188,7 +188,7 @@ public with sharing class EF_TestDataFactory
                            EF_Billing_Agreement_Approver__c=myUser.Id,
                            EF_Contract_Approver__c=myUser.Id, 
                            License_Cost_Center__c='AAA000AA00',
-                           Username='efUnit@test.ch', LastName='Test1', 
+                           Username='efUnit@test.ch'+roleNumber, LastName='Test1', 
                            Email='test1@iata.org', Alias='Test1', CommunityNickname='Test1', 
                            TimeZoneSidKey='Europe/Brussels', LocaleSidKey='en_US', 
                            EmailEncodingKey='UTF-8', LanguageLocaleKey='en_US');
