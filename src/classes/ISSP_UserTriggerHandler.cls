@@ -8,23 +8,57 @@ public without sharing class ISSP_UserTriggerHandler {
     
     public static void onBeforeUpdate(list<User> newUserList, map<Id, User> newUserMap, list<User> oldUserList, map<Id, User> oldUserMap) {
         //TF - SP9-A5
+        Set <Id> contactIdSet = new Set <Id>();
+        Set <Id> contactKaviAdd = new Set <Id>();
+
         for(User oneUser: newUserList) {
             if (oldUserMap.containsKey(oneUser.Id)){
                 if (oneUser.Email != oldUserMap.get(oneUser.Id).Email){
                     oneUser.ISSP_Old_Email__c = oldUserMap.get(oneUser.Id).Email;
                 }
             }
-        }
+
+            if(oldUserMap.get(oneUser.Id).Username != oneUser.Username ||
+               oldUserMap.get(oneUser.Id).Phone != oneUser.Phone ||
+               oldUserMap.get(oneUser.Id).Fax != oneUser.Fax ||
+               oldUserMap.get(oneUser.Id).City != oneUser.City ||
+               oldUserMap.get(oneUser.Id).State != oneUser.State ||
+               oldUserMap.get(oneUser.Id).Country != oneUser.Country ||
+               oldUserMap.get(oneUser.Id).Postalcode != oneUser.Postalcode ||
+               oldUserMap.get(oneUser.Id).Mobilephone != oneUser.Mobilephone ||
+               oldUserMap.get(oneUser.Id).Street != oneUser.Street){
+              
+               if(oneUser.contactId != null)
+                 contactIdSet.add(oneUser.contactId);
+
+               //Code added to consider Kavi internal users
+               if(oneUser.ContactKaviId__c != null){
+                   contactIdSet.add(oneUser.ContactKaviId__c);
+                  }
+               }
+            }
+
+        List <Portal_Application_Right__c> appRightList = [SELECT Id, Contact__c FROM Portal_Application_Right__c
+                            WHERE Application_Name__c = 'Standards Setting Workspace'
+                            AND Right__c = 'Access Granted'
+                            AND Contact__c IN :contactIdSet];
+         
+        for (Portal_Application_Right__c thisRecord : appRightList)
+             contactKaviAdd.add(thisRecord.Contact__c);
+        
+        if(contactKaviAdd.size()>0)
+            ISSP_WS_KAVI.createOrUpdateKaviUsersAccounts('update',contactKaviAdd);
+
         setPortalUserName(newUserList);
     }
-    
+
     public static void setPortalUserName(list<User> newUserList) {
         
         Set<Id> profileIDs = new Set<ID>();
         Map <Id, String> contactEmailMap = new Map <Id, String>();//TF - SP9-A5
         Set <Id> contactIdSet = new Set <Id>();//TF - SP9-A5
         for(User oneUser: newUserList) {
-            if(String.isBlank(oneUser.Email) || !profileByPartnerCommunityLicense.containsKey(oneUser.ProfileId) || !oneUser.isActive) 
+            if(String.isBlank(oneUser.Email) || !profileByPartnerCommunityLicense.containsKey(oneUser.ProfileId) || !oneUser.isActive ) 
                 continue;
                 
             oneUser.Username = ISSP_Utilities.buildPortalUserName(oneUser.Email);
@@ -34,6 +68,12 @@ public without sharing class ISSP_UserTriggerHandler {
                 contactEmailMap.put(oneUser.ContactId, oneUser.Email);
                 contactIdSet.add(oneUser.ContactId);
             }
+            //Code added to consider Internal Users also
+            if (oneUser.ContactKaviId__c != null){
+                contactEmailMap.put(oneUser.ContactKaviId__c, oneUser.Email);
+                contactIdSet.add(oneUser.ContactKaviId__c);
+            }
+
         }
         
         //TF - SP9-A5
@@ -58,7 +98,7 @@ public without sharing class ISSP_UserTriggerHandler {
                                 UserLicenseId, 
                                 UserLicense.Name  
                            FROM Profile
-                          WHERE UserLicense.Name =: ENV.Partner_Community]); 
+                          WHERE (UserLicense.Name =: ENV.Partner_Community OR UserLicense.Name =: ENV.Identity)]); 
     }
     
     //TF - SP9-A5
@@ -79,12 +119,14 @@ public without sharing class ISSP_UserTriggerHandler {
             system.debug('Updating contacts from future: ' + updateContactList.size());
             preventTrigger = true;
             update updateContactList;
+
         }
     }
     
     //TF - SP9-A5
     public static void changeEmailFromContact (Map<Id, String> conEmailMap, Map<Id, String> conFirstNameMap, Map<Id, String> conLastNameMap, Set<Id> conEmailIdSet){
         system.debug('In ISSP_UserTriggerHandler.changeEmailFromContact');
+        
         List <User> userList = [SELECT Id, Email, ContactId FROM User WHERE ContactId IN :conEmailIdSet];
         List <User> updateUserList = new List <User>();
         if (!userList.isEmpty()){
@@ -97,6 +139,21 @@ public without sharing class ISSP_UserTriggerHandler {
                 }
             }
         }
+
+        //Code extension to consider also Kavi internal users
+        List <User> userList2 = [SELECT Id, Email, ContactKaviId__c FROM User WHERE ContactKaviId__c IN :conEmailIdSet];
+        //List <User> updateUserList = new List <User>();
+        if (!userList2.isEmpty()){
+            for (User thisUser : userList2){
+                if (conEmailMap.containsKey(thisUser.ContactKaviId__c)){
+                    if (thisUser.Email != conEmailMap.get(thisUser.ContactKaviId__c)){
+                        thisUser.Email = conEmailMap.get(thisUser.ContactKaviId__c);
+                        updateUserList.add(thisUser);
+                    }
+                }
+            }
+        }
+        //End of Extension
         if (!updateUserList.isEmpty()){
             system.debug('Will update user: ' + updateUserList.size());
             update updateUserList;
@@ -138,67 +195,6 @@ public without sharing class ISSP_UserTriggerHandler {
         system.debug('FUTURE METHOD, REMOVE: ' + contactRemoveIdSet);
         String permissionSetId = '';
         List <PermissionSet> setList = [SELECT Id FROM PermissionSet WHERE Name = 'ISS_Portal_Permission_Set_SIS_users'];
-        if (!setList.isEmpty()){
-            permissionSetId = setList[0].Id;
-        }
-        if (permissionSetId != ''){
-            if (!contactIdSet.isEmpty()){
-                List <User> userList = [SELECT Id FROM User WHERE ContactId IN :contactIdSet AND IsActive = true];
-                Set <Id> userSetId = new Set <Id>();
-                Map <Id, Id> userMap = new Map <Id, Id>(); 
-                if (!userList.isEmpty()){
-                    for (User thisUser : userList){
-                        userSetId.add(thisUser.Id);
-                        userMap.put(thisUser.Id, thisUser.Id);
-                    }
-                    List <PermissionSetAssignment> assignmentList = [SELECT Id, AssigneeId FROM PermissionSetAssignment
-                                                                    WHERE AssigneeId IN :userSetId
-                                                                    AND PermissionSetId = :permissionSetId];
-                    if (!assignmentList.isEmpty()){
-                        for (PermissionSetAssignment thisAssignment : assignmentList){
-                            if (userMap.containsKey(thisAssignment.AssigneeId)){
-                                userMap.remove(thisAssignment.AssigneeId);
-                            }
-                        }
-                    }
-                    if (!userMap.isEmpty()){
-                        List <PermissionSetAssignment> newPermissionList = new List <PermissionSetAssignment>();
-                        List <Id> idList = userMap.values();
-                        for (Id thisId : idList){
-                            PermissionSetAssignment newPermission = new PermissionSetAssignment();
-                            newPermission.AssigneeId = thisId;
-                            newPermission.PermissionSetId = permissionSetId;
-                            newPermissionList.add(newPermission);
-                        }
-                        insert newPermissionList;
-                    }
-                }
-            }
-            if (!contactRemoveIdSet.isEmpty()){
-                List <User> userListRemove = [SELECT Id FROM User WHERE ContactId IN :contactRemoveIdSet AND IsActive = true];
-                Set <Id> userSetIdRemove = new Set <Id>(); 
-                if (!userListRemove.isEmpty()){
-                    for (User thisUser : userListRemove){
-                        userSetIdRemove.add(thisUser.Id);
-                    }
-                    List <PermissionSetAssignment> assignmentListRemove = [SELECT Id, AssigneeId FROM PermissionSetAssignment
-                                                                    WHERE AssigneeId IN :userSetIdRemove
-                                                                    AND PermissionSetId = :permissionSetId];
-                    if (!assignmentListRemove.isEmpty()){
-                        delete assignmentListRemove;
-                    }
-
-                }
-            }
-        }
-    }
-
-    @future
-    public static void updateUserPermissionSet(String permisionSetName, Set<Id> contactIdSet, Set<Id> contactRemoveIdSet){
-        system.debug('FUTURE METHOD, ADD: ' + contactIdSet);
-        system.debug('FUTURE METHOD, REMOVE: ' + contactRemoveIdSet);
-        String permissionSetId = '';
-        List <PermissionSet> setList = [SELECT Id FROM PermissionSet WHERE Name = :permisionSetName];
         if (!setList.isEmpty()){
             permissionSetId = setList[0].Id;
         }

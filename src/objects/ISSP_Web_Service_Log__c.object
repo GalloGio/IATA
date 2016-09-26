@@ -204,6 +204,26 @@
         <language>en_US</language>
     </listViews>
     <listViews>
+        <fullName>All1</fullName>
+        <columns>CREATED_DATE</columns>
+        <columns>NAME</columns>
+        <columns>System__c</columns>
+        <columns>Web_Service__c</columns>
+        <columns>Success__c</columns>
+        <columns>Error_Code__c</columns>
+        <columns>Error_Message__c</columns>
+        <columns>CREATEDBY_USER</columns>
+        <columns>Contact__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>System__c</field>
+            <operation>notEqual</operation>
+            <value>IpInfo</value>
+        </filters>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
         <fullName>BSPlink</fullName>
         <columns>NAME</columns>
         <columns>OBJECT_ID</columns>

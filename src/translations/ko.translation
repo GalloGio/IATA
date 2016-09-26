@@ -5050,6 +5050,10 @@ and
         <name>ISSP_Accept</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AcceptTermsAndConditions --></label>
+        <name>ISSP_AcceptTermsAndConditions</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP Accept Terms Warning --></label>
         <name>ISSP_Accept_Terms_Warning</name>
     </customLabels>
@@ -6548,6 +6552,22 @@ IATA로부터 다음 국가에 대한 도움을 받으신 적이 있습니까?</
         <name>ISSP_Join_BSP_CASS_Description</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_KAVI --></label>
+        <name>ISSP_KAVI</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_KAVI_Terms_Conditions_Part1 --></label>
+        <name>ISSP_KAVI_Terms_Conditions_Part1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_KAVI_Terms_Conditions_Part2 --></label>
+        <name>ISSP_KAVI_Terms_Conditions_Part2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_KAVI_Terms_Conditions_Part3 --></label>
+        <name>ISSP_KAVI_Terms_Conditions_Part3</name>
+    </customLabels>
+    <customLabels>
         <label>ko</label>
         <name>ISSP_LanguageDependentLink</name>
     </customLabels>
@@ -7886,6 +7906,22 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
     <customLabels>
         <label><!-- KALE_SUPPORT_EMAIL --></label>
         <name>KALE_SUPPORT_EMAIL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Kavi email notification part 1 --></label>
+        <name>Kavi_email_notification_part1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Kavi email notification part 1 bis --></label>
+        <name>Kavi_email_notification_part_1_bis</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Kavi email notification part 2 --></label>
+        <name>Kavi_email_notification_part_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Kavi email notification part 3 --></label>
+        <name>Kavi_email_notification_part_3</name>
     </customLabels>
     <customLabels>
         <label><!-- L2 Support Priority escalation check --></label>
