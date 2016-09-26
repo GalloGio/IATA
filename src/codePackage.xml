@@ -21,10 +21,6 @@
         <name>AuraDefinitionBundle</name>
     </types>
 	<types>
-        <members>*</members>
-        <name>Flow</name>
-    </types>
-	<types>
         <members>Admin</members>
         <members>E%26F staff</members>
         <members>E%26F Management</members>
