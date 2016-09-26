@@ -446,7 +446,11 @@ Name
       Name = &quot;Resource Center&quot;,
       CONTAINS($UserRole.Name ,&quot;General Public&quot;)
    ),
-   
+   AND(
+      Name = &quot;Standards Setting Workspace&quot;,
+      NOT CONTAINS(LOWER($UserRole.Name) ,&quot;general public&quot;)
+   ),
+   Name = &quot;Payment Link&quot;,
    Name = &quot;Resource Center&quot;
 )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
