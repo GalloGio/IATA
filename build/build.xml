@@ -86,7 +86,7 @@
   <antcallback target="deldir" />
    <mkdir dir="${basedir}/Code"/>
   
-      <for list="${object.listfolders}" param="param" >
+      <for list="${listEmailTemplateFolders}" param="param" >
         <sequential>
              <mkdir dir="${basedir}/Code/@{param}"/>
        </sequential>
