@@ -632,7 +632,7 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
             update oscar;
             System.assert(false, 'exception expected');
         } catch (Exception e) {
-            Boolean expectedExceptionThrown =  e.getMessage().contains('The target Agency Location Type must be either HO or BR') ? true : false;
+            Boolean expectedExceptionThrown =  e.getMessage().contains('The target Agency Location Type must be either HO, AO or BR') ? true : false;
             System.assertEquals(expectedExceptionThrown, true);
         }
 
