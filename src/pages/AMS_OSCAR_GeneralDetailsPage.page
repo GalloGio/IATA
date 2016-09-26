@@ -165,7 +165,7 @@
        </apex:outputPanel>
     </apex:outputPanel>
      
-        <apex:pageBlock mode="maindetail" tabStyle="AMS_Pax_Accreditation_Form__c" title="Account Detail" rendered="{!accreditationObj != null}">
+        <apex:pageBlock mode="maindetail" tabStyle="AMS_Pax_Accreditation_Form__c" title="Account New Detail" rendered="{!accreditationObj != null}">
 
         
             <apex:pageBlockButtons location="both">
