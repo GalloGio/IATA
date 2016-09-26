@@ -250,7 +250,7 @@ public class EF_LocationCurrencyHandler {
     private static void notifyOnCreation (List <EF_Location_Currency__c> locList) {
 
         String baseUrl = System.URL.getSalesforceBaseUrl().toExternalForm();
-        User u = [select EF_Contract_Approver__r.email, EF_Billing_Agreement_Approver__r.email, FirstName, LastName from User where Id = :UserInfo.getUserId()];
+        User u = [select EF_Contract_Approver_Email__c, EF_Billing_Agreement_Approver_Email__c, FirstName, LastName from User where Id = :UserInfo.getUserId()];
         String emailBody = 'Dear team member, <br/><br/>the following Location Currencies have been CREATED by '+u.FirstName+' '+u.LastName+':<br/><br/>';
         emailBody = emailBody + '<table width="600px" border="1"><tr border="1"><th border="1">Location Currency</th><th border="1">Billing Currency:</th></tr>';
         String htmlRow  = '';
@@ -262,15 +262,15 @@ public class EF_LocationCurrencyHandler {
         emailBody = emailBody + '</table>';
        
         // send an email to Contract approver if there were changes to Contracts' Location Currencies
-        
-        Utility.sendEmail(new List<String>{u.EF_Contract_Approver__r.email}, 'E&F CRM: Creation of Location Currency ', emailBody, true, null);
+        if(u.EF_Contract_Approver_Email__c != null)
+            Utility.sendEmail(new List<String>{u.EF_Contract_Approver_Email__c}, 'E&F CRM: Creation of Location Currency ', emailBody, true, null);
         
        
     }
     private static void notifyOnDelete (List <EF_Location_Currency__c> oldLocList) {
 
         String baseUrl = System.URL.getSalesforceBaseUrl().toExternalForm();
-        User u = [select EF_Contract_Approver__r.email, EF_Billing_Agreement_Approver__r.email, FirstName, LastName from User where Id = :UserInfo.getUserId()];
+        User u = [select EF_Contract_Approver_Email__c, EF_Billing_Agreement_Approver_Email__c, FirstName, LastName from User where Id = :UserInfo.getUserId()];
         String emailBody = 'Dear team member, <br/><br/>the following Location Currencies have been DELETED by '+u.FirstName+' '+u.LastName+':<br/><br/>';
         emailBody = emailBody + '<table width="600px" border="1"><tr border="1"><th border="1">Location Currency</th><th border="1">Billing Currency:</th></tr>';
         String htmlRow  = '';
@@ -282,8 +282,8 @@ public class EF_LocationCurrencyHandler {
         emailBody = emailBody + '</table>';
        
         // send an email to Contract approver if there were changes to Contracts' Location Currencies
-        
-        Utility.sendEmail(new List<String>{u.EF_Contract_Approver__r.email}, 'E&F CRM: Deletion of Location Currency ', emailBody, true, null);
+        if(u.EF_Contract_Approver_Email__c != null)
+            Utility.sendEmail(new List<String>{u.EF_Contract_Approver_Email__c}, 'E&F CRM: Deletion of Location Currency ', emailBody, true, null);
         
        
     }
@@ -292,7 +292,7 @@ public class EF_LocationCurrencyHandler {
 
         String baseUrl = System.URL.getSalesforceBaseUrl().toExternalForm();
         
-        User u = [select EF_Contract_Approver__r.email, EF_Billing_Agreement_Approver__r.email, FirstName, LastName from User where Id = :UserInfo.getUserId()];
+        User u = [select EF_Contract_Approver_Email__c, EF_Billing_Agreement_Approver_Email__c, FirstName, LastName from User where Id = :UserInfo.getUserId()];
         
         String emailBody = 'Dear team member, <br/><br/>the following Location Currencies have been UPDATED by '+u.FirstName+' '+u.LastName+':<br/><br/>';
         emailBody = emailBody + '<table width="600px" border="1"><tr border="1"><th border="1">Location Currency</th><th border="1">New Billing Currency:</th><th border="1">Old Billing Currency:</th></tr>';
@@ -303,8 +303,8 @@ public class EF_LocationCurrencyHandler {
         }
 
         emailBody = emailBody + '</table>';
-       
-        Utility.sendEmail(new List<String>{u.EF_Contract_Approver__r.email}, 'E&F CRM: Changes to Location Currency ', emailBody, true, null);
+        if(u.EF_Contract_Approver_Email__c != null)
+            Utility.sendEmail(new List<String>{u.EF_Contract_Approver_Email__c}, 'E&F CRM: Changes to Location Currency ', emailBody, true, null);
          
         
        

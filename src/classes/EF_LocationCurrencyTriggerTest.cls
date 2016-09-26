@@ -95,7 +95,7 @@ private class EF_LocationCurrencyTriggerTest {
         
         Contract ctAfter = [select Id, AccountId, Account.Name, EF_Billing_Currency__c from Contract where Account.Name = 'Test Account Client2'];               
                 
-        //System.assertEquals('USD;EUR', ctAfter.EF_Billing_Currency__c);
+        System.assertEquals('EUR', ctAfter.EF_Billing_Currency__c);
          
      
      }
@@ -161,15 +161,11 @@ private class EF_LocationCurrencyTriggerTest {
             );
         lcList.add(efl2);
         insert lcList;
+         
+        Test.startTest();
+           delete efl2; 
+        Test.stopTest();
         
-        User u = [select Id from User where userName like 'efUnit@test.ch%' limit 1];        
-        System.runAs(u){
-            
-            Test.startTest();
-               delete efl2; 
-            Test.stopTest();
-        
-        }
         Contract ctAfter = [select Id, AccountId, Account.Name, EF_Billing_Currency__c from Contract where Account.Name = 'Test Account Client2'];               
                 
         //System.assertEquals('USD', ctAfter.EF_Billing_Currency__c);
@@ -188,14 +184,11 @@ private class EF_LocationCurrencyTriggerTest {
             );
         
         insert efl;
-        User u = [select Id from User where userName like 'efUnit@test.ch%' limit 1];        
-        System.runAs(u){
-            
-            Test.startTest();
-               delete efl; 
-            Test.stopTest();
+         
+        Test.startTest();
+           delete efl; 
+        Test.stopTest();
         
-        }
         Contract ctAfter = [select Id, AccountId, Account.Name, EF_Billing_Currency__c from Contract where Account.Name = 'Test Account Client2'];               
                 
         System.assertEquals(null, ctAfter.EF_Billing_Currency__c);

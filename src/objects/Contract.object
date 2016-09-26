@@ -2665,7 +2665,8 @@ IF(ISPICKVAL(Third_Party__c, &quot;Berlitz&quot;), 0.10,
     RecordType.DeveloperName = &apos;EF_Client_Agreement&apos;, 
       NOT(ISPICKVAL($User.EF_User_Role__c, &apos;Manager, Business Development&apos;)),
       NOT(ISPICKVAL($User.EF_User_Role__c, &apos;Head, Client Services&apos;)),
-      NOT(ISPICKVAL($User.EF_User_Role__c, &apos;Client Services Specialists&apos;))
+      NOT(ISPICKVAL($User.EF_User_Role__c, &apos;Client Services Specialists&apos;)),
+	  NOT(BEGINS($User.Profile_Name__c, 'System'))
 )</errorConditionFormula>
         <errorMessage>Only Client Services Specialists, Client Services Head and Business Development Managers can modify E&amp;F Contracts.</errorMessage>
     </validationRules>

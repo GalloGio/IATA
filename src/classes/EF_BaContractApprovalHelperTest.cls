@@ -108,7 +108,7 @@ private class EF_BaContractApprovalHelperTest
 				approvalList = [SELECT Id, EF_Billing_Agreement__c FROM EF_Approval__c];
 				System.assertEquals(0, approvalList.size());
 				baList = [select id, Payment_Method__c from EF_Billing_Agreement__c];
-				System.assertEquals('Bank Transfer', baList.get(0).Payment_Method__c);
+				System.assertEquals('Bank Transfer'.toLowerCase(), baList.get(0).Payment_Method__c.toLowerCase());
 				
 
 			Test.stopTest();
