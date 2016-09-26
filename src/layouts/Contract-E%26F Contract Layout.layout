@@ -243,6 +243,22 @@
     </layoutSections>
     <layoutSections>
         <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
+        <label>Files</label>
+        <layoutColumns>
+            <layoutItems>
+                <height>350</height>
+                <page>EF_Contract_Attachment_List</page>
+                <showLabel>false</showLabel>
+                <showScrollbars>true</showScrollbars>
+                <width>100%</width>
+            </layoutItems>
+        </layoutColumns>
+        <style>OneColumn</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
         <detailHeading>false</detailHeading>
         <editHeading>false</editHeading>
         <label>Custom Links</label>
@@ -276,6 +292,7 @@
         <fields>Status__c</fields>
         <fields>Client__c</fields>
         <fields>Airline__c</fields>
+        <fields>EF_Location_ID__c</fields>
         <fields>Data_Currency__c</fields>
         <fields>Payment_Method_Code__c</fields>
         <fields>Payment_Currency__c</fields>
@@ -302,6 +319,14 @@
     </relatedLists>
     <relatedLists>
         <relatedList>RelatedApprovalList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>CASES.CASE_NUMBER</fields>
+        <fields>CASES.SUBJECT</fields>
+        <fields>BSPCountry__c</fields>
+        <fields>CASES.CREATED_DATE</fields>
+        <fields>CASES.PRIORITY</fields>
+        <relatedList>Case.EF_Contract__c</relatedList>
     </relatedLists>
     <relatedObjects>AccountId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>
