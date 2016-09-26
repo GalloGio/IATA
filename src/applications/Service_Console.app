@@ -159,8 +159,8 @@
         </defaultShortcut>
         <defaultShortcut>
             <action>TOGGLE_APP_LEVEL_COMPONENTS</action>
-            <active>false</active>
-            <keyCommand>Z</keyCommand>
+            <active>true</active>
+            <keyCommand>CTRL+ALT+I</keyCommand>
         </defaultShortcut>
         <defaultShortcut>
             <action>REOPEN_LAST_TAB</action>
@@ -170,19 +170,56 @@
     </keyboardShortcuts>
     <label>Service Console</label>
     <listPlacement>
-        <location>full</location>
+        <location>left</location>
+        <units>percent</units>
+        <width>25</width>
     </listPlacement>
     <listRefreshMethod>refreshListRows</listRefreshMethod>
+    <pushNotifications>
+        <pushNotification>
+            <fieldNames>Category__c</fieldNames>
+            <fieldNames>Email__c</fieldNames>
+            <fieldNames>LastModifiedBy</fieldNames>
+            <fieldNames>LastModifiedDate</fieldNames>
+            <fieldNames>Phone</fieldNames>
+            <fieldNames>Sector__c</fieldNames>
+            <fieldNames>Status__c</fieldNames>
+            <objectName>Account</objectName>
+        </pushNotification>
+        <pushNotification>
+            <fieldNames>Account</fieldNames>
+            <fieldNames>Attachment_received_possible_POP__c</fieldNames>
+            <fieldNames>BSPCountry__c</fieldNames>
+            <fieldNames>CaseArea__c</fieldNames>
+            <fieldNames>Case_Remarks__c</fieldNames>
+            <fieldNames>Contact</fieldNames>
+            <fieldNames>LastModifiedBy</fieldNames>
+            <fieldNames>LastModifiedDate</fieldNames>
+            <fieldNames>Origin</fieldNames>
+            <fieldNames>Owner</fieldNames>
+            <fieldNames>Parent</fieldNames>
+            <fieldNames>Priority</fieldNames>
+            <fieldNames>Reason1__c</fieldNames>
+            <fieldNames>Region__c</fieldNames>
+            <fieldNames>Status</fieldNames>
+            <fieldNames>Subject</fieldNames>
+            <objectName>Case</objectName>
+        </pushNotification>
+    </pushNotifications>
     <saveUserSessions>true</saveUserSessions>
     <tab>standard-Chatter</tab>
     <tab>My_Status</tab>
     <tab>standard-Case</tab>
+    <tab>standard-Dashboard</tab>
+    <tab>Agents__c</tab>
     <tab>standard-Account</tab>
     <tab>standard-Contact</tab>
     <tab>standard-report</tab>
-    <tab>standard-Dashboard</tab>
     <tab>Operational_Improvements__c</tab>
     <workspaceMappings>
+        <mapping>
+            <tab>Agents__c</tab>
+        </mapping>
         <mapping>
             <tab>My_Status</tab>
         </mapping>

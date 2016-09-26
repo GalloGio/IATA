@@ -727,13 +727,13 @@
                                         </apex:column>
                                     </apex:pageblocktable>
                                 </apex:pageblock>
-                                <apex:pageblock title="{!$Label.ISSP_Articles}" rendered="{!finalArticleList != null && finalArticleList.size>0}">
-                                    <apex:pageblocktable value="{!finalArticleList}" var="article" styleclass="table-hover table table-condensed table-responsive">
+                                <apex:pageblock title="{!$Label.ISSP_Articles}" rendered="{!globalList != null && globalList.size>0}">
+                                    <apex:pageblocktable value="{!globalList}" var="article" styleclass="table-hover table table-condensed table-responsive">
                                         <apex:column >
                                             <apex:facet name="header">
                                                 {!$ObjectType.KnowledgeArticleVersion.Fields.Title.Label}
                                             </apex:facet>
-                                            <a href="javascript:getSelectArtical('{!article.KnowledgeArticleId}');">{!article.Title}</a>
+                                            <a href="javascript:getSelectArtical('{!article.articleId}');">{!article.articleTitle}</a>
                                         </apex:column>
                                         <apex:column value="{!article.articleType}">
                                             <apex:facet name="header">

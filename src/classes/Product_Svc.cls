@@ -312,6 +312,11 @@ public class Product_Svc
             //Get the email template to add on the body of the task for manager and alternate manager
             lstEmailTemplate = Utility.getEmailTemplatebyTemplateId(Utility.getTextSetting('Product Effective to template Id'));
         }
+
+        //Get all the product api name that we handle the change event
+        map<String,String> apiName_Label = productApiNames();
+        map<String,String> new_oldValue = new map<String,String>();
+        map<String,String> value_Label = new map<String,String>();
         
         for(Product2 product : products){
             
@@ -319,12 +324,9 @@ public class Product_Svc
             
             if(product.Product_Set_Up_Notifications__c){
                 boolean asBeenChanged = false;
+                new_oldValue.clear();
+                value_Label.clear();
 
-                //Get all the product api name that we handle the change event
-                map<String,String> apiName_Label = productApiNames();
-                map<String,String> new_oldValue = new map<String,String>();
-                map<String,String> value_Label = new map<String,String>();
-                
                 //Get the old value of the product
                 
                 for(String apiName : apiName_Label.keySet()){
@@ -790,11 +792,11 @@ public class Product_Svc
         
         for (i1 = 0; i1 < newList.size(); i1++) {
             //*** default effective from date to SAP effective from date or today
-            //if (newList[i1].Effective_From__c == null)
-            //    newList[i1].Effective_From__c = ((newList[i1].SAP_Effective_From__c != null) ? newList[i1].SAP_Effective_From__c : system.today());
+            if (newList[i1].Effective_From__c == null)
+                newList[i1].Effective_From__c = ((newList[i1].SAP_Effective_From__c != null) ? newList[i1].SAP_Effective_From__c : system.today());
             //*** default effective to date to 1 year from effective from date
-            //if (newList[i1].Effective_To__c == null)
-            //    newList[i1].Effective_To__c = newList[i1].Effective_From__c.addYears(1);
+            if (newList[i1].Effective_To__c == null)
+                newList[i1].Effective_To__c = newList[i1].Effective_From__c.addYears(1);
             //*** default activity code
             if (newList[i1].SAP_Material_Number__c != null)
                 newList[i1].Activity_Code__c = newList[i1].SAP_Material_Number__c.left(4);
@@ -808,48 +810,48 @@ public class Product_Svc
             Checks whether product and country are compliant for the current user
     ****************************************************************************************************/
     public static Boolean IsProductAndCountryCompliant(Id idProduct2, Set<String> setCountryCode) {
-        return IsProductAndCountryCompliant(new List<Id> {idProduct2}, setCountryCode).get(idProduct2);
+    	return IsProductAndCountryCompliant(new List<Id> {idProduct2}, setCountryCode).get(idProduct2);
     }
     
     public static Map<Id, Boolean> IsProductAndCountryCompliant(List<Id> lstProduct2Id, Set<String> setCountryCode) {
-        Map<Id, Boolean> mapProduct2Id_Compliance = new Map<Id, Boolean>();
-        
-        if (setCountryCode == null || setCountryCode.isEmpty()) {
-            for (Id idProduct : lstProduct2Id) {
-                mapProduct2Id_Compliance.put(idProduct, true);
-            }
-        }
-        else {
-            Boolean bSkipProdCompliance = false;
-            
-            // First check compliance at the country level
-            for (IATA_ISO_Country__c oCountry :
-                    [SELECT Is_Non_Compliant__c
-                    FROM IATA_ISO_Country__c
-                    WHERE Is_Non_Compliant__c = true
-                        AND ISO_Code__c IN :setCountryCode]) {
-                bSkipProdCompliance = true;
-            
-                for (Id idProduct : lstProduct2Id) {
-                    mapProduct2Id_Compliance.put(idProduct, false);
-                }
-                
-                break;
-            }
-            
-            // Second check compliance at the product level
-            if (!bSkipProdCompliance) {
-                Boolean bCompliant;
-                
-                Set<Id> setNonCompliantProductId = Product_Sel.getNonCompliantProductId(new Set<Id>(lstProduct2Id), setCountryCode);
-                
-                for (Id idProduct : lstProduct2Id) {
-                    mapProduct2Id_Compliance.put(idProduct, !setNonCompliantProductId.contains(idProduct));
-                }
-            }
-        }
-        
-        return mapProduct2Id_Compliance;
+    	Map<Id, Boolean> mapProduct2Id_Compliance = new Map<Id, Boolean>();
+    	
+    	if (setCountryCode == null || setCountryCode.isEmpty()) {
+	    	for (Id idProduct : lstProduct2Id) {
+				mapProduct2Id_Compliance.put(idProduct, true);
+	    	}
+    	}
+    	else {
+			Boolean bSkipProdCompliance = false;
+			
+			// First check compliance at the country level
+			for (IATA_ISO_Country__c oCountry :
+					[SELECT Is_Non_Compliant__c
+					FROM IATA_ISO_Country__c
+					WHERE Is_Non_Compliant__c = true
+						AND ISO_Code__c IN :setCountryCode]) {
+				bSkipProdCompliance = true;
+			
+				for (Id idProduct : lstProduct2Id) {
+					mapProduct2Id_Compliance.put(idProduct, false);
+		    	}
+		    	
+		    	break;
+			}
+    		
+    		// Second check compliance at the product level
+	    	if (!bSkipProdCompliance) {
+		    	Boolean bCompliant;
+		    	
+		    	Set<Id> setNonCompliantProductId = Product_Sel.getNonCompliantProductId(new Set<Id>(lstProduct2Id), setCountryCode);
+		    	
+		    	for (Id idProduct : lstProduct2Id) {
+		    		mapProduct2Id_Compliance.put(idProduct, !setNonCompliantProductId.contains(idProduct));
+		    	}
+	    	}
+    	}
+    	
+    	return mapProduct2Id_Compliance;
     } //*** end of "IsProductAndCountryCompliant"
     
 } //*** end of class

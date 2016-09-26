@@ -1256,6 +1256,10 @@
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>Libyan Arab Jamahiriya</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>Lithuania</fullName>
                 <default>false</default>
             </picklistValues>
@@ -1785,8 +1789,8 @@
     <fields>
         <fullName>Is_Non_Compliant__c</fullName>
         <defaultValue>false</defaultValue>
+        <description>IEC - Indicate if country is non-compliant with the IEC products displayed on the portal</description>
         <externalId>false</externalId>
-        <inlineHelpText>Used to determine a specific country is non-compliant with the IEC products displayed on the portal</inlineHelpText>
         <label>Is Non Compliant</label>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
@@ -2177,6 +2181,25 @@ Enabled: Sufficient for Agents to simply upload scanned copy to online applicati
         <language>en_US</language>
         <sharedTo>
             <group>IATAAdmins</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>EU_Agent_consent</fullName>
+        <columns>NAME</columns>
+        <columns>ISO_Code__c</columns>
+        <columns>ISO_Code_Numeric__c</columns>
+        <columns>BSP__c</columns>
+        <columns>BSP_Country_free_text__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>DDS_Enabled__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <label>Countries under EU Agent consent</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>DDS_team</group>
         </sharedTo>
     </listViews>
     <nameField>

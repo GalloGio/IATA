@@ -397,7 +397,7 @@
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
-            <value>Cases - Americas,Cases - Africa &amp; Middle East,Cases - Asia &amp; Pacific,Cases - China &amp; North Asia,Cases - Europe,Complaint (IDFS ISS),Invoicing Collection Cases,FDS Ad-hoc Calendar Change (R&amp;S) Locked</value>
+            <value>Cases - Americas,Cases - Africa &amp; Middle East,Cases - Asia &amp; Pacific,Cases - China &amp; North Asia,Cases - Europe,Complaint (IDFS ISS),Invoicing Collection Cases,FDS Ad-hoc Calendar Change (R&amp;S) Locked,Airline Coding Application</value>
         </criteriaItems>
         <criteriaItems>
             <field>EmailMessage.CcAddress</field>

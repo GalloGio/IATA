@@ -1,0 +1,265 @@
+<apex:page controller="ISSP_Ctrl_AccountStatements"
+           cache="false"
+           sidebar="false"
+           showHeader="false"
+           standardStylesheets="false"
+           action="{!initActions}"
+           >
+
+<c:ISSP_Header ></c:ISSP_Header>
+<apex:stylesheet value="{!URLFOR($Resource.ISSP_AccountStatements,'css/style.css')}"/>
+
+<script>
+  $(document).ready( function () {
+    collapseAll();
+
+    // init pagination
+    $('.table-pagination').dataTable({
+      "language": {
+              "lengthMenu": "{!$Label.ISSP_Display_Records_per_page}",
+              "zeroRecords": "{!$Label.ISSP_Nothing_found}",
+              "info": "{!$Label.ISSP_Showing_page}",
+              "infoEmpty": "{!$Label.ISSP_No_records_available}",
+              "infoFiltered": "{!$Label.ISSP_filtered_from_total_records}"
+          }
+    });
+
+    // collpase detail tables
+    $('#maintable .accordion-toggle').on('click', function () {
+      var dataTarget = $(this).attr('data-target');
+      var targetId = dataTarget.replace('#','');
+      collapseAll(targetId);
+      // set plus and minus signs visibility
+      if($(dataTarget).hasClass('in')) {
+        $(this).find('.plus-sign').addClass('in');
+        $(this).find('.minus-sign').removeClass('in');
+      } else {
+        $(this).find('.plus-sign').removeClass('in');
+        $(this).find('.minus-sign').addClass('in');
+      }
+    });
+
+    // filter by currency
+    $('#currencyFilter').on('change', function () {
+      filterCurrency($(this).val());
+    });
+  });
+
+  function collapseAll(currentId) {
+    $(".plus-sign").each(function() {
+      $(this).addClass("in");
+    });
+    $(".minus-sign").each(function() {
+      $(this).removeClass("in");
+    });
+    $(".accordion-body").each(function() {
+      if ($(this).attr('id')!=currentId) {
+        $(this).removeClass("in");
+      }
+    });
+  }
+
+  function filterCurrency(filter) {
+    collapseAll();
+    $(".accordion-toggle").each(function() {
+      var value = $(this).attr('data-filter');
+      if (filter==''||filter==value) {
+        $(this).addClass('in');
+      } else {
+        $(this).removeClass('in');
+      }
+    });
+  }
+</script>
+
+<div class="container">
+  <c:ISSP_CustomNavigation />
+
+  <apex:form id="mainForm" styleclass="form-inline">
+
+    <div class="alert alert-danger" style="display:{!if(listMessages.size==0,'none','')}">
+      <apex:repeat value="{!listMessages}" var="er" id="theRepeat">
+        <p><apex:outputText value="{!er}" escape="false" /></p>
+      </apex:repeat>
+    </div>
+
+    <!-- PAGE BLOCK for Account Statements when Terms And Conditions are accepted -->
+    <apex:pageBlock rendered="{!listMessages.size==0}">
+        <div class="jumbotron main-title">
+          <apex:image value="{!URLFOR($Resource.ISSP_AccountStatements,'img/AccStatementsIcon.png')}" />
+          <span>{!$Label.ISSP_Account_Statements_Title}</span>
+        </div>
+        <div class="undertitle">
+          <div class="undertitleLeft">
+            <!--<apex:outputLink styleclass="link" value="/faq_home?q=ICE">FAQ</apex:outputLink>-->
+            <apex:outputLink styleclass="link" value="{!instance}/sfc/servlet.shepherd/version/download/{!faq.id}" target="_document" rendered="{!faq!=null}">
+              FAQ
+            </apex:outputLink>
+            <!--<apex:outputLink styleclass="link" value="/ISSP_ContentPage">{!$Label.ISSP_Documents}</apex:outputLink>-->
+            <apex:outputLink styleclass="link" value="{!instance}/sfc/servlet.shepherd/version/download/{!document.id}" target="_document" rendered="{!document!=null}">
+              {!$Label.ISSP_Documents}
+            </apex:outputLink>
+          </div>
+          <div class="undertitleRight">
+            <apex:outputText styleclass="label normal" value="{!$Label.ISSP_Agency_Head_Office_code}"/>
+            <apex:outputText styleclass="label strong" value="{!headofficeAccount.IATACode__c}"/>
+            <apex:outputText styleclass="label normal" value="{!$Label.ISSP_Last_Updated_on}"/>
+            <apex:outputText styleclass="label strong" value="{0,date,dd MMM yyyy HH:mm z}">
+              <apex:param value="{!lastUpdatedOn}" />
+            </apex:outputText>
+          </div>
+        </div>
+
+			<div class="row">
+				<div class="col-xs-12">
+          <apex:outputPanel layout="block" styleclass="main-filters" rendered="{!listCurrency.size>1}">
+            <div class="form-group form-group-sm">
+              <label class="control-label" for="currencyFilter">{!$Label.ISSP_Currency_filter}</label>
+              <select class="form-control" id="currencyFilter">
+                <option></option>
+                <apex:repeat var="currency" value="{!listCurrency}">
+                  <option>{!currency}</option>
+                </apex:repeat>
+              </select>
+            </div>
+          </apex:outputPanel>
+
+          <div class="table-responsive">
+          <table id="maintable" class="table table-hover table-condensed">
+            <thead>
+              <tr>
+                <th></th>
+                <th>{!$ObjectType.Account_Statement__c.fields.Period__c.label}</th>
+                <th>{!$ObjectType.Account_Statement__c.fields.Remittance_Date__c.label}</th>
+                <th class="text-width">{!$Label.Location}</th>
+                <th class="hidden-xs hidden-sm currency-width">{!$ObjectType.Account_Statement__c.fields.Billing_Amount__c.label}</th>
+                <th class="hidden-xs hidden-sm currency-width">{!$ObjectType.Account_Statement__c.fields.Billing_Adjustment__c.label}</th>
+                <th class="currency-width">{!$ObjectType.Account_Statement__c.fields.Amount_to_be_Paid__c.label}</th>
+                <th class="hidden-xs hidden-sm currency-width">{!$ObjectType.Account_Statement__c.fields.Paid__c.label}</th>
+                <th class="currency-width">{!$ObjectType.Account_Statement__c.fields.Balance__c.label}</th>
+                <th class="hidden-xs"></th>
+                <th>{!$ObjectType.Account_Statement__c.fields.Status__c.label}</th>
+              </tr>
+            </thead>
+            <tbody>
+						<apex:repeat var="wrapper" value="{!listWrapper}">
+              <tr class="{!IF(wrapper.showSeparation,'','hidden')}">
+                <td colspan="10" class="separation-row"><div>{!$Label.ISSP_Past_Periods}</div></td>
+              </tr>
+              <tr class="accordion-toggle collapse in" data-toggle="collapse" data-target="#{!wrapper.parent.Period__c}-period" data-filter="{!wrapper.parent.CurrencyIsoCode}">
+                <td class="hidden-xs">
+                  <apex:image styleClass="plus-sign collapse" value="{!URLFOR($Resource.ISSP_AccountStatements,'img/plus_sign.png')}" width="13" height="13"/>
+                  <apex:image styleClass="minus-sign collapse" value="{!URLFOR($Resource.ISSP_AccountStatements,'img/minus_sign.png')}" width="13" height="13"/>
+                </td>
+                <td>
+                  <apex:outputField value="{!wrapper.parent.Period__c}"/>
+                </td>
+                <td>
+                  <apex:outputText value="{0,date,dd MMM yyyy}">
+                    <apex:param value="{!wrapper.parent.Remittance_Date__c}" />
+                  </apex:outputText>
+                </td>
+                <td>
+                  <apex:outputText value="{!$Label.ISSP_Consolidated}" />
+                </td>
+                <td class="hidden-xs hidden-sm">
+                  <apex:outputText value="{!wrapper.parent.CurrencyIsoCode} {0, number, ###,##0.00}">
+                  <apex:param value="{!wrapper.parent.Billing_Amount__c}"/>
+                </apex:outputText>
+              </td>
+                <td class="hidden-xs hidden-sm">
+                  <apex:outputText value="{!wrapper.parent.CurrencyIsoCode} {0, number, ###,##0.00}">
+                    <apex:param value="{!wrapper.ParentBillingAdjustment}"/>
+                  </apex:outputText>
+                </td>
+                <td class="">
+                  <apex:outputText value="{!wrapper.parent.CurrencyIsoCode} {0, number, ###,##0.00}">
+                    <apex:param value="{!wrapper.parent.Amount_to_be_Paid__c}"/>
+                  </apex:outputText>
+                </td>
+                <td class="hidden-xs hidden-sm">
+                  <apex:outputText value="{!wrapper.parent.CurrencyIsoCode} {0, number, ###,##0.00}">
+                    <apex:param value="{!wrapper.parent.Paid__c}"/>
+                  </apex:outputText>
+                </td>
+                <td>
+                  <apex:outputText value="{!wrapper.parent.CurrencyIsoCode} {0, number, ###,##0.00}">
+                    <apex:param value="{!wrapper.parent.Balance__c}"/>
+                  </apex:outputText>
+                </td>
+                <td class="hidden-xs">
+                  <apex:image value="{!URLFOR($Resource.ISSP_AccountStatements,'img/clock.png')}" title="{!$Label.ISSP_Last_updated_statement}" width="16" height="16" rendered="{!wrapper.lastUpdatedMark}"/>
+                </td>
+                <td class="{!IF(wrapper.ParentStatus=='Fullpayment','success','')}{!IF(wrapper.ParentStatus=='Excess','warning','')}{!IF(wrapper.ParentStatus=='Pending','danger','')}">
+                  <apex:outputText value="{!wrapper.ParentStatus}"/>
+                </td>
+              </tr>
+              <!-- DETAIL TABLE-->
+              <tr class="accordion-body collapse" id="{!wrapper.parent.Period__c}-period">
+                <td colspan="1" class="hidden-xs"></td>
+                <td colspan="2"></td>
+                <td colspan="6">
+                  <apex:outputPanel rendered="{!wrapper.listStatements.size>0}">
+                    <div>
+                      <apex:pageBlockTable value="{!wrapper.listStatements}" var="statement" styleClass="table table-condensed table-pagination" headerClass="hidden">
+                        <apex:column styleclass="text-width-xs">
+                          <apex:outputField value="{!statement.Account__r.Site}"/>
+                        </apex:column>
+
+                        <apex:column styleclass="hidden-xs currency-width">
+                          <apex:outputText value="{!statement.CurrencyIsoCode} {0, number, ###,##0.00}">
+                            <apex:param value="{!statement.Billing_Amount__c}"/>
+                          </apex:outputText>
+                        </apex:column>
+
+                        <apex:column styleclass="hidden-xs currency-width">
+                          <apex:outputText value="{!statement.CurrencyIsoCode} {0, number, ###,##0.00}">
+                            <apex:param value="{!statement.Billing_Amount__c-statement.Amount_to_be_Paid__c}"/>
+                          </apex:outputText>
+                        </apex:column>
+
+                        <apex:column styleclass="hidden-xs currency-width">
+                          <apex:outputText value="{!statement.CurrencyIsoCode} {0, number, ###,##0.00}">
+                            <apex:param value="{!statement.Amount_to_be_Paid__c}"/>
+                          </apex:outputText>
+                        </apex:column>
+
+                        <apex:column styleclass="hidden-xs currency-width">
+                          <apex:outputText value="{!statement.CurrencyIsoCode} {0, number, ###,##0.00}">
+                            <apex:param value="{!statement.Paid__c}"/>
+                          </apex:outputText>
+                        </apex:column>
+
+                        <apex:column styleclass="currency-width">
+                          <apex:outputText value="{!statement.CurrencyIsoCode} {0, number, ###,##0.00}">
+                            <apex:param value="{!statement.Balance__c}"/>
+                          </apex:outputText>
+                        </apex:column>
+                      </apex:pageBlockTable>
+
+                    </div>
+                    <td colspan="1" class="hidden-xs"></td>
+                    <td colspan="1"></td>
+                  </apex:outputPanel>
+                </td>
+              </tr>
+              <!-- END DETAIL TABLE -->
+            </apex:repeat>
+          </tbody>
+          </table>
+          </div>
+
+          <div class="col-xs-12 small text-left">
+            {!$Label.ISSP_Account_Statements_Disclaimer}
+          </div>
+
+				</div>
+			</div>
+
+		</apex:pageBlock>
+
+  </apex:form>
+
+  <c:ISSP_CustomFooter />
+</div>
+</apex:page>

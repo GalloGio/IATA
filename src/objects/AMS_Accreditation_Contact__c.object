@@ -395,6 +395,17 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Legacy_External_Id__c</fullName>
+        <externalId>true</externalId>
+        <label>Legacy External Id</label>
+        <length>30</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Local_First_name__c</fullName>
         <externalId>false</externalId>
         <label>First Name (Chinese)</label>
@@ -1062,4 +1073,17 @@
     <searchLayouts/>
     <sharingModel>ControlledByParent</sharingModel>
     <startsWith>Vowel</startsWith>
+    <validationRules>
+        <fullName>AMS_Mandatory_Fields</fullName>
+        <active>true</active>
+        <description>For Accreditation Contacts with Record Type Person we had to remove some fields as mandatory due to legacy data, so we are making these fields mandatory only when the Legacy_External_Id__c is not filled</description>
+        <errorConditionFormula>AND(
+$RecordType.Name = &quot;Person&quot;,
+ISBLANK(Legacy_External_Id__c),
+ISBLANK( Email__c ),
+ISBLANK( Phone__c ),
+ISBLANK(  First_name__c )
+)</errorConditionFormula>
+        <errorMessage>Please make sure you are filling the following accreditation contact fields: First Name, Last Name, Phone and Email</errorMessage>
+    </validationRules>
 </CustomObject>

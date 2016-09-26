@@ -91,6 +91,13 @@
         <layoutColumns/>
         <style>CustomLinks</style>
     </layoutSections>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>GSA_Territory__c.Related_Accreditation__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <relatedList>RelatedEntityHistoryList</relatedList>
+    </relatedLists>
     <relatedObjects>Status__c</relatedObjects>
     <relatedObjects>Endorsed_Accredited_By__c</relatedObjects>
     <relatedObjects>Class__c</relatedObjects>

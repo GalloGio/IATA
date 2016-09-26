@@ -69,6 +69,18 @@
         <template>ISS_Portal/ISSP_Notify_contact_of_T_Dashboard_request</template>
     </alerts>
     <alerts>
+        <fullName>KAVI_Access_Granted</fullName>
+        <description>KAVI Access Granted</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Contact__c</field>
+            <type>contactLookup</type>
+        </recipients>
+        <senderAddress>noreply@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>unfiled$public/Kavi_Notify_contact_of_access_grantedVF</template>
+    </alerts>
+    <alerts>
         <fullName>Notification_that_user_receive_after_an_access_request</fullName>
         <description>Notification that user receive after an access request</description>
         <protected>false</protected>
@@ -344,6 +356,31 @@
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
+        <fullName>ISSP Notify contact of access granted to Kavi</fullName>
+        <actions>
+            <name>KAVI_Access_Granted</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Portal_Application_Right__c.Right__c</field>
+            <operation>equals</operation>
+            <value>Access Granted</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Portal_Application_Right__c.Application_Name__c</field>
+            <operation>equals</operation>
+            <value>Standards Setting Workspace</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Portal_Application_Right__c.Kavi_user__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <description>Send an email to notify that the request for kavi service has been granted</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
         <fullName>ISSP Notify contact of access granted to TD Premium</fullName>
         <actions>
             <name>Notify_contact_of_access_granted_to_TD_Premium</name>
@@ -549,7 +586,7 @@ Field update of user &apos;Treasury Dashboard User&apos; = True</description>
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <formula>AND( ISPICKVAL (Right__c , &apos;Access Granted&apos;), NOT(CONTAINS(Application_Name__c, &apos;Treasury Dashboard&apos;)),  Portal_Application__c !=  $Setup.ISSP_Portal_Service_Ids__c.AgencyAccreditation__c )</formula>
+        <formula>AND(  ISPICKVAL (Right__c , &apos;Access Granted&apos;),  NOT ( OR(CONTAINS(Application_Name__c, &apos;Treasury Dashboard&apos;), CONTAINS(Application_Name__c, &apos;Standards Setting Workspace&apos;) )),  Portal_Application__c !=  $Setup.ISSP_Portal_Service_Ids__c.AgencyAccreditation__c )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>

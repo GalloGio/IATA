@@ -74,16 +74,16 @@ public with sharing class DAL_ISSP {
     
     public static Case getCase(String caseId) {
         List<Case> cases = [select  
-                (Select Id, IsPublished, CreatedDate From CaseComments),Product_Manager_ACR__c,
+                (Select Id, IsPublished, CreatedDate From CaseComments),Product_Manager_ACR__c,ArchivedDate__c,Account.Type,Account.IATA_ISO_Country__c,account.IATA_ISO_Country__r.iso_code__c,
                 Id,Subject,Description,CaseArea__c, Country_concerned_by_the_query__c,CaseNumber,Portal_Case_Status__c,
                 ContactId, RecordType.Name, Type, Priority, Classification_SIS__c, Defect_Issue__c, Airline_Designator__c,
                 Member_Code_Numeric__c, Contact.Name, Contact.Email, Contact.Phone, Contact.MobilePhone, Contact.Fax, Contact.FirstName, Contact.LastName ,
-                CreatedDate, ClosedDate, Region__c, IATA_Code__c, BSPCountry__c, Account.Name, SAAM_Deadline_Date__c,
-                Process_Approved__c, Process_Start_Date__c, Missing_Documents_A_B_received__c,
-                Missing_Documents_A_B_requested__c, Rejection_Withdrawal_remarks__c,Type_of_customer__c,
-                Reason,Sub_Type__c,IATA_office__c,BSP_s_concerned__c,Business_Criticality__c,DPC_Software__c,
-                Status,ParentId,Origin,Account_Location_Type__c,AccountId,SuppliedEmail,DPC_Case_classification__c,
-                Planned_Start_CR__c,Planned_End_CR__c,CR_Status__c,DPC_Date_Time_New__c,DPC_Date_Time_Scheduled__c,
+                CreatedDate, ClosedDate, Region__c, IATA_Code__c, BSPCountry__c, Account.Name, Account.Status__c, SAAM_Deadline_Date__c,
+                Process_Approved__c, Process_Start_Date__c, Missing_Documents_A_B_received__c,Financial_Review_Type__c,Deadline_Date__c,FA_Second_Deadline_Date__c,
+                Missing_Documents_A_B_requested__c, Rejection_Withdrawal_remarks__c,Type_of_customer__c,FA_Third_Deadline_Date__c,Submitted_Date__c,Financial_Review_Result__c,
+                Reason,Sub_Type__c,IATA_office__c,BSP_s_concerned__c,Business_Criticality__c,DPC_Software__c,Financial_Security_Amount__c,Financial_Security_Currency__c,
+                Status,ParentId,Origin,Account_Location_Type__c,AccountId,SuppliedEmail,DPC_Case_classification__c,FS_Deadline_Date__c,FS_Second_Deadline_Date__c,FS_Third_Deadline_Date__c,
+                Planned_Start_CR__c,Planned_End_CR__c,CR_Status__c,DPC_Date_Time_New__c,DPC_Date_Time_Scheduled__c,FS_Submitted_Date__c,IFAP_Agent_Code__c,IFAP_Agent_Type__c,
                 DPC_Date_Time_Completed__c,ACCA_Case_Age_for_Standard_CR__c,ACCA_Case_Age_for_Scheduled_CR__c,
                 DPC_Case_Age_for_standard_DSR__c,DPC_Case_Age_for_Scheduled_DSR__c,ACCA_Owner__c, isDPCCurrentUser__c,
                 Escalated_Status_ACCA__c, DPC_ACR_Number__c, DPC_Person_in_Charge__c, Object_Set_Up_Affected__c,
@@ -93,7 +93,10 @@ public with sharing class DAL_ISSP {
                 Impact_Analysis_Completed_By__c, Deployment_date_to_acca__c, Expected_Deadline__c,OwnerId, Owner.Name,
                 CurrencyIsoCode, Estimated_Total_Development_Cost__c, Estimated_Processing_Cost_if_appl__c,
                 Account_Concerned__c, IATAcode__c, Reason1__c,Planned_Implementation_Date__c,Documentation_Complete__c,Planned_Documentation_Date__c,
-                PO_Number__c, Visible_on_ISS_Portal__c,Instant_Survey_Last_feedback_received__c,Dossier_reception_date__c, IFAP_Country_ISO__c
+                PO_Number__c, Visible_on_ISS_Portal__c,Instant_Survey_Last_feedback_received__c,Dossier_reception_date__c, IFAP_Country_ISO__c,
+                Outstanding_Amount__c,End_of_Grace_Period_Date__c,Total_Irregularities__c,Update_AIMS_IRR__c,Update_AIMS_IRRWITH__c,Update_AIMS_DEF__c,Reason_for_Default__c,
+             	DEF_Withdrawal_Approval_Rejection__c,DEF_Withdrawal_Approval_Rejection_Date__c,Update_AIMS_REI_DEFWITH__c,Remittance_Date__c,Short_Payment_Amount__c,Billing_Amount__c,
+     			Collected_amount__c
                 FROM Case where Id=:caseId];
         if (cases.size() > 0)
             return cases[0];

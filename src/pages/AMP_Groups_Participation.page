@@ -1,0 +1,55 @@
+<apex:page showHeader="true" sidebar="true" standardController="Account" extensions="AMP_Groups_ParticipationController">
+
+
+	<apex:pageBlock id="theBlock">
+		<table class="list"  border="0" cellpadding="0" cellspacing="0">
+			<thead class="rich-table-thead">
+				<tr class="headerRow" >
+					<th class="headerRow" scope="col" colspan="1" style="width: 17%;"><div>IATA Group Name</div></th>
+					<th class="headerRow" scope="col" colspan="1" style="width: 12%;"><div>IATA Group Owner</div></th>
+					<th class="headerRow" scope="col" colspan="1" style="width: 30%;"><div>Mission of IATA Group</div></th>
+					<th class="headerRow" scope="col" colspan="1" style="width: 11%;"><div>Role Within Group</div></th>
+					<th class="headerRow" scope="col" colspan="1" style="width: 5%;"><div>Salutation</div></th>
+					<th class="headerRow" scope="col" colspan="1" style="width: 8%;"><div>First Name</div></th>
+					<th class="headerRow" scope="col" colspan="1" style="width: 8%;"><div>Last Name</div></th>
+					<th class="headerRow" scope="col" colspan="1" style="width: 9%;"><div>Title</div></th>
+
+				</tr>
+			</thead>
+
+			<apex:variable value="{!''}" var="previousUnderGroup" />
+
+			<apex:repeat value="{!lstParticipants}" var="pWrapper">
+				
+				<apex:outputPanel rendered="{! pWrapper.participant.Local_Governance__r.AM_Under__r.Name <> previousUnderGroup}">
+					<tr class="headerRow">
+						<td class="headerRow" colspan="8"><div>Under {! pWrapper.participant.Local_Governance__r.AM_Under__r.Name}</div></td>
+					</tr>
+				</apex:outputPanel>
+
+				<tr class="dataRow" onmouseover="if (window.hiOn){hiOn(this);} " onmouseout="if (window.hiOff){hiOff(this);} " onblur="if (window.hiOff){hiOff(this);}" onfocus="if (window.hiOn){hiOn(this);}">
+
+
+					<apex:outputPanel rendered="{! pWrapper.rowspan > 0}">
+						<td class="dataCell" style="vertical-align: top;" rowspan="{! pWrapper.rowspan }">
+								<apex:outputLink value="/{!pWrapper.participant.Local_Governance__c}" target="_blank">{! pWrapper.participant.Local_Governance__r.Name }</apex:outputLink>
+						</td>
+						<td class="dataCell" style="vertical-align: top;" rowspan="{! pWrapper.rowspan }">{! pWrapper.participant.Local_Governance__r.Group_Owner__r.Name}</td>
+						<td class="dataCell" style="vertical-align: top;" rowspan="{! pWrapper.rowspan }">{! pWrapper.participant.Local_Governance__r.Mission__c }</td>
+					</apex:outputPanel>
+
+					<td class="dataCell" >{! pWrapper.participant.Participant_Type__c }</td>
+					<td class="dataCell" >{! pWrapper.participant.Contact__r.Salutation }</td>
+					<td class="dataCell" >{! IF(pWrapper.participant.Contact__r.AM_First_Name_Latin_Char__c != null, pWrapper.participant.Contact__r.AM_First_Name_Latin_Char__c , pWrapper.participant.Contact__r.FirstName) }</td>
+					<td class="dataCell" >{! IF(pWrapper.participant.Contact__r.AM_Last_Name_Latin_Char__c != null, pWrapper.participant.Contact__r.AM_Last_Name_Latin_Char__c , pWrapper.participant.Contact__r.LastName) }</td>
+					<td class="dataCell" >{! IF(pWrapper.participant.Contact__r.AM_Job_Title_English__c != null, pWrapper.participant.Contact__r.AM_Job_Title_English__c , pWrapper.participant.Contact__r.Title) }</td>
+
+				</tr>
+
+				<apex:variable value="{! pWrapper.participant.Local_Governance__r.AM_Under__r.Name}" var="previousUnderGroup" />
+			</apex:repeat>
+
+		</table>
+	</apex:pageBlock>
+
+</apex:page>

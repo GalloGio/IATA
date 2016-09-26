@@ -94,7 +94,7 @@ trigger trgCaseIFAP on Case (before insert, before update) {
                         newCase.addError('The contact\'s Agent Code is not valid.');
 
 
-                if (!IFAP_BusinessRules.IsStatusCanBeSelected(true, false, newCase, null, currentUserProfile, isIfapAuthorizedUser)) {
+                if (!IFAP_BusinessRules.IsStatusCanBeSelected(true, newCase, null, currentUserProfile, isIfapAuthorizedUser)) {
                     newCase.addError('This following case status cannot be selected: ' + newCase.status);
                 }
 
@@ -174,7 +174,7 @@ trigger trgCaseIFAP on Case (before insert, before update) {
                 if (UpdatedCase.status != 'Closed' && !TransformationHelper.NoStatusValidation ) {
                     if (UpdatedCase.status <> oldCase.status) {
 
-                        if (!IFAP_BusinessRules.IsStatusCanBeSelected(false, updatedCase.IsComplaint__c, updatedCase, oldCase , currentUserProfile, isIfapAuthorizedUser)) {
+                        if (!IFAP_BusinessRules.IsStatusCanBeSelected(false, updatedCase, oldCase , currentUserProfile, isIfapAuthorizedUser)) {
                             System.debug('IFAP_BusinessRules.IsStatusCanBeSelected............trg');
                             updatedCase.addError('The following case status cannot be selected: ' + updatedCase.status);
                         } else if (IFAP_BusinessRules.FSValidationCheckBox(updatedCase, oldCase , currentUserProfile)) {
@@ -254,7 +254,7 @@ trigger trgCaseIFAP on Case (before insert, before update) {
                     IFAP_BusinessRules.setCountryAreaAndISOCode(UpdatedCase, accountMap);
                 }
 
-                updatedCase.IsComplaint__c = false;
+                //updatedCase.IsComplaint__c = false;
 
                 /////////////////
                 // Phase 4

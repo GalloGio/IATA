@@ -131,18 +131,28 @@ public class AMS_AgencyAChangeCodeHandler {
 
         //let's first find the OSCAR that need to be migrated
         List<AMS_OSCAR__c> oscarsToCopyData = new List<AMS_OSCAR__c>();
+        List<AMS_OSCAR__c> oscarsToUpdateAppointments = new List<AMS_OSCAR__c>();
 
         //aacclist = [SELECT ID, OSCAR__c, OSCAR__r.Account__c , OSCAR__r.AMS_Online_Accreditation__c from Agency_Applied_Change_code__c where id in :aaccIds and OSCAR__r.RecordTypeId = :rtNew and OSCAR__r.Process__c in ('NEW.HO.1.0','NEW.BR','NEW.BR.ABROAD') ];
 
-        oscarsToCopyData = [SELECT ID, Account__c, AMS_Online_Accreditation__c, RecordTypeId from AMS_OSCAR__C where Id in :oscarIds and RecordTypeId = :rtNew and Process__c in :AMS_Utils.oscarAMSProcesses];
+        oscarsToCopyData = [SELECT ID, Account__c, AMS_Online_Accreditation__c, RecordTypeId,Process__c from AMS_OSCAR__C where Id in :oscarIds and RecordTypeId = :rtNew and Process__c in :AMS_Utils.oscarAMSProcesses];
 
         if(!oscarsToCopyData.isEmpty()){
             AMS_Utils.copyDataToAccount(oscarsToCopyData);
+        
+            for(AMS_OSCAR__C oscar : oscarsToCopyData)
+            {
+                 if( AMS_Utils.oscarProcessesWithAppointments.contains(oscar.Process__c))
+                     oscarsToUpdateAppointments.add(oscar);
+
+            }       
+
+            if(!oscarsToUpdateAppointments.isEmpty())
+                AMS_Utils.UpdateInspectionsFromOscar(oscarsToUpdateAppointments);
+
         }else{
             System.debug('Nothing to migrate here.');
         }
-
-        
     }
 
 }

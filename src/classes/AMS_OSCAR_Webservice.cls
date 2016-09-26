@@ -126,7 +126,7 @@ global class AMS_OSCAR_Webservice {
                     return 'ERROR: ' + result;
                 }
 
-                Case oscarCommCase = [select Id from Case where OSCAR__c =: oscar[0].Id limit 1];
+                Case oscarCommCase = [select Id,Reason1__c from Case where OSCAR__c =: oscar[0].Id AND ParentId = null limit 1];
 
                 if(oscarCommCase == null){
                     result = 'Could not find a the Oscar Communication case related to this OSCAR.';
@@ -134,7 +134,7 @@ global class AMS_OSCAR_Webservice {
                 }
 
                 Date currentDate = Date.today();
-                Case ifapCase = new Case(RecordTypeId = IFAPcaseRecordTypeID, ParentId = oscarCommCase.Id, AccountId = oscar[0].Account__c, Subject = 'Changes – ' + oscar[0].Account__r.Name, Status = 'Agent to be Notified',
+                Case ifapCase = new Case(RecordTypeId = IFAPcaseRecordTypeID, ParentId = oscarCommCase.Id, AccountId = oscar[0].Account__c, Subject = oscarCommCase.Reason1__c + ' - ' + oscar[0].Account__r.Name, Status = 'Agent to be Notified',
                                          Financial_Review_Type__c = 'New applications', IFAP_Financial_Year__c = String.valueOf(currentDate.year()),
                                          Deadline_Date__c = currentDate+5, ContactId = ifapContact[0].Id, OSCAR__c = oscar[0].Id, Financial_Assessment_requested__c = currentDate);
 
@@ -168,7 +168,7 @@ global class AMS_OSCAR_Webservice {
             List<AMS_OSCAR__c> oscar = [select Name, Account__c, Account__r.Name, Account__r.IATA_ISO_Country__r.Region__c, Account__r.IATA_ISO_Country__r.Name from AMS_OSCAR__c where Id =: oscarId];
             if(oscar!=null && oscar.size()>0){
 
-                Case oscarCommCase = [select Id from Case where OSCAR__c =: oscar[0].Id limit 1];
+                Case oscarCommCase = [select Id from Case where OSCAR__c =: oscar[0].Id AND ParentId = null limit 1];
 
                 if(oscarCommCase == null){
                     result = 'Could not find a the Oscar Communication case related to this OSCAR.';
@@ -201,11 +201,14 @@ global class AMS_OSCAR_Webservice {
     WebService static String copyDataToAccount(String oscarId){
 
         try{
-            List<AMS_OSCAR__c> oscar = [select Account__c, AMS_Online_Accreditation__c, recordTypeID from AMS_OSCAR__c where Id =: oscarId];
+            List<AMS_OSCAR__c> oscar = [select Account__c, AMS_Online_Accreditation__c, Process__c, recordTypeID from AMS_OSCAR__c where Id =: oscarId];
             AMS_Utils.copyDataToAccount(oscar);
             return 'OK';
-        }catch(Exception ex){
-            return ex.getMessage();
+        }catch (Exception ex) {
+            if (ex.getMessage().contains('ISSP_ContactUpdaetPortalUser'))
+                return Label.AMS_Duplicate_Username;
+            else
+                return ex.getMessage();
         }
     }
 

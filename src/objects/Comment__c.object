@@ -58,6 +58,19 @@ Object to store comments related to objectives, or independent comments that we 
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
+        <fullName>Account__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Account</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>News</relationshipLabel>
+        <relationshipName>Comments</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>Achievement__c</fullName>
         <defaultValue>false</defaultValue>
         <description>Is this a comment that should be displayed on the weekly or monthly reports</description>
@@ -79,50 +92,42 @@ Object to store comments related to objectives, or independent comments that we 
             <picklistValues>
                 <fullName>Eastern Africa</fullName>
                 <default>false</default>
-                <controllingFieldValues>Africa</controllingFieldValues>
-                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
+                <controllingFieldValues>AME</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Gulf Area</fullName>
                 <default>false</default>
-                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
-                <controllingFieldValues>MENA</controllingFieldValues>
+                <controllingFieldValues>AME</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Levant</fullName>
                 <default>false</default>
-                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
-                <controllingFieldValues>MENA</controllingFieldValues>
+                <controllingFieldValues>AME</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>North Africa</fullName>
                 <default>false</default>
-                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
-                <controllingFieldValues>MENA</controllingFieldValues>
+                <controllingFieldValues>AME</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>SA-YE</fullName>
                 <default>false</default>
-                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
-                <controllingFieldValues>MENA</controllingFieldValues>
+                <controllingFieldValues>AME</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>South Western Africa</fullName>
                 <default>false</default>
-                <controllingFieldValues>Africa</controllingFieldValues>
-                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
+                <controllingFieldValues>AME</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Southern Africa</fullName>
                 <default>false</default>
-                <controllingFieldValues>Africa</controllingFieldValues>
-                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
+                <controllingFieldValues>AME</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Central West Africa</fullName>
                 <default>false</default>
-                <controllingFieldValues>Africa</controllingFieldValues>
-                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
+                <controllingFieldValues>AME</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Arg-Par-Uru</fullName>
@@ -182,67 +187,67 @@ Object to store comments related to objectives, or independent comments that we 
             <picklistValues>
                 <fullName>India</fullName>
                 <default>false</default>
-                <controllingFieldValues>Asia &amp; Pacific</controllingFieldValues>
+                <controllingFieldValues>ASPAC</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Indonesia</fullName>
                 <default>false</default>
-                <controllingFieldValues>Asia &amp; Pacific</controllingFieldValues>
+                <controllingFieldValues>ASPAC</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Japan</fullName>
                 <default>false</default>
-                <controllingFieldValues>Asia &amp; Pacific</controllingFieldValues>
+                <controllingFieldValues>ASPAC</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Pakistan</fullName>
                 <default>false</default>
-                <controllingFieldValues>Asia &amp; Pacific</controllingFieldValues>
+                <controllingFieldValues>ASPAC</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Philippines</fullName>
                 <default>false</default>
-                <controllingFieldValues>Asia &amp; Pacific</controllingFieldValues>
+                <controllingFieldValues>ASPAC</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Republic of Korea</fullName>
                 <default>false</default>
-                <controllingFieldValues>Asia &amp; Pacific</controllingFieldValues>
+                <controllingFieldValues>ASPAC</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>SG_LK_MY_BD_MV_BN</fullName>
                 <default>false</default>
-                <controllingFieldValues>Asia &amp; Pacific</controllingFieldValues>
+                <controllingFieldValues>ASPAC</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Southwest Pacific</fullName>
                 <default>false</default>
-                <controllingFieldValues>Asia &amp; Pacific</controllingFieldValues>
+                <controllingFieldValues>ASPAC</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Thailand</fullName>
                 <default>false</default>
-                <controllingFieldValues>Asia &amp; Pacific</controllingFieldValues>
+                <controllingFieldValues>ASPAC</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Vietnam</fullName>
                 <default>false</default>
-                <controllingFieldValues>Asia &amp; Pacific</controllingFieldValues>
+                <controllingFieldValues>ASPAC</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>China-Mongolia-North Korea</fullName>
                 <default>false</default>
-                <controllingFieldValues>China &amp; North Asia</controllingFieldValues>
+                <controllingFieldValues>Nth. Asia</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Chinese Taipei</fullName>
                 <default>false</default>
-                <controllingFieldValues>China &amp; North Asia</controllingFieldValues>
+                <controllingFieldValues>Nth. Asia</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>HK_MO</fullName>
                 <default>false</default>
-                <controllingFieldValues>China &amp; North Asia</controllingFieldValues>
+                <controllingFieldValues>Nth. Asia</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Central Asia</fullName>
@@ -521,76 +526,101 @@ Object to store comments related to objectives, or independent comments that we 
         <inlineHelpText>Region this comment is related to</inlineHelpText>
         <label>Region</label>
         <picklist>
-            <controllingField>Division__c</controllingField>
             <picklistValues>
-                <fullName>Africa &amp; Middle East</fullName>
+                <fullName>AME</fullName>
                 <default>false</default>
-                <controllingFieldValues>CS</controllingFieldValues>
-                <controllingFieldValues>FDS</controllingFieldValues>
-                <controllingFieldValues>MACS</controllingFieldValues>
-                <controllingFieldValues>MER</controllingFieldValues>
-                <controllingFieldValues>PPD</controllingFieldValues>
-                <controllingFieldValues>RVPO</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Americas</fullName>
                 <default>false</default>
-                <controllingFieldValues>APCS</controllingFieldValues>
-                <controllingFieldValues>CS</controllingFieldValues>
-                <controllingFieldValues>FDS</controllingFieldValues>
-                <controllingFieldValues>MACS</controllingFieldValues>
-                <controllingFieldValues>MER</controllingFieldValues>
-                <controllingFieldValues>PPD</controllingFieldValues>
-                <controllingFieldValues>RVPO</controllingFieldValues>
-                <controllingFieldValues>SFO</controllingFieldValues>
             </picklistValues>
             <picklistValues>
-                <fullName>Asia &amp; Pacific</fullName>
+                <fullName>ASPAC</fullName>
                 <default>false</default>
-                <controllingFieldValues>APCS</controllingFieldValues>
-                <controllingFieldValues>CS</controllingFieldValues>
-                <controllingFieldValues>FDS</controllingFieldValues>
-                <controllingFieldValues>MACS</controllingFieldValues>
-                <controllingFieldValues>MER</controllingFieldValues>
-                <controllingFieldValues>PPD</controllingFieldValues>
-                <controllingFieldValues>RVPO</controllingFieldValues>
-                <controllingFieldValues>SFO</controllingFieldValues>
             </picklistValues>
             <picklistValues>
-                <fullName>China &amp; North Asia</fullName>
+                <fullName>Nth. Asia</fullName>
                 <default>false</default>
-                <controllingFieldValues>APCS</controllingFieldValues>
-                <controllingFieldValues>CS</controllingFieldValues>
-                <controllingFieldValues>FDS</controllingFieldValues>
-                <controllingFieldValues>MACS</controllingFieldValues>
-                <controllingFieldValues>MER</controllingFieldValues>
-                <controllingFieldValues>PPD</controllingFieldValues>
-                <controllingFieldValues>RVPO</controllingFieldValues>
-                <controllingFieldValues>SFO</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Europe</fullName>
                 <default>false</default>
-                <controllingFieldValues>APCS</controllingFieldValues>
-                <controllingFieldValues>CS</controllingFieldValues>
-                <controllingFieldValues>FDS</controllingFieldValues>
-                <controllingFieldValues>MACS</controllingFieldValues>
-                <controllingFieldValues>MER</controllingFieldValues>
-                <controllingFieldValues>PPD</controllingFieldValues>
-                <controllingFieldValues>RVPO</controllingFieldValues>
-                <controllingFieldValues>SFO</controllingFieldValues>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Status__c</fullName>
+        <externalId>false</externalId>
+        <label>Status</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Not Started</fullName>
+                <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Africa</fullName>
+                <fullName>In Progress</fullName>
                 <default>false</default>
-                <controllingFieldValues>APCS</controllingFieldValues>
-                <controllingFieldValues>SFO</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Completed</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>On hold</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Deferred</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Aborted</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Resolved</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Closed without intervention</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Out of scope</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Active</fullName>
+                <default>false</default>
+            </picklistValues>
+            <restrictedPicklist>true</restrictedPicklist>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Sub_region__c</fullName>
+        <description>Some divisions may need to report at a sub-region level instead of regional</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Some divisions may need to report at a sub-region level instead of regional</inlineHelpText>
+        <label>Sub-region</label>
+        <picklist>
+            <controllingField>Region__c</controllingField>
+            <picklistValues>
+                <fullName>AFI</fullName>
+                <default>false</default>
+                <controllingFieldValues>AME</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>MENA</fullName>
                 <default>false</default>
-                <controllingFieldValues>APCS</controllingFieldValues>
-                <controllingFieldValues>SFO</controllingFieldValues>
+                <controllingFieldValues>AME</controllingFieldValues>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
@@ -954,11 +984,11 @@ Object to store comments related to objectives, or independent comments that we 
         <picklistValues>
             <picklist>Region__c</picklist>
             <values>
-                <fullName>Africa</fullName>
+                <fullName>AME</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Africa %26 Middle East</fullName>
+                <fullName>ASPAC</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -966,15 +996,61 @@ Object to store comments related to objectives, or independent comments that we 
                 <default>false</default>
             </values>
             <values>
-                <fullName>Asia %26 Pacific</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>China %26 North Asia</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Europe</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Nth%2E Asia</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Aborted</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Closed without intervention</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Completed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Deferred</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Started</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>On hold</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Out of scope</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Resolved</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Sub_region__c</picklist>
+            <values>
+                <fullName>AFI</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1276,11 +1352,11 @@ Object to store comments related to objectives, or independent comments that we 
         <picklistValues>
             <picklist>Region__c</picklist>
             <values>
-                <fullName>Africa</fullName>
+                <fullName>AME</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Africa %26 Middle East</fullName>
+                <fullName>ASPAC</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1288,15 +1364,37 @@ Object to store comments related to objectives, or independent comments that we 
                 <default>false</default>
             </values>
             <values>
-                <fullName>Asia %26 Pacific</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>China %26 North Asia</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Europe</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Nth%2E Asia</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Completed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Started</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>On hold</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Sub_region__c</picklist>
+            <values>
+                <fullName>AFI</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1315,7 +1413,7 @@ Object to store comments related to objectives, or independent comments that we 
         <fullName>Hierarchy_of_comment</fullName>
         <active>true</active>
         <description>Type of comment is mandatory</description>
-        <errorConditionFormula>(Parent_Objective__r.Account__c  &lt;&gt;  Null) &amp;&amp;
+        <errorConditionFormula>(Achievement__c = TRUE) &amp;&amp; (Parent_Objective__r.Account__c  &lt;&gt;  Null) &amp;&amp;
 ((ISPICKVAL(Division__c,&quot;&quot;)) &amp;&amp; (ISPICKVAL(Region__c,&quot;&quot;)) &amp;&amp; (ISPICKVAL(Area__c,&quot;&quot;)))</errorConditionFormula>
         <errorDisplayField>Achievement__c</errorDisplayField>
         <errorMessage>Please specify the hierarchy your comment is related to</errorMessage>

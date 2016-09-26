@@ -29,7 +29,7 @@
         <label>Information</label>
         <layoutColumns>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Required</behavior>
                 <field>Status__c</field>
             </layoutItems>
             <layoutItems>
@@ -99,6 +99,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Forecast__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Forecast_Progress__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>

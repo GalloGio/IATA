@@ -400,6 +400,7 @@
     <fields>
         <fullName>Type_Of_Agent__c</fullName>
         <externalId>false</externalId>
+        <inlineHelpText>Applies to Cargo Agents only. Leave empty if setting up requirements for PAX Agents.</inlineHelpText>
         <label>Type Of Agent</label>
         <picklist>
             <picklistValues>

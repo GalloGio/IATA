@@ -1,0 +1,313 @@
+public without sharing class ISSP_Ctrl_AccountStatements {
+
+	public static final String APP_NAME = 'ICE – IATA Customer E-Statement';
+
+	public ContentVersion faq {get;set;}
+	public ContentVersion document {get;set;}
+	public Account headofficeAccount {get; set;}
+	public DateTime lastUpdatedOn {get; set;}
+	public list<Account_Statement__c> listStatements {get; set;}
+	public list<WrapperStatement> listWrapper {get; set;}
+    public list<String> listCurrency {get; set;}
+	public list<String> listMessages {get; set;}
+	private User currentUser;
+
+	/**
+		Start actions, check rights and terms and conditions
+	**/
+	public PageReference initActions() {
+		try {
+			String strId = this.currentUser.ContactId;
+			Portal_Application_Right__c appRight = [
+				Select Id, Terms_Acceptance__c, Terms_Acceptance_Date__c, Right__c
+				From Portal_Application_Right__c
+				Where ContactId__c = :strId.left(15)
+				And Portal_Application__r.Name = :APP_NAME
+			];
+			// If user has no rights to access to Account statements app then is redirected to Home
+			if (appRight.Right__c!='Access Granted') {
+				Pagereference pageref = new PageReference('/ISSP_Homepage');
+				pageref.setRedirect(true);
+				return pageref;
+			}
+			// if terms and conditions are not accepted is redirected to Terms page
+			if (!appRight.Terms_Acceptance__c) {
+				Pagereference pageref = new PageReference('/ISSP_AccountStatement_Accept');
+				pageref.setRedirect(true);
+				return pageref;
+			} else {
+				return null;
+			}
+		} catch(Exception e) {
+			//if error happens return to home page
+		}
+		Pagereference pageref = new PageReference('/ISSP_Homepage');
+		pageref.setRedirect(true);
+		return pageref;
+	}
+
+	public String getInstance() {
+		return URL.getSalesforceBaseUrl().toExternalForm();
+	}
+
+	/**
+		CONSTRUCTOR
+	**/
+	public ISSP_Ctrl_AccountStatements() {
+		this.faq = getContentDoc('IATA Customer E-Statement (ICE)');
+		this.document = getContentDoc('IATA Customer E-Statement (ICE) User Guide');
+
+		this.listMessages = new list<String>();
+		// get current user
+		this.currentUser = [
+			Select Id, ContactId, Contact.AccountId, Contact.Account.Status__c
+			From User
+			Where id = :UserInfo.getUserId()];
+
+		// check account status before doing anything to allow or reject access to info
+		if (this.currentUser.Contact.Account.Status__c != 'Approved' &&
+			this.currentUser.Contact.Account.Status__c != 'Changes Processed') {
+			this.listMessages.add(Label.ISSP_Account_not_approved);
+			return;
+		}
+
+		// get HQ account
+		Id parentAccountId = getMaxParentAccount(this.currentUser.Contact.AccountId);
+		this.headofficeAccount = [Select Id, IATACode__c from Account where id = :parentAccountId];
+		list<Account> listAccount = getAllHierarchy(this.currentUser.Contact.AccountId);
+
+
+
+		// get Account Statements related with all accounts in the hierarchy
+		this.listStatements = [
+			Select Id, Period__c, Operation__c, Name, Key__c, CurrencyIsoCode, Account__c, Amount_to_be_Paid__c, Balance__c, Billing_Amount__c, Paid__c, Remittance_Date__c, Status__c, Billing_Adjustment__c, Group__c, Account__r.Site, LastModifiedDate
+			From Account_Statement__c
+			Where Account__c in :listAccount
+			And Remittance_Date__c >= :getMinimumRemmitanceDateToSearch(listAccount)
+			Order By Remittance_Date__c desc, Operation__c asc];
+
+		// create a list of wrappers with collected Account Statements
+		map<String,WrapperStatement> mapWrapper = new map<String,WrapperStatement>();
+		this.lastUpdatedOn = Datetime.newInstance(1900, 1, 1);
+		for (Account_Statement__c statement: this.listStatements) {
+			//String key = statement.Period__c + statement.Group__c + statement.Operation__c;
+			String key = statement.Period__c + statement.Group__c + statement.CurrencyIsoCode;
+			WrapperStatement wrapper = mapWrapper.get(key);
+			if (wrapper == null) {
+				wrapper = new WrapperStatement(statement);
+				mapWrapper.put(key, wrapper);
+			} else {
+				wrapper.addStatement(statement);
+			}
+			this.lastUpdatedOn = this.lastUpdatedOn<statement.LastModifiedDate? statement.LastModifiedDate: this.lastUpdatedOn;
+		}
+
+		this.listWrapper = new list<WrapperStatement>();
+		for (String period: mapWrapper.keyset() ) {
+			WrapperStatement wrapper = mapWrapper.get(period);
+			wrapper.calculeLastUpdatedDate();
+			this.listWrapper.add(wrapper);
+		}
+		this.listWrapper.sort();
+		markLastUpdated();
+		markFirstOldPeriod();
+        initListCurrency();
+	}
+
+	/**
+		Get File document object from the library with given name
+	**/
+	private ContentVersion getContentDoc(String name) {
+		try {
+			return [
+				Select Id
+				From ContentVersion
+				Where isLatest = true
+				And title = :name
+				Limit 1];
+		} catch (Exception e) {
+			System.debug('ERROR, document "' + name + '" not found: ' + e.getMessage());
+			return null;
+		}
+	}
+
+	/**
+		Find the lowest remitance date in last valid periods
+	**/
+	private Date getMinimumRemmitanceDateToSearch(list<Account> listAccount) {
+		try {
+			list<AggregateResult> listResult = [
+			  Select Remittance_Date__c
+			  from Account_Statement__c
+			  Where Account__c in :listAccount
+			  and Remittance_Date__c <= TODAY
+			  group by Remittance_Date__c
+			  order by Remittance_Date__c desc
+			  limit 3
+			]; // search last 3 Remittance dates
+			AggregateResult ar = listResult.get( listResult.size()-1 );
+			return (Date)ar.get('Remittance_Date__c');
+		} catch (Exception e) {
+			return Date.today();
+		}
+	}
+
+	/**
+		populate list of available currencies
+	**/
+	private void initListCurrency() {
+		set<String> setCurrency = new set<String>();
+		for(WrapperStatement wrapper: this.listWrapper) {
+			setCurrency.add(wrapper.parent.CurrencyIsoCode);
+		}
+		this.listCurrency = new list<String>(setCurrency);
+	}
+
+	/**
+		Mark last updated Wrapper in the warapper statements list
+	**/
+	private void markLastUpdated() {
+		WrapperStatement mark = null;
+		for (WrapperStatement wrapper: this.listWrapper) {
+			mark = mark!=null && mark.lastUpdatedDate>wrapper.lastUpdatedDate? mark: wrapper;
+		}
+		if (mark!=null) mark.lastUpdatedMark = true;
+	}
+
+	/**
+		Searches in the list of Account statments and marks first statement with an old date
+	**/
+	private void markFirstOldPeriod() {
+		for(WrapperStatement wrapper: this.listWrapper) {
+			wrapper.showSeparation = false;
+		}
+		for(WrapperStatement wrapper: this.listWrapper) {
+			if (wrapper.parent.Remittance_Date__c.addDays(2) < Date.today()) {
+				wrapper.showSeparation = true;
+				return;
+			}
+		}
+	}
+
+	/**
+		Get a list containing all account in the input account hirarchy
+	**/
+	private list<Account> getAllHierarchy(Id AccountId) {
+		Id maxParentId = getMaxParentAccount(accountId);
+		return [
+			Select id, Name, ParentId
+			From Account
+			Where Id =:maxParentId
+			Or ParentId = :maxParentId
+			or Parent.ParentId = :maxParentId
+			or Parent.Parent.ParentId = :maxParentId
+			or Parent.Parent.Parent.ParentId = :maxParentId
+			or Parent.Parent.Parent.Parent.ParentId = :maxParentId
+		];
+	}
+
+	/**
+		Find Headquart account (parent top account in the hierarchy)
+	**/
+	private Id getMaxParentAccount(Id accountId) {
+		try {
+			Account account = [
+				Select id, Name,
+					ParentId,
+					Parent.ParentId,
+					Parent.Parent.ParentId,
+					Parent.Parent.Parent.ParentId,
+					Parent.Parent.Parent.Parent.ParentId
+				From Account
+				Where id = :accountId ];
+
+			if (account.ParentId == null ) {
+				return account.Id;
+			}
+			if (account.Parent.ParentId == null ) {
+				return account.ParentId;
+			}
+			if (account.Parent.Parent.ParentId == null ) {
+				return account.Parent.ParentId;
+			}
+			if (account.Parent.Parent.Parent.ParentId == null ) {
+				return account.Parent.Parent.ParentId;
+			}
+			if (account.Parent.Parent.Parent.Parent.ParentId == null ) {
+				return account.Parent.Parent.Parent.ParentId;
+			}
+			return account.Parent.Parent.Parent.Parent.ParentId;
+
+		} catch (Exception e) {
+			return accountId;
+		}
+	}
+
+	/**
+		class to store a list of Account Statements and the sumarized data
+	**/
+	public class WrapperStatement implements Comparable {
+		public Account_Statement__c parent {get;set;}
+		public list<Account_Statement__c> listStatements {get; set;}
+		public String accountSite {get;set;}
+		public Boolean showDetail {get;set;}
+		public DateTime lastUpdatedDate {get; set;}
+		public Boolean lastUpdatedMark {get; set;}
+        public Boolean showSeparation {get; set;}
+
+		public WrapperStatement(Account_Statement__c statement) {
+			this.parent = statement.clone();
+			this.listStatements = new list<Account_Statement__c>();
+			this.listStatements.add(statement);
+			this.showDetail = false;
+			this.accountSite = statement.Account__r.Site;
+			this.showSeparation = false;
+			this.lastUpdatedMark = false;
+		}
+
+		/**
+			Get most recent modification date for all statements in this wrapper
+		**/
+		public void calculeLastUpdatedDate() {
+			DateTime lastUpdated = Datetime.newInstance(1900, 1, 1);
+			for (Account_Statement__c statement: this.listStatements) {
+				lastUpdated = statement!=null && lastUpdated>statement.LastModifiedDate? lastUpdated: statement.LastModifiedDate;
+			}
+			this.lastUpdatedDate = lastUpdated;
+		}
+
+		/**
+			Add a new statement in current statements list
+		**/
+		public void addStatement(Account_Statement__c statement) {
+			this.listStatements.add(statement);
+			this.parent.Amount_to_be_Paid__c += statement.Amount_to_be_Paid__c;
+			this.parent.Billing_Amount__c += statement.Billing_Amount__c;
+			this.parent.Paid__c += statement.Paid__c;
+			this.parent.Balance__c += statement.Balance__c;
+			this.parent.Group__c = statement.Group__c;
+		}
+
+		/**
+			Get current status for parent statement
+		**/
+		public String getParentStatus() {
+			if (this.parent.Balance__c == 0 ) {
+				return Label.ISSP_Fullpayment;
+			}
+			if (this.parent.Balance__c > 0 ) {
+				return Label.ISSP_Pending;
+			}
+			return Label.ISSP_Excess;
+		}
+
+		public Decimal getParentBillingAdjustment() {
+			return this.parent.Billing_Amount__c - this.parent.Amount_to_be_Paid__c;
+		}
+
+		public Integer compareTo(Object compareTo) {
+
+			return this.parent.Period__c > ((WrapperStatement)compareTo).parent.Period__c? -1: 1;
+		}
+	}
+}

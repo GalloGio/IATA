@@ -28,7 +28,6 @@
     </alerts>
     <alerts>
         <fullName>Notification_to_the_manager_for_Inactive_Product</fullName>
-        <ccEmails>richardcs@iata.org</ccEmails>
         <description>Notification to the manager for Inactive Product</description>
         <protected>false</protected>
         <recipients>

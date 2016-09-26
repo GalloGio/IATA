@@ -35,10 +35,10 @@ public without sharing class VfIECSiteHeaderComponent {
 	public VfIECSiteHeaderComponent() {
 		try {
 			//IEC_Settings__c.getOrgDefaults().Account_Owner_Id__c;
-			sProdCACPro = IEC_Settings__c.getOrgDefaults().Prod_CACPro__c;
-			sProdGAD 	= IEC_Settings__c.getOrgDefaults().Prod_GAD__c;
-			sProdMDP 	= IEC_Settings__c.getOrgDefaults().Prod_MDP__c;
-			sProdGSS 	= IEC_Settings__c.getOrgDefaults().Prod_GSS__c;
+			sProdCACPro = IECUtil.DecodeDecryptParameter(IEC_Settings__c.getOrgDefaults().Prod_CACPro__c);
+			sProdGAD 	= IECUtil.DecodeDecryptParameter(IEC_Settings__c.getOrgDefaults().Prod_GAD__c);
+			sProdMDP 	= IECUtil.DecodeDecryptParameter(IEC_Settings__c.getOrgDefaults().Prod_MDP__c);
+			sProdGSS 	= IECUtil.DecodeDecryptParameter(IEC_Settings__c.getOrgDefaults().Prod_GSS__c);
 			//sProdCACWeb = IEC_Settings__c.getOrgDefaults().Prod_CACWeb__c;
 			//sProdEBro 	= IEC_Settings__c.getOrgDefaults().Prod_EBro__c;
 			
@@ -118,6 +118,11 @@ public without sharing class VfIECSiteHeaderComponent {
 		try {
 			// delete shopping cart cookie
 			IECCookieHelper.deleteShoppingCartCookie();
+
+			//added 2016-01-11
+			IECOrder_Svc.deleteAllCookies();
+			Cookie Cookie_Sync = new Cookie('Cookie_Sync', '', null, 0, false);
+			ApexPages.currentPage().setCookies(new Cookie[]{Cookie_Sync});
 
 			PageReference pr = Page.IECLogout; //new PageReference('/secur/logout.jsp');
 			pr.setRedirect(true);

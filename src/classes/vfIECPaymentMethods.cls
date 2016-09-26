@@ -31,11 +31,12 @@ public class vfIECPaymentMethods extends IECPageController {
 
     public boolean isAddNew { get; set; }    
     public boolean isICHCustomer { get{return  IECCustomer.getCurrentIECCustomer().canPayByICH();} set; }
-    public string ICHID {get {return IECConstants.PaymentMethod_Other_ZuoraID; } set;}
+    public string ICHID {get {return IECConstants.PaymentMethod_ICH_ZuoraID; } set;}
     public String creditCardToEdit { get; set; }
     public String creditCardToDelete { get; set; }
     public String newCreditCardPaymentId { get; set; }
     public String customerDefaultPaymentMethodId { get; set; }
+    public String customerDefaultPaymentType { get; set; }
     public List<IECZuoraHelper.CreditCard> creditCards {
         get {
                 if (creditCards == null)
@@ -173,6 +174,9 @@ public class vfIECPaymentMethods extends IECPageController {
                     customerDefaultPaymentMethodId = (String)loggedCustomer.RelatedZuoraAccount.getValue('DefaultPaymentMethodId');
                 else
                     customerDefaultPaymentMethodId = '';
+
+                // Load the default payment type from the account level
+                customerDefaultPaymentType = (loggedCustomer.RelatedAccount != null) ? loggedCustomer.RelatedAccount.Default_Payment_Type__c : '';
                 
                 loadHPMIframe();
             }
@@ -297,13 +301,14 @@ public class vfIECPaymentMethods extends IECPageController {
     
     public Pagereference updateDefaultPaymentMethod() {
         try {
+        	/* Commented by Samy (2016-03-04) Replaced with new code to save the default payment type instead of method on the SF Account level
             if (String.isBlank(customerDefaultPaymentMethodId)) {
                 addErrorMessage(Label.IEC_Error_DefaultPaymentEmpty);
                 customerDefaultPaymentMethodId = (String)loggedCustomer.RelatedZuoraAccount.getValue('DefaultPaymentMethodId');
                 return null;
             }
             
-            if (customerDefaultPaymentMethodId != IECConstants.PaymentMethod_Other_ZuoraID
+            if (customerDefaultPaymentMethodId != IECConstants.PaymentMethod_ICH_ZuoraID
                 && customerDefaultPaymentMethodId != IECConstants.PaymentMethod_BankTransfer_ZuoraID) {
                 IECZuoraHelper.CreditCard selectedCreditCard = getCreditCardById(customerDefaultPaymentMethodId);
                 // Calculate expiry date by last day in the month
@@ -334,6 +339,18 @@ public class vfIECPaymentMethods extends IECPageController {
             }
             else
                 addErrorMessage('Update default payment failed for the following reason(s): ' + IECZuoraHelper.getErrorMessagesString(result.Errors, '<BR> - '));
+            */
+            
+            if (String.isBlank(customerDefaultPaymentType)) {
+                addErrorMessage(Label.IEC_Error_DefaultPaymentEmpty);
+                customerDefaultPaymentType = loggedCustomer.RelatedAccount.Default_Payment_Type__c;
+                return null;
+            }
+            
+            loggedCustomer.RelatedAccount.Default_Payment_Type__c = customerDefaultPaymentType;
+            update loggedCustomer.RelatedAccount; 
+            addConfirmMessage(Label.IEC_Confirm_DefaultPaymentUpdate);
+            
             return null;
         }
         catch (Exception ex) {

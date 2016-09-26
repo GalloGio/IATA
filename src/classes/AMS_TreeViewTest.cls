@@ -51,7 +51,8 @@ private class AMS_TreeViewTest {
 
         Test.startTest();
         AMS_DemoTreeview sic = new AMS_DemoTreeview(sc);
-        sic.getChilds();
+        sic.fetchHierchyParent();
+        sic.getHierchyChilds();
         Test.stopTest();
 	}
 
@@ -66,7 +67,8 @@ private class AMS_TreeViewTest {
 
         Test.startTest();
         AMS_DemoTreeview sic = new AMS_DemoTreeview(sc);
-        sic.getChilds();
+        sic.fetchHierchyParent();
+        sic.getHierchyChilds();
         Test.stopTest();
 	}
 }

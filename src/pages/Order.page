@@ -1,0 +1,1575 @@
+<apex:page standardController="Order" docType="html-5.0" extensions="Order_Ext" action="{!pageLoad}" showHeader="true" sidebar="false" id="pageOrder" standardStylesheets="true">
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+    <!-- CSS Files -->
+    <apex:stylesheet value="{!URLFOR($Resource.BootstrapCSS, 'css/bootstrap.min.css')}" />
+    <apex:stylesheet value="{!URLFOR($Resource.DataTables, 'css/dataTables.bootstrap.min.css')}" />
+    <apex:stylesheet value="{!$Resource.InternalOrderCSS}" />
+
+    <!-- Load JS -->  
+    <script src="{!URLFOR($Resource.DataTables, 'js/jquery.js')}"></script>
+    <script src="{!URLFOR($Resource.BootstrapCSS, 'js/bootstrap.min.js')}"></script>    
+    <script src="{!URLFOR($Resource.DataTables, 'js/jquery.dataTables.min.js')}"></script>
+    <script src="{!URLFOR($Resource.DataTables, 'js/dataTables.bootstrap.min.js')}"></script>
+
+    <!-- <script src="https://code.jquery.com/ui/1.9.0/jquery-ui.js"></script> -->
+    <script src="{!URLFOR($Resource.jQueryUI, 'jquery-ui.js')}"></script>
+
+
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.9.1/themes/base/jquery-ui.css"/>
+    <!-- <apex:stylesheet value="{!URLFOR($Resource.jQueryUI, 'jquery-ui.min.css')}" /> -->
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <script type="text/javascript">
+        var deleteOrderItem = function(itemId){
+            if(confirm('Are you sure ?')){
+                deleteProduct(itemId);
+            }
+        }
+
+        var hideEditProductModal = function(itemId){
+            $('#editProductModal').modal('hide');
+        }
+
+        var setPanelSize = function(){
+            var h = 0;
+            $(".address-panel").each(function(i){
+                if($(this).height() > h)
+                    h = $(this).height();
+            });
+
+            $(".address-panel").each(function(i){
+                $(this).height(h);
+            });
+        }
+
+        $(document).ready(function(){
+           
+        }); 
+
+    </script>
+
+    <script>                                          
+        //on Document ready
+        $(document).ready(function(){
+
+        });
+        //billToautocomplete
+        var doAutoComplete = function(fieldName,hidenField){
+            $("#" + fieldName).autocomplete({
+                source: function( request, response ) {
+                    Visualforce.remoting.Manager.invokeAction(
+                        '{!$RemoteAction.Order_Ext.getAddresses}',
+                        $("#" + fieldName).val(), 
+                        function(result, event){
+                            response(result);
+                        }, 
+                        {escape: true}
+                    );
+                },
+                select: function( event, ui ) {
+                    if(fieldName == 'billToautocomplete'){
+                        completeAddress(ui.item.value);
+                    }else{
+                        completeShipAddress(ui.item.value);
+                    }
+                    $("#" + hidenField).val(ui.item.value);
+                },
+                change: function( event, ui ) {
+                    $("#" + hidenField).val($("#" + fieldName).val());
+                }
+            });
+        };
+        
+        var hiddenPop = function(){
+            $('.autoCompleteBoxScrolling').hide();
+        }
+                                      
+                        
+    </script>
+
+    <style type="text/css">
+        .orderType > option[value='Subscription'], .orderType > option[value='Renewal Notification'], .orderType > option[value='Event Auto-Renew'] {
+            display: none;
+        }
+    </style>
+</head>
+
+
+<body>
+    <div class="container-fluid">
+        
+        <!-- Pages Messages -->
+        <div class="row">
+            <div class="col-md-12">
+                <apex:outputPanel id="messagesContainer" layout="block">
+                    <apex:pageMessages escape="false"/>
+                    <div class="attention">
+                        <apex:outputText value="{!attentionMsg}" escape="false" />
+                    </div>
+                </apex:outputPanel>
+            </div>
+        </div>
+
+        <!-- Order View Mode -->
+        <div class="row">
+            <div class="col-md-12">
+                <apex:form id="frmOrderView" styleClass="form-inline" rendered="{! !isEdit || !allowEditSave || !isPending}">
+                    <!-- Buttons -->
+                    <div class="row">
+                        <apex:outputPanel id="sectionViewButtons" layout="block" styleClass="col-md-12 text-center" rendered="{!showAddProducts==false}">
+                            <apex:commandButton action="{!edit}" value="{! labels['btnEdit']}" rendered="{! allowEditSave && !isInlineEditing && !isEdit}" />
+                            <apex:commandButton action="{!delete}" value="{! labels['btnDelete']}" onclick="return confirm('Are you sure?');" rendered="{! allowDelete && !isInlineEditing}" />
+                            <apex:commandButton action="{!cancelOrder_Prepare}" value="{! labels['btnCancelOrder']}" status="runStatus" rendered="{! allowCancel && !isInlineEditing}" reRender="sectionStatus,sectionViewButtons,frmOrderProducts" />
+                            <apex:commandButton action="{!cancelOrder}" value="{! labels['btnSave']}" rendered="{! isCancelling}" />
+                            <apex:commandButton action="{!getFreight_Tax}" value="{! labels['btnGetTax']}" reRender="messagesContainer, orderItemContainer,attentionContainer" status="runStatus" rendered="{! allowPay && !isInlineEditing }" />
+                            <apex:commandButton action="{!payOrder_Prepare}" value="{! labels['btnPay']}" reRender="messagesContainer,sectionPayment,sectionViewButtons,frmOrderProducts" status="runStatus" rendered="{! allowPay && !isInlineEditing}" />
+                            <apex:commandButton action="{!payOrder}" value="{! labels['btnSave']}" reRender="messagesContainer" status="runStatus" rendered="{! isPaying}" />
+                            <apex:commandButton action="{!cancel}" value="{! labels['btnCancelChange']}" rendered="{! isInlineEditing || isEdit}" />
+                            <!--apex:commandButton action="{!createSalesOrder}" status="runStatus" reRender="messagesContainer, SAPOrderNumber" rendered="{!showButtonCreateSalesOrder}" value="{! labels['btnCreateOrder']}"/-->
+                            <!--apex:commandButton action="{!createSalesContract}" status="runStatus" reRender="orderItemContainer" rendered="{!showButtonCreateSalesOrder}" value="{! labels['btnCreateContract']}"/-->
+                            <apex:actionStatus id="runStatus">
+                                <apex:facet name="start">&nbsp;<img src="{!$Resource.IEC_progress}" alt="x" /></apex:facet>
+                            </apex:actionStatus>
+                        </apex:outputPanel>
+                    </div> <br />
+
+                    <!-- Order information -->
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="panel panel-info">
+                                <div class="panel-heading">{! labels['lblOrder']}</div>
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="row">
+                                                <div class="col-md-4"><apex:outputLabel value="{!$ObjectType.Order.Fields.Type.Label}" /></div>
+                                                <div class="col-md-8"><apex:outputField value="{!vfOrder.Type}" /></div>
+                                            </div>
+                                            <apex:outputPanel layout="block" styleClass="row" rendered="{! vfOrder.Type == 'Bulk Order'}">
+                                                <div class="col-md-4"><apex:outputLabel value="{!$ObjectType.Order.Fields.Bulk_Order_Info__c.Label}" /></div>
+                                                <div class="col-md-8"><apex:outputField value="{!vfOrder.Bulk_Order_Info__c}" /></div>
+                                            </apex:outputPanel>
+                                            <div class="row">
+                                                <div class="col-md-4"><apex:outputLabel value="{!$ObjectType.Order.Fields.EffectiveDate.Label}" /></div>
+                                                <div class="col-md-8"><apex:outputField value="{!vfOrder.EffectiveDate}" /></div>
+                                            </div>
+                                            <apex:outputPanel id="sectionStatus" layout="block" styleClass="row">
+                                                <div class="col-md-12">
+                                                    <div class="row">
+                                                        <div class="col-md-4"><apex:outputLabel value="{!$ObjectType.Order.Fields.Status.Label}" /></div>
+                                                        <div class="col-md-8">
+                                                            <apex:outputField value="{!vfOrder.Status}" rendered="{! !isCancelling}" />
+                                                            <apex:inputField value="{!vfOrder.Status}" styleClass="readonly" rendered="{! isCancelling}" />
+                                                            <script>$(".readonly").attr("disabled","disabled");</script>
+                                                        </div>
+                                                    </div>
+                                                    <apex:outputPanel layout="block" styleClass="row" rendered="{! vfOrder.Status == 'Cancelled'}" >
+                                                        <div class="col-md-4"><apex:outputLabel value="{! labels['lblCancelReason']}" /></div>
+                                                        <div class="col-md-8">
+                                                            <apex:outputField value="{!vfOrder.Status_Reason__c}" rendered="{! !isCancelling}" />
+                                                            <apex:inputField value="{!vfOrder.Status_Reason__c}" required="true" rendered="{! isCancelling}" />
+                                                        </div>
+                                                    </apex:outputPanel>
+                                                </div>                                          
+                                            </apex:outputPanel>                                            
+                                            <div class="row">
+                                                <div class="col-md-4"><apex:outputLabel value="{!$ObjectType.Order.Fields.Source__c.Label}" /></div>
+                                                <div class="col-md-8"><apex:outputField value="{!vfOrder.Source__c}" /></div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-4"><apex:outputLabel value="{!$ObjectType.Order.Fields.Order_Channel__c.Label}" /></div>
+                                                <div class="col-md-8"><apex:outputField value="{!vfOrder.Order_Channel__c}" /></div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-4"><apex:outputLabel value="{!$ObjectType.Order.Fields.Payment_Type__c.Label}" /></div>
+                                                <apex:outputPanel id="sectionPayment" layout="block" styleClass="col-md-8" >
+                                                    <apex:outputField value="{!vfOrder.Payment_Type__c}" rendered="{! !isPaying}" />
+                                                    <apex:outputPanel styleClass="requiredInput" layout="block" rendered="{! isPaying}">
+                                                        <apex:outputPanel styleClass="requiredBlock" layout="block"/>
+                                                        <apex:selectList value="{!paymentType}" multiselect="false" size="1" required="true">
+                                                            <apex:selectOptions value="{!listPaymentType}"/>
+                                                        </apex:selectList>
+                                                    </apex:outputPanel>
+                                                </apex:outputPanel>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-4"><apex:outputLabel value="{!labels['lblTxnNo']}" /></div>
+                                                <div class="col-md-8">
+                                                    <apex:outputField rendered="{!vfOrder.Payment_Type__c == 'Credit Card'}" value="{!vfOrder.Payment_Transaction_Number__c}" />
+                                                </div>
+                                            </div>
+                                            
+                                            <apex:outputPanel id="SAPOrderNumber" styleClass="row" layout="Block">
+                                                <div class="col-md-4"><apex:outputLabel value="{!$ObjectType.Order.Fields.SAP_Order_Number__c.Label}" /></div>
+                                                <div class="col-md-8"><apex:outputField value="{!vfOrder.SAP_Order_Number__c}" /></div>
+                                            </apex:outputPanel>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="row">
+                                                <div class="col-md-4"><apex:outputLabel value="{!$ObjectType.Order.Fields.OrderNumber.Label}" /></div>
+                                                <div class="col-md-8"><apex:outputField value="{!vfOrder.OrderNumber}" /></div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-4"><apex:outputLabel value="{!$ObjectType.Order.Fields.Internal_Remark__c.Label}" /></div>
+                                                <div class="col-md-8"><apex:outputField value="{!vfOrder.Internal_Remark__c}" /></div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-4"><apex:outputLabel value="{!$ObjectType.Order.Fields.Sales_Order_Remark__c.Label}" /></div>
+                                                <div class="col-md-8"><apex:outputField value="{!vfOrder.Sales_Order_Remark__c}" /></div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-4"><apex:outputLabel value="{!$ObjectType.Order.Fields.Total_Amount__c.Label}" /></div>
+                                                <div class="col-md-8">
+                                                    <apex:outputText styleClass="price" value="{0, number, currency}">
+                                                        <apex:param value="{!vfOrder.Total_Amount__c}" />
+                                                    </apex:outputText>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="row">
+                                                <div class="col-md-4"><apex:outputLabel value="{! labels['lblCreatedBy']}" /></div>
+                                                <div class="col-md-8">
+                                                    <apex:outputField value="{!vfOrder.CreatedById}" />,&nbsp;
+                                                    <apex:outputField value="{!vfOrder.CreatedDate}" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="row">
+                                                <div class="col-md-4"><apex:outputLabel value="{! labels['lblUpdatedBy']}" /></div>
+                                                <div class="col-md-8">
+                                                    <apex:outputField value="{!vfOrder.LastModifiedById}" />,&nbsp;
+                                                    <apex:outputField value="{!vfOrder.LastModifiedDate}" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>   
+
+                    <div class="row">
+                        <!-- Sold To -->
+                        <div class="col-md-4">
+                            <div class="panel panel-info">
+                                <div class="panel-heading">{! labels['lblSoldTo']}</div>
+                                <div class="panel-body address-panel">
+                                    <!-- <apex:outputPanel layout="block" styleClass="row" rendered="{! vfOrder.Is_New_Sold_To__c != true}">
+                                        <div class="col-md-5"><apex:outputLabel value="{! labels['lblAccount']}" /></div>
+                                        <div class="col-md-7"><apex:outputField value="{!vfOrder.AccountId}" /></div>
+                                    </apex:outputPanel> -->
+                                    <div class="row">
+                                        <div class="col-md-5"><apex:outputLabel value="{! labels['lblAccountName']}" /></div>
+                                        <div class="col-md-7"><apex:outputField value="{!vfOrder.SoldToAccount_Name__c}" /></div>
+                                    </div>
+                                    <!--apex:outputPanel layout="block" styleClass="row" rendered="{! vfOrder.SoldToAccount_VAT_Number__c != null}">
+                                        <div class="col-md-5"><label>VAT number</label></div>
+                                        <div class="col-md-7"><apex:outputField value="{!vfOrder.SoldToAccount_VAT_Number__c}" /></div>
+                                    </apex:outputPanel-->
+                                    
+                                    <div class="row">
+                                        <div class="col-md-5"><apex:outputLabel value="{!$ObjectType.Order.Fields.PoNumber.Label}" /></div>
+                                        <div class="col-md-7"><apex:outputField value="{!vfOrder.PoNumber}" /></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Bill To -->
+                        
+                        <div class="col-md-4">
+                            <div class="panel panel-info">
+                                <div class="panel-heading">{! labels['lblBillTo']}</div>
+                                <div class="panel-body address-panel">
+                                    
+                                    <apex:outputPanel layout="block" styleClass="row">
+                                        <div class="col-md-5"><apex:outputLabel value="{! labels['lblContact']}" /></div>
+                                        <div class="col-md-7"><apex:outputField value="{!vfOrder.BillToContactId}" /></div>
+                                    </apex:outputPanel>
+                                    <div class="row">
+                                        <div class="col-md-5"><apex:outputLabel value="{! labels['lblAccountName']}" /></div>
+                                        <div class="col-md-7"><apex:outputField value="{!vfOrder.BillToAccount_Name__c}" /></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-5"><apex:outputLabel value="{! labels['lblContactName']}" /></div>
+                                        <div class="col-md-7"><apex:outputField value="{!vfOrder.BillToContact_Name__c}" styleClass="MaxColumnWidth" /></div>
+                                    </div>
+                                    <!-- <apex:outputPanel layout="block" styleClass="row">
+                                        <div class="col-md-5"><apex:outputLabel value="{! labels['lblSalutation']}" /></div>
+                                        <div class="col-md-7"><apex:outputField value="{!vfOrder.BillToContact_Salutation__c}" /></div>
+                                    </apex:outputPanel> -->
+                                    <!-- <apex:outputPanel layout="block" styleClass="row">
+                                        <div class="col-md-5"><apex:outputLabel value="{! labels['lblFirstName']}" /></div>
+                                        <div class="col-md-7"><apex:outputField value="{!vfOrder.BillToContact_First_Name__c}" /></div>
+                                    </apex:outputPanel> -->
+                                    <!-- <apex:outputPanel layout="block" styleClass="row">
+                                        <div class="col-md-5"><apex:outputLabel value="{! labels['lblLastName']}" /></div>
+                                        <div class="col-md-7"><apex:outputField value="{!vfOrder.BillToContact_Last_Name__c}" /></div>
+                                    </apex:outputPanel> -->
+                                    <!-- <apex:outputPanel layout="block" styleClass="row">
+                                        <div class="col-md-5"><apex:outputLabel value="{! labels['lblJob']}" /></div>
+                                        <div class="col-md-7"><apex:outputField value="{!vfOrder.BillToContact_Job_Title__c}" /></div>
+                                    </apex:outputPanel> -->
+                                    <div class="row">
+                                        <div class="col-md-5"><apex:outputLabel value="{! labels['lblPhone']}" /></div>
+                                        <div class="col-md-7"><apex:outputField value="{!vfOrder.BillToContact_Phone__c}" /></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-5"><apex:outputLabel value="{! labels['lblEmail']}" /></div>
+                                        <div class="col-md-7"><apex:outputField value="{!vfOrder.BillToContact_Email__c}" /></div>
+                                    </div>
+                                    
+                                    <div class="row">
+                                        <div class="col-md-5"><apex:outputLabel value="{! labels['lblStreet']}" /></div>
+                                        <div class="col-md-7"><apex:outputText value="{!vfOrder.BillingStreet}" /></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-5"><apex:outputLabel value="{! labels['lblCity']}" /></div>
+                                        <div class="col-md-7"><apex:outputField value="{!vfOrder.BillingCity}" /></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-5"><apex:outputLabel value="{! labels['lblCountry']}" /></div>
+                                        <div class="col-md-7"><apex:outputField value="{!vfOrder.BillingCountry}" /></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-5"><apex:outputLabel value="{! labels['lblState']}" /></div>
+                                        <div class="col-md-7"><apex:outputField value="{!vfOrder.BillingState}" /></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-5"><apex:outputLabel value="{! labels['lblZip']}" /></div>
+                                        <div class="col-md-7"><apex:outputField value="{!vfOrder.BillingPostalCode}" /></div>
+                                    </div>
+                                    <apex:outputPanel layout="block" styleClass="row" rendered="{!vATNumberRequiredBillTo}">
+                                        <div class="col-md-5"><label>VAT number</label></div>
+                                        <div class="col-md-7"><apex:outputText value="{!vfOrder.BillToContact_VAT_Number__c}" /></div>
+                                    </apex:outputPanel>
+
+                                    <div class="row">
+                                        <div class="col-md-5"><apex:outputLabel value="{!$ObjectType.Order.Fields.Invoice_Text__c.Label}" /></div>
+                                        <div class="col-md-7"><apex:outputField value="{!vfOrder.Invoice_Text__c}" /></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+
+                        <!-- Ship To -->
+                        <div class="col-md-4">
+                            <div class="panel panel-info">
+                                <div class="panel-heading">{! labels['lblShipTo']}</div>
+                                <div class="panel-body address-panel">
+                                    
+                                    <apex:outputPanel layout="block" styleClass="row">
+                                        <div class="col-md-5"><apex:outputLabel value="{!$ObjectType.Order.Fields.ShipTo_same_BillTo__c.Label}" /></div>
+                                        <div class="col-md-7"><apex:outputField value="{!vfOrder.ShipTo_same_BillTo__c}" /></div>
+                                    </apex:outputPanel>
+                                    <apex:outputPanel layout="block" styleClass="row" rendered="{!vfOrder.ShipTo_same_BillTo__c != true}">
+                                        <div class="col-md-5"><apex:outputLabel value="{! labels['lblContact']}" /></div>
+                                        <div class="col-md-7"><apex:outputField value="{!vfOrder.ShipToContactId}" /></div>
+                                    </apex:outputPanel>
+                                    <apex:outputPanel layout="block" styleClass="row">
+                                        <div class="col-md-5"><apex:outputLabel value="{! labels['lblCompany']}" /></div>
+                                        <div class="col-md-7"><apex:outputField value="{!vfOrder.ShipToAccount_Name__c}" /></div>
+                                    </apex:outputPanel>
+                                    <apex:outputPanel layout="block" styleClass="row">
+                                        <div class="col-md-5"><apex:outputLabel value="{! labels['lblAttention']}" /></div>
+                                        <div class="col-md-7"><apex:outputField value="{!vfOrder.ShipToContact_Name__c}" styleClass="MaxColumnWidth" /></div>
+                                    </apex:outputPanel>
+                                    
+                                    <apex:outputPanel layout="block" styleClass="row" >
+                                        <div class="col-md-5"><apex:outputLabel value="{! labels['lblPhone']}" /></div>
+                                        <div class="col-md-7"><apex:outputField value="{!vfOrder.ShipToContact_Phone__c}" /></div>
+                                    </apex:outputPanel>
+                                    <apex:outputPanel layout="block" styleClass="row">
+                                        <div class="col-md-5"><apex:outputLabel value="{! labels['lblEmail']}" /></div>
+                                        <div class="col-md-7"><apex:outputField value="{!vfOrder.ShipToContact_Email__c}" /></div>
+                                    </apex:outputPanel>
+
+
+                                    <!-- readOnly Mode -->
+                                    <apex:outputPanel rendered="{!!shipToEditMod}">
+
+
+                                    <apex:outputPanel layout="block" styleClass="row" rendered="{! vfOrder.ShipTo_same_BillTo__c != true}">
+                                        <div class="col-md-5"><apex:outputLabel value="{! labels['lblStreet']}" /></div>
+                                        <div class="col-md-7"><apex:outputField value="{!vfOrder.ShippingStreet}" /></div>
+                                    </apex:outputPanel>
+                                    <apex:outputPanel layout="block" styleClass="row" rendered="{! vfOrder.ShipTo_same_BillTo__c != true}">
+                                        <div class="col-md-5"><apex:outputLabel value="{! labels['lblCity']}" /></div>
+                                        <div class="col-md-7"><apex:outputField value="{!vfOrder.ShippingCity}" /></div>
+                                    </apex:outputPanel>
+                                    <apex:outputPanel layout="block" styleClass="row" rendered="{! vfOrder.ShipTo_same_BillTo__c != true}">
+                                        <div class="col-md-5"><apex:outputLabel value="{! labels['lblCountry']}" /></div>
+                                        <div class="col-md-7"><apex:outputField value="{!vfOrder.ShippingCountry}" /></div>
+                                    </apex:outputPanel>
+                                    <apex:outputPanel layout="block" styleClass="row" rendered="{! vfOrder.ShipTo_same_BillTo__c != true}">
+                                        <div class="col-md-5"><apex:outputLabel value="{! labels['lblState']}" /></div>
+                                        <div class="col-md-7"><apex:outputField value="{!vfOrder.ShippingState}" /></div>
+                                    </apex:outputPanel>
+                                    <apex:outputPanel layout="block" styleClass="row" rendered="{! vfOrder.ShipTo_same_BillTo__c != true}">
+                                        <div class="col-md-5"><apex:outputLabel value="{! labels['lblZip']}" /></div>
+                                        <div class="col-md-7"><apex:outputField value="{!vfOrder.ShippingPostalCode}" /></div>
+                                    </apex:outputPanel>
+                                    <apex:outputPanel layout="block" styleClass="row" rendered="{! vfOrder.ShipTo_same_BillTo__c != true && vATNumberRequired }">
+                                        <div class="col-md-5"><label>VAT number</label></div>
+                                        <div class="col-md-7"><apex:outputText value="{!vfOrder.ShipToContact_VAT_Number__c}" /></div>
+                                    </apex:outputPanel>
+
+                                    </apex:outputPanel>
+
+                                    <!-- Edit Mode -->
+                                    <apex:outputPanel rendered="{!shipToEditMod}" id="shipTo">
+
+
+                                    <apex:outputPanel layout="block" styleClass="row" rendered="{! vfOrder.ShipTo_same_BillTo__c != true}">
+                                        <div class="col-md-5"><apex:outputLabel value="{! labels['lblStreet']}" /></div>
+                                        <div class="col-md-7"><apex:inputField value="{!vfOrder.ShipTo_Address__r.Street__c}" /></div>
+                                    </apex:outputPanel>
+                                    <apex:outputPanel layout="block" styleClass="row" rendered="{! vfOrder.ShipTo_same_BillTo__c != true}">
+                                        <div class="col-md-5"><apex:outputLabel value="{! labels['lblCity']}" /></div>
+                                        <div class="col-md-7"><apex:inputField value="{!vfOrder.ShipTo_Address__r.City__c}" /></div>
+                                    </apex:outputPanel>
+                                    <apex:outputPanel layout="block" styleClass="row" rendered="{! vfOrder.ShipTo_same_BillTo__c != true}">
+                                        <div class="col-md-5"><apex:outputLabel value="{! labels['lblCountry']}" /></div>
+                                        <div class="col-md-7"><apex:inputField value="{!vfOrder.ShipTo_Address__r.ISO_Country__r.Name}" /></div>
+                                    </apex:outputPanel>
+                                    <apex:outputPanel layout="block" styleClass="row" rendered="{! vfOrder.ShipTo_same_BillTo__c != true}">
+                                        <div class="col-md-5"><apex:outputLabel value="{! labels['lblState']}" /></div>
+                                        <div class="col-md-7"><apex:inputField value="{!vfOrder.ShipTo_Address__r.ISO_State__r.Name}" /></div>
+                                    </apex:outputPanel>
+                                    <apex:outputPanel layout="block" styleClass="row" rendered="{! vfOrder.ShipTo_same_BillTo__c != true}">
+                                        <div class="col-md-5"><apex:outputLabel value="{! labels['lblZip']}" /></div>
+                                        <div class="col-md-7"><apex:inputField value="{!vfOrder.ShipTo_Address__r.ZipCode__c}" /></div>
+                                    </apex:outputPanel>
+                                    
+                                    </apex:outputPanel>
+
+
+
+                                    <div class="row">
+                                        <div class="col-md-5"><apex:outputLabel value="{!$ObjectType.Order.Fields.Shipping_Instruction__c.Label}" /></div>
+                                        <div class="col-md-7"><apex:outputField value="{!vfOrder.Shipping_Instruction__c}" /></div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
+
+                    <script type="text/javascript">
+                        setPanelSize();
+                    </script>
+                </apex:form>   
+            </div>
+        </div> 
+
+        <!-- Order Edit Mode -->
+        <div class="row">
+            <div class="col-md-12">
+                <apex:form id="frmOrderEdit" rendered="{! isEdit && allowEditSave && isPending}">
+                    <!-- Buttons -->
+                    <div class="row text-center">
+                        <apex:commandButton action="{!saveOrder}" value="{! labels['btnSave']}" rendered="{! allowEditSave}" />
+                        <apex:commandButton action="{!cancel}" value="{! labels['btnCancelChange']}" />
+                    </div><br/>
+                    
+                    <!-- Order information -->
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="panel panel-info">
+                                <div class="panel-heading">{! labels['lblOrder']}</div>
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <apex:actionRegion immediate="true" >
+                                                <apex:outputPanel id="bulkOrderType" layout="block" styleClass="row">
+                                                    <div class="col-md-12">
+                                                        <div class="row">
+                                                            <div class="col-md-4"><apex:outputLabel value="{!$ObjectType.Order.Fields.Type.Label}" /></div>
+                                                            <div class="col-md-8">
+                                                                <apex:inputField styleClass="orderType" id="orderType" value="{!vfOrder.Type}" required="true">
+                                                                    <apex:actionSupport event="onchange" reRender="bulkOrderType" />
+                                                                </apex:inputField>
+                                                            </div>
+                                                        </div>
+                                                        <apex:outputPanel layout="block" styleClass="row" rendered="{! vfOrder.Type == 'Bulk Order'}">
+                                                            <div class="col-md-4"><apex:outputLabel value="{!$ObjectType.Order.Fields.Bulk_Order_Info__c.Label}" /></div>
+                                                            <div class="col-md-8"><apex:inputField value="{!vfOrder.Bulk_Order_Info__c}" /></div>
+                                                        </apex:outputPanel>
+                                                    </div>                                                
+                                                </apex:outputPanel>
+                                            </apex:actionRegion>
+                                            <div class="row">
+                                                <div class="col-md-4"><apex:outputLabel value="{!$ObjectType.Order.Fields.EffectiveDate.Label}" /></div>
+                                                <div class="col-md-8"><apex:inputField value="{!vfOrder.EffectiveDate}" required="true" /></div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-4"><apex:outputLabel value="{!$ObjectType.Order.Fields.Status.Label}" /></div>
+                                                <div class="col-md-8"><apex:outputField value="{!vfOrder.Status}" /></div>
+                                            </div>
+                                            <apex:outputPanel layout="block" styleClass="row" rendered="{! vfOrder.Status == 'Cancelled'}" >
+                                                <div class="col-md-4"><apex:outputLabel value="{! labels['lblCancelReason']}" /></div>
+                                                <div class="col-md-8"><apex:outputField value="{!vfOrder.Status_Reason__c}" /></div>
+                                            </apex:outputPanel>
+                                            <div class="row">
+                                                <div class="col-md-4"><apex:outputLabel value="{!$ObjectType.Order.Fields.Source__c.Label}" /></div>
+                                                <div class="col-md-8"><apex:inputField value="{!vfOrder.Source__c}" required="true" /></div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-4"><apex:outputLabel value="{!$ObjectType.Order.Fields.Order_Channel__c.Label}" /></div>
+                                                <div class="col-md-8"><apex:inputField value="{!vfOrder.Order_Channel__c}" required="true" /></div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-4"><apex:outputLabel value="{!$ObjectType.Order.Fields.Payment_Type__c.Label}" /></div>
+                                                <div class="col-md-8"><apex:outputField value="{!vfOrder.Payment_Type__c}" /></div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-4"><apex:outputLabel value="{!labels['lblTxnNo']}" /></div>
+                                                <div class="col-md-8"><apex:outputField value="{!vfOrder.Payment_Transaction_Number__c}" /></div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-4"><apex:outputLabel value="{!$ObjectType.Order.Fields.Is_Paid__c.Label}" /></div>
+                                                <div class="col-md-8"><apex:outputField value="{!vfOrder.Is_Paid__c}" /></div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-4"><apex:outputLabel value="{!$ObjectType.Order.Fields.SAP_Order_Number__c.Label}" /></div>
+                                                <div class="col-md-8"><apex:outputField value="{!vfOrder.SAP_Order_Number__c}" /></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="row">
+                                                <div class="col-md-4"><apex:outputLabel value="{!$ObjectType.Order.Fields.OrderNumber.Label}" /></div>
+                                                <div class="col-md-8"><apex:inputField value="{!vfOrder.OrderNumber}" /></div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-4"><apex:outputLabel value="{!$ObjectType.Order.Fields.Internal_Remark__c.Label}" /></div>
+                                                <div class="col-md-8"><apex:inputField value="{!vfOrder.Internal_Remark__c}" /></div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-4"><apex:outputLabel value="{!$ObjectType.Order.Fields.Sales_Order_Remark__c.Label}" /></div>
+                                                <div class="col-md-8"><apex:inputField value="{!vfOrder.Sales_Order_Remark__c}" /></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <!-- Sold To -->
+                        <div class="col-md-4">
+                            <div class="panel panel-info">
+                                <div class="panel-heading">
+                                    {! labels['lblSoldTo']}
+                                </div>
+                                <div class="panel-body address-panel">
+                                    <apex:actionRegion immediate="true">
+                                        <apex:outputPanel id="sectionSoldTo" layout="block">
+
+                                            <!-- <apex:outputPanel layout="block" styleClass="row" rendered="{! vfOrder.Is_New_Sold_To__c != true}">
+                                                <div class="col-md-5"><apex:outputLabel value="{! labels['lblAccount']}" /></div>
+                                                <div class="col-md-7"><apex:outputField value="{!vfOrder.AccountId}" /></div>
+                                            </apex:outputPanel> -->
+                                            <div class="row">
+                                                <div class="col-md-5"><apex:outputLabel value="{! labels['lblAccountName']}" /></div>
+                                                <div class="col-md-7"><apex:outputField value="{!vfOrder.SoldToAccount_Name__c}" /></div>
+                                            </div>
+                                            
+                                            <!--apex:outputPanel layout="block" styleClass="row" rendered="{!vfOrder.SoldToAccount_VAT_Number__c != null}">
+                                                <div class="col-md-5"><label>VAT number</label></div>
+                                                <div class="col-md-7"><apex:outputField value="{!vfOrder.SoldToAccount_VAT_Number__c}" /></div>
+                                            </apex:outputPanel-->
+                                            
+                                            <apex:outputPanel layout="block" styleClass="row">
+                                                <div class="col-md-5"><apex:outputLabel value="{!$ObjectType.Order.Fields.PoNumber.Label}" /></div>
+                                                <div class="col-md-7"><apex:inputText value="{!vfOrder.PoNumber}" maxlength="20" /></div>
+                                            </apex:outputPanel>
+                                        </apex:outputPanel>
+                                    </apex:actionRegion>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Bill To -->
+                        <apex:outputPanel id="BillToReadOnly" >
+                        <div class="col-md-4">
+                            <div class="panel panel-info">
+                                <div class="panel-heading">
+                                    <div style="{!IF(vfOrder.BillToContactId != null,'width: 80%;float: left;',false)}">{! labels['lblBillTo']}</div>
+                                    <div>
+                                        <apex:commandLink action="{!editAddressOrderReadOnly}" value="Edit address" id="editAddressOrderReadOnly" reRender="BillToReadOnly" status="billToLoading" rendered="{!IF(vfOrder.BillToContactId != null,true,false) && !editMod}" /> 
+                                        <apex:commandLink action="{!saveAddressOrderReadOnly}" value="Save" id="saveAddressOrderReadOnlyHead" reRender="BillToReadOnly" rendered="{!editMod}" status="billToLoading"/>
+                                        &nbsp;&nbsp;
+                                        <apex:commandLink action="{!CancelAddressOrderReadOnly}" value="cancel" id="cancelAddressOrderReadOnlyHead" reRender="BillToReadOnly" rendered="{!editMod}" status="billToLoading" />
+                                    </div>
+                                </div>
+                                <div class="panel-body address-panel">
+                                    <apex:actionRegion immediate="true" >
+                                        
+                                        <apex:outputPanel id="sectionBillTo" layout="block">
+                                            
+                                            <apex:pageMessages id="msgErrors" />
+
+                                            <apex:outputPanel layout="block" styleClass="row">
+                                                <div class="col-md-5"><apex:outputLabel value="{! labels['lblContact']}" /></div>
+                                                <div class="col-md-7"><div class="requiredBlock"></div>
+                                                    <apex:inputField value="{!vfOrder.BillToContactId}" styleClass="MaxColumnWidth" >
+                                                        <apex:actionSupport event="onchange" action="{!getContactLocations}" reRender="BillToReadOnly, sectionBillTo, sectionSoldTo,messagesContainer" status="billToLoading" />
+                                                    </apex:inputField>
+                                                </div>
+                                            </apex:outputPanel>
+                                            <br />
+                                            <!-- Show the location pickList values for billto contact -->
+                                            <div class="row" style="display:none;">
+                                              <div class="col-md-5"><apex:outputLabel value="{! labels['lblChooseBillTo']}" /></div>
+                                              <div class="col-md-7"><div class="requiredBlock"></div>
+                                                <apex:selectList value="{!selectedBillToLocation}" size="1">
+                                                  <apex:selectOptions value="{!billToLocations}"/>
+                                                  <!-- <apex:actionSupport event="onchange" action="{!billToContactDetails}" reRender="sectionBillTo,messagesContainer" status="billToLoading" /> -->
+                                              </apex:selectList>
+                                              </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-5">&nbsp;</div>
+                                                <div class="col-md-7">
+                                                    <apex:actionStatus id="billToLoading" >
+                                                        <apex:facet name="start" >
+                                                          <img src="/img/loading.gif" />                    
+                                                        </apex:facet>
+                                                    </apex:actionStatus>
+                                                </div>
+                                            </div>
+                                            
+                                            
+                                            <br />
+                                            <div class="row">
+                                                <div class="col-md-5"><apex:outputLabel value="{! labels['lblAccountName']}" /></div>
+                                                <div class="col-md-7"><apex:outputField value="{!billToLocation.Account_Name__c}" styleClass="MaxColumnWidth" /></div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-5"><apex:outputLabel value="{! labels['lblContactName']}" /></div>
+                                                <div class="col-md-7"><apex:outputField value="{!billToLocation.Contact_First_Name__c}" styleClass="MaxColumnWidth" />&nbsp;<apex:outputField value="{!billToLocation.Contact_Last_Name__c}" styleClass="MaxColumnWidth" /></div>
+                                            </div>
+                                            <!-- <apex:outputPanel layout="block" styleClass="row">
+                                                <div class="col-md-5"><apex:outputLabel value="{! labels['lblSalutation']}" /></div>
+                                                <div class="col-md-7"><apex:outputField value="{!billToLocation.Contact_Salutation__c}" /></div>
+                                            </apex:outputPanel> -->
+                                            <!-- <apex:outputPanel layout="block" styleClass="row">
+                                                <div class="col-md-5"><apex:outputLabel value="{! labels['lblFirstName']}" /></div>
+                                                <div class="col-md-7"><apex:outputField value="{!billToLocation.Contact_First_Name__c}" styleClass="MaxColumnWidth" /></div>
+                                            </apex:outputPanel> -->
+                                            <!-- <apex:outputPanel layout="block" styleClass="row">
+                                                <div class="col-md-5"><apex:outputLabel value="{! labels['lblLastName']}" /></div>
+                                                <div class="col-md-7"><apex:outputField value="{!billToLocation.Contact_Last_Name__c}" styleClass="MaxColumnWidth" /></div>
+                                            </apex:outputPanel> -->
+                                            <!-- <apex:outputPanel layout="block" styleClass="row" >
+                                                <div class="col-md-5"><apex:outputLabel value="{! labels['lblJob']}" /></div>
+                                                <div class="col-md-7"><apex:outputField value="{!billToLocation.Contact_Title__c}" styleClass="MaxColumnWidth" /></div>
+                                            </apex:outputPanel> -->
+                                            
+
+
+                                            <!-- ReadOnly Mode -->
+                                            <apex:outputPanel rendered="{!!editMod}">
+
+                                            <div class="row">
+                                                <div class="col-md-5"><apex:outputLabel value="{! labels['lblPhone']}" /></div>
+                                                <div class="col-md-7"><apex:outputField value="{!billToLocation.Phone__c}" /></div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-5"><apex:outputLabel value="{! labels['lblEmail']}" /></div>
+                                                <div class="col-md-7"><apex:outputField value="{!billToLocation.Email__c}" styleClass="MaxColumnWidth" /></div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-5"><apex:outputLabel value="{! labels['lblStreet']}" /></div>
+                                                <div class="col-md-7"><apex:outputText value="{!street}" styleClass="MaxColumnWidth" /></div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-5"><apex:outputLabel value="{! labels['lblCity']}" /></div>
+                                                <div class="col-md-7"><apex:outputText value="{!city}" styleClass="MaxColumnWidth" /></div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-5"><apex:outputLabel value="{! labels['lblCountry']}" /></div>
+                                                <div class="col-md-7">
+                                                   
+                                                    <apex:outputText value="{!country}" styleClass="MaxColumnWidth" />
+                                                </div>
+                                            </div>
+                                            <apex:outputPanel id="BillingStateInfoToChanged" layout="block" styleClass="row">
+                                                <div class="col-md-5"><apex:outputLabel value="{! labels['lblState']}" /></div>
+                                                <div class="col-md-7">
+                                                    <apex:outputText value="{!state}" styleClass="MaxColumnWidth"  />
+                                                </div>
+                                            </apex:outputPanel>
+                                            <div class="row">
+                                                <div class="col-md-5"><apex:outputLabel value="{! labels['lblZip']}" /></div>
+                                                <div class="col-md-7"><apex:outputText value="{!zipCode}" /></div>
+                                            </div>
+                                            <apex:outputPanel layout="block" styleClass="row" rendered="{!vATNumberRequiredBillTo}">
+                                                <div class="col-md-5"><apex:outputLabel value="VAT number" /></div>
+                                                <div class="col-md-7"><apex:outputText value="{!vatNumberBillTo}" /></div>
+                                            </apex:outputPanel>   
+
+                                        </apex:outputPanel>
+
+
+
+                                            <!-- Edit Mode -->
+                                            <apex:outputPanel rendered="{!editMod}" id="billTo">
+                                                <br /> <br />
+                                                <!-- <apex:pageMessages id="messageErrors" /> -->
+
+                                                <apex:actionFunction name="completeAddress" action="{!autoCompleteBillToAddresses}" rerender="billTo" status="autoCompBillToLoading">
+                                                    <apex:param name="firstParam" assignTo="{!fullAddress}" value="" />
+                                                </apex:actionFunction>
+                                                
+                                                <div class="row">
+                                                    <div class="col-md-5"><apex:outputLabel value="{! labels['lblPhone']}" /></div>
+                                                    <div class="col-md-7"><apex:inputField value="{!billToLocation.Phone__c}" /></div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-5"><apex:outputLabel value="{! labels['lblEmail']}" /></div>
+                                                    <div class="col-md-7"><div class="requiredBlock"></div><apex:inputField value="{!billToLocation.Email__c}" styleClass="MaxColumnWidth" /></div>
+                                                </div>
+                                                
+                                                <div class="row">
+                                                    <div class="col-md-5"><apex:outputLabel value="{! labels['lblStreet']}" /></div>
+                                                    <div class="col-md-7"><div class="requiredBlock"></div>
+                                                        <input type="text" value="{!street}" id="billToautocomplete" name="billToautocomplete"/>
+                                                        <input type="hidden" id="hiddenBillToautocomplete" name="hiddenBillToautocomplete"/>
+                                                        <apex:actionStatus id="autoCompBillToLoading" >
+                                                            <apex:facet name="start" >
+                                                              <img src="/img/loading.gif" />                    
+                                                            </apex:facet>
+                                                        </apex:actionStatus>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-5"><apex:outputLabel value="{! labels['lblCity']}" /></div>
+                                                    <div class="col-md-7"><div class="requiredBlock"></div><apex:inputText value="{!city}" /></div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-5"><apex:outputLabel value="{! labels['lblCountry']}" /></div>
+                                                    <div class="col-md-7">
+                                                        <!-- <apex:outputText value="{!country}" styleClass="MaxColumnWidth" /> -->
+                                                        <div class="requiredBlock"></div>
+                                                        <apex:selectList value="{!selectedCountryIsoCode}" styleClass="MaxColumnWidth" multiselect="false" size="1">
+                                                            <apex:selectOptions value="{!listCountry}"/>
+                                                            <apex:actionsupport event="onchange" action="{! changeBillToCountryUsingLocation}" rerender="BillingStateInfo,vatNumberBillTo,BillingZipCodeInfo" status="billToCountryLoading" />
+                                                        </apex:selectList>
+                                                        <apex:actionStatus id="billToCountryLoading" >
+                                                            <apex:facet name="start" >
+                                                              <img src="/img/loading.gif" />                    
+                                                            </apex:facet>
+                                                        </apex:actionStatus>
+                                                    </div>
+                                                </div>
+                                                <apex:outputPanel id="BillingStateInfo" layout="block" styleClass="row">
+                                                    <div class="col-md-5"><apex:outputLabel value="{! labels['lblState']}" /></div>
+                                                    <div class="col-md-7">
+                                                        <!-- <apex:outputText value="{!state}" styleClass="MaxColumnWidth"  /> -->
+                                                        <div class="requiredBlock"></div>
+                                                        <apex:selectList value="{!selectedStateIsoCode}" styleClass="MaxColumnWidth" multiselect="false" size="1" rendered="{! listBillingState.size > 0}">
+                                                            <apex:selectOptions value="{!listBillingState}"/>
+                                                            <apex:actionsupport event="onchange" action="{! changeBillToState}" reRender="" />
+                                                        </apex:selectList>
+                                                    </div>
+                                                </apex:outputPanel>
+                                                
+                                                <apex:outputPanel id="BillingZipCodeInfo" layout="block" styleClass="row">
+                                                    <div class="col-md-5"><apex:outputLabel value="{! labels['lblZip']}" /></div>
+                                                    <div class="col-md-7">
+                                                        <apex:outputPanel rendered="{!billToZipCodeRequired}">
+                                                            <div class="requiredBlock"></div>
+                                                        </apex:outputPanel>
+                                                        <apex:inputText value="{!zipCode}" />
+                                                    </div>
+                                                </apex:outputPanel>
+
+                                                <apex:outputPanel id="vatNumberBillTo" layout="block" styleClass="row">
+                                                    <apex:outputPanel rendered="{!vATNumberRequiredBillTo}">
+                                                        <div class="col-md-5"><apex:outputLabel value="VAT number" /></div>
+                                                        <div class="col-md-7"><div class=""></div><input type="text" value="{!vatNumberBillTo}" name="vatNumberBillTo" /></div>
+                                                    </apex:outputPanel>
+                                                </apex:outputPanel>
+
+                                                <div class="row">
+                                                    <div class="col-md-5">&nbsp;</div>
+                                                    <div class="col-md-7"><br />
+                                                        <apex:commandLink action="{!saveAddressOrderReadOnly}" value="Save address" id="saveAddressOrderReadOnly" reRender="BillToReadOnly" rendered="{!editMod}" status="billToLoading" />
+                                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                        <apex:commandLink action="{!CancelAddressOrderReadOnly}" value="cancel address" id="cancelAddressOrderReadOnly" reRender="BillToReadOnly" rendered="{!editMod}" status="billToLoading" />
+                                                    </div>
+                                                </div>
+
+                                                
+
+                                                <script type="text/javascript">
+                                                    doAutoComplete('billToautocomplete','hiddenBillToautocomplete');
+                                                </script>
+
+                                            </apex:outputPanel>
+
+
+                                            <br /><br />
+                                            <div class="row">
+                                                <div class="col-md-5"><apex:outputLabel value="{!$ObjectType.Order.Fields.Invoice_Text__c.Label}" /></div>
+                                                <div class="col-md-7"><apex:inputField value="{!vfOrder.Invoice_Text__c}" styleClass="MaxColumnWidth" /></div>
+                                            </div>
+                                        </apex:outputPanel>
+                                    </apex:actionRegion>
+                                </div>
+                            </div>
+                        </div>
+                        </apex:outputPanel>
+
+                        <!-- Ship To -->
+                        <apex:outputPanel id="ShipToReadOnly" >
+                            <div class="col-md-4">
+                                <div class="panel panel-info">
+                                    <div class="panel-heading">
+                                        <div style="{!IF(vfOrder.ShipToContactId != null,'width: 70%;float: left;',false)}">{! labels['lblShipTo']}</div>
+                                        <div>
+                                        <apex:commandLink action="{!addShpAddressOrder}" value="Add address" id="addShpAddressOrder" reRender="ShipToReadOnly" status="shipToLoading" rendered="{!IF(vfOrder.ShipToContactId != null,true,false) && !editModShp}" />
+                                            &nbsp;&nbsp;
+                                            <apex:commandLink action="{!editShpAddressOrder}" value="Edit address" id="editShpAddressOrder" reRender="ShipToReadOnly" status="shipToLoading" rendered="{!IF(vfOrder.ShipToContactId != null,true,false) && !editModShp}" /> 
+                                            <apex:commandLink action="{!saveAddressOrder}" value="Save" id="saveAddressOrderHead" reRender="ShipToReadOnly" rendered="{!editModShp}" status="shipToLoading"/>
+                                            &nbsp;&nbsp;
+                                            <apex:commandLink action="{!CancelAddressOrder}" value="cancel" id="cancelAddressOrderHead" reRender="ShipToReadOnly" rendered="{!editModShp}" status="shipToLoading" />
+                                        </div>
+
+                                    </div>
+                                    <div class="panel-body address-panel">
+                                        <apex:actionRegion immediate="true" >
+                                            <apex:outputPanel id="sectionShipTo" layout="block">
+                                                
+                                                <apex:outputPanel layout="block" styleClass="row">
+                                                    <div class="col-md-5"><apex:outputLabel value="{!$ObjectType.Order.Fields.ShipTo_same_BillTo__c.Label}" /></div>
+                                                    <div class="col-md-7">
+                                                        <apex:inputField value="{!vfOrder.ShipTo_same_BillTo__c}">
+                                                            <apex:actionSupport event="onchange" reRender="sectionShipTo" />
+                                                        </apex:inputField>
+                                                    </div>
+                                                </apex:outputPanel>
+                                                <apex:outputPanel layout="block" styleClass="row" rendered="{!vfOrder.ShipTo_same_BillTo__c != true}">
+                                                    <div class="col-md-5"><apex:outputLabel value="{! labels['lblContact']}" /></div>
+                                                    <div class="col-md-7"><div class="requiredBlock"></div>
+                                                        <apex:inputField value="{!vfOrder.ShipToContactId}" styleClass="MaxColumnWidth">
+                                                            <apex:actionSupport event="onchange" onsubmit="hiddenPop();" action="{!getContactShipToLocations}" reRender="ShipToReadOnly, sectionShipTo,messagesContainer" status="shipToLoading" />
+                                                        </apex:inputField>
+                                                    </div>
+                                                </apex:outputPanel>
+                                                <br />
+                                                
+
+                                                <apex:outputPanel layout="block" styleClass="row" rendered="{! vfOrder.ShipTo_same_BillTo__c != true}">
+                                                    <!-- Show the location pickList values for billto contact -->
+                                                    <div class="col-md-5"><apex:outputLabel value="{! labels['lblChooseShipTo']}" /></div>
+                                                    <div class="col-md-7"><div class="requiredBlock"></div>
+                                                        <apex:selectList value="{!selectedShipToLocation}" size="1">
+                                                            <apex:selectOptions value="{!ShipToLocations}"/>
+                                                            <apex:actionSupport event="onchange" action="{!shipToContactDetails}" reRender="sectionShipTo,messagesContainer" status="shipToLoading" />
+                                                        </apex:selectList>
+                                                        <apex:actionStatus id="shipToLoading" >
+                                                            <apex:facet name="start" >
+                                                              <img src="/img/loading.gif" />                    
+                                                            </apex:facet>
+                                                        </apex:actionStatus>
+                                                    </div>
+                                                </apex:outputPanel>
+                                                <br /><br />
+                                                
+                                                
+                                                
+
+                                                
+                                                <!-- ReadOnly Mode -->
+                                                <apex:outputPanel rendered="{!!editModShp}">
+
+                                                <apex:outputPanel layout="block" styleClass="row">
+                                                    <div class="col-md-5"><apex:outputLabel value="{! labels['lblCompany']}" /></div>
+                                                    <!-- <div class="col-md-7"><apex:outputField value="{!shipToLocation.Account_Name__c}" styleClass="MaxColumnWidth" /></div> -->
+                                                    <div class="col-md-7"><apex:inputField value="{!vfOrder.ShipToAccount_Name__c}" styleClass="MaxColumnWidth" /></div>
+                                                </apex:outputPanel>
+                                                <!-- <apex:outputPanel layout="block" styleClass="row" rendered="{! vfOrder.ShipTo_same_BillTo__c != true}"> -->
+                                                <apex:outputPanel layout="block" styleClass="row">
+                                                    <div class="col-md-5"><apex:outputLabel value="{! labels['lblAttention']}" /></div>
+                                                    <!-- <div class="col-md-7"><apex:outputField value="{!shipToLocation.Contact_First_Name__c}" styleClass="MaxColumnWidth" />&nbsp;<apex:outputField value="{!shipToLocation.Contact_Last_Name__c}" styleClass="MaxColumnWidth" /></div> -->
+                                                    <div class="col-md-7"><apex:inputField value="{!vfOrder.ShipToContact_Name__c}" styleClass="MaxColumnWidth" /></div>
+                                                </apex:outputPanel>
+
+                                                <!-- <apex:outputPanel layout="block" styleClass="row" rendered="{! vfOrder.ShipTo_same_BillTo__c != true}"> -->
+                                                <apex:outputPanel layout="block" styleClass="row">
+                                                    <div class="col-md-5"><apex:outputLabel value="{! labels['lblPhone']}" /></div>
+                                                    <!-- <div class="col-md-7"><apex:outputField value="{!shipToLocation.Phone__c}" styleClass="MaxColumnWidth" /></div> -->
+                                                    <div class="col-md-7"><apex:inputField value="{!vfOrder.ShipToContact_Phone__c}" styleClass="MaxColumnWidth" /></div>
+                                                </apex:outputPanel>
+                                                <!-- <apex:outputPanel layout="block" styleClass="row" rendered="{! vfOrder.ShipTo_same_BillTo__c != true}"> -->
+                                                <apex:outputPanel layout="block" styleClass="row">
+                                                    <div class="col-md-5"><apex:outputLabel value="{! labels['lblEmail']}" /></div>
+                                                    <!-- <div class="col-md-7"><apex:outputField value="{!shipToLocation.Email__c}" styleClass="MaxColumnWidth" /></div> -->
+                                                    <div class="col-md-7"><apex:inputField value="{!vfOrder.ShipToContact_Email__c}" styleClass="MaxColumnWidth" /></div>
+                                                </apex:outputPanel>
+
+                                                <apex:outputPanel layout="block" styleClass="row" rendered="{! vfOrder.ShipTo_same_BillTo__c != true}">
+                                                    <div class="col-md-5"><apex:outputLabel value="{! labels['lblStreet']}" /></div>
+                                                    <div class="col-md-7">
+                                                        <apex:outputField value="{!shipToLocation.Street__c}" styleClass="MaxColumnWidth" />
+                                                        
+                                                    </div>
+                                                </apex:outputPanel>
+                                                <apex:outputPanel layout="block" styleClass="row" rendered="{! vfOrder.ShipTo_same_BillTo__c != true}">
+                                                    <div class="col-md-5"><apex:outputLabel value="{! labels['lblCity']}" /></div>
+                                                    <div class="col-md-7"><apex:outputField value="{!shipToLocation.City__c}" styleClass="MaxColumnWidth" /></div>
+                                                </apex:outputPanel>
+                                                <apex:outputPanel layout="block" styleClass="row" rendered="{! vfOrder.ShipTo_same_BillTo__c != true}">
+                                                    <div class="col-md-5"><apex:outputLabel value="{! labels['lblCountry']}" /></div>
+                                                    <div class="col-md-7">
+                                                        <apex:outputField value="{!shipToLocation.Country__c}" styleClass="MaxColumnWidth"  />
+                                                    </div>
+                                                </apex:outputPanel>
+                                                <apex:outputPanel id="ShippingStateInfoReadOnly" layout="block" styleClass="row" rendered="{! vfOrder.ShipTo_same_BillTo__c != true}">
+                                                    <div class="col-md-5"><apex:outputLabel value="{! labels['lblState']}" /></div>
+                                                    <div class="col-md-7">
+                                                        <apex:outputField value="{!shipToLocation.State__c}" styleClass="MaxColumnWidth" />
+                                                    </div>
+                                                </apex:outputPanel>
+                                                
+                                                <apex:outputPanel layout="block" styleClass="row" rendered="{! vfOrder.ShipTo_same_BillTo__c != true}">
+                                                    <div class="col-md-5"><apex:outputLabel value="{! labels['lblZip']}" /></div>
+                                                    <div class="col-md-7"><apex:outputField value="{!shipToLocation.ZipCode__c}" /></div>
+                                                </apex:outputPanel>
+                                                <apex:outputPanel layout="block" styleClass="row" rendered="{! vfOrder.ShipTo_same_BillTo__c != true && vATNumberRequired}">
+                                                    <div class="col-md-5"><apex:outputLabel value="VAT number" /></div>
+                                                    <div class="col-md-7"><apex:outputText value="{!vatNumber}" /></div>
+                                                </apex:outputPanel>
+
+                                                </apex:outputPanel>
+
+
+
+                                                <!-- Edit Mode -->
+                                                <apex:outputPanel rendered="{!editModShp}" id="shipTo">
+                                                    <br /> <br />
+                                                    <apex:pageMessages id="shipMessageErrors" />
+
+                                                    <apex:outputPanel layout="block" styleClass="row">
+                                                        <div class="col-md-5"><apex:outputLabel value="{! labels['lblCompany']}" /></div>
+                                                        <div class="col-md-7"><apex:inputField value="{!vfOrder.ShipToAccount_Name__c}" styleClass="MaxColumnWidth" /></div>
+                                                    </apex:outputPanel>
+                                                    <apex:outputPanel layout="block" styleClass="row">
+                                                        <div class="col-md-5"><apex:outputLabel value="{! labels['lblAttention']}" /></div>
+                                                        <div class="col-md-7"><apex:inputField value="{!vfOrder.ShipToContact_Name__c}" styleClass="MaxColumnWidth" /></div>
+                                                    </apex:outputPanel>
+
+                                                    <apex:actionFunction name="completeShipAddress" action="{!autoCompleteShipToAddresses}" rerender="shipTo" status="autoCompShipToLoading">
+                                                        <apex:param name="firstParam" assignTo="{!fullAddress}" value="" />
+                                                    </apex:actionFunction>
+                                                    
+                                                    <apex:outputPanel layout="block" styleClass="row" rendered="{! vfOrder.ShipTo_same_BillTo__c != true}">
+                                                        <div class="col-md-5"><apex:outputLabel value="{! labels['lblPhone']}" /></div>
+                                                        <div class="col-md-7"><apex:inputField value="{!vfOrder.ShipToContact_Phone__c}" styleClass="MaxColumnWidth" /></div>
+                                                    </apex:outputPanel>
+                                                    <apex:outputPanel layout="block" styleClass="row" rendered="{! vfOrder.ShipTo_same_BillTo__c != true}">
+                                                        <div class="col-md-5"><apex:outputLabel value="{! labels['lblEmail']}" /></div>
+                                                        <div class="col-md-7"><div class="requiredBlock"></div><apex:inputField value="{!vfOrder.ShipToContact_Email__c}" styleClass="MaxColumnWidth" /></div>
+                                                    </apex:outputPanel>
+                                                    
+                                                    <div class="row">
+                                                        <div class="col-md-5"><apex:outputLabel value="{! labels['lblStreet']}" /></div>
+                                                        <div class="col-md-7"><div class="requiredBlock"></div>
+                                                            <input type="text" value="{!shipStreet}" id="shipToautocomplete" name="autoCompShipToLoading"/>
+                                                            <input type="hidden"  id="hiddenShipToautocomplete" name="hiddenShipToautocomplete"/>
+                                                            <apex:actionStatus id="autoCompShipToLoading" >
+                                                                <apex:facet name="start" >
+                                                                  <img src="/img/loading.gif" />                    
+                                                                </apex:facet>
+                                                            </apex:actionStatus>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-5"><apex:outputLabel value="{! labels['lblCity']}" /></div>
+                                                        <div class="col-md-7"><div class="requiredBlock"></div><apex:inputText value="{!shipCity}" /></div>
+                                                    </div>
+                                                    
+
+                                                    <!-- for Edit existing address -->
+                                                    <apex:outputPanel rendered="{!!countryAndStateEditable}">
+
+                                                        <div class="row">
+                                                            <div class="col-md-5"><apex:outputLabel value="{! labels['lblCountry']}" /></div>
+                                                            <div class="col-md-7">
+                                                                <apex:outputText value="{!shipToLocation.Country__c}" styleClass="MaxColumnWidth" />
+                                                            </div>
+                                                        </div>
+
+                                                        <apex:outputPanel layout="block" styleClass="row">
+                                                            <div class="col-md-5"><apex:outputLabel value="{! labels['lblState']}" /></div>
+                                                            <div class="col-md-7">
+                                                                <apex:outputText value="{!shipToLocation.State__c}" styleClass="MaxColumnWidth"  />
+                                                            </div>
+                                                        </apex:outputPanel>
+
+                                                    </apex:outputPanel>
+
+                                                    <!-- for Add a new Address -->
+                                                    <apex:outputPanel rendered="{!countryAndStateEditable}">
+                                                        <div class="row">
+                                                            <div class="col-md-5"><apex:outputLabel value="{! labels['lblCountry']}" /></div>
+                                                            <div class="col-md-7">
+                                                                <div class="requiredBlock"></div>
+                                                                <apex:selectList value="{!selectedShipCountryIsoCode}" styleClass="MaxColumnWidth" multiselect="false" size="1">
+                                                                    <apex:selectOptions value="{!listCountry}"/>
+                                                                    <apex:actionsupport event="onchange" action="{! changeShipToCountryUsingLocation}" rerender="ShippingStateInfo,vatNumber,ShippingZipCodeInfo" status="shipToCountryLoading" />
+                                                                </apex:selectList>
+                                                                <apex:actionStatus id="shipToCountryLoading" >
+                                                                    <apex:facet name="start" >
+                                                                      <img src="/img/loading.gif" />                    
+                                                                    </apex:facet>
+                                                                </apex:actionStatus>
+                                                            </div>
+                                                        </div>
+
+                                                        <apex:outputPanel id="ShippingStateInfo" layout="block" styleClass="row">
+                                                            <div class="col-md-5"><apex:outputLabel value="{! labels['lblState']}" /></div>
+                                                            <div class="col-md-7">
+                                                                <div class="requiredBlock"></div>
+                                                                <apex:selectList value="{!selectedShipStateIsoCode}" styleClass="MaxColumnWidth" multiselect="false" size="1" rendered="{! listShippingState.size > 0}">
+                                                                    <apex:selectOptions value="{!listShippingState}"/>
+                                                                    <apex:actionsupport event="onchange" reRender="" />
+                                                                </apex:selectList>
+                                                            </div>
+                                                        </apex:outputPanel>
+                                                    </apex:outputPanel>
+
+                                                    
+                                                    <apex:outputPanel id="ShippingZipCodeInfo" layout="block" styleClass="row">
+                                                        <div class="col-md-5"><apex:outputLabel value="{! labels['lblZip']}" /></div>
+                                                        <div class="col-md-7">
+                                                            <apex:outputPanel rendered="{!shipToZipCodeRequired}">
+                                                                <div class="requiredBlock"></div>
+                                                            </apex:outputPanel>
+                                                            <apex:inputText value="{!shipZipCode}" />
+                                                        </div>
+                                                    </apex:outputPanel>
+
+                                                    <apex:outputPanel id="vatNumber" layout="block" styleClass="row">
+                                                        <apex:outputPanel rendered="{!vATNumberRequired}">
+                                                            <div class="col-md-5"><apex:outputLabel value="VAT number" /></div>
+                                                            <div class="col-md-7">
+                                                                <div class=""></div>
+                                                                <input type="text" value="{!vatNumber}" name="vatNumber" />
+                                                            </div>
+                                                        </apex:outputPanel>
+                                                    </apex:outputPanel>
+                                                    
+                                                    <div class="row">
+                                                        <div class="col-md-5">&nbsp;</div>
+                                                        <div class="col-md-7"><br />
+                                                            <apex:commandLink action="{!saveAddressOrder}" value="Save address" id="saveAddressOrder" reRender="ShipToReadOnly" rendered="{!editModShp}" status="shipToLoading" />
+                                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                            <apex:commandLink action="{!CancelAddressOrder}" value="cancel address" id="cancelAddressOrder" reRender="ShipToReadOnly" rendered="{!editModShp}" status="shipToLoading" />
+                                                        </div>
+                                                    </div>
+
+                                                    
+
+                                                    <script type="text/javascript">
+                                                        doAutoComplete('shipToautocomplete','hiddenShipToautocomplete');
+                                                    </script>
+                                                </apex:outputPanel>
+
+
+
+
+
+                                                <br /><br />
+                                                <div class="row">
+                                                    <div class="col-md-5"><apex:outputLabel value="{!$ObjectType.Order.Fields.Shipping_Instruction__c.Label}" /></div>
+                                                    <div class="col-md-7"><apex:inputField value="{!vfOrder.Shipping_Instruction__c}" styleClass="MaxColumnWidth" /></div>
+                                                </div>
+                                            </apex:outputPanel>
+                                        </apex:actionRegion>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </apex:outputPanel>
+
+                    </div>
+
+                    <script type="text/javascript">
+                        setPanelSize();
+                    </script>
+                </apex:form>
+            </div>
+        </div>   
+
+        <!-- Order Products --> 
+        <div class="row">
+            <div class="col-md-12">
+                <apex:form id="frmOrderProducts">
+                    <!-- AJAX CALLS -->
+                    <apex:actionFunction name="addProductsToOrder" reRender="addProductsContainer,frmOrderView" action="{!addProductsToOrder}" status="addProductsStatus">
+                        <apex:param name="productsNumbers" value="" />
+                    </apex:actionFunction>            
+                    
+                    <apex:actionFunction name="removeProductsFromOrder" reRender="messagesContainer,addProductsContainer,frmOrderView" action="{!removeProductsFromOrder}" status="addProductsStatus">
+                        <apex:param name="productsNumbers" value="" />
+                    </apex:actionFunction>  
+                    
+                    <apex:actionFunction name="addSelectedProducts" reRender="messagesContainer,selectedProductsPanel,existingProductsPanel,modalFooter,modalHeader" action="{!addSelectedProducts}">
+                        <apex:param name="selectedProductsIdsStr" assignTo="{!selectedProductsIdsStr}" value="" />
+                    </apex:actionFunction>
+
+                    <apex:actionFunction name="saveSelectedProducts" reRender="messagesContainer,frmOrderProducts" action="{!saveSelectedProducts}" status="myStatus"/>
+
+                    <apex:actionFunction name="deleteProduct" reRender="messagesContainer,frmOrderProducts" action="{!deleteProduct}" status="myStatus">
+                        <apex:param name="orderItemId" assignTo="{!orderItemId}" value="" />
+                    </apex:actionFunction>
+
+                    <apex:actionFunction name="selectOrderItemToEdit" action="{!selectOrderItemToEdit}" reRender="itemEditContainer" status="editProductStatus">
+                        <apex:param name="orderItemId" assignTo="{!orderItemId}" value="" />
+                    </apex:actionFunction>
+                    
+                    <apex:actionFunction name="resendOrderItemLink" reRender="messagesContainer,frmOrderProducts" action="{!resendOrderItemLink}" status="myStatus">
+                        <apex:param name="orderItemId" assignTo="{!orderItemId}" value="" />
+                    </apex:actionFunction>
+
+                    <apex:actionFunction name="saveProduct" reRender="messagesContainer,frmOrderProducts" action="{!saveProduct}" status="myStatus" />
+                    
+                    <apex:actionFunction name="selectMore" reRender="messagesContainer,selectedProductsPanel,existingProductsPanel,modalFooter,modalHeader" action="{!selectMore}"/>
+            
+
+                    <apex:outputPanel layout="block" styleClass="row" id="orderItemContainer" rendered="{!vfOrder != null && vfOrder.Id != null}">
+                        <div class="col-md-12">
+                            <div class="panel panel-info">
+                                <div class="panel-heading">{! labels['lblOrderProduct']}</div>
+                                <div class="panel-body">
+                                    <!-- Buttons -->
+                                    <apex:outputPanel layout="block" rendered="{! !isEdit && allowEditSave && !isInlineEditing && showAddProducts==false}">
+                                        <apex:commandButton styleClass="btn btn-default btn-lg" status="myStatus" action="{!showAddProductsSection}" reRender="frmOrderProducts, orderItemList, frmOrderView" value="{!labels['lblAddProduct']}" />
+                                        <apex:actionStatus id="myStatus">
+                                            <apex:facet name="start">&nbsp;<img src="{!$Resource.IEC_progress}" alt="x" /></apex:facet>
+                                        </apex:actionStatus>
+                                    </apex:outputPanel>
+
+                                    <apex:pageMessages escape="false"/>
+
+                                    <!-- Add Products Section  -->
+                                    <apex:outputPanel id="addProductsContainer" rendered="{!showAddProducts==true}" layout="block" styleClass="row">
+                                        <div class="col-md-6">
+                                            <h3 class="section_title">Available Products</h3>
+                                            <apex:dataTable title="Available Products" id="availableProducts" value="{!availableProducts}" var="product" styleClass="table table-striped aTable">
+                                                <apex:column >
+                                                    <input type="checkbox" />
+                                                </apex:column>
+                                                <apex:column >
+                                                    <apex:facet name="header">{!$ObjectType.Product2.fields.Name.Label}</apex:facet>
+                                                    <a href="/{!product.ecomProduct.ProductId}" target="_blank">{!product.ecomProduct.ProductName}</a>
+                                                </apex:column>
+                                                <apex:column >
+                                                    <apex:facet name="header">{!$ObjectType.Product2.fields.SAP_Material_Number__c.Label}</apex:facet>
+                                                    {!product.ecomProduct.ProductNumber}
+                                                </apex:column>
+                                                <apex:column >
+                                                    <apex:facet name="header">{!$ObjectType.Product2.fields.Media__c.Label}</apex:facet>
+                                                    {!product.ecomProduct.Media}
+                                                </apex:column>
+                                                <apex:column >
+                                                    <apex:facet name="header">{!$ObjectType.Product2.fields.Language__c.Label}</apex:facet>
+                                                    {!product.ecomProduct.Language}
+                                                </apex:column>
+                                                <apex:column >
+                                                    <apex:facet name="header">Unit Price</apex:facet>
+                                                    <apex:outputText styleClass="price" value="{0, number, currency}">
+                                                        <apex:param value="{!product.ecomProduct.UnitPrice}" />
+                                                    </apex:outputText>
+                                                </apex:column>
+                                            </apex:dataTable>
+                                        </div>
+                                        <div class="col-md-1" id="addRemoveButtons">
+                                            <div>
+                                                <button type="button" class="btn btn-default" onclick="addProducts()">
+                                                    {!$Label.Button_Add} <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                                                </button>
+                                                <br />
+                                                <button type="button" class="btn btn-default" onclick="removeProducts()">
+                                                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> {!$Label.Button_Remove}
+                                                </button>
+                                                <br />
+                                                <apex:actionStatus id="addProductsStatus">
+                                                    <apex:facet name="start"><img src="{!$Resource.IEC_progress}" alt="x" /></apex:facet>
+                                                </apex:actionStatus>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <h3 class="section_title">Selected Products</h3>
+                                            <apex:dataTable id="selectedProducts" value="{!selectedProducts}" var="product" styleClass="table table-striped sTable">
+                                                <apex:column >
+                                                    <input type="checkbox" />
+                                                </apex:column>
+                                                <apex:column >
+                                                    <apex:facet name="header">{!$ObjectType.Product2.fields.Name.Label}</apex:facet>
+                                                    <a href="/{!product.ecomProduct.ProductId}" target="_blank">{!product.ecomProduct.ProductName}</a>
+                                                </apex:column>
+                                                <apex:column >
+                                                    <apex:facet name="header">{!$ObjectType.Product2.fields.SAP_Material_Number__c.Label}</apex:facet>
+                                                   {!product.ecomProduct.ProductNumber}
+                                                </apex:column>
+                                                <apex:column >
+                                                    <!-- {!$ObjectType.OrderItem.fields.Quantity.Label} -->
+                                                    <apex:facet name="header">Qty</apex:facet>
+                                                    <apex:input type="number" styleClass="qty" html-min="1" html-step="{!IF(product.IsQuantityInteger, '1', 'any')}" value="{!product.quantity}" size="5" />
+                                                    <!-- <apex:inputHidden value="{!product.quantity}" /> -->
+                                                </apex:column>
+                                                <apex:column >
+                                                    <apex:facet name="header">{!$ObjectType.OrderItem.fields.Coupon__c.Label}</apex:facet>
+                                                    <input type="text" value="{!product.couponCode}" />
+                                                    <apex:inputHidden value="{!product.couponCode}" />
+                                                </apex:column>
+                                                <apex:column >
+                                                    <apex:facet name="header">{!$ObjectType.OrderItem.fields.UnitPrice.Label}</apex:facet>
+                                                    <apex:outputText styleClass="price" value="{0, number, currency}">
+                                                        <apex:param value="{!product.ecomProduct.UnitPrice}" />
+                                                    </apex:outputText>
+                                                </apex:column>
+                                            </apex:dataTable>
+                                            <div class="row" id="orderProductButtons">
+                                                <div class="col-md-12">
+                                                    <div>
+                                                        <apex:commandButton styleClass="btn btn-default btn-lg" status="addProductStatus" action="{!hideAddProductsSection}" reRender="frmOrderProducts,frmOrderView" value="{!$Label.Button_Cancel}" />&nbsp;
+
+                                                        <apex:commandButton styleClass="btn btn-default btn-lg" status="addProductStatus" action="{!saveSelectedProducts}" rendered="{!selectedProducts.size > 0}" reRender="frmOrderProducts,frmOrderView" value="{!$Label.Button_Add_To_Order}" />&nbsp;
+
+                                                        <apex:actionStatus id="addProductStatus">
+                                                            <apex:facet name="start"><img src="{!$Resource.IEC_progress}" alt="x" /></apex:facet>
+                                                        </apex:actionStatus>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <script type="text/javascript">
+                                            var availableProductTable = $('.aTable').DataTable({
+                                                dom: "<'row'<'col-md-12'f>><'tbl't><'row'<'col-md-12'p>>",
+                                                scrollY: "260px",
+                                                scrollCollapse: true,
+                                                columns:[{orderable:false},null,null,null,null,null],
+                                                order: [[ 1, "asc" ]],
+                                                lengthMenu:[5,10,20]
+                                            }); 
+
+                                            var selectedProductTable = $('.sTable').DataTable({
+                                                // dom: "<'tbl't><'row'<'col-md-8'p><'col-md-4'f>>",
+                                                dom: "<'row'<'col-md-12'f>><'tbl't><'row'<'col-md-12'p>>",
+                                                scrollY: "260px",
+                                                scrollCollapse: true,
+                                                columns:[{orderable:false},null,null,null,null,null],
+                                                order: [[ 1, "asc" ]],
+                                                lengthMenu:[5,10,20]
+                                            }); 
+                                            
+                                            $('.aTable tbody, .sTable tbody').on('click', 'input[type="checkbox"]', function(e){
+                                                var $row = $(this).closest('tr');
+                                            
+                                                if(this.checked){
+                                                    $row.addClass('selected');
+                                                } else {
+                                                    $row.removeClass('selected');
+                                                }
+                                            });
+
+                                            $('.sTable tbody').on('keyup', 'input[type="text"], input[type="number"]', function(e){
+                                                $(this).siblings('input[type="hidden"]').val($(this).val());
+                                            });
+
+                                            var addProducts = function(){
+                                                var selectedRows = availableProductTable.rows('.selected').data();
+                                                var selectedProducts = [];
+                                                
+                                                if(selectedRows.length > 0){
+                                                    for(i=0; i <selectedRows.length; i++)
+                                                        selectedProducts.push(selectedRows[i][2]);
+                                                    
+                                                    addProductsToOrder(selectedProducts.join('_'));
+                                                }else{
+                                                    alert('You must select a product first');
+                                                }                                    
+                                            }
+
+                                            var removeProducts = function(){
+                                                var selectedRows = selectedProductTable.rows('.selected').data();
+                                                var selectedProducts = [];
+
+                                                if(selectedRows.length > 0){
+                                                    for(i=0; i <selectedRows.length; i++)
+                                                        selectedProducts.push(selectedRows[i][2]);
+                                                    
+                                                    console.log(selectedProducts);
+                                                    removeProductsFromOrder(selectedProducts.join('_'));
+                                                }else{
+                                                    alert('You must select a product first');
+                                                }   
+                                            }
+                                        </script>
+                                    </apex:outputPanel>
+
+                                    <!-- Edit Order Item Section -->
+                                    <apex:outputPanel layout="block" id="editProductContainer">
+                                        <div id="editProductModal" class="modal fade" role="dialog">
+                                            <div class="modal-dialog modal-lg">
+                                                <apex:outputPanel styleClass="modal-content" layout="block" id="itemEditContainer">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                        <h4 class="modal-title">
+                                                            Edit Product
+                                                            <apex:actionStatus id="editProductStatus">
+                                                                <apex:facet name="start"><img src="/img/loading.gif" /></apex:facet>
+                                                            </apex:actionStatus>
+                                                        </h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <apex:dataTable value="{!orderItemToEdit}" var="item" styleClass="table table-striped">
+                                                            <apex:column >
+                                                                <apex:facet name="header">{!$ObjectType.Product2.fields.Name.Label}</apex:facet>
+                                                                <apex:outputText value="{!item.productName}"/>
+                                                            </apex:column>
+                                                        
+                                                            <apex:column >
+                                                                <apex:facet name="header">{!$ObjectType.Product2.fields.SAP_Material_Number__c.Label}</apex:facet>
+                                                                <apex:outputText value="{!item.productCode}"/>
+                                                            </apex:column>
+                                                            
+                                                            <apex:column >
+                                                                <!-- {!$ObjectType.OrderItem.fields.Quantity.Label} -->
+                                                                <apex:facet name="header">Qty</apex:facet>
+                                                                <apex:input type="number" styleClass="qty orderQtyPopup" html-min="1" html-step="{!IF(item.IsQuantityInteger, '1', 'any')}" id="inputQty" value="{!item.quantityStripped}" size="5" />
+                                                            </apex:column>
+
+                                                            <apex:column >
+                                                                <apex:facet name="header">{!$ObjectType.OrderItem.fields.Coupon__c.Label}</apex:facet>
+                                                                <apex:inputText value="{!item.couponCode}"/>
+                                                            </apex:column>
+                                                        </apex:dataTable>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <input type="button" id="btnCancel" class="btn btn-default btn-lg" data-dismiss="modal" value="Cancel" />
+                                                        <apex:commandButton styleClass="btn btn-default btn-lg" rerender="frmOrderProducts" status="myStatus" action="{!saveProduct}" onclick="if (document.getElementsByClassName('orderQtyPopup')[0].checkValidity() == true) hideEditProductModal();" value="Save" />
+                                                    </div>
+                                                </apex:outputPanel>
+                                            </div>
+                                        </div>
+                                    </apex:outputPanel>
+
+                                </div>
+                                
+                                <!-- Order Product List -->
+                                <apex:dataTable value="{!orderProducts}" var="item" styleClass="table table-striped" id="orderItemList">
+                                    <apex:column >
+                                        <apex:outputPanel layout="block" rendered="{! !isEdit && allowEditSave && !isInlineEditing && showAddProducts==false}">
+                                            <button type="button" class="btn btn-default btn-xs" onclick="selectOrderItemToEdit('{!item.orderItemId}')" data-toggle="modal" data-target="#editProductModal">
+                                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                                            </button>
+                                            <button type="button" class="btn btn-default btn-xs" onclick="deleteOrderItem('{!item.orderItemId}')">
+                                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                            </button>
+                                        </apex:outputPanel>  
+                                    </apex:column>
+
+                                    <apex:column >
+                                        <apex:facet name="header">{!$ObjectType.Product2.fields.Name.Label}</apex:facet>
+                                        <apex:outputText value="{!item.productName}"/>
+                                    </apex:column>
+
+                                    <apex:column >
+                                        <apex:facet name="header">{!$ObjectType.Product2.fields.SAP_Material_Number__c.Label}</apex:facet>
+                                        <apex:outputText value="{!item.productCode}"/>
+                                    </apex:column>
+
+                                    <apex:column styleClass="align_center" headerClass="align_center" rendered="{! !isPending}">
+                                        <apex:facet name="header">{!labels['lblSubNo']}</apex:facet>
+                                        <apex:outputText value="{!item.subscription}"/>
+                                    </apex:column>
+
+                                    <apex:column styleClass="align_center" headerClass="align_center" rendered="{! !isPending}">
+                                        <apex:facet name="header">{!labels['lblContractNo']}</apex:facet>
+                                        <apex:outputText value="{!item.contractNumber}"/>
+                                    </apex:column>
+                                    
+                                    <apex:column >
+                                        <!-- {!$ObjectType.OrderItem.fields.Quantity.Label} -->
+                                        <apex:facet name="header">Qty</apex:facet>
+                                        <apex:outputText value="{0, number}">
+                                            <apex:param value="{!item.quantity}"/>
+                                        </apex:outputText>
+                                    </apex:column>
+
+                                    <apex:column styleClass="align_right" headerClass="align_right">
+                                        <apex:facet name="header">{!$ObjectType.OrderItem.fields.UnitPrice.Label}</apex:facet>
+                                        <apex:outputText value="{0, number, currency}">
+                                            <apex:param value="{!item.unitPrice}"/>
+                                        </apex:outputText>
+                                    </apex:column>
+
+                                    <apex:column styleClass="align_center" headerClass="align_center">
+                                        <apex:facet name="header">{!$ObjectType.OrderItem.fields.Setup_Fee__c.Label}</apex:facet>
+                                        <apex:outputText value="{0, number, currency}">
+                                            <apex:param value="{!item.setupFee}"/>
+                                        </apex:outputText>
+                                    </apex:column>
+
+                                    <apex:column styleClass="align_right" headerClass="align_right">
+                                        <apex:facet name="header">{!$ObjectType.OrderItem.fields.SubTotal__c.Label}</apex:facet>
+                                        <apex:outputText value="{0, number, currency}">
+                                            <apex:param value="{!item.subTotal}"/>
+                                        </apex:outputText>
+                                    </apex:column>
+
+                                    <apex:column styleClass="align_center" headerClass="align_center">
+                                        <apex:facet name="header">{!$ObjectType.OrderItem.fields.Coupon__c.Label}</apex:facet>
+                                        <apex:outputText value="{!item.couponCode}"/>
+                                    </apex:column>
+
+                                    <apex:column styleClass="align_right" headerClass="align_right">
+                                        <apex:facet name="header">Additional discount</apex:facet>
+                                        <apex:outputText value="{0, number, currency}">
+                                            <apex:param value="{! -item.discountAmount}"/>
+                                        </apex:outputText>
+                                    </apex:column>
+                                    
+                                    <apex:column styleClass="align_right" headerClass="align_right">
+                                        <apex:facet name="header">{!$ObjectType.OrderItem.fields.Handling_charges__c.Label}</apex:facet>
+                                        <apex:outputText value="{0, number, currency}">
+                                            <apex:param value="{!item.handlingCharges}"/>
+                                        </apex:outputText>
+                                    </apex:column>
+                                    
+                                    <apex:column styleClass="align_right" headerClass="align_right">
+                                        <apex:facet name="header">{!$ObjectType.OrderItem.fields.Freight_Charge__c.Label}</apex:facet>
+                                        <apex:outputText value="{0, number, currency}">
+                                            <apex:param value="{!item.shippingAmount}"/>
+                                        </apex:outputText>
+                                    </apex:column>
+                                    
+                                    <apex:column styleClass="align_right" headerClass="align_right">
+                                        <apex:facet name="header">{!$ObjectType.OrderItem.fields.Tax__c.Label}</apex:facet>
+                                        <apex:outputText value="{0, number, currency}">
+                                            <apex:param value="{!item.taxAmount}"/>
+                                        </apex:outputText>
+                                    </apex:column>
+
+                                    <apex:column styleClass="align_right" headerClass="align_right">
+                                        <apex:facet name="header">{!$ObjectType.OrderItem.fields.Total__c.Label}</apex:facet>
+                                        <apex:outputText value="{0, number, currency}">
+                                            <apex:param value="{!item.totalAmount}"/>
+                                        </apex:outputText>
+                                    </apex:column>
+
+                                    <apex:column styleClass="align_center" headerClass="align_center">
+                                        <apex:facet name="header">{!$ObjectType.OrderItem.fields.Status__c.Label}</apex:facet>
+                                        <apex:outputText value="{!item.status}" />
+                                    </apex:column>
+                                    
+                                    <apex:column styleClass="align_center" headerClass="align_center">
+                                        <apex:facet name="header">{!$ObjectType.OrderItem.fields.Scheduled_Delivery_Date__c.Label}</apex:facet>
+                                        <apex:outputText value="{0, date, medium}">
+                                            <apex:param value="{!item.scheduledDate}"/>
+                                        </apex:outputText>
+                                    </apex:column>
+                                    
+                                    <apex:column styleClass="align_center" headerClass="align_center">
+                                        <apex:facet name="header">{!$ObjectType.OrderItem.fields.Shipped_Date__c.Label}</apex:facet>
+                                        <apex:outputText value="{0, date, medium}">
+                                            <apex:param value="{!item.shippedDate}"/>
+                                        </apex:outputText>
+                                    </apex:column>
+                                    
+                                    <apex:column styleClass="align_left" headerClass="align_center">
+                                        <apex:facet name="header">{!$ObjectType.OrderItem.fields.Carrier_Tracking_URL__c.Label}</apex:facet>
+                                        <apex:outputText value="{!item.trackingNumber}" escape="false" />
+                                    </apex:column>
+                                    
+                                    <apex:column styleClass="align_center" headerClass="align_center">
+                                        <apex:facet name="header">{!$ObjectType.OrderItem.fields.Invoice_Number__c.Label}</apex:facet>
+                                        <apex:outputLink value="/apex/IECInvoice?invoice={!item.invoiceNumber}" id="invoiceLink" target="_blank">{!item.invoiceNumber}</apex:outputLink>
+                                    </apex:column>
+                                    
+                                    <apex:column styleClass="align_center" headerClass="align_center">
+                                        <apex:facet name="header">{!$ObjectType.OrderItem.fields.Invoice_Date__c.Label}</apex:facet>
+                                        <apex:outputText value="{0, date, medium}">
+                                            <apex:param value="{!item.invoiceDate}"/>
+                                        </apex:outputText>
+                                    </apex:column>
+                                    
+                                    <apex:column styleClass="align_right" headerClass="align_right">
+                                        <apex:facet name="header">{!$ObjectType.OrderItem.fields.Invoice_Amount__c.Label}</apex:facet>
+                                        <apex:outputText value="{0, number, currency}">
+                                            <apex:param value="{!item.invoiceAmount}"/>
+                                        </apex:outputText>
+                                    </apex:column>
+                                    
+                                    <apex:column styleClass="align_right" headerClass="align_right">
+                                        <apex:facet name="header">{!$ObjectType.OrderItem.fields.Credit_Debit__c.Label}</apex:facet>
+                                        <apex:outputText value="{0, number, currency}">
+                                            <apex:param value="{!item.CreditDebitAmount}"/>
+                                        </apex:outputText>
+                                    </apex:column>
+                                    
+                                    <apex:column styleClass="align_center" headerClass="align_center" rendered="{! NOT(allowEditSave)}">
+                                        <apex:facet name="header">Download Link</apex:facet>
+                                        <apex:outputPanel layout="block" rendered="{!item.IsWebDownload}">
+                                            <button type="button" class="btn btn-default btn-xs" onclick="resendOrderItemLink('{!item.orderItemId}')">Resend</button>
+                                        </apex:outputPanel>
+                                    </apex:column>
+                                </apex:dataTable>
+
+                            </div>
+                        </div>
+                    </apex:outputPanel>
+                </apex:form>
+            </div>
+        </div>
+
+        <!-- Order invoices  -->
+        <apex:outputPanel styleClass="row" rendered="{!orderInvoices.size > 0}" layout="block">
+            <div class="col-md-12">
+                <div class="panel panel-info">
+                    <div class="panel-heading">Order Invoices</div>
+                    <div class="panel-body"></div>
+                    <apex:dataTable id="orderInvoices" value="{!orderInvoices}" var="invoice" styleClass="table table-striped aTable">
+                        <apex:column >
+                            <apex:facet name="header">{!$ObjectType.SAP_Invoice__c.fields.Invoice_Number__c.Label}</apex:facet>
+                            {!invoice.invoiceNumber}
+                        </apex:column>
+                        <apex:column >
+                            <apex:facet name="header">{!$ObjectType.SAP_Invoice__c.fields.Clearance_Date__c.Label}</apex:facet>
+                            <apex:outputText value="{0, date, medium}">
+                                <apex:param value="{!invoice.clearanceDate}"/>
+                            </apex:outputText>
+                        </apex:column>
+                    </apex:dataTable>
+                </div>
+            </div>
+        </apex:outputPanel>
+
+    </div>
+</body>
+</html>
+</apex:page>

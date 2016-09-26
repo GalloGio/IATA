@@ -17,9 +17,17 @@ global class ISSP_WS_BSP_Utilities {
         String currentEnvironment = inputData.currentEnvironment;
     
         // Get request IP
-        List <LoginHistory> loginList = [SELECT Id, SourceIp FROM LoginHistory
+        List <LoginHistory> loginList;
+        if(Test.isRunningTest()){
+            loginList = [SELECT Id, SourceIp FROM LoginHistory
+                                        WHERE UserId = :UserInfo.getUserId()
+                                        ORDER BY LoginTime DESC
+                                        Limit 1000];
+        }else{
+            loginList = [SELECT Id, SourceIp FROM LoginHistory
                                         WHERE UserId = :UserInfo.getUserId()
                                         ORDER BY LoginTime DESC];
+        }
         
         // Create log object record
         ISSP_Web_Service_Log__c newLog = new ISSP_Web_Service_Log__c();
@@ -135,8 +143,8 @@ global class ISSP_WS_BSP_Utilities {
     
         // Get request IP
         List <LoginHistory> loginList = [SELECT Id, SourceIp FROM LoginHistory
-                                        WHERE UserId = :UserInfo.getUserId()
-                                        ORDER BY LoginTime DESC];
+                                        WHERE UserId = :UserInfo.getUserId() 
+                                        ORDER BY LoginTime DESC limit 5000 ];
         
         // Create log object record
         ISSP_Web_Service_Log__c newLog = new ISSP_Web_Service_Log__c();

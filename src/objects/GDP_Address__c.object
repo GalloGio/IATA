@@ -50,7 +50,7 @@
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
-    <enableHistory>false</enableHistory>
+    <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
@@ -62,6 +62,7 @@
         <label>AIMS ID</label>
         <length>40</length>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>true</unique>
@@ -72,6 +73,20 @@
         <label>Address City</label>
         <length>30</length>
         <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Address_Country_Name_Uppercase__c</fullName>
+        <description>IATA_ISO_Country Name in uppercase, this is intended for generating the GDP Files.</description>
+        <externalId>false</externalId>
+        <formula>UPPER(IATA_ISO_Country__r.Name)</formula>
+        <inlineHelpText>IATA_ISO_Country Name in uppercase</inlineHelpText>
+        <label>Address Country Name Uppercase</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -82,6 +97,7 @@
         <formula>IATA_ISO_Country__r.Name</formula>
         <label>Address Country Name</label>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -99,6 +115,7 @@ For UP (US Proctectorates), use the State Code, otherwise, it is equals to Addre
         <inlineHelpText>Used as LCtryISO, MCtryISO, RCtryISO by the GDP/MDP table, based on Address_ISO_Country_Code__c or Address_State_Code__c</inlineHelpText>
         <label>Address IATA Custom ISO Country Code</label>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -109,6 +126,7 @@ For UP (US Proctectorates), use the State Code, otherwise, it is equals to Addre
         <formula>IATA_ISO_Country__r.ISO_Code__c</formula>
         <label>Address ISO Country Code</label>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -122,6 +140,7 @@ This is needed because there is bad data with &apos;|&apos; in Address_Line_1__c
         <inlineHelpText>Substitution rule from “|” to “/” in Address Line 1.</inlineHelpText>
         <label>Address Line 1 Clean</label>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -132,6 +151,7 @@ This is needed because there is bad data with &apos;|&apos; in Address_Line_1__c
         <label>Address Line 1</label>
         <length>32</length>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -142,6 +162,7 @@ This is needed because there is bad data with &apos;|&apos; in Address_Line_1__c
         <label>Address Line 2</label>
         <length>32</length>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -152,6 +173,7 @@ This is needed because there is bad data with &apos;|&apos; in Address_Line_1__c
         <label>Address Line 3</label>
         <length>32</length>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -162,16 +184,39 @@ This is needed because there is bad data with &apos;|&apos; in Address_Line_1__c
         <label>Address Postal Code</label>
         <length>10</length>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
     </fields>
     <fields>
         <fullName>Address_State_Code__c</fullName>
+        <description>State Code without the preceding country code. 
+The source of information is taken from IATA_ISO_State.
+In case the dash (-) does not exist,  e.g. CA60, it will only display the Country ISO Code.</description>
         <externalId>false</externalId>
-        <formula>IATA_ISO_State__r.ISO_Code__c</formula>
+        <formula>IF( CONTAINS(IATA_ISO_State__r.ISO_Code__c, &apos;-&apos;) 
+   , SUBSTITUTE(IATA_ISO_State__r.ISO_Code__c, IATA_ISO_Country__r.ISO_Code__c+ &apos;-&apos;, &apos;&apos;) 
+   , IATA_ISO_Country__r.ISO_Code__c 
+)</formula>
+        <inlineHelpText>State Code without the preceding country code. 
+The source of information is taken from IATA_ISO_State.</inlineHelpText>
         <label>Address State Code</label>
         <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Address_State_Name_Uppercase__c</fullName>
+        <description>IATA_ISO_State Name in uppercase, this is intended for generating the GDP Files.</description>
+        <externalId>false</externalId>
+        <formula>UPPER(IATA_ISO_State__r.Name)</formula>
+        <inlineHelpText>IATA_ISO_State Name in uppercase</inlineHelpText>
+        <label>Address State Name Uppercase</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -182,6 +227,7 @@ This is needed because there is bad data with &apos;|&apos; in Address_Line_1__c
         <formula>IATA_ISO_State__r.Name</formula>
         <label>Address State Name</label>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -205,6 +251,7 @@ This is needed because there is bad data with &apos;|&apos; in Address_Line_1__c
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -218,6 +265,7 @@ This is needed because there is bad data with &apos;|&apos; in Address_Line_1__c
 , &apos;|&apos;, &apos;/&apos;)</formula>
         <label>Address</label>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -231,6 +279,7 @@ This is needed because there is bad data with &apos;|&apos; in Address_Line_1__c
         <relationshipLabel>GDP Addresses</relationshipLabel>
         <relationshipName>GDP_Addresses</relationshipName>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -243,8 +292,21 @@ This is needed because there is bad data with &apos;|&apos; in Address_Line_1__c
         <relationshipLabel>GDP Addresses</relationshipLabel>
         <relationshipName>GDP_Addresses</relationshipName>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>IATA_ISO_NCode__c</fullName>
+        <externalId>false</externalId>
+        <label>IATA ISO NCode</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>IATA_ISO_State__c</fullName>
@@ -255,6 +317,7 @@ This is needed because there is bad data with &apos;|&apos; in Address_Line_1__c
         <relationshipLabel>GDP Addresses</relationshipLabel>
         <relationshipName>GDP_Addresses</relationshipName>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -265,6 +328,7 @@ This is needed because there is bad data with &apos;|&apos; in Address_Line_1__c
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Profit Center</label>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -278,6 +342,7 @@ This is needed because there is bad data with &apos;|&apos; in Address_Line_1__c
         <relationshipLabel>GDP Addresses</relationshipLabel>
         <relationshipName>GDP_Addresses</relationshipName>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -290,6 +355,7 @@ This is needed because there is bad data with &apos;|&apos; in Address_Line_1__c
         <relationshipLabel>GDP Addresses</relationshipLabel>
         <relationshipName>GDP_Addresses</relationshipName>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -299,6 +365,7 @@ This is needed because there is bad data with &apos;|&apos; in Address_Line_1__c
         <formula>GDP_Geo_Detail__r.Sub_Continent__c</formula>
         <label>Sub Continent</label>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -310,6 +377,7 @@ This is needed because there is bad data with &apos;|&apos; in Address_Line_1__c
         <label>WebStar ID</label>
         <length>50</length>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>true</unique>
@@ -317,6 +385,9 @@ This is needed because there is bad data with &apos;|&apos; in Address_Line_1__c
     <label>GDP Address</label>
     <listViews>
         <fullName>AIMS_Mailing_address</fullName>
+        <columns>AIMS_ID__c</columns>
+        <columns>Related_GDP_Products_Account_View__c</columns>
+        <columns>Related_Account__c</columns>
         <columns>NAME</columns>
         <columns>Address_City__c</columns>
         <columns>Address_Country_Name__c</columns>
@@ -364,9 +435,11 @@ This is needed because there is bad data with &apos;|&apos; in Address_Line_1__c
     <nameField>
         <displayFormat>A-{00000}</displayFormat>
         <label>GDP Address Name</label>
+        <trackHistory>false</trackHistory>
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>GDP Addresses</pluralLabel>
+    <recordTypeTrackHistory>false</recordTypeTrackHistory>
     <recordTypes>
         <fullName>GDP</fullName>
         <active>true</active>

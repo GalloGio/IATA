@@ -62,7 +62,7 @@ public with sharing class IFAP_BusinessRules {
             /*isValid = (contactMap.get(theCase.id).Agent_Type__c != null
                         && (contactMap.get(theCase.id).Agent_Type__c == 'IATA Cargo Agent' ||  contactMap.get(theCase.id).Agent_Type__c == 'IATA Passenger Sales Agent' || contactMap.get(theCase.id).Agent_Type__c == 'CASS Associate' ||  contactMap.get(theCase.id).Agent_Type__c == 'Domestic Agent'));*/
             isValid = (theCase.IFAP_Agent_Type__c != null
-                       && (theCase.IFAP_Agent_Type__c == 'IATA Cargo Agent' ||  theCase.IFAP_Agent_Type__c == 'IATA Passenger Sales Agent' || theCase.IFAP_Agent_Type__c == 'CASS Associate'));
+                       && (theCase.IFAP_Agent_Type__c == 'IATA Cargo Agent' ||  theCase.IFAP_Agent_Type__c == 'IATA Passenger Sales Agent' || theCase.IFAP_Agent_Type__c == 'CASS Associate' || theCase.IFAP_Agent_Type__c == 'Import Agent'));
 
 
 
@@ -89,15 +89,15 @@ public with sharing class IFAP_BusinessRules {
 
 
                 isValid = (accountMap.get(theCase.id).IATACode__c.length() >= 7 && accountMap.get(theCase.id).IATACode__c.length() <= 11);
-
-                Pattern valid_characters = Pattern.compile('([0-9]+)'); //only numbers
-                Matcher check_chars = valid_characters.matcher(accountMap.get(theCase.id).IATACode__c);
-
-
+                //INC249798
+                //Pattern valid_characters = Pattern.compile('([0-9]+)'); //only numbers
+                //Matcher check_chars = valid_characters.matcher(accountMap.get(theCase.id).IATACode__c);
 
 
 
-                isValid &= check_chars.matches();
+
+
+                //isValid &= check_chars.matches();
             }
         } catch (Exception ex) {
 
@@ -264,7 +264,7 @@ public with sharing class IFAP_BusinessRules {
         return false;
     }
 
-    public static Boolean IsStatusCanBeSelected(Boolean isOnCaseCreation, Boolean isUpdateFromWS, Case UpdatedCase, Case OldCase, Profile currentUserProfile, Boolean isAuthorizedUser) {
+    public static Boolean IsStatusCanBeSelected(Boolean isOnCaseCreation, Case UpdatedCase, Case OldCase, Profile currentUserProfile, Boolean isAuthorizedUser) {
 
         String caseStatus = UpdatedCase.Status;
 
@@ -281,10 +281,12 @@ public with sharing class IFAP_BusinessRules {
         }
 
         //Allow any status change coming from webservice that will have a user that is not a sys admin making the change(UPDATE WEBSERVICE CODE TO SURE ALL THE UPDATES FROM WS SET THE FIELD IS_COMPLAINT ON THE CASE to TRUE)
+        /*
         if (isUpdateFromWS) {
             system.debug('*** WEBSERVICE BYPASS ***');
             return true;
         }
+        */
 
         if (isOnCaseCreation) {
 

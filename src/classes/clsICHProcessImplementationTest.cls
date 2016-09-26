@@ -68,7 +68,7 @@ private class clsICHProcessImplementationTest {
         contact2.LastName = 'ICH Help Desk';
         contact2.Type_of_Contact__c = 'ICH User';
         contact2.AccountId = account1.Id;
-        contact2.Email = 'some@email.org';
+        contact2.Email = 'some2@email.org';
         insert contact2;
 
         Priority_Mapping__c pm1 = new Priority_Mapping__c();

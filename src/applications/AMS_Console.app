@@ -6,6 +6,9 @@
     </customApplicationComponents>
     <defaultLandingTab>standard-home</defaultLandingTab>
     <detailPageRefreshMethod>none</detailPageRefreshMethod>
+    <domainWhitelist>
+        <domain>iata--AmsDev1.cs86.my.salesforce.com</domain>
+    </domainWhitelist>
     <enableCustomizeMyTabs>false</enableCustomizeMyTabs>
     <enableKeyboardShortcuts>true</enableKeyboardShortcuts>
     <enableListViewReskin>true</enableListViewReskin>
@@ -171,15 +174,66 @@
         <location>full</location>
     </listPlacement>
     <listRefreshMethod>none</listRefreshMethod>
+    <pushNotifications>
+        <pushNotification>
+            <fieldNames>Category__c</fieldNames>
+            <fieldNames>Email__c</fieldNames>
+            <fieldNames>LastModifiedBy</fieldNames>
+            <fieldNames>LastModifiedDate</fieldNames>
+            <fieldNames>Phone</fieldNames>
+            <fieldNames>Sector__c</fieldNames>
+            <fieldNames>Status__c</fieldNames>
+            <objectName>Account</objectName>
+        </pushNotification>
+        <pushNotification>
+            <fieldNames>Account</fieldNames>
+            <fieldNames>Attachment_received_possible_POP__c</fieldNames>
+            <fieldNames>BSPCountry__c</fieldNames>
+            <fieldNames>CaseArea__c</fieldNames>
+            <fieldNames>Case_Remarks__c</fieldNames>
+            <fieldNames>Contact</fieldNames>
+            <fieldNames>LastModifiedBy</fieldNames>
+            <fieldNames>LastModifiedDate</fieldNames>
+            <fieldNames>Origin</fieldNames>
+            <fieldNames>Owner</fieldNames>
+            <fieldNames>Parent</fieldNames>
+            <fieldNames>Priority</fieldNames>
+            <fieldNames>Reason1__c</fieldNames>
+            <fieldNames>Region__c</fieldNames>
+            <fieldNames>Status</fieldNames>
+            <fieldNames>Subject</fieldNames>
+            <objectName>Case</objectName>
+        </pushNotification>
+    </pushNotifications>
     <saveUserSessions>true</saveUserSessions>
-    <tab>AMS_Agency__c</tab>
-    <tab>Operational_Improvements__c</tab>
+    <tab>standard-Account</tab>
+    <tab>standard-Case</tab>
+    <tab>standard-report</tab>
+    <tab>standard-Dashboard</tab>
+    <tab>IATA_Code_Loader</tab>
+    <tab>Code_Range__c</tab>
+    <tab>standard-Chatter</tab>
     <workspaceMappings>
         <mapping>
-            <tab>AMS_Agency__c</tab>
+            <tab>Code_Range__c</tab>
         </mapping>
         <mapping>
-            <tab>Operational_Improvements__c</tab>
+            <tab>IATA_Code_Loader</tab>
+        </mapping>
+        <mapping>
+            <tab>standard-Account</tab>
+        </mapping>
+        <mapping>
+            <tab>standard-Case</tab>
+        </mapping>
+        <mapping>
+            <tab>standard-Chatter</tab>
+        </mapping>
+        <mapping>
+            <tab>standard-Dashboard</tab>
+        </mapping>
+        <mapping>
+            <tab>standard-report</tab>
         </mapping>
     </workspaceMappings>
 </CustomApplication>

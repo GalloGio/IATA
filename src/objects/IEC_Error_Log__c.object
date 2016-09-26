@@ -69,6 +69,7 @@
     </fields>
     <fields>
         <fullName>Data__c</fullName>
+        <description>IEC - data that caused error</description>
         <externalId>false</externalId>
         <label>Input Data</label>
         <length>32768</length>
@@ -246,6 +247,11 @@
             <field>Source__c</field>
             <operation>contains</operation>
             <value>Accreditations</value>
+        </filters>
+        <filters>
+            <field>CREATED_DATE</field>
+            <operation>equals</operation>
+            <value>6/10/2016 12:00 AM</value>
         </filters>
         <label>DataLoader - Accreditation errors</label>
         <language>en_US</language>

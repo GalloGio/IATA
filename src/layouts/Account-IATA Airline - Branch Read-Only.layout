@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
     <customButtons>Zuora__Sync_Data_from_ZBilling</customButtons>
-    <excludeButtons>DataDotComClean</excludeButtons>
-    <excludeButtons>DataDotComCompanyHierarchy</excludeButtons>
+    <excludeButtons>DataDotComAccountInsights</excludeButtons>
     <excludeButtons>DisableCustomerPortalAccount</excludeButtons>
     <excludeButtons>DisablePartnerPortalAccount</excludeButtons>
     <excludeButtons>IncludeOffline</excludeButtons>
@@ -284,6 +283,14 @@
         <fields>Services_Rendered_Status__c</fields>
         <fields>ISO_Country_formula__c</fields>
         <relatedList>Services_Rendered__c.Services_Rendered_to_Airline__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>ORDERS.ORDER_NUMBER</fields>
+        <fields>ORDERS.STATUS</fields>
+        <fields>ORDERS.EFFECTIVE_DATE</fields>
+        <fields>CONTRACT.CONTRACT_NUMBER</fields>
+        <fields>ORDERS.TOTAL_AMOUNT</fields>
+        <relatedList>RelatedOrderList</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>FULL_NAME</fields>

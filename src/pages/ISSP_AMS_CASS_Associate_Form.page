@@ -389,8 +389,8 @@
         </div>
         <p><a href="#top">{!$Label.ISSP_AMS_Top}</a></p>
         <p><a href="#nav_one">{!$Label.ISSP_AMS_LeftNav_Section1}</a></p>
-        <p><a href="#nav_two">2. Agency Contacts</a></p>
-        <p><a href="#nav_three">3. Other Info</a></p>
+        <p><a href="#nav_two">{!$Label.ISSP_AMS_LeftNav_Section2_Cargo_Cass_Ass}</a></p>
+        <p><a href="#nav_three">{!$Label.ISSP_AMS_LeftNav_Section3_Cargo_Cass_Ass}</a></p>
        
         
     </div>
@@ -462,7 +462,7 @@
                  <apex:pageBlockSection columns="2" collapsible="false">
                     <apex:facet name="header">
                         <apex:outputpanel >
-                            SECTION 1 - Identification of Agency Location for which Approval Requested
+                            {!$Label.ISSP_AMS_Cargo_Cass_SECTION_1}
                         </apex:outputpanel>
                     </apex:facet>
                   </apex:pageBlockSection>
@@ -527,7 +527,7 @@
                        <apex:inputField value="{!newForm.Local_Physical_Address_Postal_Code__c}" onChange="copyPhysicalAddress()" styleClass="PhysicalPostalCode"/>
                        <apex:inputField value="{!newForm.Local_Physical_Address_Province__c}" onChange="copyPhysicalAddress()" styleClass="PhysicalProvince"/>
                        <apex:inputField value="{!newForm.Local_Physical_Address_Area__c}" onChange="copyPhysicalAddress()" styleClass="PhysicalArea"/>
-                       <apex:outputText value="{!CASE(isocountry.ISO_Code__c, 'KR', isocountry.IATA_Contry_KR__c, 'JP', isocountry.IATA_Country_JP__c, isocountry.IATA_Country_ZH__c)}" label="Country"/>
+                       <apex:outputText value="{!CASE(isocountry.ISO_Code__c, 'KR', isocountry.IATA_Contry_KR__c, 'JP', isocountry.IATA_Country_JP__c, 'BR', isocountry.IATA_Country_PT__c, isocountry.IATA_Country_ZH__c)}" label="Country"/>
                    </apex:pageBlockSection>
                    <apex:pageBlockSection columns="1">
                        <apex:outputText value="{!txtLocalAgencyDetailsCorrespondenceAddress}" style="font-weight:bold; font-size:110%"/>
@@ -539,7 +539,7 @@
                        <apex:inputField value="{!newForm.Local_Postal_Address_Postal_Code__c}" styleClass="PostalPostalCode"/>
                        <apex:inputField value="{!newForm.Local_Postal_Address_Province__c}" styleClass="PostalProvince"/>
                        <apex:inputField value="{!newForm.Local_Postal_Address_Area__c}" styleClass="PostalArea"/>
-                       <apex:outputText value="{!CASE(isocountry.ISO_Code__c, 'KR', isocountry.IATA_Contry_KR__c, 'JP', isocountry.IATA_Country_JP__c, isocountry.IATA_Country_ZH__c)}" label="Country"/>
+                       <apex:outputText value="{!CASE(isocountry.ISO_Code__c, 'KR', isocountry.IATA_Contry_KR__c, 'JP', isocountry.IATA_Country_JP__c, 'BR', isocountry.IATA_Country_PT__c, isocountry.IATA_Country_ZH__c)}" label="Country"/>
                    </apex:pageBlockSection>
                 </apex:pageBlockSection>
      
@@ -547,15 +547,13 @@
                    <apex:pageBlockSection id="sectionFour" columns="1" collapsible="false">
                     <apex:facet name="header">
                         <apex:outputpanel >
-                            SECTION 2 - Agency Contacts    
+                            {!$Label.ISSP_AMS_Cargo_Cass_SECTION_2}  
                         </apex:outputpanel>
                     </apex:facet>
-                        <div class="col-md-12 bg-info"><strong>2.1 PEOPLE</strong></div>
+                        <div class="col-md-12 bg-info"><strong>{!$Label.ISSP_AMS_Cargo_Cass_SECTION_2_1}</strong></div>
                        <div class="col-md-12">
                            <apex:outputText escape="false">
-                               If your agency is fully- or partially-owned by one or more people, please enter their details here as owners, partners or shareholders (except where your organization is a legal entity whose shares are listed on a security exchange or are regularly traded in an ‘over-the-counter’ market).<br/>
-                               Enter the names and titles for the directors or officers of a corporation, and the details of the managers of the agency.<br/> 
-								Select at least one Authorised Signatory and CASS Contact, and choose the and Portal Administrator.
+                               {!$Label.ISSP_AMS_Cargo_Cass_SECTION_2_1_text_1}
                            </apex:outputText>
                        </div>
                        <div id="msgshareholdersdetails" class="bg-warning" style="margin-top:3px; margin-bottom:5px;{!IF(newForm.ISSP_AMS_Entity_with_listed_shares__c == 'No', 'border: 0px !important;', 'display:none')}">
@@ -613,7 +611,7 @@
                             
                 <div id="multi-owners" style="{!IF(AND(newForm.ISSP_AMS_Legal_Status__c != 'Sole Proprietorship', newForm.ISSP_AMS_Legal_Status__c !=null), 'border: 0px !important;', 'display:none')}">
                  <apex:pageBlockSection columns="1">
-                     <div class="bg-info col-md-12" style="margin-top:15px;"><strong> 2.2 COMPANIES</strong></div>
+                     <div class="bg-info col-md-12" style="margin-top:15px;"><strong> {!$Label.ISSP_AMS_Cargo_Cass_SECTION_2_2}</strong></div>
                      <div class="col-md-12">
                            <apex:outputText value="{!$Label.ISSP_AMS_Step3_4_Companies}" escape="false"/>
                        </div>
@@ -637,7 +635,7 @@
                         </apex:actionFunction>
                   </apex:pageBlockSection>
                 <apex:pageBlockSection columns="1">
-                    <div class="bg-info col-md-12" style="margin-top:15px;"><strong>2.3 SUMMARY OF OWNERSHIP</strong></div>
+                    <div class="bg-info col-md-12" style="margin-top:15px;"><strong>{!$Label.ISSP_AMS_Cargo_Cass_SECTION_2_3}</strong></div>
                     <div class="col-md-12">
                            <apex:outputText value="{!$Label.ISSP_AMS_Step3_4_Ownership}" escape="false"/>
                        </div>
@@ -653,7 +651,7 @@
                  <apex:pageBlockSection columns="1" collapsible="false">
                     <apex:facet name="header">
                         <apex:outputpanel >
-                            SECTION 3 - Other Info
+                            {!$Label.ISSP_AMS_Cargo_Cass_SECTION_3}
                         </apex:outputpanel>
                     </apex:facet>
             		 <apex:actionfunction name="validateVAT" action="{!validateVATNumber}" status="actValidVAT" rerender="VATNumberInput">
@@ -667,7 +665,7 @@
                             <apex:image value="/img/msg_icons/info16.png" style="margin-left:3px;" title="{!IF(isocountry.Tax_number_help_text__c == null, txtHelpTaxNumber, isocountry.Tax_number_help_text__c)}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
                             <apex:actionstatus id="actValidVAT" startstyleclass="bg-info">
                                 <apex:facet name="start">
-                                    Validating VAT number...
+                                    {!$Label.ISSP_PAX_Validating_VAT_Number}
                                 </apex:facet>
                             </apex:actionstatus>
                         </apex:outputpanel>
@@ -682,11 +680,11 @@
                         </apex:outputpanel>
                     </apex:pageblocksectionitem>
                      <apex:pageblocksectionitem >
-                     	<apex:outputlabel value="* Estimated future sales for the coming 12 months:" />
+                     	<apex:outputlabel value="{!$Label.ISSP_AMS_Cargo_Cass_SECTION_3_Q1}" />
                          <apex:inputField value="{!newForm.Est_Future_Sales__c}" onkeypress="return onlyNumbers(event);"/>                  
                      </apex:pageblocksectionitem>
                     
-                    <apex:selectRadio label="* Please Indicate if you are registered to receive HOT files" style="width:10%" styleClass="{!IF(AND(isValError, newForm.Registered_to_hot_files__c==null), 'requiredIndicator', '')}" value="{!newForm.Registered_to_hot_files__c}" >
+                    <apex:selectRadio label="{!$Label.ISSP_AMS_Cargo_Cass_SECTION_3_Q2}" style="width:10%" styleClass="{!IF(AND(isValError, newForm.Registered_to_hot_files__c==null), 'requiredIndicator', '')}" value="{!newForm.Registered_to_hot_files__c}" >
                         <apex:selectOption itemValue="Yes" itemLabel="{!$Label.ISSP_Yes}"/>
                         <apex:selectOption itemValue="No" itemLabel="{!$Label.ISSP_No}"/>
                     </apex:selectRadio>
@@ -729,7 +727,7 @@
                     <apex:inputField value="{!newContact.Authorised_signatory__c}" />
                 </apex:pageBlockSectionItem>              
                 <apex:pageBlockSectionItem labelStyle="white-space: nowrap;font-size:110%" dataStyle="width:15%">
-                    <apex:outputLabel >CASS Contact</apex:outputLabel>
+                    <apex:outputLabel >{!$Label.ISSP_AMS_Cargo_Cass_Contact}</apex:outputLabel>
                     <apex:inputField value="{!newContact.CASS_contact__c}" />
                 </apex:pageBlockSectionItem>
             </apex:pageBlockSection>
@@ -1064,7 +1062,7 @@
 
                 <apex:actionStatus id="loadingDetailsCompanyModal" startStyleClass="bg-info">
                     <apex:facet name="start" >
-                        Loading Agency details...     
+                        {!$Label.ISSP_AMS_Loading_Agency_details}     
                     </apex:facet>
                 </apex:actionStatus>
 

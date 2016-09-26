@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
     <customButtons>Zuora__Sync_Data_from_ZBilling</customButtons>
-    <excludeButtons>DataDotComClean</excludeButtons>
+    <excludeButtons>DataDotComAccountInsights</excludeButtons>
+    <excludeButtons>DataDotComCompanyHierarchy</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
         <customLabel>true</customLabel>
@@ -24,6 +25,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>IATACode__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Airline_Prefix__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -208,6 +213,29 @@
         </layoutColumns>
         <style>CustomLinks</style>
     </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
+        <label>Due Diligence (Corporate Compliance)</label>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Due_Diligence_Status__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Due_Diligence_Remarks__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Level_of_risk__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <style>TwoColumnsLeftToRight</style>
+    </layoutSections>
     <relatedLists>
         <fields>NAME</fields>
         <fields>Issues__c</fields>
@@ -215,6 +243,14 @@
         <fields>Duplicate_Account__c</fields>
         <fields>CREATED_DATE</fields>
         <relatedList>Data_Quality_Feedback__c.Account__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>ORDERS.ORDER_NUMBER</fields>
+        <fields>ORDERS.STATUS</fields>
+        <fields>ORDERS.EFFECTIVE_DATE</fields>
+        <fields>CONTRACT.CONTRACT_NUMBER</fields>
+        <fields>ORDERS.TOTAL_AMOUNT</fields>
+        <relatedList>RelatedOrderList</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>OPPORTUNITY.NAME</fields>
@@ -312,20 +348,33 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Zuora__BillToCountry__c</fields>
         <fields>Zuora__Balance__c</fields>
-        <fields>Zuora__MRR__c</fields>
         <fields>Zuora__LastInvoiceDate__c</fields>
+        <fields>Zuora__MRR__c</fields>
         <fields>Zuora__AutoPay__c</fields>
-        <fields>Zuora__Status__c</fields>
-        <fields>Zuora__PaymentTerm__c</fields>
-        <fields>Zuora__CreditCard_Number__c</fields>
-        <fields>Zuora__CreditCard_Expiration__c</fields>
+        <fields>Zuora__DefaultPaymentMethod__c</fields>
+        <fields>Zuora__SalesRepName__c</fields>
         <relatedList>Zuora__CustomerAccount__c.Zuora__Account__c</relatedList>
         <sortField>NAME</sortField>
         <sortOrder>Asc</sortOrder>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Contact__c</fields>
+        <fields>Address__c</fields>
+        <fields>Country__c</fields>
+        <fields>Type__c</fields>
+        <relatedList>Location__c.Account__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>SAP_ID__c</fields>
+        <fields>SAP_Account_type__c</fields>
+        <fields>GDP__c</fields>
+        <fields>CREATED_DATE</fields>
+        <fields>LAST_UPDATE</fields>
+        <fields>UPDATEDBY_USER</fields>
         <relatedList>SAP_Account__c.Account__c</relatedList>
     </relatedLists>
     <relatedLists>

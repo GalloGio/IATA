@@ -317,7 +317,10 @@
         <members>*</members>
           <name>EmailTemplate</name>
     </types>  
+        <types> 
+        <members>Portal_Application_Right__c</members>
+          <name>CustomObject</name>
+    </types>     
     
-    
-    <version>34.0</version>
+    <version>37.0</version>
 </Package>

@@ -1260,15 +1260,18 @@
     </alerts>
     <alerts>
         <fullName>IDFS_SIDRA_DP01_KAM_case_created_assign</fullName>
-        <ccEmails>madsceacc@iata.org</ccEmails>
         <description>IDFS_SIDRA_DP01_KAM case created</description>
         <protected>false</protected>
         <recipients>
-            <recipient>albuquerqd@iata.org</recipient>
+            <recipient>armientoe@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
             <recipient>batagliaf@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>dovgano@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -1280,11 +1283,19 @@
             <type>user</type>
         </recipients>
         <recipients>
+            <recipient>martinyuks@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>paredesc@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
             <recipient>saremyt@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>schuchardm@iata.org</recipient>
             <type>user</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
@@ -3661,6 +3672,14 @@
             <type>owner</type>
         </recipients>
         <recipients>
+            <field>Country_Manager_Backup_2__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <recipients>
+            <field>Country_Manager_Backup__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <recipients>
             <field>Country_Manager__c</field>
             <type>userLookup</type>
         </recipients>
@@ -3765,6 +3784,15 @@
         <field>Status</field>
         <literalValue>Closed_Rejected</literalValue>
         <name>Ad-hoc calendar rejection - status updat</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Airline_Master_List</fullName>
+        <field>Reason1__c</field>
+        <literalValue>Airline Master List and Details</literalValue>
+        <name>Airline Master List</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Literal</operation>
         <protected>false</protected>
@@ -5316,7 +5344,7 @@ IF(IsClosed, &quot;Closed&quot;, &quot;Open&quot;)</formula>
         <description>SIDRA</description>
         <field>Acc_IRR_leading_to_DEF__c</field>
         <formula>CASE( Region__c , 
-&quot;Europe&quot;, IF(OR(ISPICKVAL( BSPCountry__c, &quot;Hungary&quot; ),ISPICKVAL( BSPCountry__c, &quot;Switzerland &amp; Liechtenstein&quot; )),6,4), &quot;Africa &amp; middle east&quot;,4, &quot;Asia &amp; pacific&quot;, IF(OR(ISPICKVAL( BSPCountry__c , &quot;Nepal&quot;), AND(ISPICKVAL( BSPCountry__c , &quot;India&quot;),ISPICKVAL( BSP_CASS__c ,&quot;BSP&quot;))), 6,4),&quot;China &amp; North Asia&quot;, IF(AND(ISPICKVAL( BSPCountry__c , &quot;People&apos;s republic of China&quot;),ISPICKVAL( BSP_CASS__c ,&quot;BSP&quot;)),10,4),&quot;Americas&quot;, 
+&quot;Europe&quot;, IF(OR(ISPICKVAL( BSPCountry__c, &quot;Hungary&quot; ),ISPICKVAL( BSPCountry__c, &quot;Switzerland &amp; Liechtenstein&quot; ),ISPICKVAL( BSPCountry__c, &quot;Poland&quot; )),6,4), &quot;Africa &amp; middle east&quot;,4, &quot;Asia &amp; pacific&quot;, IF(OR(ISPICKVAL( BSPCountry__c , &quot;Nepal&quot;), AND(ISPICKVAL( BSPCountry__c , &quot;India&quot;),ISPICKVAL( BSP_CASS__c ,&quot;BSP&quot;))), 6,4),&quot;China &amp; North Asia&quot;, IF(AND(ISPICKVAL( BSPCountry__c , &quot;People&apos;s republic of China&quot;),ISPICKVAL( BSP_CASS__c ,&quot;BSP&quot;)),10,4),&quot;Americas&quot;, 
 
 IF(ISPICKVAL( BSP_CASS__c ,&quot;CASS&quot;), 4, IF(OR(ISPICKVAL( BSPCountry__c , &quot;Argentina&quot;),ISPICKVAL( BSPCountry__c , &quot;Uruguay&quot;),ISPICKVAL( BSPCountry__c , &quot;Paraguay&quot;)),8,6)),-1 
 )</formula>
@@ -6988,6 +7016,27 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <operation>Formula</operation>
         <protected>false</protected>
     </fieldUpdates>
+    <fieldUpdates>
+        <fullName>update_closed_by_role_field</fullName>
+        <description>This field update contains a formula based on User&apos;s profile and role, the result is stored in the case field &apos;Closed by Role&apos;</description>
+        <field>Closed_by_Role__c</field>
+        <formula>(IF(OR(CONTAINS( $Profile.Name,&quot;ISS Portal&quot;),CONTAINS( $Profile.Name,&quot;IATA Portal1389712205152 Profile&quot;)),&quot;IATA Partner&quot;,
+(IF(OR(CONTAINS($Profile.Name,&quot;Hub CS Management&quot;),CONTAINS( $Profile.Name,&quot;IDFS Americas - Hub Staff&quot;)),&quot;Customer Service&quot;,
+(IF(OR(CONTAINS($Profile.Name,&quot;Hub MGR AM/ARM&quot;),CONTAINS( $Profile.Name,&quot;Hub Staff AM&quot;)),&quot;Agency Management&quot;,
+(IF(CONTAINS($Profile.Name,&quot;Hub Staff ARM&quot;),&quot;Risk Management&quot;,
+(IF(CONTAINS($Profile.Name,&quot;Hub Staff R&amp;S&quot;),&quot;Remittance &amp; Settlement&quot;,
+(IF(CONTAINS( $UserRole.Name, &quot;Banking&quot;),&quot;Banking&quot;, 
+(IF(CONTAINS( $UserRole.Name, &quot;Business Delivery&quot;),&quot;Business Delivery&quot;, 
+(IF(CONTAINS( $UserRole.Name, &quot;I&amp;C&quot;),&quot;Invoicing &amp; Collection&quot;,
+(IF(CONTAINS( $UserRole.Name, &quot;Operations Manager&quot;),&quot;Operations&quot;,
+(IF(OR(CONTAINS( $UserRole.Name, &quot;Operations Staff&quot;),CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)),&quot;Operations&quot;, 
+(IF(CONTAINS($Profile.Name,&quot;Coding and MITA&quot;),&quot;Coding &amp; MITA&quot;,
+(IF(CONTAINS($UserRole.Name, &quot;Distribution - Airline Management&quot;),&quot;Airline Management&quot;,&quot;IATA Other&quot;))))))))))))))))))))))))</formula>
+        <name>update closed by role field</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
     <outboundMessages>
         <fullName>SNOW_Incident</fullName>
         <apiVersion>30.0</apiVersion>
@@ -8112,6 +8161,17 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <value>Cubana</value>
         </criteriaItems>
         <description>IDFS assign cases to Airlines SCE queue</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Case Closed By Role</fullName>
+        <actions>
+            <name>update_closed_by_role_field</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <description>This workflow fill field &apos;Closed by Role&apos; with the user&apos;s role name who closed the case</description>
+        <formula>IsClosed = true</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -11323,6 +11383,29 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
+        <fullName>Email from ibsps%40acca%2Ecom%2Ecn</fullName>
+        <actions>
+            <name>Airline_Master_List</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>DPC_Update_case_area</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Case.SuppliedEmail</field>
+            <operation>equals</operation>
+            <value>ibsps@acca.com.cn</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Process</value>
+        </criteriaItems>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
         <fullName>External split for OPS Mgt cases</fullName>
         <actions>
             <name>External_OPS_Mgt_cases</name>
@@ -12364,7 +12447,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
-            <value>SAAM,SIDRA,Process</value>
+            <value>SAAM,SIDRA,Process,OSCAR Communication,IATA Financial Review</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.IsComplaint__c</field>
@@ -13359,7 +13442,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         </actions>
         <active>true</active>
         <description>SIDRA</description>
-        <formula>AND( NOT(SIDRA_workflow_flag__c), RecordType.Name = &quot;SIDRA&quot;, OR(AND(ISPICKVAL(Total_Irregularities__c,&quot;4&quot;), Acc_IRR_leading_to_DEF__c = 4),  AND(ISPICKVAL(Total_Irregularities__c,&quot;6&quot;), Acc_IRR_leading_to_DEF__c = 6),  AND(ISPICKVAL(Total_Irregularities__c,&quot;8&quot;), Acc_IRR_leading_to_DEF__c = 8),  AND(ISPICKVAL(Total_Irregularities__c,&quot;10&quot;), Acc_IRR_leading_to_DEF__c = 10),  AND( REI_Previous_12_Months_CASS_only__c , ispickval( Region__c ,&quot;europe&quot;))))</formula>
+        <formula>AND( NOT(SIDRA_workflow_flag__c), RecordType.Name = &quot;SIDRA&quot;, OR(AND(ISPICKVAL(Total_Irregularities__c,&quot;4&quot;), Acc_IRR_leading_to_DEF__c = 4), AND(ISPICKVAL(Total_Irregularities__c,&quot;6&quot;), Acc_IRR_leading_to_DEF__c = 6), AND(ISPICKVAL(Total_Irregularities__c,&quot;8&quot;), Acc_IRR_leading_to_DEF__c = 8), AND(ISPICKVAL(Total_Irregularities__c,&quot;10&quot;), Acc_IRR_leading_to_DEF__c = 10), AND( REI_Previous_12_Months_CASS_only__c , ispickval( Region__c ,&quot;europe&quot;))))</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>

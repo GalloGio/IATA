@@ -8,7 +8,9 @@ trigger ISSP_ContactAfterInsert on Contact (after insert,after update) {
     list<Contact> contactsToDisable_TD = new list<Contact>();
     set<string> contactsForUserUpdateIdSet = new set<string>();
     set<string> contactsForUserdeActivateIdSet = new set<string>();
-    
+    Map<Id,Id> oldAccountByContactIdMap = new Map<Id,Id>();
+    Map<Id,Id> newAccountByContactIdMap = new Map<Id,Id>();
+   
     Set<Id> contactsToProcess = new Set<Id>();
     Map<Id, Id> contactsToProcessMap = new Map<Id, Id>();
     
@@ -16,13 +18,23 @@ trigger ISSP_ContactAfterInsert on Contact (after insert,after update) {
         contactsToProcess.add(con.Id);
     }
     if (!contactsToProcess.isEmpty()){
-        List <User> userList = [SELECT Id, Profile.Name, ContactId FROM User WHERE ContactId = :contactsToProcess];
+        List <User> userList = [SELECT Id, Profile.Name, ContactId,ContactKaviId__c,Is_Kavi_Internal_User__c FROM User WHERE ContactId = :contactsToProcess OR ContactKaviId__c =:contactsToProcess];
         if (!userList.isEmpty()){
             for (User thisUser : userList){
                 if (thisUser.Profile.Name.startsWith('ISS')){
                     if (!contactsToProcessMap.containsKey(thisUser.ContactId)){
                         contactsToProcessMap.put(thisUser.ContactId, thisUser.ContactId);
                     }
+                }
+                //if (thisUser.Profile.Name == 'KaviProvisioningUser'){
+                //    if (!contactsToProcessMap.containsKey(thisUser.ContactKaviId__c)){
+                //       contactsToProcessMap.put(thisUser.ContactKaviId__c, thisUser.ContactKaviId__c);
+                //   }
+                //}
+                if (thisUser.Is_Kavi_Internal_User__c){
+                    if (!contactsToProcessMap.containsKey(thisUser.ContactKaviId__c)){
+                       contactsToProcessMap.put(thisUser.ContactKaviId__c, thisUser.ContactKaviId__c);
+                   }
                 }
             }
         }
@@ -37,6 +49,8 @@ trigger ISSP_ContactAfterInsert on Contact (after insert,after update) {
             Contact oldCon;  
             if(trigger.isUpdate){
                 oldCon = trigger.oldMap.get(con.Id);
+                system.debug('con.LastName '+con.LastName);
+                system.debug('oldCon.LastName '+oldCon.LastName);
                 if(
                     con.FirstName != oldCon.FirstName ||
                     con.LastName != oldCon.LastName ||
@@ -59,9 +73,12 @@ trigger ISSP_ContactAfterInsert on Contact (after insert,after update) {
                 contactsWithStatusEqualToInactivList.add(con);
             }
             
-            if((con.Status__c == 'Inactive') // || con.Status__c == 'Retired' || con.Status__c == 'Left Company / Relocated' ) 
+            if(((con.Status__c == 'Inactive') || (con.Kavi_User__c != null & (con.Status__c == 'Retired' || con.Status__c == 'Left Company / Relocated') ) )// || con.Status__c == 'Retired' || con.Status__c == 'Left Company / Relocated' ) 
                   && (trigger.isinsert || con.Status__c!= oldCon.Status__c )){
                     contactsForUserdeActivateIdSet.add(con.Id);
+                    if (con.Kavi_User__c != null){
+                        contactsWithStatusEqualToInactivList.add(con);
+                    }
             }
         }
     }
@@ -70,7 +87,9 @@ trigger ISSP_ContactAfterInsert on Contact (after insert,after update) {
     //if(contactsFromMigrationList.size()>0)
     //    ISSP_PortalUserStatusChange.maasUserCreation(contactsFromMigrationList);
     
-    // Update user by contact changes 
+    // Update user by contact changes
+    // Update Portal Application Rights - to Access Denide If contact Status is inactiv
+    system.debug('\n\n KIKEcontactsForUserUpdateIdSet '+ contactsForUserUpdateIdSet+'\n\n');
     if(contactsForUserUpdateIdSet.size()>0)
         ISSP_PortalUserStatusChange.futureUpdateUsers(contactsForUserUpdateIdSet);
     
@@ -101,6 +120,22 @@ trigger ISSP_ContactAfterInsert on Contact (after insert,after update) {
             }
             update tdList;
         }
+
+        list<Portal_Application_Right__c> kaviList = [SELECT Id, Right__c, Contact__c
+                                                FROM Portal_Application_Right__c
+                                                WHERE Contact__c in:contactsToDisable_TD
+                                                AND Right__c = 'Access Granted'
+                                                AND Portal_Application__r.Name LIKE 'Standards Setting Workspace%'];
+        if (!kaviList.isEmpty()){
+            for(Portal_Application_Right__c par : kaviList){
+                oldAccountByContactIdMap.put(par.Contact__c,trigger.oldMap.get(par.Contact__c).AccountId);
+                newAccountByContactIdMap.put(par.Contact__c,trigger.newMap.get(par.Contact__c).AccountId);
+            }
+        }
     }
 
+    if(!ISSP_WS_KAVI.preventTrigger && oldAccountByContactIdMap.size()>0){
+        ISSP_WS_KAVI.preventTrigger = true;
+        ISSP_WS_KAVI.replaceKaviRelationShip(newAccountByContactIdMap,oldAccountByContactIdMap);
+    }
 }

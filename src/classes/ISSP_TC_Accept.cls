@@ -1,214 +1,221 @@
 public  class ISSP_TC_Accept {
 
-	public boolean accept {get; set;}
-	public list<String> errorMessage {get; set;}
-	public List <User> userList {get; set;}
-	public Boolean toChangePassword {get; set;}
-	public Boolean toAcceptTC {get; set;}
-	public Boolean isBSP {get; set;}
-	
-	public String searchText {get; set;}
+    public boolean accept {get; set;}
+    public list<String> errorMessage {get; set;}
+    public List <User> userList {get; set;}
+    public Boolean toChangePassword {get; set;}
+    public Boolean toAcceptTC {get; set;}
+    public Boolean isBSP {get; set;}
+    
+    public String searchText {get; set;}
 
-	//Survey variables
-	public String SurveyLink {get; set;}
-	public String SurveyName {get; set;}
-	public Boolean ShowModal {get; set;}
-	
-	//Language picklist
-	public String selectedLanguage {get;set;}
-	
-	public List<SelectOption> languages {
-	get {
+    //Survey variables
+    public String SurveyLink {get; set;}
+    public String SurveyName {get; set;}
+    public Boolean ShowModal {get; set;}
+    
+    //Language picklist
+    public String selectedLanguage {get;set;}
+    
+    public List<SelectOption> languages {
+    get {
       List<SelectOption> options = new List<selectOption>();
 
       for (Preferred_Language_on_ISS_Portal__c l : Preferred_Language_on_ISS_Portal__c.getAll().values())
-        options.add(new SelectOption(l.languageLocalKey__c, l.Language__c)); 
+        options.add(new SelectOption(l.languageLocalKey__c, l.Language__c));
       return options;
 
     }
     set;
-	}
-	
+    }
+    
 
-	public ISSP_TC_Accept(){
-		isBSP = false;
-		errorMessage = new list<string>();
-		toChangePassword = false;
-		ShowModal = true ;
-		toAcceptTC = false;
-		integer passwordDays = integer.ValueOF(ISSP_CS__c.getValues('PasswordResetPeriod').value__c);
-		userList = [SELECT Id, ToU_Accepted__c, UID__c, LastPasswordChangeDate , Email, ContactId
-								//X2FA_Session__c, TD_User__c
-								FROM User WHERE Id =:UserInfo.getUserId()];
-		if (!userList.isEmpty()){
-			if (userList[0].LastPasswordChangeDate != null){
-				system.debug('LastPasswordChangeDate: ' + userList[0].LastPasswordChangeDate);
-    			system.debug('LastPasswordChangeDate addDays: ' + userList[0].LastPasswordChangeDate.addDays(passwordDays));
-    			system.debug('LastPasswordChangeDate now: ' + system.now());
-				//if (userList[0].LastPasswordChangeDate.addMinutes(10) < system.now() && userList[0].Email == 'tiago.ferreira+newportal_01_01@kerensen.com'){
-				if (userList[0].LastPasswordChangeDate.addDays(passwordDays) < system.now()){
-					toChangePassword = true;
-					system.debug('password date passed');
-				}
-				else{
-					system.debug('password date not passed');
-				}
-			}
-			if (userList[0].UID__c != '' && userList[0].UID__c != null){
-				toChangePassword = true;
-			}
-			if (!userList[0].ToU_Accepted__c){
-				toAcceptTC = true;
-			}
-			if (userList[0].ContactId != null){
-				ISSP_Portal_Service_Ids__c serviceIdInstance = ISSP_Portal_Service_Ids__c.getInstance();
-				String appId = serviceIdInstance.BSPLink__c;
-				List <Portal_Application_Right__c> bspList = [SELECT Id FROM Portal_Application_Right__c
-															WHERE Portal_Application__c = :appId
-															AND Contact__c = :userList[0].ContactId
-															AND Right__c = 'Access Granted'];
-				if (!bspList.isEmpty()){
-					isBSP = true;
-				}
-			}
-		}
-		system.debug('IS BSP: ' + isBSP);
-	}
-	
-	public PageReference redirectChangePassword(){
-		if (!userList.isEmpty()){
-			integer passwordDays = integer.ValueOF(ISSP_CS__c.getValues('PasswordResetPeriod').value__c);
-			if (userList[0].UID__c != '' && userList[0].UID__c != null){
-				PageReference pr = new PageReference('/ISSP_ChangePassword');
-				system.debug('REDIRECTING TO CHANGE PASSWORD');
-				pr.setRedirect(true);
-				return pr;
-			}
-			else if (userList[0].LastPasswordChangeDate != null){
-				//if (userList[0].LastPasswordChangeDate.addMinutes(10) < system.now() && userList[0].Email == 'tiago.ferreira+newportal_01_01@kerensen.com'){
-				if (userList[0].LastPasswordChangeDate.addDays(passwordDays) < system.now()){
-					PageReference pr2 = new PageReference('/ISSP_ChangePassword');
-					system.debug('REDIRECTING TO CHANGE PASSWORD');
-					pr2.setRedirect(true);
-					return pr2;
-				}
-			}
-		}
-		return null;
-	}
-	
-	public PageReference redirectTC_Accept(){
-		if (!userList.isEmpty()){
-			if (!userList[0].ToU_Accepted__c){
-				PageReference pr = new PageReference('/ISSP_TC_Accept');
-				system.debug('REDIRECTING TO TC ACCEPT');
-				pr.setRedirect(true);
-				return pr;
-			}
-			else{
-				return null;
-			}
-		}
-		else{
-			return null;
-		}
-	}
-	
-	/*
-	public PageReference pageLoad(){
-		String strUrl = ApexPages.currentPage().getUrl();
-		system.debug('URL: ' + strUrl);
-		if (!strUrl.contains('ISSP_TC_Accept')){// && !strUrl.contains('ISSP_2FA')){
-			system.debug('DOES NOT CONTAIN ISSP_CHANGEPASSWORD');
-			List <User> userList = [SELECT Id, ToU_Accepted__c, UID__c
-								//X2FA_Session__c, TD_User__c
-								FROM User WHERE Id =:UserInfo.getUserId()];
-			if (!userList.isEmpty()){
-				if (!userList[0].ToU_Accepted__c){
-					//PageReference pr = new PageReference('/ISSP_TC_Redirect');
-					PageReference pr = new PageReference('/ISSP_TC_Accept');
-					system.debug('REDIRECTING TO TC ACCEPT');
-					pr.setRedirect(true);
-					return pr;
-				}
-				else if (userList[0].UID__c != '' && userList[0].UID__c != null){
-					//PageReference pr = new PageReference('/ISSP_ChangePasswordRedirect');
-					PageReference pr = new PageReference('/ISSP_ChangePassword');
-					system.debug('REDIRECTING TO CHANGE PASSWORD');
-					pr.setRedirect(true);
-					return pr;
-				}
-			}
-		}
-		return null;
-	}
-	*/
-	
-	public PageReference docontinue(){
-		if(!accept){
-			errorMessage = new list<string>();
+    public ISSP_TC_Accept(){
+        isBSP = false;
+        errorMessage = new list<string>();
+        toChangePassword = false;
+        ShowModal = true ;
+        toAcceptTC = false;
+        integer passwordDays = integer.ValueOF(ISSP_CS__c.getValues('PasswordResetPeriod').value__c);
+        userList = [SELECT Id, ToU_Accepted__c, UID__c, LastPasswordChangeDate , Email, ContactId
+                                //X2FA_Session__c, TD_User__c
+                                FROM User WHERE Id =:UserInfo.getUserId()];
+        if (!userList.isEmpty()){
+            if (userList[0].LastPasswordChangeDate != null){
+                system.debug('LastPasswordChangeDate: ' + userList[0].LastPasswordChangeDate);
+                system.debug('LastPasswordChangeDate addDays: ' + userList[0].LastPasswordChangeDate.addDays(passwordDays));
+                system.debug('LastPasswordChangeDate now: ' + system.now());
+                //if (userList[0].LastPasswordChangeDate.addMinutes(10) < system.now() && userList[0].Email == 'tiago.ferreira+newportal_01_01@kerensen.com'){
+                if (userList[0].LastPasswordChangeDate.addDays(passwordDays) < system.now()){
+                    toChangePassword = true;
+                    system.debug('password date passed');
+                }
+                else{
+                    system.debug('password date not passed');
+                }
+            }
+            if (userList[0].UID__c != '' && userList[0].UID__c != null){
+                toChangePassword = true;
+            }
+            if (!userList[0].ToU_Accepted__c){
+                toAcceptTC = true;
+            }
+            if (userList[0].ContactId != null){
+                ISSP_Portal_Service_Ids__c serviceIdInstance = ISSP_Portal_Service_Ids__c.getInstance();
+                String appId = serviceIdInstance.BSPLink__c;
+                List <Portal_Application_Right__c> bspList = [SELECT Id FROM Portal_Application_Right__c
+                                                            WHERE Portal_Application__c = :appId
+                                                            AND Contact__c = :userList[0].ContactId
+                                                            AND Right__c = 'Access Granted'];
+                if (!bspList.isEmpty()){
+                    isBSP = true;
+                }
+            }
+        }
+        
+        selectedLanguage = UserInfo.getLanguage();
+        system.debug('IS BSP: ' + isBSP);
+    }
+    
+    public PageReference redirectChangePassword(){
+        if (!userList.isEmpty()){
+            integer passwordDays = integer.ValueOF(ISSP_CS__c.getValues('PasswordResetPeriod').value__c);
+            if (userList[0].UID__c != '' && userList[0].UID__c != null){
+                PageReference pr = new PageReference('/ISSP_ChangePassword');
+                system.debug('REDIRECTING TO CHANGE PASSWORD');
+                pr.setRedirect(true);
+                return pr;
+            }
+            else if (userList[0].LastPasswordChangeDate != null){
+                //if (userList[0].LastPasswordChangeDate.addMinutes(10) < system.now() && userList[0].Email == 'tiago.ferreira+newportal_01_01@kerensen.com'){
+                if (userList[0].LastPasswordChangeDate.addDays(passwordDays) < system.now()){
+                    PageReference pr2 = new PageReference('/ISSP_ChangePassword');
+                    system.debug('REDIRECTING TO CHANGE PASSWORD');
+                    pr2.setRedirect(true);
+                    return pr2;
+                }
+            }
+        }
+        return null;
+    }
+
+    public PageReference redirectTC_Accept(){
+        if (!userList.isEmpty()){
+            if (!userList[0].ToU_Accepted__c){
+                PageReference pr = new PageReference('/ISSP_TC_Accept');
+                system.debug('REDIRECTING TO TC ACCEPT');
+                pr.setRedirect(true);
+                return pr;
+            }
+            else{
+                return null;
+            }
+        }
+        else{
+            return null;
+        }
+    }
+
+
+    public PageReference pageLoad(){
+        String strUrl = ApexPages.currentPage().getUrl();
+        system.debug('URL: ' + strUrl);
+        if (!strUrl.contains('ISSP_TC_Accept')){// && !strUrl.contains('ISSP_2FA')){
+            system.debug('DOES NOT CONTAIN ISSP_CHANGEPASSWORD');
+            List <User> userList = [SELECT Id, ToU_Accepted__c, UID__c
+                                //X2FA_Session__c, TD_User__c
+                                FROM User WHERE Id =:UserInfo.getUserId()];
+            if (!userList.isEmpty()){
+                if (!userList[0].ToU_Accepted__c){
+                    //PageReference pr = new PageReference('/ISSP_TC_Redirect');
+                    PageReference pr = new PageReference('/ISSP_TC_Accept');
+                    system.debug('REDIRECTING TO TC ACCEPT');
+                    pr.setRedirect(true);
+                    return pr;
+                }
+                else if (userList[0].UID__c != '' && userList[0].UID__c != null){
+                    //PageReference pr = new PageReference('/ISSP_ChangePasswordRedirect');
+                    PageReference pr = new PageReference('/ISSP_ChangePassword');
+                    system.debug('REDIRECTING TO CHANGE PASSWORD');
+                    pr.setRedirect(true);
+                    return pr;
+                }
+            }
+        }
+        return null;
+    }
+
+
+    public PageReference docontinue(){
+        if(!accept){
+            errorMessage = new list<string>();
             errorMessage.add(Label.ISSP_accept_General_Conditions);
             return null;
         }
         else{
-			List <User> userList = [SELECT Id, ToU_Accepted__c FROM User WHERE Id =:UserInfo.getUserId()];
-			if (!userList.isEmpty()){
-				userList[0].ToU_Accepted__c = true;
-				userList[0].Date_ToU_accepted__c = system.now();
-				update userList;
-			}
-			PageReference pr = new PageReference('/ISSP_Homepage');
-			pr.setRedirect(true);
-			return pr;
+            List <User> userList = [SELECT Id, ToU_Accepted__c FROM User WHERE Id =:UserInfo.getUserId()];
+            if (!userList.isEmpty()){
+                userList[0].ToU_Accepted__c = true;
+                userList[0].Date_ToU_accepted__c = system.now();
+                update userList;
+            }
+            PageReference pr = new PageReference('/ISSP_Homepage');
+            pr.setRedirect(true);
+            return pr;
         }
-	}
+    }
 
-	public PageReference CheckLogoutorSurvey(){
-	System.debug('SFI Start CheckLogoutorSurvey Method');
+    public PageReference CheckLogoutorSurvey(){
+    System.debug('SFI Start CheckLogoutorSurvey Method');
 
-		//Select all active LogoutSrvey Custom settings
-		List<ISSPLogoutSurvey__c> LogoutSurvey_List = new List<ISSPLogoutSurvey__c>([select Name, Survey_Link__c, isActive__c  from ISSPLogoutSurvey__c where isActive__c =: true ]);
-		System.debug('SFI LogoutSurvey_List'+LogoutSurvey_List);
+        //Select all active LogoutSrvey Custom settings
+        List<ISSPLogoutSurvey__c> LogoutSurvey_List = new List<ISSPLogoutSurvey__c>([select Name, Survey_Link__c, isActive__c  from ISSPLogoutSurvey__c where isActive__c =: true ]);
+        System.debug('SFI LogoutSurvey_List'+LogoutSurvey_List);
 
-		if (LogoutSurvey_List != null && LogoutSurvey_List.size() > 0)
-		{
-			//Get the newest one according to Survey_Number Field
-			ISSPLogoutSurvey__c LogoutSurvey_rec = new ISSPLogoutSurvey__c();
-			LogoutSurvey_rec = LogoutSurvey_List[0];
-			SurveyName = LogoutSurvey_rec.Name ;
-			System.debug('SFI LogoutSurvey_rec'+LogoutSurvey_rec);
-			
-			//Get the Survey ID
-			String SurveyID = (LogoutSurvey_rec.Survey_Link__c).substringAfterLast('iv=');
-			
-			//Retrieve the current looged in useriv=
-			User userRec = [SELECT Id, ContactId FROM User WHERE Id =:UserInfo.getUserId()][0];
-			System.debug('SFI userList'+userRec);
-			
-			//prepare the full survey URL
-			String fullSurveyURL = LogoutSurvey_rec.Survey_Link__c.removeStart('http:')+'&q4='+userRec.ID+'&q5='+SurveyID;
+        if (LogoutSurvey_List != null && LogoutSurvey_List.size() > 0)
+        {
+            //Get the newest one according to Survey_Number Field
+            ISSPLogoutSurvey__c LogoutSurvey_rec = new ISSPLogoutSurvey__c();
+            LogoutSurvey_rec = LogoutSurvey_List[0];
+            SurveyName = LogoutSurvey_rec.Name ;
+            System.debug('SFI LogoutSurvey_rec'+LogoutSurvey_rec);
 
-			//Get Survey Instant according to UserId and Survey ID
-			List<Instant_Surveys__c>  InstantSurvey_List = new List<Instant_Surveys__c>([select Id ,SurveyUserID__c , SurveyURL__c
-																						  From Instant_Surveys__c 
-																						  Where SurveyUserID__c =: userRec.Id
-																						  AND SurveyURL__c =: SurveyID ]);
+            //Get the Survey ID
+            String SurveyID = (LogoutSurvey_rec.Survey_Link__c).substringAfterLast('iv=');
 
-			if (InstantSurvey_List != null && InstantSurvey_List.size() > 0 )
-			{
-				ShowModal = false ;
-			}
-			else
-			{
-				SurveyLink = fullSurveyURL ;
-			}
-		}else{
-			ShowModal = false ;
-			Pagereference p =  new PageReference('/secur/logout.jsp?retUrl={!$Site.BaseUrl}/ISSP_Homepage');
-			p.setRedirect(true);
-			return p;
-		}
-	return null;
-	}
+            //Retrieve the current looged in useriv=
+            User userRec = [SELECT Id, ContactId FROM User WHERE Id =:UserInfo.getUserId()][0];
+            System.debug('SFI userList'+userRec);
+
+            //prepare the full survey URL
+            String fullSurveyURL = LogoutSurvey_rec.Survey_Link__c.removeStart('http:')+'&q4='+userRec.ID+'&q5='+SurveyID;
+
+            //Get Survey Instant according to UserId and Survey ID
+            List<Instant_Surveys__c>  InstantSurvey_List = new List<Instant_Surveys__c>([select Id ,SurveyUserID__c , SurveyURL__c
+                                                                                          From Instant_Surveys__c 
+                                                                                          Where SurveyUserID__c =: userRec.Id
+                                                                                          AND SurveyURL__c =: SurveyID ]);
+
+            if (InstantSurvey_List != null && InstantSurvey_List.size() > 0 )
+            {
+                ShowModal = false ;
+            }
+            else
+            {
+                SurveyLink = fullSurveyURL ;
+            }
+        }else{
+            ShowModal = false ;
+            Pagereference p =  new PageReference('/secur/logout.jsp?retUrl={!$Site.BaseUrl}/ISSP_Homepage');
+            p.setRedirect(true);
+            return p;
+        }
+    return null;
+    }
+
+    public Boolean getCountryRequirementPermission() {
+        return ISSP_Ctrl_Country_Requirements.isAllowedAccess();
+    }
+
 
 }

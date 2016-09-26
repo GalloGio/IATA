@@ -84,7 +84,7 @@
     </fields>
     <fields>
         <fullName>Key__c</fullName>
-        <description>Technical field to perform upserts</description>
+        <description>IEC - Technical field for upsert</description>
         <externalId>true</externalId>
         <label>Key</label>
         <length>50</length>
@@ -204,6 +204,7 @@
     <fields>
         <fullName>Order__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
+        <description>IEC - reference to renewal notice helping to update status</description>
         <externalId>false</externalId>
         <label>Quote</label>
         <referenceTo>Order</referenceTo>
@@ -283,10 +284,6 @@
             </picklistValues>
             <picklistValues>
                 <fullName>Off.</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Other</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>

@@ -13,7 +13,8 @@ public with sharing class ISSP_PersonalInformation {
     public String accountCountryISOCode {get; set;}
     //If the user is admin and already opt-out, optin option will be visible
     public boolean bIsAdmin				{get; set;}		//identify if a user is administrator or not
-    public boolean bIsOSCARenabled {get; set;} //Hide edit buttons on Company Info page if Country for Agencies is not pointing to OSCAR
+    public boolean bIsOSCARenabled {get; set;} 
+    public boolean bIsMinorChangeEnabled {get; set;} //Hide edit buttons on Company Info page if Country for Agencies is not pointing to OSCAR
     public boolean bBlockTradeNameChange {get; set;}
     public boolean isHOAccredited {get;set;}
     
@@ -51,6 +52,7 @@ public with sharing class ISSP_PersonalInformation {
     	hasIdCard = false;
     	bIsAdmin = false;
         bIsOSCARenabled = false;
+        bIsMinorChangeEnabled = false;
         bBlockTradeNameChange = false;
         isHOAccredited = false;
         
@@ -68,13 +70,9 @@ public with sharing class ISSP_PersonalInformation {
         popContact();
         accountType=' Company ';
 
-        if (con.Account.Top_Parent__c == null) { //User is from HQ  Account
-            if(con.Account.IATACode__c!=null && con.Account.Location_Type__c=='HO' && con.Account.RecordType.DeveloperName=='IATA_Agency' && con.Account.Status__c=='Approved')
-                isHOAccredited = true; //This is an accredited  Agency Account    
-        } else { //Get Id for HQ Account when user's Account is a branch office
-             if(con.Account.Top_Parent__r.IATACode__c!=null && con.Account.Top_Parent__r.Location_Type__c=='HO' && con.Account.RecordType.DeveloperName=='IATA_Agency' && con.Account.Status__c=='Approved')
-                isHOAccredited = true; //This is an accredited  Agency Account
-        }
+        //Is this user's account accredited
+        if(con.Account.IATACode__c!=null && con.Account.RecordType.DeveloperName=='IATA_Agency' && con.Account.Status__c != 'Terminated' && con.Account.Status__c != 'Not accredited' && con.Account.Status__c != 'New application pending' && con.Account.Status__c != 'No longer a customer')
+        	isHOAccredited = true; //This is an accredited Agency Account    
         
         OpenDebts = string.valueof(con.Account.Overdue_Invoices_Indicator__c );
         
@@ -134,6 +132,7 @@ public with sharing class ISSP_PersonalInformation {
         	bIsAdmin = true;
         
         bIsOSCARenabled = con.Account.IATA_ISO_Country__r.OSCAR_enabled__c;
+        bIsMinorChangeEnabled = con.Account.IATA_ISO_Country__r.Enable_Minor_Changes_from_Portal__c;
         bBlockTradeNameChange = con.Account.IATA_ISO_Country__r.Prevent_Portal_Trade_Name_Change__c;
     }
     
@@ -194,8 +193,8 @@ public with sharing class ISSP_PersonalInformation {
     public Pagereference saveAccount(){
         try {
             isEditMode = false;
-            if(isHOAccredited && bIsOSCARenabled){
-                ISSP_AMS_Accreditation.callToMinorChangesWS(ISSP_AMS_Accreditation.getWSInstance(),con.Account.Id,getAccountChangesList());
+            if(isHOAccredited && bIsMinorChangeEnabled){
+             //   ISSP_AMS_Accreditation.callToMinorChangesWS(ISSP_AMS_Accreditation.getWSInstance(),con.Account.Id,getAccountChangesList());
             }
             update con.Account;
             popContact();  

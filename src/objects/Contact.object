@@ -260,6 +260,16 @@
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
+            <field>LastReferencedDate</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>LastViewedDate</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
             <field>LeadSource</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
@@ -531,6 +541,16 @@
         </availableFields>
         <availableFields>
             <field>LastName</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>LastReferencedDate</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>LastViewedDate</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </availableFields>
@@ -970,6 +990,16 @@
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
+            <field>LastReferencedDate</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>LastViewedDate</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
             <field>LeadSource</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
@@ -1245,6 +1275,16 @@
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
+            <field>LastReferencedDate</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>LastViewedDate</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
             <field>LeadSource</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
@@ -1516,6 +1556,16 @@
         </availableFields>
         <availableFields>
             <field>LastName</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>LastReferencedDate</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>LastViewedDate</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </availableFields>
@@ -2398,6 +2448,39 @@ Received from AIMS and needed in synchronization file but never displayed and up
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>AM_First_Name_Latin_Char__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>The transcript of the First Name in latin characters (only if using a different character set)</inlineHelpText>
+        <label>First Name - Latin Char.</label>
+        <length>128</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AM_Job_Title_English__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>The English translation of the job title (only if Job Title is given in another language)</inlineHelpText>
+        <label>Job Title - English</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AM_Last_Name_Latin_Char__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>The transcript of the Last Name in latin characters (only if using a different character set)</inlineHelpText>
+        <label>Last Name - Latin Char.</label>
+        <length>128</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>APCS_profile__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
@@ -2441,12 +2524,17 @@ Received from AIMS and needed in synchronization file but never displayed and up
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>Account_Management_key_contact__c</fullName>
-        <defaultValue>false</defaultValue>
-        <description>used for account management program to flag key contacts.</description>
+        <fullName>Account_Management_Key_Contact__c</fullName>
+        <description>This formula evaluates whether the contact represents a key contact, from the perspective of the Account Management project.</description>
         <externalId>false</externalId>
-        <inlineHelpText>used for account management program to flag key contacts.</inlineHelpText>
-        <label>Account Management key contact</label>
+        <formula>OR (
+  TEXT(CEO_CFO__c) = &quot;CEO&quot;,
+  TEXT(CEO_CFO__c) = &quot;CFO&quot;,
+  TEXT(CEO_CFO__c) = &quot;COO&quot;,
+  Membership_Main_Contact__c,
+  NOT(ISBLANK(Function__c))
+)</formula>
+        <label>Account Management Key Contact</label>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
     </fields>
@@ -2687,9 +2775,11 @@ Received from AIMS and needed in synchronization file but never displayed and up
     <fields>
         <fullName>Airline_Contact_Type__c</fullName>
         <externalId>false</externalId>
-        <formula>IF(TEXT(CEO_CFO__c)=&quot;CEO&quot;,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000002rRZT&quot; ,&quot;&quot;,40,40),&quot;&quot;)
+        <formula>IF(TEXT(CEO_CFO__c)=&quot;CEO&quot;,IMAGE(&quot;/resource/CEO_Contact_image&quot; ,&quot;&quot;,40,40),&quot;&quot;)
 &amp;&quot; &quot;&amp;
-IF(TEXT(CEO_CFO__c)=&quot;CFO&quot;,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000002rRZO&quot; ,&quot;&quot;,40,40),&quot;&quot;)
+IF(TEXT(CEO_CFO__c)=&quot;CFO&quot;,IMAGE(&quot;/resource/CFO_Contact_image&quot; ,&quot;&quot;,40,40),&quot;&quot;)
+&amp;&quot; &quot;&amp;
+IF(TEXT(CEO_CFO__c)=&quot;COO&quot;,IMAGE(&quot;/resource/COO_Contact_image&quot; ,&quot;&quot;,40,40),&quot;&quot;)
 &amp;&quot; &quot;&amp;
 IF(Airline_Credit_Risk_Manager__c,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000002rRZF&quot; ,&quot;&quot;,40,40),&quot;&quot;)
 &amp;&quot; &quot;&amp;
@@ -2709,7 +2799,11 @@ IF(APJC_Participant__c,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w000000
 &amp;&quot; &quot;&amp;
 IF(BSP_CASS_Payment_contact__c,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w00000037Sjc&quot; ,&quot;&quot;,40,40),&quot;&quot;)
 &amp;&quot; &quot;&amp;
-IF(Financial_Assessment_Contact__c,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w00000037Sj8&quot; ,&quot;&quot;,40,40),&quot;&quot;)</formula>
+IF(Financial_Assessment_Contact__c,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w00000037Sj8&quot; ,&quot;&quot;,40,40),&quot;&quot;)
+&amp;&quot; &quot;&amp;
+IF(NOT(ISBLANK(Function__c)),IMAGE(&quot;/resource/Primary_Contact_image&quot; ,&quot;&quot;,40,40),&quot;&quot;)
+&amp;&quot; &quot;&amp;
+IF(Membership_Main_Contact__c,IMAGE(&quot;/resource/Main_Contact_image&quot; ,&quot;&quot;,40,40),&quot;&quot;)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Contact Type</label>
         <required>false</required>
@@ -2922,6 +3016,7 @@ IF(Financial_Assessment_Contact__c,IMAGE(&quot;/servlet/servlet.FileDownload?fil
     <fields>
         <fullName>BillTo_Location__c</fullName>
         <deleteConstraint>Restrict</deleteConstraint>
+        <description>IEC - Reference to “Locations” object to default billing information in order</description>
         <externalId>false</externalId>
         <label>BillTo Location</label>
         <referenceTo>Location__c</referenceTo>
@@ -2938,7 +3033,7 @@ IF(Financial_Assessment_Contact__c,IMAGE(&quot;/servlet/servlet.FileDownload?fil
     <fields>
         <fullName>CEO_CFO__c</fullName>
         <externalId>false</externalId>
-        <label>CEO/CFO</label>
+        <label>CEO/CFO/COO</label>
         <picklist>
             <picklistValues>
                 <fullName>CEO</fullName>
@@ -5687,8 +5782,10 @@ IFAP Application.</description>
     </fields>
     <fields>
         <fullName>Function__c</fullName>
+        <description>This list serves as a flag to show whether this is the primary contact for the account, and for what domains. Introduced by the Account Management project.</description>
         <externalId>false</externalId>
-        <label>Function</label>
+        <inlineHelpText>Shows that the contact is the primary contact for the domains selected in the list</inlineHelpText>
+        <label>Primary Contact for</label>
         <picklist>
             <picklistValues>
                 <fullName>Aeropolitical</fullName>
@@ -5711,7 +5808,7 @@ IFAP Application.</description>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Gen. Management</fullName>
+                <fullName>Gen.Management</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -5754,10 +5851,11 @@ IFAP Application.</description>
                 <fullName>Training</fullName>
                 <default>false</default>
             </picklistValues>
-            <sorted>true</sorted>
+            <sorted>false</sorted>
         </picklist>
         <trackHistory>false</trackHistory>
-        <type>Picklist</type>
+        <type>MultiselectPicklist</type>
+        <visibleLines>3</visibleLines>
     </fields>
     <fields>
         <fullName>Functional_Interest__c</fullName>
@@ -6510,6 +6608,17 @@ TotalRows-Successes-Errors</description>
         <trackHistory>false</trackHistory>
     </fields>
     <fields>
+        <fullName>Kavi_User__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Kavi_User</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Contacts</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>LCAG_Member__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
@@ -6989,7 +7098,9 @@ TotalRows-Successes-Errors</description>
     <fields>
         <fullName>Membership_Main_Contact__c</fullName>
         <defaultValue>false</defaultValue>
+        <description>This box serves as a flag to show whether the contact represents the main contact for the airline. Used for the Account Management project.</description>
         <externalId>false</externalId>
+        <inlineHelpText>Shows whether the contact represents the main contact for the whole airline</inlineHelpText>
         <label>Main Contact</label>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
@@ -8699,6 +8810,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
     <fields>
         <fullName>ShipTo_Location__c</fullName>
         <deleteConstraint>Restrict</deleteConstraint>
+        <description>IEC - Reference to “Locations” object to default shipping information in order</description>
         <externalId>false</externalId>
         <label>ShipTo Location</label>
         <referenceTo>Location__c</referenceTo>
@@ -19211,6 +19323,13 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>CEO_CFO__c</picklist>
+            <values>
+                <fullName>COO</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Call_Status__c</picklist>
             <values>
                 <fullName>Call Opt-in</fullName>
@@ -20363,7 +20482,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
                 <default>false</default>
             </values>
             <values>
-                <fullName>Gen%2E Management</fullName>
+                <fullName>Gen%2EManagement</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -21536,6 +21655,13 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </values>
             <values>
                 <fullName>Ticketing</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>CEO_CFO__c</picklist>
+            <values>
+                <fullName>COO</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -22723,7 +22849,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
                 <default>false</default>
             </values>
             <values>
-                <fullName>Gen%2E Management</fullName>
+                <fullName>Gen%2EManagement</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -23399,10 +23525,6 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
                 <fullName>Ms%2E</fullName>
                 <default>false</default>
             </values>
-            <values>
-                <fullName>Other</fullName>
-                <default>false</default>
-            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Preferred_Channel__c</picklist>
@@ -24022,6 +24144,10 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </values>
             <values>
                 <fullName>CFO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>COO</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -25244,7 +25370,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
                 <default>false</default>
             </values>
             <values>
-                <fullName>Gen%2E Management</fullName>
+                <fullName>Gen%2EManagement</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -25980,10 +26106,6 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
                 <fullName>Ms%2E</fullName>
                 <default>false</default>
             </values>
-            <values>
-                <fullName>Other</fullName>
-                <default>false</default>
-            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Position__c</picklist>
@@ -26495,6 +26617,26 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
         <errorMessage>You should deactivate a user before changing his license</errorMessage>
     </validationRules>
     <validationRules>
+        <fullName>Change_id_card_holder_cont_name</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+ISPICKVAL($User.UserType,&quot;Standard&quot;), 
+ID_Card_Holder__c=true,
+ISCHANGED(ISSP_Contact_Name__c )
+)</errorConditionFormula>
+        <errorMessage>This contact is an ID Card holder. To change name, please raise an internal case to ID Card team</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Change_id_card_holder_cont_name_portal</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND( 
+ ISPICKVAL($User.UserType,&quot;PowerPartner&quot;), 
+ID_Card_Holder__c=true,
+ISCHANGED(ISSP_Contact_Name__c )
+)</errorConditionFormula>
+        <errorMessage>This contact is an ID Card holder. To change the contact name, please contact to IATA Customer Service team.</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>Comment_data_quality_feedback_Mandatory</fullName>
         <active>true</active>
         <errorConditionFormula>NOT(ISBLANK(TEXT(Data_quality_feedback__c))) &amp;&amp; ISBLANK(Comment_data_quality_feedback__c)</errorConditionFormula>
@@ -26505,7 +26647,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
         <fullName>Contact_cannot_be_created_under_MSO_offi</fullName>
         <active>true</active>
         <description>FDS OPS + Account management Contact cannot be logged under MSO office, but should be under the airline account</description>
-        <errorConditionFormula>AND(TEXT(Account.Category__c)=&quot;MSO Member Sales Office&quot;,ISCHANGED(AccountId),datevalue(CreatedDate)&gt;DATE(2016,5,9),CreatedBy.LastName&lt;&gt;&quot;Site Guest User&quot;)</errorConditionFormula>
+        <errorConditionFormula>AND(TEXT(Account.Category__c)=&quot;MSO Member Sales Office&quot;,OR(isnew(),ISCHANGED(AccountId)),datevalue(CreatedDate)&gt;DATE(2016,5,9),CreatedBy.LastName&lt;&gt;&quot;Site Guest User&quot;)</errorConditionFormula>
         <errorDisplayField>AccountId</errorDisplayField>
         <errorMessage>Contacts should not be created under the MSO account, but under the airline Headquarters or branch account.</errorMessage>
     </validationRules>
@@ -26532,6 +26674,27 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
         <description>Prevent creation of IFAP contacts under Branch Account.</description>
         <errorConditionFormula>IF($RecordType.Name  = &apos;IATA Standard Contact&apos;  &amp;&amp;  Financial_Assessment_Contact__c  &amp;&amp; (NOT(ISPICKVAL(Account.Location_Type__c , &apos;AO&apos;))  &amp;&amp; NOT(ISPICKVAL(Account.Location_Type__c , &apos;HO&apos;)) &amp;&amp; NOT(ISPICKVAL(Account.Location_Type__c , &apos;BR&apos;))) , true ,false)</errorConditionFormula>
         <errorMessage>A contact can be a &quot;Financial Assessment Contact&quot; only if the Account types is HO, AO or BR .</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Key_Contacts_Data_Quality</fullName>
+        <active>true</active>
+        <description>Put in place for the Account Management Project, this rule is meant to ensure data quality for the key contacts.</description>
+        <errorConditionFormula>AND(
+RecordType.DeveloperName = &apos;Standard_Contact&apos;,
+OR(
+ TEXT(CEO_CFO__c)=&quot;CEO&quot;,
+ TEXT(CEO_CFO__c)=&quot;CFO&quot;,
+ TEXT(CEO_CFO__c)=&quot;COO&quot;,
+ Membership_Main_Contact__c,
+ NOT(ISBLANK(Function__c))
+),
+OR(
+ ISBLANK(FirstName ) ,
+ ISBLANK(LastName),
+ ISBLANK(Title ) ,
+ ISBLANK(Email) ,
+ ISBLANK(AccountId ) ))</errorConditionFormula>
+        <errorMessage>Please make sure you filled in all the following fields: First Name, Last Name, Job Title, Job Function, Email address and Account</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Phone_or_email_mandatory</fullName>

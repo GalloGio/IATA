@@ -86,7 +86,7 @@ public class soapSforceComSchemasClassIecWebser2 {
         private String[] field_order_type_info = new String[]{'quoteId'};
     }
     public class IEC_WebService {
-        public String endpoint_x = 'https://cs18.salesforce.com/services/Soap/class/IEC_WebService';
+        public String endpoint_x = IEC_Settings__c.getOrgDefaults().IEC_Web_Service_Endpoint__c;  //'https://iata--Preprod.cs86.my.salesforce.com/services/Soap/class/IEC_WebService';
         public Map<String,String> inputHttpHeaders_x;
         public Map<String,String> outputHttpHeaders_x;
         public String clientCertName_x;
