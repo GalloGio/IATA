@@ -13,7 +13,7 @@ private class EF_LocationCurrencyTriggerTest {
     
      @isTest static void addFirstLocationCurrency() {
         Contract contract = [select Id, AccountId, Account.Name, EF_Allow_Billing_Agreements__c from Contract where Account.Name = 'Test Account Client2'];
-		
+        
         // Add one billing currency to the contract.
         EF_Location_Currency__c efl = new EF_Location_Currency__c(
                 EF_Billing_Currency__c = 'USD',
@@ -33,7 +33,7 @@ private class EF_LocationCurrencyTriggerTest {
     @isTest static void addSecondLocationCurrency() {   
         
          Contract contract = [select Id, AccountId, Account.Name, EF_Allow_Billing_Agreements__c from Contract where Account.Name = 'Test Account Client2'];
-		
+        
         List <EF_Location_Currency__c> lcList = new List <EF_Location_Currency__c> ();
         
         // Add one billing currency to the contract.
@@ -64,7 +64,7 @@ private class EF_LocationCurrencyTriggerTest {
      @isTest static void addRepeatedLocationCurrency() {
          
           Contract contract = [select Id, AccountId, Account.Name, EF_Allow_Billing_Agreements__c from Contract where Account.Name = 'Test Account Client2'];
-		
+        
         List <EF_Location_Currency__c> lcList = new List <EF_Location_Currency__c> ();
         
         // Add one billing currency to the contract.
@@ -103,7 +103,7 @@ private class EF_LocationCurrencyTriggerTest {
      @isTest static void addRepeatedLocationCurrencyWhenThereIsOne() {
          
           Contract contract = [select Id, AccountId, Account.Name, EF_Allow_Billing_Agreements__c from Contract where Account.Name = 'Test Account Client2'];
-		
+        
         List <EF_Location_Currency__c> lcList = new List <EF_Location_Currency__c> ();
         
         // Add one billing currency to the contract.
@@ -135,15 +135,15 @@ private class EF_LocationCurrencyTriggerTest {
         
         Contract ctAfter = [select Id, AccountId, Account.Name, EF_Billing_Currency__c from Contract where Account.Name = 'Test Account Client2'];               
                 
-        System.assertEquals('USD;EUR', ctAfter.EF_Billing_Currency__c);
+        System.assertEquals('EUR;USD', ctAfter.EF_Billing_Currency__c);
          
      
      }
     
      @isTest static void deleteOneLocationCurrency() {  
          
-         Contract contract = [select Id, AccountId, Account.Name, EF_Allow_Billing_Agreements__c from Contract where Account.Name = 'Test Account Client2'];
-		
+        Contract contract = [select Id, AccountId, Account.Name, EF_Allow_Billing_Agreements__c from Contract where Account.Name = 'Test Account Client2'];
+        
         List <EF_Location_Currency__c> lcList = new List <EF_Location_Currency__c> ();
         
         // Add one billing currency to the contract.
@@ -160,12 +160,16 @@ private class EF_LocationCurrencyTriggerTest {
                 Location_ID__c = [select Id, Name from EF_Related_Records__c where Name = '1' limit 1].Id
             );
         lcList.add(efl2);
-		insert lcList;
-         
-        Test.startTest();
-           delete efl2; 
-        Test.stopTest();
+        insert lcList;
         
+        User u = [select Id from User where userName like 'efUnit@test.ch%' limit 1];        
+        System.runAs(u){
+            
+            Test.startTest();
+               delete efl2; 
+            Test.stopTest();
+        
+        }
         Contract ctAfter = [select Id, AccountId, Account.Name, EF_Billing_Currency__c from Contract where Account.Name = 'Test Account Client2'];               
                 
         //System.assertEquals('USD', ctAfter.EF_Billing_Currency__c);
@@ -175,7 +179,7 @@ private class EF_LocationCurrencyTriggerTest {
      @isTest static void deleteALLLocationCurrency() {  
          
          Contract contract = [select Id, AccountId, Account.Name, EF_Allow_Billing_Agreements__c from Contract where Account.Name = 'Test Account Client2'];
-		
+        
         // Add one billing currency to the contract.
         EF_Location_Currency__c efl = new EF_Location_Currency__c(
                 EF_Billing_Currency__c = 'USD',
@@ -183,12 +187,15 @@ private class EF_LocationCurrencyTriggerTest {
                 Location_ID__c = [select Id, Name from EF_Related_Records__c where Name = 'Main' limit 1].Id
             );
         
-		insert efl;
-         
-        Test.startTest();
-           delete efl; 
-        Test.stopTest();
+        insert efl;
+        User u = [select Id from User where userName like 'efUnit@test.ch%' limit 1];        
+        System.runAs(u){
+            
+            Test.startTest();
+               delete efl; 
+            Test.stopTest();
         
+        }
         Contract ctAfter = [select Id, AccountId, Account.Name, EF_Billing_Currency__c from Contract where Account.Name = 'Test Account Client2'];               
                 
         System.assertEquals(null, ctAfter.EF_Billing_Currency__c);
@@ -198,7 +205,7 @@ private class EF_LocationCurrencyTriggerTest {
      @isTest static void updateLocationCurrencyWhenThereIsOne() {
          
         Contract contract = [select Id, AccountId, Account.Name, EF_Allow_Billing_Agreements__c from Contract where Account.Name = 'Test Account Client2'];
-		
+        
         List <EF_Location_Currency__c> lcList = new List <EF_Location_Currency__c> ();
         
         // Add one billing currency to the contract.
@@ -218,15 +225,15 @@ private class EF_LocationCurrencyTriggerTest {
         lcList.add(efl2);
        
          insert lcList;
-
+        
         Test.startTest();
             efl2.EF_Billing_Currency__c='GBP';
-         	update efl2;
+            update efl2;
         Test.stopTest();
         
         Contract ctAfter = [select Id, AccountId, Account.Name, EF_Billing_Currency__c from Contract where Account.Name = 'Test Account Client2'];               
                 
-        System.assertEquals('USD;GBP', ctAfter.EF_Billing_Currency__c);
+        System.assertEquals('GBP;USD', ctAfter.EF_Billing_Currency__c);
          
      
      }
