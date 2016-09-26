@@ -643,29 +643,43 @@ public with sharing class ISSP_PortalUserStatusChange {
         
      }
      
-    @future 
+    @future(callout=true)
     public static void futureUpdateUsers(set<string> conIdSet) {
-        map<Id,Contact> contactMap = new map<Id,Contact>([select Id,email,firstName,lastname,Title,Preferred_Language__c from Contact where Id in:conIdSet]);
+        map<Id,Contact> contactMap = new map<Id,Contact>([select Id,email,firstName,lastname,Title,Preferred_Language__c,Status__c from Contact where Id in:conIdSet]);
         if(!contactMap.values().isEmpty()){
-            list<User> userList = [select Id,ContactId,languagelocalekey,email,firstname,lastname,Title from User where ContactId in:contactMap.keySet() ];
+            list<User> userList = [select Id,ContactId, ContactKaviId__c,languagelocalekey,email,firstname,lastname,Title,IsActive,IsPortalEnabled,username from User where ContactId in:contactMap.keySet() OR ContactKaviId__c in:contactMap.keySet()];
             for(User user : userList){
-                Contact con = contactMap.get(user.ContactId);
-//                user.email = con.email; 
+                //Code extension to consider internal users
+                Contact con = new Contact();
+                if (user.ContactId <> null)
+                {
+                    con = contactMap.get(user.ContactId);
+                }
+                if (user.ContactKaviId__c <> null)
+                {
+                    con = contactMap.get(user.ContactKaviId__c);   
+                }
+                //user.email = con.email; 
                 user.firstname = con.firstName;
                 user.lastname = con.lastname;
                 user.Title = con.Title;
                 if(con.Preferred_Language__c!=null && languageMap.containsKey(con.Preferred_Language__c))
                     user.languagelocalekey = ISSP_PortalUserStatusChange.languageMap.get(con.Preferred_Language__c);
-            }
-            //EM: Test class failing
-            try {update userList;}
-            catch (Exception e) {}
+                if(con.Status__c == 'Inactive' || con.Status__c == 'Retired' || con.Status__c == 'Left Company / Relocated' )
+                    user.IsActive = false;
+                else
+                    user.IsActive = true;
+             }
+
+            ISSP_WS_KAVI.updateKaviUsers(conIdSet, userList);
+            update userList;
+            
         }
     }
     
-    @future 
+    @future
     public static void futureDeactivateUsers(set<string> conIdSet) {
-        list<User> userList = [select Id,IsActive,IsPortalEnabled from User where ContactId in:conIdSet];
+        list<User> userList = [select Id,IsActive,IsPortalEnabled from User where ContactId in:conIdSet OR ContactKaviId__c in:conIdSet];
         for(User user : userList){
              user.IsActive = false;
              // TF - Commented to fix SP8-28, user just needs to be inactivated. A batch has been created to change IsPortalEnabled to false
@@ -711,12 +725,9 @@ public with sharing class ISSP_PortalUserStatusChange {
                     if (inactiveReason == 'Retired'){
                         conList[0].Portal_Inactivation_Reason__c = Label.ISSP_RejectReason_Retired;
                         system.debug('currentEmail: ' + currentEmail);
-                        if(currentEmail != null){ //INC268233
-                            emailDigit = ISSP_PortalUserStatusChange.inactiveEmailNumber(currentEmail);
-                            system.debug('emailDigit: ' + emailDigit);
-                            thisEmail = currentEmail + '.inactive';    
-                        }
-                        
+                        emailDigit = ISSP_PortalUserStatusChange.inactiveEmailNumber(currentEmail);
+                        system.debug('emailDigit: ' + emailDigit);
+                        thisEmail = currentEmail + '.inactive';
                         if (emailDigit > 0)
                             thisEmail = thisEmail + String.valueOf(emailDigit);
                         system.debug('thisEmail: ' + thisEmail);
@@ -729,11 +740,9 @@ public with sharing class ISSP_PortalUserStatusChange {
                     else if (inactiveReason == 'LeftCompany'){
                         conList[0].Portal_Inactivation_Reason__c = Label.ISSP_RejectReason_Left;
                         system.debug('currentEmail: ' + currentEmail);
-                        if(currentEmail != null){ //INC268233 
-                            emailDigit = ISSP_PortalUserStatusChange.inactiveEmailNumber(currentEmail);
-                            system.debug('emailDigit: ' + emailDigit);
-                            thisEmail = currentEmail + '.inactive';
-                        }
+                        emailDigit = ISSP_PortalUserStatusChange.inactiveEmailNumber(currentEmail);
+                        system.debug('emailDigit: ' + emailDigit);
+                        thisEmail = currentEmail + '.inactive';
                         if (emailDigit > 0)
                             thisEmail = thisEmail + String.valueOf(emailDigit);
                         system.debug('thisEmail: ' + thisEmail);
@@ -742,11 +751,9 @@ public with sharing class ISSP_PortalUserStatusChange {
                     else if (inactiveReason == 'UnknownContact'){
                         conList[0].Portal_Inactivation_Reason__c = Label.ISSP_RejectReason_Unknown;
                         system.debug('currentEmail: ' + currentEmail);
-                        if(currentEmail != null){ //INC268233 
-                            emailDigit = ISSP_PortalUserStatusChange.inactiveEmailNumber(currentEmail);
-                            system.debug('emailDigit: ' + emailDigit);
-                            thisEmail = currentEmail + '.inactive';
-                        }
+                        emailDigit = ISSP_PortalUserStatusChange.inactiveEmailNumber(currentEmail);
+                        system.debug('emailDigit: ' + emailDigit);
+                        thisEmail = currentEmail + '.inactive';
                         if (emailDigit > 0)
                             thisEmail = thisEmail + String.valueOf(emailDigit);
                         system.debug('thisEmail: ' + thisEmail);
@@ -786,16 +793,16 @@ public with sharing class ISSP_PortalUserStatusChange {
             }
             String thisEmail = currentEmail;
             List <Contact> conList = [SELECT Id, Status__c, (SELECT Id, Valid_To_Date__c FROM ID_Cards__r WHERE NOT card_status__c like 'Cancelled%') FROM Contact WHERE Id = :conId];
-            if (!conList.isEmpty()){ //&& currentEmail != null){
+            if (!conList.isEmpty()){
                 try{
                     integer emailDigit = 0;
                     String newContactStatus = conList[0].Status__c;
                     if (inactiveReason == 'Retired'){
                         conList[0].Portal_Inactivation_Reason__c = Label.ISSP_RejectReason_Retired;
                         system.debug('currentEmail: ' + currentEmail);
-                            emailDigit = ISSP_PortalUserStatusChange.inactiveEmailNumber(currentEmail);
-                            system.debug('emailDigit: ' + emailDigit);
-                            thisEmail = currentEmail + '.inactive';  
+                        emailDigit = ISSP_PortalUserStatusChange.inactiveEmailNumber(currentEmail);
+                        system.debug('emailDigit: ' + emailDigit);
+                        thisEmail = currentEmail + '.inactive';
                         if (emailDigit > 0)
                             thisEmail = thisEmail + String.valueOf(emailDigit);
                         system.debug('thisEmail: ' + thisEmail);
@@ -862,7 +869,6 @@ public with sharing class ISSP_PortalUserStatusChange {
             List <Contact> conList = [SELECT Id, Status__c FROM Contact WHERE Id = :conId];
             if (!conList.isEmpty()){
                 try{
-                    system.debug('aqui conList ' + conList);
                     conList[0].Status__c = 'Active';
                     conList[0].Email = currentEmail;
                     conList[0].User_Portal_Status__c = 'Approved User';
@@ -1072,7 +1078,7 @@ public with sharing class ISSP_PortalUserStatusChange {
             return emailInt;
         }
         else{
-            String emailString = currentEmail + '.inactive'; 
+            String emailString = currentEmail + '.inactive';
             String contactString = emailString.difference(contactList[0].Email);
             system.debug('contactString: ' + contactString);
             String userString = emailString.difference(userList[0].Email);
