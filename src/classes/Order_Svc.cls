@@ -1061,7 +1061,7 @@ public without sharing class Order_Svc
 
             for(Id ordItem : orderItemsResponse.keySet()){
                 String msg = orderItemsResponse.get(ordItem);
-                if(msg == 'Failed'){
+                if(msg != 'Success'){
                     return Label.Order_transaction_failed_message;
                     break;
                 }
@@ -1114,7 +1114,6 @@ public without sharing class Order_Svc
     public static Map<Id,Zuora.zApi.SubscribeResult> subscribe(set<Id> orderIds,Map<Id,IECZuoraHelper.PaymentMethod> orderId_paymentMethod, Map<Id,String> orderId_paymentType){
         /*Map<Id,IECZuoraHelper.PaymentMethod> orderId_paymentMethod 
         Map<Id,String> orderId_paymentType*/
-
         //Get order by order Id
         list<Order> lstCustomerOrder = Order_Sel.getOrdersById(orderIds);
 
@@ -1220,8 +1219,9 @@ public without sharing class Order_Svc
 
         //set Order Items by Order Id that already have subscription and invoices in Zuora
         Map<Id,List<OrderItem>> OrderId_orderItemsExistInZuora;
-        Set<Id> setContactIdOfNewZAccount = new Set<Id>(), setOrderItemIdProceeded = new Set<Id>();
-        Boolean okForStep2 = false, okForSubscription;
+        Set<Id> setContactIdOfNewZAccount = new Set<Id>(), setOrderItemIdProceeded = new Set<Id>(), setOrderWithTaxSubscription = new Set<Id>();
+        Boolean okForStep2 = false, okForSubscription, createNewAccount;
+        Product2 product;
 
         //*** subscribe in 2 possible steps: 1st step for existing ZAccount or create new, 2nd step for subscription requiring new ZAccount in step 1
         for (Integer ixStep = 1; ixStep <= 2; ixStep++)
@@ -1241,30 +1241,39 @@ public without sharing class Order_Svc
                     String paymentType = null;
         
                     OrderId_orderItemsExistInZuora = new map<Id,List<OrderItem>>();
+                    Decimal totalShipping = 0.00;
+                    Decimal totalTax = 0.00;
+                    
+                    if (ixStep == 1)
+                        orderItems.add(null);  //*** to create subscription for shipping & tax
         
                     for(OrderItem orderItem : orderItems)
                     {
-                        //Don't send to Zuora order items that are not Subscribe to Zuora set to true and payament method is BankTransfer or ICH
-                        //if(!orderItem.IEC_Subscribe_to_Zuora__c && (orderPaymentMethod == IECConstants.PaymentThresholdType_BankTransfer || orderPaymentMethod == IECConstants.PaymentThresholdType_ICH)){
-                        //}else
-                        //{
-                        //*** control to proceed order item only one
-                        if (setOrderItemIdProceeded.contains(orderItem.Id))
-                            continue;
-                        else
-                            setOrderItemIdProceeded.add(orderItem.Id);
-                        
-                        okForSubscription = true;
-                        
-                        //system.debug('orderItem.IEC_Subscribe_to_Zuora__c ' + orderItem.IEC_Subscribe_to_Zuora__c);
-                        if (orderItem.IEC_Subscribe_to_Zuora__c == true || orderPaymentMethod == IECConstants.PaymentThresholdType_CreditCard) {
-                            //Create a new Subscribe
-                            //Verified if the Order Item is Available for Subscription
-                            Id productId = orderItemId_ProductId.get(orderItem.Id);
-                            Product2 product = productId_product.get(productId);
-            
-                            OrderItemSend.add(orderItem);
-            
+                        if (orderItem == null || orderItem.IEC_Subscribe_to_Zuora__c == true || orderPaymentMethod == IECConstants.PaymentThresholdType_CreditCard) {
+                            if (orderItem != null)
+                            {
+                                //*** summarize shipping & tax in order to create a subscription
+                                if (orderItem.Handling_charges__c != null)
+                                    totalShipping += orderItem.Handling_charges__c;
+                                if (orderItem.Freight_Charge__c != null)
+                                    totalShipping += orderItem.Freight_Charge__c;
+                                if (orderItem.Tax__c != null)
+                                    totalTax += orderItem.Tax__c;
+                                
+                                //*** control to proceed order item only one
+                                if (setOrderItemIdProceeded.contains(orderItem.Id))
+                                    continue;
+                                else
+                                    setOrderItemIdProceeded.add(orderItem.Id);
+                                
+                                product = productId_product.get(orderItemId_ProductId.get(orderItem.Id));
+                                
+                                OrderItemSend.add(orderItem);
+                            }
+                            
+                            okForSubscription = true;
+                            createNewAccount = false;
+                            
                             //--- Order Header information          
                             Zuora.zObject acc = new Zuora.zObject('Account');
                             //Set the bill to contact
@@ -1343,7 +1352,6 @@ public without sharing class Order_Svc
                                     zAccounts = getZuoraAccounts(billToContactIds);
                                     alreadyQueryZAccounts = true;
                                 }
-                                Boolean createNewAccount = false;
             
                                 //If the Account existe in Zuora
                                 if(zAccounts != null && zAccounts.size() > 0){
@@ -1426,89 +1434,141 @@ public without sharing class Order_Svc
                                 else if(createNewAccount)
                                 {
                                     //*** proceed order item in the second step because new customer creation is asked in another order item
-                                    setOrderItemIdProceeded.remove(orderItem.Id);
-                                    OrderItemSend.remove(OrderItemSend.size() - 1);
+                                    if (orderItem != null)
+                                    {
+                                        setOrderItemIdProceeded.remove(orderItem.Id);
+                                        OrderItemSend.remove(OrderItemSend.size() - 1);
+                                    }
                                     okForStep2 = true;
                                     okForSubscription = false;
                                 }
                             }
-            
-                            //Get the corresponding charge for the Order Item
-                            List<Order_Item_Charge__c> lstOrderItemCharge = new List<Order_Item_Charge__c>();
-                            if(orderItemId_listOrderItemCharges.containsKey(orderItem.Id)){
-                                lstOrderItemCharge = orderItemId_listOrderItemCharges.get(orderItem.Id);
-                            }
-                            
-                            //Create Rate Plan Data object
-                            ratePlanData = getRatePlanData(orderItem,lstOrderItemCharge,zRatePlanChargeIds_zModel);
-                            
-                            //Create subscription for each ORder Item
-                            Zuora.zObject sub = new Zuora.zObject('Subscription');
-                            
-                            //Date activationDate = customerOrder.EffectiveDate;
-                            Date activationDate = Date.today();
-                            
-                            sub.setValue('ContractEffectiveDate', Test.IsRunningTest() ? Zuora.zUtil.getZuoraDate(Date.today()) : Zuora.zUtil.getZuoraDate(activationDate));
-                            sub.setValue('ContractAcceptanceDate', Test.IsRunningTest() ? Zuora.zUtil.getZuoraDate(Date.today()) : Zuora.zUtil.getZuoraDate(activationDate));
-                            if(customerOrder.Payment_Type__c != IECConstants.PaymentThresholdType_BankTransfer)
-                            {
-                                sub.setValue('ServiceActivationDate', Test.IsRunningTest() ? Zuora.zUtil.getZuoraDate(Date.today()) : Zuora.zUtil.getZuoraDate(activationDate));
-                            }
-            
-                            sub.setValue('InitialTerm', (product.Number_of_months_of_subscription__c != null) ? product.Number_of_months_of_subscription__c : ZuoraUtil.SUBSCRIPTION_TERM);
-                            sub.setValue('RenewalTerm', (product.Number_of_months_of_subscription__c != null) ? product.Number_of_months_of_subscription__c : ZuoraUtil.SUBSCRIPTION_TERM);
-                            
-                            
-                            //AutoRenew just for electronic product
-                            //if(orderItem.Is_Electronic_Product__c && !orderItem.IEC_Subscribe_to_Zuora__c){
-                            if(orderItem.Is_Electronic_Product__c){ sub.setValue('AutoRenew', orderItem.Auto_Renew__c); }
-            
-                            //Generate a single invoice for all subscriptions.
-                            sub.setValue('IsInvoiceSeparate', false);
-            
-                            //Set the order Id in Zuora
-                            sub.setValue('OrderId__c', customerOrder.Id);
-                            
-                            //Set the orderItem Id in Zuora
-                            sub.setValue('OrderItemId__c', orderItem.Id);
-                            
-                            // Set the source of the Subscription Creation
-                            sub.setValue('Source__c', 'Salesforce');
-            
-                            //subscription data
-                            Zuora.zApi.SubscriptionData sd = new Zuora.zApi.SubscriptionData();
-                            sd.Subscription = sub;
-                            sd.RatePlanData = ratePlanData;
-                                
-                            //subscription options
-                            Zuora.zApi.SubscribeOptions so = new Zuora.zApi.SubscribeOptions();
-                            so.GenerateInvoice = true;
-                            so.ProcessPayments = false;
-
-
-
-                            
-                            so.SubscribeInvoiceProcessingOptions = new Zuora.zApi.SubscribeInvoiceProcessingOptions();
-                            so.SubscribeInvoiceProcessingOptions.InvoiceTargetDate = Zuora.zUtil.getZuoraDate(activationDate); //IECZuoraHelper.getCurrentDate(); customerOrder.EffectiveDate
-                            so.SubscribeInvoiceProcessingOptions.InvoiceDate = Zuora.zUtil.getZuoraDate(activationDate); //IECZuoraHelper.getCurrentDate();
-                            
-                            //subscribe request
-                            Zuora.zApi.SubscribeRequest subsRequest = new Zuora.zApi.SubscribeRequest();
-                             
-                            subsRequest.ZAccount = acc;
-                            subsRequest.BillToContact = billToContact;
-                            subsRequest.SoldToContact = soldToContact;
-                            subsRequest.SubscribeOptions = so;
-                                
-                            subsRequest.SubscriptionData = sd;
-                            
-                            if(customerOrder.Payment_Type__c == IECConstants.PaymentThresholdType_CreditCard){
-                                subsRequest.PaymentMethod = pm;
-                            }
                             
                             if (okForSubscription)
-                                subsRequestLists.add(subsRequest);
-                            
+                            {
+                                if (orderItem != null)
+                                {
+                                    //Get the corresponding charge for the Order Item
+                                    List<Order_Item_Charge__c> lstOrderItemCharge = new List<Order_Item_Charge__c>();
+                                    if(orderItemId_listOrderItemCharges.containsKey(orderItem.Id)){
+                                        lstOrderItemCharge = orderItemId_listOrderItemCharges.get(orderItem.Id);
+                                    }
+                                    
+                                    //Create Rate Plan Data object
+                                    ratePlanData = getRatePlanData(orderItem,lstOrderItemCharge,zRatePlanChargeIds_zModel);
+                                }
+                                else if (!createNewAccount && !setOrderWithTaxSubscription.contains(customerOrder.Id) && (totalShipping > 0 || totalTax > 0))
+                                {
+                                    setOrderWithTaxSubscription.add(customerOrder.Id);
+                                    OrderItemSend.add(new OrderItem(OrderId=customerOrder.Id));
+                                    
+                                    //*** build rate plan data for shipping & tax
+                                    ratePlanData = new List<Zuora.zObject>();
+                                    Zuora.zObject rp, rpd, rpc, rpcd;
+                                    List<Zuora.zObject> ratePlanCharge = new List<Zuora.zObject>();
+                                    if (totalShipping > 0)
+                                    {
+                                        //*** Shipping rate plan charge
+                                        rpc = new Zuora.zObject('RatePlanCharge');
+                                        rpc.setValue('ProductRatePlanChargeId', Utility.getTextSetting('Zuora shipping Charge id'));
+                                        rpc.setValue('Price', totalShipping);
+                                        //rpc.setValue('Quantity', 1);
+                                        rpcd = new Zuora.zObject('RatePlanChargeData');
+                                        rpcd.setValue('RatePlanCharge', rpc);
+                                        //*** Shipping rate plan
+                                        rp = new Zuora.zObject('RatePlan');
+                                        rp.setValue('ProductRatePlanId', Utility.getTextSetting('Zuora shipping Plan id'));
+                                        rpd = new Zuora.zObject('RatePlanData');
+                                        rpd.setValue('RatePlan', rp);
+                                        rpd.setValue('RatePlanChargeData', new List<Zuora.zObject>{rpcd});
+                                        ratePlanData.add(rpd);
+                                    }
+                                    if (totalTax > 0)
+                                    {
+                                        //*** Tax rate plan charge
+                                        rpc = new Zuora.zObject('RatePlanCharge');
+                                        rpc.setValue('ProductRatePlanChargeId', Utility.getTextSetting('Zuora tax Charge id'));
+                                        rpc.setValue('Price', totalTax);
+                                        //rpc.setValue('Quantity', 1);
+                                        rpcd = new Zuora.zObject('RatePlanChargeData');
+                                        rpcd.setValue('RatePlanCharge', rpc);
+                                        //*** Tax rate plan
+                                        rp = new Zuora.zObject('RatePlan');
+                                        rp.setValue('ProductRatePlanId', Utility.getTextSetting('Zuora tax Plan id'));
+                                        rpd = new Zuora.zObject('RatePlanData');
+                                        rpd.setValue('RatePlan', rp);
+                                        rpd.setValue('RatePlanChargeData', new List<Zuora.zObject>{rpcd});
+                                        ratePlanData.add(rpd);
+                                    }
+                                }
+                                
+                                if (ratePlanData != null && ratePlanData.size() > 0)
+                                {
+                                    //Create subscription for each ORder Item
+                                    Zuora.zObject sub = new Zuora.zObject('Subscription');
+                                    
+                                    //Date activationDate = customerOrder.EffectiveDate;
+                                    Date activationDate = Date.today();
+                                    
+                                    sub.setValue('ContractEffectiveDate', Test.IsRunningTest() ? Zuora.zUtil.getZuoraDate(Date.today()) : Zuora.zUtil.getZuoraDate(activationDate));
+                                    sub.setValue('ContractAcceptanceDate', Test.IsRunningTest() ? Zuora.zUtil.getZuoraDate(Date.today()) : Zuora.zUtil.getZuoraDate(activationDate));
+                                    //if(customerOrder.Payment_Type__c != IECConstants.PaymentThresholdType_BankTransfer)
+                                    if(customerOrder.Payment_Type__c == IECConstants.PaymentThresholdType_CreditCard || customerOrder.Payment_Type__c == IECConstants.PaymentThresholdType_ICH)
+                                    {
+                                        sub.setValue('ServiceActivationDate', Test.IsRunningTest() ? Zuora.zUtil.getZuoraDate(Date.today()) : Zuora.zUtil.getZuoraDate(activationDate));
+                                    }
+                                    
+                                    sub.setValue('InitialTerm', (product.Number_of_months_of_subscription__c != null) ? product.Number_of_months_of_subscription__c : ZuoraUtil.SUBSCRIPTION_TERM);
+                                    sub.setValue('RenewalTerm', (product.Number_of_months_of_subscription__c != null) ? product.Number_of_months_of_subscription__c : ZuoraUtil.SUBSCRIPTION_TERM);
+                                    
+                                    //AutoRenew just for electronic product
+                                    //if(orderItem.Is_Electronic_Product__c && !orderItem.IEC_Subscribe_to_Zuora__c){
+                                    if(orderItem != null && orderItem.Is_Electronic_Product__c){ sub.setValue('AutoRenew', orderItem.Auto_Renew__c); }
+                                    
+                                    //Generate a single invoice for all subscriptions.
+                                    sub.setValue('IsInvoiceSeparate', false);
+                                    
+                                    //Set the order Id in Zuora
+                                    sub.setValue('OrderId__c', customerOrder.Id);
+                                    
+                                    //Set the orderItem Id in Zuora
+                                    if (orderItem != null)
+                                        sub.setValue('OrderItemId__c', orderItem.Id);
+                                    
+                                    // Set the source of the Subscription Creation
+                                    sub.setValue('Source__c', 'Salesforce');
+                                    
+                                    //subscription data
+                                    Zuora.zApi.SubscriptionData sd = new Zuora.zApi.SubscriptionData();
+                                    sd.Subscription = sub;
+                                    sd.RatePlanData = ratePlanData;
+                                    
+                                    //subscription options
+                                    Zuora.zApi.SubscribeOptions so = new Zuora.zApi.SubscribeOptions();
+                                    so.GenerateInvoice = true;
+                                    so.ProcessPayments = false;
+                                    
+                                    so.SubscribeInvoiceProcessingOptions = new Zuora.zApi.SubscribeInvoiceProcessingOptions();
+                                    so.SubscribeInvoiceProcessingOptions.InvoiceTargetDate = Zuora.zUtil.getZuoraDate(activationDate); //IECZuoraHelper.getCurrentDate(); customerOrder.EffectiveDate
+                                    so.SubscribeInvoiceProcessingOptions.InvoiceDate = Zuora.zUtil.getZuoraDate(activationDate); //IECZuoraHelper.getCurrentDate();
+                                    
+                                    //subscribe request
+                                    Zuora.zApi.SubscribeRequest subsRequest = new Zuora.zApi.SubscribeRequest();
+                                    
+                                    subsRequest.ZAccount = acc;
+                                    subsRequest.BillToContact = billToContact;
+                                    subsRequest.SoldToContact = soldToContact;
+                                    subsRequest.SubscribeOptions = so;
+                                    
+                                    subsRequest.SubscriptionData = sd;
+                                    
+                                    if(customerOrder.Payment_Type__c == IECConstants.PaymentThresholdType_CreditCard){
+                                        subsRequest.PaymentMethod = pm;
+                                    }
+                                    
+                                    subsRequestLists.add(subsRequest);
+                                }
+                            }
                             //-- Wait 1 s 
                             //Integer start = System.Now().millisecond();
                             //while(System.Now().millisecond()< start+3000){}
@@ -1539,7 +1599,10 @@ public without sharing class Order_Svc
                         for (Zuora.zApi.SubscribeResult result : subscribeResults) {
                             OrderItem orderItem = OrderItemSend.get(i);
                             if(orderItem != null){
-                                orderItemId_subscribeResult.put(orderItem.Id,result);
+                                if (orderItem.Id != null)
+                                    orderItemId_subscribeResult.put(orderItem.Id,result);
+                                else
+                                    orderItemId_subscribeResult.put(orderItem.OrderId,result);
                             }
         
                             i++;
@@ -1557,7 +1620,7 @@ public without sharing class Order_Svc
                     //Log the Zuora exception when creating a new Subscription
                     IEC_Error_Log__c errorLog = IECErrorLogger.createErrorLog('Order_Svc/subscribe','subsRequestLists: ' + subsRequestLists,ex.getMessage(),ex.getStackTraceString());
                     IECErrorLogger.logErrors(new list<IEC_Error_Log__c>{errorLog});
-        
+                    
                     //Threw an exception when Zuora exception occur
                     throw new OrderException(ex.getMessage() + ' +++ ' + ex.getStackTraceString() + ' +++ ' + ex.getLineNumber());
                 }
@@ -1597,6 +1660,7 @@ public without sharing class Order_Svc
         
         List<OrderItem> orderItemsToUpdate = new List<OrderItem>();
         List<Order> orderToUpdate = new List<Order>();
+        Set<Id> orderAlreadyToUpdate = new Set<Id>();
 
         Map<Id,String> itemsStatus = new Map<Id,String>();
         
@@ -1632,45 +1696,77 @@ public without sharing class Order_Svc
             ZuoraUtil.zAccountPaymentMethod iecOrderId_paymentMethod = new ZuoraUtil.zAccountPaymentMethod();
             
             for(Id orderItemId : orderItemResponse.keySet()){
-                OrderItem ordItem = ordItemId_OrderItem.get(orderItemId);
+                OrderItem ordItem;
+                if (ordItemId_OrderItem.containsKey(orderItemId))
+                    ordItem = ordItemId_OrderItem.get(orderItemId);
+                else
+                    ordItem = new OrderItem(OrderId=orderItemId);
                 Order order = orderMap.get(ordItem.OrderId);
 
                 if(ordItem != null){
                     
-                    Zuora.zApi.SubscribeResult subResponse = orderItemResponse.get(ordItem.Id);
+                    Zuora.zApi.SubscribeResult subResponse = orderItemResponse.get(ordItem.Id != null ? ordItem.Id : ordItem.OrderId);
                     iecOrderId_paymentMethod = orderId_zAccountPaymentMethod.get(order.Id);
 
                     if (subResponse.Success) {
-                        
-                        //Set Zuora Invoice Ids
-                        if(subResponse.InvoiceId != null){
-
+                        //*** save Zuora subscription information
+                        if (ordItem.Id != null)
+                        {
                             ordItem.Zuora_InvoiceId__c =  subResponse.InvoiceId;
                             ordItem.Zuora_InvoiceNumber__c = subResponse.InvoiceNumber;
                             ordItem.Zuora_SubscriptionId__c = subResponse.SubscriptionId;
-                            ordItem.Payment_Transaction_Number__c = subResponse.PaymentTransactionNumber;
                             ordItem.Zuora_Subscription_Number__c = subResponse.SubscriptionNumber;
-                            if(iecOrderId_paymentMethod.zPaymentMethodName == IECConstants.PaymentThresholdType_BankTransfer)
-                                ordItem.Zuora_Subscription_Status__c = 'Pending Activation';
-
-                            zInvoicesIds.add(subResponse.InvoiceId);
-                            zAccountIds.add(subResponse.AccountId);
-
-                            if(!orderId_Items.containskey(order.Id)){
-                                orderId_Items.put(order.Id, new List<OrderItem>());
+                        }
+                        else
+                        {
+                            order.IEC_Zuora_ST_InvoiceId__c =  subResponse.InvoiceId;
+                            order.IEC_Zuora_ST_InvoiceNumber__c = subResponse.InvoiceNumber;
+                            order.IEC_Zuora_ST_SubscriptionId__c = subResponse.SubscriptionId;
+                            order.IEC_Zuora_ST_SubscriptionNumber__c = subResponse.SubscriptionNumber;
+                        }
+                        //Set Zuora Invoice Ids
+                        if(subResponse.InvoiceId != null){
+                            if (ordItem.Id != null)
+                            {
+                                //*** save Zuora information on subscription for an order item
+                                //ordItem.Zuora_InvoiceId__c =  subResponse.InvoiceId;
+                                //ordItem.Zuora_InvoiceNumber__c = subResponse.InvoiceNumber;
+                                //ordItem.Zuora_SubscriptionId__c = subResponse.SubscriptionId;
+                                //ordItem.Zuora_Subscription_Number__c = subResponse.SubscriptionNumber;
+                                ordItem.Payment_Transaction_Number__c = subResponse.PaymentTransactionNumber;
+                                if(iecOrderId_paymentMethod.zPaymentMethodName == IECConstants.PaymentThresholdType_BankTransfer)
+                                    ordItem.Zuora_Subscription_Status__c = 'Pending Activation';
+    
+                                zInvoicesIds.add(subResponse.InvoiceId);
+                                zAccountIds.add(subResponse.AccountId);
+    
+                                if(!orderId_Items.containskey(order.Id)){
+                                    orderId_Items.put(order.Id, new List<OrderItem>());
+                                }
+                                orderId_Items.get(order.Id).add(ordItem);
                             }
-                            orderId_Items.get(order.Id).add(ordItem);
-
+                            else
+                            {
+                                //*** save Zuora information on shipping & tax subscription
+                                //order.IEC_Zuora_ST_InvoiceId__c =  subResponse.InvoiceId;
+                                //order.IEC_Zuora_ST_InvoiceNumber__c = subResponse.InvoiceNumber;
+                                //order.IEC_Zuora_ST_SubscriptionId__c = subResponse.SubscriptionId;
+                                //order.IEC_Zuora_ST_SubscriptionNumber__c = subResponse.SubscriptionNumber;
+    
+                                zInvoicesIds.add(subResponse.InvoiceId);
+                                zAccountIds.add(subResponse.AccountId);
+                            }
+    
                             //Set the Zuora Account Id with payment Method
                             iecOrderId_paymentMethod.zAccountId = subResponse.AccountId;
-
-                            itemsStatus.put(ordItem.Id,'Success');
+    
+                            itemsStatus.put((ordItem.Id != null ? ordItem.Id : ordItem.OrderId),'Success');
 
                         }
                         else{
                             //Set the invoice error
                             orderIdsForFailedSub.put(ordItem.OrderId,subResponse.SubscriptionId);
-                            itemsStatus.put(ordItem.Id,'Failed');
+                            itemsStatus.put((ordItem.Id != null ? ordItem.Id : ordItem.OrderId),'Failed');
                         }
 
                     }else{
@@ -1682,9 +1778,15 @@ public without sharing class Order_Svc
                         }
                         orderIdsForFailedSub.put(ordItem.OrderId,errorText);
                         errors = true;
-                        itemsStatus.put(ordItem.Id,errorText);
+                        itemsStatus.put((ordItem.Id != null ? ordItem.Id : ordItem.OrderId),errorText);
                     }
-                    orderItemsToUpdate.add(ordItem);
+                    if (ordItem.Id != null)
+                        orderItemsToUpdate.add(ordItem);
+                    else if (!orderAlreadyToUpdate.contains(order.Id))
+                    {
+                        orderAlreadyToUpdate.add(order.Id);
+                        orderToUpdate.add(order);
+                    }
                 }
             }
 
@@ -1701,10 +1803,15 @@ public without sharing class Order_Svc
 
             //Throw exception if at less one subscription have an error
             if(orderIdsForFailedSub.size() > 0){
+                //Update order if an error occur
+                if(orderToUpdate.size() > 0)
+                    update orderToUpdate;
+                orderToUpdate.clear();
                 //Update the orderItem if an error occur
                 if(orderItemsToUpdate.size() > 0){
                     update orderItemsToUpdate;
                 }
+                orderItemsToUpdate.clear();
 
                 //Delete all of the Subscription on Zuora
                 if (system.isBatch() || system.isFuture())
@@ -1712,9 +1819,10 @@ public without sharing class Order_Svc
                 else
                     deleteZuoraSubscription(orderIdsForFailedSub.keySet());
 
+                //*** should not throw exception because no update nor rollback is performed
                 //throw Exception
-                throw new OrderException(String.join(orderIdsForFailedSub.values(), ' '));
-                
+                //throw new OrderException(String.join(orderIdsForFailedSub.values(), ' '));
+                return itemsStatus;
             }
 
             //Get the Zuora invoices
@@ -1732,7 +1840,10 @@ public without sharing class Order_Svc
                 //List<Zuora.zApi.SaveResult> lstResults; = new List<Zuora.zApi.SaveResult>();
                 
                 //Make Payment on orders and get a map of Zuora response by order Id
-                Map<Id,Zuora.zApi.SaveResult> resultByOrderId = createZuoraPayment(orderMap, orderId_Items, orderId_zAccountPaymentMethod, invoiceMap);
+                Map<Id,Zuora.zApi.SaveResult> resultByOrderId;
+                try {
+                    resultByOrderId = createZuoraPayment(orderMap, orderId_Items, orderId_zAccountPaymentMethod, invoiceMap);
+                } catch (Exception e) {}
                 
                 //Parse payment Result
                 if(resultByOrderId != null && resultByOrderId.size() > 0){
@@ -1750,6 +1861,11 @@ public without sharing class Order_Svc
                                 paymentIds.add(zResult);
                             }else{
                                 orderIdsForFailedSub.put(orderId,zResult);
+                                if (itemsStatus.containsKey(orderId))
+                                    itemsStatus.put(orderId, 'Failed');
+                                for (OrderItem oi : orderId_Items.get(orderId))
+                                    if (oi.Id != null && itemsStatus.containsKey(oi.Id))
+                                        itemsStatus.put(oi.Id, 'Failed');
                             }
                         }
                     }
@@ -1785,7 +1901,11 @@ public without sharing class Order_Svc
                                     orderIdsForFailedSub.put(OrderId,'GatewayResponseCode : ' + GatewayResponseCode);
                                 }
 
-                                orderToUpdate.add(order2Update);
+                                if (!orderAlreadyToUpdate.contains(order2Update.Id))
+                                {
+                                    orderAlreadyToUpdate.add(order2Update.Id);
+                                    orderToUpdate.add(order2Update);
+                                }
                             }
                         }
                     }
@@ -1798,18 +1918,25 @@ public without sharing class Order_Svc
 
                 //Throw exception if the transaction failed
                 if(orderIdsForFailedSub.size() > 0){
+                    //Update order if an error occur
+                    if(orderToUpdate.size() > 0)
+                        update orderToUpdate;
+                    orderToUpdate.clear();
                     //Update the orderItem if an error occur
                     if(orderItemsToUpdate.size() > 0){
                         update orderItemsToUpdate;
                     }
+                    orderItemsToUpdate.clear();
                     
                     if (system.isBatch() || system.isFuture())
                         deleteZuoraSubscriptionNow(orderIdsForFailedSub.keySet());
                     else
                         deleteZuoraSubscription(orderIdsForFailedSub.keySet());
 
+                    //*** should not throw exception because no update nor rollback is performed
                     //throw Exception
-                    throw new OrderException(String.join(orderIdsForFailedSub.values(), ' ') );
+                    //throw new OrderException(String.join(orderIdsForFailedSub.values(), ' ') );
+                    return itemsStatus;
                 }
 
             }
@@ -1937,20 +2064,35 @@ public without sharing class Order_Svc
         List<Zuora.zApi.SaveResult> lstResults = new List<Zuora.zApi.SaveResult>();
 
         Map<Id,Zuora.zApi.SaveResult> resultByOrderId = new Map<Id,Zuora.zApi.SaveResult>();
+        Zuora.zObject ipd, zInvoice;
 
         for(Order order : orderMap.values()){
 
             List<Zuora.zObject> lstInvoicePaymentData = new List<Zuora.zObject>();
 
             Decimal totalToPaid = 0;
+            
+            if (order.IEC_Zuora_ST_InvoiceId__c != null && invoiceMap.containsKey(order.IEC_Zuora_ST_InvoiceId__c))
+            {
+                ipd = new Zuora.zObject('InvoicePayment');
+                zInvoice = invoiceMap.get(order.IEC_Zuora_ST_InvoiceId__c);
+                ipd.setValue('Amount',(Decimal)zInvoice.getValue('Balance'));
+                ipd.setValue('InvoiceId', order.IEC_Zuora_ST_InvoiceId__c);
+                ipd.setValue('RefundAmount', 0);
+                lstInvoicePaymentData.add(ipd);
+
+                //Calcul the total amount to paid
+                totalToPaid += (Decimal)zInvoice.getValue('Balance');
+            }
+            
             //Get list of Items
             List<OrderItem> lstOi = orderId_Items.get(order.Id);
             if(lstOi != null && lstOi.size() > 0){
                 //set the list of invoice to paid
                 for(OrderItem oi : lstOi){
-                    Zuora.zObject ipd = new Zuora.zObject('InvoicePayment');
+                    ipd = new Zuora.zObject('InvoicePayment');
                     //get OrderItem Amount from Invoice
-                    Zuora.zObject zInvoice = invoiceMap.get(oi.Zuora_InvoiceId__c);
+                    zInvoice = invoiceMap.get(oi.Zuora_InvoiceId__c);
                     ipd.setValue('Amount',(Decimal)zInvoice.getValue('Balance'));
                     ipd.setValue('InvoiceId', oi.Zuora_InvoiceId__c);
                     ipd.setValue('RefundAmount', 0);
@@ -1984,7 +2126,7 @@ public without sharing class Order_Svc
                 
             }
             
-            pmt.setValue('Status','Processed');// Error
+            pmt.setValue('Status','Processed');// Error, Processed
 
             String paymentType = 'Electronic';
 
@@ -2051,6 +2193,11 @@ public without sharing class Order_Svc
             
             Order order = orderMap.get(orderId);
             if(order.Zuora_Transaction_Id__c != null){ refId.add(order.Zuora_Transaction_Id__c); }
+
+            if(order.IEC_Zuora_ST_SubscriptionId__c != null)
+                sub2Delete.add(order.IEC_Zuora_ST_SubscriptionId__c);
+            if(order.IEC_Zuora_ST_InvoiceId__c != null)
+                inv2Delete.add(order.IEC_Zuora_ST_InvoiceId__c);
 
             list<OrderItem> ordItems = orderId_Items.get(orderId);
             if(ordItems != null && ordItems.size() > 0){
@@ -2369,7 +2516,7 @@ public without sharing class Order_Svc
                 ratePlanData.add(discount_rpd);
             }
         }
-
+/*
         //Add Shipping charge if Charge_Shipping__c is true
         if(orderItem.Charge_Shipping__c || orderItem.Handling_charges__c != null){
             //Set Shipping rate plan charge
@@ -2418,7 +2565,7 @@ public without sharing class Order_Svc
         rpdTax.setValue('RatePlanChargeData', ratePlanCharge);
 
         ratePlanData.add(rpdTax);
-
+*/
 
         return ratePlanData;
     }

@@ -10,11 +10,10 @@ trigger ISSP_Portal_Application_Right on Portal_Application_Right__c (after inse
     Set <Id> contactFedIdSet = new Set <Id>();
     Map <Id, String> contactFedIdMap = new Map <Id, String>();
     Set <Id> contactBaggageAdd = new Set <Id>();
+    Set <Id> contactKaviAdd = new Set <Id>();
     Set <Id> contactBaggageRemove = new Set <Id>();
     Set <Id> manageAccessTDidSet = new Set <Id>();
 	Set <Id> ContactDelRightSet = new Set <Id>();
-    Set <Id> contactIdIATAAccreditationSet = new Set <Id>();
-    Set <Id> contactIdRemoveIATAAccreditationSet = new Set <Id>();
 	
     
     for(Portal_Application_Right__c access : trigger.new){
@@ -56,9 +55,9 @@ trigger ISSP_Portal_Application_Right on Portal_Application_Right__c (after inse
         	else if (trigger.isUpdate){
                 Portal_Application_Right__c oldAccess = trigger.oldMap.get(access.Id);
                 if (access.Right__c != oldAccess.Right__c){
-                    if (oldAccess.Right__c == 'Access Granted' && access.Right__c == 'Access Denied'){
-                        contactRemove2FAIdSet.add(access.Contact__c);
-                    }
+		            if (access.Right__c == 'Access Denied'){
+		            	contactRemove2FAIdSet.add(access.Contact__c);
+		            }
 		            else if (access.Right__c == 'Access Granted'){
 		            	system.debug('Adding id from update');
 		            	contactFedIdMap.put(access.Contact__c, tdAppName);
@@ -86,22 +85,15 @@ trigger ISSP_Portal_Application_Right on Portal_Application_Right__c (after inse
                 }
             }
         }
-        else if (access.Application_Name__c.startsWith('IATA Accreditation')){
-            
+        else if (access.Application_Name__c == 'Standards Setting Workspace'){
             if (trigger.isInsert && access.Right__c == 'Access Granted'){
-                system.debug('IS INSERT AND GRANTED');
-                contactIdIATAAccreditationSet.add(access.Contact__c);
+                contactKaviAdd.add(access.Contact__c);
             }
             else if (trigger.isUpdate){
                 Portal_Application_Right__c oldAccess = trigger.oldMap.get(access.Id);
                 if (access.Right__c != oldAccess.Right__c){
                     if (access.Right__c == 'Access Granted'){
-                        system.debug('IS UPDATE AND GRANTED');
-                        contactIdIATAAccreditationSet.add(access.Contact__c);
-                    }
-                    else if (access.Right__c == 'Access Denied'){
-                        system.debug('IS UPDATE AND DENIED');
-                        contactIdRemoveIATAAccreditationSet.add(access.Contact__c);
+                        contactKaviAdd.add(access.Contact__c);
                     }
                 }
             }
@@ -155,6 +147,17 @@ trigger ISSP_Portal_Application_Right on Portal_Application_Right__c (after inse
     	ISSP_UserTriggerHandler.removeNonTdReportSharing(contactRemove2FAIdSet);
     }
 
+    if (!contactKaviAdd.isEmpty()){
+        string kaviUser = [SELECT Kavi_User__c from Contact where Id in:contactKaviAdd limit 1].Kavi_User__c;
+        if (kaviUser != null ){
+        ISSP_WS_KAVI.createOrUpdateKaviUsersAccounts('create2',contactKaviAdd);
+            }
+        else  
+        {
+            ISSP_WS_KAVI.createOrUpdateKaviUsersAccounts('create',contactKaviAdd);
+        }
+    }
+
 	/*
     if (!contactBaggageAdd.isEmpty()){
     	system.debug('calling addBaggageSharing');
@@ -173,18 +176,6 @@ trigger ISSP_Portal_Application_Right on Portal_Application_Right__c (after inse
     	PortalServiceAccessTriggerHandler.manageAccessTD(manageAccessTDidSet, contactFedIdSet);
     }
     
-    if (!contactIdIATAAccreditationSet.isEmpty() || !contactIdRemoveIATAAccreditationSet.isEmpty()){
-        system.debug('WILL START FUTURE METHOD');
-
-        // Validate: Give permission set only to Accounts with record type == 'Standard Account' 
-        List<Contact> lsContact = [SELECT Id FROM Contact where Account.recordtype.name ='Standard Account' and id in :contactIdIATAAccreditationSet];
-        contactIdIATAAccreditationSet = (new Map<Id,SObject>(lsContact)).keySet(); //Replace current set with the filtered results from the query
-            
-        if (!ISSP_UserTriggerHandler.preventTrigger)
-            ISSP_UserTriggerHandler.updateUserPermissionSet('ISSP_New_Agency_permission_set', contactIdIATAAccreditationSet, contactIdRemoveIATAAccreditationSet);
-        ISSP_UserTriggerHandler.preventTrigger = true;
-    }
-
     if(!trigger.isDelete){
         if(Trigger.new.size()>1)
             return;
