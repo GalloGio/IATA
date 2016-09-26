@@ -243,6 +243,8 @@ global class AmsIataCodeGenerator{
                         Integer minRange = Integer.valueOf(String.valueOf(range.Min_Range__c).left(1));
                         Integer maxRange = Integer.valueOf(String.valueOf(range.Max_Range__c).left(1));
                         
+                        //looking only into the fisrt left number on the range to avoid querying all the specific iata code
+                        //we will refine the searh later
                         System.debug('****************** min: '+minRange);
                         System.debug('****************** max: '+maxRange);
                         
@@ -284,24 +286,29 @@ global class AmsIataCodeGenerator{
                         List<Account> rangeAgencies = new List<Account>();
                         Set<Integer> usedValuesInRange = new Set<Integer>();
 
+                        Integer minRangeInt = Integer.valueOf(String.valueOf(range.Min_Range__c).replace(',', ''));
+                        Integer maxRangeInt = Integer.valueOf(String.valueOf(range.Max_Range__c).replace(',', ''));
+
+                        System.debug('Min range ---> ' + minRangeInt);
+                        System.debug('Max range ---> ' + maxRangeInt);
+                        
                         if(rangeAgenciesBeforeFilter == null)
                         {
                             rangeAgenciesBeforeFilter = new List<AggregateResult>();
                         }
                         for(AggregateResult ag : rangeAgenciesBeforeFilter)
                         {
+                            
                             String iatacode = (String) ag.get('IATACode__c');
                             
-                            usedValuesInRange.add(Integer.valueOf(iatacode.subString(3, 7)));
+                            Integer rangeValue = Integer.valueOf(iatacode.subString(3, 7));
+                            
+                            //refining the search to the real max and min range
+                            if(rangeValue >= minRangeInt && rangeValue <= maxRangeInt)
+                                usedValuesInRange.add(rangeValue);
                         }
 
                         system.debug('Used values in the defined range: '+ usedValuesInRange);
-
-                        Integer minRangeInt = Integer.valueOf(String.valueOf(range.Min_Range__c).replace(',', ''));
-                        Integer maxRangeInt = Integer.valueOf(String.valueOf(range.Max_Range__c).replace(',', ''));
-
-                        System.debug('Min range ---> ' + minRangeInt);
-                        System.debug('Max range ---> ' + maxRangeInt);
 
                         Integer rangeValueToUse = AMS_Utils.findGapInRange(minRangeInt, maxRangeInt, new List<Integer>(usedValuesInRange));
 
