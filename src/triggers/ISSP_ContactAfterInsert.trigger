@@ -44,27 +44,7 @@ trigger ISSP_ContactAfterInsert on Contact (after insert,after update) {
         
         if (contactsToProcessMap.containsKey(con.Id)){
             system.debug('PROCESSING THIS CONTACT FOR PORTAL');
-                        system.debug('PROCESSING THIS CONTACT FOR PORTAL');
 
-            system.debug('PROCESSING THIS CONTACT FOR PORTAL');
-
-            system.debug('PROCESSING THIS CONTACT FOR PORTAL');
-
-            system.debug('PROCESSING THIS CONTACT FOR PORTAL');
-
-            system.debug('PROCESSING THIS CONTACT FOR PORTAL');
-
-            system.debug('PROCESSING THIS CONTACT FOR PORTAL');
-
-            system.debug('PROCESSING THIS CONTACT FOR PORTAL');
-
-            system.debug('PROCESSING THIS CONTACT FOR PORTAL');
-
-            system.debug('PROCESSING THIS CONTACT FOR PORTAL');
-
-            system.debug('PROCESSING THIS CONTACT FOR PORTAL');
-            system.debug('PROCESSING THIS CONTACT FOR PORTAL');
-            system.debug('PROCESSING THIS CONTACT FOR PORTAL');
 
             //if(con.Is_from_migration__c)
             //    contactsFromMigrationList.add(con);
