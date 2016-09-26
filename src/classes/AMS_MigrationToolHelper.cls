@@ -29,7 +29,7 @@ public with sharing class AMS_MigrationToolHelper {
 			sp = Database.setSavepoint();
 
 			if(cont.fromPortal)
-				cont = processFromPortal(cont); //call portal method
+					cont = processFromPortal(cont); //call portal method
 			else{
 					cont = processNotFromPortalNew(cont);
 			}
@@ -72,6 +72,8 @@ public with sharing class AMS_MigrationToolHelper {
 		}
 
 		String oscarId = AMS_RecordCreatorWebservice.createAccreditation(caseToProcess.AccountId, accreditationObj.Id, processType, caseToProcess.Id);
+
+		postOscarUpdate(oscarId,caseToProcess.CaseNumber, caseToProcess.AccountId, true);
 
 		cont.oscarId = oscarId;
 		cont.oscarCreated = new AMS_OSCAR__c(Id = oscarId, Name = caseToProcess.CaseNumber);
@@ -246,14 +248,32 @@ public with sharing class AMS_MigrationToolHelper {
 
 	}
 
-	private static void updateOscarName(String oscarId, String oscarName){
+	private static void postOscarUpdate(String oscarId, String oscarName, Id accountId, boolean isComingFromPortal){
 
-		List<AMS_OSCAR__c> oscars = [SELECT Id, Name from AMS_OSCAR__c where Id = :oscarId];
+		List<AMS_OSCAR__c> oscars = [SELECT Id, Name, First_Step_Completed__c from AMS_OSCAR__c where Id = :oscarId];
+
+		boolean toUpdate = false;
 
 		if(!oscars.isEmpty()){
+
 			AMS_OSCAR__c oscar = oscars.get(0);
-			oscar.Name = oscarName;
-			update oscar;
+
+			if(!isComingFromPortal){
+
+				oscar.Name = oscarName;
+				toUpdate = true;
+			}
+
+			List<Agency_Applied_Change_code__c> changeCodes = [SELECT Id from Agency_Applied_Change_code__c where Account__c = :accountId and Change_Code__c = 'NEW'];
+
+			if(!changeCodes.isEmpty()){
+
+				oscar.First_Step_Completed__c = true;
+				toUpdate = true;
+			}
+
+			if(toUpdate)
+				update oscar;
 		}
 
 	}
@@ -293,7 +313,7 @@ public with sharing class AMS_MigrationToolHelper {
 
 		String oscarId = AMS_RecordCreatorWebservice.createAccreditation(caseToProcess.AccountId, accreditationObj.Id, processType, caseToProcess.Id);
 
-		updateOscarName(oscarId,caseToProcess.CaseNumber);
+		postOscarUpdate(oscarId,caseToProcess.CaseNumber, caseToProcess.AccountId, false);
 
 		cont.oscarId = oscarId;
 		cont.oscarCreated = new AMS_OSCAR__c(Id = oscarId, Name = caseToProcess.CaseNumber);
