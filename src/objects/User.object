@@ -429,52 +429,6 @@ If( Contact.Account.ICH_Member__c = true,&quot;ICH&quot;, &quot;&quot;)</formula
         <type>DateTime</type>
     </fields>
     <fields>
-        <fullName>EF_Billing_Agreement_Approver_Email__c</fullName>
-        <externalId>false</externalId>
-        <formula>EF_Billing_Agreement_Approver__r.Email</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>EF Billing Agreement Approver Email</label>
-        <required>false</required>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>EF_Billing_Agreement_Approver__c</fullName>
-        <externalId>false</externalId>
-        <label>E&amp;F Billing Agreement Approver</label>
-        <relationshipName>EF_BA_Listing</relationshipName>
-        <restrictedAdminField>false</restrictedAdminField>
-        <trackFeedHistory>false</trackFeedHistory>
-        <type>Hierarchy</type>
-    </fields>
-    <fields>
-        <fullName>EF_Contract_Approver_Email__c</fullName>
-        <externalId>false</externalId>
-        <formula>EF_Contract_Approver__r.Email</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>EF Contract Approver Email</label>
-        <required>false</required>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>EF_Contract_Approver__c</fullName>
-        <externalId>false</externalId>
-        <label>E&amp;F Contract Approver</label>
-        <relationshipName>EF_Contract_Listing</relationshipName>
-        <restrictedAdminField>false</restrictedAdminField>
-        <trackFeedHistory>false</trackFeedHistory>
-        <type>Hierarchy</type>
-    </fields>
-    <fields>
-        <fullName>EF_User_Role__c</fullName>
-        <externalId>false</externalId>
-        <globalPicklist>EF_User_Role</globalPicklist>
-        <label>E&amp;F User Role</label>
-        <trackFeedHistory>false</trackFeedHistory>
-        <type>Picklist</type>
-    </fields>
-    <fields>
         <fullName>Employee_Number_PPD__c</fullName>
         <description>IATA Employee Number</description>
         <externalId>false</externalId>
