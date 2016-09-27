@@ -214,7 +214,7 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
                     // Regardless the changecode is generated or not, move data to Master Data
                     // First move the account
                     system.debug(LoggingLevel.ERROR,'applyChangeCodesWithDependencies() -> move to MD account data');
-                    List<AMS_ChangeCodesHelper.ObjectChangesStruct> changes = AMS_Utils.copyDataToAccount(new List<AMS_OSCAR__c>{updatedOscar}, false);
+                    AMS_Utils.copyDataToAccount(new List<AMS_OSCAR__c>{updatedOscar}, false);
 
                     // THen move the owners
                     Map<Id, Set<Id>> stagingToAccounts = new Map<Id, Set<Id>>();
@@ -259,7 +259,7 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
                         changeCode.status  = '9';
 
                         Account acct = new Account(Id = updatedOscar.Account__c);
-                        AMS_ChangeCodesHelper.createAAChangeCodes(changes, new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {updatedOscar}, new List<Account> {acct}, true);
+                        AMS_Utils.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {updatedOscar}, new List<Account> {acct}, true);
                     }
                     // If the picklist is set create a CAD change code.
                     if(updatedOscar.AMS_Correction_change_code__c == 'CAD') {
@@ -273,7 +273,7 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
                         changeCode.status  = null;
 
                         Account acct = new Account(Id = updatedOscar.Account__c);
-                        AMS_ChangeCodesHelper.createAAChangeCodes(changes, new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {updatedOscar}, new List<Account> {acct}, true);
+                        AMS_Utils.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {updatedOscar}, new List<Account> {acct}, true);
                     }
 
                 } catch (Exception ex) {
