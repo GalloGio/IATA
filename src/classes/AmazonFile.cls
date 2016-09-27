@@ -199,7 +199,7 @@ public class AmazonFile {
 			AmazonFile__c aFile;
 			list<AmazonFile__c> aFiles = [
 				Select Id, Name, Full_Name_Unique__c, CreatedDate, CreatedById, CreatedBy.Name, Case__c, isPublic__c, Description__c, File_Identifier__c,
-                File_Identifier_picklist__c, Review_Status__c, Source__c, RecordTypeId, RecordType.DeveloperName,
+                File_Identifier_picklist__c, Review_Status__c, Source__c, RecordTypeId, RecordType.DeveloperName, Internal_Comments__c, 
                 EF_Document_Date__c, EF_Category__c, EF_Subcategory__c, EF_Expiry_Date__c, EF_Expired__c, EF_SAP_Number__c, EF_Skip_Validation__c
 				From AmazonFile__c 
 				Where id = :sobjectId
