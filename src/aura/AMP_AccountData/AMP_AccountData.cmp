@@ -1,9 +1,5 @@
-<aura:component controller="AMP_AccountManagementController">
+<aura:component >
 	<aura:attribute name="account" type="Account" />
-	<aura:attribute name="isEditMode" type="Boolean" default="false"/>
-	<aura:attribute name="isPrivatelyHeld" type="Boolean" default="false"/>
-	<aura:attribute name="isPublicallyHeld" type="Boolean" default="false"/>
-	<aura:attribute name="isGovernmentHeld" type="Boolean" default="false"/>
 
     <div class="slds-grid slds-wrap">
     	
@@ -120,37 +116,13 @@
             <div class="slds-form-element">
                 <label class="slds-form-element__label" >Ownership Type</label>
                 <div class="slds-form-element__control">
-					<aura:if isTrue="{!v.isEditMode}">
 						<!--<force:outputField value="{!v.account.AM_Ownership_Type__c}" />-->
-						<!-- <ui:inputText value="{!v.account.AM_Ownership_Type__c}" /> -->
-						<ui:inputCheckbox label="Privately Held" value="{!v.isPrivatelyHeld}" aura:id="privatelyHeld" />
-						<ui:inputCheckbox label="Publicly Held" value="{!v.isPublicallyHeld}" aura:id="publiclyHeld" />
-						<ui:inputCheckbox label="Government Held" value="{!v.isGovernmentHeld}" aura:id="govermentHeld" />
-
-
-						<aura:set attribute="else">
-							<ui:outputText value="{!v.account.AM_Ownership_Type__c}" />
-						</aura:set>
-					</aura:if>
+                    {!v.account.AM_Ownership_Type__c}
                 </div>
             </div>            
         </div>
 
 		<div class="slds-col--padded slds-size--1-of-2 slds-large-size--1-of-3 slds-p-bottom--medium">
-			<div class="slds-form-element">
-
-				<div class="slds-form-element__control">
-					<aura:if isTrue="{!v.isEditMode}">
-						<button class="slds-button slds-button--neutral slds-col--bump-left" onclick="{!c.cancelEditMode}">Cancel</button>
-						<button class="slds-button slds-button--neutral slds-col--bump-left" onclick="{!c.clickSaveAccount}">Save</button>
-						<aura:set attribute="else">
-							<button class="slds-button slds-button--neutral slds-col--bump-left" onclick="{!c.switchToEditMode}">Edit</button>
-						</aura:set>
-					</aura:if>
-				</div>
-			</div>
-		</div>
-        <div class="slds-col--padded slds-size--1-of-2 slds-large-size--1-of-3 slds-p-bottom--medium">
         </div>
     </div>
 </aura:component>

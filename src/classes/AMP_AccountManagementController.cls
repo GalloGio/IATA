@@ -16,9 +16,4 @@ public with sharing class AMP_AccountManagementController {
                LIMIT 1];
     }
 
-    @AuraEnabled
-    public static Account saveAccount(Account accountToUpdate) {
-        update accountToUpdate;
-        return accountToUpdate;
-    }
 }
