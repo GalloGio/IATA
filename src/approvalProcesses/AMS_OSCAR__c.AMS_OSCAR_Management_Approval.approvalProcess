@@ -36,6 +36,7 @@
             <type>RejectRequest</type>
         </rejectBehavior>
     </approvalStep>
+    <emailTemplate>AMS/AMS_Notify_OSCAR_Team_Members</emailTemplate>
     <enableMobileDeviceAccess>false</enableMobileDeviceAccess>
     <entryCriteria>
         <criteriaItems>
@@ -59,6 +60,6 @@
     </finalRejectionActions>
     <finalRejectionRecordLock>false</finalRejectionRecordLock>
     <label>AMS OSCAR Management Approval</label>
-    <recordEditability>AdminOnly</recordEditability>
+    <recordEditability>AdminOrCurrentApprover</recordEditability>
     <showApprovalHistory>true</showApprovalHistory>
 </ApprovalProcess>
