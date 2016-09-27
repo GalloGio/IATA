@@ -1675,7 +1675,7 @@
         <fullName>IEC_Subscribe_to_Zuora__c</fullName>
         <description>Determine if to subscribe the product to Zuora on purchase</description>
         <externalId>false</externalId>
-        <formula>IF(ISBLANK(IEC_Parent_Product__c), Available_for_Subscription__c = true &amp;&amp; Is_Shippable__c != true, IEC_Parent_Product__r.Available_for_Subscription__c = true &amp;&amp; IEC_Parent_Product__r.Is_Shippable__c != true)</formula>
+        <formula>true</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Subscribe to Zuora</label>
         <trackHistory>false</trackHistory>
