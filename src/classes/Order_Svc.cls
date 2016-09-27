@@ -1393,7 +1393,7 @@ public without sharing class Order_Svc
                                     
                                     //Create the PaymentType
                                     //Payment method
-                                    String sPaymentMethodId;
+                                    String sPaymentMethodId = null;
                                     if(orderId_paymentMethod != null && orderId_paymentMethod.containsKey(customerOrder.Id)){
                                         IECZuoraHelper.PaymentMethod paymentMethod = orderId_paymentMethod.get(customerOrder.Id);
                                         
@@ -1444,6 +1444,7 @@ public without sharing class Order_Svc
                                 }
                             }
                             
+                            ratePlanData = new List<Zuora.zObject>();
                             if (okForSubscription)
                             {
                                 if (orderItem != null)
@@ -1463,7 +1464,6 @@ public without sharing class Order_Svc
                                     OrderItemSend.add(new OrderItem(OrderId=customerOrder.Id));
                                     
                                     //*** build rate plan data for shipping & tax
-                                    ratePlanData = new List<Zuora.zObject>();
                                     Zuora.zObject rp, rpd, rpc, rpcd;
                                     List<Zuora.zObject> ratePlanCharge = new List<Zuora.zObject>();
                                     if (totalShipping > 0)
@@ -1622,7 +1622,8 @@ public without sharing class Order_Svc
                     IECErrorLogger.logErrors(new list<IEC_Error_Log__c>{errorLog});
                     
                     //Threw an exception when Zuora exception occur
-                    throw new OrderException(ex.getMessage() + ' +++ ' + ex.getStackTraceString() + ' +++ ' + ex.getLineNumber());
+                    //*** do not throw error in order to rollback
+                    //throw new OrderException(ex.getMessage() + ' +++ ' + ex.getStackTraceString() + ' +++ ' + ex.getLineNumber());
                 }
             }
         
