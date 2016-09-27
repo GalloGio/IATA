@@ -24,7 +24,7 @@
         <members>*</members>
         <name>Layout</name>
     </types>
-	<types>
+    <types>
         <members>EF_Airline_Edit</members>
         <members>EF_Client_Edit</members>
         <members>EF_Contract_Creation</members>

@@ -12973,6 +12973,15 @@ If you want to create a new branch for this company in your country, click Creat
 If you continue to experience issues registering for the IATA Customer Portal then please consult our &lt;a href=http://theiatahub.force.com/iatapkb/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US target=_blank&gt;troubleshooting guide&lt;/a&gt;</value>
     </labels>
     <labels>
+        <fullName>ISSP_NoRecordsFoundCreateAgency2</fullName>
+        <categories>ISSP_Registration, s8</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_NoRecordsFoundCreateAgency2</shortDescription>
+        <value>No Organization was found for these search criteria. Please modify your search and try again or click Create New Agency to create a new company record. 
+&lt;br/&gt;&lt;br/&gt;</value>
+    </labels>
+    <labels>
         <fullName>ISSP_NoRecordsFoundCreateStandardAirline</fullName>
         <categories>ISSP_Registration, s10</categories>
         <language>en_US</language>

@@ -5010,7 +5010,6 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                 <default>false</default>
                 <controllingFieldValues>Internal Use</controllingFieldValues>
             </picklistValues>
-
             <sorted>true</sorted>
         </picklist>
         <required>false</required>
@@ -10421,6 +10420,7 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
         <label>Registration Number</label>
         <length>30</length>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>false</unique>
@@ -22491,7 +22491,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
         </picklistValues>
-		<picklistValues>
+        <picklistValues>
             <picklist>AM_Ownership_Type__c</picklist>
             <values>
                 <fullName>Government-held</fullName>
@@ -23670,7 +23670,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
         </picklistValues>
-	    <picklistValues>
+        <picklistValues>
             <picklist>Category__c</picklist>
             <values>
                 <fullName>Airport Operator</fullName>
@@ -24779,7 +24779,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
         </picklistValues>
-		<picklistValues>
+        <picklistValues>
             <picklist>AM_Ownership_Type__c</picklist>
             <values>
                 <fullName>Government-held</fullName>
@@ -27690,7 +27690,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
         </picklistValues>
-		<picklistValues>
+        <picklistValues>
             <picklist>AM_Ownership_Type__c</picklist>
             <values>
                 <fullName>Government-held</fullName>
@@ -29903,7 +29903,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
         </picklistValues>
-		<picklistValues>
+        <picklistValues>
             <picklist>AM_Ownership_Type__c</picklist>
             <values>
                 <fullName>Government-held</fullName>
@@ -32176,7 +32176,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>Cargo Agent</fullName>
                 <default>false</default>
             </values>
-	    <values>
+            <values>
                 <fullName>Internal Use</fullName>
                 <default>false</default>
             </values>
@@ -33461,7 +33461,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
         </picklistValues>
-		<picklistValues>
+        <picklistValues>
             <picklist>AM_Ownership_Type__c</picklist>
             <values>
                 <fullName>Government-held</fullName>
@@ -35500,7 +35500,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
         </picklistValues>
-		<picklistValues>
+        <picklistValues>
             <picklist>AM_Ownership_Type__c</picklist>
             <values>
                 <fullName>Government-held</fullName>
@@ -35514,7 +35514,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>Publically-held</fullName>
                 <default>false</default>
             </values>
-        </picklistValues>		
+        </picklistValues>
         <picklistValues>
             <picklist>AccountSource</picklist>
             <values>
@@ -38487,7 +38487,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>New airline joining BSP</fullName>
                 <default>false</default>
             </values>
-			<values>
+            <values>
                 <fullName>New for E%26F</fullName>
                 <default>false</default>
             </values>
@@ -38527,6 +38527,73 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <picklist>Remittance_frequency__c</picklist>
             <values>
                 <fullName>Daily</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Sector</picklist>
+            <values>
+                <fullName>Accommodation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline Supplier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Association</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cargo Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Education</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Equipment Manufacturer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Financial Institution</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>General Sales Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Governmental Institution</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Infrastructure Partner</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Media</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Non-Airline Transportation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Recreational</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Travel Agent</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -40649,7 +40716,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
         </picklistValues>
-		<picklistValues>
+        <picklistValues>
             <picklist>AM_Ownership_Type__c</picklist>
             <values>
                 <fullName>Government-held</fullName>
@@ -42993,7 +43060,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
         </picklistValues>
-		<picklistValues>
+        <picklistValues>
             <picklist>AM_Ownership_Type__c</picklist>
             <values>
                 <fullName>Government-held</fullName>
@@ -44993,7 +45060,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>New airline joining BSP</fullName>
                 <default>false</default>
             </values>
-			<values>
+            <values>
                 <fullName>New for E%26F</fullName>
                 <default>false</default>
             </values>
@@ -47155,7 +47222,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
         </picklistValues>
-		<picklistValues>
+        <picklistValues>
             <picklist>AM_Ownership_Type__c</picklist>
             <values>
                 <fullName>Government-held</fullName>
@@ -51221,7 +51288,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
         </picklistValues>
-		<picklistValues>
+        <picklistValues>
             <picklist>AM_Ownership_Type__c</picklist>
             <values>
                 <fullName>Government-held</fullName>
@@ -53740,7 +53807,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
         </picklistValues>
-		<picklistValues>
+        <picklistValues>
             <picklist>AM_Ownership_Type__c</picklist>
             <values>
                 <fullName>Government-held</fullName>
@@ -55942,7 +56009,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
         </picklistValues>
-		<picklistValues>
+        <picklistValues>
             <picklist>AM_Ownership_Type__c</picklist>
             <values>
                 <fullName>Government-held</fullName>
@@ -58144,7 +58211,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
         </picklistValues>
-		<picklistValues>
+        <picklistValues>
             <picklist>AM_Ownership_Type__c</picklist>
             <values>
                 <fullName>Government-held</fullName>
@@ -59594,7 +59661,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
         </picklistValues>
-	    <picklistValues>
+        <picklistValues>
             <picklist>Customer_Type__c</picklist>
             <values>
                 <fullName>Accredited Training Center %28ATC%29</fullName>
@@ -60727,7 +60794,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
         </picklistValues>
-		<picklistValues>
+        <picklistValues>
             <picklist>AM_Ownership_Type__c</picklist>
             <values>
                 <fullName>Government-held</fullName>
@@ -65670,7 +65737,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>New airline joining BSP</fullName>
                 <default>false</default>
             </values>
-			<values>
+            <values>
                 <fullName>New for E%26F</fullName>
                 <default>false</default>
             </values>
@@ -70021,6 +70088,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>EF_Allow_Billing_Agreements</picklist>
+            <values>
+                <fullName>Allowed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Allowed with Approval</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Allowed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>EF_Level__c</picklist>
             <values>
                 <fullName>1</fullName>
@@ -70161,10 +70243,9 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>September</fullName>
                 <default>false</default>
             </values>
-
         </picklistValues>
         <picklistValues>
-        <picklist>Financial_Year_End__c</picklist>
+            <picklist>Financial_Year_End__c</picklist>
             <values>
                 <fullName>April</fullName>
                 <default>false</default>
@@ -70761,7 +70842,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>New airline joining BSP</fullName>
                 <default>false</default>
             </values>
-	    <values>
+            <values>
                 <fullName>New for E%26F</fullName>
                 <default>false</default>
             </values>
@@ -75053,7 +75134,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>New airline joining BSP</fullName>
                 <default>false</default>
             </values>
-	    <values>
+            <values>
                 <fullName>New for E%26F</fullName>
                 <default>false</default>
             </values>
@@ -75143,7 +75224,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-            <fullName>IATA</fullName>
+                <fullName>IATA</fullName>
                 <default>false</default>
             </values>
             <values>
