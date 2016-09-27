@@ -63,7 +63,8 @@ public virtual class vfIECEBC_Controller {
 	public static final String EBC_PAYMENT_TARGET_CAMPAIGN = 'campaign';
 	public static final String EBC_PAYMENT_TARGET_ACCOUNT_RATE_PLAN = 'rateplan';
 	public static final String EBC_PAYMENT_TARGET_ACCOUNT_EMAIL_PACKAGE = 'email';
-	public static final String EBC_PAYMENT_TARGET_ACCOUNT_ADD_ON = 'addon';
+	public static final String EBC_PAYMENT_TARGET_ACCOUNT_ADD_ON_REPORTING = 'addon reporting';
+	public static final String EBC_PAYMENT_TARGET_ACCOUNT_ADD_ON_STORAGE = 'addon storage';
 	public static final String EBC_PAYMENT_TARGET_RENEWAL = 'renewal';
 	
 	

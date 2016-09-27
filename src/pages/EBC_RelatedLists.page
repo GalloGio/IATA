@@ -1,0 +1,29 @@
+<apex:page standardController="Zuora__CustomerAccount__c">
+    <apex:pageBlock title="eBroadcast Lists">
+       
+        <apex:pageBlockSection title="Campaigns of {!Zuora__CustomerAccount__c.Name}" columns="1">
+            <apex:relatedList list="EBC_Campaigns__r"/>
+        </apex:pageBlockSection>
+
+        <apex:pageBlockSection title="Selection Lists of {!Zuora__CustomerAccount__c.Name}" columns="1">
+            <apex:relatedList list="EBC_Master_Filter__r"/>
+        </apex:pageBlockSection>
+
+        <apex:pageBlockSection title="E-Mail Exclusions of {!Zuora__CustomerAccount__c.Name}" columns="1">
+            <apex:relatedList list="EBC_Email_Exclusions__r"/>
+        </apex:pageBlockSection>
+
+        <apex:pageBlockSection title="Templates of {!Zuora__CustomerAccount__c.Name}" columns="1">
+            <apex:relatedList list="EBC_Templates__r"/>
+        </apex:pageBlockSection>
+               
+        <apex:pageBlockSection title="Notifications of {!Zuora__CustomerAccount__c.Name}" columns="1">
+            <apex:relatedList list="EBC_Account_Notifications__r"/>
+        </apex:pageBlockSection>
+
+        <apex:pageBlockSection title="EBC Prefferences of {!Zuora__CustomerAccount__c.Name}" columns="1">
+            <apex:relatedList list="eBroadcast_Preferences__r"/>
+        </apex:pageBlockSection>    
+
+    </apex:pageBlock>
+</apex:page>
