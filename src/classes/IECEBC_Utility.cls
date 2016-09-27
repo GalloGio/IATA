@@ -12,6 +12,15 @@
 public class IECEBC_Utility {
 	public static final Integer EBC_PAYMENT_TOKEN_MAX_LENGTH = 250; // no more than max length of zqu__CustomerAccount__c.eBroadcast_Payment_Token__c 
 	
+	// zqu__ProductRatePlanCharge__c.zqu__Model__c should be defined in IECConstants.ChargeModel_Zuora_*, however there some inactive values in SF
+	public static final String RATE_PLAN_CHARGE_MODEL_PER_UNIT = 'Per Unit';  // this is used for additional inactive options
+	public static final String RATE_PLAN_CHARGE_MODEL_FLAT_FEE = 'Flat Fee';  // this is used for additional inactive options
+	
+	// list of zqu__ProductRatePlanCharge__c.zqu__Model__c that is considered as price (rate) per unit email
+	public static final Set<String> ratePlanChargeModelperUnitPriceSet = new Set<String> { IECConstants.ChargeModel_Zuora_PerUnitPricing 
+													, RATE_PLAN_CHARGE_MODEL_PER_UNIT};
+		
+	
     public static String generateRandomString(Integer len) {
         final String chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz';
         String randStr = '';

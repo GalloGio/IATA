@@ -51,7 +51,8 @@ public class CampaignMember_Svc
                     //else
                         //productId_newCampaignMemberPrd.get(newVersion).Quantity__c += cmp.Quantity__c;
                 }
-                contactId_newCampaignMemberPrd.put(contactId, productId_newCampaignMemberPrd.values());
+                if (productId_newCampaignMemberPrd.size() > 0)
+                    contactId_newCampaignMemberPrd.put(contactId, productId_newCampaignMemberPrd.values());
             }
             /*
             List<Campaign_Member_Product__c> lstMemberProds = contactId_campaignMemberPrd.get(contactId);

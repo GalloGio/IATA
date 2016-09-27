@@ -24,10 +24,6 @@
                 <field>EBC_Master_Filter__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Required</behavior>
-                <field>Account__c</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>EBC_Design__c</field>
             </layoutItems>
