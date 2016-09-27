@@ -9,6 +9,7 @@
   * History: 
   *  - 20160729-sl: initial version
   *  - 20160811-sl: move some methods and properties to vfIECEBC_Controller
+  *  - 20160920-sl: add payment link and hide submit payment if no Add On has been selected.
   */
 
 
@@ -169,6 +170,24 @@ public with sharing class vfIECEBC_AccountExtras extends vfIECEBC_Controller
 		}
 		private set;
 	} // end of productRatePlanWrapperAddonNewPurchaseList getter/setter
+	
+	
+	// ========================================================================
+	// go to the payment page, the information is passed on the billingAccount record
+	// use paymentToken as Url Parameter to ensure the communication integrity between pages.
+	// the detail on the product rate plan charge will be recalculated and reselected
+	// this ensure the data integrity and simplify the caller
+	public PageReference goToPaymentPage()
+	{
+		PageReference paymentPage = goToPaymentPageBase( Page.IECEBC_Payment, EBC_PAYMENT_TARGET_ACCOUNT_RATE_PLAN, EBC_PAYMENT_CAMPAIGN_NONE
+							, null // subscription.Id
+							, selectedProductRatePlan.Id // productRatePlanId
+							, null // campaignId
+							, 0 // emailCreditAmount
+							);
+		
+		return paymentPage;
+	} // end of goToPaymentPage
 	
 	
 	// ========================================================================

@@ -31,7 +31,7 @@
                                         <button class="text-link js-close-modaldel">Cancel</button>
                                     </li>
                                     <li>
-                                        <apex:commandLink onclick="jQuery('body').css('cursor', 'wait');" action="{!deleteItem}" styleClass="button" value="Confirm" reRender="itemList" oncomplete="closeModal();" />
+                                        <apex:commandLink onclick="jQuery('body').css('cursor', 'wait');" action="{!deleteItem}" styleClass="button" value="Confirm" reRender="itemList,paginator" oncomplete="closeModal();" />
                                     </li>
                                 </ul>
                             </footer>
@@ -229,10 +229,10 @@
                                 <apex:repeat value="{!filters}" var="i">
                                     <tr>
                                         <td class="type">
-                                            <img src="{!URLFOR($Resource.eBroadcastAssets, '/assets/img/components/icons/cat.png')}" alt="Resource" width="50px"/>
+                                            <img src="{!i.Thumbnail_URL__c}" alt="Resource" width="50px"/>
                                         </td>
                                         <td class="name">
-                                            {!i.Name}
+                                            <a href="{!i.Image_URL__c}" onclick="window.open(this.href); return false;">{!i.Name}</a>
                                             <!--
                                             <apex:outputText rendered="{!i.eBroadcast_Campaigns__r.size > 0}">
 	                                            <a href="#" class="tooltip-icon js-tooltip"><i class="fa fa-exclamation-triangle"></i></a>
@@ -267,22 +267,23 @@
                    </div>
                 </div>
             </main>
-            
-            <apex:form >
-                <Center>
-                <apex:outputPanel styleClass="paginator" rendered="{!maxPage > 1}">
-                    Page
-                    <div class="custom-user-input select">
-                        <i class="icon angle-down"></i>
-                        <apex:selectList value="{!page}" styleClass="user-input select" size="1">
-                            <apex:selectOptions value="{!pageOptions}"/>
-                            <apex:actionSupport event="onchange" action="{!doNothing}" reRender="itemList" />
-                        </apex:selectList> 
-                    </div>
-                    of {!maxPage}
-                </apex:outputPanel>
-                </Center>
-            </apex:form>
+            <apex:outputPanel id="paginator">
+                <apex:form >
+                    <Center>
+                        <apex:outputPanel styleClass="paginator" rendered="{!maxPage > 1}">
+                            Page
+                            <div class="custom-user-input select">
+                                <i class="icon angle-down"></i>
+                                <apex:selectList value="{!page}" styleClass="user-input select" size="1">
+                                    <apex:selectOptions value="{!pageOptions}"/>
+                                    <apex:actionSupport event="onchange" action="{!doNothing}" reRender="itemList" />
+                                </apex:selectList> 
+                            </div>
+                            of {!maxPage}
+                        </apex:outputPanel>
+                    </Center>
+                </apex:form>
+            </apex:outputPanel>
             <!-- End of Page Content -->
             
         </apex:define>

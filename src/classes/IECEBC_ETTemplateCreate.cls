@@ -62,52 +62,6 @@ public class IECEBC_ETTemplateCreate {
         return att;
     }
     
-    // Create the email template in ExactTarget using SOAP API (XML)  
-    public static String createEmailTemplate(Id emailTempId, String campaignName, String contactType){
-        Http http = new Http();
-        String emailAttachments = getEmailTempalteAttachments(emailTempId);
-        EBC_Template__c emailTemplate = [Select Name from EBC_Template__c where id =:emailTempId];
-        String emailTemplateName = emailTemplate.Name + ' for ' + campaignName;
-        
-        string requiredCode = '<table cellpadding="2" cellspacing="0" width="600" ID="Table5" Border=0><tr><td><font face="verdana" size="1" color="#444444">This email was sent to:  %%emailaddr%% <br><br><b>Email Sent By:</b> %%Member_Busname%%<br>%%Member_Addr%% %%Member_City%%, %%Member_State%%, %%Member_PostalCode%%, %%Member_Country%%<br><br></font></td></tr></table>' + 
-            '<a href="%%profile_center_url%%" alias="Update Profile">Update Profile</a>';
-        string bodyContent = 
-            '<CreateRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">' +
-            '<Objects xsi:type="Email">' +
-            '<ObjectID xsi:nil="true"/>' +
-            '<Name>' +
-            IECEBC_ETHelper.xmlEncode(emailTemplateName) +
-            '</Name>' +
-            '<Description>This is a new Summer Time Campaign Template !!! </Description>' +
-            '<HTMLBody><![CDATA[' +
-            emailAttachments +
-            requiredCode +
-            ']]></HTMLBody>' +
-            '<Subject>Email Test</Subject>' +
-            '<EmailType>HTML</EmailType>' +
-            '<IsHTMLPaste>true</IsHTMLPaste>' +
-            '</Objects>' +
-            '</CreateRequest>';
-        
-        HttpRequest req = new HttpRequest();
-        req.setTimeout(IECEBC_ETInit.TimeOut);
-        IECEBC_ETHelper.SetSoapRequest(req, 'Create', bodyContent);     
-        
-        HttpResponse res = http.send(req);
-        String bodyRes = res.getBody();
-        String templateId = '';
-        if (res.getStatusCode() == 200) { 
-            system.debug('Email Template is ready!');
-            templateId = IECEBC_ETHelper.parse(res, 'NewID');
-            system.debug('Email template creation finishes with id :' + templateId);
-            IECEBC_ETTriggeredSendDefinitionCreate.createTriggeredSendDefinition(templateId, contactType, campaignName);
-            return templateId;
-        }else{
-            system.debug('This is a bad request, email template is failed to sent to ET!');
-            return null;
-        }        
-    }     
-    
     // Update email template in ExactTarget using SOAP API (XML)  
     public static void updateEmailTemplate(String emailTempId, String subject){
         updateEmailTemplate(emailTempId, subject, null, null);

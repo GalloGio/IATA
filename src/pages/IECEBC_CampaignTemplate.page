@@ -25,11 +25,13 @@
                         }
                         </script>
                         
+                        <apex:pageMessages />
+                        
                 		<div class="tab-container js-tabs">
                             <ul class="nav tabs">
                                 <li class="active" data-target="#pane-1"><a href="#" onclick="resetTemplate(jQuery('input:checked', jQuery(this).closest('li').attr('data-target')).val());">Basic Templates</a></li>
                                 <li data-target="#pane-2"><a href="#" onclick="resetTemplate(jQuery('input:checked', jQuery(this).closest('li').attr('data-target')).val());">Saved Templates</a></li>
-                                <li data-target="#pane-3"><a href="#" onclick="resetTemplate('');">Use your HTML code</a></li>
+                                <li data-target="#pane-3"><a href="#" onclick="resetTemplate('{!customHtmlTemplate.Id}');">Use your HTML code</a></li>
                             </ul>
                             <div class="tab-content">
                                 <div class="tab-pane is-open" id="pane-1">
@@ -43,6 +45,13 @@
                                 </div>
                             </div>
                         </div>
+                        <apex:outputText rendered="{!NOT(campaign.Is_Step3_Writable__c)}">
+                            <script type="text/javascript">
+                            jQuery(document).ready(function(){
+                                jQuery('.tab-content input[type="checkbox"]').attr('disabled', 'disabled').attr('readonly', 'readonly');
+                            });
+                            </script>
+                        </apex:outputText>
                         <div class="footer-actions text-right">
                             <ul class="list actions">
                                 <apex:outputText rendered="{!campaign.Is_Step3_Writable__c}">

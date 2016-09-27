@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -67,6 +63,28 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Event_Date_Timestamp__c</fullName>
+        <description>Event Date in milliseconds since 1970</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Event Date in milliseconds since 1970</inlineHelpText>
+        <label>Event Date Timestamp</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Event_Date__c</fullName>
+        <defaultValue>now()</defaultValue>
+        <externalId>false</externalId>
+        <label>Event Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
         <fullName>Other_Reason__c</fullName>
         <externalId>false</externalId>
         <label>Other Reason</label>
@@ -75,34 +93,6 @@
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>Related_Agency__c</fullName>
-        <deleteConstraint>SetNull</deleteConstraint>
-        <description>GDP Product Account View that received the email that result in an exclusion</description>
-        <externalId>false</externalId>
-        <inlineHelpText>GDP Product Account View that received the email that result in an exclusion</inlineHelpText>
-        <label>Related Agency</label>
-        <referenceTo>GDP_Products_Account_View__c</referenceTo>
-        <relationshipLabel>EBC Email Exclusions</relationshipLabel>
-        <relationshipName>EBC_Email_Exclusions</relationshipName>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Lookup</type>
-    </fields>
-    <fields>
-        <fullName>Related_Agent__c</fullName>
-        <deleteConstraint>SetNull</deleteConstraint>
-        <description>ID Card that received the email that result in an exclusion</description>
-        <externalId>false</externalId>
-        <inlineHelpText>ID Card that received the email that result in an exclusion</inlineHelpText>
-        <label>Related Agent</label>
-        <referenceTo>ID_Card__c</referenceTo>
-        <relationshipLabel>EBC Email Exclusions</relationshipLabel>
-        <relationshipName>EBC_Email_Exclusions</relationshipName>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Lookup</type>
     </fields>
     <fields>
         <fullName>Source_Campaign__c</fullName>
@@ -132,12 +122,17 @@
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>LISTDETECTIVE</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>OTHER</fullName>
                 <default>false</default>
             </picklistValues>
             <restrictedPicklist>true</restrictedPicklist>
             <sorted>false</sorted>
         </picklist>
+        <required>true</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -158,14 +153,27 @@
     <label>EBC Email Exclusion</label>
     <listViews>
         <fullName>All</fullName>
+        <columns>Email__c</columns>
+        <columns>Type__c</columns>
+        <columns>Source_Campaign__c</columns>
+        <columns>Other_Reason__c</columns>
+        <columns>Event_Date__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
+        <language>en_US</language>
     </listViews>
     <nameField>
         <label>EBC Exclusion Name</label>
         <type>Text</type>
     </nameField>
     <pluralLabel>EBC Email Exclusions</pluralLabel>
-    <searchLayouts/>
+    <searchLayouts>
+        <customTabListAdditionalFields>Email__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Event_Date__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Other_Reason__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Source_Campaign__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Type__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Unsubscribe_From__c</customTabListAdditionalFields>
+    </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
 </CustomObject>

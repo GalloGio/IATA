@@ -5,6 +5,16 @@ public class vfIECEBC_RecipientList extends vfIECEBC_Abstract_List {
     }
     
     public PageReference duplicate() {
+        EBC_Master_Filter__c castedSelectedItem = (EBC_Master_Filter__c)selectedItem;
+        
+        EBC_Master_Filter__c cloned = duplicate(selectedItem.Id, castedSelectedItem.Name);
+        
+        
+        PageReference pr = new PageReference('/iec/IECEBC_Recipient?id=' + cloned.Id);
+        pr.setRedirect(true);
+        return pr;
+    }
+    public static EBC_Master_Filter__c duplicate(Id originalId, String name) {
         EBC_Master_Filter__c f = [Select Id,
                      Billing_Account__c,
                      Refinement_Condition__c,
@@ -14,11 +24,10 @@ public class vfIECEBC_RecipientList extends vfIECEBC_Abstract_List {
                      Number_of_Recipients__c,
                      Name
                      From EBC_Master_Filter__c
-                     where Id = :selectedItem.Id];
+                     where Id = :originalId];
         
         EBC_Master_Filter__c cloned = (EBC_Master_Filter__c)f.clone(false, true, false, false);
-        EBC_Master_Filter__c castedSelectedItem = (EBC_Master_Filter__c)selectedItem;
-        cloned.Name = castedSelectedItem.Name; 
+        cloned.Name = name; 
         
         insert cloned;
         
@@ -31,7 +40,7 @@ public class vfIECEBC_RecipientList extends vfIECEBC_Abstract_List {
             Field_Operator__c ,
             Field_Value__c 
             From EBC_Customer_Filter__c
-            Where EBC_Master_Filter__c = :selectedItem.Id
+            Where EBC_Master_Filter__c = :originalId
         ];
         
         for(EBC_Customer_Filter__c cf : customerFilters) {
@@ -41,13 +50,7 @@ public class vfIECEBC_RecipientList extends vfIECEBC_Abstract_List {
         
         insert customerFilters;
         
-        PageReference pr = new PageReference('/iec/IECEBC_Recipient?id=' + cloned.Id);
-        pr.setRedirect(true);
-        return pr;
-        /*
-        clear();
-        
-        return null;*/
+        return cloned;
     }
 
     

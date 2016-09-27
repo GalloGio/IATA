@@ -1,5 +1,6 @@
 <apex:component controller="vfIECEBC_CampaignList" allowDML="true">
     <apex:attribute name="limited" assignTo="{!isLimitedComponent}" description="Is this component in currently loaded by the dashboard" type="Boolean" required="true" />
+    <apex:attribute name="sort" assignTo="{!sortBy}" description="Sort by" type="String" required="false" />
     
     <apex:outputPanel id="campaignListContainer">
     	<apex:outputText rendered="{!IF(CampaignsCount > 0, true, false)}">
@@ -44,19 +45,19 @@
                         </td>
                         <td class="recipients">
                             <apex:outputText rendered="{!c.Status__c == 'SENT'}">
-                                <strong class="value">{!c.Number_of_Recipients__c}</strong> 
+                                <strong class="value">{!c.NumberSent__c}</strong> 
                                 <span class="label">Recipients</span>
                             </apex:outputText>
                         </td>
                         <td class="opens">
                             <apex:outputText rendered="{!c.Status__c == 'SENT'}">
-                                <strong class="value">100%</strong> 
+                                <strong class="value">{!IF(c.NumberSent__c > 0, TEXT(ROUND(c.NumberofOpens__c * 100 / c.NumberSent__c, 1)) + '%', 'n/a')}</strong> 
                                 <span class="label">Opens</span>
                             </apex:outputText>
                         </td>
                         <td class="clicks">
                             <apex:outputText rendered="{!c.Status__c == 'SENT'}">
-                                <strong class="value">66%</strong> 
+                                <strong class="value">{!IF(c.NumberSent__c > 0, TEXT(ROUND(c.NumberofClicks__c * 100 / c.NumberSent__c, 1)) + '%', 'n/a')}</strong> 
                                 <span class="label">Clicks</span>
                             </apex:outputText>
                         </td>
@@ -147,6 +148,9 @@
                 <apex:actionFunction name="renameCampaign" rerender="js-modal-rename-campaign-wrapper" onbeforedomupdate="jQuery('#js-modal .modal-content:not(.is-hidden)').addClass('is-hidden');" oncomplete="actionFunctionCompleted();">
                     <apex:param name="firstParam" assignTo="{!selectedCampaignId}" value="" />
                 </apex:actionFunction>
+                <apex:actionFunction name="cloneCampaign" rerender="js-modal-clone-campaign-wrapper" onbeforedomupdate="jQuery('#js-modal .modal-content:not(.is-hidden)').addClass('is-hidden');" oncomplete="actionFunctionCompleted();">
+                    <apex:param name="firstParam" assignTo="{!selectedCampaignId}" value="" />
+                </apex:actionFunction>
                 <apex:actionFunction name="cancelCampaign" rerender="js-modal-cancel-campaign-wrapper" onbeforedomupdate="jQuery('#js-modal .modal-content:not(.is-hidden)').addClass('is-hidden');" oncomplete="actionFunctionCompleted();">
                     <apex:param name="firstParam" assignTo="{!selectedCampaignId}" value="" />
                 </apex:actionFunction>
@@ -197,6 +201,31 @@
                             </li>
                             <li>
                                 <apex:commandLink onclick="jQuery('body').css('cursor', 'wait');" action="{!save}" styleClass="button" value="I confirm" reRender="campaignListContainer" oncomplete="closeModal();" />
+                            </li>
+                        </ul>
+                    </footer>
+                </section>
+            </apex:form>
+            <apex:form id="js-modal-clone-campaign-wrapper">
+                <section id="js-modal-clone-campaign" class="modal-content">
+                    <header class="modal-header">
+                        <h2 class="modal-title">Replicate Campaign</h2>
+                        <a href="#" class="icon-close js-close-modal"><i class="fa fa-times"></i></a>
+                    </header>
+                    <div class="modal-body">
+                        <div class="field-group text">
+                            <label>
+                                <span class="input-label">Campaign Name</span> <apex:inputField styleClass="user-input text" value="{!selectedCampaign.Name}" />
+                            </label>
+                        </div>
+                    </div>
+                    <footer class="modal-footer">
+                        <ul class="list actions">
+                            <li>
+                                <button class="text-link js-close-modal">Discard</button>
+                            </li>
+                            <li>
+                                <apex:commandLink onclick="jQuery('body').css('cursor', 'wait');" action="{!duplicate}" styleClass="button" value="I confirm" reRender="campaignListContainer" oncomplete="closeModal();" />
                             </li>
                         </ul>
                     </footer>
@@ -292,6 +321,9 @@
                     case 'rename':
                         renameCampaign(campaign.Id);
                         break;
+                    case 'clone':
+                        cloneCampaign(campaign.Id);
+                        break;
                     case 'cancel':
                         cancelCampaign(campaign.Id);
                         break;
@@ -301,6 +333,9 @@
                     case 'preview':
                         console.log(campaign);
                         window.open('/iec/IECEBC_CampaignPreview?id=' + campaign.EBC_Design__c);
+                        break;
+                    case 'report':
+                        window.open('/iec/IECEBC_ManageReportsDetails?id=' + campaign.Id); 
                         break;
                 	default:
                         alert('The action ' + $(this).val() + ' has not been defined yet.');

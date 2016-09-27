@@ -2,6 +2,7 @@ global class vfIECEBC_MosaicoEditor extends vfIECEBC_Controller {
     public ApexPages.StandardController con { get; set; }
     public EBC_Template__c template { get; set; }
     
+    class RejectedSubscriber_Exception extends Exception{}
     class Template_Not_Using_Mosaico_Template_Exception extends Exception{}
     class Resource_Not_Ready_Exception extends Exception{}
     
@@ -123,7 +124,16 @@ global class vfIECEBC_MosaicoEditor extends vfIECEBC_Controller {
         return true;
     }
     
+    public class DailyLimitReached_Exception extends Exception {}
+    
     webService static void sendTest(Id templateId, String email) {
+        datetime dt = System.now()-1;
+        Integer dailyCount = Database.countQuery('SELECT count() FROM EBC_Template_Test__c WHERE EBC_Template__c = :templateId AND Event_Date__c > :dt');
+
+        if (dailyCount >= 10) {
+            throw new DailyLimitReached_Exception('Daily limit of 10 tests for that design/template has been reached.');
+        }
+        
         EBC_Template__c template = [
             Select
                 Id,
@@ -136,27 +146,26 @@ global class vfIECEBC_MosaicoEditor extends vfIECEBC_Controller {
         ];
         
         String body = vfIECEBC_Template.getTemplateHtml(template.Id, true, null, null);
-        //String body = vfIECEBC_Template.getTemplateHtml(template.Id, true, 'UA-35085912-1', 'This is a campaign test');
         
         System.debug('Sending a test email to ' + email);
         
+        System.debug(body);
+        System.debug(template.External_Id__c);
         if (template.External_Id__c == null) {
             template.External_Id__c = IECEBC_ETTemplateCreate.pushEmailTemplate(String.valueOf(template.Id), 'This is a rendering test for eBroadcast', body, 'HTML');
         } else {
             IECEBC_ETTemplateCreate.updateEmailTemplate(template.External_Id__c, 'This is a rendering test for eBroadcast', body, 'HTML');
         }
         
-        String mailingId = template.TriggSend_Id__c;
-        if (String.isBlank(mailingId)) mailingId = 'TEST_' + template.Id;
+        String mailingId = 'TEST_' + template.Id + '_'+IECEBC_Utility.generateRandomString(12);
         
-        if (String.isBlank(template.TriggSend_Id__c)) {
-            IECEBC_ETTriggeredSendDefinitionCreate.createTriggeredSendDefinition(mailingId, template.External_Id__c, 'Default', '27f87e21-4ed1-e511-9e76-8cdcd4af9375');
-            IECEBC_ETTriggeredSendDefinitionStart.updateTriggeredSendDefinition(mailingId);
-        }
+        IECEBC_ETTriggeredSendDefinitionCreate.createTriggeredSendDefinition(mailingId, template.External_Id__c, 'Default', '27f87e21-4ed1-e511-9e76-8cdcd4af9375');
+        IECEBC_ETTriggeredSendDefinitionStart.updateTriggeredSendDefinition(mailingId);
         
         Map<String, String> attributes = new Map<String, String>();
         attributes.put('AGENCY_NAME', 'John Doe Inc.');
         attributes.put('SFID', '1234');
+        attributes.put('EMAIL', email);
         
         if (template.Audience__c == 'Agency') {
             attributes.put('AGENCY_STATE', 'New York');
@@ -168,14 +177,26 @@ global class vfIECEBC_MosaicoEditor extends vfIECEBC_Controller {
             attributes.put('AGENT_LASTNAME', 'Doe');
         }
         
-        IECEBC_ETEmailSend.sendSingleEmail(mailingId, email, attributes);
+        IECEBC_ETEmailSend.sendSingleEmail(mailingId, 'TEST_' + email, attributes);
         
-        template.Is_Tested__c = true;
-        
-        if (String.isBlank(template.TriggSend_Id__c)) {
+        if (IECEBC_ETEmailSend.failureDetails == null) {
+            template.Is_Tested__c = true;
+            
+            EBC_Template_Test__c tt = new EBC_Template_Test__c();
+            tt.EBC_Template__c = template.Id;
+            tt.Event_Date__c = Datetime.now();
+            tt.External_Id__c = mailingId;
+            tt.To__c = email;
+            insert tt;
+            
             template.TriggSend_Id__c = mailingId;
+            
+            update template;
+        } else {
+            for(String emailAddress : IECEBC_ETEmailSend.failureDetails.keySet()) {
+                System.debug(IECEBC_ETEmailSend.failureDetails.get(emailAddress));
+                throw new RejectedSubscriber_Exception('Email Address Rejected');
+            }
         }
-        
-        update template;
     }
 }

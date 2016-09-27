@@ -225,7 +225,7 @@
                                                 </div>
                                             </apex:outputPanel>
                                         </td>
-                                        <td class="type">{!i.Audience__c}</td>
+                                        <td class="type">{!IF(i.Audience__c != 'Custom', i.Audience__c, 'Agency')}</td>
                                         <td class="date created-on">
                                             <apex:outputText value="{0,date,EEE MMM dd yyyy hh:mm:ss}">
                                                 <apex:param value="{!i.CreatedDate}" /> 

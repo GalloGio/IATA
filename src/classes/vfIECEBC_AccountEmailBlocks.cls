@@ -13,6 +13,9 @@
   * History: 
   *  - 20160809-sl: initial workable version.
   *  - 20160815-sl: change wrapper to have disable flag
+  *  - 20160920-sl: add payment link and hide submit payment if no Email Block has been selected.
+  *  - 20160926-sl: change the price calculation for email block, use current default productRatePlan.EBC_Cost_Per_Email
+  *
   */
 
 global virtual with sharing class vfIECEBC_AccountEmailBlocks extends vfIECEBC_Controller 
@@ -52,17 +55,17 @@ global virtual with sharing class vfIECEBC_AccountEmailBlocks extends vfIECEBC_C
 		}
 	}
 	
-    // minimumEmailBlockPurchaseSize is used to define whether a rate plan is disabled or not
-    public Integer minimumEmailBlockPurchaseSize{
-        get {
-            if (minimumEmailBlockPurchaseSize==null) {
-                return 0;
-            }
-            return minimumEmailBlockPurchaseSize;
-        }
-        set;
-    }
-    
+	// minimumEmailBlockPurchaseSize is used to define whether a rate plan is disabled or not
+	public Integer minimumEmailBlockPurchaseSize{
+		get {
+			if (minimumEmailBlockPurchaseSize==null) {
+				return 0;
+			}
+			return minimumEmailBlockPurchaseSize;
+		}
+		set;
+	}
+	
 	// ========================================================================
 	// visualforce display flags below
 	// ------------------------------------------------------------------------
@@ -97,13 +100,23 @@ global virtual with sharing class vfIECEBC_AccountEmailBlocks extends vfIECEBC_C
 				selectedProductRatePlan = prpw.productRatePlan;
 				selectedProductRatePlanWrapper = prpw;
 				prpcList = selectedProductRatePlan.zqu__R00N40000001mFVKEA2__r;
-				updateNewPurchasedRatePlanChargeList(prpcList);
+				//updateNewPurchasedRatePlanChargeList(prpcList); // do not use this for EmailBlocks
+				updateTotalNewPurchaseAmount();
 			} else {
 				// clear other rate plan options' flags
 				prpw.selected = false;
 			}
 		}
 	} // end of selectRatePlanEmailBlock
+	
+	
+	// ========================================================================
+	// update vfIECEBC_Controller.totalNewPurchaseAmount
+	// do not use updateNewPurchasedRatePlanChargeList(prpcList) for vfIECEBC_AccountEmailBlock
+	private void updateTotalNewPurchaseAmount()
+	{
+		totalNewPurchaseAmount = selectedProductRatePlanWrapper.amount;
+	}
 	
 	
 	// ========================================================================
@@ -121,7 +134,7 @@ global virtual with sharing class vfIECEBC_AccountEmailBlocks extends vfIECEBC_C
 					//, EBC_SubscriptionType__c
 					, zqu__Description__c
 					, zqu__EffectiveEndDate__c
-					, (select Id, Name, zqu__ProductRatePlan__c, zqu__ListPrice__c, zqu__Description__c, zqu__Type__c
+					, (select Id, Name, zqu__ProductRatePlan__c, zqu__ListPrice__c, zqu__Description__c, zqu__Type__c, zqu__Model__c
 						from zqu__R00N40000001mFVKEA2__r order by Id)
 						//from zqu__ProductRatePlanCharge__r order by Id)
 					, (select Id, Name, Product_Rate_Plan__c, Short_Description__c, Long_Description__c, Order__c
@@ -154,7 +167,7 @@ global virtual with sharing class vfIECEBC_AccountEmailBlocks extends vfIECEBC_C
 				List<zqu__ProductRatePlan__c> availableProductRatePlanOptionList = productRatePlanOptionList;
 				for (zqu__ProductRatePlan__c prp : availableProductRatePlanOptionList)
 				{
-					ProductRatePlanWrapper prpWrapper = new ProductRatePlanWrapper(prp, minimumEmailBlockPurchaseSize);
+					ProductRatePlanWrapper prpWrapper = new ProductRatePlanWrapper(prp, productRatePlan.EBC_Cost_Per_Email__c, minimumEmailBlockPurchaseSize);
 					prpWrapper.selected = false;
 					prpWrapper.index = prpWrapperList.size();
 					prpWrapperList.add(prpWrapper);
@@ -167,6 +180,30 @@ global virtual with sharing class vfIECEBC_AccountEmailBlocks extends vfIECEBC_C
 		}
 		set;
 	} // end of productRatePlanWrapperEmailBlockOptionList getter/setter
+	
+	
+	// ========================================================================
+	// go to the payment page, the information is passed on the billingAccount record
+	// use paymentToken as Url Parameter to ensure the communication integrity between pages.
+	// the detail on the product rate plan charge will be recalculated and reselected
+	// this ensure the data integrity and simplify the caller
+	public PageReference goToPaymentPage()
+	{
+        Integer emails = 0;
+		if (selectedProductRatePlanWrapper.productRatePlan.EBC_Email_Credit_Standard__c != null)
+		{
+			emails = Integer.valueOf(selectedProductRatePlanWrapper.productRatePlan.EBC_Email_Credit_Standard__c); 
+			emails = (emails == null) ? 0 : emails;
+		}
+		PageReference paymentPage = goToPaymentPageBase( Page.IECEBC_Payment, EBC_PAYMENT_TARGET_ACCOUNT_EMAIL_PACKAGE, EBC_PAYMENT_CAMPAIGN_NONE
+							, null // subscription.Id
+							, selectedProductRatePlanWrapper.productRatePlan.Id // productRatePlanId
+							, null // campaignId
+							, emails // emailCreditAmount for price calculation
+							);
+		
+		return paymentPage;
+	} // end of goToPaymentPage
 	
 	
 	// ========================================================================
@@ -188,16 +225,26 @@ global virtual with sharing class vfIECEBC_AccountEmailBlocks extends vfIECEBC_C
 		public Integer currentEmailCredits {get; private set;}
 		
 		public Decimal amount {get; set;} // price amount
+		public Decimal unitPrice {get; private set;}
 		
-         // this tooltipDescription will be used for disabled option
+		
+		// zqu__ProductRatePlanCharge__c.zqu__Model__c should be defined in IECConstants.ChargeModel_Zuora_*, however there some inactive values in SF
+		private final String RATE_PLAN_CHARGE_MODEL_PER_UNIT = 'Per Unit';  // this is used for additional inactive options
+		
+		// list of zqu__ProductRatePlanCharge__c.zqu__Model__c that is considered as price (rate) per unit email
+		private final Set<String> ratePlanChargeModelperUnitPriceSet = new Set<String> { IECConstants.ChargeModel_Zuora_PerUnitPricing 
+														, RATE_PLAN_CHARGE_MODEL_PER_UNIT};
+		
+		
+		 // this tooltipDescription will be used for disabled option
 		public String tooltipDescription {
-            get{
-                String returnValue = (isDisabled) ? 'You can only select email packages above the balance owing.' : '';
-                return returnValue;
-            }
-            set;
-        }
-        
+			get{
+				String returnValue = (isDisabled) ? 'You can only select email packages above the balance owing.' : '';
+				return returnValue;
+			}
+			set;
+		}
+		
 		// --------------------------------------------------------------------
 		// this isPromo and classStringPromoflag are set based on EBC_Email_Credit_Current_Offering__c and EBC_Email_Credit_Standard__c 
 		// values from zqu__ProductRatePlan__c   
@@ -236,21 +283,23 @@ global virtual with sharing class vfIECEBC_AccountEmailBlocks extends vfIECEBC_C
 		// --------------------------------------------------------------------
 		// this constructor is used for the rate plan selection to choose
 		// in case there is more than one zqu__ProductRatePlanCharge__c, the amount will be the sum
-		public ProductRatePlanWrapper(zqu__ProductRatePlan__c prp)
-        {
-            initializeProductRatePlanWrapper(prp, 0);
-        }
-        
-		public ProductRatePlanWrapper(zqu__ProductRatePlan__c prp, Integer minimumEmailBlockSize)
-        {
-            initializeProductRatePlanWrapper(prp, minimumEmailBlockSize);
-        }
-        
-        private void initializeProductRatePlanWrapper(zqu__ProductRatePlan__c prp, Integer minEmailBlockSize)
+		public ProductRatePlanWrapper(zqu__ProductRatePlan__c prp, String realUnitPrice )
+		{
+			initializeProductRatePlanWrapper(prp, realUnitPrice, 0);
+		}
+		
+		public ProductRatePlanWrapper(zqu__ProductRatePlan__c prp, String realUnitPrice , Integer minimumEmailBlockSize)
+		{
+			initializeProductRatePlanWrapper(prp, realUnitPrice, minimumEmailBlockSize);
+		}
+		
+		private void initializeProductRatePlanWrapper(zqu__ProductRatePlan__c prp, String ebcPrpCostPerEmailString , Integer minEmailBlockSize)
 		{
 			productRatePlan = prp;
 			selected = false;
 			name = prp.Name;
+			Decimal ebcPrpCostPerEmail = Decimal.valueOf(ebcPrpCostPerEmailString);
+			unitPrice = (ebcPrpCostPerEmail == null) ? 0 : ebcPrpCostPerEmail;
 			
 			String standardCreditStr = (prp.EBC_Email_Credit_Standard__c == null) ? '0' : prp.EBC_Email_Credit_Standard__c;
 			standardEmailCredits = Integer.valueOf(standardCreditStr);
@@ -262,16 +311,24 @@ global virtual with sharing class vfIECEBC_AccountEmailBlocks extends vfIECEBC_C
 			
 			// set the price amount based on ProductRatePlanCharge
 			amount = 0;
-            if (currentEmailCredits >= minEmailBlockSize)
-            {
+			if (currentEmailCredits >= minEmailBlockSize)
+			{
 				setOptionEnable();
-            } else {
-                setOptionDisable();
-            }
+			} else {
+				setOptionDisable();
+			}
 			//for (zqu__ProductRatePlanCharge__c prpc : prp.zqu__ProductRatePlanCharge__r)
+			
 			for (zqu__ProductRatePlanCharge__c prpc : prp.zqu__R00N40000001mFVKEA2__r)
 			{
-				amount += prpc.zqu__ListPrice__c;
+				Decimal thisChargeAmount = (prpc.zqu__ListPrice__c == null) ? 0 : prpc.zqu__ListPrice__c; // default value: flat price 
+				if (ratePlanChargeModelperUnitPriceSet.contains(prpc.zqu__Model__c)) 
+				{ 
+					Integer emails = (prp.EBC_Email_Credit_Standard__c == null) ? 0 : Integer.valueOf(prp.EBC_Email_Credit_Standard__c);
+					emails = (emails == null) ? 0 : emails;
+					thisChargeAmount = emails * unitPrice;
+				}
+				amount += thisChargeAmount;
 			}
 			
 			// collect the description from Product_Rate_Plan_Information__c

@@ -1,4 +1,5 @@
 <apex:page standardController="EBC_Template__c" extensions="vfIECEBC_MosaicoEditor" applyBodyTag="false" applyHtmlTag="false" docType="html-5.0" showHeader="false" sidebar="false" standardStylesheets="false">
+    <apex:variable var="isCustomHtml" value="{!BEGINS(EBC_Template__c.Parent_Template__r.External_Id__c, 'customhtml-') == true}" />
     <apex:outputText rendered="{!ISBLANK(EBC_Template__c.Id)}">
         Invalid Parameters
     </apex:outputText>
@@ -76,6 +77,14 @@
                     plugins:  ["paste", "iataMergeField"],
                     toolbar2: "iataMergeField"
                 }
+                
+                
+                <apex:outputText rendered="{!false == true}">
+                    ko.bindingHandlers.wysiwyg.fullOptions = {
+                        toolbar1: 'code',
+                        plugins: ["code"]
+                    }
+                </apex:outputText>
     
                 
                 //var window.mosaicoSave;
@@ -104,14 +113,11 @@
                     if (basePath.lastIndexOf('/') > 0) basePath = basePath.substr(0, basePath.lastIndexOf('/'));
                     var plugins = [
                         function(viewModel) {
-                        	console.log('viewModel', viewModel);
-                        	console.log('viewModel.logoPath', viewModel.logoPath);
                             viewModel.logoPath = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
                         },
                         function(viewModel) {
                         	globalViewModel = viewModel;
                         },
-                        
                         function(viewModel) {
                             viewModel.loadGallery = function(a, b, c, d) {
                                 viewModel.galleryLoaded('loading');
@@ -142,7 +148,7 @@
                                 enabled: ko.observable(true)
                             };
                             
-                            saveCmd.execute = function() {
+                            saveCmd.execute = function(preventMessage) {
                                 saveCmd.enabled(false);
                                 viewModel.metadata.changed = Date.now();
                                 if (typeof viewModel.metadata.key == 'undefined') {
@@ -159,7 +165,6 @@
                                     
                                     viewModel.notifier.options.onShown = function() {
                                     	viewModel.notifier.options.onShown = null;
-                                            
                                         sforce.apex.execute("vfIECEBC_MosaicoEditor","saveTemplate", {
                                             templateId: '{!template.Id}',
                                             metadataContent: viewModel.exportMetadata(),
@@ -167,11 +172,13 @@
                                             xHtmlContent: viewModel.exportHTML()
                                         });
                                         
-                                        viewModel.notifier.clear();
-                                        viewModel.notifier.success(viewModel.t('Successfully saved.'));
+                                        if (typeof(preventMessage) != 'boolean') {
+                                            viewModel.notifier.clear();
+                                            viewModel.notifier.success(viewModel.t('Successfully saved.'));
+                                        }
                                     }
                                     
-                                    viewModel.notifier.info(viewModel.t("Please wait while saving template..."), null, {timeOut: null});
+                                    viewModel.notifier.info(viewModel.t("Please wait while saving..."), null, {timeOut: null});
                                 } catch(er) {
                                     viewModel.notifier.clear();
                                     viewModel.notifier.error(viewModel.t('Saving failed. Please try again in a few moment or contact us.'));
@@ -193,38 +200,50 @@
                             testCmd.execute = function() {
                                 testCmd.enabled(false);
                                 
-                                try {
-                                    var email = window.prompt(viewModel.t("Insert here the recipient email address"), '{!JSENCODE(preferences.PrimaryContact_Email__c)}');
-                                    
-                                    
+                                var email = window.prompt(viewModel.t("Insert here the recipient email address"), '{!JSENCODE(preferences.PrimaryContact_Email__c)}');
+                                
+                                if (email != null) {
                                     viewModel.notifier.options.onShown = function() {
-                                    	viewModel.notifier.options.onShown = null;
-                                            
-                                        sforce.apex.execute("vfIECEBC_MosaicoEditor","sendTest", {
-                                            templateId: '{!template.Id}',
-                                            email: email
-                                        });
+                                        viewModel.notifier.options.onShown = null;
                                         
-                                        viewModel.notifier.clear();
-                                        viewModel.notifier.success(viewModel.t("Test email sent successfully."));
+                                        
+                                        try {
+                                            sforce.apex.execute("vfIECEBC_MosaicoEditor","sendTest", {
+                                                templateId: '{!template.Id}',
+                                                email: email
+                                            });
+                                            
+                                            viewModel.notifier.clear();
+                                            viewModel.notifier.success(viewModel.t("Test email sent successfully."));
+                                        } catch(e) {
+                                            //vfIECEBC_Template.ResourceNotReady_Exception
+                                            console.log(e);
+                                            
+                                            viewModel.notifier.clear();
+                                            
+                                            if ('undefined' != typeof(e.faultstring) && e.faultstring.indexOf('ResourceNotReady_Exception') != -1) {
+                                                viewModel.notifier.error(viewModel.t('Some of the images you are using are not yet ready.'));
+                                                console.log(e);
+                                            } else if ('undefined' != typeof(e.faultstring) && e.faultstring.indexOf('ResourceMissing_Exception') != -1) {
+                                                viewModel.notifier.error(viewModel.t('Some of the images has been deleted. Please repleace them by existing resources.'));
+                                                console.log(e);
+                                            } else if ('undefined' != typeof(e.faultstring) && e.faultstring.indexOf('RejectedSubscriber_Exception') != -1) {
+                                                viewModel.notifier.error(viewModel.t('Email Address has been rejected'));
+                                                console.log(e);
+                                            } else if ('undefined' != typeof(e.faultstring) && e.faultstring.indexOf('DailyLimitReached_Exception') != -1) {
+                                                viewModel.notifier.error(viewModel.t('Daily limit of 10 tests for this design/template has been reached.'));
+                                                console.log(e);
+                                            } else {
+                                                viewModel.notifier.error(viewModel.t('Unknown error!'));
+                                                console.log(e);
+                                            }
+                                        }
+                                        
                                     }
                                     
                                     viewModel.notifier.info(viewModel.t("Please wait while sending a test email..."), null, {timeOut: null});
-                                    
-                                    
-                                } catch(e) {
-                                    //vfIECEBC_Template.ResourceNotReady_Exception
-                                    console.log(e);
-                                    
-                                    viewModel.notifier.clear();
-                                    if ('undefined' != typeof(e.faultstring) && e.faultstring.indexOf('ResourceNotReady_Exception') != -1) {
-                                        viewModel.notifier.error(viewModel.t('Some of the images you are using are not yet ready.'));
-                                        console.log(e);
-                                    } else {
-                                        viewModel.notifier.error(viewModel.t('Unknown error!'));
-                                        console.log(e);
-                                    }
                                 }
+                                    
                                 
                                 testCmd.enabled(true);
                             };
@@ -232,10 +251,14 @@
                             viewModel.test = testCmd;
                         },
                         
+                        <apex:outputText rendered="{!false == true}">
+                        function(viewModel) {
+                            viewModel.showToolbox = false;
+                        
+                        	setTimeout("jQuery('#ko_preheaderBlock_1 > :first').click()", 1000); 
+                        },
+                        </apex:outputText>
                         function(viewModel){
-                            console.log(viewModel);
-                            
-                            
                         	if (undefined != parent && undefined !== parent.onEditorLoaded) {
                             	parent.onEditorLoaded();
                             }
@@ -263,7 +286,13 @@
                 
                 
                 </script>
-                
+                <apex:outputText rendered="{!false == true}">
+                    <style>
+                        #showGallery,
+                        [for="showGallery"],
+                        .fa-picture-o { display: none !important; }
+                    </style>
+                </apex:outputText>
                 <link rel="stylesheet" href="{!URLFOR($Resource.Mosaico, '/dist/mosaico-material.min.css')}?v=0.10" />
                 <link rel="stylesheet" href="{!URLFOR($Resource.Mosaico, '/dist/vendor/notoregular/stylesheet.css')}" />
             </head>

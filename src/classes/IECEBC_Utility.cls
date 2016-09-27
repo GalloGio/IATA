@@ -1,4 +1,26 @@
+/*  
+  * IECEBC_Utility: Collection of misc static utilities for eBroadcast
+  * 
+  * Description:
+  *   
+  * History: 
+  *  - 20160915-sl: add generatePaymentToken()
+  *  - 20160922-sl: update renewalPageUrl (use IECEBC_SubscriptionRenewal), ebcSetup 
+  *
+  */
+
 public class IECEBC_Utility {
+	public static final Integer EBC_PAYMENT_TOKEN_MAX_LENGTH = 250; // no more than max length of zqu__CustomerAccount__c.eBroadcast_Payment_Token__c 
+	
+	// zqu__ProductRatePlanCharge__c.zqu__Model__c should be defined in IECConstants.ChargeModel_Zuora_*, however there some inactive values in SF
+	public static final String RATE_PLAN_CHARGE_MODEL_PER_UNIT = 'Per Unit';  // this is used for additional inactive options
+	public static final String RATE_PLAN_CHARGE_MODEL_FLAT_FEE = 'Flat Fee';  // this is used for additional inactive options
+	
+	// list of zqu__ProductRatePlanCharge__c.zqu__Model__c that is considered as price (rate) per unit email
+	public static final Set<String> ratePlanChargeModelperUnitPriceSet = new Set<String> { IECConstants.ChargeModel_Zuora_PerUnitPricing 
+													, RATE_PLAN_CHARGE_MODEL_PER_UNIT};
+		
+	
     public static String generateRandomString(Integer len) {
         final String chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz';
         String randStr = '';
@@ -39,6 +61,7 @@ public class IECEBC_Utility {
             Audience__c,
             Geo_Condition__c,
             Refinement_Condition__c,
+            Billing_Account__c,
             IATA_Codes__c,
             (
                 Select Id,
@@ -117,7 +140,19 @@ public class IECEBC_Utility {
         query += 'From ' + table + ' ';
         
         List<String> queryWhereClauses = new List<String>();
+        // Remove exclusions
         queryWhereClauses.add(emailField + ' != null');
+        
+        //queryWhereClauses.add('Id NOT IN (Select Email__c From EBC_Email_Exclusion__c Where Unsubscribe_From__c = NULL OR Unsubscribe_From__c = \'' + masterFilter.Billing_Account__c + '\')');
+        
+        
+        if (masterFilter.Audience__c == 'Agent') {
+            queryWhereClauses.add('Opt_in__c = true');
+        } else {
+            queryWhereClauses.add('GDP_Opt_In__c = true');            
+        }
+        
+         
         
         if (masterFilter.Audience__c == 'Custom') {
             if (!String.isBlank(masterFilter.IATA_Codes__c)) {
@@ -175,8 +210,8 @@ public class IECEBC_Utility {
     public static void createResourceForAttachment(Attachment a, Zuora__CustomerAccount__c billingAccount) {
 		if (String.isBlank(a.name) || a.body == null)  throw new Resource_Invalid_Attachment_Exception('Attachment must have a valid name or name too long (max 80 characters).');
         if (a.name.length()>80) throw new Resource_Invalid_Attachment_Exception('Attachment name must have be less 80 characters long.');
-        String types = a.Name.right(3);
-        String typel = a.Name.right(4);
+        String types = a.Name.right(3).toLowerCase();
+        String typel = a.Name.right(4).toLowerCase();
         String typen='';
         Set<String> extension = new Set<String>{'jpg', 'jpeg', 'gif', 'png', 'tiff', 'bmp'};
         if (extension.contains(types)) typen=types; 
@@ -189,7 +224,7 @@ public class IECEBC_Utility {
         Decimal mk = bodyEncoded.length();
         
         //file larger than maximum allowed
-        if ((mk/(1024*1024)>FILE_SIZE_MAX)) throw new Attachment_Size_Exceeds_Capacity_Exception('Attachment size exceeds Maximum File Size allowed ('+String.ValueOf(FILE_SIZE_MAX)+' MB.)'+String.ValueOf(bodyEncoded.length()));
+        if ((mk/(1024*1024)>FILE_SIZE_MAX)) throw new Attachment_Size_Exceeds_Capacity_Exception('Attachment size exceeds Maximum File Size allowed ('+String.ValueOf(FILE_SIZE_MAX)+' MB.)');
         
         mb = mb +mk;
         mb = (mb / (STORAGE_CAPACITY * 1024*1024))*100;
@@ -274,12 +309,14 @@ public class IECEBC_Utility {
 			{
 				List<EBC_Setup__c> ebcSetupList = [select Id, Name
 								, Member_Email_Block_Product__c
+								, Member_Pay_As_You_Go_Plan__c
 								, Member_Prepaid_Product_Rate_Plan_01__c
 								, Member_Prepaid_Product_Rate_Plan_02__c
 								, Member_Prepaid_Product_Rate_Plan_03__c
 								, Member_Prepaid_Product_Rate_Plan_04__c
-
+								
 								, Non_Member_Email_Block_Product__c
+								, Non_Member_Pay_As_You_Go_Plan__c
 								, Non_Member_Prepaid_Product_Rate_Plan_01__c
 								, Non_Member_Prepaid_Product_Rate_Plan_02__c
 								, Non_Member_Prepaid_Product_Rate_Plan_03__c
@@ -288,6 +325,10 @@ public class IECEBC_Utility {
 								, Enhanced_Reporting_Product_Rate_Plan__c
 								, Storage_Product_Rate_Plan__c
 								
+								, Pay_Exact_Amount_Member__c
+								, Pay_Exact_Amount_Non_Member__c
+								
+								, Extra_Storage_Capacity__c
 								, Default_Storage_Capacity__c
 								, E_Commerce_Base_Url__c
 								, Product_Category__c
@@ -356,9 +397,23 @@ public class IECEBC_Utility {
     // renewalPageUrl return the complete URL for the renewal page from the community page
     public static String renewalPageUrl {
         get {
-            String theUrl =  IECEBC_Utility.ebcSetup.E_Commerce_Base_Url__c + '/IECProductViewer?ProductCode=' + IECUtil.EncryptEncodeParameter(IECConstants.ProductCategory_SF_EBROADCAST);
-            return theUrl;
+            //String theUrl =  IECEBC_Utility.ebcSetup.E_Commerce_Base_Url__c + '/IECProductViewer?ProductCode=' + IECUtil.EncryptEncodeParameter(IECConstants.ProductCategory_SF_EBROADCAST);
+			String theUrl =  IECEBC_Utility.ebcSetup.E_Commerce_Base_Url__c + '/IECEBC_SubscriptionRenewal';
+			return theUrl;
         }
     } // end of renewalPageUrl getter
+    
+    
+	// ========================================================================
+	// generate payment token, 
+	// used by EBC Payment process to set value in zqu__CustomerAccount__c.eBroadcast_Payment_Token__c
+	// additionalText can be the related campaignId, ratePlanId, etc. 
+	public static String generatePaymentToken(String additionalText)
+	{
+		String baseText = UserInfo.getUserId() + '-' + additionalText + '-' + DateTime.now().format('YYYYMMDD-HH:mm:ss.0');
+		String result = IECUtil.EncryptParameter(baseText);
+		result = (result.length() <= EBC_PAYMENT_TOKEN_MAX_LENGTH) ? result : result.substring(0, EBC_PAYMENT_TOKEN_MAX_LENGTH);
+		return result;
+	} // end of generatePaymentToken
     
 }

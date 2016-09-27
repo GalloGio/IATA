@@ -3,12 +3,39 @@
  * 
  * It contains various usefull method and properties that can be reused such as
  * as the access to the rate plan, etc.
+ * 
+ * Getter Dependencies
+ *   billingAccount: vfIECEBC.billingAccount. 
+ *   preference: vfIECEBC.preference.
+ *   subscription: vfIECEBC.preferenc.
+ *   productRatePlan: subscription
+ *   isMember: billingAccount, no setter.
+ *   isEbcPrepaid: productRatePlan, no setter.
+ *   productRatePlanCharge: productRatePlan.
+ *   productRatePlanIdUpgradeSet: productRatePlanIdUpgradeList
+ *   productRatePlanIdUpgradeList: productRatePlan, IECEBC_Utility.ebcNonMemberProductRatePlanIdList, ebcMemberProductRatePlanIdList.
+ *   
+ *   allowableEbcAddOnProductRatePlanList: IECEBC_Utility.ebcSetup, allowableEbcAddOnProductRatePlanIdSet.
+ *   allowableEbcAddOnProductRatePlanIdSet: IECEBC_Utility.ebcSetup, productRatePlan.
  *
+ *   currentEbcAddOnProductRatePlanList: currentEbcAddOnProductRatePlanIdToSubscriptionMap
+ *   currentEbcAddOnProductRatePlanIdToSubscriptionMap: currentEbcAddOnSubscriptionProductChargeList
+ *   currentEbcAddOnSubscriptionProductChargeList: IECEBC_Utility.ebcAddOnProductRatePlanAllIdSet
+ *
+ *   hasValidAddOnEnhancedReporting: subscription, no setter.
+ *   
+ *   
+ * Supporting methods  
+ *   rereadBillignAccount()
+ *   goToPaymentPageBase()
+ *   rereadSubscription()
+ *   
  * Change log:
  *   20160704-mb: initial version
  *   20160809-sl: modify productRatePlanIdUpgradeList
  *   20160811-sl: add currentAddon
  *   20160824-sl: modify the query for EbcAddOn rate plans to comply with technical design: select based on EBC_Setup instead of zqu__ZProduct.ProductCategory__c 
+ *   20160915-sl: add payment related constants and rereadBillingAccount method 
  *
  **/
 
@@ -18,11 +45,55 @@ public virtual class vfIECEBC_Controller {
 	public static final String EBC_PRODUCT_RATE_PLAN_SUBSCRIPTION_TYPE_PAY_AS_YOU_GO = 'Pay-As-You-Go';
 	public static final String EBC_PRODUCT_RATE_PLAN_SUBSCRIPTION_TYPE_PRE_PAID = 'Pre-Paid';
 	
+	// ===================================================================================
+	// this is used as url parameter for the EBC Payment pages 
+	public static final String EBC_PAYMENT_PARAM_PAYMENT_TOKEN = 'paymentToken';
+	public static final String EBC_PAYMENT_PARAM_CAMPAIGN_OPTION = 'campaignPaymentOption';
+	public static final String EBC_PAYMENT_PARAM_PAYMENT_TARGET = 'target';
+	public static final String EBC_PAYMENT_PARAM_RATE_PLAN_ID = 'ratePlanId';
+	public static final String EBC_PAYMENT_PARAM_EMAIL_CREDIT_PURCHASED = 'emailCreditAmount';
+	
+	// values for URL parameter campaignPaymentOption / eBroadcast_Payment_Campaign_Option__c
+	public static final String EBC_PAYMENT_CAMPAIGN_NONE = '';//'None'; 
+	public static final String EBC_PAYMENT_CAMPAIGN_EXACT = 'Exact Amount'; 
+	public static final String EBC_PAYMENT_CAMPAIGN_EMAIL_PACKAGE = 'Email Package'; 
+	public static final String EBC_PAYMENT_CAMPAIGN_RATE_PLAN = 'Prepaid Rate Plan';
+	
+	// values for URL parameter target / eBroadcast_Payment_Target__c
+	public static final String EBC_PAYMENT_TARGET_CAMPAIGN = 'campaign';
+	public static final String EBC_PAYMENT_TARGET_ACCOUNT_RATE_PLAN = 'rateplan';
+	public static final String EBC_PAYMENT_TARGET_ACCOUNT_EMAIL_PACKAGE = 'email';
+	public static final String EBC_PAYMENT_TARGET_ACCOUNT_ADD_ON = 'addon';
+	public static final String EBC_PAYMENT_TARGET_RENEWAL = 'renewal';
+	
+	
 	// Zuora__CustomerAccount__c.ClientType__c picklist value, this was used to determine if a billing account is of a member
 	//private static final String BILLING_ACCOUNT_CLIENT_TYPE_MEMBER_AIRLINE = 'Member Airline'; 
 	
 	// Exception to be thrown by the controllers
 	public class Controller_Exception extends Exception{}
+	
+	// ========================================================================
+	// constructor
+	public vfIECEBC_Controller()
+	{
+	}
+	
+	// ========================================================================
+	// verify and update if needed the value of billingAccount.eBroadcast_Add_On_Advanced_Reporting__c.
+	// this can be called from any controller that might need this.
+	public void verifyAddOnEnhancedReportingFlagValidity()
+	{
+		if (billingAccount.eBroadcast_Add_On_Advanced_Reporting__c != hasValidAddOnEnhancedReporting)  
+		{ // billingAccount needs update
+			Zuora__CustomerAccount__c updatedBillingAccount = new Zuora__CustomerAccount__c(
+					Id = billingAccount.Id
+					,  eBroadcast_Add_On_Advanced_Reporting__c = hasValidAddOnEnhancedReporting
+				); 
+			update updatedBillingAccount;
+			rereadBillingAccount();
+		}
+	} // end of verifyAddOnEnhancedReportingFlagValidity
 	
 	// The current user
 	public User usr {
@@ -39,16 +110,50 @@ public virtual class vfIECEBC_Controller {
 			if (billingAccount == null) billingAccount = vfIECEBC.billingAccount;
 			return billingAccount;
 		}
-		set;
+		private set;
+	}
+	// Reread billing account associated with the current user
+	public Zuora__CustomerAccount__c rereadBillingAccount()
+	{
+		billingAccount = null;
+		vfIECEBC.rereadBillingAccount(); 
+		return billingAccount;
 	}
 	
-	// The zuora subscription associated with the current billing account
+	// ========================================================================
+	// rereadSubscription will force the getters to reread the subscription record from the database
+	// this is relevant in the case of new EBC Subscription Prepaid rate plan purchase, renewal, or 
+	// enhanced reporting add on purchase (which link to the EBC Subscription)
+	public void rereadSubscription()
+	{
+		vfIECEBC.rereadSubscription(); // this will reset vfIECEBC.subscription and vfIECEBC.productRatePlan
+		
+		// nullify the following values, so getters will update them
+		// start from the least dependent properties
+		subscription = null;
+		productRatePlan = null;
+		productRatePlanCharge = null;
+		productRatePlanIdUpgradeSet = null;
+		productRatePlanIdUpgradeList = null;
+		
+		allowableEbcAddOnProductRatePlanIdSet = null;
+		allowableEbcAddOnProductRatePlanList = null;
+		
+		currentEbcAddOnSubscriptionProductChargeList = null;
+		currentEbcAddOnProductRatePlanIdToSubscriptionMap = null;
+		currentEbcAddOnProductRatePlanList = null;
+		
+	} // rereadSubscription
+	
+	
+	// ========================================================================
+	// The zuora EBC subscription associated with the current billing account
 	public Zuora__Subscription__c subscription {
 		get {
 			if (subscription == null) subscription = vfIECEBC.subscription;
 			return subscription;
 		}
-		set;
+		private set;
 	}
 	
 	// The zuora rate plan associated with the current subscription
@@ -57,7 +162,7 @@ public virtual class vfIECEBC_Controller {
 			if (productRatePlan == null) productRatePlan = vfIECEBC.productRatePlan;
 			return productRatePlan;
 		}
-		set;
+		private set;
 	}
 	
 	// The zuora rate plan associated with the current subscription
@@ -320,7 +425,7 @@ public virtual class vfIECEBC_Controller {
 			} // end if
 			return allowedSet;
 		}
-		//private set;
+		private set;
 	} // end of allowableEbcAddOnProductRatePlanIdSet getter/setter
 	
 	// =========================================================================
@@ -410,5 +515,60 @@ public virtual class vfIECEBC_Controller {
 		}
 		private set;
 	} // currentEbcAddOnSubscriptionProductChargeList getter/setter
+	
+	
+	// ========================================================================
+	// hasValidAddOnEnhancedReporting will check the list of current rate plan on the currently active EBC Subscription
+	// it will return true if it include the rate plan of the Enhanced Reporting Add On.
+	// the rate plan of the Enhanced Reporting Add On is based on what we set in EBC_Setup.
+	public Boolean hasValidAddOnEnhancedReporting
+	{
+		get{
+			return currentEbcAddOnProductRatePlanIdToSubscriptionMap.keySet().contains(IECEBC_Utility.ebcSetup.Enhanced_Reporting_Product_Rate_Plan__c);
+		}
+	}
+	
+	
+	// ========================================================================
+	// this is the core of goToPaymentPage
+	// pass the eBroadcast_Payment_* fields from the page calling the payment to the payment page.
+	//  - paymentPageBase: Page.IECEBC_Payment or Page.IECECBC_CampaignPayment
+	//  - ebcPaymentTarget : Zuora__CustomerAccount__c.eBroadcast_Payment_Target__c ( EBC_PAYMENT_TARGET_* )
+	//  - ebcPaymentCampaignOption : Zuora__CustomerAccount__c.eBroadcast_Payment_Campaign_Option__c (EBC_PAYMENT_CAMPAIGN_*)
+	//  - token will be calculated
+	// the amount detail on the product rate plan charge will be recalculated and reselected
+	// this ensure the data integrity and simplify the caller
+	public PageReference goToPaymentPageBase( PageReference paymentPageBase 
+					, String ebcPaymentTarget
+					, String ebcPaymentCampaignOption
+					, Id subscriptionId
+					, Id productRatePlanId
+					, Id campaignId 
+					, Integer creditAmount
+ 		)
+	{
+		//String theToken = IECEBC_Utility.generatePaymentToken(ebcCampaignId + '-' + paidProductRatePlanId + '-' + campaignPaymentOption);
+		String objectId = (subscriptionId == null) ? '' : subscriptionId;
+		objectId += (productRatePlanId == null) ? '' : productRatePlanId;
+		objectId += (ebcPaymentCampaignOption == null) ? '' : ('-' + ebcPaymentCampaignOption); 
+		
+		String theToken = IECEBC_Utility.generatePaymentToken( objectId + ebcPaymentTarget);
+		
+		Zuora__CustomerAccount__c paymentBillingAccount = new Zuora__CustomerAccount__c( Id = billingAccount.Id
+														, eBroadcast_Payment_Token__c = theToken
+														, eBroadcast_Payment_Target__c = ebcPaymentTarget
+														, eBroadcast_Payment_Subscription__c = subscriptionId
+														, eBroadcast_Payment_Product_Rate_Plan__c = productRatePlanId
+														, eBroadcast_Payment_Campaign__c = campaignId //null 
+														, eBroadcast_Payment_Campaign_Option__c = ebcPaymentCampaignOption // EBC_PAYMENT_CAMPAIGN_NONE
+														, eBroadcast_Payment_Email_Credit_Amount__c = creditAmount
+														);
+		update paymentBillingAccount;
+		
+		PageReference paymentPage = paymentPageBase;  
+		paymentPage.getParameters().put( EBC_PAYMENT_PARAM_PAYMENT_TOKEN, theToken);
+			
+		return paymentPage;
+	} // end of goToRenewalPaymentPage
 	
 } // end of vfIECEBC_Controller

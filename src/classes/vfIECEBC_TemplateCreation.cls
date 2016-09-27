@@ -14,7 +14,8 @@ public class vfIECEBC_TemplateCreation extends vfIECEBC_Controller
                     FROM EBC_Template__c
                     WHERE
                         Recordtype.DeveloperName = 'Global' AND 
-                        Audience__c = :audience
+                        Audience__c = :audience AND
+                    	(NOT External_Id__c LIKE '%customhtml-%')
                 ];
             }
             
@@ -37,7 +38,7 @@ public class vfIECEBC_TemplateCreation extends vfIECEBC_Controller
                     where Is_Reusable__c = true
                         and OwnerId =: userinfo.getUserId()
                         and RecordType.DeveloperName != 'Global'
-                        and Audience__c = :audience
+                        and (Audience__c = :audience or Audience__c = 'Neutral')
                 ];
             }
             return userEditableTemplates;

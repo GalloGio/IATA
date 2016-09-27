@@ -29,7 +29,7 @@
                         </div> 
                     </apex:form>
                     <apex:outputPanel id="campaignList" style="padding: 10px 0;" layout="block">
-                        <c:IECEBC_CampaignList limited="false" />
+                        <c:IECEBC_CampaignList limited="false" sort="{!sortBy}" />
                     </apex:outputPanel>
                 </div>
             </main>

@@ -12,10 +12,6 @@
         <label>Information</label>
         <layoutColumns>
             <layoutItems>
-                <behavior>Required</behavior>
-                <field>E_Commerce_Base_Url__c</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Storage_Product_Rate_Plan__c</field>
             </layoutItems>
@@ -139,9 +135,6 @@
         <layoutColumns/>
         <style>CustomLinks</style>
     </layoutSections>
-    <miniLayout>
-        <fields>E_Commerce_Base_Url__c</fields>
-    </miniLayout>
     <relatedLists>
         <relatedList>RelatedNoteList</relatedList>
     </relatedLists>

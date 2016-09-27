@@ -1,4 +1,4 @@
-public class vfIECEBC_CampaignList {
+public class vfIECEBC_CampaignList extends vfIECEBC_Controller {
     public Boolean isLimitedComponent {
         get {
             if (isLimitedComponent == null) isLimitedComponent = false;
@@ -15,14 +15,14 @@ public class vfIECEBC_CampaignList {
     public EBC_Campaign__c selectedCampaign {
         get {
             if (selectedCampaign == null || selectedCampaign.Id != selectedCampaignId) {
-            	Map<Id, EBC_Campaign__c> campaignsMapping = new Map<Id, EBC_Campaign__c>(campaigns);
+                Map<Id, EBC_Campaign__c> campaignsMapping = new Map<Id, EBC_Campaign__c>(campaigns);
                 selectedCampaign = campaignsMapping.get(selectedCampaignId);
             }
             
             return selectedCampaign;
         }
         set;
-	}
+    }
     public PageReference deleteCampaign() {
         delete selectedCampaign;
         
@@ -60,6 +60,44 @@ public class vfIECEBC_CampaignList {
         clear();
         
         return null;
+    }
+    
+    public PageReference duplicate() {
+        EBC_Campaign__c oCampaign = [
+            Select
+                Id,
+                Billing_Account__c,
+                EBC_Master_Filter__c,
+                //          EBC_Master_Filter__c,
+                // Exact_Target_Campaign_Id__c  wtf is that?
+                From_Name__c,
+                Google_Analytics_Tracking_Code__c,
+                Is_Google_Analytics_Tracker_Active__c,
+                Subject__c,
+                
+                EBC_Design__c
+            From EBC_Campaign__c
+            Where Id = :selectedCampaign.Id
+        ];
+        
+        //EBC_Master_Filter__c nFilter = vfIECEBC_RecipientList.duplicate(oCampaign.EBC_Master_Filter__c, 'new name');
+        
+        EBC_Campaign__c nCampaign = oCampaign.clone(false, true, false, false);
+        nCampaign.Name = selectedCampaign.Name;
+        //nCampaign.EBC_Master_Filter__c = nFilter.Id;
+        nCampaign.Status__c = 'DRAFT';
+        
+        
+        if (oCampaign.EBC_Design__c != null) {
+	        EBC_Template__c nDesign = vfIECEBC_TemplateList.duplicate(oCampaign.EBC_Design__c, selectedCampaign.Name, billingAccount.Id, false);
+	        nCampaign.EBC_Design__c = nDesign.Id;
+        }
+        
+        insert nCampaign;
+        
+        PageReference pr = new PageReference('/iec/IECEBC_Campaign?id=' + nCampaign.Id);
+        pr.setRedirect(true);
+        return pr;
     }
      
     public Integer page {
@@ -101,9 +139,9 @@ public class vfIECEBC_CampaignList {
         get {
             if (sortBy == null) {
                 if (isLimitedComponent) {
-                	sortBy = 'LastModifiedDate DESC';
+                    sortBy = 'LastModifiedDate DESC';
                 } else {
-                	sortBy = 'CreatedDate ASC';
+                    sortBy = 'CreatedDate ASC';
                 }
             }
             
@@ -125,8 +163,6 @@ public class vfIECEBC_CampaignList {
         
         return options;
     }
-
-    public PageReference doNothing() { return null; }
     
     public Integer offset {
         get {
@@ -148,6 +184,9 @@ public class vfIECEBC_CampaignList {
             fields.add('Status__c');
             fields.add('Scheduled_Date__c'); 
             fields.add('Number_of_Recipients__c');
+            fields.add('NumberofClicks__c');
+            fields.add('NumberSent__c');
+            fields.add('NumberofOpens__c');
             fields.add('EBC_Design__c');
             fields.add('Is_Step5_Writable__c');
             fields.add('Is_Step4_Valid__c');  

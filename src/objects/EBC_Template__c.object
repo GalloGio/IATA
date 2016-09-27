@@ -136,17 +136,6 @@
         <type>Lookup</type>
     </fields>
     <fields>
-        <fullName>Template_Name__c</fullName>
-        <description>Name of the saved template</description>
-        <externalId>false</externalId>
-        <label>Template Name</label>
-        <length>255</length>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
         <fullName>TriggSend_Id__c</fullName>
         <externalId>false</externalId>
         <label>Triggered Send Id</label>
@@ -159,10 +148,12 @@
     <label>EBC Template</label>
     <listViews>
         <fullName>All</fullName>
-        <columns>NAME</columns>
-        <columns>Audience__c</columns>
-        <columns>RECORDTYPE</columns>
         <columns>Is_Reusable__c</columns>
+        <columns>NAME</columns>
+        <columns>Template_Name__c</columns>
+        <columns>RECORDTYPE</columns>
+        <columns>CREATEDBY_USER.ALIAS</columns>
+        <columns>CREATEDBY_USER</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
         <language>en_US</language>

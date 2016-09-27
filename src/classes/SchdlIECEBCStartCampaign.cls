@@ -24,7 +24,7 @@ global class SchdlIECEBCStartCampaign implements Database.Batchable<sObject>, Da
     
     // Batchable 
     global Database.QueryLocator start(Database.BatchableContext BC){
-        EBC_Campaign__c c = [Select Id, Name, Subject__c, EBC_Design__c, Billing_Account__c, From_Name__c, Is_Google_Analytics_Tracker_Active__c, Google_Analytics_Tracking_Code__c From EBC_Campaign__c Where Id = :campaignId];
+        EBC_Campaign__c c = [Select Id, Name, Subject__c, EBC_Design__c, Billing_Account__c, From_Name__c, Is_Google_Analytics_Tracker_Active__c, Google_Analytics_Tracking_Code__c, Send_Datetime__c From EBC_Campaign__c Where Id = :campaignId];
         
         String senderProfileCustomerKey = c.Id + '_'+IECEBC_Utility.generateRandomString(11);
         
@@ -43,7 +43,7 @@ global class SchdlIECEBCStartCampaign implements Database.Batchable<sObject>, Da
         
         String senderExternalId = IECEBC_ETSenderProfileCreate.createSenderProfile(senderProfileCustomerKey, senderProfileCustomerKey, c.From_Name__c, 'test@cubicmedia.ca'); //@todo
         String sendClassificationId = IECEBC_ETSendClassificationCreate.createSendClassification(senderProfileCustomerKey, senderProfileCustomerKey, senderExternalId);
-         
+        
         System.debug('IECEBC_ETTriggeredSendDefinitionCreate.createTriggeredSendDefinition');
         System.debug(mailingId);
         System.debug(templateExternalId);
@@ -69,15 +69,17 @@ global class SchdlIECEBCStartCampaign implements Database.Batchable<sObject>, Da
                 if (previousBatchEmail.contains(a.Email_Address__c) || currentBatchEmail.contains(a.Email_Address__c)) continue;
                     
                 
-                params.put(a.Email_Address__c, new Map<String, String>{
+                params.put(campaignId + '_' + a.Email_Address__c, new Map<String, String>{
                     'SFID' => a.Id,
+                    'CAMPAIGN_ID' => campaignId,
+                    'EMAIL' => a.Email_Address__c,
                     'AGENCY_NAME' => a.Trading_Name__c,
                         
                     'AGENCY_STATE' => a.State_Province__c,
                     'AGENCY_COUNTRY' => a.Country_Name__c,
                     'AGENCY_ACCREDITATIONCLASS' => a.Accreditation_Class__c,
                     'AGENCY_LOCATIONTYPE' => a.Location_Type_Name__c
-                });
+                }); 
                 
                 currentBatchEmail.add(a.Email_Address__c);
             } else if (i instanceof Id_Card__c) {
@@ -85,8 +87,10 @@ global class SchdlIECEBCStartCampaign implements Database.Batchable<sObject>, Da
                 newPreviousBatchEmail.add(a.Email__c);
                 if (previousBatchEmail.contains(a.Email__c) || currentBatchEmail.contains(a.Email__c)) continue;
                 
-                params.put(a.Email__c, new Map<String, String>{
+                params.put(campaignId + '_' + a.Email__c, new Map<String, String>{
                     'SFID' => a.Id,
+                    'CAMPAIGN_ID' => campaignId,
+                    'EMAIL' => a.Email__c,
                     'AGENCY_NAME' => a.Agency_Name__c,
                     'AGENT_FIRSTNAME' => a.FirstName__c,
                     'AGENT_LASTNAME' => a.LastName__c
@@ -102,18 +106,39 @@ global class SchdlIECEBCStartCampaign implements Database.Batchable<sObject>, Da
         System.debug('IECEBC_ETEmailSend.sendMassEmail');
         if (params.size() > 0) {
         	IECEBC_ETEmailSend.sendMassEmail(mailingId, params);
+            System.debug(IECEBC_ETEmailSend.failureDetails);
+            if (IECEBC_ETEmailSend.failureDetails != null) {
+                List<EBC_Email_Exclusion__c> excls = new List< EBC_Email_Exclusion__c>();
+                for(String failureKey : IECEBC_ETEmailSend.failureDetails.keySet()) {
+                    EBC_Email_Exclusion__c excl = new EBC_Email_Exclusion__c();
+                    excl.Email__c = failureKey;
+                    excl.Type__c  = 'OTHER';
+                    excl.Event_Date__c = Datetime.now();
+                    excl.Other_Reason__c = IECEBC_ETEmailSend.failureDetails.get(failureKey);
+                    if (excl.Type__c == 'OTHER' && excl.Other_Reason__c.indexOf('Error Code: 24 ') == 0) {
+                        excl.Type__c = 'LISTDETECTIVE';
+                        excl.Other_Reason__c = null;
+                    }
+                    excl.Source_Campaign__c = campaignId;
+                        
+                    excls.add(excl);
+                }
+                System.debug(excls); 
+                if (excls.size() > 0) insert excls;
+                System.debug(excls);
+            }
         }
         
         // Send the mailing to scope
     }
     
     global void finish(Database.BatchableContext BC) {
-        EBC_Campaign__c c = new EBC_Campaign__c();
-        c.Id = campaignId;
+        EBC_Campaign__c c = [Select Id, Send_Datetime__c, Name From EBC_Campaign__c Where Id = :campaignId];
         c.Status__c = 'SENT';
         c.External_Id__c = mailingId;
-        
         update c;
+        
+        IECEBC_ETCampaignTrackingAsync.initCampaignTrackingRecords(c); 
     }
     
     
@@ -122,6 +147,7 @@ global class SchdlIECEBCStartCampaign implements Database.Batchable<sObject>, Da
         List<EBC_Campaign__c> campaigns = [Select Id, EBC_Master_Filter__c, Audience__c, EBC_Design__r.External_Id__c From EBC_Campaign__c Where OwnerId = '0058E000001Lwad' AND Status__c = 'APPROVED' AND (Scheduled_Date__c <= :Datetime.now() or Scheduled_Date__c = null)];
         for(EBC_Campaign__c campaign : campaigns) {
             campaign.Status__c = 'STARTED';
+            campaign.Send_Datetime__c = Datetime.now();
             List<String> columns;
             if (campaign.Audience__c == 'Agent') {
                 columns = new List<String>{
