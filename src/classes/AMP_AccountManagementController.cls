@@ -15,4 +15,10 @@ public with sharing class AMP_AccountManagementController {
             WHERE Id = :accountId
                LIMIT 1];
     }
+
+    @AuraEnabled
+    public static Account saveAccount(Account accountToUpdate) {
+        update accountToUpdate;
+        return accountToUpdate;
+    }
 }
