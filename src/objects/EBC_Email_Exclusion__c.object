@@ -57,7 +57,7 @@
         <externalId>true</externalId>
         <inlineHelpText>The Email Address to opt out</inlineHelpText>
         <label>Email</label>
-        <required>true</required>
+ 
         <trackTrending>false</trackTrending>
         <type>Email</type>
         <unique>false</unique>
@@ -69,7 +69,7 @@
         <inlineHelpText>Event Date in milliseconds since 1970</inlineHelpText>
         <label>Event Date Timestamp</label>
         <precision>18</precision>
-        <required>false</required>
+ 
         <scale>0</scale>
         <trackTrending>false</trackTrending>
         <type>Number</type>
@@ -80,7 +80,7 @@
         <defaultValue>now()</defaultValue>
         <externalId>false</externalId>
         <label>Event Date</label>
-        <required>false</required>
+ 
         <trackTrending>false</trackTrending>
         <type>DateTime</type>
     </fields>
@@ -89,7 +89,7 @@
         <externalId>false</externalId>
         <label>Other Reason</label>
         <length>255</length>
-        <required>false</required>
+ 
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -131,7 +131,7 @@
             <restrictedPicklist>true</restrictedPicklist>
             <sorted>false</sorted>
         </picklist>
-        <required>true</required>
+ 
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -145,7 +145,7 @@
         <referenceTo>Zuora__CustomerAccount__c</referenceTo>
         <relationshipLabel>EBC Email Exclusions</relationshipLabel>
         <relationshipName>EBC_Email_Exclusions</relationshipName>
-        <required>false</required>
+ 
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
