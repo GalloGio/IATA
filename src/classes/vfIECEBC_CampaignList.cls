@@ -80,14 +80,19 @@ public class vfIECEBC_CampaignList extends vfIECEBC_Controller {
             Where Id = :selectedCampaign.Id
         ];
         
-        EBC_Template__c nDesign = vfIECEBC_TemplateList.duplicate(oCampaign.EBC_Design__c, selectedCampaign.Name, billingAccount.Id, false);
         //EBC_Master_Filter__c nFilter = vfIECEBC_RecipientList.duplicate(oCampaign.EBC_Master_Filter__c, 'new name');
         
         EBC_Campaign__c nCampaign = oCampaign.clone(false, true, false, false);
         nCampaign.Name = selectedCampaign.Name;
-        nCampaign.EBC_Design__c = nDesign.Id;
         //nCampaign.EBC_Master_Filter__c = nFilter.Id;
         nCampaign.Status__c = 'DRAFT';
+        
+        
+        if (oCampaign.EBC_Design__c != null) {
+	        EBC_Template__c nDesign = vfIECEBC_TemplateList.duplicate(oCampaign.EBC_Design__c, selectedCampaign.Name, billingAccount.Id, false);
+	        nCampaign.EBC_Design__c = nDesign.Id;
+        }
+        
         insert nCampaign;
         
         PageReference pr = new PageReference('/iec/IECEBC_Campaign?id=' + nCampaign.Id);

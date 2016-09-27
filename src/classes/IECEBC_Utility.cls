@@ -201,8 +201,8 @@ public class IECEBC_Utility {
     public static void createResourceForAttachment(Attachment a, Zuora__CustomerAccount__c billingAccount) {
 		if (String.isBlank(a.name) || a.body == null)  throw new Resource_Invalid_Attachment_Exception('Attachment must have a valid name or name too long (max 80 characters).');
         if (a.name.length()>80) throw new Resource_Invalid_Attachment_Exception('Attachment name must have be less 80 characters long.');
-        String types = a.Name.right(3);
-        String typel = a.Name.right(4);
+        String types = a.Name.right(3).toLowerCase();
+        String typel = a.Name.right(4).toLowerCase();
         String typen='';
         Set<String> extension = new Set<String>{'jpg', 'jpeg', 'gif', 'png', 'tiff', 'bmp'};
         if (extension.contains(types)) typen=types; 

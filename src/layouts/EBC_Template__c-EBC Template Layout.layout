@@ -106,6 +106,23 @@
         <fields>EBC_Resource__c.Is_Ready__c</fields>
         <relatedList>EBC_Template_Resource__c.EBC_Template__c</relatedList>
     </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Campaign_ID__c</fields>
+        <fields>Audience__c</fields>
+        <fields>Status__c</fields>
+        <fields>Billing_Account__c</fields>
+        <fields>EBC_Master_Filter__c</fields>
+        <fields>Scheduled_Date__c</fields>
+        <fields>Exact_Target_Campaign_Id__c</fields>
+        <relatedList>EBC_Campaign__c.EBC_Design__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Event_Date__c</fields>
+        <fields>To__c</fields>
+        <relatedList>EBC_Template_Test__c.EBC_Template__c</relatedList>
+    </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
     <showInteractionLogPanel>false</showInteractionLogPanel>

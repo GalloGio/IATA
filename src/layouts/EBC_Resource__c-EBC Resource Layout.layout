@@ -72,6 +72,15 @@
     <relatedLists>
         <relatedList>RelatedNoteList</relatedList>
     </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>EBC_Template__c.NAME</fields>
+        <fields>EBC_Template__c.CUST_RECORDTYPE</fields>
+        <fields>EBC_Template__c.Is_Reusable__c</fields>
+        <fields>EBC_Template__c.Audience__c</fields>
+        <fields>EBC_Template__c.Billing_Account__c</fields>
+        <relatedList>EBC_Template_Resource__c.EBC_Resource__c</relatedList>
+    </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
     <showInteractionLogPanel>false</showInteractionLogPanel>
