@@ -224,42 +224,23 @@
                         if({!isnew}==false)
                           document.getElementById('{!$Component.idcardForm.pb1.sc1.first}').setAttribute('readonly', 'readonly');
                        </script>
-
-
-                       <!--<apex:outputLabel styleClass="LabelsBlue" value="{!app.Middle_Initial__c}" />
-                       <apex:inputField styleClass="outputText2" id="midle" value="{!app.Middle_Initial__c}" onkeyup="calculateDisplayedName();" style="width:1em" rendered="{!isnew}" />-->
                        
                        <apex:inputField value="{!app.Date_of_Birth__c}" styleclass="drawRedBar" rendered="{!isnew}"/>
                        <apex:outputField value="{!app.Date_of_Birth__c}"  rendered="{!NOT(isnew)}"/>
                        
                        <apex:inputField value="{!app.Last_Name__c}" styleclass="drawRedBar" id="last" onkeyup="workingLastName();calculateDisplayedName();"/>
                     
-                                    <apex:pageBlockSectionItem id="itemDisplayedName">
-                                        <apex:outputLabel value="{!$Label.ID_Card_Displayed_Name_Label}" />
-                                        <apex:outputPanel styleClass="requiredInput" layout="block">
-                                            <apex:outputPanel styleClass="requiredBlock" layout="block" />
-                                            <apex:inputText styleClass="outputText2" id="txtDisplayedName"
-                                                            value="{!app.Displayed_Name__c}" style="width:150px;" onfocus="setMaxLength('{!$Component.txtDisplayedName}', 22);" />
-                                            <apex:outputPanel id="textDisplayedName_Panel" rendered="true">
-                                                <apex:outputLabel id="textDisplayedName_CharacterRemaining" value="" />
-                                            </apex:outputPanel>
-                                            <script> document.getElementById('{!$Component.txtDisplayedName}').setAttribute('readonly', 'readonly');</script>
-                                            </apex:outputPanel>
-                                            </apex:pageBlockSectionItem>
-                     
-                      
-
-
-                     <!-- <apex:outputPanel styleClass="requiredInput" layout="block">
-                      <apex:outputPanel styleClass="requiredBlock" layout="block"  style="height:23px; margin-left: 3px;" />
-                       <apex:outputLabel value="{!$Label.ID_Card_Displayed_Name_Label}" />
-                         <apex:inputField styleclass="outputText2" id="txtDisplayedName" label="" value="{!app.Displayed_Name__c}" style="width:150px;" onfocus="setMaxLength('{!$Component.txtDisplayedName}', 22);" />
-                         <apex:outputPanel id="textDisplayedName_Panel" rendered="true">
-                         <apex:outputLabel id="textDisplayedName_CharacterRemaining" value="" />
-                      </apex:outputPanel>
-                       <script> document.getElementById('{!$Component.txtDisplayedName}').setAttribute('readonly', 'readonly');</script>  
-                      </apex:outputPanel>            -->      
-                      
+                      <apex:pageBlockSectionItem id="itemDisplayedName">
+                          <apex:outputLabel value="{!$Label.ID_Card_Displayed_Name_Label}" />
+                          <apex:outputPanel styleClass="requiredInput" layout="block">
+                              <apex:outputPanel styleClass="requiredBlock" layout="block" />
+                              <apex:inputText styleClass="outputText2" id="txtDisplayedName" value="{!app.Displayed_Name__c}" style="width:150px;" onfocus="setMaxLength('{!$Component.txtDisplayedName}', 22);" />
+                              <apex:outputPanel id="textDisplayedName_Panel" rendered="true">
+                                  <apex:outputLabel id="textDisplayedName_CharacterRemaining" value="" />
+                              </apex:outputPanel>
+                              <script> document.getElementById('{!$Component.txtDisplayedName}').setAttribute('readonly', 'readonly');</script>
+                              </apex:outputPanel>
+                        </apex:pageBlockSectionItem>                      
 
                        <apex:selectList value="{!app.IATA_Code__c}" label="{!$Label.IDCard_AgencyIATAcode}" size="1" styleclass="drawRedBar" rendered="{!NOT(moreThan1000Iatacodes)}">
                             <apex:selectOptions value="{!accountCodes}"/>

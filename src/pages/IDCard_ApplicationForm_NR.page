@@ -360,8 +360,7 @@
                         
                         <p>
                             <h1>
-                               <!-- <apex:outputText >{!PageTitle}</apex:outputText>-->
-                               <apex:outputText >CHANGE OF AGENCY</apex:outputText>
+                               <apex:outputText >{!PageTitle}</apex:outputText>
                         </h1>
                     </p>
                     <apex:pageBlockSection columns="1" rendered="{!NOT(keyAccount&&personalPurchase)}" >

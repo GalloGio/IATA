@@ -326,8 +326,7 @@
                         <br/> 
                         
                         
-                       <!-- <div><h1>{!PageTitle}</h1></div>-->
-                        <div><h1>Reprint</h1></div>
+                       <div><h1>{!PageTitle}</h1></div>
                         
                         <apex:actionRegion >
                             <apex:pageMessages id="ErrorMsgs" escape="false" />
