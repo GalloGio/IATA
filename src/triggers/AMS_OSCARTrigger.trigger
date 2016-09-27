@@ -210,25 +210,11 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
                 Savepoint sp = Database.setSavepoint();
 
                 try {
-                    // If the checkbox is set create a COR change code.
-                    if(updatedOscar.AMS_Generate_COR_change_code__c==true) {
-                        system.debug(LoggingLevel.ERROR,'applyChangeCodesWithDependencies() -> generate the change code');
-                        AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
-
-                        changeCode.name = 'COR';
-                        changeCode.reasonCode = '91';
-                        changeCode.memoText = 'Correction';
-                        changeCode.reasonDesc  = 'ACCREDITED–MEETS–STANDARDS';
-                        changeCode.status  = '9';
-
-                        Account acct = new Account(Id = updatedOscar.Account__c);
-                        AMS_Utils.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {updatedOscar}, new List<Account> {acct}, true);
-                    }
 
                     // Regardless the changecode is generated or not, move data to Master Data
                     // First move the account
                     system.debug(LoggingLevel.ERROR,'applyChangeCodesWithDependencies() -> move to MD account data');
-                    AMS_Utils.copyDataToAccount(new List<AMS_OSCAR__c>{updatedOscar}, false);
+                    List<AMS_ChangeCodesHelper.ObjectChangesStruct> changes = AMS_Utils.copyDataToAccount(new List<AMS_OSCAR__c>{updatedOscar}, false);
 
                     // THen move the owners
                     Map<Id, Set<Id>> stagingToAccounts = new Map<Id, Set<Id>>();
@@ -260,6 +246,35 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
                     //verify ownership alignment
                     if(allHierarchyAccountIds.size()>0 && !AMS_HierarchyHelper.checkHierarchyIntegrity(new Map<Id, Set<Id>>{updatedOscar.Id => allHierarchyAccountIds}))
                         throw new AMS_ApplicationException('This operation cannot be performed because the ownership in this hierarchy is not aligned. It is advised to perform a change of ownership to align the owners in this hierarchy.');
+
+                    // If the picklist is set create a COR change code.
+                    if(updatedOscar.AMS_Correction_change_code__c == 'COR') {
+                        system.debug(LoggingLevel.ERROR,'applyChangeCodesWithDependencies() -> generate the change code');
+                        AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
+
+                        changeCode.name = 'COR';
+                        changeCode.reasonCode = '91';
+                        changeCode.memoText = 'Correction';
+                        changeCode.reasonDesc  = 'ACCREDITED–MEETS–STANDARDS';
+                        changeCode.status  = '9';
+
+                        Account acct = new Account(Id = updatedOscar.Account__c);
+                        AMS_ChangeCodesHelper.createAAChangeCodes(changes, new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {updatedOscar}, new List<Account> {acct}, true);
+                    }
+                    // If the picklist is set create a CAD change code.
+                    if(updatedOscar.AMS_Correction_change_code__c == 'CAD') {
+                        system.debug(LoggingLevel.ERROR,'applyChangeCodesWithDependencies() -> generate the change code');
+                        AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
+
+                        changeCode.name = 'CAD';
+                        changeCode.reasonCode = 'Change data';
+                        changeCode.memoText = 'Minor Changes';
+                        changeCode.reasonDesc  = 'Accredited-Meets Criteria.';
+                        changeCode.status  = null;
+
+                        Account acct = new Account(Id = updatedOscar.Account__c);
+                        AMS_ChangeCodesHelper.createAAChangeCodes(changes, new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {updatedOscar}, new List<Account> {acct}, true);
+                    }
 
                 } catch (Exception ex) {
                     System.debug('Exception: ' + ex);
