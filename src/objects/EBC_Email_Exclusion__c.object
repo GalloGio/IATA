@@ -102,7 +102,6 @@
         <referenceTo>EBC_Campaign__c</referenceTo>
         <relationshipLabel>EBC Email Exclusions</relationshipLabel>
         <relationshipName>EBC_Email_Exclusions</relationshipName>
-        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
