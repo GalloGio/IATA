@@ -29,12 +29,6 @@
         <members>EF_Staff</members>
         <name>PermissionSet</name>
     </types>
-	<types>
-        <members>Admin</members>
-        <members>E%26F staff</members>
-        <members>E%26F Management</members>
-        <name>Profile</name>
-    </types>
     <types>
         <members>Account-Airline Hqs Read-Only</members>
         <members>Account-Airline Hqs</members>
