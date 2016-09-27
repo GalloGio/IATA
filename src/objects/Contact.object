@@ -2461,8 +2461,8 @@ Received from AIMS and needed in synchronization file but never displayed and up
     <fields>
         <fullName>AM_Job_Title_English__c</fullName>
         <externalId>false</externalId>
-        <inlineHelpText>The English translation of the job title (only if Job Title is given in another language)</inlineHelpText>
-        <label>Job Title - English</label>
+        <inlineHelpText>The English translation of the title (only if Title is given in another language)</inlineHelpText>
+        <label>Title - English</label>
         <length>255</length>
         <required>false</required>
         <trackHistory>false</trackHistory>

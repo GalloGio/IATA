@@ -70,12 +70,17 @@
 
                 <apex:inputTextarea cols="50" rows="4" value="{! message }" label="Message:"/>
 
-                <b>The message will be posted to the Chatter feed of the following accounts:</b><br/>
+                <b>The message will be posted to the Chatter feed of the following accounts: ({!numberOfAccounts})</b><br/>
                 {!strAcctList}
 
                 <apex:outputPanel >
                     <apex:commandButton action="{! GoBackToStep1 }" value="< Back to Account Selection" reRender="mainBlock" />
-                    <apex:commandButton action="{! BroadcastMessage }" value="Broadcast Message" reRender="mainBlock" style="float: right;" />
+                    <apex:commandButton action="{! BroadcastMessage }" value="Broadcast Message" reRender="mainBlock" style="float: right;" status="actStatusId"/>
+                    <apex:actionStatus id="actStatusId" >
+                        <apex:facet name="start" >
+                          <img src="/img/loading.gif" style="float: right;"/>
+                        </apex:facet>
+                    </apex:actionStatus>
                 </apex:outputPanel>
             </apex:pageBlockSection>
             
