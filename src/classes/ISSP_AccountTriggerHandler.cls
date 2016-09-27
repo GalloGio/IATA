@@ -22,6 +22,36 @@ public with sharing class ISSP_AccountTriggerHandler
 	 */
 	public static void onAfterUpdate(Map<Id, Account> oldAccountMap, Map<Id, Account> newAccountMap)
 	{
+	    Set<Id> newAccountsIds = new Set<Id>();
+		list<Portal_Application_Right__c> kaviList = [SELECT Id, Right__c, Contact__r.AccountId, Contact__r.Account.Field_Head_Office__c, Contact__r.Account.Location_Type__c, Contact__r.Account.ParentId, Contact__r.Account.Parent.ParentId
+                                                FROM Portal_Application_Right__c
+                                                WHERE ((Contact__r.Account.Field_Head_Office__c!='Branch' AND Contact__r.Account.ParentId=null AND Contact__r.AccountId in:newAccountMap.keySet())
+                                                	   OR (((Contact__r.Account.Field_Head_Office__c='Branch' OR Contact__r.Account.ParentId!=null) AND Contact__r.Account.Parent.ParentId=null) AND Contact__r.Account.ParentId in:newAccountMap.keySet())
+                                                	   OR (Contact__r.Account.ParentId!=null AND Contact__r.Account.Parent.ParentId!=null AND Contact__r.Account.Parent.ParentId in:newAccountMap.keySet()))
+                                                AND Right__c = 'Access Granted'
+                                                AND Portal_Application__r.Name LIKE 'Standards Setting Workspace%'];
+
+        for(Portal_Application_Right__c par:kaviList){
+        	String accId = par.Contact__r.AccountId;
+        	if((par.Contact__r.Account.Field_Head_Office__c=='Branch' || par.Contact__r.Account.ParentId!=null) && par.Contact__r.Account.Parent.ParentId==null)
+        		accId = par.Contact__r.Account.ParentId;
+        	else if (par.Contact__r.Account.ParentId!=null && par.Contact__r.Account.Parent.ParentId!=null)
+        		accId = par.Contact__r.Account.Parent.ParentId;
+        	if(oldAccountMap.get(accId).Name != newAccountMap.get(accId).Name ||
+        	   oldAccountMap.get(accId).Website != newAccountMap.get(accId).Website ||
+        	   oldAccountMap.get(accId).Email__c != newAccountMap.get(accId).Email__c ||
+        	   oldAccountMap.get(accId).BillingCity != newAccountMap.get(accId).BillingCity ||
+        	   oldAccountMap.get(accId).Iso_State__c != newAccountMap.get(accId).Iso_State__c ||
+        	   oldAccountMap.get(accId).IATA_ISO_Country__c != newAccountMap.get(accId).IATA_ISO_Country__c ||
+        	   oldAccountMap.get(accId).BillingStreet != newAccountMap.get(accId).BillingStreet ||
+        	   oldAccountMap.get(accId).BillingPostalCode != newAccountMap.get(accId).BillingPostalCode)
+
+        	   newAccountsIds.add(accId);
+        }
+
+        if (newAccountsIds.size()>0)
+        	ISSP_WS_KAVI.createOrUpdateKaviAccountsFuture(newAccountsIds);
+
 		sendAccountNotifications(oldAccountMap, newAccountMap);
 	}
     

@@ -5052,6 +5052,10 @@ la funzione &quot;Password dimenticata?&quot;</label>
         <name>ISSP_Accept</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AcceptTermsAndConditions --></label>
+        <name>ISSP_AcceptTermsAndConditions</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP Accept Terms Warning --></label>
         <name>ISSP_Accept_Terms_Warning</name>
     </customLabels>
@@ -6550,6 +6554,22 @@ La preghiamo di indicarci il paese per il quale richiede assistenza</label>
         <name>ISSP_Join_BSP_CASS_Description</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_KAVI --></label>
+        <name>ISSP_KAVI</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_KAVI_Terms_Conditions_Part1 --></label>
+        <name>ISSP_KAVI_Terms_Conditions_Part1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_KAVI_Terms_Conditions_Part2 --></label>
+        <name>ISSP_KAVI_Terms_Conditions_Part2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_KAVI_Terms_Conditions_Part3 --></label>
+        <name>ISSP_KAVI_Terms_Conditions_Part3</name>
+    </customLabels>
+    <customLabels>
         <label>it</label>
         <name>ISSP_LanguageDependentLink</name>
     </customLabels>
@@ -7890,6 +7910,22 @@ ll Dashboard di tesoreria IATA è uno strumento web dinamico  che assiste e supp
     <customLabels>
         <label><!-- KALE_SUPPORT_EMAIL --></label>
         <name>KALE_SUPPORT_EMAIL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Kavi email notification part 1 --></label>
+        <name>Kavi_email_notification_part1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Kavi email notification part 1 bis --></label>
+        <name>Kavi_email_notification_part_1_bis</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Kavi email notification part 2 --></label>
+        <name>Kavi_email_notification_part_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Kavi email notification part 3 --></label>
+        <name>Kavi_email_notification_part_3</name>
     </customLabels>
     <customLabels>
         <label><!-- L2 Support Priority escalation check --></label>

@@ -52,7 +52,7 @@ public class CampaignProduct_Sel extends Selector {
         String query = String.format(
             'SELECT {0} ' +
             'FROM {1} ' +
-            'Where Campaign__c = :campaignId' , 
+            'Where IsDeleted = false and Campaign__c = :campaignId' , 
             new List<String>{
                 String.join(getDefaultFields(), ', '),
                 getSObjectType().getDescribe().getName()

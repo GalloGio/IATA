@@ -1572,11 +1572,16 @@ public static String fetchTypeOfCustomer (String locationType , String category)
 
         Integer availableNumberInRange = -1;
 
+        //invalid range
+        if(maxRange-minRange <= 0)
+            return -1;
+        
         //no available slots
-        if(orderedSlotsOccupied.size() >= maxRange-minRange)
+        if(orderedSlotsOccupied.size() > maxRange-minRange)
             return -1;
 
-        if(orderedSlotsOccupied[0] > minRange)
+
+        if(orderedSlotsOccupied.isEmpty() || (!orderedSlotsOccupied.isEmpty() && orderedSlotsOccupied[0] > minRange))
             availableNumberInRange = minRange;
         else
             availableNumberInRange = binarySearchGapFinder(orderedSlotsOccupied);
