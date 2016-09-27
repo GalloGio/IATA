@@ -124,15 +124,30 @@
         <type>Picklist</type>
     </fields>
     <fields>
-        <fullName>AMS_Generate_COR_change_code__c</fullName>
-        <defaultValue>false</defaultValue>
+        <fullName>AMS_Correction_change_code__c</fullName>
         <externalId>false</externalId>
-        <inlineHelpText>If selected, once the sanity checks will be set as passed, a COR change code will be generated for each agency involved</inlineHelpText>
-        <label>Generate COR change code</label>
+        <inlineHelpText>If selected, once the sanity checks will be set as passed, the selected change code will be generated for each agency involved</inlineHelpText>
+        <label>Correction change code</label>
+        <picklist>
+            <picklistValues>
+                <fullName>--None--</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>CAD</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>COR</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
-        <type>Checkbox</type>
+        <type>Picklist</type>
     </fields>
     <fields>
         <fullName>AMS_Online_Accreditation__c</fullName>
@@ -5449,6 +5464,21 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
                 <fullName>Change of legal status</fullName>
                 <default>false</default>
             </values>
+        <picklistValues>
+            <picklist>AMS_Correction_change_code__c</picklist>
+            <values>
+                <fullName>--None--</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CAD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>COR</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
             <values>
                 <fullName>Change of location</fullName>
                 <default>false</default>
