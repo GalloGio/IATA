@@ -9422,7 +9422,7 @@ J-Joint Vent</inlineHelpText>
         <fullName>Membership_SITA__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
-        <label>Membership SITA</label>
+        <label>SITA Member</label>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
