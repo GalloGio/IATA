@@ -1,5 +1,5 @@
 <apex:page standardController="Account">
-    <apex:form >
+    <apex:form>
         <c:RelatedList objectName="Contract"
             parentFieldName="AccountId"
             parentFieldId="{!Account.Id}"       
