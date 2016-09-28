@@ -799,21 +799,12 @@
                             <apex:outputfield value="{!hqAccount.Name}" />
                         </apex:pageblocksectionitem>
                         <apex:outputfield value="{!hqAccount.TradeName__c}" rendered="{!newCase.Reason1__c!='New BR Abroad'}"/>
-                        
-                       <apex:pageBlockSectionItem >
-                        <apex:outputLabel value="{!IF(newCase.Reason1__c=='New BR Abroad',$Label.ISSP_AMS_Step3_HO_Full_Address,$Label.ISSP_AMS_Step3_Office_FullAddress)}"/>
-                        <apex:outputPanel >
-                                <apex:outputtext value="{0}
-                            <br />{1}<br />{2}" escape="false">
+                        <apex:outputtext value="{0}
+                            <br />{1}<br />{2}" escape="false" label="{!IF(newCase.Reason1__c=='New BR Abroad',$Label.ISSP_AMS_Step3_HO_Full_Address,$Label.ISSP_AMS_Step3_Office_FullAddress)}">
                             <apex:param value="{!hqAccount.BillingStreet}" />
                             <apex:param value="{!hqAccount.BillingCity}{!IF(hqAccount.BillingPostalCode!='', ', ' + hqAccount.BillingPostalCode, '')}" />
                             <apex:param value="{!IF(hqAccount.BillingState!='',hqAccount.BillingState + ',&nbsp;','')}{!hqAccount.BillingCountry}" />
                         </apex:outputtext>
-                            <apex:image value="/img/msg_icons/info16.png" style="margin-left:3px;" title="{!$Label.ISSP_AMS_PAX_Issuing_Address}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
-                           </apex:outputPanel>
-                        </apex:pageBlockSectionItem>
-                       
-                        
                         <apex:outputfield value="{!hqAccount.Website}" />
                         <apex:outputfield value="{!hqAccount.Phone}" />
                         <apex:outputfield value="{!hqAccount.Email__c}" />

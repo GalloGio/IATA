@@ -6,14 +6,14 @@ public class AMS_SAAMCaseMigrationController {
     private String ALL_NOT_FROM_PORTAL = 'All SAAM Cases not from Portal';
 
     private final Integer PAGE_SIZE = 50; //max size: 1000
-    private final Integer RECORD_LIMIT = 1000; //prevent view state limit, if you increase page size, decrease limit
+    private final Integer RECORD_LIMIT = 750; //prevent view state limit, if you increase page size, decrease limit
     private final Id SAAMCaseRecType = Schema.SObjectType.Case.getRecordTypeInfosByName().get('SAAM').getRecordTypeId();
 
     public String caseNumbers   { get; set; }
     public String searchOption  { get; set; }
     public Boolean selectAll    { get; set; }
 
-    private List<String> caseMigratedFields = new List<String> {'AIMS_updated__c','Assessment_Performed_Date__c','Bank_Guarantee_amount__c','Bank_Guarantee_deadline__c','Bank_Guarantee_received__c','Bank_Guarantee_requested__c','Change_effective_as_of__c','Criteria_remarks__c','Documentation_remarks__c','Dossier_reception_date__c','Fees_refund_requested__c','Fees_refund_requested__c','Finalization_checklist__c','Finalized_in_AIMS__c','Financial_Assessment_deadline__c','Financial_Assessment_requested__c','Financial_Review_Result__c','Invoice_number__c','Local_Inspection_compliant__c','Local_Inspection_deadline__c','Local_Inspection_received__c','Local_Inspection_requested__c','Process_Start_Date__c','Proof_of_payment_received__c','PSAA_EACP_Agreement_received__c','PSAA_signed_copy_sent__c','SAAM_Deadline_Date__c'};
+    private List<String> caseMigratedFields = new List<String> {'AIMS_updated__c','Assessment_Performed_Date__c','Bank_Guarantee_amount__c','Bank_Guarantee_deadline__c','Bank_Guarantee_received__c','Bank_Guarantee_requested__c','Change_effective_as_of__c','Criteria_remarks__c','Documentation_remarks__c','Dossier_reception_date__c','Finalization_checklist__c','Finalized_in_AIMS__c','Financial_Assessment_deadline__c','Financial_Assessment_requested__c','Financial_Review_Result__c','Invoice_number__c','Local_Inspection_compliant__c','Local_Inspection_deadline__c','Local_Inspection_received__c','Local_Inspection_requested__c','Process_Start_Date__c','Proof_of_payment_received__c','PSAA_EACP_Agreement_received__c','PSAA_signed_copy_sent__c','SAAM_Deadline_Date__c'};
 
     private Map<String, String> pageQueriesOption {
         get {

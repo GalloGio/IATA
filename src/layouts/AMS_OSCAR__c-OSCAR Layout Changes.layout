@@ -38,10 +38,6 @@
                 <behavior>Edit</behavior>
                 <field>Change_of_location_type_behavior__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>First_Step_Completed__c</field>
-            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
