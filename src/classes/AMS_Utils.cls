@@ -452,10 +452,12 @@ public without sharing class AMS_Utils {
         if(addressType.equalsIgnoreCase('Billing')){
             //R3.1 - removed the state validation
             //return ((acc.BillingStreet == null && acc.BillingCity == null && acc.BillingPostalCode == null) || acc.IATA_ISO_Country__c == null || acc.Iso_State__c == null);
-            return ((acc.BillingStreet == null && acc.BillingCity == null && acc.BillingPostalCode == null) || acc.IATA_ISO_Country__c == null );
+            //return ((acc.BillingStreet == null && acc.BillingCity == null && acc.BillingPostalCode == null) || acc.IATA_ISO_Country__c == null );
+            return ((acc.BillingStreet == null && acc.BillingCity == null ) || acc.IATA_ISO_Country__c == null );
         }
         if(addressType.equalsIgnoreCase('Shipping')){
-            return ((acc.ShippingStreet == null && acc.ShippingCity == null && acc.ShippingPostalCode == null) );
+            //return ((acc.ShippingStreet == null && acc.ShippingCity == null && acc.ShippingPostalCode == null) );
+            return ((acc.ShippingStreet == null && acc.ShippingCity == null) );
         }
         
         return false;   
