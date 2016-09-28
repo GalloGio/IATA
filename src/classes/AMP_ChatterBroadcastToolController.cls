@@ -10,6 +10,7 @@ public with sharing class AMP_ChatterBroadcastToolController {
 			for (AccountWrapper aw : lstAccounts) {
 				if (aw.isSelected) {
 					tmpStr += (tmpStr != '' ? ', ' : '') + aw.acct.Name;
+					numberOfAccounts++;
 				}
 			}
 
@@ -17,6 +18,7 @@ public with sharing class AMP_ChatterBroadcastToolController {
 		} set;}
 
 	public list<AccountWrapper> lstAccounts {get; set;}
+	public Integer numberOfAccounts {get; set;}
 
 	public String strRegion {get; set;}
 
@@ -121,6 +123,7 @@ public with sharing class AMP_ChatterBroadcastToolController {
     
 	public AMP_ChatterBroadcastToolController() {
 		step = 1;
+		numberOfAccounts = 0;
 		strRegion = '';
 		RefreshAccountsList();
 
