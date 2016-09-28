@@ -51,6 +51,7 @@
 
 }
 
+
 .text-link {
     border: 0;
     background: none;
@@ -61,6 +62,17 @@
         text-decoration: underline;
     }
 }
+
+.resubscribe {
+    .button {
+        border-color: #0a4279;
+        background: #0a4279;
+        color: #fff;
+        font-size: 1.4rem;
+    }
+
+}
+
 
 .footer-actions {
     .button {
