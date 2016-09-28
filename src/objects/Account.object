@@ -77487,7 +77487,7 @@ userid={!User.Id}</url>
         <displayType>button</displayType>
         <encodingKey>UTF-8</encodingKey>
         <linkType>url</linkType>
-        <masterLabel>Web App View &gt;</masterLabel>
+        <masterLabel>Account Profile &gt;</masterLabel>
         <openType>replace</openType>
         <protected>false</protected>
         <url>https://{! MID($Api.Partner_Server_URL_370, 9, FIND( &apos;.&apos;, $Api.Partner_Server_URL_370 )-9 ) }.lightning.force.com/c/AccountProfile.app?accountId={!Account.Id}</url>
