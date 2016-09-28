@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>List</customSettingsType>
+    <description>based on the value of 2 change codes returns the rec_Id value to use on the integration with SAP PI</description>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>RecId_A__c</fullName>
+        <externalId>false</externalId>
+        <label>RecId A</label>
+        <length>1</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>RecId_B__c</fullName>
+        <externalId>false</externalId>
+        <label>RecId B</label>
+        <length>1</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>RecId_Res__c</fullName>
+        <externalId>false</externalId>
+        <label>RecId Result</label>
+        <length>1</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>AMS Change Codes Integration</label>
+    <visibility>Protected</visibility>
+</CustomObject>

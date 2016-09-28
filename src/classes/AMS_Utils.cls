@@ -43,6 +43,24 @@ public without sharing class AMS_Utils {
         set;
     }
 
+    public static List<AMS_ChangeCodes__c> CUSTOM_CHANGECODES {
+        get {
+            List<AMS_ChangeCodes__c> lChangeCodes = [SELECT Change_Code__c,Integration_RecId__c,Account_status_change__c,Billable__c,Bulletin_Memo_Text__c,
+                                                                Reason_Code__c, Reason_Code_Description__c
+                                                        FROM AMS_ChangeCodes__c];
+           
+            return lChangeCodes;
+        }
+    }
+
+    public static List<AMS_ChangeCodes_Integration__c> CUSTOM_CHANGECODES_INTEGRATION {
+        get {
+            List<AMS_ChangeCodes_Integration__c> lChangeCodes = [SELECT RecId_A__c,RecId_B__c,RecId_Res__c FROM AMS_ChangeCodes_Integration__c];
+           
+            return lChangeCodes;
+        }
+    }
+
     private static Map<String, RecordType> currentCache = null;
 
     public static String userSessionId = UserInfo.getSessionId();
@@ -336,10 +354,24 @@ public without sharing class AMS_Utils {
     */
     public static String getRecIdFromChangeCode(String sChangeCode) {
 
-        String sRes = '';
-
         //Validates the Changes codes for "A=Added" and "D=Deleted", all other Change Codes not mentioned return "C=Changed"
 
+        String sRes = '';
+
+        for (AMS_ChangeCodes__c cc : CUSTOM_CHANGECODES ){
+
+            if(cc.Change_Code__c.equalsIgnoreCase(sChangeCode)){
+                sRes = cc.Integration_RecId__c;
+                break;
+            }
+
+        }
+
+        //Just in case we don't get a result, we set the value for the most common RecId - "C"
+        if( sRes == ''){
+            sRes = 'C';
+        }
+/*
         // «A» Section
         if (sChangeCode.equalsIgnoreCase('NEW')) {
             sRes = 'A';
@@ -372,6 +404,34 @@ public without sharing class AMS_Utils {
         } 
         // «C» Section
         else {
+            sRes = 'C';
+        }
+*/
+        return sRes;
+    }
+/**
+    //Based on the Change code passed we get the Rec ID
+    Indicates if record is A=Added, C=Changed or D=Deleted.
+    */
+    public static String getRecIdFromIntegrationMatriz(String sRecIdA, String sRecIdB) {
+
+        //Validates the Changes codes for "A=Added" and "D=Deleted", all other Change Codes not mentioned return "C=Changed"
+
+        String sRes = '';
+
+        for (AMS_ChangeCodes_Integration__c cc : CUSTOM_CHANGECODES_INTEGRATION ){
+
+            if(cc.RecId_A__c.equalsIgnoreCase(sRecIdA)){
+                if(cc.RecId_B__c.equalsIgnoreCase(sRecIdB)){
+                    sRes = cc.RecId_Res__c;
+                    break;
+                }
+            }
+
+        }
+
+        //Just in case we don't get a result, we set the value for the most common RecId - "C"
+        if( sRes == ''){
             sRes = 'C';
         }
 
