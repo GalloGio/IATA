@@ -192,8 +192,7 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
 
         Test.startTest();
 
-        //oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
-        oscar.STEP6__c = AMS_Utils.PASSED;
+        oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
         update oscar;
 
         //refresh the Account's data
@@ -266,8 +265,7 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
 
         Test.startTest();
 
-        //oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
-        oscar.STEP6__c = AMS_Utils.PASSED;
+        oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
         update oscar;
 
 
@@ -341,8 +339,7 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
 
         Test.startTest();
 
-        //oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
-        oscar.STEP6__c = AMS_Utils.PASSED;
+        oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
         update oscar;
 
 
@@ -364,10 +361,10 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
                 System.assertEquals(HO1.Id, rel.Child_Account__r.ParentId);
                 countConditions++;
             } else if (rel.Child_Account__r.Name == 'Earth Travels SA2') {
-                //System.assertEquals('BR', rel.Child_Account__r.Location_Type__c);
-                //System.assertEquals('Winter Travels HO1', rel.Parent_Account__r.Name);
-                //System.assertEquals('HO', rel.Parent_Account__r.Location_Type__c);
-                //System.assertEquals(HO1.Id, rel.Child_Account__r.ParentId);
+                System.assertEquals('BR', rel.Child_Account__r.Location_Type__c);
+                System.assertEquals('Winter Travels HO1', rel.Parent_Account__r.Name);
+                System.assertEquals('HO', rel.Parent_Account__r.Location_Type__c);
+                System.assertEquals(HO1.Id, rel.Child_Account__r.ParentId);
                 countConditions++;
             } else if (rel.Child_Account__r.Name == 'Fire Travels BR1') {
                 System.assertEquals('BR', rel.Child_Account__r.Location_Type__c);
@@ -415,8 +412,7 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
 
         Test.startTest();
 
-        //oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
-        oscar.STEP6__c = AMS_Utils.PASSED;
+        oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
         update oscar;
 
         getUpdatedAccountData();
@@ -535,8 +531,7 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
         AMS_OSCAR__c oscar = createOSCAR(SA1, 'Location', null, BR2);
 
         Test.startTest();
-        //oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
-        oscar.STEP6__c = AMS_Utils.PASSED;
+        oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
         update oscar;
 
         getUpdatedAccountData();
@@ -637,7 +632,7 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
             update oscar;
             System.assert(false, 'exception expected');
         } catch (Exception e) {
-            Boolean expectedExceptionThrown =  e.getMessage().contains('The target Agency Location Type must be either HO, AO or BR') ? true : false;
+            Boolean expectedExceptionThrown =  e.getMessage().contains('The target Agency Location Type must be either HO or BR') ? true : false;
             System.assertEquals(expectedExceptionThrown, true);
         }
 
@@ -767,8 +762,7 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
 
         Test.startTest();
 
-        //oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
-        oscar.STEP6__c = AMS_Utils.PASSED;
+        oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
         update oscar;
 
         getUpdatedAccountData();
@@ -853,8 +847,7 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
 
         Test.startTest();
 
-        //oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
-        oscar.STEP6__c = AMS_Utils.PASSED;
+        oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
         update oscar;
 
         getUpdatedAccountData();
@@ -944,8 +937,7 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
 
         Test.startTest();
 
-        //oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
-        oscar.STEP6__c = AMS_Utils.PASSED;
+        oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
         update oscar;
 
         getUpdatedAccountData();
@@ -1042,8 +1034,7 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
 
         Test.startTest();
 
-        //oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
-        oscar.STEP6__c = AMS_Utils.PASSED;
+        oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
         update oscar;
 
         getUpdatedAccountData();
@@ -1126,8 +1117,7 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
 
         Test.startTest();
 
-        //oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
-        oscar.STEP6__c = AMS_Utils.PASSED;
+        oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
         update oscar;
 
         getUpdatedAccountData();
@@ -1207,8 +1197,7 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
 
         Test.startTest();
 
-        //oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
-        oscar.STEP6__c = AMS_Utils.PASSED;
+        oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
         update oscar;
 
         getUpdatedAccountData();
@@ -1287,8 +1276,7 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
 
         Test.startTest();
 
-        //oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
-        oscar.STEP6__c = AMS_Utils.PASSED;
+        oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
         update oscar;
 
         getUpdatedAccountData();
@@ -1355,8 +1343,7 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
 
         Test.startTest();
 
-        //oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
-        oscar.STEP6__c = AMS_Utils.PASSED;
+        oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
         update oscar;
 
         getUpdatedAccountData();
@@ -1430,8 +1417,7 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
 
         Test.startTest();
 
-        //oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
-        oscar.STEP6__c = AMS_Utils.PASSED;
+        oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
         update oscar;
 
         getUpdatedAccountData();
@@ -1525,8 +1511,7 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
 
         Test.startTest();
 
-        //oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
-        oscar.STEP6__c = AMS_Utils.PASSED;
+        oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
         update oscar;
 
         getUpdatedAccountData();

@@ -444,7 +444,7 @@ global class AMS_HierarchyHelper {
 			system.debug('DEVO VALIDARE ' + a.Name + ' - iata code ' + a.IATAcode__c + ' - Location type ' + a.Location_Type__c + ' - ParentId ' + a.ParentId);
 
 			//whenever a child agency (active) is left without a parent an error should be raised
-			if (a.Location_Type__c != AMS_Utils.HO && a.Location_Type__c != AMS_Utils.AO && !agenciesNotMigrated.contains(a.ParentId) &&
+			if (a.Location_Type__c != AMS_Utils.HO && !agenciesNotMigrated.contains(a.ParentId) &&
 			        a.Status__c != AMS_Utils.ACC_S0_TERMINATED && a.Status__c != AMS_Utils.ACC_S1_NOTACCREDITED)
 
 				errorMessage += (errorMessage == '' ? '' : '\n' ) +

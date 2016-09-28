@@ -28,6 +28,10 @@
                 <behavior>Edit</behavior>
                 <field>AMS_Online_Accreditation__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>First_Step_Completed__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -44,7 +48,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>AMS_Correction_change_code__c</field>
+                <field>AMS_Generate_COR_change_code__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
