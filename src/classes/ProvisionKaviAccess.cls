@@ -96,14 +96,14 @@ global with sharing class ProvisionKaviAccess {
         public static Account getFakeAccount (){
         
         
-        list<Account> acc2 = [Select Id from Account Where Name= 'IATA SCT ACCOUNT'];
+        list<Account> acc2 = [Select Id from Account Where Name= 'IATA SSW ACCOUNT'];
         if (! acc2.isEmpty())       
             return acc2[0];
         else 
         {
           Account acc = new Account();
             acc = new Account();
-            acc.Name = 'IATA SCT ACCOUNT';
+            acc.Name = 'IATA SSW ACCOUNT';
             acc.RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Standard Account').getRecordTypeId();
             //acc.Sector__c = 'IATA';
             //acc.Category__c = 'IATA Cargo Agent';
