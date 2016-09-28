@@ -14,10 +14,16 @@ global class AMS_HierarchyHelper {
 		                                      WHERE Parent_Account__c IN :accountsIds OR Child_Account__c IN :accountsIds ]) {
 
 			system.debug(LoggingLevel.ERROR, 'getAccountsHierarchies() --> trovo hierarchy ' + h.ID);
-			if (!hierarchyToAccounts.containsKey(h.Hierarchy__c)) hierarchyToAccounts.put(h.Hierarchy__c, new Set<Id>());
+			if (hierarchyToAccounts.get(h.Hierarchy__c) == null)
+				hierarchyToAccounts.put(h.Hierarchy__c, new Set<Id>());
 
-			if (accountsIds.contains(h.Parent_Account__c)) hierarchyToAccounts.get(h.Hierarchy__c).add(h.Parent_Account__c);
-			if (accountsIds.contains(h.Child_Account__c)) hierarchyToAccounts.get(h.Hierarchy__c).add(h.Child_Account__c);
+
+			if (accountsIds.contains(h.Parent_Account__c)) {
+				hierarchyToAccounts.get(h.Hierarchy__c).add(h.Parent_Account__c);
+
+			}/*else */if (accountsIds.contains(h.Child_Account__c)) {
+				hierarchyToAccounts.get(h.Hierarchy__c).add(h.Child_Account__c);
+			}
 		}
 
 		system.debug(LoggingLevel.ERROR, 'getAccountsHierarchies() --> hierarchyToAccounts ' + hierarchyToAccounts);
@@ -28,22 +34,9 @@ global class AMS_HierarchyHelper {
 		for (Id accountId : accountsIds)
 			result.put(accountId, new List<AMS_Agencies_relationhip__c>());
 
-
-		Map<Id, Id> accountToHierarchies = new Map<Id, Id>();
-
-		for (AMS_Agencies_relationhip__c r : [SELECT Hierarchy__c, Parent_Account__c,  Child_Account__c, Parent_Account__r.Location_Type__c,  Child_Account__r.Location_Type__c,  Child_Account__r.Status__c, Parent_Account__r.Status__c, Parent_Account__r.Name, Child_Account__r.Name, Parent_Account__r.IATAcode__c, Child_Account__r.IATAcode__c
+		for (AMS_Agencies_relationhip__c r : [SELECT Hierarchy__c, Parent_Account__c,  Child_Account__c, Parent_Account__r.Location_Type__c,  Child_Account__r.Location_Type__c,  Child_Account__r.Status__c, Parent_Account__r.Status__c
 		                                      FROM AMS_Agencies_relationhip__c
 		                                      WHERE Hierarchy__c IN :hierarchyToAccounts.keyset() ]) {
-
-			system.debug(LoggingLevel.ERROR, 'getAccountsHierarchies() --> r.Parent_account__c ' + r.Parent_account__c + '( '+r.Parent_account__r.Name+' - '+r.Parent_account__r.IATAcode__c+' - '+r.Hierarchy__c+' - '+accountToHierarchies.get(r.Parent_Account__c)+' )');
-			if(accountToHierarchies.get(r.Parent_Account__c) != null && accountToHierarchies.get(r.Parent_Account__c) != r.Hierarchy__c) throw new AMS_ApplicationException('The Account '+r.Parent_Account__r.Name+' is linked to two different hierarchy');
-			accountToHierarchies.put(r.Parent_Account__c, r.Hierarchy__c);
-
-			system.debug(LoggingLevel.ERROR, 'getAccountsHierarchies() --> r.Child_account__c ' + r.Child_account__c + '( '+r.Child_account__r.Name+' - '+r.Child_account__r.IATAcode__c+' - '+r.Hierarchy__c+' - '+accountToHierarchies.get(r.Child_Account__c)+' )');
-			if(accountToHierarchies.get(r.Child_Account__c) != null && accountToHierarchies.get(r.Child_Account__c) != r.Hierarchy__c) throw new AMS_ApplicationException('The Account '+r.Child_Account__r.Name+' is linked to two different hierarchy');
-			accountToHierarchies.put(r.Child_Account__c, r.Hierarchy__c);
-
-			system.debug(LoggingLevel.ERROR, 'getAccountsHierarchies() --> accountToHierarchies ' + accountToHierarchies);
 
 			system.debug(LoggingLevel.ERROR, 'getAccountsHierarchies() --> found relationship ' + r);
 			for (Id theAccountId : hierarchyToAccounts.get(r.Hierarchy__c)) {
