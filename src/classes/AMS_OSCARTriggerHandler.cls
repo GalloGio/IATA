@@ -245,7 +245,9 @@ public class AMS_OSCARTriggerHandler {
 			for (List<AMS_Agencies_relationhip__c> hierarchyRelations : accountHierarchyRelationships.values()) {
 				for (AMS_Agencies_relationhip__c relationship : hierarchyRelations) {
 
-					if(relationship.Parent_Account__c == oscar.Account__c && relationship.Child_Account__r.Location_Type__c==AMS_Utils.SA){
+					if(relationship.Parent_Account__c == oscar.Account__c && 
+						relationship.Child_Account__r.Location_Type__c==AMS_Utils.SA && 
+						relationship.Child_Account__r.Status__c!=AMS_Utils.ACC_S0_TERMINATED){
 						if(agencyToSAs.get(oscar.Account__c)==null)
 							agencyToSAs.put(oscar.Account__c, new Set<Id>());
 						agencyToSAs.get(oscar.Account__c).add(relationship.Child_Account__c);
