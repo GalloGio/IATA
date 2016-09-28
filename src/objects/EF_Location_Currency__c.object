@@ -77,6 +77,7 @@ It contains a currency to make the correspondance between contract + location + 
         <externalId>false</externalId>
         <globalPicklist>EF_Currency</globalPicklist>
         <label>Billing Currency</label>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>

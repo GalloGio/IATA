@@ -25,10 +25,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -2374,6 +2370,7 @@
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <type>Picklist</type>
@@ -2410,6 +2407,7 @@
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
@@ -2460,6 +2458,7 @@
             <restrictedPicklist>true</restrictedPicklist>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
@@ -2839,6 +2838,7 @@
             </picklistValues>
             <sorted>true</sorted>
         </picklist>
+        <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <type>Picklist</type>
@@ -2987,6 +2987,7 @@
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
@@ -3056,6 +3057,7 @@
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
@@ -3622,6 +3624,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </picklistValues>
             <sorted>true</sorted>
         </picklist>
+        <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
@@ -4362,6 +4365,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </picklistValues>
             <sorted>true</sorted>
         </picklist>
+        <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
@@ -4401,6 +4405,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
@@ -4451,6 +4456,7 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
@@ -5006,6 +5012,7 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
             </picklistValues>
             <sorted>true</sorted>
         </picklist>
+        <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
@@ -5141,6 +5148,7 @@ V - Co-operative</inlineHelpText>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
@@ -5818,6 +5826,7 @@ V - Co-operative</inlineHelpText>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
@@ -5895,6 +5904,7 @@ V - Co-operative</inlineHelpText>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
@@ -5951,6 +5961,7 @@ V - Co-operative</inlineHelpText>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
@@ -6943,6 +6954,7 @@ V - Co-operative</inlineHelpText>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
@@ -7059,6 +7071,7 @@ V - Co-operative</inlineHelpText>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
@@ -7113,6 +7126,7 @@ V - Co-operative</inlineHelpText>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
@@ -7157,6 +7171,7 @@ V - Co-operative</inlineHelpText>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
@@ -7206,8 +7221,315 @@ V - Co-operative</inlineHelpText>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>EF_Additional_SAP_Nr__c</fullName>
+        <description>E&amp;F CRM Project. Holds E&amp;F additional SAP number, that might not match the SAP number from other departments.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Temporary duplicate bill-to (4xxxx) SAP number</inlineHelpText>
+        <label>E&amp;F Additional SAP Nr.</label>
+        <length>20</length>
+        <required>false</required>
+        <trackFeedHistory>true</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>EF_Airline_ID__c</fullName>
+        <description>E&amp;F CRM Project. Front end Airline ID number (legacy) in CRM</description>
+        <externalId>false</externalId>
+        <inlineHelpText>E&amp;F AL_ID number</inlineHelpText>
+        <label>E&amp;F Airline ID</label>
+        <length>12</length>
+        <required>false</required>
+        <trackFeedHistory>true</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>EF_Allow_Billing_Agreements__c</fullName>
+        <description>Field allowed to be updated only by E&amp;F Business Development Manager. This field controls whether E&amp;F Billing Agreements are allowed (occasionally with management&apos;s approval) for the Account or not.</description>
+        <externalId>false</externalId>
+        <globalPicklist>EF_Allow_Billing_Agreements</globalPicklist>
+        <inlineHelpText>Controls whether the creation of Billing Agreements on this Account is allowed or not. With &quot;Allowed with Approval&quot; selection, the E&amp;F management must approval creation of Billing Agreements before they are activated.</inlineHelpText>
+        <label>E&amp;F Allow Billing Agreements</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>EF_Annual_Revenue_USD__c</fullName>
+        <description>E&amp;F Project. Annual Revenue for E&amp;F, might be different to Standard Annual Revenue. Allways computed on USD</description>
+        <externalId>false</externalId>
+        <label>E&amp;F Annual Revenue (USD)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>EF_Client_Services_Specialist__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>E&amp;F Project. Defines who is the E&amp;F specialist for the account.</description>
+        <externalId>false</externalId>
+        <label>E&amp;F Client Services Specialist</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>EFAccountClientServicesSpecialist</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>EF_Effective_Date__c</fullName>
+        <description>E&amp;F CRM Project
+(EF-864) Add airline status details.
+ when E&amp;F Status gets inactive, this field becomes mandatory.</description>
+        <externalId>false</externalId>
+        <label>E&amp;F Status Change Date</label>
+        <required>false</required>
+        <trackFeedHistory>true</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>EF_Legacy_Code__c</fullName>
+        <description>E&amp;F Project. This field allows easy identification with E&amp;F clients.</description>
+        <externalId>false</externalId>
+        <label>E&amp;F Legacy Code</label>
+        <length>20</length>
+        <required>false</required>
+        <trackFeedHistory>true</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>EF_Level__c</fullName>
+        <description>Client level clasification within E&amp;F (1, for very good clients)</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Scale goes from 1 to 3. Being 1 the best clasification</inlineHelpText>
+        <label>E&amp;F Level</label>
+        <picklist>
+            <picklistValues>
+                <fullName>1</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>2</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>3</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>EF_Liquidator_Administrator__c</fullName>
+        <description>E&amp;F CRM Project 
+(EF-864) Add airline status details. 
+when E&amp;F Status gets inactive, this field becomes mandatory.</description>
+        <externalId>false</externalId>
+        <label>Liquidator/Administrator</label>
+        <required>false</required>
+        <trackFeedHistory>true</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>EF_Remitter_details__c</fullName>
+        <description>E&amp;F CRM Project. Sets additional info about Remitter</description>
+        <externalId>false</externalId>
+        <label>E&amp;F Remitter details</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>EF_SIS_Code_Verified__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>E&amp;F CRM Project. Used to verify if the E&amp;F SIS Code has been verified/provided by SIS team</description>
+        <externalId>false</externalId>
+        <label>SIS Verified</label>
+        <trackFeedHistory>true</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>EF_SIS_Code__c</fullName>
+        <description>E&amp;F SIS Code. Specific for them. Sometimes does not match the SIS Member Code</description>
+        <externalId>false</externalId>
+        <label>SIS Accounting Code</label>
+        <length>15</length>
+        <required>false</required>
+        <trackFeedHistory>true</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>EF_SIS_Designator__c</fullName>
+        <description>E&amp;F SIS Designator. Most of the times the same as Airline Designator, but sometimes specific value for E&amp;F</description>
+        <externalId>false</externalId>
+        <label>SIS Designator</label>
+        <length>2</length>
+        <required>false</required>
+        <trackFeedHistory>true</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>EF_SIS_Location_ID__c</fullName>
+        <description>E&amp;F Project. Location ID to track locations from SIS. Text field can accpet values Main, and numbers  from 1 to 99.
+Val. Rule to check format.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>SIS Location ID just accepts values Main, and numbers from 1 to 99</inlineHelpText>
+        <label>E&amp;F SIS Location ID</label>
+        <length>4</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>EF_Status_Additional_Information__c</fullName>
+        <description>E&amp;F CRM Project 
+(EF-864) Add airline status details. 
+when E&amp;F Status gets inactive, this field can hold information about why the account got innactive</description>
+        <externalId>false</externalId>
+        <label>E&amp;F Status Additional Information</label>
+        <required>false</required>
+        <trackFeedHistory>true</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>EF_Status__c</fullName>
+        <description>E&amp;F CRM Project Field to set the (EF-864) Add airline status details.
+Controlling picklist of E&amp;F Sub-Status Account</description>
+        <externalId>false</externalId>
+        <label>E&amp;F Status</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Active</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Inactive</fullName>
+                <default>false</default>
+            </picklistValues>
+            <restrictedPicklist>true</restrictedPicklist>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>EF_SubStatus__c</fullName>
+        <externalId>false</externalId>
+        <label>E&amp;F Sub-Status</label>
+        <picklist>
+            <controllingField>EF_Status__c</controllingField>
+            <picklistValues>
+                <fullName>Bankrupt</fullName>
+                <default>false</default>
+                <controllingFieldValues>Inactive</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Ceased Operations</fullName>
+                <default>false</default>
+                <controllingFieldValues>Inactive</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Chapter 11</fullName>
+                <default>false</default>
+                <controllingFieldValues>Active</controllingFieldValues>
+                <controllingFieldValues>Inactive</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Chapter 7</fullName>
+                <default>false</default>
+                <controllingFieldValues>Active</controllingFieldValues>
+                <controllingFieldValues>Inactive</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Liquidated</fullName>
+                <default>false</default>
+                <controllingFieldValues>Inactive</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>No Longer Bill</fullName>
+                <default>false</default>
+                <controllingFieldValues>Inactive</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>No Longer Client</fullName>
+                <default>false</default>
+                <controllingFieldValues>Inactive</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Sanctioned</fullName>
+                <default>false</default>
+                <controllingFieldValues>Inactive</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>None</fullName>
+                <default>false</default>
+                <controllingFieldValues>Active</controllingFieldValues>
+            </picklistValues>
+            <restrictedPicklist>true</restrictedPicklist>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>EF_Type__c</fullName>
+        <description>E&amp;F CRM Project. (EF-1042) Flag an account as an E&amp;F account
+An account should have a field to indicate if it&apos;s an E&amp;F client or Operator or Supplier</description>
+        <externalId>false</externalId>
+        <label>E&amp;F Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>E&amp;F Client</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>E&amp;F Operator</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>E&amp;F Supplier</fullName>
+                <default>false</default>
+            </picklistValues>
+            <restrictedPicklist>true</restrictedPicklist>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackFeedHistory>true</trackFeedHistory>
+        <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
     <fields>
@@ -7561,6 +7883,7 @@ An account should have a field to indicate if it&apos;s an E&amp;F client or Ope
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <type>Picklist</type>
@@ -7620,6 +7943,7 @@ An account should have a field to indicate if it&apos;s an E&amp;F client or Ope
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <type>Picklist</type>
@@ -7692,6 +8016,7 @@ An account should have a field to indicate if it&apos;s an E&amp;F client or Ope
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <type>Picklist</type>
@@ -7827,6 +8152,7 @@ WSPN-Worldspan</inlineHelpText>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
@@ -7847,6 +8173,7 @@ WSPN-Worldspan</inlineHelpText>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
@@ -8059,6 +8386,7 @@ WSPN-Worldspan</inlineHelpText>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <type>Picklist</type>
@@ -8196,6 +8524,7 @@ WSPN-Worldspan</inlineHelpText>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <type>Picklist</type>
@@ -8276,6 +8605,7 @@ Approval: Key Contact can see pending request approve it one by one</inlineHelpT
             </picklistValues>
             <sorted>true</sorted>
         </picklist>
+        <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
@@ -8666,6 +8996,7 @@ Approval: Key Contact can see pending request approve it one by one</inlineHelpT
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
@@ -8699,6 +9030,7 @@ Approval: Key Contact can see pending request approve it one by one</inlineHelpT
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
@@ -8744,6 +9076,7 @@ Approval: Key Contact can see pending request approve it one by one</inlineHelpT
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
@@ -8853,6 +9186,7 @@ Approval: Key Contact can see pending request approve it one by one</inlineHelpT
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
@@ -9064,6 +9398,7 @@ EA=EUROPE ACCREDITED AGENT</inlineHelpText>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
@@ -9163,6 +9498,7 @@ J-Joint Vent</inlineHelpText>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
@@ -9253,6 +9589,7 @@ J-Joint Vent</inlineHelpText>
             </picklistValues>
             <sorted>true</sorted>
         </picklist>
+        <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <type>Picklist</type>
@@ -9291,6 +9628,7 @@ J-Joint Vent</inlineHelpText>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
@@ -9451,6 +9789,7 @@ J-Joint Vent</inlineHelpText>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <type>Picklist</type>
@@ -9821,6 +10160,7 @@ J-Joint Vent</inlineHelpText>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
@@ -10018,6 +10358,7 @@ J-Joint Vent</inlineHelpText>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
@@ -10210,6 +10551,7 @@ J-Joint Vent</inlineHelpText>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
@@ -10309,6 +10651,7 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
             </picklistValues>
             <sorted>true</sorted>
         </picklist>
+        <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
@@ -10356,6 +10699,7 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
             </picklistValues>
             <sorted>true</sorted>
         </picklist>
+        <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <type>Picklist</type>
@@ -10366,6 +10710,16 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
         <externalId>false</externalId>
         <formula>TEXT(IATA_ISO_Country__r.Region__c)</formula>
         <label>Region</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Registration_Number__c</fullName>
+        <externalId>false</externalId>
+        <label>Registration Number</label>
+        <length>30</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Text</type>
@@ -10422,6 +10776,7 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
@@ -10629,6 +10984,7 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
             </picklistValues>
             <sorted>true</sorted>
         </picklist>
+        <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
@@ -11486,6 +11842,7 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
@@ -12325,6 +12682,7 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
@@ -12459,6 +12817,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </picklistValues>
             <sorted>true</sorted>
         </picklist>
+        <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <type>Picklist</type>
@@ -12665,6 +13024,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </picklistValues>
             <sorted>true</sorted>
         </picklist>
+        <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <type>MultiselectPicklist</type>
@@ -12783,6 +13143,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <type>Picklist</type>
@@ -13220,6 +13581,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
@@ -13269,6 +13631,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
@@ -13344,6 +13707,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
@@ -13465,6 +13829,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
@@ -13489,6 +13854,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
@@ -13552,6 +13918,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
@@ -13576,6 +13943,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
@@ -22434,7 +22802,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
         </picklistValues>
-        <picklistValues>
+		<picklistValues>
             <picklist>AM_Ownership_Type__c</picklist>
             <values>
                 <fullName>Government-held</fullName>
@@ -23613,7 +23981,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
         </picklistValues>
-        <picklistValues>
+	    <picklistValues>
             <picklist>Category__c</picklist>
             <values>
                 <fullName>Airport Operator</fullName>
@@ -24722,7 +25090,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
         </picklistValues>
-        <picklistValues>
+		<picklistValues>
             <picklist>AM_Ownership_Type__c</picklist>
             <values>
                 <fullName>Government-held</fullName>
@@ -27633,7 +28001,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
         </picklistValues>
-        <picklistValues>
+		<picklistValues>
             <picklist>AM_Ownership_Type__c</picklist>
             <values>
                 <fullName>Government-held</fullName>
@@ -29846,7 +30214,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
         </picklistValues>
-        <picklistValues>
+		<picklistValues>
             <picklist>AM_Ownership_Type__c</picklist>
             <values>
                 <fullName>Government-held</fullName>
@@ -31499,25 +31867,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>DDS_Status__c</picklist>
-            <values>
-                <fullName>No Reply</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Opt-In</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Opt-Out</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>multinational</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Data_quality_feedback__c</picklist>
             <values>
                 <fullName>Account Duplicated</fullName>
@@ -31548,6 +31897,86 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Sanctioned%2E Please contact compliance</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>EF_Level__c</picklist>
+            <values>
+                <fullName>1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>EF_Status__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inactive</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>EF_SubStatus__c</picklist>
+            <values>
+                <fullName>Bankrupt</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ceased Operations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Chapter 11</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Chapter 7</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Liquidated</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No Longer Bill</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No Longer Client</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>None</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sanctioned</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>EF_Type__c</picklist>
+            <values>
+                <fullName>E%26F Client</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>E%26F Operator</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>E%26F Supplier</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -32138,7 +32567,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>Cargo Agent</fullName>
                 <default>false</default>
             </values>
-            <values>
+	    <values>
                 <fullName>Internal Use</fullName>
                 <default>false</default>
             </values>
@@ -33423,7 +33852,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
         </picklistValues>
-        <picklistValues>
+		<picklistValues>
             <picklist>AM_Ownership_Type__c</picklist>
             <values>
                 <fullName>Government-held</fullName>
@@ -35462,7 +35891,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
         </picklistValues>
-        <picklistValues>
+		<picklistValues>
             <picklist>AM_Ownership_Type__c</picklist>
             <values>
                 <fullName>Government-held</fullName>
@@ -35476,7 +35905,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>Publically-held</fullName>
                 <default>false</default>
             </values>
-        </picklistValues>
+        </picklistValues>		
         <picklistValues>
             <picklist>AccountSource</picklist>
             <values>
@@ -38449,7 +38878,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>New airline joining BSP</fullName>
                 <default>false</default>
             </values>
-            <values>
+			<values>
                 <fullName>New for E%26F</fullName>
                 <default>false</default>
             </values>
@@ -38489,73 +38918,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <picklist>Remittance_frequency__c</picklist>
             <values>
                 <fullName>Daily</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Sector</picklist>
-            <values>
-                <fullName>Accommodation</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Airline</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Airline Supplier</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Association</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Cargo Agent</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Education</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Equipment Manufacturer</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Financial Institution</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>General Sales Agent</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Governmental Institution</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>IATA</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Infrastructure Partner</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Media</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Non-Airline Transportation</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Recreational</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Travel Agent</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -38607,6 +38969,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Infrastructure Partner</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Internal Use</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -40678,7 +41044,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
         </picklistValues>
-        <picklistValues>
+		<picklistValues>
             <picklist>AM_Ownership_Type__c</picklist>
             <values>
                 <fullName>Government-held</fullName>
@@ -43022,7 +43388,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
         </picklistValues>
-        <picklistValues>
+		<picklistValues>
             <picklist>AM_Ownership_Type__c</picklist>
             <values>
                 <fullName>Government-held</fullName>
@@ -45022,7 +45388,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>New airline joining BSP</fullName>
                 <default>false</default>
             </values>
-            <values>
+			<values>
                 <fullName>New for E%26F</fullName>
                 <default>false</default>
             </values>
@@ -47184,7 +47550,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
         </picklistValues>
-        <picklistValues>
+		<picklistValues>
             <picklist>AM_Ownership_Type__c</picklist>
             <values>
                 <fullName>Government-held</fullName>
@@ -51250,7 +51616,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
         </picklistValues>
-        <picklistValues>
+		<picklistValues>
             <picklist>AM_Ownership_Type__c</picklist>
             <values>
                 <fullName>Government-held</fullName>
@@ -53769,7 +54135,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
         </picklistValues>
-        <picklistValues>
+		<picklistValues>
             <picklist>AM_Ownership_Type__c</picklist>
             <values>
                 <fullName>Government-held</fullName>
@@ -55971,7 +56337,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
         </picklistValues>
-        <picklistValues>
+		<picklistValues>
             <picklist>AM_Ownership_Type__c</picklist>
             <values>
                 <fullName>Government-held</fullName>
@@ -58173,7 +58539,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
         </picklistValues>
-        <picklistValues>
+		<picklistValues>
             <picklist>AM_Ownership_Type__c</picklist>
             <values>
                 <fullName>Government-held</fullName>
@@ -59623,7 +59989,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
         </picklistValues>
-        <picklistValues>
+	    <picklistValues>
             <picklist>Customer_Type__c</picklist>
             <values>
                 <fullName>Accredited Training Center %28ATC%29</fullName>
@@ -60756,7 +61122,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
         </picklistValues>
-        <picklistValues>
+		<picklistValues>
             <picklist>AM_Ownership_Type__c</picklist>
             <values>
                 <fullName>Government-held</fullName>
@@ -70190,6 +70556,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>September</fullName>
                 <default>false</default>
             </values>
+
         </picklistValues>
         <picklistValues>
             <picklist>Financial_Year_End__c</picklist>
