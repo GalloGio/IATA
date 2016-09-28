@@ -4,6 +4,6 @@
     <encodingKey>UTF-8</encodingKey>
     <name>AMS Notify OSCAR Team Members</name>
     <style>none</style>
-    <subject>An OSCAR Case has been set to state {!AMS_OSCAR__c.Status__c}</subject>
+    <subject>An OSCAR Case has been set to the state {!ApprovalRequest.Process_Step_Name}</subject>
     <type>text</type>
 </EmailTemplate>
