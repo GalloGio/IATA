@@ -30,6 +30,10 @@
                 <behavior>Edit</behavior>
                 <field>Last_synchronization__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Key__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

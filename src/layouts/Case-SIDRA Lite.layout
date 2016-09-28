@@ -2,8 +2,6 @@
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
     <customButtons>Approve_Default</customButtons>
     <customButtons>EasyUpload</customButtons>
-    <customButtons>R_S_feedback_complete</customButtons>
-    <customButtons>CS_actions_complete</customButtons>
     <customButtons>Reset_New_interactions</customButtons>
     <customButtons>Send_Email</customButtons>
     <emailDefault>false</emailDefault>
@@ -115,10 +113,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>IsComplaint__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>CS_pending_actions__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -361,7 +355,7 @@
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
-        <label>Default Withdrawal</label>
+        <label>Default/Suspension Withdrawal</label>
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>

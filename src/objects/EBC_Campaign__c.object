@@ -580,6 +580,11 @@ E.g. in the last test email was sent last April 1 at 9pm, this stores the total 
         <language>en_US</language>
     </listViews>
     <listViews>
+        <fullName>All1</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <listViews>
         <fullName>EBC_Approvers_EBC_Campaign</fullName>
         <columns>NAME</columns>
         <columns>Campaign_ID__c</columns>

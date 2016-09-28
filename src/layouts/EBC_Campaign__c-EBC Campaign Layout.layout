@@ -8,10 +8,6 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Required</behavior>
-                <field>Account__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Required</behavior>
                 <field>From_Name__c</field>
             </layoutItems>
             <layoutItems>
@@ -64,7 +60,6 @@
         <style>CustomLinks</style>
     </layoutSections>
     <miniLayout>
-        <fields>Account__c</fields>
         <fields>From_Name__c</fields>
         <fields>Subject__c</fields>
     </miniLayout>
