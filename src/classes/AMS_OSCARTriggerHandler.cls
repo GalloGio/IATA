@@ -78,7 +78,7 @@ public class AMS_OSCARTriggerHandler {
 	public static void handleChangesProcess(List<AMS_OSCAR__c> oscars) {
 
 		//do Not run minor changes on agency changes trigger????
-		AMS_AccountTriggerHandler.processMinorChangesValidationFlag = false;
+		//AMS_AccountTriggerHandler.processMinorChangesValidationFlag = false;
 
 		List<AMS_OSCAR__c> oscarsToValidate = getAgencyChangeOSCARS(oscars);
 
