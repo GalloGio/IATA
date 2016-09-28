@@ -150,7 +150,6 @@
         <fullName>All</fullName>
         <columns>Is_Reusable__c</columns>
         <columns>NAME</columns>
-        <columns>Template_Name__c</columns>
         <columns>RECORDTYPE</columns>
         <columns>CREATEDBY_USER.ALIAS</columns>
         <columns>CREATEDBY_USER</columns>
@@ -222,7 +221,6 @@
         <searchResultsAdditionalFields>Billing_Account__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Is_Reusable__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Parent_Template__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Template_Name__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>RECORDTYPE</searchResultsAdditionalFields>
     </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>

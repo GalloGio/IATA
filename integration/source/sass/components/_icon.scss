@@ -45,6 +45,24 @@ i.icon {
     &.plus::before {
         content: '\f067';
     }
+
+    
+    /* social */
+    &.facebook::before {
+        content: '\f09a';
+    }
+
+    &.twitter::before {
+        content: '\f099';
+    }
+    
+    &.linkedin::before {
+        content: '\f0e1';
+    }
+
+    &.youtube::before {
+        content: '\f167';
+    }
     
     $icon-size: 1.8em;
     &.plus-circle::before {

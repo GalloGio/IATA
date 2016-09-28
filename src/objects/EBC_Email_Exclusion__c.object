@@ -132,7 +132,6 @@
             <restrictedPicklist>true</restrictedPicklist>
             <sorted>false</sorted>
         </picklist>
-        <required>true</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
