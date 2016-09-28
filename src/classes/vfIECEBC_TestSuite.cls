@@ -70,19 +70,56 @@ public class vfIECEBC_TestSuite {
     //////////////////// TESTS /////////////////////
     public static void testPageLoadDashboard() {
 		PageReference pageRef = Page.IECEBC_Dashboard;
-        Test.setCurrentPage(pageRef);
+        Test.setCurrentPage(pageRef); 
+        
+        Account newAccount = new Account();
+        newAccount.Name = 'Hello World';
+        insert newAccount;
+        Contact newContact = new Contact();
+        newContact.LastName = 'w00t';
+        insert newContact;
+        
+        Zuora__CustomerAccount__c otherBillingAccount = IECTestUtil.createSampleBillingAccount(newAccount, newContact);
+        insert otherBillingAccount;  
         
         User usr = initPreRunAs(true);
+        
+        List<EBC_Campaign__c> campaigns = new List<EBC_Campaign__c>{
+            new EBC_Campaign__c(Name = 'Foo Bar 1', Subject__c = 'Foo Bar 1', From_Name__c = 'FooBar1', Billing_Account__c = oBillingAccount.Id),
+            new EBC_Campaign__c(Name = 'Foo Bar 2', Subject__c = 'Foo Bar 2', From_Name__c = 'FooBar2', Billing_Account__c = oBillingAccount.Id),
+            new EBC_Campaign__c(Name = 'Foo Bar 3', Subject__c = 'Foo Bar 3', From_Name__c = 'FooBar3', Billing_Account__c = oBillingAccount.Id),
+            new EBC_Campaign__c(Name = 'Foo Bar 4', Subject__c = 'Foo Bar 4', From_Name__c = 'FooBar4', Billing_Account__c = oBillingAccount.Id),
+            new EBC_Campaign__c(Name = 'Hello World 1', Subject__c = 'Hello World 1', From_Name__c = 'HelloWorld1', Billing_Account__c = otherBillingAccount.Id)
+        };
+            
+        insert campaigns;
+        
+        
         System.runAs(usr) {
             initPostRunAs();
         	Test.startTest();
             
         	vfIECEBC_Layout layoutController = new vfIECEBC_Layout();
-            
             System.assertEquals(null, layoutController.pageLoad());
+            layoutController.getSProdCACPro();
+            layoutController.getSProdGAD();
+            layoutController.getSProdMDP();
+            layoutController.getSProdGSS();
+            layoutController.getSContactEmail();
+            layoutController.getSContactSubject();
+            
+            vfIECEBC_Dashboard dashboardCon = new vfIECEBC_Dashboard();
+            System.assertEquals(4, dashboardCon.campaignsCount);
+            
+            vfIECEBC_CampaignList campaignListComponent = new vfIECEBC_CampaignList();
+            campaignListComponent.isLimitedComponent = true;
+            
+            System.assertEquals('LastModifiedDate DESC', campaignListComponent.sortBy);
+            System.assertEquals(dashboardCon.campaignsCount, campaignListComponent.CampaignsCount);
+            System.assertEquals(2, campaignListComponent.campaigns.size());
         }
     }
-    public static void testCampaignSetup() {
+    public static void testCampaignCreate() {
 		PageReference pageRef = Page.IECEBC_Campaign;
         Test.setCurrentPage(pageRef);
 
@@ -98,6 +135,7 @@ public class vfIECEBC_TestSuite {
             EBC_Campaign__c camp = new EBC_Campaign__c();
             ApexPages.StandardController sc = new ApexPages.StandardController(camp);
             vfIECEBC_Campaign campaignExtCon = new vfIECEBC_Campaign(sc);
+            campaignExtCon.pageLoad();
             
             camp.Name = 'Foo Bar';
             camp.Subject__c = 'Foo Subject';
@@ -110,6 +148,36 @@ public class vfIECEBC_TestSuite {
             System.assertNotEquals(null, campaignExtCon.con.getId());
             System.assertEquals(campaignExtCon.con.getId(), pr.getParameters().get('id'));
             System.assertEquals(campaignExtCon.getPRByStepNumber(2, true).getUrl(), pr.getUrl());
+        }
+    }
+    public static void testCampaignCreateAndExit() {
+		PageReference pageRef = Page.IECEBC_Campaign;
+        Test.setCurrentPage(pageRef);
+
+        User usr = initPreRunAs(true);
+        System.runAs(usr) {
+            initPostRunAs();
+        	Test.startTest();
+            
+            // Layout PageLoad
+        	vfIECEBC_Layout layoutController = new vfIECEBC_Layout();
+            System.assertEquals(null, layoutController.pageLoad());
+            
+            EBC_Campaign__c camp = new EBC_Campaign__c();
+            ApexPages.StandardController sc = new ApexPages.StandardController(camp);
+            vfIECEBC_Campaign campaignExtCon = new vfIECEBC_Campaign(sc);
+            campaignExtCon.pageLoad();
+            
+            camp.Name = 'Foo Bar';
+            camp.Subject__c = 'Foo Subject';
+            camp.From_Name__c = 'Foo From Name';
+            camp.Is_Google_Analytics_Tracker_Active__c = true;
+            camp.Google_Analytics_Tracking_Code__c = 'UA-XXXXXX';
+            
+            PageReference pr = campaignExtCon.saveAndExit();
+             
+            System.assertNotEquals(null, campaignExtCon.con.getId());
+            System.assertEquals(Page.IECEBC_Dashboard.getUrl(), pr.getUrl());
         }
     }
     
@@ -146,42 +214,118 @@ public class vfIECEBC_TestSuite {
         	vfIECEBC_Layout layoutController = new vfIECEBC_Layout();
             System.assertEquals(null, layoutController.pageLoad());
             
-            vfIECEBC_CampaignList campaignListCon = new vfIECEBC_CampaignList();
+            vfIECEBC_CampaignList campaignListPageCon = new vfIECEBC_CampaignList();
+            System.assertEquals('CreatedDate ASC', campaignListPageCon.sortBy);
+            campaignListPageCon.getSortByOptions();
             
+            vfIECEBC_CampaignList campaignListComponentCon = new vfIECEBC_CampaignList();
+            campaignListComponentCon.isLimitedComponent = false;
+            campaignListComponentCon.sortBy = campaignListPageCon.sortBy;
             vfIECEBC_CampaignList.CAMPAIGNS_PER_PAGE = campaigns.size() - 1;
-            
-            System.assertEquals(campaigns.size() - 1, campaignListCon.campaignsCount);
-            System.assert(campaignListCon.campaigns.size() <= vfIECEBC_CampaignList.CAMPAIGNS_PER_PAGE);
-            System.assertEquals(1, campaignListCon.page);
-            System.assertEquals(1, campaignListCon.maxPage);
-            System.assertEquals(campaignListCon.maxPage, campaignListCon.getPageOptions().size());
-            System.assertEquals(campaignListCon.getSortByOptions()[0].getValue(), campaignListCon.sortBy);
-            System.assertEquals(0, campaignListCon.offset);
-            
+            System.assertEquals(campaigns.size() - 1, campaignListComponentCon.campaignsCount);
+            System.assert(campaignListComponentCon.campaigns.size() <= vfIECEBC_CampaignList.CAMPAIGNS_PER_PAGE);
+            System.assertEquals(1, campaignListComponentCon.page);
+            System.assertEquals(1, campaignListComponentCon.maxPage);
+            System.assertEquals(campaignListComponentCon.maxPage, campaignListComponentCon.getPageOptions().size());
+            System.assertEquals(campaignListComponentCon.getSortByOptions()[0].getValue(), campaignListComponentCon.sortBy);
+            System.assertEquals(0, campaignListComponentCon.offset);
             vfIECEBC_CampaignList.CAMPAIGNS_PER_PAGE = 3;
             
-            campaignListCon = new vfIECEBC_CampaignList();
+            campaignListComponentCon = new vfIECEBC_CampaignList();
+            campaignListComponentCon.isLimitedComponent = false;
+            campaignListComponentCon.sortBy = campaignListPageCon.sortBy;
+//            campaignListCon = new vfIECEBC_CampaignList();
+            System.assertEquals(campaigns.size() - 1, campaignListComponentCon.campaignsCount);
+            System.assert(campaignListComponentCon.campaigns.size() <= vfIECEBC_CampaignList.CAMPAIGNS_PER_PAGE);
+            System.assertEquals(1, campaignListComponentCon.page);
+            System.assertEquals(2, campaignListComponentCon.maxPage);
+            System.assertEquals(campaignListComponentCon.maxPage, campaignListComponentCon.getPageOptions().size());
+            System.assertEquals(campaignListComponentCon.getSortByOptions()[0].getValue(), campaignListComponentCon.sortBy);
+            System.assertEquals(0, campaignListComponentCon.offset);
             
-            System.assertEquals(campaigns.size() - 1, campaignListCon.campaignsCount);
-            System.assert(campaignListCon.campaigns.size() <= vfIECEBC_CampaignList.CAMPAIGNS_PER_PAGE);
-            System.assertEquals(1, campaignListCon.page);
-            System.assertEquals(2, campaignListCon.maxPage);
-            System.assertEquals(campaignListCon.maxPage, campaignListCon.getPageOptions().size());
-            System.assertEquals(campaignListCon.getSortByOptions()[0].getValue(), campaignListCon.sortBy);
-            System.assertEquals(0, campaignListCon.offset);
+            campaignListComponentCon.page = 2;
             
-            campaignListCon.page = 2;
+            System.assertEquals(campaigns.size() - 1, campaignListComponentCon.campaignsCount);
+            System.assert(campaignListComponentCon.campaigns.size() <= vfIECEBC_CampaignList.CAMPAIGNS_PER_PAGE);
+            System.assertEquals(2, campaignListComponentCon.page);
+            System.assertEquals(2, campaignListComponentCon.maxPage);
+            System.assertEquals(campaignListComponentCon.maxPage, campaignListComponentCon.getPageOptions().size());
+            System.assertEquals(campaignListComponentCon.getSortByOptions()[0].getValue(), campaignListComponentCon.sortBy);
+            System.assertEquals(vfIECEBC_CampaignList.CAMPAIGNS_PER_PAGE, campaignListComponentCon.offset);
             
-            System.assertEquals(campaigns.size() - 1, campaignListCon.campaignsCount);
-            System.assert(campaignListCon.campaigns.size() <= vfIECEBC_CampaignList.CAMPAIGNS_PER_PAGE);
-            System.assertEquals(2, campaignListCon.page);
-            System.assertEquals(2, campaignListCon.maxPage);
-            System.assertEquals(campaignListCon.maxPage, campaignListCon.getPageOptions().size());
-            System.assertEquals(campaignListCon.getSortByOptions()[0].getValue(), campaignListCon.sortBy);
-            System.assertEquals(vfIECEBC_CampaignList.CAMPAIGNS_PER_PAGE, campaignListCon.offset);
-            
-            campaignListCon.sortBy = campaignListCon.getSortByOptions()[1].getValue();
+            campaignListComponentCon.sortBy = campaignListComponentCon.getSortByOptions()[1].getValue();
         }
+
+    }
+
+    public static void testCampaignListingActions() {
+		PageReference pageRef = Page.IECEBC_CampaignList;
+        Test.setCurrentPage(pageRef);
+        
+        User usr = initPreRunAs(true);
+        
+        List<EBC_Campaign__c> campaigns = new List<EBC_Campaign__c>{
+            new EBC_Campaign__c(Name = 'Foo Bar 1', Subject__c = 'Foo Bar 1', From_Name__c = 'FooBar1', Billing_Account__c = oBillingAccount.Id),
+            new EBC_Campaign__c(Name = 'Foo Bar 2', Subject__c = 'Foo Bar 2', From_Name__c = 'FooBar2', Billing_Account__c = oBillingAccount.Id),
+            new EBC_Campaign__c(Name = 'Foo Bar 3', Subject__c = 'Foo Bar 3', From_Name__c = 'FooBar3', Billing_Account__c = oBillingAccount.Id),
+            new EBC_Campaign__c(Name = 'Foo Bar 4', Subject__c = 'Foo Bar 4', From_Name__c = 'FooBar4', Billing_Account__c = oBillingAccount.Id)
+        };
+            
+        insert campaigns;
+        
+        System.runAs(usr) {
+            initPostRunAs();
+        	Test.startTest();
+            
+        	vfIECEBC_Layout layoutController = new vfIECEBC_Layout();
+            System.assertEquals(null, layoutController.pageLoad());
+            
+            vfIECEBC_CampaignList campaignListPageCon = new vfIECEBC_CampaignList();
+            
+            // Testing 
+            vfIECEBC_CampaignList campaignListComponentCon = new vfIECEBC_CampaignList();
+            campaignListComponentCon.isLimitedComponent = false;
+            campaignListComponentCon.sortBy = campaignListPageCon.sortBy;
+            vfIECEBC_CampaignList.CAMPAIGNS_PER_PAGE = campaigns.size();
+            
+         	// Duplicate
+         	campaignListComponentCon.selectedCampaignId = campaigns[1].Id;
+            campaignListComponentCon.selectedCampaign.Name = 'Duplicate 1';
+            PageReference duplicatePR = campaignListComponentCon.duplicate();
+            
+            EBC_Campaign__c newCampaign = [Select Id, Name, Subject__c, From_Name__c, Billing_Account__c From EBC_Campaign__c Where name = 'Duplicate 1'];
+            System.assertEquals(campaignListComponentCon.selectedCampaign.Name, newCampaign.Name);
+            System.assertEquals(campaigns[1].Subject__c, newCampaign.Subject__c);
+            System.assertEquals(campaigns[1].From_Name__c, newCampaign.From_Name__c);
+            System.assertEquals(campaigns[1].Billing_Account__c, newCampaign.Billing_Account__c);
+            System.assertNotEquals(campaigns[1].Id, newCampaign.Id);
+            System.assertEquals('/iec/IECEBC_Campaign?id=' + newCampaign.Id, duplicatePR.getUrl());
+            
+            System.assertEquals(campaigns.size(), campaignListComponentCon.campaigns.size());
+            campaignListComponentCon = new vfIECEBC_CampaignList();
+            campaignListComponentCon.isLimitedComponent = false;
+            campaignListComponentCon.sortBy = campaignListPageCon.sortBy;
+            vfIECEBC_CampaignList.CAMPAIGNS_PER_PAGE = campaigns.size() + 1;
+            System.assertEquals(campaigns.size() + 1, campaignListComponentCon.campaignsCount);
+            
+            // Delete
+         	campaignListComponentCon.selectedCampaignId = newCampaign.Id;
+            System.debug(campaignListComponentCon.selectedCampaign);
+            PageReference deletePR = campaignListComponentCon.deleteCampaign();
+            System.assertEquals(null, deletePR);
+            System.assertEquals(campaigns.size(), campaignListComponentCon.campaignsCount);
+            
+            // Rename
+         	campaignListComponentCon.selectedCampaignId = campaigns[1].Id;
+            campaignListComponentCon.selectedCampaign.Name = 'Updated name 1';
+            PageReference savePR = campaignListComponentCon.save();
+            System.assertEquals(null, savePR);
+            System.assertEquals(campaigns.size(), campaignListComponentCon.campaigns.size());
+            EBC_Campaign__c cUpdated = [Select Id, Name From EBC_Campaign__c Where Id = :campaigns[1].Id];
+            System.assertEquals('Updated name 1', cUpdated.Name);
+            
+        }
+
     }
     
     public static void testCampaignScheduling() {
@@ -255,6 +399,91 @@ public class vfIECEBC_TestSuite {
             
             System.assertEquals(campaignExtCon.con.getId(), pr.getParameters().get('id'));
             System.assertEquals(campaignExtCon.getPRByStepNumber(6, true).getUrl(), pr.getUrl());
+        }
+    }
+    
+    public static void testCampaignTemplate() {
+        
+		PageReference pageRef = Page.IECEBC_CampaignSchedule;
+        Test.setCurrentPage(pageRef);
+        
+        User usr = initPreRunAs(true);
+        
+        EBC_Master_Filter__c masterFilter = new EBC_Master_Filter__c();
+        masterFilter.Audience__c = 'Agency';
+        masterFilter.Billing_Account__c = oBillingAccount.Id;
+        insert masterFilter;
+        
+        EBC_Template__c tpl = new EBC_Template__c();
+        insert tpl;
+        
+        EBC_Campaign__c camp = new EBC_Campaign__c();
+        // Step 1
+        camp.Name = 'Foo Bar';
+        camp.Subject__c = 'Foo Subject';
+        camp.From_Name__c = 'Foo From Name';
+        camp.Is_Google_Analytics_Tracker_Active__c = true;
+        camp.Google_Analytics_Tracking_Code__c = 'UA-XXXXXX';
+        camp.Billing_Account__c = oBillingAccount.Id;
+        // Step 2
+//        camp.EBC_Master_Filter__c = masterFilter.Id;
+        insert camp;
+        
+        System.runAs(usr) {
+            initPostRunAs();
+        	Test.startTest();
+            
+            // Layout PageLoad
+        	vfIECEBC_Layout layoutController = new vfIECEBC_Layout();
+            System.assertEquals(null, layoutController.pageLoad());
+            
+            ApexPages.StandardController sc = new ApexPages.StandardController(camp);
+            vfIECEBC_Campaign campaignExtCon = new vfIECEBC_Campaign(sc);
+            
+            System.debug(campaignExtCon.campaign);
+            vfIECEBC_CampaignRecipient recipientExtCon = new vfIECEBC_CampaignRecipient(sc);
+            
+            // Check existing list
+            List<SelectOption> masterFilters = recipientExtCon.getMasterFilters();
+            System.assertEquals(1, masterFilters.size());
+            
+			// Step 1
+            vfIECEBC_RecipientEdit recipientEditCon = new vfIECEBC_RecipientEdit();
+            recipientEditCon.campaign = camp;
+            System.assertEquals(1, recipientEditCon.newListStepNumber);
+            recipientEditCon.newFilter.Audience__c = 'Agency';
+            recipientEditCon.reset();
+            recipientEditCon.newListStepNumber = 2;
+            recipientEditCon.validateNewFilter();
+            System.assertEquals(2, recipientEditCon.newListStepNumber);
+            
+            // Step 2
+            for(Id geoFilterPresetId : recipientEditCon.geoFilterPresets.keySet()) {
+                EBC_Master_Filter__c f = recipientEditCon.geoFilterPresets.get(geoFilterPresetId);
+                if (f.Name == 'Worldwide') {
+                    recipientEditCon.geoFilterPreset = geoFilterPresetId;
+                    break;
+                }
+            }
+            recipientEditCon.newListStepNumber = 3;
+            recipientEditCon.validateNewFilter();
+            System.assertEquals(3, recipientEditCon.newListStepNumber);
+            
+            Integer cnt = vfIECEBC_RecipientEdit.getNewFilterCnt(recipientEditCon.getNewFilterJSON());
+            System.assert(cnt > 0);
+            recipientEditCon.newFilter.Number_of_Recipients__c = cnt;
+            recipientEditCon.newListStepNumber = 4;
+            recipientEditCon.validateNewFilter();
+            System.assertEquals(4, recipientEditCon.newListStepNumber);
+            
+            
+            recipientEditCon.newFilter.Name = 'New filter name';
+            recipientEditCon.save();
+            
+            EBC_Master_Filter__c nf = [Select Id From EBC_Master_Filter__c Where Name = :recipientEditCon.newFilter.Name];
+            EBC_Campaign__c c = [Select Id, EBC_Master_Filter__c From EBC_Campaign__c Where Id = :camp.Id];
+            
+            System.assertEquals(nf.Id, c.EBC_Master_Filter__c);
         }
     }
     

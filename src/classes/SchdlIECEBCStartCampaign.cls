@@ -143,7 +143,7 @@ global class SchdlIECEBCStartCampaign implements Database.Batchable<sObject>, Da
     
     
     // Schedulable
-    global void execute(SchedulableContext SC)  {
+    public static void executeSingle() {
         List<EBC_Campaign__c> campaigns = [Select Id, EBC_Master_Filter__c, Audience__c, EBC_Design__r.External_Id__c From EBC_Campaign__c Where OwnerId = '0058E000001Lwad' AND Status__c = 'APPROVED' AND (Scheduled_Date__c <= :Datetime.now() or Scheduled_Date__c = null)];
         for(EBC_Campaign__c campaign : campaigns) {
             campaign.Status__c = 'STARTED';
@@ -177,6 +177,9 @@ global class SchdlIECEBCStartCampaign implements Database.Batchable<sObject>, Da
         }
         
         update campaigns;
+    }
+    global void execute(SchedulableContext SC)  {
+        executeSingle();
         
         reschedule();
     }
@@ -200,7 +203,7 @@ global class SchdlIECEBCStartCampaign implements Database.Batchable<sObject>, Da
     global static void reschedule() {
         cancel();
         
-        Datetime nextSchedules = Datetime.now().addMinutes(5);
+        Datetime nextSchedules = Datetime.now().addMinutes(15);
         String sch = String.valueOf(nextSchedules.second()) + ' ' + String.valueOf(nextSchedules.minute()) + ' * * * ?';
         
         Schedule(sch);

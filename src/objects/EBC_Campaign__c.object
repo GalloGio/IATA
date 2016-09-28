@@ -579,7 +579,7 @@ E.g. in the last test email was sent last April 1 at 9pm, this stores the total 
         <label>All</label>
         <language>en_US</language>
     </listViews>
-    <listViews>
+ <!--   <listViews>
         <fullName>EBC_Approvers_EBC_Campaign</fullName>
         <columns>NAME</columns>
         <columns>Campaign_ID__c</columns>
@@ -594,10 +594,7 @@ E.g. in the last test email was sent last April 1 at 9pm, this stores the total 
         <label>eBroadcast Approvers</label>
         <language>en_US</language>
         <queue>EBC_Approvers</queue>
-        <sharedTo>
-            <allInternalUsers></allInternalUsers>
-        </sharedTo>
-    </listViews>
+    </listViews> -->
     <nameField>
         <label>eBroadcast Campaign Name</label>
         <trackHistory>false</trackHistory>
