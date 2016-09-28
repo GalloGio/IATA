@@ -221,7 +221,6 @@
         <searchResultsAdditionalFields>Billing_Account__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Is_Reusable__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Parent_Template__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Template_Name__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>RECORDTYPE</searchResultsAdditionalFields>
     </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
