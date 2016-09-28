@@ -3,7 +3,7 @@
 		//Fetch the expense list from the Apex controller
 		var action = component.get("c.getIssuesAndPriorities");
 		var accountId = component.get("v.accountId");
-		component.set("v.editMode", false);
+		// component.set("v.editMode", false);
 
 		var showAllCheckBox = component.find("showAllCheckBox");
 		var showAll = showAllCheckBox.get("v.value");
@@ -26,7 +26,7 @@
 					 }
 				 }
 
-				 component.set("v.backup",backup);
+				component.set("v.issuesBackup",backup);
 				 component.set("v.issues", filteredIssues);
 
 				 }
@@ -35,7 +35,7 @@
 			$A.enqueueAction(action);
 	},
 	sortIssues : function (component, fieldname,reverse) {
-		var backup = component.get("v.backup");
+		var backup = component.get("v.issuesBackup");
 		backup.sort(function(a,b) {
 			// special treatment for Priority
 			var rating = {'High':1,'Medium':2,'Low':3};
@@ -57,11 +57,11 @@
 			else return -1;
 		});
 		if (reverse < 0) backup.reverse();
-		component.set("v.backup",backup);
+		component.set("v.issuesBackup",backup);
 		this.refreshIssues(component);
 	},
 	refreshIssues : function(component) {
-		var issues = component.get("v.backup");
+		var issues = component.get("v.issuesBackup");
 		var filteredIssues = new Array();
 
 		var showAllCheckBox = component.find("showAllCheckBox");
