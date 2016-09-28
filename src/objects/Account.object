@@ -8819,6 +8819,16 @@ Approval: Key Contact can see pending request approve it one by one</inlineHelpT
         <type>Date</type>
     </fields>
     <fields>
+        <fullName>Last_Integration_Date__c</fullName>
+        <description>Last date of Integration with &quot;SAP PI / Downstream Systems&quot;</description>
+        <externalId>false</externalId>
+        <label>Last Integration Date</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>DateTime</type>
+    </fields>
+    <fields>
         <fullName>Last_Modified_by_Source__c</fullName>
         <description>Date this record was last updated with master data from the source. Workflow updates this field.</description>
         <externalId>false</externalId>
