@@ -384,11 +384,6 @@
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
-        <label>Name</label>
-    </fieldSets>
-    <fieldSets>
-        <fullName>AMS_ownershiptoiataagent</fullName>
-        <description>fields to be migrated when we have a change of ownership process</description>
         <displayedFields>
             <field>ISSP_AMS_Total_Ownership__c</field>
             <isFieldManaged>false</isFieldManaged>
@@ -4471,7 +4466,7 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
     </fields>
     <fields>
         <fullName>Will_such_change_affect_the_premises__c</fullName>
-        <description>Will such change affect the premises that were investigated in the course of approving the Agentâ€™s application for registration?</description>
+        <description>Will such change affect the premises that were investigated in the course of approving the Agent’s application for registration?</description>
         <externalId>false</externalId>
         <label>Will such change affect the premises</label>
         <picklist>
