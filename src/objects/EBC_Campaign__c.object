@@ -594,9 +594,6 @@ E.g. in the last test email was sent last April 1 at 9pm, this stores the total 
         <label>eBroadcast Approvers</label>
         <language>en_US</language>
         <queue>EBC_Approvers</queue>
-        <sharedTo>
-            <allInternalUsers></allInternalUsers>
-        </sharedTo>
     </listViews>
     <nameField>
         <label>eBroadcast Campaign Name</label>
