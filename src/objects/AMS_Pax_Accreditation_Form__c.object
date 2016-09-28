@@ -379,11 +379,6 @@
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
-        <label>Name</label>
-    </fieldSets>
-    <fieldSets>
-        <fullName>AMS_ownershiptoiataagent</fullName>
-        <description>fields to be migrated when we have a change of ownership process</description>
         <displayedFields>
             <field>ISSP_AMS_Total_Ownership__c</field>
             <isFieldManaged>false</isFieldManaged>
