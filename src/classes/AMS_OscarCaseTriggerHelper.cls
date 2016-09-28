@@ -353,7 +353,8 @@ public class AMS_OscarCaseTriggerHelper {
 
             
             if(c.Origin != 'Portal'){
-                c.Subject = c.reason1__c + ' - ' + oscars.get(c.Oscar__c).Account__r.Name;
+                if(c.reason1__c != null)
+                    c.Subject = c.reason1__c + ' - ' + oscars.get(c.Oscar__c).Account__r.Name;
             }
         }
 
