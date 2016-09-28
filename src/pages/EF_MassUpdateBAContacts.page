@@ -1,8 +1,8 @@
 <apex:page standardController="EF_Billing_Agreement__c">
-    <apex:form >
-        <c:RelatedList objectName="EF_Contact_Relationship__c"
-            parentFieldName="EF_Airline_Billing_Agreement__c"
-            parentFieldId="{!EF_Billing_Agreement__c.Id}"       
+    <apex:form>
+        <c:RelatedList objectName="EF_Contact_Relationship__c" 
+            parentFieldName="EF_Airline_Billing_Agreement__c" 
+            parentFieldId="{!EF_Billing_Agreement__c.Id}" 
             fieldsCSV="Contact__c,Contact_Account__c,Role__c,Status__c" 
             editableFieldsCSV="Role__c,Status__c" 
             updateAllOrNone="false" 
