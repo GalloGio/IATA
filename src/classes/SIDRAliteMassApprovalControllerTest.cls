@@ -44,7 +44,7 @@ private class SIDRAliteMassApprovalControllerTest {
         //mark case and approve it
         controller.SelectAllCheckbox = true;
         controller.SelectAll();
-        controller.confirmApproval = true;
+        //controller.confirmApproval = true;
         controller.confirmMassApproveCases();
         controller.massApproveCases();
         test.stopTest();
@@ -120,7 +120,7 @@ private class SIDRAliteMassApprovalControllerTest {
         controller.SelectAllCheckbox = true;
         controller.SelectAll();
         controller.confirmMassApproveCases();
-        controller.confirmApproval = true;
+        //controller.confirmApproval = true;
         controller.massApproveCases();
         test.stopTest();
 
@@ -193,7 +193,7 @@ private class SIDRAliteMassApprovalControllerTest {
         controller.SelectAllCheckbox = true;
         controller.SelectAll();
         controller.confirmMassApproveCases();
-        controller.confirmApproval = true;
+        //controller.confirmApproval = true;
         controller.massApproveCases();
         test.stopTest();
 
@@ -267,7 +267,7 @@ private class SIDRAliteMassApprovalControllerTest {
         controller.SelectAllCheckbox = true;
         controller.SelectAll();
         controller.confirmMassApproveCases();
-        controller.confirmApproval = true;
+        //controller.confirmApproval = true;
         controller.massApproveCases();
         test.stopTest();
 
@@ -342,7 +342,7 @@ private class SIDRAliteMassApprovalControllerTest {
         controller.SelectAllCheckbox = true;
         controller.SelectAll();
         controller.confirmMassApproveCases();
-        controller.confirmApproval = true;
+        //controller.confirmApproval = true;
         controller.massApproveCases();
         test.stopTest();
 
@@ -418,7 +418,7 @@ private class SIDRAliteMassApprovalControllerTest {
         controller.SelectAllCheckbox = true;
         controller.SelectAll();
         controller.confirmMassApproveCases();
-        controller.confirmApproval = true;
+        //controller.confirmApproval = true;
         controller.massApproveCases();
         test.stopTest();
 
