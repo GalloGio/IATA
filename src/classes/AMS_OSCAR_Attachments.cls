@@ -68,7 +68,7 @@ public Case oscCase {get;set;}
     public AMS_OSCAR_Attachments() {
 
         String sObjId = ApexPages.currentPage().getParameters().get('Id');
-        cse = [Select Id, Status from Case where OSCAR__c = :sObjId AND RecordType.Name = 'OSCAR Communication' AND ParentId = null];
+        cse = [Select Id, Status from Case where OSCAR__c = :sObjId AND RecordType.Name = 'OSCAR Communication' AND ( ParentId = null or Parent.RecordType.Name != 'OSCAR Communication' ) ];
         
         // check if current user is Admin
         Profile profile = [Select id, Name from Profile where Id = :UserInfo.getProfileId()];

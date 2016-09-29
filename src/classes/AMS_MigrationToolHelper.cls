@@ -50,11 +50,70 @@ public with sharing class AMS_MigrationToolHelper {
 		return cont;
 	}
 
+	private static void alignOwners(AMS_Pax_Accreditation_Form__c accreditationObj, Case commCase){
+
+		List<AMS_Accreditation_Contact__c> contactsToUpdate = new List<AMS_Accreditation_Contact__c>();
+
+		List<AMS_Accreditation_Contact__c> contacts = [SELECT Id, Legacy_External_ID__c, AMS_Ownership_Role__c, Contact__c, Person_AMS__c,   Company__c, Name from AMS_Accreditation_Contact__c where AMS_Pax_Accreditation_Form__c = :accreditationObj.Id and AMS_Ownership_Role__c = null and Agency_owner__c = true];
+
+		List<AMS_Account_Role__c> roles = [SELECT Id, Contact__c, Person__c, Legacy_External_ID__c, Owner_Account__c,Owner_Name__c,Person__r.Contact__c from AMS_Account_Role__c where Active__c = true and Account__c = :commCase.AccountId];
+
+		for(AMS_Accreditation_Contact__c contact: contacts){
+
+			for(AMS_Account_Role__c role: roles){
+
+				if(contact.Contact__c != null && contact.Contact__c == role.Contact__c){
+					contact.AMS_Ownership_Role__c = role.Id;
+					contactsToUpdate.add(contact);
+					break;
+				}
+
+				if(contact.Contact__c != null && role.Person__c != null && role.Person__r.Contact__c != null && contact.Contact__c == role.Person__r.Contact__c){
+					contact.AMS_Ownership_Role__c = role.Id;
+					contactsToUpdate.add(contact);
+					break;
+				}
+
+				if(contact.Person_AMS__c != null && contact.Person_AMS__c == role.Person__c){
+					contact.AMS_Ownership_Role__c = role.Id;
+					contactsToUpdate.add(contact);
+					break;
+				}
+
+				if(contact.Company__c != null && contact.Company__c == role.Owner_Account__c){
+					contact.AMS_Ownership_Role__c = role.Id;
+					contactsToUpdate.add(contact);
+					break;
+				}
+
+				if(contact.Legacy_External_Id__c != null && contact.Legacy_External_Id__c == role.Legacy_External_ID__c){
+					contact.AMS_Ownership_Role__c = role.Id;
+					contactsToUpdate.add(contact);
+					break;
+				}
+
+				if(contact.Contact__c == null && contact.Person_AMS__c == null && contact.Company__c == null && contact.Legacy_External_Id__c == null && Role.Owner_Name__c != null){
+					if(contact.Name == role.Owner_Name__c){
+						contact.AMS_Ownership_Role__c = role.Id;
+						contactsToUpdate.add(contact);
+						break;
+					}
+				}
+			}
+
+		}
+
+		if(!contactsToUpdate.isEmpty())
+			update contactsToUpdate;
+	}
+
 	private static CaseContainer processFromPortal(CaseContainer cont){
 
 		Case caseToProcess = cont.c;
 
 		caseToProcess.RecordTypeId = rtCommCase;
+
+		String caseStatus = caseToProcess.Status;
 
         update caseToProcess;
         
@@ -71,9 +130,11 @@ public with sharing class AMS_MigrationToolHelper {
 			return cont;
 		}
 
+		alignOwners(accreditationObj,caseToProcess);
+
 		String oscarId = AMS_RecordCreatorWebservice.createAccreditation(caseToProcess.AccountId, accreditationObj.Id, processType, caseToProcess.Id);
 
-		postOscarUpdate(oscarId,caseToProcess.CaseNumber, caseToProcess.AccountId, true);
+		postOscarUpdate(oscarId,caseToProcess.CaseNumber, caseToProcess.AccountId, true, caseStatus,caseToProcess);
 
 		cont.oscarId = oscarId;
 		cont.oscarCreated = new AMS_OSCAR__c(Id = oscarId, Name = caseToProcess.CaseNumber);
@@ -212,7 +273,7 @@ public with sharing class AMS_MigrationToolHelper {
 		contact.Email__c = role.Contact_Email__c;
 		contact.Financial_interest__c = role.Percentage__c;
 		contact.First_name__c = role.Contact__c != null ? role.Contact__r.FirstName : ( role.Person__c != null ? role.Person__r.First_name__c : ''); 
-		contact.Last_name__c = role.Contact__c != null ? role.Contact__r.LastName : ( role.Person__c != null ? role.Person__r.Lastname__c : '_'); 
+		contact.Last_name__c = (role.Contact__c == null && role.Person__c == null && role.Owner_Account__c == null) ? role.Owner_Name__c : ( role.Contact__c != null ? role.Contact__r.LastName : ( role.Person__c != null ? role.Person__r.Lastname__c : '_')); 
 		contact.Legacy_External_Id__c = role.Legacy_External_ID__c;
 		contact.Name = role.Owner_Name__c != null ? role.Owner_Name__c : (contact.First_name__c + contact.Last_name__c);
 		contact.Person_AMS__c = role.Person__c;
@@ -248,32 +309,71 @@ public with sharing class AMS_MigrationToolHelper {
 
 	}
 
-	private static void postOscarUpdate(String oscarId, String oscarName, Id accountId, boolean isComingFromPortal){
+	private static AMS_OSCAR__c updateDatesFromSAAM(AMS_OSCAR__c oscar, Case saamCase){
+		
+		oscar.AIMS_updated__c = saamCase.AIMS_updated__c;
+		oscar.Assessment_Performed_Date__c = saamCase.Assessment_Performed_Date__c;
+
+		try{
+		
+			oscar.Bank_Guarantee_amount__c = Integer.valueof(saamCase.Bank_Guarantee_amount__c);
+		
+		}catch(Exception e){
+			// shhhhhhhhhhhhhhh ...
+		}
+
+		oscar.Bank_Guarantee_deadline__c = saamCase.Bank_Guarantee_deadline__c;
+		oscar.Bank_Guarantee_received__c = saamCase.Bank_Guarantee_received__c;
+		oscar.Bank_Guarantee_requested__c = saamCase.Bank_Guarantee_requested__c;
+		oscar.Change_effective_as_of__c = saamCase.Change_effective_as_of__c;
+		oscar.Criteria_remarks__c = saamCase.Criteria_remarks__c;
+		oscar.Documentation_remarks__c = saamCase.Documentation_remarks__c;
+		oscar.Dossier_Reception_Date__c = saamCase.Dossier_reception_date__c;
+		oscar.Fees_refund_requested__c = saamCase.Fees_refund_requested__c;
+		oscar.Fees_refund_requested__c = saamCase.Fees_refund_requested__c;
+		oscar.Finalization_checklist__c = saamCase.Finalization_checklist__c;
+		oscar.Finalized_in_AIMS__c = saamCase.Finalized_in_AIMS__c;
+		oscar.Financial_Assessment_deadline__c = saamCase.Financial_Assessment_deadline__c;
+		oscar.Financial_Assessment_requested__c = saamCase.Financial_Assessment_requested__c;
+		oscar.Financial_Review_Result__c = saamCase.Financial_Review_Result__c;
+		oscar.Invoice_number__c = saamCase.Invoice_number__c;
+		oscar.Local_Inspection_compliant__c = saamCase.Local_Inspection_compliant__c;
+		oscar.Local_Inspection_deadline__c = saamCase.Local_Inspection_deadline__c;
+		oscar.Local_Inspection_received__c = saamCase.Local_Inspection_received__c;
+		oscar.Local_Inspection_requested__c = saamCase.Local_Inspection_requested__c;
+		oscar.Process_Start_Date__c = saamCase.Process_Start_Date__c;
+		oscar.Proof_of_payment_received__c = saamCase.Proof_of_payment_received__c;
+		oscar.PSAA_EACP_Agreement_received__c = saamCase.PSAA_EACP_Agreement_received__c;
+		oscar.PSAA_signed_copy_sent__c = saamCase.PSAA_signed_copy_sent__c;
+		oscar.SAAM_Deadline_Date__c = saamCase.SAAM_Deadline_Date__c;
+
+		return oscar;
+	}
+
+	private static void postOscarUpdate(String oscarId, String oscarName, Id accountId, boolean isComingFromPortal, String caseStatus, Case oscarCase){
 
 		List<AMS_OSCAR__c> oscars = [SELECT Id, Name, First_Step_Completed__c from AMS_OSCAR__c where Id = :oscarId];
-
-		boolean toUpdate = false;
 
 		if(!oscars.isEmpty()){
 
 			AMS_OSCAR__c oscar = oscars.get(0);
 
+			oscar.Status__c = caseStatus;
+
 			if(!isComingFromPortal){
 
 				oscar.Name = oscarName;
-				toUpdate = true;
 			}
 
 			List<Agency_Applied_Change_code__c> changeCodes = [SELECT Id from Agency_Applied_Change_code__c where Account__c = :accountId and Change_Code__c = 'NEW'];
 
 			if(!changeCodes.isEmpty()){
-
 				oscar.First_Step_Completed__c = true;
-				toUpdate = true;
 			}
 
-			if(toUpdate)
-				update oscar;
+			oscar = updateDatesFromSAAM(oscar,oscarCase);
+
+			update oscar;
 		}
 
 	}
@@ -294,6 +394,8 @@ public with sharing class AMS_MigrationToolHelper {
 			return cont;
 		}
 
+		String caseStatus = caseToProcess.Status;
+
 		caseToProcess.RecordTypeId = rtCommCase;
 
         update caseToProcess;
@@ -313,7 +415,7 @@ public with sharing class AMS_MigrationToolHelper {
 
 		String oscarId = AMS_RecordCreatorWebservice.createAccreditation(caseToProcess.AccountId, accreditationObj.Id, processType, caseToProcess.Id);
 
-		postOscarUpdate(oscarId,caseToProcess.CaseNumber, caseToProcess.AccountId, false);
+		postOscarUpdate(oscarId,caseToProcess.CaseNumber, caseToProcess.AccountId, false,caseStatus,caseToProcess);
 
 		cont.oscarId = oscarId;
 		cont.oscarCreated = new AMS_OSCAR__c(Id = oscarId, Name = caseToProcess.CaseNumber);
