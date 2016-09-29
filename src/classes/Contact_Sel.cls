@@ -80,13 +80,13 @@ public without sharing class Contact_Sel extends Selector {
 
         return new map<Id,Contact>([
                                     SELECT 
-                                        id,FirstName,LastName,Email,Phone,Tax_1_ID__c,Tax_2_ID__c,Title,Name,Salutation,
+                                        Id,FirstName,LastName,Email,Phone,Tax_1_ID__c,Tax_2_ID__c,Title,Name,Salutation,
                                         MailingStreet,MailingCity,MailingPostalCode,MailingState,MailingCountry, IsDeleted,
                                         Account.BillingStreet,Account.BillingCity,Account.BillingPostalCode,Account.BillingState,Account.BillingCountry,
                                         Account.ShippingStreet,Account.ShippingCity,Account.ShippingPostalCode,Account.ShippingState,Account.ShippingCountry,
                                         Account.Sector__c, Account.Name, Account.Parent.Name, Account.Parent.Sector__c, Account.Parent.BillingStreet, 
                                         Account.Parent.BillingCity,Account.Parent.BillingPostalCode,Account.Parent.BillingState,Account.Parent.BillingCountry, 
-                                        Account.ParentId,Account.SoldTo_Location__c, AccountId,
+                                        Account.ParentId,Account.SoldTo_Location__c, AccountId,BillTo_Location__r.Account__r.SoldTo_Location__c,
                                         BillTo_Location__c, BillTo_Location__r.Address__c,BillTo_Location__r.VAT_Number__c,BillTo_Location__r.SAP_Id__c,
                                         BillTo_Location__r.Street__c,BillTo_Location__r.City__c,BillTo_Location__r.ZipCode__c,BillTo_Location__r.Account__c,
                                         BillTo_Location__r.ISO_Country_Name__c,BillTo_Location__r.ISO_Country_Code__c,BillTo_Location__r.Account_Name__c,

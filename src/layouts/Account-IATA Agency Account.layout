@@ -471,6 +471,14 @@
         <relatedList>RelatedAccountSalesTeam</relatedList>
     </relatedLists>
     <relatedLists>
+        <fields>ORDERS.ORDER_NUMBER</fields>
+        <fields>ORDERS.STATUS</fields>
+        <fields>ORDERS.EFFECTIVE_DATE</fields>
+        <fields>CONTRACT.CONTRACT_NUMBER</fields>
+        <fields>ORDERS.TOTAL_AMOUNT</fields>
+        <relatedList>RelatedOrderList</relatedList>
+    </relatedLists>
+    <relatedLists>
         <customButtons>Assign_New_Financial_Assessment_Contact</customButtons>
         <fields>FULL_NAME</fields>
         <fields>CONTACT.TITLE</fields>
@@ -485,6 +493,20 @@
         <relatedList>RelatedContactList</relatedList>
         <sortField>FULL_NAME</sortField>
         <sortOrder>Asc</sortOrder>
+    </relatedLists>
+    <relatedLists>
+        <excludeButtons>New</excludeButtons>
+        <fields>Active__c</fields>
+        <fields>Contact__c</fields>
+        <fields>Person__c</fields>
+        <fields>Owner_Name__c</fields>
+        <fields>Owner_Account__c</fields>
+        <fields>Percentage__c</fields>
+        <fields>Contact_Email__c</fields>
+        <fields>Termination_Date__c</fields>
+        <relatedList>AMS_Account_Role__c.Account__c</relatedList>
+        <sortField>Active__c</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <fields>Contact_Name__c</fields>
@@ -508,6 +530,20 @@
         <fields>CASES.RECORDTYPE</fields>
         <relatedList>RelatedCaseList</relatedList>
         <sortField>CASES.CREATED_DATE_DATE_ONLY</sortField>
+        <sortOrder>Desc</sortOrder>
+    </relatedLists>
+    <relatedLists>
+        <excludeButtons>New</excludeButtons>
+        <fields>Active__c</fields>
+        <fields>Change_Code__c</fields>
+        <fields>Bulletin_Information__c</fields>
+        <fields>OSCAR__c</fields>
+        <fields>Reason_Code__c</fields>
+        <fields>Reason_Description__c</fields>
+        <fields>Created_Date_To_Show__c</fields>
+        <fields>CREATEDBY_USER</fields>
+        <relatedList>Agency_Applied_Change_code__c.Account__c</relatedList>
+        <sortField>Created_Date_To_Show__c</sortField>
         <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
@@ -536,10 +572,6 @@
         <relatedList>Financial_Security__c.Account__c</relatedList>
         <sortField>NAME</sortField>
         <sortOrder>Asc</sortOrder>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <relatedList>AMS_Account_Role__c.Account__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
@@ -633,6 +665,7 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>SAP_Id__c</fields>
         <fields>Contact__c</fields>
         <fields>Address__c</fields>
         <fields>Country__c</fields>

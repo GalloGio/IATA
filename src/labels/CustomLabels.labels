@@ -1516,6 +1516,27 @@ Case description: {!Case.Description}
         <value>Download Invoice</value>
     </labels>
     <labels>
+        <fullName>EF_Account_Disallow_BA</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>E&amp;F Disallow Account Relationships</shortDescription>
+        <value>The selected Client or Airline has E&amp;F setting for &quot;Allow Airline Billing Agreements&quot; set to &quot;Not Allowed&quot;. Please change this before creating a new Billing Agreement or select a different Account.</value>
+    </labels>
+    <labels>
+        <fullName>EF_Currency_Not_In_Contract_Error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>E&amp;F Currency Not In Contract Error</shortDescription>
+        <value>The currency select needs to be present in the related Contract</value>
+    </labels>
+    <labels>
+        <fullName>EF_Line_Item_Not_In_Contract_Error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>E&amp;F Line Item Not In Contract Error</shortDescription>
+        <value>Can&apos;t select E&amp;F Material not present in the related Contract</value>
+    </labels>
+    <labels>
         <fullName>E_mail_to_Case_IS_Help_Desk</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -9513,6 +9534,14 @@ Select at least one Authorized Signatory, and choose the Financial Assessment Co
         <value>Accept</value>
     </labels>
     <labels>
+        <fullName>ISSP_AcceptTermsAndConditions</fullName>
+        <categories>ISSP_AvailableServices</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AcceptTermsAndConditions</shortDescription>
+        <value>I have read and understood</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Accept_Terms_Warning</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
@@ -12482,6 +12511,38 @@ this is the tiess topic help</value>
         <value>This service enables you to apply for joining BSP or CASS online.</value>
     </labels>
     <labels>
+        <fullName>ISSP_KAVI</fullName>
+        <categories>ISSP_Homepage</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_KAVI</shortDescription>
+        <value>Standards Setting Workspace</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_KAVI_Terms_Conditions_Part1</fullName>
+        <categories>ISSP_AvailableServices</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_KAVI_Terms_Conditions_Part1</shortDescription>
+        <value>Participation in IATA standards development activities including meetings and all interactions in the collaboration environment are subject to Provisions for the Conduct of the IATA Traffic Conferences.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_KAVI_Terms_Conditions_Part2</fullName>
+        <categories>ISSP_AvailableServices</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_KAVI_Terms_Conditions_Part2</shortDescription>
+        <value>The foregoing applies equally to email discussions, instant messaging and social media discussions whether directed to announced participants or other parties not present in the meeting or not working in the collaboration environment.  Participants are reminded that live streaming of any meeting to parties not present in person is not permitted except as indicated by and with the express permission and knowledge of the Chairperson and IATA and only in the event that specific participation on a given item from a party not present in person is required.  Unauthorized recording of all meetings is prohibited.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_KAVI_Terms_Conditions_Part3</fullName>
+        <categories>ISSP_AvailableServices</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_KAVI_Terms_Conditions_Part3</shortDescription>
+        <value>Pursuant thereto, participants will not discuss or take action to develop fares or charges, nor will it discuss or take action on remuneration levels of any intermediaries engaged in the sale of passenger air transportation.  Participants also have no authority to discuss or reach agreement on the allocation of markets, the division or sharing of traffic or revenues, or the number of flights or capacity to be offered in any market.  Delegates are cautioned that any discussion regarding such matters, or concerning any other competitively sensitive topics outside the scope of the agenda, either on the floor or off, is strictly prohibited.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_LanguageDependentLink</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -15105,6 +15166,38 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <protected>false</protected>
         <shortDescription>KALE_SUPPORT_EMAIL</shortDescription>
         <value>sis.servicedesk@accelya.com</value>
+    </labels>
+    <labels>
+        <fullName>Kavi_email_notification_part1</fullName>
+        <categories>service portal email notification</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Kavi email notification part 1</shortDescription>
+        <value>You may now access the IATA Standards Setting Workspace, using your existing IATA log on credentials.</value>
+    </labels>
+    <labels>
+        <fullName>Kavi_email_notification_part_1_bis</fullName>
+        <categories>service portal email notification</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Kavi email notification part 1 bis</shortDescription>
+        <value>You can log into the standard setting platform directly at any time using this link</value>
+    </labels>
+    <labels>
+        <fullName>Kavi_email_notification_part_2</fullName>
+        <categories>portal service notification</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Kavi email notification part 2</shortDescription>
+        <value>Details of all industry standard setting groups that use this platform will be visible. Please select the group(s) in which you plan to actively participate and follow  “join the group”.</value>
+    </labels>
+    <labels>
+        <fullName>Kavi_email_notification_part_3</fullName>
+        <categories>service portal email notification</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Kavi email notification part 3</shortDescription>
+        <value>If you forget your password, or having trouble logging in, please visit this link</value>
     </labels>
     <labels>
         <fullName>L2_Support_Priority_escalation_check</fullName>
@@ -18019,7 +18112,7 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Signaturit Allowed Users</shortDescription>
-        <value>005w0000004ohsY;00520000000rfl7AAA;005w00000047RhzAAE;00520000001VbBNAA0;005w0000002te47AAA;00520000001WIUJ;00520000001Wo2s;00520000002PRqS;00520000002qSkO;005w0000003Z3il;00520000002Q7A4;005200000014b1i;00520000002OqCK;00520000000lGDb;005w00000048WJD;00520000000hdUI;00520000001UEA0;00520000001VhfB;00520000001WToeAAG;005w0000003VyOAAA0</value>
+        <value>005w0000004ohsY;00520000000rfl7AAA;005w00000047RhzAAE;00520000001VbBNAA0;005w0000002te47AAA;00520000001WIUJ;00520000001Wo2s;00520000002PRqS;00520000002qSkO;005w0000003Z3il;00520000002Q7A4;005200000014b1i;00520000002OqCK;00520000000lGDb;005w00000048WJD;00520000000hdUI;00520000001UEA0;00520000001VhfB;00520000001WToeAAG;005w0000003VyOAAA0;00520000002rzLU;00520000001Wfth;00520000002Q38Y;005w0000004gSUJ;005w0000003X6vd;005w0000004BVdv</value>
     </labels>
     <labels>
         <fullName>Signaturit_Endpoint</fullName>
