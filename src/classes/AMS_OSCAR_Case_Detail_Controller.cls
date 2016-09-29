@@ -15,6 +15,23 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
     // variable oscarObj by using the getRecord method from the standard
     // controller.
     public AMS_OSCAR_Case_Detail_Controller() {
+        this.objectId = ApexPages.currentPage().getParameters().get('id');
+
+        if(objectId == null)
+            return;
+
+        this.oscarObj = fetchOscarFields(objectId, isObjectCase(objectId));
+
+        if(this.oscarObj != null && this.oscarObj.AMS_Online_Accreditation__c != null){
+            this.accreditationObj = fetchAccreditationFields(this.oscarObj.AMS_Online_Accreditation__c);
+
+        }else{
+            System.debug('Could not fetch any Oscar or does not have an accreditation object');
+        }
+
+    }
+
+    public AMS_OSCAR_Case_Detail_Controller(ApexPages.StandardController std) {
 
         this.objectId = ApexPages.currentPage().getParameters().get('id');
 
