@@ -3,6 +3,7 @@
     <apiVersion>37.0</apiVersion>
     <availableInTouch>false</availableInTouch>
     <confirmationTokenRequired>false</confirmationTokenRequired>
+    <description>For Mass-updating Contract record for EF project</description>
     <label>EF_MassUpdateContract</label>
     <description>For Mass-updating Contract record for EF project</description>
 </ApexPage>
