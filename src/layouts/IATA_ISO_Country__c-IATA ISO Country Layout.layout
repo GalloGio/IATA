@@ -194,6 +194,10 @@
                 <behavior>Edit</behavior>
                 <field>original_bank_details_not_required__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Enable_Minor_Changes_from_Portal__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>

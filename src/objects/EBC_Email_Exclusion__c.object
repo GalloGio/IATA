@@ -21,6 +21,10 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -57,7 +61,7 @@
         <externalId>true</externalId>
         <inlineHelpText>The Email Address to opt out</inlineHelpText>
         <label>Email</label>
-        <required>true</required>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Email</type>
         <unique>false</unique>
@@ -95,6 +99,34 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Related_Agency__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>GDP Product Account View that received the email that result in an exclusion</description>
+        <externalId>false</externalId>
+        <inlineHelpText>GDP Product Account View that received the email that result in an exclusion</inlineHelpText>
+        <label>Related Agency</label>
+        <referenceTo>GDP_Products_Account_View__c</referenceTo>
+        <relationshipLabel>EBC Email Exclusions</relationshipLabel>
+        <relationshipName>EBC_Email_Exclusions</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Related_Agent__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>ID Card that received the email that result in an exclusion</description>
+        <externalId>false</externalId>
+        <inlineHelpText>ID Card that received the email that result in an exclusion</inlineHelpText>
+        <label>Related Agent</label>
+        <referenceTo>ID_Card__c</referenceTo>
+        <relationshipLabel>EBC Email Exclusions</relationshipLabel>
+        <relationshipName>EBC_Email_Exclusions</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>Source_Campaign__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
@@ -102,6 +134,7 @@
         <referenceTo>EBC_Campaign__c</referenceTo>
         <relationshipLabel>EBC Email Exclusions</relationshipLabel>
         <relationshipName>EBC_Email_Exclusions</relationshipName>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -131,7 +164,6 @@
             <restrictedPicklist>true</restrictedPicklist>
             <sorted>false</sorted>
         </picklist>
-        <required>true</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -160,6 +192,11 @@
         <filterScope>Everything</filterScope>
         <label>All</label>
         <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>All1</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
     </listViews>
     <nameField>
         <label>EBC Exclusion Name</label>

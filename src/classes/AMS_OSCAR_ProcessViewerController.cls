@@ -218,7 +218,7 @@ public class AMS_OSCAR_ProcessViewerController {
                     AMS_Online_Accreditation__r.Ready_for_Accreditation__c, Validation_Status__c, Issue_billing_document__c, AMS_Generate_COR_change_code__c,
                     Country_Specifics_Approval__c,Update_AIMS_Approval__c,Update_AIMS_Disapproval__c,Close_IFAP_Disapproval__c,Cancel_Inspection_Requests_Disapproval__c,
                     Update_AIMS_Rejection__c,Close_IFAP_Rejection__c,Cancel_Inspection_Requests_Rejection__c,Country_Specifics_Disapproval__c,Country_Specifics_Rejection__c,
-                    Roll_back_account_data__c  
+                    Roll_back_account_data__c,AMS_Correction_change_code__c  
                     from AMS_OSCAR__c where Id =: oscarId LIMIT 1];
 
         if(!oscars.isEmpty())

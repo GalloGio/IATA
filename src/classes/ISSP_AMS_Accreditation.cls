@@ -98,7 +98,7 @@ public without sharing class ISSP_AMS_Accreditation {
     public string lblNoCStepA {get; set;}
     public string lblNoCStepC {get; set;}
     public string lblNoCStepD {get; set;}
-	public string lblStep1Title {get; set;}
+    public string lblStep1Title {get; set;}
     public string lblNoCRequest {get; set;}
     public string lblPAXTitle {get; set;}
     public string lblCargoTitle {get; set;}
@@ -298,9 +298,9 @@ public without sharing class ISSP_AMS_Accreditation {
         lblStep1Title = Label.ISSP_AMS_Step1_Title;
         lblNoCRequest = Label.ISSP_AMS_NoC_Request_for_Change;
         lblPAXTitle = Label.ISSP_AMS_StepsAll_Travel_Title;
-    	lblCargoTitle = Label.ISSP_AMS_StepsAll_Cargo_Title;
-    	lblEACPTitle = Label.ISSP_AMS_StepsAll_Cargo_EACP_Intermediary_Title;
-    	lblCASSTitle = Label.ISSP_AMS_StepsAll_Cargo_CASS_Associate_Title;
+        lblCargoTitle = Label.ISSP_AMS_StepsAll_Cargo_Title;
+        lblEACPTitle = Label.ISSP_AMS_StepsAll_Cargo_EACP_Intermediary_Title;
+        lblCASSTitle = Label.ISSP_AMS_StepsAll_Cargo_CASS_Associate_Title;
     
         Apexpages.currentPage().getHeaders().put('content-disposition', 'inline; filename=Application_Summary.pdf');
         if (ApexPages.currentPage().getParameters().containsKey('step'))
@@ -352,7 +352,7 @@ public without sharing class ISSP_AMS_Accreditation {
                 if(isStep1) { //Set display of STEP A to always be user's portal language
                     displayLanguage = UserInfo.getLanguage();
                 } else {
-                	displayLanguage = newCase.Case_Language__c;    
+                    displayLanguage = newCase.Case_Language__c;    
                 }
                
                 if (applyLanguage == 'en_US') {

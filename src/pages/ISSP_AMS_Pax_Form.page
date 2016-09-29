@@ -422,11 +422,11 @@
                 }
                 document.getElementById(ownerModalFields[6]).disabled = true;
                  if($j('[id$=contactStreet]').parent().is('div')) {
-                	$j('[id$=contactStreet]').unwrap().prev('.requiredBlock').remove();
-                	$j('[id$=contactCity]').unwrap().prev('.requiredBlock').remove();
+                    $j('[id$=contactStreet]').unwrap().prev('.requiredBlock').remove();
+                    $j('[id$=contactCity]').unwrap().prev('.requiredBlock').remove();
                     $j('[id$=contactFinInterest]').unwrap().prev('.requiredBlock').remove();
-                	$j('[id$=contactTimeToBusiness]').unwrap().prev('.requiredBlock').remove();
-                	$j('[id$=contactBlock]').find('.contactcountry').unwrap().prev('.requiredBlock').remove();
+                    $j('[id$=contactTimeToBusiness]').unwrap().prev('.requiredBlock').remove();
+                    $j('[id$=contactBlock]').find('.contactcountry').unwrap().prev('.requiredBlock').remove();
                 }
             }
 
@@ -834,7 +834,7 @@
                     </apex:pageBlockSection>
                     
                     <apex:outputText rendered="{!amsOfficeType=='Branch'}">
-                    	<div class="col-md-12 bg-info"><strong>{!$Label.ISSP_AMS_Section_2_SubSection_2}</strong></div>
+                        <div class="col-md-12 bg-info"><strong>{!$Label.ISSP_AMS_Section_2_SubSection_2}</strong></div>
                     </apex:outputText>
                     
                     <apex:pageBlockSection columns="1" id="section2_2">
@@ -951,11 +951,11 @@
                    <apex:outputText value="{!txtLocalAgencyDetailsPleaseEnter}"/>
                    <apex:outputtext ><!--empty: move following field to next row --></apex:outputtext>
                    <apex:pageBlockSectionItem labelStyle="width:10%;text-align:left" dataStyle="width:20%">
-                       	<apex:outputLabel value="{!txtLocalAgencyDetailsLegalName}"/>
-                   		<apex:outputPanel >
-                       		<apex:inputField value="{!newForm.Local_Legally_Registered_Name__c}" />
+                        <apex:outputLabel value="{!txtLocalAgencyDetailsLegalName}"/>
+                        <apex:outputPanel >
+                            <apex:inputField value="{!newForm.Local_Legally_Registered_Name__c}" />
                             <apex:image value="/img/msg_icons/info16.png" style="margin-left:3px;" title="{!txtLocalAgencyDetailsNoCompany}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
-                   		</apex:outputPanel>
+                        </apex:outputPanel>
                    </apex:pageBlockSectionItem>                   
                    <apex:outputtext ><!--empty: move following field to next row --></apex:outputtext>
                    <apex:outputtext ><!--empty: move following field to next row --></apex:outputtext>
@@ -1436,8 +1436,8 @@
                             <apex:outputText rendered="{!isocountry.Local_language_Agency_details_required__c}">
                             <tr><td class="modalrow">
                                 <apex:outputPanel >
-                                	<apex:outputLabel value="{!txtLocalAgencyDetailsFirstNameLocal}" />&nbsp;
-                                	<apex:image value="/img/msg_icons/info16.png" style="margin-left:3px;" title="{!txtLocalAgencyDetailsNoLocalFirstName}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
+                                    <apex:outputLabel value="{!txtLocalAgencyDetailsFirstNameLocal}" />&nbsp;
+                                    <apex:image value="/img/msg_icons/info16.png" style="margin-left:3px;" title="{!txtLocalAgencyDetailsNoLocalFirstName}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
                                   </apex:outputPanel>   
                                   <apex:inputField value="{!newContact.Local_First_name__c}" required="true"/>
                                 </td></tr>
@@ -1449,7 +1449,7 @@
                             <apex:outputText rendered="{!isocountry.Local_language_Agency_details_required__c}">
                             <tr><td class="modalrow">
                                 <apex:outputPanel >
-                                	<apex:outputLabel value="{!txtLocalAgencyDetailsLastNameLocal}" />&nbsp;
+                                    <apex:outputLabel value="{!txtLocalAgencyDetailsLastNameLocal}" />&nbsp;
                                     <apex:image value="/img/msg_icons/info16.png" style="margin-left:3px;" title="{!txtLocalAgencyDetailsNoLocalLastName}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
                                 </apex:outputPanel>
                                 <apex:inputField value="{!newContact.Local_Last_Name__c}" required="true"/>
@@ -1754,11 +1754,11 @@
                     <apex:inputField value="{!newContact.Name}" required="true"/>
                 </apex:pageBlockSectionItem>
              <apex:pageBlockSectionItem rendered="{!isocountry.Local_language_Agency_details_required__c}">
-             	 <apex:outputLabel value="{!txtLocalAgencyDetailsCompanyNameLocal}" />
+                 <apex:outputLabel value="{!txtLocalAgencyDetailsCompanyNameLocal}" />
                  <apex:outputPanel >
-                 	<apex:inputField value="{!newContact.Company_Name_Local__c}" required="true"/>
-               		<apex:image value="/img/msg_icons/info16.png" style="margin-left: 43%;margin-top: -7%;" title="{!txtLocalAgencyDetailsNoLocalCompanyName}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
-             	</apex:outputPanel>
+                    <apex:inputField value="{!newContact.Company_Name_Local__c}" required="true"/>
+                    <apex:image value="/img/msg_icons/info16.png" style="margin-left: 43%;margin-top: -7%;" title="{!txtLocalAgencyDetailsNoLocalCompanyName}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
+                </apex:outputPanel>
              </apex:pageBlockSectionItem>
                 <apex:inputField value="{!newContact.Registration_number__c}" required="true" />
                 <apex:inputField value="{!newContact.IATACode__c}" onblur="fetchTravelAgent3(this.value.trim())"/>

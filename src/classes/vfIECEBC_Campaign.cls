@@ -5,6 +5,8 @@ public class vfIECEBC_Campaign extends vfIECEBC_Controller {
         private set;
     }
     
+    public static void submitForApproval(){}
+    
 	public Integer numberOfRecipients {
 		get{
 			if (numberOfRecipients == null) {
