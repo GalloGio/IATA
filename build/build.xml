@@ -86,7 +86,7 @@
   <antcallback target="deldir" />
    <mkdir dir="${basedir}/Code"/>
   
-      <for list="${object.listfolders}" param="param" >
+      <for list="${listEmailTemplateFolders}" param="param" >
         <sequential>
              <mkdir dir="${basedir}/Code/@{param}"/>
        </sequential>
@@ -156,6 +156,7 @@
     </for>
     
     <move file="${basedir}/src/staticPackage.xml" tofile="${basedir}/Code/package.xml"/>  
+    <antcallback target="deployCodeLocal" />
     <antcallback target="deployLabelFolder" />
 </target> 
 
@@ -215,13 +216,13 @@
  <move file="${basedir}/src/workflowPackage.xml" tofile="${basedir}/Code/package.xml"/>  
       
       <antcallback target="deployCodeLocal" />
-        <antcallback target="deployCodeLocalFolder" />
+        <antcallback target="deployApex" />
 
   </target> 
 
 
 
-<target name="deployCodeLocalFolder"> 
+<target name="deployApex"> 
   <echo level="info">creating new folder</echo>
    <antcallback target="deldir" />
    <mkdir dir="${basedir}/Code"/>
@@ -246,9 +247,77 @@
  <move file="${basedir}/src/codePackage.xml" tofile="${basedir}/Code/package.xml"/>  
       
       <antcallback target="deployCodeLocal" />
-          <antcallback target="deployDontRetrieve" />
+          <antcallback target="deployLayout" />
 
   </target> 
+
+
+
+
+
+
+<target name="deployLayout"> 
+  <echo level="info">creating new folder</echo>
+   <antcallback target="deldir" />
+   <mkdir dir="${basedir}/Code"/>
+  
+      <for list="${layout.listfolders}" param="param" >
+        <sequential>
+             <mkdir dir="${basedir}/Code/@{param}"/>
+       </sequential>
+     </for>
+
+     <echo level="info">moving files</echo>
+      
+      <for list="${layout.listfolders}" param="param" delimiter=",">
+        <sequential>
+          <move todir="${basedir}/Code/@{param}">
+            <fileset dir="${basedir}/src/@{param}">
+            </fileset>
+          </move>
+       </sequential>
+     </for>
+
+ <move file="${basedir}/src/layoutPackage.xml" tofile="${basedir}/Code/package.xml"/>  
+      
+      <antcallback target="deployCodeLocal" />
+          <antcallback target="deployApprovals" />
+
+  </target> 
+
+
+
+
+
+<target name="deployApprovals"> 
+  <echo level="info">creating new folder</echo>
+   <antcallback target="deldir" />
+   <mkdir dir="${basedir}/Code"/>
+  
+      <for list="${approvalPackage.listfolders}" param="param" >
+        <sequential>
+             <mkdir dir="${basedir}/Code/@{param}"/>
+       </sequential>
+     </for>
+
+     <echo level="info">moving files</echo>
+      
+      <for list="${approvalPackage.listfolders}" param="param" delimiter=",">
+        <sequential>
+          <move todir="${basedir}/Code/@{param}">
+            <fileset dir="${basedir}/src/@{param}">
+            </fileset>
+          </move>
+       </sequential>
+     </for>
+
+ <move file="${basedir}/src/approvalPackage.xml" tofile="${basedir}/Code/package.xml"/>  
+      
+      <antcallback target="deployCodeLocal" />
+            <antcallback target="deployDontRetrieve" />
+
+  </target> 
+
 
 
 

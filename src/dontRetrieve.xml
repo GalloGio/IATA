@@ -17,6 +17,5 @@
         <members>*</members>
         <name>ReportType</name>
     </types>
-
     <version>37.0</version>
 </Package>
