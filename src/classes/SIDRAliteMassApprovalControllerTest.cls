@@ -46,7 +46,7 @@ private class SIDRAliteMassApprovalControllerTest {
         controller.SelectAll();
         //controller.confirmApproval = true;
         controller.confirmMassApproveCases();
-        controller.massApproveCases();
+        //controller.massApproveCases();
         test.stopTest();
 
         //check taht case was approved
@@ -121,7 +121,7 @@ private class SIDRAliteMassApprovalControllerTest {
         controller.SelectAll();
         controller.confirmMassApproveCases();
         //controller.confirmApproval = true;
-        controller.massApproveCases();
+        //controller.massApproveCases();
         test.stopTest();
 
         //check taht case was approved
@@ -194,7 +194,7 @@ private class SIDRAliteMassApprovalControllerTest {
         controller.SelectAll();
         controller.confirmMassApproveCases();
         //controller.confirmApproval = true;
-        controller.massApproveCases();
+        //controller.massApproveCases();
         test.stopTest();
 
         //check taht case was approved
@@ -268,7 +268,7 @@ private class SIDRAliteMassApprovalControllerTest {
         controller.SelectAll();
         controller.confirmMassApproveCases();
         //controller.confirmApproval = true;
-        controller.massApproveCases();
+        //controller.massApproveCases();
         test.stopTest();
 
         //check taht case was approved
@@ -343,7 +343,7 @@ private class SIDRAliteMassApprovalControllerTest {
         controller.SelectAll();
         controller.confirmMassApproveCases();
         //controller.confirmApproval = true;
-        controller.massApproveCases();
+        //controller.massApproveCases();
         test.stopTest();
 
         //check taht case was approved
@@ -419,7 +419,7 @@ private class SIDRAliteMassApprovalControllerTest {
         controller.SelectAll();
         controller.confirmMassApproveCases();
         //controller.confirmApproval = true;
-        controller.massApproveCases();
+        //controller.massApproveCases();
         test.stopTest();
 
         //check taht case was approved
