@@ -273,7 +273,7 @@ public with sharing class AMS_MigrationToolHelper {
 		contact.Email__c = role.Contact_Email__c;
 		contact.Financial_interest__c = role.Percentage__c;
 		contact.First_name__c = role.Contact__c != null ? role.Contact__r.FirstName : ( role.Person__c != null ? role.Person__r.First_name__c : ''); 
-		contact.Last_name__c = (role.Contact__c == null && role.Person__c == null && role.Owner_Account__c == null) ? role.Owner_Name__c : ( role.Contact__c != null ? role.Contact__r.LastName : ( role.Person__c != null ? role.Person__r.Lastname__c : '_')); 
+		contact.Last_name__c = role.Contact__c != null ? role.Contact__r.LastName : ( role.Person__c != null ? role.Person__r.Lastname__c : '_'); 
 		contact.Legacy_External_Id__c = role.Legacy_External_ID__c;
 		contact.Name = role.Owner_Name__c != null ? role.Owner_Name__c : (contact.First_name__c + contact.Last_name__c);
 		contact.Person_AMS__c = role.Person__c;
@@ -311,17 +311,18 @@ public with sharing class AMS_MigrationToolHelper {
 
 	private static AMS_OSCAR__c updateDatesFromSAAM(AMS_OSCAR__c oscar, Case saamCase){
 		
-		oscar.AIMS_updated__c = saamCase.AIMS_updated__c;
-		oscar.Assessment_Performed_Date__c = saamCase.Financial_Assessment_received__c;
+
+		System.debug('Starting to migrate date fields...');
 
 		try{
-		
-			oscar.Bank_Guarantee_amount__c = Integer.valueof(saamCase.Bank_Guarantee_amount__c);
+			if(saamCase.Bank_Guarantee_amount__c != null)
+				oscar.Bank_Guarantee_amount__c = Integer.valueof(saamCase.Bank_Guarantee_amount__c);
 		
 		}catch(Exception e){
 			// shhhhhhhhhhhhhhh ...
 		}
-		
+
+		oscar.Assessment_Performed_Date__c = saamCase.Financial_Assessment_received__c;
 		oscar.Bank_Guarantee_deadline__c = saamCase.Bank_Guarantee_deadline__c;
 		oscar.Bank_Guarantee_received__c = saamCase.Bank_Guarantee_received__c;
 		oscar.Bank_Guarantee_requested__c = saamCase.Bank_Guarantee_requested__c;
@@ -330,9 +331,7 @@ public with sharing class AMS_MigrationToolHelper {
 		oscar.Documentation_remarks__c = saamCase.Documentation_remarks__c;
 		oscar.Dossier_Reception_Date__c = saamCase.Dossier_reception_date__c;
 		oscar.Fees_refund_requested__c = saamCase.Fees_refund_requested__c;
-		oscar.Fees_refund_requested__c = saamCase.Fees_refund_requested__c;
 		oscar.Finalization_checklist__c = saamCase.Finalization_checklist__c;
-		oscar.Finalized_in_AIMS__c = saamCase.Finalized_in_AIMS__c;
 		oscar.Financial_Assessment_deadline__c = saamCase.Financial_Assessment_deadline__c;
 		oscar.Financial_Assessment_requested__c = saamCase.Financial_Assessment_requested__c;
 		oscar.Financial_Review_Result__c = saamCase.Financial_Review_Result__c;
@@ -346,6 +345,12 @@ public with sharing class AMS_MigrationToolHelper {
 		oscar.PSAA_EACP_Agreement_received__c = saamCase.PSAA_EACP_Agreement_received__c;
 		oscar.Welcome_Pack_Sent__c = saamCase.PSAA_signed_copy_sent__c;
 		oscar.Sanity_check_deadline__c = saamCase.SAAM_Deadline_Date__c;
+		oscar.Update_AIMS_Rejection_Date__c = saamCase.AIMS_updated__c != null ? saamCase.AIMS_updated__c.date() : null;
+		oscar.Update_AIMS_Rejection__c = saamCase.AIMS_updated__c != null ? true : false;
+		oscar.Update_AIMS_Approval_Date__c = saamCase.Finalized_in_AIMS__c != null ? saamCase.Finalized_in_AIMS__c.date() : null;
+		oscar.Update_AIMS_Approval__c = saamCase.Finalized_in_AIMS__c != null ? true : false;
+
+		System.debug('End date fields migration...');
 
 		return oscar;
 	}
@@ -374,6 +379,10 @@ public with sharing class AMS_MigrationToolHelper {
 			oscar = updateDatesFromSAAM(oscar,oscarCase);
 
 			update oscar;
+
+			System.debug('Oscar updated.');
+
+			System.debug('Oscar:'+oscar);
 		}
 
 	}
