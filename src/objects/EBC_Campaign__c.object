@@ -298,7 +298,9 @@ The value is determined by ExactTarget, and this is is only populated once a cam
     </fields>
     <fields>
         <fullName>External_Id__c</fullName>
+        <description>Latest Triggered Send Id used. Source: Exact Target</description>
         <externalId>true</externalId>
+        <inlineHelpText>Latest Triggered Send Id used. Source: Exact Target</inlineHelpText>
         <label>External Id</label>
         <length>255</length>
         <required>false</required>
@@ -540,7 +542,9 @@ The value is determined by ExactTarget, and this is is only populated once a cam
     <fields>
         <fullName>Number_of_Recipients__c</fullName>
         <defaultValue>0</defaultValue>
+        <description>Total number of recipients</description>
         <externalId>false</externalId>
+        <inlineHelpText>Total number of recipients</inlineHelpText>
         <label>Number of Recipients</label>
         <precision>18</precision>
         <required>false</required>
@@ -552,7 +556,9 @@ The value is determined by ExactTarget, and this is is only populated once a cam
     </fields>
     <fields>
         <fullName>Number_of_Unique_Clicks__c</fullName>
+        <description>Total number of unique clicks</description>
         <externalId>false</externalId>
+        <inlineHelpText>Total number of unique clicks</inlineHelpText>
         <label>Number of Unique Clicks</label>
         <summarizedField>EBC_Campaign_Email_Tracking__c.NumberofUniqueClicks__c</summarizedField>
         <summaryForeignKey>EBC_Campaign_Email_Tracking__c.EBC_Campaign__c</summaryForeignKey>
@@ -563,7 +569,9 @@ The value is determined by ExactTarget, and this is is only populated once a cam
     </fields>
     <fields>
         <fullName>Number_of_Unique_Opens__c</fullName>
+        <description>Total number of unique opening</description>
         <externalId>false</externalId>
+        <inlineHelpText>Total number of unique opening</inlineHelpText>
         <label>Number of Unique Opens</label>
         <summarizedField>EBC_Campaign_Email_Tracking__c.NumberofUniqueOpens__c</summarizedField>
         <summaryForeignKey>EBC_Campaign_Email_Tracking__c.EBC_Campaign__c</summaryForeignKey>
