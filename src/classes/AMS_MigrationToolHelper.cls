@@ -273,7 +273,7 @@ public with sharing class AMS_MigrationToolHelper {
 		contact.Email__c = role.Contact_Email__c;
 		contact.Financial_interest__c = role.Percentage__c;
 		contact.First_name__c = role.Contact__c != null ? role.Contact__r.FirstName : ( role.Person__c != null ? role.Person__r.First_name__c : ''); 
-		contact.Last_name__c = role.Contact__c != null ? role.Contact__r.LastName : ( role.Person__c != null ? role.Person__r.Lastname__c : '_'); 
+		contact.Last_name__c = (role.Contact__c == null && role.Person__c == null && role.Owner_Account__c == null) ? role.Owner_Name__c : ( role.Contact__c != null ? role.Contact__r.LastName : ( role.Person__c != null ? role.Person__r.Lastname__c : '_')); 
 		contact.Legacy_External_Id__c = role.Legacy_External_ID__c;
 		contact.Name = role.Owner_Name__c != null ? role.Owner_Name__c : (contact.First_name__c + contact.Last_name__c);
 		contact.Person_AMS__c = role.Person__c;
@@ -312,7 +312,7 @@ public with sharing class AMS_MigrationToolHelper {
 	private static AMS_OSCAR__c updateDatesFromSAAM(AMS_OSCAR__c oscar, Case saamCase){
 		
 		oscar.AIMS_updated__c = saamCase.AIMS_updated__c;
-		oscar.Assessment_Performed_Date__c = saamCase.Assessment_Performed_Date__c;
+		oscar.Assessment_Performed_Date__c = saamCase.Financial_Assessment_received__c;
 
 		try{
 		
@@ -321,7 +321,7 @@ public with sharing class AMS_MigrationToolHelper {
 		}catch(Exception e){
 			// shhhhhhhhhhhhhhh ...
 		}
-
+		
 		oscar.Bank_Guarantee_deadline__c = saamCase.Bank_Guarantee_deadline__c;
 		oscar.Bank_Guarantee_received__c = saamCase.Bank_Guarantee_received__c;
 		oscar.Bank_Guarantee_requested__c = saamCase.Bank_Guarantee_requested__c;
@@ -336,16 +336,16 @@ public with sharing class AMS_MigrationToolHelper {
 		oscar.Financial_Assessment_deadline__c = saamCase.Financial_Assessment_deadline__c;
 		oscar.Financial_Assessment_requested__c = saamCase.Financial_Assessment_requested__c;
 		oscar.Financial_Review_Result__c = saamCase.Financial_Review_Result__c;
-		oscar.Invoice_number__c = saamCase.Invoice_number__c;
-		oscar.Local_Inspection_compliant__c = saamCase.Local_Inspection_compliant__c;
+		oscar.Billing_Document_Number__c = saamCase.Invoice_number__c;
+		oscar.Local_Inspection_compliant__c = saamCase.Local_Inspection_compliant__c == 'Yes' ? 'Passed' :  (saamCase.Local_Inspection_compliant__c == 'No' ? 'Failed' : 'N/A' );
 		oscar.Local_Inspection_deadline__c = saamCase.Local_Inspection_deadline__c;
 		oscar.Local_Inspection_received__c = saamCase.Local_Inspection_received__c;
 		oscar.Local_Inspection_requested__c = saamCase.Local_Inspection_requested__c;
 		oscar.Process_Start_Date__c = saamCase.Process_Start_Date__c;
 		oscar.Proof_of_payment_received__c = saamCase.Proof_of_payment_received__c;
 		oscar.PSAA_EACP_Agreement_received__c = saamCase.PSAA_EACP_Agreement_received__c;
-		oscar.PSAA_signed_copy_sent__c = saamCase.PSAA_signed_copy_sent__c;
-		oscar.SAAM_Deadline_Date__c = saamCase.SAAM_Deadline_Date__c;
+		oscar.Welcome_Pack_Sent__c = saamCase.PSAA_signed_copy_sent__c;
+		oscar.Sanity_check_deadline__c = saamCase.SAAM_Deadline_Date__c;
 
 		return oscar;
 	}

@@ -13,8 +13,8 @@ private class SIDRAliteMassApprovalControllerTest {
         controller.filter.getActionTypeList();
         controller.getApprovalButtonLabel();
         controller.getRejectionButtonLabel();
-        //controller.massApproveCases();
-        //controller.massRejectCases();
+        controller.massApproveCases();
+        controller.massRejectCases();
         test.stopTest();
     }
 
@@ -44,9 +44,9 @@ private class SIDRAliteMassApprovalControllerTest {
         //mark case and approve it
         controller.SelectAllCheckbox = true;
         controller.SelectAll();
-        //controller.confirmApproval = true;
+        controller.confirmApproval = true;
         controller.confirmMassApproveCases();
-        //controller.massApproveCases();
+        controller.massApproveCases();
         test.stopTest();
 
         //check taht case was approved
@@ -120,8 +120,8 @@ private class SIDRAliteMassApprovalControllerTest {
         controller.SelectAllCheckbox = true;
         controller.SelectAll();
         controller.confirmMassApproveCases();
-        //controller.confirmApproval = true;
-        //controller.massApproveCases();
+        controller.confirmApproval = true;
+        controller.massApproveCases();
         test.stopTest();
 
         //check taht case was approved
@@ -193,8 +193,8 @@ private class SIDRAliteMassApprovalControllerTest {
         controller.SelectAllCheckbox = true;
         controller.SelectAll();
         controller.confirmMassApproveCases();
-        //controller.confirmApproval = true;
-        //controller.massApproveCases();
+        controller.confirmApproval = true;
+        controller.massApproveCases();
         test.stopTest();
 
         //check taht case was approved
@@ -267,8 +267,8 @@ private class SIDRAliteMassApprovalControllerTest {
         controller.SelectAllCheckbox = true;
         controller.SelectAll();
         controller.confirmMassApproveCases();
-        //controller.confirmApproval = true;
-        //controller.massApproveCases();
+        controller.confirmApproval = true;
+        controller.massApproveCases();
         test.stopTest();
 
         //check taht case was approved
@@ -342,8 +342,8 @@ private class SIDRAliteMassApprovalControllerTest {
         controller.SelectAllCheckbox = true;
         controller.SelectAll();
         controller.confirmMassApproveCases();
-        //controller.confirmApproval = true;
-        //controller.massApproveCases();
+        controller.confirmApproval = true;
+        controller.massApproveCases();
         test.stopTest();
 
         //check taht case was approved
@@ -418,8 +418,8 @@ private class SIDRAliteMassApprovalControllerTest {
         controller.SelectAllCheckbox = true;
         controller.SelectAll();
         controller.confirmMassApproveCases();
-        //controller.confirmApproval = true;
-        //controller.massApproveCases();
+        controller.confirmApproval = true;
+        controller.massApproveCases();
         test.stopTest();
 
         //check taht case was approved
