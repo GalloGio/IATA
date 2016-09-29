@@ -315,6 +315,15 @@ E&amp;F CRM Project</description>
         <type>Picklist</type>
     </fields>
     <fields>
+        <fullName>EF_Approver_Email__c</fullName>
+        <externalId>false</externalId>
+        <label>E&amp;F Approver Email</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>EF_BSP_Periods__c</fullName>
         <externalId>false</externalId>
         <label>E&amp;F BSP Periods</label>
@@ -623,6 +632,15 @@ E&amp;F CRM Project</description>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>EF_Submitter_Email__c</fullName>
+        <externalId>false</externalId>
+        <label>E&amp;F_Submitter_Email</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Email</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>EF_Trading_Partner__c</fullName>
@@ -2644,7 +2662,7 @@ IF(ISPICKVAL(Third_Party__c, &quot;Berlitz&quot;), 0.10,
         <description>Only roles Manager, Business Development, Head, Client Services and Client Services Specialists can modify E&amp;F Contracts.</description>
         <errorConditionFormula>AND
 (
-    RecordType.DeveloperName = &apos;EF_Contract&apos;, 
+    RecordType.DeveloperName = &apos;EF_Client_Agreement&apos;, 
       NOT(ISPICKVAL($User.EF_User_Role__c, &apos;Manager, Business Development&apos;)),
       NOT(ISPICKVAL($User.EF_User_Role__c, &apos;Head, Client Services&apos;)),
       NOT(ISPICKVAL($User.EF_User_Role__c, &apos;Client Services Specialists&apos;))
@@ -2783,8 +2801,8 @@ COPY THE URL FROM THIS BUTTON and paste it into your own custom button or link. 
 ?sessionId={!API.Session_ID}
 &amp;serverUrl={!API.Partner_Server_URL_290}
 &amp;id={!Contract.Id}
-&amp;reportId=00O8E000000GhtL?pv0={!Contract.Id}
-&amp;templateId=a8B8E000000Cd36
+&amp;reportId=00O8E000000KPON?pv0={!Contract.Id}
+&amp;templateId=a7v8E00000004nb
 &amp;AC0=0
 &amp;DS7=3</url>
     </webLinks>

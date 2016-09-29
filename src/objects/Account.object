@@ -8819,6 +8819,16 @@ Approval: Key Contact can see pending request approve it one by one</inlineHelpT
         <type>Date</type>
     </fields>
     <fields>
+        <fullName>Last_Integration_Date__c</fullName>
+        <description>Last date of Integration with &quot;SAP PI / Downstream Systems&quot;</description>
+        <externalId>false</externalId>
+        <label>Last Integration Date</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>DateTime</type>
+    </fields>
+    <fields>
         <fullName>Last_Modified_by_Source__c</fullName>
         <description>Date this record was last updated with master data from the source. Workflow updates this field.</description>
         <externalId>false</externalId>
@@ -10341,6 +10351,10 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>New for E&amp;F</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>Other</fullName>
                 <default>false</default>
             </picklistValues>
@@ -10416,6 +10430,7 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
         <label>Registration Number</label>
         <length>30</length>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>false</unique>
@@ -10467,12 +10482,12 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
     </fields>
     <fields>
         <fullName>SAP_Number__c</fullName>
-        <description>E&amp;F Project. Field needed because ACLI SAP can&apos;t be used.</description>
+        <description>E&amp;F CRM Project. Field needed because ACLI SAP can&apos;t be used.</description>
         <externalId>false</externalId>
         <label>SAP Number</label>
         <length>12</length>
         <required>false</required>
-        <trackFeedHistory>false</trackFeedHistory>
+        <trackFeedHistory>true</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>false</unique>
@@ -38483,6 +38498,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
+                <fullName>New for E%26F</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Other</fullName>
                 <default>false</default>
             </values>
@@ -45049,6 +45068,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>New airline joining BSP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>New for E%26F</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -65725,6 +65748,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
+                <fullName>New for E%26F</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Other</fullName>
                 <default>false</default>
             </values>
@@ -70826,6 +70853,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
+                <fullName>New for E%26F</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Other</fullName>
                 <default>false</default>
             </values>
@@ -75114,6 +75145,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
+                <fullName>New for E%26F</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Other</fullName>
                 <default>false</default>
             </values>
@@ -76784,12 +76819,24 @@ NOT(CONTAINS($Profile.Name, &quot;Developer&quot;))
         <fullName>EF_BlockRemoveSISVerifiedOnOperator</fullName>
         <active>true</active>
         <description>Can&apos;t set to false SIS Verified if Record Type is Operator</description>
-        <errorConditionFormula>AND( 
-OR(RecordType.DeveloperName=&apos;Operator&apos;, RecordType.DeveloperName=&apos;Others&apos;), 
-EF_SIS_Code_Verified__c=false 
+        <errorConditionFormula>AND(
+  OR($User.Profile_Name__c == &apos;E&amp;F staff&apos;, $User.Profile_Name__c == &apos;E&amp;F Management&apos;),
+  OR(RecordType.DeveloperName=&apos;Operator&apos;, RecordType.DeveloperName=&apos;Others&apos;),
+  EF_SIS_Code_Verified__c=false 
 )</errorConditionFormula>
         <errorDisplayField>EF_SIS_Code_Verified__c</errorDisplayField>
         <errorMessage>SIS Verified can&apos;t be unchecked if Record Type is Operator</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>EF_CantSetSISVerifiedIfSISCodeEmpty</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+   EF_SIS_Code_Verified__c=true,
+   OR(ISBLANK(EF_SIS_Code__c), ISBLANK(EF_SIS_Designator__c))
+   
+)</errorConditionFormula>
+        <errorDisplayField>EF_SIS_Code_Verified__c</errorDisplayField>
+        <errorMessage>SIS Verified can&apos;t be checked if SIS Accounting Code or SIS Designator are empty</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>EF_SIS_Location_ID_format_check</fullName>
@@ -76962,12 +77009,12 @@ PRIORVALUE( Total_Value_Won_Opportunities__c ) = Total_Value_Won_Opportunities__
     <validationRules>
         <fullName>PreventEFStatusActiveIfParentInactive</fullName>
         <active>true</active>
-        <description>Account can&apos;t be Active for E&amp;F becaue Parent E&amp;F Status is Inactive</description>
+        <description>If Parent EF_Status is Inactive the child can&apos;t be active.</description>
         <errorConditionFormula>AND(
     ISPICKVAL(Parent.EF_Status__c, &apos;Inactive&apos;),
     ISCHANGED(EF_Status__c),
     ISPICKVAL(EF_Status__c, &apos;Active&apos;)
-)</errorConditionFormula>
+  )</errorConditionFormula>
         <errorDisplayField>EF_Status__c</errorDisplayField>
         <errorMessage>Account can&apos;t be Active for E&amp;F becaue Parent E&amp;F Status is Inactive</errorMessage>
     </validationRules>

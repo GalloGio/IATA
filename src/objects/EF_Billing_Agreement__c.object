@@ -66,9 +66,7 @@
     <fields>
         <fullName>Allow_Billing_Agreements__c</fullName>
         <externalId>false</externalId>
-        <formula>IF(
-        ISPICKVAL(Contract__r.EF_Allow_Billing_Agreements__c, &apos;Allowed&apos;), &apos;Allowed&apos;, &apos;Other&apos;
-)</formula>
+        <formula>IF(ISPICKVAL(Contract__r.EF_Allow_Billing_Agreements__c, &apos;Allowed&apos;),&apos;Allowed&apos;, &apos;Other&apos;)</formula>
         <label>Allow Billing Agreements</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -158,6 +156,16 @@
         <type>Picklist</type>
     </fields>
     <fields>
+        <fullName>EF_Approver_Email__c</fullName>
+        <externalId>false</externalId>
+        <label>E&amp;F Approver Email</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>EF_Location_ID__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
@@ -174,7 +182,7 @@
         <referenceTo>EF_Related_Records__c</referenceTo>
         <relationshipName>EF_LocationRelationships</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -187,6 +195,16 @@
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>EF_Submitter_Email__c</fullName>
+        <externalId>false</externalId>
+        <label>E&amp;F Submitter Email</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Invoice_Distribution_Method_Code__c</fullName>
@@ -412,20 +430,8 @@
     <label>E&amp;F Airline Billing Agreement</label>
     <listViews>
         <fullName>All</fullName>
-        <columns>NAME</columns>
-        <columns>Billing_Agreement_Name__c</columns>
-        <columns>Client__c</columns>
-        <columns>Airline__c</columns>
-        <columns>Contract__c</columns>
-        <columns>Status__c</columns>
-        <columns>Data_Currency__c</columns>
-        <columns>Billing_Currency__c</columns>
-        <columns>Payment_Currency__c</columns>
-        <columns>Payment_Method__c</columns>
-        <columns>Payment_Terms__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
-        <language>en_US</language>
     </listViews>
     <nameField>
         <displayFormat>E&amp;F ABA-{0000}{MM}{YY}</displayFormat>
@@ -436,6 +442,14 @@
     <pluralLabel>E&amp;F Airline Billing Agreements</pluralLabel>
     <searchLayouts/>
     <sharingModel>ControlledByParent</sharingModel>
+    <validationRules>
+        <fullName>EF_Prevent_For_Not_Allowed_Contracts</fullName>
+        <active>true</active>
+        <description>Prevents the creation or update of Billing Agreements if Contract is set to not to allow billing agreements.</description>
+        <errorConditionFormula>ISPICKVAL(Contract__r.EF_Allow_Billing_Agreements__c, &apos;Not Allowed&apos;)</errorConditionFormula>
+        <errorDisplayField>Contract__c</errorDisplayField>
+        <errorMessage>The selected Contract record has &quot;Allow Billing Agreements&quot; set to &quot;Not Allowed&quot;. Please choose a different Contract or update the currently selected Contract to allow Billing Agreements.</errorMessage>
+    </validationRules>
     <validationRules>
         <fullName>EF_Prevent_Update_From_General_Access</fullName>
         <active>true</active>

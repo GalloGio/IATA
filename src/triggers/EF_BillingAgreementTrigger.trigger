@@ -23,7 +23,7 @@ trigger EF_BillingAgreementTrigger on EF_Billing_Agreement__c (
                 EF_BillingAgreementHandler.handleApprovedAndRejectedApprovals(Trigger.new, Trigger.oldMap);
             }
             
-        } else if (Trigger.isAfter)
+        } else if (Trigger.isAfter && !Trigger.isDelete)
         {
             Set<Id> withApprovalIds = EF_BillingAgreementHandler.findIdsOfWithApprovalBillingAgreements(Trigger.new);
             if(EF_BillingAgreementHandler.runOnce() && withApprovalIds.size() > 0)

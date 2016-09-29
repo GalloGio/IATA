@@ -40,7 +40,7 @@ public class EF_BillingAgreementHandler
 
     // Queries for any Accounts that do only allow Billing Agreements to be updated with approval
     public static void handleWithApprovalContractUpdates(Map<Id, EF_Billing_Agreement__c> newAgreements, Map<Id, EF_Billing_Agreement__c> oldAgreements)
-    { /*
+    {
         Set<Id> contractIds = new Set<Id>();
         for(EF_Billing_Agreement__c ba : newAgreements.values())
         {
@@ -80,7 +80,7 @@ public class EF_BillingAgreementHandler
             {
                 insert approvalStorageList;
             }
-        }*/
+        }
     }
 
     // For after insert trigger to find out if any of the attached Accounts is set to "Allow Billing Agreements with Approval"
@@ -105,7 +105,7 @@ public class EF_BillingAgreementHandler
     // Queries for any Accounts that do only allow Billing Agreements to be created with approval
     public static void handleWithApprovalContractInserts(List<EF_Billing_Agreement__c> agreementList)
     {
-       /* Set<Id> contractIds = new Set<Id>();
+        Set<Id> contractIds = new Set<Id>();
         for(EF_Billing_Agreement__c ba : agreementList)
         {
             // add both Client and Customer (Airline) into the Set, so that both will be queried for
@@ -128,12 +128,12 @@ public class EF_BillingAgreementHandler
                 ba.Status__c = 'Inactive';
                 EF_BaContractApprovalHelper.identifyBillingAgreementChanges(ba, null, fields, true);
             }
-        }*/
+        }
     }
 
     //checks if location chosen has been set in Contract Location Currency.
     public static void checkLocationCurrency (List<EF_Billing_Agreement__c> relationshipList){
-       
+
         //check if relationship records have location.
         List <EF_Billing_Agreement__c> relWithLocation = new List <EF_Billing_Agreement__c>();
 
@@ -178,7 +178,7 @@ public class EF_BillingAgreementHandler
                 }else{
                     if(!mapLocationsInLocationCurrency.containsKey(r.EF_Location_ID__c)){
                         r.EF_Location_ID__c.addError('Location chosen is not allowed. It has not been defined in Contract as a valid location.');
-                    }else{                       
+                    }else{
                             for(EF_Location_Currency__c lc: contractMap.get(r.Contract__c).EF_Locations_Currencies__r){
                                 //System.debug('#### REL loc Id ' + r.EF_Location_ID__c + r.EF_Location_ID__r.Name + ' --- location Currency ' + lc.Location_ID__c + lc.Location_ID__r.Name);
                                 if(r.EF_Location_ID__c== lc.Location_ID__c){
