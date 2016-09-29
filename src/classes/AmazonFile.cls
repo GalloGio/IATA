@@ -237,7 +237,7 @@ public class AmazonFile {
 	private static map<String,AmazonFile__c> getMapAmazonFiles(Id sobjectId) {
 		list<AmazonFile__c> listFiles = new list<AmazonFile__c>();
 		// for cases
-		if (String.ValueOf(sobjectId.getSObjectType()) == 'Case' && EF_AttachmentListController.runningForEF) {
+		if (String.ValueOf(sobjectId.getSObjectType()) == 'Case' && !EF_AttachmentListController.runningForEF) {
 			listFiles = [
 				Select Id, Name, Full_Name_Unique__c, CreatedDate, CreatedById, CreatedBy.Name, Case__c, isPublic__c, Description__c, File_Identifier__c,
                 File_Identifier_picklist__c, Review_Status__c, Source__c, RecordTypeId, RecordType.DeveloperName, Internal_Comments__c,
