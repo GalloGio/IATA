@@ -26,7 +26,57 @@
 		    var tabId = result.id;
 		    sforce.console.closeTab(tabId);
 		};
+
+		function bindCheckboxes() {
+			$('[data-group="main"]').on("change", function () {
+				var $clicked = $(this);
+
+				if($clicked.prop("checked")){
+					$('[data-group="main"]').not($clicked).each(function () {
+						if($(this).prop("checked")){
+							$(this).prop("checked", false);
+							$('[data-controlledBy="'+$(this).data("controls")+'"]').prop("checked", true);
+						}						
+					});
+					$('[data-controlledBy="'+$clicked.data("controls")+'"]').prop("checked", false);
+
+					selectMain();
+				}else{
+					var selection = false;
+					$('[data-group="main"]').not($clicked).each(function () {
+						if($(this).prop("checked")) selection = true;
+					});
+
+					if(!selection){
+						$clicked.prop("checked", true);
+						alert('Main account must always be selected');
+					}
+				}
+			});
+		}
 	</script>
+
+
+
+	<style>
+		.pos-relative{ position: relative; }
+		.loading-backdrop{ 
+			position: absolute; 
+			top: 0; 
+			bottom: 0; 
+			right: 0; 
+			left: 0; 
+			background: #FFF; 
+			opacity: 0.5; 
+		}
+		.loading-img{
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			margin-top: -16px;
+			margin-left: -16px;
+			}
+	</style>
 	
 	<apex:sectionHeader title="Account Hierarchy Selection" subtitle="{!oscar.Account__r.Name}"/>
 	
@@ -59,9 +109,7 @@
 				<apex:pageBlockTable value="{!hierarchy}" var="hi"> 
 					
 					<apex:column headerValue="Main">
-						<apex:inputCheckbox html-data-group="main" value="{!hi.main}">
-							<apex:actionSupport event="onchange" action="{!hi.selectMain}" status="blockEditing" reRender="table, dependentFields"/>
-						</apex:inputCheckbox>
+						<apex:inputCheckbox html-data-group="main" html-data-controls="{!hi.acc.Id}" value="{!hi.main}"/>
 					</apex:column>
 
 					<apex:column >
@@ -71,7 +119,7 @@
 							</apex:inputCheckbox>
 						</apex:facet>
 
-						<apex:inputCheckbox value="{!hi.selected}"/>
+						<apex:inputCheckbox html-data-group="select" html-data-controlledBy="{!hi.acc.Id}" value="{!hi.selected}"/>
 					</apex:column>
 
 					<apex:repeat value="{!accountFieldList}" var="field">
@@ -79,25 +127,12 @@
 					</apex:repeat>
 				</apex:pageBlockTable>
 
-				<style>
-					.pos-relative{ position: relative; }
-					.loading-backdrop{ 
-						position: absolute; 
-						top: 0; 
-						bottom: 0; 
-						right: 0; 
-						left: 0; 
-						background: #FFF; 
-						opacity: 0.5; 
-					}
-					.loading-img{
-						position: absolute;
-						top: 50%;
-						left: 50%;
-						margin-top: -16px;
-						margin-left: -16px;
-	 				}
-				</style>
+				<script>
+					bindCheckboxes();
+				</script>
+
+				<apex:actionFunction name="selectMain" action="{!selectMain}" status="blockEditing" reRender="table, dependentFields"/>
+
 				<apex:actionStatus id="blockEditing">
 					<apex:facet name="start">
 						<apex:outputPanel layout="none">
