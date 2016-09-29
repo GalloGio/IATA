@@ -9,7 +9,6 @@ var dyn_functions = {
                 var result2;
                 var result3;
                 var bUpdate = false;
-                var createNewChangeCode = true;
                 var sResult = '';
                 if (r == true) {
                     
@@ -58,24 +57,21 @@ var dyn_functions = {
                         sResult = '- IATA code already generated \n\r';
                     }
 
+                    if (recordsFlag[0].Flag_IATACode_Formula__c == 'true' && recordsCC.length == 0)
+                        sforce.apex.execute("AMS_OSCAR_Webservice", "createChangeCodeNEW", {oscarId: argList[2]});
 
                     if (records.length>0 && recordsFlag[0].Flag_IATACode_Formula__c == 'true' && records[0].Flag_Data_to_Account__c == 'false') {
                         result2 = sforce.apex.execute("AMS_OSCAR_Webservice", "copyDataToAccount", {oscarId: argList[2]});
                         if(result2 != 'OK'){
                             sResult = sResult + '- Move Data To Account - Failed to copy data to Account. Please contact your Administrator.\n(Error: ' + result2 +')\n\r';
-                            createNewChangeCode = false;
                         }else{
                             records[0].Flag_Data_to_Account__c = 'true';
                             bUpdate = true;
                             sResult = sResult + '- Move Data To Account - Success!\n\r';
                         }
-
                     }else{
                         sResult = sResult + '- Move Data To Account - ByPassed! \n\r';
                     }
-
-                    if (createNewChangeCode && recordsFlag[0].Flag_IATACode_Formula__c == 'true' && recordsCC.length == 0)
-                        sforce.apex.execute("AMS_OSCAR_Webservice", "createChangeCodeNEW", {oscarId: argList[2]});
                
                     if (records.length>0 && recordsFlag[0].Flag_IATACode_Formula__c == 'true' && records[0].Flag_Data_to_Account__c == 'true' 
                             && records[0].Flag_Data_to_SAPECC__c == 'false') {
@@ -276,64 +272,6 @@ var dyn_functions = {
                };
 
                sforce.console.getEnclosingPrimaryTabId(openSubtab);
-           
-           },
-           createSIDRALite:function (arg) {
-                var result;
-                result = sforce.apex.execute("AMS_OSCAR_Webservice", "createSIDRALite", {oscarId: arg});
-                
-                // error
-                if (result[0].substring(0, 6) == 'ERROR:') {
-                    alert(result);
-                } 
-                else {
-                    
-                    var caseId = result[0];
-
-                    var changeTab = function(result){
-                        if(result.success == true){
-                            //sforce.console.focusPrimaryTabById(caseId);
-                            alert('SIDRA Lite Case created successfully.');
-                        }
-                    };
-
-                    // Use the results primary tab id and open a new subtab
-                   var openSubtab = function(result)
-                   {            
-                        sforce.console.openSubtab(result.id, '/'+caseId, true, 'SIDRA Lite Case', null, changeTab);    
-                   };
-                   sforce.console.getEnclosingPrimaryTabId(openSubtab);
-
-                }
-           
-           },
-           createCommissionerCase:function (arg) {
-                var result;
-                result = sforce.apex.execute("AMS_OSCAR_Webservice", "createCommissionerCase", {oscarId: arg});
-                
-                // error
-                if (result[0].substring(0, 6) == 'ERROR:') {
-                    alert(result);
-                } 
-                else {
-                    
-                    var caseId = result[0];
-
-                    var changeTab = function(result){
-                        if(result.success == true){
-                            //sforce.console.focusPrimaryTabById(caseId);
-                            alert('Commissioner Case created successfully.');
-                        }
-                    };
-
-                    // Use the results primary tab id and open a new subtab
-                   var openSubtab = function(result)
-                   {            
-                        sforce.console.openSubtab(result.id, '/'+caseId, true, 'Commissioner Lite Case', null, changeTab);    
-                   };
-                   sforce.console.getEnclosingPrimaryTabId(openSubtab);
-
-                }
            
            }
 

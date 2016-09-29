@@ -227,7 +227,7 @@ System.debug('au3: ' + au3);
         Set<Id> agenciesValidateError = new Set<Id>();
         Set<Id> agenciesInvalid = new Set<Id>();
         for(Account au: aulist){
-
+System.debug('Account au: ' + au);  
             Boolean bError = false;
             Boolean bErrorLog = false;
             Boolean bInvalid = false;
