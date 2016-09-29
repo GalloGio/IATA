@@ -23,6 +23,9 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
 	private static final String RATE_PLAN_CHARGE_TYPE_USAGE = 'Usage';
 	private static final String EBC_PAYMENT_MESSAGE_TOKEN_INVALID_ERROR = 'This eBroadcast Payment is accessed with invalid token. Please redo from the previous page.';
 	
+    
+    
+    
 	// ======================================================================== 
 	// incoming component parameters are set directly by the caller
 	public String paymentToken {get;set;}
@@ -343,7 +346,9 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
 	// =======================================================================
 	// flags for what to be displayed in Payment Confirmation
 	// this flags also affect the payment action
-
+    // Tax can only be done if the address update is already saved
+    public Boolean showTaxButtons {get {if (showTaxButtons==null) showTaxButtons=true; return showTaxButtons;}set;}
+	 // end of showPaymentButtons getter
 	// Payment can only be done if the address update is already saved
 	public Boolean showPaymentButtons
 	{
@@ -356,6 +361,7 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
 								&& !(String.isBlank(oPaymentBillingContact.Phone))
 								&& !(String.isBlank(oBillingAddress.Street__c))
 								&& !(String.isBlank(oBillingAddress.ISO_Country__c))
+                                && !(showTaxButtons)
 							);
 			return result;
 		}
@@ -390,7 +396,8 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
 		
 	public Boolean payAddOn{
 		get{
-			Boolean result = (paymentTarget == EBC_PAYMENT_TARGET_ACCOUNT_ADD_ON);
+			Boolean result = ((paymentTarget == EBC_PAYMENT_TARGET_ACCOUNT_ADD_ON_REPORTING)
+								|| (paymentTarget == EBC_PAYMENT_TARGET_ACCOUNT_ADD_ON_STORAGE));
 			return result;
 		}
 	}
@@ -991,24 +998,163 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
 	//   public static List<Zuora.zApi.SubscribeResult> EBCSubscribe(List<RatePlanAndCharge> listCartItems, IECCustomer oCustomer, IECConstants.PaymentType ePaymentType, IECZuoraHelper.PaymentMethod creditCard, List<Boolean> lstAutoRenew, List<Terms_and_Conditions__c> lstAcceptedTnCs, String sPurchaseOrder) {
 	public static final String TERM_TYPE = 'TERMED';
 	public static final Integer INVOICE_PREVIEW_TERM = 12;
-	public static final Integer SUBSCRIPTION_TERM = 12;
-	public static final Integer EBC_PAY_AS_YOU_GO_SUBSCRIPTION_TERM = 1; 
-	public static final String EBC_PAY_AS_YOU_GO_SUBSCRIPTION_TERM_PERIOD = 'Day';
+	public static final Integer EBC_SUBSCRIPTION_TERM_12 = 12;
+	public static final Integer EBC_SUBSCRIPTION_TERM_1 = 1; 
+	public static final String EBC_SUBSCRIPTION_TERM_PERIOD_DAY = 'Day';
+    public static final String EBC_SUBSCRIPTION_TERM_PERIOD_MONTH = 'Month';
 	public static final String EBC_PAY_AS_YOU_GO_SUBSCRIPTION_NOTES = 'eBroadcast Pay-As-You-Go activation';
+    public static final String EBC_SUBSCRIPTION_NOTES = 'eBroadcast Product';
 	public static final String EBC_PRODUCT_RATE_PLAN_SUBSCRIPTION_TYPE_PAY_AS_YOU_GO = 'Pay-As-You-Go';
+    
+    
+    
+    // values for URL parameter campaignPaymentOption / eBroadcast_Payment_Campaign_Option__c
+	private static final String EBC_PAYMENT_CAMPAIGN_NONE = '';//'None'; 
+	Private static final String EBC_PAYMENT_CAMPAIGN_EXACT = 'Exact Amount'; 
+	private static final String EBC_PAYMENT_CAMPAIGN_EMAIL_PACKAGE = 'Email Package'; 
+	private static final String EBC_PAYMENT_CAMPAIGN_RATE_PLAN = 'Prepaid Rate Plan';
+	
+	// values for URL parameter target / eBroadcast_Payment_Target__c
+	private static final String EBC_PAYMENT_TARGET_CAMPAIGN = 'campaign';
+	private static final String EBC_PAYMENT_TARGET_ACCOUNT_RATE_PLAN = 'rateplan';
+	private static final String EBC_PAYMENT_TARGET_ACCOUNT_EMAIL_PACKAGE = 'email';
+    private static final String EBC_PAYMENT_TARGET_ACCOUNT_ADD_ON='addon';
+	private static final String EBC_PAYMENT_TARGET_ACCOUNT_ADD_ON_STORAGE = 'addon storage';
+    private static final String EBC_PAYMENT_TARGET_ACCOUNT_ADD_ON_REPORT = 'addon reporting';
+	private static final String EBC_PAYMENT_TARGET_RENEWAL = 'renewal'; 
+    
+    
+    
 	
 	public void  EBCSubscribe() {
 		
+       Integer UseCasePricing=-1;
+       Boolean isPreview=false;
+       //0:Email Block 
+       //1:Overwrite Pricing and Qty when pay exact amount
+       //2:Add to the existing Subscription
+       //3:Renewal
+       //4:Prepaid
+       //5:Tax Calculation
+       if (campaignPaymentOption==null) campaignPaymentOption='';
+       if (paymentTarget==null) paymentTarget='';
+       if (campaignPaymentOption.equals(EBC_PAYMENT_CAMPAIGN_EXACT))  UseCasePricing=1;
+       if (campaignPaymentOption.equals(EBC_PAYMENT_CAMPAIGN_EMAIL_PACKAGE)) UseCasePricing=0;
+       if (campaignPaymentOption.equals(EBC_PAYMENT_CAMPAIGN_RATE_PLAN)) UseCasePricing=4;
+        
+        
+       if (paymentTarget.equals(EBC_PAYMENT_TARGET_ACCOUNT_EMAIL_PACKAGE)) UseCasePricing=0;
+       if (paymentTarget.equals(EBC_PAYMENT_TARGET_RENEWAL)) UseCasePricing=3;
+       if (paymentTarget.equals(EBC_PAYMENT_TARGET_ACCOUNT_ADD_ON_STORAGE)) UseCasePricing=0;
+       if (paymentTarget.equals(EBC_PAYMENT_TARGET_ACCOUNT_ADD_ON_REPORT)) UseCasePricing=2;
+       if (paymentTarget.equals(EBC_PAYMENT_TARGET_ACCOUNT_RATE_PLAN)) UseCasePricing=4;
+        
+       
+        
+	   System.debug('UseCasePricing >>>'+UseCasePricing);
+       System.debug('paymentTarget >>>'+paymentTarget);
+       System.debug('campaignPaymentOption >>>'+campaignPaymentOption);
+       if (UseCasePricing==-1) return;
 	   IECConstants.PaymentType PaymentMethodType = IECConstants.PaymentType.CREDIT_CARD;
 	   if (selectedPaymentMethodType.equals('BANK_TRANSFER'))  PaymentMethodType = IECConstants.PaymentType.BANK_TRANSFER;
 	   if (selectedPaymentMethodType.equals('ICH')) PaymentMethodType = IECConstants.PaymentType.ICH;
 	  
 	   // selectedCreditCardPaymentId = '2c92c0f8574b2b8101574df5ec7a6009';
 		try {
-		   
-		 
-					  
+            //We need to perform an Add product to existing Subscription
+            
+            if (UseCasePricing==2){
+               /////////////////////////////////////////////// 
+                // create second amendment to add a new product
+                // An array of all amendments required to upgrade the subscription
+                String dtContractAndServiceActivationDate =IECZuoraHelper.getCurrentDate();
+                String activationDate=dtContractAndServiceActivationDate; //IECZuoraHelper.getFutureDate(dtContractAndServiceActivationDate);
 
+                List<Zuora.zObject> lstAmendments = new List<Zuora.zObject>();
+                for (ProductRatePlanChargeWrapper cartItem : selectedProductRatePlanChargeWrapperList) {
+                    Zuora.zObject amendNewProduct = new Zuora.zObject('Amendment');
+                    amendNewProduct.setValue('Name', 'Upgrade subscription - add product');
+                    amendNewProduct.setValue('Description', 'asdfasdf');
+                    amendNewProduct.setValue('Type', 'NewProduct');
+                    amendNewProduct.setValue('SubscriptionId', subscription.Zuora__Zuora_Id__c);
+                    amendNewProduct.setValue('AutoRenew', false);
+                    amendNewProduct.setValue('CustomerAcceptanceDate', IECZuoraHelper.getCurrentDate());
+                    amendNewProduct.setValue('ContractEffectiveDate', activationDate);
+                    String amendStatus='Draft';
+                    // if paying by credit card or ICH, upgrade is active now
+                    if (PaymentMethodType == IECConstants.PaymentType.CREDIT_CARD) amendStatus='Completed';
+                    if (PaymentMethodType == IECConstants.PaymentType.ICH)  amendStatus='Completed';
+                    amendNewProduct.setValue('Status', amendStatus);
+                    
+                    if (PaymentMethodType == IECConstants.PaymentType.ICH) amendNewProduct.setValue('ServiceActivationDate', activationDate);
+                    if (PaymentMethodType == IECConstants.PaymentType.CREDIT_CARD) amendNewProduct.setValue('ServiceActivationDate', activationDate);
+    
+                    // set the RatePlanData of the product being added
+                    Zuora.zObject addRatePlan = new Zuora.zObject('RatePlan');
+                    addRatePlan.setValue('ProductRatePlanId', CartItem.prpcId);
+                    Zuora.zObject addRatePlanData = new Zuora.zObject('RatePlanData');
+                    addRatePlanData.setValue('RatePlan', addRatePlan);
+                    amendNewProduct.setValue('RatePlanData', addRatePlanData);
+                    lstAmendments.add(amendNewProduct);
+                }
+                
+                
+                 // create amendment request
+                Zuora.zApi.AmendRequest amendRequest = new Zuora.zApi.AmendRequest();
+                
+                // Specify amendment options for generating invoice to determine total amount and taxes
+                Zuora.zApi.AmendOptions amendOpt = new Zuora.zApi.AmendOptions();
+                amendOpt.GenerateInvoice = true;
+                amendOpt.ProcessPayments = (!isPreview && PaymentMethodType == IECConstants.PaymentType.CREDIT_CARD); // can only set ProcessPayments=true for electronic payments (credit card)
+                amendRequest.AmendOptions = amendOpt;
+    
+                if (isPreview) {
+                    // Specify preview options for to simulate the amendment without actually submitting it
+                    Zuora.zApi.PreviewOptions previewOpt = new Zuora.zApi.PreviewOptions();
+                    previewOpt.EnablePreviewMode = true;
+                    previewOpt.NumberOfPeriods = 1;
+                    amendRequest.PreviewOptions = previewOpt;
+                }
+                else {
+                    // Specify target date for the invoice to generate an invoice for the renewal
+                    Zuora.zApi.InvoiceProcessingOptions invoiceOpt = new Zuora.zApi.InvoiceProcessingOptions();
+                    invoiceOpt.InvoiceTargetDate = IECZuoraHelper.getCurrentDate();
+                    invoiceOpt.InvoiceDate = IECZuoraHelper.getCurrentDate();
+                    amendRequest.AmendOptions.InvoiceProcessingOptions = invoiceOpt;
+                }
+                
+                amendRequest.Amendments = lstAmendments;
+                                                
+                  
+                Zuora.zApi.AmendResult result =
+                    (!Test.isRunningTest()
+                        ? IECZuoraHelper.amendApiCall(amendRequest)
+                        : IECTestUtil.CreateSampleAmendResult());
+                        
+                if (Zuora.zApi.currentLogger != null) {
+                    system.debug('SOAP Upgrade Request >>> ' + Zuora.zApi.currentLogger.request );
+                    system.debug('SOAP Upgrade Response >>> ' + Zuora.zApi.currentLogger.response );
+                }
+    
+                ///////////////////////////////////////////////
+                // On-demand sync for the user Billing Account
+                if (!isPreview) {
+                    if (result.Success) {
+                        
+                        if (!Test.isRunningTest()) {
+                            // sync of the account
+                            // TODO:
+                            List<Zuora.SyncResult> lstSyncResults = OnDemandSyncAccounts(new Set<String> {(String) loggedCustomer.RelatedZuoraAccount.getValue('Id')});
+                        }
+                  
+                    }
+                   
+                }
+                
+
+            }
+            //We need a New Subscription
+            if (UseCasePricing==0 || UseCasePricing==1 || UseCasePricing==4){
 		   		List<Zuora.zApi.SubscribeRequest> listSubscribeRequests = new List<Zuora.zApi.SubscribeRequest>();
 				List<Zuora.zApi.SubscribeResult> listSubscribeResults = null;
 
@@ -1039,8 +1185,10 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
 				Zuora.zObject subscription = new Zuora.zObject('Subscription');
 				subscription.setValue('ContractEffectiveDate', IECZuoraHelper.getCurrentDate());
 				subscription.setValue('TermType', TERM_TYPE);
-				subscription.setValue('InitialTerm', SUBSCRIPTION_TERM);
-				subscription.setValue('RenewalTerm', SUBSCRIPTION_TERM);
+				subscription.setValue('InitialTerm', EBC_SUBSCRIPTION_TERM_1);
+				subscription.setValue('RenewalTerm', EBC_SUBSCRIPTION_TERM_1);
+                //subscription.setValue('InitialTermPeriodType', EBC_SUBSCRIPTION_TERM_PERIOD_DAY);
+				//subscription.setValue('RenewalTermPeriodType', EBC_SUBSCRIPTION_TERM_PERIOD_DAY);
 				// only activate subscription if payment is by credit card or ICH
 				if (PaymentMethodType == IECConstants.PaymentType.CREDIT_CARD) subscription.setValue('ServiceActivationDate', IECZuoraHelper.getCurrentDate());
 				if (PaymentMethodType == IECConstants.PaymentType.ICH)  subscription.setValue('ServiceActivationDate', IECZuoraHelper.getCurrentDate());
@@ -1052,26 +1200,17 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
 				//subscription = 
 				//TODAO:Abdellah Bring up here code of the subroutine
 				//ebcSubscriptionInitialization(cartItem, subscription); // special handling, in case it is an ebroadcast pay as you go
-			   /*
-				if ((CartItem != null)
-						&& (CartItem.Related_Rate_Plan_Information__c != null)
-						&& (CartItem.Related_Rate_Plan_Information__r.Related_Product_Information__c != null)
-						&& (CartItem.Related_Rate_Plan_Information__r.Related_Product_Information__r.Related_Product_Category__c != null)
-						&& (CartItem.Related_Rate_Plan_Information__r.Related_Product_Information__r.Related_Product_Category__r.Name == IECConstants.ProductCategory_SF_EBROADCAST)
-						&& (CartItem.Related_Rate_Plan_Information__r.Product_Rate_Plan__r.EBC_SubscriptionType__c == EBC_PRODUCT_RATE_PLAN_SUBSCRIPTION_TYPE_PAY_AS_YOU_GO ) // 'Pay-As-You-Go', not 'Pre-Paid'
-						)
-					{
-				*/
-				
-				
+				/*
 				subscription.setValue('ContractEffectiveDate', IECZuoraHelper.getCurrentDate());
 				subscription.setValue('TermType', TERM_TYPE);
 				subscription.setValue('InitialTerm', EBC_PAY_AS_YOU_GO_SUBSCRIPTION_TERM);
 				subscription.setValue('RenewalTerm', EBC_PAY_AS_YOU_GO_SUBSCRIPTION_TERM);
-				//subscription.setValue('InitialTermPeriodType', EBC_PAY_AS_YOU_GO_SUBSCRIPTION_TERM_PERIOD);
-				//subscription.setValue('RenewalTermPeriodType', EBC_PAY_AS_YOU_GO_SUBSCRIPTION_TERM_PERIOD);
-				subscription.setValue('Notes', EBC_PAY_AS_YOU_GO_SUBSCRIPTION_NOTES);
-				subscription.setValue('AutoRenew', false);
+				*/
+                if (UseCasePricing==4) subscription.setValue('InitialTerm', EBC_SUBSCRIPTION_TERM_12);
+				if (UseCasePricing==4) subscription.setValue('RenewalTerm', EBC_SUBSCRIPTION_TERM_12);
+				//if (UseCasePricing==4) subscription.setValue('InitialTermPeriodType', EBC_SUBSCRIPTION_TERM_PERIOD_MONTH);
+				//if (UseCasePricing==4) subscription.setValue('RenewalTermPeriodType', EBC_SUBSCRIPTION_TERM_PERIOD_MONTH);
+				subscription.setValue('Notes', EBC_SUBSCRIPTION_NOTES);				
 				subscription.setValue('ServiceActivationDate', IECZuoraHelper.getCurrentDate()); 
 				// subscription.setValue('SubscriptionStartDate', IECZuoraHelper.getCurrentDate()); // this is not insertable
 				//subscription.setValue('Status', EBC_PAY_AS_YOU_GO_DEFAULT_STATUS); // set to Active
@@ -1083,24 +1222,22 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
 				
 				//TODO:Abdellah Bring up here code of the subroutine
 				// oSubsRequest.SubscriptionData.RatePlanData = IECShoppingCartHelper.createRatePlanDataObjectFromCartItem(cartItem);
-				Integer UseCasePricing=1;
-				//0: Email Block 
-				//1:Overwrite Pricing and Qty when pay exact amount
-				//2:Add to the existing Subscription
 				//
-				List<Zuora.zObject> listRatePlanData = new List<Zuora.zObject>();
-				//Zuora.zObject oRatePlanChargeData = null;
+				Boolean FirstPass=false;
+                List<Zuora.zObject> listRatePlanData = new List<Zuora.zObject>();
 				for (ProductRatePlanChargeWrapper cartItem : selectedProductRatePlanChargeWrapperList) {
 					// loop for each quantity (did not found a way to provide quantity at the rate plan level in the subscribeRequest call)
 					//for (Integer icharge = 0; icharge < CartItem.Size(); icharge++) {
-					Zuora.zObject ratePlanData = new Zuora.zObject('RatePlanData');
-					//Use Case #0
-					if (UseCasePricing==0) {
+					if (FirstPass) continue; 
+					//Use Case Email Block
+					if (UseCasePricing==0 || UseCasePricing==4 ) {
+                        System.debug('CartItem.prpcId >>>'+CartItem.prpcId);
+                        Zuora.zObject ratePlanData = new Zuora.zObject('RatePlanData');
 						Zuora.zObject ratePlan = new Zuora.zObject('RatePlan');
-						//ratePlan.setValue('ProductRatePlanId', CartItem.Related_Rate_Plan_Information__r.Product_Rate_Plan__r.zqu__ZuoraId__c);
-						ratePlan.setValue('ProductRatePlanId', CartItem.prpcId);
-						
+						ratePlan.setValue('ProductRatePlanId', CartItem.prpcId);						
 						ratePlanData.setValue('RatePlan', ratePlan);
+                        listRatePlanData.add(ratePlanData);
+                        FirstPass=true;
 						//if (oRatePlanChargeData != null)
 						//	ratePlanData.setValue('RatePlanChargeData', new List<Zuora.zObject> {oRatePlanChargeData});
 						
@@ -1114,6 +1251,7 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
 						public Integer numberOfEmails {get; private set;}
 						public Id prpcId {get;private set;}
 						*/
+                        Zuora.zObject ratePlanData = new Zuora.zObject('RatePlanData');
  						Zuora.zObject ratePlan = new Zuora.zObject('RatePlan');
 						//ratePlan.setValue('ProductRatePlanId', CartItem.Related_Rate_Plan_Information__r.Product_Rate_Plan__r.zqu__ZuoraId__c);
 						ratePlan.setValue('ProductRatePlanId', CartItem.prpcId);
@@ -1132,9 +1270,10 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
 							oRatePlanChargeData.setValue('RatePlanCharge', oRatePlanCharge);
 						  
 							ratePlanData.setValue('RatePlanChargeData', new List<Zuora.zObject>{oRatePlanChargeData});
+                        listRatePlanData.add(ratePlanData);
 						//}
 			   		 }
-					 listRatePlanData.add(ratePlanData);
+					 
 						
 				  
 					//}
@@ -1189,9 +1328,7 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
 				}
 				
 				listSubscribeRequests.add(oSubsRequest);
-			   
-		   
-			
+
 				///////////////////////////
 				// Subscribe call to Zuora
 				System.debug('listSubscribeRequests >>>'+listSubscribeRequests);
@@ -1214,17 +1351,8 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
 				 */
 	
 				if (listSubscribeResults[0].Success && !Test.isRunningTest()){
-					//OnDemandSyncAccounts(new Set<String> {listSubscribeResults[0].AccountId});
-					try {
-						Zuora.OnDemandSyncManager syncManager = new Zuora.OnDemandSyncManager();
-						syncManager.syncObjectType = Zuora.OnDemandSyncManager.ObjectType.BILLING_ACCOUNT;
-						syncManager.emailNotificationEnabled = false; 
-						syncManager.syncZuoraObjectIdSet = new Set<String> {listSubscribeResults[0].AccountId};
-						
-					}
-					catch (Zuora.OnDemandSyncManager.OnDemandSyncException ex) {
-						throw new IECApplicationException('Could not sync Account: ' + ex.getMessage());
-					}
+					OnDemandSyncAccounts(new Set<String> {listSubscribeResults[0].AccountId});
+					
 				}
 	
 	
@@ -1251,20 +1379,178 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
 					i++;
 				}
 				*/
-				
-				purchaseFulfillment();
-				return;
+            }
+			purchaseFulfillment();
+			return;
 		}
 		catch (IECApplicationException ex) {
 			throw ex;
 		}
 		catch (Exception ex) {
 			if (Zuora.zApi.currentLogger != null) {
-				system.debug('SOAP Request = ' + Zuora.zApi.currentLogger.request );
-				system.debug('SOAP Response = ' + Zuora.zApi.currentLogger.response );
+				system.debug('SOAP Request >>> ' + Zuora.zApi.currentLogger.request );
+				system.debug('SOAP Response >>> ' + Zuora.zApi.currentLogger.response );
 			}
 			throw new IECApplicationException('Could not subscribe: ' + ex.getMessage() + ' ' + ex.getStacktraceString());
 		}
 	}	
+    
+     /**
+     * Sync a speicifc customer account from Zuora back to Salesforce
+     * @param zuoraAccountIdSet the Zuora AccountId that needs to be sync
+     * @return A list of SyncResult (Zuora objects)
+     */
+    public static List<Zuora.SyncResult> OnDemandSyncAccounts (Set<String> zuoraAccountIdSet) {
+        try {
+            Zuora.OnDemandSyncManager syncManager = new Zuora.OnDemandSyncManager();
+            syncManager.syncObjectType = Zuora.OnDemandSyncManager.ObjectType.BILLING_ACCOUNT;
+            syncManager.emailNotificationEnabled = false; 
+            syncManager.syncZuoraObjectIdSet = zuoraAccountIdSet;
+            return (!Test.isRunningTest())
+                ? syncManager.sendRequest()
+                : null;
+        }
+        catch (Zuora.OnDemandSyncManager.OnDemandSyncException ex) {
+            throw new IECApplicationException('Could not sync Account: ' + ex.getMessage());
+        }
+    }
+    
+    //Tax calculation from SAP
+    //
+    public PageReference CalculateTaxNow(){
+        TaxAmount=getSAP_Freight_Tax();
+        showTaxButtons=false;
+        return null;
+    }
+    public decimal getSAP_Freight_Tax() {
+        
+        SAP_Freight_and_Tax.HTTPS_Port request = new SAP_Freight_and_Tax.HTTPS_Port();
+        
+        SAP_Freight_and_Tax.DT_SFDC_TaxShippingCalc_Response response;
+        
+        List<SAP_Freight_and_Tax.DT_SFDC_TaxShippingCalc_Response> lstResponse = new List<SAP_Freight_and_Tax.DT_SFDC_TaxShippingCalc_Response>();
+       
+        Map<String, List<SAP_Freight_and_Tax.Product_element>> outProductList = new Map<String, List<SAP_Freight_and_Tax.Product_element>>();
+        
+        SAP_Freight_and_Tax.Product_element outProduct;
+        
+        SAP_Freight_and_Tax.DT_SFDC_Partner soldToPartner, billToPartner, shipToPartner;
+                
+        // retrieve SAP_Id__c From Location__c under Contact
+        String SoldToAccount_Partner_Number='';
+        String BillToContact_Partner_Number='';
+        String ShipToContact_Partner_Number='';
+        
+        List<Location__c> location = new List<Location__c>();
+        
+        location = [Select SAP_Id__c
+                     From Location__c
+                     Where Contact__c=:billingAccount.Contact__c
+                      and Type__c='Bill To'
+                    Limit 1];
+                    
+        SoldToAccount_Partner_Number='0040145300'; //location[0].SAP_Id__c;
+        BillToContact_Partner_Number='0040145300'; //location[0].SAP_Id__c;
+        ShipToContact_Partner_Number='0040145300'; //location[0].SAP_Id__c;
+        
+        String SAP_Order_Type='Order';
+        String SAP_Sales_Org='';
+        String SAP_Division='';
+        String SAP_Distribition_Channel='';
+        //*** build outbound products list
+        String SAP_Product_Number='00752510';
+        Decimal Quantity=1;
+        Decimal SubTotal=1;
+        Decimal TotalTax=0;
+      
+        String CurrencyIsoCode='USD';
+        Boolean FreeShippingFlag=true;
+        outProductList.put('Order', new List<SAP_Freight_and_Tax.Product_element>());
+      
+        //*** build outbound product
+        outProduct = new SAP_Freight_and_Tax.Product_element();
+        
+        if (SAP_Product_Number.isNumeric())
+            outProduct.ProductNumber = '0'.repeat(18 - SAP_Product_Number.length()) + SAP_Product_Number;
+        else
+            outProduct.ProductNumber = SAP_Product_Number;
+        outProduct.Quantity = 0.00 + Quantity;   //*** force to have 2 decimals
+        outProduct.TotalCost = SubTotal;
+        outProduct.Currency_x = CurrencyIsoCode;
+        outProduct.FreeShippingFlag = FreeShippingFlag;
+        //if (item.Use_Contract_when_ordered__c == true)
+        //    outProductList.put(item.Id, new List<SAP_Freight_and_Tax.Product_element>{outProduct});
+        //else
+        outProductList.get('Order').add(outProduct);
+        
+        if (outProductList.get('Order').size() == 0) outProductList.remove('Order');
+        if (outProductList.size() == 0)  return null;
+        
+        //*** callout to get freight & tax
+        //SoldToAccount_Partner_Number__c
+        //BillToContact_Partner_Number__c
+        //ShipToContact_Partner_Number__c
+        try {
+            //*** prepare callout header
+            if (request.inputHttpHeaders_x == null) request.inputHttpHeaders_x = new Map<String,String>(); 
+            request.inputHttpHeaders_x.put('Authorization', Utility.getSAPauthorization());
+            request.timeout_x = Utility.getIntegerSetting('SAP_CALL_TIMEOUT');
+            request.endpoint_x = Utility.fixEndpointDomain(request.endpoint_x);
+            
+            //*** prepare partners
+            soldToPartner = new SAP_Freight_and_Tax.DT_SFDC_Partner();
+            soldToPartner.SAPPartnerID = SoldToAccount_Partner_Number;
+            billToPartner = new SAP_Freight_and_Tax.DT_SFDC_Partner();
+            billToPartner.SAPPartnerID = BillToContact_Partner_Number;
+            shipToPartner = new SAP_Freight_and_Tax.DT_SFDC_Partner();
+            shipToPartner.SAPPartnerID = ShipToContact_Partner_Number;
+            /*
+            (outType == 'Order' ? conversion.SAP_Order_Type__c : 'Contract')
+                                                                     , (outType == 'Order' ? conversion.SAP_Sales_Org__c : '')
+                                                                     , (outType == 'Order' ? conversion.SAP_Division__c : '')
+                                                                     , (outType == 'Order' ? conversion.SAP_Distribition_Channel__c : '')
+            
+            */
+            //*** call out
+            for (String outType : outProductList.keySet())
+            {
+                system.debug('outType >>>' + outType);
+                system.debug('outProductList.get(outType) ' + outProductList.get(outType));
+                
+                system.debug('soldToPartner >>>' + soldToPartner);
+                system.debug('shipToPartner >>>' + shipToPartner);
+                system.debug('soldToPartner >>>' + soldToPartner);
+                
+                response = request.SI_SFDC_TaxShippingCalculation_SYNC( SAP_Order_Type
+                                                                     , SAP_Sales_Org
+                                                                     , SAP_Division
+                                                                     , SAP_Distribition_Channel
+                                                                     , soldToPartner
+                                                                     , shipToPartner
+                                                                     , billToPartner
+                                                                     , outProductList.get(outType));
+                system.debug('response >>>' + response);
+                if (response.Error != null)  break;
+                lstResponse.add(response);
+            }
+            
+            //*** return error message if applicable
+            if (response.Error != null) return null; 
+            
+            //*** set tax and freight on order item and update at the end
+            for (Integer i1 = 0; i1 < lstResponse.size(); i1++)
+                for (SAP_Freight_and_Tax.CalculationResult_element calc : lstResponse[i1].CalculationResult)                   
+                        TotalTax += ((calc.Tax == null) ? 0 : calc.Tax);
+         
+           // update mapProduct_OrderItem.values();
+           
+        } catch (Exception e) {
+          system.debug('Issue >>>' + e.getMessage());
+          return null;
+        } //*** end of call out
+        return TotalTax;
+    } //*** end of "getSAP_Freight_Tax"
+
+
 	
 } // end of class vfIECEBC_PaymentComponentController
