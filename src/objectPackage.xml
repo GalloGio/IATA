@@ -42,6 +42,8 @@
         <name>Queue</name>
     </types>
         <types>
+		<members>AMS/AMS_Notify_OSCAR_Owner_on_Manager_Approval</members>
+		<members>AMS/AMS_Notify_OSCAR_Owner_on_Manager_Rejection</members>
 		<members>AMS/AMS_Notify_OSCAR_Team_Members</members>
         <name>EmailTemplate</name>
     </types>
