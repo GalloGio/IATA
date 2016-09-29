@@ -192,7 +192,7 @@ System.debug('setToRemoveAgencyUpdate: ' + setToRemoveAgencyUpdate);
                                     au3.Update_Type__c = 'Deleted';
                                     au3.Change_Code__c = '';
                                     if(setToRemoveAgencyUpdate == null || !setToRemoveAgencyUpdate.contains(au3.Account__c) ){
-System.debug('au3: ' + au3);                                        
+System.debug('au3: ' + au3);                                         
                                         toRemoveAgencyUpdate.add(au3);
                                         setToRemoveAgencyUpdate.add(au3.Account__c);
                                     }
