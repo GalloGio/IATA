@@ -269,7 +269,11 @@ System.debug('Account au: ' + au);
             //Validates Hierarchy (null top parent cannot be sent to SAP except for HO, AO)
             //result: on Fail - will create the Agency Update Record in "Invalid" Status and will NOT create a Log entry
             //Site type EP, AO, SP, AA & HO are all considered as HO in PI. - Jitender
-            if(au.Top_Parent__c == null && au.Location_Type__c != 'HO' && au.Location_Type__c != 'AO' && bToValidate){
+            //if(au.Top_Parent__c == null && au.Location_Type__c != 'HO' && au.Location_Type__c != 'AO' && bToValidate){
+            if(au.Top_Parent__c == null && !AMS_Utils.LocationTypeAllHOTypes.contains(au.Location_Type__c) && bToValidate){
+
+                
+
                 accErrors += '\nHO Id empty - Agency: '+au.Name+' ('+au.IATACode__c+'-'+au.id+'): Active Change Code - ' + sChangeCode ;
                 bError = true;
                 bErrorLog = true;     
