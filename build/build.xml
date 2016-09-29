@@ -467,10 +467,10 @@
         unpackaged="src/workflowPackage.xml"/>
       <move file="${basedir}/${sfdc.retrieveTarget}/package.xml" tofile="src/workflowPackage.xml"/>  
       <move file="${basedir}/${sfdc.retrieveTarget}" tofile="src"/>
-       <antcallback target="getCodeLocal" />
+       <antcallback target="getApex" />
     </target>
 
-    <target name="getCodeLocal">
+    <target name="getApex">
       <echo level="info">Retrieving the server's version of code</echo>
       <mkdir dir="${basedir}/${sfdc.retrieveTarget}"/>
       <sf:retrieve
@@ -499,14 +499,44 @@
       <move file="${basedir}/${sfdc.retrieveTarget}/package.xml" tofile="src/staticPackage.xml"/>
       <move file="${basedir}/${sfdc.retrieveTarget}" tofile="src"/>
 
-<!-- <antcallback target="bulkRetrieveEmailTemplate" /> -->
+    <antcallback target="getLayouts" /> 
 
     </target>
 
- 
+     <target name="getLayouts">
+      <echo level="info">Retrieving the server's version of code</echo>
+      <mkdir dir="${basedir}/${sfdc.retrieveTarget}"/>
+      <sf:retrieve
+        retrieveTarget="${basedir}/${sfdc.retrieveTarget}"
+        username="${sfdc.username}"
+        password="${sfdc.password}"
+        serverurl="${sfdc.serverurl}"
+        unpackaged="src/layoutPackage.xml"/>
+      <move file="${basedir}/${sfdc.retrieveTarget}/package.xml" tofile="src/layoutPackage.xml"/>
+      <move file="${basedir}/${sfdc.retrieveTarget}" tofile="src"/>
+
+       <antcallback target="getApproval" /> 
+
+    </target>
     
 
 
+     <target name="getApproval">
+      <echo level="info">Retrieving the server's version of code</echo>
+      <mkdir dir="${basedir}/${sfdc.retrieveTarget}"/>
+      <sf:retrieve
+        retrieveTarget="${basedir}/${sfdc.retrieveTarget}"
+        username="${sfdc.username}"
+        password="${sfdc.password}"
+        serverurl="${sfdc.serverurl}"
+        unpackaged="src/approvalPackage.xml"/>
+      <move file="${basedir}/${sfdc.retrieveTarget}/package.xml" tofile="src/approvalPackage.xml"/>
+      <move file="${basedir}/${sfdc.retrieveTarget}" tofile="src"/>
+
+     <!--  <antcallback target="getApproval" />  -->
+
+    </target>
+    
 
 
     <target name="getCodePointAndClick">
@@ -558,13 +588,11 @@
       <move file="${basedir}/${sfdc.retrieveTarget}/package.xml" tofile="src/workflowPackage.xml"/>
       <move file="${basedir}/${sfdc.retrieveTarget}" tofile="src"/>
 
-<!-- <antcallback target="bulkRetrieveEmailTemplate" /> -->
+       <antcallback target="getLayouts" /> 
 
     </target>
 
  
-
-
 
 
   
