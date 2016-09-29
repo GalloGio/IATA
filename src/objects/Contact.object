@@ -2775,9 +2775,11 @@ Received from AIMS and needed in synchronization file but never displayed and up
     <fields>
         <fullName>Airline_Contact_Type__c</fullName>
         <externalId>false</externalId>
-        <formula>IF(TEXT(CEO_CFO__c)=&quot;CEO&quot;,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000002rRZT&quot; ,&quot;&quot;,40,40),&quot;&quot;)
+        <formula>IF(TEXT(CEO_CFO__c)=&quot;CEO&quot;,IMAGE(&quot;/resource/CEO_Contact_image&quot; ,&quot;&quot;,40,40),&quot;&quot;)
 &amp;&quot; &quot;&amp;
-IF(TEXT(CEO_CFO__c)=&quot;CFO&quot;,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000002rRZO&quot; ,&quot;&quot;,40,40),&quot;&quot;)
+IF(TEXT(CEO_CFO__c)=&quot;CFO&quot;,IMAGE(&quot;/resource/CFO_Contact_image&quot; ,&quot;&quot;,40,40),&quot;&quot;)
+&amp;&quot; &quot;&amp;
+IF(TEXT(CEO_CFO__c)=&quot;COO&quot;,IMAGE(&quot;/resource/COO_Contact_image&quot; ,&quot;&quot;,40,40),&quot;&quot;)
 &amp;&quot; &quot;&amp;
 IF(Airline_Credit_Risk_Manager__c,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000002rRZF&quot; ,&quot;&quot;,40,40),&quot;&quot;)
 &amp;&quot; &quot;&amp;
@@ -2797,7 +2799,11 @@ IF(APJC_Participant__c,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w000000
 &amp;&quot; &quot;&amp;
 IF(BSP_CASS_Payment_contact__c,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w00000037Sjc&quot; ,&quot;&quot;,40,40),&quot;&quot;)
 &amp;&quot; &quot;&amp;
-IF(Financial_Assessment_Contact__c,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w00000037Sj8&quot; ,&quot;&quot;,40,40),&quot;&quot;)</formula>
+IF(Financial_Assessment_Contact__c,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w00000037Sj8&quot; ,&quot;&quot;,40,40),&quot;&quot;)
+&amp;&quot; &quot;&amp;
+IF(NOT(ISBLANK(Function__c)),IMAGE(&quot;/resource/Primary_Contact_image&quot; ,&quot;&quot;,40,40),&quot;&quot;)
+&amp;&quot; &quot;&amp;
+IF(Membership_Main_Contact__c,IMAGE(&quot;/resource/Main_Contact_image&quot; ,&quot;&quot;,40,40),&quot;&quot;)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Contact Type</label>
         <required>false</required>
@@ -24561,6 +24567,10 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </values>
             <values>
                 <fullName>CFO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>COO</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
