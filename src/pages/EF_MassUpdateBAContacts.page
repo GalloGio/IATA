@@ -1,6 +1,13 @@
-<apex:page >
-  <!-- Begin Default Content REMOVE THIS -->
-  <h1>Congratulations</h1>
-  This is your new Page: EF_MassUpdateBAContacts
-  <!-- End Default Content REMOVE THIS -->
+<apex:page standardController="EF_Billing_Agreement__c">
+    <apex:form >
+        <c:RelatedList objectName="EF_Contact_Relationship__c"
+            parentFieldName="EF_Airline_Billing_Agreement__c"
+            parentFieldId="{!EF_Billing_Agreement__c.Id}"       
+            fieldsCSV="Contact__c,Contact_Account__c,Role__c,Status__c" 
+            editableFieldsCSV="Role__c,Status__c" 
+            updateAllOrNone="false" 
+            defaultEditAll="true" 
+            massUpdateInputs="true"
+            hideActionLinkEdit="true"/>
+    </apex:form>
 </apex:page>

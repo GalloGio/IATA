@@ -24563,6 +24563,10 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
                 <fullName>CFO</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>COO</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Call_Status__c</picklist>
