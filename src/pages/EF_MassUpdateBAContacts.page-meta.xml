@@ -5,5 +5,4 @@
     <confirmationTokenRequired>false</confirmationTokenRequired>
     <description>For EF project and mass-updating Billing Agreement Contacts</description>
     <label>EF_MassUpdateBAContacts</label>
-    <description>For EF project and mass-updating Billing Agreement Contacts</description>
 </ApexPage>
