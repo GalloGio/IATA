@@ -15,13 +15,35 @@ global  class NewLocalGroupCtrl {
     }
 
     public PageReference redirect(){
+        Boolean redirect = false;
       List<RecordType> lsRecordTypes =
-          [SELECT Id FROM RecordType
-          WHERE SObjectType = 'LocalGovernance__c'
-          AND ( DeveloperName  = 'Reg_Div_Groups' OR DeveloperName  = 'Draft_Reg_Div_Group')];
+            [SELECT Id, DeveloperName FROM RecordType
+            WHERE SObjectType = 'LocalGovernance__c' ];
       Set<Id> setRegDivRecordTypes = new Set<Id>();
-      for(RecordType rt : lsRecordTypes) {setRegDivRecordTypes.add(rt.Id);}
-      if(setRegDivRecordTypes.Contains(lg.RecordTypeId )){
+        Set<Id> setLocalGroupRecordTypes = new Set<Id>();
+        for (RecordType rt : lsRecordTypes) {
+            if(rt.DeveloperName == 'Reg_Div_Groups' || rt.DeveloperName == 'Draft_Reg_Div_Group') {
+                setRegDivRecordTypes.add(rt.Id);
+            } else if(rt.DeveloperName == 'Local_Groups') {
+                setLocalGroupRecordTypes.add(rt.Id);
+            }
+        }
+        System.debug(lg.RecordTypeId + ' ' + lg.RecordType.Name);
+        // 1. if there is already a recordtype set redirect accordingly
+        if(setRegDivRecordTypes.contains(lg.RecordTypeId)) { redirect = true;}
+        else if(setLocalGroupRecordTypes.contains(lg.RecordTypeId)) {redirect = false;}
+        // 2. if the user can only see one recordtype it's null and we check which type the user has access to
+        if(!redirect && lg.RecordTypeId == null) {
+            for(RecordTypeInfo info: LocalGovernance__c.SObjectType.getDescribe().getRecordTypeInfos()) {
+                if(info.isAvailable()) {
+                    if( info.getName() == 'Reg/Div Groups' || info.getName() == 'Draft Reg/Div Group') {
+                        redirect = true;
+                    }
+                }
+            }
+        }
+
+        if(redirect){
         String prURL = '/apex/AMP_NewIATAGroup?';
 
         String recordId =  ApexPages.currentPage().getParameters().get('id');
