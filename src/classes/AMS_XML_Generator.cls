@@ -1351,21 +1351,30 @@ public with sharing class AMS_XML_Generator {
                     //}else{
                     //    agRelationshipsNode.addTextNode('Missing');
                     }
+				
                     if(!bHier || bHierChild){
                         //AMS_Agency__c parentAg = (AMS_Agency__c)msObject.get(mAg_VS_ParentAg.get(ag.Id)); - #AMSFTS    
                         Account parentAg = (Account)msObject.get(mAg_VS_ParentAg.get(ag.Id));
                         
-                        Dom.Xmlnode agRelationshipNode = agRelationshipsNode.addChildElement('agencies_relationship', null, null);
-                       
                         if(parentAg != Null){
+                            Dom.Xmlnode agRelationshipNode = agRelationshipsNode.addChildElement('agencies_relationship', null, null);
                             //agRelationshipHO_FlagNode.addTextNode('False');
                             Dom.Xmlnode auxAgencyNode = agRelationshipNode.addChildElement('parent_agency', null, null);
                             getAgencyNode(auxAgencyNode, parentAg,False, True);
-                        }else{
-                            //agRelationshipHO_FlagNode.addTextNode('True');
                         }
-                        
                     }
+                   
+                    if( (!bHier && !bHierChild) || (bHier && !bHierChild)){
+                        //For HO agencies - put the HO own data on the relationship 
+                        //if(ag.Location_Type__c.equalsIgnoreCase('HO')){
+                        if(AMS_Utils.LocationTypeAllHOTypes.contains(ag.Location_Type__c)){
+                            Dom.Xmlnode agRelationshipNode = agRelationshipsNode.addChildElement('agencies_relationship', null, null);
+                            Dom.Xmlnode auxAgencyNode = agRelationshipNode.addChildElement('parent_agency', null, null);
+                            getAgencyNode(auxAgencyNode, ag,False, True);
+                        }
+                    }
+
+                    
                     
                     Dom.Xmlnode airportsNode = agencyNode.addChildElement('airports', null, null);
                     if(lAirport.size() > 0){
