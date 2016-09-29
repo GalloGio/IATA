@@ -130,10 +130,6 @@
         <label>Correction change code</label>
         <picklist>
             <picklistValues>
-                <fullName>--None--</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
                 <fullName>CAD</fullName>
                 <default>false</default>
             </picklistValues>
@@ -5476,10 +5472,6 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
             </values>
         <picklistValues>
             <picklist>AMS_Correction_change_code__c</picklist>
-            <values>
-                <fullName>--None--</fullName>
-                <default>false</default>
-            </values>
             <values>
                 <fullName>CAD</fullName>
                 <default>false</default>
