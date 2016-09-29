@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <name>E&amp;F Billing Agreement Approved</name>
+    <style>none</style>
+    <subject>Billing Agreement changes approved</subject>
+    <textOnly>Dear {!User.FirstName},
+
+your changes for an Airline Billing Agreement have been approved.</textOnly>
+    <type>custom</type>
+</EmailTemplate>
