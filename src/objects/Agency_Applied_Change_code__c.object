@@ -350,6 +350,22 @@
         <type>Date</type>
     </fields>
     <fields>
+        <fullName>For_Integration__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( ISNULL(Account__r.Last_Integration_Date__c), 
+    true, 
+    IF( CreatedDate &gt; Account__r.Last_Integration_Date__c,
+        true,
+        false
+    )
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>For Integration</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Irregularities_Expired__c</fullName>
         <defaultValue>false</defaultValue>
         <description>If true, irregularities points are not summed in the account. It expires 12 months after the Effective_Date__c</description>
