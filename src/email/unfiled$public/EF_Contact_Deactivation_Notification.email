@@ -1,0 +1,13 @@
+<table border="0" cellpadding="5" width="550" cellspacing="5" height="400" >
+<tr valign="top" height="400" >
+<td tEditID="c1r1" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
+<![CDATA[<font size="2">
+<p><font face="Arial" size="2"><strong>Note that this is an automatic message.&nbsp;Please do not respond to this email.</strong></font></p>
+<p><font size="2"><font face="Arial"></font></font>&nbsp;</p>
+<p><font size="2"><font face="Arial">Dear E&amp;F member,<br><br>Please note that the&nbsp;</font></font><span style="font-family: Arial;">E&amp;F&nbsp;</span><font size="2"><font face="Arial">contact {!Contact.Name} of the account&nbsp;</font></font><span style="font-family: Arial;">{!Account.Name}</span><span style="font-family: Arial;">&nbsp;</span><font size="2"><font face="Arial">has been deactivated (new status: {!Contact.Status__c})</font></font><span style="font-family: Arial;">.</span></p></font><font size="2">
+<p><font face="Arial"><font size="2"><span class="389045109-29042009"></span></font></font>&nbsp;</p>
+<p><font face="Arial"><font size="2"><span class="389045109-29042009">Best </span>regards,</font></font></p>
+<p><font face="Arial" size="2"><span class="389045109-29042009">IATA E&amp;F Services</span></font></p>
+</font><p><br></p>]]></td>
+</tr>
+</table>
