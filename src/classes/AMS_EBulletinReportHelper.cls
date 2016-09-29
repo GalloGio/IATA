@@ -25,7 +25,11 @@ public class AMS_EBulletinReportHelper {
 		set;}
 
 
-	private static List<AMS_CustomSettingsUtils.AMS_EBulletinSetting> EBulletinSettingsList{get;set;}
+	private static List<AMS_CustomSettingsUtils.AMS_EBulletinSetting> eBulletinSettingsList{
+		get{ 
+			if(eBulletinSettingsList == null) eBulletinSettingsList = new List<AMS_CustomSettingsUtils.AMS_EBulletinSetting>();return eBulletinSettingsList;
+		}
+		set;}	
 	
 	private static final Map <String,String>  typeEBulletinMap = new Map<String, String>{ 'D' => 'Daily__c', 'W' => 'Weekly__c' };
 
@@ -43,20 +47,20 @@ public class AMS_EBulletinReportHelper {
 		
 		
 		for(AMSEBulletinSettings__c setting : eBulletinSettingsMap.values()){
-			EBulletinSettingsList.add( new AMS_CustomSettingsUtils.AMS_EBulletinSetting(setting,'Number_Order__c') );
+			eBulletinSettingsList.add( new AMS_CustomSettingsUtils.AMS_EBulletinSetting(setting,'Number_Order__c') );
 
 		}
-		EBulletinSettingsList.sort();
+		eBulletinSettingsList.sort();
 
 	
 
 
 
-		//EBulletinSettingsList = Database.query(AMS_QueryUtils.getAllFieldQuery('AMSEBulletinSettings__c',typeEBulletinMap.get(typeEBulletin)+'=true ORDER BY Number_Order__c',false));
+		//eBulletinSettingsList = Database.query(AMS_QueryUtils.getAllFieldQuery('AMSEBulletinSettings__c',typeEBulletinMap.get(typeEBulletin)+'=true ORDER BY Number_Order__c',false));
 
 
 
-		System.debug('E Bulletin Settings to recover: ' + EBulletinSettingsList);
+		System.debug('E Bulletin Settings to recover: ' + eBulletinSettingsList);
 	}
 
 	/** 
@@ -77,7 +81,7 @@ public class AMS_EBulletinReportHelper {
 		****** Alternative method to recover directly the field labels to use has columns headers ****/
 
 
-		for (AMS_CustomSettingsUtils.AMS_EBulletinSetting eBulletinSettingG : EBulletinSettingsList)
+		for (AMS_CustomSettingsUtils.AMS_EBulletinSetting eBulletinSettingG : eBulletinSettingsList)
 		{
 			fieldsList.add(eBulletinSettingG.eBulletinSetting.API_Name__c);
 			headersList.add(eBulletinSettingG.eBulletinSetting.Name);

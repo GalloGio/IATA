@@ -260,7 +260,8 @@ public class AMS_ChangeCodesHelper {
                                                         Object_API_Name__c            = change.objectAPI    ,
                                                         Field_API_Name__c             = change.fieldAPI     ,
                                                         Field_New_Value__c            = change.newValue     ,
-                                                        Field_Old_Value__c            = change.oldValue     );
+                                                        Field_Old_Value__c            = change.oldValue     
+                                                        );
     
     
                 changeCodeFielsHistory.add(aacNEWHistory);

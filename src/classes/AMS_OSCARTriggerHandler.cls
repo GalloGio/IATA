@@ -195,6 +195,9 @@ public class AMS_OSCARTriggerHandler {
 		//store all the updates to be made on account as consequence of migration of data from staging area to master data
 		Map<Account,AMS_ChangeCodesHelper.ObjectChangesStruct> accountsToUpdate = new Map<Account,AMS_ChangeCodesHelper.ObjectChangesStruct>();
 
+		// Account Fields Information
+		Map<String, Schema.SObjectField>  acctFieldsMap= Schema.SObjectType.Account.fields.getMap();
+
 		//this structure contains all the hierarchy relationships that need to be inserted/updated/deleted
 		List<AMS_HierarchyHelper.HierarchyStruct> hierarchyChanges = new List<AMS_HierarchyHelper.HierarchyStruct>();
 
@@ -475,36 +478,7 @@ public class AMS_OSCARTriggerHandler {
 
 		try {
 
-			List<Account> accsToUpdateFromCC = new List<Account>();
 
-			//insert the change codes
-			if (changesContainer.size() > 0) {
-				List<AMS_OSCAR_JSON.ChangeCode> changeCodes = new List<AMS_OSCAR_JSON.ChangeCode>();
-				List<Account> accts = new List<Account>();
-				List<AMS_OSCAR__c> theoscars = new List<AMS_OSCAR__c>();
-
-				//merge everything
-				for (AMS_Utils.Container c : changesContainer) {
-					changeCodes.addAll(c.changeCodes);
-					accts.addAll(c.accts);
-					
-					for(Account acc : c.accts)
-					{
-						objectChanges.add(accountsToUpdate.get(acc));
-					}
-
-					theoscars.addAll(c.oscars);
-				}
-				//create change codes
-
-				accsToUpdateFromCC = AMS_ChangeCodesHelper.createAAChangeCodes(objectChanges,changeCodes, theoscars, accts, false);
-			}
-
-			List<Account> mergedAccountUpdate = mergeAccountsToUpdate(accsToUpdateFromCC, new List<Account>(accountsToUpdate.keySet()));
-
-			if (!mergedAccountUpdate.isEmpty()) {
-				update mergedAccountUpdate;
-			}
 
 			if (hierarchyChanges.size() > 0) {
 				List<AMS_Agencies_Hierarchy__c> allHierarchiesToInsert = new List<AMS_Agencies_Hierarchy__c>();
@@ -539,17 +513,93 @@ public class AMS_OSCARTriggerHandler {
 
 			}
 
+			Map<Id,AMS_AccountRoleCreator.OldAndNewOwners> oldAndNewOwnersMap = new Map<Id,AMS_AccountRoleCreator.OldAndNewOwners>();
+			
 			//Migrate Ownership
 			if (!accountsAffectedPerOnlineAccreditation.isEmpty()) {
 				system.debug('processAgencyChanges() --> accountsAffectedPerOnlineAccreditation = ' + accountsAffectedPerOnlineAccreditation);
 
-				AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(accountsAffectedPerOnlineAccreditation, !isSanityCheck);
-
+				oldAndNewOwnersMap = AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(accountsAffectedPerOnlineAccreditation, !isSanityCheck);
+			
 				//verify ownership alignment
 				if(accsToCompareOwnership.size()>0 && !AMS_HierarchyHelper.checkHierarchyIntegrity(accsToCompareOwnership))
 					throw new AMSException('Performing this operation will result in hierarchy ownership inconsistency. Please make sure the owners being processed match with the owners of the target agency.');
 			}
 
+
+			//************Create Change Codes ****************
+			//
+			//
+			List<Account> accsToUpdateFromCC = new List<Account>();
+
+
+			//insert the change codes
+			if (changesContainer.size() > 0) {
+				List<AMS_OSCAR_JSON.ChangeCode> changeCodes = new List<AMS_OSCAR_JSON.ChangeCode>();
+				List<Account> accts = new List<Account>();
+				List<AMS_OSCAR__c> theoscars = new List<AMS_OSCAR__c>();
+
+				//merge everything
+				for (AMS_Utils.Container c : changesContainer) {
+					
+				//All lists must have the same size in order to create correctly the change codes
+				
+					changeCodes.addAll(c.changeCodes);
+					accts.addAll(c.accts);
+					theoscars.addAll(c.oscars);
+
+					integer index = 0;
+					for(Account acc : c.accts)
+					{
+						//******* Add "Custom" changes struct for the Ownership mapping ******** INI
+
+						AMS_AccountRoleCreator.OldAndNewOwners oldNewOwnersByOscar = oldAndNewOwnersMap.get(theoscars[index].AMS_Online_Accreditation__c);
+
+						if(oldNewOwnersByOscar != null )
+						{
+							String oldOwnerCSV,newOwnerCSV = '';
+
+							if (oldNewOwnersByOscar.getOldOwnersByAccountId(acc.Id) != null) oldOwnerCSV = oldNewOwnersByOscar.getOldOwnersByAccountId(acc.Id).allOwnersCSV;
+							if (oldNewOwnersByOscar.getNewOwnersByAccountId(acc.Id) != null) newOwnerCSV = oldNewOwnersByOscar.getNewOwnersByAccountId(acc.Id).allOwnersCSV;
+
+												
+        		            AMS_ChangeCodesHelper.ObjectChange objectChangesOwnership = new AMS_ChangeCodesHelper.ObjectChange('Account','Owners',oldOwnerCSV,newOwnerCSV);
+		                
+							if(accountsToUpdate.get(acc) == null) 
+							{
+								AMS_ChangeCodesHelper.ObjectChangesStruct acctChangesStruct = new AMS_ChangeCodesHelper.ObjectChangesStruct(new List <AMS_ChangeCodesHelper.ObjectChange> {objectChangesOwnership});
+								objectChanges.add(acctChangesStruct);
+							}								
+
+							else
+								accountsToUpdate.get(acc).changes.add(objectChangesOwnership);							
+
+						}
+
+						//******* Add "Custom" changes struct for the Ownership mapping ******** END
+
+						system.debug('accountsToUpdate.get(acc):' + accountsToUpdate.get(acc));
+
+						objectChanges.add(accountsToUpdate.get(acc));
+
+						index++;
+					}
+
+					//throw new AMSException('STOP!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+
+
+				}
+				//create change codes
+
+				accsToUpdateFromCC = AMS_ChangeCodesHelper.createAAChangeCodes(objectChanges,changeCodes, theoscars, accts, false);
+			}
+
+
+			List<Account> mergedAccountUpdate = mergeAccountsToUpdate(accsToUpdateFromCC, new List<Account>(accountsToUpdate.keySet()));
+
+			if (!mergedAccountUpdate.isEmpty()) {
+				update mergedAccountUpdate;
+			}
 
 
 		} catch (Exception ex) {

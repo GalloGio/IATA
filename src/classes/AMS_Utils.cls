@@ -945,6 +945,7 @@ public without sharing class AMS_Utils {
 
         Map<Account,AMS_ChangeCodesHelper.ObjectChangesStruct> accountsToUpdate = new  Map<Account,AMS_ChangeCodesHelper.ObjectChangesStruct>();
         
+        Map<String, Schema.SObjectField>  acctFieldsMap= Schema.SObjectType.Account.fields.getMap();
 
         //DT: Reindented and added 3 fields for addresses
         // Account Fields => AMS Pax Accreditation Fields (Staging area)
@@ -1025,7 +1026,7 @@ public without sharing class AMS_Utils {
                     for(String accFieldApiName: accountFieldNewValue.keySet())
                     {
                         
-                        Schema.SObjectField field = Schema.SObjectType.Account.fields.getMap().get(accFieldApiName);
+                        Schema.SObjectField field = acctFieldsMap.get(accFieldApiName);
                         Schema.DisplayType fldType = field.getDescribe().getType();
                         
                         system.debug('Field value to migrate to account: ' + accFieldApiName);
