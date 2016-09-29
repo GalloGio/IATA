@@ -14,7 +14,7 @@
     </types>
     <types>
         <members>*</members>
-        <name>StaticResource</name>
+        <name>Translations</name>
     </types>
     <version>37.0</version>
 </Package>

@@ -195,7 +195,12 @@ public with sharing class EF_TestDataFactory
         if(efProfileIds.size() == 2)
         {
             u1.ProfileId = efProfileIds.get(profileNumber).Id;
+        } else
+        {
+            List<Profile> adminId = [select id from Profile where Name like 'System Administrator' order by Name asc limit 1];
+            u1.ProfileId = adminId.get(0).Id;
         }
+
         Map<Integer, String> roleNumberNameMap = new Map<Integer, String>();
         roleNumberNameMap.put(1,'Manager, Business Development');
         roleNumberNameMap.put(2,'Head, Client Services');

@@ -204,11 +204,11 @@
                 <behavior>Edit</behavior>
                 <field>BusinessHoursId</field>
             </layoutItems>
-			<layoutItems>
+            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>EF_Contract__c</field>
             </layoutItems>
-			<layoutItems>
+            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>EF_Airline_Billing_Agreement__c</field>
             </layoutItems>
