@@ -1,0 +1,6 @@
+.THIS .hidden{
+  display: none;
+}
+.THIS .textwrap {
+    white-space: normal;
+}

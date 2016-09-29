@@ -1,0 +1,135 @@
+<apex:page standardController="Objective__c" extensions="AMP_KeyAccountPlanExtension"
+    showHeader="true" standardStylesheets="true" sidebar="true"  applyBodyTag="false" docType="html-5.0">
+
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+
+    <head>
+      <title>Key Account Plan</title>
+      <apex:stylesheet value="{!URLFOR($Resource.AMP_helper, 'css/general.css')}"/>
+
+    </head>
+
+    <body>
+        <apex:form >
+        <apex:outputLink value="/{!accountId}" >back to Account</apex:outputLink>
+        <apex:pageBlock id="theBlock" title="Key Account Plan for {!AccountName}">
+        <apex:image value="{!$Resource.AMP_logo}" />
+            <apex:commandButton value="History" action="{!showPrevious}" reRender="theBlock" />
+            <apex:commandButton value="Current" action="{!showThis}" reRender="theBlock" />
+            <apex:outputLink value="/apex/AMP_KeyAccountPlanPrintable?accountId={!accountId}">Printable</apex:outputLink>
+            <!-- <apex:commandButton value="Next Year" action="{!showNext}" reRender="theBlock" /> -->
+
+            <apex:outputPanel id="thisPanel" >
+            <apex:outputPanel rendered="{!!showMilestones}" >
+                <apex:pageMessages />
+
+                <apex:pageBlockTable value="{!lsObjectivesActive}" var="objective">
+                <apex:column styleClass="narrow-table-column" headerValue="Actions">
+      						<apex:facet name="header"></apex:facet>
+
+                  <apex:commandLink value="Edit" action="{!EditLine}" reRender="thisPanel" oncomplete="enableShowMoreOrLess();" rendered="{!IF(AND(isEditMode, IdConcerned==objective.Id), false, true)}" >
+                      <apex:param name="IdConcerned" value="{!objective.Id}" assignTo="{!IdConcerned}"/>
+                  </apex:commandLink>
+
+                  <apex:commandLink value="Save" action="{!SaveLine}" reRender="thisPanel"  oncomplete="enableShowMoreOrLess();" rendered="{!IF(AND(isEditMode, IdConcerned==objective.Id), true, false)}">
+                      <apex:param name="IdConcerned" value="{!objective.Id}" assignTo="{!IdConcerned}"/>
+                  </apex:commandLink>
+                  &nbsp;
+                  <apex:commandLink value="Cancel" action="{!CancelEdit}" immediate="true"
+                    html-formnovalidate="formnovalidate" reRender="thisPanel" oncomplete="enableShowMoreOrLess();" rendered="{!IF(AND(isEditMode, IdConcerned==objective.Id), true, false)}" >
+                      <apex:param name="IdConcerned" value="{!objective.Id}" assignTo="{!IdConcerned}"/>
+                  </apex:commandLink>
+                  <br />
+                  <!-- <apex:commandLink value="Show Milestones" action="{!showMilestones}" reRender="thisPanel,milestonesPanel"  >
+                    <apex:param name="IdConcerned" value="{!objective.Id}" assignTo="{!IdConcerned}"/>
+                  </apex:commandLink> -->
+                  <apex:outputLink value="AMP_KAPMilestones?accountId={!accountId}&objectiveId={!objective.Id}" target="_blank">Show Milestones</apex:outputLink>
+      			    </apex:column>
+
+      					<apex:column headerValue="Activity">
+
+                    <apex:outputField value="{!objective.Name}"  rendered="{!!AND(isEditMode, IdConcerned==objective.Id)}"/>
+                    <apex:inputField value="{!objective.Name}"  rendered="{!AND(isEditMode, IdConcerned==objective.Id)}" required="true" style="width: 80%;" />
+      					</apex:column>
+      					<apex:column headerValue="Description">
+                    <!-- <apex:outputField value="{!objective.Details__c}"  rendered="{!!AND(isEditMode, IdConcerned==objective.Id)}"/> -->
+                    <apex:inputField value="{!objective.Details__c}"  rendered="{!AND(isEditMode, IdConcerned==objective.Id)}" required="true" style="width: 80%;" />
+                    <apex:outputPanel styleClass="long-text-area hidden" rendered="{!NOT(AND(isEditMode, IdConcerned==objective.Id))}" >
+                      <apex:outputText value="{!objective.Details__c}"   />
+                      <a href="#" class="show-less">[show less]</a>
+                    </apex:outputPanel>
+                    <apex:outputPanel styleClass="short-text-area" rendered="{!NOT(AND(isEditMode, IdConcerned==objective.Id))}">
+                      <apex:outputText value="{!LEFT(objective.Details__c,100)}" />
+                      <apex:outputPanel rendered="{!LEN(objective.Details__c)>100}"> <a href="#" class="show-more">[show more]</a></apex:outputPanel>
+                    </apex:outputPanel>
+                </apex:column>
+
+      					<apex:column headerValue="Overall Status" styleClass="table-column-10pc">
+                    <apex:outputField value="{!objective.Status__c}"  rendered="{!!AND(isEditMode, IdConcerned==objective.Id)}"/>
+                    <apex:inputField value="{!objective.Status__c}" rendered="{!AND(isEditMode, IdConcerned==objective.Id)}" required="true" style="width: 80%;" />
+                </apex:column>
+
+      					<apex:column headerValue="Account Issue or Priority">
+                    <apex:outputField value="{!objective.Account_Issue_or_Priority__c}"  rendered="{!!AND(isEditMode, IdConcerned==objective.Id)}"/>
+                    <apex:inputField value="{!objective.Account_Issue_or_Priority__c}" rendered="{!AND(isEditMode, IdConcerned==objective.Id)}" style="width: 80%;" />
+                </apex:column>
+
+      					<apex:column headerValue="Benefits to the Account">
+                    <!-- <apex:outputField value="{!objective.Benefits_to_Account__c}"  rendered="{!!AND(isEditMode, IdConcerned==objective.Id)}"/> -->
+                    <apex:inputField value="{!objective.Benefits_to_Account__c}" rendered="{!AND(isEditMode, IdConcerned==objective.Id)}" style="width: 80%;" />
+                    <apex:outputPanel styleClass="long-text-area hidden" rendered="{!NOT(AND(isEditMode, IdConcerned==objective.Id))}" >
+                      <apex:outputText value="{!objective.Benefits_to_Account__c}"   />
+                      <a href="#" class="show-less">[show less]</a>
+                    </apex:outputPanel>
+                    <apex:outputPanel styleClass="short-text-area" rendered="{!NOT(AND(isEditMode, IdConcerned==objective.Id))}">
+                      <apex:outputText value="{!LEFT(objective.Benefits_to_Account__c,100)}" />
+                      <apex:outputPanel rendered="{!LEN(objective.Benefits_to_Account__c)>100}"> <a href="#" class="show-more">[show more]</a></apex:outputPanel>
+                    </apex:outputPanel>
+                </apex:column>
+
+      					<apex:column headerValue="Deadline" styleClass="narrow-table-column">
+                    <apex:outputField value="{!objective.Deadline__c}"  rendered="{!!AND(isEditMode, IdConcerned==objective.Id)}"/>
+                    <apex:inputField value="{!objective.Deadline__c}" rendered="{!AND(isEditMode, IdConcerned==objective.Id)}"  />
+                </apex:column>
+
+              </apex:pageBlockTable>
+
+
+
+          </apex:outputPanel>
+          </apex:outputPanel>
+
+            <apex:commandButton action="{!newObjective}" value="New Planned Activity" rendered="{!visibleTab != 'previous'}" reRender="thisPanel"/>
+            <!-- </apex:outputPanel> -->
+
+        </apex:pageBlock>
+    </apex:form>
+
+<!--
+        <style>
+            .inputDiv {display: block;}
+            td.dataCell {vertical-align: top !important;}
+            td.invisible {border: 0px !important}
+            table.dataTable {width: 100%;}
+            a.btn {white-space: nowrap;}
+        </style>
+-->
+        <apex:outputPanel id="js">
+
+
+      <!-- JAVASCRIPT -->
+      <apex:includeScript value="{!$Resource.jQuery172}" />
+      <apex:includeScript value="{!URLFOR($Resource.AMP_helper,'js/general.js')}" />
+        <script>
+        $(document).ready(function(){
+          enableShowMoreOrLess();
+        });
+
+
+      </script>
+    </apex:outputPanel>
+    </body>
+
+
+</html>
+</apex:page>

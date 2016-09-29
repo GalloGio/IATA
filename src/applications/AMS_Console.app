@@ -9,7 +9,7 @@
     <domainWhitelist>
         <domain>iata--AmsDev1.cs86.my.salesforce.com</domain>
     </domainWhitelist>
-    <enableCustomizeMyTabs>false</enableCustomizeMyTabs>
+    <enableCustomizeMyTabs>true</enableCustomizeMyTabs>
     <enableKeyboardShortcuts>true</enableKeyboardShortcuts>
     <enableListViewReskin>true</enableListViewReskin>
     <enableMultiMonitorComponents>true</enableMultiMonitorComponents>
@@ -204,11 +204,6 @@
             <fieldNames>Subject</fieldNames>
             <objectName>Case</objectName>
         </pushNotification>
-        <pushNotification>
-            <fieldNames>LastModifiedBy</fieldNames>
-            <fieldNames>LastModifiedDate</fieldNames>
-            <objectName>Contact__c</objectName>
-        </pushNotification>
     </pushNotifications>
     <saveUserSessions>true</saveUserSessions>
     <tab>standard-Account</tab>
@@ -217,7 +212,12 @@
     <tab>standard-Dashboard</tab>
     <tab>IATA_Code_Loader</tab>
     <tab>Code_Range__c</tab>
+    <tab>standard-Chatter</tab>
+    <tab>APXTConga4__Conga_Template__c</tab>
     <workspaceMappings>
+        <mapping>
+            <tab>APXTConga4__Conga_Template__c</tab>
+        </mapping>
         <mapping>
             <tab>Code_Range__c</tab>
         </mapping>
@@ -229,6 +229,9 @@
         </mapping>
         <mapping>
             <tab>standard-Case</tab>
+        </mapping>
+        <mapping>
+            <tab>standard-Chatter</tab>
         </mapping>
         <mapping>
             <tab>standard-Dashboard</tab>

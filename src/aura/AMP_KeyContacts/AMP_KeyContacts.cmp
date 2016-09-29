@@ -1,0 +1,52 @@
+<aura:component controller="AMP_KeyContactsController">
+    <aura:attribute name="accountId" type="String" />
+    <aura:attribute name="contacts" type="Contact[]" />
+
+   <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+   <div class="slds-card">
+
+    <div class="slds-card__header slds-grid">
+      <div class="slds-media slds-media--center">
+        <div class="slds-media__figure">
+            <c:svg xlinkHref="{!$Resource.SLDS102 + '/assets/icons/standard-sprite/svg/symbols.svg#contact'}" class="slds-icon slds-icon-standard-contact slds-icon--medium" />
+        </div>
+        <div class="slds-media__body">
+          <h3 class="slds-text-heading--small">Key Contacts</h3>
+        </div>
+      </div>
+    </div>
+<div class="slds-card__body">
+   <table class="slds-table slds-table--bordered slds-table--striped">
+      <thead>
+        <tr>
+			<!-- <th scope="col"><span class="slds-truncate">Actions</span></th> -->
+            <th scope="col"><span class="slds-truncate">Name</span></th>
+            <th scope="col"><span class="slds-truncate">Type</span></th>
+            <th scope="col"><span class="slds-truncate">Job Function</span></th>
+            <th scope="col"><span class="slds-truncate">Title</span></th>
+            <th scope="col"><span class="slds-truncate">Phone</span></th>
+            <th scope="col"><span class="slds-truncate">Mobile</span></th>
+            <th scope="col"><span class="slds-truncate">Email</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <aura:iteration items="{!v.contacts}" var="contact">
+         <tr>
+             <!-- <td><c:AMP_EditSaveMenu /></td> -->
+           <td><a href="{!'/'+contact.Id}" target="_blank">{!contact.Name}</a></td>
+           <td> <aura:unescapedHtml value="{!contact.Airline_Contact_Type__c}"/></td>
+           <td>{!contact.Membership_Function__c}</td>
+           <td>{!contact.Title}</td>
+           <td>{!contact.Phone}</td>
+           <td>{!contact.MobilePhone}</td>
+           <td>{!contact.Email}</td>
+
+         </tr>
+        </aura:iteration>
+      </tbody>
+   </table>
+
+     </div>
+     </div>
+
+</aura:component>

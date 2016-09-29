@@ -1,0 +1,13 @@
+.THIS .hidden{
+  display: none;
+}
+
+.THIS .width100pc {
+  width: 100%;
+}
+.THIS td {
+  vertical-align: top;
+}
+.THIS .slds-truncate {
+  white-space: normal;
+}

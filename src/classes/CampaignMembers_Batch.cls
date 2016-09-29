@@ -15,7 +15,7 @@ global class CampaignMembers_Batch implements Database.Batchable<sObject> {
     
     //Campaign members to generate renewal
     global Database.QueryLocator start(Database.BatchableContext BC){
-        String query = 'SELECT Status, Contact.FirstName, Contact.LastName, Contact.Account.Name, Contact.Title, Campaign.Campaign_AutoNumber__c, CampaignId FROM CampaignMember where CampaignId = \'' + campaigId + '\' ';
+        String query = 'SELECT Status, ContactId, Contact.FirstName, Contact.LastName, Contact.Account.Name, Contact.Title, Campaign.Campaign_AutoNumber__c, CampaignId FROM CampaignMember where CampaignId = \'' + campaigId + '\' ';
         System.debug('query::'+query);
         return Database.getQueryLocator(query);
     }
@@ -29,24 +29,9 @@ global class CampaignMembers_Batch implements Database.Batchable<sObject> {
     
     global void finish(Database.BatchableContext BC) {
         
-        try{
-            //Update the Campaign Renewal notice generated field
-            Campaign campaign = Campaign_Sel.getCampaignById(campaigId);
-            campaign.Renewal_notice_generated__c = Datetime.now();
-            update campaign;
-
-            //Send notification to the loggin user
-            String templateId = Utility.getTextSetting('loginUser campaign notice notification');
-            
-            list<EmailTemplate> templates = Utility.getEmailTemplatebyTemplateId((Id) templateId);
-            if(templates != null && templates.size() > 0){
-                //Send notification to login user
-                CampaignMember_Svc.sendBatchFinishNotification(new List<String> {UserInfo.getUserEmail()}, campaignNumber, UserInfo.getName(), templates[0]);
-            }
-
-        }catch(Exception ex){
-            System.debug('Batch error ' + ex.getMessage());
-        }
+        //Calculate Taxes and Shipping
+        IEC_CampaignMembers_SAPFreightTax_Batch freightTaxBatch = new IEC_CampaignMembers_SAPFreightTax_Batch(campaigId,campaignNumber);
+        Database.ExecuteBatch(freightTaxBatch,1);
         
     }
     

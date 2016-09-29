@@ -1,0 +1,72 @@
+<aura:component >
+	<aura:attribute name="account" type="Account"/>
+        
+    <div class="slds-card">
+        
+        <div class="slds-card__header slds-grid">
+            <div class="slds-media slds-media--center slds-has-flexi-truncate">
+                <div class="slds-media__figure">
+                    <c:svg xlinkHref="{!$Resource.SLDS102 + '/assets/icons/standard-sprite/svg/symbols.svg#user'}" class="slds-icon slds-icon-standard-contact slds-icon--small" />
+                </div>
+                <div class="slds-media__body slds-truncate">
+                    <a href="javascript:void(0);" class="slds-text-link--reset">
+                        <span class="slds-text-heading--small">Account Manager</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="slds-card__body">
+            <ul>
+                <li class="slds-tile slds-hint-parent">
+        		
+                  	<p class="tile__title slds-truncate slds-p-bottom--x-small"><a href="#">{!v.account.AM_Account_Manager__r.Name}</a></p>
+        
+                  	<div class="tile__detail">
+                        <dl class="dl--horizontal">
+                            
+                          	<dt class="slds-dl--horizontal__label">
+                                <p class="slds-truncate">Title:</p>
+                            </dt>
+                          	<dd class="slds-tile__meta slds-p-bottom--x-small"><!-- slds-dl- -horizontal__detail -->
+                            	<p class="">{!v.account.AM_Account_Manager__r.PPD_Tittle__c}</p> <!-- slds-truncate -->
+                          	</dd>
+                            
+                            <dt class="slds-dl--horizontal__label">
+                                <p class="slds-truncate">Office:</p>
+                            </dt>
+                          	<dd class="slds-tile__meta slds-p-bottom--x-small">
+                            	<p class="">{!v.account.AM_Account_Manager__r.PPD_Office__c}</p>
+                          	</dd>
+                            
+                            <dt class="slds-dl--horizontal__label">
+                                <p class="slds-truncate">Email:</p>
+                            </dt>
+                          	<dd class="slds-tile__meta slds-p-bottom--x-small">
+                            	<p class="slds-truncate"><a href="{! 'mailto:' + v.account.AM_Account_Manager__r.Email}">{!v.account.AM_Account_Manager__r.Email}</a></p>
+                          	</dd>
+                            
+                            <dt class="slds-dl--horizontal__label">
+                                <p class="slds-truncate">Phone:</p>
+                            </dt>
+                          	<dd class="slds-tile__meta slds-p-bottom--x-small">
+                            	<p class="">{!v.account.AM_Account_Manager__r.Phone}</p>
+                          	</dd>
+                            
+                            <dt class="slds-dl--horizontal__label">
+                                <p class="slds-truncate">Mobile:</p>
+                            </dt>
+                          	<dd class="slds-tile__meta">
+                            	<p class="">{!v.account.AM_Account_Manager__r.MobilePhone}</p>
+                          	</dd>
+                            
+                        </dl>
+                  	</div>
+                    
+                </li>
+            </ul>
+        </div>
+        
+    </div>
+    
+</aura:component>

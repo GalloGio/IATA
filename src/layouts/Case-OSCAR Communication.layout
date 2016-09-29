@@ -98,8 +98,16 @@
                 <field>Region__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>BSPCountry__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Required</behavior>
                 <field>Origin</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ParentId</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -181,10 +189,6 @@
         <label>Performance information</label>
         <layoutColumns>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>OwnerId</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>ACC_Process_Type__c</field>
             </layoutItems>
@@ -238,6 +242,9 @@
         <editHeading>false</editHeading>
         <label>Custom Links</label>
         <layoutColumns>
+            <layoutItems>
+                <customLink>Run_Reports</customLink>
+            </layoutItems>
             <layoutItems>
                 <emptySpace>true</emptySpace>
             </layoutItems>

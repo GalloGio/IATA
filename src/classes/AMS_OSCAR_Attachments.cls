@@ -1,20 +1,223 @@
 global class AMS_OSCAR_Attachments {
     
-    private Id oscId;
-    public Case oscCase {get {
-     
-        if(this.oscCase == null) {
+    private Boolean canAttachFiles;
+    private Case cse;
+
+public Case oscCase {get;set;}
+  public AMS_OSCAR_Attachments(ApexPages.StandardController ctrl){
+
+
+  }
+
+
+    public Boolean isAdminUser {get; set;}
+
+    public Id caseId{
+        get{
+            return cse.Id;
+        }
+    }
+    
+
+    public List<WrapperAttach> listAttachments {
+        get{
+            if(listAttachments == null) refreshList();
+            return listAttachments;
+        }
+        set;
+    }
+
+    public List<String> emptyList{
+        get{
+            return new List<String>{ 'No records to display'};
+        }
+    }
+
+    public String amazonURL  {
+        get { return WrapperAttach.CREDENTIAL.EndpointBaseURL + WrapperAttach.CREDENTIAL.Bucket; }
+    }
+    public String credentialName  {
+        get { return WrapperAttach.CREDENTIAL_NAME; }
+    }
+    public String amazonPath  {
+        get { return WrapperAttach.getAmazonFolder(this.cse.Id); }
+    }
+
+    private List<ErrorMessageConstruct> errorMessages{
+        get{
+            if(errorMessages == null) errorMessages = new List<ErrorMessageConstruct>();
+            return errorMessages;
+        }
+        set;
+    }
+
+    private void logMessage(ApexPages.Message message){
+        errorMessages.add(new ErrorMessageConstruct(message));
+    }
+
+    private class ErrorMessageConstruct{
+        ApexPages.Severity severity;
+        String message;
+
+        public ErrorMessageConstruct(ApexPages.Message message){
+            this.severity = message.getSeverity();
+            this.message = message.getSummary();
+        }
+    }
+
+    public AMS_OSCAR_Attachments() {
+
+        String sObjId = ApexPages.currentPage().getParameters().get('Id');
+        cse = [Select Id, Status from Case where OSCAR__c = :sObjId AND RecordType.Name = 'OSCAR Communication'];
+        
+        // check if current user is Admin
+        Profile profile = [Select id, Name from Profile where Id = :UserInfo.getProfileId()];
+        this.isAdminUser = profile.Name.startsWithIgnoreCase('System Administrator') || profile.Name.startsWithIgnoreCase('Developer');
+    }
+
+    /*
+        Refresh the list of file attachments
+    */
+    public void refreshList() {
+        try {
+            this.listAttachments = WrapperAttach.getListAttachments(this.cse.id);
+            this.listAttachments.sort();
+        } catch (Exception e ) {
+            TransformationHelper.sendEmailSupport('FATAL: GenericAttachmentListController in function refreshList()  ' ,'STACKTRACE   ' + e.getStackTraceString()  + '  '  + e.getMessage());
+            logMessage(new ApexPages.message(ApexPages.Severity.WARNING, e.getMessage()));
+        }
+
+        for(ErrorMessageConstruct message : errorMessages) ApexPages.addMessage(new ApexPages.message(message.severity, message.message));
+        errorMessages.clear();
+    }
+
+    /*
+        Get alink to access to an amazon file, this link is time limited
+    */
+    @RemoteAction
+    global static string getExpiringLink(string fileName ) {
+        Integer secondsValid = 300;
+        String link = AmazonRest.genPublicExpiringAWSLink( fileName, WrapperAttach.CREDENTIAL, secondsValid);
+        return link;
+    }
+
+    /*
+        Delete an attachment archived attachment or Amazon Attachment
+    */
+    @RemoteAction
+    global static Boolean deleteAttachment(string strId, String fullName) {
+        Schema.SObjectType attType = Id.valueOf(strId).getSObjectType();
+        Boolean result = false;
+        if (attType == Schema.Attachment.SObjectType) {
+            result = deleteSalesforceAttachment(strId);
+        }
+        if (attType == Schema.Archived_Attachment__c.SObjectType) {
+            result = deleteArchivedAttachment(strId);
+        }
+        if (attType == Schema.AmazonFile__c.SObjectType) {
+            result = deleteAmazonAttachment(strId, fullName);
+        }
+        //System.debug('GenericAttachmentListController.deleteAttachment: ' + strId + ' object not recognized');
+        return result;
+    }
+    
+    /*
+        Delete a standard attachment in Salesforce
+    */
+    private static Boolean deleteSalesforceAttachment(String id) {
+        try {
+            delete [SELECT Id  FROM Attachment where Id=:id];
+            return true;
+        } catch (Exception e) {
+            System.debug('GenericAttachmentListController.deleteSalesforceAttachment' + e.getMessage());
+            return false;
+        }
+    }
+    
+    /*
+        Delete an archived attachment object
+    */
+    private static Boolean deleteArchivedAttachment(String id) {
+        try {
+            delete [SELECT Id  FROM Archived_Attachment__c where Id=:id];
+            return true;
+        } catch (Exception e) {
+            System.debug('GenericAttachmentListController.deleteArchivedAttachment' + e.getMessage());
+            return false;
+        }
+    }
+    
+    /*
+        Delete a file in Amazon Bucket, including AmazonFile object in Amazon
+    */
+    private static Boolean deleteAmazonAttachment(String strId, String fullName) {
+        try {
+            Id sObjectId = Id.ValueOf(strId);
+            WrapperAttach attach = WrapperAttach.getAmazonAttachment( sObjectId, fullName);
+            Boolean result = attach.moveToBucket();
+            return result;
             
-            ID oscarCaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('OSCAR Communication');
-            
-            this.oscCase = [select Id from Case where OSCAR__c =: this.oscId and RecordTypeId =: oscarCaseRecordTypeID];
+        } catch (Exception e) {
+            System.debug('GenericAttachmentListController.deleteAmazonAttachment' + e.getMessage());
+            return false;
+        }
+    }
+    
+    /*
+        Change all Attachments to public
+    */
+    public void makeAllPublic() {
+        changePermissionToAll(true);
+    }
+    
+    /*
+        Change all Attachments to private
+    */
+    public void makeAllPrivate() {
+        changePermissionToAll(false);
+    }
+    
+    /*
+        Set the same permission to all attachments
+    */
+    private void changePermissionToAll(Boolean value) {
+        for ( WrapperAttach attachment: this.listAttachments ) {
+            attachment.changePermission(value);
+        }
+    }
+    
+    /*
+        redirect to the Trasnfer Attachments page
+    */
+    public String getTransferAttachmentsUrl() {
+        PageReference pageref = Page.TransferAttachmentToCase;
+        pageref.getParameters().put('id',this.cse.Id);
+        pageref.setRedirect(true);
+        return pageref.getUrl();
+    }
+
+    public void updateAllAttach(){
+        try{
+            for(WrapperAttach att : listAttachments){
+                att.updateAttach();
+            }
+            logMessage(new ApexPages.message(ApexPages.Severity.CONFIRM, 'Attachments updated'));
+        }catch(Exception e){
+            logMessage(new ApexPages.message(ApexPages.Severity.ERROR, 'Error updating attachments: '+ e.getMessage()));
         }
         
-        return this.oscCase;
-    }set;}
-     
-    public AMS_OSCAR_Attachments(ApexPages.StandardController stdController) {
-
-        this.oscId = stdController.getId();
+    }
+    
+    
+    public Boolean getCanAttachFilesToCase() {
+        if(cse.Status != 'Draft') {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    public PageReference goToAttachmentPage() {
+        return new Pagereference('/ISSP_AddAttachment?caseId=' + this.cse.id + '&retURL=%2F' + this.cse.id);
     }
 }

@@ -245,6 +245,7 @@ private class MITA_AgreementsCtrlTest {
 		System.assert(controller.duplicateContacts == null);
 	}
 
+	/*comment due to sfdc standard duplicate tool
 	@isTest
 	static void Test_moveContact_DuplicateContacts() {
 		MITA_AgreementsCtrl controller = new MITA_AgreementsCtrl();
@@ -264,6 +265,7 @@ private class MITA_AgreementsCtrlTest {
 
 		System.assert(controller.duplicateContactMode == true);
 	}
+	*/
 
 	@isTest
 	static void Test_confirmMoveContact_Error() {

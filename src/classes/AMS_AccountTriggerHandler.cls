@@ -33,7 +33,7 @@ public class AMS_AccountTriggerHandler {
         for(Account ag : accs){
 	if(!disallowedSources.contains(ag.Source_System__c))
        	{
-		if(ag.Sector__c == AMS_Utils.SECTOR_PASSENGER || ag.Sector__c == AMS_Utils.SECTOR_PASSENGER){
+		if(ag.Sector__c == AMS_Utils.SECTOR_PASSENGER || ag.Sector__c == AMS_Utils.SECTOR_CARGO){
 
 			setCassNumberOnHO(ag);
 
@@ -88,12 +88,6 @@ public class AMS_AccountTriggerHandler {
             System.debug('Not Handling minor changes');
        }
 
-
-       System.debug('Start Check for irregularity thresold');
-       //checkIrregularityThresold(accs, oldMap);
-       System.debug('End Check for irregularity thresold');
-
-
     }
 
     public static void handleAfterUpdate(List<Account> accs, Map<Id,Account> oldMap){
@@ -139,6 +133,8 @@ public class AMS_AccountTriggerHandler {
     }
 
     public static void handleManualMinorChanges(List<Account> accs, Map<Id,Account> oldMap){
+
+        accs = filterByAgencyRecordType(accs);
 
         Map<String, Schema.SObjectField> accountFields = AMS_Utils.getObjectFields('Account');
 
@@ -197,6 +193,23 @@ public class AMS_AccountTriggerHandler {
                 createMinorChangesChangeCode(accountChangesList);
          }
 
+    }
+
+    private static List<Account> filterByAgencyRecordType(List<Account> accts){
+
+        ID standardRT = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency') ;
+
+        List<Account> toReturn = new List<Account>();
+
+        for(Account acct: accts){
+
+            if(acct.recordTypeId == standardRT)
+                toReturn.add(acct);
+
+        }
+
+
+        return toReturn;
     }
 
 
@@ -377,54 +390,6 @@ public class AMS_AccountTriggerHandler {
             }
         }
 
-    }
-
-
-    private static void checkIrregularityThresold(List<Account> accs, Map<Id,Account> oldMap) {
-        List<Account> updatedAcc = new List<Account>();
-        Set<ID> isoCountries = new Set<ID>();
-        for(Account a : accs){
-            Account oldAcc = oldMap.get(a.Id);
-
-            System.debug(loggingLevel.Debug, '____ [trg AMS_AccountTriggerHandler - checkIrregularityThresold] a.Count_Accumulated_Irregularities__c - ' + a.Count_Accumulated_Irregularities__c);
-            System.debug(loggingLevel.Debug, '____ [trg AMS_AccountTriggerHandler - checkIrregularityThresold] oldAcc.Count_Accumulated_Irregularities__c - ' + oldAcc.Count_Accumulated_Irregularities__c);
-
-            if(a.Count_Accumulated_Irregularities__c > oldAcc.Count_Accumulated_Irregularities__c){
-                updatedAcc.add(a);
-                isoCountries.add(a.IATA_ISO_Country__c);
-            }
-        }
-
-        if(updatedAcc.isEmpty()) return;
-
-        System.debug(loggingLevel.Debug, '____ [trg AMS_AccountTriggerHandler - checkIrregularityThresold] updatedAcc - ' + updatedAcc);
-
-        Map<String, Decimal> thresholds = new Map<String, Decimal>();
-        for(IATA_ISO_Country__c country : [SELECT
-                                                        Id
-                                                        , (SELECT
-                                                                Id
-                                                                , Threshold__c
-                                                                , Location_Class__c
-                                                            FROM AMS_Country_Specific_Attributes__r
-                                                            WHERE RecordType.Name = 'Irregularity Threshold')
-                                                    FROM IATA_ISO_Country__c
-                                                    WHERE Id IN :isoCountries])
-        {
-            for(AMS_Country_Specific_Attribute__c att : country.AMS_Country_Specific_Attributes__r){
-                thresholds.put(country.Id+att.Location_Class__c, att.Threshold__c);
-            }
-        }
-        System.debug(loggingLevel.Debug, '____ [trg AMS_AccountTriggerHandler - checkIrregularityThresold] thresholds - ' + thresholds);
-
-        for(Account a : updatedAcc){
-            Decimal threshold = thresholds.get(a.IATA_ISO_Country__c+a.Location_Class__c);
-
-            System.debug(loggingLevel.Debug, '____ [trg AMS_AccountTriggerHandler - checkIrregularityThresold] a.Count_Accumulated_Irregularities__c - ' + a.Count_Accumulated_Irregularities__c);
-            System.debug(loggingLevel.Debug, '____ [trg AMS_AccountTriggerHandler - checkIrregularityThresold] threshold - ' + threshold);
-
-            if(threshold != null && a.Count_Accumulated_Irregularities__c >= threshold) a.Send_Irregularity_Email__c = true;
-        }
     }
     
     

@@ -1,0 +1,142 @@
+<aura:component controller="AMP_CoreRelationshipExtension">
+  <aura:attribute name="account" type="Account" />
+  <aura:attribute name="accountId" type="String" />
+  <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+  <aura:attribute name="GroupNames" type="String[]" access="private"/>
+  <aura:attribute name="Participants" type="Participant__c[]" access="private"/>
+  <aura:attribute name="ParticipantWrappers" type="Object[]" access="private"/>
+
+  <ltng:require styles="/resource/SLDS102/assets/styles/salesforce-lightning-design-system-ltng.css" />
+
+	<h3 class="slds-section__title">Core Relationship with IATA</h3>
+    
+    <div class="slds-grid slds-wrap">
+    	
+        <div class="slds-col--padded slds-size--1-of-2 slds-large-size--1-of-3 slds-p-bottom--medium">
+            <div class="slds-form-element">
+                <label class="slds-form-element__label">IATA Membership Status</label>
+                <div class="slds-form-element__control">
+                	<!--<force:outputField value="{!v.account.Membership_status__c}" />-->
+                    <ui:outputText value="{!v.account.Membership_status__c}" />
+                </div>
+            </div>            
+        </div>
+        
+        <div class="slds-col--padded slds-size--1-of-2 slds-large-size--1-of-3 slds-p-bottom--medium">
+            <div class="slds-form-element">
+                <label class="slds-form-element__label">Admission Date</label>
+                <div class="slds-form-element__control">
+                	<!--<force:outputField value="{!v.account.Admission_Date__c}" />-->
+                    <ui:outputDate value="{!v.account.Admission_Date__c}" />
+                </div>
+            </div>            
+        </div>  
+    	
+        <div class="slds-col--padded slds-size--1-of-1 slds-p-bottom--medium">
+            <div class="slds-form-element">
+                <label class="slds-form-element__label">IATA Membership History</label>
+                <div class="slds-form-element__control">
+                	<!--<force:outputField value="{!v.account.IATA_Membership_History__c}" />-->
+                    <ui:outputText value="{!v.account.IATA_Membership_History__c}"/>
+                </div>
+            </div>            
+        </div>
+    	
+        <div class="slds-col--padded slds-size--1-of-2 slds-large-size--1-of-3 slds-p-bottom--medium">
+            <div class="slds-form-element">
+                <label class="slds-form-element__label">Total BSP Participations</label>
+                <div class="slds-form-element__control">
+                	<!--<force:outputField value="{!v.account.Airline_BSP_Participations__c}" />-->
+                    <ui:outputText value="{!v.account.Airline_BSP_Participations__c}" />
+                </div>
+            </div>            
+        </div>
+        
+        <div class="slds-col--padded slds-size--1-of-2 slds-large-size--1-of-3 slds-p-bottom--medium">
+            <div class="slds-form-element">
+                <label class="slds-form-element__label">Total CASS Participations</label>
+                <div class="slds-form-element__control">
+                	<!--<force:outputField value="{!v.account.Airline_CASS_Participations__c}" />-->
+                    <ui:outputText value="{!v.account.Airline_CASS_Participations__c}" />
+                </div>
+            </div>            
+        </div>
+        
+        <div class="slds-col--padded slds-size--1-of-2 slds-large-size--1-of-3 slds-p-bottom--medium">
+        </div>
+    	
+        <div class="slds-col--padded slds-size--1-of-2 slds-large-size--1-of-3 slds-p-bottom--medium">
+            <div class="slds-form-element">
+                <label class="slds-form-element__label">MITA Member</label>
+                <div class="slds-form-element__control">
+                	<!--<force:outputField value="{!v.account.MITA_Member__c}" />-->
+                    <ui:outputCheckbox value="{!v.account.MITA_Member__c}"/>
+                </div>
+            </div>            
+        </div>
+        
+    </div>
+    
+    
+    
+    <div class="slds-card slds-m-bottom--x-large">
+
+        <div class="slds-card__header slds-grid">
+            <div class="slds-media slds-media--center slds-has-flexi-truncate">
+                <div class="slds-media__figure">
+                    <c:svg xlinkHref="{!$Resource.SLDS102 + '/assets/icons/standard-sprite/svg/symbols.svg#environment_hub'}" class="slds-icon slds-icon-standard-environment-hub slds-icon--medium" />
+                </div>
+                <div class="slds-media__body slds-truncate">
+                    <span class="slds-text-heading--small">Membership on Main IATA Industry Groups</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="slds-card__body">
+            <table class="slds-table slds-table--bordered slds-table--cell-buffer slds-table--fixed-layout slds-table--striped">
+                <thead>
+                    <tr class="headerRow" >
+                        <th style="width: 17%;"><span>IATA Group Name</span></th>
+                        <th style="width: 11%;"><span>Role Within Group</span></th>
+                        <th style="width: 5%;"><span>Salut.</span></th>
+                        <th style="width: 8%;"><span>First Name</span></th>
+                        <th style="width: 8%;"><span>Last Name</span></th>
+                        <th style="width: 9%;"><span>Title</span></th>
+                    </tr>
+                </thead>
+                
+                <tbody>
+                    <aura:iteration items="{!v.ParticipantWrappers}" var="participant" indexVar="index">
+                        <tr>
+                            <td><a href="{!'/'+participant.GroupId}" target="_blank">{!participant.GroupName}</a></td>
+                            <td><ui:outputText value="{!participant.Role}" /></td>
+                            <td><ui:outputText value="{!participant.Salutation}" /></td>
+                            <td><ui:outputText value="{!participant.FirstName}" /></td>
+                            <td><ui:outputText value="{!participant.LastName}" /></td>
+                            <td><ui:outputText value="{!participant.Title}" /></td>
+                        </tr>
+                    </aura:iteration>
+                </tbody>
+            </table>
+        </div>
+        
+    </div>
+
+    	
+   	<h3 class="slds-section__title">Relationship with External Entities</h3>        
+    
+    <div class="slds-grid slds-wrap">
+        
+        <div class="slds-col--padded slds-size--1-of-2 slds-large-size--1-of-3 slds-p-bottom--medium">
+            <div class="slds-form-element">
+                <label class="slds-form-element__label">SITA Member</label>
+                <div class="slds-form-element__control">
+                	<!--<force:outputField value="{!v.account.Membership_SITA__c}" />-->
+                    <ui:outputCheckbox value="{!v.account.Membership_SITA__c}"/>
+                </div>
+            </div>            
+        </div>
+        
+    </div>
+
+</aura:component>

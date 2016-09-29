@@ -60,13 +60,21 @@ public without sharing class AMS_Utils {
     public static final String LOCATION_INSPECTION = 'Location with inspection';
     public static final String OWNERSHIP_IATA = 'Ownership to IATA Agent';
     public static final String OWNERSHIP_NON_IATA = 'Ownership to non-IATA Agent';
+    public static final String MAJ_SHAREHOLDING = 'Major Shareholding';
+    public static final String MIN_SHAREHOLDING = 'Minor Shareholding';
+    public static final String NAME = 'Name';
+    public static final String LEGAL_STATUS = 'Legal Status';
+    public static final String VFMR = 'VFMR';
+
 
     public static final String OSCAR_CLOSED = 'Closed (Closed)';
 
     public static final String BR = 'BR';
     public static final String HO = 'HO';
+    public static final String AO = 'AO';
     public static final String SA = 'SA';
 
+    //Processes of type NEW
     public static final String new_HO           = 'NEW.HO.1.0'      ;
     public static final String new_BR           = 'NEW.BR'          ;
     public static final String new_BR_ABROAD    = 'NEW.BR.ABROAD'   ;
@@ -79,7 +87,12 @@ public without sharing class AMS_Utils {
     public static final String new_AHA_BSP      = 'NEW.AHA.1.0.BSP' ;
     public static final String new_SA           = 'NEW.SA.1.0'      ;
 
-    public static final Set<String> oscarAMSProcesses = new Set <String>{new_HO,new_BR,new_BR_ABROAD,new_TIDS,new_MSO,new_GSA,new_GSA_BSP,new_GSSA,new_AHA,new_AHA_BSP,new_SA};
+    //Processes of type CHANGES
+    public static final String COR              = 'CORRECTION.1.0'  ;
+    public static final String AGENCYCHANGES    = 'MAJOR.CHANGES'   ;
+
+    public static final Set<String> oscarAMSProcesses = new Set <String>{new_HO,new_BR,new_BR_ABROAD,new_TIDS,new_MSO,new_GSA,new_GSA_BSP,new_GSSA,new_AHA,new_AHA_BSP,new_SA, COR};
+
 
     public static final Set<String> oscarProcessesWithAppointments = new Set <String>{new_GSA,new_GSA_BSP,new_AHA,new_AHA_BSP,new_GSSA};
 
@@ -93,9 +106,10 @@ public without sharing class AMS_Utils {
     public static final String ACC_S7_UNDERREVIEW = 'Under review';
     public static final String ACC_S8_CHANGESPROCESSED = 'Changes processed';
     public static final String ACC_S9_APPROVED = 'Approved';
-    
+     
     public static final String CHLOCTYPEBEHAVIOR_NOSWAP = 'Don’t change the parent';        
     public static final String CHLOCTYPEBEHAVIOR_SWAP = 'Swap with the parent';
+    public static final String CHLOCTYPEBEHAVIOR_STANDARD = CHLOCTYPEBEHAVIOR_SWAP;
     public static final String SECTOR_CARGO = 'Cargo Agent';
     public static final String SECTOR_PASSENGER = 'Travel Agent';
 
@@ -105,6 +119,7 @@ public without sharing class AMS_Utils {
     public static final String TYPECHANGE_LOCATIONWITHINSPECTION = 'Location with inspection'; 
     public static final Id AccreditationContactPersonRT = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Person').getRecordTypeId();
     public static final Id AccreditationContactCompanyRT = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Company').getRecordTypeId();
+    public static final Id AccountRoleOwnershipRT = Schema.SObjectType.AMS_Account_Role__c.getRecordTypeInfosByName().get('Ownership').getRecordTypeId();
 
     public static final Set<String> LocationClassIFAPAllowed = new Set<String>{'P','C','R'};
     public static final Set<String> LocationClassCARGO = new Set<String>{'C','I','Q','R'};
@@ -126,6 +141,19 @@ public without sharing class AMS_Utils {
             return Test.isRunningTest() ? 'AES128' : AMS_SAP_Settings__c.getOrgDefaults().Encryption_Algorythm__c;
         }
     }
+
+    public static Map<String, String> categoryCustomerMap = new Map<String, String> {
+        'IATA Passenger Sales Agent' => 'IATA Travel Agent',
+        'IATA Cargo Agent' =>   'IATA Cargo Agent',
+        'Import Agent' =>   'IATA Cargo Agent',
+        'CASS Associate' => 'CASS Associates',
+        'Courier' =>    'IATA Cargo Agent',
+        'Handling Agent' => 'IATA Travel Agent',
+        'MSO Member Sales Office' => 'IATA Travel Agent',
+        'TIDS Agent' => 'TIDS',
+        'GSA General Sales Agent' =>    'General Sales Agent (GSA)',
+        'GSSA Cargo' => 'GSSA Cargo'
+    };   
 
     public AMS_Utils() {}
     //private static final String ENCRYPTION_ALGORYTHM = 'AES128';
@@ -495,7 +523,9 @@ public without sharing class AMS_Utils {
         return res;
     }
 
-    public static void createAAChangeCodes(List<AMS_OSCAR_JSON.ChangeCode> changeCodes, List<AMS_OSCAR__c> oscars, List<Account> oscarAgencies, Boolean isToUpdateAccounts) {
+
+
+    public static List<Account> createAAChangeCodes(List<AMS_OSCAR_JSON.ChangeCode> changeCodes, List<AMS_OSCAR__c> oscars, List<Account> oscarAgencies, Boolean isToUpdateAccounts) {
 
         Map<Account, Boolean> accountsChecker = new Map<Account, Boolean>();
 
@@ -525,9 +555,11 @@ public without sharing class AMS_Utils {
 
         }
 
+        List<Account> accountsToUpdateList = new List<Account>(accountsToUpdate);
+
         if (!accountsToUpdate.isEmpty() && (!Trigger.isExecuting || isToUpdateAccounts)) {
             System.debug('The list of Accounts to update is ' + accountsToUpdate.size());
-            update new List<Account>(accountsToUpdate);
+            update accountsToUpdateList;
         }
 
         if (!aaccToInsert.isEmpty()) {
@@ -536,6 +568,8 @@ public without sharing class AMS_Utils {
 
             insert aaccToInsert;
         }
+
+        return accountsToUpdateList;
 
     }
 
@@ -576,9 +610,10 @@ public without sharing class AMS_Utils {
         if( aacNEW.Change_Code__c == 'FIN' ){
             
             oscarAgency.Is_AIMS_Account__c = true;
+            oscarAgency.Accreditation_Date__c = Date.Today();            
             toReturn = oscarAgency;
         }
-		
+
         return new ChangeCodeStruct(aacNEW, toReturn);
     }
 
@@ -712,8 +747,13 @@ public without sharing class AMS_Utils {
     }
 
 
-    //Map data from staging area (AMS Online Accreditation) to account
     public static void copyDataToAccount(List<AMS_OSCAR__c> oscars) {
+        copyDataToAccount(oscars, true);
+    }
+
+
+    //Map data from staging area (AMS Online Accreditation) to account
+    public static void copyDataToAccount(List<AMS_OSCAR__c> oscars, Boolean runOwnershipMigration) {
 
         AMS_AccountTriggerHandler.processMinorChangesValidationFlag = false;
 
@@ -723,6 +763,7 @@ public without sharing class AMS_Utils {
 
         List<Account> accountsToUpdate = new List<Account>();
         List<AMS_Pax_Accreditation_Form__c> onlineAccToCreateAccountRole = new List<AMS_Pax_Accreditation_Form__c>();
+        Map<Id, Set<Id>> stagingToAccount = new Map<Id, Set<Id>>();
         
         //DT: reindented and added 3 fields for iso shipping/billin
         Map<String, String> fieldsMapping = new Map<String, String> {'Name' => 'Account_Name__c'
@@ -789,39 +830,73 @@ public without sharing class AMS_Utils {
 
         List<Map<String, String>> configs = AMS_AgencyChangesConfigHelper.getAgencyChangesConfigData();
 
+
+
+
         for (AMS_OSCAR__c oscar : oscars) {
 
             Account acc = accounts.get(oscar.Account__c);
+
             AMS_Pax_Accreditation_Form__c onlineAcc = onlineAccreditations.get(oscar.AMS_Online_Accreditation__c);
+
+            Map<Id, List<AMS_Agencies_relationhip__c>> accountHierarchyRelationships = AMS_HierarchyHelper.getAccountsHierarchies(new Set<Id>{acc.Id});
 
             if (acc != null && onlineAcc != null) {
 
-                    for (String key : fieldsMapping.keySet()) {
-                        String value = fieldsMapping.get(key);
-                        acc.put(key, onlineAcc.get(value));
-                        System.debug(key + ':' + onlineAcc.get(value));
-                    }
+                for (String key : fieldsMapping.keySet()) {
+                    String value = fieldsMapping.get(key);
+                    acc.put(key, onlineAcc.get(value));
+                    System.debug(key + ':' + onlineAcc.get(value));
+                }
 
-                    acc.In_a_Airport__c = (onlineAcc.ISSP_AMS_Premises_located_at_airport__c == 'Yes') ? true : false;
-                    acc.Company_Type__c = transformCompanyType(onlineAcc.ISSP_AMS_Legal_Status__c);
-                    acc.GDS__c = transformGDS(onlineAcc.ISSP_AMS_GDS_with_signed_contract__c);
-                    acc.BillingCountry = onlineAcc.Branch_Office_Country__r.Name;
-                    acc.ShippingCountry = onlineAcc.Shipping_ISO_Country__r.Name;
-                    acc.ShippingState = onlineAcc.Shipping_ISO_State__r.Name;
-                    acc.BillingState = onlineAcc.IATA_ISO_State__r.Name;
-                    onlineAccToCreateAccountRole.add(onlineAcc);
+                acc.In_a_Airport__c = (onlineAcc.ISSP_AMS_Premises_located_at_airport__c == 'Yes') ? true : false;
+                acc.Company_Type__c = transformCompanyType(onlineAcc.ISSP_AMS_Legal_Status__c);
+                acc.GDS__c = transformGDS(onlineAcc.ISSP_AMS_GDS_with_signed_contract__c);
+                acc.BillingCountry = onlineAcc.Branch_Office_Country__r.Name;
+                acc.ShippingCountry = onlineAcc.Shipping_ISO_Country__r.Name;
+                acc.ShippingState = onlineAcc.Shipping_ISO_State__r.Name;
+                acc.BillingState = onlineAcc.IATA_ISO_State__r.Name;
+                onlineAccToCreateAccountRole.add(onlineAcc);
 
                 accountsToUpdate.add(acc);
+                stagingToAccount.put(onlineAcc.Id, new Set<Id>{oscar.Account__c});
 
             }
-
-            if (!accountsToUpdate.isEmpty()) {
-                update accountsToUpdate;
-            }
-            if (!onlineAccToCreateAccountRole.isEmpty())
-                AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(onlineAccToCreateAccountRole);
 
         }
+
+        Savepoint sp = Database.setSavepoint();
+
+        try {
+
+            if (!accountsToUpdate.isEmpty())
+                update accountsToUpdate;
+
+            if(!stagingToAccount.isEmpty() && runOwnershipMigration)
+                AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(stagingToAccount, true);
+
+        } catch (Exception ex) {
+            System.debug('Exception: ' + ex);
+            Database.rollback(sp);
+            throw ex;
+        }
+        
+    }
+
+    private static boolean isEmptyAccountHierarchyRelationshipsMap(Map<Id, List<AMS_Agencies_relationhip__c>> accountHierarchyRelationships){
+
+        if(accountHierarchyRelationships.isEmpty())
+            return true;
+
+        if(accountHierarchyRelationships.values().isEmpty())
+            return true;
+
+        for(List<AMS_Agencies_relationhip__c> agency:accountHierarchyRelationships.values()){
+            if(!agency.isEmpty())
+                return false;
+        }
+
+        return true;
     }
 
     public static Boolean ownershipIsToBeMigrated(String typesOfChange){
@@ -880,7 +955,7 @@ public without sharing class AMS_Utils {
                                                                     ,'IATA_ISO_Shipping_Country__c' => 'Shipping_ISO_Country__c'
                                                                     ,'IATA_ISO_Shipping_State__c' => 'Shipping_ISO_State__c'};
 
-        if (fieldsToMigrate != null) {
+        if (fieldsToMigrate != null && oscarOnlineAccreditation != null) {
                 Map<String, Object> accountFieldNewValue = new Map<String,Object>();
 
                 for (String key : fieldsMapping.keySet()) {
@@ -924,6 +999,35 @@ public without sharing class AMS_Utils {
     return accountsToUpdate;
 
 }
+
+//get Inspections from oscar
+    public static void UpdateInspectionsFromOscar(List<AMS_OSCAR__c> oscars){
+
+        //query the the AMS Inspections to update the Account
+        List<AMS_Inspection__c> lsInsToUpdate = new List<AMS_Inspection__c>();
+
+        //Update Account Id on Inspections
+        for(AMS_Inspection__c amsIns : [SELECT Id, Account__c,OSCAR__c,OSCAR__r.Account__c, Date_Organisation_Status_attained__c,Last_synchronization__c,Accreditation_Endorsement_Status_code__c FROM AMS_Inspection__c WHERE OSCAR__c IN :oscars])
+        {
+
+            amsIns.Account__c = amsIns.OSCAR__r.Account__c;
+            
+            amsIns.Date_Organisation_Status_attained__c = (amsIns.Date_Organisation_Status_attained__c == null) ? system.today() : amsIns.Date_Organisation_Status_attained__c;
+            amsIns.Accreditation_Endorsement_Status_code__c = '9';
+            amsIns.Last_synchronization__c = system.today();
+            
+            lsInsToUpdate.add(amsIns);
+        }
+        
+        try {
+            update lsInsToUpdate;
+        } catch (DmlException e) {
+            system.debug('Exception updating Inspection: ' + e.getMessage());
+        }
+
+    }
+
+
 
 
 /**
@@ -1018,7 +1122,7 @@ public static String errorMessageBeautifyer(Exception ex) {
         System.debug(ex.getMessage().indexOfIgnoreCase(searchString));
         Integer startOfErrorMessage = ex.getMessage().indexOfIgnoreCase(searchString) + searchString.length() + 2;
         errorString = ex.getMessage().substring(startOfErrorMessage, ex.getMessage().length());
-        errorString = errorString.substringBefore(':');
+        errorString = errorString.substringBefore(': [');
     }
     return 'ERROR: ' + errorString;
 }
@@ -1216,6 +1320,8 @@ public static String getChangeCodeMemoText(String process,String changeCodeId) {
         memoText = 'New application - TIDS';
     else if (process == AMS_Utils.new_SA)
         memoText = 'New application - SA';
+    else if (process == AMS_Utils.new_GSSA)
+        memoText = 'New application - GSSA';
     else if (process == AMS_Utils.new_GSA_BSP || process == AMS_Utils.new_GSA)
         memoText = 'New application - GSA';
     else if (process == AMS_Utils.new_AHA_BSP || process == AMS_Utils.new_AHA)
@@ -1330,6 +1436,22 @@ public static Map<String,List<String>> GetDependentOptions(String pObjName, Stri
     objDS_Entries = null;
 
     return mapResults;
+}
+
+//used to fill the Type_of_Customer__c field on the Oscar Comunication Case
+public static String fetchTypeOfCustomer (String locationType , String category) {
+
+    if(locationType == null)
+        return null;
+
+    if(locationType == 'SA')
+        return 'IATA Travel Agent';
+
+    if(category == null)
+        return null;
+
+    return categoryCustomerMap.get(category);
+
 }
 
 }

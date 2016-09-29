@@ -135,6 +135,14 @@ If the Disallow HTML documents and attachments security setting is enabled for y
         <type>TextArea</type>
     </fields>
     <fields>
+        <fullName>Internal_Comments__c</fullName>
+        <externalId>false</externalId>
+        <label>Internal Comments</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
         <fullName>OriginalCreatedBy__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <description>Who had created the orignal file on SFDC</description>

@@ -1,4 +1,4 @@
-public with sharing class IEC_LoginController extends IEC_PageController {
+public without sharing class IEC_LoginController extends IEC_PageController {
 
     public String username                  { get; set; }
     public String password                  { get; set; }
@@ -11,32 +11,39 @@ public with sharing class IEC_LoginController extends IEC_PageController {
 
     public Pagereference onLoadAction()
     {
+        
         try {
             
             paramReturnURL = System.currentPageReference().getParameters().get(IECConstants.PARAM_RETURN_URL);
             String paramResetPassword = System.currentPageReference().getParameters().get(IECConstants.PARAM_RESETPASSWORD);
             
-            //if (paramReturnURL == null || paramReturnURL == '') {
-            //    retURL = null;
-            //}
-            //else {
-            //    retURL = paramReturnURL;
-            //}
             retURL = (paramReturnURL == null || paramReturnURL == '') ? null : paramReturnURL;
             
             if(System.currentPageReference().getParameters().containsKey('doLogin'))
             {
                 //Read username & password from post data
                 username = ApexPages.currentPage().getParameters().get('username');
-                password = ApexPages.currentPage().getParameters().get('password');
+                password = ApexPages.currentPage().getParameters().get('password'); 
 
                 String retUrl = (System.currentPageReference().getParameters().containsKey('retUrl'))
                     ? System.currentPageReference().getParameters().get('retUrl')
                     : 'IEC_Home';
-               
-                if(retUrl == 'null') retUrl = 'iec_Home';
-                Pagereference pr  = IECUserManager.login(username, password, '/'+retUrl+'?tt='+DateTime.now().getTime());                
+				
+                if(retUrl.toLowerCase().contains('iec_forgotpassword') || retUrl.toLowerCase().contains('iec_login')){retUrl = 'iec_Home';}
+
+                String tt = '?tt=';
+                if(retUrl == 'null') {retUrl = 'iec_Home';}
+                if(retUrl != null && retUrl.contains('?')) tt = '&tt=';
+
+                Pagereference pr  = IECUserManager.login(username, password, '/'+retUrl + tt + DateTime.now().getTime());                
                 return pr ;
+            }else{
+                //Customer need to login in
+                String resetPasswordEmail = ApexPages.currentPage().getParameters().get('resetPasswordEmail');
+                if(resetPasswordEmail != null && resetPasswordEmail != ''){
+                    addConfirmMessage('A new password has been sent to ' + resetPasswordEmail);
+                }
+
             }
 
             return null;
@@ -49,6 +56,7 @@ public with sharing class IEC_LoginController extends IEC_PageController {
      * Handles the login
      */
     public Pagereference login() {
+        
         try {
            // throw new transformationException('  isUserLoggedIn ' +  isUserLoggedIn +  '     retUrl  ' +  retURL + '     IECUserManager.login(username, password, retURL'+ IECUserManager.login(username, password, retURL)  );
             if (username == null || username == '')
@@ -57,17 +65,28 @@ public with sharing class IEC_LoginController extends IEC_PageController {
                 throw new IECApplicationException('The Password field is required.');
               
             if (username != null && username != '') {
-               
-                Pagereference pr  = IECUserManager.login(username, password, retURL+'?tt='+DateTime.now().getTime());
+
+                if(retUrl == null){retUrl = 'iec_Home';}
+                if(retUrl.toLowerCase().contains('iec_forgotpassword') || retUrl.toLowerCase().contains('iec_login')){retUrl = 'iec_Home';}
+
+                String tt = '?tt=';
+                if(retURL != null && retUrl.contains('?')) tt = '&tt=';
+
+                Pagereference pr  = IECUserManager.login(username, password, retURL + tt + DateTime.now().getTime());
+                
+                if(ApexPages.hasMessages(ApexPages.Severity.ERROR))
+                    hasError = true;
+
                 return pr ;
             }
-        
                 
             return null;
         }
         catch (Exception ex) {
             //addErrorMessage(ex.getMessage());
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, ex.getMessage()));
+            hasConfirm = false;
+            hasError = true;
             return null;
         }
     }
@@ -95,8 +114,12 @@ public with sharing class IEC_LoginController extends IEC_PageController {
           //SALVATORE if (IECUserManager.resetPassword(resetPasswordEmail)) {
             if (Comm_User_Helper.resetPassword(resetPasswordEmail, 'IEC', false) ){
                 //resetPassword = false;
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.INFO, 'A new password has been sent to ' + resetPasswordEmail));
-                resetPasswordEmail = '';
+                /*ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.INFO, 'A new password has been sent to ' + resetPasswordEmail));
+                resetPasswordEmail = '';*/
+                //Redirect the Customer to the login page
+                Pagereference pageRef = new Pagereference('/iec_Login?resetPasswordEmail=' + resetPasswordEmail);
+                pageRef.setRedirect(true);
+                return pageRef;
             }
             else
                 throw new IECApplicationException('Your password could not be reseted. Please contact support.');
@@ -104,7 +127,8 @@ public with sharing class IEC_LoginController extends IEC_PageController {
             return null;
         }
         catch (Exception ex) {
-            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, ex.getMessage()));
+            //ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, ex.getMessage()));
+            addErrorMessage(ex.getMessage());
             return null;
         }
     }
@@ -114,7 +138,6 @@ public with sharing class IEC_LoginController extends IEC_PageController {
      */
     public Pagereference register() {
         try {
-            system.debug('on register ');
             //Pagereference pr = Page.IECUserRegistration;
             //MM: I have changed the target registration page to the ISS registration page and added a parameter to identify from which portal customer is coming from: "IEC".
             /*Pagereference pr = Page.ISSP_Registration;

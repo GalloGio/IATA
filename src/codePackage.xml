@@ -16,10 +16,6 @@
         <members>*</members>
         <name>ApexTrigger</name>
     </types>
-        <types>
-        <members>*</members>
-        <name>Layout</name>
-    </types>  
     <types>
         <members>*</members>
         <name>AuraDefinitionBundle</name>

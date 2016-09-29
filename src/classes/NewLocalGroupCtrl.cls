@@ -11,9 +11,55 @@ global  class NewLocalGroupCtrl {
     public NewLocalGroupCtrl(ApexPages.StandardController stdctrl){
         lg = (LocalGovernance__c)stdctrl.getRecord();
         onChangeGroupType();
+        redirect();
     }
-    
-    
+
+    public PageReference redirect(){
+        Boolean redirect = false;
+      List<RecordType> lsRecordTypes =
+            [SELECT Id, DeveloperName FROM RecordType
+            WHERE SObjectType = 'LocalGovernance__c' ];
+      Set<Id> setRegDivRecordTypes = new Set<Id>();
+        Set<Id> setLocalGroupRecordTypes = new Set<Id>();
+        for (RecordType rt : lsRecordTypes) {
+            if(rt.DeveloperName == 'Reg_Div_Groups' || rt.DeveloperName == 'Draft_Reg_Div_Group') {
+                setRegDivRecordTypes.add(rt.Id);
+            } else if(rt.DeveloperName == 'Local_Groups') {
+                setLocalGroupRecordTypes.add(rt.Id);
+            }
+        }
+        System.debug(lg.RecordTypeId + ' ' + lg.RecordType.Name);
+        // 1. if there is already a recordtype set redirect accordingly
+        if(setRegDivRecordTypes.contains(lg.RecordTypeId)) { redirect = true;}
+        else if(setLocalGroupRecordTypes.contains(lg.RecordTypeId)) {redirect = false;}
+        // 2. if the user can only see one recordtype it's null and we check which type the user has access to
+        if(!redirect && lg.RecordTypeId == null) {
+            for(RecordTypeInfo info: LocalGovernance__c.SObjectType.getDescribe().getRecordTypeInfos()) {
+                if(info.isAvailable()) {
+                    if( info.getName() == 'Reg/Div Groups' || info.getName() == 'Draft Reg/Div Group') {
+                        redirect = true;
+                    }
+                }
+            }
+        }
+
+        if(redirect){
+        String prURL = '/apex/AMP_NewIATAGroup?';
+
+        String recordId =  ApexPages.currentPage().getParameters().get('id');
+        if(recordId != null) prUrl +='id='+recordId;
+        String recordType =  ApexPages.currentPage().getParameters().get('RecordType');
+        if(recordType != null) prUrl +='RecordType='+recordType;
+        String retUrl =  ApexPages.currentPage().getParameters().get('retUrl');
+        if(retUrl != null) prUrl +='&retURL='+retUrl;
+        prUrl +='&save_new=1&sfdc.override=1';
+        PageReference pageRef = new PageReference(prURL);
+        pageRef.setRedirect(true);
+        return pageRef;
+      }
+      else return null;
+    }
+
     public void onChangeGroupType(){
         // I cannot do that by filtered lookup because it's from parent to child
         nton = [SELECT IATA_ISO_Country__c, IATA_ISO_Country__r.Name, Cluster__c, Cluster__r.Name,
