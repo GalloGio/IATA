@@ -3594,6 +3594,34 @@ The product will only appear on the Online Store when the date entered in this f
         </sharedTo>
     </listViews>
     <listViews>
+        <fullName>GDP_EBC_Add_On</fullName>
+        <columns>PRODUCT2.NAME</columns>
+        <columns>IEC_Product_Information__c</columns>
+        <columns>IEC_Parent_Product__c</columns>
+        <columns>IEC_Product_Rate_Plan_Information__c</columns>
+        <columns>SAP_Material_Number__c</columns>
+        <columns>IEC_Static_Cart_Quantity__c</columns>
+        <columns>Product_Manager_lookup__c</columns>
+        <columns>Zuora_Id__c</columns>
+        <columns>ZProduct__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>PRODUCT2.FAMILY</field>
+            <operation>equals</operation>
+            <value>GDP</value>
+        </filters>
+        <filters>
+            <field>PRODUCT2.NAME</field>
+            <operation>contains</operation>
+            <value>Add On</value>
+        </filters>
+        <label>GDP/EBC Add-On</label>
+        <language>en_US</language>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
         <fullName>GDP_EBC_Email_Packs</fullName>
         <columns>PRODUCT2.NAME</columns>
         <columns>IEC_Product_Information__c</columns>
@@ -3628,6 +3656,8 @@ The product will only appear on the Online Store when the date entered in this f
         <columns>SAP_Material_Number__c</columns>
         <columns>IEC_Static_Cart_Quantity__c</columns>
         <columns>Product_Manager_lookup__c</columns>
+        <columns>Zuora_Id__c</columns>
+        <columns>ZProduct__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>PRODUCT2.FAMILY</field>
@@ -3654,6 +3684,8 @@ The product will only appear on the Online Store when the date entered in this f
         <columns>SAP_Material_Number__c</columns>
         <columns>IEC_Static_Cart_Quantity__c</columns>
         <columns>Product_Manager_lookup__c</columns>
+        <columns>Zuora_Id__c</columns>
+        <columns>ZProduct__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>PRODUCT2.FAMILY</field>

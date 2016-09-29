@@ -189,11 +189,6 @@
     <fieldSets>
         <fullName>AMS_locationtype</fullName>
         <description>fields to be migrated when we have a change of location type process</description>
-        <displayedFields>
-            <field>Location_Type__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
         <label>LocationType</label>
     </fieldSets>
     <fieldSets>
@@ -917,7 +912,7 @@
     <fields>
         <fullName>Account_Name__c</fullName>
         <externalId>false</externalId>
-        <label>Account Name</label>
+        <label>Account New Name</label>
         <length>80</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -1173,7 +1168,7 @@
         <fullName>Branch_Office_Street_name_number__c</fullName>
         <externalId>false</externalId>
         <label>* Street Name &amp; Number</label>
-        <length>255</length>
+        <length>100</length>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
@@ -2937,7 +2932,7 @@ If(LEN( SAAM_Case__r.Account.ShippingCountry) &gt;0, SAAM_Case__r.Account.Shippi
     <fields>
         <fullName>Issued_share_capital__c</fullName>
         <externalId>false</externalId>
-        <label>Previous Issued Share Capital</label>
+        <label>Current Issued Share Capital</label>
         <precision>13</precision>
         <required>false</required>
         <scale>0</scale>
@@ -3324,16 +3319,16 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
         <fullName>Map_Company_Type_to_Legal_Status__c</fullName>
         <externalId>false</externalId>
         <formula>CASE( HO_Account__r.Company_Type__c ,
-&apos;A&apos;, &apos;Association&apos;,
-&apos;C&apos;, &apos;Corporation&apos;,
-&apos;E&apos;, &apos;Government Owned Enterprise&apos;,
-&apos;L&apos;, &apos;Limited Company&apos;,
-&apos;O&apos;, &apos;Other&apos;,
-&apos;P&apos;, &apos;Partnership&apos;,
-&apos;R&apos;, &apos;Limited Partnership&apos;,
-&apos;T&apos;, &apos;Trust Company&apos;,
-&apos;V&apos;, &apos;Co-operative&apos;,
-&apos;Sole Proprietorship&apos;)</formula>
+&apos;A&apos;, $Label.ISSP_AMS_LS_Association,
+&apos;C&apos;, $Label.ISSP_AMS_LS_Corporation,
+&apos;E&apos;, $Label.ISSP_AMS_LS_Government,
+&apos;L&apos;, $Label.ISSP_AMS_LS_Limited_Company,
+&apos;O&apos;, $Label.ISSP_AMS_LS_Other,
+&apos;P&apos;, $Label.ISSP_AMS_LS_Partnership,
+&apos;R&apos;, $Label.ISSP_AMS_LS_Limited_Partnership,
+&apos;T&apos;, $Label.ISSP_AMS_LS_Trust_Company,
+&apos;V&apos;, $Label.ISSP_AMS_LS_Co_operative,
+$Label.ISSP_AMS_LS_Sole_Owner)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <inlineHelpText>Map Company Type of HO to Legal Status</inlineHelpText>
         <label>Current Legal Status</label>
@@ -3947,7 +3942,7 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
         <fullName>Shipping_Street__c</fullName>
         <externalId>false</externalId>
         <label>Shipping Street</label>
-        <length>255</length>
+        <length>100</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -4466,7 +4461,7 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
     </fields>
     <fields>
         <fullName>Will_such_change_affect_the_premises__c</fullName>
-        <description>Will such change affect the premises that were investigated in the course of approving the Agent’s application for registration?</description>
+        <description>Will such change affect the premises that were investigated in the course of approving the Agentâ€™s application for registration?</description>
         <externalId>false</externalId>
         <label>Will such change affect the premises</label>
         <picklist>

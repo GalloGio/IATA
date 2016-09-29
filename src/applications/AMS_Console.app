@@ -9,7 +9,7 @@
     <domainWhitelist>
         <domain>iata--AmsDev1.cs86.my.salesforce.com</domain>
     </domainWhitelist>
-    <enableCustomizeMyTabs>false</enableCustomizeMyTabs>
+    <enableCustomizeMyTabs>true</enableCustomizeMyTabs>
     <enableKeyboardShortcuts>true</enableKeyboardShortcuts>
     <enableListViewReskin>true</enableListViewReskin>
     <enableMultiMonitorComponents>true</enableMultiMonitorComponents>
