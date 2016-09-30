@@ -79,7 +79,9 @@ public class Product_Sel extends Selector
             Product2.IEC_OrderBy__c,
             Product2.IEC_Page_Areas_of_Activity__c,
             Product2.IEC_Page_Content_Types__c,
-            Product2.IEC_Use_on_IATA_org__c
+            Product2.IEC_Use_on_IATA_org__c,
+            Product2.IEC_Parent_Product__c,
+            Product2.Sell_through_eCommerce__c
         };
     }
 
@@ -114,6 +116,37 @@ public class Product_Sel extends Selector
         );
 
         return Database.query(query);
+    }
+
+    /****************************************************************************************************
+        Created by CGI - Kevin
+            return list of product by parent id
+    ****************************************************************************************************/
+    public Map<Id,List<Product2>> getProductsByParentId(set<Id> parentProdIds){
+
+        Map<Id,List<Product2>> productsByParentId = new Map<Id,List<Product2>>();
+
+        String query = String.format(
+            'SELECT {0} FROM {1} ' + 
+            'WHERE IEC_Parent_Product__c in :parentProdIds ' , 
+            new List<String>{
+                String.join(getDefaultFields(), ', '),
+                getSObjectType().getDescribe().getName()
+            }
+        );
+
+        List<Product2> lstProduct = (List<Product2>)Database.query(query);
+        if(lstProduct != null && !lstProduct.isEmpty()){
+            for(Product2 prod : lstProduct){
+                if(!productsByParentId.containsKey(prod.IEC_Parent_Product__c)){
+                    productsByParentId.put(prod.IEC_Parent_Product__c, new List<Product2>());
+                }
+                productsByParentId.get(prod.IEC_Parent_Product__c).add(prod);
+            }
+        }
+
+        return productsByParentId;
+
     }
 
     /****************************************************************************************************
