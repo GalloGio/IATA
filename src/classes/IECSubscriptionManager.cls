@@ -11,8 +11,6 @@
             Added method to get swapping rate plans
         - 20160805-Sonny Leman:
             Merge change from eBroadcast special handling for subscription creation for Ebroadcast Pay-As-You-Go product
-        - 20160928-Sonny Leman:
-            ebcSubscriptionInitialization uses EBC_Setup/IECEBC_Utility.ebcPayAsYouGoProductRatePlanIdSet to check if it is an Ebroadcast Pay-As-You-Go product rate plan, for code consistency.
          
   */
 public with sharing class IECSubscriptionManager {
@@ -2582,8 +2580,7 @@ public with sharing class IECSubscriptionManager {
             && (oCartItem.Related_Rate_Plan_Information__r.Related_Product_Information__c != null)
             && (oCartItem.Related_Rate_Plan_Information__r.Related_Product_Information__r.Related_Product_Category__c != null)
             && (oCartItem.Related_Rate_Plan_Information__r.Related_Product_Information__r.Related_Product_Category__r.Name == IECConstants.ProductCategory_SF_EBROADCAST)
-            //&& (oCartItem.Related_Rate_Plan_Information__r.Product_Rate_Plan__r.EBC_SubscriptionType__c == EBC_PRODUCT_RATE_PLAN_SUBSCRIPTION_TYPE_PAY_AS_YOU_GO ) // 'Pay-As-You-Go', not 'Pre-Paid'
-            && ( IECEBC_Utility.ebcPayAsYouGoProductRatePlanIdSet.contains(oCartItem.Related_Rate_Plan_Information__r.Product_Rate_Plan__c) ) // 'Pay-As-You-Go' as defined in the EBC_Setup
+            && (oCartItem.Related_Rate_Plan_Information__r.Product_Rate_Plan__r.EBC_SubscriptionType__c == EBC_PRODUCT_RATE_PLAN_SUBSCRIPTION_TYPE_PAY_AS_YOU_GO ) // 'Pay-As-You-Go', not 'Pre-Paid'
             )
         {
                 subscription.setValue('ContractEffectiveDate', IECZuoraHelper.getCurrentDate());

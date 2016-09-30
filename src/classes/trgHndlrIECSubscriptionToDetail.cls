@@ -13,7 +13,6 @@
 *   - 20160112-sl: change default monthly day of delivery to 10
 *   - 20160122-sl: refine the default delivery days
 *   - 20160229-sl: Calendar_New_Submission_Effective_Date__c  should be initialized to null
-*   - 20160719-ab: Avoid creating GSS or CACWEB line when Cancelled Subscription
 */
 
 public with sharing class trgHndlrIECSubscriptionToDetail {
@@ -235,7 +234,7 @@ public with sharing class trgHndlrIECSubscriptionToDetail {
                             { // only set the link (previously has been emptied)
                                 relatedSubscriptionDetail.Zuora_Subscription__c = zSub.Id;
                             } else { // create and initialize new GSS_Subscription_Detail
-                                if (zSub.Zuora__Status__c!='Cancelled') relatedSubscriptionDetail = GSS_newSubscriptionDetail(fileDescRatePlanMatching,zSub);
+                                relatedSubscriptionDetail = GSS_newSubscriptionDetail(fileDescRatePlanMatching,zSub);
                             }
                             GSS_subscriptionDetailToUpsertList.add(relatedSubscriptionDetail);
                         }
@@ -258,8 +257,8 @@ public with sharing class trgHndlrIECSubscriptionToDetail {
                             if (CAC_subcriptionDetailExists)
                             { // only set the link (previously has been emptied)
                                 CAC_relatedSubscriptionDetail.Subscription__c = zSub.Id;
-                            } else { // create and initialize new CAC_Subscription_Detail
-                                if (zSub.Zuora__Status__c!='Cancelled') CAC_relatedSubscriptionDetail = CAC_newSubscriptionDetail(fileDescRatePlanMatching,zSub);
+                            } else { // create and initialize new GSS_Subscription_Detail
+                                CAC_relatedSubscriptionDetail = CAC_newSubscriptionDetail(fileDescRatePlanMatching,zSub);
                             }                      
                             CAC_subscriptionDetailToUpsertList.add(CAC_relatedSubscriptionDetail);
                         }
@@ -366,13 +365,10 @@ public with sharing class trgHndlrIECSubscriptionToDetail {
             zuoraSubscriptionIdSet.add(zSubsProdCharge.Zuora__Subscription__c);
         } // for zuoraSubscriptionProductChargeList
         
-        Map<Id,Zuora__Subscription__c> zuoraSubscriptionIdToObjectMap = new Map<Id,Zuora__Subscription__c> (
-            [select Id
-                    , Name 
-                    , Zuora__Status__c
-                    , Zuora__SubscriptionStartDate__c
-                 From Zuora__Subscription__c
-                 Where Id in : zuoraSubscriptionIdSet
+        Map<Id,Zuora__Subscription__c> zuoraSubscriptionIdToObjectMap = new Map<Id,Zuora__Subscription__c> ([select Id, Name 
+            , Zuora__SubscriptionStartDate__c
+                    from Zuora__Subscription__c
+                    where Id in : zuoraSubscriptionIdSet
                 ]);
         processRelatedSubscriptionDetail(zuoraSubscriptionIdToObjectMap);
     } // end processRelatedSubscriptionDetailSpc TEMPORARY version

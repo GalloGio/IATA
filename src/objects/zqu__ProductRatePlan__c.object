@@ -583,8 +583,8 @@
         <columns>zqu__EffectiveStartDate__c</columns>
         <columns>zqu__EffectiveEndDate__c</columns>
         <columns>EBC_SubscriptionType__c</columns>
-        <columns>zqu__ZuoraId__c</columns>
-        <columns>zqu__Deleted__c</columns>
+       <!-- <columns>zqu__ZuoraId__c</columns>
+        <columns>zqu__Deleted__c</columns> -->
         <columns>UIDisplay__c</columns>
         <filterScope>Everything</filterScope>
         <filters>

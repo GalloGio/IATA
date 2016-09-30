@@ -1308,7 +1308,7 @@ This should be set by calling Payment for renewal.</inlineHelpText>
         <linkType>page</linkType>
         <masterLabel>View eBroadcast Specific Details</masterLabel>
         <openType>sidebar</openType>
-        <page>EBC_RelatedLists</page>
+       <!-- <page>EBC_RelatedLists</page> -->
         <protected>false</protected>
     </webLinks>
     <webLinks>
