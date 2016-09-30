@@ -336,6 +336,15 @@
         <visibleLines>5</visibleLines>
     </fields>
     <fields>
+        <fullName>Kavi_user__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Kavi user</label>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>My_Apps__c</fullName>
         <externalId>false</externalId>
         <formula>Contact__c == $User.ContactId</formula>
@@ -398,6 +407,7 @@ In the Portal Service object, the ServiceName__c field has the same functionalit
 &quot;CASSLink Analytics&quot;, $Label.ISSP_CASSLink_Analytics, 
 &quot;ASD&quot;, $Label.ISSP_ASD, 
 &quot;Standards Setting Workspace&quot;, $Label.ISSP_KAVI,
+&quot;ICE – IATA Customer E-Statement&quot;,&quot;ICE - IATA Customer E-statement&quot;,
 Name
 )</formula>
         <inlineHelpText>This formula field looks up the service Name and the points to a custom label</inlineHelpText>

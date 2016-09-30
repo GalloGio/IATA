@@ -23,9 +23,9 @@ public class CampaignMemberProduct_Sel extends Selector{
 		Map<Id, List<Campaign_Member_Product__c>> contactId_cmProducts = new Map<Id, List<Campaign_Member_Product__c>>(); 
 
 		String query = String.format(
-            'SELECT {0}  ' + 
+            'SELECT {0}, Product__r.SAP_Material_Number__c  ' + 
             'FROM {1} ' + 
-            'WHERE Campaign__c = :campaignId AND Contact__c IN :contactIds' , 
+            'WHERE IsDeleted = false and Campaign__c = :campaignId AND Contact__c IN :contactIds' , 
             new List<String>{
                 String.join(getDefaultFields(), ', '),
                 getSObjectType().getDescribe().getName()
@@ -55,7 +55,7 @@ public class CampaignMemberProduct_Sel extends Selector{
 		String query = String.format(
             'SELECT {0}  ' + 
             'FROM {1} ' + 
-            'WHERE Key__c IN :keys' , 
+            'WHERE IsDeleted = false and Key__c IN :keys' , 
             new List<String>{
                 String.join(getDefaultFields(), ', '),
                 getSObjectType().getDescribe().getName()

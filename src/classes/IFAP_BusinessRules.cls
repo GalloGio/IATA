@@ -366,6 +366,12 @@ public with sharing class IFAP_BusinessRules {
             if (caseStatus == SCF)
                 if (oldCaseStatus == QI_REJECTED || oldCaseStatus == FINANCIAL_STATEMENTS_UPLOADED)
                     return true;
+
+            if(caseStatus == QI_REQUEST_APPROVED || caseStatus == QI_REJECTED){ //TD - INC276565
+                if(oldCaseStatus == QI_REQUEST_PENDING_APPROVAL){
+                    return true;
+                }
+            }
         }
         /*// default value is false ...*/
         System.debug('** Default Response -- This status change is not valid! **');
