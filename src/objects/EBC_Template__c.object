@@ -98,7 +98,9 @@
     <fields>
         <fullName>External_Id__c</fullName>
         <caseSensitive>false</caseSensitive>
+        <description>The Exact Target is of this template</description>
         <externalId>true</externalId>
+        <inlineHelpText>The Exact Target is of this template</inlineHelpText>
         <label>External Id</label>
         <length>255</length>
         <required>false</required>
@@ -118,7 +120,9 @@
     <fields>
         <fullName>Is_Tested__c</fullName>
         <defaultValue>false</defaultValue>
+        <description>Is the template has been Send a Test Email since the last save</description>
         <externalId>false</externalId>
+        <inlineHelpText>Is the template has been Send a Test Email since the last save</inlineHelpText>
         <label>Is Tested</label>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
@@ -126,7 +130,9 @@
     <fields>
         <fullName>Parent_Template__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
+        <description>The Global Template that was used to create this child</description>
         <externalId>false</externalId>
+        <inlineHelpText>The Global Template that was used to create this child</inlineHelpText>
         <label>Parent Template</label>
         <referenceTo>EBC_Template__c</referenceTo>
         <relationshipLabel>Designs</relationshipLabel>
@@ -136,19 +142,10 @@
         <type>Lookup</type>
     </fields>
     <fields>
-        <fullName>Template_Name__c</fullName>
-        <description>Name of the saved template</description>
-        <externalId>false</externalId>
-        <label>Template Name</label>
-        <length>255</length>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
         <fullName>TriggSend_Id__c</fullName>
+        <description>The Exact Target Triggered Sent Id</description>
         <externalId>false</externalId>
+        <inlineHelpText>The Exact Target Triggered Sent Id</inlineHelpText>
         <label>Triggered Send Id</label>
         <length>255</length>
         <required>false</required>
@@ -161,18 +158,13 @@
         <fullName>All</fullName>
         <columns>Is_Reusable__c</columns>
         <columns>NAME</columns>
-        <columns>Template_Name__c</columns>
+        <columns>LAST_UPDATE</columns>
         <columns>RECORDTYPE</columns>
         <columns>CREATEDBY_USER.ALIAS</columns>
         <columns>CREATEDBY_USER</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
         <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>All1</fullName>
-        <filterScope>Everything</filterScope>
-        <label>All</label>
     </listViews>
     <nameField>
         <label>EBC Template Name</label>
@@ -238,7 +230,6 @@
         <searchResultsAdditionalFields>Billing_Account__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Is_Reusable__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Parent_Template__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Template_Name__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>RECORDTYPE</searchResultsAdditionalFields>
     </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>

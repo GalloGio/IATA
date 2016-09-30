@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -96,7 +92,9 @@
     </fields>
     <fields>
         <fullName>To__c</fullName>
+        <description>The recipient that received the test</description>
         <externalId>false</externalId>
+        <inlineHelpText>The recipient that received the test</inlineHelpText>
         <label>To</label>
         <required>true</required>
         <trackTrending>false</trackTrending>

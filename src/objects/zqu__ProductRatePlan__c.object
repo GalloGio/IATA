@@ -576,6 +576,7 @@
         <columns>EBC_Currency_Cost_Per_Email__c</columns>
         <columns>EBC_Email_Credit_Current_Offering__c</columns>
         <columns>EBC_Email_Credit_Standard__c</columns>
+        <columns>EBC_PrePaid_Emails__c</columns>
         <columns>zqu__EffectiveStartDateTEXT__c</columns>
         <columns>zqu__EffectiveEndDateTEXT__c</columns>
         <columns>zqu__Description__c</columns>

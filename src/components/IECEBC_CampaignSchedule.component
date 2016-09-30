@@ -49,17 +49,9 @@
                         <apex:outputText rendered="{!c.Is_Step5_Writable__c}"><i class="icon angle-down"></i></apex:outputText>
                         <apex:selectList rendered="{!c.Is_Step5_Writable__c}" styleClass="user-input select" value="{!campaignMinutes}" size="1">
                             <apex:selectOption itemLabel="00" itemValue="00" />
-                            <apex:selectOption itemLabel="05" itemValue="05" />
-                            <apex:selectOption itemLabel="10" itemValue="10" />
                             <apex:selectOption itemLabel="15" itemValue="15" />
-                            <apex:selectOption itemLabel="20" itemValue="20" />
-                            <apex:selectOption itemLabel="25" itemValue="25" />
                             <apex:selectOption itemLabel="30" itemValue="30" />
-                            <apex:selectOption itemLabel="35" itemValue="35" />
-                            <apex:selectOption itemLabel="40" itemValue="40" />
                             <apex:selectOption itemLabel="45" itemValue="45" />
-                            <apex:selectOption itemLabel="50" itemValue="50" />
-                            <apex:selectOption itemLabel="55" itemValue="55" />
                             
                             <apex:actionSupport action="{!validate}" event="onchange" rerender="pageMessagesBlock"/> 
                         </apex:selectList>

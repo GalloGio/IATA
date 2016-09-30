@@ -3,8 +3,7 @@
     <apiVersion>38.0</apiVersion>
     <availableInTouch>false</availableInTouch>
     <confirmationTokenRequired>false</confirmationTokenRequired>
-    <description>eBroadcast Payment Page, called when subscribing Rate Plan, purchasing Email Credits, Add-Ons, and renewal.</description>
-    <label>IECEBC_Payment</label>
+    <label>EBC_RelatedLists</label>
     <packageVersions>
         <majorNumber>2</majorNumber>
         <minorNumber>70</minorNumber>

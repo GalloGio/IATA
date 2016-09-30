@@ -98,7 +98,9 @@
     <fields>
         <fullName>External_Id__c</fullName>
         <caseSensitive>false</caseSensitive>
+        <description>This field may be used to refer to global filters such as World Wide, etc.</description>
         <externalId>true</externalId>
+        <inlineHelpText>This field may be used to refer to global filters such as World Wide, etc.</inlineHelpText>
         <label>External Id</label>
         <length>255</length>
         <required>false</required>

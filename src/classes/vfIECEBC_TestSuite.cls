@@ -32,18 +32,14 @@ public class vfIECEBC_TestSuite {
     }
     
     static void initPostRunAs() {
-        oProductCategory = IECTestUtil.CreateSampleProductCategory(IECConstants.ProductCategory_SF_EBROADCAST, true);
-        insert oProductCategory;
+    	IECEBC_TestUtility.createEbcSetupAndRelatedData();
+        oProductCategory = IECEBC_TestUtility.oEbcProductCategory;
         
-        oProduct = IECTestUtil.CreateSampleProduct('eBroadcast for Non-Members');
-        insert oProduct;
+        oProduct = IECEBC_TestUtility.oEbcProductNonMember;
         
-        oProductInfo = IECTestUtil.CreateSampleProductInfo('eBroadcast for IATA Non Member Airlines', oProductCategory, oProduct);
-        oProductInfo.Product_Audience__c = IECConstants.ProductInformationAudience_DEFAULT;
-        insert oProductInfo;
+        oProductInfo = IECEBC_TestUtility.mProductIdToProductInfoObj.get(oProduct.Id);
         
-        oProductRatePlan = IECTestUtil.CreateSampleProductRatePlan('Enterprise Edition', false, oProduct);
-        insert oProductRatePlan;
+        oProductRatePlan = IECEBC_TestUtility.lEbcProductRatePlanNonMember[0];
         
         oProductRatePlanCharge = IECTestUtil.CreateSampleProductRatePlanCharge(oProductRatePlan, 'CHARGETEST', 1);
         insert oProductRatePlanCharge;
