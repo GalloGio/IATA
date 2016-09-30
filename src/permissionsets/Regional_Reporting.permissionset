@@ -5660,7 +5660,6 @@
 <tabSettings><tab>Comment__c</tab><visibility>Visible</visibility></tabSettings>
 <tabSettings><tab>Complaint_Action__c</tab><visibility>None</visibility></tabSettings>
 <tabSettings><tab>Complaint__c</tab><visibility>None</visibility></tabSettings>
-<tabSettings><tab>Contact__c</tab><visibility>None</visibility></tabSettings>
 <tabSettings><tab>DFSS_SnapShot_Push__c</tab><visibility>None</visibility></tabSettings>
 <tabSettings><tab>EC2_Console</tab><visibility>None</visibility></tabSettings>
 <tabSettings><tab>EC2_Images</tab><visibility>None</visibility></tabSettings>
