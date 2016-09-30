@@ -14,13 +14,15 @@ global class SchdlIECEBCETCreatePortfolio implements Database.Batchable<sObject>
     }
     
     global static void reschedule() {
-        CronTrigger ct = [SELECT Id, CronJobDetail.Id, CronJobDetail.Name, CronJobDetail.JobType FROM CronTrigger Where CronJobDetail.Name = 'SchdlIECEBCETCreatePortfolio' LIMIT 1];
-        System.abortJob(ct.Id);
-        
-        Datetime nextSchedules = Datetime.now().addMinutes(15);
-        String sch = String.valueOf(nextSchedules.second()) + ' ' + String.valueOf(nextSchedules.minute()) + ' * * * ?';
-
-        Schedule(sch);
+        List<CronTrigger> ct = [SELECT Id, CronJobDetail.Id, CronJobDetail.Name, CronJobDetail.JobType FROM CronTrigger Where CronJobDetail.Name = 'SchdlIECEBCETCreatePortfolio' LIMIT 1];
+        if (ct.size() > 0) {
+            System.abortJob(ct[0].Id);
+            
+            Datetime nextSchedules = Datetime.now().addMinutes(15);
+            String sch = String.valueOf(nextSchedules.second()) + ' ' + String.valueOf(nextSchedules.minute()) + ' * * * ?';
+            
+            Schedule(sch);
+        }
     }
     
     global void execute(SchedulableContext SC)  {

@@ -1187,7 +1187,11 @@ This should be set by calling Payment for renewal.</inlineHelpText>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>addon</fullName>
+                <fullName>addon report</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>addon storage</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -1295,6 +1299,18 @@ This should be set by calling Payment for renewal.</inlineHelpText>
         <customTabListAdditionalFields>Zuora__Status__c</customTabListAdditionalFields>
     </searchLayouts>
     <sharingModel>ControlledByParent</sharingModel>
+    <webLinks>
+        <fullName>View_eBroadcast_Specific_Details</fullName>
+        <availability>online</availability>
+        <description>View eBroadcast Related Lists</description>
+        <displayType>button</displayType>
+        <height>600</height>
+        <linkType>page</linkType>
+        <masterLabel>View eBroadcast Specific Details</masterLabel>
+        <openType>sidebar</openType>
+        <page>EBC_RelatedLists</page>
+        <protected>false</protected>
+    </webLinks>
     <webLinks>
         <fullName>Zuora__Sync_Data_from_ZBilling</fullName>
         <availability>online</availability>

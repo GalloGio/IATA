@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -47,17 +43,20 @@
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
+    <description>Object that store all the clicks that have been tracked by Exact Target</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>true</enableReports>
-    <enableSearch>false</enableSearch>
+    <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
         <fullName>EBC_Campaign__c</fullName>
+        <description>The related EBC Campaign</description>
         <externalId>false</externalId>
+        <inlineHelpText>The related EBC Campaign</inlineHelpText>
         <label>EBC Campaign</label>
         <referenceTo>EBC_Campaign__c</referenceTo>
         <relationshipLabel>EBC Click Events</relationshipLabel>
@@ -70,7 +69,9 @@
     </fields>
     <fields>
         <fullName>Event_Date_Timestamp__c</fullName>
+        <description>The date time of the click event in milliseconds since 1970, used for sorting purpose (datetime does not provide accurate milliseconds)</description>
         <externalId>false</externalId>
+        <inlineHelpText>The date time of the click event in milliseconds since 1970, used for sorting purpose (datetime does not provide accurate milliseconds)</inlineHelpText>
         <label>Event Date Timestamp</label>
         <precision>18</precision>
         <required>false</required>
@@ -81,7 +82,9 @@
     </fields>
     <fields>
         <fullName>Event_Date__c</fullName>
+        <description>The date time of the click event</description>
         <externalId>false</externalId>
+        <inlineHelpText>The date time of the click event</inlineHelpText>
         <label>Event Date</label>
         <required>false</required>
         <trackTrending>false</trackTrending>
@@ -90,7 +93,9 @@
     <fields>
         <fullName>Related_Agency__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
+        <description>The GDP Products Acc View matching with the click</description>
         <externalId>false</externalId>
+        <inlineHelpText>The GDP Products Acc View matching with the click</inlineHelpText>
         <label>Related Agency</label>
         <referenceTo>GDP_Products_Account_View__c</referenceTo>
         <relationshipLabel>EBC Click Events</relationshipLabel>
@@ -102,7 +107,9 @@
     <fields>
         <fullName>Related_Agent__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
+        <description>The ID Card matching with the click</description>
         <externalId>false</externalId>
+        <inlineHelpText>The ID Card matching with the click</inlineHelpText>
         <label>Related Agent</label>
         <referenceTo>ID_Card__c</referenceTo>
         <relationshipLabel>EBC Click Events</relationshipLabel>
@@ -113,7 +120,9 @@
     </fields>
     <fields>
         <fullName>Subscriber_Key__c</fullName>
+        <description>The Subscriber Key of the client that clicked</description>
         <externalId>true</externalId>
+        <inlineHelpText>The Subscriber Key of the client that clicked</inlineHelpText>
         <label>Subscriber Key</label>
         <length>255</length>
         <required>true</required>
@@ -123,7 +132,9 @@
     </fields>
     <fields>
         <fullName>URL__c</fullName>
+        <description>The URL that have been clicked</description>
         <externalId>false</externalId>
+        <inlineHelpText>The URL that have been clicked</inlineHelpText>
         <label>URL</label>
         <length>255</length>
         <required>true</required>

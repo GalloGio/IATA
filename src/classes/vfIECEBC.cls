@@ -124,7 +124,6 @@ public class vfIECEBC extends IECPageController {
 			if (subscription == null) 
 			{
 				Zuora__SubscriptionProductCharge__c ebcSpc = ebcSubscriptionProductCharge;
-                System.debug(ebcSpc.Zuora__Subscription__c);
 				if (ebcSpc != null && ebcSpc.Zuora__Subscription__c != null)
 				{
 					subscription = ebcSpc.Zuora__Subscription__r;
@@ -195,17 +194,14 @@ public class vfIECEBC extends IECPageController {
 			{
 				Zuora__SubscriptionProductCharge__c ebcSpc = null;
 				List<Zuora__SubscriptionProductCharge__c> spcList = ebcPrepaidSubscriptionProductChargeList;
-                System.debug(spcList);
 				if (spcList.size() > 0) {
 					ebcSpc = spcList[0];
 				} else {
 					spcList = ebcPayAsYouGoSubscriptionProductChargeList;
-                    System.debug(spcList);
 					if (spcList.size() > 0) {
 						ebcSpc = spcList[0];
 					}
 				}
-                System.debug(ebcSpc);
 				ebcSubscriptionProductCharge = ebcSpc;
 			}
 			
@@ -223,7 +219,6 @@ public class vfIECEBC extends IECPageController {
 			Set<Id> ebcProductRatePlanIdSet = new Set<Id>();
 			ebcProductRatePlanIdSet.addAll(IECEBC_Utility.ebcNonMemberProductRatePlanIdList);
 			ebcProductRatePlanIdSet.addAll(IECEBC_Utility.ebcMemberProductRatePlanIdList);
-            System.debug(ebcProductRatePlanIdSet);
 			
 			List<Zuora__SubscriptionProductCharge__c> subscriptionProductChargeList = [select Id
 				, Zuora__Product__c, Zuora__Product__r.Name
@@ -250,7 +245,7 @@ public class vfIECEBC extends IECPageController {
 				, Zuora__Subscription__r.Zuora__Status__c
 				, Zuora__Subscription__r.Zuora__SubscriptionEndDate__c
 				, Zuora__Subscription__r.Zuora__TermEndDate__c
-				
+				, Zuora__Subscription__r.Zuora__Zuora_Id__c 
 				, Zuora__Subscription__r.Product_Rate_Plan_Information__r.Product_Rate_Plan__c
 				, Zuora__Subscription__r.Product_Rate_Plan_Information__r.Product_Rate_Plan__r.Id
 				, Zuora__Subscription__r.Product_Rate_Plan_Information__r.Product_Rate_Plan__r.Name
@@ -281,7 +276,7 @@ public class vfIECEBC extends IECPageController {
 					 , Zuora__Subscription__r.Zuora__TermStartDate__c DESC
 				 ];
 				
-				System.debug(subscriptionProductChargeList);
+				
 			//subscriptionProductCharge = (subscriptionProductChargeList.size() == 0) ? null : subscriptionProductChargeList[0];
 			return subscriptionProductChargeList;
 		}
@@ -323,7 +318,7 @@ public class vfIECEBC extends IECPageController {
 				, Zuora__Subscription__r.Zuora__Status__c
 				, Zuora__Subscription__r.Zuora__SubscriptionEndDate__c
 				, Zuora__Subscription__r.Zuora__TermEndDate__c
-				
+				, Zuora__Subscription__r.Zuora__Zuora_Id__c 
 				, Zuora__Subscription__r.Product_Rate_Plan_Information__r.Product_Rate_Plan__c
 				, Zuora__Subscription__r.Product_Rate_Plan_Information__r.Product_Rate_Plan__r.Id
 				, Zuora__Subscription__r.Product_Rate_Plan_Information__r.Product_Rate_Plan__r.Name

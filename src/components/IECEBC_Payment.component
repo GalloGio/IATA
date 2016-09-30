@@ -216,18 +216,36 @@
                                             ::before
                                         </i>
                                     -->
-                                    
-                                    <apex:commandButton action="{!clickEditButton}" rendered="{!!editMode}" 
-                                                        value="Edit billing information"
+                                    <ul class="list actions">
+                                    <apex:outputText rendered="{!!editMode}">
+										<li>
+                                            <apex:commandLink action="{!clickEditButton}"
+                                                                value="Edit billing information"
+                                                                reRender="campaignConfirmBillingDetailForm,formShoppingCart,msg"
+                                                                styleClass="button secondary fa fa-pencil-square-o"
+                                                                status="statusId"
+                                                                />
+                                       </li>
+									</apex:outputText>
+                                    <apex:outputText rendered="{!editMode}">
+										<li>
+                                            <apex:commandLink action="{!clickCancelBillingDetailButton}"  
+                                                        value="Cancel" 
                                                         reRender="campaignConfirmBillingDetailForm,formShoppingCart,msg"
-                                                        styleClass="button secondary fa fa-pencil-square-o"
                                                         status="statusId"
-                                                        />
-                                    <apex:commandButton action="{!clickSaveBillingDetailButton}" rendered="{!editMode}" 
+                                                        styleClass="text-link"/>
+                                        </li>
+                                    </apex:outputText>
+                                    <apex:outputText rendered="{!editMode}">
+										<li>
+                                            <apex:commandLink action="{!clickSaveBillingDetailButton}"  
                                                         value="Save" 
                                                         reRender="campaignConfirmBillingDetailForm,formShoppingCart,msg"
                                                         status="statusId"
                                                         styleClass="button secondary"/>
+                                        </li>
+									</apex:outputText>
+                                    </ul>                                    
                                 </div>
                             </apex:form>
 						</dd>
@@ -457,7 +475,7 @@
 										Taxes
 									</th>
 									<td class="price">
-										<apex:outputText value="${0,number,###,###,##0.00}"><apex:param value="{!taxAmount}" /></apex:outputText>
+										<apex:outputText value="${0,number,###,###,##0.00}"><apex:param value="{!TaxAmount}" /></apex:outputText>
 									</td>
 								</tr>
 								<tr class="total">
@@ -491,12 +509,16 @@
                         <apex:param name="errMsg" value="" assignTo="{!sErrorMsgFromHPM}"/>
                     </apex:actionFunction>
 	
-					<apex:outputPanel rendered="true" >
+					<apex:outputPanel rendered="true" id="actionButtons" >
 						<div class="footer-actions">
 							<ul class="list actions">
+                                
 								<li><a class="text-link" href="#">Cancel</a></li>
 								<apex:outputText rendered="{!showPaymentButtons}">
-									<li><apex:commandLink action="{!EBCSubscribe}" styleClass="button" value="Submit payment" /></li>
+									<li><apex:commandLink action="{!EBCSubscribeNow}" styleClass="button" value="Submit payment" /></li>
+								</apex:outputText>
+                                <apex:outputText rendered="{!showTaxButtons}">
+									<li><apex:commandLink action="{!CalculateTaxNow}" styleClass="button" value="Calculate Tax"  reRender="actionButtons,paymentConfirmationForm"/></li>
 								</apex:outputText>
 							</ul>
 						</div>

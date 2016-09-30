@@ -14,6 +14,7 @@
         </apex:define>
         <apex:define name="pageContent">
             <!-- Start of Page Content -->
+            <apex:outputText rendered="{!EBC_Campaign__c.Status__c == 'DRAFT'}">
             <script type="text/javascript">
             function refreshExistingListCount(filterId) { 
                 jQuery('.existingListRecipientCount,.existingListRecipientCount2,.existingListProvisionalCost,.existingListNewBalance').html('<img src="/img/loading.gif" />');
@@ -49,6 +50,7 @@
                 });
             }
             </script>
+            </apex:outputText>
             <main class="main-content no-provisional-cost">
                 <div class="inner-wrapper">
                     <c:IECEBC_ProgressComponent currentStepNumber="{!currentStepNumber}" campaign="{!EBC_Campaign__c}" />
@@ -117,7 +119,10 @@
                                                     </th>
                                                     <td>
                                                         <div class="item-value">
-                                                            <strong class="existingListRecipientCount">n/a</strong>
+                                                            <strong class="existingListRecipientCount">
+                                                                {!IF(EBC_Campaign__c.Status__c == 'DRAFT', 'n/a', EBC_Campaign__c.Number_of_Recipients__c)}
+                                                            </strong>
+                                                            
                                                             <span class="unit"> email(s)</span>
                                                         </div>
                                                     </td>
