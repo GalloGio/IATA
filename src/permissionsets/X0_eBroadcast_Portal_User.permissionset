@@ -1001,10 +1001,6 @@
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
-        <apexPage>IECEBC_CampaignPayment2</apexPage>
-        <enabled>true</enabled>
-    </pageAccesses>
-    <pageAccesses>
         <apexPage>IECEBC_CampaignPreview</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
