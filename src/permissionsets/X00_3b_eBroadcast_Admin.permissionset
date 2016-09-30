@@ -642,11 +642,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>EBC_Email_Exclusion__c.Is_Active__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>EBC_Email_Exclusion__c.Other_Reason__c</field>
         <readable>true</readable>
     </fieldPermissions>
