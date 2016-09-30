@@ -78,7 +78,7 @@ public class AMS_OSCARTriggerHandler {
 	public static void handleChangesProcess(List<AMS_OSCAR__c> oscars) {
 
 		//do Not run minor changes on agency changes trigger????
-		//AMS_AccountTriggerHandler.processMinorChangesValidationFlag = false;
+		AMS_AccountTriggerHandler.processMinorChangesValidationFlag = false;
 
 		List<AMS_OSCAR__c> oscarsToValidate = getAgencyChangeOSCARS(oscars);
 
@@ -516,7 +516,9 @@ public class AMS_OSCARTriggerHandler {
 			List<Account> mergedAccountUpdate = mergeAccountsToUpdate(accsToUpdateFromCC, new List<Account>(accountsToUpdate.keySet()));
 
 			if (!mergedAccountUpdate.isEmpty()) {
+				AMS_AccountTriggerHandler.processMinorChangesValidationFlag = true;
 				update mergedAccountUpdate;
+				AMS_AccountTriggerHandler.processMinorChangesValidationFlag = false;
 			}
 
 			if (hierarchyChanges.size() > 0) {
@@ -557,7 +559,7 @@ public class AMS_OSCARTriggerHandler {
 				system.debug('processAgencyChanges() --> accountsAffectedPerOnlineAccreditation = ' + accountsAffectedPerOnlineAccreditation);
 
 				AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(accountsAffectedPerOnlineAccreditation, !isSanityCheck);
-
+			
 				//verify ownership alignment
 				if(accsToCompareOwnership.size()>0 && !AMS_HierarchyHelper.checkHierarchyIntegrity(accsToCompareOwnership))
 					throw new AMSException('Performing this operation will result in hierarchy ownership inconsistency. Please make sure the owners being processed match with the owners of the target agency.');
