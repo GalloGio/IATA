@@ -29,7 +29,7 @@ global class ISSP_AccountStatementsSchedule implements Schedulable {
         ISSP_NotificationBatch bc = new ISSP_NotificationBatch();
         bc.Query = 'SELECT ' + String.join(ISSP_NotificationUtilities.getAllContactFields(), ',')
         + ' FROM Contact '
-        + ' WHERE Account.Status__c IN (\'Approved\',\'Changes Processed\')'
+        + ' WHERE Account.Status__c IN (\'Approved\',\'Changes Processed\',\'Listed\')'
         + ' AND AccountId in ('
         + '   Select Account__c'
         + '   From Account_Statement__c'
