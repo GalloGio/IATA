@@ -273,7 +273,7 @@ public with sharing class AMS_MigrationToolHelper {
 		contact.Email__c = role.Contact_Email__c;
 		contact.Financial_interest__c = role.Percentage__c;
 		contact.First_name__c = role.Contact__c != null ? role.Contact__r.FirstName : ( role.Person__c != null ? role.Person__r.First_name__c : ''); 
-		contact.Last_name__c = role.Contact__c != null ? role.Contact__r.LastName : ( role.Person__c != null ? role.Person__r.Lastname__c : '_'); 
+		contact.Last_name__c = (role.Contact__c == null && role.Person__c == null && role.Owner_Account__c == null) ? role.Owner_Name__c : ( role.Contact__c != null ? role.Contact__r.LastName : ( role.Person__c != null ? role.Person__r.Lastname__c : '_')); 
 		contact.Legacy_External_Id__c = role.Legacy_External_ID__c;
 		contact.Name = role.Owner_Name__c != null ? role.Owner_Name__c : (contact.First_name__c + contact.Last_name__c);
 		contact.Person_AMS__c = role.Person__c;
@@ -312,7 +312,7 @@ public with sharing class AMS_MigrationToolHelper {
 	private static AMS_OSCAR__c updateDatesFromSAAM(AMS_OSCAR__c oscar, Case saamCase){
 		
 
-		System.debug('Starting to migrate date fields...');
+		System.debug('Starting to migrate date fields from case:' + saamCase);
 
 		try{
 			if(saamCase.Bank_Guarantee_amount__c != null)
