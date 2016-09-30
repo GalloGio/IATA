@@ -1,11 +1,16 @@
 global class SchdlEBCImportClickEvent implements Database.AllowsCallouts, Schedulable {
-    // Schedulable
-    global void execute(SchedulableContext SC)  {
+    @future (callout=true)
+    global static void futureExecute() {
         List<EBC_Click_Event__c> existingEE = [Select Event_Date_Timestamp__c From EBC_Click_Event__c Where Event_Date_Timestamp__c != null ORDER BY Event_Date_Timestamp__c DESC LIMIT 1];
         Datetime lastEventDate = Datetime.newInstance(2016, 09, 01, 01, 00, 00);
         if (existingEE.size() > 0) lastEventDate = Datetime.newInstance((Long)existingEE[0].Event_Date_Timestamp__c);
         
         IECEBC_ETCampaignTopLink.RetrieveClickEventProperties(lastEventDate);
+        
+    }
+    // Schedulable
+    global void execute(SchedulableContext SC)  {
+        futureExecute();
     }
     global static void cancel() {
         cancel('SchdlEBCImportClickEvent');
@@ -17,6 +22,6 @@ global class SchdlEBCImportClickEvent implements Database.AllowsCallouts, Schedu
     
     global static void Schedule() {
         SchdlEBCImportClickEvent a = new SchdlEBCImportClickEvent();
-        System.schedule('SchdlEBCImportClickEvent', '0 15 * * * ?', a);
+        System.schedule('SchdlEBCImportClickEvent', '0 28 * * * ?', a);
     }
 }

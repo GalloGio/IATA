@@ -312,7 +312,7 @@ public with sharing class AMS_MigrationToolHelper {
 	private static AMS_OSCAR__c updateDatesFromSAAM(AMS_OSCAR__c oscar, Case saamCase){
 		
 
-		System.debug('Starting to migrate date fields...');
+		System.debug('Starting to migrate date fields from case:' + saamCase);
 
 		try{
 			if(saamCase.Bank_Guarantee_amount__c != null)
@@ -357,7 +357,7 @@ public with sharing class AMS_MigrationToolHelper {
 
 	private static void postOscarUpdate(String oscarId, String oscarName, Id accountId, boolean isComingFromPortal, String caseStatus, Case oscarCase){
 
-		List<AMS_OSCAR__c> oscars = [SELECT Id, Name, First_Step_Completed__c from AMS_OSCAR__c where Id = :oscarId];
+		List<AMS_OSCAR__c> oscars = [SELECT Id,Status__c, Name, Bank_Guarantee_amount__c, First_Step_Completed__c, Assessment_Performed_Date__c,Bank_Guarantee_deadline__c,Bank_Guarantee_received__c,Bank_Guarantee_requested__c,Change_effective_as_of__c,Criteria_remarks__c,Documentation_remarks__c,Dossier_Reception_Date__c,Fees_refund_requested__c,Finalization_checklist__c,Financial_Assessment_deadline__c,Financial_Assessment_requested__c,Financial_Review_Result__c,Billing_Document_Number__c,Local_Inspection_compliant__c,Local_Inspection_deadline__c,Local_Inspection_received__c,Local_Inspection_requested__c,Process_Start_Date__c,Proof_of_payment_received__c,PSAA_EACP_Agreement_received__c,Welcome_Pack_Sent__c,Sanity_check_deadline__c,Update_AIMS_Rejection_Date__c,Update_AIMS_Rejection__c,Update_AIMS_Approval_Date__c,Update_AIMS_Approval__c from AMS_OSCAR__c where Id = :oscarId];
 
 		if(!oscars.isEmpty()){
 
@@ -376,6 +376,8 @@ public with sharing class AMS_MigrationToolHelper {
 				oscar.First_Step_Completed__c = true;
 			}
 
+			System.debug('Initiating Oscar update with values from case:' + oscarCase);
+
 			oscar = updateDatesFromSAAM(oscar,oscarCase);
 
 			update oscar;
@@ -383,6 +385,7 @@ public with sharing class AMS_MigrationToolHelper {
 			System.debug('Oscar updated.');
 
 			System.debug('Oscar:'+oscar);
+            System.debug('Case:'+ oscarCase);
 		}
 
 	}
@@ -442,7 +445,7 @@ public with sharing class AMS_MigrationToolHelper {
 	}
 
 	private static CaseContainer processNotFromPortal(CaseContainer cont){
-		
+
 		Case caseToProcess = cont.c;
 
 		AMS_Pax_Accreditation_Form__c accreditationObj = fetchAccreditation(caseToProcess.Id);
@@ -469,7 +472,7 @@ public with sharing class AMS_MigrationToolHelper {
       	
 
       	System.debug('Starting with flow ...');
-		
+
 		Flow.Interview.OSCAR_Wizard_SIMPLEX_Automatic_v2_0 wizardFlow = new Flow.Interview.OSCAR_Wizard_SIMPLEX_Automatic_v2_0(flowVarMap);
 		wizardFlow.start();
 
@@ -511,8 +514,8 @@ public with sharing class AMS_MigrationToolHelper {
 		System.debug('Process finished.');
 
 		return cont;
-		
-		return null;
+
+
 	}
 
 	private static String performValidations(Case c, String processType){

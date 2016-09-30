@@ -154,7 +154,7 @@ global class SchdlIECEBCStartCampaign implements Database.Batchable<sObject>, Da
     
     // Schedulable
     public static void executeSingle() {
-        List<EBC_Campaign__c> campaigns = [Select Id, EBC_Master_Filter__c, Audience__c, EBC_Design__r.External_Id__c From EBC_Campaign__c Where OwnerId = '0058E000001Lwad' AND Status__c = 'APPROVED' AND (Scheduled_Date__c <= :Datetime.now() or Scheduled_Date__c = null)];
+        List<EBC_Campaign__c> campaigns = [Select Id, EBC_Master_Filter__c, Audience__c, EBC_Design__r.External_Id__c From EBC_Campaign__c Where Status__c = 'APPROVED' AND (Scheduled_Date__c <= :Datetime.now() or Scheduled_Date__c = null)];
         for(EBC_Campaign__c campaign : campaigns) {
             campaign.Status__c = 'STARTED';
             campaign.Send_Datetime__c = Datetime.now();

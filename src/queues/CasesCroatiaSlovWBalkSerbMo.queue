@@ -4,6 +4,9 @@
     <email>maodusb@iata.org</email>
     <name>Cases - Croatia, Slov, W. Balk, Serb, Mo</name>
     <queueSobject>
+        <sobjectType>AMS_OSCAR__c</sobjectType>
+    </queueSobject>
+    <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>
 </Queue>

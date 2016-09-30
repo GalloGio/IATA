@@ -126,8 +126,7 @@
     <fields>
         <fullName>AMS_Correction_change_code__c</fullName>
         <externalId>false</externalId>
-        <inlineHelpText>If selected, once the sanity checks will be set as passed, the selected change code will be generated for each agency involved</inlineHelpText>
-        <label>Correction change code</label>
+        <label>AMS Correction change code</label>
         <picklist>
             <picklistValues>
                 <fullName>CAD</fullName>
@@ -139,11 +138,21 @@
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>AMS_Generate_COR_change_code__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>If selected, once the sanity checks will be set as passed, a COR change code will be generated for each agency involved</inlineHelpText>
+        <label>Generate COR change code</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>AMS_Online_Accreditation__c</fullName>
@@ -1733,6 +1742,16 @@ IF(Financial_Assessment_received__c - Financial_Assessment_requested__c =6, TEXT
         <type>Picklist</type>
     </fields>
     <fields>
+        <fullName>First_Step_Completed__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>First Step Completed</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Flag_Data_to_Account__c</fullName>
         <defaultValue>false</defaultValue>
         <description>when checked means that the Staging Data was copied to the account with sucess, if not checked means that the Staging Data needs to be  copied to the account!</description>
@@ -1770,16 +1789,6 @@ IF(Financial_Assessment_received__c - Financial_Assessment_requested__c =6, TEXT
         <description>when checked means that the IATACode was generated with sucess, if not checked means that the IATAcode needs to be generated!</description>
         <externalId>false</externalId>
         <label>Flag IATACode</label>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Checkbox</type>
-    </fields>
-	<fields>
-        <fullName>First_Step_Completed__c</fullName>
-        <defaultValue>false</defaultValue>
-        <externalId>false</externalId>
-        <label>First Step Completed</label>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -2078,10 +2087,7 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
     <fields>
         <fullName>Out_of_deadline_SAAM__c</fullName>
         <externalId>false</externalId>
-        <formula>IF( AND( ISBLANK(Documentation_Compliant__c) , OSCAR_Deadline__c &lt;= DATEVALUE(now())), &quot;Docs &quot;, &quot;&quot;) &amp; IF( AND( ISBLANK( Financial_Assessment_received__c ) , not (isblank(Financial_Assessment_deadline__c)), Financial_Assessment_deadline__c &lt;= DATEVALUE(now())), &quot;FA &quot;, &quot;&quot;) &amp; IF( AND( ISBLANK( Local_Inspection_received__c ) , not (isblank( Local_Inspection_deadline__c )), Local_Inspection_deadline__c &lt;= DATEVALUE(now())), &quot;LI &quot;, &quot;&quot;) &amp; IF( AND( ISBLANK( Bank_Guarantee_received__c ) , not (isblank( Bank_Guarantee_deadline__c )), Bank_Guarantee_deadline__c &lt;= DATEVALUE(now())), &quot;BG &quot;, &quot;&quot;)
-&amp; IF( AND( TEXT( AML_result__c )=&quot;&quot; , not (isblank( AML_deadline__c )),  AML_deadline__c&lt;= DATEVALUE(now())), &quot;AML &quot;, &quot;&quot;)
-&amp; IF( AND( ISBLANK( PSAA_EACP_Agreement_received__c ) , not (isblank( Agreement_deadline__c )),  Agreement_deadline__c&lt;= DATEVALUE(now())), &quot;AGR &quot;, &quot;&quot;)
-&amp; IF( AND( ISBLANK( Proof_of_payment_received__c ) , not (isblank( Invoice_deadline__c)),  Invoice_deadline__c&lt;= DATEVALUE(now())), &quot;PAY &quot;, &quot;&quot;)</formula>
+        <formula>IF( AND( ISBLANK(Documentation_Compliant__c) , OSCAR_Deadline__c &lt;= DATEVALUE(now())), &quot;Docs &quot;, &quot;&quot;) &amp; IF( AND( ISBLANK( Financial_Assessment_received__c ) , not (isblank(Financial_Assessment_deadline__c)), Financial_Assessment_deadline__c &lt;= DATEVALUE(now())), &quot;FA &quot;, &quot;&quot;) &amp; IF( AND( ISBLANK( Local_Inspection_received__c ) , not (isblank( Local_Inspection_deadline__c )), Local_Inspection_deadline__c &lt;= DATEVALUE(now())), &quot;LI &quot;, &quot;&quot;) &amp; IF( AND( ISBLANK( Bank_Guarantee_received__c ) , not (isblank( Bank_Guarantee_deadline__c )), Bank_Guarantee_deadline__c &lt;= DATEVALUE(now())), &quot;BG &quot;, &quot;&quot;)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Out of deadline</label>
         <required>false</required>
@@ -3322,7 +3328,7 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Closed</fullName>
+                <fullName>Closed (Closed)</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -3362,7 +3368,7 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Closed (Closed)</fullName>
+                <fullName>Closed</fullName>
                 <default>false</default>
             </picklistValues>
             <sorted>false</sorted>
@@ -3670,6 +3676,69 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
     </fields>
     <label>OSCAR</label>
     <listViews>
+        <fullName>ACCABugFixes_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>ACCA Bug Fixes</label>
+        <queue>ACCABugFixes</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>AGM_Non_Compliance_Americas_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>AGM Non Compliance - Americas</label>
+        <queue>AGM_Non_Compliance_Americas</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>AP_Central_Team_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>AP Central Team</label>
+        <queue>AP_Central_Team</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>ASDSupportTeamChinaNAsia_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>ASD Support Team - China &amp; N. Asia</label>
+        <queue>ASDSupportTeamChinaNAsia</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>ATOSEscalationsIATAIWCases_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>ATOS Escalations (IATA IW Cases)</label>
+        <queue>ATOSEscalationsIATAIWCases</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>A_ME_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>A&amp;ME PwC</label>
+        <queue>A_ME</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>AccreditationSwitzerland_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Accreditation - Switzerland</label>
+        <queue>AccreditationSwitzerland</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
         <fullName>Africa_ME_OSCAR_AMS_OSCAR</fullName>
         <filterScope>Queue</filterScope>
         <label>Africa &amp; ME [OSCAR]</label>
@@ -3715,6 +3784,159 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
         </sharedTo>
     </listViews>
     <listViews>
+        <fullName>AgencyManagementheadoffice_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Agency Management - head office</label>
+        <queue>AgencyManagementheadoffice</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>AgencyPoliciesHO_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Agency Policies - HO</label>
+        <queue>AgencyPoliciesHO</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>AgencyRiskManagementAP_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Agency Risk Management - A&amp;P</label>
+        <queue>AgencyRiskManagementAP</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>AgencyRiskManagementheadoffice_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Agency Risk Management - head office</label>
+        <queue>AgencyRiskManagementheadoffice</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Agency_Management_A_ME_Non_Complianc_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>AGM Non Compliance - A&amp;ME</label>
+        <queue>Agency_Management_A_ME_Non_Complianc</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Agency_Management_A_P_non_compliance_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>AGM Non Compliance - A&amp;P</label>
+        <queue>Agency_Management_A_P_non_compliance</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Agency_Management_C_NA_non_compliance_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>AGM Non Compliance - China &amp; NA</label>
+        <queue>Agency_Management_C_NA_non_compliance</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Agency_Management_IATAN_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Agency Management IATAN</label>
+        <queue>Agency_Management_IATAN</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Agency_Mgmt_Americas_Data_Validation_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Agency Mgmt - Americas Data Validation</label>
+        <queue>Agency_Mgmt_Americas_Data_Validation</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Agency_Risk_Management_Americas_T1_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Agency Risk Management - Americas</label>
+        <queue>Agency_Risk_Management_Americas_T1</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Agency_Risk_Management_China_NA_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Agency Risk Management - North Asia</label>
+        <queue>Agency_Risk_Management_China_NA</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>AirlineParticipationHeadOffice_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Airline Participation - Head Office</label>
+        <queue>AirlineParticipationHeadOffice</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>AirlineSuspensionHeadOffice_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Airline Suspension - Head Office</label>
+        <queue>AirlineSuspensionHeadOffice</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Airline_Participation_Drafts_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Airline Participation - Drafts</label>
+        <queue>Airline_Participation_Drafts</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>America_pwc_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Americas PwC</label>
+        <queue>America_pwc</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Americas_ID_Card_Canada_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Americas ID Card - Canada</label>
+        <queue>Americas_ID_Card_Canada</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Americas_ID_Card_LATAM_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Americas ID Card - LATAM</label>
+        <queue>Americas_ID_Card_LATAM</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
         <fullName>Americas_OSCAR_AMS_OSCAR</fullName>
         <filterScope>Queue</filterScope>
         <label>Americas [OSCAR]</label>
@@ -3733,10 +3955,1171 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
         </sharedTo>
     </listViews>
     <listViews>
+        <fullName>Asia_Pacific_PwC_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Asia &amp; Pacific PwC</label>
+        <queue>Asia_Pacific_PwC</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>BIS_Products_EU_Agent_Consent_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>BIS Products - EU Agent Consent</label>
+        <queue>BIS_Products_EU_Agent_Consent</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>BProcess_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>BProcess</label>
+        <queue>BProcess</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>BProcess_UAT_PM_team_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>BProcess UAT - PM team</label>
+        <queue>BProcess_UAT_PM_team</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>BankingManagementAP_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Banking Management - A&amp;P</label>
+        <queue>BankingManagementAP</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>BankingManagementAfricaME_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Banking Management - Africa &amp; ME</label>
+        <queue>BankingManagementAfricaME</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>BankingManagementAmericas_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Banking Management - Americas</label>
+        <queue>BankingManagementAmericas</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>BankingManagementChinaNAsia_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Banking Management - China &amp; N. Asia</label>
+        <queue>BankingManagementChinaNAsia</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>BankingManagementEurope_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Banking Management - Europe</label>
+        <queue>BankingManagementEurope</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Business_Delivery_A_P_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Business Delivery - A&amp;P</label>
+        <queue>Business_Delivery_A_P</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Business_Delivery_Africa_ME_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Business Delivery - Africa &amp; ME</label>
+        <queue>Business_Delivery_Africa_ME</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Business_Delivery_Americas_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Business Delivery - Americas</label>
+        <queue>Business_Delivery_Americas</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Business_Delivery_China_N_A_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Business Delivery - China &amp; N.A</label>
+        <queue>Business_Delivery_China_N_A</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Business_Delivery_Europe_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Business Delivery - Europe</label>
+        <queue>Business_Delivery_Europe</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CSMSolutionApprovalIATAIWCases_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>CSM Solution Approval (IATA IW Cases)</label>
+        <queue>CSMSolutionApprovalIATAIWCases</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CS_Systems_Area1_MIA_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>CS Systems Area1 MIA</label>
+        <queue>CS_Systems_Area1_MIA</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CS_Systems_Area2_MAD_AMM_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>CS Systems Area2 MAD&amp;AMM</label>
+        <queue>CS_Systems_Area2_MAD_AMM</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CS_Systems_Area3_SIN_BJS_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>CS Systems Area3 SIN&amp;BJS</label>
+        <queue>CS_Systems_Area3_SIN_BJS</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CS_Systems_GVA_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>CS Systems GVA</label>
+        <queue>CS_Systems_GVA</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CallCentreIATAIWCases_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Call Centre (IATA IW Cases)</label>
+        <queue>CallCentreIATAIWCases</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CasesACCEuropeBankGuarantees_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - ACC Europe Bank Guarantees</label>
+        <queue>CasesACCEuropeBankGuarantees</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
         <fullName>CasesACCEuropeOffOnshore_AMS_OSCAR</fullName>
         <filterScope>Queue</filterScope>
         <label>Agency Management - Europe</label>
         <queue>CasesACCEuropeOffOnshore</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CasesACCEuropeProducts_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - ACC Europe Products</label>
+        <queue>CasesACCEuropeProducts</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CasesACCEuropeRisk_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>AGM Non Compliance - Europe</label>
+        <queue>CasesACCEuropeRisk</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CasesAirlinesSCE_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - Airlines SCE</label>
+        <queue>CasesAirlinesSCE</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CasesAmericasemails_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - Americas (emails)</label>
+        <queue>CasesAmericasemails</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CasesArgentinaParaguayUruguay_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - Argentina, Paraguay &amp; Uruguay</label>
+        <queue>CasesArgentinaParaguayUruguay</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CasesAustralia_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - Australia</label>
+        <queue>CasesAustralia</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CasesAustria_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - Austria</label>
+        <queue>CasesAustria</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CasesAzerbaijan_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - Azerbaijan</label>
+        <queue>CasesAzerbaijan</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CasesBangladesh_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - Bangladesh</label>
+        <queue>CasesBangladesh</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CasesBelux_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - Belux</label>
+        <queue>CasesBelux</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CasesBolivia_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - Bolivia</label>
+        <queue>CasesBolivia</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CasesBrazil_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - Brazil</label>
+        <queue>CasesBrazil</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CasesBulgaria_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - Bulgaria</label>
+        <queue>CasesBulgaria</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CasesCanada_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - Canada</label>
+        <queue>CasesCanada</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CasesCentralAmerica_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - Central America</label>
+        <queue>CasesCentralAmerica</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CasesCentralWesternAfrica_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - Central &amp; Western Africa</label>
+        <queue>CasesCentralWesternAfrica</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CasesChile_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - Chile</label>
+        <queue>CasesChile</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CasesColombia_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - Colombia</label>
+        <queue>CasesColombia</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CasesComplaintsAME_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - Complaints AME</label>
+        <queue>CasesComplaintsAME</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CasesCroatiaSlovWBalkSerbMo_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - Croatia, Slov, W. Balk, Serb, Mo</label>
+        <queue>CasesCroatiaSlovWBalkSerbMo</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CasesCyprus_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - Cyprus</label>
+        <queue>CasesCyprus</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CasesCzechRepublicSlovakiaBSP_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - Czech Republic &amp; Slovakia</label>
+        <queue>CasesCzechRepublicSlovakiaBSP</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CasesEasternAfrica_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - Eastern Africa</label>
+        <queue>CasesEasternAfrica</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CasesEasternCaribbean_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - Eastern Caribbean</label>
+        <queue>CasesEasternCaribbean</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CasesEcuador_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - Ecuador</label>
+        <queue>CasesEcuador</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CasesEgypt_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - Egypt</label>
+        <queue>CasesEgypt</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CasesFinland_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - Finland</label>
+        <queue>CasesFinland</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CasesFrance_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - France</label>
+        <queue>CasesFrance</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CasesGermany_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - Germany</label>
+        <queue>CasesGermany</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CasesGreece_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - Greece</label>
+        <queue>CasesGreece</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CasesHongKong_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - Hong-Kong</label>
+        <queue>CasesHongKong</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CasesHungary_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - Hungary</label>
+        <queue>CasesHungary</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CasesISS_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - ISS</label>
+        <queue>CasesISS</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CasesIndia_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - India</label>
+        <queue>CasesIndia</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CasesIndonesia_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - Indonesia</label>
+        <queue>CasesIndonesia</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CasesInvoicingCIS_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - Invoicing CIS</label>
+        <queue>CasesInvoicingCIS</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CasesIreland_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - Ireland</label>
+        <queue>CasesIreland</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CasesIsrael_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - Israel</label>
+        <queue>CasesIsrael</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CasesItaly_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - Italy</label>
+        <queue>CasesItaly</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CasesJapan_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - Japan</label>
+        <queue>CasesJapan</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CasesJordanSyriaLebanon_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - Jordan, Syria &amp; Lebanon</label>
+        <queue>CasesJordanSyriaLebanon</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CasesKorea_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - Korea</label>
+        <queue>CasesKorea</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CasesMalaysia_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - Malaysia</label>
+        <queue>CasesMalaysia</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CasesMalta_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - Malta</label>
+        <queue>CasesMalta</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CasesMexico_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - Mexico</label>
+        <queue>CasesMexico</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CasesMongolia_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - Mongolia</label>
+        <queue>CasesMongolia</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CasesNepal_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - Nepal</label>
+        <queue>CasesNepal</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CasesNetherlands_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - Netherlands</label>
+        <queue>CasesNetherlands</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CasesNewZealand_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - New Zealand</label>
+        <queue>CasesNewZealand</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CasesNordicBalticRS_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - Nordic &amp; Baltic R&amp;S</label>
+        <queue>CasesNordicBalticRS</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CasesNordicBaltic_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - Nordic &amp; Baltic</label>
+        <queue>CasesNordicBaltic</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CasesNorthAfrica_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - North Africa</label>
+        <queue>CasesNorthAfrica</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CasesOCITComplaints_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - OCIT Europe</label>
+        <queue>CasesOCITComplaints</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CasesPakistan_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - Pakistan</label>
+        <queue>CasesPakistan</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CasesPeru_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - Peru</label>
+        <queue>CasesPeru</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CasesPhilippines_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - Philippines</label>
+        <queue>CasesPhilippines</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CasesPoland_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - Poland</label>
+        <queue>CasesPoland</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CasesPortugal_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - Portugal</label>
+        <queue>CasesPortugal</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CasesRS_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - R&amp;S</label>
+        <queue>CasesRS</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CasesReportingBilling_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - Reporting &amp; Billing</label>
+        <queue>CasesReportingBilling</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CasesRomaniaMoldova_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - Romania &amp; Moldova</label>
+        <queue>CasesRomaniaMoldova</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CasesRussia_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - Russia</label>
+        <queue>CasesRussia</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CasesSaudiArabiaYemen_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - Saudi Arabia &amp; Yemen</label>
+        <queue>CasesSaudiArabiaYemen</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CasesServiceCentreEurope_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - Service Centre Europe</label>
+        <queue>CasesServiceCentreEurope</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CasesSingapore_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - Singapore</label>
+        <queue>CasesSingapore</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CasesSouthWestAfrica_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - South West Africa</label>
+        <queue>CasesSouthWestAfrica</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CasesSouthernAfrica_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - Southern Africa</label>
+        <queue>CasesSouthernAfrica</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CasesSpainAndorra_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - Spain &amp; Andorra</label>
+        <queue>CasesSpainAndorra</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CasesSriLanka_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - Sri Lanka</label>
+        <queue>CasesSriLanka</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CasesSwitzerlandLiechtenstein_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - Switzerland &amp; Liechtenstein</label>
+        <queue>CasesSwitzerlandLiechtenstein</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CasesTTBS_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - TTBS</label>
+        <queue>CasesTTBS</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CasesTaiwan_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - Taiwan</label>
+        <queue>CasesTaiwan</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CasesThailand_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - Thailand</label>
+        <queue>CasesThailand</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CasesTurkey_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - Turkey</label>
+        <queue>CasesTurkey</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CasesUkraine_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - Ukraine</label>
+        <queue>CasesUkraine</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CasesUnitedArabEmirates_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - United Arab Emirates</label>
+        <queue>CasesUnitedArabEmirates</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CasesUnitedKingdom_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - United Kingdom</label>
+        <queue>CasesUnitedKingdom</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CasesUnitedStates_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - United States</label>
+        <queue>CasesUnitedStates</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CasesUzbekistan_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - Uzbekistan &amp; Tajikistan</label>
+        <queue>CasesUzbekistan</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CasesVenezuela_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - Venezuela</label>
+        <queue>CasesVenezuela</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CasesVietnam_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - Vietnam</label>
+        <queue>CasesVietnam</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CasesWesternCaribbean_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - Western Caribbean</label>
+        <queue>CasesWesternCaribbean</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Cases_AME_Airlines_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - AME Airlines</label>
+        <queue>Cases_AME_Airlines</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Cases_AME_Airlines_French_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - AME Airlines (French)</label>
+        <queue>Cases_AME_Airlines_French</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Cases_ARM_Africa_Middle_East_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Agency Risk Management - A&amp;ME</label>
+        <queue>Cases_ARM_Africa_Middle_East</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Cases_ARM_Europe_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Agency Risk Management - Europe</label>
+        <queue>Cases_ARM_Europe</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Cases_ARM_North_Asia_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - ARM - North Asia</label>
+        <queue>Cases_ARM_North_Asia</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Cases_Agent_Financial_Review_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - Agent Financial Review</label>
+        <queue>Cases_Agent_Financial_Review</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Cases_Airline_Coding_YMQ_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - Airline Coding YMQ</label>
+        <queue>Cases_Airline_Coding_YMQ</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Cases_Airlines_A_P_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases Airlines - A&amp;P</label>
+        <queue>Cases_Airlines_A_P</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Cases_Airlines_C_NA_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases Airlines - C&amp;NA</label>
+        <queue>Cases_Airlines_C_NA</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Cases_Airlines_Korea_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases Airlines - Korea</label>
+        <queue>Cases_Airlines_Korea</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Cases_Americas_Airlines_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - Americas Airlines</label>
+        <queue>Cases_Americas_Airlines</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Cases_Armenia_Belarus_Turkmenistan_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - Armenia Belarus &amp; Turkmenistan</label>
+        <queue>Cases_Armenia_Belarus_Turkmenistan</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Cases_China_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - China</label>
+        <queue>Cases_China</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Cases_Closed_SIDRA_cases_Europe_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - Closed SIDRA cases Europe</label>
+        <queue>Cases_Closed_SIDRA_cases_Europe</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Cases_Complaints_Americas_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - Complaints Americas</label>
+        <queue>Cases_Complaints_Americas</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Cases_Complaints_BJS_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - Complaints BJS</label>
+        <queue>Cases_Complaints_BJS</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Cases_Complaints_SIN_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - Complaints SIN</label>
+        <queue>Cases_Complaints_SIN</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Cases_Georgia_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - Georgia</label>
+        <queue>Cases_Georgia</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Cases_Israel_CASS_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - Israel CASS</label>
+        <queue>Cases_Israel_CASS</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Cases_Kazakhstan_Kyrgyzstan_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - Kazakhstan &amp; Kyrgyzstan</label>
+        <queue>Cases_Kazakhstan_Kyrgyzstan</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Cases_MITA_YMQ_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - MITA YMQ</label>
+        <queue>Cases_MITA_YMQ</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Cases_Voicemail_North_Asia_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - Voicemail North Asia</label>
+        <queue>Cases_Voicemail_North_Asia</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CegedimDeskomEscalationsIATAIW_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cegedim (Deskom) Escalations (IATA IW)</label>
+        <queue>CegedimDeskomEscalationsIATAIW</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>ChangeRequestsAIMS_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Change Requests - AIMS</label>
+        <queue>ChangeRequestsAIMS</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>ChangeRequestsDPCSystems_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Change Requests - DPC Systems</label>
+        <queue>ChangeRequestsDPCSystems</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>ChangeRequestsSalesforce_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Change Requests - Salesforce</label>
+        <queue>ChangeRequestsSalesforce</queue>
         <sharedTo>
             <allInternalUsers></allInternalUsers>
         </sharedTo>
@@ -3751,10 +5134,163 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
         </sharedTo>
     </listViews>
     <listViews>
+        <fullName>China_North_Asia_PwC_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>China &amp; North Asia PwC</label>
+        <queue>China_North_Asia_PwC</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CodeTransfersMergersHeadOffice_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Code Transfers &amp; Mergers - Head Office</label>
+        <queue>CodeTransfersMergersHeadOffice</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Communication_Requests_Europe_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Communication Requests - Europe</label>
+        <queue>Communication_Requests_Europe</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CommunicationsWebUploadsEurope_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Communications &amp; Web Uploads - Europe</label>
+        <queue>CommunicationsWebUploadsEurope</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Communications_Web_uploads_AME_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Communications &amp; Web uploads - AME</label>
+        <queue>Communications_Web_uploads_AME</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Communications_Web_uploads_A_P_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Communications &amp; Web uploads - A&amp;P</label>
+        <queue>Communications_Web_uploads_A_P</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Communications_Web_uploads_Americas_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Communications &amp; Web uploads - Americas</label>
+        <queue>Communications_Web_uploads_Americas</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Communications_Web_uploads_BJS_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Communications &amp; Web uploads - BJS</label>
+        <queue>Communications_Web_uploads_BJS</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CustomerServiceAP_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Customer Service - A&amp;P</label>
+        <queue>CustomerServiceAP</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CustomerServiceAfricaMENA_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Customer Service - Africa &amp; MENA</label>
+        <queue>CustomerServiceAfricaMENA</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CustomerServiceAmericas_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Customer Service - Americas</label>
+        <queue>CustomerServiceAmericas</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CustomerServiceChinaNAsia_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Customer Service - China &amp; N.Asia</label>
+        <queue>CustomerServiceChinaNAsia</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CustomerServiceEurope_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Customer Service - Europe</label>
+        <queue>CustomerServiceEurope</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CustomerServiceheadoffice_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Customer Service - head office</label>
+        <queue>CustomerServiceheadoffice</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Customer_Service_IATAN_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Customer Service IATAN</label>
+        <queue>Customer_Service_IATAN</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Due_Diligence_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Due Diligence</label>
+        <queue>Due_Diligence</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
         <fullName>Europe_OSCAR_AMS_OSCAR</fullName>
         <filterScope>Queue</filterScope>
         <label>Europe [OSCAR]</label>
         <queue>Europe_OSCAR</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Europe_PwC_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Europe PwC</label>
+        <queue>Europe_PwC</queue>
         <sharedTo>
             <allInternalUsers></allInternalUsers>
         </sharedTo>
@@ -3773,6 +5309,1338 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
         <filterScope>Queue</filterScope>
         <label>FDS Agency Managers</label>
         <queue>FDS_Agency_Managers</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>FDS_ICCS_Head_Office_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>FDS ICCS - Head Office</label>
+        <queue>FDS_ICCS_Head_Office</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>FDS_Quality_HO_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>FDS Quality - HO</label>
+        <queue>FDS_Quality_HO</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>FSM_Africa_Middle_East_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>FSM - Africa &amp; Middle East</label>
+        <queue>FSM_Africa_Middle_East</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>FSM_Americas_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>FSM - Americas</label>
+        <queue>FSM_Americas</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>FSM_Asia_Pacific_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>FSM - Asia &amp; Pacific</label>
+        <queue>FSM_Asia_Pacific</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>FSM_China_North_Asia_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>FSM - China &amp; North Asia</label>
+        <queue>FSM_China_North_Asia</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>FSM_Europe_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>FSM - Europe</label>
+        <queue>FSM_Europe</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Finance_Africa_Middle_East_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Finance - Africa &amp; Middle East</label>
+        <queue>Finance_Africa_Middle_East</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Finance_Europe_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Finance - Europe</label>
+        <queue>Finance_Europe</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Fraction_1USD_Cases_Closed_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Fraction (&lt;1USD) Cases Closed</label>
+        <queue>Fraction_1USD_Cases_Closed</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Fraud_Management_Head_Office_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Fraud Management - Head Office</label>
+        <queue>Fraud_Management_Head_Office</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>FundsManagementheadoffice_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Funds Management - head office</label>
+        <queue>FundsManagementheadoffice</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>GFA_Communication_queue_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>GFA Communication queue</label>
+        <queue>GFA_Communication_queue</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>IATAN_ID_Card_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>IATAN ID Card</label>
+        <queue>IATAN_ID_Card</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>IATAN_Mega_Support_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>IATAN Mega Support</label>
+        <queue>IATAN_Mega_Support</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>IATAN_Online_Payment_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>IATAN Online Payment</label>
+        <queue>IATAN_Online_Payment</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>IBSP_Migration_AME_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>IBSP Migration - AME</label>
+        <queue>IBSP_Migration_AME</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>IBSP_Migration_Americas_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>IBSP Migration - Americas</label>
+        <queue>IBSP_Migration_Americas</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>IBSP_Migration_Europe_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>IBSP Migration - Europe</label>
+        <queue>IBSP_Migration_Europe</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>ICH_Help_Desk_ICH_Finance_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>ICH Help Desk - ICH Finance</label>
+        <queue>ICH_Help_Desk_ICH_Finance</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>ICH_Help_Desk_ICH_General_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>ICH Help Desk - ICH General</label>
+        <queue>ICH_Help_Desk_ICH_General</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>ICH_Help_Desk_ICH_Membership_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>ICH Help Desk - ICH Membership</label>
+        <queue>ICH_Help_Desk_ICH_Membership</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>ICH_Help_Desk_ICH_Operations_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>ICH Help Desk - ICH Operations</label>
+        <queue>ICH_Help_Desk_ICH_Operations</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>IDCard_Cases_Africa_Middle_East_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>IDCard Cases - Africa &amp; Middle East</label>
+        <queue>IDCard_Cases_Africa_Middle_East</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>IDCard_Cases_Americas_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>IDCard Cases - Americas</label>
+        <queue>IDCard_Cases_Americas</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>IDCard_Cases_Asia_Pacific_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>IDCard Cases - Asia &amp; Pacific</label>
+        <queue>IDCard_Cases_Asia_Pacific</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>IDCard_Cases_China_North_Asia_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>IDCard Cases - China &amp; North Asia</label>
+        <queue>IDCard_Cases_China_North_Asia</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>IDCard_Cases_Europe_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>IDCard Cases - Europe</label>
+        <queue>IDCard_Cases_Europe</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>ID_Card_Facebook_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>ID Card Facebook</label>
+        <queue>ID_Card_Facebook</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>ID_Card_Global_Mailbox_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>ID Card Global Mailbox</label>
+        <queue>ID_Card_Global_Mailbox</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>ISIS2_A_P_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>ISIS2 - A&amp;P</label>
+        <queue>ISIS2_A_P</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>ISIS2_Migration_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>ISIS2 Migration</label>
+        <queue>ISIS2_Migration</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>ISSP_Queue_for_failed_assignation_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>ISSP - Assignation queue</label>
+        <queue>ISSP_Queue_for_failed_assignation</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Incoming_IS_Cases_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Incoming IS Cases</label>
+        <queue>Incoming_IS_Cases</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>India_BG_queue_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>India BG queue</label>
+        <queue>India_BG_queue</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>InvoicingManagementHO_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Invoicing Management - HO</label>
+        <queue>InvoicingManagementHO</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Invoicing_Collection_A_ME_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Invoicing &amp; Collection - A&amp;ME</label>
+        <queue>Invoicing_Collection_A_ME</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Invoicing_Management_A_P_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Invoicing Management - A&amp;P</label>
+        <queue>Invoicing_Management_A_P</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Invoicing_Management_Americas_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Invoicing Management - Americas</label>
+        <queue>Invoicing_Management_Americas</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Knowledge_Management_AME_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Knowledge Management - AME</label>
+        <queue>Knowledge_Management_AME</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Knowledge_Management_A_P_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Knowledge Management - A&amp;P</label>
+        <queue>Knowledge_Management_A_P</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Knowledge_Management_Americas_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Knowledge Management - Americas</label>
+        <queue>Knowledge_Management_Americas</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Knowledge_Management_BJS_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Knowledge Management - BJS</label>
+        <queue>Knowledge_Management_BJS</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Knowledge_Management_Europe_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Knowledge Management - Europe</label>
+        <queue>Knowledge_Management_Europe</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Knowledge_Management_GVA_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Knowledge Management - GVA</label>
+        <queue>Knowledge_Management_GVA</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Local_OfficeIT_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Local Office - IT MT and WB</label>
+        <queue>Local_OfficeIT</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Local_Office_Argentina_PY_UY_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Local Office - Argentina/PY/UY</label>
+        <queue>Local_Office_Argentina_PY_UY</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Local_Office_Australia_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Local Office - Australia</label>
+        <queue>Local_Office_Australia</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Local_Office_BENELUX_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Local Office - BENELUX</label>
+        <queue>Local_Office_BENELUX</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Local_Office_BG_KZ_KG_AZ_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Local Office - BG KZ KG AZ</label>
+        <queue>Local_Office_BG_KZ_KG_AZ</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Local_Office_BZ_CR_GT_HN_NI_PA_SV_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Local Office - BZ CR GT HN NI PA SV</label>
+        <queue>Local_Office_BZ_CR_GT_HN_NI_PA_SV</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Local_Office_Bangladesh_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Local Office - Bangladesh</label>
+        <queue>Local_Office_Bangladesh</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Local_Office_Brazil_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Local Office - Brazil</label>
+        <queue>Local_Office_Brazil</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Local_Office_CH_LI_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Local Office - CH LI</label>
+        <queue>Local_Office_CH_LI</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Local_Office_CL_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Local Office - Chile</label>
+        <queue>Local_Office_CL</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Local_Office_CZ_SK_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Local Office - CZ &amp; SK</label>
+        <queue>Local_Office_CZ_SK</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Local_Office_Cambodia_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Local Office - Cambodia</label>
+        <queue>Local_Office_Cambodia</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Local_Office_Canada_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Local Office - Canada</label>
+        <queue>Local_Office_Canada</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Local_Office_Central_Western_Africa_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Local Office - Central &amp; Western Africa</label>
+        <queue>Local_Office_Central_Western_Africa</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Local_Office_China_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Local Office - China</label>
+        <queue>Local_Office_China</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Local_Office_Chinese_Taipei_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Local Office - Chinese Taipei</label>
+        <queue>Local_Office_Chinese_Taipei</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Local_Office_Colombia_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Local Office - Colombia</label>
+        <queue>Local_Office_Colombia</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Local_Office_DE_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Local Office - DE</label>
+        <queue>Local_Office_DE</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Local_Office_DO_HT_JM_KY_TC_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Local Office - DO HT JM KY TC</label>
+        <queue>Local_Office_DO_HT_JM_KY_TC</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Local_Office_ES_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Local Office - ES</label>
+        <queue>Local_Office_ES</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Local_Office_Eastern_Africa_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Local Office - Eastern Africa</label>
+        <queue>Local_Office_Eastern_Africa</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Local_Office_Eastern_Caribbean_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Local Office - Eastern Caribbean</label>
+        <queue>Local_Office_Eastern_Caribbean</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Local_Office_Egypt_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Local Office - Egypt</label>
+        <queue>Local_Office_Egypt</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Local_Office_FR_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Local Office - FR</label>
+        <queue>Local_Office_FR</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Local_Office_Fiji_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Local Office - Fiji</label>
+        <queue>Local_Office_Fiji</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Local_Office_French_Polynesia_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Local Office - French Polynesia</label>
+        <queue>Local_Office_French_Polynesia</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Local_Office_GR_CY_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Local Office GR CY</label>
+        <queue>Local_Office_GR_CY</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Local_Office_Guam_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Local Office - Guam</label>
+        <queue>Local_Office_Guam</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Local_Office_Hong_Kong_Macao_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Local Office - Hong Kong (Macao)</label>
+        <queue>Local_Office_Hong_Kong_Macao</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Local_Office_India_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Local Office - India</label>
+        <queue>Local_Office_India</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Local_Office_Indonesia_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Local Office - Indonesia</label>
+        <queue>Local_Office_Indonesia</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Local_Office_Japan_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Local Office - Japan</label>
+        <queue>Local_Office_Japan</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Local_Office_Korea_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Local Office - Korea</label>
+        <queue>Local_Office_Korea</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Local_Office_Levant_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Local Office - Levant</label>
+        <queue>Local_Office_Levant</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Local_Office_Malaysia_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Local Office - Malaysia</label>
+        <queue>Local_Office_Malaysia</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Local_Office_Micronesia_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Local Office - Micronesia</label>
+        <queue>Local_Office_Micronesia</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Local_Office_Mongolia_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Local Office - Mongolia</label>
+        <queue>Local_Office_Mongolia</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Local_Office_Nepal_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Local Office - Nepal</label>
+        <queue>Local_Office_Nepal</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Local_Office_New_Caledonia_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Local Office - New Caledonia</label>
+        <queue>Local_Office_New_Caledonia</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Local_Office_New_Zealand_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Local Office - New Zealand</label>
+        <queue>Local_Office_New_Zealand</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Local_Office_North_Africa_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Local Office - North Africa</label>
+        <queue>Local_Office_North_Africa</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Local_Office_PL_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Local Office - PL</label>
+        <queue>Local_Office_PL</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Local_Office_Pakistan_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Local Office - Pakistan</label>
+        <queue>Local_Office_Pakistan</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Local_Office_Papua_New_Guinea_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Local Office - Papua New Guinea</label>
+        <queue>Local_Office_Papua_New_Guinea</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Local_Office_Philippines_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Local Office - Philippines</label>
+        <queue>Local_Office_Philippines</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Local_Office_RO_MO_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Local Office - RO MO</label>
+        <queue>Local_Office_RO_MO</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Local_Office_SA_YE_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Local Office - SA &amp; YE</label>
+        <queue>Local_Office_SA_YE</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Local_Office_Samoa_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Local Office - Samoa</label>
+        <queue>Local_Office_Samoa</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Local_Office_Singapore_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Local Office - Singapore</label>
+        <queue>Local_Office_Singapore</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Local_Office_South_West_Africa_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Local Office - South West Africa</label>
+        <queue>Local_Office_South_West_Africa</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Local_Office_Southern_Africa_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Local Office - Southern Africa</label>
+        <queue>Local_Office_Southern_Africa</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Local_Office_Sri_Lanka_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Local Office - Sri Lanka</label>
+        <queue>Local_Office_Sri_Lanka</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Local_Office_TR_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Local Office - Turkey</label>
+        <queue>Local_Office_TR</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Local_Office_Thailand_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Local Office - Thailand</label>
+        <queue>Local_Office_Thailand</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Local_Office_Tonga_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Local Office - Tonga</label>
+        <queue>Local_Office_Tonga</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Local_Office_UAE_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Local Office - UAE</label>
+        <queue>Local_Office_UAE</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Local_Office_UK_IE_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Local Office - UK IE</label>
+        <queue>Local_Office_UK_IE</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Local_Office_Vanuatu_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Local Office - Vanuatu</label>
+        <queue>Local_Office_Vanuatu</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Local_Office_Venezuela_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Local Office - Venezuela</label>
+        <queue>Local_Office_Venezuela</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Local_Office_Vietnam_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Local Office - Vietnam</label>
+        <queue>Local_Office_Vietnam</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>MAD_BSP_Escalation_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>MAD CS BSP Escalation</label>
+        <queue>MAD_BSP_Escalation</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>MDM_confirmations_FDS_AP_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>MDM confirmations (FDS AP)</label>
+        <queue>MDM_confirmations_FDS_AP</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>NewISSDeploymentHeadOffice_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>New ISS Deployment - Head Office</label>
+        <queue>NewISSDeploymentHeadOffice</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>OperationalManagementAP_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Operational Management - A&amp;P</label>
+        <queue>OperationalManagementAP</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>OperationalManagementAfricaME_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Operational Management - Africa &amp; ME</label>
+        <queue>OperationalManagementAfricaME</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>OperationalManagementAmericas_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Operational Management - Americas</label>
+        <queue>OperationalManagementAmericas</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>OperationalManagementChinaNAsia_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Operational Management - China &amp; N. Asia</label>
+        <queue>OperationalManagementChinaNAsia</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>OperationalManagementHeadOffice_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Operational Management - Head Office</label>
+        <queue>OperationalManagementHeadOffice</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>OtherAll_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Other (All)</label>
+        <queue>OtherAll</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>R_S_EasyPay_A_P_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>R&amp;S - EasyPay A&amp;P</label>
+        <queue>R_S_EasyPay_A_P</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>RecallFranceImgEscIATAIW_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Recall France Img. Esc (IATA IW)</label>
+        <queue>RecallFranceImgEscIATAIW</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>RecallSingaporeImgEscIATAIW_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Recall Singapore Img. Esc. (IATA IW)</label>
+        <queue>RecallSingaporeImgEscIATAIW</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>RecallSwedenImgEscIATAIW_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Recall Sweden Img. Esc. (IATA IW)</label>
+        <queue>RecallSwedenImgEscIATAIW</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>RecallUSImgEscIATAIW_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Recall US Img. Esc (IATA IW)</label>
+        <queue>RecallUSImgEscIATAIW</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>RecycleBinAfricaMiddleEast_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Recycle Bin Africa &amp; Middle East</label>
+        <queue>RecycleBinAfricaMiddleEast</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>RecycleBinAmericas_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Recycle Bin Americas</label>
+        <queue>RecycleBinAmericas</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>RecycleBinAsiaPacific_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Recycle Bin Asia &amp; Pacific</label>
+        <queue>RecycleBinAsiaPacific</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>RecycleBinEurope_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Recycle Bin Europe</label>
+        <queue>RecycleBinEurope</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>RecycleBinOperationalManagementHO_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Recycle Bin Operational Management HO</label>
+        <queue>RecycleBinOperationalManagementHO</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>RecyclebinNorthAsia_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Recycle bin North Asia</label>
+        <queue>RecyclebinNorthAsia</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>RemittanceSettlementAP_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Remittance &amp; Settlement - A&amp;P</label>
+        <queue>RemittanceSettlementAP</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>RemittanceSettlementAfricaME_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Remittance &amp; Settlement - Africa &amp; ME</label>
+        <queue>RemittanceSettlementAfricaME</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>RemittanceSettlementAmericas_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Remittance &amp; Settlement - Americas</label>
+        <queue>RemittanceSettlementAmericas</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>RemittanceSettlementChinaNA_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Remittance &amp; Settlement - China &amp; N.A</label>
+        <queue>RemittanceSettlementChinaNA</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>RemittanceSettlementHeadOffice_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Remittance &amp; Settlement - Head Office</label>
+        <queue>RemittanceSettlementHeadOffice</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>SAAM_Drafts_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>OSCAR / SAAM Drafts</label>
+        <queue>SAAM_Drafts</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>SARA_Americas_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>SARA - Americas</label>
+        <queue>SARA_Americas</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>SIDRA_Cases_Closed_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>SIDRA Cases Closed</label>
+        <queue>SIDRA_Cases_Closed</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>SISHelpDeskIATASISCustomerSupport_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>SIS Help Desk -IATA SIS Customer Support</label>
+        <queue>SISHelpDeskIATASISCustomerSupport</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>SISHelpDeskRecycleBin_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>SIS Help Desk - Recycle Bin</label>
+        <queue>SISHelpDeskRecycleBin</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>SISHelpDeskSISOperations_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>SIS Help Desk - SIS Operations</label>
+        <queue>SISHelpDeskSISOperations</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>SISHelpDesk_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>SIS Help Desk</label>
+        <queue>SISHelpDesk</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>TASF_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>TASF</label>
+        <queue>TASF</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>TIESSManagementAmericas_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>TIESS - Head Office YMQ</label>
+        <queue>TIESSManagementAmericas</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>TIESS_Africa_Middle_East_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>TIESS - Africa &amp; Middle East</label>
+        <queue>TIESS_Africa_Middle_East</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>TIESS_Americas_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>TIESS - Americas</label>
+        <queue>TIESS_Americas</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>TIESS_Asia_Pacific_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>TIESS - Asia &amp; Pacific</label>
+        <queue>TIESS_Asia_Pacific</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>TIESS_China_North_Asia_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>TIESS - China &amp; North Asia</label>
+        <queue>TIESS_China_North_Asia</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>TIESS_Europe_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>TIESS - Europe</label>
+        <queue>TIESS_Europe</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>TestQueueAutoAssignment_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Test Queue Auto Assignment</label>
+        <queue>TestQueueAutoAssignment</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Weblinkheadoffice_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Weblink - head office</label>
+        <queue>Weblinkheadoffice</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>iPayablesEscalationsIATAIWCases_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>iPayables Escalations (IATA IW Cases)</label>
+        <queue>iPayablesEscalationsIATAIWCases</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>iiNETheadoffice_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>iiNET - head office</label>
+        <queue>iiNETheadoffice</queue>
         <sharedTo>
             <allInternalUsers></allInternalUsers>
         </sharedTo>
@@ -3806,6 +6674,17 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
             </values>
             <values>
                 <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>AMS_Correction_change_code__c</picklist>
+            <values>
+                <fullName>CAD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>COR</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -5297,6 +8176,10 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
             </values>
             <values>
                 <fullName>Closed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Closed %28Closed%29</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -5450,6 +8333,17 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>AMS_Correction_change_code__c</picklist>
+            <values>
+                <fullName>CAD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>COR</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Agreement_result__c</picklist>
             <values>
                 <fullName>Failed</fullName>
@@ -5470,17 +8364,6 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
                 <fullName>Change of legal status</fullName>
                 <default>false</default>
             </values>
-        <picklistValues>
-            <picklist>AMS_Correction_change_code__c</picklist>
-            <values>
-                <fullName>CAD</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>COR</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
             <values>
                 <fullName>Change of location</fullName>
                 <default>false</default>
@@ -6739,6 +9622,25 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>STEP25__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>STEP2__c</picklist>
             <values>
                 <fullName>Failed</fullName>
@@ -6924,6 +9826,10 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
                 <default>false</default>
             </values>
             <values>
+                <fullName>Closed %28Closed%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Closed_Not Accepted</fullName>
                 <default>false</default>
             </values>
@@ -7069,6 +9975,17 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
             </values>
             <values>
                 <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>AMS_Correction_change_code__c</picklist>
+            <values>
+                <fullName>CAD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>COR</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -8563,6 +11480,10 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
                 <default>false</default>
             </values>
             <values>
+                <fullName>Closed %28Closed%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Closed_Not Accepted</fullName>
                 <default>false</default>
             </values>
@@ -8672,6 +11593,17 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
             </values>
             <values>
                 <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>AMS_Correction_change_code__c</picklist>
+            <values>
+                <fullName>CAD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>COR</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -10144,6 +13076,10 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
             </values>
             <values>
                 <fullName>Closed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Closed %28Closed%29</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -10324,13 +13260,7 @@ alert(&apos; Failed to generate a new IATA CODE. Please contact your administrat
         <masterLabel>Manage Attachments</masterLabel>
         <openType>onClickJavaScript</openType>
         <protected>false</protected>
-        <url>{!REQUIRESCRIPT(&quot;/support/console/30.0/integration.js&quot;)} 
-
-if (sforce.console.isInConsole()) { 
-srcUp(&quot;/apex/AMS_OSCAR_Attachment_List?id={!AMS_OSCAR__c.Id}&quot;); 
-} else { 
-window.open(&quot;/apex/AMS_OSCAR_Attachment_List?id={!AMS_OSCAR__c.Id}&quot;); 
-}</url>
+        <url>javascript:srcUp(&quot;/apex/AMS_OSCAR_Attachment_List?id={!AMS_OSCAR__c.Id}&quot;);</url>
     </webLinks>
     <webLinks>
         <fullName>Set_Ownership</fullName>

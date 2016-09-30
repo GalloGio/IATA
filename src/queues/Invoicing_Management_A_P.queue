@@ -4,6 +4,9 @@
     <email>ic_idfs@iata.org</email>
     <name>Invoicing Management - A&amp;P</name>
     <queueSobject>
+        <sobjectType>AMS_OSCAR__c</sobjectType>
+    </queueSobject>
+    <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>
 </Queue>
