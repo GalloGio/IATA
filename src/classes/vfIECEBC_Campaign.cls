@@ -9,7 +9,7 @@ public class vfIECEBC_Campaign extends vfIECEBC_Controller {
 		get{
 			if (numberOfRecipients == null) {
 				HttpRequest req = new HttpRequest();
-				req.setEndpoint('https://3b-customer-portal-iata.cs87.force.com/iec/services/apexrest/RecipientsCount/' + campaign.EBC_Master_Filter__c);
+				req.setEndpoint(IECEBC_Utility.ebcSetup.E_Commerce_Base_Url__c + '/services/apexrest/RecipientsCount/' + campaign.EBC_Master_Filter__c);
 				req.setMethod('GET');
 				req.setHeader('Authorization', 'OAuth ' + UserInfo.getSessionId());
 				
