@@ -91,6 +91,17 @@
         <type>DateTime</type>
     </fields>
     <fields>
+        <fullName>External_Id__c</fullName>
+        <externalId>true</externalId>
+        <label>External Id</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Related_Agency__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <description>The GDP Products Acc View matching with the click</description>
@@ -136,11 +147,10 @@
         <externalId>false</externalId>
         <inlineHelpText>The URL that have been clicked</inlineHelpText>
         <label>URL</label>
-        <length>255</length>
-        <required>true</required>
+        <length>4000</length>
         <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
+        <type>LongTextArea</type>
+        <visibleLines>2</visibleLines>
     </fields>
     <label>EBC Click Event</label>
     <nameField>
