@@ -210,16 +210,6 @@
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
-        <fullName>SIS_Assign_contact_recordtype</fullName>
-        <field>RecordTypeId</field>
-        <lookupValue>IATA_SIS_Contact</lookupValue>
-        <lookupValueType>RecordType</lookupValueType>
-        <name>SIS - Assign contact recordtype</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>LookupValue</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
         <fullName>SIS_Update_Contact_Owner</fullName>
         <field>OwnerId</field>
         <lookupValue>smitha@iata.org</lookupValue>
@@ -547,10 +537,6 @@
     </rules>
     <rules>
         <fullName>SIS HelpDesk - Assign SIS recordtype when new contact source system is SIS</fullName>
-        <actions>
-            <name>SIS_Assign_contact_recordtype</name>
-            <type>FieldUpdate</type>
-        </actions>
         <actions>
             <name>SIS_Update_Contact_Owner</name>
             <type>FieldUpdate</type>
