@@ -39267,9 +39267,6 @@
         <recordType>Contact.Standard_Contact</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Contact__c-Contact Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
         <layout>ContentVersion-General</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -41769,10 +41766,6 @@
         <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
-        <apexPage>IFAP_Upload_File_Successfull_Message</apexPage>
-        <enabled>false</enabled>
-    </pageAccesses>
-    <pageAccesses>
         <apexPage>IFAP_forgot_password</apexPage>
         <enabled>false</enabled>
     </pageAccesses>
@@ -43960,10 +43953,6 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>Complaint__c</tab>
-        <visibility>Hidden</visibility>
-    </tabVisibilities>
-    <tabVisibilities>
-        <tab>Contact__c</tab>
         <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>
