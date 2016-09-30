@@ -75,14 +75,14 @@ public class AMS_ChangeCodesHelper {
 
                 ObjectChange objChange = new ObjectChange('Account',changes.accountFieldAPI, changes.oldValue, changes.newValue);
                 
-                if(changes.accountFieldAPI.equalsIgnoreCase('TradeName__c'))
+                if(changes.accountFieldAPI.equalsIgnoreCase('tradename__c'))
                     objChangesStructList.add(new ObjectChangesStruct(new List <ObjectChange>{objChange}));
                 else
                     ObjectChangeList.add(objChange);
-                
+
             }
 
-            objChangesStructList.add(new ObjectChangesStruct(ObjectChangeList));
+            if(!ObjectChangeList.isEmpty()) objChangesStructList.add(new ObjectChangesStruct(ObjectChangeList));
 
         }
 
@@ -96,16 +96,19 @@ public class AMS_ChangeCodesHelper {
 
         List <ObjectChange> ObjectChangeList = new List <ObjectChange> ();
 
-        for(AMS_RecordCreatorWebservice.AccountChanges changes : accountChange){
-
+        for(AMS_RecordCreatorWebservice.AccountChanges changes : accountChange)
+        {
             ObjectChange objChange = new ObjectChange('Account',changes.accountFieldAPI, changes.oldValue, changes.newValue);
+
+            if(changes.accountFieldAPI.equalsIgnoreCase('tradename__c'))
+                objChangesStructList.add(new ObjectChangesStruct(new List <ObjectChange>{objChange}));
+            else
             ObjectChangeList.add(objChange);
 
         }
 
-        objChangesStructList.add(new ObjectChangesStruct(ObjectChangeList));
+        if(!ObjectChangeList.isEmpty()) objChangesStructList.add(new ObjectChangesStruct(ObjectChangeList));
 
-        
         return objChangesStructList;
     }
 
