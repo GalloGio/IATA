@@ -169,16 +169,6 @@
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
-        <fullName>SIS_Assign_account_recordtype</fullName>
-        <field>RecordTypeId</field>
-        <lookupValue>IATA_SIS_Account</lookupValue>
-        <lookupValueType>RecordType</lookupValueType>
-        <name>SIS - Assign account recordtype</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>LookupValue</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
         <fullName>SIS_Update_Account_Site</fullName>
         <field>Site</field>
         <formula>Airline_designator__c +  Member_Code_Numeric__c</formula>
@@ -588,10 +578,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
     </rules>
     <rules>
         <fullName>SIS HelpDesk - Assign SIS recordtype when new account source system is SIS</fullName>
-        <actions>
-            <name>SIS_Assign_account_recordtype</name>
-            <type>FieldUpdate</type>
-        </actions>
         <actions>
             <name>SIS_Update_Record_Owner</name>
             <type>FieldUpdate</type>
