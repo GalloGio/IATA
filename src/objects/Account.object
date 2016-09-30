@@ -24204,7 +24204,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
     </recordTypes>
     <recordTypes>
         <fullName>IATA</fullName>
-        <active>true</active>
+        <active>false</active>
         <description>Used for all standard Accounts (airlines, agents, partners etc)</description>
         <label>IATA Standard Account</label>
         <picklistValues>
@@ -26968,7 +26968,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
     </recordTypes>
     <recordTypes>
         <fullName>IATACountryOffice</fullName>
-        <active>true</active>
+        <active>false</active>
         <description>Used to display country offices</description>
         <label>IATA Country Office</label>
         <picklistValues>
@@ -39418,7 +39418,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
     </recordTypes>
     <recordTypes>
         <fullName>IATA_Airline_Account</fullName>
-        <active>true</active>
+        <active>false</active>
         <description>Used for Accounts uploaded from ACLI and DPC Systems</description>
         <label>IATA Airline Account</label>
         <picklistValues>
@@ -49634,7 +49634,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
     </recordTypes>
     <recordTypes>
         <fullName>IATA_SIS_Account</fullName>
-        <active>true</active>
+        <active>false</active>
         <description>SIS Participant</description>
         <label>IATA SIS Account</label>
         <picklistValues>
@@ -52057,7 +52057,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
     </recordTypes>
     <recordTypes>
         <fullName>IATA_Service_Provider_Account</fullName>
-        <active>true</active>
+        <active>false</active>
         <description>SIS Service Providers</description>
         <label>IATA Service Provider Account</label>
         <picklistValues>
@@ -54161,7 +54161,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
     </recordTypes>
     <recordTypes>
         <fullName>IATA_TTBS_Account</fullName>
-        <active>true</active>
+        <active>false</active>
         <label>IATA TTBS Account</label>
         <picklistValues>
             <picklist>ACLI_Status__c</picklist>
@@ -56261,7 +56261,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
     </recordTypes>
     <recordTypes>
         <fullName>MACSSalesAccount</fullName>
-        <active>true</active>
+        <active>false</active>
         <label>MACS Sales Account</label>
         <picklistValues>
             <picklist>ACLI_Status__c</picklist>

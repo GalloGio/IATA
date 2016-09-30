@@ -12,6 +12,17 @@
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>Reg_Dig_Group_to_Draft</fullName>
+        <description>Change the record type back to Draft Reg/Div Group</description>
+        <field>RecordTypeId</field>
+        <lookupValue>Draft_Reg_Div_Group</lookupValue>
+        <lookupValueType>RecordType</lookupValueType>
+        <name>Reg/Dig Group to Draft</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>Set_Industry_Group_Unique_Name</fullName>
         <description>To be used for Reg / Div Groups. Copies the Name field into the Unique Name field.</description>
         <field>Unique_Name__c</field>
@@ -104,6 +115,17 @@ RecordType.Name + &quot; - &quot; + IF( ISBLANK(Country__c), Cluster__r.Name, Co
             <value>Reg/Div Groups,Draft Reg/Div Group</value>
         </criteriaItems>
         <description>Fill the Unique Name field for industry groups with the (Draft) Reg / Div Group record types</description>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Reg%2FDiv group reporting to changed</fullName>
+        <actions>
+            <name>Reg_Dig_Group_to_Draft</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <description>If the reporting to of an approved group is changed, send it back for re-approval</description>
+        <formula>AND( RecordType.DeveloperName = &apos;Reg_Div_Groups&apos;, ISCHANGED( Reporting_to__c ))</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
 </Workflow>

@@ -1,5 +1,35 @@
 public class AmazonFileTrgHelper {
 
+    public static String sapNumberRequiredJSON{
+        get{
+            return JSON.serialize(new List<String>(AmazonFileTrgHelper.sapNumberRequired));
+        }
+    }
+    
+    public static String expiryDateRequiredJSON{
+        get{
+            return JSON.serialize(new List<String>(AmazonFileTrgHelper.expiryDateRequired));
+        }
+    }
+    
+    public static String expiredRequiredJSON{
+        get{
+            return JSON.serialize(new List<String>(AmazonFileTrgHelper.expiredRequired));
+        }
+    }
+
+    public static Set<String> sapNumberRequired = new Set<String>{
+        'Contractual.Contract/Amendment','Contractual.Termination','Contractual.Implementation Summary'
+    };
+    
+    public static Set<String> expiryDateRequired = new Set<String>{
+        'Contractual.Signatory Authentication','Operational Calendars.BSP','Operational Calendars.ICH','Operational Calendars.Client'
+    };
+    
+    public static Set<String> expiredRequired = new Set<String>{
+        ''
+    };
+    
     /*
 
         copy the files back into the appropriate folder
@@ -167,4 +197,48 @@ public class AmazonFileTrgHelper {
 
     }
 
+    public static void checkEFRequiredFields(map<Id,AmazonFile__C> trgNewMap){
+       
+        if (trgNewMap != null && trgNewMap.isEmpty() == false) {
+        
+            List<AmazonFile__c> efFiles = new List<AmazonFile__c>();
+            
+            for (AmazonFile__c af : trgNewMap.values()) {
+            
+                if (af.RecordTypeId == Schema.SObjectType.AmazonFile__c.getRecordTypeInfosByName().get('E&F File').getRecordTypeId()) {
+                
+                    efFiles.add(af);
+                }   
+            }
+            
+            if (efFiles.isEmpty() == false) {
+                
+                String errorMessage = 'This field is required for this '+Schema.SobjectType.AmazonFile__c.fields.EF_Category__c.label+'/'+Schema.SobjectType.AmazonFile__c.fields.EF_SubCategory__c.label+': '; 
+                String key;
+                
+                for (AmazonFile__c eff : efFiles) {
+                    
+                    if (eff.EF_Category__c != null && eff.EF_SubCategory__c != null) {
+                        
+                        key = eff.EF_Category__c+'.'+eff.EF_SubCategory__c;
+                        
+                        if (sapNumberRequired.contains(key) && eff.EF_SAP_Number__c == null) {
+                            
+                            eff.EF_SAP_Number__c.addError(errorMessage+eff.EF_Category__c+'/'+eff.EF_SubCategory__c);
+                        }
+                        
+                        if (expiryDateRequired.contains(key) && eff.EF_Expiry_Date__c == null) {
+                            
+                            eff.EF_Expiry_Date__c.addError(errorMessage+eff.EF_Category__c+'/'+eff.EF_SubCategory__c);
+                        }
+                        
+                        if (expiredRequired.contains(key) && eff.EF_Expired__c == false) {
+                            
+                            eff.EF_Expired__c.addError(errorMessage+eff.EF_Category__c+'/'+eff.EF_SubCategory__c);
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
