@@ -9,7 +9,7 @@
   * History: 
   *  - 20160729-sl: initial version
   *  - 20160811-sl: move some methods and properties to vfIECEBC_Controller
-  *  - 20160920-sl: add payment link and hide submit payment if no Add On has been selected.
+  *  - 20160926-sl: add payment link and hide submit payment if no Add On has been selected, split Zuora__CustomerAccount__c.eBroadcast_Payment_Target for addon
   */
 
 
@@ -179,8 +179,15 @@ public with sharing class vfIECEBC_AccountExtras extends vfIECEBC_Controller
 	// this ensure the data integrity and simplify the caller
 	public PageReference goToPaymentPage()
 	{
-		PageReference paymentPage = goToPaymentPageBase( Page.IECEBC_Payment, EBC_PAYMENT_TARGET_ACCOUNT_RATE_PLAN, EBC_PAYMENT_CAMPAIGN_NONE
-							, null // subscription.Id
+		String payAddOnType = ( selectedProductRatePlan.Id == IECEBC_Utility.ebcSetup.Enhanced_Reporting_Product_Rate_Plan__c)
+							? EBC_PAYMENT_TARGET_ACCOUNT_ADD_ON_REPORTING
+							: EBC_PAYMENT_TARGET_ACCOUNT_ADD_ON_STORAGE;
+		Id subscriptionId = ( selectedProductRatePlan.Id == IECEBC_Utility.ebcSetup.Storage_Product_Rate_Plan__c)
+							? subscription.Id
+							: null;
+		PageReference paymentPage = goToPaymentPageBase( Page.IECEBC_Payment, payAddOnType
+							, EBC_PAYMENT_CAMPAIGN_NONE
+							, subscriptionId
 							, selectedProductRatePlan.Id // productRatePlanId
 							, null // campaignId
 							, 0 // emailCreditAmount

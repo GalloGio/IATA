@@ -51,13 +51,13 @@
                         </td>
                         <td class="opens">
                             <apex:outputText rendered="{!c.Status__c == 'SENT'}">
-                                <strong class="value">{!IF(c.NumberSent__c > 0, TEXT(ROUND(c.NumberofOpens__c * 100 / c.NumberSent__c, 1)) + '%', 'n/a')}</strong> 
+                                <strong class="value">{!IF(c.NumberSent__c > 0, TEXT(ROUND(c.Number_of_Unique_Opens__c * 100 / c.NumberSent__c, 1)) + '%', 'n/a')}</strong> 
                                 <span class="label">Opens</span>
                             </apex:outputText>
                         </td>
                         <td class="clicks">
                             <apex:outputText rendered="{!c.Status__c == 'SENT'}">
-                                <strong class="value">{!IF(c.NumberSent__c > 0, TEXT(ROUND(c.NumberofClicks__c * 100 / c.NumberSent__c, 1)) + '%', 'n/a')}</strong> 
+                                <strong class="value">{!IF(c.NumberSent__c > 0, TEXT(ROUND(c.Number_of_Unique_Clicks__c * 100 / c.NumberSent__c, 1)) + '%', 'n/a')}</strong> 
                                 <span class="label">Clicks</span>
                             </apex:outputText>
                         </td>

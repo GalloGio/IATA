@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -69,7 +65,9 @@
     </fields>
     <fields>
         <fullName>EBC_Campaign__c</fullName>
+        <description>Related eBroadcast Campaign</description>
         <externalId>false</externalId>
+        <inlineHelpText>Related eBroadcast Campaign</inlineHelpText>
         <label>EBC Campaign</label>
         <referenceTo>EBC_Campaign__c</referenceTo>
         <relationshipLabel>EBC Campaign Email Trackings</relationshipLabel>
@@ -318,47 +316,27 @@
         <type>Number</type>
         <unique>false</unique>
     </fields>
-    <fields>
-        <fullName>is24hFollowUpCompleted__c</fullName>
-        <defaultValue>false</defaultValue>
-        <externalId>false</externalId>
-        <label>is24hFollowUpCompleted</label>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Checkbox</type>
-    </fields>
-    <fields>
-        <fullName>is48hFollowUpCompleted__c</fullName>
-        <defaultValue>false</defaultValue>
-        <externalId>false</externalId>
-        <label>is48hFollowUpCompleted</label>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Checkbox</type>
-    </fields>
-    <fields>
-        <fullName>is72hFollowUpCompleted__c</fullName>
-        <defaultValue>false</defaultValue>
-        <externalId>false</externalId>
-        <label>is72hFollowUpCompleted</label>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Checkbox</type>
-    </fields>
-    <fields>
-        <fullName>is7dFollowUpCompleted__c</fullName>
-        <defaultValue>false</defaultValue>
-        <externalId>false</externalId>
-        <label>is7dFollowUpCompleted</label>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Checkbox</type>
-    </fields>
     <label>EBC Campaign Email Tracking</label>
     <listViews>
         <fullName>All</fullName>
+        <columns>EBC_Campaign__c</columns>
+        <columns>NumberofClicks__c</columns>
+        <columns>NumberofOpens__c</columns>
+        <columns>NumberofUniqueClicks__c</columns>
+        <columns>NumberofUniqueOpens__c</columns>
+        <columns>NumberSent__c</columns>
+        <columns>SendDate__c</columns>
+        <columns>NumberBounced__c</columns>
+        <columns>NumberOptOuts__c</columns>
+        <columns>InProcess__c</columns>
+        <columns>NotSentDueToError__c</columns>
+        <columns>NotSentDueToOptOut__c</columns>
+        <columns>NotSentDueToUndeliverable__c</columns>
+        <columns>Rank__c</columns>
+        <columns>LAST_ACTIVITY</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
+        <language>en_US</language>
     </listViews>
     <nameField>
         <label>EBC Campaign Email Tracking Name</label>

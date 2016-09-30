@@ -80,6 +80,62 @@
         <type>Lookup</type>
     </fields>
     <fields>
+        <fullName>Change_Code__c</fullName>
+        <externalId>false</externalId>
+        <label>Change Code</label>
+        <length>10</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Country_ISO_Code__c</fullName>
+        <externalId>false</externalId>
+        <formula>Account__r.IATA_ISO_Country__r.ISO_Code__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Country ISO Code</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>IATA_Code__c</fullName>
+        <externalId>false</externalId>
+        <formula>Account__r.IATACode__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>IATA Code</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>IATA_Regional_Office__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(Account__r.IATA_ISO_Country__r.IATA_Regional_Office__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>IATA Regional Office</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Location_Type_Ordered__c</fullName>
+        <externalId>false</externalId>
+        <formula>Account__r.Location_Type_Ordered__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Location Type Ordered</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>RelationShip__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
@@ -90,6 +146,28 @@
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Sector__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(Account__r.Sector__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Sector</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Status__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT( Account__r.Status__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Status</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Update_Type__c</fullName>
@@ -130,10 +208,15 @@
         <fullName>AMS</fullName>
         <columns>NAME</columns>
         <columns>Account__c</columns>
-        <columns>RelationShip__c</columns>
+        <columns>Change_Code__c</columns>
         <columns>Update_Type__c</columns>
+        <columns>IATA_Code__c</columns>
+        <columns>Country_ISO_Code__c</columns>
+        <columns>Sector__c</columns>
+        <columns>Status__c</columns>
         <columns>CREATEDBY_USER</columns>
         <columns>CREATED_DATE</columns>
+        <columns>RelationShip__c</columns>
         <filterScope>Everything</filterScope>
         <label>AMS</label>
         <language>en_US</language>
