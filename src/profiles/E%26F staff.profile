@@ -22403,6 +22403,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>EF_Billing_Agreement__c.Contract_Payment_Terms__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>EF_Billing_Agreement__c.Currency_Read_Only__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -22469,11 +22474,6 @@
 	<fieldPermissions>
         <editable>false</editable>
         <field>EF_Billing_Agreement__c.Base_URL__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>EF_Billing_Agreement__c.Contract_Payment_Terms__c</field>
         <readable>true</readable>
     </fieldPermissions>
 	<fieldPermissions>
