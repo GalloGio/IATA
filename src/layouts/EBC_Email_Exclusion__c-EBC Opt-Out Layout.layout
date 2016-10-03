@@ -29,10 +29,6 @@
                 <behavior>Edit</behavior>
                 <field>Event_Date__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Is_Active__c</field>
-            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>

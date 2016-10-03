@@ -3,7 +3,7 @@
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
         <customLabel>false</customLabel>
-        <detailHeading>false</detailHeading>
+        <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
         <label>Information</label>
         <layoutColumns>
@@ -17,50 +17,66 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Billing_Account__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>Number_of_Recipients__c</field>
             </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Geo_Condition__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Refinement_Condition__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>IATA_Codes__c</field>
+                <field>Billing_Account__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Is_Global_Filter__c</field>
             </layoutItems>
         </layoutColumns>
-        <layoutColumns>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>OwnerId</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>CurrencyIsoCode</field>
-            </layoutItems>
-        </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
     <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
+        <label>Search Criteria</label>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Geo_Condition__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Refinement_Condition__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <style>TwoColumnsLeftToRight</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
+        <label>By IATA Code</label>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>IATA_Codes__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <style>OneColumn</style>
+    </layoutSections>
+    <layoutSections>
         <customLabel>false</customLabel>
-        <detailHeading>false</detailHeading>
+        <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
         <label>System Information</label>
         <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>CreatedById</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>External_Id__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -87,16 +103,24 @@
         <fields>Field_Name__c</fields>
         <fields>Field_Operator__c</fields>
         <fields>Field_Value__c</fields>
+        <fields>LAST_UPDATE</fields>
         <relatedList>EBC_Customer_Filter__c.EBC_Master_Filter__c</relatedList>
+        <sortField>LAST_UPDATE</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
-        <fields>From_Name__c</fields>
-        <fields>Google_Analytics_Tracking_Code__c</fields>
-        <fields>Is_Google_Analytics_Tracker_Active__c</fields>
+        <fields>Campaign_ID__c</fields>
+        <fields>Audience__c</fields>
         <fields>Status__c</fields>
-        <fields>Subject__c</fields>
+        <fields>Number_of_Recipients__c</fields>
+        <fields>NumberSent__c</fields>
+        <fields>Scheduled_Date__c</fields>
+        <fields>LAST_UPDATE</fields>
+        <fields>External_Id__c</fields>
         <relatedList>EBC_Campaign__c.EBC_Master_Filter__c</relatedList>
+        <sortField>Campaign_ID__c</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
