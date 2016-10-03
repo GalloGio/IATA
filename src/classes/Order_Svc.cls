@@ -1393,7 +1393,7 @@ public without sharing class Order_Svc
                                     
                                     //Create the PaymentType
                                     //Payment method
-                                    String sPaymentMethodId;
+                                    String sPaymentMethodId = null;
                                     if(orderId_paymentMethod != null && orderId_paymentMethod.containsKey(customerOrder.Id)){
                                         IECZuoraHelper.PaymentMethod paymentMethod = orderId_paymentMethod.get(customerOrder.Id);
                                         
@@ -1622,7 +1622,8 @@ public without sharing class Order_Svc
                     IECErrorLogger.logErrors(new list<IEC_Error_Log__c>{errorLog});
                     
                     //Threw an exception when Zuora exception occur
-                    throw new OrderException(ex.getMessage() + ' +++ ' + ex.getStackTraceString() + ' +++ ' + ex.getLineNumber());
+                    //*** do not throw error in order to rollback
+                    //throw new OrderException(ex.getMessage() + ' +++ ' + ex.getStackTraceString() + ' +++ ' + ex.getLineNumber());
                 }
             }
         

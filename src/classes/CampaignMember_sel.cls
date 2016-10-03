@@ -53,7 +53,7 @@ Public class CampaignMember_sel extends Selector{
         String query = String.format(
             'SELECT {0} ' +
             'FROM {1} ' + 
-            'WHERE Key__c IN :keys ' , 
+            'WHERE IsDeleted = false and Key__c IN :keys ' , 
             new List<String>{
                 String.join(getDefaultFields(), ', '),
                 getSObjectType().getDescribe().getName()

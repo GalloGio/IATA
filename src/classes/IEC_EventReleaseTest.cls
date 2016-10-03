@@ -42,7 +42,7 @@ private class IEC_EventReleaseTest
             products[2].Line_of_Business__c = 'Publications';
 
 
-        update products;
+        database.update(products,false);
 
         //-- UPdate zProducts Material Numbers
         Set<String> zProductIds = new Set<String>();
@@ -53,7 +53,7 @@ private class IEC_EventReleaseTest
             zProducts[0].SAPProductMaterialNo__c = '0000-98';
             zProducts[1].SAPProductMaterialNo__c = '0000-99';
             zProducts[2].SAPProductMaterialNo__c = '0101-01';
-        update zProducts;
+        database.update(zProducts,false) ;
 
 
         //Products
