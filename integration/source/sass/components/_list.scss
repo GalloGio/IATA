@@ -489,156 +489,167 @@
     }
 }
 
-/*------------------------------------*\
-    #$pagination
-    \*------------------------------------*/
 
-    $pagination-color: $link-color;
-    .pagination {
-        text-align: center;
-        margin: 1em 0;
-        position: relative;
+$pagination-color: $link-color;
+.pagination {
+    text-align: center;
+    margin: 1em 0;
+    position: relative;
 
-        &.text-left {
-            text-align: left;
+    &.text-left {
+        text-align: left;
+    }
+
+    li {
+        display: inline-block;
+        margin-bottom: 10px;
+        vertical-align: top;
+    }
+
+    a {
+        display: block;
+        border: 1px solid $pagination-color;
+        width: 40px;
+        height: 40px;
+        line-height: 40px;
+        color: $pagination-color;
+        text-decoration: none;
+
+        &:hover {
+            text-decoration: underline;
         }
+    }
 
-        li {
-            display: inline-block;
-            margin-bottom: 10px;
-            vertical-align: top;
-        }
-
+    .selected {
         a {
-            display: block;
-            border: 1px solid $pagination-color;
-            width: 40px;
-            height: 40px;
-            line-height: 40px;
-            color: $pagination-color;
-            text-decoration: none;
+            background: $pagination-color;
+            color: #fff;
 
             &:hover {
-                text-decoration: underline;
+                text-decoration: none;
+                cursor: default;
             }
         }
+    }
 
-        .selected {
-            a {
-                background: $pagination-color;
-                color: #fff;
-
-                &:hover {
-                    text-decoration: none;
-                    cursor: default;
-                }
-            }
-        }
-
-        .control {
-            position: absolute;
-            display: inline-block;
-            top: 0;
-
-        }
-
-        .prev {
-            left: 0;
-        }
-
-        .next {
-            right: 0;
-        }
-
-        .prev,
-        .next {
-            a:hover {
-                background: $pagination-color;
-                color: #fff;
-            }
-        }
-
-        .custom-user-input.select {
-            margin-left: 5px;
-            margin-right: 5px;
-        }
+    .control {
+        position: absolute;
+        display: inline-block;
+        top: 0;
 
     }
 
-    .list.page-number {
-        margin: 0 55px;
-
-        .prev,
-        .next {
-            display: inline-block;
-        }
+    .prev {
+        left: 0;
     }
 
-    .addon-list {
-        .list-item {
-            vertical-align: top;
-            padding: 20px;
-            border: 1px solid #2ca4b1;
-            display: inline-block;
-            width: 45%;
-            margin-right: 4%;
-            margin-bottom: 4%;
-
-            &.is-selected {
-                background: #2ca4b1;
-            }
-        }
-
-        .checkbox-box {
-            margin: 0;
-        }
-
-        .input-label {
-            font-weight: 400;
-        }
+    .next {
+        right: 0;
     }
 
-    .addon-name,
-    .addon-description,
-    .addon-price {
-        text-align: center;
-        margin: 0;
-    }
-
-    .addon-name,
-    .addon-price {
-        font-weight: 600;
-        font-size: 1.8rem;
-    }
-
-    .addon-price {
-        margin-top: .5em;
-    }
-
-    .addon-list .is-selected .input-state {
-        color: #fff;
-    }
-    .addon-list .checkbox:checked ~ .custom-checkbox {
-        background: #fff;
-
-        .icon::before {
-            color: #000;
-        }
-    }
-    .is-selected {
-        .addon-name,
-        .addon-description,
-        .addon-price {
+    .prev,
+    .next {
+        a:hover {
+            background: $pagination-color;
             color: #fff;
         }
     }
 
-    .list.campaign-info {
-        text-align: center;
-        margin: 30px 0;
+    .custom-user-input.select {
+        margin-left: 5px;
+        margin-right: 5px;
+    }
 
-        li {
-            display: inline-block;
-            margin: 0 30px;
+}
+
+.list.page-number {
+    margin: 0 55px;
+
+    .prev,
+    .next {
+        display: inline-block;
+    }
+}
+
+.addon-list {
+    .list-item {
+        vertical-align: top;
+        padding: 20px;
+        border: 1px solid #2ca4b1;
+        display: inline-block;
+        width: 45%;
+        margin-right: 4%;
+        margin-bottom: 4%;
+
+        &.is-selected {
+            background: #2ca4b1;
         }
     }
+
+    .checkbox-box {
+        margin: 0;
+    }
+
+    .input-label {
+        font-weight: 400;
+    }
+}
+
+.addon-name,
+.addon-description,
+.addon-price {
+    text-align: center;
+    margin: 0;
+}
+
+.addon-name,
+.addon-price {
+    font-weight: 600;
+    font-size: 1.8rem;
+}
+
+.addon-price {
+    margin-top: .5em;
+}
+
+.addon-list .is-selected .input-state {
+    color: #fff;
+}
+.addon-list .checkbox:checked ~ .custom-checkbox {
+    background: #fff;
+
+    .icon::before {
+        color: #000;
+    }
+}
+.is-selected {
+    .addon-name,
+    .addon-description,
+    .addon-price {
+        color: #fff;
+    }
+}
+
+.list.campaign-info {
+    text-align: center;
+    margin: 30px 0;
+
+    li {
+        display: inline-block;
+        margin: 0 30px;
+    }
+}
+
+
+.resubscribe .list-radio-select .view-details {
+    font-size: 2.4rem;
+    display: inline-block;
+    margin-top: 20px;
+
+    .fa {
+        color: #0a4279;
+        font-size: 4rem;
+        vertical-align: middle;
+        margin-right: 5px;
+    }
+}
