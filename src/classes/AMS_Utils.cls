@@ -44,21 +44,26 @@ public without sharing class AMS_Utils {
     }
 
     public static List<AMS_ChangeCodes__c> CUSTOM_CHANGECODES {
-        get {
-            List<AMS_ChangeCodes__c> lChangeCodes = [SELECT Change_Code__c,Integration_RecId__c,Account_status_change__c,Billable__c,Bulletin_Memo_Text__c,
+        get { 
+            if(CUSTOM_CHANGECODES == null){
+                CUSTOM_CHANGECODES = [SELECT Change_Code__c,Integration_RecId__c,Account_status_change__c,Billable__c,Bulletin_Memo_Text__c,
                                                                 Reason_Code__c, Reason_Code_Description__c
                                                         FROM AMS_ChangeCodes__c];
-           
-            return lChangeCodes;
+            }
+            return CUSTOM_CHANGECODES;
         }
+        private set;
     }
-
+    
     public static List<AMS_ChangeCodes_Integration__c> CUSTOM_CHANGECODES_INTEGRATION {
         get {
-            List<AMS_ChangeCodes_Integration__c> lChangeCodes = [SELECT RecId_A__c,RecId_B__c,RecId_Res__c FROM AMS_ChangeCodes_Integration__c];
-           
-            return lChangeCodes;
+            if(CUSTOM_CHANGECODES_INTEGRATION == null){
+                CUSTOM_CHANGECODES_INTEGRATION = [SELECT RecId_A__c,RecId_B__c,RecId_Res__c FROM AMS_ChangeCodes_Integration__c];
+                
+            }
+            return CUSTOM_CHANGECODES_INTEGRATION;
         }
+        private set;
     }
 
     private static Map<String, RecordType> currentCache = null;
