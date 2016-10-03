@@ -20,34 +20,5 @@
         <members>*</members>
         <name>AuraDefinitionBundle</name>
     </types>
-	<types>
-        <members>EF_Airline_Edit</members>
-        <members>EF_Client_Edit</members>
-        <members>EF_Contract_Creation</members>
-        <members>EF_Contract_Update</members>
-        <members>EF_Management</members>
-        <members>EF_Staff</members>
-        <name>PermissionSet</name>
-    </types>
-    <types>
-        <members>Account-Airline Hqs Read-Only</members>
-        <members>Account-Airline Hqs</members>
-        <members>Account-IATA Airline - Branch</members>
-        <members>Account-Operators Page Layout</members>
-        <members>Account-Others</members>
-        <members>Account-new IATA Standard Account</members>
-        <members>Contract-E%26F Contract Layout</members>
-		<members>EF_Billing_Agreement__c-E%26F Airline Billing Agreement Layout</members>
-		<members>EF_Approval__c-E%26F Approval Temp Storage Layout</members>
-		<members>EF_Contact_Relationship__c-E%26F Contact Relationship Layout</members>
-		<members>EF_Location_Currency__c-E%26F Location Currency Layout</members>
-		<members>EF_Material_Line_Item__c-E%26F Material Line Item Layout</members>
-		<members>EF_Material_Line_Item__c-E%26F Material Line Item for Contract Layout</members>
-		<members>EF_Material_Line_Item__c-E%26F Material Line Item for Relationship Layout</members>
-		<members>EF_Related_Records__c-E%26F FIR Code Page Layout</members>
-		<members>EF_Related_Records__c-E%26F Location Page Layout</members>
-		<members>EF_Related_Records__c-E%26F Related Records Layout</members>
-        <name>Layout</name>
-    </types>
     <version>37.0</version>
 </Package>

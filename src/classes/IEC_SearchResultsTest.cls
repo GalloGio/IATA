@@ -27,7 +27,7 @@ private class IEC_SearchResultsTest
 			p.Line_of_Business__c = 'Publications';
 			p.Refinement_Language__c = (Math.mod(x, 2)==0) ? 'English' : 'French';
 		}
-		insert products;
+		database.insert(products,false);
 
 		for(Product2 p : products)
 		{

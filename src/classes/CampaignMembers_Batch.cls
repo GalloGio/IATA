@@ -15,7 +15,7 @@ global class CampaignMembers_Batch implements Database.Batchable<sObject> {
     
     //Campaign members to generate renewal
     global Database.QueryLocator start(Database.BatchableContext BC){
-        String query = 'SELECT Status, Contact.FirstName, Contact.LastName, Contact.Account.Name, Contact.Title, Campaign.Campaign_AutoNumber__c, CampaignId FROM CampaignMember where CampaignId = \'' + campaigId + '\' ';
+        String query = 'SELECT Status, ContactId, Contact.FirstName, Contact.LastName, Contact.Account.Name, Contact.Title, Campaign.Campaign_AutoNumber__c, CampaignId FROM CampaignMember where CampaignId = \'' + campaigId + '\' ';
         System.debug('query::'+query);
         return Database.getQueryLocator(query);
     }

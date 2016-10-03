@@ -183,6 +183,15 @@
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>Marketing_Opt_out</fullName>
+        <field>Marketing_Communications_Opt_in__c</field>
+        <literalValue>0</literalValue>
+        <name>Marketing Opt out</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>New_user_portal</fullName>
         <field>Notification_Template__c</field>
         <formula>&quot;NT-0033&quot;</formula>
@@ -218,6 +227,16 @@
         <name>SIS Update Contact Owner</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>LookupValue</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>STD_Opt_out</fullName>
+        <description>STD Opt out</description>
+        <field>HasOptedOutOfEmail</field>
+        <literalValue>1</literalValue>
+        <name>STD Opt out</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
@@ -506,6 +525,25 @@
         </criteriaItems>
         <description>This is used to automatically check the read-only field &apos;InvoiceWorks Customer&apos; when a Contact is created by one of the users with IW Profiles</description>
         <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>Key contact Opt out</fullName>
+        <actions>
+            <name>Marketing_Opt_out</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>STD_Opt_out</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Contact.Account_Management_Key_Contact__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <description>Automatically Opt out all Key contact</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
         <fullName>SIS HelpDesk - Assign SIS recordtype when new contact source system is SIS</fullName>

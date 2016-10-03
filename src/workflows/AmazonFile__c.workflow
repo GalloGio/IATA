@@ -9,20 +9,20 @@
         <template>E_F_Services/EF_Doc_Expired_Notification</template>
     </alerts>
     <fieldUpdates>
-        <fullName>EF_SetDocExpired</fullName>
-        <field>EF_Expired__c</field>
-        <literalValue>1</literalValue>
-        <name>EF_SetDocExpired</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
         <fullName>AmazonFile_SetPrivate</fullName>
         <description>RejectedClosed</description>
         <field>isPublic__c</field>
         <literalValue>0</literalValue>
         <name>AmazonFile_SetPrivate</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>EF_SetDocExpired</fullName>
+        <field>EF_Expired__c</field>
+        <literalValue>1</literalValue>
+        <name>EF_SetDocExpired</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Literal</operation>
         <protected>false</protected>
