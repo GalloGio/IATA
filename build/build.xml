@@ -639,7 +639,7 @@
 
 
 
-     <target name="getLayoutsProd">
+     <target name="getLayoutsOnly">
       <echo level="info">Retrieving the server's version of LAYOUTS</echo>
       <mkdir dir="${basedir}/${sfdc.retrieveTarget}"/>
       <sf:retrieve
@@ -656,22 +656,6 @@
     </target>
     
 
-         <target name="getLayoutsPreprod">
-      <echo level="info">Retrieving the server's version of LAYOUTS</echo>
-      <mkdir dir="${basedir}/${sfdc.retrieveTarget}"/>
-      <sf:retrieve
-        retrieveTarget="${basedir}/${sfdc.retrieveTarget}"
-        username="${sfdc.username}"
-        password="${sfdc.password}"
-        serverurl="${sfdc.serverurl}"
-        unpackaged="src/layoutPackage.xml"/>
-      <move file="${basedir}/${sfdc.retrieveTarget}/package.xml" tofile="src/layoutPackage.xml"/>
-      <move file="${basedir}/${sfdc.retrieveTarget}" tofile="src"/>
-
-       <antcallback target="getApproval" /> 
-
-    </target>
-    
 
 
 <target name="compressProfiles">
