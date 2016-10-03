@@ -459,7 +459,7 @@ public with sharing class AMS_MigrationToolHelper {
 	}
 
 	private static CaseContainer processNotFromPortal(CaseContainer cont){
-		
+
 		Case caseToProcess = cont.c;
 
 		AMS_Pax_Accreditation_Form__c accreditationObj = fetchAccreditation(caseToProcess.Id);
@@ -486,7 +486,7 @@ public with sharing class AMS_MigrationToolHelper {
       	
 
       	System.debug('Starting with flow ...');
-		
+
 		Flow.Interview.OSCAR_Wizard_SIMPLEX_Automatic_v2_0 wizardFlow = new Flow.Interview.OSCAR_Wizard_SIMPLEX_Automatic_v2_0(flowVarMap);
 		wizardFlow.start();
 
@@ -528,8 +528,8 @@ public with sharing class AMS_MigrationToolHelper {
 		System.debug('Process finished.');
 
 		return cont;
-		
-		return null;
+
+
 	}
 
 	private static String performValidations(Case c, String processType){
