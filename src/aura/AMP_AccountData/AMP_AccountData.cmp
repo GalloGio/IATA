@@ -1,6 +1,6 @@
 <aura:component >
 	<aura:attribute name="account" type="Account" />
-    
+
     <div class="slds-grid slds-wrap">
     	
         <div class="slds-col--padded slds-size--1-of-2 slds-large-size--1-of-3 slds-p-bottom--medium">
@@ -74,26 +74,6 @@
     	
         <div class="slds-col--padded slds-size--1-of-2 slds-large-size--1-of-3 slds-p-bottom--medium">
             <div class="slds-form-element">
-                <label class="slds-form-element__label" >Sector</label>
-                <div class="slds-form-element__control">
-                	<!--<force:outputField value="{!v.account.Sector__c}" />-->
-                    {!v.account.Sector__c}
-                </div>
-            </div>            
-        </div>
-    	
-        <div class="slds-col--padded slds-size--1-of-2 slds-large-size--1-of-3 slds-p-bottom--medium">
-            <div class="slds-form-element">
-                <label class="slds-form-element__label">Category</label>
-                <div class="slds-form-element__control">
-                	<!--<force:outputField value="{!v.account.Category__c}" />-->
-                    {!v.account.Category__c}
-                </div>
-            </div>            
-        </div>
-    	
-        <div class="slds-col--padded slds-size--1-of-2 slds-large-size--1-of-3 slds-p-bottom--medium">
-            <div class="slds-form-element">
                 <label class="slds-form-element__label" >ISO Country</label>
                 <div class="slds-form-element__control">
                 	<!--<force:outputField value="{!v.account.IATA_ISO_Country__r.Name}" />-->
@@ -136,13 +116,13 @@
             <div class="slds-form-element">
                 <label class="slds-form-element__label" >Ownership Type</label>
                 <div class="slds-form-element__control">
-                	<!--<force:outputField value="{!v.account.AM_Ownership_Type__c}" />-->
+						<!--<force:outputField value="{!v.account.AM_Ownership_Type__c}" />-->
                     {!v.account.AM_Ownership_Type__c}
                 </div>
             </div>            
         </div>
-        
-        <div class="slds-col--padded slds-size--1-of-2 slds-large-size--1-of-3 slds-p-bottom--medium">
+
+		<div class="slds-col--padded slds-size--1-of-2 slds-large-size--1-of-3 slds-p-bottom--medium">
         </div>
     </div>
 </aura:component>

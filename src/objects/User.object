@@ -429,6 +429,52 @@ If( Contact.Account.ICH_Member__c = true,&quot;ICH&quot;, &quot;&quot;)</formula
         <type>DateTime</type>
     </fields>
     <fields>
+        <fullName>EF_Billing_Agreement_Approver_Email__c</fullName>
+        <externalId>false</externalId>
+        <formula>EF_Billing_Agreement_Approver__r.Email</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>EF Billing Agreement Approver Email</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>EF_Billing_Agreement_Approver__c</fullName>
+        <externalId>false</externalId>
+        <label>E&amp;F Billing Agreement Approver</label>
+        <relationshipName>EF_BA_Listing</relationshipName>
+        <restrictedAdminField>false</restrictedAdminField>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Hierarchy</type>
+    </fields>
+    <fields>
+        <fullName>EF_Contract_Approver_Email__c</fullName>
+        <externalId>false</externalId>
+        <formula>EF_Contract_Approver__r.Email</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>EF Contract Approver Email</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>EF_Contract_Approver__c</fullName>
+        <externalId>false</externalId>
+        <label>E&amp;F Contract Approver</label>
+        <relationshipName>EF_Contract_Listing</relationshipName>
+        <restrictedAdminField>false</restrictedAdminField>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Hierarchy</type>
+    </fields>
+    <fields>
+        <fullName>EF_User_Role__c</fullName>
+        <externalId>false</externalId>
+        <globalPicklist>EF_User_Role</globalPicklist>
+        <label>E&amp;F User Role</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Picklist</type>
+    </fields>
+    <fields>
         <fullName>Employee_Number_PPD__c</fullName>
         <description>IATA Employee Number</description>
         <externalId>false</externalId>
@@ -2660,6 +2706,14 @@ Currently (26/10/15) used to identify which user haven&apos;t complete the suppo
         <errorMessage>The format for cost center is - &lt;2/4 Alphabets(Uppercase)&gt;&lt;2/4 Numeric&gt;&lt;2/4 Alphabets(Uppercase)&gt;&lt;2 Numeric&gt;, with a total of 10 characters. For example, ISF005CH01, XSMW01JO01.</errorMessage>
     </validationRules>
     <webLinks>
+        <description>*** DO NOT USE THIS BUTTON ON A PAGE LAYOUT *** 
+
+COPY THE URL FROM THIS BUTTON and paste it into your own custom button or link. Then add optional parameters to finely tune the button&apos;s behavior. See the Conga Configuration Guide for details.</description>
+        <masterLabel>Conga Merge</masterLabel>
+        <url>https://www.appextremes.com/apps/Conga/PointMerge.aspx?sessionId={!API.Session_ID}&amp;serverUrl={!API.Partner_Server_URL_80}&amp;id={!User.Id}</url>
+?sessionId={!API.Session_ID}
+&amp;serverUrl={!API.Partner_Server_URL_290}
+&amp;id={!User.Id}</url>
         <fullName>Provision_Kavi_Access</fullName>
         <availability>online</availability>
         <displayType>link</displayType>

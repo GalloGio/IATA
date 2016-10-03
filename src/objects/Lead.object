@@ -10616,6 +10616,14 @@ albam@iata.org</description>
         <errorMessage>A lead has to have Email or Phone number</errorMessage>
     </validationRules>
     <webLinks>
+        <description>*** DO NOT USE THIS BUTTON ON A PAGE LAYOUT *** 
+
+COPY THE URL FROM THIS BUTTON and paste it into your own custom button or link. Then add optional parameters to finely tune the button&apos;s behavior. See the Conga Configuration Guide for details.</description>
+        <masterLabel>Conga Merge</masterLabel>
+        <url>https://www.appextremes.com/apps/Conga/PointMerge.aspx?sessionId={!API.Session_ID}&amp;serverUrl={!API.Partner_Server_URL_80}&amp;id={!Lead.Id}</url>
+?sessionId={!API.Session_ID}
+&amp;serverUrl={!API.Partner_Server_URL_290}
+&amp;id={!Lead.Id}</url>
         <fullName>ActOn__Acton_Activity_History</fullName>
         <availability>online</availability>
         <displayType>button</displayType>

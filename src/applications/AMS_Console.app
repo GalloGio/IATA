@@ -9,7 +9,7 @@
     <domainWhitelist>
         <domain>iata--AmsDev1.cs86.my.salesforce.com</domain>
     </domainWhitelist>
-    <enableCustomizeMyTabs>false</enableCustomizeMyTabs>
+    <enableCustomizeMyTabs>true</enableCustomizeMyTabs>
     <enableKeyboardShortcuts>true</enableKeyboardShortcuts>
     <enableListViewReskin>true</enableListViewReskin>
     <enableMultiMonitorComponents>true</enableMultiMonitorComponents>
@@ -213,7 +213,11 @@
     <tab>IATA_Code_Loader</tab>
     <tab>Code_Range__c</tab>
     <tab>standard-Chatter</tab>
+    <tab>APXTConga4__Conga_Template__c</tab>
     <workspaceMappings>
+        <mapping>
+            <tab>APXTConga4__Conga_Template__c</tab>
+        </mapping>
         <mapping>
             <tab>Code_Range__c</tab>
         </mapping>

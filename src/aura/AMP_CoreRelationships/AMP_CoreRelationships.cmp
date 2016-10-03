@@ -108,7 +108,7 @@
                 <tbody>
                     <aura:iteration items="{!v.ParticipantWrappers}" var="participant" indexVar="index">
                         <tr>
-                            <td><ui:outputText value="{!participant.GroupName}" /></td>
+                            <td><a href="{!'/'+participant.GroupId}" target="_blank">{!participant.GroupName}</a></td>
                             <td><ui:outputText value="{!participant.Role}" /></td>
                             <td><ui:outputText value="{!participant.Salutation}" /></td>
                             <td><ui:outputText value="{!participant.FirstName}" /></td>
@@ -129,7 +129,7 @@
         
         <div class="slds-col--padded slds-size--1-of-2 slds-large-size--1-of-3 slds-p-bottom--medium">
             <div class="slds-form-element">
-                <label class="slds-form-element__label">Membership SITA</label>
+                <label class="slds-form-element__label">SITA Member</label>
                 <div class="slds-form-element__control">
                 	<!--<force:outputField value="{!v.account.Membership_SITA__c}" />-->
                     <ui:outputCheckbox value="{!v.account.Membership_SITA__c}"/>
