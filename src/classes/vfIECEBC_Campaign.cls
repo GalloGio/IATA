@@ -16,11 +16,13 @@ public class vfIECEBC_Campaign extends vfIECEBC_Controller {
 				
 				Http http = new Http();
 				HTTPResponse res = http.send(req);
+                
+                Integer cnt = Integer.valueOf(res.getBody().trim());
 				
-                if (campaign.Number_of_Recipients__c != Integer.valueOf(res.getBody())) {
+                if (campaign.Number_of_Recipients__c != cnt) {
                     EBC_Campaign__c tmpCamp = new EBC_Campaign__c();
                     tmpCamp.Id = campaign.Id;
-                    campaign.Number_of_Recipients__c = tmpCamp.Number_of_Recipients__c = Integer.valueOf(res.getBody());
+                    campaign.Number_of_Recipients__c = tmpCamp.Number_of_Recipients__c = cnt;
                     update tmpCamp;
                 }
                 numberOfRecipients = Integer.valueOf(campaign.Number_of_Recipients__c);
