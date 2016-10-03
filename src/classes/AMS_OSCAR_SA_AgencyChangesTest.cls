@@ -1697,12 +1697,15 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
         System.assertEquals(7,con.hierarchy.size());
 
         con.hierarchy[2].main = true;
-        con.hierarchy[2].selectMain(); //simulates page actionSupport
-        System.assertNotEquals(HO1.Id, con.oscar.Account__c);
 
-        con.hierarchy[2].main = false;
-        con.hierarchy[2].selectMain(); //simulates page actionSupport
-        System.assert(con.hierarchy[2].main);
+        //emulate js
+        con.hierarchy[2].selected  = false;
+        con.hierarchy[0].main = false;
+        con.hierarchy[0].main = false;
+        // /emulate js
+
+        con.selectMain();        
+        System.assertNotEquals(HO1.Id, con.oscar.Account__c);
 
         System.assert(!con.oscarFieldList.isEmpty());
         System.assert(con.showTargetAgency);
