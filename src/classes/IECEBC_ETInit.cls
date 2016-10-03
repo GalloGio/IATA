@@ -3,7 +3,12 @@ public class IECEBC_ETInit {
     public static final String SandboxEndpoint = 'https://webservice.test.exacttarget.com/Service.asmx';
     public static final String ProductionEndpoint = 'https://webservice.s7.exacttarget.com/Service.asmx';    
     public static final String SoapWSApi = 'http://exacttarget.com/wsdl/partnerAPI';
-    public static final	String IECRestAPI = 'https://3b-customer-portal-iata.cs87.force.com/iec/services/apexrest/';
+    public static final	String IECRestAPI {
+    	get {
+    		return IECEBC_Utility.ebcSetup.E_Commerce_Base_Url__c + '/services/apexrest/';
+    	}
+    	set;
+    }
     public static final	Integer TimeOut = 120000;
     
     
