@@ -216,7 +216,6 @@ public with sharing class IECEBC_TestUtility {
 					, Storage_Product_Rate_Plan__c = oEbcProductRatePlanAddOnStorage.Id
 					, Enhanced_Reporting_Product_Rate_Plan__c = oEbcProductRatePlanAddOnReporting.Id
 					
-					//, E_Commerce_Base_Url__c = 'https://3b-customer-portal-iata.cs87.force.com/iec'
 				);
 		insert oEbcSetup;
 		
