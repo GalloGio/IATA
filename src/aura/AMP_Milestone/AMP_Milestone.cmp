@@ -59,35 +59,14 @@
         <td><ui:inputTextArea value="{!v.milestone.Description}" class="slds-textarea" rows="5"/></td>
         
         <aura:set attribute="else">
-            <td>
-                <c:AMP_EditSaveMenu />
-            </td>
+            <td><c:AMP_EditSaveMenu /></td>
             <td><ui:outputText value="{!v.milestone.Subject}" class="slds-truncate"/></td>
-            <td>
-                <ui:outputText value="{!v.milestone.AM_Responsible__c}" class="slds-truncate"/>
-            </td>
-            <td>
-                <ui:outputText value="{!v.milestone.AM_Involved__c}" class="slds-truncate"/>
-            </td>
-            <td>
-                <ui:outputRichText value="{!v.milestone.AM_Support_Required_from_Account__c}" class="slds-truncate"/>
-            </td>
+            <td><c:AMP_LongText text="{!v.milestone.AM_Responsible__c}" /></td>
+            <td><c:AMP_LongText text="{!v.milestone.AM_Involved__c}" /></td>
+            <td><c:AMP_LongText text="{!v.milestone.AM_Support_Required_from_Account__c}" /></td>
             <td><ui:outputText value="{!v.milestone.Status}" /></td>
             <td><ui:outputDate value="{!v.milestone.ActivityDate}" class="slds-truncate" /></td>
-            <td>
-                <div class="slds-p-right--medium">
-                    <ui:outputRichText value="{!v.milestone.Description}" class="slds-truncate" aura:id="comments"/>
-                    
-                    <aura:renderIf isTrue="{!v.milestone.Description != null}">
-                        <button aura:id="show-more-button" class="slds-button slds-button--icon slds-m-around--xx-small show-more-button" onclick="{!c.showMore}" >
-                            <c:svg xlinkHref="{!$Resource.SLDS102 + '/assets/icons/utility-sprite/svg/symbols.svg#zoomin'}" class="slds-button__icon slds-button__icon--large" />
-                        </button>
-                        <button aura:id="show-less-button" class="slds-button slds-button--icon slds-hide" onclick="{!c.showLess}" >
-                            <c:svg xlinkHref="{!$Resource.SLDS102 + '/assets/icons/utility-sprite/svg/symbols.svg#zoomout'}" class="slds-button__icon slds-button__icon--large" />
-                        </button>
-                    </aura:renderIf>
-                </div>
-            </td>
+            <td><c:AMP_LongText text="{!v.milestone.Description}"/></td>
         </aura:set>
     </aura:if>
     <!-- </tr> -->

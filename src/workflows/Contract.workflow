@@ -76,7 +76,7 @@
         <operation>Literal</operation>
         <protected>false</protected>
     </fieldUpdates>
-	<fieldUpdates>
+    <fieldUpdates>
         <fullName>Set_Approver_Email</fullName>
         <field>EF_Approver_Email__c</field>
         <formula>$User.EF_Contract_Approver_Email__c</formula>

@@ -87,7 +87,7 @@ public with sharing class AMS_MigrationToolHelper {
 	}
 
 	private static CaseContainer processNotFromPortal(CaseContainer cont){
-		/*
+		
 		Case caseToProcess = cont.c;
 
 		AMS_Pax_Accreditation_Form__c accreditationObj = fetchAccreditation(caseToProcess.Id);
@@ -156,7 +156,7 @@ public with sharing class AMS_MigrationToolHelper {
 		System.debug('Process finished.');
 
 		return cont;
-		*/
+		
 		return null;
 	}
 

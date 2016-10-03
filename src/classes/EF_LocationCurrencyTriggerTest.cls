@@ -226,7 +226,8 @@ private class EF_LocationCurrencyTriggerTest {
         
         Contract ctAfter = [select Id, AccountId, Account.Name, EF_Billing_Currency__c from Contract where Account.Name = 'Test Account Client2'];               
                 
-        System.assertEquals('GBP;USD', ctAfter.EF_Billing_Currency__c);
+        System.assert(ctAfter.EF_Billing_Currency__c.contains('USD'));
+        System.assert(ctAfter.EF_Billing_Currency__c.contains('GBP'));
          
      
      }
