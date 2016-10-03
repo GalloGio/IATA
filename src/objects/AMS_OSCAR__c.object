@@ -5470,17 +5470,6 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
                 <fullName>Change of legal status</fullName>
                 <default>false</default>
             </values>
-        <picklistValues>
-            <picklist>AMS_Correction_change_code__c</picklist>
-            <values>
-                <fullName>CAD</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>COR</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
             <values>
                 <fullName>Change of location</fullName>
                 <default>false</default>
