@@ -266,9 +266,11 @@ public with sharing class RelatedListController {
 
     public PageReference cancelChanges(){
         ssc = null;
-        String retUrl =  ApexPages.currentPage().getParameters().get('retUrl');
+        String idUrl =  ApexPages.currentPage().getParameters().get('id');
+        String retUrl =  ApexPages.currentPage().getParameters().get('retURL');
         String prUrl;
         if(retUrl != null) prUrl =''+retUrl;
+        else if(idUrl != null) prUrl ='/'+idUrl;
         PageReference pageRef = new PageReference(prURL);
         return pageRef;
     }
