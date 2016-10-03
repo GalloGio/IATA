@@ -147,7 +147,6 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
-        <fields>SAP_Id__c</fields>
         <fields>Contact__c</fields>
         <fields>Address__c</fields>
         <fields>Country__c</fields>
