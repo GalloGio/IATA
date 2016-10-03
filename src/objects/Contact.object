@@ -5889,6 +5889,10 @@ IFAP Application.</description>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>IT</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>Legal</fullName>
                 <default>false</default>
             </picklistValues>
@@ -5897,7 +5901,7 @@ IFAP Application.</description>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>None</fullName>
+                <fullName>Media</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -5924,7 +5928,7 @@ IFAP Application.</description>
                 <fullName>Training</fullName>
                 <default>false</default>
             </picklistValues>
-            <sorted>false</sorted>
+            <sorted>true</sorted>
         </picklist>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
@@ -7095,15 +7099,7 @@ TotalRows-Successes-Errors</description>
         <label>Job Function</label>
         <picklist>
             <picklistValues>
-                <fullName>Gen.Management</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Technical</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Commercial</fullName>
+                <fullName>Aeropolitical</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -7111,27 +7107,7 @@ TotalRows-Successes-Errors</description>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Finance</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Other</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Legal</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Operations</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Safety</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Aeropolitical</fullName>
+                <fullName>Commercial</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -7139,7 +7115,23 @@ TotalRows-Successes-Errors</description>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>Finance</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Gen.Management</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>Human Resources</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>IT</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Legal</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -7147,22 +7139,34 @@ TotalRows-Successes-Errors</description>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>Media</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Operations</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Safety</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>Security&amp; Facilitation</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Technical</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>Training</fullName>
                 <default>false</default>
             </picklistValues>
-            <picklistValues>
-                <fullName>Media</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>IT</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
+            <sorted>true</sorted>
         </picklist>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
@@ -20873,7 +20877,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
                 <default>false</default>
             </values>
             <values>
-                <fullName>None</fullName>
+                <fullName>Media</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -23269,6 +23273,10 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
                 <default>false</default>
             </values>
             <values>
+                <fullName>IT</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Legal</fullName>
                 <default>false</default>
             </values>
@@ -23277,7 +23285,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
                 <default>false</default>
             </values>
             <values>
-                <fullName>None</fullName>
+                <fullName>Media</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -25886,6 +25894,10 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
                 <default>false</default>
             </values>
             <values>
+                <fullName>IT</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Legal</fullName>
                 <default>false</default>
             </values>
@@ -25894,7 +25906,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
                 <default>false</default>
             </values>
             <values>
-                <fullName>None</fullName>
+                <fullName>Media</fullName>
                 <default>false</default>
             </values>
             <values>
