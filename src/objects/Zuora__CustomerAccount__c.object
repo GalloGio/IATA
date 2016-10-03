@@ -1299,7 +1299,7 @@ This should be set by calling Payment for renewal.</inlineHelpText>
         <customTabListAdditionalFields>Zuora__Status__c</customTabListAdditionalFields>
     </searchLayouts>
     <sharingModel>ControlledByParent</sharingModel>
-    <webLinks>
+  <!--  <webLinks>
         <fullName>View_eBroadcast_Specific_Details</fullName>
         <availability>online</availability>
         <description>View eBroadcast Related Lists</description>
@@ -1308,9 +1308,9 @@ This should be set by calling Payment for renewal.</inlineHelpText>
         <linkType>page</linkType>
         <masterLabel>View eBroadcast Specific Details</masterLabel>
         <openType>sidebar</openType>
-       <!-- <page>EBC_RelatedLists</page> -->
+        <page>EBC_RelatedLists</page> 
         <protected>false</protected>
-    </webLinks>
+    </webLinks>-->
     <webLinks>
         <fullName>Zuora__Sync_Data_from_ZBilling</fullName>
         <availability>online</availability>

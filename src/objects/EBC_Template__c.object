@@ -142,6 +142,17 @@
         <type>Lookup</type>
     </fields>
     <fields>
+        <fullName>Template_Name__c</fullName>
+        <description>Name of the saved template</description>
+        <externalId>false</externalId>
+        <label>Template Name</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>TriggSend_Id__c</fullName>
         <description>The Exact Target Triggered Sent Id</description>
         <externalId>false</externalId>
@@ -165,6 +176,11 @@
         <filterScope>Everything</filterScope>
         <label>All</label>
         <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>All1</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
     </listViews>
     <nameField>
         <label>EBC Template Name</label>

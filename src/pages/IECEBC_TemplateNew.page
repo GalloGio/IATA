@@ -114,7 +114,7 @@
                                             <ul class="nav tabs">
                                                 <li class="active" data-target="#pane-1"><a href="#" onclick="resetTemplate(jQuery('input:checked', jQuery(this).closest('li').attr('data-target')).val());">Basic Templates</a></li>
                                                 
-												<li data-target="#pane-2"><a href="#" onclick="resetTemplate('');">Use your HTML code</a></li>
+                                                <li data-target="#pane-2"><a href="#" onclick="resetTemplate('{!customHtmlTemplate.Id}');">Use your HTML code</a></li>
                                             </ul>
                                             
                                             <div class="tab-content">

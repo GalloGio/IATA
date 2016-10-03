@@ -4,6 +4,9 @@
     <email>support@deskom.com</email>
     <name>Cegedim (Deskom) Escalations (IATA IW)</name>
     <queueSobject>
+        <sobjectType>AMS_OSCAR__c</sobjectType>
+    </queueSobject>
+    <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>
 </Queue>

@@ -4,6 +4,9 @@
     <email>information.security@iata.org</email>
     <name>Fraud Management - Head Office</name>
     <queueSobject>
+        <sobjectType>AMS_OSCAR__c</sobjectType>
+    </queueSobject>
+    <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>
 </Queue>

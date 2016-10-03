@@ -3,6 +3,9 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <name>SIS Help Desk -IATA SIS Customer Support</name>
     <queueSobject>
+        <sobjectType>AMS_OSCAR__c</sobjectType>
+    </queueSobject>
+    <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>
 </Queue>

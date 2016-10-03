@@ -4,6 +4,9 @@
     <email>kimey@iata.org</email>
     <name>Local Office - Korea</name>
     <queueSobject>
+        <sobjectType>AMS_OSCAR__c</sobjectType>
+    </queueSobject>
+    <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>
 </Queue>

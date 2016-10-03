@@ -5,7 +5,7 @@
         <members>*</members>
         <name>Report</name>
     </types>
-    <types>
+ <!--   <types>
         <members>*</members>
         <name>PermissionSet</name>
     </types>
@@ -16,6 +16,6 @@
     <types>
         <members>*</members>
         <name>ReportType</name>
-    </types>
+    </types> -->
     <version>37.0</version>
 </Package>

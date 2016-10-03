@@ -4,6 +4,9 @@
     <email>maria.veselinova@recall.com</email>
     <name>Recall Sweden Img. Esc. (IATA IW)</name>
     <queueSobject>
+        <sobjectType>AMS_OSCAR__c</sobjectType>
+    </queueSobject>
+    <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>
 </Queue>
