@@ -75,14 +75,14 @@ public class AMS_ChangeCodesHelper {
 
                 ObjectChange objChange = new ObjectChange('Account',changes.accountFieldAPI, changes.oldValue, changes.newValue);
                 
-                if(changes.accountFieldAPI.equalsIgnoreCase('TradeName__c'))
+                if(changes.accountFieldAPI.equalsIgnoreCase('tradename__c'))
                     objChangesStructList.add(new ObjectChangesStruct(new List <ObjectChange>{objChange}));
                 else
                     ObjectChangeList.add(objChange);
-                
+
             }
 
-            objChangesStructList.add(new ObjectChangesStruct(ObjectChangeList));
+            if(!ObjectChangeList.isEmpty()) objChangesStructList.add(new ObjectChangesStruct(ObjectChangeList));
 
         }
 
@@ -95,20 +95,20 @@ public class AMS_ChangeCodesHelper {
         List<ObjectChangesStruct> objChangesStructList = new List<ObjectChangesStruct>();
 
         List <ObjectChange> ObjectChangeList = new List <ObjectChange> ();
-        
+
         for(AMS_RecordCreatorWebservice.AccountChanges changes : accountChange)
         {
             ObjectChange objChange = new ObjectChange('Account',changes.accountFieldAPI, changes.oldValue, changes.newValue);
-        
-            if(changes.accountFieldAPI.equalsIgnoreCase('TradeName__c'))
+
+            if(changes.accountFieldAPI.equalsIgnoreCase('tradename__c'))
                 objChangesStructList.add(new ObjectChangesStruct(new List <ObjectChange>{objChange}));
             else
-                ObjectChangeList.add(objChange);
-        
-       }
+            ObjectChangeList.add(objChange);
 
-        objChangesStructList.add(new ObjectChangesStruct(ObjectChangeList));
-        
+        }
+
+        if(!ObjectChangeList.isEmpty()) objChangesStructList.add(new ObjectChangesStruct(ObjectChangeList));
+
         return objChangesStructList;
     }
 
@@ -207,7 +207,9 @@ public class AMS_ChangeCodesHelper {
     }
 
    /** 
+
      Support for Old method from AMS_Utils
+
     */
 
     public static List<Account> createAAChangeCodes(List<AMS_OSCAR_JSON.ChangeCode> changeCodes, List<AMS_OSCAR__c> oscars, List<Account> oscarAgencies, Boolean isToUpdateAccounts) {
@@ -215,9 +217,7 @@ public class AMS_ChangeCodesHelper {
     }
 
     /** 
-     
      Add Change Code to be Created NeW method with Change Code History
-
     */
 
     private static ChangeCodeStruct createAAChangeCode(ObjectChangesStruct objectChangesByChangeCode, AMS_OSCAR_JSON.ChangeCode changeCode, AMS_OSCAR__c oscar, Account oscarAgency, Boolean isActive) {
@@ -263,7 +263,8 @@ public class AMS_ChangeCodesHelper {
                                                         Object_API_Name__c            = change.objectAPI    ,
                                                         Field_API_Name__c             = change.fieldAPI     ,
                                                         Field_New_Value__c            = change.newValue     ,
-                                                        Field_Old_Value__c            = change.oldValue     );
+                                                        Field_Old_Value__c            = change.oldValue     
+                                                        );
     
     
                 changeCodeFielsHistory.add(aacNEWHistory);
@@ -326,9 +327,7 @@ public class AMS_ChangeCodesHelper {
 
 
       /** 
-    
      generateChangeCodes for Agency Changes from a Custom Setting Mapping
-     
     */
 
     public static AMS_Utils.Container generateChangeCodes(AMS_OSCAR__c oscar, AMS_Utils.AgChangesConfig config, Map<Id, Account> accounts, Map<Id, Agency_Applied_Change_code__c> accountsPrevChangeCode, String action, Set<Id> allHierarchyAccountsToApplyCC) {
