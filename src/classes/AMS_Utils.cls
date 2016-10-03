@@ -585,9 +585,18 @@ public without sharing class AMS_Utils {
 
         System.debug('Creating a new Agency Applied Change Code for Account ' + oscarAgency.Id + ' with flag active set to ' + isActive);
 
-        Agency_Applied_Change_code__c aacNEW = new Agency_Applied_Change_code__c(Active__c = isActive, Account__c = oscarAgency.Id, Change_Code__c = changeCode.name,
-                OSCAR__c = oscarId, Bulletin_Information__c = changeCode.memoText,
-                Reason_Code__c = changeCode.reasonCode, Reason_Description__c = changeCode.reasonDesc);
+        String source = UserInfo.getUserType() == 'PowerPartner' ? 'Portal' : 'Internal';
+
+        Agency_Applied_Change_code__c aacNEW = new Agency_Applied_Change_code__c(
+            Active__c = isActive
+            , Account__c = oscarAgency.Id
+            , Change_Code__c = changeCode.name
+            , OSCAR__c = oscarId
+            , Bulletin_Information__c = changeCode.memoText
+            , Reason_Code__c = changeCode.reasonCode
+            , Reason_Description__c = changeCode.reasonDesc
+            , Source__c = source
+        );
 
         //insert aacNEW;
 

@@ -39,6 +39,10 @@
     </types>
     <types>
         <members>*</members>
+        <name>GlobalPicklist</name>
+    </types>
+    <types>
+        <members>*</members>
         <name>Queue</name>
     </types>
     <version>37.0</version>

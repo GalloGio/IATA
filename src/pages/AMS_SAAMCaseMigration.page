@@ -1,12 +1,34 @@
 <apex:page showHeader="true" sidebar="true" controller="AMS_SAAMCaseMigrationController" tabStyle="Case" title="AMS - SAAM Case Migration" docType="html-5.0">
+
+	<style>
+		.pos-relative{ position: relative; }
+		.loading-backdrop{ 
+			position: absolute; 
+			top: 0; 
+			bottom: 0; 
+			right: 0; 
+			left: 0; 
+			background: #FFF; 
+			opacity: 0.5; 
+			z-index: 95;
+		}
+		.loading-img{
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			margin-top: -16px;
+			margin-left: -16px;
+			z-index: 96;
+			}
+	</style>
 	
-	<apex:form id="caseFilters">
+	<apex:form id="caseFilters" styleClass="pos-relative">
 		<apex:pageBlock title="SAAM Case Migration" >
 			<apex:pageMessages id="pageMessages"/>
 			
 			<apex:pageBlockSection columns="1" id="searchPanel">
 				<apex:selectList multiselect="false" size="1" value="{!searchOption}" label="Cases to Migrate:">
-					<apex:actionSupport event="onchange" reRender="searchPanel"/>
+					<apex:actionSupport event="onchange" reRender="searchPanel" status="loadingHeader"/>
 					<apex:selectOptions value="{!searchOptions}" />
 				</apex:selectList> 
 
@@ -14,9 +36,18 @@
 			</apex:pageBlockSection>
 
 			<apex:pageBlockButtons location="bottom" id="buttons">
-				<apex:commandButton action="{!search}" value="Search" reRender="pageMessages, caseTable" disabled="{!processing}" />
+				<apex:commandButton action="{!search}" value="Search" reRender="pageMessages, caseTable" disabled="{!processing}" status="loadingHeader" />
 			</apex:pageBlockButtons>
 		</apex:pageBlock>
+
+		<apex:actionStatus id="loadingHeader" >
+			<apex:facet name="start">
+				<apex:outputPanel layout="none">
+					<apex:outputPanel layout="block" styleClass="loading-backdrop"/>
+					<apex:image value="/../img/loading32.gif" styleClass="loading-img"/>
+				</apex:outputPanel>
+			</apex:facet>
+		</apex:actionStatus> 
 	</apex:form>
 	
 	<apex:form id="caseTable" styleClass="pos-relative" >
@@ -48,6 +79,10 @@
 					<apex:outputLink value="{!URLFOR($Action.Case.View, container.c.Id)}">{!container.c.CaseNumber}</apex:outputLink>
 				</apex:column>
 
+				<apex:column headerValue="From Portal">
+					<apex:inputCheckbox value="{!container.fromPortal}" disabled="true"/>
+				</apex:column>
+
 				<apex:repeat value="{!caseFieldNames}" var="field">
 					<apex:column value="{!container.c[field]}"/>
 				</apex:repeat>
@@ -56,7 +91,7 @@
 					<apex:outputLink value="/{!container.oscarCreated.Id}">{!container.oscarCreated.Name}</apex:outputLink>
 				</apex:column>
 
-				<apex:column headerValue="New case created">
+				<apex:column headerValue="Created/Updated Case">
 					<apex:outputLink value="/{!container.caseCreated.Id}">{!container.caseCreated.CaseNumber}</apex:outputLink>
 				</apex:column>
 
@@ -75,30 +110,10 @@
 				<apex:commandLink action="{!next}"		value="Next >"		rendered="{!pageNumber < saamCases.size}" reRender="caseTable"/>&nbsp;
 				<apex:commandLink action="{!last}"		value="Last >>"		rendered="{!pageNumber < saamCases.size}" reRender="caseTable"/>&nbsp;
 			</apex:outputPanel>
-			
+	
 			<apex:outputPanel layout="block" styleClass="loading-backdrop" rendered="{!processing}"/>
 			<apex:image value="/../img/loading32.gif" styleClass="loading-img" rendered="{!processing}"/>
-			<!-- <apex:image value="{!URLFOR($Resource.loadinggif)}" styleClass="loading-img" rendered="{!processing}"/> -->
-
-			<style>
-				.pos-relative{ position: relative; }
-				.loading-backdrop{ 
-					position: absolute; 
-					top: 0; 
-					bottom: 0; 
-					right: 0; 
-					left: 0; 
-					background: #FFF; 
-					opacity: 0.5; 
-				}
-				.loading-img{
-					position: absolute;
-					top: 50%;
-					left: 50%;
-					margin-top: -16px;
-					margin-left: -16px;
- 				}
-			</style>
+			<!-- <apex:image value="{!URLFOR($Resource.loadinggif)}" styleClass="loading-img" rendered="{!processing}"/> --> 
 
 			<apex:pageBlockButtons >
 				<apex:commandButton action="{!convert}" value="Convert" disabled="{!processing}" reRender="buttons, caseTable, pageMessages" oncomplete="migrateCases();" />
