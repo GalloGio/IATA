@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <name>E&amp;F Contract Approved</name>
+    <style>none</style>
+    <subject>Contract changes approved</subject>
+    <textOnly>Dear {!User.FirstName},
+
+your changes for a Contract record have been approved.</textOnly>
+    <type>custom</type>
+</EmailTemplate>

@@ -103,49 +103,5 @@
         activity.Account_Issue_or_Priority__c = null;
         // Set the Id bound to the View
         cmp.set("v.activity", activity);
-    },
-    showMore : function(component, event, helper) {
-        var details = component.find("details");
-        $A.util.removeClass(details, 'slds-truncate');
-        $A.util.addClass(details, 'popup');
-        
-        var showMore = component.find("show-more-button");
-        $A.util.addClass(showMore, 'slds-hide');
-        var showLess = component.find("show-less-button");
-        $A.util.removeClass(showLess, 'slds-hide');
-        $A.util.addClass(showLess, 'popup-button');
-    },
-    showLess : function(component, event, helper) {
-        var details = component.find("details");
-        $A.util.addClass(details, 'slds-truncate');
-        $A.util.removeClass(details, 'popup');
-        
-        var showMore = component.find("show-more-button");
-        $A.util.removeClass(showMore, 'slds-hide');
-        var showLess = component.find("show-less-button");
-        $A.util.addClass(showLess, 'slds-hide');
-        $A.util.removeClass(showLess, 'popup-button');
-    },
-    showMoreBenefits : function(component, event, helper) {
-        var benefits = component.find("benefits");
-        $A.util.removeClass(benefits, 'slds-truncate');
-        $A.util.addClass(benefits, 'popup');
-        
-        var showMore = component.find("show-more-benefits-button");
-        $A.util.addClass(showMore, 'slds-hide');
-        var showLess = component.find("show-less-benefits-button");
-        $A.util.removeClass(showLess, 'slds-hide');
-        $A.util.addClass(showLess, 'popup-button');
-    },
-    showLessBenefits : function(component, event, helper) {
-        var benefits = component.find("benefits");
-        $A.util.addClass(benefits, 'slds-truncate');
-        $A.util.removeClass(benefits, 'popup');
-        
-        var showMore = component.find("show-more-benefits-button");
-        $A.util.removeClass(showMore, 'slds-hide');
-        var showLess = component.find("show-less-benefits-button");
-        $A.util.addClass(showLess, 'slds-hide');
-        $A.util.removeClass(showLess, 'popup-button');
     }
 })
