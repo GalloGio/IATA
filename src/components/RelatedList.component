@@ -23,7 +23,7 @@
     <apex:includeScript value="{!$Resource.jquery2_1_4}"/>
 
     <script>
-        
+
         function updateSelected(className, value) {
 
             // loop all rows
@@ -31,10 +31,19 @@
                 // on a row, find the checkbox and change the values if it's checked
                 if($(this).find(".selectedCheckbox").prop("checked")) {
                     $(this).find("."+className).val(value);
-                } 
+                }
             });
         }
-    
+
+        function selectAll() {
+
+            // loop all rows
+            $(".targetTable tbody tr").each(function() {
+                // on a row, find the checkbox and change the values to checked
+                $(this).find(".selectedCheckbox").prop("checked", true);
+            });
+        }
+
         function redirectNew() {
             window.location.href = "{!urlForNewRecord}";
 
@@ -53,7 +62,8 @@
             <apex:commandButton value="Edit All" action="{!changeInlineEditMode}" rendered="{!AND(NOT(ISNULL(updatableFields)),updatableFields.size > 0,showUpdateButton, NOT(inlineEditMode), NOT(defaultEditAll))}" rerender="pageBlock" styleClass="btn commandButton"></apex:commandButton>
             <!-- Show 'Save' and 'Cancel' buttons if inlineEditeMode is set to true -->
             <apex:commandButton value="Save" onclick="if(!confirm('Are you sure?')) return false;" action="{!updateRecords}" rendered="{!inlineEditMode}" rerender="pageBlock" styleClass="btn commandButton"></apex:commandButton>
-            <apex:commandButton value="Cancel" action="{!cancelChanges}" rendered="{!inlineEditMode}" styleClass="btn commandButton"></apex:commandButton>
+            <apex:commandButton value="Close" action="{!cancelChanges}" rendered="{!inlineEditMode}" styleClass="btn commandButton"></apex:commandButton>
+            <apex:commandButton value="Select All" onclick="selectAll();" reRender="false"></apex:commandButton>
         </apex:pageBlockButtons>
 
         <!-- Output error/warning messages here -->
@@ -96,7 +106,7 @@
             <apex:column headerValue="Select" rendered="{!massUpdateValues && inLineEditMode}">
                 <input id="{!r['Id']}" class="selectedCheckbox" type="checkbox" value="false"/>
             </apex:column>
-            
+
             <!-- Loop through list of field names to dynamically render the correct columns -->
             <apex:repeat value="{!fieldNames}" var="fld">
                 <!-- Set correct style alignment based on values stored in fieldAlignMap -->
