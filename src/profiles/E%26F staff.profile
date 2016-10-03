@@ -22466,14 +22466,14 @@
         <field>EF_Billing_Agreement__c.Payment_Terms_Code__c</field>
         <readable>true</readable>
     </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>EF_Billing_Agreement__c.Payment_Terms__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
 	<fieldPermissions>
         <editable>false</editable>
         <field>EF_Billing_Agreement__c.Base_URL__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>EF_Billing_Agreement__c.Contract_Payment_Terms__c</field>
         <readable>true</readable>
     </fieldPermissions>
 	<fieldPermissions>
