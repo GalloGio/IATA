@@ -125,7 +125,7 @@ public with sharing class AMS_MigrationToolHelper {
 
 			cont.migrated = true;
 			cont.processing = false;
-			cont.errorMessage = 'Could not match case reason from case ('+caseToProcess.Reason1__c+') with type of process to be run.';
+			cont.errorMessage = 'Could not match case  reason from case ('+caseToProcess.Reason1__c+') with type of process to be run.';
 			
 			return cont;
 		}
