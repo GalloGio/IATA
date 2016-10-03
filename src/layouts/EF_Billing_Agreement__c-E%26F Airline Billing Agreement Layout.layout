@@ -89,11 +89,11 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>Payment_Terms_Code__c</field>
+                <field>Contract_Payment_Terms__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Required</behavior>
-                <field>Payment_Terms__c</field>
+                <behavior>Readonly</behavior>
+                <field>Payment_Terms_Code__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>

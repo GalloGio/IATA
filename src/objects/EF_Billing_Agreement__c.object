@@ -118,6 +118,18 @@
         <type>Lookup</type>
     </fields>
     <fields>
+        <fullName>Contract_Payment_Terms__c</fullName>
+        <description>E&amp;F Contract Payment Terms</description>
+        <externalId>false</externalId>
+        <formula>TEXT(Contract__r.EF_Payment_Terms__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Payment Terms</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Contract__c</fullName>
         <externalId>false</externalId>
         <label>Contract</label>
@@ -326,39 +338,13 @@
     <fields>
         <fullName>Payment_Terms_Code__c</fullName>
         <externalId>false</externalId>
-        <formula>IF(
-	ISPICKVAL(Payment_Terms__c, &apos;Payable immediately due net&apos;), &apos;0001&apos;,
-	IF(
-		ISPICKVAL(Payment_Terms__c, &apos;30 days after invoice date&apos;), &apos;0011&apos;,
-		IF(
-			ISPICKVAL(Payment_Terms__c, &apos;10 days after invoice date&apos;), &apos;0012&apos;,
-			IF(
-				ISPICKVAL(Payment_Terms__c, &apos;15 days after invoice date&apos;), &apos;0013&apos;,
-				IF(
-					ISPICKVAL(Payment_Terms__c, &apos;20 days after invoice date&apos;), &apos;0018&apos;,
-					IF(
-						ISPICKVAL(Payment_Terms__c, &apos;07 days after invoice date&apos;), &apos;Z007&apos;,
-						&apos;&apos;
-					)
-				)
-			)
-		)
-	)
-)</formula>
+        <formula>Contract__r.EF_Payment_Terms_Code__c</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Payment Terms Code</label>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>Payment_Terms__c</fullName>
-        <externalId>false</externalId>
-        <globalPicklist>EF_Payment_Terms</globalPicklist>
-        <label>Payment Terms</label>
-        <trackTrending>false</trackTrending>
-        <type>Picklist</type>
     </fields>
     <fields>
         <fullName>Requested_Changes__c</fullName>

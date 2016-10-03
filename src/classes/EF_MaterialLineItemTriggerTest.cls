@@ -157,12 +157,12 @@ public class EF_MaterialLineItemTriggerTest {
                 Status__c = 'Active',
                 Billing_Currency__c = 'AED',
                 Payment_Currency__c = 'AED',
-                Payment_Terms__c = '30 days after invoice date',
+                //Payment_Terms__c = '30 days after invoice date',
                 Invoice_Distribution_Method__c = 'Electronic Via Platform'           
             );
             
             insert rel;    
-    		
+            
             List <EF_Material_Line_Item__c> mliList = new List <EF_Material_Line_Item__c> ();
             EF_Material_Line_Item__c mli = new EF_Material_Line_Item__c(
                 RecordTypeId = Schema.SObjectType.EF_Material_Line_Item__c.getRecordTypeInfosByName().get('Contract Line Item').getRecordTypeId(),
