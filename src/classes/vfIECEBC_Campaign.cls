@@ -9,9 +9,10 @@ public class vfIECEBC_Campaign extends vfIECEBC_Controller {
 		get{
 			if (numberOfRecipients == null) {
 				HttpRequest req = new HttpRequest();
-				req.setEndpoint(IECEBC_Utility.ebcSetup.E_Commerce_Base_Url__c + '/services/apexrest/RecipientsCount/' + campaign.EBC_Master_Filter__c);
+				//req.setEndpoint(IECEBC_Utility.ebcSetup.E_Commerce_Base_Url__c + '/services/apexrest/RecipientsCount/' + campaign.EBC_Master_Filter__c);
+				req.setEndpoint(IECEBC_Utility.ebcSetup.E_Commerce_Base_Url__c + '/IECEBC_RecipientCount?id=' + campaign.EBC_Master_Filter__c);
 				req.setMethod('GET');
-				req.setHeader('Authorization', 'OAuth ' + UserInfo.getSessionId());
+				//req.setHeader('Authorization', 'OAuth ' + UserInfo.getSessionId());
 				
 				Http http = new Http();
 				HTTPResponse res = http.send(req);

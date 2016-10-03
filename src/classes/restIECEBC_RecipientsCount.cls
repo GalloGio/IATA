@@ -16,4 +16,12 @@ global without sharing class restIECEBC_RecipientsCount {
         
         return Integer.valueOf(Database.Query(cntQuery)[0].get('expr0'));
     }
+    
+    public Integer getCount() {
+        String masterFilterId = ApexPages.currentPage().getParameters().get('id');
+        
+        String cntQuery = IECEBC_Utility.getSOQLFromMasterFilter(null, masterFilterId);
+        
+        return Integer.valueOf(Database.Query(cntQuery)[0].get('expr0'));
+    }
 }
