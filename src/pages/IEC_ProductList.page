@@ -137,6 +137,8 @@
                                                     oncomplete="javascript:matchHeight2();"/>
                                             </div>
                                         </div>
+
+                                        <apex:actionFunction name="backButonRefine" reRender="main_container" action="{!refine}" status="sortByStatus" oncomplete="javascript:matchHeight2();" />
                                     </apex:form>
                                 </section>
                             </div>
@@ -250,7 +252,7 @@
                                             <apex:variable var="firstDot" value="{!0}" />
                                             <apex:repeat value="{!pages}" var="page">
                                                 <apex:variable value="1" var="displayedPages" rendered="{!OR(page<=max, page>pages.size-max,page==currentPageNumber)}">
-                                                    <li class="page-number{!IF(currentPageNumber==page,' selected','')}"><a href="javascript:gotoPage({!page});">{!page}</a></li>
+                                                    <li class="page-number{!IF(currentPageNumber==page,' selected','')}"><a href="javascript:jsGotoPage({!page});">{!page}</a></li>
                                                 </apex:variable>
                                                 <apex:variable value="1" var="dots" rendered="{!AND(page==max+1,page!=currentPageNumber, currentPageNumber<=pages.size-max)}">
                                                     <apex:variable var="firstDot" value="{!page}" />
@@ -281,7 +283,7 @@
                                         <ol class="list page-number">
                                             <apex:repeat value="{!pages}" var="page">
                                                 <apex:variable value="1" var="displayedPages" rendered="{!OR(page<=max, page>pages.size-max,page==currentPageNumber)}">
-                                                    <li class="page-number{!IF(currentPageNumber==page,' selected','')}"><a href="javascript:gotoPage({!page});">{!page}</a></li>
+                                                    <li class="page-number{!IF(currentPageNumber==page,' selected','')}"><a href="javascript:jsGotoPage({!page});">{!page}</a></li>
                                                 </apex:variable>
                                                 <apex:variable value="1" var="dots" rendered="{!AND(page==max+1,page!=currentPageNumber, currentPageNumber<=pages.size-max)}">
                                                     <apex:variable var="firstDot" value="{!page}" />
@@ -305,6 +307,10 @@
                                 </div>
 
                             </apex:outputPanel>
+
+                            <apex:form >
+                                <apex:inputHidden id="pageNumber" value="{!pageNumber}" />
+                            </apex:form>
 
                         </div>
                     </main>
@@ -337,15 +343,33 @@
                     });
                 }
 
-                $(document).ready(function(){
-                    
-                    /*$(window).resize(function() {
-                        var viewport = $('body').attr('data-media-size');
-                        console.log('viewport::'+viewport);
-                    });*/
+                //Reload page with selected filters
+                var jsBackButonRefine = function(){
+                    backButonRefine();
+                }
 
+                //Go to the giving page number
+                var jsGotoPage = function(page){
+                    $('input[id$=pageNumber]').val(page);
+                    gotoPage(page);
+                }
+
+                $(document).ready(function(){
+
+                    //If selected filters are not empty
+                    var selectedFieltersVal = $('input[id$=selectedFilters]').val();
+                    if(selectedFieltersVal != ''){
+                        jsBackButonRefine();
+                    }
+
+                    //If the page number is not empty go the the page number
+                    var pageNumber = $('input[id$=pageNumber]').val();
+                    if(pageNumber != ''){
+                        gotoPage(pageNumber);
+                    }
+                    
                     $('body').bind('change', function(eventObject){
-                        console.log(eventObject);
+                        //console.log(eventObject);
                     });
 
 
@@ -353,6 +377,8 @@
 
                     var updateSelectedFilters = function(){
                         
+                        console.log('in updateSelectedFilters');
+
                         selected_filters = [];
                         $(".frmFilters input[type='checkbox']:checked").each(function(idx, item){
                             selected_filters.push($(item).val());
