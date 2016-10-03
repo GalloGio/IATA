@@ -2917,6 +2917,33 @@
         <template>SCESIDRACases/DEF_DEFWITH01_DefaultWithdrawalProposedbyCM</template>
     </alerts>
     <alerts>
+        <fullName>SIDRA_IRIS_CLIENT_BALANCE</fullName>
+        <description>SIDRA_IRIS_CLIENT_BALANCE</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>SIDRA ACC &amp; Risk</recipient>
+            <type>caseTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>SIDRA ACC &amp; Risk &amp; LO</recipient>
+            <type>caseTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>SIDRA Approvals &amp; ACC &amp; Risk</recipient>
+            <type>caseTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>SIDRA LO &amp; RISK</recipient>
+            <type>caseTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>SIDRA RISK</recipient>
+            <type>caseTeam</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>unfiled$public/IRIS_Client_Balance</template>
+    </alerts>
+    <alerts>
         <fullName>SIDRA_IRRDEF02_IrregularityDefaultapprovedby2hoursMailtoRSESPTCY</fullName>
         <description>SIDRA_IRR/DEF02_Irregularity/Default approved by 2 hours - Mail to R&amp;S - ES - PT - CY</description>
         <protected>false</protected>
@@ -17017,6 +17044,17 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
             <value>Israel</value>
         </criteriaItems>
         <description>SCE</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>SIDRA_IRIS_Client_Balance</fullName>
+        <actions>
+            <name>SIDRA_IRIS_CLIENT_BALANCE</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <description>Sending notifications to ARM when R&amp;S update the IRIS Client balance</description>
+        <formula>AND ((RecordType.Name = &quot;SIDRA&quot;), AND(NOT(ISBLANK(IRIS_Client_Balance__c))))</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
