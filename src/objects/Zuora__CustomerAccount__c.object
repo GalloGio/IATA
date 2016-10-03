@@ -1187,7 +1187,7 @@ This should be set by calling Payment for renewal.</inlineHelpText>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>addon report</fullName>
+                <fullName>addon reporting</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
