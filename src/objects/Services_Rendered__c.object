@@ -200,7 +200,7 @@
         <picklist>
             <picklistValues>
                 <fullName>Active</fullName>
-                <default>false</default>
+                <default>true</default>
             </picklistValues>
             <picklistValues>
                 <fullName>Inactive</fullName>
