@@ -245,7 +245,7 @@ public class vfIECEBC extends IECPageController {
 				, Zuora__Subscription__r.Zuora__Status__c
 				, Zuora__Subscription__r.Zuora__SubscriptionEndDate__c
 				, Zuora__Subscription__r.Zuora__TermEndDate__c
-				
+				, Zuora__Subscription__r.Zuora__Zuora_Id__c 
 				, Zuora__Subscription__r.Product_Rate_Plan_Information__r.Product_Rate_Plan__c
 				, Zuora__Subscription__r.Product_Rate_Plan_Information__r.Product_Rate_Plan__r.Id
 				, Zuora__Subscription__r.Product_Rate_Plan_Information__r.Product_Rate_Plan__r.Name
@@ -318,7 +318,7 @@ public class vfIECEBC extends IECPageController {
 				, Zuora__Subscription__r.Zuora__Status__c
 				, Zuora__Subscription__r.Zuora__SubscriptionEndDate__c
 				, Zuora__Subscription__r.Zuora__TermEndDate__c
-				
+				, Zuora__Subscription__r.Zuora__Zuora_Id__c 
 				, Zuora__Subscription__r.Product_Rate_Plan_Information__r.Product_Rate_Plan__c
 				, Zuora__Subscription__r.Product_Rate_Plan_Information__r.Product_Rate_Plan__r.Id
 				, Zuora__Subscription__r.Product_Rate_Plan_Information__r.Product_Rate_Plan__r.Name

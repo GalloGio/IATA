@@ -1,37 +1,6 @@
 .THIS .hidden{
   display: none;
 }
-.THIS .popup, .THIS .popup-button {
-  position: relative;;
-  z-index: 10;
-}
-.THIS .popup {
-  width: 130%;
-  left: -30%;
-  border: 2px solid black;
-  background: white;
-  white-space: normal;
-}
 .THIS textarea {
   width: 90%;
-}
-
-.THIS .slds-truncate {
-  max-width: 100% !important;
-    max-height: 3em;
-  white-space: normal !important;
-}
-.THIS .width100pc {
-  width: 100%;
-}
-.THIS .show-more-button {
-    position: absolute !important;
-    right: 0%;
-    bottom: 0%;
-}
-.THIS .slds-popover {
-    position: absolute !important;
-    top: 90px;
-    left: 4px;
-    white-space: normal;
 }

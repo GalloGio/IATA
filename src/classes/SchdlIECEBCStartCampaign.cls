@@ -21,10 +21,11 @@ global class SchdlIECEBCStartCampaign implements Database.Batchable<sObject>, Da
         set;
     }
     public String templateExternalId;
+    public EBC_Campaign__c c;
     
     // Batchable 
     global Database.QueryLocator start(Database.BatchableContext BC){
-        EBC_Campaign__c c = [Select Id, Name, Subject__c, EBC_Design__c, Billing_Account__c, From_Name__c, Is_Google_Analytics_Tracker_Active__c, Google_Analytics_Tracking_Code__c, Send_Datetime__c From EBC_Campaign__c Where Id = :campaignId];
+        c = [Select Id, Name, Subject__c, EBC_Design__c, Billing_Account__c, Billing_Account__r.Name, From_Name__c, Is_Google_Analytics_Tracker_Active__c, Google_Analytics_Tracking_Code__c, Send_Datetime__c From EBC_Campaign__c Where Id = :campaignId];
         
         String senderProfileCustomerKey = c.Id + '_'+IECEBC_Utility.generateRandomString(11);
         
@@ -67,14 +68,16 @@ global class SchdlIECEBCStartCampaign implements Database.Batchable<sObject>, Da
                 newPreviousBatchEmail.add(a.Email_Address__c);
                 
                 if (previousBatchEmail.contains(a.Email_Address__c) || currentBatchEmail.contains(a.Email_Address__c)) continue;
-                    
                 
                 params.put(campaignId + '_' + a.Email_Address__c, new Map<String, String>{
                     'SFID' => a.Id,
+                    'CAMPAIGN_ID_ENC' => IECUtil.EncryptEncodeParameter(campaignId),
                     'CAMPAIGN_ID' => campaignId,
+                    'EMAIL_ENC' => IECUtil.EncryptEncodeParameter(a.Email_Address__c),
                     'EMAIL' => a.Email_Address__c,
+                    'BILLINGACCOUNT_ID_ENC' => IECUtil.EncryptEncodeParameter(c.Billing_Account__c),
+                    'BILLINGACCOUNT_NAME_ENC' => IECUtil.EncryptEncodeParameter(c.Billing_Account__r.Name),
                     'AGENCY_NAME' => a.Trading_Name__c,
-                        
                     'AGENCY_STATE' => a.State_Province__c,
                     'AGENCY_COUNTRY' => a.Country_Name__c,
                     'AGENCY_ACCREDITATIONCLASS' => a.Accreditation_Class__c,
@@ -87,10 +90,17 @@ global class SchdlIECEBCStartCampaign implements Database.Batchable<sObject>, Da
                 newPreviousBatchEmail.add(a.Email__c);
                 if (previousBatchEmail.contains(a.Email__c) || currentBatchEmail.contains(a.Email__c)) continue;
                 
+                String token;
+                
                 params.put(campaignId + '_' + a.Email__c, new Map<String, String>{
                     'SFID' => a.Id,
+                    'TOKEN' => token,
+                    'CAMPAIGN_ID_ENC' => IECUtil.EncryptEncodeParameter(campaignId),
                     'CAMPAIGN_ID' => campaignId,
+                    'EMAIL_ENC' => IECUtil.EncryptEncodeParameter(a.Email__c),
                     'EMAIL' => a.Email__c,
+                    'BILLINGACCOUNT_ID_ENC' => IECUtil.EncryptEncodeParameter(c.Billing_Account__c),
+                    'BILLINGACCOUNT_NAME_ENC' => IECUtil.EncryptEncodeParameter(c.Billing_Account__r.Name),
                     'AGENCY_NAME' => a.Agency_Name__c,
                     'AGENT_FIRSTNAME' => a.FirstName__c,
                     'AGENT_LASTNAME' => a.LastName__c
@@ -144,7 +154,7 @@ global class SchdlIECEBCStartCampaign implements Database.Batchable<sObject>, Da
     
     // Schedulable
     public static void executeSingle() {
-        List<EBC_Campaign__c> campaigns = [Select Id, EBC_Master_Filter__c, Audience__c, EBC_Design__r.External_Id__c From EBC_Campaign__c Where OwnerId = '0058E000001Lwad' AND Status__c = 'APPROVED' AND (Scheduled_Date__c <= :Datetime.now() or Scheduled_Date__c = null)];
+        List<EBC_Campaign__c> campaigns = [Select Id, EBC_Master_Filter__c, Audience__c, EBC_Design__r.External_Id__c From EBC_Campaign__c Where Status__c = 'APPROVED' AND (Scheduled_Date__c <= :Datetime.now() or Scheduled_Date__c = null)];
         for(EBC_Campaign__c campaign : campaigns) {
             campaign.Status__c = 'STARTED';
             campaign.Send_Datetime__c = Datetime.now();

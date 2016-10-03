@@ -8,7 +8,7 @@ private class EF_AccountTriggerHandlerTest {
         User u = EF_TestDataFactory.getEfProfileAndRole(0,2);
         EF_TestDataFactory.createCustomSettings();
 
-    	System.runAs(u){
+        System.runAs(u){
             //create parent client account
             Account parentClient = new Account(
                 Name='Test Account Parent Client',
@@ -171,36 +171,31 @@ private class EF_AccountTriggerHandlerTest {
     }
 
     static testMethod void testHandleAfterUpdate() {
+        Account parent = [select Id, Name, EF_Status__c from Account where Name = 'Test Account Parent Client'];
 
-        User testUser = [SELECT Id FROM User WHERE EF_User_Role__c =:'Head, Client Services' LIMIT 1][0];
+        parent.EF_Status__c = 'Inactive';
 
-        System.runAs(testUser){
+        Test.startTest();
+        update parent;
+        Test.stopTest();
 
-            Account parent = [select Id, Name, EF_Status__c from Account where Name = 'Test Account Parent Client'];
+        Account child = [select Id, Name, EF_Status__c from Account where Name = 'Test Account Child Client'];
+        System.assertEquals(child.EF_Status__c, 'Inactive');
 
-            parent.EF_Status__c = 'Inactive';
-
-            Test.startTest();
-            update parent;
-            Test.stopTest();
-
-            Account child = [select Id, Name, EF_Status__c from Account where Name = 'Test Account Child Client'];
-            System.assertEquals(child.EF_Status__c, 'Inactive');
-
-            List<Contract> contracts = [select Id, EF_Status__c from Contract];
-            for(Contract contract : contracts){
-            	System.assertEquals(contract.EF_Status__c, 'Inactive');
-            }
-
-            List<EF_Billing_Agreement__c> billingAgreements = [select Id, Status__c from EF_Billing_Agreement__c];
-            for(EF_Billing_Agreement__c billingAgreement : billingAgreements){
-                System.assertEquals(billingAgreement.Status__c, 'Inactive');
-            }
-
-            List<EF_Contact_Relationship__c> relationships = [select Id, Status__c from EF_Contact_Relationship__c];
-            for(EF_Contact_Relationship__c relationship : relationships){
-                System.assertEquals(relationship.Status__c, 'Inactive');
-            }
+        List<Contract> contracts = [select Id, EF_Status__c from Contract];
+        for(Contract contract : contracts){
+            System.assertEquals(contract.EF_Status__c, 'Inactive');
         }
+
+        List<EF_Billing_Agreement__c> billingAgreements = [select Id, Status__c from EF_Billing_Agreement__c];
+        for(EF_Billing_Agreement__c billingAgreement : billingAgreements){
+            System.assertEquals(billingAgreement.Status__c, 'Inactive');
+        }
+
+        List<EF_Contact_Relationship__c> relationships = [select Id, Status__c from EF_Contact_Relationship__c];
+        for(EF_Contact_Relationship__c relationship : relationships){
+            System.assertEquals(relationship.Status__c, 'Inactive');
+        }
+        
     }
 }

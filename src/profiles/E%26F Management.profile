@@ -43168,8 +43168,8 @@
         <visible>false</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
-        <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
+        <default>false</default>
+        <personAccountDefault>false</personAccountDefault>
         <recordType>Case.YMQCustomerCare</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>

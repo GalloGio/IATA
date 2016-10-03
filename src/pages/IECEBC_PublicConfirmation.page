@@ -1,0 +1,35 @@
+<apex:page controller="vfIECEBC_OptOut" cache="false" docType="html-5.0" applyHtmlTag="false" applyBodyTag="false" sidebar="false" showheader="false" standardStylesheets="false">
+    
+    <apex:composition template="IECEBC_LayoutPublic">
+        <apex:define name="pageHeadAdditions">
+            <!-- Start of Page <head> -->
+            <title>Confirmation - IATA eBroadcast</title>
+            <!-- End of Page </head> -->
+        </apex:define>
+        <apex:define name="pageScriptAdditions">
+            <!-- If any page specific .js, add them here -->
+        </apex:define>
+        <apex:define name="pageContent">
+            <!--
+            <div class="message-container">
+                <div class="inner-wrapper">
+                    <p>
+                        Static Marketing text goes here to explain what eBroadcast is and try to retain subscribers. <br />
+                        Aliquam quis tristique lectus. Morbi nibh libero, facilisis nec luctus a, eleifend sit amet risus.
+                    </p>
+                </div>
+            </div>
+-->
+            <div class="inner-wrapper">
+                <div class="group-container confirmation">
+                    <h1 class="page-title">Confirmation</h1>
+                    <div class="confirmation-box">
+                        <p>Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam quis risus eget urna mollis ornare vel eu leo. Donec sed odio dui.</p>
+                        <a href="#">Lorem ipsum dolor sit amet</a>
+                    </div>
+                </div>
+            </div>
+            <!-- End of Page Content -->
+        </apex:define>
+    </apex:composition>
+</apex:page>

@@ -85,6 +85,55 @@
         <type>Lookup</type>
     </fields>
     <fields>
+        <fullName>Bounced24Hours__c</fullName>
+        <description>The number of bounced during the first 24 hours</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The number of bounced during the first 24 hours</inlineHelpText>
+        <label>Bounced 24 Hours</label>
+        <summarizedField>EBC_Campaign_Email_Tracking__c.NumberBounced__c</summarizedField>
+        <summaryFilterItems>
+            <field>EBC_Campaign_Email_Tracking__c.Rank__c</field>
+            <operation>lessOrEqual</operation>
+            <value>24</value>
+        </summaryFilterItems>
+        <summaryForeignKey>EBC_Campaign_Email_Tracking__c.EBC_Campaign__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Bounced48Hours__c</fullName>
+        <description>The number of bounced during the first 48 hours</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The number of bounced during the first 48 hours</inlineHelpText>
+        <label>Bounced48Hours</label>
+        <summarizedField>EBC_Campaign_Email_Tracking__c.NumberBounced__c</summarizedField>
+        <summaryFilterItems>
+            <field>EBC_Campaign_Email_Tracking__c.Rank__c</field>
+            <operation>lessOrEqual</operation>
+            <value>48</value>
+        </summaryFilterItems>
+        <summaryForeignKey>EBC_Campaign_Email_Tracking__c.EBC_Campaign__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Bounced7Days__c</fullName>
+        <description>The number of bounced during the first 7 days</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The number of bounced during the first 7 days</inlineHelpText>
+        <label>Bounced7Days</label>
+        <summarizedField>EBC_Campaign_Email_Tracking__c.NumberBounced__c</summarizedField>
+        <summaryForeignKey>EBC_Campaign_Email_Tracking__c.EBC_Campaign__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
         <fullName>Campaign_ID__c</fullName>
         <description>The unique campaign ID</description>
         <displayFormat>C-{0000000}</displayFormat>
@@ -94,6 +143,135 @@
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>AutoNumber</type>
+    </fields>
+    <fields>
+        <fullName>ClickRate24Hours__c</fullName>
+        <description>The click rate (Unique clicks / Delivered) first 24 hours</description>
+        <externalId>false</externalId>
+        <formula>if(Delivered24Hours__c != 0, UniqueClicks24Hours__c /  Delivered24Hours__c, null)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>The click rate (Unique clicks / Delivered) first 24 hours</inlineHelpText>
+        <label>Click Rate 24 Hours</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>ClickRate48Hours__c</fullName>
+        <description>The click rate (Unique clicks / Delivered) first 48 hours</description>
+        <externalId>false</externalId>
+        <formula>IF(Delivered48Hours__c != 0, UniqueClicks48Hours__c /  Delivered48Hours__c, null)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>The click rate (Unique clicks / Delivered) first 48 hours</inlineHelpText>
+        <label>Click Rate 48 Hours</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>ClickRate7Days__c</fullName>
+        <description>The click rate (Unique clicks / Delivered) first 7 days</description>
+        <externalId>false</externalId>
+        <formula>if(Delivered7Days__c != 0, UniqueClicks7Days__c /  Delivered7Days__c, null)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>The click rate (Unique clicks / Delivered) first 7 days</inlineHelpText>
+        <label>Click Rate 7 Days</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>Clicks24Hours__c</fullName>
+        <description>The number of clicks first 24 hours</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The number of clicks first 24 hours</inlineHelpText>
+        <label>Clicks24Hours</label>
+        <summarizedField>EBC_Campaign_Email_Tracking__c.NumberofClicks__c</summarizedField>
+        <summaryFilterItems>
+            <field>EBC_Campaign_Email_Tracking__c.Rank__c</field>
+            <operation>lessOrEqual</operation>
+            <value>24</value>
+        </summaryFilterItems>
+        <summaryForeignKey>EBC_Campaign_Email_Tracking__c.EBC_Campaign__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Clicks48Hours__c</fullName>
+        <description>The number of clicks first 48 hours</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The number of clicks first 48 hours</inlineHelpText>
+        <label>Clicks48Hours</label>
+        <summarizedField>EBC_Campaign_Email_Tracking__c.NumberofClicks__c</summarizedField>
+        <summaryFilterItems>
+            <field>EBC_Campaign_Email_Tracking__c.Rank__c</field>
+            <operation>lessOrEqual</operation>
+            <value>48</value>
+        </summaryFilterItems>
+        <summaryForeignKey>EBC_Campaign_Email_Tracking__c.EBC_Campaign__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Delivered24Hours__c</fullName>
+        <description>The number of delivered (sent - bounced) first 24 hours</description>
+        <externalId>false</externalId>
+        <formula>Sent24Hours__c -  Bounced24Hours__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>The number of delivered (sent - bounced) first 24 hours</inlineHelpText>
+        <label>Delivered 24 Hours</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Delivered48Hours__c</fullName>
+        <description>The number of delivered (sent - bounced) first 48 hours</description>
+        <externalId>false</externalId>
+        <formula>Sent48Hours__c -  Bounced48Hours__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>The number of delivered (sent - bounced) first 48 hours</inlineHelpText>
+        <label>Delivered 48 Hours</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Delivered7Days__c</fullName>
+        <description>The number of delivered (sent - bounced) first 7 days</description>
+        <externalId>false</externalId>
+        <formula>NumberSent__c -  Bounced7Days__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>The number of delivered (sent - bounced) first 7 days</inlineHelpText>
+        <label>Delivered7Days</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>EBC_Design__c</fullName>
@@ -142,7 +320,9 @@ The value is determined by ExactTarget, and this is is only populated once a cam
     </fields>
     <fields>
         <fullName>External_Id__c</fullName>
+        <description>Latest Triggered Send Id used. Source: Exact Target</description>
         <externalId>true</externalId>
+        <inlineHelpText>Latest Triggered Send Id used. Source: Exact Target</inlineHelpText>
         <label>External Id</label>
         <length>255</length>
         <required>false</required>
@@ -384,7 +564,9 @@ The value is determined by ExactTarget, and this is is only populated once a cam
     <fields>
         <fullName>Number_of_Recipients__c</fullName>
         <defaultValue>0</defaultValue>
+        <description>Total number of recipients</description>
         <externalId>false</externalId>
+        <inlineHelpText>Total number of recipients</inlineHelpText>
         <label>Number of Recipients</label>
         <precision>18</precision>
         <required>false</required>
@@ -393,6 +575,32 @@ The value is determined by ExactTarget, and this is is only populated once a cam
         <trackTrending>false</trackTrending>
         <type>Number</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Number_of_Unique_Clicks__c</fullName>
+        <description>Total number of unique clicks</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Total number of unique clicks</inlineHelpText>
+        <label>Number of Unique Clicks</label>
+        <summarizedField>EBC_Campaign_Email_Tracking__c.NumberofUniqueClicks__c</summarizedField>
+        <summaryForeignKey>EBC_Campaign_Email_Tracking__c.EBC_Campaign__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Number_of_Unique_Opens__c</fullName>
+        <description>Total number of unique opening</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Total number of unique opening</inlineHelpText>
+        <label>Number of Unique Opens</label>
+        <summarizedField>EBC_Campaign_Email_Tracking__c.NumberofUniqueOpens__c</summarizedField>
+        <summaryForeignKey>EBC_Campaign_Email_Tracking__c.EBC_Campaign__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
     </fields>
     <fields>
         <fullName>NumberofClicks__c</fullName>
@@ -414,6 +622,87 @@ The value is determined by ExactTarget, and this is is only populated once a cam
         <inlineHelpText>Total number of opening</inlineHelpText>
         <label>Number of Opens</label>
         <summarizedField>EBC_Campaign_Email_Tracking__c.NumberofOpens__c</summarizedField>
+        <summaryForeignKey>EBC_Campaign_Email_Tracking__c.EBC_Campaign__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>OpenRate24Hours__c</fullName>
+        <description>The open rate (unique opens / delivered) first 24 hours</description>
+        <externalId>false</externalId>
+        <formula>IF(Delivered24Hours__c !=0, UniqueOpens24Hours__c  /  Delivered24Hours__c, null)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>The open rate (unique opens / delivered) first 24 hours</inlineHelpText>
+        <label>Open Rate 24 Hours</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>OpenRate48Hours__c</fullName>
+        <description>The open rate (unique opens / delivered) first 48 hours</description>
+        <externalId>false</externalId>
+        <formula>if(Delivered48Hours__c !=0, UniqueOpens48Hours__c /  Delivered48Hours__c, null)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>The open rate (unique opens / delivered) first 48 hours</inlineHelpText>
+        <label>Open Rate 48 Hours</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>OpenRate7Days__c</fullName>
+        <description>The open rate (unique opens / delivered) first 7 days</description>
+        <externalId>false</externalId>
+        <formula>if(Delivered7Days__c !=0, UniqueOpens7Days__c /  Delivered7Days__c, null)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>The open rate (unique opens / delivered) first 7 days</inlineHelpText>
+        <label>Open Rate 7 Days</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>Opens24Hours__c</fullName>
+        <description>The number of Opens during first 24 hours</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The number of Opens during first 24 hours</inlineHelpText>
+        <label>Opens 24 Hours</label>
+        <summarizedField>EBC_Campaign_Email_Tracking__c.NumberofOpens__c</summarizedField>
+        <summaryFilterItems>
+            <field>EBC_Campaign_Email_Tracking__c.Rank__c</field>
+            <operation>lessOrEqual</operation>
+            <value>24</value>
+        </summaryFilterItems>
+        <summaryForeignKey>EBC_Campaign_Email_Tracking__c.EBC_Campaign__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Opens48Hours__c</fullName>
+        <description>The number of Opens during first 48 hours</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The number of Opens during first 48 hours</inlineHelpText>
+        <label>Opens48Hours</label>
+        <summarizedField>EBC_Campaign_Email_Tracking__c.NumberofOpens__c</summarizedField>
+        <summaryFilterItems>
+            <field>EBC_Campaign_Email_Tracking__c.Rank__c</field>
+            <operation>lessOrEqual</operation>
+            <value>48</value>
+        </summaryFilterItems>
         <summaryForeignKey>EBC_Campaign_Email_Tracking__c.EBC_Campaign__c</summaryForeignKey>
         <summaryOperation>sum</summaryOperation>
         <trackHistory>false</trackHistory>
@@ -452,6 +741,42 @@ The value is determined by ExactTarget, and this is is only populated once a cam
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Sent24Hours__c</fullName>
+        <description>The number of sent emails during the first 24 hours</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The number of sent emails during the first 24 hours</inlineHelpText>
+        <label>Sent24Hours</label>
+        <summarizedField>EBC_Campaign_Email_Tracking__c.NumberSent__c</summarizedField>
+        <summaryFilterItems>
+            <field>EBC_Campaign_Email_Tracking__c.Rank__c</field>
+            <operation>lessOrEqual</operation>
+            <value>24</value>
+        </summaryFilterItems>
+        <summaryForeignKey>EBC_Campaign_Email_Tracking__c.EBC_Campaign__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Sent48Hours__c</fullName>
+        <description>The number of sent emails during the first 48 hours</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The number of sent emails during the first 48 hours</inlineHelpText>
+        <label>Sent48Hours</label>
+        <summarizedField>EBC_Campaign_Email_Tracking__c.NumberSent__c</summarizedField>
+        <summaryFilterItems>
+            <field>EBC_Campaign_Email_Tracking__c.Rank__c</field>
+            <operation>lessOrEqual</operation>
+            <value>48</value>
+        </summaryFilterItems>
+        <summaryForeignKey>EBC_Campaign_Email_Tracking__c.EBC_Campaign__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
     </fields>
     <fields>
         <fullName>Status__c</fullName>
@@ -556,9 +881,109 @@ E.g. in the last test email was sent last April 1 at 9pm, this stores the total 
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>UniqueClicks24Hours__c</fullName>
+        <description>The number of unique clicks during the first 24 hours</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The number of unique clicks during the first 24 hours</inlineHelpText>
+        <label>Unique Clicks 24 Hours</label>
+        <summarizedField>EBC_Campaign_Email_Tracking__c.NumberofClicks__c</summarizedField>
+        <summaryFilterItems>
+            <field>EBC_Campaign_Email_Tracking__c.Rank__c</field>
+            <operation>lessOrEqual</operation>
+            <value>24</value>
+        </summaryFilterItems>
+        <summaryForeignKey>EBC_Campaign_Email_Tracking__c.EBC_Campaign__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>UniqueClicks48Hours__c</fullName>
+        <description>The number of unique clicks during the first 48 hours</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The number of unique clicks during the first 48 hours</inlineHelpText>
+        <label>Unique Clicks 48 Hours</label>
+        <summarizedField>EBC_Campaign_Email_Tracking__c.NumberofUniqueClicks__c</summarizedField>
+        <summaryFilterItems>
+            <field>EBC_Campaign_Email_Tracking__c.Rank__c</field>
+            <operation>lessOrEqual</operation>
+            <value>48</value>
+        </summaryFilterItems>
+        <summaryForeignKey>EBC_Campaign_Email_Tracking__c.EBC_Campaign__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>UniqueClicks7Days__c</fullName>
+        <description>The number of unique clicks during the first 7 days</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The number of unique clicks during the first 7 days</inlineHelpText>
+        <label>Unique Clicks 7 Days</label>
+        <summarizedField>EBC_Campaign_Email_Tracking__c.NumberofUniqueClicks__c</summarizedField>
+        <summaryForeignKey>EBC_Campaign_Email_Tracking__c.EBC_Campaign__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>UniqueOpens24Hours__c</fullName>
+        <description>The number of unique opens during the first 24 hours</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The number of unique opens during the first 24 hours</inlineHelpText>
+        <label>Unique Opens 24 Hours</label>
+        <summarizedField>EBC_Campaign_Email_Tracking__c.NumberofUniqueOpens__c</summarizedField>
+        <summaryFilterItems>
+            <field>EBC_Campaign_Email_Tracking__c.Rank__c</field>
+            <operation>lessOrEqual</operation>
+            <value>24</value>
+        </summaryFilterItems>
+        <summaryForeignKey>EBC_Campaign_Email_Tracking__c.EBC_Campaign__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>UniqueOpens48Hours__c</fullName>
+        <description>The number of unique opens during the first 48 hours</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The number of unique opens during the first 48 hours</inlineHelpText>
+        <label>Unique Opens 48 Hours</label>
+        <summarizedField>EBC_Campaign_Email_Tracking__c.NumberofUniqueOpens__c</summarizedField>
+        <summaryFilterItems>
+            <field>EBC_Campaign_Email_Tracking__c.Rank__c</field>
+            <operation>lessOrEqual</operation>
+            <value>48</value>
+        </summaryFilterItems>
+        <summaryForeignKey>EBC_Campaign_Email_Tracking__c.EBC_Campaign__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>UniqueOpens7Days__c</fullName>
+        <description>The number of unique opens during the first 7 days</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The number of unique opens during the first 7 days</inlineHelpText>
+        <label>Unique Opens 7 Days</label>
+        <summarizedField>EBC_Campaign_Email_Tracking__c.NumberofUniqueOpens__c</summarizedField>
+        <summaryForeignKey>EBC_Campaign_Email_Tracking__c.EBC_Campaign__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
         <fullName>is7dFollowUpCompleted__c</fullName>
         <defaultValue>false</defaultValue>
+        <description>Indicate if we should continue tracking the campaing or not</description>
         <externalId>false</externalId>
+        <inlineHelpText>Indicate if we should continue tracking the campaing or not</inlineHelpText>
         <label>is7dFollowUpCompleted</label>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>

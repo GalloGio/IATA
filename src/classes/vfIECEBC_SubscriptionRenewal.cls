@@ -24,7 +24,7 @@ public with sharing class vfIECEBC_SubscriptionRenewal extends vfIECEBC_Controll
 	{
 		PageReference paymentPage = goToPaymentPageBase( Page.IECEBC_Payment, EBC_PAYMENT_TARGET_RENEWAL, EBC_PAYMENT_CAMPAIGN_NONE
 							, subscription.Id
-							, null // productRatePlanId
+							, productRatePlan.Id // EBC productRatePlanId
 							, null // campaignId
 							, 0 // emailCreditAmount
 							);

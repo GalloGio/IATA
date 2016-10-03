@@ -11,6 +11,7 @@
   * Version: 1.0
   * History: 
   *   2016-09-11 -sl: initial version prior to move the content of vfIECEBC_TestSuite, no extra insert on createTestUser
+  *   2016-09-30 -sl: update EBC_Setup, create related Product Rate Plan Information and Product Info as part of the set up
   *
   * Public Methods:
   *  - createTestUser()
@@ -33,9 +34,14 @@ public with sharing class IECEBC_TestUtility {
 	public static EBC_Preference__c oEbcPreference {get;private set;}
 	
 	// ========================================================================
+	// zqu_ProductRatePlanCharge__c.zqu__Type__c picklist options
+	private static final String RATE_PLAN_CHARGE_TYPE_ONE_TIME = 'One-Time';
+	private static final String RATE_PLAN_CHARGE_TYPE_RECURRING = 'Recurring';
+	
+	// ========================================================================
 	// EBC Configuration Records
 	// EBC_Setup, EBC Specific Categories, EBC Related Product, 
-	// Product Rate Plan, Product Rate Plan Charge
+	// Product Rate Plan, Product Rate Plan Information, Product Rate Plan Charge
 	//  
 	
 	public static Product_Category__c oEbcProductCategory;
@@ -44,7 +50,9 @@ public with sharing class IECEBC_TestUtility {
 	public static zqu__ZProduct__c oEbcProductAddOnStorage;
 	public static zqu__ZProduct__c oEbcProductAddOnReporting;
 	public static zqu__ZProduct__c oEbcProductEmailBlock;
+	public static zqu__ZProduct__c oEbcProductPayExactAmount;
 	public static List<Product_Information__c> lEbcProductInfo;
+	public static Map<Id,Product_Information__c> mProductIdToProductInfoObj; // map from ZProduct.Id to Product_Information
 	
 	public static zqu__ProductRatePlan__c oEbcPayAsYouGoProductRatePlanMember {get;private set;}	// pay as you go EBC
 	public static zqu__ProductRatePlan__c oEbcPayAsYouGoProductRatePlanNonMember {get;private set;} // pay as you go EBC
@@ -53,10 +61,18 @@ public with sharing class IECEBC_TestUtility {
 	public static List<zqu__ProductRatePlan__c> lEbcProductRatePlanNonMember {get;private set;} // prepaid EBC
 	public static zqu__ProductRatePlan__c oEbcProductRatePlanAddOnStorage {get;private set;} 
 	public static zqu__ProductRatePlan__c oEbcProductRatePlanAddOnReporting {get;private set;}
-	public static List<zqu__ProductRatePlan__c> lEbcProductRatePlanEmailBlock {get;private set;}
+	public static List<Product_Rate_Plan_Information__c> lProductRatePlanInformation {get; private set;} 
+	public static Map<Id,Product_Rate_Plan_Information__c> mProductRatePlanIdToProductRatePlanInformationObj {get; private set;}
 	
+	public static List<zqu__ProductRatePlan__c> lEbcProductRatePlanEmailBlock {get;private set;}
+	public static zqu__ProductRatePlan__c oEbcProductRatePlanPaysExactAmount {get;private set;}
 	public static List<zqu__ProductRatePlanCharge__c> lEbcProductRatePlanCharge {get;private set;}
+	
 	public static EBC_Setup__c oEbcSetup {get;private set;}
+	
+	private static Set<Id> sProductIdWithRecurringFlatCharge {get; private set;}
+	private static Set<Id> sProductIdWithOneTimeFlatCharge {get; private set;}
+	private static Set<Id> sProductIdWithOneTimePerUnitCharge {get; private set;}
 	
 	// ================================================================================
 	// last created/inserted ebc subscription and subscription charge, created by createEbcSubscription
@@ -66,8 +82,6 @@ public with sharing class IECEBC_TestUtility {
 	// ================================================================================
 	// static constants
 	private static String TEST_IATA_CODE = '1234567';
-	private static final String EBC_PRODUCT_RATE_PLAN_SUBSCRIPTION_TYPE_PAY_AS_YOU_GO = 'Pay-As-You-Go';	
-	private static final String EBC_PRODUCT_RATE_PLAN_SUBSCRIPTION_TYPE_PRE_PAID = 'Pre-Paid';	
 	public static final String EBC_RENEWAL_WINDOW = '60';
 	
 			
@@ -79,7 +93,7 @@ public with sharing class IECEBC_TestUtility {
 		createTestUser(false);
 	}
 	
-	private static void createTestUser(Boolean isMember)
+	public static void createTestUser(Boolean isMember)
 	{
 		// create users 
 		
@@ -161,11 +175,57 @@ public with sharing class IECEBC_TestUtility {
 	// ========================================================================
 	// create all EBC Setup, and all related records
 	// Product, Product Rate Plan, Product Rate Plan Charge 
-	// Output oEbcSetup, 
+	// Main Output oEbcSetup
+	// Other ouputs:  
 	//   oEbcProductCategory, oEbcProductMember, oEbcProductNonMember,
 	//   oEbcProductAddOnStorage, oEbcProductAddOnReporting, oEbcProductEmailBlock
 	//   lEbcProductInfo
 	public static void createEbcSetupAndRelatedData()
+	{
+		// create all EBC related Product_Category, zqu__ZProduct, Product_Information
+		createEbcRelatedProducts();
+		
+		// create all EBC Related Rate Plans and ProducRatePlanCharges
+		createEbcRelatedRatePlansAndCharges(); 
+		
+		// create EBC Set up
+		oEbcSetup = new EBC_Setup__c( Name='Default for Test'
+					, Default_Storage_Capacity__c = 20
+					, Default_Cost_per_E_mail__c  = 0.53
+					, Extra_Storage_Capacity__c = 25
+					, Maximum_File_Size_Upload__c = 1
+					
+					, Product_Category__c = oEbcProductCategory.Id
+					, Member_Pay_As_You_Go_Plan__c = oEbcPayAsYouGoProductRatePlanMember.Id
+					, Member_Prepaid_Product_Rate_Plan_01__c = lEbcProductRatePlanMember[0].Id
+					, Member_Prepaid_Product_Rate_Plan_02__c = lEbcProductRatePlanMember[1].Id
+					, Member_Prepaid_Product_Rate_Plan_03__c = lEbcProductRatePlanMember[2].Id
+					, Member_Prepaid_Product_Rate_Plan_04__c = lEbcProductRatePlanMember[3].Id
+					, Non_Member_Pay_As_You_Go_Plan__c = oEbcPayAsYouGoProductRatePlanMember.Id 
+					, Non_Member_Prepaid_Product_Rate_Plan_01__c = lEbcProductRatePlanNonMember[0].Id
+					, Non_Member_Prepaid_Product_Rate_Plan_02__c = lEbcProductRatePlanNonMember[1].Id
+					, Non_Member_Prepaid_Product_Rate_Plan_03__c = lEbcProductRatePlanNonMember[2].Id
+					, Non_Member_Prepaid_Product_Rate_Plan_04__c = lEbcProductRatePlanNonMember[3].Id
+					
+					, Pay_Exact_Amount_Member__c = oEbcProductRatePlanPaysExactAmount.Id
+					, Pay_Exact_Amount_Non_Member__c = oEbcProductRatePlanPaysExactAmount.Id
+					
+					, Member_Email_Block_Product__c = oEbcProductEmailBlock.Id
+					, Non_Member_Email_Block_Product__c = oEbcProductEmailBlock.Id
+					
+					, Storage_Product_Rate_Plan__c = oEbcProductRatePlanAddOnStorage.Id
+					, Enhanced_Reporting_Product_Rate_Plan__c = oEbcProductRatePlanAddOnReporting.Id
+					
+				);
+		insert oEbcSetup;
+		
+	} // end of createEbcData
+	
+	
+	// ========================================================================
+	// create all EBC Category, Products, and Product_Information
+	// output oEbcProductCategory, oEbcProduct*, lEbcProductInfo
+	private static void createEbcRelatedProducts()
 	{
 		oEbcProductCategory = IECTestUtil.CreateSampleProductCategory(IECConstants.ProductCategory_SF_EBROADCAST, true);
 		
@@ -203,54 +263,34 @@ public with sharing class IECEBC_TestUtility {
 		oEbcProductEmailBlock.ProductCategory__c = IECConstants.ProductCategory_SF_EBROADCAST; // option undefined yet
 		oEbcProductEmailBlock.zqu__Description__c = 'eBroadcast Email Blocks';
 		
+		oEbcProductPayExactAmount = IECTestUtil.CreateSampleProduct('EBC Pay Exact Amount');
+		oEbcProductPayExactAmount.ProductCategory__c = IECConstants.ProductCategory_SF_EBROADCAST;
+		oEbcProductPayExactAmount.zqu__Description__c ='eBroadcast Pay Exact Amount';
+		
 		List<zqu__ZProduct__c> lEbcProduct = new List<zqu__ZProduct__c>{oEbcProductMember, oEbcProductNonMember
-			, oEbcProductAddOnStorage, oEbcProductAddOnReporting, oEbcProductEmailBlock};
+			, oEbcProductAddOnStorage, oEbcProductAddOnReporting, oEbcProductEmailBlock
+			, oEbcProductPayExactAmount };
 		insert lEbcProduct;
 		
 		//
 		lEbcProductInfo = new List<Product_Information__c>();
+		mProductIdToProductInfoObj = new Map<Id,Product_Information__c>();
 		for (zqu__ZProduct__c prd : lEbcProduct) 
 		{
 			Product_Information__c oProdInfo = IECTestUtil.CreateSampleProductInfo( prd.Name, oEbcProductCategory, prd);
 			oProdInfo.Product_Audience__c = IECConstants.ProductInformationAudience_DEFAULT;
 			lEbcProductInfo.add(oProdInfo);
+			mProductIdToProductInfoObj.put( prd.Id, oProdInfo);
 		}
 		insert lEbcProductInfo;
 		
-		// create all EBC Related Rate Plans and ProducRatePlanCharges
-		createEbcRelatedRatePlansAndCharges(); 
-		
-		// create EBC Set up
-		oEbcSetup = new EBC_Setup__c( Name='Default for Test'
-					, Member_Prepaid_Product_Rate_Plan_01__c = lEbcProductRatePlanMember[0].Id
-					, Member_Prepaid_Product_Rate_Plan_02__c = lEbcProductRatePlanMember[1].Id
-					, Member_Prepaid_Product_Rate_Plan_03__c = lEbcProductRatePlanMember[2].Id
-					, Member_Prepaid_Product_Rate_Plan_04__c = lEbcProductRatePlanMember[3].Id
-					, Non_Member_Prepaid_Product_Rate_Plan_01__c = lEbcProductRatePlanNonMember[0].Id
-					, Non_Member_Prepaid_Product_Rate_Plan_02__c = lEbcProductRatePlanNonMember[1].Id
-					, Non_Member_Prepaid_Product_Rate_Plan_03__c = lEbcProductRatePlanNonMember[2].Id
-					, Non_Member_Prepaid_Product_Rate_Plan_04__c = lEbcProductRatePlanNonMember[3].Id
-					
-					, Enhanced_Reporting_Product_Rate_Plan__c = oEbcProductRatePlanAddOnReporting.Id
-					, Storage_Product_Rate_Plan__c = oEbcProductRatePlanAddOnStorage.Id
-					
-					, Member_Email_Block_Product__c = oEbcProductEmailBlock.Id
-					//, Non_Member_Email_Block_Product__c
-					, Maximum_File_Size_Upload__c = 1
-					
-					, Default_Storage_Capacity__c = 76
-					, Default_Cost_per_E_mail__c  = 0.53
-					//, E_Commerce_Base_Url__c = 'https://3b-customer-portal-iata.cs87.force.com/iec'
-				);
-		insert oEbcSetup;
-		
-	} // end of createEbcData
+	} // createEbcRelatedCategoryProducts
 	
 	
 	// ========================================================================
-	// create all EBC Product Rate Plans and Product Rate Plan Charges
+	// create all EBC Product Rate Plans, Product Rate Plan Information, and Product Rate Plan Charges
 	// input oEbcProductMember, oEbcProductNonMember, oEbcProductAddOnStorage, oEbcProductAddOnReporting, oEbcProductEmailBlock
-	// outpu 
+	// output:  
 	private static void createEbcRelatedRatePlansAndCharges()
 	{
 		lEbcProductRatePlanMember= new List<zqu__ProductRatePlan__c>();
@@ -260,7 +300,7 @@ public with sharing class IECEBC_TestUtility {
 		lEbcProductRatePlanMember.add(IECTestUtil.CreateSampleProductRatePlan('Premium Edition M', false, oEbcProductMember));
 		
 		for (zqu__ProductRatePlan__c prp : lEbcProductRatePlanMember) {
-			prp.EBC_SubscriptionType__c = EBC_PRODUCT_RATE_PLAN_SUBSCRIPTION_TYPE_PRE_PAID;
+			prp.EBC_SubscriptionType__c = vfIECEBC.EBC_PRODUCT_RATE_PLAN_SUBSCRIPTION_TYPE_PRE_PAID;
 		}
 
 		lEbcProductRatePlanNonMember = new List<zqu__ProductRatePlan__c>();
@@ -269,13 +309,13 @@ public with sharing class IECEBC_TestUtility {
 		lEbcProductRatePlanNonMember.add(IECTestUtil.CreateSampleProductRatePlan('Enterprise Edition N', false, oEbcProductNonMember));
 		lEbcProductRatePlanNonMember.add(IECTestUtil.CreateSampleProductRatePlan('Premium Edition N', false, oEbcProductNonMember));
 		for (zqu__ProductRatePlan__c prp : lEbcProductRatePlanNonMember) {
-			prp.EBC_SubscriptionType__c = EBC_PRODUCT_RATE_PLAN_SUBSCRIPTION_TYPE_PRE_PAID;
+			prp.EBC_SubscriptionType__c = vfIECEBC.EBC_PRODUCT_RATE_PLAN_SUBSCRIPTION_TYPE_PRE_PAID;
 		}
 		
-		oEbcPayAsYouGoProductRatePlanMember = IECTestUtil.CreateSampleProductRatePlan(EBC_PRODUCT_RATE_PLAN_SUBSCRIPTION_TYPE_PAY_AS_YOU_GO, false, oEbcProductMember);
-		oEbcPayAsYouGoProductRatePlanMember.EBC_SubscriptionType__c = EBC_PRODUCT_RATE_PLAN_SUBSCRIPTION_TYPE_PAY_AS_YOU_GO;
-		oEbcPayAsYouGoProductRatePlanNonMember = IECTestUtil.CreateSampleProductRatePlan(EBC_PRODUCT_RATE_PLAN_SUBSCRIPTION_TYPE_PAY_AS_YOU_GO, false, oEbcProductNonMember);
-		oEbcPayAsYouGoProductRatePlanNonMember.EBC_SubscriptionType__c = EBC_PRODUCT_RATE_PLAN_SUBSCRIPTION_TYPE_PAY_AS_YOU_GO;
+		oEbcPayAsYouGoProductRatePlanMember = IECTestUtil.CreateSampleProductRatePlan(vfIECEBC.EBC_PRODUCT_RATE_PLAN_SUBSCRIPTION_TYPE_PAY_AS_YOU_GO, false, oEbcProductMember);
+		oEbcPayAsYouGoProductRatePlanMember.EBC_SubscriptionType__c = vfIECEBC.EBC_PRODUCT_RATE_PLAN_SUBSCRIPTION_TYPE_PAY_AS_YOU_GO;
+		oEbcPayAsYouGoProductRatePlanNonMember = IECTestUtil.CreateSampleProductRatePlan(vfIECEBC.EBC_PRODUCT_RATE_PLAN_SUBSCRIPTION_TYPE_PAY_AS_YOU_GO, false, oEbcProductNonMember);
+		oEbcPayAsYouGoProductRatePlanNonMember.EBC_SubscriptionType__c = vfIECEBC.EBC_PRODUCT_RATE_PLAN_SUBSCRIPTION_TYPE_PAY_AS_YOU_GO;
 		
 		oEbcProductRatePlanAddOnStorage = IECTestUtil.CreateSampleProductRatePlan('Extra Storage', false, oEbcProductAddOnStorage);
 		oEbcProductRatePlanAddOnReporting = IECTestUtil.CreateSampleProductRatePlan('Extra Storage', false, oEbcProductAddOnReporting);
@@ -285,6 +325,10 @@ public with sharing class IECEBC_TestUtility {
 		lEbcProductRatePlanEmailBlock.add(IECTestUtil.CreateSampleProductRatePlan('Email Block 2', false, oEbcProductEmailBlock));
 		lEbcProductRatePlanEmailBlock.add(IECTestUtil.CreateSampleProductRatePlan('Email Block 3', false, oEbcProductEmailBlock));
 		
+		oEbcProductRatePlanPaysExactAmount = IECTestUtil.CreateSampleProductRatePlan('Exact Amount', false, oEbcProductPayExactAmount);
+		
+		
+		// insert all of product rate plans
 		List<zqu__ProductRatePlan__c> lEbcProductRatePlan = new List<zqu__ProductRatePlan__c>();
 		lEbcProductRatePlan.addAll(lEbcProductRatePlanMember);
 		lEbcProductRatePlan.addAll(lEbcProductRatePlanNonMember);
@@ -293,17 +337,54 @@ public with sharing class IECEBC_TestUtility {
 		lEbcProductRatePlan.add(oEbcProductRatePlanAddOnStorage);
 		lEbcProductRatePlan.add(oEbcProductRatePlanAddOnReporting);
 		lEbcProductRatePlan.addAll(lEbcProductRatePlanEmailBlock);
+		lEbcProductRatePlan.add(oEbcProductRatePlanPaysExactAmount);
 		
 		insert lEbcProductRatePlan;
 		
+		// product rate plan charges are set based on products 
+		sProductIdWithRecurringFlatCharge = new Set<Id> {oEbcProductMember.Id, oEbcProductNonMember.Id, oEbcProductAddOnStorage.Id};
+		sProductIdWithOneTimeFlatCharge = new Set<Id> {oEbcProductAddOnStorage.Id, oEbcProductAddOnReporting.Id};
+		sProductIdWithOneTimePerUnitCharge = new Set<Id> {oEbcProductEmailBlock.Id, oEbcProductPayExactAmount.Id};
+		
 		// Product Rate Plan Charges
 		lEbcProductRatePlanCharge = new List<zqu__ProductRatePlanCharge__c>();
+		
+		// Product Rate Plan Information
+		lProductRatePlanInformation = new List<Product_Rate_Plan_Information__c>();
+		mProductRatePlanIdToProductRatePlanInformationObj = new Map<Id,Product_Rate_Plan_Information__c>();
+		
 		for (zqu__ProductRatePlan__c oPrp : lEbcProductRatePlan)
 		{
-			zqu__ProductRatePlanCharge__c oPrpCharge = IECTestUtil.CreateSampleProductRatePlanCharge(oPrp, 'CHARGETEST', 1);
-			lEbcProductRatePlanCharge.add(oPrpCharge);
+			Product_Rate_Plan_Information__c oPrpi = IECTestUtil.CreateSampleProductRatePlanInfo( oPrp.Name, false
+												, oPrp, mProductIdToProductInfoObj.get( oPrp.zqu__ZProduct__c) );
+			lProductRatePlanInformation.add(oPrpi);
+			mProductRatePlanIdToProductRatePlanInformationObj.put( oPrp.Id, oPrpi);
+			
+			// create product rate plan charge as needed.
+			if ( sProductIdWithRecurringFlatCharge.contains( oPrp.zqu__ZProduct__c)) {
+				zqu__ProductRatePlanCharge__c oPrpCharge;
+				oPrpCharge = IECTestUtil.CreateSampleProductRatePlanCharge(oPrp, 'Charge Recurring Flat-' + oPrp.Name, 1);
+				oPrpCharge.zqu__Type__c = RATE_PLAN_CHARGE_TYPE_RECURRING;
+				oPrpCharge.zqu__Model__c = IECConstants.ChargeModel_Zuora_FlatFeePricing;
+				lEbcProductRatePlanCharge.add(oPrpCharge);
+			}
+			if ( sProductIdWithOneTimeFlatCharge.contains( oPrp.zqu__ZProduct__c)) {
+				zqu__ProductRatePlanCharge__c oPrpCharge;
+				oPrpCharge = IECTestUtil.CreateSampleProductRatePlanCharge(oPrp, 'Charge One Time Flat-' + oPrp.Name, 1);
+				oPrpCharge.zqu__Type__c = RATE_PLAN_CHARGE_TYPE_ONE_TIME;
+				oPrpCharge.zqu__Model__c = IECConstants.ChargeModel_Zuora_FlatFeePricing;
+				lEbcProductRatePlanCharge.add(oPrpCharge);
+			}
+			if ( sProductIdWithOneTimePerUnitCharge.contains( oPrp.zqu__ZProduct__c)) {
+				zqu__ProductRatePlanCharge__c oPrpCharge;
+				oPrpCharge = IECTestUtil.CreateSampleProductRatePlanCharge(oPrp, 'Charge One Time Per Unit-' + oPrp.Name, 1);
+				oPrpCharge.zqu__Type__c = RATE_PLAN_CHARGE_TYPE_ONE_TIME;
+				oPrpCharge.zqu__Model__c = IECConstants.ChargeModel_Zuora_PerUnitPricing;
+				lEbcProductRatePlanCharge.add(oPrpCharge);
+			}
 		}
 		insert lEbcProductRatePlanCharge;
+		insert lProductRatePlanInformation;
 	} // end of createEbcRelatedRatePlansAndCharges
 	
 	
