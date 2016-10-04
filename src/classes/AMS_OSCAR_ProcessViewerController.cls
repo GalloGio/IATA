@@ -20,7 +20,9 @@ public class AMS_OSCAR_ProcessViewerController {
     public String getEffectiveDate(){
         return oscar.Change_effective_as_of__c.format();
     }
-
+    public boolean getIsAgencyChange(){
+        return oscar.RecordType.DeveloperName == 'CHANGE';
+    }
 
     public AMS_OSCAR_ProcessViewerController() {
         
