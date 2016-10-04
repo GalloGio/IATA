@@ -35,6 +35,39 @@ public without sharing class AMS_Utils {
         set;
     }
 
+    public static Integer binarySearchGapFinder(List<Integer> orderedSlotsOccupied){
+
+        Integer first = 0;
+        Integer last = orderedSlotsOccupied.size()-1;
+        Integer mid = (first+last)/2;
+
+        while(first < last){
+            //check for gaps in first half of the list
+            if(orderedSlotsOccupied[mid]-orderedSlotsOccupied[first] != (mid - first)){
+                //found a gap
+                if ((mid-first) == 1 && (orderedSlotsOccupied[mid]-orderedSlotsOccupied[first] > 1)) {
+                    return (orderedSlotsOccupied[first]+1);
+                }   
+                last = mid;
+            }
+            //check for gaps in second half of the list
+            else if ((orderedSlotsOccupied[last]-orderedSlotsOccupied[mid]) != (last-mid)) {
+                //found a gap
+                if ((last-mid) == 1 && (orderedSlotsOccupied[last]-orderedSlotsOccupied[mid] > 1)) {
+                    return (orderedSlotsOccupied[mid]+1);
+                }   
+                first = mid;
+            }   
+            else
+                return -1; 
+
+            mid = (first+last)/2;
+
+        }
+
+        return -1;
+
+    }
     public static Map<String, IATA_ISO_Country__c> iataIsoCountries{
         get{
             if(iataIsoCountries == null){
