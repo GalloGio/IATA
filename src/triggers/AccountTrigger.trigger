@@ -29,6 +29,12 @@ trigger AccountTrigger on Account (before insert, after insert, after update, be
   }
   else if(Trigger.isAfter && Trigger.isUpdate){
     AMS_AccountTriggerHandler.handleAfterUpdate(Trigger.new, Trigger.oldMap);
+    
+  }
+
+  if(Trigger.isAfter && Trigger.isUpdate){
+    //E&F Account After Update
+    EF_AccountTriggerHandler.handleAfterUpdate(Trigger.new, Trigger.oldMap);
   }
 
 }

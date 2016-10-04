@@ -1,0 +1,13 @@
+<apex:page standardController="Account">
+    <apex:form >
+        <c:RelatedList objectName="Contract"
+            parentFieldName="AccountId"
+            parentFieldId="{!Account.Id}"       
+            fieldsCSV="Name,Contract_Name__c,EF_Status__c,EF_Group_Code__c,EF_Trading_Partner__c,EF_Payment_Terms__c,EF_Data_Currency__c,EF_Payment_Currency__c" 
+            editableFieldsCSV="EF_Status__c,EF_Group_Code__c,EF_Trading_Partner__c,EF_Payment_Terms__c,EF_Data_Currency__c,EF_Payment_Currency__c" 
+            updateAllOrNone="false" 
+            defaultEditAll="true" 
+            massUpdateInputs="true"
+            hideActionLinkEdit="true"/>
+    </apex:form>
+</apex:page>
