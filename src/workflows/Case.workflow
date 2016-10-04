@@ -12335,7 +12335,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <name>ICCS_Create_Status_to_Complete</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>1 AND 2 AND (3 OR 4 OR 5) AND 6 AND 7</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
@@ -12380,7 +12380,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <name>ICCS_Update_Status_to_Complete</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>1 AND 2 AND 3 AND ( (4 AND 5 AND 6) OR ((7 OR 8) AND 9 AND 10) OR (11 AND 12 AND 13))</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
@@ -14334,7 +14334,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <name>IFAP_FA_Letter_Sent_Status_change</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.FA_Letter_Sent__c</field>
             <operation>equals</operation>
@@ -16218,7 +16218,7 @@ Inactive (Miguel Guerreiro, 3/17/2016 12:59 PM) - self service is no longer used
             <name>ChangeIATACountrytoCHLI</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>1 OR 2</booleanFilter>
         <criteriaItems>
             <field>Case.BSPCountry__c</field>
@@ -16240,7 +16240,7 @@ For cases coming from web forms</description>
             <name>Change_IATA_Country_to_CZSL</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>1 OR 2</booleanFilter>
         <criteriaItems>
             <field>Case.BSPCountry__c</field>
@@ -16262,7 +16262,7 @@ For cases coming from web forms</description>
             <name>ChangeIATACountrytoES</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>1 OR 2</booleanFilter>
         <criteriaItems>
             <field>Case.BSPCountry__c</field>
@@ -16284,7 +16284,7 @@ For cases coming from web forms</description>
             <name>Change_IATA_Country_to_ROMO</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>1 OR 2</booleanFilter>
         <criteriaItems>
             <field>Case.BSPCountry__c</field>
@@ -16515,7 +16515,7 @@ For cases coming from web forms</description>
             <name>Chg_owner_to_Airline_Suspension_Head</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>1 AND 2 AND (3 OR (4 AND 5))</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
@@ -16557,7 +16557,7 @@ For cases coming from web forms</description>
             <name>Status_Closed</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
