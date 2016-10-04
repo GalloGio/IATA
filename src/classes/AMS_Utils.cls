@@ -4,7 +4,7 @@ public without sharing class AMS_Utils {
         get {
             Set<Id> toReturn = new Set<Id>();
 
-            List<Profile> profiles = [select ID from profile where Name IN ('FDS Hub Analyst ARM', 'FDS – Agency Management - Supervisor (Approver)', 'IDFS Americas - Hub CS Management', 'IDFS Americas - Hub Staff')];
+            List<Profile> profiles = [select ID from profile where Name IN ('FDS Hub Analyst ARM', 'FDS â€“ Agency Management - Supervisor (Approver)', 'IDFS Americas - Hub CS Management', 'IDFS Americas - Hub Staff')];
 
             for (Profile p : profiles)
                 toReturn.add(p.Id);
@@ -43,6 +43,29 @@ public without sharing class AMS_Utils {
         set;
     }
 
+    public static List<AMS_ChangeCodes__c> CUSTOM_CHANGECODES {
+        get { 
+            if(CUSTOM_CHANGECODES == null){
+                CUSTOM_CHANGECODES = [SELECT Change_Code__c,Integration_RecId__c,Account_status_change__c,Billable__c,Bulletin_Memo_Text__c,
+                                                                Reason_Code__c, Reason_Code_Description__c
+                                                        FROM AMS_ChangeCodes__c];
+            }
+            return CUSTOM_CHANGECODES;
+        }
+        private set;
+    }
+    
+    public static List<AMS_ChangeCodes_Integration__c> CUSTOM_CHANGECODES_INTEGRATION {
+        get {
+            if(CUSTOM_CHANGECODES_INTEGRATION == null){
+                CUSTOM_CHANGECODES_INTEGRATION = [SELECT RecId_A__c,RecId_B__c,RecId_Res__c FROM AMS_ChangeCodes_Integration__c];
+                
+            }
+            return CUSTOM_CHANGECODES_INTEGRATION;
+        }
+        private set;
+    }
+    
     private static Map<String, RecordType> currentCache = null;
 
     public static String userSessionId = UserInfo.getSessionId();
@@ -107,7 +130,7 @@ public without sharing class AMS_Utils {
     public static final String ACC_S8_CHANGESPROCESSED = 'Changes processed';
     public static final String ACC_S9_APPROVED = 'Approved';
      
-    public static final String CHLOCTYPEBEHAVIOR_NOSWAP = 'Don’t change the parent';        
+    public static final String CHLOCTYPEBEHAVIOR_NOSWAP = 'Donâ€™t change the parent';        
     public static final String CHLOCTYPEBEHAVIOR_SWAP = 'Swap with the parent';
     public static final String CHLOCTYPEBEHAVIOR_STANDARD = CHLOCTYPEBEHAVIOR_SWAP;
     public static final String SECTOR_CARGO = 'Cargo Agent';
@@ -124,6 +147,7 @@ public without sharing class AMS_Utils {
     public static final Set<String> LocationClassIFAPAllowed = new Set<String>{'P','C','R'};
     public static final Set<String> LocationClassCARGO = new Set<String>{'C','I','Q','R'};
     public static final Set<String> LocationClassPASSENGER = new Set<String>{'P','T','M','X'};
+	public static final Set<String> LocationTypeAllHOTypes = new Set<String>{'EP','AO','SP','AA','HO'};
 
 
     static {
@@ -326,11 +350,25 @@ public without sharing class AMS_Utils {
     */
     public static String getRecIdFromChangeCode(String sChangeCode) {
 
-        String sRes = '';
-
         //Validates the Changes codes for "A=Added" and "D=Deleted", all other Change Codes not mentioned return "C=Changed"
 
-        // «A» Section
+        String sRes = '';
+
+        for (AMS_ChangeCodes__c cc : CUSTOM_CHANGECODES ){
+
+            if(cc.Change_Code__c.equalsIgnoreCase(sChangeCode)){
+                sRes = cc.Integration_RecId__c;
+                break;
+            }
+
+        }
+
+        //Just in case we don't get a result, we set the value for the most common RecId - "C"
+        if( sRes == ''){
+            sRes = 'C';
+        }
+/*
+        // Â«AÂ» Section
         if (sChangeCode.equalsIgnoreCase('NEW')) {
             sRes = 'A';
         } else if (sChangeCode.equalsIgnoreCase('FIN')) {
@@ -350,7 +388,7 @@ public without sharing class AMS_Utils {
         } else if (sChangeCode.equalsIgnoreCase('NAC')) {
             sRes = 'A';
         } 
-        // «D» Section
+        // Â«DÂ» Section
         else if (sChangeCode.equalsIgnoreCase('DIS')) {
             sRes = 'D';
         } else if (sChangeCode.equalsIgnoreCase('NWD')) {
@@ -360,8 +398,36 @@ public without sharing class AMS_Utils {
         } else if (sChangeCode.equalsIgnoreCase('CLO')) {
             sRes = 'D';
         } 
-        // «C» Section
+        // Â«CÂ» Section
         else {
+            sRes = 'C';
+        }
+*/
+        return sRes;
+    }
+/**
+    //Based on the Change code passed we get the Rec ID
+    Indicates if record is A=Added, C=Changed or D=Deleted.
+    */
+    public static String getRecIdFromIntegrationMatriz(String sRecIdA, String sRecIdB) {
+
+        //Validates the Changes codes for "A=Added" and "D=Deleted", all other Change Codes not mentioned return "C=Changed"
+
+        String sRes = '';
+
+        for (AMS_ChangeCodes_Integration__c cc : CUSTOM_CHANGECODES_INTEGRATION ){
+
+            if(cc.RecId_A__c.equalsIgnoreCase(sRecIdA)){
+                if(cc.RecId_B__c.equalsIgnoreCase(sRecIdB)){
+                    sRes = cc.RecId_Res__c;
+                    break;
+                }
+            }
+
+        }
+
+        //Just in case we don't get a result, we set the value for the most common RecId - "C"
+        if( sRes == ''){
             sRes = 'C';
         }
 
@@ -382,10 +448,12 @@ public without sharing class AMS_Utils {
         if(addressType.equalsIgnoreCase('Billing')){
             //R3.1 - removed the state validation
             //return ((acc.BillingStreet == null && acc.BillingCity == null && acc.BillingPostalCode == null) || acc.IATA_ISO_Country__c == null || acc.Iso_State__c == null);
-            return ((acc.BillingStreet == null && acc.BillingCity == null && acc.BillingPostalCode == null) || acc.IATA_ISO_Country__c == null );
+            //return ((acc.BillingStreet == null && acc.BillingCity == null && acc.BillingPostalCode == null) || acc.IATA_ISO_Country__c == null );
+            return ((acc.BillingStreet == null && acc.BillingCity == null ) || acc.IATA_ISO_Country__c == null );
         }
         if(addressType.equalsIgnoreCase('Shipping')){
-            return ((acc.ShippingStreet == null && acc.ShippingCity == null && acc.ShippingPostalCode == null) );
+            //return ((acc.ShippingStreet == null && acc.ShippingCity == null && acc.ShippingPostalCode == null) );
+            return ((acc.ShippingStreet == null && acc.ShippingCity == null) );
         }
         
         return false;   
@@ -585,9 +653,18 @@ public without sharing class AMS_Utils {
 
         System.debug('Creating a new Agency Applied Change Code for Account ' + oscarAgency.Id + ' with flag active set to ' + isActive);
 
-        Agency_Applied_Change_code__c aacNEW = new Agency_Applied_Change_code__c(Active__c = isActive, Account__c = oscarAgency.Id, Change_Code__c = changeCode.name,
-                OSCAR__c = oscarId, Bulletin_Information__c = changeCode.memoText,
-                Reason_Code__c = changeCode.reasonCode, Reason_Description__c = changeCode.reasonDesc);
+        String source = UserInfo.getUserType() == 'PowerPartner' ? 'Portal' : 'Internal';
+
+        Agency_Applied_Change_code__c aacNEW = new Agency_Applied_Change_code__c(
+            Active__c = isActive
+            , Account__c = oscarAgency.Id
+            , Change_Code__c = changeCode.name
+            , OSCAR__c = oscarId
+            , Bulletin_Information__c = changeCode.memoText
+            , Reason_Code__c = changeCode.reasonCode
+            , Reason_Description__c = changeCode.reasonDesc
+            , Source__c = source
+        );
 
         //insert aacNEW;
 
