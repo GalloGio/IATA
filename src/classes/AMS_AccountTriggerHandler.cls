@@ -134,7 +134,7 @@ public class AMS_AccountTriggerHandler {
 
     public static void handleManualMinorChanges(List<Account> accs, Map<Id,Account> oldMap){
 
-        accs = filterByAgencyRecordType(accs);
+        accs = filterValidAgencies(accs);
 
         Map<String, Schema.SObjectField> accountFields = AMS_Utils.getObjectFields('Account');
 
@@ -195,7 +195,7 @@ public class AMS_AccountTriggerHandler {
 
     }
 
-    private static List<Account> filterByAgencyRecordType(List<Account> accts){
+    private static List<Account> filterValidAgencies(List<Account> accts){
 
         ID standardRT = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency') ;
 
@@ -203,11 +203,11 @@ public class AMS_AccountTriggerHandler {
 
         for(Account acct: accts){
 
-            if(acct.recordTypeId == standardRT)
+            //only accredited agencies can generate minor change codes
+            if(acct.recordTypeId == standardRT && acct.Accreditation_date__c != null)
                 toReturn.add(acct);
 
         }
-
 
         return toReturn;
     }
