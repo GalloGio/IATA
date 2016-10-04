@@ -159,10 +159,7 @@ public without sharing class AMS_Utils {
     public static final Set<String> LocationClassPASSENGER = new Set<String>{'P','T','M','X'};
     public static final Set<String> LocationTypeAllHOTypes = new Set<String>{'EP','AO','SP','AA','HO'};
 
-    //Record Types
-    public static final String RECTYPE_NEW      = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('NEW').getRecordTypeId();
-    public static final String RECTYPE_CHANGE   = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('CHANGE').getRecordTypeId();
-    
+
     static {
         refreshCache();
     }
