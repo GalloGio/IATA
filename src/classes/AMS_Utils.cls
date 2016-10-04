@@ -86,7 +86,7 @@ public without sharing class AMS_Utils {
     public static final String MAJ_SHAREHOLDING = 'Major Shareholding';
     public static final String MIN_SHAREHOLDING = 'Minor Shareholding';
     public static final String NAME = 'Name';
-    public static final String LEGAL_STATUS = 'Legal Status';
+    public static final String LEGAL_STATUS = 'Legal status';
     public static final String VFMR = 'VFMR';
 
 
@@ -114,6 +114,10 @@ public without sharing class AMS_Utils {
     public static final String COR              = 'CORRECTION.1.0'  ;
     public static final String AGENCYCHANGES    = 'MAJOR.CHANGES'   ;
 
+    //Record Types
+    public static final String RECTYPE_NEW      = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('NEW').getRecordTypeId();
+    public static final String RECTYPE_CHANGE   = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('CHANGE').getRecordTypeId();
+
     public static final Set<String> oscarAMSProcesses = new Set <String>{new_HO,new_BR,new_BR_ABROAD,new_TIDS,new_MSO,new_GSA,new_GSA_BSP,new_GSSA,new_AHA,new_AHA_BSP,new_SA, COR};
 
 
@@ -129,8 +133,14 @@ public without sharing class AMS_Utils {
     public static final String ACC_S7_UNDERREVIEW = 'Under review';
     public static final String ACC_S8_CHANGESPROCESSED = 'Changes processed';
     public static final String ACC_S9_APPROVED = 'Approved';
+
+    public static final String AACC_INPROGRESS = 'in progress';
+    public static final String AACC_FINALIZED = 'finalized';
+    public static final String AACC_WITHDRAWAL = 'withdrawn';
+    public static final String AACC_DISAPPROVED = 'disapproved';
+    public static final Set<String> AACC_FINALS = new Set<String>{AACC_FINALIZED, AACC_DISAPPROVED, AACC_WITHDRAWAL};
      
-    public static final String CHLOCTYPEBEHAVIOR_NOSWAP = 'Donâ€™t change the parent';        
+    public static final String CHLOCTYPEBEHAVIOR_NOSWAP = 'Don’t change the parent';        
     public static final String CHLOCTYPEBEHAVIOR_SWAP = 'Swap with the parent';
     public static final String CHLOCTYPEBEHAVIOR_STANDARD = CHLOCTYPEBEHAVIOR_SWAP;
     public static final String SECTOR_CARGO = 'Cargo Agent';
@@ -147,7 +157,7 @@ public without sharing class AMS_Utils {
     public static final Set<String> LocationClassIFAPAllowed = new Set<String>{'P','C','R'};
     public static final Set<String> LocationClassCARGO = new Set<String>{'C','I','Q','R'};
     public static final Set<String> LocationClassPASSENGER = new Set<String>{'P','T','M','X'};
-	public static final Set<String> LocationTypeAllHOTypes = new Set<String>{'EP','AO','SP','AA','HO'};
+    public static final Set<String> LocationTypeAllHOTypes = new Set<String>{'EP','AO','SP','AA','HO'};
 
 
     static {
