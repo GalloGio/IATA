@@ -17,6 +17,11 @@ public class AMS_OSCAR_ProcessViewerController {
     
     public static Map<String, Schema.SObjectField> fieldMap = Schema.getGlobalDescribe().get('AMS_OSCAR__c').getDescribe().fields.getMap();
     
+    public String getEffectiveDate(){
+        return oscar.Change_effective_as_of__c.format();
+    }
+
+
     public AMS_OSCAR_ProcessViewerController() {
         
         

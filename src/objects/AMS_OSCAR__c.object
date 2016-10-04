@@ -10203,6 +10203,17 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
     <sharingModel>ReadWrite</sharingModel>
     <startsWith>Vowel</startsWith>
     <validationRules>
+        <fullName>Effective_date_mandatory_in_changes</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+  ISBLANK(Change_effective_as_of__c ),
+  RecordType.DeveloperName = &quot;CHANGE&quot;,
+  ISCHANGED(STEP6__c), 
+  ISPICKVAL(STEP6__c, &quot;Passed&quot;)
+)</errorConditionFormula>
+        <errorMessage>Sanity checks cannot be set as passed if &quot;Change effective as of&quot; is empty</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>IFAP_Changing_Financial_Review_Result</fullName>
         <active>true</active>
         <errorConditionFormula>AND
@@ -10266,7 +10277,11 @@ $Profile.Name = &apos;System Administrator - automated processes&apos;
         <masterLabel>Edit the accounts involved</masterLabel>
         <openType>onClickJavaScript</openType>
         <protected>false</protected>
-        <url>javascript:srcUp(&quot;/apex/AMS_AccountHierarchySelection?id={!AMS_OSCAR__c.Id}&quot;);</url>
+        <url>if (sforce.console.isInConsole()) { 
+   srcUp(&quot;/apex/AMS_AccountHierarchySelection?id={!AMS_OSCAR__c.Id}&quot;);
+} else { 
+   window.open(&quot;/apex/AMS_AccountHierarchySelection?id={!AMS_OSCAR__c.Id}&quot;);
+}</url>
     </webLinks>
     <webLinks>
         <fullName>IATA_Code_Gen</fullName>
@@ -10294,7 +10309,7 @@ alert(&apos; Failed to generate a new IATA CODE. Please contact your administrat
         <protected>false</protected>
         <url>{!REQUIRESCRIPT(&quot;/support/console/30.0/integration.js&quot;)} 
 
-if (typeof(srcUp) == &apos;function&apos;) {
+if (sforce.console.isInConsole()) { 
 srcUp(&quot;/apex/AMS_OSCAR_Attachment_List?id={!AMS_OSCAR__c.Id}&quot;); 
 } else { 
 window.open(&quot;/apex/AMS_OSCAR_Attachment_List?id={!AMS_OSCAR__c.Id}&quot;); 
@@ -10308,7 +10323,11 @@ window.open(&quot;/apex/AMS_OSCAR_Attachment_List?id={!AMS_OSCAR__c.Id}&quot;);
         <masterLabel>Manage owners / contacts</masterLabel>
         <openType>onClickJavaScript</openType>
         <protected>false</protected>
-        <url>javascript:srcUp(&quot;/apex/AMSAccreditationContact?id={!AMS_OSCAR__c.AMS_Online_AccreditationId__c}&quot;);</url>
+        <url>if (sforce.console.isInConsole()) { 
+   srcUp(&quot;/apex/AMSAccreditationContact?id={!AMS_OSCAR__c.AMS_Online_AccreditationId__c}&quot;);
+} else { 
+   window.open(&quot;/apex/AMSAccreditationContact?id={!AMS_OSCAR__c.AMS_Online_AccreditationId__c}&quot;);
+}</url>
     </webLinks>
     <webLinks>
         <fullName>Start_Oscar_Wizzard_button</fullName>
