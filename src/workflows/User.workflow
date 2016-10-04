@@ -12,17 +12,6 @@
         <senderType>OrgWideEmailAddress</senderType>
         <template>ISS_Portal/ISSP_Change_Email_Address</template>
     </alerts>
-    <alerts>
-        <fullName>Notify_if_new_admins_are_granted</fullName>
-        <description>Notify if new admins are granted</description>
-        <protected>false</protected>
-        <recipients>
-            <recipient>velascop@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <senderType>CurrentUser</senderType>
-        <template>SFDC_admin/User_admin_updates</template>
-    </alerts>
     <fieldUpdates>
         <fullName>Update_user_nickname</fullName>
         <field>CommunityNickname</field>
@@ -62,29 +51,5 @@
         <active>true</active>
         <formula>AND( ISCHANGED(Email), CONTAINS( Profile.Name , &apos;ISS&apos; ),Community__c &lt;&gt;&apos;IEC&apos;,Community__c &lt;&gt;&apos;E-commerce&apos;)</formula>
         <triggerType>onAllChanges</triggerType>
-    </rules>
-    <rules>
-        <fullName>Notify if new admins</fullName>
-        <actions>
-            <name>Notify_if_new_admins_are_granted</name>
-            <type>Alert</type>
-        </actions>
-        <active>true</active>
-        <criteriaItems>
-            <field>User.ProfileId</field>
-            <operation>contains</operation>
-            <value>admin</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>User.UserType</field>
-            <operation>equals</operation>
-            <value>Standard</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>User.IsActive</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
 </Workflow>

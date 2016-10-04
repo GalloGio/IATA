@@ -2311,7 +2311,6 @@ _blank = new window</description>
         <columns>Publication_end_date__c</columns>
         <columns>Country__c</columns>
         <columns>Sector__c</columns>
-        <columns>Zone_1_text_hyperlink__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Status__c</field>

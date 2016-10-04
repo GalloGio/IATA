@@ -643,6 +643,7 @@
         }
 
         function validateSearch(){
+
             var flag = true;
             $j('#recFields').hide();
             $j('.recSearch').each(function (){

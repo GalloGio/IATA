@@ -123,7 +123,7 @@ public abstract class IDCardAbstractController {
                                                       m.Account__r.ID_Card_Key_Account_Discount__c, m.Account__r.Short_Name__c
                                                 from Managed_agency__c m where m.contact__r.Ver_Number_2__c = :vernumParameter ORDER BY m.Account__r.Short_Name__c, m.Account__r.IATACode__c];
            */ 
-            
+            system.debug('aqui vernumParameter ' + vernumParameter);
             for(Managed_agency__c ma:[select m.Id, m.Account__c, m.Account__r.Name, m.Account__r.IATACode__c,  m.Account__r.BillingCountry, m.delegate__c ,
                                                       m.Account__r.Type, m.Account__r.BillingState, m.Account__r.ID_Card_KeyAccount_features__c, m.Contact__r.Email, m.Contact__r.Name,
                                                       m.Account__r.ID_Card_Key_Account_Discount__c, m.Account__r.Short_Name__c

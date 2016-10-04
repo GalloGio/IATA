@@ -4,6 +4,9 @@
     <email>usukhjargale@iata.org</email>
     <name>Local Office - Mongolia</name>
     <queueSobject>
+        <sobjectType>AMS_OSCAR__c</sobjectType>
+    </queueSobject>
+    <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>
 </Queue>

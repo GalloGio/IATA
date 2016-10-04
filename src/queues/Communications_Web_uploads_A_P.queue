@@ -4,6 +4,9 @@
     <email>mohananb@iata.org</email>
     <name>Communications &amp; Web uploads - A&amp;P</name>
     <queueSobject>
+        <sobjectType>AMS_OSCAR__c</sobjectType>
+    </queueSobject>
+    <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>
 </Queue>

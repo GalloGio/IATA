@@ -192,7 +192,8 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
 
         Test.startTest();
 
-        oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
+        //oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
+        oscar.STEP6__c = AMS_Utils.PASSED;
         update oscar;
 
         //refresh the Account's data
@@ -265,7 +266,8 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
 
         Test.startTest();
 
-        oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
+        //oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
+        oscar.STEP6__c = AMS_Utils.PASSED;
         update oscar;
 
 
@@ -339,7 +341,8 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
 
         Test.startTest();
 
-        oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
+        //oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
+        oscar.STEP6__c = AMS_Utils.PASSED;
         update oscar;
 
 
@@ -412,7 +415,8 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
 
         Test.startTest();
 
-        oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
+        //oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
+        oscar.STEP6__c = AMS_Utils.PASSED;
         update oscar;
 
         getUpdatedAccountData();
@@ -531,7 +535,8 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
         AMS_OSCAR__c oscar = createOSCAR(SA1, 'Location', null, BR2);
 
         Test.startTest();
-        oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
+        //oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
+        oscar.STEP6__c = AMS_Utils.PASSED;
         update oscar;
 
         getUpdatedAccountData();
@@ -632,7 +637,7 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
             update oscar;
             System.assert(false, 'exception expected');
         } catch (Exception e) {
-            Boolean expectedExceptionThrown =  e.getMessage().contains('The target Agency Location Type must be either HO or BR') ? true : false;
+            Boolean expectedExceptionThrown =  e.getMessage().contains('The target Agency Location Type must be either HO, AO or BR') ? true : false;
             System.assertEquals(expectedExceptionThrown, true);
         }
 
@@ -762,7 +767,8 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
 
         Test.startTest();
 
-        oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
+        //oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
+        oscar.STEP6__c = AMS_Utils.PASSED;
         update oscar;
 
         getUpdatedAccountData();
@@ -847,7 +853,8 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
 
         Test.startTest();
 
-        oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
+        //oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
+        oscar.STEP6__c = AMS_Utils.PASSED;
         update oscar;
 
         getUpdatedAccountData();
@@ -937,7 +944,8 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
 
         Test.startTest();
 
-        oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
+        //oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
+        oscar.STEP6__c = AMS_Utils.PASSED;
         update oscar;
 
         getUpdatedAccountData();
@@ -1034,7 +1042,8 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
 
         Test.startTest();
 
-        oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
+        //oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
+        oscar.STEP6__c = AMS_Utils.PASSED;
         update oscar;
 
         getUpdatedAccountData();
@@ -1117,7 +1126,8 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
 
         Test.startTest();
 
-        oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
+        //oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
+        oscar.STEP6__c = AMS_Utils.PASSED;
         update oscar;
 
         getUpdatedAccountData();
@@ -1197,7 +1207,8 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
 
         Test.startTest();
 
-        oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
+        //oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
+        oscar.STEP6__c = AMS_Utils.PASSED;
         update oscar;
 
         getUpdatedAccountData();
@@ -1276,7 +1287,8 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
 
         Test.startTest();
 
-        oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
+        //oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
+        oscar.STEP6__c = AMS_Utils.PASSED;
         update oscar;
 
         getUpdatedAccountData();
@@ -1343,7 +1355,8 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
 
         Test.startTest();
 
-        oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
+        //oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
+        oscar.STEP6__c = AMS_Utils.PASSED;
         update oscar;
 
         getUpdatedAccountData();
@@ -1417,7 +1430,8 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
 
         Test.startTest();
 
-        oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
+        //oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
+        oscar.STEP6__c = AMS_Utils.PASSED;
         update oscar;
 
         getUpdatedAccountData();
@@ -1511,7 +1525,8 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
 
         Test.startTest();
 
-        oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
+        //oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
+        oscar.STEP6__c = AMS_Utils.PASSED;
         update oscar;
 
         getUpdatedAccountData();
@@ -1682,7 +1697,7 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
         System.assertEquals(7,con.hierarchy.size());
 
         con.hierarchy[2].main = true;
-        con.hierarchy[2].selectMain(); //simulates page actionSupport
+/*        con.hierarchy[2].selectMain(); //simulates page actionSupport
         System.assertNotEquals(HO1.Id, con.oscar.Account__c);
 
         con.hierarchy[2].main = false;
@@ -1701,7 +1716,7 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
         con.doSelectAll(); //simulates page actionSupport
 
         con.oscar.AMS_Target_Agency__c = HO2.Id;
-        con.save();
+        con.save();*/
 
         Test.stopTest();
 

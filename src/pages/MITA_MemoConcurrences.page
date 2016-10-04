@@ -19,19 +19,28 @@
 		<body>
 			<img class="fullsize"  src="{!URLFOR($Resource.AP_PDF_Header)}" />
 
-			<h3 class="centered">CONCURRENCES - INTERLINE TRAFFIC AGREEMENTS - </h3>
-			<h3 class="centered">PASSENGER &amp; CARGO AND ONE-WAY</h3>
-			<h3 class="centered">M E M O R A N D U M</h3>
-			<p class="centered">ADMIN / INTERLINE / {!memorandumNumber}</p>
-			<p>Listed below are concurrences between parties to the IATA Multilateral Interline Traffic Agreements -</p>
-			<p>Passenger and Cargo and MITA One-Way received in this office from&nbsp;<apex:outputField value="{!fromDate.Agreement_processed_date__c}" />&nbsp;to&nbsp;<apex:outputField value="{!toDate.Agreement_processed_date__c}" /></p>
-			<p>They will become effective on the dates indicated.</p>
-			<p>Requests for concurrence from concurring parties are to be addressed to mita@iata.org copied to</p>
-			<p>respective carriers involved.&nbsp;
-				<apex:outputText value="(P&C = Passenger and Cargo, P = Passenger, C = Cargo and O = One-Way)." rendered="{!selectedAgreement=='MITA'}"/>
-				<apex:outputText value="(BIET = Bilateral, OWI = One-Way Passenger Issuing Airline, OWP = One-Way Passenger Participating and O = One-Way Intermodal)." rendered="{!selectedAgreement=='BIETA'}"/>
-			</p>
+			<apex:outputPanel rendered="{!selectedAgreement=='MITA'}">
+				<h3 class="centered">CONCURRENCES - INTERLINE TRAFFIC AGREEMENTS - </h3>
+				<h3 class="centered">PASSENGER &amp; CARGO AND ONE-WAY</h3>
+				<h3 class="centered">M E M O R A N D U M</h3>
+				<p class="centered">ADMIN / INTERLINE / {!memorandumNumber}</p>
+				<p>Listed below are concurrences between parties to the IATA Multilateral Interline Traffic Agreements -</p>
+				<p>Passenger and Cargo and MITA One-Way received from&nbsp;<apex:outputField value="{!fromDate.Agreement_processed_date__c}" />&nbsp;to&nbsp;<apex:outputField value="{!toDate.Agreement_processed_date__c}" /></p>
+				<p>They will become effective on the dates indicated.</p>
+				<p>Requests for concurrences should be submitted via our Customer Portal at www.iata.org/cs and include the</p>
+				<p>respective carriers involved. (P&amp;C = Passenger and Cargo, P = Passenger, C = Cargo and O = One-Way).</p>
+			</apex:outputPanel>
 
+			<apex:outputPanel rendered="{!selectedAgreement=='BIETA'}">
+				<h3 class="centered">CONCURRENCES</h3>
+				<h3 class="centered">Bilateral Interline Electronic Ticket Agreements (BIETA)</h3>
+				<h3 class="centered">M E M O R A N D U M</h3>
+				<p class="centered">ADMIN / INTERLINE / {!memorandumNumber}</p>
+				<p>Listed below are concurrences between parties to the BIETA Agreements received from&nbsp;<apex:outputField value="{!fromDate.Agreement_processed_date__c}" />&nbsp;to&nbsp;<apex:outputField value="{!toDate.Agreement_processed_date__c}" /></p>
+				<p>They will become effective on the dates indicated.</p>
+				<p>Requests for concurrences should be submitted via our Customer Portal at www.iata.org/cs and include the</p>
+				<p>respective carriers involved. (BIET = Bilateral, OWI = One-Way Passenger Issuing Airline, OWP = One-Way Passenger Participating and O = One-Way Intermodal).</p>
+			</apex:outputPanel>
 			<br/>
 
 			<apex:pageBlock >

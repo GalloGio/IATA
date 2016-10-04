@@ -4,6 +4,9 @@
     <email>baissonm@iata.org</email>
     <name>MAD CS BSP Escalation</name>
     <queueSobject>
+        <sobjectType>AMS_OSCAR__c</sobjectType>
+    </queueSobject>
+    <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>
 </Queue>
