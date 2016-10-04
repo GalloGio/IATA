@@ -68,7 +68,10 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
 	public void init()
 	{
 		// verify the token
-		if ( billingAccount.eBroadcast_Payment_Token__c != paymentToken) {
+		//if ( billingAccount.eBroadcast_Payment_Token__c != paymentToken) {
+		//	ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, EBC_PAYMENT_MESSAGE_TOKEN_INVALID_ERROR));
+		//}
+        if (billingAccountOrder==null) {
 			ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, EBC_PAYMENT_MESSAGE_TOKEN_INVALID_ERROR));
 		}
 	} // end of init
@@ -82,24 +85,53 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
 		
 		rereadBillingAccount(); // refetch BillingAccount, to get updated eBroadcast_Payment related fields
 		getAddressDetail(); // get oBillingLocation, oBillingAddress, oOriginalBillingAddress 
+        
+        
 		
-		paymentTarget = billingAccount.eBroadcast_Payment_Target__c;
-		campaignPaymentOption = billingAccount.eBroadcast_Payment_Campaign_Option__c;
-		paymentTarget = billingAccount.eBroadcast_Payment_Target__c;
-		campaignPaymentOption = billingAccount.eBroadcast_Payment_Campaign_Option__c;
-		selectedRatePlanId = ( !payExactAmount ) ? billingAccount.eBroadcast_Payment_Product_Rate_Plan__c
+		paymentTarget = billingAccountOrder.eBroadcast_Payment_Target__c;
+		campaignPaymentOption = billingAccountOrder.eBroadcast_Payment_Campaign_Option__c;
+		paymentTarget = billingAccountOrder.eBroadcast_Payment_Target__c;
+		campaignPaymentOption = billingAccountOrder.eBroadcast_Payment_Campaign_Option__c;
+		selectedRatePlanId = ( !payExactAmount ) ? billingAccountOrder.eBroadcast_Payment_Product_Rate_Plan__c
 									: ( isMember ? IECEBC_Utility.ebcSetup.Pay_Exact_Amount_Member__c
 												: IECEBC_Utility.ebcSetup.Pay_Exact_Amount_Non_Member__c);
 		
-		selectedEbcSubscriptionId = billingAccount.eBroadcast_Payment_Subscription__c;
-		emailCreditPurchased = Integer.valueOf(billingAccount.eBroadcast_Payment_Email_Credit_Amount__c);
-		ebcCampaignId = billingAccount.eBroadcast_Payment_Campaign__c;
+		selectedEbcSubscriptionId = billingAccountOrder.eBroadcast_Payment_Subscription__c;
+		emailCreditPurchased = Integer.valueOf(billingAccountOrder.eBroadcast_Payment_Email_Credit_Amount__c);
+		ebcCampaignId = billingAccountOrder.eBroadcast_Payment_Campaign__c;
 	} // end of initialization
-	
+    public EBC_Order__c billingAccountOrder {
+        get {
+            paymentToken=apexPages.CurrentPage().getParameters().Get( EBC_PAYMENT_PARAM_PAYMENT_TOKEN);
+            System.Debug('paymentToken >>>'+paymentToken);
+            if (billingAccountOrder==null){
+                List<EBC_Order__c> listorder = new List<EBC_Order__c>();
+                listorder = [Select Id
+                              ,eBroadcast_Payment_Target__c
+                              ,eBroadcast_Payment_Campaign_Option__c
+                              ,eBroadcast_Payment_Product_Rate_Plan__c
+                              ,eBroadcast_Payment_Campaign__c
+                              ,eBroadcast_Payment_Email_Credit_Amount__c
+                              ,eBroadcast_Payment_Subscription__c	
+                              ,eBroadcast_Payment_Token__c
+                              ,Email_Credit__c
+                              ,Status__c
+                             From EBC_Order__c
+                             Where eBroadcast_Payment_Token__c=:paymentToken
+                               and Status__c=:'Pending'
+                             Limit 1];
+                if (listorder.size()>0) billingAccountOrder=listorder[0];
+                System.Debug('billingAccountOrder >>>'+billingAccountOrder);
+            }
+            return billingAccountOrder;
+        }
+        private set;
+    }
 	// isPaymentTokenValid flag is used to show/hide the content of payment pages
 	public Boolean isPaymentTokenValid{
 		get {
-			return (billingAccount.eBroadcast_Payment_Token__c == paymentToken);
+            if (billingAccountOrder==null) return false;
+			return (billingAccountOrder.eBroadcast_Payment_Token__c == paymentToken);
 			//return true;
 		}
 		//set;
@@ -942,17 +974,8 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
         PageReference newPage=Page.IECEBC_AccountManage;
         return newPage.setRedirect(true);
     }
-	
-	private boolean  EBCSubscribe() {
-		
-       Integer UseCasePricing=-1;
-       Boolean isPreview=false;
-       //0:Email Block 
-       //1:Overwrite Pricing and Qty when pay exact amount
-       //2:Add to the existing Subscription
-       //3:Renewal
-       //4:Prepaid
-       //5:Tax Calculation
+    private Integer Situation(){
+        Integer UseCasePricing=-1;
        if (campaignPaymentOption==null) campaignPaymentOption='';
        if (paymentTarget==null) paymentTarget='';
        if (campaignPaymentOption.equals(EBC_PAYMENT_CAMPAIGN_EXACT))  UseCasePricing=1;
@@ -965,7 +988,20 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
        if (paymentTarget.equals(EBC_PAYMENT_TARGET_ACCOUNT_ADD_ON_STORAGE)) UseCasePricing=0;
        if (paymentTarget.equals(EBC_PAYMENT_TARGET_ACCOUNT_ADD_ON_REPORT)) UseCasePricing=2;
        if (paymentTarget.equals(EBC_PAYMENT_TARGET_ACCOUNT_RATE_PLAN)) UseCasePricing=4;
-        
+        return UseCasePricing;
+    }
+	private boolean  EBCSubscribe() {
+		
+       Integer UseCasePricing=Situation();
+       Boolean isPreview=false;
+       //0:Email Block 
+       //1:Overwrite Pricing and Qty when pay exact amount
+       //2:Add to the existing Subscription
+       //3:Renewal
+       //4:Prepaid
+       //5:Tax Calculation
+       
+       
        
         
 	   System.debug('UseCasePricing >>>'+UseCasePricing);
@@ -1348,7 +1384,8 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
     public decimal getSAP_Freight_Tax() {
         
         Decimal TotalTax=0;
-        
+        Integer UseCasePricing=Situation();
+        System.debug('UseCasePricing >>>'+UseCasePricing);
         // Retrieve the SoldTo Location for the current contact
 	    Location__c oLocSoldTo = new Location_Sel().getSoldToLocationByContactId(new Set<Id> {loggedCustomer.RelatedContact.Id}).get(loggedCustomer.RelatedContact.Id);
         
@@ -1361,8 +1398,13 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
                 , subscription.Zuora__Zuora_Id__c
                         , cartItem.ZChargeId    */
             uiUpgradableRatePlan = cartItem.prpcId;
+            System.debug('uiUpgradableRatePlan before >>>'+uiUpgradableRatePlan);
+            if (UseCasePricing==1) uiUpgradableRatePlan = cartItem.ZChargeId;
+            
+            
     
         }
+        System.debug('uiUpgradableRatePlan after>>>'+uiUpgradableRatePlan);
         Try{
             //uiUpgradableRatePlan.productRatePlanInfo.Product_Rate_Plan__r.zqu__ZuoraId__c
             //Get Product Info
@@ -1441,16 +1483,19 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
 	
 	private void purchaseFulfillment()
 	{
-        EBC_Activity__c ebcAct;
+        
+        String EmailCreditToApply='0';
+        //EBC_Activity__c ebcAct;
         String numberOfEmail = String.valueOf(emailCreditPurchased).trim();
 		rereadSubscription();
-		if (isRenewal) ebcAct = newEbcActivity(paidProductRatePlan.EBC_PrePaid_Emails__c);
-		if (payEmailCredit)  ebcAct = newEbcActivity(paidProductRatePlan.EBC_Email_Credit_Current_Offering__c);
+		if (isRenewal) EmailCreditToApply=paidProductRatePlan.EBC_PrePaid_Emails__c;
+		if (payEmailCredit)EmailCreditToApply=paidProductRatePlan.EBC_Email_Credit_Current_Offering__c;
 	
-		if (payExactAmount)	ebcAct = newEbcActivity(numberOfEmail);
-		if (payNewRatePlan) ebcAct = newEbcActivity( paidProductRatePlan.EBC_PrePaid_Emails__c);
+		if (payExactAmount) EmailCreditToApply=numberOfEmail;
+		if (payNewRatePlan)  EmailCreditToApply=paidProductRatePlan.EBC_PrePaid_Emails__c;
         
         if (payAddOn){
+            /*
             Zuora__CustomerAccount__c updatedBillingAccount = new Zuora__CustomerAccount__c( Id = billingAccount.Id);
             if (paidProductRatePlan.Id == IECEBC_Utility.ebcSetup.Storage_Product_Rate_Plan__c) 
             { // increase the value of eBroadcast_Storage__c
@@ -1465,8 +1510,12 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
             }
             
             update updatedBillingAccount;
+            */
         }
-		if (ebcAct!=null) Insert ebcAct;
+        billingAccountOrder.Status__c='Payment';
+        billingAccountOrder.Email_Credit__c=Decimal.ValueOf(EmailCreditToApply);
+        update billingAccountOrder;
+		//if (ebcAct!=null) Insert ebcAct;
 		rereadBillingAccount();
 	} // end of purchaseFulfillment
 	

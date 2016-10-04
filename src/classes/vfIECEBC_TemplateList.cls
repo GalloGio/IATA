@@ -241,5 +241,39 @@ public class vfIECEBC_TemplateList extends vfIECEBC_Abstract_List {
     }
     
     public Id selectedTemplateId { get; set; }
+        private Set<String> SelectionAllowed {
+        get {
+            if (SelectionAllowed==null) {
+                List<SelectOption> options = new List<SelectOption>();
+        
+               
+                SelectionAllowed = new Set<String>();
+                //SelectionAllowed.add('IATA Numeric Codes');
+                //SelectionAllowed.add('IATA/IATAN ID Cardholders');
+                List<Zuora__CustomerAccount__c> balist = New List<Zuora__CustomerAccount__c>();
+                balist=[Select Id
+                        		,eBroadcast_Audience_Selection__c
+                       		From Zuora__CustomerAccount__c
+                       		where Id=:vfIECEBC.billingAccount.Id];
+                if (balist.size()==0) return SelectionAllowed;
+                //Read Values
+                if ( balist[0].eBroadcast_Audience_Selection__c==null) return SelectionAllowed;
+                String[] loadinfo = balist[0].eBroadcast_Audience_Selection__c.Split(';');
+                if (loadinfo!=null) SelectionAllowed.addAll(loadinfo);
+                
+            }
+            
+            return SelectionAllowed;
+        }
+        private set;
+    }
+    public Boolean isIDCARDSelectionAllowed {
+        get {
+            isIDCARDSelectionAllowed=false;
+            if (SelectionAllowed.Contains('IATA/IATAN ID Cardholders')) isIDCARDSelectionAllowed=true;
+            return isIDCARDSelectionAllowed;
+        }
+        private set;
+    }
     
 }

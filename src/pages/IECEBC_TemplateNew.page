@@ -54,6 +54,7 @@
                                                     <label class="input-label" for="new-template-agency">IATA Travel Agencies</label>
                                                 </div>
                                             </li>
+                                            <apex:outputText rendered="{!isIDCARDSelectionAllowed}">
                                             <li>
                                                 <div class="radio-box">
                                                     <div class="custom-user-input radio">
@@ -63,12 +64,14 @@
                                                         <apex:outputText rendered="{!newTemplate.Audience__c != 'Agent'}">
                                                             <input class="user-input radio" onchange="setAudience(this.value);" id="new-template-agent" type="radio" name="audience" value="Agent" />
                                                         </apex:outputText>
+                                                       	<label class="custom-radio" for="new-template-agent"><i class="icon"></i></label>
                                                         
-                                                        <label class="custom-radio" for="new-template-agent"><i class="icon"></i></label>
                                                     </div>
+                                                    
                                                     <label class="input-label" for="new-template-agent">IATA/IATAN ID Cardholders</label>
                                                 </div>
                                             </li>
+                                            </apex:outputText>
                                             <li>
                                                 <div class="radio-box">
                                                     <div class="custom-user-input radio">

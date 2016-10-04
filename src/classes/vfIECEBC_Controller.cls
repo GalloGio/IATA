@@ -555,7 +555,7 @@ public virtual class vfIECEBC_Controller {
 		
 		String theToken = IECEBC_Utility.generatePaymentToken( objectId + ebcPaymentTarget);
 		
-		Zuora__CustomerAccount__c paymentBillingAccount = new Zuora__CustomerAccount__c( Id = billingAccount.Id
+		EBC_Order__c paymentBillingAccount = new EBC_Order__c( billing_Account__c= billingAccount.Id
 														, eBroadcast_Payment_Token__c = theToken
 														, eBroadcast_Payment_Target__c = ebcPaymentTarget
 														, eBroadcast_Payment_Subscription__c = subscriptionId
@@ -563,8 +563,10 @@ public virtual class vfIECEBC_Controller {
 														, eBroadcast_Payment_Campaign__c = campaignId //null 
 														, eBroadcast_Payment_Campaign_Option__c = ebcPaymentCampaignOption // EBC_PAYMENT_CAMPAIGN_NONE
 														, eBroadcast_Payment_Email_Credit_Amount__c = creditAmount
+                                                        , Email_Credit__c=0
+                                                        , Status__c='Pending'
 														);
-		update paymentBillingAccount;
+		insert paymentBillingAccount;
 		
 		PageReference paymentPage = paymentPageBase;  
 		paymentPage.getParameters().put( EBC_PAYMENT_PARAM_PAYMENT_TOKEN, theToken);

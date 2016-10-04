@@ -86,28 +86,49 @@ public class vfIECEBC_RecipientEdit extends vfIECEBC_Controller {
         allAvailableApplicationFilterValues = null;
         geoFilters = null;
         refinementFilters = null;
+
         
         return null;
     }
     private Set<String> SelectionAllowed {
         get {
             if (SelectionAllowed==null) {
+                List<SelectOption> options = new List<SelectOption>();
+        
                
                 SelectionAllowed = new Set<String>();
+                //SelectionAllowed.add('IATA Numeric Codes');
+                //SelectionAllowed.add('IATA/IATAN ID Cardholders');
+                List<Zuora__CustomerAccount__c> balist = New List<Zuora__CustomerAccount__c>();
+                balist=[Select Id
+                        		,eBroadcast_Audience_Selection__c
+                       		From Zuora__CustomerAccount__c
+                       		where Id=:vfIECEBC.billingAccount.Id];
+                if (balist.size()==0) return SelectionAllowed;
+                //Read Values
+                if ( balist[0].eBroadcast_Audience_Selection__c==null) return SelectionAllowed;
+                String[] loadinfo = balist[0].eBroadcast_Audience_Selection__c.Split(';');
+                if (loadinfo!=null) SelectionAllowed.addAll(loadinfo);
+                
             }
+            
             return SelectionAllowed;
         }
         private set;
     }
     public Boolean isIDCARDSelectionAllowed {
         get {
-            return true;
+            isIDCARDSelectionAllowed=false;
+            if (SelectionAllowed.Contains('IATA/IATAN ID Cardholders')) isIDCARDSelectionAllowed=true;
+            return isIDCARDSelectionAllowed;
         }
         private set;
     }
     public Boolean isCodeSelectionAllowed {
         get {
-            return true;
+            isCodeSelectionAllowed=false;
+            if (SelectionAllowed.contains('IATA Numeric Codes')) isCodeSelectionAllowed=true;
+            return isCodeSelectionAllowed;
         }
         private set;
     }

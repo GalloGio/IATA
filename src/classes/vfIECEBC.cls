@@ -27,14 +27,9 @@ public class vfIECEBC extends IECPageController {
 		get {
 			if (billingAccount == null) {
 				billingAccount = [Select Id, Name
-									, eBroadcast_Trusted_Sender__c, eBroadcast_Email_Balance__c, Zuora__Account__c  
-									, eBroadcast_Payment_Token__c
-									, eBroadcast_Payment_Target__c
-									, eBroadcast_Payment_Product_Rate_Plan__c
-									, eBroadcast_Payment_Subscription__c
-									, eBroadcast_Payment_Campaign__c
-									, eBroadcast_Payment_Campaign_Option__c
-									, eBroadcast_Payment_Email_Credit_Amount__c
+									, eBroadcast_Trusted_Sender__c
+                                    , eBroadcast_Email_Balance__c
+                                    , Zuora__Account__c  
 									, eBroadcast_Add_On_Access__c
 									, eBroadcast_Add_On_Advanced_Reporting__c
 									, eBroadcast_Storage__c
@@ -83,10 +78,16 @@ public class vfIECEBC extends IECPageController {
 				System.debug(billingAccount);
 				
 				pref = [
-					Select Id, Default_From_Name__c, Default_Google_Analytics_Tracker__c,
-						Monthly_Account_Status__c, Notify_On_Send__c, PrimaryContact_Address__c,
-						PrimaryContact_Company__c, PrimaryContact_Email__c,
-						PrimaryContact_Job_Title__c, PrimaryContact_Name__c, PrimaryContact_Phone__c
+					Select Id, Default_From_Name__c
+                    		, Default_Google_Analytics_Tracker__c
+                    		,Monthly_Account_Status__c
+                    		, Notify_On_Send__c
+                    		, PrimaryContact_Address__c
+							, PrimaryContact_Company__c
+                    		, PrimaryContact_Email__c
+							, PrimaryContact_Job_Title__c
+                    		, PrimaryContact_Name__c
+                    		, PrimaryContact_Phone__c
 					From EBC_Preference__c
 					Where Billing_Account__c = :billingAccount.Id
 					LIMIT 1
