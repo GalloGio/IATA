@@ -1287,7 +1287,15 @@
             <type>user</type>
         </recipients>
         <recipients>
+            <recipient>ogandoi@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>paredesc@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>sanchezc@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
