@@ -11432,42 +11432,6 @@ ISBLANK( New_Business_Booking__c )
         <errorMessage>Please enter contract expiry date</errorMessage>
     </validationRules>
     <webLinks>
-        <description>*** DO NOT USE THIS BUTTON ON A PAGE LAYOUT *** 
-
-COPY THE URL FROM THIS BUTTON and paste it into your own custom button or link. Then add optional parameters to finely tune the button&apos;s behavior. See the Conga Configuration Guide for details.</description>
-        <masterLabel>Conga Merge</masterLabel>
-        <url>https://www.appextremes.com/apps/Conga/PointMerge.aspx?sessionId={!API.Session_ID}&amp;serverUrl={!API.Partner_Server_URL_80}&amp;id={!Opportunity.Id}</url>
-?sessionId={!API.Session_ID}
-&amp;serverUrl={!API.Partner_Server_URL_290}
-&amp;id={!Opportunity.Id}</url>
-        <fullName>BLND_FormFactory_Opportunity_Link</fullName>
-        <availability>online</availability>
-        <displayType>link</displayType>
-        <encodingKey>UTF-8</encodingKey>
-        <hasMenubar>false</hasMenubar>
-        <hasScrollbars>true</hasScrollbars>
-        <hasToolbar>false</hasToolbar>
-        <height>600</height>
-        <isResizable>true</isResizable>
-        <linkType>url</linkType>
-        <masterLabel>FormFactory Opportunity Link</masterLabel>
-        <openType>newWindow</openType>
-        <position>none</position>
-        <protected>false</protected>
-        <showsLocation>false</showsLocation>
-        <showsStatus>false</showsStatus>
-        <url>https://www.dreamfactory.net/sforce/formfactory/formfactory.html? 
-sforce_session_id={!API.Session_ID}&amp; 
-sforce_server_url={!API.Partner_Server_URL_120}&amp; 
-sforce_user_name={!User.Username}&amp; 
-sforce_full_name={!User.Name}&amp; 
-sforce_user_id={!User.Id}&amp; 
-custom_link_name=FormFactory Form Name&amp; 
-myaccount={!Account.Id}&amp; 
-myopportunity={!Opportunity.Id}&amp; 
-myuser={!User.Id}</url>
-    </webLinks>
-    <webLinks>
         <fullName>Create_Contract</fullName>
         <availability>online</availability>
         <description>Click to create a contract derived from the opportunity</description>

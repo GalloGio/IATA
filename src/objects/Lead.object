@@ -10616,33 +10616,6 @@ albam@iata.org</description>
         <errorMessage>A lead has to have Email or Phone number</errorMessage>
     </validationRules>
     <webLinks>
-        <description>*** DO NOT USE THIS BUTTON ON A PAGE LAYOUT *** 
-
-COPY THE URL FROM THIS BUTTON and paste it into your own custom button or link. Then add optional parameters to finely tune the button&apos;s behavior. See the Conga Configuration Guide for details.</description>
-        <masterLabel>Conga Merge</masterLabel>
-        <url>https://www.appextremes.com/apps/Conga/PointMerge.aspx?sessionId={!API.Session_ID}&amp;serverUrl={!API.Partner_Server_URL_80}&amp;id={!Lead.Id}</url>
-?sessionId={!API.Session_ID}
-&amp;serverUrl={!API.Partner_Server_URL_290}
-&amp;id={!Lead.Id}</url>
-        <fullName>ActOn__Acton_Activity_History</fullName>
-        <availability>online</availability>
-        <displayType>button</displayType>
-        <hasMenubar>false</hasMenubar>
-        <hasScrollbars>true</hasScrollbars>
-        <hasToolbar>false</hasToolbar>
-        <height>600</height>
-        <isResizable>true</isResizable>
-        <linkType>sControl</linkType>
-        <masterLabel>Act-On Activity History</masterLabel>
-        <openType>newWindow</openType>
-        <position>none</position>
-        <protected>false</protected>
-        <scontrol>ActOn__ActonActivityHistory</scontrol>
-        <showsLocation>false</showsLocation>
-        <showsStatus>false</showsStatus>
-        <width>900</width>
-    </webLinks>
-    <webLinks>
         <fullName>ActOn__Send_Act_On_Email</fullName>
         <availability>online</availability>
         <description>Send email to current Lead</description>
