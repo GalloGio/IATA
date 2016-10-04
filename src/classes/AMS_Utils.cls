@@ -4,7 +4,7 @@ public without sharing class AMS_Utils {
         get {
             Set<Id> toReturn = new Set<Id>();
 
-            List<Profile> profiles = [select ID from profile where Name IN ('FDS Hub Analyst ARM', 'FDS â€“ Agency Management - Supervisor (Approver)', 'IDFS Americas - Hub CS Management', 'IDFS Americas - Hub Staff')];
+            List<Profile> profiles = [select ID from profile where Name IN ('FDS Hub Analyst ARM', 'FDS – Agency Management - Supervisor (Approver)', 'IDFS Americas - Hub CS Management', 'IDFS Americas - Hub Staff')];
 
             for (Profile p : profiles)
                 toReturn.add(p.Id);
@@ -86,7 +86,7 @@ public without sharing class AMS_Utils {
     public static final String MAJ_SHAREHOLDING = 'Major Shareholding';
     public static final String MIN_SHAREHOLDING = 'Minor Shareholding';
     public static final String NAME = 'Name';
-    public static final String LEGAL_STATUS = 'Legal status';
+    public static final String LEGAL_STATUS = 'Legal Status';
     public static final String VFMR = 'VFMR';
 
 
@@ -114,10 +114,6 @@ public without sharing class AMS_Utils {
     public static final String COR              = 'CORRECTION.1.0'  ;
     public static final String AGENCYCHANGES    = 'MAJOR.CHANGES'   ;
 
-    //Record Types
-    public static final String RECTYPE_NEW      = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('NEW').getRecordTypeId();
-    public static final String RECTYPE_CHANGE   = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('CHANGE').getRecordTypeId();
-
     public static final Set<String> oscarAMSProcesses = new Set <String>{new_HO,new_BR,new_BR_ABROAD,new_TIDS,new_MSO,new_GSA,new_GSA_BSP,new_GSSA,new_AHA,new_AHA_BSP,new_SA, COR};
 
 
@@ -133,12 +129,6 @@ public without sharing class AMS_Utils {
     public static final String ACC_S7_UNDERREVIEW = 'Under review';
     public static final String ACC_S8_CHANGESPROCESSED = 'Changes processed';
     public static final String ACC_S9_APPROVED = 'Approved';
-
-    public static final String AACC_INPROGRESS = 'in progress';
-    public static final String AACC_FINALIZED = 'finalized';
-    public static final String AACC_WITHDRAWAL = 'withdrawn';
-    public static final String AACC_DISAPPROVED = 'disapproved';
-    public static final Set<String> AACC_FINALS = new Set<String>{AACC_FINALIZED, AACC_DISAPPROVED, AACC_WITHDRAWAL};
      
     public static final String CHLOCTYPEBEHAVIOR_NOSWAP = 'Don’t change the parent';        
     public static final String CHLOCTYPEBEHAVIOR_SWAP = 'Swap with the parent';
@@ -157,7 +147,7 @@ public without sharing class AMS_Utils {
     public static final Set<String> LocationClassIFAPAllowed = new Set<String>{'P','C','R'};
     public static final Set<String> LocationClassCARGO = new Set<String>{'C','I','Q','R'};
     public static final Set<String> LocationClassPASSENGER = new Set<String>{'P','T','M','X'};
-    public static final Set<String> LocationTypeAllHOTypes = new Set<String>{'EP','AO','SP','AA','HO'};
+  public static final Set<String> LocationTypeAllHOTypes = new Set<String>{'EP','AO','SP','AA','HO'};
 
 
     static {
@@ -378,7 +368,7 @@ public without sharing class AMS_Utils {
             sRes = 'C';
         }
 /*
-        // Â«AÂ» Section
+        // «A» Section
         if (sChangeCode.equalsIgnoreCase('NEW')) {
             sRes = 'A';
         } else if (sChangeCode.equalsIgnoreCase('FIN')) {
@@ -398,7 +388,7 @@ public without sharing class AMS_Utils {
         } else if (sChangeCode.equalsIgnoreCase('NAC')) {
             sRes = 'A';
         } 
-        // Â«DÂ» Section
+        // «D» Section
         else if (sChangeCode.equalsIgnoreCase('DIS')) {
             sRes = 'D';
         } else if (sChangeCode.equalsIgnoreCase('NWD')) {
@@ -408,7 +398,7 @@ public without sharing class AMS_Utils {
         } else if (sChangeCode.equalsIgnoreCase('CLO')) {
             sRes = 'D';
         } 
-        // Â«CÂ» Section
+        // «C» Section
         else {
             sRes = 'C';
         }
@@ -1540,5 +1530,33 @@ public static String fetchTypeOfCustomer (String locationType , String category)
     return categoryCustomerMap.get(category);
 
 }
+
+
+    public static Integer findGapInRange(Integer minRange, Integer maxRange, List<Integer> orderedSlotsOccupied){
+
+        Integer availableNumberInRange = -1;
+
+        //invalid range
+        if(maxRange-minRange <= 0)
+            return -1;
+        
+        //no available slots
+        if(orderedSlotsOccupied.size() > maxRange-minRange)
+            return -1;
+
+
+        if(orderedSlotsOccupied.isEmpty() || (!orderedSlotsOccupied.isEmpty() && orderedSlotsOccupied[0] > minRange))
+            availableNumberInRange = minRange;
+        else
+            availableNumberInRange = binarySearchGapFinder(orderedSlotsOccupied);
+
+        if(availableNumberInRange == -1 && orderedSlotsOccupied[orderedSlotsOccupied.size()-1] < maxRange)
+            availableNumberInRange = orderedSlotsOccupied[orderedSlotsOccupied.size()-1] +1;
+
+        return availableNumberInRange;
+
+    }
+
+
 
 }
