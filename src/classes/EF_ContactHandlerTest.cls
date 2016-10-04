@@ -40,7 +40,7 @@ private class EF_ContactHandlerTest {
         cr.Contact__c = cont.Id;
         cr.EF_Airline_Billing_Agreement__c = rel.Id;
         cr.Status__c='Active';
-        cr.Role__c='Operations';
+        cr.EF_Role__c='Operations';
         insert cr;
         
         Test.startTest();
