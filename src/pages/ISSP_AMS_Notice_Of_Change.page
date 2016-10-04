@@ -354,6 +354,7 @@
         
 		if (ownerRecType=='Current Owner'){
 			$j('[id$=personEmail]').show();
+            $j('[id$=personPhone]').show();
             //$j('[id$=ownerContactTitleAfterChange]').show(); 
             //$j('[id$=c]').hide();				
 			if($j('[id$=UpdatedLegalStatus]').val()=='Corporation')
@@ -653,6 +654,11 @@
 				<apex:param value="" name="recordId" assignTo="{!editContactId}" />
 			</apex:actionFunction>
 			<apex:actionFunction name="cancelFormUpdate" action="{!cancelFormUpdate}" status="WaitingStatus" reRender="none"/>
+            <apex:actionFunction name="fetchTravelAgent3" action="{!fetchAgentDetails}" status="loadingDetailsCompanyModal" reRender="companyModalIataCodeValidation">
+                <apex:param name="travelAgentCode" assignTo="{!iatacode}" value=""/>
+                <apex:param name="AgentSector" assignTo="{!agentsector}" value="Both"/>
+                <apex:param name="isAddCompanyModal" assignTo="{!isAddCompanyModal}" value="true"/>
+            </apex:actionFunction>
 					
 			<apex:pageBlock id="AMSBlock">
 			<div class="alert alert-info" role="alert">
@@ -1005,6 +1011,7 @@
 											<span style="font-weight:bold">{!$ObjectType.AMS_Accreditation_Contact__c.fields.Financial_interest__c.Label} </span>{!TEXT(agencycon.Financial_interest__c)}
 										</div>
 										<div class="contact-detail"><span style="font-weight:bold">Email&nbsp;</span>{!agencycon.Email__c}</div>
+                                        <div class="contact-detail"><span style="font-weight:bold">{!$ObjectType.Contact.fields.Phone.Label}&nbsp;</span>{!agencycon.Phone__c}</div>
 									</div>																					
 								</apex:column>
 							</apex:pageBlockTable>
@@ -1053,6 +1060,7 @@
 																				<div class="contact-detail"><span style="font-weight:bold">{!$ObjectType.AMS_Accreditation_Contact__c.fields.Number_Of_Shares__c.Label}&nbsp;</span>{!TEXT(agencycon.Number_Of_Shares__c)}</div>
 																				</apex:outputText>
 																				<div class="contact-detail"><span style="font-weight:bold">Email&nbsp;</span>{!agencycon.Email__c}</div>
+                                                                                <div class="contact-detail"><span style="font-weight:bold">{!$ObjectType.Contact.fields.Phone.Label}&nbsp;</span>{!agencycon.Phone__c}</div>
 																			</div>							
 								</apex:column>
 							</apex:pageBlockTable>
@@ -1300,6 +1308,11 @@
 								<apex:outputText value="{!$ObjectType.Contact.fields.Email.Label}" /><br/>
 								<apex:inputField value="{!newContact.Email__c}" required="true"/>
 								</td></tr>
+                            <tr id="personPhone" style="display:none"><td class="modalrow">
+                                <apex:inputHidden value="{!newContact.Phone__c}" id="contactphone" />
+                                <apex:outputText value="{!$ObjectType.Contact.fields.Phone.Label}" /><br/>
+                                <apex:inputField id="contactphoneinput" html-placeholder="" value="{!newContact.PhoneNational__c}" onblur="setInternationalPhoneNo('phone');" required="true"/>
+                                </td></tr>
 						</table>
 						</td>							
 					
@@ -1328,6 +1341,28 @@
 
 		toggleModalContactFields('{!$Component.newContact.contactBlock.contactSection.contactItemOwner.owner}');
 		
+        var natphone = $j("input[name='{!$Component.newContact.contactBlock.contactphoneinput}']");
+        var phone = $j("input[name='{!$Component.newContact.contactBlock.contactphone}']");
+
+        natphone.intlTelInput({
+            nationalMode: true,
+            defaultCountry: defaultHQCountry,
+            numberType: "FIXED_LINE",
+            utilsScript: "{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/lib/libphonenumber/build/utils.js')}"
+        });
+        
+         natphone.intlTelInput("setNumber", phone.val());
+        
+        function setInternationalPhoneNo(p) {
+            if(p=='phone') {
+                phone.val(natphone.intlTelInput("getNumber"));
+            } else if(p=='mobile') {
+                mobile.val(natmobile.intlTelInput("getNumber"));
+            } else {
+                fax.val(natfax.intlTelInput("getNumber"));
+            }
+        }
+        
 	</script>		
 	</div>
 	</div>
@@ -1373,7 +1408,7 @@
 				<apex:outputPanel id="companyModalIataCodeValidation">
 					<apex:outputText value="{!$Label.ISSP_AMS_Invalid_IATA_Code}" styleClass="bg-danger" escape="false" rendered="{!AND(companyModalNameOfEmployer=='', iatacode!='')}"/>	
 					<apex:outputPanel rendered="{!AND(companyModalNameOfEmployer!='', iatacode!='')}">
-						<span style="font-weight: bold; color: #4a4a56;">{!$Label.ISSP_AMS_Name_of_employer} </span>{!companyModalNameOfEmployer} <br/>
+						<span style="font-weight: bold; color: #4a4a56;">{!$Label.ISSP_Agency_name} </span>{!companyModalNameOfEmployer} <br/>
 						<span style="font-weight: bold; color: #4a4a56;">{!$Label.ISSP_AMS_Address} </span> {!companyModalAddress}
 					</apex:outputPanel>
 				</apex:outputPanel>						

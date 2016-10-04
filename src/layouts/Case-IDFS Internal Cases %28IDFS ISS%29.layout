@@ -205,22 +205,12 @@
                 <field>BusinessHoursId</field>
             </layoutItems>
             <layoutItems>
-                <emptySpace>true</emptySpace>
+                <behavior>Edit</behavior>
+                <field>EF_Contract__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Business_Justification__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Business_Process_es_Affected__c</field>
-            </layoutItems>
-            <layoutItems>
-                <height>35</height>
-                <page>AirlineSuspensionCsTemplateMerge</page>
-                <showLabel>false</showLabel>
-                <showScrollbars>true</showScrollbars>
-                <width>100%</width>
+                <field>EF_Airline_Billing_Agreement__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>

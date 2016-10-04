@@ -446,7 +446,7 @@
             </div>
          
         </div> 
-        <apex:actionFunction action="{!null}" name="refreshOfficeTypes" reRender="officetypelist,langGSA,chinatypeofagent">
+        <apex:actionFunction action="{!null}" name="refreshOfficeTypes" reRender="langGSA,officetypelist,chinatypeofagent">
             <apex:param value="" assignTo="{!sectorValue}" name="sectorValue"/>
         </apex:actionFunction>
         <apex:actionFunction action="{!updateAmsCountry}" name="updateAmsCountry" oncomplete="getCountryFromController()" reRender="amscountrylabel">
@@ -488,7 +488,7 @@
                         <apex:selectRadio style="width:35%" id="operationType" value="{!sectorValue}" onchange="refreshOfficeTypes(this.value)"> <!--onchange="refreshOfficeTypes(this.value);"-->
                             <apex:selectOption itemValue="Travel_Agent" itemLabel="{!$Label.ISSP_Travel_Agent}" id="travelAgentCheck" />
                             <apex:selectOption itemValue="Cargo_Agent" itemLabel="{!$Label.ISSP_Cargo_Agent}" id="cargoAgentCheck" />
-                            <!--apex:actionsupport event="onchange" rerender="langGSA,officetypelist" action="{!null}"/--> 
+                            <!--apex:actionsupport event="onchange" rerender="langGSA,officetypelist" action="{!null}"/ --> 
                         </apex:selectRadio>
                     </div>
                     </div>
@@ -519,7 +519,9 @@
                 </apex:outputpanel> 
             </apex:outputPanel>
             
-                <apex:outputpanel rendered="{!isNoticeOfChange}">
+            
+
+                            <apex:outputpanel rendered="{!isNoticeOfChange}">
                         <!--
                                 <apex:outputPanel rendered="{!isBankAccountChange==false}">
                                     <div class="form-group">
@@ -572,31 +574,33 @@
                                                                    rightLabel="{!$Label.ISSP_AMS_Selected_Branch_Offices}"
                                                                    rightOptions="{!agencyCodesConcerned}"
                                                                    size="8"
-                                                                   width="250px"
+                                                                   width="300px"
                                             />
                                         </div>
                                     </div>  
                                     </apex:outputPanel>
                                 </apex:outputpanel>
-                        </apex:outputpanel>          
+                            </apex:outputpanel>          
             
-                             <div class="form-group">
-                            <label for="countryconcerned" class="col-lg-3 control-label">* {!$Label.ISSP_CountryConcerned}</label>
-                            
-                            <div class="col-lg-9" id="brabroadcountries" style="padding-top:7px;display:none">                               
-                                <apex:selectList id="countrySelected" required="true" styleClass="form-control" style="width:40%" value="{!newCase.IFAP_Country_ISO__c}" size="1">
-                                        <apex:selectOptions value="{!countryISOCodeList}"/>
-                                </apex:selectList><!--onchange="setIsPilotCountry(this.value);"-->
-                            </div>
-                            
-                            <div class="col-lg-9" id="brcountry" style="padding-top:7px;display:none">
-                                <apex:outputText value="{!amsAllLangCountryLabel}"/>
-                            </div>
+                            <div class="form-group">
+                                <label for="countryconcerned" class="col-lg-3 control-label">* {!$Label.ISSP_CountryConcerned}</label>
+                                
+                                <div class="col-lg-9" id="brabroadcountries" style="padding-top:7px;display:none">                               
+                                    <apex:selectList id="countrySelected" required="true" styleClass="form-control" style="width:40%" value="{!newCase.IFAP_Country_ISO__c}" size="1">
+                                            <apex:selectOptions value="{!countryISOCodeList}"/>
+                                    </apex:selectList><!--onchange="setIsPilotCountry(this.value);"-->
+                                </div>
+                                
+                                <div class="col-lg-9" id="brcountry" style="padding-top:7px;display:none">
+                                    <apex:outputText value="{!amsAllLangCountryLabel}"/>
+                                </div>
                             </div>
 
-                            <apex:outputpanel id="langGSA" rendered="{!NOT(BEGINS(sectorValue,'Cargo_Agent')) || isNoticeOfChange}">
-                            <apex:outputpanel >
-                                <div class="form-group">
+                            <!-- apex:outputpanel id="langGSA" rendered="{!NOT(BEGINS(sectorValue,'Cargo_Agent')) || isNoticeOfChange}" -->
+                            <apex:outputpanel id="langGSA" >
+                            <apex:outputpanel rendered="{!NOT(BEGINS(sectorValue,'Cargo_Agent'))}">
+         
+                                <div class="form-group"> 
                                 <label for="applylanguage" class="col-lg-3 control-label">{!$Label.ISSP_AMS_Step1_Lang_Display}</label>
                                 <div class="col-lg-9">
                                     <apex:selectList styleClass="form-control" style="width:15%;float:left;" id="applylanguage" size="1" value="{!applyLanguage}" >
@@ -606,6 +610,8 @@
                                 </div>
                                 </div>
                             </apex:outputpanel>
+                       
+                            
                             <apex:outputpanel rendered="{!AND(NOT(isNoticeOfChange),newCase.Status!='Open - EDMC')}">  
                             <apex:outputpanel id="GSAPanel" rendered="{!NOT(BEGINS(sectorValue,'Cargo_Agent'))}">
                                 <div class="form-group" id="isGSA">
@@ -862,9 +868,11 @@
                 <apex:pageBlockSection title="{!$Label.ISSP_TC_Accept}" columns="1" collapsible="false">
                     <div class="aplabel">
                         <apex:outputText rendered="{!newForm.Is_change_ownership_or_shareholding__c==true}">
-                            <apex:outputText escape="false" value="{!$Label.ISSP_AMS_NoC_Bank_Change1}"/>
-                            <apex:outputText escape="false" value="{!$Label.ISSP_AMS_NoC_Bank_Change2}"/>  
-                            <apex:outputText escape="false" value="{!$Label.ISSP_AMS_NoC_Bank_Change3}"/> 
+                            <apex:outputText escape="false" value="{!IF(BEGINS(sectorValue,'Cargo_Agent'), IF(agencyCategory='IATA Cargo Agent', IF(isocountry.EACP_Country__c, $Label.ISSP_AMS_NoC_TC_Change_EACP, $Label.ISSP_AMS_NoC_TC_Change_CGO), $Label.ISSP_AMS_NoC_TC_Change_CASS), $Label.ISSP_AMS_NoC_Bank_Change1)}"/>
+                            <br/><br/>
+                            <apex:outputText escape="false" value="{!IF(BEGINS(sectorValue,'Cargo_Agent'), IF(agencyCategory='IATA Cargo Agent', IF(isocountry.EACP_Country__c, $Label.ISSP_AMS_NoC_TC_Change_EACP2, $Label.ISSP_AMS_NoC_TC_Change_CGO2), ''), $Label.ISSP_AMS_NoC_Bank_Change2)}"/>
+                            <br/><br/>
+                            <apex:outputText escape="false" value="{!IF(BEGINS(sectorValue,'Cargo_Agent'), IF(agencyCategory='IATA Cargo Agent', IF(isocountry.EACP_Country__c, $Label.ISSP_AMS_NoC_TC_Change_EACP3, $Label.ISSP_AMS_NoC_TC_Change_CGO3), ''), $Label.ISSP_AMS_NoC_Bank_Change3)}"/> 
                         </apex:outputText>  
                         <apex:outputText escape="false" value="{!$Label.ISSP_AMS_NoC_TC}" rendered="{!newForm.Is_change_ownership_or_shareholding__c==false}"/>                                     
                     <br/>
@@ -921,11 +929,11 @@
            
            
            <br/> <br/> 
-            {!$Label.ISSP_AMS_StepFinal_Your_CaseNumber} <a href="/ISSP_Case?caseId={!newCase.Id}" target="_blank">{!newCase.CaseNumber}</a>.
+            {!$Label.ISSP_AMS_StepFinal_Your_CaseNumber} <a href="/ISSP_Case?caseId={!newCase.Id}" target="_self">{!newCase.CaseNumber}</a>.
             <br/><br/>
-                <a href="/ISSP_Case?caseId={!newCase.Id}" target="_blank">{!$Label.ISSP_AMS_StepFinal_Access_Direct}</a>&nbsp;{!$Label.ISSP_AMS_StepFinal_Access_Direct2}
+                <a href="/ISSP_Case?caseId={!newCase.Id}" target="_self">{!$Label.ISSP_AMS_StepFinal_Access_Direct}</a>&nbsp;{!$Label.ISSP_AMS_StepFinal_Access_Direct2}
             <br/><br/>
-           {!$Label.ISSP_AMS_StepFinal_In_Addition} <a href="/ISSP_CaseList" target="_blank">{!$Label.ISSP_AMS_StepFinal_In_Addition2}</a>.
+           {!$Label.ISSP_AMS_StepFinal_In_Addition} <a href="/ISSP_CaseList" target="_self">{!$Label.ISSP_AMS_StepFinal_In_Addition2}</a>.
             <br/><br/><br/><br/>
             <!---
             <a href="/ISSP_APCases?retURL=/ISSP_Homepage"><apex:image value="https://iata--preprod--c.cs18.content.force.com/servlet/servlet.ImageServer?id=01511000000UHn7&oid=00D1100000Bzzsg&lastMod=1425387500000" width="60" height="60" style="vertical-align: middle;"/></a>&nbsp;<b>Create new BSP / CASS Joining application.</b>

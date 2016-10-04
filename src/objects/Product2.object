@@ -150,7 +150,7 @@
         <referenceTo>User</referenceTo>
         <relationshipName>Products1</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>Lookup</type>
     </fields>
     <fields>
@@ -520,9 +520,10 @@
       TEXT(Inventory_Status__c) = &quot;Out of stock&quot;, 
       NOT(ISBLANK(Expected_Availability_Date__c))
     )
-  ), 
+  ),
   Post_to_Ecommerce_Date__c &lt;= TODAY(),
-  NOT(ISBLANK(SAP_Material_Number__c))
+  NOT(ISBLANK(SAP_Material_Number__c)),
+  IF( (IEC_Parent_Product__c &lt;&gt; null &amp;&amp; IEC_Parent_Product__r.IEC_Product_Information__c &lt;&gt; null || IEC_Product_Information__c &lt;&gt; null), Sell_through_eCommerce__c, true)
 )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Display to eCommerce</label>
@@ -569,6 +570,16 @@
         <externalId>false</externalId>
         <label>Division</label>
         <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>EF_IATA_Ticket_Tax_Code__c</fullName>
+        <externalId>false</externalId>
+        <label>IATA Ticket Tax Code</label>
+        <length>8</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Text</type>
@@ -1675,7 +1686,7 @@
         <fullName>IEC_Subscribe_to_Zuora__c</fullName>
         <description>Determine if to subscribe the product to Zuora on purchase</description>
         <externalId>false</externalId>
-        <formula>IF(ISBLANK(IEC_Parent_Product__c), Available_for_Subscription__c = true &amp;&amp; Is_Shippable__c != true, IEC_Parent_Product__r.Available_for_Subscription__c = true &amp;&amp; IEC_Parent_Product__r.Is_Shippable__c != true)</formula>
+        <formula>IF(ISBLANK(IEC_Parent_Product__c), Available_for_Subscription__c = true &amp;&amp; Is_Shippable__c != true &amp;&amp; CONTAINS(&apos;-030-031-032-033-034-035-036-037-038-039-&apos;, SAP_Media_Code__c), IEC_Parent_Product__r.Available_for_Subscription__c = true &amp;&amp; IEC_Parent_Product__r.Is_Shippable__c != true &amp;&amp; CONTAINS(&apos;-030-031-032-033-034-035-036-037-038-039-&apos;, IEC_Parent_Product__r.SAP_Media_Code__c))</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Subscribe to Zuora</label>
         <trackHistory>false</trackHistory>
@@ -2552,6 +2563,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>Kato Christophe</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>Laurent Delarue</fullName>
                 <default>false</default>
             </picklistValues>
@@ -2621,7 +2636,7 @@ The product will only appear on the Online Store when the date entered in this f
             </picklistValues>
             <sorted>true</sorted>
         </picklist>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>Picklist</type>
     </fields>
     <fields>
@@ -2633,7 +2648,7 @@ The product will only appear on the Online Store when the date entered in this f
         <referenceTo>User</referenceTo>
         <relationshipName>Products</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>Lookup</type>
     </fields>
     <fields>
@@ -4006,6 +4021,29 @@ The product will only appear on the Online Store when the date entered in this f
             <value>Passenger Agency List</value>
         </filters>
         <label>GDP/EPUB/Passenger Agency List</label>
+        <language>en_US</language>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>GDP_Subscritpion_to_Zuora_RPT</fullName>
+        <columns>PRODUCT2.NAME</columns>
+        <columns>IEC_Product_Information__c</columns>
+        <columns>IEC_Parent_Product__c</columns>
+        <columns>IEC_Product_Rate_Plan_Information__c</columns>
+        <columns>SAP_Material_Number__c</columns>
+        <columns>Product_Manager_lookup__c</columns>
+        <columns>IEC_Subscribe_to_Zuora__c</columns>
+        <columns>Available_for_Subscription__c</columns>
+        <columns>Number_of_months_of_subscription__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>PRODUCT2.FAMILY</field>
+            <operation>equals</operation>
+            <value>GDP</value>
+        </filters>
+        <label>GDP/Subscritpion to Zuora RPT</label>
         <language>en_US</language>
         <sharedTo>
             <allInternalUsers></allInternalUsers>
@@ -10071,6 +10109,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Kato Christophe</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Laurent Delarue</fullName>
                 <default>false</default>
             </values>
@@ -10564,12 +10606,14 @@ The product will only appear on the Online Store when the date entered in this f
         <customTabListAdditionalFields>PRODUCT2.FAMILY</customTabListAdditionalFields>
         <customTabListAdditionalFields>Product_Manager__c</customTabListAdditionalFields>
         <lookupDialogsAdditionalFields>PRODUCT2.NAME</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>SAP_Material_Number__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>Product_Manager__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>Product_Section__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>Line_of_Business__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>Activity_Code__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>Product_Segment__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>PRODUCT2.DESCRIPTION</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>EF_IATA_Ticket_Tax_Code__c</lookupDialogsAdditionalFields>
         <lookupPhoneDialogsAdditionalFields>PRODUCT2.NAME</lookupPhoneDialogsAdditionalFields>
         <lookupPhoneDialogsAdditionalFields>PRODUCT2.CUSTOMER_PRODUCT_ID</lookupPhoneDialogsAdditionalFields>
         <lookupPhoneDialogsAdditionalFields>PRODUCT2.DESCRIPTION</lookupPhoneDialogsAdditionalFields>

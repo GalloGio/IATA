@@ -68,27 +68,5 @@
         deleteEvent.setParams({ "task": milestone, "index":index }).fire();
         
         component.set("v.isEditMode", false);
-    },
-    showMore : function(component, event, helper) {
-        var comments = component.find("comments");
-        $A.util.removeClass(comments, 'slds-truncate');
-        $A.util.addClass(comments, 'popup');
-                
-        var showMore = component.find("show-more-button");
-        $A.util.addClass(showMore, 'slds-hide');
-        var showLess = component.find("show-less-button");
-        $A.util.removeClass(showLess, 'slds-hide');
-        $A.util.addClass(showLess, 'popup-button');
-    },
-    showLess : function(component, event, helper) {
-        var comments = component.find("comments");
-        $A.util.addClass(comments, 'slds-truncate');
-        $A.util.removeClass(comments, 'popup');
-        
-        var showMore = component.find("show-more-button");
-        $A.util.removeClass(showMore, 'slds-hide');
-        var showLess = component.find("show-less-button");
-        $A.util.addClass(showLess, 'slds-hide');
-        $A.util.removeClass(showLess, 'popup-button');
-    },
+    }
 })

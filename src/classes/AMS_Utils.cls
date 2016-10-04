@@ -687,6 +687,7 @@ public without sharing class AMS_Utils {
         if( aacNEW.Change_Code__c == 'FIN' ){
             
             oscarAgency.Is_AIMS_Account__c = true;
+            oscarAgency.Accreditation_Date__c = Date.Today();            
             toReturn = oscarAgency;
         }
 

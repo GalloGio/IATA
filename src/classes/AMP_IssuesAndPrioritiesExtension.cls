@@ -163,7 +163,12 @@ public with sharing class AMP_IssuesAndPrioritiesExtension {
           newIssue.RecordTypeId = this.objectiveRecordTypeId;
           //newIssue.Name = 'new issue or priority';
           //insert newIssue;
-          lsIssuesAndPriorities.add(newIssue);
+          List<Objective__c> newList = new List<Objective__c>();
+          newList.add(newIssue);
+          newList.addAll(lsIssuesAndPriorities);
+          lsIssuesAndPriorities.clear();
+          lsIssuesAndPriorities.addAll(newList);
+        //   lsIssuesAndPriorities.add(newIssue);
         //   lsIssuesAndPriorities.clear();
 
           isEditMode = true;

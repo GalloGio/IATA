@@ -1248,15 +1248,18 @@
     </alerts>
     <alerts>
         <fullName>IDFS_SIDRA_DP01_KAM_case_created_assign</fullName>
-        <ccEmails>madsceacc@iata.org</ccEmails>
         <description>IDFS_SIDRA_DP01_KAM case created</description>
         <protected>false</protected>
         <recipients>
-            <recipient>albuquerqd@iata.org</recipient>
+            <recipient>armientoe@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
             <recipient>batagliaf@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>dovgano@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -1268,11 +1271,19 @@
             <type>user</type>
         </recipients>
         <recipients>
+            <recipient>martinyuks@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>paredesc@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
             <recipient>saremyt@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>schuchardm@iata.org</recipient>
             <type>user</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
@@ -3788,6 +3799,15 @@
         <field>Status</field>
         <literalValue>Closed_Rejected</literalValue>
         <name>Ad-hoc calendar rejection - status updat</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Airline_Master_List</fullName>
+        <field>Reason1__c</field>
+        <literalValue>Airline Master List and Details</literalValue>
+        <name>Airline Master List</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Literal</operation>
         <protected>false</protected>
@@ -11378,6 +11398,29 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
+        <fullName>Email from ibsps%40acca%2Ecom%2Ecn</fullName>
+        <actions>
+            <name>Airline_Master_List</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>DPC_Update_case_area</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Case.SuppliedEmail</field>
+            <operation>equals</operation>
+            <value>ibsps@acca.com.cn</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Process</value>
+        </criteriaItems>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
         <fullName>External split for OPS Mgt cases</fullName>
         <actions>
             <name>External_OPS_Mgt_cases</name>
@@ -12539,7 +12582,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
-            <value>SAAM,SIDRA,Process</value>
+            <value>SAAM,SIDRA,Process,OSCAR Communication,IATA Financial Review</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.IsComplaint__c</field>
@@ -14242,10 +14285,6 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <type>Alert</type>
         </actions>
         <actions>
-            <name>IFAP_Update_Is_Complaint</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
             <name>Reset_Mass_Case_Creation_Email_Send_c</name>
             <type>FieldUpdate</type>
         </actions>
@@ -14293,10 +14332,6 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <fullName>IFAP FA Letter Sent Status change</fullName>
         <actions>
             <name>IFAP_FA_Letter_Sent_Status_change</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>IFAP_Update_Is_Complaint</name>
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
