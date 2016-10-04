@@ -619,9 +619,22 @@
         unpackaged="src/labelPackage.xml"/>
       <move file="${basedir}/${sfdc.retrieveTarget}/package.xml" tofile="src/labelPackage.xml"/>  
       <move file="${basedir}/${sfdc.retrieveTarget}" tofile="src"/>
-       <antcallback target="getWorkflowLocalPointAndClick" />
+       <antcallback target="getGroupsPointAndClick" />
     </target>
 
+      <target name="getGroupsPointAndClick">
+      <echo level="info">Retrieving the server's version of LABELS</echo>
+      <mkdir dir="${basedir}/${sfdc.retrieveTarget}"/>
+      <sf:retrieve
+        retrieveTarget="${basedir}/${sfdc.retrieveTarget}"
+        username="${sfdc.username}"
+        password="${sfdc.password}"
+        serverurl="${sfdc.serverurl}"
+        unpackaged="src/groupsPackage.xml"/>
+      <move file="${basedir}/${sfdc.retrieveTarget}/package.xml" tofile="src/groupsPackage.xml"/>  
+      <move file="${basedir}/${sfdc.retrieveTarget}" tofile="src"/>
+       <antcallback target="getWorkflowLocalPointAndClick" />
+    </target>
 
 
 
