@@ -78,7 +78,7 @@ public class AMS_OSCARTriggerHandler {
 	public static void handleChangesProcess(List<AMS_OSCAR__c> oscars) {
 
 		//do Not run minor changes on agency changes trigger????
-		//AMS_AccountTriggerHandler.processMinorChangesValidationFlag = false;
+		AMS_AccountTriggerHandler.processMinorChangesValidationFlag = false;
 
 		List<AMS_OSCAR__c> oscarsToValidate = getAgencyChangeOSCARS(oscars);
 
@@ -486,7 +486,9 @@ public class AMS_OSCARTriggerHandler {
 			List<Account> mergedAccountUpdate = mergeAccountsToUpdate(accsToUpdateFromCC, accountsToUpdate);
 
 			if (!mergedAccountUpdate.isEmpty()) {
-				update mergedAccountUpdate;
+				AMS_AccountTriggerHandler.processMinorChangesValidationFlag = true;
+ 				update mergedAccountUpdate;
+				AMS_AccountTriggerHandler.processMinorChangesValidationFlag = false;
 			}
 
 			if (hierarchyChanges.size() > 0) {
