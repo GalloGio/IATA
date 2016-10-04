@@ -12,6 +12,13 @@ public without sharing class AMS_Utils {
             return toReturn;
         }
     }
+    //Record Types
+    public static final String RECTYPE_NEW      = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('NEW').getRecordTypeId();
+    public static final String RECTYPE_CHANGE   = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('CHANGE').getRecordTypeId();
+    public static final String AACC_INPROGRESS = 'in progress';
+    public static final String AACC_FINALIZED = 'finalized';
+    public static final String AACC_WITHDRAWAL = 'withdrawn';
+    public static final String AACC_DISAPPROVED = 'disapproved';
 
     public static Map<String, IATA_ISO_State__c> iataIsoStates{
         get{
@@ -1531,13 +1538,6 @@ public static String fetchTypeOfCustomer (String locationType , String category)
     return categoryCustomerMap.get(category);
 
 }
-    //Record Types
-    public static final String RECTYPE_NEW      = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('NEW').getRecordTypeId();
-    public static final String RECTYPE_CHANGE   = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('CHANGE').getRecordTypeId();
-    public static final String AACC_INPROGRESS = 'in progress';
-    public static final String AACC_FINALIZED = 'finalized';
-    public static final String AACC_WITHDRAWAL = 'withdrawn';
-    public static final String AACC_DISAPPROVED = 'disapproved';
 
     public static Integer findGapInRange(Integer minRange, Integer maxRange, List<Integer> orderedSlotsOccupied){
 
