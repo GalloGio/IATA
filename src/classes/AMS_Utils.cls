@@ -129,6 +129,7 @@ public without sharing class AMS_Utils {
     public static final String ACC_S7_UNDERREVIEW = 'Under review';
     public static final String ACC_S8_CHANGESPROCESSED = 'Changes processed';
     public static final String ACC_S9_APPROVED = 'Approved';
+    public static final Set<String> AACC_FINALS = new Set<String>{AACC_FINALIZED, AACC_DISAPPROVED, AACC_WITHDRAWAL};
      
     public static final String CHLOCTYPEBEHAVIOR_NOSWAP = 'Don’t change the parent';        
     public static final String CHLOCTYPEBEHAVIOR_SWAP = 'Swap with the parent';
