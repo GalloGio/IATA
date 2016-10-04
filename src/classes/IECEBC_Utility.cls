@@ -143,13 +143,13 @@ public class IECEBC_Utility {
 		// Remove exclusions
 		queryWhereClauses.add(emailField + ' != null');
 		
-		//queryWhereClauses.add('Id NOT IN (Select Email__c From EBC_Email_Exclusion__c Where Unsubscribe_From__c = NULL OR Unsubscribe_From__c = \'' + masterFilter.Billing_Account__c + '\')');
-		
 		
 		if (masterFilter.Audience__c == 'Agent') {
 			queryWhereClauses.add('Opt_in__c = true');
+			queryWhereClauses.add('Id NOT IN (Select ID_Card__c From EBC_Email_Exclusion_Relation__c Where Is_Global__c = true OR Billing_Account__c = \'' + masterFilter.Billing_Account__c + '\')');
 		} else {
-			queryWhereClauses.add('GDP_Opt_In__c = true');			
+			queryWhereClauses.add('GDP_Opt_In__c = true');
+			queryWhereClauses.add('Id NOT IN (Select GDP_Products_Account_View__c From EBC_Email_Exclusion_Relation__c Where Is_Global__c = true OR Billing_Account__c = \'' + masterFilter.Billing_Account__c + '\')');
 		}
 		
 		 
