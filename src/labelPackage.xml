@@ -12,9 +12,9 @@
         <members>*</members>
         <name>Group</name>
     </types>
-    <types>
+   <!-- <types>
         <members>*</members>
         <name>Translations</name>
-    </types>
+    </types> -->
     <version>37.0</version>
 </Package>
