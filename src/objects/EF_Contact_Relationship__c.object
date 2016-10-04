@@ -154,16 +154,5 @@
         <errorDisplayField>Status__c</errorDisplayField>
         <errorMessage>Status can&apos;t be active if Contact E&amp;F Status is Inactive</errorMessage>
     </validationRules>
-    <webLinks>
-        <fullName>Mass_Update_Contact_Billing_Agreement</fullName>
-        <availability>online</availability>
-        <displayType>massActionButton</displayType>
-        <height>600</height>
-        <linkType>page</linkType>
-        <masterLabel>Mass Update Contact Billing Agreement</masterLabel>
-        <openType>sidebar</openType>
-        <page>EF_MassUpdateBAContacts</page>
-        <protected>false</protected>
-        <requireRowSelection>true</requireRowSelection>
-    </webLinks>
+
 </CustomObject>
