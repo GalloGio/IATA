@@ -19,6 +19,10 @@
                 <behavior>Required</behavior>
                 <field>Type__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Is_Relation_Created__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -82,6 +86,10 @@
     </layoutSections>
     <relatedLists>
         <relatedList>RelatedEntityHistoryList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>EBC_Email_Exclusion_Relation__c.EBC_Email_Exclusion__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
