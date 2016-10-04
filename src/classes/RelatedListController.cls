@@ -264,8 +264,15 @@ public with sharing class RelatedListController {
         }
     }
 
-    public void cancelChanges(){
+    public PageReference cancelChanges(){
         ssc = null;
+        String idUrl =  ApexPages.currentPage().getParameters().get('id');
+        String retUrl =  ApexPages.currentPage().getParameters().get('retURL');
+        String prUrl;
+        if(retUrl != null) prUrl =''+retUrl;
+        else if(idUrl != null) prUrl ='/'+idUrl;
+        PageReference pageRef = new PageReference(prURL);
+        return pageRef;
     }
 
     public void updateRecords(){

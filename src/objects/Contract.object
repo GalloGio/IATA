@@ -2765,7 +2765,7 @@ COPY THE URL FROM THIS BUTTON and paste it into your own custom button or link. 
         <openType>sidebar</openType>
         <page>EF_MassUpdateContract</page>
         <protected>false</protected>
-        <requireRowSelection>true</requireRowSelection>
+        <requireRowSelection>false</requireRowSelection>
     </webLinks>
     <webLinks>
         <fullName>SIS_SAP_Client_Request</fullName>
