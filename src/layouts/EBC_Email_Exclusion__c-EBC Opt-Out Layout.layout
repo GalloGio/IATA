@@ -19,10 +19,10 @@
                 <behavior>Required</behavior>
                 <field>Type__c</field>
             </layoutItems>
-            <layoutItems>
+       <!--     <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Is_Relation_Created__c</field>
-            </layoutItems>
+            </layoutItems> -->
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

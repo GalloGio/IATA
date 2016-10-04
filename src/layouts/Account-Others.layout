@@ -372,7 +372,7 @@
         <sortField>CASES.CREATED_DATE_DATE_ONLY</sortField>
         <sortOrder>Desc</sortOrder>
     </relatedLists>
-    <relatedLists>
+ <!--   <relatedLists>
         <customButtons>Mass_Update_Contracts</customButtons>
         <fields>CONTRACT.CONTRACT_NUMBER</fields>
         <fields>CONTRACT.NAME</fields>
@@ -380,7 +380,7 @@
         <fields>CONTRACT.END_DATE</fields>
         <fields>EF_Status__c</fields>
         <relatedList>RelatedContractList</relatedList>
-    </relatedLists>
+    </relatedLists> -->
     <relatedLists>
         <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
