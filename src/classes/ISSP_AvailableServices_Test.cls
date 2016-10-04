@@ -55,7 +55,7 @@ public class ISSP_AvailableServices_Test {
         Apexpages.currentPage().getParameters().put('ServId', app.Id);
 		
     	cttr.doRequest();
-    	ISSP_AvailableServices.newAppsRequest(app.Id, con.Id);
+    	ISSP_AvailableServices.newAppsRequest(app.Id, app.Name, con.Id);
     }
     
 }

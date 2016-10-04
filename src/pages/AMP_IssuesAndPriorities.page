@@ -185,7 +185,7 @@
 
         </apex:outputPanel>
         </apex:pageBlock>
-        <apex:outputLabel for="showAllItems" value="Show all Issues" />
+        <apex:outputLabel for="showAllItems" value="Show closed Issues" />
         <apex:inputCheckBox value="{!showAllItems}" id="showAllItems">
                 <apex:actionSupport event="onchange" rerender="issueTable" action="{!filterIssuesAndPriorities}"/>
         </apex:inputcheckbox>

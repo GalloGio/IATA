@@ -1697,7 +1697,7 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
         System.assertEquals(7,con.hierarchy.size());
 
         con.hierarchy[2].main = true;
-        con.hierarchy[2].selectMain(); //simulates page actionSupport
+/*        con.hierarchy[2].selectMain(); //simulates page actionSupport
         System.assertNotEquals(HO1.Id, con.oscar.Account__c);
 
         con.hierarchy[2].main = false;
@@ -1716,7 +1716,7 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
         con.doSelectAll(); //simulates page actionSupport
 
         con.oscar.AMS_Target_Agency__c = HO2.Id;
-        con.save();
+        con.save();*/
 
         Test.stopTest();
 

@@ -207,7 +207,7 @@ public class vfIECEBC_CampaignTracking extends vfIECEBC_Controller{
                 TotalClickMap = new Map<String, List<Integer>>();
                 
                 List<EBC_Click_Event__c> My_Event_ClickLink = new List<EBC_Click_Event__c>();
-                My_Event_ClickLink = [Select URL__c, Subscriber_Key__c
+                My_Event_ClickLink = [Select URL__c, External_Id__c, Subscriber_Key__c
                                       From EBC_Click_Event__c 
                                       Where EBC_Campaign__r.Id = :campaign.Id //'a768E000000CuzMQAS'//  ApexPages.currentPage().getParameters().get('id') //'a768E000000CuzMQAS' //'a768E000000CuuHQAS'                                                          
                                      ];
@@ -215,8 +215,8 @@ public class vfIECEBC_CampaignTracking extends vfIECEBC_Controller{
                 for (EBC_Click_Event__c ebc_ce: My_Event_ClickLink){
                     List<Integer> My_IntegerList = new List<Integer>();
                     String totalClick= String.valueOf(ebc_ce.url__c);
-                    My_IntegerList.add(getTotalLink(totalClick, campaign.Id));
-                    My_IntegerList.add((Integer)getUniqueTotalLink(totalClick, campaign.Id)[0].get('unique'));
+                    My_IntegerList.add(getTotalLink(Integer.valueOf(ebc_ce.External_Id__c), campaign.Id));
+                    My_IntegerList.add((Integer)getUniqueTotalLink(Integer.valueOf(ebc_ce.External_Id__c), campaign.Id)[0].get('unique'));
                     TotalClickMap.put(ebc_ce.url__c, My_IntegerList);
                 }
             }            
@@ -257,22 +257,22 @@ public class vfIECEBC_CampaignTracking extends vfIECEBC_Controller{
         set;
     }
     
-    public static Integer getTotalLink(String Url, Id campId){
+    public static Integer getTotalLink(Integer extId, Id campId){
         
         Integer total = [Select count() 
                          from EBC_Click_Event__c 
-                         where url__c = :url 
+                         where External_Id__c = :extId 
                          And EBC_Campaign__r.Id = :campId            //ApexPages.currentPage().getParameters().get('id') //'a768E000000CuzMQAS' 
                         ];
         return total;
     }
     
-    public static List<AggregateResult> getUniqueTotalLink(String url, Id campId){
+    public static List<AggregateResult> getUniqueTotalLink(Integer externalId, Id campId){
         
         List<AggregateResult> uniqueTotal = [Select count_distinct(Subscriber_Key__c) unique 
                                              from EBC_Click_Event__c 
                                              where EBC_Campaign__r.Id = :campId                 //ApexPages.currentPage().getParameters().get('id') 
-                                             and url__c = :url
+                                             and External_Id__c = :externalId
                                             ];
         return uniqueTotal;
     }

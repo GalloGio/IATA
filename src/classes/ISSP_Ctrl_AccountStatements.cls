@@ -66,8 +66,7 @@ public without sharing class ISSP_Ctrl_AccountStatements {
 
 		// check account status before doing anything to allow or reject access to info
 		if (this.currentUser.Contact.Account.Status__c != 'Approved' &&
-			this.currentUser.Contact.Account.Status__c != 'Changes Processed' &&
-			this.currentUser.Contact.Account.Status__c != 'Listed') {
+			this.currentUser.Contact.Account.Status__c != 'Changes Processed') {
 			this.listMessages.add(Label.ISSP_Account_not_approved);
 			return;
 		}

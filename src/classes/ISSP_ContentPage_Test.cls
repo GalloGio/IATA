@@ -59,13 +59,12 @@ private class ISSP_ContentPage_Test {
         system.runAs(newUser2){
 			Apexpages.currentPage().getParameters().put('title','lemon');
             ISSP_ctrl_ContentPage controller = new ISSP_ctrl_ContentPage();
-      		controller.Title = 'lemon';
           	controller.Init();
-         	controller.runQuery();
+         	//controller.runQuery();
          	//String mySoql = controller.debugSoql;
          	//controller.toggleSort();
-         	controller.ClearFilters();
-         	controller.getCountries();
+         	//controller.ClearFilters();
+         	//controller.getCountries();
         }
         Test.stopTest();
     
