@@ -75,12 +75,12 @@
 
       
       <antcallback target="deployCodeLocal" />
-      <antcallback target="deployTemplate" />
+      <!--<antcallback target="deployTemplate" />-->
   
   </target> 
 
 
-
+<!--
 <target name="deployTemplate"> 
     <echo level="info">Deploying TEMPLATES</echo>
   <antcallback target="deldir" />
@@ -110,7 +110,7 @@
       <antcallback target="deployWorkflows" />
   
   </target> 
-
+-->
 
 <target name="deployLabelsOnly"> 
     <echo level="info">Deploying LABELS</echo>
