@@ -208,6 +208,9 @@ global without sharing class AMS_RecordCreatorWebservice {
             oscar.Type_of_change__c = typeOfChange;
 
         }
+        if(accreditationObj!=null){
+            oscar.Change_effective_as_of__c = accreditationObj.Effective_Date_Of_Change__c;
+        }
         
         insert oscar;
 
