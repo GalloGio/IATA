@@ -10266,11 +10266,7 @@ $Profile.Name = &apos;System Administrator - automated processes&apos;
         <masterLabel>Edit the accounts involved</masterLabel>
         <openType>onClickJavaScript</openType>
         <protected>false</protected>
-        <url>if (sforce.console.isInConsole()) { 
-   srcUp(&quot;/apex/AMS_AccountHierarchySelection?id={!AMS_OSCAR__c.Id}&quot;);
-} else { 
-   window.open(&quot;/apex/AMS_AccountHierarchySelection?id={!AMS_OSCAR__c.Id}&quot;);
-}</url>
+        <url>javascript:srcUp(&quot;/apex/AMS_AccountHierarchySelection?id={!AMS_OSCAR__c.Id}&quot;);</url>
     </webLinks>
     <webLinks>
         <fullName>IATA_Code_Gen</fullName>
@@ -10312,11 +10308,7 @@ window.open(&quot;/apex/AMS_OSCAR_Attachment_List?id={!AMS_OSCAR__c.Id}&quot;);
         <masterLabel>Manage owners / contacts</masterLabel>
         <openType>onClickJavaScript</openType>
         <protected>false</protected>
-        <url>if (sforce.console.isInConsole()) { 
-   srcUp(&quot;/apex/AMSAccreditationContact?id={!AMS_OSCAR__c.AMS_Online_AccreditationId__c}&quot;);
-} else { 
-   window.open(&quot;/apex/AMSAccreditationContact?id={!AMS_OSCAR__c.AMS_Online_AccreditationId__c}&quot;);
-}</url>
+        <url>javascript:srcUp(&quot;/apex/AMSAccreditationContact?id={!AMS_OSCAR__c.AMS_Online_AccreditationId__c}&quot;);</url>
     </webLinks>
     <webLinks>
         <fullName>Start_Oscar_Wizzard_button</fullName>
