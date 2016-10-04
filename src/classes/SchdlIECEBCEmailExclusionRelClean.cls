@@ -4,7 +4,7 @@ global class SchdlIECEBCEmailExclusionRelClean implements Database.Batchable<sOb
     // Batchable 
     global Database.QueryLocator start(Database.BatchableContext BC){
         return Database.getQueryLocator([
-            SELECT Id FROM EBC_Email_Exclusion_Relation__c Where Is_Email_Changed__c = true
+            SELECT Id FROM EBC_Email_Exclusion_Relation__c Where Is_Email_Changed__c = true OR EBC_Email_Exclusion__r.Is_Active__c = false
         ]);
     }	
     
