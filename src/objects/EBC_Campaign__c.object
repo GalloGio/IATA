@@ -1172,4 +1172,15 @@ TEXT(Status__c) != &apos;DRAFT&apos;</errorConditionFormula>
         <errorDisplayField>Subject__c</errorDisplayField>
         <errorMessage>The Subject can only be changed when the campaign status is Draft</errorMessage>
     </validationRules>
+    <webLinks>
+        <fullName>Campaign_Tracking</fullName>
+        <availability>online</availability>
+        <displayType>link</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <linkType>url</linkType>
+        <masterLabel>Campaign Tracking</masterLabel>
+        <openType>replace</openType>
+        <protected>false</protected>
+        <url>/00O8E000000GkPn?pv0={!EBC_Campaign__c.Id}</url>
+    </webLinks>
 </CustomObject>

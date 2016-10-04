@@ -1039,7 +1039,7 @@ The flag is set upon the payment.</description>
         <description>The field allows IATA Admin to select to which audience the billing account has access to.</description>
         <externalId>false</externalId>
         <inlineHelpText>The field allows IATA Admin to select to which audience the billing account has access to.</inlineHelpText>
-        <label>eBroadcast Audience Selection</label>
+        <label>eBroadcast Available Audiences</label>
         <picklist>
             <picklistValues>
                 <fullName>IATA/IATAN ID Cardholders</fullName>
@@ -1187,7 +1187,7 @@ This should be set by calling Payment for renewal.</inlineHelpText>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>addon report</fullName>
+                <fullName>addon reporting</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -1201,7 +1201,6 @@ This should be set by calling Payment for renewal.</inlineHelpText>
             <restrictedPicklist>true</restrictedPicklist>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -1225,7 +1224,7 @@ This should be set by calling Payment for renewal.</inlineHelpText>
         <description>For eBroadcast application, the field designates if the account is given access to the application area (one time payment required, access forever)</description>
         <externalId>false</externalId>
         <inlineHelpText>For eBroadcast application, the field designates if the account is given access to the application area (one time payment required, access forever)</inlineHelpText>
-        <label>eBroadcast Product Access</label>
+        <label>eBroadcast Service Access</label>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
@@ -1299,7 +1298,7 @@ This should be set by calling Payment for renewal.</inlineHelpText>
         <customTabListAdditionalFields>Zuora__Status__c</customTabListAdditionalFields>
     </searchLayouts>
     <sharingModel>ControlledByParent</sharingModel>
-  <!--  <webLinks>
+    <webLinks>
         <fullName>View_eBroadcast_Specific_Details</fullName>
         <availability>online</availability>
         <description>View eBroadcast Related Lists</description>
@@ -1308,9 +1307,9 @@ This should be set by calling Payment for renewal.</inlineHelpText>
         <linkType>page</linkType>
         <masterLabel>View eBroadcast Specific Details</masterLabel>
         <openType>sidebar</openType>
-        <page>EBC_RelatedLists</page> 
+        <page>EBC_RelatedLists</page>
         <protected>false</protected>
-    </webLinks>-->
+    </webLinks>
     <webLinks>
         <fullName>Zuora__Sync_Data_from_ZBilling</fullName>
         <availability>online</availability>

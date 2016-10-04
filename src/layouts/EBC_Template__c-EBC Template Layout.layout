@@ -3,7 +3,7 @@
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
         <customLabel>false</customLabel>
-        <detailHeading>false</detailHeading>
+        <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
         <label>Information</label>
         <layoutColumns>
@@ -17,23 +17,30 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Billing_Account__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Template_Name__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>Is_Reusable__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Billing_Account__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Parent_Template__c</field>
             </layoutItems>
+        </layoutColumns>
+        <style>TwoColumnsTopToBottom</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
+        <label>Technical Details</label>
+        <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>External_Id__c</field>
+                <field>RecordTypeId</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -43,22 +50,18 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>OwnerId</field>
+                <field>TriggSend_Id__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>CurrencyIsoCode</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>RecordTypeId</field>
+                <field>External_Id__c</field>
             </layoutItems>
         </layoutColumns>
-        <style>TwoColumnsTopToBottom</style>
+        <style>TwoColumnsLeftToRight</style>
     </layoutSections>
     <layoutSections>
         <customLabel>false</customLabel>
-        <detailHeading>false</detailHeading>
+        <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
         <label>System Information</label>
         <layoutColumns>
@@ -90,7 +93,6 @@
         <fields>Billing_Account__c</fields>
         <fields>Audience__c</fields>
         <fields>Is_Reusable__c</fields>
-        <fields>Template_Name__c</fields>
         <relatedLists>
             <relatedList>RelatedNoteList</relatedList>
         </relatedLists>
@@ -100,10 +102,11 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
-        <fields>EBC_Resource__c.NAME</fields>
+        <fields>EBC_Resource__c.Image_URL__c</fields>
         <fields>EBC_Resource__c.Image_Type__c</fields>
         <fields>EBC_Resource__c.Image_Size__c</fields>
         <fields>EBC_Resource__c.Is_Ready__c</fields>
+        <fields>CONNECTION_SENT.NAME</fields>
         <relatedList>EBC_Template_Resource__c.EBC_Template__c</relatedList>
     </relatedLists>
     <relatedLists>
