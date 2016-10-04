@@ -24,7 +24,7 @@ public without sharing class RCRMUtil {
             map<Id,Opportunity> mapLostOpportunitiesPerId = new map<Id,Opportunity>();
             
             for (Opportunity opp : mapTriggerNew.values()) {
-                system.debug('11111 ' + opp.Amount + ' - ' + opp.RCRM_Product_Manager__c + ' - ' + opp.RCRM_Validation_Status__c);
+                system.debug('Opp Amount: ' + opp.Amount + ' - Product Manager: ' + opp.RCRM_Product_Manager__c + ' - Validation Status:' + opp.RCRM_Validation_Status__c);
                 // map of opportunities closed WON && that have RCRM products attached and have an amount > 0 (catch errors here)
                 if (opp.RecordTypeId == RT_RCRM_Opportunity_Id && 
                     mapTriggerOld.get(opp.Id).StageName != '7. Closed Sales / Sold' && 
@@ -54,7 +54,7 @@ public without sharing class RCRMUtil {
                 List<OpportunityLineItem> lstAllRcrmOLIs = [SELECT Id, OpportunityId, Product2Id, Product2.Product_Manager_lookup__c, Product2.Reminder_interval__c, 
                                             Product2.Family, CurrencyIsoCode, PricebookEntryId, UnitPrice, Quantity FROM OpportunityLineItem 
                                             WHERE Product2.RCRM_Product__c = true AND OpportunityId IN :mapWonOpportunitiesPerId.keyset()];
-                system.debug('2222' + lstAllRcrmOLIs);
+                system.debug('Aqui Related OLI: ' + lstAllRcrmOLIs);
                 //Create a map of lists of OLIs per Opportunity Id (the goal is to have a list of the RCRM Product Id per Opportunity Id)
                 Map<Id, List<OpportunityLineItem>> mapRcrmOLIPerOppId = new Map<Id, List<OpportunityLineItem>>();
                 for (OpportunityLineItem oli : lstAllRcrmOLIs) {
@@ -64,7 +64,7 @@ public without sharing class RCRMUtil {
                     
                     mapRcrmOLIPerOppId.get(oli.OpportunityId).add(oli);
                 }
-                system.debug('33333' + mapWonOpportunitiesPerId + ' - ' + mapRcrmOLIPerOppId);
+                system.debug('Map of OLIs: ' + mapWonOpportunitiesPerId + ' - ' + mapRcrmOLIPerOppId);
                 // Validate opportunity for close, create / update Contract, update RSLs type to Booked 
                 RCRMUtil.CreateUpdateContract(mapWonOpportunitiesPerId, mapRcrmOLIPerOppId);
                 
@@ -150,7 +150,7 @@ public without sharing class RCRMUtil {
      */
     public static void CreateUpdateContract (Map<Id,Opportunity> mapOpportunitiesPerId, Map<Id, List<OpportunityLineItem>> mapRcrmOLIPerOppId) {
         Id RT_RCRM_Contract_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Contract').get('RCRM_Contract');
-        system.debug('444');
+        system.debug('Entrou no update do contracto');
         // List of Opportunities from the parameter map
         List<Opportunity> lstOpportunities = mapOpportunitiesPerId.values();
         
@@ -167,13 +167,13 @@ public without sharing class RCRMUtil {
                 lstExpConIds.add(opp.Expiring_contract__c);
             }
         }
-        system.debug('555');
+        system.debug('Tem opp a expirar.');
         // Get info from the expiring contracts into a map of contracts per contract Id
         Map<Id, Contract> mapExpContractsPerId = new Map<Id, Contract>([SELECT Id, ContractTerm, Booking_value__c, Number_of_times_renewed__c, 
                                                                     Renewal_under_Sales_Responsibility__c, Renewal_Status__c, Current_Opportunity__c, Opportunity_OwnerEmail__c 
                                                                     FROM Contract WHERE Id IN :lstExpConIds]);
         
-        system.debug('666' + lstOpportunities);
+        system.debug('Oportunidades a listar: ' + lstOpportunities);
         //////////////////////////
         // Get the RCRM OLIs from the opportunities that created/updated the EXPIRING contracts, in order to compare them with the current RCRM OLIs lists
         Map<Id, List<OpportunityLineItem>> mapOLDRcrmOLIPerExpContractId = new  Map<Id, List<OpportunityLineItem>>();
@@ -201,7 +201,7 @@ public without sharing class RCRMUtil {
 
 
         //////////////////////////
-        system.debug('777' + mapRcrmOLIPerOppId);
+        system.debug('OLI por Opp Id: ' + mapRcrmOLIPerOppId);
         
         for (Opportunity opp : lstOpportunities) {
 
@@ -209,15 +209,15 @@ public without sharing class RCRMUtil {
             List<Opportunity> emailManager = [select id, RCRM_Product_Manager__r.Email from Opportunity where id = :opp.Id];
             List<Opportunity> emailAltManager = [select id, Alternate_RCRM_Product_Manager__r.Email from Opportunity where id = :opp.Id];
 
-            system.debug('aqui email ' + email[0].Owner.Email + '+' + emailManager[0].RCRM_Product_Manager__r.Email);
+            system.debug('Aqui email do owner: ' + email[0].Owner.Email + '+ Aqui email do Manager: ' + emailManager[0].RCRM_Product_Manager__r.Email);
             
             // Validate Opportunity - a RCRM product needs to be present
             if (mapRcrmOLIPerOppId.get(opp.Id) == null || mapRcrmOLIPerOppId.get(opp.Id).isEmpty()) {
                 // No RCRM product present => prevent the opportunity from being closed
                 opp.addError('ERROR - The Opportunity cannot be closed because there is no RCRM product attached to it. You need to either add a RCRM product, or change the opportunity record type.');
-                system.debug('888');
+                //system.debug('Teste erro');
             } else if (opp.Expiring_contract__c == null) {
-                system.debug('999 -' + opp.Owner.Name + ' - ' + opp.Amount);
+                system.debug('Opp Owner: ' + opp.Owner.Name + ' - Opp Amount:  ' + opp.Amount);
                 // NEW CONTRACT
                 Contract newContract = new Contract();
                 newContract.Name = opp.Name.startsWith('Renewal - ') ? opp.Name.replaceFirst('Renewal - ','') : opp.Name;
