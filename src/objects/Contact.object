@@ -27273,26 +27273,7 @@ Account.Is_Branch_Abroad__c = &apos;No&apos; &amp;&amp;
 )</errorConditionFormula>
         <errorMessage>Only an admin can assign a Financial Assessment contact to a branch agency (BR).</errorMessage>
     </validationRules>
-    <webLinks>
-        <description>*** DO NOT USE THIS BUTTON ON A PAGE LAYOUT *** 
-
-COPY THE URL FROM THIS BUTTON and paste it into your own custom button or link. Then add optional parameters to finely tune the button&apos;s behavior. See the Conga Configuration Guide for details.</description>
-        <masterLabel>Conga Composer</masterLabel>
-        <url>https://www.appextremes.com/apps/Conga/PointMerge.aspx?sessionId={!API.Session_ID}&amp;serverUrl={!API.Partner_Server_URL_80}&amp;id={!Contact.Id}</url>
-?sessionId={!API.Session_ID}
-&amp;serverUrl={!API.Partner_Server_URL_290}
-&amp;id={!Contact.Id}</url>
-        <fullName>Accreditationchanges</fullName>
-        <availability>online</availability>
-        <displayType>link</displayType>
-        <encodingKey>UTF-8</encodingKey>
-        <linkType>url</linkType>
-        <masterLabel>Accreditation changes</masterLabel>
-        <openType>replace</openType>
-        <protected>false</protected>
-        <url>/500/e?retURL=/{!Contact.Id}&amp;def_contact_id={!Contact.Id}&amp;cas14= Accreditation changes&amp;cas6=Accreditation changes&amp;cas15=Customer informs about accreditation changes of ownership/equity or legal status, changes of name, changes of address.&amp;00N20000000h4cK={!Account.BillingCountry}&amp;00N20000000h23T=Changes&amp;00N20000000gzqc={!Account.Site}&amp;00N20000000h1xp=Accreditation&amp;def_account_id={!Account.Id}</url>
-    </webLinks>
-    <webLinks>
+     <webLinks>
         <fullName>ActOn__ActOn_Activity_History</fullName>
         <availability>online</availability>
         <displayType>button</displayType>

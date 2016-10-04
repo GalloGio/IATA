@@ -1813,33 +1813,6 @@
         <searchResultsAdditionalFields>CORE.USERS.ALIAS</searchResultsAdditionalFields>
     </searchLayouts>
     <webLinks>
-        <description>*** DO NOT USE THIS BUTTON ON A PAGE LAYOUT *** 
-
-COPY THE URL FROM THIS BUTTON and paste it into your own custom button or link. Then add optional parameters to finely tune the button&apos;s behavior. See the Conga Configuration Guide for details.</description>
-        <masterLabel>Conga Merge</masterLabel>
-        <url>https://www.appextremes.com/apps/Conga/PointMerge.aspx?sessionId={!API.Session_ID}&amp;serverUrl={!API.Partner_Server_URL_80}&amp;id={!Solution.Id}</url>
-?sessionId={!API.Session_ID}
-&amp;serverUrl={!API.Partner_Server_URL_290}
-&amp;id={!Solution.Id}</url>
-        <fullName>CreateTranslatedSolution</fullName>
-        <availability>online</availability>
-        <displayType>link</displayType>
-        <encodingKey>UTF-8</encodingKey>
-        <hasMenubar>false</hasMenubar>
-        <hasScrollbars>true</hasScrollbars>
-        <hasToolbar>false</hasToolbar>
-        <height>600</height>
-        <isResizable>true</isResizable>
-        <linkType>url</linkType>
-        <masterLabel>Create Translated Solution</masterLabel>
-        <openType>newWindow</openType>
-        <position>none</position>
-        <protected>false</protected>
-        <showsLocation>false</showsLocation>
-        <showsStatus>false</showsStatus>
-        <url>/501/e?retURL=%2F501%2Fo{!Solution.IATA_solution_number__c}</url>
-    </webLinks>
-    <webLinks>
         <fullName>ENZ__AttachFTP</fullName>
         <availability>online</availability>
         <displayType>link</displayType>
