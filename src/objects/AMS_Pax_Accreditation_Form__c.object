@@ -772,7 +772,7 @@
     <fields>
         <fullName>Account_Name__c</fullName>
         <externalId>false</externalId>
-        <label>Account Name</label>
+        <label>Account New Name</label>
         <length>80</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -784,7 +784,7 @@
         <fullName>Agency_Codes_Concerned__c</fullName>
         <description>List of Agency IATA Codes for all Accounts involved in a Notice of Change</description>
         <externalId>false</externalId>
-        <label>Agency Codes Concerned</label>
+        <label>Branch Agency Codes affected</label>
         <length>32768</length>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -969,7 +969,7 @@
     <fields>
         <fullName>Branch_Office_Email__c</fullName>
         <externalId>false</externalId>
-        <label>Email</label>
+        <label>Office Email</label>
         <length>80</length>
         <required>false</required>
         <trackHistory>true</trackHistory>
@@ -998,7 +998,7 @@
     <fields>
         <fullName>Branch_Office_Phone_National__c</fullName>
         <externalId>false</externalId>
-        <label>* Phone</label>
+        <label>* Office Phone</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -1007,7 +1007,7 @@
     <fields>
         <fullName>Branch_Office_Phone__c</fullName>
         <externalId>false</externalId>
-        <label>* Phone</label>
+        <label>* Office Phone</label>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
@@ -1028,7 +1028,7 @@
         <fullName>Branch_Office_Street_name_number__c</fullName>
         <externalId>false</externalId>
         <label>* Street Name &amp; Number</label>
-        <length>255</length>
+        <length>100</length>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
@@ -1266,6 +1266,18 @@
         <externalId>false</externalId>
         <label>Country</label>
         <length>100</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Current_VAT_Number__c</fullName>
+        <externalId>false</externalId>
+        <formula>SAAM_Case__r.Account_Concerned__r.VAT_Number__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Current VAT Number</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -1516,6 +1528,20 @@
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>HO_Account__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <inlineHelpText>Lookup to HO for the Online application (not necessarily the account on the case)</inlineHelpText>
+        <label>HO Account</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>AMS Online Accreditations (HO Account)</relationshipLabel>
+        <relationshipName>AMS_Online_Accreditations</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
     </fields>
     <fields>
         <fullName>HO_Billing_Address__c</fullName>
@@ -2766,7 +2792,7 @@ If(LEN( SAAM_Case__r.Account.ShippingCountry) &gt;0, SAAM_Case__r.Account.Shippi
     <fields>
         <fullName>Issued_share_capital__c</fullName>
         <externalId>false</externalId>
-        <label>Previous Issued Share Capital</label>
+        <label>Current Issued Share Capital</label>
         <precision>13</precision>
         <required>false</required>
         <scale>0</scale>
@@ -3150,6 +3176,29 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
         <type>Picklist</type>
     </fields>
     <fields>
+        <fullName>Map_Company_Type_to_Legal_Status__c</fullName>
+        <externalId>false</externalId>
+        <formula>CASE( HO_Account__r.Company_Type__c ,
+&apos;A&apos;, $Label.ISSP_AMS_LS_Association,
+&apos;C&apos;, $Label.ISSP_AMS_LS_Corporation,
+&apos;E&apos;, $Label.ISSP_AMS_LS_Government,
+&apos;L&apos;, $Label.ISSP_AMS_LS_Limited_Company,
+&apos;O&apos;, $Label.ISSP_AMS_LS_Other,
+&apos;P&apos;, $Label.ISSP_AMS_LS_Partnership,
+&apos;R&apos;, $Label.ISSP_AMS_LS_Limited_Partnership,
+&apos;T&apos;, $Label.ISSP_AMS_LS_Trust_Company,
+&apos;V&apos;, $Label.ISSP_AMS_LS_Co_operative,
+$Label.ISSP_AMS_LS_Sole_Owner)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Map Company Type of HO to Legal Status</inlineHelpText>
+        <label>Current Legal Status</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>MobileNational__c</fullName>
         <externalId>false</externalId>
         <label>MobileNational</label>
@@ -3341,7 +3390,7 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
         <externalId>false</externalId>
         <formula>SAAM_Case__r.Account_Concerned__r.BillingCity</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>Previous City</label>
+        <label>Current City</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -3353,7 +3402,7 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
         <externalId>false</externalId>
         <formula>SAAM_Case__r.Account_Concerned__r.Email__c</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>Previous Email</label>
+        <label>Current Office Email</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -3365,7 +3414,7 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
         <externalId>false</externalId>
         <formula>SAAM_Case__r.Account_Concerned__r.Fax</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>Previous FAX</label>
+        <label>Current FAX</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -3375,9 +3424,9 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
     <fields>
         <fullName>Previous_Legal_Registered_Name__c</fullName>
         <externalId>false</externalId>
-        <formula>SAAM_Case__r.Account_Concerned__r.Legal_name__c</formula>
+        <formula>SAAM_Case__r.Account_Concerned__r.Name</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>Previous Legal / Registered Name</label>
+        <label>Current Legal / Registered Name</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -3401,7 +3450,7 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
         <externalId>false</externalId>
         <formula>SAAM_Case__r.Account_Concerned__r.Mobile__c</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>Previous Mobile</label>
+        <label>Current Mobile</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -3425,7 +3474,7 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
         <externalId>false</externalId>
         <formula>SAAM_Case__r.Account_Concerned__r.Phone</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>Previous Phone</label>
+        <label>Current Office Phone</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -3437,7 +3486,7 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
         <externalId>false</externalId>
         <formula>SAAM_Case__r.Account_Concerned__r.BillingPostalCode</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>Previous Postal code</label>
+        <label>Current Postal code</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -3449,7 +3498,7 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
         <externalId>false</externalId>
         <formula>SAAM_Case__r.Account_Concerned__r.BillingState</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>Previous State/Province</label>
+        <label>Current State/Province</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -3461,7 +3510,7 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
         <externalId>false</externalId>
         <formula>SAAM_Case__r.Account_Concerned__r.BillingStreet</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>Previous Street Name &amp; Number</label>
+        <label>Current Street Name &amp; Number</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -3473,7 +3522,7 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
         <externalId>false</externalId>
         <formula>SAAM_Case__r.Account_Concerned__r.TradeName__c</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>Previous Trade Name</label>
+        <label>Current Trade Name</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -3485,7 +3534,7 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
         <externalId>false</externalId>
         <formula>SAAM_Case__r.Account_Concerned__r.Fax</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>Previous fax</label>
+        <label>Current FAX</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -3753,7 +3802,7 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
         <fullName>Shipping_Street__c</fullName>
         <externalId>false</externalId>
         <label>Shipping Street</label>
-        <length>255</length>
+        <length>100</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -4272,7 +4321,7 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
     </fields>
     <fields>
         <fullName>Will_such_change_affect_the_premises__c</fullName>
-        <description>Will such change affect the premises that were investigated in the course of approving the Agent’s application for registration?</description>
+        <description>Will such change affect the premises that were investigated in the course of approving the Agentâ€™s application for registration?</description>
         <externalId>false</externalId>
         <label>Will such change affect the premises</label>
         <picklist>
@@ -13581,10 +13630,6 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Daily</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Fortnightly - Bi-Monthly</fullName>
                 <default>false</default>
             </values>
@@ -15440,10 +15485,6 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
             </values>
             <values>
                 <fullName>3-days</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Daily</fullName>
                 <default>false</default>
             </values>
             <values>

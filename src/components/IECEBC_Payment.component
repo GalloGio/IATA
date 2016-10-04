@@ -13,6 +13,12 @@
 		function selectPaymentMethod( methodName, creditCardExternalId)
 		{
 			console.log( 'selectPaymentMethod: ( methodName:' + methodName + ' ; cardExtId:'+ creditCardExternalId + ')') ;
+            //Credit Card Selection only if not blank
+            if (creditCardExternalId!='')
+            this.document.getElementById('{!$Component.formShoppingCart.hiddenSelectedCreditCardPaymentId}').value = creditCardExternalId;
+            //Method Selection
+            this.document.getElementById('{!$Component.formShoppingCart.hiddenSelectedPaymentType}').value = methodName;
+            console.log( 'values loaded');
 		}
 		
 		/*
@@ -66,25 +72,7 @@
     
 		
 	</script>
-	<apex:form id="formShoppingCart">
-    <!--
-	<apex:actionStatus id="statusId" onstart="showLoading();" onstop="hideLoading();" />
-	-->
-	<!--
-    <apex:actionFunction name="pageLoadAction" action="{!pageLoad}" rerender="campaignConfirmBillingDetailForm" status="loadingCartStatus"/>
-    
-    
-    
-   
-	-->
-     <apex:inputHidden value="{!selectedPaymentMethodType}" id="hiddenSelectedPaymentType" />
-     <apex:actionFunction action="{!readMethodofPayment}" name="readMethodofPaymentBackend" rerender="paymentMethodsection"   />
-    
-     <apex:inputHidden value="{!selectedCreditCardPaymentId}" id="hiddenSelectedCreditCardPaymentId" />
-     <apex:actionFunction action="{!displayCallBackfailure}" name="displayCallBackfailureJS" rerender="js-modal-newcreditcard-item-wrapper">
-        <apex:param name="errMsg" value="" assignTo="{!sErrorMsgFromHPM}"/>
-    </apex:actionFunction>
-	</apex:form>
+	
 	<div class="row row-payment">
 		<section class="columns main-container campaign-cost">
 			
@@ -228,18 +216,36 @@
                                             ::before
                                         </i>
                                     -->
-                                    
-                                    <apex:commandButton action="{!clickEditButton}" rendered="{!!editMode}" 
-                                                        value="Edit billing information"
-                                                        reRender="campaignConfirmBillingDetailForm,footerActionForm,msg"
-                                                        styleClass="button secondary fa fa-pencil-square-o"
+                                    <ul class="list actions">
+                                    <apex:outputText rendered="{!!editMode}">
+										<li>
+                                            <apex:commandLink action="{!clickEditButton}"
+                                                                value="Edit billing information"
+                                                                reRender="campaignConfirmBillingDetailForm,formShoppingCart,msg"
+                                                                styleClass="button secondary fa fa-pencil-square-o"
+                                                                status="statusId"
+                                                                />
+                                       </li>
+									</apex:outputText>
+                                    <apex:outputText rendered="{!editMode}">
+										<li>
+                                            <apex:commandLink action="{!clickCancelBillingDetailButton}"  
+                                                        value="Cancel" 
+                                                        reRender="campaignConfirmBillingDetailForm,formShoppingCart,msg"
                                                         status="statusId"
-                                                        />
-                                    <apex:commandButton action="{!clickSaveBillingDetailButton}" rendered="{!editMode}" 
+                                                        styleClass="text-link"/>
+                                        </li>
+                                    </apex:outputText>
+                                    <apex:outputText rendered="{!editMode}">
+										<li>
+                                            <apex:commandLink action="{!clickSaveBillingDetailButton}"  
                                                         value="Save" 
-                                                        reRender="campaignConfirmBillingDetailForm,footerActionForm,msg"
+                                                        reRender="campaignConfirmBillingDetailForm,formShoppingCart,msg"
                                                         status="statusId"
                                                         styleClass="button secondary"/>
+                                        </li>
+									</apex:outputText>
+                                    </ul>                                    
                                 </div>
                             </apex:form>
 						</dd>
@@ -263,7 +269,9 @@
 										<apex:outputPanel id="paymentWithCreditCardPanel" rendered="{!isPayableWithCreditCard}">
 											<div class="radio-box">
 												<div class="custom-user-input radio">
-													<input class="user-input radio" type="radio" name="pay-by2" id="pay-by-credit-card2" value="creditCard" checked=""/>
+													<input class="user-input radio" type="radio" name="payment-method" id="pay-by-credit-card2" value="creditCard" checked="true"
+                                                       onClick="selectPaymentMethod('CREDIT_CARD', '');"    
+                                                           />
 													<label class="custom-radio" for="pay-by-credit-card2"><i class="icon"></i></label>
 												</div>
 												<label class="input-label" for="pay-by-credit-card2">Credit card</label>
@@ -272,7 +280,7 @@
 										<apex:outputPanel id="paymentWithICHPanel" rendered="{!isPayableWithICH}">
 											<div class="radio-box">
 												<div class="custom-user-input radio">
-													<input class="user-input radio" type="radio" name="pay-by2" id="pay-by-ich2" value="ich"
+													<input class="user-input radio" type="radio" name="payment-method" id="pay-by-ich2" value="ich"
 															onClick="selectPaymentMethod('ICH', '');"
 														/>
 													<label class="custom-radio" for="pay-by-ich2"><i class="icon"></i></label>
@@ -305,13 +313,13 @@
 											<!-- -->
 											
 											<apex:repeat value="{!paymentMethods}" var="cc" rendered="{!isPayableWithCreditCard}">
-												<tr class="{!IF(cc.zId!=cc.zId,'item', 'item is-selected')}">
+												<tr class="{!IF(cc.zId!=selectedCreditCardPaymentId,'item', 'item is-selected')}">
 													<td class="card">
 														<div class="field-group radio">
 															<div class="radio-box">
 																<div class="custom-user-input radio">
 																	<input class="user-input radio" type="radio" name="pay-by2-card-type" 
-																			id="pay-by-credit-card2-saved-card-1-{!cc.zId}" checked=""
+																			id="pay-by-credit-card2-saved-card-1-{!cc.zId}" checked="{!cc.zId==selectedCreditCardPaymentId}"
 																			onClick="selectPaymentMethod('CREDIT_CARD', '{!cc.zId}');"
 																		/>
 																	<label class="custom-radio" for="pay-by-credit-card2-saved-card-1-{!cc.zId}"><i class="icon"></i></label>
@@ -467,7 +475,7 @@
 										Taxes
 									</th>
 									<td class="price">
-										<apex:outputText value="${0,number,###,###,##0.00}"><apex:param value="{!taxAmount}" /></apex:outputText>
+										<apex:outputText value="${0,number,###,###,##0.00}"><apex:param value="{!TaxAmount}" /></apex:outputText>
 									</td>
 								</tr>
 								<tr class="total">
@@ -486,13 +494,31 @@
 				</apex:form>
 				
 				
-				<apex:form id="footerActionForm" rendered="{!isPaymentTokenValid}">
-					<apex:outputPanel rendered="true" >
+				<apex:form id="formShoppingCart" rendered="{!isPaymentTokenValid}">
+                    <!--
+                    <apex:actionStatus id="statusId" onstart="showLoading();" onstop="hideLoading();" />
+                    -->
+                    <!--
+                    <apex:actionFunction name="pageLoadAction" action="{!pageLoad}" rerender="campaignConfirmBillingDetailForm" status="loadingCartStatus"/>
+                    -->
+                     <apex:inputHidden value="{!selectedPaymentMethodType}" id="hiddenSelectedPaymentType" />
+                     <apex:actionFunction action="{!readMethodofPayment}" name="readMethodofPaymentBackend" rerender="paymentMethodsection"   />
+                    
+                     <apex:inputHidden value="{!selectedCreditCardPaymentId}" id="hiddenSelectedCreditCardPaymentId" />
+                     <apex:actionFunction action="{!displayCallBackfailure}" name="displayCallBackfailureJS" rerender="js-modal-newcreditcard-item-wrapper">
+                        <apex:param name="errMsg" value="" assignTo="{!sErrorMsgFromHPM}"/>
+                    </apex:actionFunction>
+	
+					<apex:outputPanel rendered="true" id="actionButtons" >
 						<div class="footer-actions">
 							<ul class="list actions">
+                                
 								<li><a class="text-link" href="#">Cancel</a></li>
 								<apex:outputText rendered="{!showPaymentButtons}">
-									<li><apex:commandLink action="{!EBCSubscribe}" styleClass="button" value="Submit payment" /></li>
+									<li><apex:commandLink action="{!EBCSubscribeNow}" styleClass="button" value="Submit payment" /></li>
+								</apex:outputText>
+                                <apex:outputText rendered="{!showTaxButtons}">
+									<li><apex:commandLink action="{!CalculateTaxNow}" styleClass="button" value="Calculate Tax"  reRender="actionButtons,paymentConfirmationForm"/></li>
 								</apex:outputText>
 							</ul>
 						</div>

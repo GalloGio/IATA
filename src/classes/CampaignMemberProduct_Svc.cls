@@ -10,8 +10,9 @@ public class CampaignMemberProduct_Svc
         
         Map<String, Campaign_Member_Product__c> cmpByKey = new Map<String, Campaign_Member_Product__c>();
         Map<Id, List<OrderItem>> itemsByContactId = new Map<Id, List<OrderItem>>(); 
-        Set<Id> productsOrdered = new Set<Id>();
-        Set<String> cmpSearchKeys = new Set<String>();
+        //Set<Id> productsOrdered = new Set<Id>();
+        //Set<String> cmpSearchKeys = new Set<String>();
+        List<IEC_Renewal_notice_log__c> lstErrorLog = new List<IEC_Renewal_notice_log__c>();
         
         for(OrderItem item : items)
         {
@@ -25,39 +26,49 @@ public class CampaignMemberProduct_Svc
                 itemsByContactId.put(item.Order.BillToContactId, tmp);
             }
             
-            productsOrdered.add(item.Product__c);
+            //productsOrdered.add(item.Product__c);
         }
+        
+        //*** build set of contact not deleted
+        Set<Id> setLiveContactId = new Set<Id>();
+        for (Contact c : [select Id from Contact where IsDeleted = false and Id in :itemsByContactId.keySet()])
+            setLiveContactId.add(c.Id);
         
         for(Id contactId : itemsByContactId.keySet())
-        {
-            for(OrderItem item : itemsByContactId.get(contactId))
+            if (setLiveContactId.contains(contactId))
             {
-                String key = campaignId+'_'+contactId+'_'+item.Product__c;
-                
-                //validate key unicity 
-                if(cmpByKey.containsKey(key))
+                for(OrderItem item : itemsByContactId.get(contactId))
                 {
-                    //-- If item Invoice Date is more recent the update qty 
-                    Campaign_Member_Product__c cmp = cmpByKey.get(key);
-                    if(item.Invoice_Date__c > cmp.Invoice_Date__c)
-                        cmp.Quantity__c = item.Quantity;
-                }
-                else
-                {
-                    cmpByKey.put(key, new Campaign_Member_Product__c(
-                        Campaign__c = campaignId,
-                        Contact__c  = contactId,
-                        Product__c  = item.Product__c,
-                        Quantity__c = item.Quantity,
-                        Key__c = key,
-                        Invoice_Date__c = item.Invoice_Date__c
-                    ));
+                    String key = campaignId+'_'+contactId+'_'+item.Product__c;
+                    
+                    //validate key unicity 
+                    if(cmpByKey.containsKey(key))
+                    {
+                        //-- summarize quantity of all orders
+                        Campaign_Member_Product__c cmp = cmpByKey.get(key);
+                        if (item.Invoice_Date__c != null && (cmp.Invoice_Date__c == null || item.Invoice_Date__c > cmp.Invoice_Date__c))
+                            cmp.Invoice_Date__c = item.Invoice_Date__c;
+                        //if(item.Invoice_Date__c > cmp.Invoice_Date__c)
+                            cmp.Quantity__c += item.Quantity;
+                    }
+                    else
+                    {
+                        cmpByKey.put(key, new Campaign_Member_Product__c(
+                            Campaign__c = campaignId,
+                            Contact__c  = contactId,
+                            Product__c  = item.Product__c,
+                            Quantity__c = item.Quantity,
+                            Key__c = key,
+                            Invoice_Date__c = item.Invoice_Date__c
+                        ));
+                    }
                 }
             }
-        }
+            else
+                lstErrorLog.add(IEC_RenewalNotice_Svc.logError('Trying to create Campaign Member Product for deleted contact', String.valueOf(itemsByContactId.get(contactId)), null, campaignId, null, false));
         
         //-- Check in existing CMP if there is no duplicates with the one we are about to save 
-        Map<String, Campaign_Member_Product__c> existingCMPByKey = new CampaignMemberProduct_Sel().getCampaignMemberProductByKey(cmpSearchKeys);
+        Map<String, Campaign_Member_Product__c> existingCMPByKey = new CampaignMemberProduct_Sel().getCampaignMemberProductByKey(cmpByKey.keySet());
         
         List<Campaign_Member_Product__c> cmpToInsert = new List<Campaign_Member_Product__c>();
         List<Campaign_Member_Product__c> cmpToUpdate = new List<Campaign_Member_Product__c>();
@@ -69,12 +80,12 @@ public class CampaignMemberProduct_Svc
             if(existingCMPByKey.containsKey(key))
             {
                 Campaign_Member_Product__c existingCMP = existingCMPByKey.get(key);
-                if(cmp.Invoice_Date__c > existingCMP.Invoice_Date__c)
-                {
+                //if(cmp.Invoice_Date__c > existingCMP.Invoice_Date__c)
+                //{
                     //CMP more recent than the existing  => update the existing qty 
-                    existingCMP.Quantity__c = cmp.Quantity__c;
+                    existingCMP.Quantity__c += cmp.Quantity__c;
                     cmpToUpdate.add(existingCMP);
-                }
+                //}
             }
             else
             {
@@ -83,16 +94,30 @@ public class CampaignMemberProduct_Svc
         }
         
         if(cmpToUpdate.size() > 0)
-        {
-            update cmpToUpdate; 
-            cmpSaved.addAll(cmpToUpdate);
-        }
+            try
+            {
+                update cmpToUpdate; 
+                cmpSaved.addAll(cmpToUpdate);
+            }
+            catch(Exception ex)
+            {
+                lstErrorLog.add(IEC_RenewalNotice_Svc.logError('Error when trying to update Campaign Member Product', String.valueOf(ex), null, campaignId, null, false));
+            }
         
         if(cmpToInsert.size() > 0)
-        {
-            insert cmpToInsert; 
-            cmpSaved.addAll(cmpToInsert);
-        }
+            try
+            {
+                insert cmpToInsert; 
+                cmpSaved.addAll(cmpToInsert);
+            }
+            catch(Exception ex)
+            {
+                lstErrorLog.add(IEC_RenewalNotice_Svc.logError('Error when trying to insert Campaign Member Product', String.valueOf(ex), null, campaignId, null, false));
+            }
+        
+        //*** log error if applicable
+        if(lstErrorLog.size() > 0)
+            insert lstErrorLog;
         
         return cmpSaved;
     }

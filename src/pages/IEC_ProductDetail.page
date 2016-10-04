@@ -70,7 +70,7 @@
 					                </div>
 					            </div>
 					            <!-- Overview -->
-								<section class="section-container overview" id="overview">
+								<section class="section-container overview" id="overview" style="min-height:270px;">
 					                <h2 class="section-title">Overview</h2>
 					                <apex:outputText value="{!ecomProduct.ProductDesc}" escape="false" />
 					            </section>

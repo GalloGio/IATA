@@ -62,40 +62,13 @@
                 </aura:renderIf>
                 <td><ui:outputText value="{!v.bma.Name}" class="textwrap"/></td>
                 <aura:renderIf isTrue="{!v.displayType=='Account'}">
-                    <td>
-                        <div class="slds-p-right--medium">
-                            <ui:outputRichText value="{!v.bma.Details__c}" class="slds-truncate" aura:id="target"/>
-                            
-                            <aura:renderIf isTrue="{!v.bma.Details__c != null}">
-                                <button aura:id="show-more-target-button" class="slds-button slds-button--icon slds-m-around--xx-small show-more-button" onclick="{!c.showMoreTarget}" >
-                                    <c:svg xlinkHref="{!$Resource.SLDS102 + '/assets/icons/utility-sprite/svg/symbols.svg#zoomin'}" class="slds-button__icon slds-button__icon--large" />
-                                </button>
-                                <button aura:id="show-less-target-button" class="slds-button slds-button--icon slds-hide show-more-button" onclick="{!c.showLessTarget}" >
-                                    <c:svg xlinkHref="{!$Resource.SLDS102 + '/assets/icons/utility-sprite/svg/symbols.svg#zoomout'}" class="slds-button__icon slds-button__icon--large" />
-                                </button>
-                            </aura:renderIf>
-                        </div>
-                    </td>
+                    <td><c:AMP_LongText text="{!v.bma.Details__c}" /></td>
                 </aura:renderIf>
                 <td><ui:outputText value="{!v.bma.Type__c}"/></td>
                 <aura:renderIf isTrue="{!v.displayType=='Division'}">
                     <td><ui:outputText value="{!v.bma.Comments__r[0].Status__c}"/></td>
                 </aura:renderIf>
-                <td>
-                    <div class="slds-p-right--medium">
-                        <ui:outputRichText value="{!v.bma.Comments__r[0].Detail__c}" class="slds-truncate" aura:id="details"/>
-                        
-                        <aura:renderIf isTrue="{!v.bma.Comments__r[0].Detail__c != null}">
-                            <button aura:id="show-more-button" class="slds-button slds-button--icon slds-m-around--xx-small show-more-button" onclick="{!c.showMore}" >
-                                <c:svg xlinkHref="{!$Resource.SLDS102 + '/assets/icons/utility-sprite/svg/symbols.svg#zoomin'}" class="slds-button__icon slds-button__icon--large" />
-                            </button>
-                            <button aura:id="show-less-button" class="slds-button slds-button--icon slds-hide show-more-button" onclick="{!c.showLess}" >
-                                <c:svg xlinkHref="{!$Resource.SLDS102 + '/assets/icons/utility-sprite/svg/symbols.svg#zoomout'}" class="slds-button__icon slds-button__icon--large" />
-                            </button>
-                        </aura:renderIf>
-                    </div>
-                </td>
-                
+                <td><c:AMP_LongText text="{!v.bma.Comments__r[0].Detail__c}" /></td>
             </aura:set>
         </aura:if>
         

@@ -217,7 +217,7 @@ global class IFAP_WebService {
                             } else {
                                 // set the case status to Reassessment Request Pending Approval (entry criteria for the approval process)
                                 c[0].Status = CASE_STATUS_R_PENDING_APPROVAL ;
-                                c[0].IsComplaint__c = true;
+                                //c[0].IsComplaint__c = true;
                                 Update c[0];
 
                                 // Create an approval request for the Opportunity
@@ -231,7 +231,7 @@ global class IFAP_WebService {
                         } else {
                             // set the case status to Reassessment Request Pending Approval (entry criteria for the approval process)
                             c[0].Status = CASE_STATUS_R_PENDING_APPROVAL ;
-                            c[0].IsComplaint__c = true;
+                            //c[0].IsComplaint__c = true;
                             Update c[0];
 
                             // Create an approval request for the Opportunity

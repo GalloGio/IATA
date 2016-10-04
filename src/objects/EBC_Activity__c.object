@@ -133,7 +133,7 @@
         <description>This field contains the number of credits sent, credited or adjusted.</description>
         <externalId>false</externalId>
         <inlineHelpText>This field contains the number of credits sent, credited or adjusted.</inlineHelpText>
-        <label>Total Count</label>
+        <label>Count</label>
         <precision>18</precision>
         <required>false</required>
         <scale>0</scale>

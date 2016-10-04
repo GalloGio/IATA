@@ -6,17 +6,17 @@ public  class ISSP_TC_Accept {
     public Boolean toChangePassword {get; set;}
     public Boolean toAcceptTC {get; set;}
     public Boolean isBSP {get; set;}
-
+    
     public String searchText {get; set;}
 
     //Survey variables
     public String SurveyLink {get; set;}
     public String SurveyName {get; set;}
     public Boolean ShowModal {get; set;}
-
+    
     //Language picklist
     public String selectedLanguage {get;set;}
-
+    
     public List<SelectOption> languages {
     get {
       List<SelectOption> options = new List<selectOption>();
@@ -28,7 +28,7 @@ public  class ISSP_TC_Accept {
     }
     set;
     }
-
+    
 
     public ISSP_TC_Accept(){
         isBSP = false;
@@ -72,9 +72,11 @@ public  class ISSP_TC_Accept {
                 }
             }
         }
+        
+        selectedLanguage = UserInfo.getLanguage();
         system.debug('IS BSP: ' + isBSP);
     }
-
+    
     public PageReference redirectChangePassword(){
         if (!userList.isEmpty()){
             integer passwordDays = integer.ValueOF(ISSP_CS__c.getValues('PasswordResetPeriod').value__c);
@@ -190,7 +192,7 @@ public  class ISSP_TC_Accept {
 
             //Get Survey Instant according to UserId and Survey ID
             List<Instant_Surveys__c>  InstantSurvey_List = new List<Instant_Surveys__c>([select Id ,SurveyUserID__c , SurveyURL__c
-                                                                                          From Instant_Surveys__c
+                                                                                          From Instant_Surveys__c 
                                                                                           Where SurveyUserID__c =: userRec.Id
                                                                                           AND SurveyURL__c =: SurveyID ]);
 
@@ -214,4 +216,6 @@ public  class ISSP_TC_Accept {
     public Boolean getCountryRequirementPermission() {
         return ISSP_Ctrl_Country_Requirements.isAllowedAccess();
     }
+
+
 }

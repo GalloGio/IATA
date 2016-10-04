@@ -7,7 +7,6 @@
     </allowedSubmitters>
     <approvalPageFields>
         <field>Name</field>
-        <field>Account__c</field>
         <field>Owner</field>
         <field>EBC_Design__c</field>
         <field>EBC_Master_Filter__c</field>

@@ -99,7 +99,11 @@ public without sharing class Order_Sel extends Selector{
             Order.IEC_Credit_Card_Expiration__c,
             Order.IEC_Credit_Card_Holder_Name__c,
             Order.IEC_Credit_Card_Mask_Number__c,
-            Order.IEC_Credit_Card_Type__c 
+            Order.IEC_Credit_Card_Type__c,
+            Order.IEC_Zuora_ST_InvoiceId__c,
+            Order.IEC_Zuora_ST_InvoiceNumber__c,
+            Order.IEC_Zuora_ST_SubscriptionId__c,
+            Order.IEC_Zuora_ST_SubscriptionNumber__c
         };
     }
 
@@ -190,7 +194,7 @@ public without sharing class Order_Sel extends Selector{
                     ShipToContact_First_Name__c,ShipToContact_Last_Name__c,ShipToContact_Email__c,ShipToContact_Phone__c,ShippingCountryCode__c,
                     ShippingCountry,ShippingState,Campaign__c, //IEC_Shipping_Instruction_attention__c,
                     ShippingStateCode__c,ShippingCity,ShippingPostalCode,ShippingStreet,
-                    ActivatedDate,EffectiveDate, IEC_Event_Subscription__c,
+                    ActivatedDate,EffectiveDate, IEC_Event_Subscription__c,ShipToAccount_Name__c,
                     Payment_Type__c,Nb_Payment_Failure__c
                     , BillToAccount_Name__c, BillToContact_Name__c, OrderNumber, Is_Paid__c
                     ,SubTotal_Amount__c, Discount_Amount__c, Taxes__c, Total_Freight_Charge__c, Total_handling_charges__c, Total_Amount__c

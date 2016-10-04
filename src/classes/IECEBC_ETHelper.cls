@@ -258,7 +258,7 @@ public class IECEBC_ETHelper {
             + '<ns1:ModifiedDate xsi:nil="true"/>'
             + '<ns1:ObjectID xsi:nil="true"/>'
             + '<ns1:URN>'  
-            + 'https://3b-customer-portal-iata.cs87.force.com/iec/services/apexrest/'
+            + IECEBC_ETInit.IECRestAPI
             + xmlEncode(restWS) + '/' 
             + xmlEncode(attachmentId)
             + '</ns1:URN>'

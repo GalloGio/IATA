@@ -60,6 +60,7 @@
   }
 
   function filterCurrency(filter) {
+    collapseAll();
     $(".accordion-toggle").each(function() {
       var value = $(this).attr('data-filter');
       if (filter==''||filter==value) {

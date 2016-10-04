@@ -12639,7 +12639,7 @@ jQuery(document).ready(function($) {
         }
     });
 
-    $('.js-enable-accordion').on('click', function() {
+    $(document).on('click', '.js-enable-accordion', function() {
         var self = $(this),
             parent = self.parents('.js-accordion'),
             target = self.data('target');
@@ -12696,7 +12696,7 @@ jQuery(document).ready(function($) {
     stickyContainer();
 
 
-    $('.js-selectable-row').on('click', '.user-input', function() {
+    $(document).on('click', '.js-selectable-row .user-input', function() {
         if ($(this).is(':checked')) {
             $(this).parents('tr').addClass(className.selected).siblings().removeClass(className.selected);
         } else {
@@ -12706,7 +12706,7 @@ jQuery(document).ready(function($) {
 
     var stickyElementContainerWidth,
         stickyElementPositionTop;
-    $('.js-tabs').on('click', '.tabs a', function(event) {
+    $(document).on('click', '.js-tabs .tabs a', function(event) {
         event.preventDefault();
         var self = $(this),
         parent = self.parents('.js-tabs'),
@@ -12786,27 +12786,37 @@ jQuery(document).ready(function($) {
     /* ---------------------------------------- */
     /*  Payment Method                            */
     /* ---------------------------------------- */
-    $('.js-payment-method').on('change', '.user-input:checked', function() {
+    $(document).on('change', '.js-payment-method .user-input:checked', function() {
         var value = $(this).val();
         var parents = $(this).parents('.group-container.payment-info');
         if (value === 'ich') {
             parents.find('.payment-method-container').addClass(className.hidden);
+            parents.find('.payment-method-container.bank').addClass(className.hidden);
+            $('#js-method-bank-transfer').removeClass(className.hidden);
         }
         if (value === 'creditCard') {
             parents.find('.payment-method-container').removeClass(className.hidden);
+            parents.find('.payment-method-container.bank').addClass(className.hidden);
+            $('#js-method-bank-transfer').removeClass(className.hidden);
+        }
+        if (value === 'bank') {
+            parents.find('.payment-method-container').addClass(className.hidden);
+            parents.find('.payment-method-container.bank').removeClass(className.hidden);
+            $('#js-method-bank-transfer').addClass(className.hidden);
         }
     });
 
-    $('.js-card-data-table .user-input').on('change', function() {
+    $(document).on('change', '.js-card-data-table .user-input', function() {
         $(this).parents('tr').addClass(className.selected).siblings().removeClass(className.selected);
     });
     
     /* ---------------------------------------- */
     /*  Radio Checkbox List                     */
     /* ---------------------------------------- */
-    $('.js-radio-list').on('click', '.user-input.radio', function() {
+    $(document).on('click', '.js-radio-list .user-input.radio', function() {
         $(this).parents('li').addClass(className.selected).siblings().removeClass(className.selected);
-    }).on('change', '.user-input:checked', function() {
+        stickyFooter();
+    }).on('change', '.js-radio-list .user-input:checked', function() {
         var value = $(this).val();
         if (value === 'audience-option-3') {
             $('.process-2-steps').removeClass(className.hidden);
@@ -12817,40 +12827,39 @@ jQuery(document).ready(function($) {
         }
     });
     
-    $('.js-template-list').on('click', '.user-input', function() {
+    $(document).on('click', '.js-template-list .user-input', function() {
         var self = $(this);
         self.parents('.list-item').toggleClass(className.selected).siblings().removeClass(className.selected).find('.user-input').prop('checked', false);
     });
-    $('.js-checkbox-list').on('click', '.user-input', function() {
+    $(document).on('click', '.js-checkbox-list .user-input', function() {
         var self = $(this);
         self.parents('.list-item').toggleClass(className.selected).siblings().removeClass(className.selected).find('.user-input').prop('checked', false);
     });
 
     
-    $('.button').on('click', function(event) {
+    $(document).on('click', '.button', function(event) {
         if ($(this).is('.disabled')) {
             event.preventDefault();
         }
     });
 
-    /* ----------------------------------------
-        From Validation
-    ------------------------------------------- */
-
-    $('.user-input').on('focus', function() {
+    /* ---------------------------------------- */
+    /*  From Validation                         */
+    /* ---------------------------------------- */
+    $(document).on('focus', '.user-input', function() {
         $(this).parents('.field-group').addClass('is-focus');
-    }).on('blur', function() {
+    }).on('blur', '.user-input', function() {
         $(this).parents('.field-group').removeClass('is-focus');
-    }).on('keyup', function() {
+    }).on('keyup', '.user-input', function() {
         if ($(this).val().length) {
             $(this).parents('.field-group').removeClass('is-focus').removeClass('error');
         }
-    }).on('change', function() {
+    }).on('change', '.user-input', function() {
         if ($(this).val() !== 'select') {
             $(this).parents('.field-group').removeClass('is-focus').removeClass('error');
         }
     });
-    
+
     /* ---------------------------------------- */
     /*  Sticky Footer                           */
     /* ---------------------------------------- */
@@ -12876,7 +12885,7 @@ jQuery(document).ready(function($) {
 
     stickyFooter();
 
-    $('.js-accordion').on('click', '.accordion-title', function() {
+    $(document).on('click', '.js-accordion .accordion-title', function() {
         
         if ($(this).is('.is-disabled')) {
         } else {
@@ -12886,13 +12895,13 @@ jQuery(document).ready(function($) {
         stickyFooter();
     });
     
-    $('.js-toggle-type-sort').on('click',  function(event) {
+    $(document).on('click', '.js-toggle-type-sort', function(event) {
         event.preventDefault();
         event.stopPropagation();
         $(this).toggleClass(className.open).next().toggleClass(className.open);
     });
 
-    $('.type-sort').on('click',  function(event) {
+    $(document).on('click', '.type-sort', function(event) {
         event.stopPropagation();
     });
 
@@ -12915,7 +12924,7 @@ jQuery(document).ready(function($) {
     };
     
     var selectedCampainID;
-    $('.js-open-modal').on('click', function(event) {
+    $(document).on('click', '.js-open-modal', function(event) {
         if (!$(this).hasClass('select')) {
             event.preventDefault();
 
@@ -12926,7 +12935,7 @@ jQuery(document).ready(function($) {
                 openModal();
             }
         }
-    }).on('change', function(event) {
+    }).on('change', '.js-open-modal', function(event) {
         var selected = $(this).find('option:selected');
         
         selectedCampainID = this.getAttribute('data-target-campaign-id');
@@ -12944,39 +12953,39 @@ jQuery(document).ready(function($) {
         }
     });
 
-    $('.js-delete-campaign').on('click', function(event) {
+    $(document).on('click', '.js-delete-campaign', function(event) {
         event.preventDefault();
         $('#' + selectedCampainID).remove();
         closeModal();
     });
 
-    $('.js-rename-campaign').on('click', function(event) {
+    $(document).on('click', '.js-rename-campaign', function(event) {
         event.preventDefault();
         var newCampaignName = $('.user-input.js-get-campaign-name').val();
         $('#' + selectedCampainID).find('.js-campaign-name').html(newCampaignName);
         closeModal();
     });
 
-    $('.js-pause-campaign').on('click', function(event) {
+    $(document).on('click', '.js-pause-campaign', function(event) {
         event.preventDefault();
         $('#' + selectedCampainID).find('.js-icon-status').attr('data-icon-type', 'pending');
         $('#' + selectedCampainID).find('.js-campaign-status').text('Pending');
         closeModal();
     });
 
-    $('#js-modal').on('click', '.js-close-modal', function(event) {
+    $(document).on('click', '#js-modal .js-close-modal', function(event) {
         event.preventDefault();
         closeModal();
     });
 
-    $('.js-form-continue-validation').on('click', function() {
+    $(document).on('click', '.js-form-continue-validation', function() {
         var target = $(this).data('target-button');
         if ($(this).find('.user-input:checked').length) {
             $(target).removeClass(className.disabled);
         }
     });
 
-    $('.js-clear-form').on('click', function() {
+    $(document).on('click', '.js-clear-form', function() {
         $('.user-input.radio').prop('checked', false);
         $('.js-radio-list li').removeClass(className.selected);
         $('.button[data-default-state="disabled"]').addClass(className.disabled);
@@ -12984,7 +12993,7 @@ jQuery(document).ready(function($) {
         $('.process-4-steps').removeClass(className.hidden);
     });
 
-    $('#js-radio-list-audience').on('change', '.user-input:checked', function() {
+    $(document).on('change', '#js-radio-list-audience.user-input:checked', function() {
         $('#js-radio-list-geo-selection .user-input.radio').prop('checked', false);
         $('#js-radio-list-geo-selection li').removeClass(className.selected);
     });
@@ -13013,11 +13022,11 @@ jQuery(document).ready(function($) {
         }
     };
 
-    $('.js-multi-select').on('click', 'li', function() {
+    $(document).on('click', '.js-multi-select li', function() {
         $(this).addClass(className.selected).siblings().removeClass(className.selected);
     });
 
-    $('.js-add-field').on('click', function(event) {
+    $(document).on('click', '.js-add-field', function(event) {
         event.preventDefault();
         var target = $(this).data('target-field'),
             html = $(target).html();
@@ -13026,7 +13035,7 @@ jQuery(document).ready(function($) {
         numberOfFields++;
     });
 
-    $('.js-input-file').on('change', function() {
+    $(document).on('change', '.js-input-file', function() {
         var value = $(this).val();
         $(this).next('.user-input').val(value);
     });

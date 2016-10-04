@@ -44,6 +44,7 @@ global class IECConstants {
   public static final string PARAM_CUSTOMERTYPE_GAS =       'GAS';
   public static final string PARAM_CUSTOMERTYPE_PARTNER =     'Partner';
   public static final string PARAM_CUSTOMERTYPE_OTHER =       'Other';
+  public static final string PARAM_CUSTOMERTYPE_DEFAULT = 'Non-member';  //*** (Thai 2016-09-01) added
 
     //Params to defin elements to be shown on Maps
     public static final string PARAM_SHOWMAPSAGENCIES =             'sa';
