@@ -259,14 +259,14 @@ public without sharing class IECTestUtil {
     }
     
     
-    
+
     public static User createSampleGuestUserAndLogin(String ClientType) {
         // insert account
-        Account newAccount = createSampleAccount(ClientType);
+        Account newAccount = vfIECEBC_TestSuite.IECTestUtil_Account = createSampleAccount(ClientType);
         insert newAccount;
 
         // create Bill To contact info
-        Contact newContact = new Contact();
+        Contact newContact = vfIECEBC_TestSuite.IECTestUtil_Contact = new Contact();
         newContact.RecordTypeId = IECUserManager.getContactRecordTypeForIEC();
         newContact.AccountId = newAccount.Id;
         newContact.OwnerId = IECUserManager.getIECContactOwnerId();
@@ -278,10 +278,10 @@ public without sharing class IECTestUtil {
         newContact.User_IECPortal_Status__c = IECConstants.APPROVED_CONTACT_STATUS;
         insert newContact;
         
-        Zuora__CustomerAccount__c oBillingAccount = IECTestUtil.createSampleBillingAccount(newAccount, newContact);
+        Zuora__CustomerAccount__c oBillingAccount = vfIECEBC_TestSuite.IECTestUtil_BillingAccount = IECTestUtil.createSampleBillingAccount(newAccount, newContact);
         insert oBillingAccount;        
 
-        User u = new User(
+        User u = vfIECEBC_TestSuite.IECTestUtil_User = new User(
             Username = ISSP_Utilities.buildPortalUserName('testIECGuest@test.iata.org')
             , Email = 'testIECGuest@test.iata.org'
             , emailencodingkey = 'UTF-8'
@@ -300,7 +300,7 @@ public without sharing class IECTestUtil {
         );
         insert u;
         trgPortalUserAfterInserUpdate = true;
-        String userId = Site.createPortalUser(u, newAccount.Id, 'testpassword');
+        String userId = vfIECEBC_TestSuite.IECTestUtil_UserId = Site.createPortalUser(u, newAccount.Id, 'testpassword');
       //  trgPortalUserAfterInserUpdate = false;
         /*
         // assign Permission Set to provide access to objects
@@ -311,8 +311,8 @@ public without sharing class IECTestUtil {
             oPermissionSetAssignment.PermissionSetId = permissionSetId;
             insert oPermissionSetAssignment;
         }
-        */
-        
+*/
+         
         IECUserManager.login(u.Username, 'testpassword', null);
            
         return u;

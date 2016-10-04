@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -63,7 +59,6 @@
         <inlineHelpText>The Email Address to opt out</inlineHelpText>
         <label>Email</label>
         <required>true</required>
-        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Email</type>
         <unique>false</unique>
@@ -77,7 +72,6 @@
         <precision>18</precision>
         <required>false</required>
         <scale>0</scale>
-        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Number</type>
         <unique>false</unique>
@@ -90,9 +84,30 @@
         <inlineHelpText>The event date</inlineHelpText>
         <label>Event Date</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Is_Active__c</fullName>
+        <defaultValue>true</defaultValue>
+        <description>Manual cancellation of an exclusion should use this field</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Manual cancellation of an exclusion should use this field</inlineHelpText>
+        <label>Is Active</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Is_Relation_Created__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Is the relation has been created by the batch job</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Is the relation has been created by the batch job</inlineHelpText>
+        <label>Is Relation Created</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>Other_Reason__c</fullName>
@@ -101,40 +116,9 @@
         <inlineHelpText>The reason of this event</inlineHelpText>
         <label>Other Reason</label>
         <length>131000</length>
-        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
         <visibleLines>5</visibleLines>
-    </fields>
-    <fields>
-        <fullName>Related_Agency__c</fullName>
-        <deleteConstraint>SetNull</deleteConstraint>
-        <description>GDP Product Account View that received the email that result in an exclusion</description>
-        <externalId>false</externalId>
-        <inlineHelpText>GDP Product Account View that received the email that result in an exclusion</inlineHelpText>
-        <label>Related Agency</label>
-        <referenceTo>GDP_Products_Account_View__c</referenceTo>
-        <relationshipLabel>EBC Email Exclusions</relationshipLabel>
-        <relationshipName>EBC_Email_Exclusions</relationshipName>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Lookup</type>
-    </fields>
-    <fields>
-        <fullName>Related_Agent__c</fullName>
-        <deleteConstraint>SetNull</deleteConstraint>
-        <description>ID Card that received the email that result in an exclusion</description>
-        <externalId>false</externalId>
-        <inlineHelpText>ID Card that received the email that result in an exclusion</inlineHelpText>
-        <label>Related Agent</label>
-        <referenceTo>ID_Card__c</referenceTo>
-        <relationshipLabel>EBC Email Exclusions</relationshipLabel>
-        <relationshipName>EBC_Email_Exclusions</relationshipName>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Lookup</type>
     </fields>
     <fields>
         <fullName>Source_Campaign__c</fullName>
@@ -147,7 +131,6 @@
         <relationshipLabel>EBC Email Exclusions</relationshipLabel>
         <relationshipName>EBC_Email_Exclusions</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -177,7 +160,6 @@
             <restrictedPicklist>true</restrictedPicklist>
             <sorted>false</sorted>
         </picklist>
-        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -192,7 +174,6 @@
         <relationshipLabel>EBC Email Exclusions</relationshipLabel>
         <relationshipName>EBC_Email_Exclusions</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -208,14 +189,8 @@
         <label>All</label>
         <language>en_US</language>
     </listViews>
-    <listViews>
-        <fullName>All1</fullName>
-        <filterScope>Everything</filterScope>
-        <label>All</label>
-    </listViews>
     <nameField>
         <label>EBC Exclusion Name</label>
-        <trackHistory>false</trackHistory>
         <type>Text</type>
     </nameField>
     <pluralLabel>EBC Email Exclusions</pluralLabel>

@@ -569,33 +569,6 @@
         <language>en_US</language>
     </listViews>
     <listViews>
-        <fullName>EBC_Product_Rate_Plans</fullName>
-        <columns>NAME</columns>
-        <columns>zqu__ZProduct__c</columns>
-        <columns>EBC_Cost_Per_Email__c</columns>
-        <columns>EBC_Currency_Cost_Per_Email__c</columns>
-        <columns>EBC_Email_Credit_Current_Offering__c</columns>
-        <columns>EBC_Email_Credit_Standard__c</columns>
-        <columns>EBC_PrePaid_Emails__c</columns>
-        <columns>zqu__EffectiveStartDateTEXT__c</columns>
-        <columns>zqu__EffectiveEndDateTEXT__c</columns>
-        <columns>zqu__Description__c</columns>
-        <columns>zqu__EffectiveStartDate__c</columns>
-        <columns>zqu__EffectiveEndDate__c</columns>
-        <columns>EBC_SubscriptionType__c</columns>
-       <!-- <columns>zqu__ZuoraId__c</columns>
-        <columns>zqu__Deleted__c</columns> -->
-        <columns>UIDisplay__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>zqu__ZProduct__c</field>
-            <operation>contains</operation>
-            <value>eBroadcast</value>
-        </filters>
-        <label>EBC Product Rate Plans</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
         <fullName>GSS</fullName>
         <columns>NAME</columns>
         <columns>zqu__ZProduct__c</columns>

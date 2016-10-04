@@ -215,6 +215,7 @@ jQuery(document).ready(function($) {
     /* ---------------------------------------- */
     $(document).on('click', '.js-radio-list .user-input.radio', function() {
         $(this).parents('li').addClass(className.selected).siblings().removeClass(className.selected);
+        stickyFooter();
     }).on('change', '.js-radio-list .user-input:checked', function() {
         var value = $(this).val();
         if (value === 'audience-option-3') {

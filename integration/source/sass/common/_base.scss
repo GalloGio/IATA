@@ -20,12 +20,22 @@ body {
     min-height: 100vh;
 }
 
+
+
 a {
     color: $link-color;
     text-decoration: underline;
 
     &:hover {
         text-decoration: none;
+    }
+}
+
+.resubscribe {
+    font-family: Arial;
+
+    a {
+        color: #2190d8;
     }
 }
 
@@ -74,6 +84,14 @@ figure {
     border-top: 1px solid #ccc;
 }
 
+.reader-only {
+    position: absolute;
+    left: -10000px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}
 
 
 /*------------------------------------*\
@@ -167,6 +185,89 @@ figure {
         }
     }
 }
+
+.copyright {
+    color: #9aa3b7;
+    display: block;
+}
+
+.resubscribe {
+    .page-footer {
+        font-size: 1.4rem;
+        text-align: center;
+
+        background: #0a4279;
+
+        a {
+            color: #fff;
+            text-decoration: underline;
+
+            &:hover {
+                text-decoration: none;
+            }
+        }
+        .inner-wrapper {
+            padding: 50px 0;
+
+            &::before { 
+                display: none;
+            }
+        }
+    }
+}
+
+$icon-size: 50px;
+.nav-social {
+
+    li {
+        margin: 0 5px;
+        padding: 0;
+        border: 0;
+    }
+
+    
+    .icon {
+        position: relative;
+        display: block;
+        width: $icon-size;
+        height: $icon-size;
+
+        
+        &::after,
+        &::before {
+            width: $icon-size;
+            height: $icon-size;
+            position: absolute;
+            left: 0;
+        }
+
+        &::after {
+            content: '';
+            display: inline-block;
+            border-radius: 50%;
+            border: 2px solid #fff;
+            z-index: 10;
+        }
+
+        &::before {
+            line-height: $icon-size;
+            font-size: 2.2rem;
+            text-align: center;
+            z-index: 11;
+            padding: 0;
+        }
+
+        &:focus {
+            display: block;
+            width: $icon-size;
+            height: $icon-size;
+
+        }
+    }
+    
+}
+
+
 
 .row-mangage .group-container {
     margin-top: 40px;
@@ -373,7 +474,33 @@ figure {
     margin: auto;
     max-width: 1600px;
     padding: 0 15px;
+
 }
+
+.resubscribe {
+    .inner-wrapper {
+        max-width: 1140px;
+    }
+}
+
+
+.message-container {
+    background: #e6ecf1;
+    text-align: center;
+    padding: 15px 0;
+
+    p {
+        margin: 0;
+        padding: 15px 0;
+        color: #666;
+    }
+
+    .lead {
+        font-size: 2.4rem;
+        color: #2a3940;
+    }
+}
+
 .text-right {
     text-align: right;
 }
@@ -522,6 +649,12 @@ figure {
         &:hover {
             text-decoration: none;
         }
+    }
+}
+
+.resubscribe {
+    .footer-actions {
+        border: 0;
     }
 }
 
@@ -825,4 +958,19 @@ figure {
 
 .stikcy-adjuster {
     top: 0;
+}
+
+.confirmation-box {
+    border: 1px solid #2190d8;
+    padding: 30px;
+    font-size: 1.6rem;
+
+    p {
+        margin: 0 0 15px;
+    }
+}
+
+.contact-us {
+    margin: 15px 0;
+    display: inline-block; 
 }

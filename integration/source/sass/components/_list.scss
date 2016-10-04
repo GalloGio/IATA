@@ -187,7 +187,7 @@
             padding: 0 0 0 30px;
 
             &:last-child {
-                
+
             }
         }
     }
@@ -423,6 +423,60 @@
         top: 5px;
     }
 
+    .toggle-container.space {
+        padding: 30px;
+    }
+
+}
+
+.resubscribe {
+    .list-radio-select {
+        border-top: 1px solid #0a4279;
+        border-bottom: 1px solid #0a4279;
+        background: #e6ecf1;
+        margin: 50px 0;
+
+        .group-container {
+            padding: 15px;
+            font-size: 1.4rem;
+
+            .custom-radio {
+                top: 0;
+            }
+        }
+
+        li {
+            font-size: 1.6rem;
+        }
+
+        .group-title {
+            font-size: 1.6rem;
+        }
+
+        .footer-actions {
+            margin: 0;
+        }
+
+        .is-selected {
+            background: #0a4279;
+            color: #fff;
+        }
+
+        .text-link {
+            font-size: 1.4rem;
+        }
+    }
+}
+
+.group-container {
+    &.feedback {
+        border-top: 1px dotted #ccc;
+    }
+
+    &.confirmation {
+        width: 930px;
+        margin: auto;
+    }
 }
 
 .modal-dialog {
@@ -435,16 +489,13 @@
     }
 }
 
-/*------------------------------------*\
-    #$pagination
-\*------------------------------------*/
 
 $pagination-color: $link-color;
 .pagination {
     text-align: center;
     margin: 1em 0;
     position: relative;
-    
+
     &.text-left {
         text-align: left;
     }
@@ -463,7 +514,7 @@ $pagination-color: $link-color;
         line-height: 40px;
         color: $pagination-color;
         text-decoration: none;
-    
+
         &:hover {
             text-decoration: underline;
         }
@@ -480,7 +531,7 @@ $pagination-color: $link-color;
             }
         }
     }
-    
+
     .control {
         position: absolute;
         display: inline-block;
@@ -586,5 +637,19 @@ $pagination-color: $link-color;
     li {
         display: inline-block;
         margin: 0 30px;
+    }
+}
+
+
+.resubscribe .list-radio-select .view-details {
+    font-size: 2.4rem;
+    display: inline-block;
+    margin-top: 20px;
+
+    .fa {
+        color: #0a4279;
+        font-size: 4rem;
+        vertical-align: middle;
+        margin-right: 5px;
     }
 }
