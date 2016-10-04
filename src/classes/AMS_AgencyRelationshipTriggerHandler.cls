@@ -188,6 +188,7 @@ public class AMS_AgencyRelationshipTriggerHandler {
         }
 
         system.debug(LoggingLevel.ERROR, 'setStandardHierarchyRelationship() --> SECOND UPDATE');
+        TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
         update accsToUpdate;
 
     }
