@@ -13,7 +13,7 @@
     </fieldUpdates>
     <fieldUpdates>
         <fullName>Reg_Dig_Group_to_Draft</fullName>
-        <description>change the record type back to Draft Reg/Div Group</description>
+        <description>Change the record type back to Draft Reg/Div Group</description>
         <field>RecordTypeId</field>
         <lookupValue>Draft_Reg_Div_Group</lookupValue>
         <lookupValueType>RecordType</lookupValueType>

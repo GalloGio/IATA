@@ -541,6 +541,10 @@
                 <fullName>CASS_FORM</fullName>
                 <default>false</default>
             </picklistValues>
+            <picklistValues>
+                <fullName>OTHERS</fullName>
+                <default>false</default>
+            </picklistValues>
             <sorted>false</sorted>
         </picklist>
         <required>false</required>
@@ -933,6 +937,10 @@
             </values>
             <values>
                 <fullName>OFFICE_LEASE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>OTHERS</fullName>
                 <default>false</default>
             </values>
             <values>

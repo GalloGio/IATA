@@ -37088,9 +37088,19 @@
         <field>User.EF_Billing_Agreement_Approver__c</field>
         <readable>true</readable>
     </fieldPermissions>
+	<fieldPermissions>
+        <editable>false</editable>
+        <field>User.EF_Billing_Agreement_Approver_Email__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>User.EF_Contract_Approver__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>false</editable>
+        <field>User.EF_Contract_Approver_Email__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -41199,6 +41209,7 @@
         <apexPage>EF_Mass_Update_Billing_Agreements</apexPage>
 		<enabled>true</enabled>
     </pageAccesses>
+	<pageAccesses>
         <apexPage>EF_MassUpdateMaterialLI_BillingAgreement</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
@@ -43157,8 +43168,8 @@
         <visible>false</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
-        <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
+        <default>false</default>
+        <personAccountDefault>false</personAccountDefault>
         <recordType>Case.YMQCustomerCare</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>

@@ -188,14 +188,19 @@ public with sharing class EF_TestDataFactory
                            EF_Billing_Agreement_Approver__c=myUser.Id,
                            EF_Contract_Approver__c=myUser.Id, 
                            License_Cost_Center__c='AAA000AA00',
-                           Username='efUnit@test.ch', LastName='Test1', 
+                           Username='efUnit@test.ch'+roleNumber, LastName='Test1', 
                            Email='test1@iata.org', Alias='Test1', CommunityNickname='Test1', 
                            TimeZoneSidKey='Europe/Brussels', LocaleSidKey='en_US', 
                            EmailEncodingKey='UTF-8', LanguageLocaleKey='en_US');
         if(efProfileIds.size() == 2)
         {
             u1.ProfileId = efProfileIds.get(profileNumber).Id;
+        } else
+        {
+            List<Profile> adminId = [select id from Profile where Name like 'System Administrator' order by Name asc limit 1];
+            u1.ProfileId = adminId.get(0).Id;
         }
+
         Map<Integer, String> roleNumberNameMap = new Map<Integer, String>();
         roleNumberNameMap.put(1,'Manager, Business Development');
         roleNumberNameMap.put(2,'Head, Client Services');

@@ -25,6 +25,10 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -239,7 +243,6 @@ E&amp;F CRM Project</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -310,7 +313,6 @@ E&amp;F CRM Project</description>
         <externalId>false</externalId>
         <globalPicklist>EF_Allow_Billing_Agreements</globalPicklist>
         <label>E&amp;F Allow Billing Agreements</label>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -371,7 +373,6 @@ E&amp;F CRM Project</description>
             <restrictedPicklist>true</restrictedPicklist>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
@@ -381,7 +382,6 @@ E&amp;F CRM Project</description>
         <externalId>false</externalId>
         <globalPicklist>EF_Currency</globalPicklist>
         <label>E&amp;F Billing Currency</label>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
@@ -391,7 +391,6 @@ E&amp;F CRM Project</description>
         <externalId>false</externalId>
         <globalPicklist>EF_Frequency</globalPicklist>
         <label>E&amp;F Billing Frequency</label>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -421,7 +420,6 @@ E&amp;F CRM Project</description>
         <externalId>false</externalId>
         <globalPicklist>EF_Currency</globalPicklist>
         <label>E&amp;F 	Data Currency</label>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
@@ -471,7 +469,6 @@ E&amp;F CRM Project</description>
             <restrictedPicklist>true</restrictedPicklist>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
@@ -504,7 +501,6 @@ E&amp;F CRM Project</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -513,7 +509,6 @@ E&amp;F CRM Project</description>
         <externalId>false</externalId>
         <globalPicklist>EF_Currency</globalPicklist>
         <label>E&amp;F Payment Currency</label>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
@@ -552,7 +547,6 @@ E&amp;F CRM Project</description>
         <externalId>false</externalId>
         <globalPicklist>EF_Payment_Terms</globalPicklist>
         <label>E&amp;F Payment Terms</label>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -561,7 +555,6 @@ E&amp;F CRM Project</description>
         <externalId>false</externalId>
         <globalPicklist>EF_Frequency</globalPicklist>
         <label>E&amp;F Reporting Frequency</label>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -581,7 +574,6 @@ E&amp;F CRM Project</description>
             <restrictedPicklist>true</restrictedPicklist>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
@@ -629,7 +621,6 @@ E&amp;F CRM Project</description>
         <externalId>false</externalId>
         <globalPicklist>EF_Status</globalPicklist>
         <label>E&amp;F Status</label>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -750,7 +741,6 @@ IF(ISPICKVAL(Third_Party__c, &quot;Berlitz&quot;), 0.10,
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -846,7 +836,6 @@ IF(ISPICKVAL(Third_Party__c, &quot;Berlitz&quot;), 0.10,
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -982,7 +971,6 @@ IF(ISPICKVAL(Third_Party__c, &quot;Berlitz&quot;), 0.10,
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -1001,7 +989,6 @@ IF(ISPICKVAL(Third_Party__c, &quot;Berlitz&quot;), 0.10,
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -2665,7 +2652,8 @@ IF(ISPICKVAL(Third_Party__c, &quot;Berlitz&quot;), 0.10,
     RecordType.DeveloperName = &apos;EF_Client_Agreement&apos;, 
       NOT(ISPICKVAL($User.EF_User_Role__c, &apos;Manager, Business Development&apos;)),
       NOT(ISPICKVAL($User.EF_User_Role__c, &apos;Head, Client Services&apos;)),
-      NOT(ISPICKVAL($User.EF_User_Role__c, &apos;Client Services Specialists&apos;))
+      NOT(ISPICKVAL($User.EF_User_Role__c, &apos;Client Services Specialists&apos;)),
+	  NOT(BEGINS($User.Profile_Name__c, &apos;System&apos;))
 )</errorConditionFormula>
         <errorMessage>Only Client Services Specialists, Client Services Head and Business Development Managers can modify E&amp;F Contracts.</errorMessage>
     </validationRules>

@@ -768,7 +768,7 @@
     <fields>
         <fullName>Account_Name__c</fullName>
         <externalId>false</externalId>
-        <label>Account Name</label>
+        <label>Account New Name</label>
         <length>80</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
