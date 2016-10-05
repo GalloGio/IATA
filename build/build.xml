@@ -193,7 +193,7 @@
 
 
 <target name="deployGroups"> 
-    <echo level="info">Deploying LABELS</echo>
+    <echo level="info">Deploying GROUPS</echo>
   <antcallback target="deldir" />
    <mkdir dir="${basedir}/Code"/>
   
