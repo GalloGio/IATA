@@ -44,7 +44,8 @@ private class ISSP_LoginTest {
 	                            PortalRole = 'Manager',
 	                            CommunityNickname = contact.email.substring(0, contact.email.indexOf('@'))+Datetime.now().formatLong().substring(10,15),
 	                            ProfileId = profileId,
-	                            IsActive = false);
+	                            IsActive = false,
+	                            Community__c = 'IEC');
     	insert newUser;
     	
     	Apexpages.currentPage().getParameters().put('retURL', '/test');
@@ -80,7 +81,8 @@ private class ISSP_LoginTest {
 	                            CommunityNickname = contact.email.substring(0, contact.email.indexOf('@'))+Datetime.now().formatLong().substring(10,15),
 	                            ProfileId = profileId,
 	                            Portal_User_Frozen_Checkbox__c = true,
-	                            IsActive = false);
+	                            IsActive = false,
+	                            Community__c = 'IEC');
     	insert newUser;
     	
     	Contact contact2 = ISSP_ObjectFactory.createNewContact();
@@ -102,7 +104,8 @@ private class ISSP_LoginTest {
 	                            PortalRole = 'Manager',
 	                            CommunityNickname = contact2.email.substring(0, contact2.email.indexOf('@'))+Datetime.now().formatLong().substring(10,15),
 	                            ProfileId = profileId,
-	                            IsActive = true);
+	                            IsActive = true,
+	                            Community__c = 'IEC');
     	insert newUser2;
     	
     	system.runAs(newUser2){
