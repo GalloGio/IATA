@@ -221,38 +221,7 @@
        <antcallback target="deployCodeObjects" />
   </target> 
 
-<<<<<<< HEAD
-<target name="deploySharing"> 
-    <echo level="info">Deploying SHARING</echo>
-  <antcallback target="deldir" />
-   <mkdir dir="${basedir}/Code"/>
-  
-      <for list="${SharingRulesPacakge.listfolders}" param="param" >
-        <sequential>
-             <mkdir dir="${basedir}/Code/@{param}"/>
-       </sequential>
-     </for>
 
-     <echo level="info">moving files</echo>
-      
-      <for list="${SharingRulesPackage.listfolders}" param="param" delimiter=",">
-        <sequential>
-          <move todir="${basedir}/Code/@{param}">
-            <fileset dir="${basedir}/src/@{param}">
-            </fileset>
-          </move>
-       </sequential>
-     </for>
-
- <move file="${basedir}/src/SharingRulesPackage.xml" tofile="${basedir}/Code/package.xml"/>  
-
-      
-      <antcallback target="deployCodeLocal" />
-       <antcallback target="deployCodeObjects" />
-  </target> 
-=======
-
->>>>>>> parent of b80086b... sharing rules added
 
 <target name="deployWorkflows"> 
     <echo level="info">Deploying WORKFLOWS</echo>
@@ -500,26 +469,7 @@
     </target>
 
 
-<<<<<<< HEAD
-    <target name="getSharing">
-      <echo level="info">Retrieving the server's version of Sharing </echo>
-      <mkdir dir="${basedir}/${sfdc.retrieveTarget}"/>
-      <sf:retrieve
-        retrieveTarget="${basedir}/${sfdc.retrieveTarget}"
-        username="${sfdc.username}"
-        password="${sfdc.password}"
-        serverurl="${sfdc.serverurl}"
-        unpackaged="src/SharingRulesPackage.xml" />
 
-      <move file="${basedir}/${sfdc.retrieveTarget}/package.xml" tofile="src/SharingRulesPackage.xml" />  
-
-
-
-      <move file="${basedir}/${sfdc.retrieveTarget}" tofile="src"/>
-        <antcallback target="getLabel" />
-    </target>
-=======
->>>>>>> parent of b80086b... sharing rules added
 
 
 
