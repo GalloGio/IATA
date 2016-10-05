@@ -46,7 +46,7 @@ public class AMS_OSCARTriggerHandler {
 	public static void handleAfterUpdate() {
 		
 		updateCaseKPIFields();
-		updateCaseStatusOwner();
+		updateCaseInfo();
 	}
 
 	//*************************************
@@ -78,7 +78,7 @@ public class AMS_OSCARTriggerHandler {
 	public static void handleChangesProcess(List<AMS_OSCAR__c> oscars) {
 
 		//do Not run minor changes on agency changes trigger????
-		//AMS_AccountTriggerHandler.processMinorChangesValidationFlag = false;
+		AMS_AccountTriggerHandler.processMinorChangesValidationFlag = false;
 
 		List<AMS_OSCAR__c> oscarsToValidate = getAgencyChangeOSCARS(oscars);
 
@@ -486,7 +486,9 @@ public class AMS_OSCARTriggerHandler {
 			List<Account> mergedAccountUpdate = mergeAccountsToUpdate(accsToUpdateFromCC, accountsToUpdate);
 
 			if (!mergedAccountUpdate.isEmpty()) {
-				update mergedAccountUpdate;
+				AMS_AccountTriggerHandler.processMinorChangesValidationFlag = true;
+ 				update mergedAccountUpdate;
+				AMS_AccountTriggerHandler.processMinorChangesValidationFlag = false;
 			}
 
 			if (hierarchyChanges.size() > 0) {
@@ -608,7 +610,7 @@ public class AMS_OSCARTriggerHandler {
 		List<AMS_Agencies_relationhip__c> currentHierarchy = hierarchies.get(oscar.Account__c);
 		AMS_HierarchyHelper.HierarchyStruct relationshipsToManage;
 
-		relationshipsToManage = AMS_HierarchyHelper.migrateAccountsToExistingHierarchy(currentHierarchy, targetHierarchyHO, newHierarchy, agenciesAffected, accounts);
+		relationshipsToManage = AMS_HierarchyHelper.migrateAccountsToExistingHierarchy(oscar.Account__c, currentHierarchy, targetHierarchyHO, newHierarchy, agenciesAffected, accounts);
 
 		if (relationshipsToManage.errorMessage != null)
 			oscar.addError(relationshipsToManage.errorMessage);
@@ -755,7 +757,7 @@ public class AMS_OSCARTriggerHandler {
 	}
 
 
-	private static void updateCaseStatusOwner() {
+	private static void updateCaseInfo() {
 
 		Map<Id, AMS_OSCAR__c> oldMap = (Map<Id,AMS_OSCAR__c>) Trigger.oldMap;
 		Map<Id, AMS_OSCAR__c> newMap = (Map<Id,AMS_OSCAR__c>) Trigger.newMap;
@@ -765,6 +767,7 @@ public class AMS_OSCARTriggerHandler {
 			if(
 				(oscar.Status__c != null && oscar.Status__c != oldMap.get(oscar.Id).Status__c)
 				|| oscar.OwnerId != oldMap.get(oscar.Id).OwnerId
+				|| (oscar.Sanity_check_results__c == AMS_Utils.PASSED && oldMap.get(oscar.Id).Sanity_check_results__c != AMS_Utils.PASSED)
 			){
 				updatedOscars.add(oscar);
 			}
@@ -773,7 +776,7 @@ public class AMS_OSCARTriggerHandler {
 		if(updatedOscars.isEmpty()) return;
 
 		List<Case> casesToUpdate = new List<Case>();
-		for(Case c : [SELECT Id, Status, OwnerId, Oscar__c from CASE WHERE Oscar__c != null and RecordType.Name = 'OSCAR Communication' and Oscar__c IN :updatedOscars AND ParentId = null]){
+		for(Case c : [SELECT Id, Status, OwnerId, Oscar__c, Process_Start_Date__c from CASE WHERE Oscar__c != null and RecordType.Name = 'OSCAR Communication' and Oscar__c IN :updatedOscars AND ParentId = null]){
 
 			AMS_OSCAR__c updatedOSCAR = newMap.get(c.Oscar__c);
 			Boolean caseChanged = false;
@@ -793,8 +796,12 @@ public class AMS_OSCARTriggerHandler {
         		c.OwnerId = updatedOSCAR.OwnerId;
         		caseChanged = true;
         	}
+        	if(c.Process_Start_Date__c == null){
+        		c.Process_Start_Date__c = updatedOSCAR.Sanity_check_received__c;
+        		caseChanged = true;
+        	}
 
-		    casesToUpdate.add(c);
+		    if(caseChanged) casesToUpdate.add(c);
 		}
 
 		if(!casesToUpdate.isEmpty()) update casesToUpdate;
