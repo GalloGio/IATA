@@ -260,7 +260,7 @@ public class AMS_AgencyChangesTest {
 		// If I pass the sanity check (STEP 6) a change code CHO should be generated all the agencies involved (HO1, BR1, BR2, BR3)
 		system.debug(LoggingLevel.ERROR, '[LF]: theOSCAR ha Change_effective_as_of__c = '+theOSCAR.change_effective_as_of__c+' e sanity checks = '+theOSCAR.STEP6__c);
 		theOSCAR.STEP6__c = 'Passed';
-		theOSCAR.Change_effective_as_of__c = Date.today().addDays(5);
+		theOSCAR.Change_effective_as_of__c = Date.today();
 		
 		update theOSCAR;
 
