@@ -138,7 +138,7 @@ public class AMS_AgencyChangesTest {
 		
 		// Create OSCAR and Communication Case
 		ID rtChange = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('CHANGE').getRecordTypeId();
-		theOscar = new AMS_OSCAR__c(RecordTypeId = rtChange, Account__c = theAccount.Id, Type_of_change__c = typeOfChange);
+		theOscar = new AMS_OSCAR__c(RecordTypeId = rtChange, Account__c = theAccount.Id, Type_of_change__c = typeOfChange, change_effective_as_of__c = Date.today().addDays(5));
 		insert theOscar;
 
 		ID rtCommCase = Schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
