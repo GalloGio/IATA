@@ -683,7 +683,7 @@
         oscar.recordTypeID = newRT;
         oscar.STEP6__c = AMS_Utils.PASSED;
         oscar.Type_of_change__c = 'Name';
-        oscar.Change_effective_as_of__c = date.today().addDays(5);
+        oscar.Change_effective_as_of__c = date.today();
 
 
         Test.startTest();
