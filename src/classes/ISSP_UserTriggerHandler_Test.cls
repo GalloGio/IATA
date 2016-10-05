@@ -25,7 +25,8 @@ private class ISSP_UserTriggerHandler_Test {
 	                            PortalRole = 'Manager',
 	                            CommunityNickname = contact.email.substring(0, contact.email.indexOf('@'))+Datetime.now().formatLong().substring(10,15),
 	                            ProfileId = profileId,
-	                            IsActive = true);
+	                            IsActive = true,
+	                            Community__c = 'IEC');
     	insert newUser;
     	
     	System.runAs (newUser){

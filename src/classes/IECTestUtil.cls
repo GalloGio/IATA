@@ -237,6 +237,7 @@ public without sharing class IECTestUtil {
             , IsActive = true
             , ReceivesAdminInfoEmails = false
             , ReceivesInfoEmails = false
+            , Community__c = 'IEC'
         );
         insert u;
         trgPortalUserAfterInserUpdate = true;
@@ -259,7 +260,7 @@ public without sharing class IECTestUtil {
     }
     
     
-
+    
     public static User createSampleGuestUserAndLogin(String ClientType) {
         // insert account
         Account newAccount = vfIECEBC_TestSuite.IECTestUtil_Account = createSampleAccount(ClientType);
@@ -297,6 +298,7 @@ public without sharing class IECTestUtil {
             , IsActive = true
             , ReceivesAdminInfoEmails = false
             , ReceivesInfoEmails = false
+            , Community__c = 'IEC'
         );
         insert u;
         trgPortalUserAfterInserUpdate = true;
@@ -311,8 +313,8 @@ public without sharing class IECTestUtil {
             oPermissionSetAssignment.PermissionSetId = permissionSetId;
             insert oPermissionSetAssignment;
         }
-*/
-         
+        */
+        
         IECUserManager.login(u.Username, 'testpassword', null);
            
         return u;
@@ -335,6 +337,7 @@ public without sharing class IECTestUtil {
             , IsActive = true
             , ReceivesAdminInfoEmails = false
             , ReceivesInfoEmails = false
+            , Community__c = 'IEC'
         );
         
         return u;

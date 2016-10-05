@@ -2709,6 +2709,20 @@ Currently (26/10/15) used to identify which user haven&apos;t complete the suppo
     </searchLayouts>
     <sharingModel>Read</sharingModel>
     <validationRules>
+        <fullName>Partner_User_fill_Community</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND 
+(ISPICKVAL
+(UserType,&apos;PowerPartner&apos;),
+OR
+(ISBLANK( Community__c ), AND
+(Community__c !=&apos;ISSP&apos;,
+Community__c !=&apos;IEC&apos;)
+)
+)</errorConditionFormula>
+        <errorMessage>Please fill in the Community field with either ISSP or IEC</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>UserDIvision</fullName>
         <active>true</active>
         <description>Division is mandatory for every user.</description>
