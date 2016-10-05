@@ -24,7 +24,7 @@ public without sharing class RCRMUtil {
             map<Id,Opportunity> mapLostOpportunitiesPerId = new map<Id,Opportunity>();
             
             for (Opportunity opp : mapTriggerNew.values()) {
-                
+                system.debug('Opp Amount: ' + opp.Amount + ' - Product Manager: ' + opp.RCRM_Product_Manager__c + ' - Validation Status:' + opp.RCRM_Validation_Status__c);
                 // map of opportunities closed WON && that have RCRM products attached and have an amount > 0 (catch errors here)
                 if (opp.RecordTypeId == RT_RCRM_Opportunity_Id && 
                     mapTriggerOld.get(opp.Id).StageName != '7. Closed Sales / Sold' && 
@@ -33,6 +33,8 @@ public without sharing class RCRMUtil {
                     opp.Amount > 0 && 
                     opp.RCRM_Product_Manager__c != null &&
                     opp.RCRM_Validation_Status__c == 'Validated by PM') {
+                    Opportunity o = mapTriggerNew.get(opp.Id);
+                    system.debug('a ' + o.Owner.Email);
                         mapWonOpportunitiesPerId.put(opp.Id, opp);
                     }
                     
@@ -45,13 +47,14 @@ public without sharing class RCRMUtil {
             }
             
             // Handle WON RCRM opportunities
+
             if (! mapWonOpportunitiesPerId.values().isEmpty()) {
                 
                 // List of all the OpportunityLineItems related to these opportunities and containing a product from the RCRM project scope
                 List<OpportunityLineItem> lstAllRcrmOLIs = [SELECT Id, OpportunityId, Product2Id, Product2.Product_Manager_lookup__c, Product2.Reminder_interval__c, 
                                             Product2.Family, CurrencyIsoCode, PricebookEntryId, UnitPrice, Quantity FROM OpportunityLineItem 
                                             WHERE Product2.RCRM_Product__c = true AND OpportunityId IN :mapWonOpportunitiesPerId.keyset()];
-                
+                system.debug('Aqui Related OLI: ' + lstAllRcrmOLIs);
                 //Create a map of lists of OLIs per Opportunity Id (the goal is to have a list of the RCRM Product Id per Opportunity Id)
                 Map<Id, List<OpportunityLineItem>> mapRcrmOLIPerOppId = new Map<Id, List<OpportunityLineItem>>();
                 for (OpportunityLineItem oli : lstAllRcrmOLIs) {
@@ -61,7 +64,7 @@ public without sharing class RCRMUtil {
                     
                     mapRcrmOLIPerOppId.get(oli.OpportunityId).add(oli);
                 }
-                
+                system.debug('Map of OLIs: ' + mapWonOpportunitiesPerId + ' - ' + mapRcrmOLIPerOppId);
                 // Validate opportunity for close, create / update Contract, update RSLs type to Booked 
                 RCRMUtil.CreateUpdateContract(mapWonOpportunitiesPerId, mapRcrmOLIPerOppId);
                 
@@ -147,7 +150,7 @@ public without sharing class RCRMUtil {
      */
     public static void CreateUpdateContract (Map<Id,Opportunity> mapOpportunitiesPerId, Map<Id, List<OpportunityLineItem>> mapRcrmOLIPerOppId) {
         Id RT_RCRM_Contract_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Contract').get('RCRM_Contract');
-        
+        system.debug('Entrou no update do contracto');
         // List of Opportunities from the parameter map
         List<Opportunity> lstOpportunities = mapOpportunitiesPerId.values();
         
@@ -164,13 +167,13 @@ public without sharing class RCRMUtil {
                 lstExpConIds.add(opp.Expiring_contract__c);
             }
         }
-        
+        system.debug('Tem opp a expirar.');
         // Get info from the expiring contracts into a map of contracts per contract Id
         Map<Id, Contract> mapExpContractsPerId = new Map<Id, Contract>([SELECT Id, ContractTerm, Booking_value__c, Number_of_times_renewed__c, 
-                                                                    Renewal_under_Sales_Responsibility__c, Renewal_Status__c, Current_Opportunity__c 
+                                                                    Renewal_under_Sales_Responsibility__c, Renewal_Status__c, Current_Opportunity__c, Opportunity_OwnerEmail__c 
                                                                     FROM Contract WHERE Id IN :lstExpConIds]);
         
-        
+        system.debug('Oportunidades a listar: ' + lstOpportunities);
         //////////////////////////
         // Get the RCRM OLIs from the opportunities that created/updated the EXPIRING contracts, in order to compare them with the current RCRM OLIs lists
         Map<Id, List<OpportunityLineItem>> mapOLDRcrmOLIPerExpContractId = new  Map<Id, List<OpportunityLineItem>>();
@@ -195,18 +198,26 @@ public without sharing class RCRMUtil {
                 }
             }
         }
+
+
         //////////////////////////
-        
+        system.debug('OLI por Opp Id: ' + mapRcrmOLIPerOppId);
         
         for (Opportunity opp : lstOpportunities) {
+
+            List<Opportunity> email = [select id, Owner.Email from Opportunity where id = :opp.Id];
+            List<Opportunity> emailManager = [select id, RCRM_Product_Manager__r.Email from Opportunity where id = :opp.Id];
+            List<Opportunity> emailAltManager = [select id, Alternate_RCRM_Product_Manager__r.Email from Opportunity where id = :opp.Id];
+
+            system.debug('Aqui email do owner: ' + email[0].Owner.Email + '+ Aqui email do Manager: ' + emailManager[0].RCRM_Product_Manager__r.Email);
             
             // Validate Opportunity - a RCRM product needs to be present
             if (mapRcrmOLIPerOppId.get(opp.Id) == null || mapRcrmOLIPerOppId.get(opp.Id).isEmpty()) {
                 // No RCRM product present => prevent the opportunity from being closed
                 opp.addError('ERROR - The Opportunity cannot be closed because there is no RCRM product attached to it. You need to either add a RCRM product, or change the opportunity record type.');
-                
+                //system.debug('Teste erro');
             } else if (opp.Expiring_contract__c == null) {
-                
+                system.debug('Opp Owner: ' + opp.Owner.Name + ' - Opp Amount:  ' + opp.Amount);
                 // NEW CONTRACT
                 Contract newContract = new Contract();
                 newContract.Name = opp.Name.startsWith('Renewal - ') ? opp.Name.replaceFirst('Renewal - ','') : opp.Name;
@@ -228,7 +239,12 @@ public without sharing class RCRMUtil {
                 newContract.CurrencyIsoCode = opp.CurrencyIsoCode;
                 newContract.Status = 'Draft';
                 newContract.Current_Opportunity__c = opp.Id;
+                newContract.Opportunity_OwnerEmail__c = email[0].Owner.Email; // Get the owner email from the current Opportunity
+                newContract.RCRM_Product_Manager_Email__c = emailManager[0].RCRM_Product_Manager__r.Email;
+                newContract.Alternate_RCRM_Product_Manager_Email__c = emailAltManager[0].Alternate_RCRM_Product_Manager__r.Email;
                 
+                //send email to Opp owner, RCRM Manager and Alternate RCRM Manager
+                //email1 + ';' 
                 if (opp.Renewal_under_Sales_Responsibility__c && opp.RCRM_Product_Manager__c != null) {
                     newContract.OwnerId = opp.OwnerId; // we suppose the SM owns the Opportunity, since it's their responsibility - no other way of getting info on the SM
                 } else {
@@ -262,6 +278,9 @@ public without sharing class RCRMUtil {
                         
                         expContract.Current_Opportunity__c = opp.Id;
                         expContract.Booking_value__c = opp.Amount;
+                        expContract.Opportunity_OwnerEmail__c = email[0].Owner.Email; // Get the owner email from the current Opportunity
+                        expContract.RCRM_Product_Manager_Email__c = emailManager[0].RCRM_Product_Manager__r.Email;
+                        expContract.Alternate_RCRM_Product_Manager_Email__c = emailAltManager[0].Alternate_RCRM_Product_Manager__r.Email;
                         
                         lstContractsToUpdate.add(expContract);
                         
@@ -298,6 +317,9 @@ public without sharing class RCRMUtil {
                 		newContract.CurrencyIsoCode = opp.CurrencyIsoCode;
                         newContract.Status = 'Draft';
                         newContract.Current_Opportunity__c = opp.Id;
+                        newContract.Opportunity_OwnerEmail__c = email[0].Owner.Email; // Get the owner email from the current Opportunity
+                        newContract.RCRM_Product_Manager_Email__c = emailManager[0].RCRM_Product_Manager__r.Email;
+                        newContract.Alternate_RCRM_Product_Manager_Email__c = emailAltManager[0].Alternate_RCRM_Product_Manager__r.Email;
                                                 
                         if (opp.Renewal_under_Sales_Responsibility__c) {
                             newContract.OwnerId = opp.OwnerId; // we suppose the SM owns the Opportunity, since it's their responsibility - no other way of getting info on the SM

@@ -123,6 +123,16 @@ E&amp;F CRM Project</description>
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Alternate_RCRM_Product_Manager_Email__c</fullName>
+        <description>Email for the Alternate RCRM Product Manager</description>
+        <externalId>false</externalId>
+        <label>Alternate RCRM Product Manager Email</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>BillingAddress</fullName>
         <trackHistory>true</trackHistory>
     </fields>
@@ -706,6 +716,16 @@ IF(ISPICKVAL(Third_Party__c, &quot;Berlitz&quot;), 0.10,
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Opportunity_OwnerEmail__c</fullName>
+        <description>Get the email from the current opportunity owner.</description>
+        <externalId>false</externalId>
+        <label>Opportunity OwnerEmail</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>OwnerExpirationNotice</fullName>
         <trackHistory>true</trackHistory>
     </fields>
@@ -780,6 +800,27 @@ IF(ISPICKVAL(Third_Party__c, &quot;Berlitz&quot;), 0.10,
         <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>RCRM_Product_Manager_Email_Formula__c</fullName>
+        <externalId>false</externalId>
+        <formula>Current_Opportunity__r.RCRM_Product_Manager__r.Email</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>RCRM Product Manager Email_Formula</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>RCRM_Product_Manager_Email__c</fullName>
+        <description>Email for the RCRM Product Manager</description>
+        <externalId>false</externalId>
+        <label>RCRM Product Manager Email</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Email</type>
         <unique>false</unique>
     </fields>
     <fields>
