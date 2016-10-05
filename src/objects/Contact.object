@@ -10850,7 +10850,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
     <recordTypeTrackHistory>true</recordTypeTrackHistory>
     <recordTypes>
         <fullName>GDP_Contact</fullName>
-        <active>false</active>
+        <active>true</active>
         <label>GDP Contact</label>
         <picklistValues>
             <picklist>Air_Transport_Interest__c</picklist>
@@ -11991,7 +11991,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
     </recordTypes>
     <recordTypes>
         <fullName>IATAStandardContact</fullName>
-        <active>false</active>
+        <active>true</active>
         <description>Used for all standard Contacts</description>
         <label>IATA Standard Contact</label>
         <picklistValues>
@@ -13269,7 +13269,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
     </recordTypes>
     <recordTypes>
         <fullName>IATA_SIS_Contact</fullName>
-        <active>false</active>
+        <active>true</active>
         <description>SIS Contacts</description>
         <label>IATA SIS Contact</label>
         <picklistValues>
@@ -14444,7 +14444,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
     </recordTypes>
     <recordTypes>
         <fullName>IATA_Service_Provider_Contact</fullName>
-        <active>false</active>
+        <active>true</active>
         <label>IATA Service Provider Contact</label>
         <picklistValues>
             <picklist>Air_Transport_Interest__c</picklist>
@@ -15634,7 +15634,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
     </recordTypes>
     <recordTypes>
         <fullName>IATA_TTBS_Contact</fullName>
-        <active>false</active>
+        <active>true</active>
         <description>TTBS Contacts</description>
         <label>IATA TTBS Contact</label>
         <picklistValues>
@@ -16945,7 +16945,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
     </recordTypes>
     <recordTypes>
         <fullName>IDFS_ACCA_Contact</fullName>
-        <active>false</active>
+        <active>true</active>
         <description>Used for Contacts in ACCA</description>
         <label>IDFS ACCA Contact</label>
         <picklistValues>
@@ -18196,7 +18196,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
     </recordTypes>
     <recordTypes>
         <fullName>MACSSales</fullName>
-        <active>false</active>
+        <active>true</active>
         <label>MACS Sales</label>
         <picklistValues>
             <picklist>Air_Transport_Interest__c</picklist>
@@ -19374,7 +19374,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
     </recordTypes>
     <recordTypes>
         <fullName>New_contact_for_iss_portal</fullName>
-        <active>false</active>
+        <active>true</active>
         <description>Record type used only for contact creation on ISS Portal</description>
         <label>New contact for iss portal</label>
         <picklistValues>
@@ -21747,7 +21747,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
     </recordTypes>
     <recordTypes>
         <fullName>Senior</fullName>
-        <active>false</active>
+        <active>true</active>
         <description>Used to store Senior Contacts</description>
         <label>Senior</label>
         <picklistValues>
