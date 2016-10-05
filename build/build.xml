@@ -193,7 +193,7 @@
 
 
 <target name="deployGroups"> 
-    <echo level="info">Deploying GROUPS and GLOBAL PICKLISTS</echo>
+    <echo level="info">Deploying LABELS</echo>
   <antcallback target="deldir" />
    <mkdir dir="${basedir}/Code"/>
   
@@ -218,9 +218,10 @@
 
       
       <antcallback target="deployCodeLocal" />
-       <antcallback target="deploySharing" />
+       <antcallback target="deployCodeObjects" />
   </target> 
 
+<<<<<<< HEAD
 <target name="deploySharing"> 
     <echo level="info">Deploying SHARING</echo>
   <antcallback target="deldir" />
@@ -249,6 +250,9 @@
       <antcallback target="deployCodeLocal" />
        <antcallback target="deployCodeObjects" />
   </target> 
+=======
+
+>>>>>>> parent of b80086b... sharing rules added
 
 <target name="deployWorkflows"> 
     <echo level="info">Deploying WORKFLOWS</echo>
@@ -492,10 +496,11 @@
 
 
       <move file="${basedir}/${sfdc.retrieveTarget}" tofile="src"/>
-        <antcallback target="getSharing" />
+        <antcallback target="getLabel" />
     </target>
 
 
+<<<<<<< HEAD
     <target name="getSharing">
       <echo level="info">Retrieving the server's version of Sharing </echo>
       <mkdir dir="${basedir}/${sfdc.retrieveTarget}"/>
@@ -513,6 +518,8 @@
       <move file="${basedir}/${sfdc.retrieveTarget}" tofile="src"/>
         <antcallback target="getLabel" />
     </target>
+=======
+>>>>>>> parent of b80086b... sharing rules added
 
 
 
