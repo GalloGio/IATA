@@ -41,7 +41,6 @@
   
 </target> 
 
-
 <target name="deployCodeProd"> 
 
 
@@ -187,8 +186,41 @@
 
       
       <antcallback target="deployCodeLocal" />
+       <antcallback target="deployGroups" />
+  </target> 
+
+
+
+
+<target name="deployGroups"> 
+    <echo level="info">Deploying LABELS</echo>
+  <antcallback target="deldir" />
+   <mkdir dir="${basedir}/Code"/>
+  
+      <for list="${groupsPackage.listfolders}" param="param" >
+        <sequential>
+             <mkdir dir="${basedir}/Code/@{param}"/>
+       </sequential>
+     </for>
+
+     <echo level="info">moving files</echo>
+      
+      <for list="${groupsPackage.listfolders}" param="param" delimiter=",">
+        <sequential>
+          <move todir="${basedir}/Code/@{param}">
+            <fileset dir="${basedir}/src/@{param}">
+            </fileset>
+          </move>
+       </sequential>
+     </for>
+
+ <move file="${basedir}/src/groupsPackage.xml" tofile="${basedir}/Code/package.xml"/>  
+
+      
+      <antcallback target="deployCodeLocal" />
        <antcallback target="deployCodeObjects" />
   </target> 
+
 
 
 <target name="deployWorkflows"> 
@@ -440,6 +472,7 @@
 
 
 
+
     <target name="getLabel">
       <echo level="info">Retrieving the server's version of LABELS</echo>
       <mkdir dir="${basedir}/${sfdc.retrieveTarget}"/>
@@ -450,6 +483,23 @@
         serverurl="${sfdc.serverurl}"
         unpackaged="src/labelPackage.xml"/>
       <move file="${basedir}/${sfdc.retrieveTarget}/package.xml" tofile="src/labelPackage.xml"/>  
+      <move file="${basedir}/${sfdc.retrieveTarget}" tofile="src"/>
+       <antcallback target="getWorkflowLocal" />
+    </target>
+
+
+
+
+  <target name="getGroups">
+      <echo level="info">Retrieving the server's version of LABELS</echo>
+      <mkdir dir="${basedir}/${sfdc.retrieveTarget}"/>
+      <sf:retrieve
+        retrieveTarget="${basedir}/${sfdc.retrieveTarget}"
+        username="${sfdc.username}"
+        password="${sfdc.password}"
+        serverurl="${sfdc.serverurl}"
+        unpackaged="src/groupsPackage.xml"/>
+      <move file="${basedir}/${sfdc.retrieveTarget}/package.xml" tofile="src/groupsPackage.xml"/>  
       <move file="${basedir}/${sfdc.retrieveTarget}" tofile="src"/>
        <antcallback target="getWorkflowLocal" />
     </target>
@@ -570,9 +620,22 @@
         unpackaged="src/labelPackage.xml"/>
       <move file="${basedir}/${sfdc.retrieveTarget}/package.xml" tofile="src/labelPackage.xml"/>  
       <move file="${basedir}/${sfdc.retrieveTarget}" tofile="src"/>
-       <antcallback target="getWorkflowLocalPointAndClick" />
+       <antcallback target="getGroupsPointAndClick" />
     </target>
 
+      <target name="getGroupsPointAndClick">
+      <echo level="info">Retrieving the server's version of LABELS</echo>
+      <mkdir dir="${basedir}/${sfdc.retrieveTarget}"/>
+      <sf:retrieve
+        retrieveTarget="${basedir}/${sfdc.retrieveTarget}"
+        username="${sfdc.username}"
+        password="${sfdc.password}"
+        serverurl="${sfdc.serverurl}"
+        unpackaged="src/groupsPackage.xml"/>
+      <move file="${basedir}/${sfdc.retrieveTarget}/package.xml" tofile="src/groupsPackage.xml"/>  
+      <move file="${basedir}/${sfdc.retrieveTarget}" tofile="src"/>
+       <antcallback target="getWorkflowLocalPointAndClick" />
+    </target>
 
 
 
@@ -593,6 +656,8 @@
     </target>
 
  
+
+
 
 
   
@@ -634,6 +699,27 @@
         <antcallback target="deletebakpermissionsets" />-->
 
 </target>
+
+
+
+     <target name="getLayoutsOnly">
+      <echo level="info">Retrieving the server's version of LAYOUTS</echo>
+      <mkdir dir="${basedir}/${sfdc.retrieveTarget}"/>
+      <sf:retrieve
+        retrieveTarget="${basedir}/${sfdc.retrieveTarget}"
+        username="${sfdc.username}"
+        password="${sfdc.password}"
+        serverurl="${sfdc.serverurl}"
+        unpackaged="src/layoutPackage.xml"/>
+      <move file="${basedir}/${sfdc.retrieveTarget}/package.xml" tofile="src/layoutPackage.xml"/>
+      <move file="${basedir}/${sfdc.retrieveTarget}" tofile="src"/>
+
+       <antcallback target="getApproval" /> 
+
+    </target>
+    
+
+
 
 <target name="compressProfiles">
  <for param="file">
