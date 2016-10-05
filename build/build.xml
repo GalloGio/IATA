@@ -314,14 +314,14 @@
  <move file="${basedir}/src/approvalPackage.xml" tofile="${basedir}/Code/package.xml"/>  
       
       <antcallback target="deployCodeLocal" />
-            <antcallback target="deployDontRetrieve" />
+           <!-- <antcallback target="deployDontRetrieve" />-->
 
   </target> 
 
 
 
 
-
+<!--
 <target name="deployDontRetrieve"> 
     <echo level="info">Deploying DONTRETRIEVE</echo>
    <antcallback target="deldir" />
@@ -350,7 +350,7 @@
   
   </target> 
 
-
+-->
 
 
 <target name="deployCodeObjectsOnly"> 
