@@ -28,7 +28,7 @@ public class MITA_PortalTest {
 		portalUser = new User(Alias = 'standt', Email='standarduser@testorg.com', 
 				            EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US', 
 				            LocaleSidKey='en_US', ProfileId = p.Id, ContactId = MyContact.Id,
-				            TimeZoneSidKey='America/Los_Angeles', UserName='standarduser@testorg.com');
+				            TimeZoneSidKey='America/Los_Angeles', UserName='standarduser@testorg.com', Community__c = 'IEC');
 		insert portalUser;
 		
 		Myself = [SELECT Id, UserName FROM User WHERE ID =  :UserInfo.getUserId()];
