@@ -9201,7 +9201,6 @@
         <visible>true</visible>
     </recordTypeVisibilities>
 	<recordTypeVisibilities>
-        <default>false</default>
         <recordType>EF_Related_Records__c.Relationship</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>

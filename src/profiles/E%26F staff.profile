@@ -38535,7 +38535,7 @@
         <recordType>EF_Related_Records__c.Location</recordType>
     </layoutAssignments>
 	<layoutAssignments>
-        <layout>EF_Related_Records__c-E%26F Relationship Page Layout</layout>
+        <layout>EF_Related_Records__c-E%26F Relationship Layout</layout>
         <recordType>EF_Related_Records__c.Relationship</recordType>
     </layoutAssignments>
     <layoutAssignments>
