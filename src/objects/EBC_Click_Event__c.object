@@ -136,7 +136,6 @@
         <inlineHelpText>The Subscriber Key of the client that clicked</inlineHelpText>
         <label>Subscriber Key</label>
         <length>255</length>
-        <required>true</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
