@@ -52,9 +52,20 @@ public with sharing class AMS_MigrationToolHelper {
 
 	private static void alignOwners(AMS_Pax_Accreditation_Form__c accreditationObj, Case commCase){
 
+		//List<Contact> contactsFromAccountToMatch= [Select Id, Email from Contact where AccountId = :commCase.AccountId];
+
+		Set<Id> contactsUpdated = new Set<Id>();
+
+		Map<String, Id> contactsFromAccountToMatch = new Map<String, Id>();
+
+		For(Contact c: [Select Id, Email from Contact where AccountId = :commCase.AccountId]){
+
+			contactsFromAccountToMatch.put(c.email,c.Id);
+		}
+
 		List<AMS_Accreditation_Contact__c> contactsToUpdate = new List<AMS_Accreditation_Contact__c>();
 
-		List<AMS_Accreditation_Contact__c> contacts = [SELECT Id, Legacy_External_ID__c, AMS_Ownership_Role__c, Contact__c, Person_AMS__c,   Company__c, Name from AMS_Accreditation_Contact__c where AMS_Pax_Accreditation_Form__c = :accreditationObj.Id and AMS_Ownership_Role__c = null and Agency_owner__c = true];
+		List<AMS_Accreditation_Contact__c> contacts = [SELECT Id, Email__c, Legacy_External_ID__c, AMS_Ownership_Role__c, Contact__c, Person_AMS__c,   Company__c, Name from AMS_Accreditation_Contact__c where AMS_Pax_Accreditation_Form__c = :accreditationObj.Id and AMS_Ownership_Role__c = null and Agency_owner__c = true];
 
 		List<AMS_Account_Role__c> roles = [SELECT Id, Contact__c, Person__c, Legacy_External_ID__c, Owner_Account__c,Owner_Name__c,Person__r.Contact__c from AMS_Account_Role__c where Active__c = true and Account__c = :commCase.AccountId];
 
@@ -65,41 +76,80 @@ public with sharing class AMS_MigrationToolHelper {
 				if(contact.Contact__c != null && contact.Contact__c == role.Contact__c){
 					contact.AMS_Ownership_Role__c = role.Id;
 					contactsToUpdate.add(contact);
+					contactsUpdated.add(contact.Id);
 					break;
 				}
 
 				if(contact.Contact__c != null && role.Person__c != null && role.Person__r.Contact__c != null && contact.Contact__c == role.Person__r.Contact__c){
 					contact.AMS_Ownership_Role__c = role.Id;
 					contactsToUpdate.add(contact);
+					contactsUpdated.add(contact.Id);
 					break;
 				}
 
 				if(contact.Person_AMS__c != null && contact.Person_AMS__c == role.Person__c){
 					contact.AMS_Ownership_Role__c = role.Id;
 					contactsToUpdate.add(contact);
+					contactsUpdated.add(contact.Id);
 					break;
 				}
 
 				if(contact.Company__c != null && contact.Company__c == role.Owner_Account__c){
 					contact.AMS_Ownership_Role__c = role.Id;
+
+					if(contact.Contact__c == null && contact.Person_AMS__c == null && contact.Email__c != null && contactsFromAccountToMatch.get(contact.Email__c) != null){ // try to match the Accreditation Contact with an existing contact from the Account.				
+						contact.Contact__c = contactsFromAccountToMatch.get(contact.Email__c);
+					}
+
 					contactsToUpdate.add(contact);
+					contactsUpdated.add(contact.Id);
 					break;
 				}
 
 				if(contact.Legacy_External_Id__c != null && contact.Legacy_External_Id__c == role.Legacy_External_ID__c){
 					contact.AMS_Ownership_Role__c = role.Id;
+
+					if(contact.Contact__c == null && contact.Person_AMS__c == null && contact.Email__c != null && contactsFromAccountToMatch.get(contact.Email__c) != null){ // try to match the Accreditation Contact with an existing contact from the Account.				
+						contact.Contact__c = contactsFromAccountToMatch.get(contact.Email__c);
+					}
+
 					contactsToUpdate.add(contact);
+					contactsUpdated.add(contact.Id);
 					break;
 				}
 
 				if(contact.Contact__c == null && contact.Person_AMS__c == null && contact.Company__c == null && contact.Legacy_External_Id__c == null && Role.Owner_Name__c != null){
 					if(contact.Name == role.Owner_Name__c){
 						contact.AMS_Ownership_Role__c = role.Id;
+
+						if(contact.Contact__c == null && contact.Person_AMS__c == null && contact.Email__c != null && contactsFromAccountToMatch.get(contact.Email__c) != null){ // try to match the Accreditation Contact with an existing contact from the Account.				
+							contact.Contact__c = contactsFromAccountToMatch.get(contact.Email__c);
+						}
+
 						contactsToUpdate.add(contact);
+						contactsUpdated.add(contact.Id);
 						break;
 					}
 				}
 			}
+
+			// if a contact does not have a match in the AMS Account Role, we still might have to attach it to a Contact (that's why we are using that contactsUpdated set ....)
+			if(!contactsUpdated.contains(Contact.Id) && contact.Contact__c == null && contact.Person_AMS__c == null && contact.Email__c != null && contactsFromAccountToMatch.get(contact.Email__c) != null){ // try to match the Accreditation Contact with an existing contact from the Account.				
+				contact.Contact__c = contactsFromAccountToMatch.get(contact.Email__c);
+				contactsToUpdate.add(contact);
+				contactsUpdated.add(contact.Id);
+			}
+
+		}
+
+		// now for the regular non owners contacts, if they are missing a contact and they have an email, let's try to match them so we can avoid contact duplication
+
+		for(AMS_Accreditation_Contact__c nonOwnerC : [SELECT Id, Email__c, Legacy_External_ID__c, AMS_Ownership_Role__c, Contact__c, Person_AMS__c,   Company__c, Name from AMS_Accreditation_Contact__c where AMS_Pax_Accreditation_Form__c = :accreditationObj.Id and AMS_Ownership_Role__c = null and Agency_owner__c = false and Email__c != null and Contact__c = null and Person_AMS__c = null and Financial_interest__c = null]){
+				
+				if(contactsFromAccountToMatch.get(nonOwnerC.Email__c) != null){
+					nonOwnerC.Contact__c = contactsFromAccountToMatch.get(nonOwnerC.Email__c);
+					contactsToUpdate.add(nonOwnerC);
+				}
 
 		}
 
