@@ -1507,9 +1507,7 @@ public static String fetchTypeOfCustomer (String locationType , String category)
 
     }
 
-    public static Date lastDayOfMonth(Date dateField) {
-        return dateField.addMonths(1).toStartOfMonth().addDays(-1);
-    }
+
 
 
 
