@@ -8,23 +8,22 @@ public class vfIECEBC_Campaign extends vfIECEBC_Controller {
 	public Integer numberOfRecipients {
 		get{
 			if (numberOfRecipients == null) {
-				HttpRequest req = new HttpRequest();
-				//req.setEndpoint(IECEBC_Utility.ebcSetup.E_Commerce_Base_Url__c + '/services/apexrest/RecipientsCount/' + campaign.EBC_Master_Filter__c);
-				req.setEndpoint(IECEBC_Utility.ebcSetup.E_Commerce_Base_Url__c + '/IECEBC_RecipientCount?id=' + campaign.EBC_Master_Filter__c);
-				req.setMethod('GET');
-				//req.setHeader('Authorization', 'OAuth ' + UserInfo.getSessionId());
-				
-				Http http = new Http();
-				HTTPResponse res = http.send(req);
+                HttpRequest req = new HttpRequest();
+                //req.setEndpoint(IECEBC_Utility.ebcSetup.E_Commerce_Base_Url__c + '/services/apexrest/RecipientsCount/' + campaign.EBC_Master_Filter__c);
+                req.setEndpoint(IECEBC_Utility.ebcSetup.E_Commerce_Base_Url__c + '/IECEBC_RecipientCount?id=' + campaign.EBC_Master_Filter__c);
+                req.setMethod('GET');
+                //req.setHeader('Authorization', 'OAuth ' + UserInfo.getSessionId());
+                
+                Http http = new Http();
+                HTTPResponse res = http.send(req);
                 
                 Integer cnt = Integer.valueOf(res.getBody().trim());
-				
-                if (campaign.Number_of_Recipients__c != cnt) {
-                    EBC_Campaign__c tmpCamp = new EBC_Campaign__c();
-                    tmpCamp.Id = campaign.Id;
-                    campaign.Number_of_Recipients__c = tmpCamp.Number_of_Recipients__c = cnt;
-                    update tmpCamp;
-                }
+                
+                EBC_Campaign__c tmpCamp = new EBC_Campaign__c();
+                tmpCamp.Id = campaign.Id;
+                campaign.Number_of_Recipients__c = tmpCamp.Number_of_Recipients__c = cnt;
+                update tmpCamp;
+                
                 numberOfRecipients = Integer.valueOf(campaign.Number_of_Recipients__c);
 			}
 			return numberOfRecipients;
@@ -152,6 +151,15 @@ public class vfIECEBC_Campaign extends vfIECEBC_Controller {
             pr = new PageReference(url);
             pr.setRedirect(true);
         } else if (campaign.Maximum_Allowed_Step__c < currentStepNumber) pr = getPRByStepNumber(Integer.valueOf(campaign.Maximum_Allowed_Step__c), true);
+        else if (campaign.Maximum_Allowed_Step__c == 6) {
+            Integer previousCount = Integer.valueOf(campaign.Number_of_Recipients__c);
+            Integer newCount = numberOfRecipients;
+            if (previousCount != newCount) { // If the count changed, refresh the page
+                pr = ApexPages.currentPage();
+                pr.getParameters().put('id', campaign.Id);
+                pr.setRedirect(true);
+            }
+        }
         
         return pr;
     }
