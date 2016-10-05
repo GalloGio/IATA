@@ -38,7 +38,7 @@ trigger EF_ContractTrigger on Contract (
                 EF_ContractHandler.handleWithApprovalAccountUpdates(efContractMap, Trigger.oldMap);
                 EF_ContractHandler.handleApprovedAndRejectedApprovals(efContractList, Trigger.oldMap);
             }
-            
+            EF_Utilities.storeUpdateComments((List<sObject>) Trigger.new);
         } else if (Trigger.isAfter && (Trigger.isUpdate || Trigger.isInsert))
         {
             if(EF_ContractHandler.runOnce() && EF_ContractHandler.isUserCsSpecialist())

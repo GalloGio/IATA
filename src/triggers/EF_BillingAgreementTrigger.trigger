@@ -12,6 +12,7 @@ trigger EF_BillingAgreementTrigger on EF_Billing_Agreement__c (
             // checks if location chosen has been set in Contract Location Currency.
             EF_BillingAgreementHandler.checkLocationCurrency(Trigger.new);
             EF_BillingAgreementHandler.checkCurrencyFromContract(Trigger.new, Trigger.oldMap);
+            EF_Utilities.storeUpdateComments((List<sObject>) Trigger.new);
             // EF_BillingAgreementHandler.preventAgreementCreationForNotAllowed(Trigger.new);
             if(Trigger.isInsert)
             {

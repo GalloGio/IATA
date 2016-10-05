@@ -21613,6 +21613,11 @@
         <field>Contract.EF_Client_SIS_Code__c</field>
         <readable>true</readable>
     </fieldPermissions>
+	<fieldPermissions>
+        <editable>true</editable>
+        <field>Contract.EF_Comments__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>Contract.EF_DT_Specialist__c</field>
@@ -21626,6 +21631,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Contract.EF_Group_Code__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>true</editable>
+        <field>Contract.EF_History__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -22318,6 +22328,16 @@
         <field>EF_Billing_Agreement__c.Client__c</field>
         <readable>true</readable>
     </fieldPermissions>
+	<fieldPermissions>
+        <editable>true</editable>
+        <field>EF_Billing_Agreement__c.EF_Comments__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>EF_Billing_Agreement__c.Contract_Payment_Terms__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>EF_Billing_Agreement__c.Contract_Payment_Terms__c</field>
@@ -22331,6 +22351,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>EF_Billing_Agreement__c.Data_Currency__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>true</editable>
+        <field>EF_Billing_Agreement__c.EF_History__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -22476,6 +22501,36 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>EF_Material_Line_Item__c.EF_Relationship__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>true</editable>
+        <field>EF_Related_Records__c.Case__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>false</editable>
+        <field>EF_Related_Records__c.Case_Name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>true</editable>
+        <field>EF_Related_Records__c.Contact__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>false</editable>
+        <field>EF_Related_Records__c.Contact_Name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>true</editable>
+        <field>EF_Related_Records__c.Contract__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>true</editable>
+        <field>EF_Related_Records__c.EF_Billing_Agreement__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -39355,6 +39410,10 @@
         <layout>EF_Related_Records__c-E%26F Location Page Layout</layout>
         <recordType>EF_Related_Records__c.Location</recordType>
     </layoutAssignments>
+	<layoutAssignments>
+        <layout>EF_Related_Records__c-E%26F Relationship Page Layout</layout>
+        <recordType>EF_Related_Records__c.Relationship</recordType>
+    </layoutAssignments>
     <layoutAssignments>
         <layout>E_F_Asset_Value__c-E%26F Asset Value Layout</layout>
     </layoutAssignments>
@@ -43278,6 +43337,11 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>EF_Related_Records__c.Location</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+	<recordTypeVisibilities>
+        <default>false</default>
+        <recordType>EF_Related_Records__c.Relationship</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
