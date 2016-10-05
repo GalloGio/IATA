@@ -1027,97 +1027,7 @@ public without sharing class AMS_Utils {
 
     }
 
-    //Map data from staging area (AMS Online Accreditation) to account
-    public static List<Account> copyDataToAccountForAgencyChanges(AMS_OSCAR__c oscar, Set<Id> accountsAffected, String typesOfChange, Map<Id, Account> accounts, AMS_Pax_Accreditation_Form__c oscarOnlineAccreditation) {
-
-        Set<String> fieldsToMigrate = AMS_AgencyChangesConfigHelper.getFieldsToMigrate(typesOfChange);
-
-        System.debug('AGENCY CHANGES: fields to migrate (' + fieldsToMigrate + ') for accounts: ' + accountsAffected);
-
-        List<Account> accountsToUpdate = new List<Account>();
-        
-        //DT: Reindented and added 3 fields for addresses
-        Map<String, String> fieldsMapping = new Map<String, String> {'Name' => 'Account_Name__c'
-                                                                    ,'IATACode__c' => 'IATACode__c'
-                                                                    ,'Short_Name__c' => 'Short_Name__c'
-                                                                    ,'TradeName__c' => 'Trade_Name__c'
-                                                                    ,'License_Number__c' => 'ISSP_AMS_License_No__c'
-                                                                    ,'VAT_Number__c' => 'ISSP_AMS_VAT_number__c'
-                                                                    ,'BillingStreet' => 'Branch_Office_Street_name_number__c'
-                                                                    ,'Website' => 'Website__c'
-                                                                    ,'BillingPostalCode' => 'Branch_Office_Postal_code__c'
-                                                                    //,'BillingState' => 'Billing_State__c'
-                                                                    ,'BillingCity' => 'Branch_Office_City__c'
-                                                                    ,'IATA_ISO_Country__c' => 'Branch_Office_Country__c'
-                                                                    ,'Iso_State__c' => 'IATA_ISO_State__c'
-                                                                    //,'ShippingCountry' => 'Shipping_Country__c'
-                                                                    ,'ShippingStreet' => 'Shipping_Street__c'
-                                                                    ,'ShippingPostalCode' => 'Shipping_Postal_Code__c'
-                                                                    //,'ShippingState' => 'Shipping_State__c'
-                                                                    ,'Email__c' => 'Branch_Office_Email__c'
-                                                                    ,'Phone' => 'Branch_Office_Phone__c'
-                                                                    ,'Fax' => 'Branch_Office_FAX__c'
-                                                                    ,'ShippingCity' => 'Shipping_City__c'
-                                                                    ,'Operation__c' => 'Operation__c'
-                                                                    ,'Abbreviated_name__c' => 'Abbreviated_name__c'
-                                                                    ,'Abbreviated_address__c' => 'Abbreviated_Address__c'
-                                                                    ,'Remittance_frequency__c' => 'Remittance_frequency__c'
-                                                                    ,'Solicitation_Flag__c' => 'Solicitation_Flag__c'
-                                                                    ,'VAT_Number_2__c' => 'VAT_Number_2__c'
-                                                                    ,'CASS_Number__c' => 'CASS_Number__c'
-                                                                    ,'Location_Class__c' => 'Location_Class__c'
-                                                                    ,'Location_Type__c' => 'Location_Type__c'
-                                                                    ,'Mobile__c' => 'Mobile__c'
-                                                                    ,'Is_your_firm_handling_Dangerous_Goods__c' => 'Is_your_firm_handling_Dangerous_Goods__c'
-                                                                    ,'IATA_ISO_Billing_State__c' => 'IATA_ISO_State__c'
-                                                                    ,'IATA_ISO_Shipping_Country__c' => 'Shipping_ISO_Country__c'
-                                                                    ,'IATA_ISO_Shipping_State__c' => 'Shipping_ISO_State__c'};
-
-        if (fieldsToMigrate != null && oscarOnlineAccreditation != null) {
-                Map<String, Object> accountFieldNewValue = new Map<String,Object>();
-
-                for (String key : fieldsMapping.keySet()) {
-                    String value = fieldsMapping.get(key);
-                    if (fieldsToMigrate.contains(value)) {
-                    
-                        accountFieldNewValue.put(key, oscarOnlineAccreditation.get(value));
-                        System.debug(key + ':' + oscarOnlineAccreditation.get(value));
-                    }
-                }
-
-                //fields that require transformation
-                if (fieldsToMigrate.contains('ISSP_AMS_Premises_located_at_airport__c'))
-                    accountFieldNewValue.put('In_a_Airport__c', (oscarOnlineAccreditation.ISSP_AMS_Premises_located_at_airport__c == 'Yes') ? true : false);
-                if (fieldsToMigrate.contains('ISSP_AMS_Legal_Status__c'))
-                    accountFieldNewValue.put('Company_Type__c', transformCompanyType(oscarOnlineAccreditation.ISSP_AMS_Legal_Status__c));
-                if (fieldsToMigrate.contains('ISSP_AMS_GDS_with_signed_contract__c'))
-                    accountFieldNewValue.put('GDS__c', transformGDS(oscarOnlineAccreditation.ISSP_AMS_GDS_with_signed_contract__c));
-                if (fieldsToMigrate.contains('Branch_Office_Country__c'))
-                    accountFieldNewValue.put('BillingCountry', oscarOnlineAccreditation.Branch_Office_Country__r.Name);
-                if (fieldsToMigrate.contains('Shipping_ISO_Country__c'))
-                    accountFieldNewValue.put('ShippingCountry', oscarOnlineAccreditation.Shipping_ISO_Country__r.Name);
-                if (fieldsToMigrate.contains('Shipping_ISO_State__c'))
-                    accountFieldNewValue.put('ShippingState', oscarOnlineAccreditation.Shipping_ISO_State__r.Name);
-                if (fieldsToMigrate.contains('IATA_ISO_State__c'))
-                    accountFieldNewValue.put('BillingState', oscarOnlineAccreditation.IATA_ISO_State__r.Name);
-                //if (fieldsToMigrate.contains('ISSP_AMS_Total_Ownership__c'))
-                    //AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(new List<AMS_Pax_Accreditation_Form__c>{onlineAcc}, accountsAffected);
-
-                for(Id accId: accountsAffected){
-                    Account acc = accounts.get(accId);
-
-                    for(String accFieldApiName: accountFieldNewValue.keySet())
-                        acc.put(accFieldApiName, accountFieldNewValue.get(accFieldApiName));
-
-                    accountsToUpdate.add(acc);
-                }
-
-        }
-
-    return accountsToUpdate;
-
-}
-
+ 
 //get Inspections from oscar
     public static void UpdateInspectionsFromOscar(List<AMS_OSCAR__c> oscars){
 
@@ -1597,6 +1507,132 @@ public static String fetchTypeOfCustomer (String locationType , String category)
 
     }
 
+    public static Date lastDayOfMonth(Date dateField) {
+        return dateField.addMonths(1).toStartOfMonth().addDays(-1);
+    }
+
+
+
+ //Map data from staging area (AMS Online Accreditation) to account
+    public static Map<Account,AMS_ChangeCodesHelper.ObjectChangesStruct> copyDataToAccountForAgencyChanges(AMS_OSCAR__c oscar, Set<Id> accountsAffected, String typesOfChange, Map<Id, Account> accounts, AMS_Pax_Accreditation_Form__c oscarOnlineAccreditation) {
+
+        System.debug('AGENCY CHANGES: Types of Change (' + typesOfChange + ') ');
+
+        Set<String> fieldsToMigrate = AMS_AgencyChangesConfigHelper.getFieldsToMigrate(typesOfChange);
+
+        System.debug('AGENCY CHANGES: fields to migrate (' + fieldsToMigrate + ') for accounts: ' + accountsAffected);
+
+        Map<Account,AMS_ChangeCodesHelper.ObjectChangesStruct> accountsToUpdate = new  Map<Account,AMS_ChangeCodesHelper.ObjectChangesStruct>();
+        
+
+        //DT: Reindented and added 3 fields for addresses
+        // Account Fields => AMS Pax Accreditation Fields (Staging area)
+        Map<String, String> fieldsMapping = new Map<String, String> {'Name' => 'Account_Name__c'
+                                                                    ,'IATACode__c' => 'IATACode__c'
+                                                                    ,'Short_Name__c' => 'Short_Name__c'
+                                                                    ,'TradeName__c' => 'Trade_Name__c'
+                                                                    ,'License_Number__c' => 'ISSP_AMS_License_No__c'
+                                                                    ,'VAT_Number__c' => 'ISSP_AMS_VAT_number__c'
+                                                                    ,'BillingStreet' => 'Branch_Office_Street_name_number__c'
+                                                                    ,'Website' => 'Website__c'
+                                                                    ,'BillingPostalCode' => 'Branch_Office_Postal_code__c'
+                                                                    //,'BillingState' => 'Billing_State__c'
+                                                                    ,'BillingCity' => 'Branch_Office_City__c'
+                                                                    ,'IATA_ISO_Country__c' => 'Branch_Office_Country__c'
+                                                                    ,'Iso_State__c' => 'IATA_ISO_State__c'
+                                                                    //,'ShippingCountry' => 'Shipping_Country__c'
+                                                                    ,'ShippingStreet' => 'Shipping_Street__c'
+                                                                    ,'ShippingPostalCode' => 'Shipping_Postal_Code__c'
+                                                                    //,'ShippingState' => 'Shipping_State__c'
+                                                                    ,'Email__c' => 'Branch_Office_Email__c'
+                                                                    ,'Phone' => 'Branch_Office_Phone__c'
+                                                                    ,'Fax' => 'Branch_Office_FAX__c'
+                                                                    ,'ShippingCity' => 'Shipping_City__c'
+                                                                    ,'Operation__c' => 'Operation__c'
+                                                                    ,'Abbreviated_name__c' => 'Abbreviated_name__c'
+                                                                    ,'Abbreviated_address__c' => 'Abbreviated_Address__c'
+                                                                    ,'Remittance_frequency__c' => 'Remittance_frequency__c'
+                                                                    ,'Solicitation_Flag__c' => 'Solicitation_Flag__c'
+                                                                    ,'VAT_Number_2__c' => 'VAT_Number_2__c'
+                                                                    ,'CASS_Number__c' => 'CASS_Number__c'
+                                                                    ,'Location_Class__c' => 'Location_Class__c'
+                                                                    ,'Location_Type__c' => 'Location_Type__c'
+                                                                    ,'Mobile__c' => 'Mobile__c'
+                                                                    ,'Is_your_firm_handling_Dangerous_Goods__c' => 'Is_your_firm_handling_Dangerous_Goods__c'
+                                                                    ,'IATA_ISO_Billing_State__c' => 'IATA_ISO_State__c'
+                                                                    ,'IATA_ISO_Shipping_Country__c' => 'Shipping_ISO_Country__c'
+                                                                    ,'IATA_ISO_Shipping_State__c' => 'Shipping_ISO_State__c'};
+
+        if (fieldsToMigrate != null && oscarOnlineAccreditation != null) {
+                Map<String, Object> accountFieldNewValue = new Map<String,Object>();
+
+                for (String key : fieldsMapping.keySet()) {
+                    String value = fieldsMapping.get(key);
+                    if (fieldsToMigrate.contains(value)) {
+                    
+                        accountFieldNewValue.put(key, oscarOnlineAccreditation.get(value));
+                        System.debug(key + ':' + oscarOnlineAccreditation.get(value));
+                    }
+                }
+
+                //fields that require transformation
+                if (fieldsToMigrate.contains('ISSP_AMS_Premises_located_at_airport__c'))
+                    accountFieldNewValue.put('In_a_Airport__c', (oscarOnlineAccreditation.ISSP_AMS_Premises_located_at_airport__c == 'Yes') ? true : false);
+                if (fieldsToMigrate.contains('ISSP_AMS_Legal_Status__c'))
+                    accountFieldNewValue.put('Company_Type__c', transformCompanyType(oscarOnlineAccreditation.ISSP_AMS_Legal_Status__c));
+                if (fieldsToMigrate.contains('ISSP_AMS_GDS_with_signed_contract__c'))
+                    accountFieldNewValue.put('GDS__c', transformGDS(oscarOnlineAccreditation.ISSP_AMS_GDS_with_signed_contract__c));
+                if (fieldsToMigrate.contains('Branch_Office_Country__c'))
+                    accountFieldNewValue.put('BillingCountry', oscarOnlineAccreditation.Branch_Office_Country__r.Name);
+                if (fieldsToMigrate.contains('Shipping_ISO_Country__c'))
+                    accountFieldNewValue.put('ShippingCountry', oscarOnlineAccreditation.Shipping_ISO_Country__r.Name);
+                if (fieldsToMigrate.contains('Shipping_ISO_State__c'))
+                    accountFieldNewValue.put('ShippingState', oscarOnlineAccreditation.Shipping_ISO_State__r.Name);
+                if (fieldsToMigrate.contains('IATA_ISO_State__c'))
+                    accountFieldNewValue.put('BillingState', oscarOnlineAccreditation.IATA_ISO_State__r.Name);
+                //if (fieldsToMigrate.contains('ISSP_AMS_Total_Ownership__c'))
+                    //AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(new List<AMS_Pax_Accreditation_Form__c>{onlineAcc}, accountsAffected);
+
+
+
+                for(Id accId: accountsAffected){
+
+                    List<AMS_ChangeCodesHelper.ObjectChange> objectChangesList = new List <AMS_ChangeCodesHelper.ObjectChange>();
+
+                    Account acc = accounts.get(accId);
+
+                    for(String accFieldApiName: accountFieldNewValue.keySet())
+                    {
+                        
+                        Schema.SObjectField field = Schema.SObjectType.Account.fields.getMap().get(accFieldApiName);
+                        Schema.DisplayType fldType = field.getDescribe().getType();
+                        
+                        system.debug('Field value to migrate to account: ' + accFieldApiName);
+                        system.debug('Field Type to migrate to account: ' + fldType);
+
+                     
+                        //Add Account Changes to be used when generating the Change Codes History Entities
+                           
+                        String oldValue = String.valueOf(acc.get(accFieldApiName));
+                        String newValue =  String.valueOf(accountFieldNewValue.get(accFieldApiName));
+                        
+                        if (oldValue != newValue)
+                            objectChangesList.add(new AMS_ChangeCodesHelper.ObjectChange('Account',accFieldApiName,oldValue,newValue));
+                            
+
+                        acc.put(accFieldApiName, accountFieldNewValue.get(accFieldApiName));
+                    }
+
+                    AMS_ChangeCodesHelper.ObjectChangesStruct acctChangesStruct = new AMS_ChangeCodesHelper.ObjectChangesStruct(objectChangesList);
+ 
+                    accountsToUpdate.put(acc,acctChangesStruct);
+                }
+
+        }
+
+    return accountsToUpdate;
+
+    }
 
 
 }
