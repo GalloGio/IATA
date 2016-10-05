@@ -4145,6 +4145,22 @@ The product will only appear on the Online Store when the date entered in this f
         <label>RCRM Products</label>
         <language>en_US</language>
     </listViews>
+    <listViews>
+        <fullName>samson</fullName>
+        <columns>PRODUCT2.NAME</columns>
+        <columns>SAP_Material_Number__c</columns>
+        <columns>Effective_From__c</columns>
+        <columns>Effective_To__c</columns>
+        <columns>SAP_Language_Code__c</columns>
+        <columns>Edition__c</columns>
+        <columns>Refinement_Language__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>CDS View</label>
+        <language>en_US</language>
+        <sharedTo>
+            <role>DirectSalesAssociateArea1</role>
+        </sharedTo>
+    </listViews>
     <recordTypeTrackHistory>false</recordTypeTrackHistory>
     <recordTypes>
         <fullName>GDP</fullName>
