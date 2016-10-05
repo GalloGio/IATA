@@ -554,19 +554,38 @@ public virtual class vfIECEBC_Controller {
 		objectId += (ebcPaymentCampaignOption == null) ? '' : ('-' + ebcPaymentCampaignOption); 
 		
 		String theToken = IECEBC_Utility.generatePaymentToken( objectId + ebcPaymentTarget);
-		
-		EBC_Order__c paymentBillingAccount = new EBC_Order__c( billing_Account__c= billingAccount.Id
-														, eBroadcast_Payment_Token__c = theToken
-														, eBroadcast_Payment_Target__c = ebcPaymentTarget
-														, eBroadcast_Payment_Subscription__c = subscriptionId
-														, eBroadcast_Payment_Product_Rate_Plan__c = productRatePlanId
-														, eBroadcast_Payment_Campaign__c = campaignId //null 
-														, eBroadcast_Payment_Campaign_Option__c = ebcPaymentCampaignOption // EBC_PAYMENT_CAMPAIGN_NONE
-														, eBroadcast_Payment_Email_Credit_Amount__c = creditAmount
-                                                        , Email_Credit__c=0
-                                                        , Status__c='Pending'
-														);
-		insert paymentBillingAccount;
+        
+        EBC_Order__c paymentBillingAccount;
+        
+        List<EBC_Order__c> BillingAccountOrders =new List<EBC_Order__c>();
+        
+        BillingAccountOrders = [Select Id
+                               	,eBroadcast_Payment_Token__c
+                                , eBroadcast_Payment_Target__c
+                                , eBroadcast_Payment_Subscription__c
+                                , eBroadcast_Payment_Product_Rate_Plan__c
+                                , eBroadcast_Payment_Campaign__c
+                                , eBroadcast_Payment_Campaign_Option__c
+                                , eBroadcast_Payment_Email_Credit_Amount__c
+                                , Email_Credit__c
+                               From EBC_Order__c
+                               Where billing_Account__c=: billingAccount.Id
+                               and Status__c='Pending'
+                               Limit 1];
+        if (BillingAccountOrders.Size()>0) paymentBillingAccount =BillingAccountOrders[0];		
+		if (BillingAccountOrders.Size()==0) paymentBillingAccount = new EBC_Order__c(billing_Account__c= billingAccount.Id); 
+        
+		paymentBillingAccount.eBroadcast_Payment_Token__c = theToken;
+		paymentBillingAccount.eBroadcast_Payment_Target__c = ebcPaymentTarget;
+		paymentBillingAccount.eBroadcast_Payment_Subscription__c = subscriptionId;
+        paymentBillingAccount.eBroadcast_Payment_Product_Rate_Plan__c = productRatePlanId;
+        paymentBillingAccount.eBroadcast_Payment_Campaign__c = campaignId; //null 
+        paymentBillingAccount.eBroadcast_Payment_Campaign_Option__c = ebcPaymentCampaignOption; // EBC_PAYMENT_CAMPAIGN_NONE
+        paymentBillingAccount.eBroadcast_Payment_Email_Credit_Amount__c = creditAmount;
+        paymentBillingAccount.Email_Credit__c=0;
+        paymentBillingAccount.Status__c='Pending';
+														
+		upsert paymentBillingAccount;
 		
 		PageReference paymentPage = paymentPageBase;  
 		paymentPage.getParameters().put( EBC_PAYMENT_PARAM_PAYMENT_TOKEN, theToken);

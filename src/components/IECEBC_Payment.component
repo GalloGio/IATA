@@ -87,32 +87,24 @@
                                         <tr>
                                             <th>Contact name</th>
                                             <td>
-                                                <apex:outputField rendered="{!!editMode}" value="{!billingAccount.Contact__r.Name}">
-                                                </apex:outputField>
-                                                <apex:inputField rendered="{!editMode}" value="{!oPaymentBillingContact.FirstName}" styleClass="user-input text">
-                                                </apex:inputField>
-                                                <apex:inputField rendered="{!editMode}" value="{!oPaymentBillingContact.LastName}" styleClass="user-input text">
-                                                </apex:inputField>
+                                                <apex:outputField rendered="{!!editMode}" value="{!billingAccount.Contact__r.Name}" />                                               
+                                        		<apex:inputField rendered="{!editMode}" value="{!oPaymentBillingContact.FirstName}" styleClass="user-input text" />                                                
+                                                <apex:inputField rendered="{!editMode}" value="{!oPaymentBillingContact.LastName}" styleClass="user-input text"/>
                                             </td>
                                         </tr>
                                         <tr>
                                             <th>Job Title</th>
                                             <td>
-                                                <apex:outputText rendered="{!!editMode}" value="{!billingAccount.Contact__r.Title}">
-                                                </apex:outputText>
-                                                <apex:inputText rendered="{!editMode}" value="{!oPaymentBillingContact.Title}" styleClass="user-input text">
-                                                </apex:inputText>
+                                                <apex:outputText rendered="{!!editMode}" value="{!billingAccount.Contact__r.Title}" />                                           
+                                                <apex:inputText rendered="{!editMode}" value="{!oPaymentBillingContact.Title}" styleClass="user-input text" />
                                                 <!-- <input type="type" class="user-input text" value="Lorem ipsum dolor"> -->
                                             </td>
                                         </tr>
                                         <tr>
                                             <th>Company/Organization</th>
                                             <td>
-                                                <apex:outputText value="{!billingAccount.Name}" styleClass="{!IF(editMode,'disabled-user-input text','')}">
-                                                </apex:outputText>
-                                                
-                                                
-                                                <!-- <input type="type" class="user-input text" value="IATA Travel Agencies"> -->
+                                                <apex:outputText value="{!billingAccount.Name}" styleClass="{!IF(editMode,'disabled-user-input text','')}" />
+                                                 <!-- <input type="type" class="user-input text" value="IATA Travel Agencies"> -->
                                             </td>
                                         </tr>
                                         <tr>
@@ -131,24 +123,23 @@
                                                     <div class="field-group text inline">
                                                         <label>
                                                             <span class="input-label">Street</span>
-                                                            <apex:inputField value="{!oBillingAddress.Street__c}" styleClass="user-input text" >
-                                                            </apex:inputField>
+                                                            <apex:inputField value="{!oBillingAddress.Street__c}" styleClass="user-input text" />
                                                         </label>
                                                     </div>
                                                     
                                                     <div class="field-group text inline">
                                                         <label>
                                                             <span class="input-label">Postal code</span>
-                                                            <apex:inputField value="{!oBillingAddress.ZipCode__c}" styleClass="user-input text">
-                                                            </apex:inputField>
+                                                            <apex:inputField value="{!oBillingAddress.ZipCode__c}" styleClass="user-input text" />
+                                                            
                                                         </label>
                                                     </div>
                                                     
                                                     <div class="field-group text inline">
                                                         <label>
                                                             <span class="input-label">City</span>
-                                                            <apex:inputField value="{!oBillingAddress.City__c}" styleClass="user-input text">
-                                                            </apex:inputField>
+                                                            <apex:inputField value="{!oBillingAddress.City__c}" styleClass="user-input text"/>
+                                                            
                                                         </label>
                                                     </div>
                                                     
@@ -318,10 +309,18 @@
 														<div class="field-group radio">
 															<div class="radio-box">
 																<div class="custom-user-input radio">
-																	<input class="user-input radio" type="radio" name="pay-by2-card-type" 
-																			id="pay-by-credit-card2-saved-card-1-{!cc.zId}" checked="{!cc.zId==selectedCreditCardPaymentId}"
+                                                                    <apex:outputText rendered="{!cc.zId!=selectedCreditCardPaymentId}">
+                                                                        <input class="user-input radio" type="radio" name="pay-by2-card-type" 
+																			id="pay-by-credit-card2-saved-card-1-{!cc.zId}" 
 																			onClick="selectPaymentMethod('CREDIT_CARD', '{!cc.zId}');"
 																		/>
+                                                                    </apex:outputText>
+                                                                    <apex:outputText rendered="{!cc.zId==selectedCreditCardPaymentId}">
+                                                                        <input class="user-input radio" type="radio" name="pay-by2-card-type" 
+																			id="pay-by-credit-card2-saved-card-1-{!cc.zId}" checked="true"
+																			onClick="selectPaymentMethod('CREDIT_CARD', '{!cc.zId}');"                                                                           
+																		/>
+                                                                    </apex:outputText>
 																	<label class="custom-radio" for="pay-by-credit-card2-saved-card-1-{!cc.zId}"><i class="icon"></i></label>
 																</div>
 																<label class="input-label" for="pay-by-credit-card2-saved-card-1-{!cc.zId}">
@@ -329,7 +328,7 @@
 																	<span class="card-image">
 																		<img src="{!URLFOR($Resource.EcommerceAssets, ccLogo)}" alt="{!cc.creditCardType}"/>
 																	</span>
-																	<span class="card-name">
+																	<span class="card-name">                                                                   
 																		<strong>{!cc.creditCardType}</strong>
 																		<span class="ending-number">{!cc.creditCardMaskNumber}</span>
 																	</span>

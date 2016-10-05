@@ -28,7 +28,14 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
     
 	// ======================================================================== 
 	// incoming component parameters are set directly by the caller
-	public String paymentToken {get;set;}
+	public Static String paymentToken {
+        get
+        {
+             if (paymentToken==null) paymentToken=apexPages.CurrentPage().getParameters().Get('paymentToken');
+            return paymentToken;
+        }
+        set;
+    }
 	
 	// input passed from the caller using billingAccount fields
 	private String paymentTarget {get;set;}
@@ -86,7 +93,10 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
 		rereadBillingAccount(); // refetch BillingAccount, to get updated eBroadcast_Payment related fields
 		getAddressDetail(); // get oBillingLocation, oBillingAddress, oOriginalBillingAddress 
         
-        
+        if (oBillingAddress.ISO_Country__c==null) editMode=true;
+        if (oBillingAddress.ISO_Country__c!=null) {
+            if (lstStateProvince!=null && oBillingAddress.ISO_State__c==null) editMode=true;
+        }
 		
 		paymentTarget = billingAccountOrder.eBroadcast_Payment_Target__c;
 		campaignPaymentOption = billingAccountOrder.eBroadcast_Payment_Campaign_Option__c;
@@ -100,11 +110,12 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
 		emailCreditPurchased = Integer.valueOf(billingAccountOrder.eBroadcast_Payment_Email_Credit_Amount__c);
 		ebcCampaignId = billingAccountOrder.eBroadcast_Payment_Campaign__c;
 	} // end of initialization
-    public EBC_Order__c billingAccountOrder {
+    public  EBC_Order__c billingAccountOrder {
         get {
-            paymentToken=apexPages.CurrentPage().getParameters().Get( EBC_PAYMENT_PARAM_PAYMENT_TOKEN);
-            System.Debug('paymentToken >>>'+paymentToken);
+            
             if (billingAccountOrder==null){
+               
+                System.Debug('paymentToken >>>'+paymentToken);
                 List<EBC_Order__c> listorder = new List<EBC_Order__c>();
                 listorder = [Select Id
                               ,eBroadcast_Payment_Target__c
@@ -364,7 +375,9 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
 
 				if (loggedCustomer.PaymentMethods != null && loggedCustomer.PaymentMethods.size() > 0) {
 					paymentMethods = IECZuoraHelper.convertFromzObjectListToPaymentMethod(loggedCustomer.PaymentMethods);
+                    if (selectedCreditCardPaymentId==null && paymentMethods.Size()>0) selectedCreditCardPaymentId=paymentMethods[0].zId;
 				}
+                
 			}
 			return paymentMethods;
 			
@@ -1194,6 +1207,19 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
 						Zuora.zObject ratePlan = new Zuora.zObject('RatePlan');
 						ratePlan.setValue('ProductRatePlanId', CartItem.prpcId);						
 						ratePlanData.setValue('RatePlan', ratePlan);
+                        if (UseCasePricing!=4 ) {
+                            //if (cartItem.ZModel == IECConstants.ChargeModel_Zuora_PerUnitPricing) {
+                            Zuora.zObject oRatePlanChargeData = new Zuora.zObject('RatePlanChargeData');
+                            Zuora.zObject oRatePlanCharge = new Zuora.zObject('RatePlanCharge');
+                            oRatePlanCharge.setValue('Name', CartItem.name );
+                            oRatePlanCharge.setValue('ProductRatePlanChargeId', CartItem.ZChargeId );
+                            oRatePlanCharge.setValue('Quantity', CartItem.numberOfEmails);
+                            oRatePlanCharge.setValue('Price', CartItem.unitPrice);
+                            
+                            oRatePlanChargeData.setValue('RatePlanCharge', oRatePlanCharge);
+                            
+                            ratePlanData.setValue('RatePlanChargeData', new List<Zuora.zObject>{oRatePlanChargeData});
+                        }
                         listRatePlanData.add(ratePlanData);
                         FirstPass=true;
 						//if (oRatePlanChargeData != null)
@@ -1399,7 +1425,7 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
                         , cartItem.ZChargeId    */
             uiUpgradableRatePlan = cartItem.prpcId;
             System.debug('uiUpgradableRatePlan before >>>'+uiUpgradableRatePlan);
-            if (UseCasePricing==1) uiUpgradableRatePlan = cartItem.ZChargeId;
+            //if (UseCasePricing==1) uiUpgradableRatePlan = cartItem.ZChargeId;
             
             
     
