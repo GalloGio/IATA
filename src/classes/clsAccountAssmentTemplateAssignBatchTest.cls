@@ -24,7 +24,7 @@ private class clsAccountAssmentTemplateAssignBatchTest {
 
     static testMethod void myUnitTest() {
         // TO DO: implement unit test
-        List<RecordType> accountRecordTypes = [Select r.Id, r.Name From RecordType r Where r.SobjectType  = 'Account' and r.Name = 'IATA Standard Account'];
+        List<RecordType> accountRecordTypes = [Select r.Id, r.Name From RecordType r Where r.SobjectType  = 'Account' and r.Name = 'Standard Account'];
         Account theAccount = new Account();
 		theAccount.RecordTypeId = accountRecordTypes.get(0).Id;
 		theAccount.Name = 'UnitTest Account';
