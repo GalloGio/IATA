@@ -95,7 +95,7 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
         
         if (oBillingAddress.ISO_Country__c==null) editMode=true;
         if (oBillingAddress.ISO_Country__c!=null) {
-            if (lstStateProvince!=null && oBillingAddress.ISO_State__c==null) editMode=true;
+            if (lstStateProvince.Size()>1  && oBillingAddress.ISO_State__c==null) editMode=true;
         }
 		
 		paymentTarget = billingAccountOrder.eBroadcast_Payment_Target__c;
@@ -235,6 +235,9 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
 		
 		editMode = false;
         showTaxButtons=true;
+        if (oBillingAddress.ISO_Country__c!=null) {
+            if (lstStateProvince.Size()>1  && oBillingAddress.ISO_State__c!=null) CalculateTaxNow();
+        }
 	} // clickUpdateBillingContactButton
     
 	public void clickCancelBillingDetailButton()
@@ -1405,6 +1408,7 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
     public PageReference CalculateTaxNow(){
         TaxAmount=getSAP_Freight_Tax();
         showTaxButtons=false;
+        if (TaxAmount==-1) {showTaxButtons=true; TaxAmount=0;}
         return null;
     }
     public decimal getSAP_Freight_Tax() {
@@ -1426,9 +1430,7 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
             uiUpgradableRatePlan = cartItem.prpcId;
             System.debug('uiUpgradableRatePlan before >>>'+uiUpgradableRatePlan);
             //if (UseCasePricing==1) uiUpgradableRatePlan = cartItem.ZChargeId;
-            
-            
-    
+ 
         }
         System.debug('uiUpgradableRatePlan after>>>'+uiUpgradableRatePlan);
         Try{
@@ -1471,8 +1473,8 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
                                                                          , loggedCustomer.RelatedContact.ShipTo_Location__r.SAP_Id__c
                                                                          , new List<OrderItem_DTO> {dtoOrderItem});
                     
-                    if (result != null)
-                       system.debug('Callout SAP Result >>>: ' + result);
+                    System.debug('Callout SAP Result >>>: ' + result);
+                    if (result != null) return -1;
                 }
                 else
                 {
@@ -1486,7 +1488,7 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
            
         } catch (Exception e) {
           system.debug('Issue >>>' + e.getMessage());
-          return null;
+          return -1;
         } //*** end of call out
         return TotalTax;
     } //*** end of "getSAP_Freight_Tax"

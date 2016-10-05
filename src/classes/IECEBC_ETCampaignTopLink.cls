@@ -87,7 +87,9 @@ public class IECEBC_ETCampaignTopLink {
                 
                 //String eventDate = ListMap.get('EventDate');
                 String URL = ListMap.get('URL');
-                if (URL.toLowerCase().startsWith(IECEBC_Utility.ebcSetup.E_Commerce_Base_Url__c.toLowerCase() + '/iecebc_optout'))  continue; // Do not track the unsubscribe link
+                if (URL.toLowerCase().startsWith(IECEBC_Utility.ebcSetup.E_Commerce_Base_Url__c.toLowerCase() + '/iecebc_optout')) {
+                    URL = 'Unsubscribe';
+                }
                 String campaign = subKeyMatcher.group(1);
                 //String email = subKeyMatcher.group(2);                     
                 
