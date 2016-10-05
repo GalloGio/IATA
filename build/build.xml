@@ -234,7 +234,7 @@
 
      <echo level="info">moving files</echo>
       
-      <for list="${SharingRulesPacakge.listfolders}" param="param" delimiter=",">
+      <for list="${SharingRulesPackage.listfolders}" param="param" delimiter=",">
         <sequential>
           <move todir="${basedir}/Code/@{param}">
             <fileset dir="${basedir}/src/@{param}">
@@ -243,7 +243,7 @@
        </sequential>
      </for>
 
- <move file="${basedir}/src/SharingRulesPacakge.xml" tofile="${basedir}/Code/package.xml"/>  
+ <move file="${basedir}/src/SharingRulesPackage.xml" tofile="${basedir}/Code/package.xml"/>  
 
       
       <antcallback target="deployCodeLocal" />
@@ -497,16 +497,16 @@
 
 
     <target name="getSharing">
-      <echo level="info">Retrieving the server's version of OBJECTs </echo>
+      <echo level="info">Retrieving the server's version of Sharing </echo>
       <mkdir dir="${basedir}/${sfdc.retrieveTarget}"/>
       <sf:retrieve
         retrieveTarget="${basedir}/${sfdc.retrieveTarget}"
         username="${sfdc.username}"
         password="${sfdc.password}"
         serverurl="${sfdc.serverurl}"
-        unpackaged="src/SharingRulesPacakge.xml" />
+        unpackaged="src/SharingRulesPackage.xml" />
 
-      <move file="${basedir}/${sfdc.retrieveTarget}/package.xml" tofile="src/SharingRulesPacakge.xml" />  
+      <move file="${basedir}/${sfdc.retrieveTarget}/package.xml" tofile="src/SharingRulesPackage.xml" />  
 
 
 
