@@ -79,9 +79,12 @@ public without sharing class IECUserManager {
         
         boolean firstLogin = false;
           
-        list<User> users = [Select Id, ContactId, Username, LastLoginDate, uid__C from user where( username =:suserName or email =: suserName) and userType = 'PowerPartner' and LastLoginDate = null ];    
-        IF( (users <> null && users.size()>0)) {
+        list<User> users = [Select Id, Username, LastLoginDate, uid__C from user where( username =:suserName or email =: suserName) and userType = 'PowerPartner' and LastLoginDate = null ];    
+        IF( (users <> null && users.size()>0))
+
             firstLogin = true;
+            
+           /* 
             //EM: If first login assign IEC Portal Status
             User us = users[0];
             Contact con = [select User_IECPortal_Status__c, accountid from contact where id =:us.contactid];
@@ -93,7 +96,8 @@ public without sharing class IECUserManager {
                 	database.update(con,false);
             	}
             
-        }
+        } 
+        */
         //firstLogin = users[0].uid__C <> null ? true: false;
          
             //sReturnUrl = firstLogin ?  Site.getBaseUrl()+ '/IECChangePassword' :sReturnUrl ;
