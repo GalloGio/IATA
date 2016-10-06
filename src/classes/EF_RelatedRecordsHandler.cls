@@ -44,18 +44,19 @@ public with sharing class EF_RelatedRecordsHandler
 	{
 		String currentTime = System.now().format('dd MMM yyyy HH:mm ');
 		String currentUser = UserInfo.getName();
-		String comments = 'Set '+rr.Name + ' to ';
+		String comments = 'Set '+rr.Name + ' to: ';
 		if(rr.Case__c != null)
-			comments = comments + ' Case: ' + rr.Case_Name__c + ' ';
+			comments = comments + ' [Case: ' + rr.Case_Name__c + '] ';
 		if(rr.Contact__c != null)
-			comments = comments + 'Contact: ' + rr.Contact_Name__c + ' ';
+			comments = comments + ' [Contact: ' + rr.Contact_Name__c + '] ';
 	
 		String commentsHistory = (String) recordToUpdate.get('EF_History__c');
 		if(commentsHistory == null)
 			commentsHistory = '';
 		
-		commentsHistory = commentsHistory.trim();
-		commentsHistory = commentsHistory + '\n' + currentTime + ' by ' + currentUser + ': ' + comments.trim();
+		String oldHistory = commentsHistory;
+		commentsHistory = currentTime + ' by ' + currentUser + ': ' + comments.trim() + '\n';
+		commentsHistory = commentsHistory + oldHistory.trim();
 		recordToUpdate.put('EF_History__c', commentsHistory);
 		return recordToUpdate;
 	}

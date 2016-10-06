@@ -19,6 +19,10 @@
                 <behavior>Required</behavior>
                 <field>Contract__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>EF_Comments__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -45,10 +49,6 @@
             <layoutItems>
                 <behavior>Required</behavior>
                 <field>Data_Currency__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>EF_Comments__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -168,6 +168,22 @@
         </layoutColumns>
         <style>OneColumn</style>
     </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>false</editHeading>
+        <label>Comment History &amp; Linked Relationships</label>
+        <layoutColumns>
+            <layoutItems>
+                <height>100</height>
+                <page>EF_BaHistoryPage</page>
+                <showLabel>false</showLabel>
+                <showScrollbars>true</showScrollbars>
+                <width>100%</width>
+            </layoutItems>
+        </layoutColumns>
+        <style>OneColumn</style>
+    </layoutSections>
     <relatedLists>
         <customButtons>Edit_All</customButtons>
         <fields>NAME</fields>
@@ -226,6 +242,9 @@
         <fields>Case__c</fields>
         <fields>Contact__c</fields>
         <relatedList>EF_Related_Records__c.EF_Billing_Agreement__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <relatedList>RelatedEntityHistoryList</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>

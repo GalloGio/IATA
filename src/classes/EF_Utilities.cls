@@ -13,10 +13,13 @@ public with sharing class EF_Utilities
 				String currentUser = UserInfo.getName();
 				String comments = (String) o.get('EF_Comments__c');
 				String commentsHistory = (String) o.get('EF_History__c');
+				String oldHistory = '';
 				if(commentsHistory == null)
 					commentsHistory = '';
-				commentsHistory = commentsHistory.trim();
-				commentsHistory = commentsHistory + '\n' + currentTime + ' by ' + currentUser + ': ' + comments.trim();
+				oldHistory = commentsHistory;
+				commentsHistory = currentTime + ' by ' + currentUser + ': ' + comments.trim() + '\n';
+				commentsHistory = commentsHistory + oldHistory.trim();
+				
 				o.put('EF_History__c', commentsHistory);
 				o.put('EF_Comments__c', '');
 			}
