@@ -12,7 +12,6 @@
         <field>EF_Location_ID__c</field>
         <field>EF_Status__c</field>
         <field>Payment_Method__c</field>
-        <field>Payment_Terms__c</field>
     </approvalPageFields>
     <approvalStep>
         <allowDelegate>false</allowDelegate>
