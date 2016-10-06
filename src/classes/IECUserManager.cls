@@ -81,8 +81,10 @@ public without sharing class IECUserManager {
           
         list<User> users = [Select Id, Username, LastLoginDate, uid__C from user where( username =:suserName or email =: suserName) and userType = 'PowerPartner' and LastLoginDate = null ];    
         IF( (users <> null && users.size()>0))
-/*
+
             firstLogin = true;
+            
+           /* 
             //EM: If first login assign IEC Portal Status
             User us = users[0];
             Contact con = [select User_IECPortal_Status__c, accountid from contact where id =:us.contactid];
