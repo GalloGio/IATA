@@ -34,6 +34,7 @@ private class clsAccountAssmentTemplateAssignBatchTest {
 		theAccount.BillingCity = 'Montreal';
 		theAccount.BillingCountry = 'Canada';
 		theAccount.BillingPostalCode = 'H0H 0H0';
+		theAccount.Reason_for_creation__c = 'apex test';
 	
 		insert theAccount;       
         test.startTest();
