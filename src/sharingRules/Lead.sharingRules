@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sharingOwnerRules>
+        <fullName>CorporateCommunications</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>Corporate Communications</label>
+        <sharedTo>
+            <group>CorporateCommunications</group>
+        </sharedTo>
+        <sharedFrom>
+            <group>CorporateCommunications</group>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>IDFSAllusersincludingACCA</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>IDFS All users including ACCA</label>
+        <sharedTo>
+            <group>IDFSAllusersincludingACCA</group>
+        </sharedTo>
+        <sharedFrom>
+            <group>IDFSAllusersincludingACCA</group>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>MACSAllIATACommercial</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>MACS All - IATA Commercial</label>
+        <sharedTo>
+            <group>MACSAllIATACommercial</group>
+        </sharedTo>
+        <sharedFrom>
+            <group>MACSAllIATACommercial</group>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>MACSAllIATACommercial253331</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>MACS All - IATA Commercial</label>
+        <sharedTo>
+            <group>MACSAllIATACommercial</group>
+        </sharedTo>
+        <sharedFrom>
+            <queue>SalesAll</queue>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>MACSAllIATACommercial253332</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>MACS All - IATA Commercial</label>
+        <sharedTo>
+            <group>MACSAllIATACommercial</group>
+        </sharedTo>
+        <sharedFrom>
+            <queue>PAXISLeads</queue>
+        </sharedFrom>
+    </sharingOwnerRules>
+</SharingRules>

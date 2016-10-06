@@ -1,0 +1,600 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sharingCriteriaRules>
+        <fullName>Account_Management_team</fullName>
+        <accessLevel>Edit</accessLevel>
+        <accountSettings>
+            <caseAccessLevel>Read</caseAccessLevel>
+            <contactAccessLevel>Edit</contactAccessLevel>
+            <opportunityAccessLevel>Read</opportunityAccessLevel>
+        </accountSettings>
+        <description>Benoit&apos;s team on the account management project</description>
+        <label>Account Management team</label>
+        <sharedTo>
+            <group>Account_management_team</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>Membership_status__c</field>
+            <operation>equals</operation>
+            <value>IATA member</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>Account_Sharing_Rule_with_the_role_Corporate_Compliance</fullName>
+        <accessLevel>Edit</accessLevel>
+        <accountSettings>
+            <caseAccessLevel>None</caseAccessLevel>
+            <contactAccessLevel>None</contactAccessLevel>
+            <opportunityAccessLevel>None</opportunityAccessLevel>
+        </accountSettings>
+        <label>Account Sharing Rule with the role Corporate Compliance</label>
+        <sharedTo>
+            <role>Corporate_Compliance</role>
+        </sharedTo>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Standard Account,Others,General Sales Agent Headquarters,Agency,Airline Headquarters</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Category__c</field>
+            <operation>notEqual</operation>
+            <value>MSO Member Sales Office</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>Agency_RT_in_RW_mode_for_IDFS</fullName>
+        <accessLevel>Edit</accessLevel>
+        <accountSettings>
+            <caseAccessLevel>Edit</caseAccessLevel>
+            <contactAccessLevel>Edit</contactAccessLevel>
+            <opportunityAccessLevel>None</opportunityAccessLevel>
+        </accountSettings>
+        <description>Grant R/W access to all Agency RT accounts to IDFS, in order to be able to add Financial Securities</description>
+        <label>Agency RT in RW mode for IDFS</label>
+        <sharedTo>
+            <group>IDFS_excl_GDP</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Agency</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Merged_Account__c</field>
+            <operation>notEqual</operation>
+            <value>Merged</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Category__c</field>
+            <operation>notEqual</operation>
+            <value>MSO Member Sales Office</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>Airline_Accounts</fullName>
+        <accessLevel>Edit</accessLevel>
+        <accountSettings>
+            <caseAccessLevel>Edit</caseAccessLevel>
+            <contactAccessLevel>Edit</contactAccessLevel>
+            <opportunityAccessLevel>Read</opportunityAccessLevel>
+        </accountSettings>
+        <label>Airline Accounts</label>
+        <sharedTo>
+            <roleAndSubordinatesInternal>VPIDFS</roleAndSubordinatesInternal>
+        </sharedTo>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Airline Branch,Airline Headquarters,General Sales Agent Headquarters</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>Airline_Branch_to_AP_Team</fullName>
+        <accessLevel>Edit</accessLevel>
+        <accountSettings>
+            <caseAccessLevel>Edit</caseAccessLevel>
+            <contactAccessLevel>Edit</contactAccessLevel>
+            <opportunityAccessLevel>None</opportunityAccessLevel>
+        </accountSettings>
+        <description>Share and grant r/w access to the airline BR accounts to the AP Team</description>
+        <label>Airline Branch to AP Team</label>
+        <sharedTo>
+            <group>AP_Team</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>General Sales Agent Headquarters,Airline Branch</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Merged_Account__c</field>
+            <operation>notEqual</operation>
+            <value>Merged</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>E_F</fullName>
+        <accessLevel>Edit</accessLevel>
+        <accountSettings>
+            <caseAccessLevel>None</caseAccessLevel>
+            <contactAccessLevel>None</contactAccessLevel>
+            <opportunityAccessLevel>None</opportunityAccessLevel>
+        </accountSettings>
+        <label>E&amp;F</label>
+        <sharedTo>
+            <role>E_F</role>
+        </sharedTo>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Others</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>GDP_READ_ONLY</fullName>
+        <accessLevel>Read</accessLevel>
+        <accountSettings>
+            <caseAccessLevel>Edit</caseAccessLevel>
+            <contactAccessLevel>Edit</contactAccessLevel>
+            <opportunityAccessLevel>Edit</opportunityAccessLevel>
+        </accountSettings>
+        <label>GDP READ ONLY</label>
+        <sharedTo>
+            <roleAndSubordinatesInternal>GDP</roleAndSubordinatesInternal>
+        </sharedTo>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>General Sales Agent Headquarters,Airline Branch,Airline Headquarters,Agency</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>GDP_READ_WRITE</fullName>
+        <accessLevel>Edit</accessLevel>
+        <accountSettings>
+            <caseAccessLevel>Edit</caseAccessLevel>
+            <contactAccessLevel>Edit</contactAccessLevel>
+            <opportunityAccessLevel>Edit</opportunityAccessLevel>
+        </accountSettings>
+        <label>GDP READ WRITE</label>
+        <sharedTo>
+            <roleAndSubordinates>GDP</roleAndSubordinates>
+        </sharedTo>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Standard Account,Others</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Merged_Account__c</field>
+            <operation>notEqual</operation>
+            <value>Merged</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>GDP_extra_RW_Access</fullName>
+        <accessLevel>Edit</accessLevel>
+        <accountSettings>
+            <caseAccessLevel>None</caseAccessLevel>
+            <contactAccessLevel>Edit</contactAccessLevel>
+            <opportunityAccessLevel>Read</opportunityAccessLevel>
+        </accountSettings>
+        <description>RW access to record types, in addition to those granted through the IDFS sharing rules (GDP is part of IDFS)</description>
+        <label>GDP extra RW Access</label>
+        <sharedTo>
+            <roleAndSubordinatesInternal>GDP</roleAndSubordinatesInternal>
+        </sharedTo>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>GDP Account,Agency</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Merged_Account__c</field>
+            <operation>notEqual</operation>
+            <value>Merged</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>ICCS_Administrator</fullName>
+        <accessLevel>Edit</accessLevel>
+        <accountSettings>
+            <caseAccessLevel>Edit</caseAccessLevel>
+            <contactAccessLevel>Edit</contactAccessLevel>
+            <opportunityAccessLevel>None</opportunityAccessLevel>
+        </accountSettings>
+        <label>ICCS Administrator</label>
+        <sharedTo>
+            <group>ICCS_Administrator</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Airline Headquarters</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>IDCardReadOnly</fullName>
+        <accessLevel>Read</accessLevel>
+        <accountSettings>
+            <caseAccessLevel>Read</caseAccessLevel>
+            <contactAccessLevel>Read</contactAccessLevel>
+            <opportunityAccessLevel>None</opportunityAccessLevel>
+        </accountSettings>
+        <label>IDCardReadOnly</label>
+        <sharedTo>
+            <group>IDCard_ReadOnly</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Agency</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>AIMS_ID__c</field>
+            <operation>notEqual</operation>
+            <value>null</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Category__c</field>
+            <operation>notEqual</operation>
+            <value>MSO Member Sales Office</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>IDCardStandard</fullName>
+        <accessLevel>Edit</accessLevel>
+        <accountSettings>
+            <caseAccessLevel>Edit</caseAccessLevel>
+            <contactAccessLevel>Edit</contactAccessLevel>
+            <opportunityAccessLevel>None</opportunityAccessLevel>
+        </accountSettings>
+        <label>IDCardStandard</label>
+        <sharedTo>
+            <group>IDCard_Standard</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Agency</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>AIMS_ID__c</field>
+            <operation>notEqual</operation>
+            <value>null</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Category__c</field>
+            <operation>notEqual</operation>
+            <value>MSO Member Sales Office</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>IDCard_Site_user</fullName>
+        <accessLevel>Read</accessLevel>
+        <accountSettings>
+            <caseAccessLevel>None</caseAccessLevel>
+            <contactAccessLevel>Edit</contactAccessLevel>
+            <opportunityAccessLevel>None</opportunityAccessLevel>
+        </accountSettings>
+        <label>IDCard Site user</label>
+        <sharedTo>
+            <group>ID_Card_portal_user_group</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Agency</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>IW_external_read_only_access</fullName>
+        <accessLevel>Read</accessLevel>
+        <accountSettings>
+            <caseAccessLevel>None</caseAccessLevel>
+            <contactAccessLevel>Edit</contactAccessLevel>
+            <opportunityAccessLevel>None</opportunityAccessLevel>
+        </accountSettings>
+        <description>Read-only access to the accounts on which the &quot;Invoice Works Account&quot; checkbox is checked (for internal + external)</description>
+        <label>IW external read-only access</label>
+        <sharedTo>
+            <roleAndSubordinatesInternal>IATAInvoiceWorks</roleAndSubordinatesInternal>
+        </sharedTo>
+        <criteriaItems>
+            <field>InvoiceWorks_Account__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Merged_Account__c</field>
+            <operation>notEqual</operation>
+            <value>Merged</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>IW_internal_access</fullName>
+        <accessLevel>Read</accessLevel>
+        <accountSettings>
+            <caseAccessLevel>None</caseAccessLevel>
+            <contactAccessLevel>Read</contactAccessLevel>
+            <opportunityAccessLevel>None</opportunityAccessLevel>
+        </accountSettings>
+        <description>Read-only access to all accounts for internal IW users</description>
+        <label>IW internal access</label>
+        <sharedTo>
+            <role>IATAInvoiceWorks</role>
+        </sharedTo>
+        <criteriaItems>
+            <field>Merged_Account__c</field>
+            <operation>notEqual</operation>
+            <value>Merged</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>MACS_New_RT_Read_Only</fullName>
+        <accessLevel>Read</accessLevel>
+        <accountSettings>
+            <caseAccessLevel>Edit</caseAccessLevel>
+            <contactAccessLevel>Edit</contactAccessLevel>
+            <opportunityAccessLevel>Edit</opportunityAccessLevel>
+        </accountSettings>
+        <label>MACS New RT Read-Only</label>
+        <sharedTo>
+            <roleAndSubordinatesInternal>VPMACS</roleAndSubordinatesInternal>
+        </sharedTo>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Standard Account,Others,General Sales Agent Headquarters,Airline Branch,Agency,Airline Headquarters</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Merged_Account__c</field>
+            <operation>notEqual</operation>
+            <value>Merged</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Category__c</field>
+            <operation>notEqual</operation>
+            <value>MSO Member Sales Office</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>MACS_Old_RT_R_W</fullName>
+        <accessLevel>Edit</accessLevel>
+        <accountSettings>
+            <caseAccessLevel>Edit</caseAccessLevel>
+            <contactAccessLevel>Edit</contactAccessLevel>
+            <opportunityAccessLevel>Edit</opportunityAccessLevel>
+        </accountSettings>
+        <label>MACS Old RT R/W</label>
+        <sharedTo>
+            <roleAndSubordinatesInternal>VPMACS</roleAndSubordinatesInternal>
+        </sharedTo>
+        <criteriaItems>
+            <field>Merged_Account__c</field>
+            <operation>notEqual</operation>
+            <value>Merged</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>MER_Membership</fullName>
+        <accessLevel>Edit</accessLevel>
+        <accountSettings>
+            <caseAccessLevel>None</caseAccessLevel>
+            <contactAccessLevel>None</contactAccessLevel>
+            <opportunityAccessLevel>None</opportunityAccessLevel>
+        </accountSettings>
+        <label>MER Membership</label>
+        <sharedTo>
+            <group>MER_Membership</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Airline Headquarters</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Merged_Account__c</field>
+            <operation>notEqual</operation>
+            <value>Merged</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>MSO_privacy</fullName>
+        <accessLevel>Edit</accessLevel>
+        <accountSettings>
+            <caseAccessLevel>Edit</caseAccessLevel>
+            <contactAccessLevel>Edit</contactAccessLevel>
+            <opportunityAccessLevel>Edit</opportunityAccessLevel>
+        </accountSettings>
+        <description>If category is MSO, agency management managers should have read/write access</description>
+        <label>MSO privacy</label>
+        <sharedTo>
+            <group>Agency_management_managers</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>Category__c</field>
+            <operation>equals</operation>
+            <value>MSO Member Sales Office</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>Other_Roles_under_Director_General</fullName>
+        <accessLevel>Edit</accessLevel>
+        <accountSettings>
+            <caseAccessLevel>Edit</caseAccessLevel>
+            <contactAccessLevel>Edit</contactAccessLevel>
+            <opportunityAccessLevel>None</opportunityAccessLevel>
+        </accountSettings>
+        <description>R/W sharing for the roles under Director General, other than IDFS and MACS.</description>
+        <label>Other Roles under Director General</label>
+        <sharedTo>
+            <group>Other_Roles_Under_Director_General</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Others,Standard Account</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Merged_Account__c</field>
+            <operation>notEqual</operation>
+            <value>Merged</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>RW_access_for_IDFS_excl_GDP</fullName>
+        <accessLevel>Edit</accessLevel>
+        <accountSettings>
+            <caseAccessLevel>Edit</caseAccessLevel>
+            <contactAccessLevel>Edit</contactAccessLevel>
+            <opportunityAccessLevel>None</opportunityAccessLevel>
+        </accountSettings>
+        <description>RW access for IDFS roles excluding GDP</description>
+        <label>RW access for IDFS excl GDP</label>
+        <sharedTo>
+            <group>IDFS_excl_GDP</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Standard Account,Others</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Merged_Account__c</field>
+            <operation>notEqual</operation>
+            <value>Merged</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>Read_Only_Account_Access_For_IDFS_excl_GDP</fullName>
+        <accessLevel>Read</accessLevel>
+        <accountSettings>
+            <caseAccessLevel>Edit</caseAccessLevel>
+            <contactAccessLevel>Edit</contactAccessLevel>
+            <opportunityAccessLevel>None</opportunityAccessLevel>
+        </accountSettings>
+        <description>Read Only Account Access For IDFS excluding GDP</description>
+        <label>Read Only Account Access For IDFS excl GDP</label>
+        <sharedTo>
+            <group>IDFS_excl_GDP</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Airline Branch,General Sales Agent Headquarters,Agency,Airline Headquarters</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Merged_Account__c</field>
+            <operation>notEqual</operation>
+            <value>Merged</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Category__c</field>
+            <operation>notEqual</operation>
+            <value>MSO Member Sales Office</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>Read_Only_Country_office_Access_For_GDP</fullName>
+        <accessLevel>Read</accessLevel>
+        <accountSettings>
+            <caseAccessLevel>Edit</caseAccessLevel>
+            <contactAccessLevel>Edit</contactAccessLevel>
+            <opportunityAccessLevel>Edit</opportunityAccessLevel>
+        </accountSettings>
+        <description>Read Only access to the accounts with the Country office record type for GDP users</description>
+        <label>Read Only Country office Access For GDP</label>
+        <sharedTo>
+            <roleAndSubordinatesInternal>GDP</roleAndSubordinatesInternal>
+        </sharedTo>
+        <criteriaItems>
+            <field>Merged_Account__c</field>
+            <operation>notEqual</operation>
+            <value>Merged</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>Read_Only_Country_office_Access_For_SIS</fullName>
+        <accessLevel>Read</accessLevel>
+        <accountSettings>
+            <caseAccessLevel>Edit</caseAccessLevel>
+            <contactAccessLevel>Edit</contactAccessLevel>
+            <opportunityAccessLevel>None</opportunityAccessLevel>
+        </accountSettings>
+        <description>Read-only access to accounts with the RT IATA COuntry Office for SIS users</description>
+        <label>Read Only Country office Access For SIS</label>
+        <sharedTo>
+            <roleAndSubordinatesInternal>SISCustomerSupport</roleAndSubordinatesInternal>
+        </sharedTo>
+        <criteriaItems>
+            <field>Merged_Account__c</field>
+            <operation>notEqual</operation>
+            <value>Merged</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>SIS_Old_RT_R_W</fullName>
+        <accessLevel>Edit</accessLevel>
+        <accountSettings>
+            <caseAccessLevel>Edit</caseAccessLevel>
+            <contactAccessLevel>Edit</contactAccessLevel>
+            <opportunityAccessLevel>None</opportunityAccessLevel>
+        </accountSettings>
+        <label>SIS Old RT R/W</label>
+        <sharedTo>
+            <roleAndSubordinatesInternal>SISCustomerSupport</roleAndSubordinatesInternal>
+        </sharedTo>
+        <criteriaItems>
+            <field>Merged_Account__c</field>
+            <operation>notEqual</operation>
+            <value>Merged</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>Sharing_accounts_to_others</fullName>
+        <accessLevel>Read</accessLevel>
+        <accountSettings>
+            <caseAccessLevel>Edit</caseAccessLevel>
+            <contactAccessLevel>Edit</contactAccessLevel>
+            <opportunityAccessLevel>None</opportunityAccessLevel>
+        </accountSettings>
+        <description>Share accounts with Other roles in read-only mode.</description>
+        <label>Sharing accounts to &quot;others&quot;</label>
+        <sharedTo>
+            <group>Other_Roles_Under_Director_General</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Airline Branch,General Sales Agent Headquarters,Agency,Airline Headquarters</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Merged_Account__c</field>
+            <operation>notEqual</operation>
+            <value>Merged</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Category__c</field>
+            <operation>notEqual</operation>
+            <value>MSO Member Sales Office</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingOwnerRules>
+        <fullName>Timba_Survey_Account_Sharing_Rule</fullName>
+        <accessLevel>Read</accessLevel>
+        <accountSettings>
+            <caseAccessLevel>Read</caseAccessLevel>
+            <contactAccessLevel>Read</contactAccessLevel>
+            <opportunityAccessLevel>None</opportunityAccessLevel>
+        </accountSettings>
+        <label>Timba Survey Account Sharing Rule</label>
+        <sharedTo>
+            <group>Timba_Survey_User</group>
+        </sharedTo>
+        <sharedFrom>
+            <allInternalUsers></allInternalUsers>
+        </sharedFrom>
+    </sharingOwnerRules>
+</SharingRules>
