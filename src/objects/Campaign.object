@@ -25,6 +25,10 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -96,7 +100,6 @@
             </picklistValues>
             <sorted>true</sorted>
         </picklist>
-        <required>false</required>
         <type>Picklist</type>
     </fields>
     <fields>
@@ -122,7 +125,6 @@
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <type>Picklist</type>
     </fields>
     <fields>
@@ -176,7 +178,6 @@
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <type>MultiselectPicklist</type>
         <visibleLines>9</visibleLines>
     </fields>
@@ -242,7 +243,6 @@ IF (ISPICKVAL (Campaign_focus__c,&quot;Not Specific&quot;), &quot;NS-&quot; &amp
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <type>Picklist</type>
     </fields>
     <fields>

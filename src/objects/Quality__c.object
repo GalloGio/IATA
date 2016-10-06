@@ -21,6 +21,10 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -873,7 +877,6 @@ IF (Action6_Closure_Date__c &lt;= Action6_Due_Date__c,&quot;Met&quot;,&quot;&quo
             </picklistValues>
             <sorted>true</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
@@ -1154,7 +1157,6 @@ IF (Action6_Closure_Date__c &lt;= Action6_Due_Date__c,&quot;Met&quot;,&quot;&quo
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
@@ -1374,7 +1376,6 @@ IF (Action6_Closure_Date__c &lt;= Action6_Due_Date__c,&quot;Met&quot;,&quot;&quo
             </picklistValues>
             <sorted>true</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
@@ -1567,7 +1568,6 @@ IF (Action6_Closure_Date__c &lt;= Action6_Due_Date__c,&quot;Met&quot;,&quot;&quo
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
@@ -1596,7 +1596,6 @@ IF (Action6_Closure_Date__c &lt;= Action6_Due_Date__c,&quot;Met&quot;,&quot;&quo
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -1770,7 +1769,6 @@ IF (Action6_Closure_Date__c &lt;= Action6_Due_Date__c,&quot;Met&quot;,&quot;&quo
             </picklistValues>
             <sorted>true</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
@@ -1935,7 +1933,6 @@ IF (Action6_Closure_Date__c &lt;= Action6_Due_Date__c,&quot;Met&quot;,&quot;&quo
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
@@ -2041,7 +2038,6 @@ AND(Requested_Sec__c= TRUE, OR(ISBLANK( Deadline_for_Input_Sec__c ), ISBLANK( Se
             </picklistValues>
             <sorted>true</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
@@ -2078,7 +2074,6 @@ AND(Requested_Sec__c= TRUE, OR(ISBLANK( Deadline_for_Input_Sec__c ), ISBLANK( Se
             </picklistValues>
             <sorted>true</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
@@ -2099,7 +2094,6 @@ AND(Requested_Sec__c= TRUE, OR(ISBLANK( Deadline_for_Input_Sec__c ), ISBLANK( Se
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -2700,7 +2694,6 @@ IF( AND(NOT(ISBLANK(Sec_of_Passenger_Cargo_Ag_Conf_GPO_Gov__c)), Responded_Sec__
             </picklistValues>
             <sorted>true</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
@@ -2889,7 +2882,6 @@ IF( AND(NOT(ISBLANK(Sec_of_Passenger_Cargo_Ag_Conf_GPO_Gov__c)), Responded_Sec__
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
@@ -2945,7 +2937,6 @@ IF( AND(NOT(ISBLANK(Sec_of_Passenger_Cargo_Ag_Conf_GPO_Gov__c)), Responded_Sec__
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -2973,7 +2964,6 @@ IF( AND(NOT(ISBLANK(Sec_of_Passenger_Cargo_Ag_Conf_GPO_Gov__c)), Responded_Sec__
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -3001,7 +2991,6 @@ Permanent: Relates to a country specific legal or regulatory matter, outsourcing
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -3049,7 +3038,6 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -3237,7 +3225,6 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -4175,7 +4162,6 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
@@ -6706,7 +6692,6 @@ ISPICKVAL( Exception_Classification_Type__c , &quot;CaConf - Default of Major Ca
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -7150,7 +7135,6 @@ AND(Mandatory_Sec__c = &quot;YES&quot;, Responded_Sec__c = FALSE)
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -7173,7 +7157,6 @@ To comunitacate an issue, use ISSUE-Quality</inlineHelpText>
             </picklistValues>
             <sorted>true</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -7226,7 +7209,6 @@ To comunitacate an issue, use ISSUE-Quality</inlineHelpText>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
@@ -7651,7 +7633,6 @@ To comunitacate an issue, use ISSUE-Quality</inlineHelpText>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -8265,7 +8246,6 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -8421,7 +8401,6 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -8640,7 +8619,6 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -9183,7 +9161,6 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>

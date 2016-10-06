@@ -17,8 +17,7 @@ public with sharing class AMS_InspectionTriggerHandler {
 
 	public static void handleAfterUpdate(List<AMS_Inspection__c> oldValues,List<AMS_Inspection__c> newValues) {
 
-		//FM - 22-09-2016 - stop creating "agency update" Records
-        //AMS_AgencyUpdateHelper.agencyUpdate(cleanListWithoutAgencyId(newValues));
+		AMS_AgencyUpdateHelper.agencyUpdate(cleanListWithoutAgencyId(newValues));
 
 		processAgency(cleanListWithoutAgencyId(oldValues),cleanListWithoutAgencyId(newValues));
 	
