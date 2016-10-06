@@ -21,6 +21,10 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -168,7 +172,6 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -187,7 +190,6 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -798,7 +800,6 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -836,7 +837,6 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -855,7 +855,6 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -874,7 +873,6 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -893,7 +891,6 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -1570,7 +1567,6 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
             </picklistValues>
             <sorted>true</sorted>
         </picklist>
-        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -1757,7 +1753,6 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -1867,7 +1862,6 @@ Disabled: SAAM case created, no link to OSCAR.</inlineHelpText>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -1927,7 +1921,6 @@ Disabled: SAAM case created, no link to OSCAR.</inlineHelpText>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -1975,7 +1968,6 @@ Disabled: SAAM case created, no link to OSCAR.</inlineHelpText>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -2022,7 +2014,6 @@ Disabled: SAAM case created, no link to OSCAR.</inlineHelpText>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>

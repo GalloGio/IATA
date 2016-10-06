@@ -21,6 +21,10 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -278,7 +282,6 @@ AND(ISPICKVAL(Region__c , &quot;China &amp; north Asia&quot;), ISPICKVAL(Securit
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -333,7 +336,6 @@ AND(ISPICKVAL(Region__c , &quot;China &amp; north Asia&quot;), ISPICKVAL(Securit
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -394,7 +396,6 @@ AND(ISPICKVAL(Region__c , &quot;China &amp; north Asia&quot;), ISPICKVAL(Securit
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -470,7 +471,6 @@ AND(ISPICKVAL(Region__c , &quot;China &amp; north Asia&quot;), ISPICKVAL(Securit
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -583,7 +583,6 @@ AND(ISPICKVAL(Region__c , &quot;China &amp; north Asia&quot;), ISPICKVAL(Securit
             </picklistValues>
             <sorted>true</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>

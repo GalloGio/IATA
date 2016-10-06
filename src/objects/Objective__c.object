@@ -21,6 +21,10 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -117,7 +121,6 @@ Object used to store objectives that can be independent, related to other object
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -164,7 +167,6 @@ Object used to store objectives that can be independent, related to other object
         <globalPicklist>Category</globalPicklist>
         <inlineHelpText>Use this field to indicate to which Category this activity relates</inlineHelpText>
         <label>Related to Categories</label>
-        <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -178,7 +180,6 @@ Object used to store objectives that can be independent, related to other object
         <globalPicklist>Sector</globalPicklist>
         <inlineHelpText>Use this field to indicate to which sector this activity relates.</inlineHelpText>
         <label>Related to Sector</label>
-        <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -533,7 +534,6 @@ Object used to store objectives that can be independent, related to other object
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
@@ -779,7 +779,6 @@ Object used to store objectives that can be independent, related to other object
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
@@ -815,7 +814,6 @@ Object used to store objectives that can be independent, related to other object
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
@@ -954,7 +952,6 @@ Object used to store objectives that can be independent, related to other object
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
@@ -1077,7 +1074,6 @@ Object used to store objectives that can be independent, related to other object
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
@@ -1144,7 +1140,6 @@ Object used to store objectives that can be independent, related to other object
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackFeedHistory>true</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
@@ -1223,7 +1218,6 @@ Object used to store objectives that can be independent, related to other object
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackFeedHistory>true</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
@@ -1249,7 +1243,6 @@ Object used to store objectives that can be independent, related to other object
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -1310,7 +1303,6 @@ Object used to store objectives that can be independent, related to other object
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
@@ -1333,7 +1325,6 @@ Object used to store objectives that can be independent, related to other object
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -6154,8 +6145,8 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
         <customTabListAdditionalFields>Description__c</customTabListAdditionalFields>
         <customTabListAdditionalFields>Target_Progress__c</customTabListAdditionalFields>
         <excludedStandardButtons>Accept</excludedStandardButtons>
-        <excludedStandardButtons>ChangeOwner</excludedStandardButtons>
         <excludedStandardButtons>Forward</excludedStandardButtons>
+        <excludedStandardButtons>ChangeOwner</excludedStandardButtons>
         <lookupDialogsAdditionalFields>Division__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>Region__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>Area__c</lookupDialogsAdditionalFields>

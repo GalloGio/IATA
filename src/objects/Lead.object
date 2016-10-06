@@ -45,6 +45,10 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -1745,7 +1749,6 @@
             </picklistValues>
             <sorted>true</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -1814,7 +1817,6 @@
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>true</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -1881,7 +1883,6 @@
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
@@ -1949,7 +1950,6 @@
             </picklistValues>
             <sorted>true</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -1984,7 +1984,6 @@
             </picklistValues>
             <sorted>true</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -2007,7 +2006,6 @@
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -2031,7 +2029,6 @@
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -3288,7 +3285,6 @@ albam@iata.org</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -3357,7 +3353,6 @@ albam@iata.org</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>3</visibleLines>
@@ -3441,7 +3436,6 @@ albam@iata.org</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -3587,7 +3581,6 @@ albam@iata.org</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -3905,7 +3898,6 @@ albam@iata.org</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>5</visibleLines>
@@ -4033,7 +4025,6 @@ albam@iata.org</description>
             </picklistValues>
             <sorted>true</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>5</visibleLines>
@@ -4065,7 +4056,6 @@ albam@iata.org</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -4229,7 +4219,6 @@ albam@iata.org</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -4270,7 +4259,6 @@ albam@iata.org</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -4411,7 +4399,6 @@ albam@iata.org</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -4446,7 +4433,6 @@ albam@iata.org</description>
             </picklistValues>
             <sorted>true</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -4519,7 +4505,6 @@ albam@iata.org</description>
             </picklistValues>
             <sorted>true</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -4593,7 +4578,6 @@ albam@iata.org</description>
             </picklistValues>
             <sorted>true</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -4690,7 +4674,6 @@ albam@iata.org</description>
             </picklistValues>
             <sorted>true</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>3</visibleLines>
@@ -4734,7 +4717,6 @@ albam@iata.org</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>8</visibleLines>
@@ -4822,7 +4804,6 @@ albam@iata.org</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -5021,7 +5002,6 @@ albam@iata.org</description>
             </picklistValues>
             <sorted>true</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -5100,7 +5080,6 @@ albam@iata.org</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -5143,7 +5122,6 @@ albam@iata.org</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>

@@ -2,7 +2,6 @@
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
 	        <members>BSPLink_Description</members>
-        <members>ISSP_AP_Bank_Details_Change</members>
 
         <members>BSPLink_Description</members>
         <members>CASSLink_Description</members>

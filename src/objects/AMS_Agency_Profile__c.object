@@ -21,6 +21,10 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -148,7 +152,6 @@ TR- % Tour Packages</inlineHelpText>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -917,7 +920,6 @@ TR- % Tour Packages</inlineHelpText>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
@@ -964,7 +966,6 @@ TR- % Tour Packages</inlineHelpText>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>

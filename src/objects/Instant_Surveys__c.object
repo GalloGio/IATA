@@ -21,6 +21,10 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -143,7 +147,6 @@ case (CX_Easy_Resolution_CES__c , &quot;Very satisfied&quot;, 1, &quot;Somewhat 
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -200,7 +203,6 @@ case (CX_Clear_Communication__c , &quot;Very satisfied&quot;, 1, &quot;Somewhat 
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -285,7 +287,6 @@ case (CX_Clear_Communication__c , &quot;Very satisfied&quot;, 1, &quot;Somewhat 
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -313,7 +314,6 @@ case (CX_Clear_Communication__c , &quot;Very satisfied&quot;, 1, &quot;Somewhat 
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -341,7 +341,6 @@ case (CX_Clear_Communication__c , &quot;Very satisfied&quot;, 1, &quot;Somewhat 
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -423,7 +422,6 @@ case (CX_Overall_Satisfaction__c , &quot;Very satisfied&quot;, 1, &quot;Somewhat
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -465,7 +463,6 @@ case (CX_Overall_Satisfaction__c , &quot;Very satisfied&quot;, 1, &quot;Somewhat
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -535,7 +532,6 @@ case (CX_Overall_Satisfaction__c , &quot;Very satisfied&quot;, 1, &quot;Somewhat
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -597,7 +593,6 @@ case (CX_Overall_Satisfaction__c , &quot;Very satisfied&quot;, 1, &quot;Somewhat
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -626,7 +621,6 @@ case (CX_Overall_Satisfaction__c , &quot;Very satisfied&quot;, 1, &quot;Somewhat
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -655,7 +649,6 @@ case (CX_Overall_Satisfaction__c , &quot;Very satisfied&quot;, 1, &quot;Somewhat
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -694,7 +687,6 @@ case (CX_Overall_Satisfaction__c , &quot;Very satisfied&quot;, 1, &quot;Somewhat
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -727,7 +719,6 @@ case (CX_Overall_Satisfaction__c , &quot;Very satisfied&quot;, 1, &quot;Somewhat
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -816,7 +807,6 @@ case (CX_Overall_Satisfaction__c , &quot;Very satisfied&quot;, 1, &quot;Somewhat
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -874,7 +864,6 @@ case (CX_Overall_Satisfaction__c , &quot;Very satisfied&quot;, 1, &quot;Somewhat
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -932,7 +921,6 @@ case (CX_Overall_Satisfaction__c , &quot;Very satisfied&quot;, 1, &quot;Somewhat
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -990,7 +978,6 @@ case (CX_Overall_Satisfaction__c , &quot;Very satisfied&quot;, 1, &quot;Somewhat
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -1048,7 +1035,6 @@ case (CX_Overall_Satisfaction__c , &quot;Very satisfied&quot;, 1, &quot;Somewhat
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -1106,7 +1092,6 @@ case (CX_Overall_Satisfaction__c , &quot;Very satisfied&quot;, 1, &quot;Somewhat
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -1136,7 +1121,6 @@ case (CX_Overall_Satisfaction__c , &quot;Very satisfied&quot;, 1, &quot;Somewhat
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -1194,7 +1178,6 @@ case (CX_Overall_Satisfaction__c , &quot;Very satisfied&quot;, 1, &quot;Somewhat
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -1238,7 +1221,6 @@ case (CX_Overall_Satisfaction__c , &quot;Very satisfied&quot;, 1, &quot;Somewhat
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -1343,7 +1325,6 @@ case (CX_Overall_Satisfaction__c , &quot;Very satisfied&quot;, 1, &quot;Somewhat
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -1399,7 +1380,6 @@ case (CX_Overall_Satisfaction__c , &quot;Very satisfied&quot;, 1, &quot;Somewhat
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -1470,7 +1450,6 @@ case(CX_Quality_of_CSR__c,&quot;Very Satisfied&quot;,1,&quot;Somewhat Satisfied&
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -1629,7 +1608,6 @@ case(CX_Quality_of_CSR__c,&quot;Very Satisfied&quot;,1,&quot;Somewhat Satisfied&
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -1710,7 +1688,6 @@ case(CX_Quality_of_CSR__c,&quot;Very Satisfied&quot;,1,&quot;Somewhat Satisfied&
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
