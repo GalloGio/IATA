@@ -88,7 +88,16 @@ trigger trgPortalUserAfterInserUpdate on User (after insert, after update) {
         if(!IECTestUtil.trgPortalUserAfterInserUpdate) IECTestUtil.trgPortalUserAfterInserUpdate = false;
     } 
     
-    if (idportalusers.size() > 0) 
+    
+    //Fill in portal contact fields
+    
+    if (idportalusers.size() > 1) {
     	Database.executeBatch(new HandleContactPortalFields(idportalusers,contactid));
+    }
+    //Single insertion, do not execute a batch
+    else if (idportalusers.size() == 1) {
+    	HandleContactPortalFields_Helper h = new HandleContactPortalFields_Helper();
+		h.fillportalfields(null,idportalusers,contactid);
+    }
     
 }
