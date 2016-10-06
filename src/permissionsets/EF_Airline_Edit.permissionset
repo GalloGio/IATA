@@ -16857,8 +16857,8 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>EF_Billing_Agreement__c.Payment_Terms__c</field>
-        <readable>false</readable>
+        <field>EF_Billing_Agreement__c.Contract_Payment_Terms__c</field>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
