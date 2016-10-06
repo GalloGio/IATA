@@ -44,6 +44,23 @@ public with sharing class SidraLiteUtil{
     }
 
     /**
+        Return true if account is TIDS Agent
+    **/
+    public static Boolean isAgent(Account account) {
+        return account.type=='TIDS Agent';
+    }
+
+    public static String getBSPCASS(Account account) {
+        if (isPassenger(account) || isAgent(account)) {
+            return 'BSP';
+        }
+        if (isCargoCASS(account) ) {
+            return 'CASS';
+        }
+        return '';
+    }
+
+    /**
         Return true if input account is active
     **/
     public static Boolean isAccountActive(Account account) {
