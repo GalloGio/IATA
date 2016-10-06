@@ -6,7 +6,11 @@
     </types>
     <types>
         <members>*</members>
-        <name>Translations</name>
+        <name>GlobalPicklist</name>
+    </types>
+    <types>
+        <members>*</members>
+        <name>Group</name>
     </types>
     <version>37.0</version>
 </Package>

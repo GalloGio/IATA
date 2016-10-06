@@ -160,7 +160,7 @@
                 <field>Status__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>Accreditation_date__c</field>
             </layoutItems>
             <layoutItems>

@@ -1,8 +1,8 @@
 @isTest
 private class FeedItemHelperTest {
-	
-	@isTest static void test_CheckPostTopics() {
-		// CREATE TEST DATA
+    
+    @isTest static void test_CheckPostTopics() {
+        // CREATE TEST DATA
         
                 // Create a new ISO Country
                 IATA_ISO_Country__c country_qr = new IATA_ISO_Country__c(Name = 'Qatar', ISO_Code__c = 'QR', Region__c = 'Africa & Middle East');
@@ -21,54 +21,54 @@ private class FeedItemHelperTest {
 
                 test.startTest();
 
-                	// Test for errors raised
+                    // Test for errors raised
 
-                	FeedItem fi = new FeedItem(ParentId = acct_hq.Id, Body = 'body with NO hashtags');
+                    FeedItem fi = new FeedItem(ParentId = acct_hq.Id, Body = 'body with NO hashtags');
 
-                	Boolean isExceptionThrown = false;
+                    Boolean isExceptionThrown = false;
 
-                	try {
-                		insert fi;
-                	} catch (Exception e) {
-                		isExceptionThrown = true;
-                	}
+                    try {
+                        insert fi;
+                    } catch (Exception e) {
+                        isExceptionThrown = true;
+                    }
 
-                	system.assertEquals(true, isExceptionThrown);
-
-
-                	// Test for no errors raised
-                	// #1 , hashtags used
-
-                	fi = new FeedItem(ParentId = acct_hq.Id, Body = 'body WITH #hashtags');
-
-                	isExceptionThrown = false;
-
-                	try {
-                		insert fi;
-                	} catch (Exception e) {
-                		isExceptionThrown = true;
-                	}
-
-                	system.assertEquals(false, isExceptionThrown);
+                    system.assertEquals(true, isExceptionThrown);
 
 
-                	// #2, NO hashtags but attached to another object than an account
+                    // Test for no errors raised
+                    // #1 , hashtags used
+
+                    fi = new FeedItem(ParentId = acct_hq.Id, Body = 'body WITH #hashtags');
+
+                    isExceptionThrown = false;
+
+                    try {
+                        insert fi;
+                    } catch (Exception e) {
+                        isExceptionThrown = true;
+                    }
+
+                    system.assertEquals(false, isExceptionThrown);
+
+
+                    // #2, NO hashtags but attached to another object than an account
                         // ######## not working on Contact as the feedtracking is not enabled #######
                         /*
-                	fi = new FeedItem(ParentId = con.Id, Body = 'body with NO hashtags');
+                    fi = new FeedItem(ParentId = con.Id, Body = 'body with NO hashtags');
 
-                	isExceptionThrown = false;
+                    isExceptionThrown = false;
 
-                	try {
-                		insert fi;
-                	} catch (Exception e) {
-                		isExceptionThrown = true;
-                	}
+                    try {
+                        insert fi;
+                    } catch (Exception e) {
+                        isExceptionThrown = true;
+                    }
 
-                	system.assertEquals(false, isExceptionThrown);*/
+                    system.assertEquals(false, isExceptionThrown);*/
 
 
                 test.stopTest();
-	}
-	
+    }
+    
 }
