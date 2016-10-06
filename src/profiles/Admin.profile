@@ -1638,6 +1638,22 @@
         <apexClass>EF_MaterialLineItemTriggerTest</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+	<classAccesses>
+        <apexClass>EF_Utilities</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+	<classAccesses>
+        <apexClass>EF_RelatedRecordsHandler</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+	<classAccesses>
+        <apexClass>EF_ContractHistoryController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+	<classAccesses>
+        <apexClass>EF_BaHistoryController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
     <classAccesses>
         <apexClass>EF_TestDataFactory</apexClass>
         <enabled>true</enabled>
@@ -42493,6 +42509,14 @@
     </pageAccesses>
     <pageAccesses>
         <apexPage>EC2Images</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+	<pageAccesses>
+        <apexPage>EF_BaHistoryPage</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>EF_ContractHistoryPage</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>

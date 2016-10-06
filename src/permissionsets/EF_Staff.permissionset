@@ -72,6 +72,22 @@
         <apexClass>EF_MaterialLineItemTriggerTest</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+	<classAccesses>
+        <apexClass>EF_Utilities</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+	<classAccesses>
+        <apexClass>EF_RelatedRecordsHandler</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+	<classAccesses>
+        <apexClass>EF_ContractHistoryController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+	<classAccesses>
+        <apexClass>EF_BaHistoryController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
     <classAccesses>
         <apexClass>tenPageExtension</apexClass>
         <enabled>true</enabled>
@@ -8788,6 +8804,14 @@
         <object>Related_Contact__c</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
+	<pageAccesses>
+        <apexPage>EF_BaHistoryPage</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>EF_ContractHistoryPage</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
 	<pageAccesses>
         <apexPage>EF_Account_Attachment_List</apexPage>
         <enabled>true</enabled>

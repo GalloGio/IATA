@@ -19,6 +19,10 @@
                 <behavior>Required</behavior>
                 <field>Contract__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>EF_Comments__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -45,10 +49,6 @@
             <layoutItems>
                 <behavior>Required</behavior>
                 <field>Data_Currency__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>EF_Comments__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -161,6 +161,22 @@
             <layoutItems>
                 <height>350</height>
                 <page>EF_Billing_Agreement_Attachment_List</page>
+                <showLabel>false</showLabel>
+                <showScrollbars>true</showScrollbars>
+                <width>100%</width>
+            </layoutItems>
+        </layoutColumns>
+        <style>OneColumn</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>false</editHeading>
+        <label>Comment History &amp; Linked Relationships</label>
+        <layoutColumns>
+            <layoutItems>
+                <height>100</height>
+                <page>EF_BaHistoryPage</page>
                 <showLabel>false</showLabel>
                 <showScrollbars>true</showScrollbars>
                 <width>100%</width>
