@@ -34,6 +34,7 @@ public class IECEBC_ETCampaignTopLink {
             +'<Properties>SubscriberKey</Properties>'
             +'<Properties>TriggeredSendDefinitionObjectID</Properties>'
             +'<Properties>URL</Properties>'
+            +'<Properties>URLID</Properties>'
             
             +'<Filter xmlns="http://exacttarget.com/wsdl/partnerAPI" xsi:type="ComplexFilterPart">'
             +'<LeftOperand xsi:type="SimpleFilterPart">'
@@ -62,7 +63,7 @@ public class IECEBC_ETCampaignTopLink {
         
         if (res.getStatusCode() == 200) { 
             
-            List<String> elements = new List<String>{'SubscriberKey', 'URL', 'EventDate'};
+            List<String> elements = new List<String>{'SubscriberKey', 'URL', 'URLID', 'EventDate'};
                 List<Map<String, String>> TopLinkClicksMap = new List<Map<String, String>>();
             
             TopLinkClicksMap = IECEBC_ETHelper.parseListMap(res, elements);
@@ -86,6 +87,9 @@ public class IECEBC_ETCampaignTopLink {
                 
                 //String eventDate = ListMap.get('EventDate');
                 String URL = ListMap.get('URL');
+                if (URL.toLowerCase().startsWith(IECEBC_Utility.ebcSetup.E_Commerce_Base_Url__c.toLowerCase() + '/iecebc_optout')) {
+                    URL = 'Unsubscribe';
+                }
                 String campaign = subKeyMatcher.group(1);
                 //String email = subKeyMatcher.group(2);                     
                 

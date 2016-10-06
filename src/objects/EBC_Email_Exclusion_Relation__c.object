@@ -126,8 +126,7 @@
         <fullName>Is_Email_Changed__c</fullName>
         <description>Is GDP Account or ID Card email address changed since the exclusion</description>
         <externalId>false</externalId>
-        <formula>EBC_Email_Exclusion__r.Email__c != IF(!ISBLANK(GDP_Products_Account_View__c),  GDP_Products_Account_View__r.Email_Address__c,  ID_Card__r.Email__c)</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <formula>LOWER(EBC_Email_Exclusion__r.Email__c) != LOWER(IF(!ISBLANK(GDP_Products_Account_View__c),  GDP_Products_Account_View__r.Email_Address__c,  ID_Card__r.Email__c))</formula>
         <inlineHelpText>Is GDP Account or ID Card email address changed since the exclusion</inlineHelpText>
         <label>Is Email Changed</label>
         <trackTrending>false</trackTrending>
