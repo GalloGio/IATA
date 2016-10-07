@@ -6,8 +6,6 @@
     <customButtons>Cancel_Assessment</customButtons>
     <customButtons>Close_Case_c</customButtons>
     <customButtons>Log_Phone_Case</customButtons>
-    <customButtons>Send_Email</customButtons>
-    <customButtons>SIDRA_Lite_Action</customButtons>
     <excludeButtons>Clone</excludeButtons>
     <excludeButtons>CloseCase</excludeButtons>
     <excludeButtons>Delete</excludeButtons>
@@ -274,10 +272,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>FS_Third_Deadline_Date__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Bank_Guarantee_requested__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>

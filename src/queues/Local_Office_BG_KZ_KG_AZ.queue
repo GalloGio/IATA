@@ -4,9 +4,6 @@
     <email>apahideana@iata.org</email>
     <name>Local Office - BG KZ KG AZ</name>
     <queueSobject>
-        <sobjectType>AMS_OSCAR__c</sobjectType>
-    </queueSobject>
-    <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>
 </Queue>

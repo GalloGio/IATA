@@ -611,11 +611,6 @@
         <label>AMS Account Roles</label>
         <language>en_US</language>
     </listViews>
-    <listViews>
-        <fullName>All</fullName>
-        <filterScope>Everything</filterScope>
-        <label>All</label>
-    </listViews>
     <nameField>
         <displayFormat>AAR-{00000000}</displayFormat>
         <label>AMS Account Role Name</label>

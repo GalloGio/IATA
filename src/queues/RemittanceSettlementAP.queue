@@ -4,9 +4,6 @@
     <email>aspacdef@iata.org</email>
     <name>Remittance &amp; Settlement - A&amp;P</name>
     <queueSobject>
-        <sobjectType>AMS_OSCAR__c</sobjectType>
-    </queueSobject>
-    <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>
 </Queue>

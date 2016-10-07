@@ -4,9 +4,6 @@
     <email>desalvoc@iata.org</email>
     <name>Local Office - CH LI</name>
     <queueSobject>
-        <sobjectType>AMS_OSCAR__c</sobjectType>
-    </queueSobject>
-    <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>
 </Queue>

@@ -47,8 +47,7 @@ private class ISSP_PortalUserFreeze_Batch_Test {
                                 PortalRole = 'Manager',
                                 CommunityNickname = con.email.substring(0, con.email.indexOf('@'))+Datetime.now().formatLong().substring(10,15),
                                 ProfileId = ISSP_Constant.TEST_User_ProfileID,
-                                IsActive = true,
-                                Community__c = 'IEC');
+                                IsActive = true);
         insert newUser;
         
         User myUser = [ select Id from User where Id = :UserInfo.getUserId() ];
