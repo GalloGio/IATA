@@ -85,7 +85,7 @@ global with sharing class EF_AttachmentListController {
 		check all assignTo calls have been done and execute initial methods
 	**/
 	private void init() {
-		Group efViewPrivateFiles = [SELECT Id, Name FROM Group Where DeveloperName='E_F_Private_Document_Access'];
+		Group efViewPrivateFiles = [SELECT Id, Name FROM Group Where DeveloperName='EF_Private_Document_Access'];
 		List<GroupMember> lsGroupMembers = [SELECT Id FROM GroupMember WHERE GroupId =: efViewPrivateFiles.Id AND UserOrGroupId =:UserInfo.getUserId()];
 		this.viewPrivateFiles = false;
 		if(!lsGroupMembers.isEmpty()) this.viewPrivateFiles = true;
