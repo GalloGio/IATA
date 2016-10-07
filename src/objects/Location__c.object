@@ -557,6 +557,27 @@
     </fields>
     <label>Location</label>
     <listViews>
+        <fullName>ALL1</fullName>
+        <columns>NAME</columns>
+        <columns>Active__c</columns>
+        <columns>SAP_Id__c</columns>
+        <columns>Account__c</columns>
+        <columns>Type__c</columns>
+        <columns>Contact__c</columns>
+        <columns>Address__c</columns>
+        <columns>Full_Address__c</columns>
+        <columns>Address_Name__c</columns>
+        <columns>Email__c</columns>
+        <columns>Phone__c</columns>
+        <columns>ISO_Country_Code__c</columns>
+        <columns>ISO_State_Code_SAP__c</columns>
+        <columns>VAT_Number__c</columns>
+        <columns>LAST_UPDATE</columns>
+        <filterScope>Everything</filterScope>
+        <label>ALL</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
         <fullName>All</fullName>
         <columns>NAME</columns>
         <columns>Active__c</columns>
@@ -604,7 +625,7 @@
     <sharingModel>Read</sharingModel>
     <validationRules>
         <fullName>No_Change_On_Account</fullName>
-        <active>true</active>
+        <active>false</active>
         <description>Forbid update in Account</description>
         <errorConditionFormula>AND(NOT(ISNEW())
   , NOT(ISBLANK(PRIORVALUE(SAP_Id__c)))

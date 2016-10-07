@@ -60,7 +60,7 @@
         <label>Default Cost per E-mail</label>
         <precision>18</precision>
         <required>false</required>
-        <scale>2</scale>
+        <scale>3</scale>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Number</type>

@@ -115,6 +115,18 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Reason__c</fullName>
+        <description>Reason of the activity</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Reason of the activity</inlineHelpText>
+        <label>Reason</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Related_Billing_Account__c</fullName>
         <description>This field links the EBC Activity to the Billing Account.</description>
         <externalId>false</externalId>

@@ -4,6 +4,9 @@
     <email>forrestf@iata.org</email>
     <name>Local Office - UK IE</name>
     <queueSobject>
+        <sobjectType>AMS_OSCAR__c</sobjectType>
+    </queueSobject>
+    <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>
 </Queue>

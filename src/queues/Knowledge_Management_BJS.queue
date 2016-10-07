@@ -4,6 +4,9 @@
     <email>pangxx@iata.org</email>
     <name>Knowledge Management - BJS</name>
     <queueSobject>
+        <sobjectType>AMS_OSCAR__c</sobjectType>
+    </queueSobject>
+    <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>
 </Queue>

@@ -88,6 +88,28 @@
         <type>DateTime</type>
     </fields>
     <fields>
+        <fullName>Is_Active__c</fullName>
+        <defaultValue>true</defaultValue>
+        <description>Manual cancellation of an exclusion should use this field</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Manual cancellation of an exclusion should use this field</inlineHelpText>
+        <label>Is Active</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Is_Relation_Created__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Is the relation has been created by the batch job</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Is the relation has been created by the batch job</inlineHelpText>
+        <label>Is Relation Created</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Other_Reason__c</fullName>
         <description>The reason of this event</description>
         <externalId>false</externalId>

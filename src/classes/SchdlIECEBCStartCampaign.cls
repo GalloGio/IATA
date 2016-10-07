@@ -22,6 +22,8 @@ global class SchdlIECEBCStartCampaign implements Database.Batchable<sObject>, Da
     }
     public String templateExternalId;
     public EBC_Campaign__c c;
+    public Integer numberOfRecipients = 0;
+
     
     // Batchable 
     global Database.QueryLocator start(Database.BatchableContext BC){
@@ -45,11 +47,7 @@ global class SchdlIECEBCStartCampaign implements Database.Batchable<sObject>, Da
         String senderExternalId = IECEBC_ETSenderProfileCreate.createSenderProfile(senderProfileCustomerKey, senderProfileCustomerKey, c.From_Name__c, 'test@cubicmedia.ca'); //@todo
         String sendClassificationId = IECEBC_ETSendClassificationCreate.createSendClassification(senderProfileCustomerKey, senderProfileCustomerKey, senderExternalId);
         
-        System.debug('IECEBC_ETTriggeredSendDefinitionCreate.createTriggeredSendDefinition');
-        System.debug(mailingId);
-        System.debug(templateExternalId);
         IECEBC_ETTriggeredSendDefinitionCreate.createTriggeredSendDefinition(mailingId, templateExternalId, senderProfileCustomerKey, sendClassificationId);
-        System.debug('IECEBC_ETTriggeredSendDefinitionStart.updateTriggeredSendDefinition');
         IECEBC_ETTriggeredSendDefinitionStart.updateTriggeredSendDefinition(mailingId);
         
         System.debug(query);
@@ -61,6 +59,7 @@ global class SchdlIECEBCStartCampaign implements Database.Batchable<sObject>, Da
 		Set<String> currentBatchEmail = new Set<String>();
         
         Map<String, Map<String, String>> params = new Map<String, Map<String, String>>();
+        
         
         for(sObject i : scope) {
             if (i instanceof GDP_Products_Account_View__c) {
@@ -110,11 +109,14 @@ global class SchdlIECEBCStartCampaign implements Database.Batchable<sObject>, Da
             }
         }
         
+        
         previousBatchEmail = newPreviousBatchEmail;
         
         System.debug(params);
         System.debug('IECEBC_ETEmailSend.sendMassEmail');
         if (params.size() > 0) {
+        	numberOfRecipients += params.size();
+            
         	IECEBC_ETEmailSend.sendMassEmail(mailingId, params);
             System.debug(IECEBC_ETEmailSend.failureDetails);
             if (IECEBC_ETEmailSend.failureDetails != null) {
@@ -143,10 +145,23 @@ global class SchdlIECEBCStartCampaign implements Database.Batchable<sObject>, Da
     }
     
     global void finish(Database.BatchableContext BC) {
-        EBC_Campaign__c c = [Select Id, Send_Datetime__c, Name From EBC_Campaign__c Where Id = :campaignId];
+        EBC_Campaign__c c = [Select Id, Send_Datetime__c, Name, Number_of_Recipients__c, Billing_Account__c From EBC_Campaign__c Where Id = :campaignId];
         c.Status__c = 'SENT';
         c.External_Id__c = mailingId;
         update c;
+        
+        if (c.Number_of_Recipients__c > numberOfRecipients) {
+            EBC_Activity__c a = new EBC_Activity__c(
+                Activity_Date_Time__c = Datetime.now(),
+                Activity_Type__c = 'Adjustment',
+                EBC_Campaign__c = c.Id,
+                Total_Count__c = (c.Number_of_Recipients__c - numberOfRecipients),
+                Related_Billing_Account__c = c.Billing_Account__c,
+                Reason__c = 'Negative count on send'
+            );
+            
+            insert a;
+        }
         
         IECEBC_ETCampaignTrackingAsync.initCampaignTrackingRecords(c); 
     }

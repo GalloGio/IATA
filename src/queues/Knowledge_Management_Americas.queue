@@ -4,6 +4,9 @@
     <email>jacomes@iata.org</email>
     <name>Knowledge Management - Americas</name>
     <queueSobject>
+        <sobjectType>AMS_OSCAR__c</sobjectType>
+    </queueSobject>
+    <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>
 </Queue>

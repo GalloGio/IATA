@@ -33,7 +33,8 @@ public class EBC_Email_Exclusion_TriggerHandler {
                     Activity_Type__c = 'Adjustment',
                     EBC_Campaign__c = ee.Source_Campaign__c,
                     Total_Count__c = 0,
-                    Related_Billing_Account__c = campaigns.get(ee.Source_Campaign__c).Billing_Account__c
+                    Related_Billing_Account__c = campaigns.get(ee.Source_Campaign__c).Billing_Account__c,
+	                Reason__c = ee.Type__c
                 );
             }
             

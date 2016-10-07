@@ -126,7 +126,7 @@
 																				<apex:outputText value="{0,number,###,###,##0} emails"><apex:param value="{!prpOption.currentEmailCredits}" /></apex:outputText>
 																			</div>
 																			<div class="package-price">
-																				<apex:outputText value="${0,number,###,###,##0}"><apex:param value="{!prpOption.amount}" /></apex:outputText>
+																				<apex:outputText value="${0,number,###,###,##0.00}"><apex:param value="{!prpOption.amount}" /></apex:outputText>
 																			</div>
 	  																	</apex:outputPanel>
 																		
@@ -157,7 +157,7 @@
 																				<apex:outputText value="{0,number,###,###,##0} emails"><apex:param value="{!prpOption.currentEmailCredits}" /></apex:outputText>
 																			</div>
 																			<div class="package-price">
-																				<apex:outputText value="${0,number,###,###,##0}"><apex:param value="{!prpOption.amount}" /></apex:outputText>
+																				<apex:outputText value="${0,number,###,###,##0.00}"><apex:param value="{!prpOption.amount}" /></apex:outputText>
 																			</div>
 																		</apex:outputPanel>
 																		
@@ -188,9 +188,7 @@
 																			</div>
 																			
 																			<div class="package-credits">
-																				<span class="line-stroke">
-																					<apex:outputText value="{0,number,###,###,##0}"><apex:param value="{!prpOption.standardEmailCredits}" /></apex:outputText>
-																				</span>
+																				<span class="line-stroke"><apex:outputText value="{0,number,###,###,##0}"><apex:param value="{!prpOption.standardEmailCredits}" /></apex:outputText></span>
 																				<span class="text-orange">
 																					<apex:outputText value="{0,number,###,###,##0}"><apex:param value="{!prpOption.currentEmailCredits}" /></apex:outputText>
 																				</span>
@@ -198,7 +196,7 @@
 																				emails
 																			</div>
 																			<div class="package-price">
-																				<apex:outputText value="${0,number,###,###,##0}"><apex:param value="{!prpOption.amount}" /></apex:outputText>
+																				<apex:outputText value="${0,number,###,###,##0.00}"><apex:param value="{!prpOption.amount}" /></apex:outputText>
 																			</div>
 																		</apex:outputPanel>
 																	</li>
