@@ -33,11 +33,22 @@ trigger trgPortalUserAfterInserUpdate on User (after insert, after update) {
     userIdSet.clear();
     
     
-    
+    //EM: Handle portal fields at contact level
+    map <Id,String> idportalusers = new map <Id,String>();
+    map <Id,Id> contactid = new map <Id,Id>();
     if(trigger.isInsert)
     for(User u: trigger.New){
         if(portalUserAdminIds.contains(u.ProfileId))// == ISSP_Constant.UserProfilesIDs.get('ISS Portal Delegated Admin User')
             userIdSet.add(u.Id);
+        
+        system.debug('@@@u.Community__c: ' + u.Community__c);  
+        system.debug('@@@u.UserType: ' + u.UserType); 
+        system.debug('@@@u.contactId: ' + u.contactId);   
+        if (!String.isBlank(u.Community__c) && u.UserType == 'PowerPartner' && u.contactId != null) {
+        	idportalusers.put(u.id,u.community__c); 
+        	contactid.put(u.contactid,u.id); 
+        }
+        
     }
     
     if(trigger.isUpdate)
@@ -57,6 +68,7 @@ trigger trgPortalUserAfterInserUpdate on User (after insert, after update) {
     
     for(User u: trigger.New){
     System.debug('RRR1 u.ProfileId'+u.ProfileId);
+    system.debug('@@@u.contactId: ' +u.contactId);
     String Pro = u.ProfileId ;
     if(pro.length() == 18 )
     {
@@ -75,5 +87,17 @@ trigger trgPortalUserAfterInserUpdate on User (after insert, after update) {
         trg_ctrl_PortalUser.AddUsersToGroups(userIdSetAddGroup , 'ISSP_all_portal_users');
         if(!IECTestUtil.trgPortalUserAfterInserUpdate) IECTestUtil.trgPortalUserAfterInserUpdate = false;
     } 
+    
+    
+    //Fill in portal contact fields
+    
+    if (idportalusers.size() > 1) {
+    	Database.executeBatch(new HandleContactPortalFields(idportalusers,contactid));
+    }
+    //Single insertion, do not execute a batch
+    else if (idportalusers.size() == 1) {
+    	HandleContactPortalFields_Helper h = new HandleContactPortalFields_Helper();
+		h.fillportalfields(null,idportalusers,contactid);
+    }
     
 }

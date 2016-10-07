@@ -22,7 +22,8 @@ private class ISSP_TC_Accept_Test {
 	                            PortalRole = 'Manager',
 	                            CommunityNickname = contact.email.substring(0, contact.email.indexOf('@'))+Datetime.now().formatLong().substring(10,15),
 	                            ProfileId = profileId,
-	                            IsActive = true);
+	                            IsActive = true,
+	                            Community__c = 'IEC');
     	insert newUser;
 		
     	ISSP_CS__c issc = new ISSP_CS__c(name = 'PasswordResetPeriod', value__c = '90');
@@ -62,7 +63,8 @@ private class ISSP_TC_Accept_Test {
 	                            ProfileId = profileId,
 	                            UID__c = '1234',
 	                            ToU_Accepted__c = true,
-	                            IsActive = true);
+	                            IsActive = true,
+	                            Community__c = 'IEC');
     	insert newUser;
     	
     	Portal_Applications__c newApp = new Portal_Applications__c();
@@ -110,7 +112,8 @@ private class ISSP_TC_Accept_Test {
 	                            CommunityNickname = contact.email.substring(0, contact.email.indexOf('@'))+Datetime.now().formatLong().substring(10,15),
 	                            ProfileId = profileId,
 	                            UID__c = '1234',
-	                            IsActive = true);
+	                            IsActive = true,
+	                            Community__c = 'IEC');
     	insert newUser;
     	
     	ISSP_CS__c issc = new ISSP_CS__c(name = 'PasswordResetPeriod', value__c = '90');
@@ -150,7 +153,8 @@ private class ISSP_TC_Accept_Test {
 	                            CommunityNickname = contact.email.substring(0, contact.email.indexOf('@'))+Datetime.now().formatLong().substring(10,15),
 	                            ProfileId = profileId,
 	                            UID__c = '1234',
-	                            IsActive = true);
+	                            IsActive = true,
+	                            Community__c = 'IEC');
     	insert newUser;
     	
     	ISSP_CS__c issc = new ISSP_CS__c(name = 'PasswordResetPeriod', value__c = '90');

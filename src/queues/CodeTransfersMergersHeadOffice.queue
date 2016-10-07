@@ -4,6 +4,9 @@
     <email>zaharievd@iata.org</email>
     <name>Code Transfers &amp; Mergers - Head Office</name>
     <queueSobject>
+        <sobjectType>AMS_OSCAR__c</sobjectType>
+    </queueSobject>
+    <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>
 </Queue>

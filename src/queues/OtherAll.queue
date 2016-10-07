@@ -4,6 +4,9 @@
     <email>rovedaa@iata.org</email>
     <name>Other (All)</name>
     <queueSobject>
+        <sobjectType>AMS_OSCAR__c</sobjectType>
+    </queueSobject>
+    <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>
 </Queue>

@@ -83,7 +83,8 @@ private class ISSP_PortalUserStatusChangeTest {
 	                            PortalRole = 'Manager',
 	                            CommunityNickname = contact.email.substring(0, contact.email.indexOf('@'))+Datetime.now().formatLong().substring(10,15),
 	                            ProfileId = profileId,
-	                            IsActive = true);
+	                            IsActive = true,
+	                            Community__c = 'IEC');
     	insert newUser;
     	
     	ISSP_PortalUserStatusChange controler = new ISSP_PortalUserStatusChange(new Apexpages.Standardcontroller(contact));

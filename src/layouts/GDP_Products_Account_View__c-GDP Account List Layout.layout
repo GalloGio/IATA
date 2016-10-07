@@ -13,6 +13,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
+                <field>Legal_Name__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>Trading_Name__c</field>
             </layoutItems>
             <layoutItems>
@@ -436,10 +440,6 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
-        <fields>Airline_Name__c</fields>
-        <fields>Territory_Description__c</fields>
-        <fields>Territory_ISO_Country__c</fields>
-        <fields>Territory_State_Abbreviation__c</fields>
         <relatedList>GSA_Territory__c.Related_GDP_Products_Account_View__c</relatedList>
     </relatedLists>
     <relatedLists>

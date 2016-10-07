@@ -4,6 +4,9 @@
     <email>shalbakf@iata.org</email>
     <name>Local Office - North Africa</name>
     <queueSobject>
+        <sobjectType>AMS_OSCAR__c</sobjectType>
+    </queueSobject>
+    <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>
 </Queue>
