@@ -1,11 +1,6 @@
 @isTest (seeAllData=true)
 public class vfIECEBC_Test {
-	public static testMethod void testCampaignCreate() {
-        vfIECEBC_TestSuite.testCampaignCreate(); 
-    }
-	public static testMethod void testCampaignCreateAndExit() {
-        vfIECEBC_TestSuite.testCampaignCreateAndExit(); 
-    }
+
 	public static testMethod void testPageLoadDashboard() {
         vfIECEBC_TestSuite.testPageLoadDashboard();
     }
@@ -16,11 +11,11 @@ public class vfIECEBC_Test {
     public static testMethod void testCampaignListingActions() { 
         vfIECEBC_TestSuite.testCampaignListingActions();
     } 
-	public static testMethod void testCampaignScheduling() {
-        vfIECEBC_TestSuite.testCampaignScheduling();
+	public static testMethod void testCampaignCreate() {
+        vfIECEBC_TestSuite.testCampaignCreate(); 
     }
-	public static testMethod void testCampaignPreview() {
-        vfIECEBC_TestSuite.testCampaignPreview();
+	public static testMethod void testCampaignCreateAndExit() {
+        vfIECEBC_TestSuite.testCampaignCreateAndExit(); 
     }
 	public static testMethod void testCampaignRecipientsExistingList() {
         vfIECEBC_TestSuite.testCampaignRecipientsExistingList();
@@ -28,6 +23,40 @@ public class vfIECEBC_Test {
 	public static testMethod void testCampaignTemplate() {
         vfIECEBC_TestSuite.testCampaignTemplate();
     }
+	public static testMethod void testCampaignScheduling() {
+        vfIECEBC_TestSuite.testCampaignScheduling();
+    }
+	public static testMethod void testCampaignPreview() {
+        vfIECEBC_TestSuite.testCampaignPreview();
+    }
+    
+    public static testMethod void testTemplateNew() {
+        vfIECEBC_TestSuite.testTemplateNew();
+    }
+    
+    public static testMethod void testMosaicoEditorSendTestSuccess() {
+        vfIECEBC_TestSuite.testMosaicoEditorSendTestSuccess();
+    }
+    public static testMethod void testMosaicoEditorSendTestListDetective() {
+        vfIECEBC_TestSuite.testMosaicoEditorSendTestListDetective();
+    }
+    public static testMethod void testCampaignConfirmUpdateCount() {
+        vfIECEBC_TestSuite.testCampaignConfirmUpdateCount();
+    }
+    /*
+    public static testMethod void testCampaignPayWithCredit() {
+        vfIECEBC_TestSuite.testCampaignPayWithCredit();
+    }*/
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     /*
      * Those methods become useless once we test the Pay Using Credits

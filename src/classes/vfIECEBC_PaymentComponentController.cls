@@ -87,6 +87,8 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
 	private void initialization()
 	{
 		//shoppingCartController = VfIECShoppingCart();
+		showBankTransferText=false;
+		showICHText=false;
 		editMode = false;
 		ebcPreference = vfIECEBC.pref;
 		
@@ -413,6 +415,51 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
                 return showTaxButtons;
                }
         set;
+    }
+    public Boolean showICHText {get;set;}
+    public Boolean showBankTransferText {get;set;}
+    public Boolean showTransactionButtons {
+        	get {
+                if (showTransactionButtons==null) showTransactionButtons=true;
+            
+                return showTransactionButtons;
+               }
+        set;
+    }
+    public PageReference ChooseBankTransferMethod()
+    {
+        showBankTransferText=true;
+        showICHText=false;
+        showTransactionButtons=false;
+        return null;
+    }
+    public PageReference CancelToManageAccountPage()
+    {
+        PageReference newPage=Page.IECEBC_AccountManage;
+        return newPage.setRedirect(true);
+    }
+    public PageReference ReturnToManageAccountPage()
+    {
+        //Just Change the EBC_Order Status
+        billingAccountOrder.Status__c='Pending Bank Transfer';
+        billingAccountOrder.Email_Credit__c=0;
+        update billingAccountOrder;
+        PageReference newPage=Page.IECEBC_AccountManage;
+        return newPage.setRedirect(true);
+    }
+    public PageReference ChooseICHMethod()
+    {
+        showBankTransferText=false;
+        showICHText=true;
+        showTransactionButtons=false;
+        return null;
+    }
+    public PageReference ChooseCreditCardMethod()
+    {
+        showBankTransferText=false;
+        showICHText=false;
+        showTransactionButtons=true;
+         return null;
     }
 	 // end of showPaymentButtons getter
 	// Payment can only be done if the address update is already saved
