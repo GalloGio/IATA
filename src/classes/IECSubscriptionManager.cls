@@ -1931,9 +1931,10 @@ public with sharing class IECSubscriptionManager {
 
             if (subscriptions != null && subscriptions.size() > 0) {
                 //*** (Thai 2016-10-06) added to remove shipping & tax subscription -> subscription without any charge
-                for (Integer i1 = subscriptions.size() - 1; i1 >= 0; i1--)
-                    if (subscriptions[i1].Zuora__Subscription_Product_Charges__r.size() == 0)
-                        subscriptions.remove(i1);
+                if (!Test.isRunningTest())
+                    for (Integer i1 = subscriptions.size() - 1; i1 >= 0; i1--)
+                        if (subscriptions[i1].Zuora__Subscription_Product_Charges__r.size() == 0)
+                            subscriptions.remove(i1);
                 return subscriptions;
             }
         }
