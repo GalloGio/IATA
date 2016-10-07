@@ -542,7 +542,7 @@ public with sharing class IFAP_BusinessRules {
      */
     public static Boolean assignAssessmentTemplateToAccountsWhereMissing(Integer maxLimit) {
 
-        List<RecordType> accountRecordTypes = [Select r.Id, r.Name From RecordType r Where r.SobjectType  = 'Account' and r.Name = 'Standard Account'];
+        List<RecordType> accountRecordTypes = [Select r.Id, r.Name From RecordType r Where r.SobjectType  = 'Account' and r.Name = 'IATA Standard Account'];
         Account[] listAccountToAssign = [Select a.Id, a.Name, a.Type, a.BillingCountry, a.Assessment_Template__c From Account a where a.Assessment_Template__c = null and a.RecordTypeId = :accountRecordTypes.get(0).Id limit :maxLimit];
 
         for (Account a : listAccountToAssign) {

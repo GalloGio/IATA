@@ -149,7 +149,7 @@ private class ContractButtonsControllerTest {
             Opportunity renewal_opp_2 = [SELECT Id FROM Opportunity WHERE StageName = 'Future renewal' AND Expiring_contract__c = :con_pm.Id];
             
                 // play the PM role 
-                 Test.StopTest();  
+                
             system.runAs(thisUser ) {
                 ApexPages.StandardController std = new ApexPages.StandardController(con_pm);
                 ContractButtonsController controller = new ContractButtonsController(std);
@@ -193,7 +193,7 @@ private class ContractButtonsControllerTest {
                 
             }
             
-     
+        Test.StopTest();
     }
     
     static  void ContractTest_SMRole() {
@@ -288,7 +288,7 @@ private class ContractButtonsControllerTest {
         Test.StopTest();
     }
     
-    static  testMethod   void ContractTest_PMRole_CancelContract() {
+    static testMethod void ContractTest_PMRole_CancelContract() {
         loadData();
         User thisUser = [ select Id from User where Id = :UserInfo.getUserId() ];
 
