@@ -397,6 +397,171 @@ public class vfIECEBC_TestSuite {
             System.assertEquals(campaignExtCon.getPRByStepNumber(6, true).getUrl(), pr.getUrl());
         }
     }
+    public static void testCampaignConfirmUpdateCount() {
+        
+        User usr = initPreRunAs(true);
+        
+        IECTestUtil_BillingAccount.eBroadcast_Trusted_Sender__c = true;
+        update IECTestUtil_BillingAccount;
+        
+        EBC_Activity__c act = new EBC_Activity__c(Related_Billing_Account__c = IECTestUtil_BillingAccount.Id, New_Balance__c = 1000, Total_Count__c = 1000, Activity_Type__c = 'Credit', Activity_Date_Time__c = Datetime.now());
+        insert act;
+        EBC_Application_Filter__c af = new EBC_Application_Filter__c(Audience__c = 'Agency', Filter_Description__c = 'Preferred Language', Data_Type__c = 'Text', Filter_Field__c = 'Preferred_Language__c');
+        insert af;
+        EBC_Master_Filter__c masterFilter = new EBC_Master_Filter__c(Audience__c = 'Agency');
+        insert masterFilter;
+        EBC_Customer_Filter__c cf = new EBC_Customer_Filter__c(EBC_Master_Filter__c = masterFilter.Id, EBC_Application_Filter__c = af.Id, Field_Operator__c = '=', Field_Value__c = 'X0');
+        insert cf;
+        EBC_Template__c tpl = new EBC_Template__c(Is_Tested__c = true);
+        insert tpl;
+        EBC_Campaign__c camp = new EBC_Campaign__c(Name = 'Foo Bar', Subject__c = 'Foo Subject', From_Name__c = 'Foo From Name', Is_Google_Analytics_Tracker_Active__c = true, Google_Analytics_Tracking_Code__c = 'UA-XXXXXX', Billing_Account__c = oBillingAccount.Id, EBC_Master_Filter__c = masterFilter.Id, EBC_Design__c = tpl.Id);
+        insert camp;
+        List<GDP_Products_Account_View__c> gpavs = new List<GDP_Products_Account_View__c>{
+            new GDP_Products_Account_View__c(Name = 'a',			GDP_Opt_In__c = true,	Email_Address__c = 'a@b.com',			Preferred_Language__c = 'X0'),
+            new GDP_Products_Account_View__c(Name = 'b',			GDP_Opt_In__c = true,	Email_Address__c = 'b@b.com',			Preferred_Language__c = 'X0'),
+            new GDP_Products_Account_View__c(Name = 'c',			GDP_Opt_In__c = true,	Email_Address__c = 'c@b.com',			Preferred_Language__c = 'X0'),
+            new GDP_Products_Account_View__c(Name = 'd',			GDP_Opt_In__c = true,	Email_Address__c = 'd@b.com',			Preferred_Language__c = 'X0'),
+            new GDP_Products_Account_View__c(Name = 'e',			GDP_Opt_In__c = true,	Email_Address__c = 'e@b.com',			Preferred_Language__c = 'X0'),
+            new GDP_Products_Account_View__c(Name = 'f',			GDP_Opt_In__c = true,	Email_Address__c = 'f@b.com',			Preferred_Language__c = 'X0'),
+            new GDP_Products_Account_View__c(Name = 'notincluded',	GDP_Opt_In__c = true,	Email_Address__c = 'notincluded@b.com',	Preferred_Language__c = 'X1'),
+            new GDP_Products_Account_View__c(Name = 'optout',		GDP_Opt_In__c = false,	Email_Address__c = 'optout@b.com',		Preferred_Language__c = 'X0'),
+            new GDP_Products_Account_View__c(Name = 'duplicate',	GDP_Opt_In__c = true,	Email_Address__c = 'duplicate@b.com',	Preferred_Language__c = 'X0'),
+            new GDP_Products_Account_View__c(Name = 'duplicate1',	GDP_Opt_In__c = true,	Email_Address__c = 'duplicate@b.com',	Preferred_Language__c = 'X0')
+        };
+        insert gpavs;
+        
+		PageReference pageRef = Page.IECEBC_CampaignConfirm;
+        pageRef.getParameters().put('id', camp.Id);
+        Test.setCurrentPage(pageRef);
+        
+        camp = [
+            SELECT
+            	Id,
+            	Name,
+            	EBC_Master_Filter__c,
+                Audience__c,
+                EBC_Design__c,
+                From_Name__c,
+                Google_Analytics_Tracking_Code__c,
+                Is_Google_Analytics_Tracker_Active__c,
+                Is_Step1_Valid__c, Is_Step2_Valid__c, Is_Step3_Valid__c, Is_Step4_Valid__c , Is_Step5_Valid__c , Is_Step6_Valid__c,
+            	Maximum_Allowed_Step__c,
+            	Billing_Account__c,
+                Number_of_Recipients__c,
+                Scheduled_Date__c,
+                Scheduled_Date_Valid_Until__c,
+                Status__c,
+                Subject__c
+            FROM
+            	EBC_Campaign__c
+            WHERE
+            	Id = :camp.Id
+        ];
+        
+        System.runAs(usr) {
+            initPostRunAs();
+        	Test.startTest();
+            Test.setMock(HttpCalloutMock.class, new CampaignPayWithCredit_Mock());
+            
+            // Layout PageLoad
+        	vfIECEBC_Layout layoutController = new vfIECEBC_Layout();
+            System.assertEquals(null, layoutController.pageLoad());
+            
+            ApexPages.StandardController sc = new ApexPages.StandardController(camp);
+            vfIECEBC_Campaign campaignExtCon = new vfIECEBC_Campaign(sc);
+            System.assertEquals(6, campaignExtCon.campaign.Maximum_Allowed_Step__c);
+            
+            PageReference pageLoadPR = campaignExtCon.pageLoad();
+            System.assertEquals(pageRef.getUrl().toLowerCase(), pageLoadPR.getUrl().toLowerCase());
+        }
+    }
+    public static void testCampaignPayWithCredit() {
+        
+        User usr = initPreRunAs(true);
+        
+        oBillingAccount.eBroadcast_Trusted_Sender__c = true;
+        update oBillingAccount;
+        
+        EBC_Activity__c act = new EBC_Activity__c(Related_Billing_Account__c = oBillingAccount.Id, New_Balance__c = 1000, Total_Count__c = 1000, Activity_Type__c = 'Credit', Activity_Date_Time__c = Datetime.now());
+        insert act;
+        EBC_Application_Filter__c af = new EBC_Application_Filter__c(Audience__c = 'Agency', Filter_Description__c = 'Preferred Language', Data_Type__c = 'Text', Filter_Field__c = 'Preferred_Language__c');
+        insert af;
+        EBC_Master_Filter__c masterFilter = new EBC_Master_Filter__c(Audience__c = 'Agency');
+        insert masterFilter;
+        EBC_Customer_Filter__c cf = new EBC_Customer_Filter__c(EBC_Master_Filter__c = masterFilter.Id, EBC_Application_Filter__c = af.Id, Field_Operator__c = '=', Field_Value__c = 'X0');
+        insert cf;
+        EBC_Template__c tpl = new EBC_Template__c(Is_Tested__c = true);
+        insert tpl;
+        EBC_Campaign__c camp = new EBC_Campaign__c(Name = 'Foo Bar', Number_of_Recipients__c = 7, Subject__c = 'Foo Subject', From_Name__c = 'Foo From Name', Is_Google_Analytics_Tracker_Active__c = true, Google_Analytics_Tracking_Code__c = 'UA-XXXXXX', Billing_Account__c = oBillingAccount.Id, EBC_Master_Filter__c = masterFilter.Id, EBC_Design__c = tpl.Id);
+        insert camp;
+        List<GDP_Products_Account_View__c> gpavs = new List<GDP_Products_Account_View__c>{
+            new GDP_Products_Account_View__c(Name = 'a',			GDP_Opt_In__c = true,	Email_Address__c = 'a@b.com',			Preferred_Language__c = 'X0'),
+            new GDP_Products_Account_View__c(Name = 'b',			GDP_Opt_In__c = true,	Email_Address__c = 'b@b.com',			Preferred_Language__c = 'X0'),
+            new GDP_Products_Account_View__c(Name = 'c',			GDP_Opt_In__c = true,	Email_Address__c = 'c@b.com',			Preferred_Language__c = 'X0'),
+            new GDP_Products_Account_View__c(Name = 'd',			GDP_Opt_In__c = true,	Email_Address__c = 'd@b.com',			Preferred_Language__c = 'X0'),
+            new GDP_Products_Account_View__c(Name = 'e',			GDP_Opt_In__c = true,	Email_Address__c = 'e@b.com',			Preferred_Language__c = 'X0'),
+            new GDP_Products_Account_View__c(Name = 'f',			GDP_Opt_In__c = true,	Email_Address__c = 'f@b.com',			Preferred_Language__c = 'X0'),
+            new GDP_Products_Account_View__c(Name = 'notincluded',	GDP_Opt_In__c = true,	Email_Address__c = 'notincluded@b.com',	Preferred_Language__c = 'X1'),
+            new GDP_Products_Account_View__c(Name = 'optout',		GDP_Opt_In__c = false,	Email_Address__c = 'optout@b.com',		Preferred_Language__c = 'X0'),
+            new GDP_Products_Account_View__c(Name = 'duplicate',	GDP_Opt_In__c = true,	Email_Address__c = 'duplicate@b.com',	Preferred_Language__c = 'X0'),
+            new GDP_Products_Account_View__c(Name = 'duplicate1',	GDP_Opt_In__c = true,	Email_Address__c = 'duplicate@b.com',	Preferred_Language__c = 'X0')
+        };
+        insert gpavs;
+        
+		PageReference pageRef = Page.IECEBC_CampaignConfirm;
+        pageRef.getParameters().put('id', camp.Id);
+        Test.setCurrentPage(pageRef);
+        
+        camp = [
+            SELECT
+            	Id,
+            	Name,
+            	EBC_Master_Filter__c,
+                Audience__c,
+                EBC_Design__c,
+                From_Name__c,
+                Google_Analytics_Tracking_Code__c,
+                Is_Google_Analytics_Tracker_Active__c,
+                Is_Step1_Valid__c, Is_Step2_Valid__c, Is_Step3_Valid__c, Is_Step4_Valid__c , Is_Step5_Valid__c , Is_Step6_Valid__c,
+            	Maximum_Allowed_Step__c,
+            	Billing_Account__c,
+                Number_of_Recipients__c,
+                Scheduled_Date__c,
+                Scheduled_Date_Valid_Until__c,
+                Status__c,
+                Subject__c
+            FROM
+            	EBC_Campaign__c
+            WHERE
+            	Id = :camp.Id
+        ];
+        
+        System.runAs(usr) {
+            initPostRunAs();
+        	Test.startTest();
+            Test.setMock(HttpCalloutMock.class, new CampaignPayWithCredit_Mock());
+            
+            // Layout PageLoad
+        	vfIECEBC_Layout layoutController = new vfIECEBC_Layout();
+            System.assertEquals(null, layoutController.pageLoad());
+            
+            ApexPages.StandardController sc = new ApexPages.StandardController(camp);
+            vfIECEBC_Campaign campaignExtCon = new vfIECEBC_Campaign(sc);
+            System.assertEquals(6, campaignExtCon.campaign.Maximum_Allowed_Step__c);
+            sc = new ApexPages.StandardController(camp);
+            campaignExtCon = new vfIECEBC_Campaign(sc);
+            vfIECEBC_Cart cartExtCon = new vfIECEBC_Cart(sc);
+            ApexPages.currentPage().getParameters().put('id', camp.Id);
+            vfIECEBC_CampaignConfirm confExtCon = new vfIECEBC_CampaignConfirm(sc);
+            
+            System.assertEquals(7, campaignExtCon.numberOfRecipients);
+            System.assertEquals(1000, campaignExtCon.billingAccount.eBroadcast_Email_Balance__c);
+            System.assertEquals(993, confExtCon.absoluteNewEmailBalance);
+
+            PageReference prDebit = confExtCon.debitCredits();
+            
+        }
+    }
     
     
     public static void testTemplateNew() {
@@ -923,6 +1088,17 @@ public class vfIECEBC_TestSuite {
 	            r.setBody('<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"><soap:Header><wsa:Action>UpdateResponse</wsa:Action><wsa:MessageID>urn:uuid:816a24b2-236f-497e-8aa1-7e46e870d894</wsa:MessageID><wsa:RelatesTo>urn:uuid:4c4de283-ad44-4121-8b9c-1f8e7fc25779</wsa:RelatesTo><wsa:To>http://schemas.xmlsoap.org/ws/2004/08/addressing/role/anonymous</wsa:To><wsse:Security><wsu:Timestamp wsu:Id="Timestamp-1e94f5a9-cd81-4ddc-9b2f-b6d587550db8"><wsu:Created>2016-10-06T12:22:35Z</wsu:Created><wsu:Expires>2016-10-06T12:27:35Z</wsu:Expires></wsu:Timestamp></wsse:Security></soap:Header><soap:Body><UpdateResponse xmlns="http://exacttarget.com/wsdl/partnerAPI"><Results><StatusCode>OK</StatusCode><StatusMessage>TriggeredSendDefinition updated</StatusMessage><OrdinalID>0</OrdinalID><Object xsi:type="TriggeredSendDefinition"><PartnerKey xsi:nil="true" /><ObjectID xsi:nil="true" /><CustomerKey>tue322</CustomerKey><TriggeredSendStatus>Active</TriggeredSendStatus></Object></Results><RequestID>599a5821-fd43-4e91-9051-e3909f52a1cb</RequestID><OverallStatus>OK</OverallStatus></UpdateResponse></soap:Body></soap:Envelope>');
             } else if (req.getBody().contains('CreateRequest') && req.getBody().contains('<Objects xsi:type="TriggeredSend">')) {
 	            r.setBody('<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"><soap:Header><wsa:Action>CreateResponse</wsa:Action><wsa:MessageID>urn:uuid:4b20ee68-dd01-4109-86c1-68e0bcc57f59</wsa:MessageID><wsa:RelatesTo>urn:uuid:d5339cef-c42d-4ac0-8294-f932663f6deb</wsa:RelatesTo><wsa:To>http://schemas.xmlsoap.org/ws/2004/08/addressing/role/anonymous</wsa:To><wsse:Security><wsu:Timestamp wsu:Id="Timestamp-0f3a915e-ac8a-4f03-89a2-6fde3b6dacf4"><wsu:Created>2016-10-06T12:31:27Z</wsu:Created><wsu:Expires>2016-10-06T12:36:27Z</wsu:Expires></wsu:Timestamp></wsse:Security></soap:Header><soap:Body><CreateResponse xmlns="http://exacttarget.com/wsdl/partnerAPI"><Results xsi:type="TriggeredSendCreateResult"><StatusCode>Error</StatusCode><StatusMessage>Unable to queue Triggered Send request.  There are no valid subscribers.</StatusMessage><OrdinalID>0</OrdinalID><ErrorCode>180008</ErrorCode><NewID>0</NewID><SubscriberFailures><Subscriber><PartnerKey xsi:nil="true" /><ObjectID xsi:nil="true" /><EmailAddress>a768E000000CvM6QAK@cubicmedia.ca</EmailAddress><SubscriberKey>a768E000000CvM6QAK@cubicmedia.ca</SubscriberKey></Subscriber><ErrorCode>TriggeredSendSubscriberProcessingError</ErrorCode><ErrorDescription>Error Code: 24 - Subscriber was excluded by List Detective.</ErrorDescription></SubscriberFailures></Results><RequestID>2c3a2150-4d37-430d-a25e-b19f65311940</RequestID><OverallStatus>Error</OverallStatus></CreateResponse></soap:Body></soap:Envelope>');
+            }
+            
+            r.setStatusCode(200);
+            return r;
+        }
+    }
+    class CampaignPayWithCredit_Mock implements HttpCalloutMock {
+        public HTTPResponse respond(HTTPRequest req) {
+            HTTPResponse r = new HTTPResponse();
+            if (req.getEndpoint().toLowerCase().contains('iecebc_recipientcount')) {
+	            r.setBody('7');
             }
             
             r.setStatusCode(200);

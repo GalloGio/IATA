@@ -40,6 +40,23 @@ public class vfIECEBC_Test {
     public static testMethod void testMosaicoEditorSendTestListDetective() {
         vfIECEBC_TestSuite.testMosaicoEditorSendTestListDetective();
     }
+    public static testMethod void testCampaignConfirmUpdateCount() {
+        vfIECEBC_TestSuite.testCampaignConfirmUpdateCount();
+    }
+    /*
+    public static testMethod void testCampaignPayWithCredit() {
+        vfIECEBC_TestSuite.testCampaignPayWithCredit();
+    }*/
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     /*
      * Those methods become useless once we test the Pay Using Credits
