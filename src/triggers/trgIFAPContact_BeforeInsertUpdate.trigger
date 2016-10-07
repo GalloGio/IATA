@@ -22,7 +22,7 @@ trigger trgIFAPContact_BeforeInsertUpdate on Contact (before insert, before upda
   if (userinfo.getLastName() != 'Site Guest User') {
     system.debug('not guest user');
     // get the Standard Contact recordtype
-    ID standardContactRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('IATA Standard Contact');
+    ID standardContactRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('Standard');
     system.debug('standardContactRecordTypeID: ' + standardContactRecordTypeID);
     // Get the list of Profiles that we allow to create an FA contact for BR
     //list<Profile> profs = [SELECT Name, Id FROM Profile WHERE Name = 'System Administrator' limit 1];
