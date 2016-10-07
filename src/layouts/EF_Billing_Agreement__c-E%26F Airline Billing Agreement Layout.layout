@@ -20,7 +20,7 @@
                 <field>Contract__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Required</behavior>
                 <field>EF_Comments__c</field>
             </layoutItems>
         </layoutColumns>
