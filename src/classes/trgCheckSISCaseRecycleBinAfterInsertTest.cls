@@ -25,7 +25,7 @@ private class trgCheckSISCaseRecycleBinAfterInsertTest {
     static testMethod void myUnitTest() {
         // TO DO: implement unit test
         
-        RecordType StandardContactRecordType = [Select r.Id, r.Name from RecordType r where r.Name = 'IATA Standard Contact' limit 1];
+        RecordType StandardContactRecordType = [Select r.Id, r.Name from RecordType r where r.Name = 'Standard' and r.SobjectType = 'Contact' limit 1];
         
         ExcludedEmailFromAddress__c excludeEmail = new ExcludedEmailFromAddress__c();
         excludeEmail.ApplicationName__c = 'ANY';
