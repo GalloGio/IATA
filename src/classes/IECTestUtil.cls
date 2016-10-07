@@ -6,6 +6,7 @@
   */
 //*** (Thai) change to "without" to fix issue of "INSUFFICIENT_ACCESS_ON_CROSS_REFERENCE_ENTITY" when create state in "CreateSampleIECAddress"
 public without sharing class IECTestUtil {
+    public static Id PortalUserAccountId;
     public static string InvoiceTestOrigin = '';
     public static string TEST_CLASS_AIMSID = 'Flag4Test';
     public static boolean trgPortalUserAfterInserUpdate = false;
@@ -242,6 +243,7 @@ public without sharing class IECTestUtil {
         insert u;
         trgPortalUserAfterInserUpdate = true;
         String userId = Site.createPortalUser(u, newAccount.Id, 'testpassword');
+        PortalUserAccountId = newAccount.Id;
       //  trgPortalUserAfterInserUpdate = false;
         /*
         // assign Permission Set to provide access to objects
