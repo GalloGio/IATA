@@ -690,7 +690,7 @@ public class vfIECEBC_TestSuite {
             Boolean IsAsExpected = false;
             try {
             	vfIECEBC_MosaicoEditor.sendTest(childTpl.Id, 'foo@bar.com');
-            } catch(vfIECEBC_MosaicoEditor.RejectedSubscriber_Exception e) {
+            } catch(Exception e) {
                 IsAsExpected = true;
             }
             System.assertEquals(true, IsAsExpected);
