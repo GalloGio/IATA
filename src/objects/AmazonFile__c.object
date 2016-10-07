@@ -80,6 +80,18 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>EF_Additional_Information__c</fullName>
+        <description>Additional information if the E&amp;F Category is Ad-Hoc Report or Miscellaneous</description>
+        <externalId>false</externalId>
+        <label>E&amp;F Additional Information</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>EF_Category__c</fullName>
         <externalId>false</externalId>
         <label>E&amp;F Category</label>
@@ -170,6 +182,15 @@
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>EF_Private__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>E&amp;F Private</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>EF_SAP_Number__c</fullName>
