@@ -873,20 +873,6 @@ The length is the total of the original fields (Area, Country_Code, Legal_Name, 
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>One__c</fullName>
-        <externalId>false</externalId>
-        <formula>1</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>One</label>
-        <precision>18</precision>
-        <required>false</required>
-        <scale>0</scale>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Number</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
         <fullName>Parent_Account_AIMS_ID__c</fullName>
         <externalId>false</externalId>
         <label>Parent Account: AIMS ID</label>

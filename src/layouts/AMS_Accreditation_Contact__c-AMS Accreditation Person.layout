@@ -51,10 +51,6 @@
                 <behavior>Edit</behavior>
                 <field>FAX__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Legacy_External_Id__c</field>
-            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

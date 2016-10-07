@@ -313,28 +313,24 @@ global class SIDRARnSIntegrationWS {
             } else { return GetXmlResponse(STATUSFAIL, '', errorMsg, ''); }
         }
     }
-
+    
     webService static string createClientStatement(String Operation, String Client, String Grp, String Period, Date RemittanceDate, Decimal BillingAmount, Decimal AmountToBePaid, Decimal Paid, Decimal Balance, String CurrencyCode) {
         try {
-            list<Account> listAccount = [Select id, Site from Account where Site = :Client];
-            // if not found and code length is 11, try again with first 10 digits
-            if (listAccount.isEmpty() && Client.length() == 11) {
-                listAccount = [Select id, Site from Account where Site = :Client.left(10)];
-            }
+            list<Account> listAccount = [Select id from Account where Site = :Client];
             if (listAccount.isEmpty() ) {
                 return GetXmlResponse(STATUSFAIL, '', 'There is no client with code ' + Client, '');
             }
             Account account = listAccount.get(0);
-
-            String statementName = account.Site + Period.trim() + Operation.trim();
+            
+            String statementName = Client.trim() + Period.trim() + Operation.trim();
             list<Account_Statement__c> listStatement = [
                 Select Id, Name, Key__c, Account__c, Operation__c, Group__c, Period__c, Remittance_Date__c, Billing_Amount__c, Amount_to_be_Paid__c, Paid__c, Balance__c, CurrencyISOCode
                 from Account_Statement__c
                 Where Name = :statementName
             ];
-
+            
             Account_Statement__c statement = listStatement.isEmpty()? null: listStatement.get(0);
-
+            
             if  ( statement == null) {
                 statement = new Account_Statement__c();
                 statement.Name = statementName;
@@ -350,10 +346,10 @@ global class SIDRARnSIntegrationWS {
             statement.Paid__c = Paid;
             statement.Balance__c = Balance;
             statement.CurrencyISOCode = CurrencyCode;
-
+            
             upsert statement;
             return GetClientStatementXmlResponse(STATUSOK, '');
-
+            
         } catch (Exception ex) {
             String errorMsg = 'Exception Type: ' + ex.getTypeName() + ' - Message: ' + ex.getMessage() +
                               ' - Stack Trace: ' + ex.getStackTraceString();
@@ -544,7 +540,7 @@ global class SIDRARnSIntegrationWS {
 
         return writer.getXmlString();
     }
-
+ 
     private static String GetClientStatementXmlResponse(string Status, string ErrorMsg) {
         Xmlstreamwriter writer = new Xmlstreamwriter();
 
@@ -610,5 +606,5 @@ global class SIDRARnSIntegrationWS {
         public pFinancialSecurity() {
             Amount = 0;
         }
-    }
+    } 
 }

@@ -79,21 +79,9 @@ public without sharing class IECUserManager {
         
         boolean firstLogin = false;
           
-        list<User> users = [Select Id, ContactId, Username, LastLoginDate, uid__C from user where( username =:suserName or email =: suserName) and userType = 'PowerPartner' and LastLoginDate = null ];    
-        IF( (users <> null && users.size()>0)) {
+        list<User> users = [Select Id, Username, LastLoginDate, uid__C from user where( username =:suserName or email =: suserName) and userType = 'PowerPartner' and LastLoginDate = null ];    
+        IF( (users <> null && users.size()>0))
             firstLogin = true;
-            //EM: If first login assign IEC Portal Status
-            User us = users[0];
-            Contact con = [select User_IECPortal_Status__c, accountid from contact where id =:us.contactid];
-            if (con!=null && String.isBlank(con.User_IECPortal_Status__c)) {
-            	con.User_IECPortal_Status__c = IECConstants.NEW_CONTACT_STATUS;
-            	IECUtil.DomainValidation validation = IECUtil.validateContactEmailDomain(con.Email, con.accountid);
-            	if (validation == IECUtil.DomainValidation.MATCHINGDOMAIN) 
-                	con.User_IECPortal_Status__c = IECConstants.APPROVED_CONTACT_STATUS;
-                	database.update(con,false);
-            	}
-            
-        }
         //firstLogin = users[0].uid__C <> null ? true: false;
          
             //sReturnUrl = firstLogin ?  Site.getBaseUrl()+ '/IECChangePassword' :sReturnUrl ;
@@ -118,8 +106,6 @@ public without sharing class IECUserManager {
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Could not find any Contact with username ' + sUsername));
                 return pr;
             }
-            
-            
 
             // check if user has an anonymous shopping cart (assigned with GUID)
             IEC_Shopping_Cart__c anonymousCart = IECShoppingCartHelper.getShoppingCartByGUID(IECCookieHelper.getCartGuid());
@@ -572,10 +558,10 @@ public without sharing class IECUserManager {
                                         oContactToUpdate.Phone, 
                                         oContactToUpdate.Tax_1_ID__c, 
                                         oContactToUpdate.Tax_2_ID__c, 
-                                        oContactToUpdate.VAT_Country_Code__c,           
+                                        oContactToUpdate.VAT_Country_Code__c,            
                                         oContactToUpdate.User_IECPortal_Status__c);
                 
-                return bResult; 
+                return bResult;
             }
             else {
                 update oContactToUpdate;

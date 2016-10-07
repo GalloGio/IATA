@@ -109,7 +109,7 @@
         <!-- Inbox... --> 
         <apex:repeat value="{!singleAppsPerMassApps}" var="k" >
             <div id="inline{!k}" style="display:none;" >
-           <!-- <h2>This purchase had been ordered by: {!contacts[k].Name}</h2>-->
+            <h2>This purchase had been ordered by: {!contacts[k].Name}</h2>
            <table  style="border:1px solid  black;" >
                 <thead>
                 <tr style="border:1px solid  black;" >

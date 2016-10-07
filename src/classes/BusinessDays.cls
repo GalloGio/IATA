@@ -185,15 +185,4 @@ public class BusinessDays {
 
         }
     }
-
-    /**
-        add n working days to input date based on given BusinessHours
-    **/
-    public static DateTime addNBusinessDays(DateTime inputDate, Integer addDays, Id BusinessHoursId) {
-    	DateTime currentDate = BusinessHours.nextStartDate(BusinessHoursId, inputDate);
-    	for ( integer i = 0; i<addDays; i++) {
-    		currentDate = BusinessHours.nextStartDate(BusinessHoursId, currentDate.addDays(1) );
-    	}
-    	return currentDate;
-    }
 }
