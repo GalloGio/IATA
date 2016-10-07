@@ -474,7 +474,14 @@ $icon-size: 50px;
     margin: auto;
     max-width: 1600px;
     padding: 0 15px;
+    
+    &.mosaico {
+        max-width: none;
 
+        .plugin-container {
+            padding: 10px;
+        }
+    }
 }
 
 .resubscribe {
