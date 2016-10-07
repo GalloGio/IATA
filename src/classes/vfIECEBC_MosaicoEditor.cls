@@ -2,9 +2,9 @@ global class vfIECEBC_MosaicoEditor extends vfIECEBC_Controller {
     public ApexPages.StandardController con { get; set; }
     public EBC_Template__c template { get; set; }
     
-    class RejectedSubscriber_Exception extends Exception{}
-    class Template_Not_Using_Mosaico_Template_Exception extends Exception{}
-    class Resource_Not_Ready_Exception extends Exception{}
+    public class RejectedSubscriber_Exception extends Exception{}
+    public class Template_Not_Using_Mosaico_Template_Exception extends Exception{}
+    public class Resource_Not_Ready_Exception extends Exception{}
     
     public Attachment metadata {
         get;
@@ -31,7 +31,9 @@ global class vfIECEBC_MosaicoEditor extends vfIECEBC_Controller {
     public vfIECEBC_MosaicoEditor(ApexPages.StandardController stdController) {        
         this.con = stdController;
         
-        stdController.addFields(new List<String>{'Parent_Template__c'});
+        if (!Test.isRunningTest()) {
+        	stdController.addFields(new List<String>{'Parent_Template__c'});
+        }
         
         this.template = (EBC_Template__c)stdController.getRecord();
         
