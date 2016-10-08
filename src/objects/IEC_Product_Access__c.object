@@ -228,6 +228,27 @@
         <label>All</label>
         <language>en_US</language>
     </listViews>
+    <listViews>
+        <fullName>SL_debug</fullName>
+        <columns>NAME</columns>
+        <columns>Subscription_Number__c</columns>
+        <columns>Related_Contact__c</columns>
+        <columns>Related_Rate_Plan_Info__c</columns>
+        <columns>Active__c</columns>
+        <columns>Usage_Unlimited__c</columns>
+        <columns>Usage_Qty_consumed__c</columns>
+        <columns>Usage_Qty_Left__c</columns>
+        <columns>Effective_Start_Date__c</columns>
+        <columns>Effective_End_Date__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Subscription_Number__c</field>
+            <operation>equals</operation>
+            <value>A-S00000937</value>
+        </filters>
+        <label>SL debug</label>
+        <language>en_US</language>
+    </listViews>
     <nameField>
         <displayFormat>PA-{00000}</displayFormat>
         <label>IEC Product Access Name</label>

@@ -4,6 +4,9 @@
     <email>svetlanat@iata.org</email>
     <name>Cases - ACC Europe Bank Guarantees</name>
     <queueSobject>
+        <sobjectType>AMS_OSCAR__c</sobjectType>
+    </queueSobject>
+    <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>
 </Queue>

@@ -4,6 +4,9 @@
     <email>iataperu@iata.org</email>
     <name>Cases - Peru</name>
     <queueSobject>
+        <sobjectType>AMS_OSCAR__c</sobjectType>
+    </queueSobject>
+    <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>
 </Queue>
