@@ -2,10 +2,7 @@
   * Description: This class contains some utility functions to be used for test classes 
   * Author: Samy Saied
   * Version: 1.0
-  * History:
-  *  - 20160227: issue fixing related to ecommerce 3a project
-  *  - 20160804-sl: merge change from eBroadcast branch (GDP81/campaign scheduling).
-  *
+  * History: 
   */
 //*** (Thai) change to "without" to fix issue of "INSUFFICIENT_ACCESS_ON_CROSS_REFERENCE_ENTITY" when create state in "CreateSampleIECAddress"
 public without sharing class IECTestUtil {
@@ -241,6 +238,7 @@ public without sharing class IECTestUtil {
             , IsActive = true
             , ReceivesAdminInfoEmails = false
             , ReceivesInfoEmails = false
+            , Community__c = 'IEC'
         );
         insert u;
         trgPortalUserAfterInserUpdate = true;
@@ -264,7 +262,7 @@ public without sharing class IECTestUtil {
     }
     
     
-
+    
     public static User createSampleGuestUserAndLogin(String ClientType) {
         // insert account
         Account newAccount = vfIECEBC_TestSuite.IECTestUtil_Account = createSampleAccount(ClientType);
@@ -302,6 +300,7 @@ public without sharing class IECTestUtil {
             , IsActive = true
             , ReceivesAdminInfoEmails = false
             , ReceivesInfoEmails = false
+            , Community__c = 'IEC'
         );
         insert u;
         trgPortalUserAfterInserUpdate = true;
@@ -316,8 +315,8 @@ public without sharing class IECTestUtil {
             oPermissionSetAssignment.PermissionSetId = permissionSetId;
             insert oPermissionSetAssignment;
         }
-*/
-         
+        */
+        
         IECUserManager.login(u.Username, 'testpassword', null);
            
         return u;
@@ -340,6 +339,7 @@ public without sharing class IECTestUtil {
             , IsActive = true
             , ReceivesAdminInfoEmails = false
             , ReceivesInfoEmails = false
+            , Community__c = 'IEC'
         );
         
         return u;

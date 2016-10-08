@@ -29,7 +29,8 @@ private class ISSP_RegistrationTest {
                                 PortalRole = 'Manager',
                                 CommunityNickname = con.email.substring(0, con.email.indexOf('@'))+Datetime.now().formatLong().substring(10,15),
                                 ProfileId = ISSP_Constant.TEST_User_ProfileID,
-                                IsActive = true);
+                                IsActive = true,
+                                Community__c = 'IEC');
         insert newUser;
 		
 		ISSP_Registration ctrl = new ISSP_Registration();
@@ -125,7 +126,8 @@ private class ISSP_RegistrationTest {
                                 PortalRole = 'Manager',
                                 CommunityNickname = con.email.substring(0, con.email.indexOf('@'))+Datetime.now().formatLong().substring(10,15),
                                 ProfileId = ISSP_Constant.TEST_User_ProfileID,
-                                IsActive = false);
+                                IsActive = false,
+                                Community__c = 'IEC');
         insert newUser;
 		
 		ISSP_Registration ctrl = new ISSP_Registration();
@@ -167,7 +169,8 @@ private class ISSP_RegistrationTest {
 	                                CommunityNickname = con.email.substring(0, con.email.indexOf('@'))+Datetime.now().formatLong().substring(10,15),
 	                                ProfileId = ISSP_Constant.TEST_User_ProfileID,
 	                                Portal_User_Frozen_Checkbox__c = true,
-	                                IsActive = false);
+	                                IsActive = false,
+	                                Community__c = 'IEC');
 	        insert newUser;
 	        ISSP_Registration.permissionNewAgency(newUser.Id);
 		}

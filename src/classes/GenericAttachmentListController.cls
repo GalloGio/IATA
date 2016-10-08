@@ -98,6 +98,7 @@ global with sharing class GenericAttachmentListController {
 	**/
 	@RemoteAction
 	global static boolean deleteAttachment(string strId, String fullName) {
+		System.debug('aqui strId ' + strId);
 		String idType = String.ValueOf(Id.valueOf(strId).getSObjectType());
 		Boolean result = false;
 		if (idType.equals('Attachment')) {

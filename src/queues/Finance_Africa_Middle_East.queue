@@ -4,6 +4,9 @@
     <email>bahoud@iata.org</email>
     <name>Finance - Africa &amp; Middle East</name>
     <queueSobject>
+        <sobjectType>AMS_OSCAR__c</sobjectType>
+    </queueSobject>
+    <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>
 </Queue>

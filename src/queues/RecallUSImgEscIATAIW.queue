@@ -4,6 +4,9 @@
     <email>iataus@recall.com</email>
     <name>Recall US Img. Esc (IATA IW)</name>
     <queueSobject>
+        <sobjectType>AMS_OSCAR__c</sobjectType>
+    </queueSobject>
+    <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>
 </Queue>

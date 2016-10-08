@@ -4,6 +4,9 @@
     <email>biebuyckj@iata.org</email>
     <name>Change Requests - AIMS</name>
     <queueSobject>
+        <sobjectType>AMS_OSCAR__c</sobjectType>
+    </queueSobject>
+    <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>
 </Queue>

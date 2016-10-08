@@ -37,7 +37,9 @@ private class Comm_User_HelperTest {
                                   LastName = 'lstname',
                                   Salutation = 'sig',
                                   Email = 'myemail@iata.org',
-                                  accountid = Hqrter.id
+                                  accountid = Hqrter.id,
+                                  User_Portal_Status__c = '	Pending Approval',
+                                  Community__c = 'E-Commerce'
                                     );
         insert con;
 
@@ -141,7 +143,7 @@ private class Comm_User_HelperTest {
         u.timezonesidkey = 'America/Los_Angeles';
         u.languagelocalekey = 'en_US'; 
         u.alias = 'cspu';
-        
+        u.Community__c = 'IEC';
 
         Profile p = [SELECT Id FROM Profile WHERE Name='Standard User']; 
 

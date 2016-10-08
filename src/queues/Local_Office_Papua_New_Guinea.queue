@@ -4,6 +4,9 @@
     <email>zanarinim@iata.org</email>
     <name>Local Office - Papua New Guinea</name>
     <queueSobject>
+        <sobjectType>AMS_OSCAR__c</sobjectType>
+    </queueSobject>
+    <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>
 </Queue>
