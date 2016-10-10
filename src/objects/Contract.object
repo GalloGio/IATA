@@ -112,6 +112,16 @@ E&amp;F CRM Project</description>
         <type>Date</type>
     </fields>
     <fields>
+        <fullName>Alternate_RCRM_Product_Manager_Email__c</fullName>
+        <description>Email for the Alternate RCRM Product Manager</description>
+        <externalId>false</externalId>
+        <label>Alternate RCRM Product Manager Email</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Base_URL__c</fullName>
         <externalId>false</externalId>
         <formula>LEFT($Api.Enterprise_Server_URL_300, FIND(&apos;/services&apos;,$Api.Enterprise_Server_URL_300))</formula>
@@ -252,7 +262,7 @@ E&amp;F CRM Project</description>
     </fields>
     <fields>
         <fullName>Current_Cycle_End_Date__c</fullName>
-        <description>This field represents the end date of the contracts current cycle.</description>
+        <description>This field represents the end date of the contract’s current cycle.</description>
         <externalId>false</externalId>
         <label>Current Cycle End Date</label>
         <required>false</required>
@@ -261,7 +271,7 @@ E&amp;F CRM Project</description>
     </fields>
     <fields>
         <fullName>Current_Cycle_Start_Date__c</fullName>
-        <description>This field represents the starting date of the contract�s current cycle.</description>
+        <description>This field represents the starting date of the contract’s current cycle.</description>
         <externalId>false</externalId>
         <label>Current Cycle Start Date</label>
         <required>false</required>
@@ -706,6 +716,16 @@ IF(ISPICKVAL(Third_Party__c, &quot;Berlitz&quot;), 0.10,
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Opportunity_OwnerEmail__c</fullName>
+        <description>Get the email from the current opportunity owner.</description>
+        <externalId>false</externalId>
+        <label>Opportunity OwnerEmail</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>OwnerExpirationNotice</fullName>
         <trackHistory>true</trackHistory>
     </fields>
@@ -780,6 +800,27 @@ IF(ISPICKVAL(Third_Party__c, &quot;Berlitz&quot;), 0.10,
         <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>RCRM_Product_Manager_Email_Formula__c</fullName>
+        <externalId>false</externalId>
+        <formula>Current_Opportunity__r.RCRM_Product_Manager__r.Email</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>RCRM Product Manager Email_Formula</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>RCRM_Product_Manager_Email__c</fullName>
+        <description>Email for the RCRM Product Manager</description>
+        <externalId>false</externalId>
+        <label>RCRM Product Manager Email</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Email</type>
         <unique>false</unique>
     </fields>
     <fields>
