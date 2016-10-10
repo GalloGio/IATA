@@ -66,7 +66,7 @@ private class IFAP_SitesTest {
     
     public static testMethod void testRegistrationController() {
         
-        RecordType StandardContactRecordType = [Select r.Id, r.Name from RecordType r where r.Name = 'IATA Standard Contact' limit 1];
+        RecordType StandardContactRecordType = [Select r.Id, r.Name from RecordType r where r.Name = 'Standard' and r.SobjectType = 'Contact' limit 1];
         
         // Instantiate a new controller with all parameters in the page
         IFAP_SiteRegistrationController controller = new IFAP_SiteRegistrationController();
