@@ -377,9 +377,6 @@ public class AMS_OSCARTriggerHandler {
 
 				} else if (oldOSCAR.RPM_Approval__c <> AMS_Utils.AUTH_APPROVAL && oscar.RPM_Approval__c == AMS_Utils.AUTH_APPROVAL) {
 
-					if(!performOscarValidations(toclist, agenciesAffected, oscar, accounts, accountHierarchyRelationships))
-						return;
-
 					if (nonCascadingTOCs.length() > 0 && nonCascadingTOCs.containsIgnoreCase(AMS_Utils.LOCATION_TYPE)) {
 						System.debug('AGENCY CHANGES: Processing Location Type Change Codes on Authorize Approval.');
 
