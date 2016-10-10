@@ -219,6 +219,7 @@ global class IEC_REST_Zuora_TaxShipping {
                                 Zuora.zApi.AmendOptions zAmendOpt = new Zuora.zApi.AmendOptions();
                                 zAmendOpt.GenerateInvoice = false;//true;
                                 zAmendOpt.ProcessPayments = false;
+                                zAmendRequest.AmendOptions = zAmendOpt;
                     
                                 // Now we have the new tax & shipping information
                                 
