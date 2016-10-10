@@ -170,14 +170,14 @@ public class AMS_AgencyRelationshipTriggerHandler {
         List<Account> accsToUpdate = new List<Account>();
 
         for (Account acc : accounts.values()) {
-            if (acc.ParentId == null) {
+            //if (acc.ParentId == null) {
                 accsToUpdate.add(acc);
                 system.debug(LoggingLevel.ERROR, 'setStandardHierarchyRelationship() --> account ' + acc.Name + ' with id ' + acc.id + ', parent id = ' + acc.ParentId + ' and location type = ' + acc.Location_Type__c);
-            }
+            //}
         }
         system.debug(LoggingLevel.ERROR, 'setStandardHierarchyRelationship() --> FIRST UPDATE');
         update accsToUpdate;
-        accsToUpdate = new List<Account>();
+        /*accsToUpdate = new List<Account>();
 
         for (Account acc : accounts.values()) {
             if (acc.ParentId != null) {
@@ -188,7 +188,7 @@ public class AMS_AgencyRelationshipTriggerHandler {
 
         system.debug(LoggingLevel.ERROR, 'setStandardHierarchyRelationship() --> SECOND UPDATE');
         TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
-        update accsToUpdate;
+        update accsToUpdate;*/
 
     }
 
