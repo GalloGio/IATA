@@ -143,7 +143,6 @@ global class WSSidraLite {
 
             // search for another SIDRA lite case related to current case
             Case foundChildCase = SidraLiteManager.getRelatedCase(parentCase);
-
             // if another SidraLite case exists then we return this case
             if( foundChildCase != null) {
                 // check bussines rules for update only
@@ -521,9 +520,10 @@ global class WSSidraLite {
             }
             childCase.Propose_Default__c = DateTime.now();
             childCase.Termination_Reason__c = 'Non Renewal of DGR certificate';
+
         }
         // Annual Fees
-        if (parentCase.Reason1__c == 'Annual Fees') {
+        else if (parentCase.Reason1__c == 'Annual Fees') {
             // IF passenger, 2nd and 3th non-compliance
             if ( SidraLiteUtil.isPassenger(childCase.account) ) {
                 // 2nd non-compliance
