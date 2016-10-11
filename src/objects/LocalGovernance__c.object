@@ -283,6 +283,19 @@
         <visibleLines>3</visibleLines>
     </fields>
     <fields>
+        <fullName>Group_Owner_Text__c</fullName>
+        <description>Group owner in free text for Reg/Div Groups</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Name of Group Owner</inlineHelpText>
+        <label>Group Owner</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Group_Owner__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
