@@ -5,11 +5,11 @@
         <members>*</members>
         <name>Report</name>
     </types>
- <!--   <types>
+   <!--    <types>
         <members>*</members>
         <name>PermissionSet</name>
     </types>
-    <types>
+ <types>
         <members>*</members>
         <name>Profile</name>
     </types> -->

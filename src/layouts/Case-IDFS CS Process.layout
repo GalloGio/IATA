@@ -18,10 +18,6 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>First_Contact_w_Client_in_Business_Hours__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>Case_Remarks__c</field>
             </layoutItems>
             <layoutItems>

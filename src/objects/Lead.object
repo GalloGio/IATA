@@ -3595,18 +3595,6 @@ albam@iata.org</description>
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>INFA_AV__Address_Validation_Status__c</fullName>
-        <defaultValue>&quot;Not Verified&quot;</defaultValue>
-        <deprecated>false</deprecated>
-        <externalId>false</externalId>
-        <label>Address Validation Status</label>
-        <length>255</length>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
         <fullName>Industry</fullName>
         <picklist>
             <picklistValues>
@@ -10906,39 +10894,6 @@ myuser={!User.Id}</url>
         <showsStatus>false</showsStatus>
         <url>/servlet/servlet.FileDownload?file=015200000002o5K</url>
         <width>600</width>
-    </webLinks>
-    <webLinks>
-        <fullName>INFA_AV__Verify_Address</fullName>
-        <availability>online</availability>
-        <displayType>button</displayType>
-        <linkType>javascript</linkType>
-        <masterLabel>Verify Address</masterLabel>
-        <openType>onClickJavaScript</openType>
-        <protected>false</protected>
-        <url>if((&apos;{!JSENCODE(Lead.Country) }&apos;==&apos;&apos; || &apos;{!JSENCODE(Lead.Country)}&apos;==null) &amp;&amp;(&apos;{!JSENCODE(Lead.Street)}&apos;==&apos;&apos; || &apos;{!JSENCODE(Lead.Street)}&apos;==null) &amp;&amp;(&apos;{!JSENCODE(Lead.City)}&apos;==&apos;&apos; || &apos;{!JSENCODE(Lead.City)}&apos;==null) &amp;&amp;(&apos;{!JSENCODE(Lead.State)}&apos;==&apos;&apos; || &apos;{!JSENCODE(Lead.State)}&apos;==null) &amp;&amp;(&apos;{!JSENCODE(Lead.PostalCode)}&apos;==&apos;&apos; || &apos;{!JSENCODE(Lead.PostalCode)}&apos;==null)) 
-{ 
-var url=&quot;/apex/INFA_AV__selectaddress?id=&quot;+&quot;{!Lead.Id}&quot;+&quot;&amp;type=&quot;+&quot;lead&quot;+&quot;&amp;mode=1&quot;; 
-var val = window.open(url,&apos;&apos;,&apos;width=850,height=490,left=250,top=100&apos;); 
-//window.top.location.reload(true); 
-} 
-else if(&apos;{!Lead.INFA_AV__Address_Validation_Status__c}&apos;!=&apos;Address Verified&apos; 
-) 
-{ 
-if((&apos;{!JSENCODE(Lead.Country)}&apos;==&apos;&apos; || &apos;{!JSENCODE(Lead.Country)}&apos;==null) &amp;&amp;((&apos;{!JSENCODE(Lead.Street)}&apos;!=&apos;&apos; &amp;&amp; &apos;{!JSENCODE(Lead.Street)}&apos;!=null) ||(&apos;{!JSENCODE(Lead.City)}&apos;!=&apos;&apos; &amp;&amp; &apos;{!JSENCODE(Lead.City)}&apos;!=null) ||(&apos;{!JSENCODE(Lead.State)}&apos;!=&apos;&apos; &amp;&amp; &apos;{!JSENCODE(Lead.State)}&apos;!=null) ||(&apos;{!JSENCODE(Lead.PostalCode)}&apos;!=&apos;&apos; &amp;&amp; &apos;{!JSENCODE(Lead.PostalCode)}&apos;!=null))) 
-{ 
-alert(&apos;Country is mandatory&apos;); 
-} 
-else 
-{ 
-var url=&quot;/apex/INFA_AV__verifyAddress?id=&quot;+&quot;{!Lead.Id}&quot;+&quot;&amp;type=&quot;+&quot;lead&quot;+&quot;&amp;mode=1&quot;; 
-var val = window.open(url,&apos;&apos;,&apos;width=850,height=490,left=250,top=100,scrollbars=yes&apos;); 
-//window.top.location.reload(true); 
-} 
-} 
-else if(&apos;{!Lead.INFA_AV__Address_Validation_Status__c}&apos;==&apos;Address Verified&apos;) 
-{ 
-alert(&apos;Address is already verified&apos;); 
-}</url>
     </webLinks>
     <webLinks>
         <fullName>LogaCall</fullName>

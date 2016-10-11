@@ -310,7 +310,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <criteriaItems>
             <field>Account.RecordTypeId</field>
             <operation>equals</operation>
-            <value>Standard Account</value>
+            <value>IATA Standard Account,Standard Account</value>
         </criteriaItems>
         <description>AIMS Accounts record type Assignment rule</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>

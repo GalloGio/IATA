@@ -4,9 +4,6 @@
     <email>iata.israel@iata.org</email>
     <name>Cases - Israel</name>
     <queueSobject>
-        <sobjectType>AMS_OSCAR__c</sobjectType>
-    </queueSobject>
-    <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>
 </Queue>

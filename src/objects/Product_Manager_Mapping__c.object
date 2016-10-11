@@ -113,8 +113,8 @@
         <customTabListAdditionalFields>Profit_Center__c</customTabListAdditionalFields>
         <customTabListAdditionalFields>Product_Manager__c</customTabListAdditionalFields>
         <excludedStandardButtons>Accept</excludedStandardButtons>
-        <excludedStandardButtons>ChangeOwner</excludedStandardButtons>
         <excludedStandardButtons>Forward</excludedStandardButtons>
+        <excludedStandardButtons>ChangeOwner</excludedStandardButtons>
         <lookupDialogsAdditionalFields>Profit_Center__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>Product_Manager__c</lookupDialogsAdditionalFields>
         <searchResultsAdditionalFields>Profit_Center__c</searchResultsAdditionalFields>

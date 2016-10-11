@@ -4,9 +4,6 @@
     <email>amandussoc@iata.org</email>
     <name>ACCA Bug Fixes</name>
     <queueSobject>
-        <sobjectType>AMS_OSCAR__c</sobjectType>
-    </queueSobject>
-    <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>
 </Queue>

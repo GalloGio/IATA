@@ -147,40 +147,6 @@
         <language>en_US</language>
     </listViews>
     <listViews>
-        <fullName>AMS_DNG_logs_OK</fullName>
-        <booleanFilter>1 AND ( 2 OR 3 OR 4)</booleanFilter>
-        <columns>NAME</columns>
-        <columns>Log__c</columns>
-        <columns>Operation__c</columns>
-        <columns>Record__c</columns>
-        <columns>Status__c</columns>
-        <columns>start_date__c</columns>
-        <columns>End_Date__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Status__c</field>
-            <operation>notEqual</operation>
-            <value>Error</value>
-        </filters>
-        <filters>
-            <field>Record__c</field>
-            <operation>contains</operation>
-            <value>67500031</value>
-        </filters>
-        <filters>
-            <field>Record__c</field>
-            <operation>contains</operation>
-            <value>55190050005</value>
-        </filters>
-        <filters>
-            <field>Record__c</field>
-            <operation>contains</operation>
-            <value>08200010</value>
-        </filters>
-        <label>AMS DNG logs (OK)</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
         <fullName>AMS_Errors</fullName>
         <columns>NAME</columns>
         <columns>Log__c</columns>

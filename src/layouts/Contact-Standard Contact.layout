@@ -19,10 +19,6 @@
         <label>Contact Information</label>
         <layoutColumns>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Account_Management_Key_Contact__c</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Required</behavior>
                 <field>Name</field>
             </layoutItems>
@@ -229,10 +225,6 @@
                 <showLabel>false</showLabel>
                 <showScrollbars>false</showScrollbars>
                 <width>100%</width>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Portal_User_Frozen__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>

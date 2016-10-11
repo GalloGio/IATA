@@ -90,17 +90,6 @@
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>Key__c</fullName>
-        <externalId>false</externalId>
-        <formula>Related_Account__c + &apos;-&apos; +  AirportCode__r.Code__c</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>Key</label>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
         <fullName>Related_Account__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
@@ -139,7 +128,6 @@
     <listViews>
         <fullName>All</fullName>
         <columns>NAME</columns>
-        <columns>RECORDTYPE</columns>
         <columns>AirportCode__c</columns>
         <columns>Airport_ID__c</columns>
         <columns>Related_Account__c</columns>
