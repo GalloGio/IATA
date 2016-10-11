@@ -394,7 +394,7 @@ public without sharing class vfIECGADAdvanced extends IECPageController {
                 if (sProductCode == 'GAD' && agencyType.Agency_Program_Code__c=='C') continue;
                 if (sProductCode == 'PAL' && !(agencyType.Agency_Program_Code__c=='P' 
                                             || agencyType.Agency_Program_Code__c=='D'
-                                            || agencyType.Agency_Program_Code__c=='V'    
+                                            || agencyType.Agency_Program_Code__c=='V'
                                             ))  continue;
                 if (sProductCode == 'CAL' && agencyType.Agency_Program_Code__c!='C') continue;
                 if (sProductCode == 'ASL' && !(agencyType.Agency_Program_Code__c=='M'

@@ -1,4 +1,4 @@
-<apex:page controller="AMS_OSCAR_Case_Detail_Controller">
+<apex:page extensions="AMS_OSCAR_Case_Detail_Controller" standardController="Case">
    
          <!-- <c:AMS_CrossObjectViewer displayedObject="{!AMS_OSCAR__c}"/> -->
     <apex:includeScript value="/support/console/34.0/integration.js"/>
