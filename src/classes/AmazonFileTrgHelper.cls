@@ -5,13 +5,13 @@ public class AmazonFileTrgHelper {
             return JSON.serialize(new List<String>(AmazonFileTrgHelper.sapNumberRequired));
         }
     }
-    
+
     public static String expiryDateRequiredJSON{
         get{
             return JSON.serialize(new List<String>(AmazonFileTrgHelper.expiryDateRequired));
         }
     }
-    
+
     public static String expiredRequiredJSON{
         get{
             return JSON.serialize(new List<String>(AmazonFileTrgHelper.expiredRequired));
@@ -21,21 +21,21 @@ public class AmazonFileTrgHelper {
     public static Set<String> sapNumberRequired = new Set<String>{
         'Contractual.Contract/Amendment','Contractual.Termination','Contractual.Implementation Summary'
     };
-    
+
     public static Set<String> expiryDateRequired = new Set<String>{
         'Contractual.Signatory Authentication','Operational Calendars.BSP','Operational Calendars.ICH','Operational Calendars.Client'
     };
-    
+
     public static Set<String> expiredRequired = new Set<String>{
         ''
     };
-    
+
     /*
 
         copy the files back into the appropriate folder
         Delete the old files levereging AmazonRest class
 
-    
+
     -----this are few lines to test it from your execute anynuomous the id is hte id of the amazonfile__c
     list<Id> filesIDS = new list<Id>{'a558E0000005gYF'};
 
@@ -45,7 +45,7 @@ public class AmazonFileTrgHelper {
     system.debug('' +ama);
 
     AmazonFileTrgHelper.AfterUndelete(new map<Id,AmazonFile__C>{'a558E0000005gZc' => ama[0]});
-        
+
     */
 
     private static final AmazonCredentials CREDENTIALS = AmazonCredentials.getCredentials('GenericAttach');
@@ -54,18 +54,18 @@ public class AmazonFileTrgHelper {
     public static void AfterUndelete(map<Id,AmazonFile__C> trgNewMap){
 
         try{
-            
+
             integer maxEntry = trgNewMap.keySet().size();
             integer max = 100/2; //the max number of callouts in an @future Its on 2 cuase we have a copy and a delete!
             integer numberOfLoops = (trgNewMap.KeySet().Size()+1)/50;
-            
+
             if(numberOfLoops >50) throw new transformationException('Apex limits exceeded not possible to perform the operation');
             //max number of @future calls allowed in a transaction
 
 
             map<Integer,List<Id>> listIdToProcessPerInt  = new map<Integer,List<Id>>();
             map<Integer,Id> IdPerInt = new map<Integer,Id>();
-            
+
             integer k = 0;
             for(Id idFile: trgNewMap.KeySet()){
                 IdPerInt.put(k, idFile);
@@ -74,11 +74,11 @@ public class AmazonFileTrgHelper {
 
             system.debug(' @@@  IdPerInt ' + IdPerInt);
             for(integer y = numberOfLoops;y>-1; y--){//Moonwalker
-                
+
                 integer localMax;
-                
+
                 if((max - maxEntry) > 0) localMax = maxEntry;
-                else {localMax = max; maxEntry -=50;} 
+                else {localMax = max; maxEntry -=50;}
 
                 for(Integer i = 0; i < localMax  ;i++){
 
@@ -97,11 +97,11 @@ public class AmazonFileTrgHelper {
                     system.debug(' @@@ 3 Limits.getLimitFutureCalls() ' + Limits.getLimitFutureCalls());
                     AfterUndelete(listIdToProcessPerInt.get(num));
                 }
-                
+
                 else throw new transformationException('Apex limits exceeded not possible to perform the operation \n trgNewMap '
                                  + trgNewMap+ '\n listIdToProcessPerInt  '  + listIdToProcessPerInt  +  '\n num '+num   );
             }
-                    
+
 
         }catch(Exception e){
 
@@ -112,7 +112,7 @@ public class AmazonFileTrgHelper {
 
     }
 
-    /* 
+    /*
         we need to use an @future cause of the callout operation
         we need to copy back the file and then delete it
     */
@@ -120,8 +120,8 @@ public class AmazonFileTrgHelper {
     @Future(callout=true)
     public static void AfterUndelete(List<Id> filesIDS){
 //  throw new transformationException('#######   filesIDS' +filesIDS);
-        try{        
-            
+        try{
+
             if(Limits.getLimitCallouts()==0) throw new transformationException('At Future Limits reached ');
 
 
@@ -141,31 +141,31 @@ public class AmazonFileTrgHelper {
             for(Id amazonFId :amazonFilesPerId.keySet()){
 
                     AmazonRest.copyFile(RECYCLEBIN,genericAttachPerId.get(amazonFId).pathComplete,
-                                        CREDENTIALS,genericAttachPerId.get(amazonFId).pathComplete);            
+                                        CREDENTIALS,genericAttachPerId.get(amazonFId).pathComplete);
 
             }
             // then we delete
             for(Id amazonFId :amazonFilesPerId.keySet()){
 
-                    AmazonRest.deleteFile(genericAttachPerId.get(amazonFId).pathComplete,RECYCLEBIN);           
+                    AmazonRest.deleteFile(genericAttachPerId.get(amazonFId).pathComplete,RECYCLEBIN);
 
             }
 
 
         }catch(Exception e){
             if(test.isrunningTest())   throw new transformationException( e.getMessage() +'\n STACKTRACE   ' + e.getStackTraceString() + '  \n filesIDS' + filesIDS);
-         TransformationHelper.sendEmailSupport('AmazonFileTrgHelper  AfterUndelete @FUTURE ' , '\n MESSAGE: ' 
+         TransformationHelper.sendEmailSupport('AmazonFileTrgHelper  AfterUndelete @FUTURE ' , '\n MESSAGE: '
                      + e.getMessage() +'\n STACKTRACE   ' + e.getStackTraceString() + '  \n filesIDS' + filesIDS  );
 
         }
-    
+
     }
-    
+
 
 
     public class genericAttach{
 
-    
+
             public string pathComplete {get;set;}
             //public string name {get;set;}
 
@@ -181,14 +181,14 @@ public class AmazonFileTrgHelper {
         // this is to keep it generic as the users might want to add new lookups to this component and there will be no need to change the code
         // and the same time it will be possible to undelete attach belonging to different parents
         public string getTheLookUp(AmazonFile__c amazonFile){
-                
+
             for(String fieldName: TransformationHelper.getAllFieldsPerDisplayType('AmazonFile__c').get('Reference')){
 
                     if(amazonFile.get(fieldName) != null && fieldName.endsWith('__c'))  {
 
                         system.debug('##############   fieldName ' +fieldName);
                         return String.valueOf(amazonFile.get(fieldName));
-                    
+
                     }
 
             }
@@ -198,47 +198,48 @@ public class AmazonFileTrgHelper {
     }
 
     public static void checkEFRequiredFields(map<Id,AmazonFile__C> trgNewMap){
-       
+
         if (trgNewMap != null && trgNewMap.isEmpty() == false) {
-        
+
             List<AmazonFile__c> efFiles = new List<AmazonFile__c>();
-            
+
             for (AmazonFile__c af : trgNewMap.values()) {
-            
+
                 if (af.RecordTypeId == Schema.SObjectType.AmazonFile__c.getRecordTypeInfosByName().get('E&F File').getRecordTypeId()) {
-                
+
                     efFiles.add(af);
-                }   
+                }
             }
-            
+
             if (efFiles.isEmpty() == false) {
-                
-                String errorMessage = 'This field is required for this '+Schema.SobjectType.AmazonFile__c.fields.EF_Category__c.label+'/'+Schema.SobjectType.AmazonFile__c.fields.EF_SubCategory__c.label+': '; 
+
+                String errorMessage = 'This field is required for this '+Schema.SobjectType.AmazonFile__c.fields.Category__c.label+'/'+Schema.SobjectType.AmazonFile__c.fields.SubCategory__c.label+': ';
                 String key;
-                
+
                 for (AmazonFile__c eff : efFiles) {
-                    
-                    if (eff.EF_Category__c != null && eff.EF_SubCategory__c != null) {
-                        
-                        key = eff.EF_Category__c+'.'+eff.EF_SubCategory__c;
-                        
-                        if (sapNumberRequired.contains(key) && eff.EF_SAP_Number__c == null) {
-                            
-                            eff.EF_SAP_Number__c.addError(errorMessage+eff.EF_Category__c+'/'+eff.EF_SubCategory__c);
+
+                    if (eff.Category__c != null && eff.SubCategory__c != null) {
+
+                        key = eff.Category__c+'.'+eff.SubCategory__c;
+
+                        if (sapNumberRequired.contains(key) && eff.SAP_Number__c == null) {
+
+                            eff.SAP_Number__c.addError(errorMessage+eff.Category__c+'/'+eff.SubCategory__c);
                         }
-                        
-                        if (expiryDateRequired.contains(key) && eff.EF_Expiry_Date__c == null) {
-                            
-                            eff.EF_Expiry_Date__c.addError(errorMessage+eff.EF_Category__c+'/'+eff.EF_SubCategory__c);
+
+                        if (expiryDateRequired.contains(key) && eff.Expiry_Date__c == null) {
+
+                            eff.Expiry_Date__c.addError(errorMessage+eff.Category__c+'/'+eff.SubCategory__c);
                         }
-                        
-                        if (expiredRequired.contains(key) && eff.EF_Expired__c == false) {
-                            
-                            eff.EF_Expired__c.addError(errorMessage+eff.EF_Category__c+'/'+eff.EF_SubCategory__c);
+
+                        if (expiredRequired.contains(key) && eff.Expired__c == false) {
+
+                            eff.Expired__c.addError(errorMessage+eff.Category__c+'/'+eff.SubCategory__c);
                         }
                     }
                 }
             }
         }
     }
+
 }

@@ -245,7 +245,7 @@ global with sharing class EF_AttachmentListController {
 		for ( WrapperAttach attach: listAttachments ) {
 			if (attach.id == this.editAttachmentId) {
 				this.editAttachment = attach;
-				System.debug(loggingLevel.Debug, '____ [cls EF_AttachmentListController - callEditAttachment] editAttachment.fileAmazon.amazonFile.EF_Expired__c - ' + editAttachment.fileAmazon.amazonFile.EF_Expired__c);
+				System.debug(loggingLevel.Debug, '____ [cls EF_AttachmentListController - callEditAttachment] editAttachment.fileAmazon.amazonFile.Expired__c - ' + editAttachment.fileAmazon.amazonFile.Expired__c);
 				return;
 			}
 		}
@@ -340,12 +340,12 @@ global with sharing class EF_AttachmentListController {
                 Name = filename,
                 sObject_Id__c = parentId,
                 Full_Name_Unique__c = amazonKey,
-                EF_Category__c = efCategory,
-                EF_Subcategory__c = efSubCategory,
-                EF_Document_Date__c = System.today(),
-                EF_Expired__c = efExpired,
-                EF_Expiry_Date__c = (String.isEmpty(efExpiryDate) ? null : Date.parse(efExpiryDate)),
-                EF_SAP_Number__c = efSapNumber,
+                Category__c = efCategory,
+                Subcategory__c = efSubCategory,
+                Document_Date__c = System.today(),
+                Expired__c = efExpired,
+                Expiry_Date__c = (String.isEmpty(efExpiryDate) ? null : Date.parse(efExpiryDate)),
+                SAP_Number__c = efSapNumber,
                 Size_MB__c = filesize* 0.000001 //convert to MB
             );
 
