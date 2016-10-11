@@ -33,7 +33,7 @@ private class EF_ContactHandlerTest {
         rel.Airline__c = customer.Id;
         rel.Contract__c = contract.Id;
         rel.EF_Location_ID__c =  [select Id, Name from EF_Related_Records__c where Name='Main' limit 1].Id;
-        rel.Status__c='Active';
+        rel.EF_Status__c='Active';
         insert rel;
         
         EF_Contact_Relationship__c cr = new EF_Contact_Relationship__c ();

@@ -24,17 +24,17 @@ public class EF_BillingAgreementHandler
             fields = fieldList.get(0).Billing_Agreement_Fields__c.split(',');
         else
             fields.add('Id');
-        List<EF_Billing_Agreement__c> approvedList = EF_BaContractApprovalHelper.identifyApprovedBillingAgreements(newValues, oldValues);
-        List<EF_Billing_Agreement__c> rejectedList = EF_BaContractApprovalHelper.identifyRejectedOrRecalledBillingAgreements(newValues, oldValues);
+        List<EF_Billing_Agreement__c> approvedList = EF_BaContractApprovalHelper.identifyApprovedRecords(newValues, oldValues);
+        List<EF_Billing_Agreement__c> rejectedList = EF_BaContractApprovalHelper.identifyRejectedOrRecalledRecords(newValues, oldValues);
         if(approvedList.size() > 0)
         {
             // If approval occurred, copies the approved values from temporary storage onto the record itself
-            EF_BaContractApprovalHelper.copyValuesFromTempStorageOnBaApproval(approvedList, fields);
+            EF_BaContractApprovalHelper.copyValuesFromTempStorageOnRecordApproval(approvedList, fields, 'EF_Billing_Agreement__c');
         }
         if(rejectedList.size() > 0)
         {
             // Or if rejected or recalled, simply ignore the changes and get rid of the temp storage record
-            EF_BaContractApprovalHelper.removeTempStorageRecordOnBaRejection(rejectedList);
+            EF_BaContractApprovalHelper.removeTempStorageRecordOnRecordRejection(rejectedList, 'EF_Billing_Agreement__c');
         }
     }
 
@@ -62,17 +62,33 @@ public class EF_BillingAgreementHandler
             List<EF_Approval__c> approvalStorageList = new List<EF_Approval__c>();
             // Get the list of fields that require Approval from Custom Settings and place them in a List
             List<EF_Approve_Fields__c> fieldList = [select id, name, Billing_Agreement_Fields__c from EF_Approve_Fields__c where Name = 'BillingAgreement'];
-            List<String> fields = fieldList.get(0).Billing_Agreement_Fields__c.split(',');
+            List<String> editFields = fieldList.get(0).Billing_Agreement_Fields__c.split(',');
+
+            List<String> fields = new List<String>();
+            for(String f : editFields)
+            {
+                if(f.equals('EF_Location_ID__c'))
+                    f = 'EF_Location_ID_Name__c';
+                if(f.equals('Airline__c'))
+                    f = 'Airline_Name__c';
+
+                fields.add(f);
+            }
+
+            for(String f : fields)
+            {
+                System.debug('************ f: '+f);
+            }
 
             // If there are any Billing Agreements that require approval, start the process to temporarily store them into another object
             for(EF_Billing_Agreement__c ba : agreementsToApprove)
             {
-                if(EF_BaContractApprovalHelper.identifyBillingAgreementChanges(ba, oldAgreements.get(ba.Id), fields, false))
+                if(EF_BaContractApprovalHelper.identifyRecordChanges(ba, oldAgreements.get(ba.Id), fields, false))
                 {
-                    EF_Approval__c approval = EF_BaContractApprovalHelper.fillTemporaryApprovalStorage(new EF_Approval__c(), ba, fields);
+                    EF_Approval__c approval = EF_BaContractApprovalHelper.fillTemporaryApprovalStorage(new EF_Approval__c(), ba, editFields, 'EF_Billing_Agreement__c');
                     ba.Require_Approval__c = true;
                     approvalStorageList.add(approval);
-                    EF_BaContractApprovalHelper.rollbackPreviousValues(ba, oldAgreements.get(ba.Id), fields);
+                    EF_BaContractApprovalHelper.rollbackPreviousValues(ba, oldAgreements.get(ba.Id), editFields);
                 }
             }
 
@@ -117,7 +133,18 @@ public class EF_BillingAgreementHandler
         
         // Get the list of fields that require Approval from Custom Settings and place them in a List
         List<EF_Approve_Fields__c> fieldList = [select id, name, Billing_Agreement_Fields__c from EF_Approve_Fields__c where Name = 'BillingAgreement'];
-        List<String> fields = fieldList.get(0).Billing_Agreement_Fields__c.split(',');
+        List<String> editFields = fieldList.get(0).Billing_Agreement_Fields__c.split(',');
+        
+        List<String> fields = new List<String>();
+            for(String f : editFields)
+            {
+                if(f.equals('EF_Location_ID__c'))
+                    f = 'EF_Location_ID_Name__c';
+                if(f.equals('Airline__c'))
+                    f = 'Airline_Name__c';
+
+                fields.add(f);
+            }
 
         // If there are any Billing Agreements that require approval, start the process to temporarily store them into another object
         for(EF_Billing_Agreement__c ba : agreementList)
@@ -125,8 +152,8 @@ public class EF_BillingAgreementHandler
             if(contractsInvolved.get(ba.Contract__c) != null)
             {
                 ba.Require_Approval__c = true;
-                ba.Status__c = 'Inactive';
-                EF_BaContractApprovalHelper.identifyBillingAgreementChanges(ba, null, fields, true);
+                ba.EF_Status__c = 'Inactive';
+                EF_BaContractApprovalHelper.identifyRecordChanges(ba, null, fields, true);
             }
         }
     }
