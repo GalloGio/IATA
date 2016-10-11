@@ -144,10 +144,13 @@ public class IECEBC_Utility {
 		queryWhereClauses.add(emailField + ' != null');
 		
 		
+		
 		if (masterFilter.Audience__c == 'Agent') {
 			queryWhereClauses.add('Opt_in__c = true');
+			queryWhereClauses.add('Is_Active_Card__c = true');
 			queryWhereClauses.add('Id NOT IN (Select ID_Card__c From EBC_Email_Exclusion_Relation__c Where Is_Global__c = true OR Billing_Account__c = \'' + masterFilter.Billing_Account__c + '\')');
 		} else {
+			queryWhereClauses.add('Agency_Status_Code__c >= 4');
 			queryWhereClauses.add('GDP_Opt_In__c = true');
 			queryWhereClauses.add('Id NOT IN (Select GDP_Products_Account_View__c From EBC_Email_Exclusion_Relation__c Where Is_Global__c = true OR Billing_Account__c = \'' + masterFilter.Billing_Account__c + '\')');
 		}
@@ -155,8 +158,15 @@ public class IECEBC_Utility {
 		 
 		
 		if (masterFilter.Audience__c == 'Custom') {
+            List<String> rawCodes = masterFilter.IATA_Codes__c.split(';');
+            List<String> limitedCodes = new List<String>();
+            for(String code : rawCodes) {
+                limitedCodes.add(code.left(7));
+            }
+            
+            
 			if (!String.isBlank(masterFilter.IATA_Codes__c)) {
-				queryWhereClauses.add('IATA_Code__c in (\'' + String.join(masterFilter.IATA_Codes__c.split(';'), '\',\'') + '\')');
+				queryWhereClauses.add('IATA_Code__c in (\'' + String.join(limitedCodes, '\',\'') + '\')');
 			}
 		} else {
 			System.debug(masterFilter);

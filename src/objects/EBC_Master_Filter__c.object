@@ -238,8 +238,8 @@
     <validationRules>
         <fullName>IATA_Codes</fullName>
         <active>true</active>
-        <errorConditionFormula>TEXT(Audience__c) == &apos;Custom&apos; &amp;&amp; !REGEX(IATA_Codes__c, &apos;^([0-9]{6,11};)*[0-9]{6,11}$&apos;)</errorConditionFormula>
+        <errorConditionFormula>TEXT(Audience__c) == &apos;Custom&apos; &amp;&amp; !REGEX(IATA_Codes__c, &apos;^([0-9]{7,11};)*[0-9]{7,11}$&apos;)</errorConditionFormula>
         <errorDisplayField>IATA_Codes__c</errorDisplayField>
-        <errorMessage>IATA Codes must be 6 to 11 digits separated by semicolon</errorMessage>
+        <errorMessage>IATA Codes must be 7 to 11 digits separated by semicolon. Do not use spaces or breaks to separate entries.</errorMessage>
     </validationRules>
 </CustomObject>
