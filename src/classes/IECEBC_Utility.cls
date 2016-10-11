@@ -32,14 +32,15 @@ public class IECEBC_Utility {
 	}
 	
 	public static void creditCampaign(Id campaignId) {
-		EBC_Campaign__c c = [Select Id, Number_of_Recipients__c, Billing_Account__c, Billing_Account__r.eBroadcast_Email_Balance__c From EBC_Campaign__c Where Id = :campaignId AND Status__c in ('APPROVED', 'PENDING_APPROVAL') LIMIT 1];
+		EBC_Campaign__c c = [Select Id, Name, Number_of_Recipients__c, Billing_Account__c, Billing_Account__r.eBroadcast_Email_Balance__c From EBC_Campaign__c Where Id = :campaignId AND Status__c in ('APPROVED', 'PENDING_APPROVAL') LIMIT 1];
 		
 		EBC_Activity__c a = new EBC_Activity__c();
 		a.EBC_Campaign__c = c.Id;
 		a.Related_Billing_Account__c = c.Billing_Account__c;
 		a.Total_Count__c = c.Number_of_Recipients__c;
 		a.New_Balance__c = c.Billing_Account__r.eBroadcast_Email_Balance__c + c.Number_of_Recipients__c;
-		a.Activity_Type__c = 'Credit';
+		a.Activity_Type__c = 'Send';
+		a.Name = 'Cancel campaign: ' + c.Name;
 		a.Activity_Date_Time__c  = Datetime.now();
 		insert a;
 	}

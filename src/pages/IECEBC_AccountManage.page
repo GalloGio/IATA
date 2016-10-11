@@ -27,15 +27,15 @@
 					//startObservingClassMutation();	
 					SetFilter();
 					
-					renderYayActivityGraph();
+                    //renderYayActivityGraph();
 					renderYtdActivityGraph();
  				});
 				
 				$j('#pane-1-a-year-to-date-tab').on('click',  function(event) {
-					renderYtdActivityGraph();
+                    setTimeout('renderYtdActivityGraph()', 1);
 				});
 				$j('#pane-1-a-last-12-months-tab').on('click',  function(event) {
-					renderYayActivityGraph();
+					setTimeout('renderYayActivityGraph()', 1);
 				});
 					
 			
@@ -163,7 +163,7 @@
 								}
 							]
 					});
-					$j(window).resize();
+	                jQuery(window).resize();
 					return chart;
 				} // end of renderYtdActivityGraph
 			
