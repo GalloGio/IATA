@@ -12,11 +12,11 @@ public with sharing class ContractButtonsController {
         public get {
             String currentUserProfile = [SELECT Name FROM Profile WHERE Id = :UserInfo.getProfileId()].Name;
             String allowedProfiles = 'MACS - Administrator,MACS - Customer Care,MACS - Direct Sales,MACS - Events - Worldtek,MACS - Field Sales,MACS - IATAN - TIESS,' + 
-            		'MACS - Marketing & Publishing,MACS - Strategic Partnerships,System Administrator';
+            		'MACS - Marketing & Publishing,MACS - Strategic Partnerships,MACS - Product,System Administrator';
             
             // Only the Owner can see these buttons, if he/she is a SM and the renewal process has not already been started 
-            Boolean tmpResult = allowedProfiles.contains(currentUserProfile) && 
-            					con.OwnerId == UserInfo.getUserId() && 
+            Boolean tmpResult = ( allowedProfiles.contains(currentUserProfile) && con.OwnerId == UserInfo.getUserId() ) || 
+                                ( con.Current_Opportunity__r.OwnerId == UserInfo.getUserId() || con.Current_Opportunity__r.RCRM_Product_Manager__c == UserInfo.getUserId() || con.Current_Opportunity__r.Alternate_RCRM_Product_Manager__c == UserInfo.getUserId() ) && 
             					( con.Renewal_Status__c == null || con.Renewal_Status__c == 'Renewed as-is' );
              
             return tmpResult;
@@ -26,7 +26,8 @@ public with sharing class ContractButtonsController {
     public Boolean showPMRenewButtons {
         public get {
             String currentUserProfile = [SELECT Name FROM Profile WHERE Id = :UserInfo.getProfileId()].Name;
-            String allowedProfiles = 'MACS - Product,System Administrator';
+            String allowedProfiles = 'MACS - Administrator,MACS - Customer Care,MACS - Direct Sales,MACS - Events - Worldtek,MACS - Field Sales,MACS - IATAN - TIESS,' + 
+                    'MACS - Marketing & Publishing,MACS - Strategic Partnerships,MACS - Product,System Administrator';
             
             // Only the Owner can see these buttons, if he/she is a PM and the renewal process has not already been started 
             Boolean tmpResult = (allowedProfiles.contains(currentUserProfile) || con.RCRM_Product_Manager__c == UserInfo.getUserId()) && 
@@ -62,7 +63,7 @@ public with sharing class ContractButtonsController {
     
 	public ContractButtonsController (final ApexPages.StandardController controller) {
     	if (controller.getRecord().Id != null ) {
-    		con = [SELECT Id, Renewal_Status__c, OwnerId, RCRM_Product_Manager__c FROM Contract WHERE Id = :controller.getRecord().Id];
+    		con = [SELECT Id, Renewal_Status__c, OwnerId, RCRM_Product_Manager__c, Current_Opportunity__r.OwnerId, Current_Opportunity__r.RCRM_Product_Manager__c, Current_Opportunity__r.Alternate_RCRM_Product_Manager__c FROM Contract WHERE Id = :controller.getRecord().Id];
     		
     		// There should be only 1 future opportunity, but a list is used for the situation where the renewal process has already been started and there is no more 
     		// 'Future renewal' opportunity
