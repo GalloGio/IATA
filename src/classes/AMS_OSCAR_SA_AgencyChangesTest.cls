@@ -68,7 +68,7 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
             targetAgencyId = targetAgency.Id;
 
         //open the OSCAR in a BR which has child SA agencies
-        AMS_OSCAR__c oscar = new AMS_OSCAR__c(RecordTypeId = rtChange, Account__c = oscarAccount.Id, Type_of_change__c = typeOfChange, Change_of_location_type_behavior__c = changeLocTypeBehavior, AMS_Target_Agency__c = targetAgencyId);
+        AMS_OSCAR__c oscar = new AMS_OSCAR__c(RecordTypeId = rtChange, Account__c = oscarAccount.Id, Type_of_change__c = typeOfChange, Change_of_location_type_behavior__c = changeLocTypeBehavior, AMS_Target_Agency__c = targetAgencyId, Change_effective_as_of__c = Date.today());
         insert oscar;
 
         ID rtCommCase = Schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
@@ -89,7 +89,7 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
         oscar.AMS_Online_Accreditation__c = stagingArea.Id;
         update oscar;
 
-        return [SELECT Id, Account__c, Type_of_change__c FROM AMS_OSCAR__c LIMIT 1];
+        return [SELECT Id, Account__c, Type_of_change__c,Change_effective_as_of__c FROM AMS_OSCAR__c LIMIT 1];
 
     }
 
@@ -642,6 +642,7 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
             update oscar;
             System.assert(false, 'exception expected');
         } catch (Exception e) {
+          system.debug('error message: ' + e.getMessage());
             Boolean expectedExceptionThrown =  e.getMessage().contains('OSCAR for Change of Location Type cannot be performed in an HO.') ? true : false;
             System.assertEquals(expectedExceptionThrown, true);
         }
@@ -1725,12 +1726,15 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
         System.assertEquals(7,con.hierarchy.size());
 
         con.hierarchy[2].main = true;
-        con.hierarchy[2].selectMain(); //simulates page actionSupport
-        System.assertNotEquals(HO1.Id, con.oscar.Account__c);
 
-        con.hierarchy[2].main = false;
-        con.hierarchy[2].selectMain(); //simulates page actionSupport
-        System.assert(con.hierarchy[2].main);
+        //emulate js
+        con.hierarchy[2].selected  = false;
+        con.hierarchy[0].main = false;
+        con.hierarchy[0].main = false;
+        // /emulate js
+
+        con.selectMain();        
+        System.assertNotEquals(HO1.Id, con.oscar.Account__c);
 
         System.assert(!con.oscarFieldList.isEmpty());
         System.assert(con.showTargetAgency);

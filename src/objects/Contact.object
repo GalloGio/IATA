@@ -5889,6 +5889,10 @@ IFAP Application.</description>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>IT</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>Legal</fullName>
                 <default>false</default>
             </picklistValues>
@@ -5897,7 +5901,7 @@ IFAP Application.</description>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>None</fullName>
+                <fullName>Media</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -5924,7 +5928,7 @@ IFAP Application.</description>
                 <fullName>Training</fullName>
                 <default>false</default>
             </picklistValues>
-            <sorted>false</sorted>
+            <sorted>true</sorted>
         </picklist>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
@@ -7095,15 +7099,7 @@ TotalRows-Successes-Errors</description>
         <label>Job Function</label>
         <picklist>
             <picklistValues>
-                <fullName>Gen.Management</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Technical</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Commercial</fullName>
+                <fullName>Aeropolitical</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -7111,27 +7107,7 @@ TotalRows-Successes-Errors</description>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Finance</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Other</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Legal</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Operations</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Safety</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Aeropolitical</fullName>
+                <fullName>Commercial</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -7139,7 +7115,23 @@ TotalRows-Successes-Errors</description>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>Finance</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Gen.Management</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>Human Resources</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>IT</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Legal</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -7147,22 +7139,34 @@ TotalRows-Successes-Errors</description>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>Media</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Operations</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Safety</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>Security&amp; Facilitation</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Technical</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>Training</fullName>
                 <default>false</default>
             </picklistValues>
-            <picklistValues>
-                <fullName>Media</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>IT</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
+            <sorted>true</sorted>
         </picklist>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
@@ -11987,7 +11991,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
     </recordTypes>
     <recordTypes>
         <fullName>IATAStandardContact</fullName>
-        <active>true</active>
+        <active>false</active>
         <description>Used for all standard Contacts</description>
         <label>IATA Standard Contact</label>
         <picklistValues>
@@ -20873,7 +20877,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
                 <default>false</default>
             </values>
             <values>
-                <fullName>None</fullName>
+                <fullName>Media</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -23269,6 +23273,10 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
                 <default>false</default>
             </values>
             <values>
+                <fullName>IT</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Legal</fullName>
                 <default>false</default>
             </values>
@@ -23277,7 +23285,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
                 <default>false</default>
             </values>
             <values>
-                <fullName>None</fullName>
+                <fullName>Media</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -25886,6 +25894,10 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
                 <default>false</default>
             </values>
             <values>
+                <fullName>IT</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Legal</fullName>
                 <default>false</default>
             </values>
@@ -25894,7 +25906,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
                 <default>false</default>
             </values>
             <values>
-                <fullName>None</fullName>
+                <fullName>Media</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -27181,6 +27193,14 @@ ISCHANGED(ISSP_Contact_Name__c )
         <errorMessage>You cannot change your own status</errorMessage>
     </validationRules>
     <validationRules>
+        <fullName>Contact_email_change_BSPlink</fullName>
+        <active>true</active>
+        <description>prevents changes of email address for BSPlink users.</description>
+        <errorConditionFormula>aND(S_BSPlink__c&lt;&gt;0,ischanged(Email),$User.Username&lt;&gt;&quot;oscarl@iata.org&quot;,$User.Username&lt;&gt;&quot;rovedar@iata.org&quot;,
+NOT(Contains($Profile.Name, &quot;System Administrator&quot;)))</errorConditionFormula>
+        <errorMessage>Changing a BSPlink user&apos;s email may cause problems with SSO.If the user&apos;s access to BSPlink is to be switched to another email, do the changes in BSPlink. Otherwise if the contact is changing their email, please post a comment on the portal chatter group</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>Email_Update_Date_Must_be_Added</fullName>
         <active>false</active>
         <errorConditionFormula>AND(ISCHANGED( Email_Status__c ), OR( Email_Status_Update__c    &lt;    TODAY(), ISNULL( Email_Status_Update__c  )))</errorConditionFormula>
@@ -27851,7 +27871,7 @@ myuser={!User.Id}</url>
 ?sessionId={!API.Session_ID}
 &amp;serverUrl={!API.Partner_Server_URL_290}
 &amp;id={!Contact.Id}
-&amp;templateId=a7v8E00000004ng
+&amp;templateId=a87w00000009Nkg
 &amp;AC0=0
 &amp;DS7=3</url>
     </webLinks>
@@ -27877,7 +27897,7 @@ myuser={!User.Id}</url>
 ?sessionId={!API.Session_ID}
 &amp;serverUrl={!API.Partner_Server_URL_290}
 &amp;id={!Contact.Id}
-&amp;templateId=a7v8E00000004nl
+&amp;templateId=a87w00000009Nkl
 &amp;AC0=0
 &amp;DS7=3</url>
     </webLinks>
