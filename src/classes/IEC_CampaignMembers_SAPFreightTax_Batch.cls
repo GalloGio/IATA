@@ -13,7 +13,7 @@ global class IEC_CampaignMembers_SAPFreightTax_Batch implements Database.Batchab
 	}
 	
 	global Database.QueryLocator start(Database.BatchableContext BC) {
-		String query = 'SELECT Id, BillToContactId, Campaign__c FROM Order where Campaign__c =\'' + campaigId + '\' ';
+		String query = 'SELECT Id, BillToContactId, Campaign__c FROM Order where Campaign__c =\'' + campaigId + '\' and Type = \'Renewal Notification\' ';
 		return Database.getQueryLocator(query);
 	}
 

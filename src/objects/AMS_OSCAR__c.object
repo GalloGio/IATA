@@ -5465,12 +5465,6 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Applicable_changes__c</picklist>
-            <values>
-                <fullName>Change of legal status</fullName>
-                <default>false</default>
-            </values>
-        <picklistValues>
             <picklist>AMS_Correction_change_code__c</picklist>
             <values>
                 <fullName>CAD</fullName>
@@ -5481,6 +5475,12 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
                 <default>false</default>
             </values>
         </picklistValues>
+        <picklistValues>
+            <picklist>Applicable_changes__c</picklist>
+            <values>
+                <fullName>Change of legal status</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>Change of location</fullName>
                 <default>false</default>
@@ -10326,7 +10326,7 @@ alert(&apos; Failed to generate a new IATA CODE. Please contact your administrat
         <protected>false</protected>
         <url>{!REQUIRESCRIPT(&quot;/support/console/30.0/integration.js&quot;)} 
 
-if (sforce.console.isInConsole()) { 
+if (typeof(srcUp) == &apos;function&apos;) {
 srcUp(&quot;/apex/AMS_OSCAR_Attachment_List?id={!AMS_OSCAR__c.Id}&quot;); 
 } else { 
 window.open(&quot;/apex/AMS_OSCAR_Attachment_List?id={!AMS_OSCAR__c.Id}&quot;); 
