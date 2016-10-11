@@ -319,7 +319,6 @@
     </relatedContent>
     <relatedLists>
         <fields>NAME</fields>
-        <fields>SAP_ID_8digit__c</fields>
         <relatedList>Charge_Request__c.Local_Charge_Request__c</relatedList>
     </relatedLists>
     <relatedLists>

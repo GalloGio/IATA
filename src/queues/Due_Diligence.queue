@@ -4,9 +4,6 @@
     <email>sakhafs@iata.org</email>
     <name>Due Diligence</name>
     <queueSobject>
-        <sobjectType>AMS_OSCAR__c</sobjectType>
-    </queueSobject>
-    <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>
 </Queue>

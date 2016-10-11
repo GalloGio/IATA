@@ -29,8 +29,7 @@ public class ISSP_Portal_Application_RightTest {
 		                            PortalRole = 'Manager',
 		                            CommunityNickname = contact.email.substring(0, contact.email.indexOf('@'))+Datetime.now().formatLong().substring(10,15),
 		                            ProfileId = ISSP_Constant.TEST_User_ProfileID,
-		                            IsActive = true,
-		                            Community__c = 'IEC');
+		                            IsActive = true);
 	    	insert newUser;
 			Portal_Applications__c app = new Portal_Applications__c(Name = 'SIS'); 
 	        insert app;
@@ -82,8 +81,7 @@ public class ISSP_Portal_Application_RightTest {
 		                            PortalRole = 'Manager',
 		                            CommunityNickname = contact.email.substring(0, contact.email.indexOf('@'))+Datetime.now().formatLong().substring(10,15),
 		                            ProfileId = ISSP_Constant.TEST_User_ProfileID,
-		                            IsActive = true,
-		                            Community__c = 'IEC');
+		                            IsActive = true);
 	    	insert newUser;
     	
 

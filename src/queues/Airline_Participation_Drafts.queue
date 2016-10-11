@@ -4,9 +4,6 @@
     <email>martinsp@iata.org</email>
     <name>Airline Participation - Drafts</name>
     <queueSobject>
-        <sobjectType>AMS_OSCAR__c</sobjectType>
-    </queueSobject>
-    <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>
 </Queue>

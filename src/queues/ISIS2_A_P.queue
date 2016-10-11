@@ -4,9 +4,6 @@
     <email>noreply@iata.org</email>
     <name>ISIS2 - A&amp;P</name>
     <queueSobject>
-        <sobjectType>AMS_OSCAR__c</sobjectType>
-    </queueSobject>
-    <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>
 </Queue>

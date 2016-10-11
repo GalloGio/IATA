@@ -4,9 +4,6 @@
     <email>iata.recyclebin.europe@gmail.com</email>
     <name>Cases - OCIT Europe</name>
     <queueSobject>
-        <sobjectType>AMS_OSCAR__c</sobjectType>
-    </queueSobject>
-    <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>
     <queueSobject>

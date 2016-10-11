@@ -243,7 +243,7 @@ public without sharing class IECApplicationsManager {
             else if (sProductCategoryCode == IECConstants.ProductCategory_SF_GAD)
                 sQueryWhereClauses.add('Related_Accreditation_Class_Code__c NOT IN (\'A\', \'I\', \'L\', \'Q\', \'R\', \'U\', \'Y\', \'Z\', \'C\', \'X\')');
             else if (sProductCategoryCode == IECConstants.ProductCategory_SF_PAL)
-                sQueryWhereClauses.add('Related_Accreditation_Class_Code__c IN (\'P\', \'D\')');
+                sQueryWhereClauses.add('Related_Accreditation_Class_Code__c IN (\'P\', \'D\', \'V\')');
             else if (sProductCategoryCode == IECConstants.ProductCategory_SF_CAL)
                 sQueryWhereClauses.add('Related_Accreditation_Class_Code__c IN (\'C\')');
             else if (sProductCategoryCode == IECConstants.ProductCategory_SF_ASL)

@@ -362,10 +362,6 @@
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>LU</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
                 <fullName>LV</fullName>
                 <default>false</default>
             </picklistValues>

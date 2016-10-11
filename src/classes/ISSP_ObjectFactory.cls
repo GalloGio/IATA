@@ -287,7 +287,6 @@ public with sharing class ISSP_ObjectFactory {
                                 PortalRole = 'Manager',
                                 CommunityNickname = con.email.substring(0, con.email.indexOf('@'))+Datetime.now().formatLong().substring(10,15),
                                 ProfileId = ISSP_Constant.TEST_User_ProfileID,
-                                community__c = 'ISSP',
                                 IsActive = true);
         insert newUser;
         return newUser;
@@ -315,7 +314,6 @@ public with sharing class ISSP_ObjectFactory {
                                 PortalRole = 'Manager',
                                 CommunityNickname = con.email.substring(0, con.email.indexOf('@'))+Datetime.now().formatLong().substring(10,15),
                                 ProfileId = ISSP_Constant.TEST_User_ProfileID,
-                                Community__c = 'IEC',
                                 IsActive = false);
         insert newUser;
         return newUser;
@@ -341,8 +339,7 @@ public with sharing class ISSP_ObjectFactory {
                                 PortalRole = 'Manager',
                                 CommunityNickname = con.email.substring(0, con.email.indexOf('@'))+Datetime.now().formatLong().substring(10,15),
                                 ProfileId = ISSP_Constant.TEST_Basic_Airline_User_ProfileID,
-                                IsActive = true,
-                                Community__c = 'IEC');
+                                IsActive = true);
         insert newUser;
         return newUser;
     }
@@ -366,7 +363,6 @@ public with sharing class ISSP_ObjectFactory {
                                 License_Cost_Center__c = 'ITO005CH01',
                                 CommunityNickname = 'admin'+Datetime.now().formatLong().substring(10,15),
                                 ProfileId = [select Id from Profile where Name='System Administrator' limit 1].Id,
-                                Community__c = 'IEC',
                                 IsActive = true);
         insert newUser;
         return newUser;

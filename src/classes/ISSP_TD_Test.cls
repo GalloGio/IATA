@@ -23,8 +23,7 @@ private class ISSP_TD_Test {
 	                            PortalRole = 'Manager',
 	                            CommunityNickname = contact.email.substring(0, contact.email.indexOf('@'))+Datetime.now().formatLong().substring(10,15),
 	                            ProfileId = profileId,
-	                            IsActive = true,
-	                            Community__c = 'IEC');
+	                            IsActive = true);
     	insert newUser;
     	
     	ISSP_TD_Reports__c tdCS1 = new ISSP_TD_Reports__c();
@@ -90,8 +89,7 @@ private class ISSP_TD_Test {
 	                            PortalRole = 'Manager',
 	                            CommunityNickname = contact.email.substring(0, contact.email.indexOf('@'))+Datetime.now().formatLong().substring(10,15),
 	                            ProfileId = profileId,
-	                            IsActive = true,
-	                            Community__c = 'IEC');
+	                            IsActive = true);
     	insert newUser;
     	
     	User thisUser = [ select Id from User where Id = :UserInfo.getUserId() ];
@@ -148,8 +146,7 @@ private class ISSP_TD_Test {
 		                            PortalRole = 'Manager',
 		                            CommunityNickname = contact.email.substring(0, contact.email.indexOf('@'))+Datetime.now().formatLong().substring(10,15),
 		                            ProfileId = profileId,
-		                            IsActive = true,
-		                            Community__c = 'IEC');
+		                            IsActive = true);
 	    	insert newUser;
 	    	
 		    ISSP_TD ctrl = new ISSP_TD();
