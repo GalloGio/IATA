@@ -94,15 +94,4 @@
         <operation>Formula</operation>
         <protected>false</protected>
     </fieldUpdates>
-    <rules>
-        <fullName>Change Renewal Status</fullName>
-        <actions>
-            <name>Send_Email_When_Renewal_process_started</name>
-            <type>Alert</type>
-        </actions>
-        <active>true</active>
-        <description>Once the Renewal_Status__c  changes to &quot;Renewal process started&quot; the Current Opportunity Owner, the RCRM Product Manager and Alternate RCRM Product Manager  should be notified.</description>
-        <formula>AND( ISPICKVAL(  Renewal_Status__c , &apos;Renewal process started&apos;), ISCHANGED( Renewal_Status__c ) )</formula>
-        <triggerType>onAllChanges</triggerType>
-    </rules>
 </Workflow>
