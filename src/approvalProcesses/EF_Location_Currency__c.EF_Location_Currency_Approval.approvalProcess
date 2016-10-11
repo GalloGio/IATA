@@ -7,14 +7,13 @@
     </allowedSubmitters>
     <approvalPageFields>
         <field>Name</field>
-        <field>Billing_Currency__c</field>
-        <field>Client__c</field>
-        <field>EF_Location_ID__c</field>
-        <field>EF_Status__c</field>
-        <field>Payment_Method__c</field>
+        <field>Contract__c</field>
+        <field>00N3E000000W7tM</field>
+        <field>Location_ID_Name__c</field>
+        <field>Requested_Changes__c</field>
     </approvalPageFields>
     <approvalStep>
-        <allowDelegate>false</allowDelegate>
+        <allowDelegate>true</allowDelegate>
         <assignedApprover>
             <approver>
                 <type>userHierarchyField</type>
@@ -23,53 +22,53 @@
         <label>Step 1</label>
         <name>Step_1</name>
     </approvalStep>
-    <description>E&amp;F Release 1, User-story 778: Approval process for E&amp;F Airline Billing Agreements. Fired on changes to several key fields, but not all fields.</description>
-    <emailTemplate>E_F_Services/EF_Billing_Agreement_Approval_Request</emailTemplate>
+    <description>Approval process for inserts or updates for E&amp;F Location Currency records under E&amp;F Contract.</description>
+    <emailTemplate>E_F_Services/EF_Location_Currency_Request</emailTemplate>
     <enableMobileDeviceAccess>false</enableMobileDeviceAccess>
     <entryCriteria>
         <criteriaItems>
-            <field>EF_Billing_Agreement__c.Require_Approval__c</field>
+            <field>EF_Location_Currency__c.Require_Approval__c</field>
             <operation>equals</operation>
             <value>True</value>
         </criteriaItems>
     </entryCriteria>
     <finalApprovalActions>
         <action>
-            <name>EF_Notify_BA_Owner_of_Manager_Approval</name>
-            <type>Alert</type>
-        </action>
-        <action>
-            <name>EF_Set_Approval_to_Approved</name>
+            <name>EF_Set_Manager_Approval_To_Approved</name>
             <type>FieldUpdate</type>
         </action>
         <action>
             <name>EF_Set_Require_Approval_To_False</name>
             <type>FieldUpdate</type>
+        </action>
+        <action>
+            <name>Notify_Submitter_of_Manager_Approval</name>
+            <type>Alert</type>
         </action>
     </finalApprovalActions>
     <finalApprovalRecordLock>false</finalApprovalRecordLock>
     <finalRejectionActions>
         <action>
-            <name>EF_Billing_Agreement_Rejected</name>
-            <type>Alert</type>
-        </action>
-        <action>
-            <name>EF_Set_Approval_to_Rejected</name>
+            <name>EF_Set_Manager_Approval_To_Rejected</name>
             <type>FieldUpdate</type>
         </action>
         <action>
             <name>EF_Set_Require_Approval_To_False</name>
             <type>FieldUpdate</type>
         </action>
+        <action>
+            <name>Notify_Submitter_of_Manager_Rejection</name>
+            <type>Alert</type>
+        </action>
     </finalRejectionActions>
     <finalRejectionRecordLock>false</finalRejectionRecordLock>
     <initialSubmissionActions>
         <action>
-            <name>Add_Approver_Email</name>
+            <name>EF_Set_Manager_Approval_In_Progress</name>
             <type>FieldUpdate</type>
         </action>
         <action>
-            <name>EF_Set_Approval_to_In_Progress</name>
+            <name>Set_Approver_Email</name>
             <type>FieldUpdate</type>
         </action>
         <action>
@@ -77,21 +76,21 @@
             <type>FieldUpdate</type>
         </action>
     </initialSubmissionActions>
-    <label>EF Billing Agreement Approval</label>
+    <label>EF Location Currency Approval</label>
     <nextAutomatedApprover>
         <useApproverFieldOfRecordOwner>false</useApproverFieldOfRecordOwner>
-        <userHierarchyField>EF_Billing_Agreement_Approver__c</userHierarchyField>
+        <userHierarchyField>EF_Contract_Approver__c</userHierarchyField>
     </nextAutomatedApprover>
     <recallActions>
+        <action>
+            <name>EF_Set_Manager_Approval_To_Recalled</name>
+            <type>FieldUpdate</type>
+        </action>
         <action>
             <name>EF_Set_Require_Approval_To_False</name>
             <type>FieldUpdate</type>
         </action>
-        <action>
-            <name>EF_Set_Require_Approval_To_Recalled</name>
-            <type>FieldUpdate</type>
-        </action>
     </recallActions>
     <recordEditability>AdminOnly</recordEditability>
-    <showApprovalHistory>true</showApprovalHistory>
+    <showApprovalHistory>false</showApprovalHistory>
 </ApprovalProcess>
