@@ -5379,7 +5379,7 @@ IF(IsClosed, &quot;Closed&quot;, &quot;Open&quot;)</formula>
         <description>SIDRA</description>
         <field>Acc_IRR_leading_to_DEF__c</field>
         <formula>CASE( Region__c , 
-&quot;Europe&quot;, IF(OR(ISPICKVAL( BSPCountry__c, &quot;Hungary&quot; ),ISPICKVAL( BSPCountry__c, &quot;Switzerland &amp; Liechtenstein&quot; ),ISPICKVAL( BSPCountry__c, &quot;Poland&quot; ),ISPICKVAL( BSP_CASS__c ,&quot;BSP&quot;)),6,4), &quot;Africa &amp; middle east&quot;,4, &quot;Asia &amp; pacific&quot;, IF(OR(ISPICKVAL( BSPCountry__c , &quot;Nepal&quot;), AND(ISPICKVAL( BSPCountry__c , &quot;India&quot;),ISPICKVAL( BSP_CASS__c ,&quot;BSP&quot;))), 6,4),&quot;China &amp; North Asia&quot;, IF(AND(ISPICKVAL( BSPCountry__c , &quot;People&apos;s republic of China&quot;),ISPICKVAL( BSP_CASS__c ,&quot;BSP&quot;)),10,4),&quot;Americas&quot;, 
+&quot;Europe&quot;, IF(AND(OR(ISPICKVAL( BSPCountry__c, &quot;Hungary&quot; ),ISPICKVAL( BSPCountry__c, &quot;Switzerland &amp; Liechtenstein&quot; ),ISPICKVAL( BSPCountry__c, &quot;Poland&quot; )),ISPICKVAL( BSP_CASS__c ,&quot;BSP&quot;)),6,4), &quot;Africa &amp; middle east&quot;,4, &quot;Asia &amp; pacific&quot;, IF(OR(ISPICKVAL( BSPCountry__c , &quot;Nepal&quot;), AND(ISPICKVAL( BSPCountry__c , &quot;India&quot;),ISPICKVAL( BSP_CASS__c ,&quot;BSP&quot;))), 6,4),&quot;China &amp; North Asia&quot;, IF(AND(ISPICKVAL( BSPCountry__c , &quot;People&apos;s republic of China&quot;),ISPICKVAL( BSP_CASS__c ,&quot;BSP&quot;)),10,4),&quot;Americas&quot;, 
 
 IF(ISPICKVAL( BSP_CASS__c ,&quot;CASS&quot;), 4, IF(OR(ISPICKVAL( BSPCountry__c , &quot;Argentina&quot;),ISPICKVAL( BSPCountry__c , &quot;Uruguay&quot;),ISPICKVAL( BSPCountry__c , &quot;Paraguay&quot;)),8,6)),-1 
 )</formula>
@@ -15036,14 +15036,6 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
         <workflowTimeTriggers>
             <actions>
-                <name>ISSP_Send_expiration_Reminder</name>
-                <type>Alert</type>
-            </actions>
-            <timeLength>13</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-        <workflowTimeTriggers>
-            <actions>
                 <name>ISS_Portal_Make_case_invisible</name>
                 <type>FieldUpdate</type>
             </actions>
@@ -15056,6 +15048,14 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
                 <type>FieldUpdate</type>
             </actions>
             <timeLength>15</timeLength>
+            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+        <workflowTimeTriggers>
+            <actions>
+                <name>ISSP_Send_expiration_Reminder</name>
+                <type>Alert</type>
+            </actions>
+            <timeLength>13</timeLength>
             <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
         </workflowTimeTriggers>
     </rules>
