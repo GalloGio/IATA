@@ -377,8 +377,6 @@ public class AMS_OSCARTriggerHandler {
 
 				} else if (oldOSCAR.RPM_Approval__c <> AMS_Utils.AUTH_APPROVAL && oscar.RPM_Approval__c == AMS_Utils.AUTH_APPROVAL) {
 
-					if(!performOscarValidations(toclist, agenciesAffected, oscar, accounts, accountHierarchyRelationships))
-						return;
 
 					if (nonCascadingTOCs.length() > 0 && nonCascadingTOCs.containsIgnoreCase(AMS_Utils.LOCATION_TYPE)) {
 						System.debug('AGENCY CHANGES: Processing Location Type Change Codes on Authorize Approval.');
@@ -681,7 +679,7 @@ public class AMS_OSCARTriggerHandler {
 
 
 		Account oscarAccount = accounts.get(oscar.Account__c);
-		if (tocList.contains(AMS_Utils.LOCATION_TYPE) && oscar.STEP6__c == AMS_Utils.PASSED &&  oscar.RPM_Approval__c != AMS_Utils.AUTH_APPROVAL){
+		if (tocList.contains(AMS_Utils.LOCATION_TYPE)){
 			//block change of location type in Head Office
 			if(oscarAccount.Location_Type__c.equalsIgnoreCase(AMS_Utils.HO) || oscarAccount.Location_Type__c.equalsIgnoreCase(AMS_Utils.AO)){
 				oscar.addError('OSCAR for Change of Location Type cannot be performed in an HO.');
