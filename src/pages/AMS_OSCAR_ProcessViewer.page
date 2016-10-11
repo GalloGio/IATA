@@ -369,15 +369,6 @@ function buildFunctionCall(func, argList){
     </div>
 </apex:pageBlock>
 
-<apex:pageBlock rendered="{!IF(oscar != null &&  isAgencyChange &&oscar.Change_effective_as_of__c!=null && oscar.Change_effective_as_of__c > TODAY(),true,false)}">
-    <div class="overlay">
-    <div class="overlay-content">
-        <p style="font-size: 36px;">LOCKED</p>
-        <p> This OSCAR should not be processed until the date "Change effective as of" will be reached ({!EffectiveDate})</p>
-      </div>
-    </div>
-</apex:pageBlock>
-
 <apex:form id="oscarForm" rendered="{!IF(oscar != null && oscar.Process__c!=null ,true, false)}">
     <apex:outputPanel id="theProcess">
     <apex:pageBlock >

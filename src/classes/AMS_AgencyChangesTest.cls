@@ -138,7 +138,7 @@ public class AMS_AgencyChangesTest {
 		
 		// Create OSCAR and Communication Case
 		ID rtChange = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('CHANGE').getRecordTypeId();
-		theOscar = new AMS_OSCAR__c(RecordTypeId = rtChange, Account__c = theAccount.Id, Type_of_change__c = typeOfChange, change_effective_as_of__c = Date.today());
+		theOscar = new AMS_OSCAR__c(RecordTypeId = rtChange, Account__c = theAccount.Id, Type_of_change__c = typeOfChange);
 		insert theOscar;
 
 		ID rtCommCase = Schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
@@ -238,12 +238,14 @@ public class AMS_AgencyChangesTest {
 	// At the end the hierarchy is not changed, only the owners should be changed for everybody
 	
 	static TestMethod void testChangeOfOwnershipNonIATABuysAllHierarchy(){
-		system.debug(LoggingLevel.ERROR, '[LF]: testChangeOfOwnershipNonIATABuysAllHierarchy()');
+		
 		// Initialize the hierarchy and create an OSCAR
 
 		init2Hierarchies(true);
 		createOSCAR(HO1, C1, CHANGEOWNERSHIPNONIATA, null);
+		
 		Test.startTest();
+		
 		// Add to the OSCAR the list of accounts involved in the change
 		ID rtAgencyInvolved = Schema.SObjectType.AMS_Process_Detail__c.getRecordTypeInfosByName().get('Agency Involved').getRecordTypeId();
 		
@@ -254,19 +256,14 @@ public class AMS_AgencyChangesTest {
 		insert agenciesinvolved;*/
 		AMS_OSCAR__c oscar = [SELECT Id, Account__c FROM AMS_OSCAR__c LIMIT 1];
 		AMS_HierarchyHelper.createProcessDetailForFullHierarchy(oscar.Id, oscar.Account__c);
+
 		List<AMS_Process_Detail__c> accountsToMigrate = [SELECT Id FROM AMS_Process_Detail__c WHERE Oscar__c =: oscar.Id];
 		system.assertEquals(3,accountsToMigrate.size(), 'All Accounts in the hierarchy (excluding the one related to the oscar) should be added to the Process Detail');
 		
-		// If I pass the sanity check (STEP 6) a change code CHO should be generated all the agencies involved (HO1, BR1, BR2, BR3)
-		system.debug(LoggingLevel.ERROR, '[LF]: theOSCAR ha Change_effective_as_of__c = '+theOSCAR.change_effective_as_of__c+' e sanity checks = '+theOSCAR.STEP6__c);
-		theOSCAR.STEP6__c = 'Passed';
-		theOSCAR.Change_effective_as_of__c = Date.today();
 		
+		// If I pass the sanity check (STEP 6) a change code CHO should be generated all the agencies involved (HO1, BR1, BR2, BR3)
+		theOSCAR.STEP6__c = 'Passed';
 		update theOSCAR;
-
-		theoscar = [SELECT Id, STEP6__c,Change_effective_as_of__c,RPM_Approval__c FROM AMS_OSCAR__c LIMIT 1];
-		system.assertEquals('Passed',theOSCAR.STEP6__c,'Change of Ownership S1: sanity checks should pass without errors');
-		system.debug(LoggingLevel.ERROR, '[LF]: theOSCAR ha Change_effective_as_of__c = '+theOSCAR.change_effective_as_of__c+' e sanity checks = '+theOSCAR.STEP6__c);
 		
 		List<Agency_Applied_Change_code__c> changecodes = [SELECT Account__r.IATAcode__c, Change_Code__c FROM Agency_Applied_Change_code__c 
 														   WHERE OSCAR__c = :theOscar.Id  ORDER BY Account__r.IATAcode__c];
@@ -278,12 +275,9 @@ public class AMS_AgencyChangesTest {
 		system.assertEquals('1111113',changecodes[3].Account__r.IATAcode__c, 'Change of Ownership S1: when sanity checks are passed a CHO change code should be created the Branch BR3');
 		
 		// If I finalize the change (STEP 2) a change code CHF should be generated for all the agencies involved (HO1, BR1, BR2, BR3)
-		system.debug(LoggingLevel.ERROR, '[LF]: theOSCAR ha Change_effective_as_of__c = '+theOSCAR.change_effective_as_of__c+' e approval = '+theOSCAR.RPM_Approval__c);
 		theOSCAR.RPM_Approval__c = 'Authorize Approval';
 		update theOSCAR;
-		system.debug(LoggingLevel.ERROR, '[LF]: theOSCAR ha Change_effective_as_of__c = '+theOSCAR.change_effective_as_of__c+' e approval = '+theOSCAR.RPM_Approval__c);
-		theoscar = [SELECT Id, Account__c FROM AMS_OSCAR__c LIMIT 1];
-
+		
 		changecodes = [SELECT Account__r.IATAcode__c, Change_Code__c FROM Agency_Applied_Change_code__c 
 					   WHERE OSCAR__c = :theOscar.Id AND Change_Code__c = 'CHF' ORDER BY Account__r.IATAcode__c];
 		system.assertEquals(4,changecodes.size(), 'Change of Ownership S1: when sanity checks are passed a CHF change code should be created for all the agencies involved');
