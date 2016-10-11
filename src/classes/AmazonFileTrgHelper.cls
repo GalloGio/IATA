@@ -213,33 +213,33 @@ public class AmazonFileTrgHelper {
 
             if (efFiles.isEmpty() == false) {
 
-                String errorMessage = 'This field is required for this '+Schema.SobjectType.AmazonFile__c.fields.EF_Category__c.label+'/'+Schema.SobjectType.AmazonFile__c.fields.EF_SubCategory__c.label+': ';
+                String errorMessage = 'This field is required for this '+Schema.SobjectType.AmazonFile__c.fields.Category__c.label+'/'+Schema.SobjectType.AmazonFile__c.fields.SubCategory__c.label+': ';
                 String key;
 
                 for (AmazonFile__c eff : efFiles) {
 
-                    if (eff.EF_Category__c != null && eff.EF_SubCategory__c != null) {
+                    if (eff.Category__c != null && eff.SubCategory__c != null) {
 
-                        key = eff.EF_Category__c+'.'+eff.EF_SubCategory__c;
+                        key = eff.Category__c+'.'+eff.SubCategory__c;
 
                         if (sapNumberRequired.contains(key) && eff.SAP_Number__c == null) {
 
-                            eff.SAP_Number__c.addError(errorMessage+eff.EF_Category__c+'/'+eff.EF_SubCategory__c);
+                            eff.SAP_Number__c.addError(errorMessage+eff.Category__c+'/'+eff.SubCategory__c);
                         }
 
                         if (expiryDateRequired.contains(key) && eff.Expiry_Date__c == null) {
 
-                            eff.Expiry_Date__c.addError(errorMessage+eff.EF_Category__c+'/'+eff.EF_SubCategory__c);
+                            eff.Expiry_Date__c.addError(errorMessage+eff.Category__c+'/'+eff.SubCategory__c);
                         }
 
                         if (expiredRequired.contains(key) && eff.Expired__c == false) {
 
-                            eff.Expired__c.addError(errorMessage+eff.EF_Category__c+'/'+eff.EF_SubCategory__c);
+                            eff.Expired__c.addError(errorMessage+eff.Category__c+'/'+eff.SubCategory__c);
                         }
                     }
                 }
             }
         }
     }
-    
+
 }
