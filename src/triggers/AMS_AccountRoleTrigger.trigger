@@ -32,8 +32,8 @@ trigger AMS_AccountRoleTrigger on AMS_Account_Role__c (before update, after upda
 
 
         // AMP Project: Custom account ownership validations
-        // AMS_AccountRoleHelper handler = new AMS_AccountRoleHelper();
-        // handler.verifyAccountRole(Trigger.new);
+        AMS_AccountRoleHelper handler = new AMS_AccountRoleHelper();
+        handler.verifyAccountRole(Trigger.new);
 
     }
 
