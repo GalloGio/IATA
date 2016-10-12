@@ -13526,11 +13526,6 @@
     </fieldPermissions>
 	<fieldPermissions>
         <editable>true</editable>
-        <field>AmazonFile__c.Full_Name_Unique__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-	<fieldPermissions>
-        <editable>true</editable>
         <field>AmazonFile__c.Internal_Comments__c</field>
         <readable>true</readable>
     </fieldPermissions>
