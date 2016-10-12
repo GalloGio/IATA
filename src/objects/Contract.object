@@ -315,7 +315,7 @@ E&amp;F CRM Project</description>
         <precision>5</precision>
         <required>false</required>
         <scale>2</scale>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>Percent</type>
     </fields>
     <fields>
@@ -323,7 +323,7 @@ E&amp;F CRM Project</description>
         <externalId>false</externalId>
         <globalPicklist>EF_Allow_Billing_Agreements</globalPicklist>
         <label>E&amp;F Allow Billing Agreements</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>Picklist</type>
     </fields>
     <fields>
@@ -383,7 +383,7 @@ E&amp;F CRM Project</description>
             <restrictedPicklist>true</restrictedPicklist>
             <sorted>false</sorted>
         </picklist>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
     </fields>
@@ -392,7 +392,7 @@ E&amp;F CRM Project</description>
         <externalId>false</externalId>
         <globalPicklist>EF_Currency</globalPicklist>
         <label>E&amp;F Billing Currency</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
     </fields>
@@ -401,7 +401,7 @@ E&amp;F CRM Project</description>
         <externalId>false</externalId>
         <globalPicklist>EF_Frequency</globalPicklist>
         <label>E&amp;F Billing Frequency</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>Picklist</type>
     </fields>
     <fields>
@@ -410,7 +410,7 @@ E&amp;F CRM Project</description>
         <formula>Account.EF_SIS_Designator__c+ &apos; &apos; + Account.EF_SIS_Code__c</formula>
         <label>E&amp;F Client SIS Code</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>Text</type>
         <unique>false</unique>
     </fields>
@@ -433,15 +433,15 @@ E&amp;F CRM Project</description>
         <referenceTo>User</referenceTo>
         <relationshipName>Contracts_DT</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>Lookup</type>
     </fields>
     <fields>
         <fullName>EF_Data_Currency__c</fullName>
         <externalId>false</externalId>
         <globalPicklist>EF_Currency</globalPicklist>
-        <label>E&amp;F 	Data Currency</label>
-        <trackHistory>false</trackHistory>
+        <label>E&amp;F Data Currency</label>
+        <trackHistory>true</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
     </fields>
@@ -451,7 +451,7 @@ E&amp;F CRM Project</description>
         <label>E&amp;F Group Code</label>
         <length>255</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>Text</type>
         <unique>false</unique>
     </fields>
@@ -473,7 +473,7 @@ E&amp;F CRM Project</description>
         <referenceTo>User</referenceTo>
         <relationshipName>Contracts_IA</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>Lookup</type>
     </fields>
     <fields>
@@ -500,7 +500,7 @@ E&amp;F CRM Project</description>
             <restrictedPicklist>true</restrictedPicklist>
             <sorted>false</sorted>
         </picklist>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
     </fields>
@@ -509,7 +509,7 @@ E&amp;F CRM Project</description>
         <externalId>false</externalId>
         <globalPicklist>EF_Currency</globalPicklist>
         <label>E&amp;F Payment Currency</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
     </fields>
@@ -538,7 +538,7 @@ E&amp;F CRM Project</description>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>E&amp;F Payment Terms Code</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>Text</type>
         <unique>false</unique>
     </fields>
@@ -547,7 +547,7 @@ E&amp;F CRM Project</description>
         <externalId>false</externalId>
         <globalPicklist>EF_Payment_Terms</globalPicklist>
         <label>E&amp;F Payment Terms</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>Picklist</type>
     </fields>
     <fields>
@@ -555,7 +555,7 @@ E&amp;F CRM Project</description>
         <externalId>false</externalId>
         <globalPicklist>EF_Frequency</globalPicklist>
         <label>E&amp;F Reporting Frequency</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>Picklist</type>
     </fields>
     <fields>
@@ -574,7 +574,7 @@ E&amp;F CRM Project</description>
             <restrictedPicklist>true</restrictedPicklist>
             <sorted>false</sorted>
         </picklist>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
     </fields>
@@ -593,7 +593,7 @@ E&amp;F CRM Project</description>
         <label>E&amp;F SIS Aggregator</label>
         <length>255</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>Text</type>
         <unique>false</unique>
     </fields>
@@ -603,7 +603,7 @@ E&amp;F CRM Project</description>
         <description>Helper field for &quot;require approval&quot; functionality.</description>
         <externalId>false</externalId>
         <label>Send to SAP</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>Checkbox</type>
     </fields>
     <fields>
@@ -612,7 +612,7 @@ E&amp;F CRM Project</description>
         <externalId>false</externalId>
         <globalPicklist>EF_Status</globalPicklist>
         <label>E&amp;F Status</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>Picklist</type>
     </fields>
     <fields>
@@ -630,7 +630,7 @@ E&amp;F CRM Project</description>
         <label>E&amp;F Trading Partner</label>
         <length>6</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>Text</type>
         <unique>false</unique>
     </fields>
