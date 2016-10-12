@@ -410,7 +410,7 @@ E&amp;F CRM Project</description>
         <formula>Account.EF_SIS_Designator__c+ &apos; &apos; + Account.EF_SIS_Code__c</formula>
         <label>E&amp;F Client SIS Code</label>
         <required>false</required>
-        <trackHistory>true</trackHistory>
+        <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>false</unique>
     </fields>
@@ -538,7 +538,7 @@ E&amp;F CRM Project</description>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>E&amp;F Payment Terms Code</label>
         <required>false</required>
-        <trackHistory>true</trackHistory>
+        <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>false</unique>
     </fields>
