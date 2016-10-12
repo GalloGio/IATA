@@ -24,7 +24,7 @@
         <label>Step 1</label>
         <name>Step_1</name>
     </approvalStep>
-    <description>User story 778 pt. 2.</description>
+    <description>E&amp;F Release 1, User-story 778: Approval process for E&amp;F Airline Billing Agreements. Fired on changes to several key fields, but not all fields.</description>
     <emailTemplate>E_F_Services/EF_Billing_Agreement_Approval_Request</emailTemplate>
     <enableMobileDeviceAccess>false</enableMobileDeviceAccess>
     <entryCriteria>
@@ -91,6 +91,10 @@
         <action>
             <name>EF_Set_Require_Approval_To_Recalled</name>
             <type>FieldUpdate</type>
+        </action>
+        <action>
+            <name>Notify_Approver_of_Recall</name>
+            <type>Alert</type>
         </action>
     </recallActions>
     <recordEditability>AdminOnly</recordEditability>

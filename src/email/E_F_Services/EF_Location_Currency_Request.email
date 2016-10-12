@@ -1,0 +1,12 @@
+Dear recipient,
+
+a Location Current has been updated by {!EF_Location_Currency__c.LastModifiedBy}.<br/>
+
+The following key-fields have changed:<br/>
+
+<table border="1" width="800px">{!EF_Location_Currency__c.Requested_Changes__c}
+</table>
+<br/><br/>
+
+Please review the record and approve or reject the changes by 
+<a href="{!EF_Location_Currency__c.Base_URL__c}{!EF_Location_Currency__c.EF_Billing_Currency__c}">clicking here</a>.

@@ -24,6 +24,18 @@
         <senderType>OrgWideEmailAddress</senderType>
         <template>E_F_Services/EF_Billing_Agreement_Approved</template>
     </alerts>
+    <alerts>
+        <fullName>Notify_Approver_of_Recall</fullName>
+        <description>Notify Approver of Recall</description>
+        <protected>false</protected>
+        <recipients>
+            <field>EF_Approver_Email__c</field>
+            <type>email</type>
+        </recipients>
+        <senderAddress>noreply@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>E_F_Services/EF_Billing_Agreement_Recalled</template>
+    </alerts>
     <fieldUpdates>
         <fullName>Add_Approver_Email</fullName>
         <field>EF_Approver_Email__c</field>
