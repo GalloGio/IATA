@@ -62,7 +62,7 @@
         <externalId>false</externalId>
         <label>Airline</label>
         <referenceTo>Account</referenceTo>
-        <relationshipName>EF_Approval_Temp_Storages</relationshipName>
+        <relationshipName>EF_Approvals_Airline</relationshipName>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -94,7 +94,7 @@
         <externalId>false</externalId>
         <label>Contract</label>
         <referenceTo>Contract</referenceTo>
-        <relationshipName>EF_Approval_Temp_Storages</relationshipName>
+        <relationshipName>EF_Approvals_Contract</relationshipName>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -117,7 +117,7 @@
         <externalId>false</externalId>
         <label>Airline Billing Agreement</label>
         <referenceTo>EF_Billing_Agreement__c</referenceTo>
-        <relationshipName>EF_Approval_Temp_Storages</relationshipName>
+        <relationshipName>EF_Approvals_BA</relationshipName>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -238,7 +238,7 @@
         <externalId>false</externalId>
         <label>Location Currency</label>
         <referenceTo>EF_Location_Currency__c</referenceTo>
-        <relationshipName>EF_Approval_Temp_Storages</relationshipName>
+        <relationshipName>EF_Approvals_Location_Currency</relationshipName>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -251,7 +251,7 @@
         <label>E&amp;F Location ID</label>
         <referenceTo>EF_Related_Records__c</referenceTo>
         <relationshipLabel>E&amp;F Approval Storages</relationshipLabel>
-        <relationshipName>EF_Approval_Temp_Storages</relationshipName>
+        <relationshipName>EF_Approvals_Location_Id</relationshipName>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
