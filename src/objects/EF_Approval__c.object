@@ -159,7 +159,7 @@
         <label>E&amp;F Location Currency</label>
         <referenceTo>EF_Location_Currency__c</referenceTo>
         <relationshipLabel>E&amp;F Approval Storages (E&amp;F Location Currency)</relationshipLabel>
-        <relationshipName>EF_Approval_Storages</relationshipName>
+        <relationshipName>EF_Approvals</relationshipName>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
