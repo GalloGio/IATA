@@ -284,7 +284,35 @@
   </target> 
 
 
+<target name="deployApexAMS"> 
+    <echo level="info">Deploying APEX and VISUALFORCE</echo>
+   <antcallback target="deldir" />
+   <mkdir dir="${basedir}/Code"/>
+  
+      <for list="${code.listfolders}" param="param" >
+        <sequential>
+             <mkdir dir="${basedir}/Code/@{param}"/>
+       </sequential>
+     </for>
 
+     <echo level="info">moving files</echo>
+      
+      <for list="${code.listfolders}" param="param" delimiter=",">
+        <sequential>
+          <move todir="${basedir}/Code/@{param}">
+            <fileset dir="${basedir}/src/@{param}">
+            </fileset>
+          </move>
+       </sequential>
+     </for>
+
+ <move file="${basedir}/src/codePackage.xml" tofile="${basedir}/Code/package.xml"/>  
+  <move file="${basedir}/src/destructiveChangesPre.xml" tofile="${basedir}/Code/destructiveChangesPre.xml"/>  
+     
+      <antcallback target="deployCodeLocal" />
+          <antcallback target="deployLayout" />
+
+  </target> 
 
 
 
