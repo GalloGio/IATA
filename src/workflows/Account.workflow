@@ -466,7 +466,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
     </rules>
     <rules>
         <fullName>FDS Coding AOC Expiry date alert 10 Days before</fullName>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Account.ACLI_Status__c</field>
             <operation>equals</operation>
