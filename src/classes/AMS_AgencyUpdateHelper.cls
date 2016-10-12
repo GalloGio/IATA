@@ -1,7 +1,7 @@
 public without sharing class AMS_AgencyUpdateHelper {
 
     public static Set<Id> accSentToExternalSystemFlag = new Set<Id>();
-
+/*
     public static void agencyRelathionshipUpdate(List<SObject> updatedRecords){
         List<AMS_Agency_Updates__c> agencyUpdateToInsert = new List<AMS_Agency_Updates__c>();
         Set<Id> setIds = new Set<Id>();//set of ids that are not agency relathionship
