@@ -13484,7 +13484,7 @@
     </fieldPermissions>
 	<fieldPermissions>
         <editable>true</editable>
-        <field>AmazonFile__c.</field>
+        <field>AmazonFile__c.Additional_Information__c</field>
         <readable>true</readable>
     </fieldPermissions>
 	<fieldPermissions>
