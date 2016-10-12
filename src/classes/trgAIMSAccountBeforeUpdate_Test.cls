@@ -8,7 +8,7 @@ public class trgAIMSAccountBeforeUpdate_Test{
 
         Account account1 = new Account();
 
-        account1.RecordTypeId = '012200000004TQC';
+        account1.RecordTypeId = '012w0000000QBMb';
         account1.Is_AIMS_Account__c = True;
         account1.name = 'Test Account AIMS BEFORE UPDATE';
         account1.BillingCountry = 'Canada';
@@ -17,6 +17,7 @@ public class trgAIMSAccountBeforeUpdate_Test{
         account1.IATACode__c = '123456';
         account1.Email__c = 'test1@test.com';
         account1.Is_AIMS_Account__c = true;
+        account1.Reason_for_creation__c = 'apex test';
                     
         insert account1;
         
