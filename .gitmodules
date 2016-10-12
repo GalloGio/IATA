@@ -1,3 +1,0 @@
-[submodule "integration/mosaico"]
-	path = integration/mosaico
-	url = https://github.com/voidlabs/mosaico.git
