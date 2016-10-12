@@ -58,15 +58,16 @@
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
         <fullName>Billing_Account__c</fullName>
-        <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
         <label>Billing Account</label>
         <referenceTo>Zuora__CustomerAccount__c</referenceTo>
         <relationshipLabel>EBC Resources</relationshipLabel>
         <relationshipName>EBC_Resources</relationshipName>
-        <required>false</required>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
         <trackTrending>false</trackTrending>
-        <type>Lookup</type>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
     </fields>
     <fields>
         <fullName>Height__c</fullName>
@@ -182,5 +183,5 @@
     </nameField>
     <pluralLabel>EBC Resources</pluralLabel>
     <searchLayouts/>
-    <sharingModel>ReadWrite</sharingModel>
+    <sharingModel>ControlledByParent</sharingModel>
 </CustomObject>
