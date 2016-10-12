@@ -595,7 +595,7 @@ public with sharing class TestDataGenerator
         {
             pricebookEntries.addAll(generatePricebookEntry(Test.getStandardPricebookId(),prod.Id,1,false));
         }
-        insert pricebookEntries;
+        database.insert(pricebookEntries,fasle);
     
         for(Integer i = 0; i < products.size(); i++)
         {
@@ -609,7 +609,7 @@ public with sharing class TestDataGenerator
             ));
         }
         if(doInsert)
-            insert orderItems;
+            database.insert( orderItems,false);
 
         return orderItems;
     }
