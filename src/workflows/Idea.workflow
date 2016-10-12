@@ -9,7 +9,7 @@
             <type>user</type>
         </recipients>
         <senderType>CurrentUser</senderType>
-        <template>unfiled$public/NewCommentAdded</template>
+        <template>All/NewCommentAdded</template>
     </alerts>
     <alerts>
         <fullName>NewIdeaSubmitted</fullName>
@@ -21,7 +21,7 @@
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>unfiled$public/New_Idea_Submitted</template>
+        <template>All/New_Idea_Submitted</template>
     </alerts>
     <rules>
         <fullName>New Comment Added</fullName>
