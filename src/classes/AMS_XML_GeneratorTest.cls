@@ -342,7 +342,8 @@ private class AMS_XML_GeneratorTest {
                     TradeName__c,Unique_ID__c,Verification_Date__c,IATA_ISO_Country__c, IATA_ISO_Country__r.Name, 
                     Short_Name__c,Sector__c,AIMS_ID__c,BSP_CASS_Code__c,
                     Email__c,TTY__c,Website,
-                    Abbreviated_name__c, Abbreviated_address__c, status__c
+                    Abbreviated_name__c, Abbreviated_address__c, status__c,
+                    Top_Parent__c, Top_Parent__r.IATACode__c
                     FROM Account where id =  :ag1.Id];
 
         AMS_XML_Generator xmlGen = new AMS_XML_Generator();
@@ -384,7 +385,8 @@ private class AMS_XML_GeneratorTest {
                     TradeName__c,Unique_ID__c,Verification_Date__c,IATA_ISO_Country__c, IATA_ISO_Country__r.Name,
                     Short_Name__c,Sector__c,AIMS_ID__c,BSP_CASS_Code__c,
                     Email__c,TTY__c,Website,
-                    Abbreviated_name__c, Abbreviated_address__c, status__c
+                    Abbreviated_name__c, Abbreviated_address__c, status__c,
+                    Top_Parent__c, Top_Parent__r.IATACode__c
                     FROM Account where id in :sAgIDs];
         
         
