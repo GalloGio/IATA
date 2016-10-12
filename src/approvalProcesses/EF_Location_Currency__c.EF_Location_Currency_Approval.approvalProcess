@@ -8,7 +8,6 @@
     <approvalPageFields>
         <field>Name</field>
         <field>Contract__c</field>
-        <field>00N3E000000W7tM</field>
         <field>Location_ID_Name__c</field>
         <field>Requested_Changes__c</field>
     </approvalPageFields>
