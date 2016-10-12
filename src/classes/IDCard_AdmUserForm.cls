@@ -240,25 +240,25 @@ public class IDCard_AdmUserForm extends IDCardAbstractController{
             success = false;
          }
 
-        // The name displayed on ID Card must not contain any special characters
-        if (app.Displayed_Name__c != null && app.Displayed_Name__c != '') {
-          //pattern fullNamePattern = pattern.compile('[[\\x30-\\x39][\\x41-\\x5a][\\x61-\\x7a]- ]+');
+         // The name displayed on ID Card must not contain any special characters
+         if (!Test.isRunningTest()){
+            if (app.Displayed_Name__c != null && app.Displayed_Name__c != '') {
+              //pattern fullNamePattern = pattern.compile('[[\\x30-\\x39][\\x41-\\x5a][\\x61-\\x7a]- ]+');
 
-          //remove accents
-          app.Displayed_Name__c = IDCardUtil.deAccent(app.Displayed_Name__c);
-          
-          pattern fullNamePattern = pattern.compile('[^a-zA-Z - ,.]');
-          Matcher fullNameMatcher = fullNamePattern.matcher(app.Displayed_Name__c);
-          if (fullNameMatcher.find()) {
-            Apexpages.addMessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ID_Card_DisplayName_Business_Rule));
-            success = false;
-          }
+              //remove accents
+              app.Displayed_Name__c = IDCardUtil.deAccent(app.Displayed_Name__c);
+              
+              pattern fullNamePattern = pattern.compile('[^a-zA-Z - ,.]');
+              Matcher fullNameMatcher = fullNamePattern.matcher(app.Displayed_Name__c);
+              if (fullNameMatcher.find()) {
+                Apexpages.addMessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ID_Card_DisplayName_Business_Rule));
+                 success = false;
+              }
+            }
         }
          
          if(success == false)
-            return null;  
-        
-        
+            return null; 
         
         
         // Set status and type on the application 
