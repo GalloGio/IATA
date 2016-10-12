@@ -1,0 +1,391 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>true</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>Hold campaign send statistic that retrieved from Exacttarget Marketing cloud</description>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Conversions__c</fullName>
+        <description>Indicates the number of conversions results from Campaign</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Indicates the number of conversions results from Campaign</inlineHelpText>
+        <label>Conversions</label>
+        <precision>8</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>EBC_Campaign__c</fullName>
+        <description>Master EBC Campaign related to Campaign Email Tracking</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Master EBC Campaign Related to Campaign Email Tracking</inlineHelpText>
+        <label>EBC Campaign</label>
+        <referenceTo>EBC_Campaign__c</referenceTo>
+        <relationshipLabel>EBC Campaign Email Trackings</relationshipLabel>
+        <relationshipName>EBC_Campaign_Email_Trackings</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>FTAFEmailsSent__c</fullName>
+        <description>Indicates Forward To A Friend emails sent as a result of campaign</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Indicates Forward To A Friend emails sent as a result of campaign</inlineHelpText>
+        <label>FTAFEmailsSent</label>
+        <precision>8</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FTAFOptIns__c</fullName>
+        <description>Indicates number of subscribers opting in to receiving messages as a result of a Forward To A Friend action from campaign</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Indicates number of subscribers opting in to receiving messages as a result of a Forward To A Friend action from campaign</inlineHelpText>
+        <label>FTAFOptIns</label>
+        <precision>8</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FTAFRequests__c</fullName>
+        <description>Indicates number of Forward To A Friend requests received as part of campaign</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Indicates number of Forward To A Friend requests received as part of campaign</inlineHelpText>
+        <label>FTAFRequests</label>
+        <precision>8</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>InProcess__c</fullName>
+        <description>Indicates the number of send emails in progress</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Indicates the number of send emails in progress</inlineHelpText>
+        <label>InProcess</label>
+        <precision>8</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NotSentDueToError__c</fullName>
+        <description>Indicates number of send emails not sent due to error</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Indicates number of send emails not sent due to error</inlineHelpText>
+        <label>NotSentDueToError</label>
+        <precision>8</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NotSentDueToOptOut__c</fullName>
+        <description>Indicates number of sends not completed due to a subscriber&apos;s decision to opt out of receiving emails</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Indicates number of sends not completed due to a subscriber&apos;s decision to opt out of receiving emails</inlineHelpText>
+        <label>Not Sent Due To Opt Out</label>
+        <precision>8</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NotSentDueToUndeliverable__c</fullName>
+        <description>Indicates number of sends not completed due to a subscriber&apos;s undeliverable status</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Indicates number of sends not completed due to a subscriber&apos;s undeliverable status</inlineHelpText>
+        <label>Not Sent Due To Undeliverable</label>
+        <precision>8</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NumberBounced__c</fullName>
+        <description>Indicates number of bounces resulting from campaign</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Indicates number of bounces resulting from campaign</inlineHelpText>
+        <label>Number Bounced</label>
+        <precision>8</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NumberOptOuts__c</fullName>
+        <description>Indicates number of subscribers who opted out of receiving emails after receiving email</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Indicates number of subscribers who opted out of receiving emails after receiving email</inlineHelpText>
+        <label>Number Opt Outs</label>
+        <precision>8</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NumberSent__c</fullName>
+        <description>Indicates number of emails sent</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Indicates number of emails sent</inlineHelpText>
+        <label>Number Sent</label>
+        <precision>8</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NumberofClicks__c</fullName>
+        <description>Indicates the number of clicks resulting from campaign</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Indicates the number of clicks resulting from campaign</inlineHelpText>
+        <label>Number of Clicks</label>
+        <precision>8</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NumberofOpens__c</fullName>
+        <description>Indicates number of opens from campaign</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Indicates number of opens from campaign</inlineHelpText>
+        <label>Number of Opens</label>
+        <precision>8</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NumberofUniqueClicks__c</fullName>
+        <description>Indicates number of unique clicks on email</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Indicates number of unique clicks on email</inlineHelpText>
+        <label>Number of Unique Clicks</label>
+        <precision>8</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NumberofUniqueOpens__c</fullName>
+        <description>Indicates number of unique opens resulting from campaign</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Indicates number of unique opens resulting from campaign</inlineHelpText>
+        <label>Number of Unique Opens</label>
+        <precision>8</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Queued__c</fullName>
+        <description>Indicates number of messages queued for sending</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Indicates number of messages queued for sending</inlineHelpText>
+        <label>Queued</label>
+        <precision>8</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Rank__c</fullName>
+        <description>Indicate the rank of hours for tracking</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Indicate the rank of hours for tracking</inlineHelpText>
+        <label>Rank</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SendDate__c</fullName>
+        <description>Indicates the date that campaign was send</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Indicates the date that campaign was send</inlineHelpText>
+        <label>Send Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>SurveyResponses__c</fullName>
+        <description>Indicates number of responses to a survey question contained in email</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Indicates number of responses to a survey question contained in email</inlineHelpText>
+        <label>SurveyResponses</label>
+        <precision>8</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TriggeredSendName__c</fullName>
+        <description>Indicates the name of triggered send in Excattarget</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Indicates the name of triggered send in Excattarget</inlineHelpText>
+        <label>Triggered Send Name</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>UniqueConversions__c</fullName>
+        <description>Indicates number of unique conversions resulting from campaign</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Indicates number of unique conversions resulting from campaign</inlineHelpText>
+        <label>UniqueConversions</label>
+        <precision>8</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <label>EBC Campaign Email Tracking</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>EBC_Campaign__c</columns>
+        <columns>NumberofClicks__c</columns>
+        <columns>NumberofOpens__c</columns>
+        <columns>NumberofUniqueClicks__c</columns>
+        <columns>NumberofUniqueOpens__c</columns>
+        <columns>NumberSent__c</columns>
+        <columns>SendDate__c</columns>
+        <columns>NumberBounced__c</columns>
+        <columns>NumberOptOuts__c</columns>
+        <columns>InProcess__c</columns>
+        <columns>NotSentDueToError__c</columns>
+        <columns>NotSentDueToOptOut__c</columns>
+        <columns>NotSentDueToUndeliverable__c</columns>
+        <columns>Rank__c</columns>
+        <columns>LAST_ACTIVITY</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
+    <nameField>
+        <label>EBC Campaign Email Tracking Name</label>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>EBC Campaign Email Trackings</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ControlledByParent</sharingModel>
+</CustomObject>

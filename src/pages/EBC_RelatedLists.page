@@ -1,0 +1,42 @@
+<apex:page standardController="Zuora__CustomerAccount__c">
+    <apex:pageBlock title="eBroadcast Lists">
+       
+        <apex:pageBlockSection title="Campaigns of {!Zuora__CustomerAccount__c.Name}" columns="1">
+            <apex:relatedList list="EBC_Campaigns__r"/>
+        </apex:pageBlockSection>
+
+        <apex:pageBlockSection title="eBroadcast Activities of {!Zuora__CustomerAccount__c.Name}" columns="1">
+            <apex:relatedList list="EBC_Activities__r"/>
+        </apex:pageBlockSection>
+
+        <apex:pageBlockSection title="Image Resources of {!Zuora__CustomerAccount__c.Name}" columns="1">
+            <apex:relatedList list="EBC_Resources__r"/>
+        </apex:pageBlockSection>
+
+        <apex:pageBlockSection title="Templates of {!Zuora__CustomerAccount__c.Name}" columns="1">
+            <apex:relatedList list="EBC_Templates__r"/>
+        </apex:pageBlockSection>
+
+        <apex:pageBlockSection title="Selection Lists of {!Zuora__CustomerAccount__c.Name}" columns="1">
+            <apex:relatedList list="EBC_Master_Filter__r"/>
+        </apex:pageBlockSection>
+               
+        <apex:pageBlockSection title="E-Mail Notifications for {!Zuora__CustomerAccount__c.Name}" columns="1">
+            <apex:relatedList list="EBC_Account_Notifications__r"/>
+        </apex:pageBlockSection>
+
+        <apex:pageBlockSection title="E-Mail Exclusions for {!Zuora__CustomerAccount__c.Name}" columns="1">
+            <apex:relatedList list="EBC_Email_Exclusions__r"/>
+        </apex:pageBlockSection>
+
+        <apex:pageBlockSection title="E-Mail Exclusions Relations for {!Zuora__CustomerAccount__c.Name}" columns="1">
+            <apex:relatedList list="EBC_Email_Exclusion_Relations__r"/>
+        </apex:pageBlockSection>
+
+        <apex:pageBlockSection title="eBroadcast Preferences for {!Zuora__CustomerAccount__c.Name}" columns="1">
+            <apex:relatedList list="eBroadcast_Preferences__r"/>
+        </apex:pageBlockSection>    
+
+
+    </apex:pageBlock>
+</apex:page>

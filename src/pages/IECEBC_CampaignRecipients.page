@@ -1,0 +1,221 @@
+<apex:page standardController="EBC_Campaign__c" extensions="vfIECEBC_Campaign,vfIECEBC_CampaignRecipient" applyHtmlTag="false" applyBodyTag="false" sidebar="false" showheader="false" standardStylesheets="false" language="en" docType="html-5.0" action="{!pageLoad}">
+	<apex:composition template="IECEBC_Layout">
+        <apex:define name="pageHeadAdditions">
+            <!-- Start of Page <head> -->
+            <title>eBroadcast Campaign - Select recipients</title>
+            <!-- End of Page </head> -->
+        </apex:define>
+        <apex:define name="pageScriptAdditions">
+            <!-- If any page specific .js, add them here -->
+            <style type="text/css"> 
+            	#existingLists .number-of-recipients { display: none; }
+            	.no-provisional-cost #existingLists .number-of-recipients { display: inline; }
+            </style> 
+        </apex:define>
+        <apex:define name="pageContent">
+            <!-- Start of Page Content -->
+            <apex:outputText rendered="{!EBC_Campaign__c.Status__c == 'DRAFT'}">
+            <script type="text/javascript">
+            function refreshExistingListCount(filterId) { 
+                jQuery('.existingListRecipientCount,.existingListRecipientCount2,.existingListProvisionalCost,.existingListNewBalance').html('<img src="/img/loading.gif" />');
+                
+                jQuery('input', document.getElementById('{!$Component.existingListForm}')).attr('disabled', 'disabled');
+                jQuery('.button').addClass('disabled');
+                
+                vfIECEBC_CampaignRecipient.getExistingFilterCnt(filterId,  function(results, event){
+                    if (event.statusCode != 200) results = 0; 
+                    
+                    jQuery('.existingListRecipientCount').text((results).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+                    
+                    newBalance = {!billingAccount.eBroadcast_Email_Balance__c} - results;
+                    jQuery('.existingListRecipientCount2').text((newBalance > 0 ? 0 : Math.abs(newBalance)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+                    
+                    cost = 0.001;
+                    if (newBalance < 0) {
+                        cost = (Math.abs(newBalance) * {!productRatePlan.EBC_Currency_Cost_Per_Email__c});
+                        newBalance = 0;
+                    	if (cost > 0) jQuery('.existingListRecipientCount3').show();
+                    } else {
+                        jQuery('.existingListRecipientCount3').hide();
+                    }
+                    
+                    jQuery('.existingListProvisionalCost').text(cost.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
+                    
+                    jQuery('.existingListNewBalance').text((newBalance.toString()).replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+                    
+                    jQuery('.no-provisional-cost').removeClass('no-provisional-cost');
+                    
+                	jQuery('input', document.getElementById('{!$Component.existingListForm}')).removeAttr('disabled');
+                	jQuery('.button').removeClass('disabled');
+                });
+            }
+            </script>
+            </apex:outputText>
+            <main class="main-content no-provisional-cost">
+                <div class="inner-wrapper">
+                    <c:IECEBC_ProgressComponent currentStepNumber="{!currentStepNumber}" campaign="{!EBC_Campaign__c}" />
+                    <h1 class="page-title">Select the list you want to use</h1>
+
+                    <apex:form id="existingListForm" >
+                        <apex:inputHidden value="{!campaign.EBC_Master_Filter__c}" id="selectedFilter" />
+                        
+                        <script type="text/javascript">
+                        function updateSelectedTemplate(filterId) {
+                            document.getElementById('{!$Component.selectedFilter}').value = filterId;
+                            refreshExistingListCount(filterId);
+                        }
+                        </script>
+                        
+                        <div class="row">
+                            <div class="main-container columns small-12 large-7">
+                                <ul id="existingLists" class="list list-radio-select js-radio-list js-form-continue-validation" data-target-button="#js-continue-to-template">
+                                    <apex:repeat value="{!masterFilters}" var="f">
+                                        <li class="{!IF(f.Disabled, ' disabled', '')}{!IF(campaign.EBC_Master_Filter__c == f.Value, ' is-selected', '')}">
+                                            <div class="radio-box">
+                                                <div class="custom-user-input radio">
+                                                    <apex:outputText rendered="{!campaign.EBC_Master_Filter__c == f.Value}">
+                                                        <apex:outputText rendered="{!NOT(f.Disabled)}">
+	                                                        <input class="user-input radio" name="filter" type="radio" id="item{!f.Value}" value="{!f.Value}" onchange="updateSelectedTemplate('{!f.Value}');" checked="checked" />
+                                                        </apex:outputText>
+                                                        <apex:outputText rendered="{!f.Disabled}">
+	                                                        <input class="user-input radio" name="filter" type="radio" id="item{!f.Value}" value="{!f.Value}" onchange="updateSelectedTemplate('{!f.Value}');" checked="checked" disabled="disabled" readonly="readonly" />
+                                                        </apex:outputText>
+                                                    </apex:outputText>
+                                                    <apex:outputText rendered="{!NOT(campaign.EBC_Master_Filter__c == f.Value)}">
+                                                        
+                                                        <apex:outputText rendered="{!NOT(f.Disabled)}">
+	                                                        <input class="user-input radio" name="filter" type="radio" id="item{!f.Value}" value="{!f.Value}" onchange="updateSelectedTemplate('{!f.Value}');" />
+                                                        </apex:outputText>
+                                                        <apex:outputText rendered="{!f.Disabled}">
+	                                                        <input class="user-input radio" name="filter" type="radio" id="item{!f.Value}" value="{!f.Value}" onchange="updateSelectedTemplate('{!f.Value}');" disabled="disabled" readonly="readonly" />
+                                                        </apex:outputText>
+                                                    </apex:outputText>
+                                                    <label class="custom-radio" for="item{!f.Value}"><i class="icon"></i></label>
+                                                </div>
+                                                <label class="input-label" for="item{!f.Value}">
+                                                    {!f.Label}
+                                                </label>
+                                            </div>
+                                        </li>
+                                    </apex:repeat>
+                                </ul>
+                                
+								<apex:outputPanel layout="block" styleClass="list-actions" rendered="{!campaign.Status__c == 'DRAFT'}">
+                                    <a href="#" class="icon-link" onclick="jQuery('#js-modal').removeClass('is-hidden'); return false;">
+                                        <i class="icon fa fa-list-ul" aria-hidden="true"></i>Create a new list
+                                    </a>
+                                </apex:outputPanel>
+                            </div>
+                            
+                            <div class="sub-container columns small-12 large-5">
+                                <div class="summary-box">
+                                    <div class="box-body fit">
+                                        <table class="data-table zibra cost">
+                                            <caption>Campaign Cost</caption>
+                                            <tbody>
+                                                <tr class="hide-no-count">
+                                                    <th>
+                                                        <div class="item-name">Recipients selected</div>
+                                                    </th>
+                                                    <td>
+                                                        <div class="item-value">
+                                                            <strong class="existingListRecipientCount">
+                                                                {!IF(EBC_Campaign__c.Status__c == 'DRAFT', 'n/a', EBC_Campaign__c.Number_of_Recipients__c)}
+                                                            </strong>
+                                                            
+                                                            <span class="unit"> email(s)</span>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <apex:outputText rendered="{!campaign.Status__c == 'DRAFT'}">
+                                                    <tr> 
+                                                        <th>
+                                                            <div class="item-name">Available balance</div>
+                                                        </th>
+                                                        <td>
+                                                            <div class="item-value text-green">
+                                                                <strong><apex:outputText value="{0, number, ###,###,##0}"><apex:param value="{!billingAccount.eBroadcast_Email_Balance__c}"/></apex:outputText></strong>
+                                                                <span class="unit"> email(s)</span>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </apex:outputText>
+                                                <tr class="hide-no-count">
+                                                    <th>
+                                                        <div class="item-name">Provisional cost</div>
+                                                    </th>
+                                                    <td>
+                                                        <div class="item-value">
+                                                            <strong class="text-orange">USD $<span class="existingListProvisionalCost">n/a</span></strong>
+                                                            <p class="existingListRecipientCount3" style="display: none;">for <span class="existingListRecipientCount2">n/a</span> email(s) at $<apex:outputText value="{0, number, ###,###,##0.00}"><apex:param value="{!productRatePlan.EBC_Currency_Cost_Per_Email__c}"/></apex:outputText> /email</p>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <apex:outputText rendered="{!campaign.Status__c == 'DRAFT'}">
+                                                    <tr class="hide-no-count">
+                                                        <th>
+                                                            <div class="item-name">Your new account balance will be</div> 
+                                                        </th>
+                                                        <td>
+                                                            <div class="item-value">
+                                                                <strong class="existingListNewBalance">n/a</strong>
+                                                                <span class="unit"> email(s)</span>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </apex:outputText>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="footer-actions text-right">
+                            <ul class="list actions">
+                                <apex:outputText rendered="{!campaign.Is_Step2_Writable__c}">
+	                                <li><apex:commandLink action="{!previous}" styleClass="button secondary" value="Previous" /></li>
+                                </apex:outputText>
+                                <apex:outputText rendered="{!campaign.Is_Step2_Writable__c}">
+	                                <li><apex:commandLink action="{!saveAndExit}" reRender="pageMessagesBlock" styleClass="button secondary{!IF(campaign.EBC_Master_Filter__c == null, ' disabled', '')}" value="Save and Return to Dashboard" /></li>
+                                </apex:outputText>
+                                <apex:outputText rendered="{!campaign.Is_Step2_Writable__c}">
+	                                <li><apex:commandLink action="{!saveAndContinue}" reRender="pageMessagesBlock" styleClass="button{!IF(campaign.EBC_Master_Filter__c == null, ' disabled', '')}" value="Continue" /></li>
+                                </apex:outputText>
+                                <apex:outputText rendered="{!NOT(campaign.Is_Step2_Writable__c)}">
+	                                <li><apex:commandLink action="{!previous}" value="Previous" styleClass="button secondary" /></li>
+                                </apex:outputText>
+                                <apex:outputText rendered="{!NOT(campaign.Is_Step2_Writable__c)}">
+	                                <li><apex:commandLink action="{!next}" value="Next" styleClass="button" /></li>
+                                </apex:outputText>
+                            </ul>
+                        </div>
+                    </apex:form>
+                </div>
+            </main>
+            
+            
+            <div class="modal-container is-hidden" id="js-modal">
+                <div class="overlay"></div>
+                <div class="modal-dialog" id="js-modal-dialog">
+                    <section id="js-modal-new-list-audience" class="modal-content wide">
+                        
+                        <header class="modal-header">
+                            <h2 class="modal-title">Create a new list</h2>
+                            <a href="#" class="icon-close js-close-modal"><i class="fa fa-times"></i></a>
+                        </header>
+                        <c:IECEBC_RecipientEdit c="{!EBC_Campaign__c}" />
+                    </section>
+                </div>
+            </div>
+			
+            <apex:outputText rendered="{!campaign.EBC_Master_Filter__c != null}">
+                <script>
+                jQuery(document).ready(function(){
+                	refreshExistingListCount('{!campaign.EBC_Master_Filter__c}');
+                });
+                </script>
+            </apex:outputText>
+            <!-- End of Page Content -->
+        </apex:define>
+    </apex:composition>
+</apex:page>

@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>Hold the filter selected by the customer at the campaign creation but does not depend on the campaign</description>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>API_Name__c</fullName>
+        <description>API field name from salesforce</description>
+        <externalId>false</externalId>
+        <inlineHelpText>API field name from salesforce</inlineHelpText>
+        <label>API Name</label>
+        <length>50</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>EBC_Application_Filter__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Filter used by the customer to select the field</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Filter used by the customer to select the field</inlineHelpText>
+        <label>EBC Application Filter</label>
+        <referenceTo>EBC_Application_Filter__c</referenceTo>
+        <relationshipLabel>EBC Customer Filters</relationshipLabel>
+        <relationshipName>EBC_Customer_Filters</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>EBC_Master_Filter__c</fullName>
+        <description>The relationship with the filters selected by the customer</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The relationship with the filters selected by the customer</inlineHelpText>
+        <label>EBC Master Filter</label>
+        <referenceTo>EBC_Master_Filter__c</referenceTo>
+        <relationshipLabel>EBC Customer Filters</relationshipLabel>
+        <relationshipName>EBC_Customer_Filters</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Field_Name__c</fullName>
+        <description>The name of the field</description>
+        <externalId>false</externalId>
+        <formula>EBC_Application_Filter__r.Filter_Field__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>The name of the field</inlineHelpText>
+        <label>Field Name</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Field_Operator__c</fullName>
+        <description>Operator like IS,  IS NOT....</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Operator like IS,  IS NOT....</inlineHelpText>
+        <label>Field Operator</label>
+        <length>15</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Field_Value__c</fullName>
+        <description>Value to compare with the field api name</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Value to compare with the field api name</inlineHelpText>
+        <label>Field Value</label>
+        <length>100</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>EBC Customer Filter</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>CREATEDBY_USER</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>EBC_Application_Filter__c</columns>
+        <columns>EBC_Master_Filter__c</columns>
+        <columns>Field_Name__c</columns>
+        <columns>Field_Operator__c</columns>
+        <columns>Field_Value__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
+    <nameField>
+        <displayFormat>FT-{YYYY}-{00000}</displayFormat>
+        <label>EBC Customer Filter Name</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>EBC Customer Filters</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ControlledByParent</sharingModel>
+</CustomObject>
