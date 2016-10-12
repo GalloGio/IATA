@@ -144,10 +144,10 @@ public class AMS_AgencyUpdateHelperTest {
         insert air;
 
         
-        a1 = new Account(Name='Test1 Agency',Short_Name__c='Test1 Agency', IATA_ISO_Country__c = ctry.id, IATAcode__c = '1234567', Sector__c = 'Travel Agent'/*, RecordTypeId = agenciesRT.get('PASSENGER')*/);
-        a2 = new Account(Name='Test2 Agency',Short_Name__c='Test2 Agency', IATA_ISO_Country__c = ctry.id, IATAcode__c = '2345671', Sector__c = 'Travel Agent'/*, RecordTypeId = agenciesRT.get('PASSENGER')*/);
-        a3 = new Account(Name='Test3 Agency',Short_Name__c='Test3 Agency', IATA_ISO_Country__c = ctry.id, IATAcode__c = '3456712', Sector__c = 'Travel Agent'/*, RecordTypeId = agenciesRT.get('PASSENGER')*/);
-        a4 = new Account(Name='Test4 Agency',Short_Name__c='Test4 Agency', IATA_ISO_Country__c = ctry.id, IATAcode__c = '4567123', Sector__c = 'Travel Agent'/*, RecordTypeId = agenciesRT.get('PASSENGER')*/);
+        a1 = new Account(Name='Test1 Agency',Short_Name__c='Test1 Agency', IATA_ISO_Country__c = ctry.id, IATAcode__c = '1234567', Sector__c = 'Travel Agent',Reason_for_creation__c='New agent'/*, RecordTypeId = agenciesRT.get('PASSENGER')*/);
+        a2 = new Account(Name='Test2 Agency',Short_Name__c='Test2 Agency', IATA_ISO_Country__c = ctry.id, IATAcode__c = '2345671', Sector__c = 'Travel Agent',Reason_for_creation__c='New agent'/*, RecordTypeId = agenciesRT.get('PASSENGER')*/);
+        a3 = new Account(Name='Test3 Agency',Short_Name__c='Test3 Agency', IATA_ISO_Country__c = ctry.id, IATAcode__c = '3456712', Sector__c = 'Travel Agent',Reason_for_creation__c='New agent'/*, RecordTypeId = agenciesRT.get('PASSENGER')*/);
+        a4 = new Account(Name='Test4 Agency',Short_Name__c='Test4 Agency', IATA_ISO_Country__c = ctry.id, IATAcode__c = '4567123', Sector__c = 'Travel Agent',Reason_for_creation__c='New agent'/*, RecordTypeId = agenciesRT.get('PASSENGER')*/);
         agencylist.add(a1);
         agencylist.add(a2);
         agencylist.add(a3);
