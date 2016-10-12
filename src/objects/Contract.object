@@ -505,37 +505,6 @@ E&amp;F CRM Project</description>
         <visibleLines>4</visibleLines>
     </fields>
     <fields>
-        <fullName>EF_Manager_Approval__c</fullName>
-        <description>Helper field for &quot;require approval&quot; functionality.</description>
-        <externalId>false</externalId>
-        <label>E&amp;F Manager Approval</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Not Started</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>In Progress</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Approved</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Rejected</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Recalled</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
-        <trackHistory>false</trackHistory>
-        <type>Picklist</type>
-    </fields>
-    <fields>
         <fullName>EF_Payment_Currency__c</fullName>
         <externalId>false</externalId>
         <globalPicklist>EF_Currency</globalPicklist>
@@ -608,15 +577,6 @@ E&amp;F CRM Project</description>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
-    </fields>
-    <fields>
-        <fullName>EF_Requested_Changes__c</fullName>
-        <externalId>false</externalId>
-        <label>E&amp;F Requested Changes</label>
-        <length>10000</length>
-        <trackHistory>false</trackHistory>
-        <type>Html</type>
-        <visibleLines>10</visibleLines>
     </fields>
     <fields>
         <fullName>EF_Require_Approval__c</fullName>
@@ -719,6 +679,37 @@ IF(ISPICKVAL(Third_Party__c, &quot;Berlitz&quot;), 0.10,
         <label>IsMine</label>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Manager_Approval__c</fullName>
+        <description>Helper field for &quot;require approval&quot; functionality.</description>
+        <externalId>false</externalId>
+        <label>E&amp;F Manager Approval</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Not Started</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Approved</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Rejected</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Recalled</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
     </fields>
     <fields>
         <fullName>Name</fullName>
@@ -922,6 +913,15 @@ IF(ISPICKVAL(Third_Party__c, &quot;Berlitz&quot;), 0.10,
         <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Requested_Changes__c</fullName>
+        <externalId>false</externalId>
+        <label>E&amp;F Requested Changes</label>
+        <length>10000</length>
+        <trackHistory>false</trackHistory>
+        <type>Html</type>
+        <visibleLines>10</visibleLines>
     </fields>
     <fields>
         <fullName>SAP_Contract_Number__c</fullName>
@@ -2164,29 +2164,6 @@ IF(ISPICKVAL(Third_Party__c, &quot;Berlitz&quot;), 0.10,
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>EF_Manager_Approval__c</picklist>
-            <values>
-                <fullName>Approved</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>In Progress</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Not Started</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Recalled</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Rejected</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>EF_Payment_Method</picklist>
             <values>
                 <fullName>Bank transfer</fullName>
@@ -2259,6 +2236,29 @@ IF(ISPICKVAL(Third_Party__c, &quot;Berlitz&quot;), 0.10,
             </values>
             <values>
                 <fullName>Inactive</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Manager_Approval__c</picklist>
+            <values>
+                <fullName>Approved</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Started</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Recalled</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rejected</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

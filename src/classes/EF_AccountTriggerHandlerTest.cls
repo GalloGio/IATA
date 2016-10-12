@@ -107,13 +107,13 @@ private class EF_AccountTriggerHandlerTest {
             EF_Billing_Agreement__c parentBillingAgreement = new EF_Billing_Agreement__c(
                 Contract__c = parentContract.Id,
                 Airline__c = customer1.Id,
-                Status__c = 'Active'
+                EF_Status__c = 'Active'
             );
 
             EF_Billing_Agreement__c childBillingAgreement = new EF_Billing_Agreement__c(
                 Contract__c = childContract.Id,
                 Airline__c = customer2.Id,
-                Status__c = 'Active'
+                EF_Status__c = 'Active'
             );
 
             billingAgreements.add(parentBillingAgreement);
@@ -187,9 +187,9 @@ private class EF_AccountTriggerHandlerTest {
             System.assertEquals(contract.EF_Status__c, 'Inactive');
         }
 
-        List<EF_Billing_Agreement__c> billingAgreements = [select Id, Status__c from EF_Billing_Agreement__c];
+        List<EF_Billing_Agreement__c> billingAgreements = [select Id, EF_Status__c from EF_Billing_Agreement__c];
         for(EF_Billing_Agreement__c billingAgreement : billingAgreements){
-            System.assertEquals(billingAgreement.Status__c, 'Inactive');
+            System.assertEquals(billingAgreement.EF_Status__c, 'Inactive');
         }
 
         List<EF_Contact_Relationship__c> relationships = [select Id, Status__c from EF_Contact_Relationship__c];

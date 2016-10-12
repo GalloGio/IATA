@@ -13494,37 +13494,37 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>AmazonFile__c.EF_Category__c</field>
+        <field>AmazonFile__c.Category__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>AmazonFile__c.EF_Document_Date__c</field>
+        <field>AmazonFile__c.Document_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>AmazonFile__c.EF_Expired__c</field>
+        <field>AmazonFile__c.Expired__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>AmazonFile__c.EF_Expiry_Date__c</field>
+        <field>AmazonFile__c.Expiry_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>AmazonFile__c.EF_SAP_Number__c</field>
+        <field>AmazonFile__c.SAP_Number__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>AmazonFile__c.EF_Skip_Validation__c</field>
+        <field>AmazonFile__c.Skip_Validation__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>AmazonFile__c.EF_Subcategory__c</field>
+        <field>AmazonFile__c.Subcategory__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -21592,6 +21592,11 @@
         <field>Contract.EF_Allow_Billing_Agreements__c</field>
         <readable>true</readable>
     </fieldPermissions>
+	<fieldPermissions>
+        <editable>false</editable>
+        <field>Contract.EF_Approver_Email__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>Contract.EF_BSP_Periods__c</field>
@@ -21608,13 +21613,13 @@
         <readable>true</readable>
     </fieldPermissions>
 	<fieldPermissions>
-        <editable>true</editable>
-        <field>Contract.EF_Comments__c</field>
+        <editable>false</editable>
+        <field>Contract.EF_Client_SIS_Code__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
-        <field>Contract.EF_Client_SIS_Code__c</field>
+        <editable>true</editable>
+        <field>Contract.EF_Comments__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -21627,14 +21632,14 @@
         <field>Contract.EF_Data_Currency__c</field>
         <readable>true</readable>
     </fieldPermissions>
-	<fieldPermissions>
-        <editable>true</editable>
-        <field>Contract.EF_History__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>Contract.EF_Group_Code__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>true</editable>
+        <field>Contract.EF_History__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -21701,6 +21706,11 @@
         <editable>true</editable>
         <field>Contract.EF_Status__c</field>
         <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>false</editable>
+        <field>Contract.EF_Submitter_Email__c</field>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -22254,6 +22264,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>EF_Approval__c.EF_Billing_Currency__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>EF_Approval__c.EF_Billing_Frequency__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -22264,13 +22279,33 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>EF_Approval__c.EF_Location_ID__c</field>
+        <field>EF_Approval__c.EF_Location_Currency__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>EF_Approval__c.EF_Material_Line_Item__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>EF_Approval__c.EF_Material_Name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>EF_Approval__c.EF_Material__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>EF_Approval__c.EF_Payment_Terms__c</field>
         <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>EF_Approval__c.EF_Status__c</field>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -22280,6 +22315,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>EF_Approval__c.Location_Currency__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>EF_Approval__c.Location_ID__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -22295,6 +22335,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>EF_Approval__c.SAP_Contract_Number__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>false</editable>
+        <field>EF_Billing_Agreement__c.Airline_Name__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -22342,9 +22387,24 @@
         <field>EF_Billing_Agreement__c.Data_Currency__c</field>
         <readable>true</readable>
     </fieldPermissions>
-	<fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>EF_Billing_Agreement__c.EF_Approver_Email__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>EF_Billing_Agreement__c.EF_Comments__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>EF_Billing_Agreement__c.EF_History__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>EF_Billing_Agreement__c.EF_Location_ID_Name__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -22356,6 +22416,11 @@
         <editable>true</editable>
         <field>EF_Billing_Agreement__c.EF_Status__c</field>
         <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>EF_Billing_Agreement__c.EF_Submitter_Email__c</field>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -22377,9 +22442,9 @@
         <field>EF_Billing_Agreement__c.Location_Code__c</field>
         <readable>true</readable>
     </fieldPermissions>
-	<fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
-        <field>EF_Billing_Agreement__c.Location_Code_Details__c</field>
+        <field>EF_Billing_Agreement__c.Manager_Approval__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -22402,17 +22467,12 @@
         <field>EF_Billing_Agreement__c.Payment_Terms_Code__c</field>
         <readable>true</readable>
     </fieldPermissions>
-	<fieldPermissions>
-        <editable>false</editable>
-        <field>EF_Billing_Agreement__c.Base_URL__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-	<fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
-        <field>EF_Billing_Agreement__c.Manager_Approval__c</field>
+        <field>EF_Billing_Agreement__c.Payment_Terms__c</field>
         <readable>true</readable>
     </fieldPermissions>
-	<fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>EF_Billing_Agreement__c.Requested_Changes__c</field>
         <readable>true</readable>
@@ -22425,11 +22485,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>EF_Billing_Agreement__c.Send_to_SAP__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-	<fieldPermissions>
-        <editable>true</editable>
-        <field>EF_Billing_Agreement__c.Status__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -22458,13 +22513,38 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>EF_Location_Currency__c.Base_URL__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>EF_Location_Currency__c.EF_Approver_Email__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>EF_Location_Currency__c.EF_Billing_Currency__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>EF_Location_Currency__c.EF_Status__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>EF_Location_Currency__c.EF_Submitter_Email__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
-        <field>EF_Location_Currency__c.location_Id_Name__c</field>
+        <field>EF_Location_Currency__c.Location_ID_Name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>EF_Location_Currency__c.Manager_Approval__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -22474,7 +22554,27 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>EF_Location_Currency__c.Require_Approval__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>EF_Material_Line_Item__c.Base_URL__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>EF_Material_Line_Item__c.Contract__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>EF_Material_Line_Item__c.EF_Approver_Email__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>EF_Material_Line_Item__c.EF_Material_Name__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -22485,6 +22585,31 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>EF_Material_Line_Item__c.EF_Relationship__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>EF_Material_Line_Item__c.EF_Status__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>EF_Material_Line_Item__c.EF_Submitter_Email__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>EF_Material_Line_Item__c.Manager_Approval__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>EF_Material_Line_Item__c.Requested_Changes__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>EF_Material_Line_Item__c.Require_Approval__c</field>
         <readable>true</readable>
     </fieldPermissions>
 	<fieldPermissions>
