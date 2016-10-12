@@ -37,11 +37,11 @@ public class AMS_AgencyChangesTest {
 		insert customsettings;
 
 		List<AMS_ChangeCodes__c> changeCodeCustomsettings = new List<AMS_ChangeCodes__c>();
-		changeCodeCustomsettings.add(new AMS_ChangeCodes__c(Name = 'CAD', Change_Code__c = 'CAD', Reason_Code__c = '', Reason_Code_Description__c = '', Account_status_change__c = ''));
-		changeCodeCustomsettings.add(new AMS_ChangeCodes__c(Name = 'CWD', Change_Code__c = 'CWD', Reason_Code__c = '81', Reason_Code_Description__c = 'CHANGE IN PROCESS', Account_status_change__c = '8;9'));
-		changeCodeCustomsettings.add(new AMS_ChangeCodes__c(Name = 'CHI', Change_Code__c = 'CHI', Reason_Code__c = '81', Reason_Code_Description__c = 'CHANGE IN PROCESS', Account_status_change__c = '8;9'));
-		changeCodeCustomsettings.add(new AMS_ChangeCodes__c(Name = 'CHF', Change_Code__c = 'CHF', Reason_Code__c = '9', Reason_Code_Description__c = 'ACCREDITED-MEET-STANDARDS', Account_status_change__c = '9'));
-		changeCodeCustomsettings.add(new AMS_ChangeCodes__c(Name = 'CHO', Change_Code__c = 'CHO', Reason_Code__c = '81', Reason_Code_Description__c = 'CHANGE IN PROCESS', Account_status_change__c = '8;9'));
+		changeCodeCustomsettings.add(new AMS_ChangeCodes__c(Name = 'CAD', Change_Code__c = 'CAD', Reason_Code__c = '', Reason_Code_Description__c = '', Account_status_change__c = '',Integration_RecId__c = 'C'));
+		changeCodeCustomsettings.add(new AMS_ChangeCodes__c(Name = 'CWD', Change_Code__c = 'CWD', Reason_Code__c = '81', Reason_Code_Description__c = 'CHANGE IN PROCESS', Account_status_change__c = '8;9',Integration_RecId__c = 'C'));
+		changeCodeCustomsettings.add(new AMS_ChangeCodes__c(Name = 'CHI', Change_Code__c = 'CHI', Reason_Code__c = '81', Reason_Code_Description__c = 'CHANGE IN PROCESS', Account_status_change__c = '8;9',Integration_RecId__c = 'C'));
+		changeCodeCustomsettings.add(new AMS_ChangeCodes__c(Name = 'CHF', Change_Code__c = 'CHF', Reason_Code__c = '9', Reason_Code_Description__c = 'ACCREDITED-MEET-STANDARDS', Account_status_change__c = '9',Integration_RecId__c = 'C'));
+		changeCodeCustomsettings.add(new AMS_ChangeCodes__c(Name = 'CHO', Change_Code__c = 'CHO', Reason_Code__c = '81', Reason_Code_Description__c = 'CHANGE IN PROCESS', Account_status_change__c = '8;9',Integration_RecId__c = 'C'));
 		insert changeCodeCustomsettings;
 
 		ID rtAgency = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency').getRecordTypeId();
