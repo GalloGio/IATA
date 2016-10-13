@@ -376,7 +376,9 @@ public class AMS_OSCARTriggerHandler {
 					
 
 				} else if (oldOSCAR.RPM_Approval__c <> AMS_Utils.AUTH_APPROVAL && oscar.RPM_Approval__c == AMS_Utils.AUTH_APPROVAL) {
+				
 
+					//Location Type will always be selected as a single change.
 					if (nonCascadingTOCs.length() > 0 && nonCascadingTOCs.containsIgnoreCase(AMS_Utils.LOCATION_TYPE)) {
 						System.debug('AGENCY CHANGES: Processing Location Type Change Codes on Authorize Approval.');
 
