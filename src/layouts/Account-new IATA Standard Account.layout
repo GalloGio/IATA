@@ -485,7 +485,7 @@
         <fields>Release_Date__c</fields>
         <relatedList>Financial_Security__c.Account__c</relatedList>
         <sortField>NAME</sortField>
-        <sortOrder>Asc</sortOrder>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <customButtons>Mass_Update_Contracts</customButtons>

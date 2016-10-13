@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>E-mail alert to inform CM&amp;Case Owner after deadline</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>sMAP - Deadline reached pending inputs inform CM &amp; Case Owner</name>
+    <style>none</style>
+    <subject>SMAP - Deadline for case {!Case.CaseNumber} is over with {!Case.non_Airline_Input__c} pending inputs</subject>
+    <type>text</type>
+</EmailTemplate>

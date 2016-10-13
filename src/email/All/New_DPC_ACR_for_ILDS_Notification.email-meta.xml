@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>E-mail alert to inform new ACR to ITS BJS for ILDS</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>New DPC ACR for ILDS Notification</name>
+    <style>none</style>
+    <subject>New CSR Case : {!Case.CaseNumber}</subject>
+    <type>text</type>
+</EmailTemplate>

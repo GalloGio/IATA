@@ -40,7 +40,7 @@ public class AMS_DemoTreeview {
         else
             contextId= this.currentAccount.id;
             
-        return [select id,Name, IATACode__c, Status__c, Primary_Address__r.Country__r.Name, Primary_Address__r.City__c, Location_Type__c,Location_Class__c 
+        return [select id,Name, IATACode__c, Status__c, BillingCountry, BillingCity, Location_Type__c,Location_Class__c 
                                 from Account  where id =: contextId];
     }
 
@@ -87,7 +87,7 @@ public class AMS_DemoTreeview {
         }
 
         Map<Id,Account> acctsInfo = 
-            new Map <Id,Account> ([select id,Name, IATACode__c, Status__c, Primary_Address__r.Country__r.Name, Primary_Address__r.City__c, Location_Type__c,Location_Class__c 
+            new Map <Id,Account> ([select id,Name, IATACode__c, Status__c, BillingCountry, BillingCity, Location_Type__c,Location_Class__c 
                                 from Account where id in :acctIds]);
 
         return acctsInfo;
