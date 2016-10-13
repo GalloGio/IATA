@@ -15,7 +15,7 @@
             <type>userLookup</type>
         </recipients>
         <senderType>CurrentUser</senderType>
-        <template>unfiled$public/DIP_Review_Legal_Approved</template>
+        <template>All/DIP_Review_Legal_Approved</template>
     </alerts>
     <alerts>
         <fullName>DIP_Review_appoved_by_rm_i</fullName>
@@ -36,7 +36,7 @@
             <type>userLookup</type>
         </recipients>
         <senderType>CurrentUser</senderType>
-        <template>unfiled$public/DIP_Review_RM_I_Approved</template>
+        <template>All/DIP_Review_RM_I_Approved</template>
     </alerts>
     <alerts>
         <fullName>DIP_Review_rejected_by_Legal</fullName>
@@ -53,7 +53,7 @@
             <type>userLookup</type>
         </recipients>
         <senderType>CurrentUser</senderType>
-        <template>unfiled$public/DIP_Review_Rejected_by_Legal</template>
+        <template>All/DIP_Review_Rejected_by_Legal</template>
     </alerts>
     <alerts>
         <fullName>DIP_Review_rejected_by_RM_I</fullName>
@@ -74,7 +74,7 @@
             <type>userLookup</type>
         </recipients>
         <senderType>CurrentUser</senderType>
-        <template>unfiled$public/DIP_Review_Rejected_by_RM_I</template>
+        <template>All/DIP_Review_Rejected_by_RM_I</template>
     </alerts>
     <alerts>
         <fullName>DIP_Review_rejected_by_the_GPO</fullName>
@@ -87,7 +87,7 @@
             <type>owner</type>
         </recipients>
         <senderType>CurrentUser</senderType>
-        <template>unfiled$public/DIP_Review_Rejected_by_GPO</template>
+        <template>All/DIP_Review_Rejected_by_GPO</template>
     </alerts>
     <alerts>
         <fullName>DIP_approved_by_GPO</fullName>
@@ -100,7 +100,7 @@
             <type>owner</type>
         </recipients>
         <senderType>CurrentUser</senderType>
-        <template>unfiled$public/DIP_Review_GPO_Approved</template>
+        <template>All/DIP_Review_GPO_Approved</template>
     </alerts>
     <fieldUpdates>
         <fullName>Approval_recalled_DIP_Review</fullName>
