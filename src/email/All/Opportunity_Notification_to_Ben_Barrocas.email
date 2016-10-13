@@ -1,0 +1,8 @@
+Hello,
+
+Please note that the opportunity "{!Opportunity.Name}" has been created / closed.
+
+Opportunity Owner: {!Opportunity.OwnerFullName}
+Opportunity Stage: {!Opportunity.StageName}
+Description: {!Opportunity.Description}
+Opportunity: {!Opportunity.Link}
