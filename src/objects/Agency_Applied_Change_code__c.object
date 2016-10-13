@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -301,6 +297,7 @@
             </picklistValues>
             <sorted>true</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -353,6 +350,7 @@
         <type>Date</type>
     </fields>
     <fields>
+<<<<<<< HEAD
         <fullName>For_Integration__c</fullName>
         <externalId>false</externalId>
         <formula>IF( ISNULL(Account__r.Last_Integration_Date__c), 
@@ -367,6 +365,23 @@
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
+=======
+        <fullName>IRR_Expiration_Date__c</fullName>
+        <externalId>false</externalId>
+        <formula>DATETIMEVALUE(
+  TEXT(YEAR(Effective_Date__c ))+ &quot;-&quot; + 
+  IF(
+    AND(MONTH(Effective_Date__c) = 2,DAY( Effective_Date__c ) = 29)
+    ,&quot;3-1&quot;
+    ,TEXT(MONTH(Effective_Date__c)) + &quot;-&quot; + TEXT(DAY(Effective_Date__c))
+  ) + &quot; 01:01:00&quot;
+)</formula>
+        <label>IRR Expiration Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+>>>>>>> ea67b95... Provide fix for the expiration of the irregularities
     </fields>
     <fields>
         <fullName>Irregularities_Expired__c</fullName>
@@ -663,6 +678,7 @@
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
