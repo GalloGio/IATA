@@ -245,10 +245,6 @@
             <isRequired>false</isRequired>
         </displayedFields>
         <displayedFields>
-            <field>Shipping_ISO_Country__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
         <displayedFields>
             <field>Shipping_ISO_Country__c</field>
             <isFieldManaged>false</isFieldManaged>
