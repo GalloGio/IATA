@@ -202,7 +202,7 @@ global without sharing class AMS_RecordCreatorWebservice {
         else
             oscar = new AMS_OSCAR__c(Account__c = accountId, Process__c = processType, RecordTypeId =recordTypeId, Status__c = oscarStatus, AMS_Online_Accreditation__c = accreditationId, OwnerId = owner );
 
-        if(processType.equalsIgnoreCase(MAJOR_CHANGES_PV) || typeOfProcess.equalsIgnoreCase(VMFR_PV)){
+        if(processType.equalsIgnoreCase(MAJOR_CHANGES_PV) || processType.equalsIgnoreCase(VMFR_PV)){
 
             accreditationObj = fetchAccreditationObject(accreditationId);
 
