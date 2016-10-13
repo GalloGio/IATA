@@ -1,0 +1,9 @@
+The following customer complaint has been created and ready for review for the complaints management team
+
+Complaint number: {!Complaint__c.Name}
+Complaint created by: {!Complaint__c.CreatedBy}
+Complaint description: {!Complaint__c.Complaint_Description__c}
+
+Case number: {!Complaint__c.Related_Case_Number__c}
+
+Complaint: {!Complaint__c.Link}
