@@ -1,6 +1,6 @@
-<apex:page standardController="EBC_Template__c" extensions="vfIECEBC_TemplateEdit" applyHtmlTag="false" applyBodyTag="false" sidebar="false" showheader="false" standardStylesheets="false" language="en" docType="html-5.0" action="{!pageLoad}">
+<apex:page standardController="EBC_Template__c" extensions="vfIECEBC_TemplateEdit" applyHtmlTag="false" applyBodyTag="false" sidebar="false" showheader="false" standardStylesheets="false" language="en" docType="html-5.0">
 	<apex:composition template="IECEBC_Layout">
-        <apex:define name="pageHeadAdditions">
+        <apex:define name="pageHeadAdditions"> 
             <!-- Start of Page <head> -->
             <title>eBroadcast Template - Design</title>
             <style type="text/css">

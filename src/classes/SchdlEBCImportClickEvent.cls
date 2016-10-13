@@ -22,6 +22,6 @@ global class SchdlEBCImportClickEvent implements Database.AllowsCallouts, Schedu
     
     global static void Schedule() {
         SchdlEBCImportClickEvent a = new SchdlEBCImportClickEvent();
-        System.schedule('SchdlEBCImportClickEvent', '0 28 * * * ?', a);
+        System.schedule('SchdlEBCImportClickEvent', '0 58 * * * ?', a);
     }
 }

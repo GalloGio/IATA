@@ -95,9 +95,11 @@
                 
                 <div class="modal-body">
                     <h3 class="step-title">Audience</h3>
-                    <p>Please select lorem dolor sit amet nulla vel sodales mauris. Maecenas ante magna, henderite at mollis quis.</p>
+                    <p>Select the audience you want to reach. Note that the audience cannot be changed after the list is saved.</p>
                     
                     <ul class="list list-radio-select js-radio-list js-form-continue-validation" data-target-button="#js-continue-to-geo-selection" id="js-radio-list-audience">
+                        
+                        
                         <apex:variable var="isOptionDisabled" value="{!NOT(ISBLANK(limitToAudience)) && limitToAudience != 'Agency'}" />
                         <li class="{!IF(isOptionDisabled, ' disabled', '')}">
                             <div class="radio-box">
@@ -118,57 +120,62 @@
                                 <label class="input-label" for="new-list-1">IATA Travel Agencies</label>
                             </div>
                         </li>
-                        <apex:variable var="isOptionDisabled" value="{!NOT(ISBLANK(limitToAudience)) && limitToAudience != 'Agent'}" />
-                        <li class="{!IF(isOptionDisabled, ' disabled', '')}">
-                            <div class="radio-box">
-                                <div class="custom-user-input radio">
-                                    <apex:outputText rendered="{!NOT(isOptionDisabled)}">
-                                        <apex:outputText rendered="{!newFilter.Audience__c == 'Agent'}">
-                                            <input class="user-input radio" onchange="updateAudience(this.value);" type="radio" name="audience" id="Agent" value="Agent" checked="checked" />
+                        
+                        <apex:outputText rendered="{!isIDCARDSelectionAllowed}"> 
+                            <apex:variable var="isOptionDisabled" value="{!NOT(ISBLANK(limitToAudience)) && limitToAudience != 'Agent'}" />
+                            <li class="{!IF(isOptionDisabled, ' disabled', '')}">
+                                <div class="radio-box">
+                                    <div class="custom-user-input radio">
+                                        <apex:outputText rendered="{!NOT(isOptionDisabled)}">
+                                            <apex:outputText rendered="{!newFilter.Audience__c == 'Agent'}">
+                                                <input class="user-input radio" onchange="updateAudience(this.value);" type="radio" name="audience" id="Agent" value="Agent" checked="checked" />
+                                            </apex:outputText>
+                                            <apex:outputText rendered="{!newFilter.Audience__c != 'Agent'}">
+                                                <input class="user-input radio" onchange="updateAudience(this.value);" type="radio" name="audience" id="Agent" value="Agent" />
+                                            </apex:outputText>
                                         </apex:outputText>
-                                        <apex:outputText rendered="{!newFilter.Audience__c != 'Agent'}">
-                                            <input class="user-input radio" onchange="updateAudience(this.value);" type="radio" name="audience" id="Agent" value="Agent" />
+                                        <apex:outputText rendered="{!isOptionDisabled}">
+                                            <input disabled="disabled" readonly="readonly" class="user-input radio" type="radio" name="audience" id="Agent" value="Agent" />
                                         </apex:outputText>
-                                    </apex:outputText>
-                                    <apex:outputText rendered="{!isOptionDisabled}">
-                                        <input disabled="disabled" readonly="readonly" class="user-input radio" type="radio" name="audience" id="Agent" value="Agent" />
-                                    </apex:outputText>
-                                    
-                                    <label class="custom-radio" for="Agent"><i class="icon"></i></label>
+                                        
+                                        <label class="custom-radio" for="Agent"><i class="icon"></i></label>
+                                    </div>
+                                    <label class="input-label" for="Agent">IATA/IATAN ID Cardholders</label>
                                 </div>
-                                <label class="input-label" for="Agent">IATA/IATAN ID Cardholders</label>
-                            </div>
-                        </li>
-                        <apex:variable var="isOptionDisabled" value="{!NOT(ISBLANK(limitToAudience)) && limitToAudience != 'Custom'}" />
-                        <li class="{!IF(isOptionDisabled, ' disabled', '')}">
-                            <div class="radio-box">
-                                <div class="custom-user-input radio">
-                                    <apex:outputText rendered="{!NOT(isOptionDisabled)}">
-                                        <apex:outputText rendered="{!newFilter.Audience__c == 'Custom'}">
-                                            <input class="user-input radio" onchange="updateAudience(this.value);" type="radio" name="audience" id="new-list-3" value="Custom" checked="checked" />
+                            </li>
+                        </apex:outputText>
+                        <apex:outputText rendered="{!isCodeSelectionAllowed}"> 
+                            <apex:variable var="isOptionDisabled" value="{!NOT(ISBLANK(limitToAudience)) && limitToAudience != 'Custom'}" />
+                            <li class="{!IF(isOptionDisabled, ' disabled', '')}">
+                                <div class="radio-box">
+                                    <div class="custom-user-input radio">
+                                        <apex:outputText rendered="{!NOT(isOptionDisabled)}">
+                                            <apex:outputText rendered="{!newFilter.Audience__c == 'Custom'}">
+                                                <input class="user-input radio" onchange="updateAudience(this.value);" type="radio" name="audience" id="new-list-3" value="Custom" checked="checked" />
+                                            </apex:outputText>
+                                            <apex:outputText rendered="{!newFilter.Audience__c != 'Custom'}">
+                                                <input class="user-input radio" onchange="updateAudience(this.value);" type="radio" name="audience" id="new-list-3" value="Custom" />
+                                            </apex:outputText>
                                         </apex:outputText>
-                                        <apex:outputText rendered="{!newFilter.Audience__c != 'Custom'}">
-                                            <input class="user-input radio" onchange="updateAudience(this.value);" type="radio" name="audience" id="new-list-3" value="Custom" />
+                                        <apex:outputText rendered="{!isOptionDisabled}">
+                                            <input disabled="disabled" readonly="readonly" class="user-input radio" type="radio" name="audience" id="new-list-3" value="Custom" />
                                         </apex:outputText>
-                                    </apex:outputText>
-                                    <apex:outputText rendered="{!isOptionDisabled}">
-                                        <input disabled="disabled" readonly="readonly" class="user-input radio" type="radio" name="audience" id="new-list-3" value="Custom" />
-                                    </apex:outputText>
-                                    
-                                    <label class="custom-radio" for="new-list-3"><i class="icon"></i></label>
+                                        
+                                        <label class="custom-radio" for="new-list-3"><i class="icon"></i></label>
+                                    </div>
+                                    <label class="input-label" for="new-list-3">Provide a list of IATA Numeric Codes</label>
                                 </div>
-                                <label class="input-label" for="new-list-3">Provide a list of IATA Numeric Codes</label>
-                            </div>
-                            <apex:outputPanel rendered="{!newFilter.Audience__c == 'Custom'}">
-                                <div class="field-group textarea">
-                                    <label>
-                                        <span class="input-label">Paste your list of IATA numeric codes in the box below:</span>
-                                        <apex:inputField value="{!newFilter.IATA_Codes__c}" styleClass="user-input textarea" style="font-family: tahoma, open sans-serif;" />
-                                    </label>
-                                    <p class="input-description">Each IATA code needs to be entered seperated by a semicolon with a max of <strong>5,000 codes</strong>.</p>
-                                </div>
-                            </apex:outputPanel>
-                        </li>
+                                <apex:outputPanel rendered="{!newFilter.Audience__c == 'Custom'}">
+                                    <div class="field-group textarea">
+                                        <label>
+                                            <span class="input-label">Paste your list of IATA Numeric Codes in the box below</span>
+                                            <apex:inputField value="{!newFilter.IATA_Codes__c}" styleClass="user-input textarea" style="font-family: tahoma, open sans-serif;" />
+                                        </label>
+                                        <p class="input-description">Each IATA Numeric Code needs to be entered separated by a semicolon with a max of <strong>5,000 codes</strong>.</p>
+                                    </div>
+                                </apex:outputPanel>
+                            </li>
+                        </apex:outputText>
                     </ul>
                     <apex:outputText rendered="{!NOT(newFilterFieldsValidity['Audience__c'])}">
                         <div class="errorMsg"><strong>Error:</strong> You must enter a value</div>
@@ -240,12 +247,12 @@
                             <div id="custom-filter-block" style="{!IF(geoFilterPreset == 'custom-filter', '', 'display: none;')}">
                                 <div class="group-container custom-geo-selection">
                                     <div class="field-group recipents-match select default">
-                                        Recipents match
+                                        Recipients matching 
                                         <div class="custom-user-input select">
                                             <i class="icon angle-down"></i>
                                             <apex:inputField value="{!newFilter.Geo_Condition__c}" styleClass="user-input select" required="true" />
                                         </div>
-                                        of the following Geo-Selections:
+                                        of the following conditions:
                                     </div>
                                     
                                     <apex:outputPanel id="geoFilters">
@@ -343,12 +350,12 @@
                     
                     <div class="group-container custom-geo-selection">
                         <div class="field-group recipents-match select default">
-                            Recipents match
+                            Recipients matching 
                             <div class="custom-user-input select">
                                 <i class="icon angle-down"></i>
                                 <apex:inputField value="{!newFilter.Refinement_Condition__c}" styleClass="user-input select" required="true" />
                             </div>
-                            of the following filters:
+                            of the following conditions:
                         </div>
                         
                         <apex:outputPanel id="refinementFilters">
@@ -489,7 +496,7 @@
                             </table>
                             <apex:outputPanel id="newFilterNameField" layout="block" styleClass="field-group text list-name">
                                 <label>
-                                    <span class="input-label">Please provide a list name</span>
+                                    <span class="input-label">Name your list</span>
                                     <apex:inputField type="text" styleClass="user-input text js-remaining-characters" value="{!newFilter.Name}" html-data-target-element=".js-remaining-count" html-data-target-id="list-name" html-data-max-length="{!$ObjectType.EBC_Master_Filter__c.fields.Name.length}" />
                                 </label>
                                 <div class="input-remaining">
@@ -513,7 +520,7 @@
                             <div class="summary-box">
                                 <div class="box-body fit">
                                     <table class="data-table zibra cost"> 
-                                        <caption>Hint: This is what a campaign using this list would cost you</caption>
+                                        <caption>Hint: Here is what a campaign would cost using this list</caption>
                                         <tr>
                                             <th>
                                                 <div class="item-name">Recipients selected</div>
