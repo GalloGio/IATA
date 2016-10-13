@@ -25,10 +25,11 @@
         <reevaluateOnChange>true</reevaluateOnChange>
     </fieldUpdates>
     <fieldUpdates>
-        <fullName>Expire_IRR</fullName>
+        <fullName>IRR_Expire</fullName>
+        <description>Expire Irregularities 1 year after effective date</description>
         <field>Irregularities_Expired__c</field>
         <literalValue>1</literalValue>
-        <name>Expire IRR</name>
+        <name>IRR: Expire</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Literal</operation>
         <protected>false</protected>
@@ -43,6 +44,7 @@
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
         <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
     </fieldUpdates>
     <rules>
         <fullName>Change Code - Change Recordtype Irregularities</fullName>
@@ -76,7 +78,7 @@
     </rules>
     <rules>
         <fullName>Expire Irregularity</fullName>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Agency_Applied_Change_code__c.RecordTypeId</field>
             <operation>equals</operation>
@@ -91,7 +93,7 @@
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
         <workflowTimeTriggers>
             <actions>
-                <name>Expire_IRR</name>
+                <name>IRR_Expire</name>
                 <type>FieldUpdate</type>
             </actions>
             <offsetFromField>Agency_Applied_Change_code__c.IRR_Expiration_Date__c</offsetFromField>
@@ -101,20 +103,19 @@
     </rules>
     <rules>
         <fullName>IRR%3A Expire</fullName>
-        <active>false</active>
+        <active>true</active>
         <criteriaItems>
             <field>Agency_Applied_Change_code__c.RecordTypeId</field>
             <operation>equals</operation>
             <value>Irregularities</value>
         </criteriaItems>
-        <criteriaItems>
-            <field>Agency_Applied_Change_code__c.Irregularities_Expired__c</field>
-            <operation>equals</operation>
-            <value>False</value>
-        </criteriaItems>
         <description>Expire irregularities when it reached the effective date + 12 months</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
         <workflowTimeTriggers>
+            <actions>
+                <name>IRR_Expire</name>
+                <type>FieldUpdate</type>
+            </actions>
             <offsetFromField>Agency_Applied_Change_code__c.Effective_Date__c</offsetFromField>
             <timeLength>365</timeLength>
             <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
