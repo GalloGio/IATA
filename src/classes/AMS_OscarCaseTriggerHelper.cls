@@ -336,21 +336,26 @@ public class AMS_OscarCaseTriggerHelper {
 
         oscars = new Map<Id, AMS_OSCAR__c>([SELECT Id, OwnerId, Status__c, Account__r.Name, Account__r.Location_Type__c , Account__r.Category__c FROM AMS_OSCAR__c WHERE Id IN :oscars.keySet()]);
 
-        for(Case c : newOscarCases){
+        for(Case c : oscarCases){
             
-            c.OwnerId = oscars.get(c.Oscar__c).OwnerId;
-            c.Status = oscars.get(c.Oscar__c).Status__c;
-
+            if(c.OwnerId != oscars.get(c.Oscar__c).OwnerId)
+                c.OwnerId = oscars.get(c.Oscar__c).OwnerId;
             
-            if(c.Origin != 'Portal'){
-                c.Subject = c.reason1__c + ' - ' + oscars.get(c.Oscar__c).Account__r.Name;
-            }
-        }
-
-        for(Case c : updatedOscarCases){
+            if(c.Status != oscars.get(c.Oscar__c).Status__c)
+                c.Status = oscars.get(c.Oscar__c).Status__c;
 
             String typeOfCustomer = AMS_Utils.fetchTypeOfCustomer(oscars.get(c.Oscar__c).Account__r.Location_Type__c,oscars.get(c.Oscar__c).Account__r.Category__c);
-            if(typeOfCustomer != null) c.Type_of_customer__c = typeOfCustomer;
+
+            if(typeOfCustomer != null && typeOfCustomer != c.Type_of_customer__c)
+                c.Type_of_customer__c = typeOfCustomer;
+
+            String newCaseSubject = null;
+			
+			if(c.reason1__c != null)
+				newCaseSubject = c.reason1__c + ' - ' + oscars.get(c.Oscar__c).Account__r.Name;
+
+            if(newCaseSubject != null && c.Subject != newCaseSubject)
+                c.Subject = newCaseSubject;
         }
     }
 }

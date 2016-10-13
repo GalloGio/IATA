@@ -249,8 +249,8 @@ private class IFAP_BusinessRulesTest {
     }
 
     static testmethod void testCheckFinancialAssessmentContactExist() {
-        RecordType StandardAccountRecordType = [Select r.Id, r.Name from RecordType r where r.Name = 'IATA Standard Account' limit 1];
-        RecordType StandardContactRecordType = [Select r.Id, r.Name from RecordType r where r.Name = 'IATA Standard Contact' limit 1];
+        RecordType StandardAccountRecordType = [Select r.Id, r.Name from RecordType r where r.Name = 'Standard Account' and r.SobjectType = 'Account' limit 1];
+        RecordType StandardContactRecordType = [Select r.Id, r.Name from RecordType r where r.Name = 'Standard' and r.SobjectType = 'Contact' limit 1];
         ID IFAPcaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('IATA Financial Review');
         List<Account> accounts = new List<Account>();
 

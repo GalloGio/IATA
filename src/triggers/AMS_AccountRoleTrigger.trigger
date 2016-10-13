@@ -9,8 +9,9 @@ trigger AMS_AccountRoleTrigger on AMS_Account_Role__c (before update, after upda
     
     if(!AMS_TriggerExecutionManager.checkExecution(AMS_Account_Role__c.getSObjectType(), 'AMS_AccountRoleTrigger')) { return; }
         
-    if(Trigger.isUpdate && Trigger.isAfter)
-        AMS_AgencyUpdateHelper.agencyUpdate(Trigger.new);
+    //FM - 22-09-2016 - stop creating "agency update" Records
+    //if(Trigger.isUpdate && Trigger.isAfter)
+    //    AMS_AgencyUpdateHelper.agencyUpdate(Trigger.new);
 
     //bind employee to contact
     if(Trigger.isBefore){
@@ -37,7 +38,7 @@ trigger AMS_AccountRoleTrigger on AMS_Account_Role__c (before update, after upda
     //merge owners coming from AIMS. (AIMS sometimes split records that have long names)
     if(Trigger.isAfter && (Trigger.isInsert || trigger.isUpdate)){
         AMS_AccountRoleHelper handler = new AMS_AccountRoleHelper();
-        handler.aimsOwnerMerge();
+        //handler.aimsOwnerMerge();
     }
 
 }
