@@ -26,7 +26,7 @@
                 <field>Contract__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>Requested_Changes__c</field>
             </layoutItems>
         </layoutColumns>

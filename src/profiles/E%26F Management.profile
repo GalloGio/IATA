@@ -21689,7 +21689,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Contract.EF_Manager_Approval__c</field>
+        <field>Contract.Manager_Approval__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -21724,7 +21724,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Contract.EF_Require_Approval__c</field>
+        <field>Contract.Require_Approval__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
