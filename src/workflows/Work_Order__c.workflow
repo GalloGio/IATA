@@ -24,7 +24,7 @@
         <description>IW: Work Order assignment - queue</description>
         <protected>false</protected>
         <senderType>CurrentUser</senderType>
-        <template>unfiled$public/InvoiceWorks_Work_Order_assignment_queue</template>
+        <template>All/InvoiceWorks_Work_Order_assignment_queue</template>
     </alerts>
     <alerts>
         <fullName>Notify_user_when_Pending_Schedule_or_Scheduled_Development</fullName>

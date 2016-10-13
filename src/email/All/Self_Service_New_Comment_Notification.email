@@ -1,0 +1,3 @@
+A new Case Comment has been added to above Application Change Request. Pls click on this link to access the ACR {!Case.Link}
+
+{!Case.Last_Case_Comment}

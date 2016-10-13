@@ -9,7 +9,7 @@
             <type>userLookup</type>
         </recipients>
         <senderType>CurrentUser</senderType>
-        <template>unfiled$public/ReleaseTask_Inform_new_Assignee</template>
+        <template>All/ReleaseTask_Inform_new_Assignee</template>
     </alerts>
     <alerts>
         <fullName>Release_Task_Technical_Owner_Notification</fullName>
@@ -20,7 +20,7 @@
             <type>userLookup</type>
         </recipients>
         <senderType>CurrentUser</senderType>
-        <template>unfiled$public/Release_Task_Technical_Owner_Notification</template>
+        <template>All/Release_Task_Technical_Owner_Notification</template>
     </alerts>
     <fieldUpdates>
         <fullName>Release_Task_Set_Owner_to_Triage_Queue</fullName>

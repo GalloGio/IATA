@@ -3,10 +3,10 @@
     
     <apex:includeScript value="/support/console/20.0/integration.js"/>
     <apex:includeScript value="{!$Resource.jquery2_1_4}"/>
-    <apex:includeScript value="{!URLFOR($Resource.tablesorter, 'jquery.tablesorter.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.Tablesorter, 'jquery.tablesorter.js')}"/>
     <apex:includeScript value="{!URLFOR($Resource.jszip, '/jszip.min.js')}"/>
     <apex:includeScript value="{!URLFOR($Resource.jszip, '/zippack.js')}"/>
-    <apex:stylesheet value="{!URLFOR($Resource.tablesorter,'/themes/blue/style.css')}" />
+    <apex:stylesheet value="{!URLFOR($Resource.Tablesorter,'/themes/blue/style.css')}" />
 
     <c:Loading />
     <style>

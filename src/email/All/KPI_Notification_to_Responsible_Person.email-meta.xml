@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>KPI - Notification on due date to update the concerned KPI value</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>IATADynamicSkyLetterhead</letterhead>
+    <name>KPI - Notification to Responsible Person</name>
+    <style>freeForm</style>
+    <subject>Reminder - Update {!KPI_Value__c.Name} KPI for {!KPI_Value__c.Month__c} {!KPI_Value__c.Year__c}</subject>
+    <textOnly>Note that this is an auto-reply message. Please do not respond to this email.
+
+Dear Customer,
+
+Thank you for your enquiry. One of our Customer Service Representatives will respond to you shortly.
+
+You have been allocated the following:
+
+Case number: # {!Case.CaseNumber}
+Case description: {!Case.Description}
+
+
+Please quote this case number as a reference if you wish to contact us regarding your enquiry.
+
+Best regards,
+
+IATA Operations &amp; Service Center - The Americas
+
+Please visit our portal to search FAQs, to find documents and information related to Accreditation, BSP and CASS or to contact us!
+
+---------------------------------------------------------------------------------------------------------
+{!Case.Thread_Id}</textOnly>
+    <type>html</type>
+</EmailTemplate>
