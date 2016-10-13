@@ -1,0 +1,6 @@
+Dear {!Case.Country_Manager__c} & {!Case.OwnerFullName},
+
+Please note that the deadline for Airline Input is over with {!Case.non_Airline_Input__c} pending inputs for the SMAP case for agent {!Case.Account} with IATA code {!Case.IATA_Code__c} .
+
+
+For direct access, please click on this link {!Case.Link}.

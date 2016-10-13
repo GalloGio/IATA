@@ -68,7 +68,9 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
             targetAgencyId = targetAgency.Id;
 
         //open the OSCAR in a BR which has child SA agencies
-        AMS_OSCAR__c oscar = new AMS_OSCAR__c(RecordTypeId = rtChange, Account__c = oscarAccount.Id, Type_of_change__c = typeOfChange, Change_of_location_type_behavior__c = changeLocTypeBehavior, AMS_Target_Agency__c = targetAgencyId, Change_effective_as_of__c = Date.today());
+        AMS_OSCAR__c oscar = new AMS_OSCAR__c(RecordTypeId = rtChange, Account__c = oscarAccount.Id,
+                                               Type_of_change__c = typeOfChange, Change_of_location_type_behavior__c = changeLocTypeBehavior, 
+                                               AMS_Target_Agency__c = targetAgencyId, Change_effective_as_of__c = date.today());
         insert oscar;
 
         ID rtCommCase = Schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
@@ -666,6 +668,7 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
             System.assert(false, 'exception expected');
         } catch (Exception e) {
             Boolean expectedExceptionThrown =  e.getMessage().contains('The target Agency Location Type must be either HO, AO or BR') ? true : false;
+            if(!expectedExceptionThrown) throw new transformationException('this is not what we expect :' + e.getMessage() +  ' stacktracestring : ' +  e.getStackTraceString());
             System.assertEquals(expectedExceptionThrown, true);
         }
 
