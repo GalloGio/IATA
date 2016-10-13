@@ -76,7 +76,17 @@
         {
             window.location.href = "mailto:globaldata@iata.org";
         }
-		
+    function ShowWaitingStatus(section){
+    	jQuery(section).html('<img src="/img/loading.gif" width="25px" height="25px"/>');
+                
+     }
+    function ShoworHideTerms(showorhide)
+    {
+        var self = jQuery(this);
+        parent = self.parents('.js-accordion'),
+        parent.find('.accordion-panel[data-index="2"]]').removeClass('is-open');
+        parent.find('.accordion-panel[data-index="2"]]').addClass('is-disabled');
+    }
 	</script>
 	
 	<div class="row row-payment">
@@ -213,7 +223,7 @@
                                             ::before
                                         </i>
                                     -->
-                                    <ul class="list actions">
+                                    <ul class="list actions sectionAddress">
                                     <apex:outputText rendered="{!!editMode}">
 										<li>
                                             <apex:commandLink action="{!clickEditButton}"
@@ -221,7 +231,7 @@
                                                                 reRender="campaignConfirmBillingDetailForm,formShoppingCart,msg"
                                                                 styleClass="button secondary fa fa-pencil-square-o"
                                                                 status="statusId"
-                                                                />
+                                                                onclick="ShoworHideTerms(true);ShowWaitingStatus('.sectionAddress,.sectionActions');"/>
                                        </li>
 									</apex:outputText>
                                     <apex:outputText rendered="{!editMode}">
@@ -230,7 +240,7 @@
                                                         value="Cancel" 
                                                         reRender="campaignConfirmBillingDetailForm,formShoppingCart,msg"
                                                         status="statusId"
-                                                        styleClass="text-link"/>
+                                                        styleClass="text-link"  onclick="ShoworHideTerms(true);ShowWaitingStatus('.sectionAddress,.sectionActions');"/>
                                         </li>
                                     </apex:outputText>
                                     <apex:outputText rendered="{!editMode}">
@@ -239,14 +249,14 @@
                                                         value="Save" 
                                                         reRender="campaignConfirmBillingDetailForm,formShoppingCart,msg"
                                                         status="statusId"
-                                                        styleClass="button secondary"/>
+                                                        styleClass="button secondary" onclick="ShoworHideTerms(true);ShowWaitingStatus('.sectionAddress,.sectionActions');"/>
                                         </li>
 									</apex:outputText>
                                     </ul>                                    
                                 </div>
                             </apex:form>
 						</dd>
-						<dt class="accordion-title is-open" data-index="2">Terms and conditions</dt>
+                        <dt class="accordion-title is-open" data-index="2">Terms and conditions</dt>
 						<dd class="accordion-panel is-open" data-index="2">
 							<p>Please read the Terms and Conditions before proceeding with payment.</p>
 							<div class="checkbox-box">
@@ -256,7 +266,7 @@
 								</div>
 								<label class="input-label" for="terms-and-conditions">I agree to the CheckACode Profesionnal <a href="#">Terms &amp; Conditions</a></label>
 							</div>
-						</dd>
+						</dd> 	
 						<dt class="accordion-title is-disabled" data-index="3" id="accordion-payment-method">Payment method</dt>
 						<dd class="accordion-panel" data-index="3">
 							<div class="group-container payment-info">
@@ -268,7 +278,7 @@
 											<div class="radio-box">
 												<div class="custom-user-input radio">
 													<input class="user-input radio" type="radio" name="payment-method" id="pay-by-credit-card2" value="creditCard" checked="true"
-                                                       onClick="selectPaymentMethod('CREDIT_CARD', '');"    
+                                                       onClick="ShowWaitingStatus('.sectionActions');selectPaymentMethod('CREDIT_CARD', '');"    
                                                            />
 													<label class="custom-radio" for="pay-by-credit-card2"><i class="icon"></i></label>
 												</div>
@@ -279,7 +289,7 @@
 											<div class="radio-box">
 												<div class="custom-user-input radio">
 													<input class="user-input radio" type="radio" name="payment-method" id="pay-by-ich2" value="ich"
-															onClick="selectPaymentMethod('ICH', '');"
+															onClick="ShowWaitingStatus('.sectionActions');selectPaymentMethod('ICH', '');"
 														/>
 													<label class="custom-radio" for="pay-by-ich2"><i class="icon"></i></label>
 												</div>
@@ -290,7 +300,7 @@
 											<div class="radio-box">
 												<div class="custom-user-input radio">
 													<input class="user-input radio" type="radio" name="payment-method" id="payment-method-bank" value="bank"
-															onClick="selectPaymentMethod('BANK_TRANSFER', '');"
+															onClick="ShowWaitingStatus('.sectionActions');selectPaymentMethod('BANK_TRANSFER', '');"
 														/>
 													<label class="custom-radio" for="payment-method-bank"><i class="icon"></i></label>
 												</div>
@@ -523,29 +533,24 @@
                         <apex:param name="errMsg" value="" assignTo="{!sErrorMsgFromHPM}"/>
                     </apex:actionFunction>
 	
-					<apex:outputPanel rendered="{!showTransactionButtons}" id="actionButtons" >
+					<apex:outputPanel id="actionButtons" >
 						<div class="footer-actions">
-							<ul class="list actions">
-                                
-								<li><apex:commandLink value="Cancel" styleClass="text-link"  onclick="sCancelToManageAccountPage();"/></li>
-								<apex:outputText rendered="{!showPaymentButtons}">
-									<li><apex:commandLink action="{!EBCSubscribeNow}" styleClass="button" value="Submit payment" /></li>
+							<ul class="list actions sectionActions"> 
+                                <apex:outputText rendered="{!AND(OR(showPaymentButtons,showTaxButtons), NOT(showBankTransferText))}">
+									<li><apex:commandLink onclick="ShowWaitingStatus('.sectionActions');sCancelToManageAccountPage();" value="Cancel" styleClass="text-link" /></li>
 								</apex:outputText>
-                                <apex:outputText rendered="{!showTaxButtons}">
-									<li><apex:commandLink action="{!CalculateTaxNow}" styleClass="button" value="Calculate Tax"  reRender="actionButtons,paymentConfirmationForm"/></li>
+                                <apex:outputText rendered="{!AND(showPaymentButtons,NOT(showBankTransferText))}">
+									<li><apex:commandLink onclick="ShowWaitingStatus('.sectionActions');" action="{!EBCSubscribeNow}" styleClass="button" value="Submit payment" /></li>
 								</apex:outputText>
+                                <apex:outputText rendered="{!AND(showTaxButtons,NOT(showBankTransferText))}">
+									<li><apex:commandLink action="{!CalculateTaxNow}" onclick="ShowWaitingStatus('.sectionActions');" styleClass="button" value="Calculate Tax"  reRender="actionButtons,paymentConfirmationForm"/></li>
+								</apex:outputText>
+                                <apex:outputText rendered="{!showBankTransferText}" id="BankTransferText">
+                  					<li><apex:commandLink onclick="ShowWaitingStatus('.sectionActions');redirectmail();" value="Contact us to make a Bank Transfer payment" styleClass="text-link" reRender="BankTransferText" oncomplete="sReturnToManageAccountPage();"/></li>
+			                    </apex:outputText>
 							</ul>
 						</div>
-					</apex:outputPanel>
-                    <apex:outputText rendered="{!showBankTransferText}" id="BankTransferText">
-                          <div class="footer-actions">
-							<ul class="list actions">                                
-								<li>
-                                    <apex:commandLink onclick="redirectmail();" value="Contact us to make a Bank Transfer payment" styleClass="text-link" reRender="BankTransferText" oncomplete="sReturnToManageAccountPage();"/>
-                                </li>
-                            </ul>
-						</div>     
-                     </apex:outputText>
+					</apex:outputPanel>                          
 				</apex:form>
 			</div>
 		</section>
