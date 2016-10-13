@@ -277,7 +277,7 @@
                 <field>eBroadcast_Storage__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>eBroadcast_Storage_Usage__c</field>
             </layoutItems>
         </layoutColumns>
@@ -309,10 +309,35 @@
         <label>eBroadcast Payment</label>
         <layoutColumns>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>eBroadcast_Payment_Target__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>eBroadcast_Payment_Campaign__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>eBroadcast_Payment_Campaign_Option__c</field>
+            </layoutItems>
+            <layoutItems>
                 <emptySpace>true</emptySpace>
             </layoutItems>
         </layoutColumns>
-        <layoutColumns/>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>eBroadcast_Payment_Subscription__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>eBroadcast_Payment_Product_Rate_Plan__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>eBroadcast_Payment_Email_Credit_Amount__c</field>
+            </layoutItems>
+        </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
     <layoutSections>
@@ -320,7 +345,12 @@
         <detailHeading>false</detailHeading>
         <editHeading>true</editHeading>
         <label>eBroadcast Payment Token</label>
-        <layoutColumns/>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>eBroadcast_Payment_Token__c</field>
+            </layoutItems>
+        </layoutColumns>
         <style>OneColumn</style>
     </layoutSections>
     <layoutSections>
@@ -438,15 +468,6 @@
         <relatedList>IEC_SAP_Invoice__c.Billing_Account__c</relatedList>
         <sortField>NAME</sortField>
         <sortOrder>Desc</sortOrder>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <fields>Email_Credit__c</fields>
-        <fields>Status__c</fields>
-        <fields>eBroadcast_Payment_Campaign__c</fields>
-        <fields>eBroadcast_Payment_Subscription__c</fields>
-        <fields>eBroadcast_Payment_Target__c</fields>
-        <relatedList>EBC_Order__c.Billing_Account__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>

@@ -24,7 +24,7 @@ isTest
 private class clsICHProcessImplementationTest {
 
     static testMethod void myUnitTest() {
-        RecordType StandardContactRecordType = [Select r.Id, r.Name from RecordType r where r.Name = 'IATA Standard Contact' limit 1];
+        RecordType StandardContactRecordType = [Select r.Id, r.Name from RecordType r where r.Name = 'Standard' and r.SobjectType = 'Contact' limit 1];
         list<Case> theCases = new list<Case>() ;
 
 //adding an excluded subject and email address

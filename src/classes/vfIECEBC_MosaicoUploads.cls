@@ -37,14 +37,10 @@ global class vfIECEBC_MosaicoUploads extends vfIECEBC_Controller {
         );
         String errorMessage = '';
         try {
-            IECEBC_Utility.createResourceForAttachment(a, billingAccount);
-            insert a;
+            errorMessage=IECEBC_Utility.insertResourceForAttachment(a, billingAccount);
+            if (errorMessage=='') insert a;
             
-            res.responseBody = Blob.valueOf(getResourcesJSON(billingAccount.Id, a.ParentId));
-        } catch(IECEBC_Utility.Resource_Invalid_Attachment_Exception e) {
-            errorMessage = e.getMessage();
-        } catch(IECEBC_Utility.Attachment_Size_Exceeds_Capacity_Exception e) {
-            errorMessage = e.getMessage();
+            if (errorMessage=='') res.responseBody = Blob.valueOf(getResourcesJSON(billingAccount.Id, a.ParentId));
         } catch(Exception e) {
             errorMessage = 'Unknown error';
         }

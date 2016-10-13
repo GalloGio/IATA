@@ -143,7 +143,7 @@ public class IECEBC_Utility {
 		List<String> queryWhereClauses = new List<String>();
 		// Remove exclusions
 		queryWhereClauses.add(emailField + ' != null');
-         
+		
 		
 		
 		if (masterFilter.Audience__c == 'Agent') {
@@ -264,6 +264,53 @@ public class IECEBC_Utility {
 		
 		a.ParentId = res.Id;
 	}
+
+	public static String insertResourceForAttachment(Attachment a, Zuora__CustomerAccount__c billingAccount) {
+		if (String.isBlank(a.name) || a.body == null)  return 'Attachment must have a valid name or name too long (max 80 characters).';
+		if (a.name.length()>80) return 'Attachment name must have be less 80 characters long.';
+		String types = a.Name.right(3);
+		String typel = a.Name.right(4);
+		String typen='';
+		Set<String> extension = new Set<String>{'jpg', 'jpeg', 'gif', 'png', 'tiff', 'bmp'};
+		if (extension.contains(types)) typen=types; 
+		if (extension.contains(typel)) typen=typel; 
+		if (typen.equals('')) return 'Attachment extension must be of the following type: .jpg, .jpeg, .gif, .png, .tiff, .bmp';
+		FileSizeMaximum();
+		// Checking capacity
+		Decimal mb = getBillingAccountCurrentStorageUsage(billingAccount.Id);
+		String bodyEncoded = EncodingUtil.base64Encode(a.body);  
+		Decimal mk = bodyEncoded.length();
+		
+		//file larger than maximum allowed
+		if ((mk/(1024*1024)>FILE_SIZE_MAX)) return 'Attachment size exceeds Maximum File Size allowed ('+String.ValueOf(FILE_SIZE_MAX)+' MB.)';
+		
+		mb = mb +mk;
+		mb = (mb / (STORAGE_CAPACITY * 1024*1024))*100;
+		if (mb>=105) return 'Attachment size exceeds total storage capacity allowed ('+String.ValueOf(STORAGE_CAPACITY)+' MB.)';
+		
+		
+		// Checking if file name is already used
+		List<EBC_Resource__c> resourcelist= new List<EBC_Resource__c>();
+		resourcelist = [Select id From EBC_Resource__c
+					   			Where name=:a.name
+					   			and Billing_Account__c=:billingAccount.Id
+					   Limit 1];
+	   // if (resourcelist.Size()>0) {
+		//	throw new Resource_Name_Already_Exists_Exception('A resource with the same name already exists');
+		//}
+		
+		// Create EBC Resource
+		
+		EBC_Resource__c res = new EBC_Resource__c();
+		res.Billing_Account__c=billingAccount.Id;
+		res.name = a.name;
+		res.Image_Size__c = bodyEncoded.length();
+		res.Image_Type__c = typen; 
+		insert res;
+		
+		a.ParentId = res.Id;
+		return '';
+	}	
 	// =======================================================================-
 	// ebcSetup return the only EBC_Setup records in the system
 	// in case there is none (should not be the case), it return a blank record.

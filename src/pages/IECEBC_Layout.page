@@ -189,7 +189,7 @@
                 </header>
                 <apex:insert name="pageContent"/>
         
-                <footer class="page-footer" data-is-sticky="true">
+                <footer class="page-footer" data-is-sticky="false">
                     <div class="inner-wrapper">
                         <div class="group-container">
                             <strong class="group-title">Products:</strong>
@@ -211,6 +211,9 @@
                         </div>
                     </div>
                 </footer>
+                <script type="text/javascript">
+                    jQuery(".page-footer").css("position", "relative");
+                </script>
                 <!--
                 <div class="modal-container is-hidden" id="js-modal">
                     <div class="overlay"></div>

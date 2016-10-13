@@ -19,27 +19,14 @@
                 <div class="inner-wrapper">
                     <h1 class="page-title">All Campaigns</h1>
                     <apex:form >
-                        <table Width="100%" >
-                            
-                            <tr >
-                             <td width="50%">
-                                Sort By: 
-                                 <div class="custom-user-input select">
-                                     <i class="icon angle-down"></i>
-                                     <apex:selectList value="{!sortBy}" styleClass="user-input select" size="1">
-                                         <apex:selectOptions value="{!sortByOptions}"/>
-                                         <apex:actionSupport event="onchange" action="{!doNothing}" reRender="campaignList" />
-                                     </apex:selectList> 
-                                 </div> 
-                             </td>
-                             <td width="50%" >
-                                 <div class="action-box text-right ">
-                                    <apex:outputLink value="{!URLFOR($Page.IECEBC_Campaign)}" styleClass="button">Create campaign</apex:outputLink>
-                                </div>
-                             </td>
-                            </tr>
-                        </table>                       
-                        
+                        Sort By: 
+                        <div class="custom-user-input select">
+                            <i class="icon angle-down"></i>
+                            <apex:selectList value="{!sortBy}" styleClass="user-input select" size="1">
+                                <apex:selectOptions value="{!sortByOptions}"/>
+                                <apex:actionSupport event="onchange" action="{!doNothing}" reRender="campaignList" />
+                            </apex:selectList> 
+                        </div> 
                     </apex:form>
                     <apex:outputPanel id="campaignList" style="padding: 10px 0;" layout="block">
                         <c:IECEBC_CampaignList limited="false" sort="{!sortBy}" />

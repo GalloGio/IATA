@@ -30,8 +30,10 @@ public class vfIECEBC_TemplateCreation extends vfIECEBC_Controller
                     Select
                     	Id,
                     	Name,
-                    	CreatedDate,
-                    	LastModifiedDate
+                    	(Select
+                         	Id,
+                         	Name
+                         From Attachments)
                     from EBC_Template__c
                     where Is_Reusable__c = true
                         and OwnerId =: userinfo.getUserId()
