@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>to notify the Airline management team in SCE that a new process has been assigned to the queue</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>EUR_Case assignment - Airline MGMT SCE</name>
+    <style>none</style>
+    <subject>ASSIGNED CASE to Airline Management queue - {!Case.CaseNumber}</subject>
+    <type>text</type>
+</EmailTemplate>
