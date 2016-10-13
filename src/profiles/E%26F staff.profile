@@ -983,6 +983,14 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>EF_MassUpdateMatLiController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+     <classAccesses>
+        <apexClass>EF_MaterialWrapper</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>Address_DTO</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -40620,6 +40628,10 @@
     </pageAccesses>
     <pageAccesses>
         <apexPage>EF_MassUpdateContract</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>EF_MassUpdateMatLI</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>

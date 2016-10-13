@@ -2798,6 +2798,24 @@ COPY THE URL FROM THIS BUTTON and paste it into your own custom button or link. 
         <width>625</width>
     </webLinks>
     <webLinks>
+        <fullName>EF_Mass_Update_Material_Line_Items_in_BA</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>page</linkType>
+        <masterLabel>Mass Update Material Line Items in BA</masterLabel>
+        <openType>newWindow</openType>
+        <page>EF_MassUpdateMatLI</page>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+    </webLinks>
+    <webLinks>
         <fullName>ENZ__AttachFTP</fullName>
         <availability>online</availability>
         <displayType>link</displayType>
