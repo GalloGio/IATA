@@ -78,7 +78,7 @@
     </rules>
     <rules>
         <fullName>Expire Irregularity</fullName>
-        <active>false</active>
+        <active>true</active>
         <criteriaItems>
             <field>Agency_Applied_Change_code__c.RecordTypeId</field>
             <operation>equals</operation>
