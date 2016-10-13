@@ -350,7 +350,6 @@
         <type>Date</type>
     </fields>
     <fields>
-<<<<<<< HEAD
         <fullName>For_Integration__c</fullName>
         <externalId>false</externalId>
         <formula>IF( ISNULL(Account__r.Last_Integration_Date__c), 
@@ -358,14 +357,13 @@
     IF( CreatedDate &gt; Account__r.Last_Integration_Date__c,
         true,
         false
-    )
-)</formula>
+         )
+        )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>For Integration</label>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
-=======
         <fullName>IRR_Expiration_Date__c</fullName>
         <externalId>false</externalId>
         <formula>DATETIMEVALUE(
@@ -381,7 +379,6 @@
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>DateTime</type>
->>>>>>> ea67b95... Provide fix for the expiration of the irregularities
     </fields>
     <fields>
         <fullName>Irregularities_Expired__c</fullName>
