@@ -1183,7 +1183,7 @@
         <fullName>Branch_Office_Street_name_number__c</fullName>
         <externalId>false</externalId>
         <label>* Street Name &amp; Number</label>
-        <length>100</length>
+        <length>255</length>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
