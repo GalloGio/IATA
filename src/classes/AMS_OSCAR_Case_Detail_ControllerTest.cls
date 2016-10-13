@@ -32,8 +32,10 @@ private class AMS_OSCAR_Case_Detail_ControllerTest {
 			controller.cancel();
 			controller.save();
 
-			System.assertEquals(true, controller.saveAction);
+			System.assert(controller.saveAction, 'Error saving');
 			System.assertEquals(null, controller.hasCase);
+			System.assert(controller.hasEditableFields, 'No editable fields');
+			System.assert(controller.getExistOscarInspections(), 'No inspections found');
 		Test.stopTest();
 	}
 	
