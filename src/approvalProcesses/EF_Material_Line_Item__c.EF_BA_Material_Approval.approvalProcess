@@ -77,7 +77,7 @@
     <label>EF Billing Agreement Material Approval</label>
     <nextAutomatedApprover>
         <useApproverFieldOfRecordOwner>false</useApproverFieldOfRecordOwner>
-        <userHierarchyField>EF_Contract_Approver__c</userHierarchyField>
+        <userHierarchyField>EF_Billing_Agreement_Approver__c</userHierarchyField>
     </nextAutomatedApprover>
     <recallActions>
         <action>
