@@ -108,7 +108,7 @@
         </rejectionActions>
     </approvalStep>
     <description>Used for the DIP Review Process for ARM</description>
-    <emailTemplate>All/DIP_Review</emailTemplate>
+    <emailTemplate>unfiled$public/DIP_Review</emailTemplate>
     <enableMobileDeviceAccess>false</enableMobileDeviceAccess>
     <entryCriteria>
         <criteriaItems>
