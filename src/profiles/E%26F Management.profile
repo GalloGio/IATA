@@ -21719,12 +21719,12 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Contract.EF_Requested_Changes__c</field>
+        <field>Contract.Requested_Changes__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Contract.Require_Approval__c</field>
+        <field>Contract.EF_Require_Approval__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
