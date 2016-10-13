@@ -24,7 +24,8 @@ public class AMS_AgencyRelationshipTriggerHandler {
 
         List<String> relationChildrenIds = getRelationshipChildAccountIds(rels);
 
-        AMS_AgencyUpdateHelper.agencyRelathionshipUpdate(rels);
+        //FM - 22-09-2016 - stop creating "agency update" Records
+        //AMS_AgencyUpdateHelper.agencyRelathionshipUpdate(rels);
 
         setStandardHierarchyRelationship(rels, mainHierarchies, oldMap);
 
@@ -187,6 +188,7 @@ public class AMS_AgencyRelationshipTriggerHandler {
         }
 
         system.debug(LoggingLevel.ERROR, 'setStandardHierarchyRelationship() --> SECOND UPDATE');
+        TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
         update accsToUpdate;
 
     }

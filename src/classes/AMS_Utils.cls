@@ -43,6 +43,29 @@ public without sharing class AMS_Utils {
         set;
     }
 
+    public static List<AMS_ChangeCodes__c> CUSTOM_CHANGECODES {
+        get { 
+            if(CUSTOM_CHANGECODES == null){
+                CUSTOM_CHANGECODES = [SELECT Change_Code__c,Integration_RecId__c,Account_status_change__c,Billable__c,Bulletin_Memo_Text__c,
+                                                                Reason_Code__c, Reason_Code_Description__c
+                                                        FROM AMS_ChangeCodes__c];
+            }
+            return CUSTOM_CHANGECODES;
+        }
+        private set;
+    }
+    
+    public static List<AMS_ChangeCodes_Integration__c> CUSTOM_CHANGECODES_INTEGRATION {
+        get {
+            if(CUSTOM_CHANGECODES_INTEGRATION == null){
+                CUSTOM_CHANGECODES_INTEGRATION = [SELECT RecId_A__c,RecId_B__c,RecId_Res__c FROM AMS_ChangeCodes_Integration__c];
+                
+            }
+            return CUSTOM_CHANGECODES_INTEGRATION;
+        }
+        private set;
+    }
+
     private static Map<String, RecordType> currentCache = null;
 
     public static String userSessionId = UserInfo.getSessionId();
@@ -124,6 +147,7 @@ public without sharing class AMS_Utils {
     public static final Set<String> LocationClassIFAPAllowed = new Set<String>{'P','C','R'};
     public static final Set<String> LocationClassCARGO = new Set<String>{'C','I','Q','R'};
     public static final Set<String> LocationClassPASSENGER = new Set<String>{'P','T','M','X'};
+    public static final Set<String> LocationTypeAllHOTypes = new Set<String>{'EP','AO','SP','AA','HO'};
 
 
     static {
@@ -326,10 +350,24 @@ public without sharing class AMS_Utils {
     */
     public static String getRecIdFromChangeCode(String sChangeCode) {
 
-        String sRes = '';
-
         //Validates the Changes codes for "A=Added" and "D=Deleted", all other Change Codes not mentioned return "C=Changed"
 
+        String sRes = '';
+
+        for (AMS_ChangeCodes__c cc : CUSTOM_CHANGECODES ){
+
+            if(cc.Change_Code__c.equalsIgnoreCase(sChangeCode)){
+                sRes = cc.Integration_RecId__c;
+                break;
+            }
+
+        }
+
+        //Just in case we don't get a result, we set the value for the most common RecId - "C"
+        if( sRes == ''){
+            sRes = 'C';
+        }
+/*
         // «A» Section
         if (sChangeCode.equalsIgnoreCase('NEW')) {
             sRes = 'A';
@@ -364,6 +402,34 @@ public without sharing class AMS_Utils {
         else {
             sRes = 'C';
         }
+*/
+        return sRes;
+    }
+/**
+    //Based on the Change code passed we get the Rec ID
+    Indicates if record is A=Added, C=Changed or D=Deleted.
+    */
+    public static String getRecIdFromIntegrationMatriz(String sRecIdA, String sRecIdB) {
+
+        //Validates the Changes codes for "A=Added" and "D=Deleted", all other Change Codes not mentioned return "C=Changed"
+
+        String sRes = '';
+
+        for (AMS_ChangeCodes_Integration__c cc : CUSTOM_CHANGECODES_INTEGRATION ){
+
+            if(cc.RecId_A__c.equalsIgnoreCase(sRecIdA)){
+                if(cc.RecId_B__c.equalsIgnoreCase(sRecIdB)){
+                    sRes = cc.RecId_Res__c;
+                    break;
+                }
+            }
+
+        }
+
+        //Just in case we don't get a result, we set the value for the most common RecId - "C"
+        if( sRes == ''){
+            sRes = 'C';
+        }
 
         return sRes;
     }
@@ -382,10 +448,12 @@ public without sharing class AMS_Utils {
         if(addressType.equalsIgnoreCase('Billing')){
             //R3.1 - removed the state validation
             //return ((acc.BillingStreet == null && acc.BillingCity == null && acc.BillingPostalCode == null) || acc.IATA_ISO_Country__c == null || acc.Iso_State__c == null);
-            return ((acc.BillingStreet == null && acc.BillingCity == null && acc.BillingPostalCode == null) || acc.IATA_ISO_Country__c == null );
+            //return ((acc.BillingStreet == null && acc.BillingCity == null && acc.BillingPostalCode == null) || acc.IATA_ISO_Country__c == null );
+            return ((acc.BillingStreet == null && acc.BillingCity == null ) || acc.IATA_ISO_Country__c == null );
         }
         if(addressType.equalsIgnoreCase('Shipping')){
-            return ((acc.ShippingStreet == null && acc.ShippingCity == null && acc.ShippingPostalCode == null) );
+            //return ((acc.ShippingStreet == null && acc.ShippingCity == null && acc.ShippingPostalCode == null) );
+            return ((acc.ShippingStreet == null && acc.ShippingCity == null) );
         }
         
         return false;   
@@ -585,9 +653,18 @@ public without sharing class AMS_Utils {
 
         System.debug('Creating a new Agency Applied Change Code for Account ' + oscarAgency.Id + ' with flag active set to ' + isActive);
 
-        Agency_Applied_Change_code__c aacNEW = new Agency_Applied_Change_code__c(Active__c = isActive, Account__c = oscarAgency.Id, Change_Code__c = changeCode.name,
-                OSCAR__c = oscarId, Bulletin_Information__c = changeCode.memoText,
-                Reason_Code__c = changeCode.reasonCode, Reason_Description__c = changeCode.reasonDesc);
+        String source = UserInfo.getUserType() == 'PowerPartner' ? 'Portal' : 'Internal';
+
+        Agency_Applied_Change_code__c aacNEW = new Agency_Applied_Change_code__c(
+            Active__c = isActive
+            , Account__c = oscarAgency.Id
+            , Change_Code__c = changeCode.name
+            , OSCAR__c = oscarId
+            , Bulletin_Information__c = changeCode.memoText
+            , Reason_Code__c = changeCode.reasonCode
+            , Reason_Description__c = changeCode.reasonDesc
+            , Source__c = source
+        );
 
         //insert aacNEW;
 
@@ -1453,68 +1530,5 @@ public static String fetchTypeOfCustomer (String locationType , String category)
     return categoryCustomerMap.get(category);
 
 }
-
-    public static Integer binarySearchGapFinder(List<Integer> orderedSlotsOccupied){
-
-        Integer first = 0;
-        Integer last = orderedSlotsOccupied.size()-1;
-        Integer mid = (first+last)/2;
-
-        while(first < last){
-            //check for gaps in first half of the list
-            if(orderedSlotsOccupied[mid]-orderedSlotsOccupied[first] != (mid - first)){
-                //found a gap
-                if ((mid-first) == 1 && (orderedSlotsOccupied[mid]-orderedSlotsOccupied[first] > 1)) {
-                    return (orderedSlotsOccupied[first]+1);
-                }   
-                last = mid;
-            }
-            //check for gaps in second half of the list
-            else if ((orderedSlotsOccupied[last]-orderedSlotsOccupied[mid]) != (last-mid)) {
-                //found a gap
-                if ((last-mid) == 1 && (orderedSlotsOccupied[last]-orderedSlotsOccupied[mid] > 1)) {
-                    return (orderedSlotsOccupied[mid]+1);
-                }   
-                first = mid;
-            }   
-            else
-                return -1; 
-
-            mid = (first+last)/2;
-
-        }
-
-        return -1;
-
-    }
-
-    public static Integer findGapInRange(Integer minRange, Integer maxRange, List<Integer> orderedSlotsOccupied){
-
-        Integer availableNumberInRange = -1;
-
-        //invalid range
-        if(maxRange-minRange < 0)
-            return -1;
-        
-        //no available slots
-        if(orderedSlotsOccupied.size() > maxRange-minRange)
-            return -1;
-
-
-        if(orderedSlotsOccupied.isEmpty() || (!orderedSlotsOccupied.isEmpty() && orderedSlotsOccupied[0] > minRange))
-            availableNumberInRange = minRange;
-        else
-            availableNumberInRange = binarySearchGapFinder(orderedSlotsOccupied);
-
-        if(availableNumberInRange == -1 && orderedSlotsOccupied[orderedSlotsOccupied.size()-1] < maxRange)
-            availableNumberInRange = orderedSlotsOccupied[orderedSlotsOccupied.size()-1] +1;
-
-        return availableNumberInRange;
-
-    }
-
-    
-
-    
 
 }

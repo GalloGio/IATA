@@ -3067,7 +3067,7 @@
     {
       "Name": "CORRECTION.1.0",
     "Flows": [{
-        "Name": "AMS_PERFORM_CORRECTION",
+        "Name": "AMS_OSCAR_APPLICATIONRECEIPT",
         "Steps": [{
           "Name": "STEP6",
           "Required": [],
@@ -3081,7 +3081,7 @@
             "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step6_failed"
           }],
           "DisplayFields": [
-      "AMS_Generate_COR_change_code__c",
+      "AMS_Correction_change_code__c",
       "STEP6__c"],
           "IsDependent": false
         }]

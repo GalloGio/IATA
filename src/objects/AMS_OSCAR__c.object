@@ -124,6 +124,27 @@
         <type>Picklist</type>
     </fields>
     <fields>
+        <fullName>AMS_Correction_change_code__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>If selected, once the sanity checks will be set as passed, the selected change code will be generated for each agency involved</inlineHelpText>
+        <label>Correction change code</label>
+        <picklist>
+            <picklistValues>
+                <fullName>CAD</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>COR</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
         <fullName>AMS_Generate_COR_change_code__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
@@ -1720,6 +1741,16 @@ IF(Financial_Assessment_received__c - Financial_Assessment_requested__c =6, TEXT
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>First_Step_Completed__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>First Step Completed</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>Flag_Data_to_Account__c</fullName>
@@ -5429,6 +5460,17 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>AMS_Correction_change_code__c</picklist>
+            <values>
+                <fullName>CAD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>COR</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Agreement_result__c</picklist>
             <values>
                 <fullName>Failed</fullName>
@@ -6689,6 +6731,25 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
         </picklistValues>
         <picklistValues>
             <picklist>STEP24__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP25__c</picklist>
             <values>
                 <fullName>Failed</fullName>
                 <default>false</default>
