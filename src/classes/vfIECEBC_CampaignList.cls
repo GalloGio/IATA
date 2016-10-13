@@ -141,7 +141,7 @@ public class vfIECEBC_CampaignList extends vfIECEBC_Controller {
                 if (isLimitedComponent) {
                     sortBy = 'LastModifiedDate DESC';
                 } else {
-                    sortBy = 'CreatedDate ASC';
+                    sortBy = 'CreatedDate Desc';
                 }
             }
             
@@ -156,10 +156,12 @@ public class vfIECEBC_CampaignList extends vfIECEBC_Controller {
     
     public List<SelectOption> getSortByOptions() {
         List<SelectOption> options = new List<SelectOption>();
-        options.add(new SelectOption('CreatedDate ASC','CreatedDate ASC'));
         options.add(new SelectOption('CreatedDate DESC','CreatedDate DESC'));
+        options.add(new SelectOption('CreatedDate ASC','CreatedDate ASC'));
         options.add(new SelectOption('LastModifiedDate ASC','LastModifiedDate ASC'));
         options.add(new SelectOption('LastModifiedDate DESC','LastModifiedDate DESC'));
+        options.add(new SelectOption('Name','Name'));
+        options.add(new SelectOption('Status__c','Status'));
         
         return options;
     }

@@ -20,8 +20,6 @@
             <!-- Start of Page Content -->
             <main class="main-content">
                 <div class="inner-wrapper">
-                    <h1 class="page-title"><apex:outputText value="{!pageTitle}" escape="false" /></h1>
-                    
                     <apex:outputText rendered="{!NOT(isEditable)}">
                         This list is associated to an active campaign and cannot be edited until the campaign is sent.
                     </apex:outputText>
