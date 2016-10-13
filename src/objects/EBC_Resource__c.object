@@ -177,12 +177,18 @@
         <label>All</label>
         <language>en_US</language>
     </listViews>
+    <listViews>
+        <fullName>CurrentUser</fullName>
+        <columns>NAME</columns>
+        <filterScope>Mine</filterScope>
+        <label>CurrentUser</label>
+        <language>en_US</language>
+    </listViews>
     <nameField>
         <label>EBC Resource Name</label>
         <type>Text</type>
     </nameField>
     <pluralLabel>EBC Resources</pluralLabel>
     <searchLayouts/>
-    <sharingModel>ReadWrite</sharingModel>
     <sharingModel>ControlledByParent</sharingModel>
 </CustomObject>
