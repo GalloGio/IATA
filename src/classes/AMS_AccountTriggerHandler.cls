@@ -121,8 +121,9 @@ public class AMS_AccountTriggerHandler {
             }
         }
 
-        if(agencies != null && agencies.size()>0)
-            AMS_AgencyUpdateHelper.agencyUpdate(agencies);
+        //FM - 22-09-2016 - stop creating "agency update" Records
+        //if(agencies != null && agencies.size()>0)
+        //    AMS_AgencyUpdateHelper.agencyUpdate(agencies);
 
         if(operationHelpercandidate != null && operationHelpercandidate.size()>0){
             system.debug('[AMS_AgencyTrigger] updating Operation for '+operationHelpercandidate.size()+' Agencies');
