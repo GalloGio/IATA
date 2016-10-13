@@ -58,7 +58,6 @@ public with sharing class EF_BaContractApprovalHelper
 			{
 		        for(String field : fieldList)
 		        {
-		            SObjectField f = fields.get(field);
 		            recordToUpdate.put(field, storageMap.get(recordToUpdate.Id).get(field));
 		        }
 		        recordToUpdate.put('Manager_Approval__c', 'Not Started');
@@ -121,7 +120,6 @@ public with sharing class EF_BaContractApprovalHelper
         {
 	        for(String field : fieldList)
 	        {
-	            SObjectField f = fields.get(field);
             	htmlTable = htmlTable + '<tr><td border="1">'+field+'</td><td border="1">--</td><td border="1">'+newValues.get(field)+'</td></tr>';
                 hasChanged = true;
 	        }
@@ -130,7 +128,6 @@ public with sharing class EF_BaContractApprovalHelper
         {
 	        for(String field : fieldList)
 	        {
-	            SObjectField f = fields.get(field);
 	            if(newValues.get(field) != oldValues.get(field))
 	            {
 	            	htmlTable = htmlTable + '<tr><td border="1">'+field+'</td><td border="1">'+oldValues.get(field)+'</td><td border="1">'+newValues.get(field)+'</td></tr>';
@@ -153,7 +150,6 @@ public with sharing class EF_BaContractApprovalHelper
         Map<String, Schema.SobjectField> fields = newValues.getSObjectType().getDescribe().fields.getMap();
         for(String field : fieldList)
         {
-            SObjectField f = fields.get(field);
             newValues.put(field, oldValues.get(field));
         }
     }
@@ -165,7 +161,6 @@ public with sharing class EF_BaContractApprovalHelper
         
         for(String field : fieldList)
         {
-            SObjectField f = fields.get(field);
             approvalStorageRecord.put(field, newValues.get(field));
         }
         approvalStorageRecord.put(fieldToUse, newValues.Id);
@@ -177,7 +172,6 @@ public with sharing class EF_BaContractApprovalHelper
         Map<String, Schema.SobjectField> fields = newValues.getSObjectType().getDescribe().fields.getMap();
         for(String field : fieldList)
         {
-            SObjectField f = fields.get(field);
             newValues.put(field, oldValues.get(field));
         }
     }

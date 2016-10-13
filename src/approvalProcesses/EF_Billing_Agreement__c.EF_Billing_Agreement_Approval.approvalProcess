@@ -9,10 +9,7 @@
         <field>Name</field>
         <field>Billing_Currency__c</field>
         <field>Client__c</field>
-        <field>EF_Location_ID__c</field>
-        <field>EF_Status__c</field>
-        <field>Payment_Method__c</field>
-        <field>Contract_Payment_Terms__c</field>
+        <field>Requested_Changes__c</field>
     </approvalPageFields>
     <approvalStep>
         <allowDelegate>false</allowDelegate>

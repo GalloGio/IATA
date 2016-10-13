@@ -26,10 +26,5 @@ trigger EF_MaterialLineItemTrigger on EF_Material_Line_Item__c (after delete, af
         {
 			EF_MaterialLineItemHandler.startApprovalProcesses(Trigger.new);
         }
-
-
-
-        // TODO: handle approvals and rejections + updates
-	
 	}
 }

@@ -9,8 +9,6 @@
         <field>Name</field>
         <field>Owner</field>
         <field>Contract__c</field>
-        <field>EF_Material__c</field>
-        <field>EF_Status__c</field>
         <field>Requested_Changes__c</field>
     </approvalPageFields>
     <approvalStep>
