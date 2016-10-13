@@ -302,6 +302,7 @@ global class AMS_HierarchyHelper {
 				//BRs under the oldHO will move under the targetHO
 				if (rel.Parent_Account__c == oldHO && rel.Child_Account__r.Location_Type__c == AMS_Utils.BR && rel.Child_Account__r.Status__c != AMS_Utils.ACC_S0_TERMINATED){
 					rel.Parent_Account__c = targetHO;
+					rel.Hierarchy__c = newHierarchyName;
 				}
 				//TERMINATED BRs ARE TO BE LEFT STANDALONE
 				//TERMINATED SAs UNDER TERMINATED BRs also to be left STANDALONE
