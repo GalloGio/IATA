@@ -28,7 +28,7 @@
 					SetFilter();
 					
                     //renderYayActivityGraph();
-					renderYtdActivityGraph();
+                    renderYtdActivityGraph();
  				});
 				
 				$j('#pane-1-a-year-to-date-tab').on('click',  function(event) {
@@ -133,7 +133,7 @@
 						tooltip: {
 							headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
 							pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-								'<td style="padding:0"><b>{point.y:.1f} emails</b></td></tr>',
+								'<td style="padding:0"><b>{point.y:.0f} emails</b></td></tr>',
 							footerFormat: '</table>',
 							shared: true,
 							useHTML: true
