@@ -19,6 +19,9 @@ public class AMS_AgencyAChangeCodeHandler {
             }
         }
         AMS_Irregularities_Utils.CalculateAccumulatedIrregularitiesFromChangeCode(aaccToBeProcessed);
+
+        //FM 22-09-2016 - Create "Agency Update" records
+        AMS_AgencyUpdateHelper.agencyUpdate( (List<SObject>) aacc);
     }
 
     public static void handleAfterUpdate(List<Agency_Applied_Change_code__c> aacc) {

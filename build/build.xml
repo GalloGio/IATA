@@ -666,7 +666,7 @@
  
    <mkdir dir="${basedir}/${sfdc.retrieveTarget}"/>
 
-      <for list="${listEmailTemplateFolders}" param="param" >
+      <for list="${listEmailTemplateFoldersName}" param="param" >
         <sequential>
      <sf:bulkRetrieve
               username="${sfdc.username}"

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Customer Portal: Notification sent to customer when a case comment has been added (English)</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>IATADynamicSky</letterhead>
+    <name>Customer Portal: Notification on new comment (English)</name>
+    <style>freeForm</style>
+    <subject>You have a new information on your IATA Case &quot;{!Case.CaseNumber} - {!Case.Subject}&quot;</subject>
+    <type>html</type>
+</EmailTemplate>
