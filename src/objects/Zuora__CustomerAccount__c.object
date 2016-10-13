@@ -1231,18 +1231,16 @@ This should be set by calling Payment for renewal.</inlineHelpText>
     </fields>
     <fields>
         <fullName>eBroadcast_Storage_Usage__c</fullName>
-        <defaultValue>0</defaultValue>
-        <description>Current Storage Usage for eBroadcast. The storage is used to store the templates and assets (e.g. images)</description>
+        <description>In Kbytes, the Current Storage Usage for eBroadcast. The storage is used to store the templates and assets (e.g. images)</description>
         <externalId>false</externalId>
-        <inlineHelpText>Current Storage Usage for eBroadcast</inlineHelpText>
+        <inlineHelpText>In Kbytes, the Current Storage Usage for eBroadcast. The storage is used to store the templates and assets (e.g. images)</inlineHelpText>
         <label>eBroadcast Storage Usage</label>
-        <precision>10</precision>
-        <required>false</required>
-        <scale>0</scale>
+        <summarizedField>EBC_Resource__c.Size_KBytes__c</summarizedField>
+        <summaryForeignKey>EBC_Resource__c.Billing_Account__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
-        <type>Number</type>
-        <unique>false</unique>
+        <type>Summary</type>
     </fields>
     <fields>
         <fullName>eBroadcast_Storage__c</fullName>
