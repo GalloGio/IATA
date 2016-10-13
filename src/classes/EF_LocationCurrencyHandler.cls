@@ -1,5 +1,75 @@
 public class EF_LocationCurrencyHandler {
 
+    private static boolean run = true;
+
+    public static void handleApprovedAndRejectedApprovals(List<EF_Location_Currency__c> newValues, Map<Id, EF_Location_Currency__c> oldValues)
+    {
+        List<String> fields = new List<String>{'EF_Billing_Currency__c'};
+        List<Contract> approvedList = EF_BaContractApprovalHelper.identifyApprovedRecords(newValues, oldValues);
+        List<Contract> rejectedList = EF_BaContractApprovalHelper.identifyRejectedOrRecalledRecords(newValues, oldValues);
+        if(approvedList.size() > 0)
+        {
+            EF_BaContractApprovalHelper.copyValuesFromTempStorageOnrecordApproval(approvedList, fields, 'EF_Location_Currency__c');
+        }
+        if(rejectedList.size() > 0)
+        {
+            EF_BaContractApprovalHelper.removeTempStorageRecordOnRecordRejection(rejectedList, 'EF_Location_Currency__c');
+        }
+    }
+
+    public static void handleWithApprovalUpdates(Map<Id, EF_Location_Currency__c> newMaterials, Map<Id, EF_Location_Currency__c> oldMaterials)
+    {
+        if(EF_ContractHandler.isUserCsSpecialist())
+        {
+            List<EF_Approval__c> approvalStorageList = new List<EF_Approval__c>();
+            List<String> fields = new List<String>{'EF_Billing_Currency__c'};
+            List<String> editFields = new List<String>{'EF_Billing_Currency__c'};
+            User currentUser = [select Id, Email, EF_Contract_Approver_Email__c, EF_Billing_Agreement_Approver_Email__c from User where Id = :UserInfo.getUserId()];
+            for(EF_Location_Currency__c mat : newMaterials.values())
+            {
+                if(EF_BaContractApprovalHelper.identifyRecordChanges(mat, oldMaterials.get(mat.Id), fields, false))
+                {
+                    EF_Approval__c approval = EF_BaContractApprovalHelper.fillTemporaryApprovalStorage(new EF_Approval__c(), (sObject) mat, editFields, 'EF_Location_Currency__c');
+                    mat.Require_Approval__c = true;
+                    approvalStorageList.add(approval);
+                    EF_BaContractApprovalHelper.rollbackPreviousValues(mat, oldMaterials.get(mat.Id), editFields);
+                }
+            }
+
+            if(approvalStorageList.size() > 0)
+            {
+                insert approvalStorageList;
+            }
+        }
+    }
+
+    // If user is a CS Specialist, make the Contract inactive and require approval
+    public static void handleWithApprovalInserts(List<EF_Location_Currency__c> currencyList)
+    {
+        if(EF_ContractHandler.isUserCsSpecialist())
+        {
+            List<String> fields = new List<String>{'Location_ID_Name__c', 'EF_Billing_Currency__c'};
+            List<String> editFields = new List<String>{'Location_ID__c', 'EF_Billing_Currency__c'};
+
+            for(EF_Location_Currency__c cur : currencyList)
+            {
+                cur.Require_Approval__c = true;
+                EF_BaContractApprovalHelper.identifyRecordChanges(cur, null, fields, true);
+            }
+        }
+    }
+
+    public static void startApprovalProcesses(List<EF_Location_Currency__c> cList)
+    {
+        for(EF_Location_Currency__c c : cList)
+        {
+            if(c.Require_Approval__c)
+            {
+                EF_BaContractApprovalHelper.submitForApproval(c.Id, UserInfo.getUserId(), '');
+            }
+        }
+    }
+    
     public static void manageNewLocationCurrency (List<EF_Location_Currency__c> locationCurrencyList, String action) {
                 
         //First avoid adding the same location in two location currencies
@@ -110,7 +180,7 @@ public class EF_LocationCurrencyHandler {
         try{
             update mapContract.values();
             if(!locs2Notify.isEmpty()){
-                notifyOnUpdate(locs2Notify, locationCurrencyMapOld);
+                // notifyOnUpdate(locs2Notify, locationCurrencyMapOld);
             }
             
         }catch(Exception e){
@@ -122,8 +192,6 @@ public class EF_LocationCurrencyHandler {
      /*
      *  on DELETION of whole Location Currency record => don't allow if the same location ID exists on BA
         on UPDATE of Billing Currency on Location Currency record => don't allow if the same location ID exists on BA
- 
-        TODO: on successful UPDATE or DELETE of Location Currency record => update the Contract's Billing Currency listing
     */
     public static void validateLocationCurrencyRemoval(List<EF_Location_Currency__c> newLines, Map<Id, EF_Location_Currency__c> locationOldMap)
     {
@@ -143,7 +211,7 @@ public class EF_LocationCurrencyHandler {
                 contractIds.add(locationCurrencyId.Contract__c);
             }
  
-            List<EF_Billing_Agreement__c> baList = [select id, name, Billing_Currency__c, EF_Location_ID__c, Contract__c from EF_Billing_Agreement__c where Status__c = 'Active' and Contract__c in :contractIds];
+            List<EF_Billing_Agreement__c> baList = [select id, name, Billing_Currency__c, EF_Location_ID__c, Contract__c from EF_Billing_Agreement__c where EF_Status__c = 'Active' and Contract__c in :contractIds];
            
             Set<Id> locationIds = new Set<Id>();
  
@@ -211,7 +279,7 @@ public class EF_LocationCurrencyHandler {
             }
 
             if(!locCurrDeleted.isEmpty()){
-                notifyOnDelete(locCurrDeleted);
+                // notifyOnDelete(locCurrDeleted);
             }
         }
     }
@@ -305,10 +373,19 @@ public class EF_LocationCurrencyHandler {
         emailBody = emailBody + '</table>';
         if(u.EF_Contract_Approver_Email__c != null)
             Utility.sendEmail(new List<String>{u.EF_Contract_Approver_Email__c}, 'E&F CRM: Changes to Location Currency ', emailBody, true, null);
-         
-        
-       
+               
     }
 
-
+    public static boolean runOnce()
+    {
+        if(run)
+        {
+            run = false;
+            return true;
+        }
+        else
+        {
+            return run;
+        }
+    }
 }

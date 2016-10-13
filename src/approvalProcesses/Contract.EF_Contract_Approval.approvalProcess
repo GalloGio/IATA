@@ -8,11 +8,7 @@
     <approvalPageFields>
         <field>ContractNumber</field>
         <field>Owner</field>
-        <field>EF_Admin_Fee__c</field>
-        <field>EF_Billing_Currency__c</field>
-        <field>EF_Billing_Frequency__c</field>
-        <field>EF_Group_Code__c</field>
-        <field>CCF_Number__c</field>
+        <field>Requested_Changes__c</field>
     </approvalPageFields>
     <approvalStep>
         <allowDelegate>false</allowDelegate>
@@ -90,6 +86,14 @@
         <action>
             <name>EF_Set_Contract_Require_Approval_False</name>
             <type>FieldUpdate</type>
+        </action>
+        <action>
+            <name>Notify_Approver_of_Recall</name>
+            <type>Alert</type>
+        </action>
+        <action>
+            <name>Notify_Approver_of_Recall</name>
+            <type>Alert</type>
         </action>
     </recallActions>
     <recordEditability>AdminOnly</recordEditability>

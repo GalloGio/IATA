@@ -7,7 +7,7 @@ public class EF_MaterialLineItemTriggerTest {
         User u = EF_TestDataFactory.getEfProfileAndRole(0, 2);
         EF_TestDataFactory.createCustomSettings();
         
-    	System.runAs(u){
+        System.runAs(u){
             
             List <Account> accList = new List <Account> ();
             
@@ -98,7 +98,7 @@ public class EF_MaterialLineItemTriggerTest {
                 EF_Status__c = 'Active'
                 );
             insert contract2;
-    		
+            
             List <Product2> prodList = new List <Product2> ();
             Product2 prd = new Product2 (
                 Name = 'Test product 1',
@@ -154,7 +154,7 @@ public class EF_MaterialLineItemTriggerTest {
                 Payment_Method__c = 'Credit Card',
                 Location_Code__c = '1234',
                 Airline__c = customer.id,
-                Status__c = 'Active',
+                EF_Status__c = 'Active',
                 Billing_Currency__c = 'AED',
                 Payment_Currency__c = 'AED',
                 //Payment_Terms__c = '30 days after invoice date',
@@ -243,8 +243,8 @@ public class EF_MaterialLineItemTriggerTest {
             Test.startTest();
                 insert mli;
             
-            	mli.EF_Material__c = prd2.id;
-            	update mli;            
+                mli.EF_Material__c = prd2.id;
+                update mli;            
             Test.stopTest();
             System.assert(false);               
         } catch(System.Exception e) {
@@ -268,8 +268,8 @@ public class EF_MaterialLineItemTriggerTest {
             Test.startTest();
                 insert mli;
             
-            	mli.EF_Material__c = prd3.id;
-            	update mli;            
+                mli.EF_Material__c = prd3.id;
+                update mli;            
             Test.stopTest();
             System.assert(true);               
         } catch(System.Exception e) {
@@ -298,7 +298,7 @@ public class EF_MaterialLineItemTriggerTest {
         try {
             Test.startTest();
                 insert mli;           
-            	insert mli2;
+                insert mli2;
             Test.stopTest();
             System.assert(false);               
         } catch(System.Exception e) {

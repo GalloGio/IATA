@@ -1,4 +1,4 @@
-Dear {!User.FirstName},
+Dear recipient,
 
 an Airline Billing Agreement has been updated by {!EF_Billing_Agreement__c.LastModifiedBy}.<br/>
 

@@ -1,0 +1,12 @@
+Dear recipient,
+
+a Material Line Item has been updated by {!EF_Material_Line_Item__c.LastModifiedBy}.<br/>
+
+The following key-fields have changed:<br/>
+
+<table border="1" width="800px">{!EF_Material_Line_Item__c.Requested_Changes__c}
+</table>
+<br/><br/>
+
+Please review the record and approve or reject the changes by 
+<a href="{!EF_Material_Line_Item__c.Base_URL__c}{!EF_Material_Line_Item__c.Id}">clicking here</a>.

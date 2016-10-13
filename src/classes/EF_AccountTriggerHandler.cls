@@ -47,7 +47,7 @@ public class EF_AccountTriggerHandler {
 
 		//query for Contracts, Billing Agreements and Related Contacts on the accounts inactivated.
 		Map <Id,Contract> contractMap = new Map <Id,Contract> ([Select Id, EF_Status__c, 
-			(Select Id, Status__c from EF_Relationships__r) from Contract where AccountId in: inactiveAccsSet and RecordTypeId =: contractRTId]);
+			(Select Id, EF_Status__c from EF_Relationships__r) from Contract where AccountId in: inactiveAccsSet and RecordTypeId =: contractRTId]);
         
 		List <Contract> contracts2Inactivate = new List <Contract> ();
 		Set <Id> BA2Inactivate = new Set <Id> ();
@@ -59,7 +59,7 @@ public class EF_AccountTriggerHandler {
 				}
 
 				for(EF_Billing_Agreement__c ba: c.EF_Relationships__r){
-					if(ba.Status__c!='Inactive'){
+					if(ba.EF_Status__c!='Inactive'){
 						BA2Inactivate.add(ba.Id);
 					}
 				}
@@ -98,14 +98,14 @@ public class EF_AccountTriggerHandler {
         
 		if(!BASet.isEmpty() && AccSet.isEmpty()){
             System.debug('#### on the first if');
-			baMap= new Map <Id, EF_Billing_Agreement__c> ([select Id, Status__c,  (Select Id, Status__c from EF_Contact_Relationships__r) from EF_Billing_Agreement__c where Id in: BASet]);
+			baMap= new Map <Id, EF_Billing_Agreement__c> ([select Id, EF_Status__c,  (Select Id, Status__c from EF_Contact_Relationships__r) from EF_Billing_Agreement__c where Id in: BASet]);
 		}else if(BASet.isEmpty() && !AccSet.isEmpty()){
             System.debug('#### on the second if');
-			baMap= new Map <Id, EF_Billing_Agreement__c> ([select Id, Status__c, Airline__c, (Select Id, Status__c from EF_Contact_Relationships__r) from EF_Billing_Agreement__c where Airline__c in: AccSet]);
+			baMap= new Map <Id, EF_Billing_Agreement__c> ([select Id, EF_Status__c, Airline__c, (Select Id, Status__c from EF_Contact_Relationships__r) from EF_Billing_Agreement__c where Airline__c in: AccSet]);
 		}
 
 		for(EF_Billing_Agreement__c ba: baMap.values()){
-			ba.Status__c='Inactive';
+			ba.EF_Status__c='Inactive';
 			
 			for(EF_Contact_Relationship__c bac: ba.EF_Contact_Relationships__r){
 				if(bac.Status__c!='Inactive'){

@@ -485,7 +485,7 @@
         <fields>Release_Date__c</fields>
         <relatedList>Financial_Security__c.Account__c</relatedList>
         <sortField>NAME</sortField>
-        <sortOrder>Asc</sortOrder>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <customButtons>Mass_Update_Contracts</customButtons>
@@ -502,7 +502,7 @@
         <fields>NAME</fields>
         <fields>Client__c</fields>
         <fields>Contract__c</fields>
-        <fields>Status__c</fields>
+        <fields>EF_Status__c</fields>
         <fields>Payment_Method_Code__c</fields>
         <fields>Data_Currency__c</fields>
         <fields>Billing_Currency__c</fields>
@@ -514,7 +514,7 @@
         <fields>NAME</fields>
         <fields>Airline__c</fields>
         <fields>Contract__c</fields>
-        <fields>Status__c</fields>
+        <fields>EF_Status__c</fields>
         <fields>Payment_Method_Code__c</fields>
         <fields>Data_Currency__c</fields>
         <fields>Billing_Currency__c</fields>
