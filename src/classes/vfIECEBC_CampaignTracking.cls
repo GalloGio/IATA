@@ -157,50 +157,7 @@ public class vfIECEBC_CampaignTracking extends vfIECEBC_Controller{
     //=======================================================================================
     //    Manage Top Links
     //=======================================================================================
-    /*
-    public Map<String, List<Integer>> Event_TotalClickLink { 
-       	get {
-               
-               Map<String, List<Integer>> TotalClickMap = new Map<String, List<Integer>>();
-                   
-               List<EBC_Click_Event__c> My_Event_ClickLink = new List<EBC_Click_Event__c>();
-               My_Event_ClickLink = [Select Id, URL__c, Subscriber_Key__c
-                                                    From EBC_Click_Event__c 
-                                                    Where EBC_Campaign__r.Id = :campaign.Id                                                       
-                                                    ];
-                
-               for (EBC_Click_Event__c ebc_ce: My_Event_ClickLink){
-                     List<Integer> My_IntegerList = new List<Integer>();
-                     String totalClick= String.valueOf(ebc_ce.url__c);
-                     My_IntegerList.add(getTotalLink(totalClick, campaign.Id));
-                     My_IntegerList.add((Integer)getUniqueTotalLink(totalClick, campaign.Id)[0].get('unique'));
-                     TotalClickMap.put(ebc_ce.url__c, My_IntegerList);
-                }
-                 return TotalClickMap;//.get('http://www.cgi.com');
-            }
-        set;
-     }
-    
-    public static Integer getTotalLink(String url, Id campId){
-        
-        Integer total = [Select count() 
-                         	from EBC_Click_Event__c 
-                         	where url__c = :url 
-                         	And EBC_Campaign__r.Id = :campId 
-                        ];
-        return total;
-    }
-        
-    public static List<AggregateResult> getUniqueTotalLink(String url, Id campId){        
    
-     	List<AggregateResult> uniqueTotal = [Select count_distinct(Subscriber_Key__c) unique 
-                                          	from EBC_Click_Event__c 
-                                          	where EBC_Campaign__r.Id = :campId
-                                          	and url__c = :url
-                                         	];
-        return uniqueTotal;
-    }
-    */
     public Map<String, List<Integer>> TotalClickMap {
         get {
             if (TotalClickMap == null) {

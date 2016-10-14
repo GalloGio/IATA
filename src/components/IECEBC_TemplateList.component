@@ -10,6 +10,8 @@
     <script type="text/javascript">
     function updateSelectedTemplate(templateId) {
         document.getElementById('{!$Component.selectedTemplate}').value = templateId;
+        console.log(typeof(rerenderFooterActions));
+        if (typeof(rerenderFooterActions) == 'function') rerenderFooterActions();
     }
     </script>
                                     
@@ -19,8 +21,8 @@
                 <li class="list-item{!IF(selectedTemplatedId == templateSrc.Id, ' is-selected', '')}">
                     <div class="checkbox-box">
                         <div class="custom-user-input checkbox">
-                            <apex:outputText rendered="{!selectedTemplatedId == templateSrc.Id}"><input class="user-input checkbox" type="checkbox" id="item{!templateSrc.Id}" value="{!templateSrc.Id}" onchange="updateSelectedTemplate('{!templateSrc.Id}');" checked="checked" /></apex:outputText>
-                            <apex:outputText rendered="{!NOT(selectedTemplatedId == templateSrc.Id)}"><input class="user-input checkbox" type="checkbox" id="item{!templateSrc.Id}" value="{!templateSrc.Id}" onchange="updateSelectedTemplate('{!templateSrc.Id}');" /></apex:outputText>
+                            <apex:outputText rendered="{!selectedTemplatedId == templateSrc.Id}"><input class="user-input checkbox" type="radio" name="globaltemplate" id="item{!templateSrc.Id}" value="{!templateSrc.Id}" onchange="return false;" checked="checked" /></apex:outputText>
+                            <apex:outputText rendered="{!NOT(selectedTemplatedId == templateSrc.Id)}"><input class="user-input checkbox" type="radio" name="globaltemplate" id="item{!templateSrc.Id}" value="{!templateSrc.Id}" onchange="updateSelectedTemplate('{!templateSrc.Id}');" /></apex:outputText>
                             <label class="custom-checkbox" for="item{!templateSrc.Id}"><i class="icon"></i></label>
                         </div>
                         <label class="input-label" for="item{!templateSrc.Id}"><span class="input-state unselected">Select</span> <span class="input-state selected">Selected</span></label>

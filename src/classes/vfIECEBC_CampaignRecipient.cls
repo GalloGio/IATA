@@ -20,7 +20,7 @@ public class vfIECEBC_CampaignRecipient extends vfIECEBC_Controller {
         
         return options;
     }
-    
+     
     @Readonly @Remoteaction
     public static Integer getExistingFilterCnt(String filterId) {
         return Integer.valueOf(Database.query(IECEBC_Utility.getSOQLFromMasterFilter(null, filterId))[0].get('expr0'));

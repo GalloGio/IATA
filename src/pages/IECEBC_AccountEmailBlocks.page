@@ -3,6 +3,8 @@
 	
 	<apex:message id="msg" />
 	
+
+   
 	<apex:composition template="IECEBC_Layout">
 		<apex:define name="pageHeadAdditions">
 			<!-- Start of Page <head> -->
@@ -60,6 +62,10 @@
 				refreshActivityTable();
 				return false;
 			}
+            function ShowWaitingStatus(section){
+                jQuery(section).html('<img src="/img/loading.gif" width="25px" height="25px"/>');
+                        
+             }
 			</script>
 			
 			<!-- Start of Page Content -->
@@ -248,9 +254,9 @@
 													
 													
 													<div class="footer-actions">
-														<ul class="list actions">
-															<li><a class="text-link" href="{!URLFOR($Page.IECEBC_AccountExtras)}">Cancel</a></li>
-															<li><apex:commandLink action="{!goToPaymentPage}" styleClass="button" value="Submit payment" rendered="{!selectedProductRatePlan!=null}"/></li>
+														<ul class="list actions sectionActions">
+                                                            <li><apex:commandLink onclick="ShowWaitingStatus('.sectionActions');window.location='{!URLFOR($Page.IECEBC_AccountExtras)}';" styleClass="text-link" value="Cancel"/></li>
+															<li><apex:commandLink onclick="ShowWaitingStatus('.sectionActions');"  action="{!goToPaymentPage}" styleClass="button" value="Submit payment" rendered="{!selectedProductRatePlan!=null}"/></li>
 														</ul>
 													</div>
 												</apex:form>

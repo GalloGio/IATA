@@ -21,10 +21,12 @@
                     <apex:form >
                     
                     <apex:outputPanel id="itemList" style="padding: 10px 0;" layout="block">
-					<apex:inputHidden value="{!selectedTemplateId}" id="selectedTemplate" />
+                        <apex:inputHidden value="{!selectedTemplateId}" id="selectedTemplate" required="{!newTemplateStepNumber == 2}" />
                         
                         <apex:actionFunction action="{!doNothing}" name="setAudience" rerender="create-template"> 
                             <apex:param assignTo="{!newTemplate.Audience__c}" name="firstParam" value="" /> 
+                        </apex:actionFunction>
+                        <apex:actionFunction action="{!doNothing}" name="rerenderFooterActions" rerender="footerActions">
                         </apex:actionFunction>
                         <script type="text/javascript">
                         function resetTemplate(recordId) {
@@ -40,7 +42,7 @@
                                         <p>Please select lorem dolor sit amet nulla vel sodales mauris. Maecenas ante magna, henderite at mollis quis.</p>
                                         
                                         <ul class="list list-radio-select js-radio-list js-form-continue-validation" data-target-button="#js-continue-to-geo-selection" id="js-radio-list-audience">
-                                            <li>
+                                            <li class="{!IF(newTemplate.Audience__c == 'Agency', 'is-selected', '')}">
                                                 <div class="radio-box">
                                                     <div class="custom-user-input radio">
                                                         <apex:outputText rendered="{!newTemplate.Audience__c == 'Agency'}">
@@ -55,7 +57,7 @@
                                                 </div>
                                             </li>
                                             <apex:outputText rendered="{!isIDCARDSelectionAllowed}">
-                                            <li>
+                                            <li class="{!IF(newTemplate.Audience__c == 'Agent', 'is-selected', '')}">
                                                 <div class="radio-box">
                                                     <div class="custom-user-input radio">
                                                         <apex:outputText rendered="{!newTemplate.Audience__c == 'Agent'}">
@@ -72,7 +74,7 @@
                                                 </div>
                                             </li>
                                             </apex:outputText>
-                                            <li>
+                                            <li class="{!IF(newTemplate.Audience__c == 'Neutral', 'is-selected', '')}">
                                                 <div class="radio-box">
                                                     <div class="custom-user-input radio">
                                                         <apex:outputText rendered="{!newTemplate.Audience__c == 'Neutral'}">
@@ -177,7 +179,7 @@
 									-->
                                 </apex:outputText>
                                 
-                                <apex:outputText >
+                                <apex:outputPanel id="footerActions">
                                   
                                         <div class="footer-actions text-right">
                                             <ul class="list actions">
@@ -191,11 +193,10 @@
                                                     <apex:commandLink rendered="{!AND(newTemplateStepNumber == 1, NOT(ISBLANK(newTemplate.Audience__c)))}" onclick="jQuery('body').css('cursor', 'wait');" action="{!validateNewTemplate}" styleClass="button" value="Continue" rerender="create-template,bottom2" oncomplete="jQuery('body').css('cursor', 'auto');">
                                                         <apex:param assignTo="{!newTemplateStepNumber}" name="firstParam" value="2" />
                                                     </apex:commandLink>
-                                                    
-													<apex:outputText rendered="{!AND(newTemplateStepNumber == 2, ISBLANK(newTemplate.Audience__c))}">
+													<apex:outputText rendered="{!newTemplateStepNumber == 2 && (ISBLANK(selectedTemplateId) || selectedTemplateId == null)}">
                                                         <a href="javascript:void(0);" class="button disabled" data-default-state="disabled">Continue</a> 
                                                     </apex:outputText>
-                                                    <apex:commandLink rendered="{!AND(newTemplateStepNumber == 2,NOT(ISBLANK(newTemplate.Audience__c)))}" onclick="jQuery('body').css('cursor', 'wait');" action="{!validateNewTemplate}" styleClass="button" value="Continue" rerender="create-template" oncomplete="jQuery('body').css('cursor', 'auto');">
+                                                    <apex:commandLink rendered="{!newTemplateStepNumber == 2 && NOT(ISBLANK(selectedTemplateId) || selectedTemplateId == null)}" onclick="jQuery('body').css('cursor', 'wait');" action="{!validateNewTemplate}" styleClass="button" value="Continue" rerender="create-template" oncomplete="jQuery('body').css('cursor', 'auto');">
                                                         <apex:param assignTo="{!newTemplateStepNumber}" name="firstParam" value="3" />
                                                     </apex:commandLink>
                                                     
@@ -210,7 +211,7 @@
                                             </ul>
                                         </div>
                                     
-                                </apex:outputText>
+                                </apex:outputPanel>
                                 <BR/>
                             </apex:outputPanel>
                         </section>
