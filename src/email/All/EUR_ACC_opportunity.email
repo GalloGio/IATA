@@ -1,6 +1,0 @@
-Process type of {!Case.Reason1__c} finalized for {!Account.Name} in case {!Case.CaseNumber}
- 
-The contact details are:
- 
-{!Contact.Name}
-{!Contact.Email}
