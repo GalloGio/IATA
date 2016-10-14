@@ -11711,6 +11711,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.EF_Client_Services_Specialist_Email__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Account.EF_Client_Services_Specialist__c</field>
         <readable>true</readable>
@@ -21641,6 +21646,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Contract.EF_DT_Specialist_Email__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Contract.EF_DT_Specialist__c</field>
         <readable>true</readable>
@@ -21658,6 +21668,11 @@
 	<fieldPermissions>
         <editable>true</editable>
         <field>Contract.EF_History__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Contract.EF_IA_Specialist_Email__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
