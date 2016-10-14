@@ -35,7 +35,7 @@
                 // on a row, find the checkbox and change the values if it's checked
                 if($(this).find(".selectedCheckbox").prop("checked")) {
                     $(this).find("."+className).val(value);
-                // extra trick for multiselects, bacause Visualforce renders them as
+                // extra trick for multiselects, because Visualforce renders them as
                 // 1. hidden, 2. left and 3. right lists
                 $(this).find("select."+className).each(function() {
                     var selectId =  $(this).attr('id');
