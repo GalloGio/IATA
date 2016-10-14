@@ -206,6 +206,21 @@ public class AMS_OSCAR_ProcessViewerController {
 
     }
 
+    public String getAllFieldQuery() {
+
+        String fields = ' ';
+
+        Map<String, Schema.SObjectField> fMap = Schema.sObjectType.AMS_OSCAR__c.fields.getMap();
+
+        for(Schema.SObjectField field : fMap.values()){
+
+            Schema.DescribeFieldResult fd = field.getDescribe();
+            if(fd.isAccessible()) fields += fd.getName() + ', ';
+        }
+        fields = fields.substring(0,fields.lastIndexOf(','));
+        
+        return 'SELECT ' + fields + ', AMS_Online_Accreditation__r.Ready_for_Accreditation__c , RecordType.Name, RecordType.DeveloperName  FROM AMS_OSCAR__c where Id =: oscarId LIMIT 1';
+    }
 
     private AMS_OSCAR__c fetchOscarFields(ID oscarId){
         
@@ -213,20 +228,23 @@ public class AMS_OSCAR_ProcessViewerController {
 
         List<AMS_OSCAR__c> oscars = new List<AMS_OSCAR__c>();
 
-        oscars =    [SELECT Id, Status__c, Account__c, Process__c,RPM_Approval__c,Issue_credit_note_withdrawal__c,Bank_Guarantee_Currency__c,
+
+
+        /*oscars =    [SELECT Id, Status__c, Account__c, Process__c,RPM_Approval__c,Issue_credit_note_withdrawal__c,Bank_Guarantee_Currency__c,
                     Send_FS_request__c, Comments_validate__c,Comments_approval__c, AMS_Online_Accreditation__c, AMS_Online_Accreditation__r.Name,
                     Release_FS_withdrawal__c,Issue_Withdrawal_notification__c,Issue_disapproval_pack__c,Issue_credit_note_if_applicable__c,
                     Release_FS_if_applicable__c, Billing_Document_Number__c, Financial_Review_Result__c,Send_invoice__c,Send_inspection_request__c,
                     Send_agreement__c,Update_DPC__c,Update_IRIS__c,Update_BSPLink_CASSLink__c,Update_Portal_Setup__c,Welcome_pack__c,Off_site_storage__c,
                     Welcome_call__c,Change_effective_as_of__c,Bank_Guarantee_amount__c,CurrencyIsoCode,STEP1__c, STEP2__c, STEP3__c, STEP4__c, STEP5__c,
                     STEP6__c, STEP7__c, STEP8__c, STEP9__c, STEP10__c, STEP11__c, STEP12__c, STEP13__c, STEP14__c, STEP15__c, STEP16__c, STEP17__c, STEP18__c,
-                    STEP19__c, STEP20__c, STEP21__c, STEP22__c, STEP23__c, STEP24__c, STEP25__c,Confirm_DD_setup_with_agent__c, Confirm_DD_setup_with_R_S__c, Type_of_change__c,
+                    STEP19__c, STEP20__c, STEP21__c, STEP22__c, STEP23__c, STEP24__c, STEP25__c,STEP26__c,STEP27__c,STEP28__c,STEP29__c,Confirm_DD_setup_with_agent__c, Confirm_DD_setup_with_R_S__c, Type_of_change__c,
                     Late_notified_change__c, Confirm_DGR_DGA__c,Update_IRIS_processing__c, Send_approval_letter__c, Issue_rejection_notification_pack__c,
                     AMS_Online_Accreditation__r.Ready_for_Accreditation__c, Validation_Status__c, Issue_billing_document__c, AMS_Generate_COR_change_code__c,
                     Country_Specifics_Approval__c,Update_AIMS_Approval__c,Update_AIMS_Disapproval__c,Close_IFAP_Disapproval__c,Cancel_Inspection_Requests_Disapproval__c,
                     Update_AIMS_Rejection__c,Close_IFAP_Rejection__c,Cancel_Inspection_Requests_Rejection__c,Country_Specifics_Disapproval__c,Country_Specifics_Rejection__c,
                     Roll_back_account_data__c , RecordType.Name, RecordType.DeveloperName 
-                    from AMS_OSCAR__c where Id =: oscarId LIMIT 1];
+                    from AMS_OSCAR__c where Id =: oscarId LIMIT 1];*/
+        oscars = Database.query(getAllFieldQuery());
 
         if(!oscars.isEmpty())
             return oscars.get(0);
