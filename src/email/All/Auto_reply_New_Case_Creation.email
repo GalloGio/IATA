@@ -1,8 +1,0 @@
-Note that this is an auto-reply message. Please do not respond to this email.
-
-Case #: {!Case.CaseNumber} has now been created with the below information.
-
-Subject: {!Case.Subject}
-Description: {!Case.Description}
-
-For direct access, please click on this link {!Case.Link}.
