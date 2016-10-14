@@ -1,6 +1,0 @@
-<table height="400" width="550" cellpadding="5" border="0" cellspacing="5" >
-<tr height="400" valign="top" >
-<td style=" color:#000000; font-size:12pt; background-color:#FFFFFF; font-family:arial; bLabel:main; bEditID:r3st1;" tEditID="c1r1" locked="0" aEditID="c1r1" >
-<![CDATA[Dear {!Contact.Email},<br>Welcome to IATA!<br><br><br>https://preprod-theiatahub.cs18.force.com/logAnEnquiry/Enquiry_NewContact?l={!Contact.Preferred_Language__c}&amp;e= {!Contact.Email}<br><br>To complete your profile, please <a href="http://preprod-theiatahub.cs18.force.com/logAnEnquiry/Enquiry_NewContact?l={!Contact.Preferred_Language__c}&amp;e={!Contact.Email}">Click Here</a>!<br>Thank you!<br><br>]]></td>
-</tr>
-</table>
