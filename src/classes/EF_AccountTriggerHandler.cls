@@ -187,7 +187,9 @@ public class EF_AccountTriggerHandler {
 			}
 
 			//check fields for Customers
-			if(a.RecordTypeId==Schema.SObjectType.Account.getRecordTypeInfosByName().get('Operator').getRecordTypeId() ){
+			if(a.RecordTypeId==Schema.SObjectType.Account.getRecordTypeInfosByName().get('Operator').getRecordTypeId() ||
+				a.RecordTypeId==Schema.SObjectType.Account.getRecordTypeInfosByName().get('Airline Branch').getRecordTypeId() ||
+				a.RecordTypeId==Schema.SObjectType.Account.getRecordTypeInfosByName().get('Airline Headquarters').getRecordTypeId()){
 				for(String s: criticalAirlineFieldList){
 								
 	           	
