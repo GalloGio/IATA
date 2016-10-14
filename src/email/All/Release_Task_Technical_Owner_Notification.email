@@ -1,6 +1,0 @@
-Dear {!Release_Task__c.Assigned_to__c},
-
-The release task "{!Release_Task__c.Subject__c}" has been treated and its status has been changed to "{!Release_Task__c.Status__c}". 
-
-Best regards,
-The Release Manager.
