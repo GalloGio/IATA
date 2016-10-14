@@ -68,7 +68,8 @@ public class EF_MassUpdateMatLiController {
        try{
 
         update getMatSelected();
-
+        ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.INFO,'Records saved.');
+        ApexPages.addMessage(myMsg);
 
        }catch(Exception e){
             System.debug('**** error on renewal contract' +e );
