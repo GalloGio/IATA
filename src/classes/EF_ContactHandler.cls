@@ -34,4 +34,62 @@ public class EF_ContactHandler {
             }
         }
     }   
+
+      //E&F Notification of fields identified as critical. List of fields set on custom setting.
+    public static void manageCriticalFieldChanges(List<Contact> contacts, Map<Id,Contact> oldMap){
+        List<EF_Critical_Field_Notification__c> fieldList = EF_Utilities.getCriticalFields();
+
+        List  <String> criticalContactFieldList = new List <String> ();
+
+        for(EF_Critical_Field_Notification__c cfn: fieldList){
+            criticalContactFieldList= cfn.Contact_Fields__c.split(',');                     
+        }
+        
+        Map <Id,Contact> contactsNoti = new Map <Id,Contact>();
+       
+        Map<String, Schema.SobjectField> fields = contacts.getSObjectType().getDescribe().fields.getMap();
+
+        //loop over accounts to check if any of them need to trigger a notification.
+        for(Contact c: contacts){           
+            //check fields for Clients
+            
+                for(String s: criticalContactFieldList){
+                  
+                    if(c.get(s)!=oldMap.get(c.Id).get(s)){                       
+                        contactsNoti.put(c.Id, c);
+                    }
+                }          
+        }
+
+        if(!contactsNoti.isEmpty()){
+            notifyOnCriticalFields(contactsNoti, oldMap, criticalContactFieldList);
+        
+        }
+    }
+
+    public static void notifyOnCriticalFields (Map <Id, Contact> newContacts, Map <Id,Contact> oldContactMap, List <String> criticalFieldList ) {
+
+        Map<String, Schema.SobjectField> fields = newContacts.getSObjectType().getDescribe().fields.getMap();
+        String baseUrl = System.URL.getSalesforceBaseUrl().toExternalForm();
+         
+        for(Contact c: newContacts.values()){
+            String emailBody = 'Dear team member, <br/><br/>the following Contact values been UPDATED:<br/><br/>';
+            emailBody = emailBody + '<table width="600px" border="1"><tr border="1"><th border="1">Contact</th><th border="1">Field:</th><th border="1">New Value:</th><th border="1">Old Value:</th></tr>';
+        
+           for(String s: criticalFieldList){
+                         
+                if(c.get(s)!=oldContactMap.get(c.Id).get(s)){
+                    emailBody = emailBody + '<tr><td border="1"><a href="'+baseUrl+'/'+c.Id+'">'+c.Name+'</a></td><td border="1">'+s+'</td><td border="1">'+c.get(s)+'</td><td border="1">'+oldContactMap.get(c.Id).get(s)+'</td></tr>';
+                }
+           }
+           emailBody = emailBody + '</table>';
+           
+            Utility.sendEmail(new List <String> {'efs@iata.org'}, 'E&F Contact Critical Changes Notification ', emailBody, true, null);
+          
+           
+        }            
+              
+    }
+
+
 }
