@@ -1,6 +1,0 @@
-Dear {!Case.ACCA_Owner__c},
-Pls note that IATA has added below Case Comment to the above ACR:
-
-{!Case.Last_Case_Comment}
-
-For direct access to the ACR, please click on this link {!Case.Link}.
