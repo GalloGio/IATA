@@ -184,36 +184,36 @@ global class AmsIataCodeGenerator{
 
                 String isoState = theAccreditation.IATA_ISO_State__c;
                 if(isoState == null && theAccreditation.Branch_Office_Country__c != null)
-				{
-					try
-					{
-	                	// Get the default state value for the accreditation's country -- unfortunately join subselect can't be used due to the SF limits...
-	                	List<IATA_ISO_Country__c> accreditationCountry = [select AMS_Default_State__c, name from iata_iso_country__c where id = :theAccreditation.Branch_Office_Country__c limit 1];
-	                	if(accreditationCountry.size() > 0)
-	                	{
-	                		String countryDefaultState = accreditationCountry.get(0).AMS_Default_State__c;
-	                		List<IATA_ISO_State__c> defaultIsoStateList = [select id, Name, ISO_Code__c from iata_iso_state__c where ISO_Code__c = :countryDefaultState and IATA_ISO_Country__c = :theAccreditation.Branch_Office_Country__c];
-	                		isoState = defaultIsoStateList.get(0).Id;
-	                	}
-	                	else
-	                	{
-	                		// Something is seriously wrong in the iso country + iso state setup.
-	                		returnedValues[0]='2';
-		                    returnedValues[1]='The agency you were submitting does not have IATA ISO State set. The system failed to find a default one to use for your selected ISO Country. Please provide a State value as well and try generating the IATA code again, please.';
-	                		return returnedValues;
-	                	}
-					} catch(Exception e)
-					{
-						// Something is seriously wrong in the iso country + iso state setup.
-                		returnedValues[0]='2';
-	                    returnedValues[1]='The agency you were submitting does not have IATA ISO State set. The system failed to find a default one to use for your selected ISO Country. Please provide a State value as well and try generating the IATA code again, please.';
-                		return returnedValues;
-					}
+        {
+          try
+          {
+                    // Get the default state value for the accreditation's country -- unfortunately join subselect can't be used due to the SF limits...
+                    List<IATA_ISO_Country__c> accreditationCountry = [select AMS_Default_State__c, name from iata_iso_country__c where id = :theAccreditation.Branch_Office_Country__c limit 1];
+                    if(accreditationCountry.size() > 0)
+                    {
+                      String countryDefaultState = accreditationCountry.get(0).AMS_Default_State__c;
+                      List<IATA_ISO_State__c> defaultIsoStateList = [select id, Name, ISO_Code__c from iata_iso_state__c where ISO_Code__c = :countryDefaultState and IATA_ISO_Country__c = :theAccreditation.Branch_Office_Country__c];
+                      isoState = defaultIsoStateList.get(0).Id;
+                    }
+                    else
+                    {
+                      // Something is seriously wrong in the iso country + iso state setup.
+                      returnedValues[0]='2';
+                        returnedValues[1]='The agency you were submitting does not have IATA ISO State set. The system failed to find a default one to use for your selected ISO Country. Please provide a State value as well and try generating the IATA code again, please.';
+                      return returnedValues;
+                    }
+          } catch(Exception e)
+          {
+            // Something is seriously wrong in the iso country + iso state setup.
+                    returnedValues[0]='2';
+                      returnedValues[1]='The agency you were submitting does not have IATA ISO State set. The system failed to find a default one to use for your selected ISO Country. Please provide a State value as well and try generating the IATA code again, please.';
+                    return returnedValues;
+          }
                 }
                 else
                 {
-                	isoState = theAccreditation.IATA_ISO_State__c;
-                	System.debug('************ isostate existed: '+isoState);
+                  isoState = theAccreditation.IATA_ISO_State__c;
+                  System.debug('************ isostate existed: '+isoState);
                 }
                 
                 acceptableRanges  = [select IATA_ISO_State__r.Name, Area__c, Area_Code__c, Prefix__c, IATA_ISO_Country__c, IATA_ISO_State__c, Max_Range__c, Min_Range__c, ProgramCode__c, Program__c, Name from Code_Range__c where 
@@ -243,23 +243,21 @@ global class AmsIataCodeGenerator{
                         Integer minRange = Integer.valueOf(String.valueOf(range.Min_Range__c).left(1));
                         Integer maxRange = Integer.valueOf(String.valueOf(range.Max_Range__c).left(1));
                         
-                        //looking only into the fisrt left number on the range to avoid querying all the specific iata code
-                        //we will refine the searh later
                         System.debug('****************** min: '+minRange);
                         System.debug('****************** max: '+maxRange);
                         
                         List<String> rangesToSearch = new List<String>();
                         if(range.Min_Range__c < 1000 || range.Max_Range__c < 1000)
                         {
-                        	rangesToSearch.add(infLimit+'0');
+                          rangesToSearch.add(infLimit+'0');
                         }
                         
                         if(range.Min_Range__c >= 1000 || range.Max_Range__c >= 1000)
                         {
-	                        for(integer i=minRange; i<=maxRange; i++)
-	                        {
-	                            rangesToSearch.add(infLimit+String.valueOf(i));
-	                        }
+                          for(integer i=minRange; i<=maxRange; i++)
+                          {
+                              rangesToSearch.add(infLimit+String.valueOf(i));
+                          }
                         }
                         
                         String query;
@@ -292,25 +290,21 @@ global class AmsIataCodeGenerator{
                         // List<AggregateResult> rangeAgenciesBeforeFilter = [select IATACode__c from Account where IATACode__c like :infLimit + '%' group by IATACode__c order by IATACode__c];
                         List<Account> rangeAgencies = new List<Account>();
                         Set<String> tempStorage = new Set<String>();
-                        Integer minRangeInt = Integer.valueOf(String.valueOf(range.Min_Range__c).replace(',', ''));
-                        Integer maxRangeInt = Integer.valueOf(String.valueOf(range.Max_Range__c).replace(',', ''));
-
-                        System.debug('Min range ---> ' + minRangeInt);
-                        System.debug('Max range ---> ' + maxRangeInt);
-                        
                         if(rangeAgenciesBeforeFilter == null)
                         {
                             rangeAgenciesBeforeFilter = new List<AggregateResult>();
                         }
                         for(AggregateResult ag : rangeAgenciesBeforeFilter)
                         {
-                            
                             String iatacode = (String) ag.get('IATACode__c');
                             
                             if(iatacode.length() >= 8)
                             {
-                            usedValuesInRange.add(Integer.valueOf(iatacode.subString(3, 7)));
+                                tempStorage.add(iatacode.subString(0, 7));
                             }
+                            else if(iatacode.length() == 7)
+                            {
+                                tempStorage.add(iatacode);
                             } else
                             {
                                 // Incorrect IATACode format
@@ -326,8 +320,10 @@ global class AmsIataCodeGenerator{
                         {
                             rangeAgencies = new List<Account>();
                         }
-
-
+                        System.debug('**** [IATA CODE GENerator] System calc '+rangeAgencies.size()+' existing codes for Range '+range.Name);
+                        
+                        
+                        System.debug('**** JH: rangeAgencies.size(): '+rangeAgencies.size() + ' max range: ' + range.Max_Range__c + ' - min range: ' +range.Min_Range__c);
                         //test if there enought place in this range
                         if(rangeAgencies.size() <= (range.Max_Range__c-range.Min_Range__c))
                         {
@@ -335,7 +331,7 @@ global class AmsIataCodeGenerator{
                             //TODO
                             
                             //other case
-                        System.debug('Max range ---> ' + maxRangeInt);
+                            System.debug('**** rangeAgencies ' +rangeagencies.size());
                             for(Integer i =1; i < rangeAgencies.size(); i++)
                             {
                                 // JH: Try to find a hole (Number difference greater than 1!):
@@ -381,9 +377,9 @@ global class AmsIataCodeGenerator{
                                     }
                                     System.debug('**** storing accreditation with iata code: '+theAccreditation.IATACode__c);
                                     List<Code_Range__c> codeRangesToLock = [select id, AMS_Deplicate_Prevention_Lock__c from Code_Range__c where id = :range.Id for update];
-		                            Code_Range__c codeRange = codeRangesToLock.get(0);
-		                            codeRange.AMS_Deplicate_Prevention_Lock__c = true;
-		                            update codeRangesToLock;
+                                Code_Range__c codeRange = codeRangesToLock.get(0);
+                                codeRange.AMS_Deplicate_Prevention_Lock__c = true;
+                                update codeRangesToLock;
 
                                     Database.SaveResult sr = Database.update(theAccreditation, true);
                                     if(!sr.isSuccess())
@@ -411,7 +407,7 @@ global class AmsIataCodeGenerator{
                                     }
                                     
                                     codeRange.AMS_Deplicate_Prevention_Lock__c = false;
-                            		update codeRangesToLock;
+                                update codeRangesToLock;
                                     return returnedValues;
                                 }
                             }

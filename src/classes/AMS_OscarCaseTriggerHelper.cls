@@ -311,28 +311,40 @@ public class AMS_OscarCaseTriggerHelper {
     /*AMS-1580 and AMS-1585*/
     public static void copyDataFromOscar() {
 
+
         Map<Id, Case> oldMap = (Map<Id, Case>)Trigger.oldMap;
 
-        List<Case> newOscarCases = new List<Case>();
-        List<Case> updatedOscarCases = new List<Case>();
+        List<Case> oscarCases = new List<Case>();
         Map<Id, AMS_OSCAR__c> oscars = new Map<Id, AMS_OSCAR__c>();
 
         for(Case c : (List<Case>) Trigger.New){
             if(
                 c.RecordTypeID == OSCARCaseRecordTypeID
                 && c.OSCAR__c != null
+                && (Trigger.isInsert || (Trigger.isUpdate && oldMap.get(c.Id).Oscar__c != c.Oscar__c))
+            ){
+            
+                oscarCases.add(c);
+                oscars.put(c.Oscar__c, null);
+            }
+            else{ // this is only for update  AMS-1667
+
+            if(
+                c.RecordTypeID == OSCARCaseRecordTypeID
+                && c.OSCAR__c != null
+                && Trigger.isUpdate 
             ){
 
-                updatedOscarCases.add(c);
-
-                //cases that just received an OSCAR
-                if(Trigger.isInsert || (Trigger.isUpdate && oldMap.get(c.Id).Oscar__c != c.Oscar__c)) newOscarCases.add(c);
-
+                oscarCases.add(c);
                 oscars.put(c.Oscar__c, null);
+
+            }
+            
+
             }
         }
 
-        if(newOscarCases.isEmpty() && updatedOscarCases.isEmpty()) return;
+        if(oscarCases.isEmpty()) return;
 
         oscars = new Map<Id, AMS_OSCAR__c>([SELECT Id, OwnerId, Status__c, Account__r.Name, Account__r.Location_Type__c , Account__r.Category__c FROM AMS_OSCAR__c WHERE Id IN :oscars.keySet()]);
 
@@ -350,9 +362,9 @@ public class AMS_OscarCaseTriggerHelper {
                 c.Type_of_customer__c = typeOfCustomer;
 
             String newCaseSubject = null;
-			
-			if(c.reason1__c != null)
-				newCaseSubject = c.reason1__c + ' - ' + oscars.get(c.Oscar__c).Account__r.Name;
+      
+      if(c.reason1__c != null)
+        newCaseSubject = c.reason1__c + ' - ' + oscars.get(c.Oscar__c).Account__r.Name;
 
             if(newCaseSubject != null && c.Subject != newCaseSubject)
                 c.Subject = newCaseSubject;
