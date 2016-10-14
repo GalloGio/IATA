@@ -91,6 +91,31 @@
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
         <workflowTimeTriggers>
             <actions>
+                <name>IRR_Expire</name>
+                <type>FieldUpdate</type>
+            </actions>
+            <offsetFromField>Agency_Applied_Change_code__c.IRR_Expiration_Date__c</offsetFromField>
+            <timeLength>-1</timeLength>
+            <workflowTimeTriggerUnit>Hours</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+    </rules>
+    <rules>
+        <fullName>IRR%3A Expire</fullName>
+        <active>false</active>
+        <criteriaItems>
+            <field>Agency_Applied_Change_code__c.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Irregularities</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Agency_Applied_Change_code__c.Irregularities_Expired__c</field>
+            <operation>equals</operation>
+            <value>False</value>
+        </criteriaItems>
+        <description>Expires the irregularity 1 year (using date-time) After it was issued (field: effective_date__c)</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <workflowTimeTriggers>
+            <actions>
                 <name>Expire_IRR</name>
                 <type>FieldUpdate</type>
             </actions>
