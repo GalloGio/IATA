@@ -643,15 +643,6 @@ private class IDCard_AdmUserListAndFormTest {
 	        ctrl.app.Email_admin__c = 'test1@contact.com';
 	        ctrl.app.Photo__c = 'myphoto.jpg';
 	        ctrl.app.Displayed_Name__c = 'Test 01 Contact 01';
-	        ctrl.app.Title__c = 'MR',
-        	ctrl.app.Gender__c = 'Male',
-        	ctrl.app.Hours_worked__c = '35 h or more',
-        	ctrl.app.Position_in_Current_Agency__c = 'Director',
-        	ctrl.app.Duties_in_Current_Agency__c = 'Administration',
-        	ctrl.app.Start_Date_Agency_Month__c = 'January',
-        	ctrl.app.Start_Date_Agency_Year__c = '2012',
-        	ctrl.app.Start_Date_Industry__c = '2012',
-        	ctrl.app.Email_admin__c = 'xpto@xpto.com'
 	        system.assertEquals(null,ctrl.SaveContact());
 	        
 	        
