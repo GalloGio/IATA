@@ -116,7 +116,7 @@ global with sharing class EF_AttachmentListController {
 			this.listAttachments = new List<WrapperAttach>();
 
 			for(WrapperAttach wr : tmpListWrapper) {
-				if(wr.fileAmazon.amazonFile.EF_Private__c == false || this.viewPrivateFiles == true) {
+				if(wr.fileAmazon == null || wr.fileAmazon.amazonFile.EF_Private__c == false || this.viewPrivateFiles == true ) {
 					this.listAttachments.add(wr);
 				}
 			}
