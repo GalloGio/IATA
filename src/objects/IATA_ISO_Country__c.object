@@ -2177,6 +2177,9 @@ Enabled: Sufficient for Agents to simply upload scanned copy to online applicati
         <fullName>All_Countries_OSCAR</fullName>
         <columns>NAME</columns>
         <columns>ISO_Code__c</columns>
+        <columns>Enable_Minor_Changes_from_Portal__c</columns>
+        <columns>Enable_Notice_of_Change__c</columns>
+        <columns>OSCAR_enabled__c</columns>
         <columns>Region__c</columns>
         <columns>Sub_Region__c</columns>
         <columns>Country_Manager__c</columns>
