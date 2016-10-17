@@ -22782,6 +22782,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>EF_Related_Records__c.Location_Code_Details__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>EF_Related_Records__c.Type__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -38695,6 +38700,10 @@
         <recordType>EF_Related_Records__c.FIR_Code</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>EF_Related_Records__c-E%26F Location Code Page Layout</layout>
+        <recordType>EF_Related_Records__c.Location_Code</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>EF_Related_Records__c-E%26F Location Page Layout</layout>
         <recordType>EF_Related_Records__c.Location</recordType>
     </layoutAssignments>
@@ -42718,6 +42727,11 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>EF_Related_Records__c.FIR_Code</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>EF_Related_Records__c.Location_Code</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
