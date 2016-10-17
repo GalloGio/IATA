@@ -30,11 +30,19 @@ public class EF_BillingAgreementHandler
         {
             // If approval occurred, copies the approved values from temporary storage onto the record itself
             EF_BaContractApprovalHelper.copyValuesFromTempStorageOnRecordApproval(approvedList, fields, 'EF_Billing_Agreement__c');
+            for(EF_Billing_Agreement__c approved : approvedList)
+            {
+                approved.Requested_Changes__c = '';
+            }
         }
         if(rejectedList.size() > 0)
         {
             // Or if rejected or recalled, simply ignore the changes and get rid of the temp storage record
             EF_BaContractApprovalHelper.removeTempStorageRecordOnRecordRejection(rejectedList, 'EF_Billing_Agreement__c');
+            for(EF_Billing_Agreement__c rejected : rejectedList)
+            {
+                rejected.Requested_Changes__c = '';
+            }
         }
     }
 
@@ -73,11 +81,6 @@ public class EF_BillingAgreementHandler
                     f = 'Airline_Name__c';
 
                 fields.add(f);
-            }
-
-            for(String f : fields)
-            {
-                System.debug('************ f: '+f);
             }
 
             // If there are any Billing Agreements that require approval, start the process to temporarily store them into another object
