@@ -63,6 +63,28 @@ public class vfIECEBC_TestSuite {
         insert oPref;
     }
     
+    public static List<GDP_Products_Account_View__c> createGDPProductsAccountViews() {
+        GDP_Reference_Table__c grt = new GDP_Reference_Table__c(Code__c = '4');
+        insert grt;
+        Accreditation__c accr = new Accreditation__c(Status__c = grt.Id);
+        insert accr;
+            
+        List<GDP_Products_Account_View__c> gpavs = new List<GDP_Products_Account_View__c>{
+            new GDP_Products_Account_View__c(Name = 'a',				Related_Accreditation_Class__c = accr.Id,	GDP_Opt_In__c = true,	Email_Address__c = 'a@b.com',			Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'b',			Related_Accreditation_Class__c = accr.Id,	GDP_Opt_In__c = true,	Email_Address__c = 'b@b.com',			Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'c',			Related_Accreditation_Class__c = accr.Id,	GDP_Opt_In__c = true,	Email_Address__c = 'c@b.com',			Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'd',			Related_Accreditation_Class__c = accr.Id,	GDP_Opt_In__c = true,	Email_Address__c = 'd@b.com',			Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'e',			Related_Accreditation_Class__c = accr.Id,	GDP_Opt_In__c = true,	Email_Address__c = 'e@b.com',			Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'f',			Related_Accreditation_Class__c = accr.Id,	GDP_Opt_In__c = true,	Email_Address__c = 'f@b.com',			Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'notincluded',	Related_Accreditation_Class__c = accr.Id,	GDP_Opt_In__c = true,	Email_Address__c = 'notincluded@b.com',	Preferred_Language__c = 'X1'),
+                new GDP_Products_Account_View__c(Name = 'optout',		Related_Accreditation_Class__c = accr.Id,	GDP_Opt_In__c = false,	Email_Address__c = 'optout@b.com',		Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'duplicate',	Related_Accreditation_Class__c = accr.Id,	GDP_Opt_In__c = true,	Email_Address__c = 'duplicate@b.com',	Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'duplicate1',	Related_Accreditation_Class__c = accr.Id,	GDP_Opt_In__c = true,	Email_Address__c = 'duplicate@b.com',	Preferred_Language__c = 'X0')
+            };
+        insert gpavs;
+        return gpavs;
+    }
+    
     //////////////////// TESTS /////////////////////
     public static void testPageLoadDashboard() {
 		PageReference pageRef = Page.IECEBC_Dashboard;
@@ -416,6 +438,7 @@ public class vfIECEBC_TestSuite {
         insert tpl;
         EBC_Campaign__c camp = new EBC_Campaign__c(Name = 'Foo Bar', Subject__c = 'Foo Subject', From_Name__c = 'Foo From Name', Is_Google_Analytics_Tracker_Active__c = true, Google_Analytics_Tracking_Code__c = 'UA-XXXXXX', Billing_Account__c = oBillingAccount.Id, EBC_Master_Filter__c = masterFilter.Id, EBC_Design__c = tpl.Id);
         insert camp;
+        /*
         List<GDP_Products_Account_View__c> gpavs = new List<GDP_Products_Account_View__c>{
             new GDP_Products_Account_View__c(Name = 'a',			GDP_Opt_In__c = true,	Email_Address__c = 'a@b.com',			Preferred_Language__c = 'X0'),
             new GDP_Products_Account_View__c(Name = 'b',			GDP_Opt_In__c = true,	Email_Address__c = 'b@b.com',			Preferred_Language__c = 'X0'),
@@ -428,7 +451,9 @@ public class vfIECEBC_TestSuite {
             new GDP_Products_Account_View__c(Name = 'duplicate',	GDP_Opt_In__c = true,	Email_Address__c = 'duplicate@b.com',	Preferred_Language__c = 'X0'),
             new GDP_Products_Account_View__c(Name = 'duplicate1',	GDP_Opt_In__c = true,	Email_Address__c = 'duplicate@b.com',	Preferred_Language__c = 'X0')
         };
-        insert gpavs;
+        insert gpavs;*/
+        
+        List<GDP_Products_Account_View__c> gpavs = createGDPProductsAccountViews();
         
 		PageReference pageRef = Page.IECEBC_CampaignConfirm;
         pageRef.getParameters().put('id', camp.Id);
@@ -538,7 +563,7 @@ public class vfIECEBC_TestSuite {
         insert grt;
         Accreditation__c accr = new Accreditation__c(Status__c = grt.Id);
         insert accr;
-            
+            /*
         List<GDP_Products_Account_View__c> gpavs = new List<GDP_Products_Account_View__c>{
             new GDP_Products_Account_View__c(Name = 'a',				Related_Accreditation_Class__c = accr.Id,	GDP_Opt_In__c = true,	Email_Address__c = 'a@b.com',			Preferred_Language__c = 'X0'),
                 new GDP_Products_Account_View__c(Name = 'b',			Related_Accreditation_Class__c = accr.Id,	GDP_Opt_In__c = true,	Email_Address__c = 'b@b.com',			Preferred_Language__c = 'X0'),
@@ -551,7 +576,8 @@ public class vfIECEBC_TestSuite {
                 new GDP_Products_Account_View__c(Name = 'duplicate',	Related_Accreditation_Class__c = accr.Id,	GDP_Opt_In__c = true,	Email_Address__c = 'duplicate@b.com',	Preferred_Language__c = 'X0'),
                 new GDP_Products_Account_View__c(Name = 'duplicate1',	Related_Accreditation_Class__c = accr.Id,	GDP_Opt_In__c = true,	Email_Address__c = 'duplicate@b.com',	Preferred_Language__c = 'X0')
             };
-        insert gpavs;
+        insert gpavs;*/
+        List<GDP_Products_Account_View__c> gpavs = createGDPProductsAccountViews();
             
             
         EBC_Activity__c act = new EBC_Activity__c(Related_Billing_Account__c = oBillingAccount.Id, New_Balance__c = 1000, Total_Count__c = 1000, Activity_Type__c = 'Credit', Activity_Date_Time__c = Datetime.now());
@@ -615,7 +641,7 @@ public class vfIECEBC_TestSuite {
         
         oBillingAccount.eBroadcast_Trusted_Sender__c = true;
         update oBillingAccount;
-        
+        /*
         List<GDP_Products_Account_View__c> gpavs = new List<GDP_Products_Account_View__c>{
             new GDP_Products_Account_View__c(Name = 'a',			GDP_Opt_In__c = true,	Email_Address__c = 'a@b.com',			Preferred_Language__c = 'X0'),
                 new GDP_Products_Account_View__c(Name = 'b',			GDP_Opt_In__c = true,	Email_Address__c = 'b@b.com',			Preferred_Language__c = 'X0'),
@@ -628,7 +654,8 @@ public class vfIECEBC_TestSuite {
                 new GDP_Products_Account_View__c(Name = 'duplicate',	GDP_Opt_In__c = true,	Email_Address__c = 'duplicate@b.com',	Preferred_Language__c = 'X0'),
                 new GDP_Products_Account_View__c(Name = 'duplicate1',	GDP_Opt_In__c = true,	Email_Address__c = 'duplicate@b.com',	Preferred_Language__c = 'X0')
                 };
-                    insert gpavs;
+                    insert gpavs;*/
+        List<GDP_Products_Account_View__c> gpavs = createGDPProductsAccountViews();
         
         EBC_Activity__c act = new EBC_Activity__c(Related_Billing_Account__c = oBillingAccount.Id, New_Balance__c = 1000, Total_Count__c = 1000, Activity_Type__c = 'Credit', Activity_Date_Time__c = Datetime.now());
         insert act;
@@ -718,7 +745,7 @@ public class vfIECEBC_TestSuite {
     public static void testCampaignPayWithCreditNotTrusted() {
         
         User usr = initPreRunAs(true);
-        
+        /*
         List<GDP_Products_Account_View__c> gpavs = new List<GDP_Products_Account_View__c>{
             new GDP_Products_Account_View__c(Name = 'a',			GDP_Opt_In__c = true,	Email_Address__c = 'a@b.com',			Preferred_Language__c = 'X0'),
                 new GDP_Products_Account_View__c(Name = 'b',			GDP_Opt_In__c = true,	Email_Address__c = 'b@b.com',			Preferred_Language__c = 'X0'),
@@ -731,7 +758,8 @@ public class vfIECEBC_TestSuite {
                 new GDP_Products_Account_View__c(Name = 'duplicate',	GDP_Opt_In__c = true,	Email_Address__c = 'duplicate@b.com',	Preferred_Language__c = 'X0'),
                 new GDP_Products_Account_View__c(Name = 'duplicate1',	GDP_Opt_In__c = true,	Email_Address__c = 'duplicate@b.com',	Preferred_Language__c = 'X0')
                 };
-                    insert gpavs;
+                    insert gpavs;*/
+        List<GDP_Products_Account_View__c> gpavs = createGDPProductsAccountViews();
         
         EBC_Activity__c act = new EBC_Activity__c(Related_Billing_Account__c = oBillingAccount.Id, New_Balance__c = 1000, Total_Count__c = 1000, Activity_Type__c = 'Credit', Activity_Date_Time__c = Datetime.now());
         insert act;
@@ -959,6 +987,26 @@ public class vfIECEBC_TestSuite {
         Test.setCurrentPage(pageRef);
         
         User usr = initPreRunAs(true);
+        /*
+        GDP_Reference_Table__c grt = new GDP_Reference_Table__c(Code__c = '4');
+        insert grt;
+        Accreditation__c accr = new Accreditation__c(Status__c = grt.Id);
+        insert accr;
+            
+        List<GDP_Products_Account_View__c> gpavs = new List<GDP_Products_Account_View__c>{
+            new GDP_Products_Account_View__c(Name = 'a',				Related_Accreditation_Class__c = accr.Id,	GDP_Opt_In__c = true,	Email_Address__c = 'a@b.com',			Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'b',			Related_Accreditation_Class__c = accr.Id,	GDP_Opt_In__c = true,	Email_Address__c = 'b@b.com',			Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'c',			Related_Accreditation_Class__c = accr.Id,	GDP_Opt_In__c = true,	Email_Address__c = 'c@b.com',			Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'd',			Related_Accreditation_Class__c = accr.Id,	GDP_Opt_In__c = true,	Email_Address__c = 'd@b.com',			Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'e',			Related_Accreditation_Class__c = accr.Id,	GDP_Opt_In__c = true,	Email_Address__c = 'e@b.com',			Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'f',			Related_Accreditation_Class__c = accr.Id,	GDP_Opt_In__c = true,	Email_Address__c = 'f@b.com',			Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'notincluded',	Related_Accreditation_Class__c = accr.Id,	GDP_Opt_In__c = true,	Email_Address__c = 'notincluded@b.com',	Preferred_Language__c = 'X1'),
+                new GDP_Products_Account_View__c(Name = 'optout',		Related_Accreditation_Class__c = accr.Id,	GDP_Opt_In__c = false,	Email_Address__c = 'optout@b.com',		Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'duplicate',	Related_Accreditation_Class__c = accr.Id,	GDP_Opt_In__c = true,	Email_Address__c = 'duplicate@b.com',	Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'duplicate1',	Related_Accreditation_Class__c = accr.Id,	GDP_Opt_In__c = true,	Email_Address__c = 'duplicate@b.com',	Preferred_Language__c = 'X0')
+            };
+        insert gpavs;*/
+        List<GDP_Products_Account_View__c> gpavs = createGDPProductsAccountViews();
         
         EBC_Master_Filter__c masterFilter = new EBC_Master_Filter__c();
         masterFilter.Audience__c = 'Agency';
@@ -1320,7 +1368,7 @@ public class vfIECEBC_TestSuite {
         
         oBillingAccount.eBroadcast_Trusted_Sender__c = true;
         update oBillingAccount;
-        
+        /*
         List<GDP_Products_Account_View__c> gpavs = new List<GDP_Products_Account_View__c>{
             new GDP_Products_Account_View__c(Name = 'a',			GDP_Opt_In__c = true,	Email_Address__c = 'a@b.com',			Preferred_Language__c = 'X0'),
                 new GDP_Products_Account_View__c(Name = 'b',			GDP_Opt_In__c = true,	Email_Address__c = 'b@b.com',			Preferred_Language__c = 'X0'),
@@ -1333,7 +1381,8 @@ public class vfIECEBC_TestSuite {
                 new GDP_Products_Account_View__c(Name = 'duplicate',	GDP_Opt_In__c = true,	Email_Address__c = 'duplicate@b.com',	Preferred_Language__c = 'X0'),
                 new GDP_Products_Account_View__c(Name = 'duplicate1',	GDP_Opt_In__c = true,	Email_Address__c = 'duplicate@b.com',	Preferred_Language__c = 'X0')
                 };
-                    insert gpavs;
+                    insert gpavs;*/
+        List<GDP_Products_Account_View__c> gpavs = createGDPProductsAccountViews();
         
         EBC_Activity__c act = new EBC_Activity__c(Related_Billing_Account__c = oBillingAccount.Id, New_Balance__c = 1000, Total_Count__c = 1000, Activity_Type__c = 'Credit', Activity_Date_Time__c = Datetime.now());
         insert act;
@@ -1381,7 +1430,7 @@ public class vfIECEBC_TestSuite {
         
         oBillingAccount.eBroadcast_Trusted_Sender__c = true;
         update oBillingAccount;
-        
+        /*
         List<GDP_Products_Account_View__c> gpavs = new List<GDP_Products_Account_View__c>{
             new GDP_Products_Account_View__c(Name = 'a',			GDP_Opt_In__c = true,	Email_Address__c = 'a@b.com',			Preferred_Language__c = 'X0'),
                 new GDP_Products_Account_View__c(Name = 'b',			GDP_Opt_In__c = true,	Email_Address__c = 'b@b.com',			Preferred_Language__c = 'X0'),
@@ -1394,7 +1443,8 @@ public class vfIECEBC_TestSuite {
                 new GDP_Products_Account_View__c(Name = 'duplicate',	GDP_Opt_In__c = true,	Email_Address__c = 'duplicate@b.com',	Preferred_Language__c = 'X0'),
                 new GDP_Products_Account_View__c(Name = 'duplicate1',	GDP_Opt_In__c = true,	Email_Address__c = 'duplicate@b.com',	Preferred_Language__c = 'X0')
                 };
-                    insert gpavs;
+                    insert gpavs;*/
+        List<GDP_Products_Account_View__c> gpavs = createGDPProductsAccountViews();
         
         EBC_Activity__c act = new EBC_Activity__c(Related_Billing_Account__c = oBillingAccount.Id, New_Balance__c = 1000, Total_Count__c = 1000, Activity_Type__c = 'Credit', Activity_Date_Time__c = Datetime.now());
         insert act;
@@ -1452,7 +1502,7 @@ public class vfIECEBC_TestSuite {
         
         oBillingAccount.eBroadcast_Trusted_Sender__c = true;
         update oBillingAccount;
-        
+        /*
         List<GDP_Products_Account_View__c> gpavs = new List<GDP_Products_Account_View__c>{
             new GDP_Products_Account_View__c(Name = 'a',			GDP_Opt_In__c = true,	Email_Address__c = 'a@b.com',			Preferred_Language__c = 'X0'),
                 new GDP_Products_Account_View__c(Name = 'b',			GDP_Opt_In__c = true,	Email_Address__c = 'b@b.com',			Preferred_Language__c = 'X0'),
@@ -1465,7 +1515,8 @@ public class vfIECEBC_TestSuite {
                 new GDP_Products_Account_View__c(Name = 'duplicate',	GDP_Opt_In__c = true,	Email_Address__c = 'duplicate@b.com',	Preferred_Language__c = 'X0'),
                 new GDP_Products_Account_View__c(Name = 'duplicate1',	GDP_Opt_In__c = true,	Email_Address__c = 'duplicate@b.com',	Preferred_Language__c = 'X0')
                 };
-                    insert gpavs;
+                    insert gpavs;*/
+        List<GDP_Products_Account_View__c> gpavs = createGDPProductsAccountViews();
         
         EBC_Activity__c act = new EBC_Activity__c(Related_Billing_Account__c = oBillingAccount.Id, New_Balance__c = 1000, Total_Count__c = 1000, Activity_Type__c = 'Credit', Activity_Date_Time__c = Datetime.now());
         insert act;
