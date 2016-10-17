@@ -22563,6 +22563,16 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>EF_Location_Code__c.Contract__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>EF_Location_Code__c.EF_Airline_Billing_Agreement__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>EF_Location_Currency__c.Base_URL__c</field>
         <readable>true</readable>
@@ -39550,6 +39560,17 @@
         <layout>EF_Contact_Relationship__c-E%26F Contact Relationship Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>EF_Location_Code__c-E%26F Location Code BA Layout</layout>
+        <recordType>EF_Location_Code__c.EF_BA_Location_Code</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>EF_Location_Code__c-E%26F Location Code Contract Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>EF_Location_Code__c-E%26F Location Code Contract Layout</layout>
+        <recordType>EF_Location_Code__c.EF_Contract_Location_Code</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>EF_Location_Currency__c-E%26F Location Currency Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -40721,6 +40742,15 @@
         <modifyAllRecords>false</modifyAllRecords>
         <object>EF_Contact_Relationship__c</object>
         <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>EF_Location_Code__c</object>
+        <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
         <allowCreate>true</allowCreate>
@@ -43496,6 +43526,16 @@
         <default>false</default>
         <recordType>Contract.RCRM_Contract</recordType>
         <visible>false</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>EF_Location_Code__c.EF_BA_Location_Code</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>true</default>
+        <recordType>EF_Location_Code__c.EF_Contract_Location_Code</recordType>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
