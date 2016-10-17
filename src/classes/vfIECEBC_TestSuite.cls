@@ -608,6 +608,7 @@ public class vfIECEBC_TestSuite {
             */
         }
     }
+    
     public static void testCampaignPayWithCreditTrusted() {
         
         User usr = initPreRunAs(true);
@@ -1380,7 +1381,142 @@ public class vfIECEBC_TestSuite {
             return r;
         }
     }
+ 
     
+    public static void testOptOut() {
+        
+        User usr = initPreRunAs(true);
+        
+        oBillingAccount.eBroadcast_Trusted_Sender__c = true;
+        update oBillingAccount;
+        
+        List<GDP_Products_Account_View__c> gpavs = new List<GDP_Products_Account_View__c>{
+            new GDP_Products_Account_View__c(Name = 'a',			GDP_Opt_In__c = true,	Email_Address__c = 'a@b.com',			Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'b',			GDP_Opt_In__c = true,	Email_Address__c = 'b@b.com',			Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'c',			GDP_Opt_In__c = true,	Email_Address__c = 'c@b.com',			Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'd',			GDP_Opt_In__c = true,	Email_Address__c = 'd@b.com',			Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'e',			GDP_Opt_In__c = true,	Email_Address__c = 'e@b.com',			Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'f',			GDP_Opt_In__c = true,	Email_Address__c = 'f@b.com',			Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'notincluded',	GDP_Opt_In__c = true,	Email_Address__c = 'notincluded@b.com',	Preferred_Language__c = 'X1'),
+                new GDP_Products_Account_View__c(Name = 'optout',		GDP_Opt_In__c = false,	Email_Address__c = 'optout@b.com',		Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'duplicate',	GDP_Opt_In__c = true,	Email_Address__c = 'duplicate@b.com',	Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'duplicate1',	GDP_Opt_In__c = true,	Email_Address__c = 'duplicate@b.com',	Preferred_Language__c = 'X0')
+                };
+                    insert gpavs;
+        
+        EBC_Activity__c act = new EBC_Activity__c(Related_Billing_Account__c = oBillingAccount.Id, New_Balance__c = 1000, Total_Count__c = 1000, Activity_Type__c = 'Credit', Activity_Date_Time__c = Datetime.now());
+        insert act;
+        EBC_Application_Filter__c af = new EBC_Application_Filter__c(Audience__c = 'Agency', Filter_Description__c = 'Preferred Language', Data_Type__c = 'Text', Filter_Field__c = 'Preferred_Language__c');
+        insert af;
+        
+        System.runAs(usr) {
+            initPostRunAs();
+            
+            
+            EBC_Master_Filter__c masterFilter = new EBC_Master_Filter__c(Audience__c = 'Agency', OwnerId = usr.Id);
+            insert masterFilter;
+            EBC_Customer_Filter__c cf = new EBC_Customer_Filter__c(EBC_Master_Filter__c = masterFilter.Id, EBC_Application_Filter__c = af.Id, Field_Operator__c = '=', Field_Value__c = 'X0');
+            insert cf;
+            EBC_Template__c tpl = new EBC_Template__c(Is_Tested__c = true, OwnerId = usr.Id);
+            insert tpl;
+            EBC_Campaign__c camp = new EBC_Campaign__c(Name = 'Foo Bar', Number_of_Recipients__c = 7, Subject__c = 'Foo Subject', From_Name__c = 'Foo From Name', Is_Google_Analytics_Tracker_Active__c = true, Google_Analytics_Tracking_Code__c = 'UA-XXXXXX', Billing_Account__c = oBillingAccount.Id, EBC_Master_Filter__c = masterFilter.Id, EBC_Design__c = tpl.Id, OwnerId = usr.Id, Status__c = 'SENT');
+            insert camp;
+            
+            PageReference pageRef = Page.iecebc_optout;
+            pageRef.getParameters().put('c', IECUtil.EncryptParameter(camp.Id));
+            pageRef.getParameters().put('e', IECUtil.EncryptParameter(gpavs[0].Email_Address__c));
+            pageRef.getParameters().put('bai', IECUtil.EncryptParameter(camp.Billing_Account__c));
+            pageRef.getParameters().put('ban', IECUtil.EncryptParameter('Foo Bar'));
+            Test.setCurrentPage(pageRef);
+            
+            
+            Test.startTest();
+            vfIECEBC_OptOut con = new vfIECEBC_OptOut();
+            
+            System.assertEquals(gpavs[0].Email_Address__c, con.email);
+            System.assertEquals('Foo Bar', con.billingAccountName);
+            
+            con.sender = con.billingAccountId;
+            con.reasons.put('The content is not relevant to me', true);
+            PageReference pr = con.unsubscribe();
+            SchdlIECEBCEmailExclusionRelation.Schedule();
+            Test.stopTest();
+        }
+    }
     
+    public static void testResubscribe() {
+        
+        User usr = initPreRunAs(true);
+        
+        oBillingAccount.eBroadcast_Trusted_Sender__c = true;
+        update oBillingAccount;
+        
+        List<GDP_Products_Account_View__c> gpavs = new List<GDP_Products_Account_View__c>{
+            new GDP_Products_Account_View__c(Name = 'a',			GDP_Opt_In__c = true,	Email_Address__c = 'a@b.com',			Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'b',			GDP_Opt_In__c = true,	Email_Address__c = 'b@b.com',			Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'c',			GDP_Opt_In__c = true,	Email_Address__c = 'c@b.com',			Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'd',			GDP_Opt_In__c = true,	Email_Address__c = 'd@b.com',			Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'e',			GDP_Opt_In__c = true,	Email_Address__c = 'e@b.com',			Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'f',			GDP_Opt_In__c = true,	Email_Address__c = 'f@b.com',			Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'notincluded',	GDP_Opt_In__c = true,	Email_Address__c = 'notincluded@b.com',	Preferred_Language__c = 'X1'),
+                new GDP_Products_Account_View__c(Name = 'optout',		GDP_Opt_In__c = false,	Email_Address__c = 'optout@b.com',		Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'duplicate',	GDP_Opt_In__c = true,	Email_Address__c = 'duplicate@b.com',	Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'duplicate1',	GDP_Opt_In__c = true,	Email_Address__c = 'duplicate@b.com',	Preferred_Language__c = 'X0')
+                };
+                    insert gpavs;
+        
+        EBC_Activity__c act = new EBC_Activity__c(Related_Billing_Account__c = oBillingAccount.Id, New_Balance__c = 1000, Total_Count__c = 1000, Activity_Type__c = 'Credit', Activity_Date_Time__c = Datetime.now());
+        insert act;
+        EBC_Application_Filter__c af = new EBC_Application_Filter__c(Audience__c = 'Agency', Filter_Description__c = 'Preferred Language', Data_Type__c = 'Text', Filter_Field__c = 'Preferred_Language__c');
+        insert af;
+        
+        EBC_Master_Filter__c masterFilter = new EBC_Master_Filter__c(Audience__c = 'Agency', OwnerId = usr.Id);
+        insert masterFilter;
+        EBC_Customer_Filter__c cf = new EBC_Customer_Filter__c(EBC_Master_Filter__c = masterFilter.Id, EBC_Application_Filter__c = af.Id, Field_Operator__c = '=', Field_Value__c = 'X0');
+        insert cf;
+        EBC_Template__c tpl = new EBC_Template__c(Is_Tested__c = true, OwnerId = usr.Id);
+        insert tpl;
+        EBC_Campaign__c camp = new EBC_Campaign__c(Name = 'Foo Bar', Number_of_Recipients__c = 7, Subject__c = 'Foo Subject', From_Name__c = 'Foo From Name', Is_Google_Analytics_Tracker_Active__c = true, Google_Analytics_Tracking_Code__c = 'UA-XXXXXX', Billing_Account__c = oBillingAccount.Id, EBC_Master_Filter__c = masterFilter.Id, EBC_Design__c = tpl.Id, OwnerId = usr.Id, Status__c = 'SENT');
+        insert camp;
+        
+        EBC_Email_Exclusion__c ee = new EBC_Email_Exclusion__c(Email__c = gpavs[8].Email_Address__c, Unsubscribe_From__c = oBillingAccount.Id, Type__c = 'OPTOUT');
+        insert ee;
+        
+        SchdlIECEBCEmailExclusionRelation n = new SchdlIECEBCEmailExclusionRelation();
+        n.EXISTING_RELATION = false;
+        Database.executeBatch(n,SchdlIECEBCEmailExclusionRelation.BATCH_SIZE);
+        
+        System.runAs(usr) {
+            initPostRunAs();
+            
+            
+            
+            PageReference pageRef = Page.IECEBC_Resubscribe;
+            pageRef.getParameters().put('c', IECUtil.EncryptParameter(camp.Id));
+            pageRef.getParameters().put('e', IECUtil.EncryptParameter(gpavs[0].Email_Address__c));
+            pageRef.getParameters().put('bai', IECUtil.EncryptParameter(camp.Billing_Account__c));
+            pageRef.getParameters().put('ban', IECUtil.EncryptParameter('Foo Bar'));
+            Test.setCurrentPage(pageRef);
+            
+            
+            Test.startTest();
+            List<EBC_Email_Exclusion_Relation__c> eers = [Select Id From EBC_Email_Exclusion_Relation__c WHERE EBC_Email_Exclusion__c = :ee.Id];
+            System.assertEquals(2, eers.size());
+            vfIECEBC_Resubscribe con = new vfIECEBC_Resubscribe();
+            
+            con.agencyCode = '1234';
+            con.fullName = '1234';
+            con.newEmail = '12@34.com';
+            con.subscribe();
+            
+            gpavs[8].Email_Address__c = 'diff@erent.com';
+            update gpavs[8];
+            
+            SchdlIECEBCEmailExclusionRelClean.Schedule();
+            
+            Test.stopTest();
+        }
+    }
+
     
 }
