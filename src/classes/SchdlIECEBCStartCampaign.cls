@@ -24,10 +24,21 @@ global class SchdlIECEBCStartCampaign implements Database.Batchable<sObject>, Da
     public EBC_Campaign__c c;
     public Integer numberOfRecipients = 0;
 
+    public static void prepare(EBC_Campaign__c c, String gaCode, String gaName, String templateExternalId, String senderProfileCustomerKey, String mailingId) {
+        String body = vfIECEBC_Template.getTemplateHtml(c.EBC_Design__c, true, gaCode, gaName);
+        IECEBC_ETTemplateCreate.updateEmailTemplate(templateExternalId, c.Subject__c, body, 'HTML');
+        
+        String senderExternalId = IECEBC_ETSenderProfileCreate.createSenderProfile(senderProfileCustomerKey, senderProfileCustomerKey, c.From_Name__c, 'test@cubicmedia.ca'); //@todo
+        String sendClassificationId = IECEBC_ETSendClassificationCreate.createSendClassification(senderProfileCustomerKey, senderProfileCustomerKey, senderExternalId);
+        
+        IECEBC_ETTriggeredSendDefinitionCreate.createTriggeredSendDefinition(mailingId, templateExternalId, senderProfileCustomerKey, sendClassificationId);
+        IECEBC_ETTriggeredSendDefinitionStart.updateTriggeredSendDefinition(mailingId);
+    }
     
     // Batchable 
     global Database.QueryLocator start(Database.BatchableContext BC){
         c = [Select Id, Name, Subject__c, EBC_Design__c, Billing_Account__c, Billing_Account__r.Name, From_Name__c, Is_Google_Analytics_Tracker_Active__c, Google_Analytics_Tracking_Code__c, Send_Datetime__c From EBC_Campaign__c Where Id = :campaignId];
+        
         
         String senderProfileCustomerKey = c.Id + '_'+IECEBC_Utility.generateRandomString(11);
         
@@ -41,14 +52,9 @@ global class SchdlIECEBCStartCampaign implements Database.Batchable<sObject>, Da
         System.debug(gaCode);
         System.debug(gaName);
         
-        String body = vfIECEBC_Template.getTemplateHtml(c.EBC_Design__c, true, gaCode, gaName);
-        IECEBC_ETTemplateCreate.updateEmailTemplate(templateExternalId, c.Subject__c, body, 'HTML');
-        
-        String senderExternalId = IECEBC_ETSenderProfileCreate.createSenderProfile(senderProfileCustomerKey, senderProfileCustomerKey, c.From_Name__c, 'test@cubicmedia.ca'); //@todo
-        String sendClassificationId = IECEBC_ETSendClassificationCreate.createSendClassification(senderProfileCustomerKey, senderProfileCustomerKey, senderExternalId);
-        
-        IECEBC_ETTriggeredSendDefinitionCreate.createTriggeredSendDefinition(mailingId, templateExternalId, senderProfileCustomerKey, sendClassificationId);
-        IECEBC_ETTriggeredSendDefinitionStart.updateTriggeredSendDefinition(mailingId);
+        if (!Test.isRunningTest()) {
+            prepare(c, gaCode, gaName, templateExternalId, senderProfileCustomerKey, mailingId);
+        }
         
         System.debug(query);
         return Database.getQueryLocator(query);
@@ -198,7 +204,9 @@ global class SchdlIECEBCStartCampaign implements Database.Batchable<sObject>, Da
             n.query = IECEBC_Utility.getSOQLFromMasterFilter(columns, campaign.EBC_Master_Filter__c);
             n.campaignId = campaign.Id;
             n.templateExternalId = campaign.EBC_Design__r.External_Id__c;
-            Database.executeBatch(n,SchdlIECEBCStartCampaign.BATCH_SIZE);
+            //if (!Test.isRunningTest()) {
+            	Database.executeBatch(n,SchdlIECEBCStartCampaign.BATCH_SIZE);
+            //}
         }
         
         update campaigns;
