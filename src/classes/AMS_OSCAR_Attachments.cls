@@ -3,13 +3,6 @@ global class AMS_OSCAR_Attachments {
     private Boolean canAttachFiles;
     private Case cse;
 
-public Case oscCase {get;set;}
-  public AMS_OSCAR_Attachments(ApexPages.StandardController ctrl){
-
-
-  }
-
-
     public Boolean isAdminUser {get; set;}
 
     public Id caseId{
@@ -68,7 +61,7 @@ public Case oscCase {get;set;}
     public AMS_OSCAR_Attachments() {
 
         String sObjId = ApexPages.currentPage().getParameters().get('Id');
-        cse = [Select Id, Status from Case where OSCAR__c = :sObjId AND RecordType.Name = 'OSCAR Communication'];
+        cse = [Select Id, Status from Case where OSCAR__c = :sObjId AND RecordType.Name = 'OSCAR Communication' AND ( ParentId = null or Parent.RecordType.Name != 'OSCAR Communication' ) ];
         
         // check if current user is Admin
         Profile profile = [Select id, Name from Profile where Id = :UserInfo.getProfileId()];
@@ -219,5 +212,27 @@ public Case oscCase {get;set;}
     
     public PageReference goToAttachmentPage() {
         return new Pagereference('/ISSP_AddAttachment?caseId=' + this.cse.id + '&retURL=%2F' + this.cse.id);
+    }
+    
+    /**
+        get a list of files with valid links to download them from Amazon
+    **/
+    @RemoteAction
+    global static list<FileDef> getAllExpiringLink(String objectId) {
+        list<FileDef> listFileDef = new list<FileDef>();
+        for (WrapperAttach attach: WrapperAttach.getListAttachments(objectId)) {
+            FileDef filedef = new FileDef();
+            filedef.name = attach.name;
+            filedef.url = getExpiringLink(attach.fullName);
+            filedef.data = '';
+            listFileDef.add(filedef);
+        }
+        return listFileDef;
+    }
+
+    global class FileDef {
+        String name;
+        String url;
+        String data;
     }
 }

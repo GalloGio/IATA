@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
     <customButtons>Zuora__Sync_Data_from_ZBilling</customButtons>
-    <excludeButtons>DataDotComAccountInsights</excludeButtons>
-    <excludeButtons>DataDotComCompanyHierarchy</excludeButtons>
+    <excludeButtons>DataDotComClean</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
         <customLabel>true</customLabel>
@@ -194,15 +193,15 @@
         <label>E&amp;F Information</label>
         <layoutColumns>
             <layoutItems>
-                <behavior>Required</behavior>
+                <behavior>Edit</behavior>
                 <field>EF_Type__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Required</behavior>
+                <behavior>Edit</behavior>
                 <field>EF_Status__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Required</behavior>
+                <behavior>Edit</behavior>
                 <field>EF_SubStatus__c</field>
             </layoutItems>
             <layoutItems>
@@ -216,7 +215,7 @@
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
-                <behavior>Required</behavior>
+                <behavior>Edit</behavior>
                 <field>EF_Effective_Date__c</field>
             </layoutItems>
             <layoutItems>
@@ -486,7 +485,7 @@
         <fields>Release_Date__c</fields>
         <relatedList>Financial_Security__c.Account__c</relatedList>
         <sortField>NAME</sortField>
-        <sortOrder>Asc</sortOrder>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <customButtons>Mass_Update_Contracts</customButtons>

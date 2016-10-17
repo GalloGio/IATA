@@ -41,10 +41,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -2223,6 +2219,7 @@ Received from AIMS and needed in synchronization file but never displayed and up
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -2245,6 +2242,7 @@ Received from AIMS and needed in synchronization file but never displayed and up
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -2277,6 +2275,7 @@ Received from AIMS and needed in synchronization file but never displayed and up
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
@@ -2312,6 +2311,7 @@ Received from AIMS and needed in synchronization file but never displayed and up
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -2386,6 +2386,7 @@ Received from AIMS and needed in synchronization file but never displayed and up
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -2768,6 +2769,7 @@ Received from AIMS and needed in synchronization file but never displayed and up
             </picklistValues>
             <sorted>true</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>10</visibleLines>
@@ -2775,9 +2777,11 @@ Received from AIMS and needed in synchronization file but never displayed and up
     <fields>
         <fullName>Airline_Contact_Type__c</fullName>
         <externalId>false</externalId>
-        <formula>IF(TEXT(CEO_CFO__c)=&quot;CEO&quot;,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000002rRZT&quot; ,&quot;&quot;,40,40),&quot;&quot;)
+        <formula>IF(TEXT(CEO_CFO__c)=&quot;CEO&quot;,IMAGE(&quot;/resource/CEO_Contact_image&quot; ,&quot;&quot;,40,40),&quot;&quot;)
 &amp;&quot; &quot;&amp;
-IF(TEXT(CEO_CFO__c)=&quot;CFO&quot;,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000002rRZO&quot; ,&quot;&quot;,40,40),&quot;&quot;)
+IF(TEXT(CEO_CFO__c)=&quot;CFO&quot;,IMAGE(&quot;/resource/CFO_Contact_image&quot; ,&quot;&quot;,40,40),&quot;&quot;)
+&amp;&quot; &quot;&amp;
+IF(TEXT(CEO_CFO__c)=&quot;COO&quot;,IMAGE(&quot;/resource/COO_Contact_image&quot; ,&quot;&quot;,40,40),&quot;&quot;)
 &amp;&quot; &quot;&amp;
 IF(Airline_Credit_Risk_Manager__c,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000002rRZF&quot; ,&quot;&quot;,40,40),&quot;&quot;)
 &amp;&quot; &quot;&amp;
@@ -2797,7 +2801,11 @@ IF(APJC_Participant__c,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w000000
 &amp;&quot; &quot;&amp;
 IF(BSP_CASS_Payment_contact__c,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w00000037Sjc&quot; ,&quot;&quot;,40,40),&quot;&quot;)
 &amp;&quot; &quot;&amp;
-IF(Financial_Assessment_Contact__c,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w00000037Sj8&quot; ,&quot;&quot;,40,40),&quot;&quot;)</formula>
+IF(Financial_Assessment_Contact__c,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w00000037Sj8&quot; ,&quot;&quot;,40,40),&quot;&quot;)
+&amp;&quot; &quot;&amp;
+IF(NOT(ISBLANK(Function__c)),IMAGE(&quot;/resource/Primary_Contact_image&quot; ,&quot;&quot;,40,40),&quot;&quot;)
+&amp;&quot; &quot;&amp;
+IF(Membership_Main_Contact__c,IMAGE(&quot;/resource/Main_Contact_image&quot; ,&quot;&quot;,40,40),&quot;&quot;)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Contact Type</label>
         <required>false</required>
@@ -2987,6 +2995,7 @@ IF(Financial_Assessment_Contact__c,IMAGE(&quot;/servlet/servlet.FileDownload?fil
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>10</visibleLines>
@@ -3043,6 +3052,7 @@ IF(Financial_Assessment_Contact__c,IMAGE(&quot;/servlet/servlet.FileDownload?fil
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>true</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -3081,6 +3091,7 @@ IF(Financial_Assessment_Contact__c,IMAGE(&quot;/servlet/servlet.FileDownload?fil
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -3239,6 +3250,7 @@ IF(Financial_Assessment_Contact__c,IMAGE(&quot;/servlet/servlet.FileDownload?fil
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
@@ -4351,6 +4363,7 @@ IF(Financial_Assessment_Contact__c,IMAGE(&quot;/servlet/servlet.FileDownload?fil
             </picklistValues>
             <sorted>true</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -5408,6 +5421,7 @@ IF(Account.IATACode__c != &apos;&apos;
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -5480,6 +5494,7 @@ IF(Account.IATACode__c != &apos;&apos;
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -5562,6 +5577,7 @@ IF(Account.IATACode__c != &apos;&apos;
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>3</visibleLines>
@@ -5609,6 +5625,7 @@ IF(Account.IATACode__c != &apos;&apos;
             </picklistValues>
             <sorted>true</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -5666,6 +5683,7 @@ Formula field that copies the E&amp;F Type.</description>
         <externalId>false</externalId>
         <globalPicklist>EF_Role</globalPicklist>
         <label>E&amp;F Role</label>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
@@ -5690,6 +5708,7 @@ Formula field that copies the E&amp;F Type.</description>
             <restrictedPicklist>true</restrictedPicklist>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
@@ -5718,6 +5737,7 @@ Formula field that copies the E&amp;F Type.</description>
             <restrictedPicklist>true</restrictedPicklist>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -5764,6 +5784,7 @@ Formula field that copies the E&amp;F Type.</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -5814,6 +5835,7 @@ Formula field that copies the E&amp;F Type.</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -5844,6 +5866,7 @@ IFAP Application.</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -5883,6 +5906,10 @@ IFAP Application.</description>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>IT</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>Legal</fullName>
                 <default>false</default>
             </picklistValues>
@@ -5891,7 +5918,7 @@ IFAP Application.</description>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>None</fullName>
+                <fullName>Media</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -5918,8 +5945,9 @@ IFAP Application.</description>
                 <fullName>Training</fullName>
                 <default>false</default>
             </picklistValues>
-            <sorted>false</sorted>
+            <sorted>true</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>3</visibleLines>
@@ -6039,6 +6067,7 @@ IFAP Application.</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>10</visibleLines>
@@ -6066,6 +6095,7 @@ IFAP Application.</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -6171,6 +6201,7 @@ IFAP Application.</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -6290,6 +6321,7 @@ IFAP Application.</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
@@ -6345,6 +6377,7 @@ IFAP Application.</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
@@ -6397,6 +6430,7 @@ TotalRows-Successes-Errors</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -6433,6 +6467,7 @@ TotalRows-Successes-Errors</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
@@ -6460,6 +6495,7 @@ TotalRows-Successes-Errors</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
@@ -6491,6 +6527,7 @@ TotalRows-Successes-Errors</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
@@ -6522,6 +6559,7 @@ TotalRows-Successes-Errors</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>5</visibleLines>
@@ -6796,6 +6834,7 @@ TotalRows-Successes-Errors</description>
             </picklistValues>
             <sorted>true</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>5</visibleLines>
@@ -6942,6 +6981,7 @@ TotalRows-Successes-Errors</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -7003,6 +7043,7 @@ TotalRows-Successes-Errors</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
@@ -7056,6 +7097,7 @@ TotalRows-Successes-Errors</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -7089,15 +7131,7 @@ TotalRows-Successes-Errors</description>
         <label>Job Function</label>
         <picklist>
             <picklistValues>
-                <fullName>Gen.Management</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Technical</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Commercial</fullName>
+                <fullName>Aeropolitical</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -7105,27 +7139,7 @@ TotalRows-Successes-Errors</description>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Finance</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Other</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Legal</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Operations</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Safety</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Aeropolitical</fullName>
+                <fullName>Commercial</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -7133,7 +7147,23 @@ TotalRows-Successes-Errors</description>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>Finance</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Gen.Management</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>Human Resources</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>IT</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Legal</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -7141,23 +7171,36 @@ TotalRows-Successes-Errors</description>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>Media</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Operations</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Safety</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>Security&amp; Facilitation</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Technical</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>Training</fullName>
                 <default>false</default>
             </picklistValues>
-            <picklistValues>
-                <fullName>Media</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>IT</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
+            <sorted>true</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
@@ -7203,6 +7246,7 @@ TotalRows-Successes-Errors</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
@@ -7230,6 +7274,7 @@ TotalRows-Successes-Errors</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
@@ -7257,6 +7302,7 @@ TotalRows-Successes-Errors</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
@@ -7556,6 +7602,7 @@ TotalRows-Successes-Errors</description>
             </picklistValues>
             <sorted>true</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -7596,6 +7643,7 @@ TotalRows-Successes-Errors</description>
             </picklistValues>
             <sorted>true</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -7638,6 +7686,7 @@ TotalRows-Successes-Errors</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -7697,6 +7746,7 @@ TotalRows-Successes-Errors</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -8483,6 +8533,7 @@ TotalRows-Successes-Errors</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>10</visibleLines>
@@ -8526,6 +8577,7 @@ TotalRows-Successes-Errors</description>
             <restrictedPicklist>true</restrictedPicklist>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -8674,6 +8726,7 @@ TotalRows-Successes-Errors</description>
             </picklistValues>
             <sorted>true</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>3</visibleLines>
@@ -8727,6 +8780,7 @@ TotalRows-Successes-Errors</description>
             </picklistValues>
             <sorted>true</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>5</visibleLines>
@@ -8986,6 +9040,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>3</visibleLines>
@@ -9041,6 +9096,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -9099,6 +9155,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -9148,6 +9205,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>true</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -9202,6 +9260,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
@@ -9243,6 +9302,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -9297,6 +9357,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -9373,6 +9434,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>true</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -9407,6 +9469,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>true</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -9512,6 +9575,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -11981,7 +12045,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
     </recordTypes>
     <recordTypes>
         <fullName>IATAStandardContact</fullName>
-        <active>true</active>
+        <active>false</active>
         <description>Used for all standard Contacts</description>
         <label>IATA Standard Contact</label>
         <picklistValues>
@@ -20867,7 +20931,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
                 <default>false</default>
             </values>
             <values>
-                <fullName>None</fullName>
+                <fullName>Media</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -23263,6 +23327,10 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
                 <default>false</default>
             </values>
             <values>
+                <fullName>IT</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Legal</fullName>
                 <default>false</default>
             </values>
@@ -23271,7 +23339,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
                 <default>false</default>
             </values>
             <values>
-                <fullName>None</fullName>
+                <fullName>Media</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -24561,6 +24629,10 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </values>
             <values>
                 <fullName>CFO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>COO</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -25876,6 +25948,10 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
                 <default>false</default>
             </values>
             <values>
+                <fullName>IT</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Legal</fullName>
                 <default>false</default>
             </values>
@@ -25884,7 +25960,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
                 <default>false</default>
             </values>
             <values>
-                <fullName>None</fullName>
+                <fullName>Media</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -27171,6 +27247,14 @@ ISCHANGED(ISSP_Contact_Name__c )
         <errorMessage>You cannot change your own status</errorMessage>
     </validationRules>
     <validationRules>
+        <fullName>Contact_email_change_BSPlink</fullName>
+        <active>true</active>
+        <description>prevents changes of email address for BSPlink users.</description>
+        <errorConditionFormula>aND(S_BSPlink__c&lt;&gt;0,ischanged(Email),$User.Username&lt;&gt;&quot;oscarl@iata.org&quot;,$User.Username&lt;&gt;&quot;rovedar@iata.org&quot;,
+NOT(Contains($Profile.Name, &quot;System Administrator&quot;)))</errorConditionFormula>
+        <errorMessage>Changing a BSPlink user&apos;s email may cause problems with SSO.If the user&apos;s access to BSPlink is to be switched to another email, do the changes in BSPlink. Otherwise if the contact is changing their email, please post a comment on the portal chatter group</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>Email_Update_Date_Must_be_Added</fullName>
         <active>false</active>
         <errorConditionFormula>AND(ISCHANGED( Email_Status__c ), OR( Email_Status_Update__c    &lt;    TODAY(), ISNULL( Email_Status_Update__c  )))</errorConditionFormula>
@@ -27841,7 +27925,7 @@ myuser={!User.Id}</url>
 ?sessionId={!API.Session_ID}
 &amp;serverUrl={!API.Partner_Server_URL_290}
 &amp;id={!Contact.Id}
-&amp;templateId=a7v8E00000004ng
+&amp;templateId=a87w00000009Nkg
 &amp;AC0=0
 &amp;DS7=3</url>
     </webLinks>
@@ -27867,7 +27951,7 @@ myuser={!User.Id}</url>
 ?sessionId={!API.Session_ID}
 &amp;serverUrl={!API.Partner_Server_URL_290}
 &amp;id={!Contact.Id}
-&amp;templateId=a7v8E00000004nl
+&amp;templateId=a87w00000009Nkl
 &amp;AC0=0
 &amp;DS7=3</url>
     </webLinks>

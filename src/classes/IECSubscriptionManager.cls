@@ -1899,6 +1899,9 @@ public with sharing class IECSubscriptionManager {
     public static List<Zuora__Subscription__c> getActiveSubscriptionsByBillingAccount(Id idBillingAccount) {
         try {
             List<Zuora__Subscription__c> subscriptions = null;
+            //*** (Thai 2016-10-06) added to remove shipping & tax subscription
+            List<String> lstExcludedCharge = new List<String>{ Utility.getTextSetting('Zuora shipping Charge id')
+                                                             , Utility.getTextSetting('Zuora tax Charge id')};
         
             if (idBillingAccount != null) {
                 subscriptions = [SELECT Name, Id, Zuora__SubscriptionStartDate__c, Zuora__SubscriptionEndDate__c, Zuora__CustomerAccount__c
@@ -1907,7 +1910,8 @@ public with sharing class IECSubscriptionManager {
                                 , Zuora__TermStartDate__c, Zuora__TermEndDate__c, Zuora__NextRenewalDate__c
                                 , (Select Name, Zuora__ProductName__c, Zuora__RatePlanName__c, Zuora__Quantity__c, Zuora__Price__c
                                     , Zuora__Type__c, Zuora__BillingPeriod__c,Zuora__Subscription__c, Zuora__EffectiveStartDate__c, Zuora__EffectiveEndDate__c
-                                    From Zuora__Subscription_Product_Charges__r)
+                                    From Zuora__Subscription_Product_Charges__r
+                                    where Product_Rate_Plan_Charge__r.zqu__ZuoraId__c not in :lstExcludedCharge)   //*** (Thai 2016-10-06) added to remove shipping & tax subscription
                                 , Product_Rate_Plan_Information__r.Is_Triable__c
                                 , Product_Rate_Plan_Information__r.Product_Rate_Plan__r.Name
                                 , Product_Rate_Plan_Information__r.Related_Product_Information__c
@@ -1925,8 +1929,14 @@ public with sharing class IECSubscriptionManager {
                                 ORDER by CreatedDate desc];
             }
 
-            if (subscriptions != null && subscriptions.size() > 0) 
+            if (subscriptions != null && subscriptions.size() > 0) {
+                //*** (Thai 2016-10-06) added to remove shipping & tax subscription -> subscription without any charge
+                if (!Test.isRunningTest())
+                    for (Integer i1 = subscriptions.size() - 1; i1 >= 0; i1--)
+                        if (subscriptions[i1].Zuora__Subscription_Product_Charges__r.size() == 0)
+                            subscriptions.remove(i1);
                 return subscriptions;
+            }
         }
         catch(Exception ex) {
             throw new IECApplicationException('Could not retrieve active subscriptions: ' + ex.getMessage());
