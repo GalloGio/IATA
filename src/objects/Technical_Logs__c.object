@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -141,7 +137,7 @@
         <filters>
             <field>Record__c</field>
             <operation>contains</operation>
-            <value>9664725</value>
+            <value>76506286</value>
         </filters>
         <label>AMS - 1 record</label>
         <language>en_US</language>

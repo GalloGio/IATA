@@ -29,6 +29,31 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
             else if(acc.Name == 'Beach Travels SA4')
                 SA4 = acc;
         }
+       
+    }
+
+    private static void getUpdatedAccountDataV2(){
+        List<Account> accs = [SELECT Id, Name, IATAcode__c, IATA_ISO_Country__c, Location_Class__c, Location_Type__c, ParentId, Status__c FROM Account];
+
+        for(Account acc: accs){
+            if(acc.Id == HO1.Id)
+                HO1 = acc;
+            else if(acc.Id == HO2.Id)
+                HO2 = acc;
+            else if(acc.Id == BR1.Id)
+                BR1 = acc;
+            else if(acc.Id == BR2.Id)
+                BR2 = acc;
+            else if(acc.Id == SA1.Id)
+                SA1 = acc;
+            else if(acc.Id == SA2.Id)
+                SA2 = acc;
+            else if(acc.Id == SA3.Id)
+                SA3 = acc;
+            else if(acc.Id == SA4.Id)
+                SA4 = acc;
+        }
+      
     }
 
     private static AMS_OSCAR__C createOSCAR(Account oscarAccount, String typeOfChange, String changeLocTypeBehavior, Account targetAgency){
@@ -43,7 +68,9 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
             targetAgencyId = targetAgency.Id;
 
         //open the OSCAR in a BR which has child SA agencies
-        AMS_OSCAR__c oscar = new AMS_OSCAR__c(RecordTypeId = rtChange, Account__c = oscarAccount.Id, Type_of_change__c = typeOfChange, Change_of_location_type_behavior__c = changeLocTypeBehavior, AMS_Target_Agency__c = targetAgencyId);
+        AMS_OSCAR__c oscar = new AMS_OSCAR__c(RecordTypeId = rtChange, Account__c = oscarAccount.Id,
+                                               Type_of_change__c = typeOfChange, Change_of_location_type_behavior__c = changeLocTypeBehavior, 
+                                               AMS_Target_Agency__c = targetAgencyId, Change_effective_as_of__c = date.today());
         insert oscar;
 
         ID rtCommCase = Schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
@@ -64,7 +91,7 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
         oscar.AMS_Online_Accreditation__c = stagingArea.Id;
         update oscar;
 
-        return [SELECT Id, Account__c, Type_of_change__c FROM AMS_OSCAR__c LIMIT 1];
+        return [SELECT Id, Account__c, Type_of_change__c,Change_effective_as_of__c FROM AMS_OSCAR__c LIMIT 1];
 
     }
 
@@ -180,6 +207,9 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
 
         insert customsettings;
 
+        //system.assertEquals(HO1.Id, null);
+
+
     }
 
     //Scenario 1: Branch becomes an HeadOffice
@@ -197,51 +227,51 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
         update oscar;
 
         //refresh the Account's data
-        getUpdatedAccountData();
+        getUpdatedAccountDataV2();
 
         AMS_Agencies_Hierarchy__c H1 = [SELECT Id FROM AMS_Agencies_Hierarchy__c WHERE Hierarchy_Name__c = 'Hierarchy 1' limit 1];
 
         //validate the new hierarchy structure
-        List<AMS_Agencies_relationhip__c> rels = [SELECT ID, Child_Account__r.Name, Child_Account__r.Location_Type__c, Parent_Account__r.Name, Parent_Account__r.Location_Type__c, Child_Account__r.ParentId FROM AMS_Agencies_relationhip__c WHERE Hierarchy__c = : H1.Id];
+        List<AMS_Agencies_relationhip__c> rels = [SELECT ID, Child_Account__c, Child_Account__r.Location_Type__c, Parent_Account__c, Parent_Account__r.Location_Type__c, Child_Account__r.ParentId FROM AMS_Agencies_relationhip__c WHERE Hierarchy__c = : H1.Id];
         System.assertEquals(6, rels.size());
 
         Integer countConditions = 0;
 
         for (AMS_Agencies_relationhip__c rel : rels) {
-            if (rel.Child_Account__r.Name == 'Winter Travels HO1') {
+            if (rel.Child_Account__c == HO1.Id) {
                 //the old HO should now be a BR
                 System.assertEquals('BR', rel.Child_Account__r.Location_Type__c);
-                System.assertEquals('Fire Travels BR1', rel.Parent_Account__r.Name);
+                System.assertEquals(BR1.Id, rel.Parent_Account__c);
                 System.assertEquals('HO', rel.Parent_Account__r.Location_Type__c);
                 System.assertEquals(BR1.Id, rel.Child_Account__r.ParentId);
                 countConditions++;
-            } else if (rel.Child_Account__r.Name == 'Water Travels BR2') {
+            } else if (rel.Child_Account__c == BR2.Id) {
                 System.assertEquals('BR', rel.Child_Account__r.Location_Type__c);
-                System.assertEquals('Fire Travels BR1', rel.Parent_Account__r.Name);
+                System.assertEquals(BR1.Id, rel.Parent_Account__c);
                 System.assertEquals('HO', rel.Parent_Account__r.Location_Type__c);
                 System.assertEquals(BR1.Id, rel.Child_Account__r.ParentId);
                 countConditions++;
-            } else if (rel.Child_Account__r.Name == 'Water Travels SA1') {
+            } else if (rel.Child_Account__c == SA1.Id) {
                 System.assertEquals('SA', rel.Child_Account__r.Location_Type__c);
-                System.assertEquals('Winter Travels HO1', rel.Parent_Account__r.Name);
+                System.assertEquals(HO1.Id, rel.Parent_Account__c);
                 System.assertEquals('BR', rel.Parent_Account__r.Location_Type__c);
                 System.assertEquals(HO1.Id, rel.Child_Account__r.ParentId);
                 countConditions++;
-            } else if (rel.Child_Account__r.Name == 'Earth Travels SA2') {
+            } else if (rel.Child_Account__c == SA2.Id) {
                 System.assertEquals('SA', rel.Child_Account__r.Location_Type__c);
-                System.assertEquals('Fire Travels BR1', rel.Parent_Account__r.Name);
+                System.assertEquals(BR1.Id, rel.Parent_Account__c);
                 System.assertEquals('HO', rel.Parent_Account__r.Location_Type__c);
                 System.assertEquals(BR1.Id, rel.Child_Account__r.ParentId);
                 countConditions++;
-            } else if (rel.Child_Account__r.Name == 'Headhunter Travels SA3') {
+            } else if (rel.Child_Account__c == SA3.Id) {
                 System.assertEquals('SA', rel.Child_Account__r.Location_Type__c);
-                System.assertEquals('Fire Travels BR1', rel.Parent_Account__r.Name);
+                System.assertEquals(BR1.Id, rel.Parent_Account__c);
                 System.assertEquals('HO', rel.Parent_Account__r.Location_Type__c);
                 System.assertEquals(BR1.Id, rel.Child_Account__r.ParentId);
                 countConditions++;
-            } else if (rel.Child_Account__r.Name == 'Beach Travels SA4') {
+            } else if (rel.Child_Account__c == SA4.Id) {
                 System.assertEquals('SA', rel.Child_Account__r.Location_Type__c);
-                System.assertEquals('Winter Travels HO1', rel.Parent_Account__r.Name);
+                System.assertEquals(HO1.Id, rel.Parent_Account__c);
                 System.assertEquals('BR', rel.Parent_Account__r.Location_Type__c);
                 System.assertEquals(HO1.Id, rel.Child_Account__r.ParentId);
                 countConditions++;
@@ -271,50 +301,50 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
         update oscar;
 
 
-        getUpdatedAccountData();
+        getUpdatedAccountDataV2();
 
         AMS_Agencies_Hierarchy__c H1 = [SELECT Id FROM AMS_Agencies_Hierarchy__c WHERE Hierarchy_Name__c = 'Hierarchy 1' limit 1];
 
         //validate the new hierarchy structure
-        List<AMS_Agencies_relationhip__c> rels = [SELECT ID, Child_Account__r.Name, Child_Account__r.Location_Type__c, Parent_Account__r.Name, Parent_Account__r.Location_Type__c, Child_Account__r.ParentId FROM AMS_Agencies_relationhip__c WHERE Hierarchy__c = : H1.Id];
+        List<AMS_Agencies_relationhip__c> rels = [SELECT ID, Child_Account__c, Child_Account__r.Location_Type__c, Parent_Account__c, Parent_Account__r.Location_Type__c, Child_Account__r.ParentId FROM AMS_Agencies_relationhip__c WHERE Hierarchy__c = : H1.Id];
         System.assertEquals(6, rels.size());
 
         Integer countConditions = 0;
 
         for (AMS_Agencies_relationhip__c rel : rels) {
-            if (rel.Child_Account__r.Name == 'Earth Travels SA2') {
+            if (rel.Child_Account__c == SA2.Id) {
                 System.assertEquals('BR', rel.Child_Account__r.Location_Type__c);
-                System.assertEquals('Winter Travels HO1', rel.Parent_Account__r.Name);
+                System.assertEquals(HO1.Id, rel.Parent_Account__c);
                 System.assertEquals('HO', rel.Parent_Account__r.Location_Type__c);
                 System.assertEquals(HO1.Id, rel.Child_Account__r.ParentId);
                 countConditions++;
-            } else if (rel.Child_Account__r.Name == 'Water Travels BR2') {
+            } else if (rel.Child_Account__c == BR2.Id) {
                 System.assertEquals('BR', rel.Child_Account__r.Location_Type__c);
-                System.assertEquals('Winter Travels HO1', rel.Parent_Account__r.Name);
+                System.assertEquals(HO1.Id, rel.Parent_Account__c);
                 System.assertEquals('HO', rel.Parent_Account__r.Location_Type__c);
                 System.assertEquals(HO1.Id, rel.Child_Account__r.ParentId);
                 countConditions++;
-            } else if (rel.Child_Account__r.Name == 'Water Travels SA1') {
+            } else if (rel.Child_Account__c == SA1.Id) {
                 System.assertEquals('SA', rel.Child_Account__r.Location_Type__c);
-                System.assertEquals('Winter Travels HO1', rel.Parent_Account__r.Name);
+                System.assertEquals(HO1.Id, rel.Parent_Account__c);
                 System.assertEquals('HO', rel.Parent_Account__r.Location_Type__c);
                 System.assertEquals(HO1.Id, rel.Child_Account__r.ParentId);
                 countConditions++;
-            } else if (rel.Child_Account__r.Name == 'Fire Travels BR1') {
+            } else if (rel.Child_Account__c == BR1.Id) {
                 System.assertEquals('SA', rel.Child_Account__r.Location_Type__c);
-                System.assertEquals('Earth Travels SA2', rel.Parent_Account__r.Name);
+                System.assertEquals(SA2.Id, rel.Parent_Account__c);
                 System.assertEquals('BR', rel.Parent_Account__r.Location_Type__c);
                 System.assertEquals(SA2.Id, rel.Child_Account__r.ParentId);
                 countConditions++;
-            } else if (rel.Child_Account__r.Name == 'Headhunter Travels SA3') {
+            } else if (rel.Child_Account__c == SA3.Id) {
                 System.assertEquals('SA', rel.Child_Account__r.Location_Type__c);
-                System.assertEquals('Earth Travels SA2', rel.Parent_Account__r.Name);
+                System.assertEquals(SA2.Id, rel.Parent_Account__c);
                 System.assertEquals('BR', rel.Parent_Account__r.Location_Type__c);
                 System.assertEquals(SA2.Id, rel.Child_Account__r.ParentId);
                 countConditions++;
-            } else if (rel.Child_Account__r.Name == 'Beach Travels SA4') {
+            } else if (rel.Child_Account__c == SA4.Id) {
                 System.assertEquals('SA', rel.Child_Account__r.Location_Type__c);
-                System.assertEquals('Winter Travels HO1', rel.Parent_Account__r.Name);
+                System.assertEquals(HO1.Id, rel.Parent_Account__c);
                 System.assertEquals('HO', rel.Parent_Account__r.Location_Type__c);
                 System.assertEquals(HO1.Id, rel.Child_Account__r.ParentId);
                 countConditions++;
@@ -346,50 +376,50 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
         update oscar;
 
 
-        getUpdatedAccountData();
+        getUpdatedAccountDataV2();
 
         AMS_Agencies_Hierarchy__c H1 = [SELECT Id FROM AMS_Agencies_Hierarchy__c WHERE Hierarchy_Name__c = 'Hierarchy 1' limit 1];
 
         //validate the new hierarchy structure
-        List<AMS_Agencies_relationhip__c> rels = [SELECT ID, Child_Account__r.Name, Child_Account__r.Location_Type__c, Parent_Account__r.Name, Parent_Account__r.Location_Type__c, Child_Account__r.ParentId FROM AMS_Agencies_relationhip__c WHERE Hierarchy__c = : H1.Id];
+        List<AMS_Agencies_relationhip__c> rels = [SELECT ID, Child_Account__c, Child_Account__r.Location_Type__c, Parent_Account__c, Parent_Account__r.Location_Type__c, Child_Account__r.ParentId FROM AMS_Agencies_relationhip__c WHERE Hierarchy__c = : H1.Id];
         System.assertEquals(6, rels.size());
 
         Integer countConditions = 0;
 
         for (AMS_Agencies_relationhip__c rel : rels) {
-            if (rel.Child_Account__r.Name == 'Water Travels SA1') {
+            if (rel.Child_Account__c == SA1.Id) {
                 System.assertEquals('SA', rel.Child_Account__r.Location_Type__c);
-                System.assertEquals('Winter Travels HO1', rel.Parent_Account__r.Name);
+                System.assertEquals(HO1.Id, rel.Parent_Account__c);
                 System.assertEquals('HO', rel.Parent_Account__r.Location_Type__c);
                 System.assertEquals(HO1.Id, rel.Child_Account__r.ParentId);
                 countConditions++;
-            } else if (rel.Child_Account__r.Name == 'Earth Travels SA2') {
+            } else if (rel.Child_Account__c == SA2.Id) {
                 //System.assertEquals('BR', rel.Child_Account__r.Location_Type__c);
-                //System.assertEquals('Winter Travels HO1', rel.Parent_Account__r.Name);
+                //System.assertEquals(HO1.Id, rel.Parent_Account__c);
                 //System.assertEquals('HO', rel.Parent_Account__r.Location_Type__c);
                 //System.assertEquals(HO1.Id, rel.Child_Account__r.ParentId);
                 countConditions++;
-            } else if (rel.Child_Account__r.Name == 'Fire Travels BR1') {
+            } else if (rel.Child_Account__c == BR1.Id) {
                 System.assertEquals('BR', rel.Child_Account__r.Location_Type__c);
-                System.assertEquals('Winter Travels HO1', rel.Parent_Account__r.Name);
+                System.assertEquals(HO1.Id, rel.Parent_Account__c);
                 System.assertEquals('HO', rel.Parent_Account__r.Location_Type__c);
                 System.assertEquals(HO1.Id, rel.Child_Account__r.ParentId);
                 countConditions++;
-            } else if (rel.Child_Account__r.Name == 'Water Travels BR2') {
+            } else if (rel.Child_Account__c == BR2.Id) {
                 System.assertEquals('BR', rel.Child_Account__r.Location_Type__c);
-                System.assertEquals('Winter Travels HO1', rel.Parent_Account__r.Name);
+                System.assertEquals(HO1.Id, rel.Parent_Account__c);
                 System.assertEquals('HO', rel.Parent_Account__r.Location_Type__c);
                 System.assertEquals(HO1.Id, rel.Child_Account__r.ParentId);
                 countConditions++;
-            } else if (rel.Child_Account__r.Name == 'Headhunter Travels SA3') {
+            } else if (rel.Child_Account__c == SA3.Id) {
                 System.assertEquals('SA', rel.Child_Account__r.Location_Type__c);
-                System.assertEquals('Fire Travels BR1', rel.Parent_Account__r.Name);
+                System.assertEquals(BR1.Id, rel.Parent_Account__c);
                 System.assertEquals('BR', rel.Parent_Account__r.Location_Type__c);
                 System.assertEquals(BR1.Id, rel.Child_Account__r.ParentId);
                 countConditions++;
-            } else if (rel.Child_Account__r.Name == 'Beach Travels SA4') {
+            } else if (rel.Child_Account__c == SA4.Id) {
                 System.assertEquals('SA', rel.Child_Account__r.Location_Type__c);
-                System.assertEquals('Winter Travels HO1', rel.Parent_Account__r.Name);
+                System.assertEquals(HO1.Id, rel.Parent_Account__c);
                 System.assertEquals('HO', rel.Parent_Account__r.Location_Type__c);
                 System.assertEquals(HO1.Id, rel.Child_Account__r.ParentId);
                 countConditions++;
@@ -419,50 +449,50 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
         oscar.STEP6__c = AMS_Utils.PASSED;
         update oscar;
 
-        getUpdatedAccountData();
+        getUpdatedAccountDataV2();
 
         AMS_Agencies_Hierarchy__c H1 = [SELECT Id FROM AMS_Agencies_Hierarchy__c WHERE Hierarchy_Name__c = 'Hierarchy 1' limit 1];
 
         //validate the new hierarchy structure
-        List<AMS_Agencies_relationhip__c> rels = [SELECT ID, Child_Account__r.Name, Child_Account__r.Location_Type__c, Parent_Account__r.Name, Parent_Account__r.Location_Type__c, Child_Account__r.ParentId FROM AMS_Agencies_relationhip__c WHERE Hierarchy__c = : H1.Id];
+        List<AMS_Agencies_relationhip__c> rels = [SELECT ID, Child_Account__c, Child_Account__r.Location_Type__c, Parent_Account__c, Parent_Account__r.Location_Type__c, Child_Account__r.ParentId FROM AMS_Agencies_relationhip__c WHERE Hierarchy__c = : H1.Id];
         System.assertEquals(6, rels.size());
 
         Integer countConditions = 0;
 
         for (AMS_Agencies_relationhip__c rel : rels) {
-            if (rel.Child_Account__r.Name == 'Winter Travels HO1') {
+            if (rel.Child_Account__c == HO1.Id) {
                 System.assertEquals('SA', rel.Child_Account__r.Location_Type__c);
-                System.assertEquals('Water Travels SA1', rel.Parent_Account__r.Name);
+                System.assertEquals(SA1.Id, rel.Parent_Account__c);
                 System.assertEquals('HO', rel.Parent_Account__r.Location_Type__c);
                 System.assertEquals(SA1.Id, rel.Child_Account__r.ParentId);
                 countConditions++;
-            } else if (rel.Child_Account__r.Name == 'Water Travels BR2') {
+            } else if (rel.Child_Account__c == BR2.Id) {
                 System.assertEquals('BR', rel.Child_Account__r.Location_Type__c);
-                System.assertEquals('Water Travels SA1', rel.Parent_Account__r.Name);
+                System.assertEquals(SA1.Id, rel.Parent_Account__c);
                 System.assertEquals('HO', rel.Parent_Account__r.Location_Type__c);
                 System.assertEquals(SA1.Id, rel.Child_Account__r.ParentId);
                 countConditions++;
-            } else if (rel.Child_Account__r.Name == 'Earth Travels SA2') {
+            } else if (rel.Child_Account__c == SA2.Id) {
                 System.assertEquals('SA', rel.Child_Account__r.Location_Type__c);
-                System.assertEquals('Fire Travels BR1', rel.Parent_Account__r.Name);
+                System.assertEquals(BR1.Id, rel.Parent_Account__c);
                 System.assertEquals('BR', rel.Parent_Account__r.Location_Type__c);
                 System.assertEquals(BR1.Id, rel.Child_Account__r.ParentId);
                 countConditions++;
-            } else if (rel.Child_Account__r.Name == 'Fire Travels BR1') {
+            } else if (rel.Child_Account__c == BR1.Id) {
                 System.assertEquals('BR', rel.Child_Account__r.Location_Type__c);
-                System.assertEquals('Water Travels SA1', rel.Parent_Account__r.Name);
+                System.assertEquals(SA1.Id, rel.Parent_Account__c);
                 System.assertEquals('HO', rel.Parent_Account__r.Location_Type__c);
                 System.assertEquals(SA1.Id, rel.Child_Account__r.ParentId);
                 countConditions++;
-            } else if (rel.Child_Account__r.Name == 'Headhunter Travels SA3') {
+            } else if (rel.Child_Account__c == SA3.Id) {
                 System.assertEquals('SA', rel.Child_Account__r.Location_Type__c);
-                System.assertEquals('Fire Travels BR1', rel.Parent_Account__r.Name);
+                System.assertEquals(BR1.Id, rel.Parent_Account__c);
                 System.assertEquals('BR', rel.Parent_Account__r.Location_Type__c);
                 System.assertEquals(BR1.Id, rel.Child_Account__r.ParentId);
                 countConditions++;
-            } else if (rel.Child_Account__r.Name == 'Beach Travels SA4') {
+            } else if (rel.Child_Account__c == SA4.Id) {
                 System.assertEquals('SA', rel.Child_Account__r.Location_Type__c);
-                System.assertEquals('Water Travels SA1', rel.Parent_Account__r.Name);
+                System.assertEquals(SA1.Id, rel.Parent_Account__c);
                 System.assertEquals('HO', rel.Parent_Account__r.Location_Type__c);
                 System.assertEquals(SA1.Id, rel.Child_Account__r.ParentId);
                 countConditions++;
@@ -539,50 +569,50 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
         oscar.STEP6__c = AMS_Utils.PASSED;
         update oscar;
 
-        getUpdatedAccountData();
+        getUpdatedAccountDataV2();
 
         AMS_Agencies_Hierarchy__c H1 = [SELECT Id FROM AMS_Agencies_Hierarchy__c WHERE Hierarchy_Name__c = 'Hierarchy 1' limit 1];
 
         //validate the new hierarchy structure
-        List<AMS_Agencies_relationhip__c> rels = [SELECT ID, Child_Account__r.Name, Child_Account__r.Location_Type__c, Parent_Account__r.Name, Parent_Account__r.Location_Type__c, Child_Account__r.ParentId FROM AMS_Agencies_relationhip__c WHERE Hierarchy__c = : H1.Id];
+        List<AMS_Agencies_relationhip__c> rels = [SELECT ID, Child_Account__c, Child_Account__r.Location_Type__c, Parent_Account__c, Parent_Account__r.Location_Type__c, Child_Account__r.ParentId FROM AMS_Agencies_relationhip__c WHERE Hierarchy__c = : H1.Id];
         System.assertEquals(6, rels.size());
 
         Integer countConditions = 0;
 
         for (AMS_Agencies_relationhip__c rel : rels) {
-            if (rel.Child_Account__r.Name == 'Earth Travels SA2') {
+            if (rel.Child_Account__c == SA2.Id) {
                 System.assertEquals('SA', rel.Child_Account__r.Location_Type__c);
-                System.assertEquals('Fire Travels BR1', rel.Parent_Account__r.Name);
+                System.assertEquals(BR1.Id, rel.Parent_Account__c);
                 System.assertEquals('BR', rel.Parent_Account__r.Location_Type__c);
                 System.assertEquals(BR1.Id, rel.Child_Account__r.ParentId);
                 countConditions++;
-            } else if (rel.Child_Account__r.Name == 'Water Travels BR2') {
+            } else if (rel.Child_Account__c == BR2.Id) {
                 System.assertEquals('BR', rel.Child_Account__r.Location_Type__c);
-                System.assertEquals('Winter Travels HO1', rel.Parent_Account__r.Name);
+                System.assertEquals(HO1.Id, rel.Parent_Account__c);
                 System.assertEquals('HO', rel.Parent_Account__r.Location_Type__c);
                 System.assertEquals(HO1.Id, rel.Child_Account__r.ParentId);
                 countConditions++;
-            } else if (rel.Child_Account__r.Name == 'Water Travels SA1') {
+            } else if (rel.Child_Account__c == SA1.Id) {
                 System.assertEquals('SA', rel.Child_Account__r.Location_Type__c);
-                System.assertEquals('Water Travels BR2', rel.Parent_Account__r.Name);
+                System.assertEquals(BR2.Id, rel.Parent_Account__c);
                 System.assertEquals('BR', rel.Parent_Account__r.Location_Type__c);
                 System.assertEquals(BR2.Id, rel.Child_Account__r.ParentId);
                 countConditions++;
-            } else if (rel.Child_Account__r.Name == 'Fire Travels BR1') {
+            } else if (rel.Child_Account__c == BR1.Id) {
                 System.assertEquals('BR', rel.Child_Account__r.Location_Type__c);
-                System.assertEquals('Winter Travels HO1', rel.Parent_Account__r.Name);
+                System.assertEquals(HO1.Id, rel.Parent_Account__c);
                 System.assertEquals('HO', rel.Parent_Account__r.Location_Type__c);
                 System.assertEquals(HO1.Id, rel.Child_Account__r.ParentId);
                 countConditions++;
-            } else if (rel.Child_Account__r.Name == 'Headhunter Travels SA3') {
+            } else if (rel.Child_Account__c == SA3.Id) {
                 System.assertEquals('SA', rel.Child_Account__r.Location_Type__c);
-                System.assertEquals('Fire Travels BR1', rel.Parent_Account__r.Name);
+                System.assertEquals(BR1.Id, rel.Parent_Account__c);
                 System.assertEquals('BR', rel.Parent_Account__r.Location_Type__c);
                 System.assertEquals(BR1.Id, rel.Child_Account__r.ParentId);
                 countConditions++;
-            } else if (rel.Child_Account__r.Name == 'Beach Travels SA4') {
+            } else if (rel.Child_Account__c == SA4.Id) {
                 System.assertEquals('SA', rel.Child_Account__r.Location_Type__c);
-                System.assertEquals('Winter Travels HO1', rel.Parent_Account__r.Name);
+                System.assertEquals(HO1.Id, rel.Parent_Account__c);
                 System.assertEquals('HO', rel.Parent_Account__r.Location_Type__c);
                 System.assertEquals(HO1.Id, rel.Child_Account__r.ParentId);
                 countConditions++;
@@ -638,6 +668,7 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
             System.assert(false, 'exception expected');
         } catch (Exception e) {
             Boolean expectedExceptionThrown =  e.getMessage().contains('The target Agency Location Type must be either HO, AO or BR') ? true : false;
+            if(!expectedExceptionThrown) throw new transformationException('this is not what we expect :' + e.getMessage() +  ' stacktracestring : ' +  e.getStackTraceString());
             System.assertEquals(expectedExceptionThrown, true);
         }
 
@@ -771,57 +802,57 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
         oscar.STEP6__c = AMS_Utils.PASSED;
         update oscar;
 
-        getUpdatedAccountData();
+        getUpdatedAccountDataV2();
 
         //get the new hierarchy created by the system
         AMS_Agencies_Hierarchy__c H2 = [SELECT Id FROM AMS_Agencies_Hierarchy__c WHERE Hierarchy_Name__c = 'Hierarchy' limit 1];
 
         //validate the new hierarchy structure
-        List<AMS_Agencies_relationhip__c> rels = [SELECT ID, Child_Account__r.Name, Child_Account__r.Location_Type__c, Parent_Account__r.Name, Parent_Account__r.Location_Type__c, Child_Account__r.ParentId FROM AMS_Agencies_relationhip__c WHERE Hierarchy__c = : H2.Id];
+        List<AMS_Agencies_relationhip__c> rels = [SELECT ID, Child_Account__c, Child_Account__r.Location_Type__c, Parent_Account__c, Parent_Account__r.Location_Type__c, Child_Account__r.ParentId FROM AMS_Agencies_relationhip__c WHERE Hierarchy__c = : H2.Id];
         System.assertEquals(7, rels.size());
 
         Integer countConditions = 0;
 
         for (AMS_Agencies_relationhip__c rel : rels) {
-            if (rel.Child_Account__r.Name == 'Winter Travels HO1') {
+            if (rel.Child_Account__c == HO1.Id) {
                 System.assertEquals('BR', rel.Child_Account__r.Location_Type__c);
-                System.assertEquals('Ice Travels HO2', rel.Parent_Account__r.Name);
+                System.assertEquals(HO2.Id, rel.Parent_Account__c);
                 System.assertEquals('HO', rel.Parent_Account__r.Location_Type__c);
                 System.assertEquals(HO2.Id, rel.Child_Account__r.ParentId);
                 countConditions++;
-            } else if (rel.Child_Account__r.Name == 'Fire Travels BR1') {
+            } else if (rel.Child_Account__c == BR1.Id) {
                 System.assertEquals('BR', rel.Child_Account__r.Location_Type__c);
-                System.assertEquals('Ice Travels HO2', rel.Parent_Account__r.Name);
+                System.assertEquals(HO2.Id, rel.Parent_Account__c);
                 System.assertEquals('HO', rel.Parent_Account__r.Location_Type__c);
                 System.assertEquals(HO2.Id, rel.Child_Account__r.ParentId);
                 countConditions++;
-            } else if (rel.Child_Account__r.Name == 'Water Travels BR2') {
+            } else if (rel.Child_Account__c == BR2.Id) {
                 System.assertEquals('BR', rel.Child_Account__r.Location_Type__c);
-                System.assertEquals('Ice Travels HO2', rel.Parent_Account__r.Name);
+                System.assertEquals(HO2.Id, rel.Parent_Account__c);
                 System.assertEquals('HO', rel.Parent_Account__r.Location_Type__c);
                 System.assertEquals(HO2.Id, rel.Child_Account__r.ParentId);
                 countConditions++;
-            } else if (rel.Child_Account__r.Name == 'Water Travels SA1') {
+            } else if (rel.Child_Account__c == SA1.Id) {
                 System.assertEquals('SA', rel.Child_Account__r.Location_Type__c);
-                System.assertEquals('Winter Travels HO1', rel.Parent_Account__r.Name);
+                System.assertEquals(HO1.Id, rel.Parent_Account__c);
                 System.assertEquals('BR', rel.Parent_Account__r.Location_Type__c);
                 System.assertEquals(HO1.Id, rel.Child_Account__r.ParentId);
                 countConditions++;
-            } else if (rel.Child_Account__r.Name == 'Earth Travels SA2') {
+            } else if (rel.Child_Account__c == SA2.Id) {
                 System.assertEquals('SA', rel.Child_Account__r.Location_Type__c);
-                System.assertEquals('Fire Travels BR1', rel.Parent_Account__r.Name);
+                System.assertEquals(BR1.Id, rel.Parent_Account__c);
                 System.assertEquals('BR', rel.Parent_Account__r.Location_Type__c);
                 System.assertEquals(BR1.Id, rel.Child_Account__r.ParentId);
                 countConditions++;
-            } else if (rel.Child_Account__r.Name == 'Headhunter Travels SA3') {
+            } else if (rel.Child_Account__c == SA3.Id) {
                 System.assertEquals('SA', rel.Child_Account__r.Location_Type__c);
-                System.assertEquals('Fire Travels BR1', rel.Parent_Account__r.Name);
+                System.assertEquals(BR1.Id, rel.Parent_Account__c);
                 System.assertEquals('BR', rel.Parent_Account__r.Location_Type__c);
                 System.assertEquals(BR1.Id, rel.Child_Account__r.ParentId);
                 countConditions++;
-            } else if (rel.Child_Account__r.Name == 'Beach Travels SA4') {
+            } else if (rel.Child_Account__c == SA4.Id) {
                 System.assertEquals('SA', rel.Child_Account__r.Location_Type__c);
-                System.assertEquals('Winter Travels HO1', rel.Parent_Account__r.Name);
+                System.assertEquals(HO1.Id, rel.Parent_Account__c);
                 System.assertEquals('BR', rel.Parent_Account__r.Location_Type__c);
                 System.assertEquals(HO1.Id, rel.Child_Account__r.ParentId);
                 countConditions++;
@@ -857,32 +888,32 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
         oscar.STEP6__c = AMS_Utils.PASSED;
         update oscar;
 
-        getUpdatedAccountData();
+        getUpdatedAccountDataV2();
 
         AMS_Agencies_Hierarchy__c H1 = [SELECT Id FROM AMS_Agencies_Hierarchy__c WHERE Hierarchy_Name__c = 'Hierarchy 1' limit 1];
 
         //validate the origin hierarchy structure (after migrating agencies)
-        List<AMS_Agencies_relationhip__c> relsH1 = [SELECT ID, Child_Account__r.Name, Child_Account__r.Location_Type__c, Parent_Account__r.Name, Parent_Account__r.Location_Type__c, Child_Account__r.ParentId FROM AMS_Agencies_relationhip__c WHERE Hierarchy__c = : H1.Id];
+        List<AMS_Agencies_relationhip__c> relsH1 = [SELECT ID, Child_Account__c, Child_Account__r.Location_Type__c, Parent_Account__c, Parent_Account__r.Location_Type__c, Child_Account__r.ParentId FROM AMS_Agencies_relationhip__c WHERE Hierarchy__c = : H1.Id];
         System.assertEquals(3, relsH1.size());
 
         Integer countConditions = 0;
 
         for (AMS_Agencies_relationhip__c rel : relsH1) {
-            if (rel.Child_Account__r.Name == 'Water Travels BR2') {
+            if (rel.Child_Account__c == BR2.Id) {
                 System.assertEquals('BR', rel.Child_Account__r.Location_Type__c);
-                System.assertEquals('Winter Travels HO1', rel.Parent_Account__r.Name);
+                System.assertEquals(HO1.Id, rel.Parent_Account__c);
                 System.assertEquals('HO', rel.Parent_Account__r.Location_Type__c);
                 System.assertEquals(HO1.Id, rel.Child_Account__r.ParentId);
                 countConditions++;
-            } else if (rel.Child_Account__r.Name == 'Water Travels SA1') {
+            } else if (rel.Child_Account__c == SA1.Id) {
                 System.assertEquals('SA', rel.Child_Account__r.Location_Type__c);
-                System.assertEquals('Winter Travels HO1', rel.Parent_Account__r.Name);
+                System.assertEquals(HO1.Id, rel.Parent_Account__c);
                 System.assertEquals('HO', rel.Parent_Account__r.Location_Type__c);
                 System.assertEquals(HO1.Id, rel.Child_Account__r.ParentId);
                 countConditions++;
-            } else if (rel.Child_Account__r.Name == 'Beach Travels SA4') {
+            } else if (rel.Child_Account__c == SA4.Id) {
                 System.assertEquals('SA', rel.Child_Account__r.Location_Type__c);
-                System.assertEquals('Winter Travels HO1', rel.Parent_Account__r.Name);
+                System.assertEquals(HO1.Id, rel.Parent_Account__c);
                 System.assertEquals('HO', rel.Parent_Account__r.Location_Type__c);
                 System.assertEquals(HO1.Id, rel.Child_Account__r.ParentId);
                 countConditions++;
@@ -894,25 +925,25 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
         AMS_Agencies_Hierarchy__c H2 = [SELECT Id FROM AMS_Agencies_Hierarchy__c WHERE Hierarchy_Name__c = 'Hierarchy' limit 1];
 
         //validate the destination hierarchy structure (after migrating agencies)
-        List<AMS_Agencies_relationhip__c> relsH2 = [SELECT ID, Child_Account__r.Name, Child_Account__r.Location_Type__c, Parent_Account__r.Name, Parent_Account__r.Location_Type__c, Child_Account__r.ParentId FROM AMS_Agencies_relationhip__c WHERE Hierarchy__c = : H2.Id];
+        List<AMS_Agencies_relationhip__c> relsH2 = [SELECT ID, Child_Account__c, Child_Account__r.Location_Type__c, Parent_Account__c, Parent_Account__r.Location_Type__c, Child_Account__r.ParentId FROM AMS_Agencies_relationhip__c WHERE Hierarchy__c = : H2.Id];
         System.assertEquals(3, relsH2.size());
 
         for (AMS_Agencies_relationhip__c rel : relsH2) {
-            if (rel.Child_Account__r.Name == 'Fire Travels BR1') {
+            if (rel.Child_Account__c == BR1.Id) {
                 System.assertEquals('BR', rel.Child_Account__r.Location_Type__c);
-                System.assertEquals('Ice Travels HO2', rel.Parent_Account__r.Name);
+                System.assertEquals(HO2.Id, rel.Parent_Account__c);
                 System.assertEquals('HO', rel.Parent_Account__r.Location_Type__c);
                 System.assertEquals(HO2.Id, rel.Child_Account__r.ParentId);
                 countConditions++;
-            } else if (rel.Child_Account__r.Name == 'Earth Travels SA2') {
+            } else if (rel.Child_Account__c == SA2.Id) {
                 System.assertEquals('SA', rel.Child_Account__r.Location_Type__c);
-                System.assertEquals('Fire Travels BR1', rel.Parent_Account__r.Name);
+                System.assertEquals(BR1.Id, rel.Parent_Account__c);
                 System.assertEquals('BR', rel.Parent_Account__r.Location_Type__c);
                 System.assertEquals(BR1.Id, rel.Child_Account__r.ParentId);
                 countConditions++;
-            } else if (rel.Child_Account__r.Name == 'Headhunter Travels SA3') {
+            } else if (rel.Child_Account__c == SA3.Id) {
                 System.assertEquals('SA', rel.Child_Account__r.Location_Type__c);
-                System.assertEquals('Fire Travels BR1', rel.Parent_Account__r.Name);
+                System.assertEquals(BR1.Id, rel.Parent_Account__c);
                 System.assertEquals('BR', rel.Parent_Account__r.Location_Type__c);
                 System.assertEquals(BR1.Id, rel.Child_Account__r.ParentId);
                 countConditions++;
@@ -948,39 +979,39 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
         oscar.STEP6__c = AMS_Utils.PASSED;
         update oscar;
 
-        getUpdatedAccountData();
+        getUpdatedAccountDataV2();
 
         AMS_Agencies_Hierarchy__c H1 = [SELECT Id FROM AMS_Agencies_Hierarchy__c WHERE Hierarchy_Name__c = 'Hierarchy 1' limit 1];
 
         //validate the origin hierarchy structure (after migrating agencies)
-        List<AMS_Agencies_relationhip__c> relsH1 = [SELECT ID, Child_Account__r.Name, Child_Account__r.Location_Type__c, Parent_Account__r.Name, Parent_Account__r.Location_Type__c, Child_Account__r.ParentId FROM AMS_Agencies_relationhip__c WHERE Hierarchy__c = : H1.Id];
+        List<AMS_Agencies_relationhip__c> relsH1 = [SELECT ID, Child_Account__c, Child_Account__r.Location_Type__c, Parent_Account__c, Parent_Account__r.Location_Type__c, Child_Account__r.ParentId FROM AMS_Agencies_relationhip__c WHERE Hierarchy__c = : H1.Id];
         System.assertEquals(4, relsH1.size());
 
         Integer countConditions = 0;
 
         for (AMS_Agencies_relationhip__c rel : relsH1) {
-            if (rel.Child_Account__r.Name == 'Water Travels BR2') {
+            if (rel.Child_Account__c == BR2.Id) {
                 System.assertEquals('BR', rel.Child_Account__r.Location_Type__c);
-                System.assertEquals('Winter Travels HO1', rel.Parent_Account__r.Name);
+                System.assertEquals(HO1.Id, rel.Parent_Account__c);
                 System.assertEquals('HO', rel.Parent_Account__r.Location_Type__c);
                 System.assertEquals(HO1.Id, rel.Child_Account__r.ParentId);
                 countConditions++;
-            }else if (rel.Child_Account__r.Name == 'Fire Travels BR1') {
+            }else if (rel.Child_Account__c == BR1.Id) {
                 System.assertEquals('BR', rel.Child_Account__r.Location_Type__c);
-                System.assertEquals('Winter Travels HO1', rel.Parent_Account__r.Name);
+                System.assertEquals(HO1.Id, rel.Parent_Account__c);
                 System.assertEquals('HO', rel.Parent_Account__r.Location_Type__c);
                 System.assertEquals(HO1.Id, rel.Child_Account__r.ParentId);
                 countConditions++;
-            }else if (rel.Child_Account__r.Name == 'Beach Travels SA4') {
+            }else if (rel.Child_Account__c == SA4.Id) {
                 System.assertEquals('SA', rel.Child_Account__r.Location_Type__c);
-                System.assertEquals('Winter Travels HO1', rel.Parent_Account__r.Name);
+                System.assertEquals(HO1.Id, rel.Parent_Account__c);
                 System.assertEquals('HO', rel.Parent_Account__r.Location_Type__c);
                 System.assertEquals(HO1.Id, rel.Child_Account__r.ParentId);
                 countConditions++;
             }
-            else if (rel.Child_Account__r.Name == 'Headhunter Travels SA3') {
+            else if (rel.Child_Account__c == SA3.Id) {
                 System.assertEquals('SA', rel.Child_Account__r.Location_Type__c);
-                System.assertEquals('Fire Travels BR1', rel.Parent_Account__r.Name);
+                System.assertEquals(BR1.Id, rel.Parent_Account__c);
                 System.assertEquals('BR', rel.Parent_Account__r.Location_Type__c);
                 System.assertEquals(BR1.Id, rel.Child_Account__r.ParentId);
                 countConditions++;
@@ -992,19 +1023,19 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
         AMS_Agencies_Hierarchy__c H2 = [SELECT Id FROM AMS_Agencies_Hierarchy__c WHERE Hierarchy_Name__c = 'Hierarchy' limit 1];
 
         //validate the destination hierarchy structure (after migrating agencies)
-        List<AMS_Agencies_relationhip__c> relsH2 = [SELECT ID, Child_Account__r.Name, Child_Account__r.Location_Type__c, Parent_Account__r.Name, Parent_Account__r.Location_Type__c, Child_Account__r.ParentId FROM AMS_Agencies_relationhip__c WHERE Hierarchy__c = : H2.Id];
+        List<AMS_Agencies_relationhip__c> relsH2 = [SELECT ID, Child_Account__c, Child_Account__r.Location_Type__c, Parent_Account__c, Parent_Account__r.Location_Type__c, Child_Account__r.ParentId FROM AMS_Agencies_relationhip__c WHERE Hierarchy__c = : H2.Id];
         System.assertEquals(2, relsH2.size());
 
         for (AMS_Agencies_relationhip__c rel : relsH2) {
-            if (rel.Child_Account__r.Name == 'Earth Travels SA2') {
+            if (rel.Child_Account__c == SA2.Id) {
                 System.assertEquals('SA', rel.Child_Account__r.Location_Type__c);
-                System.assertEquals('Ice Travels HO2', rel.Parent_Account__r.Name);
+                System.assertEquals(HO2.Id, rel.Parent_Account__c);
                 System.assertEquals('HO', rel.Parent_Account__r.Location_Type__c);
                 System.assertEquals(HO2.Id, rel.Child_Account__r.ParentId);
                 countConditions++;
-            }else if (rel.Child_Account__r.Name == 'Water Travels SA1') {
+            }else if (rel.Child_Account__c == SA1.Id) {
                 System.assertEquals('SA', rel.Child_Account__r.Location_Type__c);
-                System.assertEquals('Ice Travels HO2', rel.Parent_Account__r.Name);
+                System.assertEquals(HO2.Id, rel.Parent_Account__c);
                 System.assertEquals('HO', rel.Parent_Account__r.Location_Type__c);
                 System.assertEquals(HO2.Id, rel.Child_Account__r.ParentId);
                 countConditions++;
@@ -1046,51 +1077,51 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
         oscar.STEP6__c = AMS_Utils.PASSED;
         update oscar;
 
-        getUpdatedAccountData();
+        getUpdatedAccountDataV2();
 
         //get the existing hierarchy. In this situation no new hierarchy is created
         AMS_Agencies_Hierarchy__c H1 = [SELECT Id FROM AMS_Agencies_Hierarchy__c WHERE Hierarchy_Name__c = 'Hierarchy 1' limit 1];
 
         //validate the new hierarchy structure
-        List<AMS_Agencies_relationhip__c> rels = [SELECT ID, Child_Account__r.Name, Child_Account__r.Location_Type__c, Parent_Account__r.Name, Parent_Account__r.Location_Type__c, Child_Account__r.ParentId FROM AMS_Agencies_relationhip__c WHERE Hierarchy__c = : H1.Id];
+        List<AMS_Agencies_relationhip__c> rels = [SELECT ID, Child_Account__c, Child_Account__r.Location_Type__c, Parent_Account__c, Parent_Account__r.Location_Type__c, Child_Account__r.ParentId FROM AMS_Agencies_relationhip__c WHERE Hierarchy__c = : H1.Id];
         System.assertEquals(6, rels.size());
 
         Integer countConditions = 0;
 
         for (AMS_Agencies_relationhip__c rel : rels) {
-            if (rel.Child_Account__r.Name == 'Fire Travels BR1') {
+            if (rel.Child_Account__c == BR1.Id) {
                 System.assertEquals('BR', rel.Child_Account__r.Location_Type__c);
-                System.assertEquals('Winter Travels HO1', rel.Parent_Account__r.Name);
+                System.assertEquals(HO1.Id, rel.Parent_Account__c);
                 System.assertEquals('HO', rel.Parent_Account__r.Location_Type__c);
                 System.assertEquals(HO1.Id, rel.Child_Account__r.ParentId);
                 countConditions++;
-            } else if (rel.Child_Account__r.Name == 'Water Travels BR2') {
+            } else if (rel.Child_Account__c == BR2.Id) {
                 System.assertEquals('BR', rel.Child_Account__r.Location_Type__c);
-                System.assertEquals('Winter Travels HO1', rel.Parent_Account__r.Name);
+                System.assertEquals(HO1.Id, rel.Parent_Account__c);
                 System.assertEquals('HO', rel.Parent_Account__r.Location_Type__c);
                 System.assertEquals(HO1.Id, rel.Child_Account__r.ParentId);
                 countConditions++;
-            } else if (rel.Child_Account__r.Name == 'Water Travels SA1') {
+            } else if (rel.Child_Account__c == SA1.Id) {
                 System.assertEquals('SA', rel.Child_Account__r.Location_Type__c);
-                System.assertEquals('Winter Travels HO1', rel.Parent_Account__r.Name);
+                System.assertEquals(HO1.Id, rel.Parent_Account__c);
                 System.assertEquals('HO', rel.Parent_Account__r.Location_Type__c);
                 System.assertEquals(HO1.Id, rel.Child_Account__r.ParentId);
                 countConditions++;
-            } else if (rel.Child_Account__r.Name == 'Earth Travels SA2') {
+            } else if (rel.Child_Account__c == SA2.Id) {
                 System.assertEquals('SA', rel.Child_Account__r.Location_Type__c);
-                System.assertEquals('Fire Travels BR1', rel.Parent_Account__r.Name);
+                System.assertEquals(BR1.Id, rel.Parent_Account__c);
                 System.assertEquals('BR', rel.Parent_Account__r.Location_Type__c);
                 System.assertEquals(BR1.Id, rel.Child_Account__r.ParentId);
                 countConditions++;
-            } else if (rel.Child_Account__r.Name == 'Headhunter Travels SA3') {
+            } else if (rel.Child_Account__c == SA3.Id) {
                 System.assertEquals('SA', rel.Child_Account__r.Location_Type__c);
-                System.assertEquals('Fire Travels BR1', rel.Parent_Account__r.Name);
+                System.assertEquals(BR1.Id, rel.Parent_Account__c);
                 System.assertEquals('BR', rel.Parent_Account__r.Location_Type__c);
                 System.assertEquals(BR1.Id, rel.Child_Account__r.ParentId);
                 countConditions++;
-            } else if (rel.Child_Account__r.Name == 'Beach Travels SA4') {
+            } else if (rel.Child_Account__c == SA4.Id) {
                 System.assertEquals('SA', rel.Child_Account__r.Location_Type__c);
-                System.assertEquals('Winter Travels HO1', rel.Parent_Account__r.Name);
+                System.assertEquals(HO1.Id, rel.Parent_Account__c);
                 System.assertEquals('HO', rel.Parent_Account__r.Location_Type__c);
                 System.assertEquals(HO1.Id, rel.Child_Account__r.ParentId);
                 countConditions++;
@@ -1130,51 +1161,51 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
         oscar.STEP6__c = AMS_Utils.PASSED;
         update oscar;
 
-        getUpdatedAccountData();
+        getUpdatedAccountDataV2();
 
         //get the existing hierarchy. In this situation no new hierarchy is created
         AMS_Agencies_Hierarchy__c H1 = [SELECT Id FROM AMS_Agencies_Hierarchy__c WHERE Hierarchy_Name__c = 'Hierarchy 1' limit 1];
 
         //validate the new hierarchy structure
-        List<AMS_Agencies_relationhip__c> rels = [SELECT ID, Child_Account__r.Name, Child_Account__r.Location_Type__c, Parent_Account__r.Name, Parent_Account__r.Location_Type__c, Child_Account__r.ParentId FROM AMS_Agencies_relationhip__c WHERE Hierarchy__c = : H1.Id];
+        List<AMS_Agencies_relationhip__c> rels = [SELECT ID, Child_Account__c, Child_Account__r.Location_Type__c, Parent_Account__c, Parent_Account__r.Location_Type__c, Child_Account__r.ParentId FROM AMS_Agencies_relationhip__c WHERE Hierarchy__c = : H1.Id];
         System.assertEquals(6, rels.size());
 
         Integer countConditions = 0;
 
         for (AMS_Agencies_relationhip__c rel : rels) {
-            if (rel.Child_Account__r.Name == 'Winter Travels HO1') {
+            if (rel.Child_Account__c == HO1.Id) {
                 System.assertEquals('BR', rel.Child_Account__r.Location_Type__c);
-                System.assertEquals('Fire Travels BR1', rel.Parent_Account__r.Name);
+                System.assertEquals(BR1.Id, rel.Parent_Account__c);
                 System.assertEquals('HO', rel.Parent_Account__r.Location_Type__c);
                 System.assertEquals(BR1.Id, rel.Child_Account__r.ParentId);
                 countConditions++;
-            } else if (rel.Child_Account__r.Name == 'Water Travels BR2') {
+            } else if (rel.Child_Account__c == BR2.Id) {
                 System.assertEquals('BR', rel.Child_Account__r.Location_Type__c);
-                System.assertEquals('Fire Travels BR1', rel.Parent_Account__r.Name);
+                System.assertEquals(BR1.Id, rel.Parent_Account__c);
                 System.assertEquals('HO', rel.Parent_Account__r.Location_Type__c);
                 System.assertEquals(BR1.Id, rel.Child_Account__r.ParentId);
                 countConditions++;
-            } else if (rel.Child_Account__r.Name == 'Water Travels SA1') {
+            } else if (rel.Child_Account__c == SA1.Id) {
                 System.assertEquals('SA', rel.Child_Account__r.Location_Type__c);
-                System.assertEquals('Winter Travels HO1', rel.Parent_Account__r.Name);
+                System.assertEquals(HO1.Id, rel.Parent_Account__c);
                 System.assertEquals('BR', rel.Parent_Account__r.Location_Type__c);
                 System.assertEquals(HO1.Id, rel.Child_Account__r.ParentId);
                 countConditions++;
-            } else if (rel.Child_Account__r.Name == 'Earth Travels SA2') {
+            } else if (rel.Child_Account__c == SA2.Id) {
                 System.assertEquals('SA', rel.Child_Account__r.Location_Type__c);
-                System.assertEquals('Fire Travels BR1', rel.Parent_Account__r.Name);
+                System.assertEquals(BR1.Id, rel.Parent_Account__c);
                 System.assertEquals('HO', rel.Parent_Account__r.Location_Type__c);
                 System.assertEquals(BR1.Id, rel.Child_Account__r.ParentId);
                 countConditions++;
-            } else if (rel.Child_Account__r.Name == 'Headhunter Travels SA3') {
+            } else if (rel.Child_Account__c == SA3.Id) {
                 System.assertEquals('SA', rel.Child_Account__r.Location_Type__c);
-                System.assertEquals('Fire Travels BR1', rel.Parent_Account__r.Name);
+                System.assertEquals(BR1.Id, rel.Parent_Account__c);
                 System.assertEquals('HO', rel.Parent_Account__r.Location_Type__c);
                 System.assertEquals(BR1.Id, rel.Child_Account__r.ParentId);
                 countConditions++;
-            } else if (rel.Child_Account__r.Name == 'Beach Travels SA4') {
+            } else if (rel.Child_Account__c == SA4.Id) {
                 System.assertEquals('SA', rel.Child_Account__r.Location_Type__c);
-                System.assertEquals('Winter Travels HO1', rel.Parent_Account__r.Name);
+                System.assertEquals(HO1.Id, rel.Parent_Account__c);
                 System.assertEquals('BR', rel.Parent_Account__r.Location_Type__c);
                 System.assertEquals(HO1.Id, rel.Child_Account__r.ParentId);
                 countConditions++;
@@ -1211,26 +1242,26 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
         oscar.STEP6__c = AMS_Utils.PASSED;
         update oscar;
 
-        getUpdatedAccountData();
+        getUpdatedAccountDataV2();
 
         AMS_Agencies_Hierarchy__c H1 = [SELECT Id FROM AMS_Agencies_Hierarchy__c WHERE Hierarchy_Name__c = 'Hierarchy 1' limit 1];
 
         //validate the origin hierarchy structure (after migrating agencies)
-        List<AMS_Agencies_relationhip__c> relsH1 = [SELECT ID, Child_Account__r.Name, Child_Account__r.Location_Type__c, Parent_Account__r.Name, Parent_Account__r.Location_Type__c, Child_Account__r.ParentId FROM AMS_Agencies_relationhip__c WHERE Hierarchy__c = : H1.Id];
+        List<AMS_Agencies_relationhip__c> relsH1 = [SELECT ID, Child_Account__c, Child_Account__r.Location_Type__c, Parent_Account__c, Parent_Account__r.Location_Type__c, Child_Account__r.ParentId FROM AMS_Agencies_relationhip__c WHERE Hierarchy__c = : H1.Id];
         System.assertEquals(2, relsH1.size());
 
         Integer countConditions = 0;
 
         for (AMS_Agencies_relationhip__c rel : relsH1) {
-            if (rel.Child_Account__r.Name == 'Water Travels BR2') {
+            if (rel.Child_Account__c == BR2.Id) {
                 System.assertEquals('BR', rel.Child_Account__r.Location_Type__c);
-                System.assertEquals('Winter Travels HO1', rel.Parent_Account__r.Name);
+                System.assertEquals(HO1.Id, rel.Parent_Account__c);
                 System.assertEquals('HO', rel.Parent_Account__r.Location_Type__c);
                 System.assertEquals(HO1.Id, rel.Child_Account__r.ParentId);
                 countConditions++;
-            }else if (rel.Child_Account__r.Name == 'Beach Travels SA4') {
+            }else if (rel.Child_Account__c == SA4.Id) {
                 System.assertEquals('SA', rel.Child_Account__r.Location_Type__c);
-                System.assertEquals('Winter Travels HO1', rel.Parent_Account__r.Name);
+                System.assertEquals(HO1.Id, rel.Parent_Account__c);
                 System.assertEquals('HO', rel.Parent_Account__r.Location_Type__c);
                 System.assertEquals(HO1.Id, rel.Child_Account__r.ParentId);
                 countConditions++;
@@ -1242,25 +1273,25 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
         AMS_Agencies_Hierarchy__c H2 = [SELECT Id FROM AMS_Agencies_Hierarchy__c WHERE Hierarchy_Name__c = 'Hierarchy' limit 1];
 
         //validate the destination hierarchy structure (after migrating agencies)
-        List<AMS_Agencies_relationhip__c> relsH2 = [SELECT ID, Child_Account__r.Name, Child_Account__r.Location_Type__c, Parent_Account__r.Name, Parent_Account__r.Location_Type__c, Child_Account__r.ParentId FROM AMS_Agencies_relationhip__c WHERE Hierarchy__c = : H2.Id];
+        List<AMS_Agencies_relationhip__c> relsH2 = [SELECT ID, Child_Account__c, Child_Account__r.Location_Type__c, Parent_Account__c, Parent_Account__r.Location_Type__c, Child_Account__r.ParentId FROM AMS_Agencies_relationhip__c WHERE Hierarchy__c = : H2.Id];
         System.assertEquals(3, relsH2.size());
 
         for (AMS_Agencies_relationhip__c rel : relsH2) {
-            if (rel.Child_Account__r.Name == 'Earth Travels SA2') {
+            if (rel.Child_Account__c == SA2.Id) {
                 System.assertEquals('SA', rel.Child_Account__r.Location_Type__c);
-                System.assertEquals('Fire Travels BR1', rel.Parent_Account__r.Name);
+                System.assertEquals(BR1.Id, rel.Parent_Account__c);
                 System.assertEquals('HO', rel.Parent_Account__r.Location_Type__c);
                 System.assertEquals(BR1.Id, rel.Child_Account__r.ParentId);
                 countConditions++;
-            }else if (rel.Child_Account__r.Name == 'Water Travels SA1') {
+            }else if (rel.Child_Account__c == SA1.Id) {
                 System.assertEquals('SA', rel.Child_Account__r.Location_Type__c);
-                System.assertEquals('Fire Travels BR1', rel.Parent_Account__r.Name);
+                System.assertEquals(BR1.Id, rel.Parent_Account__c);
                 System.assertEquals('HO', rel.Parent_Account__r.Location_Type__c);
                 System.assertEquals(BR1.Id, rel.Child_Account__r.ParentId);
                 countConditions++;
-            }else if (rel.Child_Account__r.Name == 'Headhunter Travels SA3') {
+            }else if (rel.Child_Account__c == SA3.Id) {
                 System.assertEquals('SA', rel.Child_Account__r.Location_Type__c);
-                System.assertEquals('Fire Travels BR1', rel.Parent_Account__r.Name);
+                System.assertEquals(BR1.Id, rel.Parent_Account__c);
                 System.assertEquals('HO', rel.Parent_Account__r.Location_Type__c);
                 System.assertEquals(BR1.Id, rel.Child_Account__r.ParentId);
                 countConditions++;
@@ -1291,44 +1322,44 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
         oscar.STEP6__c = AMS_Utils.PASSED;
         update oscar;
 
-        getUpdatedAccountData();
+        getUpdatedAccountDataV2();
 
         AMS_Agencies_Hierarchy__c H1 = [SELECT Id FROM AMS_Agencies_Hierarchy__c WHERE Hierarchy_Name__c = 'Hierarchy 1' limit 1];
 
         //validate the origin hierarchy structure (after migrating agencies)
-        List<AMS_Agencies_relationhip__c> relsH1 = [SELECT ID, Child_Account__r.Name, Child_Account__r.Location_Type__c, Parent_Account__r.Name, Parent_Account__r.Location_Type__c, Child_Account__r.ParentId FROM AMS_Agencies_relationhip__c WHERE Hierarchy__c = : H1.Id];
+        List<AMS_Agencies_relationhip__c> relsH1 = [SELECT ID, Child_Account__c, Child_Account__r.Location_Type__c, Parent_Account__c, Parent_Account__r.Location_Type__c, Child_Account__r.ParentId FROM AMS_Agencies_relationhip__c WHERE Hierarchy__c = : H1.Id];
         System.assertEquals(5, relsH1.size());
 
         Integer countConditions = 0;
 
         for (AMS_Agencies_relationhip__c rel : relsH1) {
-            if (rel.Child_Account__r.Name == 'Fire Travels BR1') {
+            if (rel.Child_Account__c == BR1.Id) {
                 System.assertEquals('BR', rel.Child_Account__r.Location_Type__c);
-                System.assertEquals('Winter Travels HO1', rel.Parent_Account__r.Name);
+                System.assertEquals(HO1.Id, rel.Parent_Account__c);
                 System.assertEquals('HO', rel.Parent_Account__r.Location_Type__c);
                 System.assertEquals(HO1.Id, rel.Child_Account__r.ParentId);
                 countConditions++;
-            } else if (rel.Child_Account__r.Name == 'Water Travels SA1') {
+            } else if (rel.Child_Account__c == SA1.Id) {
                 System.assertEquals('SA', rel.Child_Account__r.Location_Type__c);
-                System.assertEquals('Winter Travels HO1', rel.Parent_Account__r.Name);
+                System.assertEquals(HO1.Id, rel.Parent_Account__c);
                 System.assertEquals('HO', rel.Parent_Account__r.Location_Type__c);
                 System.assertEquals(HO1.Id, rel.Child_Account__r.ParentId);
                 countConditions++;
-            } else if (rel.Child_Account__r.Name == 'Earth Travels SA2') {
+            } else if (rel.Child_Account__c == SA2.Id) {
                 System.assertEquals('SA', rel.Child_Account__r.Location_Type__c);
-                System.assertEquals('Fire Travels BR1', rel.Parent_Account__r.Name);
+                System.assertEquals(BR1.Id, rel.Parent_Account__c);
                 System.assertEquals('BR', rel.Parent_Account__r.Location_Type__c);
                 System.assertEquals(BR1.Id, rel.Child_Account__r.ParentId);
                 countConditions++;
-            } else if (rel.Child_Account__r.Name == 'Headhunter Travels SA3') {
+            } else if (rel.Child_Account__c == SA3.Id) {
                 System.assertEquals('SA', rel.Child_Account__r.Location_Type__c);
-                System.assertEquals('Fire Travels BR1', rel.Parent_Account__r.Name);
+                System.assertEquals(BR1.Id, rel.Parent_Account__c);
                 System.assertEquals('BR', rel.Parent_Account__r.Location_Type__c);
                 System.assertEquals(BR1.Id, rel.Child_Account__r.ParentId);
                 countConditions++;
-            } else if (rel.Child_Account__r.Name == 'Beach Travels SA4') {
+            } else if (rel.Child_Account__c == SA4.Id) {
                 System.assertEquals('SA', rel.Child_Account__r.Location_Type__c);
-                System.assertEquals('Winter Travels HO1', rel.Parent_Account__r.Name);
+                System.assertEquals(HO1.Id, rel.Parent_Account__c);
                 System.assertEquals('HO', rel.Parent_Account__r.Location_Type__c);
                 System.assertEquals(HO1.Id, rel.Child_Account__r.ParentId);
                 countConditions++;
@@ -1359,44 +1390,44 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
         oscar.STEP6__c = AMS_Utils.PASSED;
         update oscar;
 
-        getUpdatedAccountData();
+        getUpdatedAccountDataV2();
 
         AMS_Agencies_Hierarchy__c H1 = [SELECT Id FROM AMS_Agencies_Hierarchy__c WHERE Hierarchy_Name__c = 'Hierarchy 1' limit 1];
 
         //validate the origin hierarchy structure (after migrating agencies)
-        List<AMS_Agencies_relationhip__c> relsH1 = [SELECT ID, Child_Account__r.Name, Child_Account__r.Location_Type__c, Parent_Account__r.Name, Parent_Account__r.Location_Type__c, Child_Account__r.ParentId FROM AMS_Agencies_relationhip__c WHERE Hierarchy__c = : H1.Id];
+        List<AMS_Agencies_relationhip__c> relsH1 = [SELECT ID, Child_Account__c, Child_Account__r.Location_Type__c, Parent_Account__c, Parent_Account__r.Location_Type__c, Child_Account__r.ParentId FROM AMS_Agencies_relationhip__c WHERE Hierarchy__c = : H1.Id];
         System.assertEquals(5, relsH1.size());
 
         Integer countConditions = 0;
 
         for (AMS_Agencies_relationhip__c rel : relsH1) {
-            if (rel.Child_Account__r.Name == 'Fire Travels BR1') {
+            if (rel.Child_Account__c == BR1.Id) {
                 System.assertEquals('BR', rel.Child_Account__r.Location_Type__c);
-                System.assertEquals('Winter Travels HO1', rel.Parent_Account__r.Name);
+                System.assertEquals(HO1.Id, rel.Parent_Account__c);
                 System.assertEquals('HO', rel.Parent_Account__r.Location_Type__c);
                 System.assertEquals(HO1.Id, rel.Child_Account__r.ParentId);
                 countConditions++;
-            }else if (rel.Child_Account__r.Name == 'Water Travels BR2') {
+            }else if (rel.Child_Account__c == BR2.Id) {
                 System.assertEquals('BR', rel.Child_Account__r.Location_Type__c);
-                System.assertEquals('Winter Travels HO1', rel.Parent_Account__r.Name);
+                System.assertEquals(HO1.Id, rel.Parent_Account__c);
                 System.assertEquals('HO', rel.Parent_Account__r.Location_Type__c);
                 System.assertEquals(HO1.Id, rel.Child_Account__r.ParentId);
                 countConditions++;
-            } else if (rel.Child_Account__r.Name == 'Earth Travels SA2') {
+            } else if (rel.Child_Account__c == SA2.Id) {
                 System.assertEquals('SA', rel.Child_Account__r.Location_Type__c);
-                System.assertEquals('Fire Travels BR1', rel.Parent_Account__r.Name);
+                System.assertEquals(BR1.Id, rel.Parent_Account__c);
                 System.assertEquals('BR', rel.Parent_Account__r.Location_Type__c);
                 System.assertEquals(BR1.Id, rel.Child_Account__r.ParentId);
                 countConditions++;
-            } else if (rel.Child_Account__r.Name == 'Headhunter Travels SA3') {
+            } else if (rel.Child_Account__c == SA3.Id) {
                 System.assertEquals('SA', rel.Child_Account__r.Location_Type__c);
-                System.assertEquals('Fire Travels BR1', rel.Parent_Account__r.Name);
+                System.assertEquals(BR1.Id, rel.Parent_Account__c);
                 System.assertEquals('BR', rel.Parent_Account__r.Location_Type__c);
                 System.assertEquals(BR1.Id, rel.Child_Account__r.ParentId);
                 countConditions++;
-            } else if (rel.Child_Account__r.Name == 'Beach Travels SA4') {
+            } else if (rel.Child_Account__c == SA4.Id) {
                 System.assertEquals('SA', rel.Child_Account__r.Location_Type__c);
-                System.assertEquals('Winter Travels HO1', rel.Parent_Account__r.Name);
+                System.assertEquals(HO1.Id, rel.Parent_Account__c);
                 System.assertEquals('HO', rel.Parent_Account__r.Location_Type__c);
                 System.assertEquals(HO1.Id, rel.Child_Account__r.ParentId);
                 countConditions++;
@@ -1434,32 +1465,32 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
         oscar.STEP6__c = AMS_Utils.PASSED;
         update oscar;
 
-        getUpdatedAccountData();
+        getUpdatedAccountDataV2();
 
         AMS_Agencies_Hierarchy__c H1 = [SELECT Id FROM AMS_Agencies_Hierarchy__c WHERE Hierarchy_Name__c = 'Hierarchy 1' limit 1];
 
         //validate the origin hierarchy structure (after migrating agencies)
-        List<AMS_Agencies_relationhip__c> relsH1 = [SELECT ID, Child_Account__r.Name, Child_Account__r.Location_Type__c, Parent_Account__r.Name, Parent_Account__r.Location_Type__c, Child_Account__r.ParentId FROM AMS_Agencies_relationhip__c WHERE Hierarchy__c = : H1.Id];
+        List<AMS_Agencies_relationhip__c> relsH1 = [SELECT ID, Child_Account__c, Child_Account__r.Location_Type__c, Parent_Account__c, Parent_Account__r.Location_Type__c, Child_Account__r.ParentId FROM AMS_Agencies_relationhip__c WHERE Hierarchy__c = : H1.Id];
         System.assertEquals(3, relsH1.size());
 
         Integer countConditions = 0;
 
         for (AMS_Agencies_relationhip__c rel : relsH1) {
-             if (rel.Child_Account__r.Name == 'Water Travels SA1') {
+             if (rel.Child_Account__c == SA1.Id) {
                 System.assertEquals('SA', rel.Child_Account__r.Location_Type__c);
-                System.assertEquals('Winter Travels HO1', rel.Parent_Account__r.Name);
+                System.assertEquals(HO1.Id, rel.Parent_Account__c);
                 System.assertEquals('HO', rel.Parent_Account__r.Location_Type__c);
                 System.assertEquals(HO1.Id, rel.Child_Account__r.ParentId);
                 countConditions++;
-            }  else if (rel.Child_Account__r.Name == 'Beach Travels SA4') {
+            }  else if (rel.Child_Account__c == SA4.Id) {
                 System.assertEquals('SA', rel.Child_Account__r.Location_Type__c);
-                System.assertEquals('Winter Travels HO1', rel.Parent_Account__r.Name);
+                System.assertEquals(HO1.Id, rel.Parent_Account__c);
                 System.assertEquals('HO', rel.Parent_Account__r.Location_Type__c);
                 System.assertEquals(HO1.Id, rel.Child_Account__r.ParentId);
                 countConditions++;
-            } else if (rel.Child_Account__r.Name == 'Water Travels BR2') {
+            } else if (rel.Child_Account__c == BR2.Id) {
                 System.assertEquals('BR', rel.Child_Account__r.Location_Type__c);
-                System.assertEquals('Winter Travels HO1', rel.Parent_Account__r.Name);
+                System.assertEquals(HO1.Id, rel.Parent_Account__c);
                 System.assertEquals('HO', rel.Parent_Account__r.Location_Type__c);
                 System.assertEquals(HO1.Id, rel.Child_Account__r.ParentId);
                 countConditions++;
@@ -1471,25 +1502,25 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
         AMS_Agencies_Hierarchy__c H2 = [SELECT Id FROM AMS_Agencies_Hierarchy__c WHERE Hierarchy_Name__c = 'Hierarchy' limit 1];
 
         //validate the destination hierarchy structure (after migrating agencies)
-        List<AMS_Agencies_relationhip__c> relsH2 = [SELECT ID, Child_Account__r.Name, Child_Account__r.Location_Type__c, Parent_Account__r.Name, Parent_Account__r.Location_Type__c, Child_Account__r.ParentId FROM AMS_Agencies_relationhip__c WHERE Hierarchy__c = : H2.Id];
+        List<AMS_Agencies_relationhip__c> relsH2 = [SELECT ID, Child_Account__c, Child_Account__r.Location_Type__c, Parent_Account__c, Parent_Account__r.Location_Type__c, Child_Account__r.ParentId FROM AMS_Agencies_relationhip__c WHERE Hierarchy__c = : H2.Id];
         System.assertEquals(2, relsH2.size());
 
         for (AMS_Agencies_relationhip__c rel : relsH2) {
-           if (rel.Child_Account__r.Name == 'Headhunter Travels SA3') {
+           if (rel.Child_Account__c == SA3.Id) {
                 System.assertEquals('SA', rel.Child_Account__r.Location_Type__c);
-                System.assertEquals('Fire Travels BR1', rel.Parent_Account__r.Name);
+                System.assertEquals(BR1.Id, rel.Parent_Account__c);
                 System.assertEquals('BR', rel.Parent_Account__r.Location_Type__c);
                 System.assertEquals(BR1.Id, rel.Child_Account__r.ParentId);
                 countConditions++;
-            } else if (rel.Child_Account__r.Name == 'Fire Travels BR1') {
+            } else if (rel.Child_Account__c == BR1.Id) {
                 System.assertEquals('BR', rel.Child_Account__r.Location_Type__c);
-                System.assertEquals('Earth Travels SA2', rel.Parent_Account__r.Name);
+                System.assertEquals(SA2.Id, rel.Parent_Account__c);
                 System.assertEquals('HO', rel.Parent_Account__r.Location_Type__c);
                 System.assertEquals(SA2.Id, rel.Child_Account__r.ParentId);
                 countConditions++;
-            } else if (rel.Child_Account__r.Name == 'Headhunter Travels SA3') {
+            } else if (rel.Child_Account__c == SA3.Id) {
                 System.assertEquals('SA', rel.Child_Account__r.Location_Type__c);
-                System.assertEquals('Fire Travels BR1', rel.Parent_Account__r.Name);
+                System.assertEquals(BR1.Id, rel.Parent_Account__c);
                 System.assertEquals('BR', rel.Parent_Account__r.Location_Type__c);
                 System.assertEquals(BR1.Id, rel.Child_Account__r.ParentId);
                 countConditions++;
@@ -1529,32 +1560,32 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
         oscar.STEP6__c = AMS_Utils.PASSED;
         update oscar;
 
-        getUpdatedAccountData();
+        getUpdatedAccountDataV2();
 
         AMS_Agencies_Hierarchy__c H1 = [SELECT Id FROM AMS_Agencies_Hierarchy__c WHERE Hierarchy_Name__c = 'Hierarchy 1' limit 1];
 
         //validate the origin hierarchy structure (after migrating agencies)
-        List<AMS_Agencies_relationhip__c> relsH1 = [SELECT ID, Child_Account__r.Name, Child_Account__r.Location_Type__c, Parent_Account__r.Name, Parent_Account__r.Location_Type__c, Child_Account__r.ParentId FROM AMS_Agencies_relationhip__c WHERE Hierarchy__c = : H1.Id];
+        List<AMS_Agencies_relationhip__c> relsH1 = [SELECT ID, Child_Account__c, Child_Account__r.Location_Type__c, Parent_Account__c, Parent_Account__r.Location_Type__c, Child_Account__r.ParentId FROM AMS_Agencies_relationhip__c WHERE Hierarchy__c = : H1.Id];
         System.assertEquals(3, relsH1.size());
 
         Integer countConditions = 0;
 
         for (AMS_Agencies_relationhip__c rel : relsH1) {
-            if (rel.Child_Account__r.Name == 'Fire Travels BR1') {
+            if (rel.Child_Account__c == BR1.Id) {
                 System.assertEquals('BR', rel.Child_Account__r.Location_Type__c);
-                System.assertEquals('Winter Travels HO1', rel.Parent_Account__r.Name);
+                System.assertEquals(HO1.Id, rel.Parent_Account__c);
                 System.assertEquals('HO', rel.Parent_Account__r.Location_Type__c);
                 System.assertEquals(HO1.Id, rel.Child_Account__r.ParentId);
                 countConditions++;
-            }else if (rel.Child_Account__r.Name == 'Water Travels BR2') {
+            }else if (rel.Child_Account__c == BR2.Id) {
                 System.assertEquals('BR', rel.Child_Account__r.Location_Type__c);
-                System.assertEquals('Winter Travels HO1', rel.Parent_Account__r.Name);
+                System.assertEquals(HO1.Id, rel.Parent_Account__c);
                 System.assertEquals('HO', rel.Parent_Account__r.Location_Type__c);
                 System.assertEquals(HO1.Id, rel.Child_Account__r.ParentId);
                 countConditions++;
-            } else if (rel.Child_Account__r.Name == 'Beach Travels SA4') {
+            } else if (rel.Child_Account__c == SA4.Id) {
                 System.assertEquals('SA', rel.Child_Account__r.Location_Type__c);
-                System.assertEquals('Winter Travels HO1', rel.Parent_Account__r.Name);
+                System.assertEquals(HO1.Id, rel.Parent_Account__c);
                 System.assertEquals('HO', rel.Parent_Account__r.Location_Type__c);
                 System.assertEquals(HO1.Id, rel.Child_Account__r.ParentId);
                 countConditions++;
@@ -1565,19 +1596,19 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
         AMS_Agencies_Hierarchy__c H2 = [SELECT Id FROM AMS_Agencies_Hierarchy__c WHERE Hierarchy_Name__c = 'Hierarchy' limit 1];
 
         //validate the destination hierarchy structure (after migrating agencies)
-        List<AMS_Agencies_relationhip__c> relsH2 = [SELECT ID, Child_Account__r.Name, Child_Account__r.Location_Type__c, Parent_Account__r.Name, Parent_Account__r.Location_Type__c, Child_Account__r.ParentId FROM AMS_Agencies_relationhip__c WHERE Hierarchy__c = : H2.Id];
+        List<AMS_Agencies_relationhip__c> relsH2 = [SELECT ID, Child_Account__c, Child_Account__r.Location_Type__c, Parent_Account__c, Parent_Account__r.Location_Type__c, Child_Account__r.ParentId FROM AMS_Agencies_relationhip__c WHERE Hierarchy__c = : H2.Id];
         System.assertEquals(2, relsH2.size());
 
         for (AMS_Agencies_relationhip__c rel : relsH2) {
-           if (rel.Child_Account__r.Name == 'Headhunter Travels SA3') {
+           if (rel.Child_Account__c == SA3.Id) {
                 System.assertEquals('SA', rel.Child_Account__r.Location_Type__c);
-                System.assertEquals('Water Travels SA1', rel.Parent_Account__r.Name);
+                System.assertEquals(SA1.Id, rel.Parent_Account__c);
                 System.assertEquals('HO', rel.Parent_Account__r.Location_Type__c);
                 System.assertEquals(SA1.Id, rel.Child_Account__r.ParentId);
                 countConditions++;
-            }  else if (rel.Child_Account__r.Name == 'Earth Travels SA2') {
+            }  else if (rel.Child_Account__c == SA2.Id) {
                 System.assertEquals('SA', rel.Child_Account__r.Location_Type__c);
-                System.assertEquals('Water Travels SA1', rel.Parent_Account__r.Name);
+                System.assertEquals(SA1.Id, rel.Parent_Account__c);
                 System.assertEquals('HO', rel.Parent_Account__r.Location_Type__c);
                 System.assertEquals(SA1.Id, rel.Child_Account__r.ParentId);
                 countConditions++;
@@ -1697,12 +1728,15 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
         System.assertEquals(7,con.hierarchy.size());
 
         con.hierarchy[2].main = true;
-        con.hierarchy[2].selectMain(); //simulates page actionSupport
-        System.assertNotEquals(HO1.Id, con.oscar.Account__c);
 
-        con.hierarchy[2].main = false;
-        con.hierarchy[2].selectMain(); //simulates page actionSupport
-        System.assert(con.hierarchy[2].main);
+        //emulate js
+        con.hierarchy[2].selected  = false;
+        con.hierarchy[0].main = false;
+        con.hierarchy[0].main = false;
+        // /emulate js
+
+        con.selectMain();        
+        System.assertNotEquals(HO1.Id, con.oscar.Account__c);
 
         System.assert(!con.oscarFieldList.isEmpty());
         System.assert(con.showTargetAgency);
