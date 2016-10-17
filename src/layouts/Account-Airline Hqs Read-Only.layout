@@ -105,6 +105,10 @@
                 <behavior>Readonly</behavior>
                 <field>Invoicing_and_Collection__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Payment_Term__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -202,6 +206,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>ShippingAddress</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>IATA_ISO_Billing_State__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -460,6 +468,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Source_System__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>AIMS_ID__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>

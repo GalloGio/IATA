@@ -37,11 +37,11 @@ public class AMS_AgencyChangesTest {
 		insert customsettings;
 
 		List<AMS_ChangeCodes__c> changeCodeCustomsettings = new List<AMS_ChangeCodes__c>();
-		changeCodeCustomsettings.add(new AMS_ChangeCodes__c(Name = 'CAD', Change_Code__c = 'CAD', Reason_Code__c = '', Reason_Code_Description__c = '', Account_status_change__c = ''));
-		changeCodeCustomsettings.add(new AMS_ChangeCodes__c(Name = 'CWD', Change_Code__c = 'CWD', Reason_Code__c = '81', Reason_Code_Description__c = 'CHANGE IN PROCESS', Account_status_change__c = '8;9'));
-		changeCodeCustomsettings.add(new AMS_ChangeCodes__c(Name = 'CHI', Change_Code__c = 'CHI', Reason_Code__c = '81', Reason_Code_Description__c = 'CHANGE IN PROCESS', Account_status_change__c = '8;9'));
-		changeCodeCustomsettings.add(new AMS_ChangeCodes__c(Name = 'CHF', Change_Code__c = 'CHF', Reason_Code__c = '9', Reason_Code_Description__c = 'ACCREDITED-MEET-STANDARDS', Account_status_change__c = '9'));
-		changeCodeCustomsettings.add(new AMS_ChangeCodes__c(Name = 'CHO', Change_Code__c = 'CHO', Reason_Code__c = '81', Reason_Code_Description__c = 'CHANGE IN PROCESS', Account_status_change__c = '8;9'));
+		changeCodeCustomsettings.add(new AMS_ChangeCodes__c(Name = 'CAD', Change_Code__c = 'CAD', Reason_Code__c = '', Reason_Code_Description__c = '', Account_status_change__c = '',Integration_RecId__c = 'C'));
+		changeCodeCustomsettings.add(new AMS_ChangeCodes__c(Name = 'CWD', Change_Code__c = 'CWD', Reason_Code__c = '81', Reason_Code_Description__c = 'CHANGE IN PROCESS', Account_status_change__c = '8;9',Integration_RecId__c = 'C'));
+		changeCodeCustomsettings.add(new AMS_ChangeCodes__c(Name = 'CHI', Change_Code__c = 'CHI', Reason_Code__c = '81', Reason_Code_Description__c = 'CHANGE IN PROCESS', Account_status_change__c = '8;9',Integration_RecId__c = 'C'));
+		changeCodeCustomsettings.add(new AMS_ChangeCodes__c(Name = 'CHF', Change_Code__c = 'CHF', Reason_Code__c = '9', Reason_Code_Description__c = 'ACCREDITED-MEET-STANDARDS', Account_status_change__c = '9',Integration_RecId__c = 'C'));
+		changeCodeCustomsettings.add(new AMS_ChangeCodes__c(Name = 'CHO', Change_Code__c = 'CHO', Reason_Code__c = '81', Reason_Code_Description__c = 'CHANGE IN PROCESS', Account_status_change__c = '8;9',Integration_RecId__c = 'C'));
 		insert changeCodeCustomsettings;
 
 		ID rtAgency = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency').getRecordTypeId();
@@ -138,7 +138,7 @@ public class AMS_AgencyChangesTest {
 		
 		// Create OSCAR and Communication Case
 		ID rtChange = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('CHANGE').getRecordTypeId();
-		theOscar = new AMS_OSCAR__c(RecordTypeId = rtChange, Account__c = theAccount.Id, Type_of_change__c = typeOfChange);
+		theOscar = new AMS_OSCAR__c(RecordTypeId = rtChange, Account__c = theAccount.Id, Type_of_change__c = typeOfChange,Change_effective_as_of__c  = Date.today());
 		insert theOscar;
 
 		ID rtCommCase = Schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
@@ -188,7 +188,7 @@ public class AMS_AgencyChangesTest {
 		system.debug('theOscar: ' + theOscar);
 		system.debug('theOSCAR: ' + theOSCAR);
 		// If I pass the sanity check (STEP 6) a change code CAD should be generated for both HO1
-		theOSCAR.STEP6__c = 'Passed';
+		theOSCAR.STEP6__c = AMS_Utils.PASSED;
 		update theOSCAR;
 		
 		List<Agency_Applied_Change_code__c> changecodes = [SELECT Account__r.IATAcode__c, Change_Code__c FROM Agency_Applied_Change_code__c 
@@ -200,7 +200,7 @@ public class AMS_AgencyChangesTest {
 		
 		
 		// If I finalize the change (STEP 2) no more change codes schould be generated
-		theOSCAR.RPM_Approval__c = 'Authorize Approval';
+		theOSCAR.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
 		update theOSCAR;
 		
 		changecodes = [SELECT Account__r.IATAcode__c, Change_Code__c FROM Agency_Applied_Change_code__c WHERE OSCAR__c = :theOscar.Id ORDER BY Account__r.IATAcode__c];
