@@ -14,10 +14,12 @@ public class AMS_QueryUtils {
         		String fieldType = fd.getType().name();
         		String apiName = fd.getName();
         		
+        		/*
         		if(fieldType.equalsIgnoreCase('reference')) {
         			if(apiName.endsWith('__c')) apiName += ', '+apiName.replace('__c', '__r.Name');
         			if(apiName.endsWith('Id')) apiName += ', '+apiName.replace('Id', '.Name');
         		}
+        		*/
 
         		fields += apiName + ', ';
         	}

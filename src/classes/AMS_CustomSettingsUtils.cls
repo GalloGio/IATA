@@ -19,11 +19,11 @@ This Custom Setting recovers the Collumns used In the EBulletin Reports
 
 		public AMSEBulletinSettings__c eBulletinSetting;
 		public String colToSort;
-
+	
 		public AMS_EBulletinSetting(AMSEBulletinSettings__c eBulletinSetting, String colToSort){
 			this.eBulletinSetting = eBulletinSetting;
 			this.colToSort = colToSort;
-			
+				
 		}
 
 		public Integer compareTo(Object compareTo) {

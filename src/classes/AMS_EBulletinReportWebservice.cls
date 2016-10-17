@@ -1,6 +1,7 @@
 global class AMS_EBulletinReportWebservice {
 
 	private static String objectBaseQuery = 'Agency_Applied_Change_code__c';
+	private static String objectHistBaseQuery = 'AMS_Agency_A_Change_code_History__c';
 	private static String typeEBulletin;
 
 	/** 
@@ -51,7 +52,7 @@ global class AMS_EBulletinReportWebservice {
 
 		AMS_EBulletinReportHelper EbulletinHelper = new AMS_EBulletinReportHelper();
 
-		return EbulletinHelper.processEBulletinRecords(typeEBulletin,objectBaseQuery,'";"');
+		return EbulletinHelper.processEBulletinRecords(typeEBulletin,objectBaseQuery,objectHistBaseQuery,'";"');
 
 
 	}

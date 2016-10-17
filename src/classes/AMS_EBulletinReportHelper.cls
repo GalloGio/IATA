@@ -38,37 +38,11 @@ public class AMS_EBulletinReportHelper {
 
 
 	/** 
-		 Get EBulletin Settings with the Account / Oscar / Change Codes fields to be recovered 
-	*/
-	private static void getEBulletinSettings(String typeEBulletin)
-	{
-
-		Map<String, AMSEBulletinSettings__c> eBulletinSettingsMap = AMSEBulletinSettings__c.getAll();
-		
-		
-		for(AMSEBulletinSettings__c setting : eBulletinSettingsMap.values()){
-			eBulletinSettingsList.add( new AMS_CustomSettingsUtils.AMS_EBulletinSetting(setting,'Number_Order__c') );
-
-		}
-		eBulletinSettingsList.sort();
-
-	
-
-
-
-		//eBulletinSettingsList = Database.query(AMS_QueryUtils.getAllFieldQuery('AMSEBulletinSettings__c',typeEBulletinMap.get(typeEBulletin)+'=true ORDER BY Number_Order__c',false));
-
-
-
-		System.debug('E Bulletin Settings to recover: ' + eBulletinSettingsList);
-	}
-
-	/** 
 		 Generate CSV Header with the recovered metadata records 
 	*/
 	public static void getEBulletinFields(String typeEBulletin, String objectBaseQuery,String csvFormat )
 	{
-		getEBulletinSettings(typeEBulletin);
+		getEBulletinSettings();
 
 		/****** Alternative method to recover directly the field labels to use has columns headers ****
 		
@@ -83,10 +57,17 @@ public class AMS_EBulletinReportHelper {
 
 		for (AMS_CustomSettingsUtils.AMS_EBulletinSetting eBulletinSettingG : eBulletinSettingsList)
 		{
-			fieldsList.add(eBulletinSettingG.eBulletinSetting.API_Name__c);
-			headersList.add(eBulletinSettingG.eBulletinSetting.Name);
+			if(eBulletinSettingG.eBulletinSetting.API_Name__c == 'Owners')
+			{
 
-			system.debug('EBulletinSetting.API_Name__c: ' + eBulletinSettingG.eBulletinSetting.API_Name__c);
+			}
+
+			else if((Boolean)eBulletinSettingG.eBulletinSetting.get(typeEBulletinMap.get(typeEBulletin)))
+			{
+				headersList.add(eBulletinSettingG.eBulletinSetting.Label__c);
+				fieldsList.add(eBulletinSettingG.eBulletinSetting.API_Name__c);
+			}
+
 			
 			/****** Alternative method to recover directly the field labels to use has columns headers ****
 			wrapperLabel wL = new wrapperLabel(objectBaseQuery,EBulletinSetting.API_Name__c,fieldMap);
@@ -122,18 +103,24 @@ public class AMS_EBulletinReportHelper {
 	/** 
 		 process EBulletin Records 
 	*/
-	public String processEBulletinRecords(String typeEBulletin , String objectBaseQuery ,String csvFormat)
+	public String processEBulletinRecords(String typeEBulletin, String objectBaseQuery, String objectHistBaseQuery, String csvFormat)
 	{
 
 		system.debug('Records query: ' + AMS_QueryUtils.getFieldsQuery(objectBaseQuery,fieldsQuery, ''));
 	
-		List <Agency_Applied_Change_code__c> ccHistList = Database.query(AMS_QueryUtils.getFieldsQuery(objectBaseQuery,fieldsQuery, ''));
+		List <Agency_Applied_Change_code__c> ccList = Database.query(AMS_QueryUtils.getFieldsQuery(objectBaseQuery,fieldsQuery, ''));
 
-		system.debug('ccHistList: ' + ccHistList);
+
+		system.debug('Records history query: ' +AMS_QueryUtils.getAllFieldQuery(objectHistBaseQuery,objectBaseQuery.replace('__c', '__r.Id') + '=:ccList', false));
+	
+		List <AMS_Agency_A_Change_code_History__c> ccHistList = Database.query(AMS_QueryUtils.getAllFieldQuery(objectHistBaseQuery,objectBaseQuery.replace('__c', '__r.Id') + '=:ccList', false));
+	
+
+		system.debug('ccList: ' + ccList);
 
 		String recordsCSV = '';	
 
-		for (Agency_Applied_Change_code__c ccHist : ccHistList) 
+		for (Agency_Applied_Change_code__c ccHist : ccList) 
 		{
 			List<String> recordList = processParentDependecies(fieldsList,ccHist);
 			
@@ -149,6 +136,29 @@ public class AMS_EBulletinReportHelper {
 
 	}
 
+
+	/** 
+		 Get EBulletin Settings with the Account / Oscar / Change Codes fields to be recovered 
+	*/
+	private static void getEBulletinSettings()
+	{
+
+		Map<String, AMSEBulletinSettings__c> eBulletinSettingsMap = AMSEBulletinSettings__c.getAll();
+		
+		//TODO condition to get the fiels for EBulletin Daily our Weekly
+
+		for(AMSEBulletinSettings__c setting : eBulletinSettingsMap.values()){
+			eBulletinSettingsList.add( new AMS_CustomSettingsUtils.AMS_EBulletinSetting(setting,'Number_Order__c'));
+
+		}
+		eBulletinSettingsList.sort();
+
+		//eBulletinSettingsList = Database.query(AMS_QueryUtils.getAllFieldQuery('AMSEBulletinSettings__c',typeEBulletinMap.get(typeEBulletin)+'=true ORDER BY Number_Order__c',false));
+
+
+
+		System.debug('EBulletin Settings to recover: ' + eBulletinSettingsList);
+	}
 	/** 
 		 convert a list of strings to a string with a custom pattern 
 	*/
