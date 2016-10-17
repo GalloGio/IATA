@@ -73,7 +73,7 @@
                                                             <td>{!productRatePlan.Name}</td>
                                                         </tr>
                                                         <tr>
-                                                            <th>Cost per e-mail:</th>
+                                                            <th>Cost per email:</th>
                                                             <td>
                                                                 <apex:outputText value="${0, number, ###,###,##0.00}"><apex:param value="{!productRatePlan.EBC_Currency_Cost_Per_Email__c}"/></apex:outputText><br />
                                                                 <apex:outputLink value="{!URLFOR($Page.IECEBC_AccountRatePlan)}" rendered="{!productRatePlan.Name != 'Premium Edition'}">Lower your cost per email</apex:outputLink>
@@ -81,7 +81,7 @@
                                                         </tr>
                                                         <tr>
                                                             <th>Account Balance:</th>
-                                                            <td><apex:outputText value="{0, number, ###,###,##0}"><apex:param value="{!billingAccount.eBroadcast_Email_Balance__c}"/></apex:outputText> e-mail(s)</td>
+                                                            <td><apex:outputText value="{0, number, ###,###,##0}"><apex:param value="{!billingAccount.eBroadcast_Email_Balance__c}"/></apex:outputText> email(s)</td>
                                                         </tr>
                                                         <apex:outputText rendered="{!productRatePlan.EBC_SubscriptionType__c == 'Pre-Paid' && subscription.Zuora__NextRenewalDate__c >= TODAY()}">
                                                             <tr>

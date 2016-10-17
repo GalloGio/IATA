@@ -30,13 +30,13 @@
                             <div class="tab-pane is-open" id="pane-4">
                                     <div class="row row-payment">
                                         <div class="columns main-container campaign-cost no-line">
-                                            <p class="description light small">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illo, natus, vel laboriosam id excepturi repellat tempore sint quos, ut doloribus maxime ipsam temporibus hic molestias cumque obcaecati velit libero commodi.</p>
+                                            <p class="description light small">This section allows you to maintain your default account parameters and preferences.</p>
                                             <div class="accordion-container js-accordion">
                                                 <dl class="list">
-                                                    <dt class="accordion-title is-open">Campaign settings</dt>
+                                                    <dt class="accordion-title is-open">Campaign Settings</dt>
                                                     <dd class="accordion-panel is-open">
+                                                        <p>Save time by defining some default campaign settings.</p>
                                                         <apex:form id="campaignSettings">
-                                                            <h3 class="group-title">Default Campaign Settings</h3>
                                                             <div class="field-group text">
                                                                 <label>
                                                                     <span class="input-label">Default "From Name"</span>
@@ -59,8 +59,7 @@
                                                     <dt class="accordion-title" id="primaryContactTitle">Primary Contact</dt>
                                                     <dd class="accordion-panel">
                                                             <apex:form id="primaryContact">
-                                                                <h3 class="group-title">Primary account contact</h3>
-                                                                <p>You can provide an alternate contact. This person will receive notifications such as campaign send notifications, account status notifications and campaign test  emails.</p>
+                                                                <p>The primary contact is the person responsible for the account. This person will receive service notifications and may be contacted by IATA as required.</p>
                                                                 <table class="data-table table-contact-info">
                                                                     <tbody>
                                                                         <tr>
@@ -117,7 +116,6 @@
                                                     <dt class="accordion-title">Notifications</dt>
                                                     <dd class="accordion-panel">
                                                         <apex:form id="notifications">
-                                                            <h3 class="group-title">Notifications</h3>
                                                             <p>Notifications are sent to the <a href="#" onclick="jQuery('#primaryContactTitle').click(); return false;">Primary Contact</a> email address.</p>
                                                             <div class="field-group checkbox-light">
                                                                 <div class="checkbox-box"> 

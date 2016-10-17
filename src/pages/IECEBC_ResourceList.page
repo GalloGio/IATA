@@ -54,7 +54,7 @@
                         <div class="modal-body">
                             <div class="field-group text">
                                 <label>
-                                    <span class="input-label">Lorem ipsum dolor sit amet, consectetur.</span>
+                                    <span class="input-label">Import images to your gallery</span>
                                     
                                     <span class="custom-user-input file">
                                         <span class="button">Browse</span>
@@ -173,7 +173,7 @@
                         </script>
                         <div class="gage-container">
                             <div class="clearfix">
-                                <span class="title">Image Gallery Storage</span>
+                                <span class="title">Image Gallery Capacity</span>
                                 <span class="light">{!gaugestorage}</span>
                             </div>
                             <div class="gage">

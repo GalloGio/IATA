@@ -190,7 +190,7 @@
 					<div class="tab-container">
 						<ul class="nav tabs">
 							<li class="active"><a href="{!URLFOR($Page.IECEBC_AccountManage)}">Overview</a></li>
-							<li><a href="{!URLFOR($Page.IECEBC_AccountRatePlan)}">Rate plan</a></li>
+							<li><a href="{!URLFOR($Page.IECEBC_AccountRatePlan)}">Rate Plan</a></li>
 							<li><a href="{!URLFOR($Page.IECEBC_AccountExtras)}">Extras</a></li>
 							<apex:outputPanel rendered="{!isEbcPrepaid}">
 								<li><a href="{!URLFOR($Page.IECEBC_AccountEmailBlocks)}">Email Blocks</a></li>
@@ -220,7 +220,7 @@
 										</apex:outputPanel>
 										<apex:outputPanel rendered="{!showSuggestionMessage}">
 											<div class="alert default">
-												<p>Lower your cost per email as low as USD $0.05 with our Pre-Paid rate plans.</p>
+												<p>Lower your cost per email as low as $0.05 with our Pre-Paid rate plans.</p>
 												<a href="{!URLFOR($Page.IECEBC_AccountRatePlan)}">See our rate plans</a>
 											</div>
 										</apex:outputPanel>
@@ -232,9 +232,7 @@
 												<strong class="number">
 													<apex:outputText value="{0, number, ###,###,##0}"><apex:param value="{!billingAccount.eBroadcast_Email_Balance__c}" /></apex:outputText>
 												</strong>
-												<span class="label">
-													{!IF((billingAccount.eBroadcast_Email_Balance__c < -1 || billingAccount.eBroadcast_Email_Balance__c>1  ),"emails", "email")}
-												</span>
+												<span class="label">email(s)</span>
 												<div class="icon">
 													<i class="fa fa-envelope" aria-hidden="true"></i>
 												</div>
@@ -251,7 +249,7 @@
 												<strong class="number">
 													<apex:outputText value="{0, number, ###,###,##0}"><apex:param value="{!totalCampaigns}" /></apex:outputText>
 												</strong>
-												<span class="label">Total campaigns</span>
+												<span class="label">Total Campaigns</span>
 												<div class="icon">
 													<i class="fa fa-bullhorn" aria-hidden="true"></i>
 												</div>
@@ -262,7 +260,7 @@
 												<strong class="number">
 													<apex:outputText value="{0, number, ###,###,##0}"><apex:param value="{!totalSends}" /></apex:outputText>
 												</strong>
-												<span class="label">Total sends</span>
+												<span class="label">Total Sends</span>
 												<div class="icon">
 													<i class="fa fa-paper-plane" aria-hidden="true"></i>
 												</div>
@@ -352,7 +350,7 @@
 																<th class="activity-date">Activity Date/Time</th>
 																<th class="name">Activity Name</th>
 																<th class="id">Campaign ID</th>
-																<th class="total-count">Total Count</th>
+																<th class="total-count">Count</th>
 															</tr>
 															
 														</thead>
@@ -365,7 +363,7 @@
 																	</td>																
 																	<td class="name">{!act.Name}</td>
 																	<td class="id">{!act.EBC_Campaign__r.Campaign_ID__c}</td>
-																	<td class="total-count">{!act.Total_Count__c} {!IF((act.Total_Count__c < -1 || act.Total_Count__c>1  ),"emails", "email")}</td>
+																	<td class="total-count">email(s)</td>
 																</tr>
 															</apex:repeat>
 															
