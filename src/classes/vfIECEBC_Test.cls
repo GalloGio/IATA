@@ -54,13 +54,15 @@ public class vfIECEBC_Test {
         vfIECEBC_TestSuite.testOptOut();
     }
     
-    
 	public static testMethod void testResubscribe() {
         vfIECEBC_TestSuite.testResubscribe();
     }
+	public static testMethod void testCleanOutOfDateOptOut() {
+        vfIECEBC_TestSuite.testCleanOutOfDateOptOut();
+    }
+     
     
-    
-    
+     
     /*
      * Those methods become useless once we test the Pay Using Credits
 	public static testMethod void testCampaignApproval() {
