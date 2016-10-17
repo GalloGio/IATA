@@ -82,10 +82,22 @@
      }
     function ShoworHideTerms(showorhide)
     {
-        var self = jQuery(this);
-        parent = self.parents('.js-accordion'),
-        parent.find('.accordion-panel[data-index="2"]]').removeClass('is-open');
-        parent.find('.accordion-panel[data-index="2"]]').addClass('is-disabled');
+     var openterms='is-open';
+     var closeterms='is-disabled';
+     if (!showorhide) {closeterms='is-open';openterms='is-disabled';}
+     jQuery('#accordion-title-terms').removeClass(openterms);
+     jQuery('#accordion-title-terms').addClass(closeterms);
+     jQuery('#accordion-panel-terms').removeClass(openterms);
+     jQuery('#accordion-panel-terms').addClass(closeterms);
+     var isTermsSelected=(jQuery('#terms-and-conditions').is(':checked') ) ? 1 : 0;
+     
+     if (isTermsSelected==1){
+         jQuery('#accordion-payment-method').removeClass(openterms);
+         jQuery('#accordion-payment-method').addClass(closeterms);
+         jQuery('#accordion-payment-method-panel').removeClass(openterms);
+         jQuery('#accordion-payment-method-panel').addClass(closeterms);
+         }
+         
     }
 	</script>
 	
@@ -240,7 +252,7 @@
                                                         value="Cancel" 
                                                         reRender="campaignConfirmBillingDetailForm,formShoppingCart,msg"
                                                         status="statusId"
-                                                        styleClass="text-link"  onclick="ShoworHideTerms(true);ShowWaitingStatus('.sectionAddress,.sectionActions');"/>
+                                                        styleClass="text-link"  onclick="ShoworHideTerms(false);ShowWaitingStatus('.sectionAddress,.sectionActions');"/>
                                         </li>
                                     </apex:outputText>
                                     <apex:outputText rendered="{!editMode}">
@@ -249,15 +261,16 @@
                                                         value="Save" 
                                                         reRender="campaignConfirmBillingDetailForm,formShoppingCart,msg"
                                                         status="statusId"
-                                                        styleClass="button secondary" onclick="ShoworHideTerms(true);ShowWaitingStatus('.sectionAddress,.sectionActions');"/>
+                                                        styleClass="button secondary" onclick="ShoworHideTerms(false);ShowWaitingStatus('.sectionAddress,.sectionActions');"/>
                                         </li>
 									</apex:outputText>
                                     </ul>                                    
                                 </div>
                             </apex:form>
 						</dd>
-                        <dt class="accordion-title is-open" data-index="2">Terms and conditions</dt>
-						<dd class="accordion-panel is-open" data-index="2">
+                        
+                        <dt class="accordion-title is-open" data-index="2" id="accordion-title-terms">Terms and conditions</dt>
+						<dd class="accordion-panel is-open" data-index="2" id="accordion-panel-terms">
 							<p>Please read the Terms and Conditions before proceeding with payment.</p>
 							<div class="checkbox-box">
 								<div class="custom-user-input checkbox">
@@ -268,7 +281,7 @@
 							</div>
 						</dd> 	
 						<dt class="accordion-title is-disabled" data-index="3" id="accordion-payment-method">Payment method</dt>
-						<dd class="accordion-panel" data-index="3">
+						<dd class="accordion-panel" data-index="3" id="accordion-payment-method-panel">
 							<div class="group-container payment-info">
 								<h3 class="group-title">Payment information</h3>
 								<div class="box box-payment-type js-payment-method">
@@ -556,5 +569,9 @@
 		</section>
 		
 	</div>
-	
+	<apex:outputText rendered="{!editMode}">
+        <script>
+        ShoworHideTerms(true);
+        </script>
+    </apex:outputText>
 </apex:component>
