@@ -21707,6 +21707,11 @@
     </fieldPermissions>
 	<fieldPermissions>
         <editable>true</editable>
+        <field>Contract.Dunning_Procedure__c</field>
+        <readable>true</readable>
+    </fieldPermissions>    
+	<fieldPermissions>
+        <editable>true</editable>
         <field>Contract.EF_Admin_Fee__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -22482,6 +22487,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>EF_Billing_Agreement__c.Airline_Location_ID__c</field>
+        <readable>true</readable>
+    </fieldPermissions> 
+    <fieldPermissions>
+        <editable>false</editable>
         <field>EF_Billing_Agreement__c.Allow_Billing_Agreements__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -22498,6 +22508,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>EF_Billing_Agreement__c.Billing_Currency__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>EF_Billing_Agreement__c.Bill_to__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -22582,6 +22597,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>EF_Billing_Agreement__c.Payer__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>EF_Billing_Agreement__c.Payment_Currency__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -22621,6 +22641,16 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>EF_Billing_Agreement__c.Ship_to__c</field>
+        <readable>true</readable>
+    </fieldPermissions> 
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>EF_Billing_Agreement__c.Sold_to__c</field>
+        <readable>true</readable>
+    </fieldPermissions>   
+    <fieldPermissions>
         <editable>false</editable>
         <field>EF_Contact_Relationship__c.Contact_Account__c</field>
         <readable>true</readable>
@@ -22646,6 +22676,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>EF_Location_Code__c.Contract_BA_Id__c</field>
+        <readable>true</readable>
+    </fieldPermissions>    
+    <fieldPermissions>
         <editable>true</editable>
         <field>EF_Location_Code__c.Contract__c</field>
         <readable>true</readable>
@@ -22655,6 +22690,11 @@
         <field>EF_Location_Code__c.EF_Airline_Billing_Agreement__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>EF_Location_Code__c.Location_Code_Details__c</field>
+        <readable>true</readable>
+    </fieldPermissions>    
     <fieldPermissions>
         <editable>false</editable>
         <field>EF_Location_Currency__c.Base_URL__c</field>

@@ -49,6 +49,10 @@
                 <behavior>Required</behavior>
                 <field>EF_Status__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Dunning_Procedure__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -322,6 +326,8 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Location_Code__c</fields>
+        <fields>Location_Code_Details__c</fields>
         <relatedList>EF_Location_Code__c.Contract__c</relatedList>
     </relatedLists>
     <relatedLists>
