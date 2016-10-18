@@ -49,6 +49,10 @@
                 <behavior>Required</behavior>
                 <field>EF_Status__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Dunning_Procedure__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
