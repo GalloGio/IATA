@@ -369,11 +369,11 @@
         <fullName>IRR_Expiration_Date__c</fullName>
         <externalId>false</externalId>
         <formula>DATETIMEVALUE(
-  TEXT(YEAR(Effective_Date__c ))+ &quot;-&quot; + 
+  TEXT(YEAR(NULLVALUE(Effective_Date__c, DATEVALUE(CreatedDate)) )+1)+ &quot;-&quot; + 
   IF(
-    AND(MONTH(Effective_Date__c) = 2,DAY( Effective_Date__c ) = 29)
+    AND(MONTH(NULLVALUE(Effective_Date__c, DATEVALUE(CreatedDate))) = 2,DAY( NULLVALUE(Effective_Date__c, DATEVALUE(CreatedDate))) = 29)
     ,&quot;3-1&quot;
-    ,TEXT(MONTH(Effective_Date__c)) + &quot;-&quot; + TEXT(DAY(Effective_Date__c))
+    ,TEXT(MONTH(NULLVALUE(Effective_Date__c, DATEVALUE(CreatedDate)))) + &quot;-&quot; + TEXT(DAY(NULLVALUE(Effective_Date__c, DATEVALUE(CreatedDate))))
   ) + &quot; 01:01:00&quot;
 )</formula>
         <label>IRR Expiration Date</label>
