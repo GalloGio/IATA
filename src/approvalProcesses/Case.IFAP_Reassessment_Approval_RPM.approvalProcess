@@ -136,6 +136,10 @@
             <type>FieldUpdate</type>
         </action>
         <action>
+            <name>IFAP_Update_Is_Complaint</name>
+            <type>FieldUpdate</type>
+        </action>
+        <action>
             <name>Quality_issue_accepted_Notification</name>
             <type>Alert</type>
         </action>
@@ -148,6 +152,10 @@
     <finalRejectionActions>
         <action>
             <name>Change_status_to_Reassessment_Rejected</name>
+            <type>FieldUpdate</type>
+        </action>
+        <action>
+            <name>IFAP_Update_Is_Complaint</name>
             <type>FieldUpdate</type>
         </action>
         <action>

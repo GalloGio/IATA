@@ -22,25 +22,6 @@
         <senderType>OrgWideEmailAddress</senderType>
         <template>E_F_Services/EF_Billing_Agreement_Rejected</template>
     </alerts>
-    <alerts>
-        <fullName>Send_Email_When_Renewal_process_started</fullName>
-        <description>Send Email When Renewal process started</description>
-        <protected>false</protected>
-        <recipients>
-            <field>Alternate_RCRM_Product_Manager_Email__c</field>
-            <type>email</type>
-        </recipients>
-        <recipients>
-            <field>Opportunity_OwnerEmail__c</field>
-            <type>email</type>
-        </recipients>
-        <recipients>
-            <field>RCRM_Product_Manager_Email__c</field>
-            <type>email</type>
-        </recipients>
-        <senderType>CurrentUser</senderType>
-        <template>MarketingPAX/Marketing_Alert_on_Started_renewal</template>
-    </alerts>
     <fieldUpdates>
         <fullName>EF_Set_Contract_Approval_To_Approved</fullName>
         <field>EF_Manager_Approval__c</field>
@@ -113,15 +94,4 @@
         <operation>Formula</operation>
         <protected>false</protected>
     </fieldUpdates>
-    <rules>
-        <fullName>Change Renewal Status</fullName>
-        <actions>
-            <name>Send_Email_When_Renewal_process_started</name>
-            <type>Alert</type>
-        </actions>
-        <active>true</active>
-        <description>Once the Renewal_Status__c  changes to &quot;Renewal process started&quot; the Current Opportunity Owner, the RCRM Product Manager and Alternate RCRM Product Manager  should be notified.</description>
-        <formula>AND( ISPICKVAL(  Renewal_Status__c , &apos;Renewal process started&apos;), ISCHANGED( Renewal_Status__c ) )</formula>
-        <triggerType>onAllChanges</triggerType>
-    </rules>
 </Workflow>

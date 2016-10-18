@@ -857,7 +857,6 @@
             "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step6_succeeded"
           }],
           "DisplayFields": [
-          "Change_effective_as_of__c",
           "Type_of_change__c",
           "STEP6__c"],
           "IsDependent": false
@@ -3081,7 +3080,7 @@
             "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step6_failed"
           }],
           "DisplayFields": [
-      "AMS_Correction_change_code__c",
+      "AMS_Generate_COR_change_code__c",
       "STEP6__c"],
           "IsDependent": false
         }]

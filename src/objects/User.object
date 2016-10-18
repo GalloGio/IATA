@@ -2624,9 +2624,9 @@ Currently (26/10/15) used to identify which user haven&apos;t complete the suppo
         <columns>CORE.USERS.EMAIL</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>CORE.PROFILE.NAME</field>
+            <field>CORE.USER_ROLE.NAME</field>
             <operation>contains</operation>
-            <value>Agency Management</value>
+            <value>Director General</value>
         </filters>
         <label>TD</label>
         <language>en_US</language>

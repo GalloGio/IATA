@@ -59,10 +59,6 @@
                 <behavior>Edit</behavior>
                 <field>Contact_Position__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Would_you_like_to_keep_your_subscription__c</field>
-            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

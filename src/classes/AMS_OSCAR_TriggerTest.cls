@@ -1,4 +1,5 @@
-@isTest class AMS_OSCAR_TriggerTest {
+@isTest
+private class AMS_OSCAR_TriggerTest {
     
     @testSetup static void setup(){
 		AMS_OSCAR_TestDataFactory.createOSCARwithInspectionsTestData();
@@ -694,9 +695,7 @@
         oscar.recordTypeID = newRT;
         oscar.STEP6__c = AMS_Utils.PASSED;
         oscar.Type_of_change__c = 'Name';
-        oscar.Change_effective_as_of__c = date.today();
-
-
+        
         Test.startTest();
             
             update oscar;

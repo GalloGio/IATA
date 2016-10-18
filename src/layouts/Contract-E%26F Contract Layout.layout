@@ -292,7 +292,6 @@
         <fields>Status__c</fields>
         <fields>Client__c</fields>
         <fields>Airline__c</fields>
-        <fields>EF_Location_ID__c</fields>
         <fields>Data_Currency__c</fields>
         <fields>Payment_Method_Code__c</fields>
         <fields>Payment_Currency__c</fields>
@@ -327,14 +326,6 @@
     </relatedLists>
     <relatedLists>
         <relatedList>RelatedApprovalList</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>CASES.CASE_NUMBER</fields>
-        <fields>CASES.SUBJECT</fields>
-        <fields>BSPCountry__c</fields>
-        <fields>CASES.CREATED_DATE</fields>
-        <fields>CASES.PRIORITY</fields>
-        <relatedList>Case.EF_Contract__c</relatedList>
     </relatedLists>
     <relatedObjects>AccountId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>

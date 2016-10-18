@@ -2174,30 +2174,6 @@ Enabled: Sufficient for Agents to simply upload scanned copy to online applicati
         </sharedTo>
     </listViews>
     <listViews>
-        <fullName>All_Countries_OSCAR</fullName>
-        <columns>NAME</columns>
-        <columns>ISO_Code__c</columns>
-        <columns>Enable_Minor_Changes_from_Portal__c</columns>
-        <columns>Enable_Notice_of_Change__c</columns>
-        <columns>OSCAR_enabled__c</columns>
-        <columns>Region__c</columns>
-        <columns>Sub_Region__c</columns>
-        <columns>Country_Manager__c</columns>
-        <columns>AIMS_Area_Name__c</columns>
-        <columns>Case_BSP_Country__c</columns>
-        <columns>AIMS_Area_ID__c</columns>
-        <columns>SLA_Type__c</columns>
-        <columns>UPDATEDBY_USER</columns>
-        <columns>LAST_UPDATE</columns>
-        <filterScope>Everything</filterScope>
-        <label>All Countries - OSCAR</label>
-        <language>en_US</language>
-        <sharedTo>
-            <group>Account_management_team</group>
-            <group>IDFSAllusersexcludingIWandACCA</group>
-        </sharedTo>
-    </listViews>
-    <listViews>
         <fullName>Americas_Countries</fullName>
         <columns>NAME</columns>
         <columns>BSP_Country_free_text__c</columns>

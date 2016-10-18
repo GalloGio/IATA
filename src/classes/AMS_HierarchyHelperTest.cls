@@ -257,21 +257,21 @@ static testMethod void migrateAccountsToExistingHierarchyTestScenario1() {
         Map<Id, List<AMS_Agencies_relationhip__c>> hierarchies = AMS_HierarchyHelper.getAccountsHierarchies(new Set<Id>{HO.Id, HO2.Id});
         system.assertEquals(0, hierarchies.get(HO2.Id).size(), 'migrateAccountsToExistingHierarchy() Scenario1: the HO2 hierarchy should be empty');
 
-        /*AMS_HierarchyHelper.HierarchyStruct res = AMS_HierarchyHelper.migrateAccountsToExistingHierarchy(HO.Id, 
+        AMS_HierarchyHelper.HierarchyStruct res = AMS_HierarchyHelper.migrateAccountsToExistingHierarchy(//HO, 
                                                                                                          hierarchies.get(HO.Id), 
                                                                                                          HO2.Id,
                                                                                                          hierarchies.get(HO2.Id), 
                                                                                                          allIds, accounts);
-		*/
+
         
         // nothing to delete
         //system.assertEquals(null, res.relationsToDelete, 'migrateAccountsToExistingHierarchy() Scenario 1: the result should not include any relationship to be deleted');
 
         // The system should create a new relationship HO2 -> HO1
         system.assertEquals(1, res.relationsToInsert.size(), 'migrateAccountsToExistingHierarchy() Scenario 1: the result should include a new relationship HO2 -> HO1' );
-        //system.assertNotEquals(hierarchy.Id, res.relationsToInsert[0].Hierarchy__c, 'migrateAccountsToExistingHierarchy() Scenario 1: the result should include a new relationship HO2 -> HO1 with a hierarhcy different from the old one');
-        //system.assertEquals(HO2.Id, res.relationsToInsert[0].Parent_Account__c, 'migrateAccountsToExistingHierarchy() Scenario 1: the result should include a new relationship HO2 -> HO1 with parent = HO2' );
-        //system.assertEquals(HO.Id, res.relationsToInsert[0].Child_Account__c, 'migrateAccountsToExistingHierarchy() Scenario 1: the result should include a new relationship HO2 -> HO1 with child = HO1' );
+        system.assertNotEquals(hierarchy.Id, res.relationsToInsert[0].Hierarchy__c, 'migrateAccountsToExistingHierarchy() Scenario 1: the result should include a new relationship HO2 -> HO1 with a hierarhcy different from the old one');
+        system.assertEquals(HO2.Id, res.relationsToInsert[0].Parent_Account__c, 'migrateAccountsToExistingHierarchy() Scenario 1: the result should include a new relationship HO2 -> HO1 with parent = HO2' );
+        system.assertEquals(HO.Id, res.relationsToInsert[0].Child_Account__c, 'migrateAccountsToExistingHierarchy() Scenario 1: the result should include a new relationship HO2 -> HO1 with child = HO1' );
         
         // the system should update the relationship HO1-BRto make them point to HO2
         system.assertEquals(5, res.relationsToUpdate.size(), 'migrateAccountsToExistingHierarchy() Scenario 1: the result should not include any relationship to be updated');
@@ -335,7 +335,7 @@ static testMethod void migrateAccountsToExistingHierarchyTestScenario1() {
         for(Integer i=0; i<3; i++)
             someIds.add(secondLevel[i].Id);
         
-        res = AMS_HierarchyHelper.migrateAccountsToExistingHierarchy(HO.Id, 
+        res = AMS_HierarchyHelper.migrateAccountsToExistingHierarchy(//secondLevel[0], 
                                                                      hierarchies.get(HO.Id), 
                                                                      HO2.Id,
                                                                      hierarchies.get(HO2.Id), 

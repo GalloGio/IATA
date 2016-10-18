@@ -158,6 +158,11 @@
     </fields>
     <label>IEC Event Subscription</label>
     <listViews>
+        <fullName>All</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <listViews>
         <fullName>All1</fullName>
         <columns>Subscriber__c</columns>
         <columns>Product_Number__c</columns>

@@ -278,8 +278,8 @@ public class AMS_OscarCaseTriggerHelper {
         for(Case c : (List<Case>)Trigger.new){
             Case cOld = (Trigger.isInsert ? null : (Case)Trigger.oldMap.get(c.Id));
             if(c.RecordTypeId == sidraRecTypeId){
-                if(c.IRR_Withdrawal_Approval_Rejection__c == 'Approved' && (Trigger.isInsert || cOld.IRR_Withdrawal_Approval_Rejection__c != 'Approved') && caseIrregularityCreated.add(c.Id)) IRRWDCases.add(c);
-                if(c.IRR_Approval_Rejection__c == 'Approved' && (Trigger.isInsert || cOld.IRR_Approval_Rejection__c != 'Approved') && caseIrregularityCreated.add(c.Id)) IRRCases.add(c);
+                if(c.Update_AIMS_IRRWITH__c != null && c.IRR_Withdrawal_Approval_Rejection__c == 'Approved' && (Trigger.isInsert || cOld.Update_AIMS_IRRWITH__c == null) && caseIrregularityCreated.add(c.Id)) IRRWDCases.add(c);
+                if(c.Update_AIMS_IRR__c != null && c.IRR_Approval_Rejection__c == 'Approved' && (Trigger.isInsert || cOld.Update_AIMS_IRR__c == null) && caseIrregularityCreated.add(c.Id)) IRRCases.add(c);
             }
         }
 
@@ -288,7 +288,17 @@ public class AMS_OscarCaseTriggerHelper {
         List<Agency_Applied_Change_code__c> irregularities = new List<Agency_Applied_Change_code__c>();
 
         for(Case c : IRRCases) irregularities.add(createChangeCodeFromCase(c, 'A'));
-        for(Case c : IRRWDCases) irregularities.add(createChangeCodeFromCase(c, 'W'));
+
+        Map<Id, Agency_Applied_Change_code__c> approvals = new Map<Id, Agency_Applied_Change_code__c>();
+        for(Agency_Applied_Change_code__c aacc : [SELECT CreatedDate, SIDRA_Case__c FROM Agency_Applied_Change_code__c WHERE SIDRA_Case__c IN :IRRWDCases AND Operation__c = 'A' ORDER BY CreatedDate ASC]){
+            approvals.put(aacc.SIDRA_Case__c, aacc);
+        }
+
+        for(Case c : IRRWDCases){
+            Agency_Applied_Change_code__c irr = createChangeCodeFromCase(c, 'W');
+            irr.Date_time_of_change__c = approvals.get(c.Id).CreatedDate;
+            irregularities.add(irr);
+        }
 
         insert irregularities;
     }
@@ -311,63 +321,46 @@ public class AMS_OscarCaseTriggerHelper {
     /*AMS-1580 and AMS-1585*/
     public static void copyDataFromOscar() {
 
-
         Map<Id, Case> oldMap = (Map<Id, Case>)Trigger.oldMap;
 
-        List<Case> oscarCases = new List<Case>();
+        List<Case> newOscarCases = new List<Case>();
+        List<Case> updatedOscarCases = new List<Case>();
         Map<Id, AMS_OSCAR__c> oscars = new Map<Id, AMS_OSCAR__c>();
 
         for(Case c : (List<Case>) Trigger.New){
             if(
                 c.RecordTypeID == OSCARCaseRecordTypeID
                 && c.OSCAR__c != null
-                && (Trigger.isInsert || (Trigger.isUpdate && oldMap.get(c.Id).Oscar__c != c.Oscar__c))
-            ){
-            
-                oscarCases.add(c);
-                oscars.put(c.Oscar__c, null);
-            }
-            else{ // this is only for update  AMS-1667
-
-            if(
-                c.RecordTypeID == OSCARCaseRecordTypeID
-                && c.OSCAR__c != null
-                && Trigger.isUpdate 
             ){
 
-                oscarCases.add(c);
+                updatedOscarCases.add(c);
+
+                //cases that just received an OSCAR
+                if(Trigger.isInsert || (Trigger.isUpdate && oldMap.get(c.Id).Oscar__c != c.Oscar__c)) newOscarCases.add(c);
+
                 oscars.put(c.Oscar__c, null);
-
-            }
-            
-
             }
         }
 
-        if(oscarCases.isEmpty()) return;
+        if(newOscarCases.isEmpty() && updatedOscarCases.isEmpty()) return;
 
         oscars = new Map<Id, AMS_OSCAR__c>([SELECT Id, OwnerId, Status__c, Account__r.Name, Account__r.Location_Type__c , Account__r.Category__c FROM AMS_OSCAR__c WHERE Id IN :oscars.keySet()]);
 
-        for(Case c : oscarCases){
+        for(Case c : newOscarCases){
             
-            if(c.OwnerId != oscars.get(c.Oscar__c).OwnerId)
-                c.OwnerId = oscars.get(c.Oscar__c).OwnerId;
+            c.OwnerId = oscars.get(c.Oscar__c).OwnerId;
+            c.Status = oscars.get(c.Oscar__c).Status__c;
+
             
-            if(c.Status != oscars.get(c.Oscar__c).Status__c)
-                c.Status = oscars.get(c.Oscar__c).Status__c;
+            if(c.Origin != 'Portal'){
+                c.Subject = c.reason1__c + ' - ' + oscars.get(c.Oscar__c).Account__r.Name;
+            }
+        }
+
+        for(Case c : updatedOscarCases){
 
             String typeOfCustomer = AMS_Utils.fetchTypeOfCustomer(oscars.get(c.Oscar__c).Account__r.Location_Type__c,oscars.get(c.Oscar__c).Account__r.Category__c);
-
-            if(typeOfCustomer != null && typeOfCustomer != c.Type_of_customer__c)
-                c.Type_of_customer__c = typeOfCustomer;
-
-            String newCaseSubject = null;
-			
-			if(c.reason1__c != null)
-				newCaseSubject = c.reason1__c + ' - ' + oscars.get(c.Oscar__c).Account__r.Name;
-
-            if(newCaseSubject != null && c.Subject != newCaseSubject)
-                c.Subject = newCaseSubject;
+            if(typeOfCustomer != null) c.Type_of_customer__c = typeOfCustomer;
         }
     }
 }

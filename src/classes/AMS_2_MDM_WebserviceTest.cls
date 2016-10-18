@@ -45,51 +45,51 @@ public class AMS_2_MDM_WebserviceTest {
         */
     }
     
-    //public static testmethod void test_getHierarchyList() {
+    public static testmethod void test_getHierarchyList() {
 
-    //    IATA_ISO_Country__c isoc = new IATA_ISO_Country__c(Name = 'Test', ISO_Code__c = 'TS');
-    //    insert isoc;
+        IATA_ISO_Country__c isoc = new IATA_ISO_Country__c(Name = 'Test', ISO_Code__c = 'TS');
+        insert isoc;
 
-    //    List<Account> agencylist = new List<Account>();
-    //    Account a1 = new Account(Name='Test1 Parent Agency',IATA_ISO_Country__c = isoc.id);
-    //    Account a2 = new Account(Name='Test1 Child Agency',IATA_ISO_Country__c = isoc.id);
-    //    Account a3 = new Account(Name='Test2 Parent Agency',IATA_ISO_Country__c = isoc.id);
-    //    Account a4 = new Account(Name='Test2 Child Agency',IATA_ISO_Country__c = isoc.id);
-    //    agencylist.add(a1);
-    //    agencylist.add(a2);
-    //    agencylist.add(a3);
-    //    agencylist.add(a4);
-    //    insert agencylist;
+        List<Account> agencylist = new List<Account>();
+        Account a1 = new Account(Name='Test1 Parent Agency',IATA_ISO_Country__c = isoc.id);
+        Account a2 = new Account(Name='Test1 Child Agency',IATA_ISO_Country__c = isoc.id);
+        Account a3 = new Account(Name='Test2 Parent Agency',IATA_ISO_Country__c = isoc.id);
+        Account a4 = new Account(Name='Test2 Child Agency',IATA_ISO_Country__c = isoc.id);
+        agencylist.add(a1);
+        agencylist.add(a2);
+        agencylist.add(a3);
+        agencylist.add(a4);
+        insert agencylist;
 
-    //    List<AMS_Agencies_Hierarchy__c> hierachieslist = new List<AMS_Agencies_Hierarchy__c>();
-    //    AMS_Agencies_Hierarchy__c ah1 = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c='Test Hierarchy');
-    //    AMS_Agencies_Hierarchy__c ah2 = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c='Another Test Hierarchy');
-    //    hierachieslist.add(ah1);
-    //    hierachieslist.add(ah2);
-    //    insert hierachieslist;
+        List<AMS_Agencies_Hierarchy__c> hierachieslist = new List<AMS_Agencies_Hierarchy__c>();
+        AMS_Agencies_Hierarchy__c ah1 = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c='Test Hierarchy');
+        AMS_Agencies_Hierarchy__c ah2 = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c='Another Test Hierarchy');
+        hierachieslist.add(ah1);
+        hierachieslist.add(ah2);
+        insert hierachieslist;
 
-    //    List<AMS_Agencies_relationhip__c> relationshiplist = new List<AMS_Agencies_relationhip__c>();
-    //    AMS_Agencies_relationhip__c ar1 = new AMS_Agencies_relationhip__c(Relationship_details__c='Test',Hierarchy__c=ah1.id,Child_Account__c=a2.id,Parent_Account__c=a1.id);
-    //    AMS_Agencies_relationhip__c ar2 = new AMS_Agencies_relationhip__c(Relationship_details__c='Test',Hierarchy__c=ah2.id,Child_Account__c=a4.id,Parent_Account__c=a3.id);
-    //    relationshiplist.add(ar1);
-    //    relationshiplist.add(ar2);
-    //    insert relationshiplist;
+        List<AMS_Agencies_relationhip__c> relationshiplist = new List<AMS_Agencies_relationhip__c>();
+        AMS_Agencies_relationhip__c ar1 = new AMS_Agencies_relationhip__c(Relationship_details__c='Test',Hierarchy__c=ah1.id,Child_Account__c=a2.id,Parent_Account__c=a1.id);
+        AMS_Agencies_relationhip__c ar2 = new AMS_Agencies_relationhip__c(Relationship_details__c='Test',Hierarchy__c=ah2.id,Child_Account__c=a4.id,Parent_Account__c=a3.id);
+        relationshiplist.add(ar1);
+        relationshiplist.add(ar2);
+        insert relationshiplist;
 
-    //    ah1.Hierarchy_Name__c = 'Test update';
-    //    ah2.Hierarchy_Name__c = 'Test update';
-    //    update hierachieslist;
+        ah1.Hierarchy_Name__c = 'Test update';
+        ah2.Hierarchy_Name__c = 'Test update';
+        update hierachieslist;
 
-    //    Test.startTest();
-    //    List<Id> result = AMS_2_MDM_Webservice.getUpdatedHierarchiesList(null,null);
-    //    system.assertEquals(2, result.size());
-    //    Map<Id,Id> mapResult = new Map<Id,Id>();
-    //    for(Id theId: result){
-    //        mapResult.put(theId, theId);
-    //    }
-    //    system.assert(mapResult.get(ah1.Id) != null);
-    //    system.assert(mapResult.get(ah2.Id) != null);
-    //    Test.stopTest();
-    //}   
+        Test.startTest();
+        List<Id> result = AMS_2_MDM_Webservice.getUpdatedHierarchiesList(null,null);
+        system.assertEquals(2, result.size());
+        Map<Id,Id> mapResult = new Map<Id,Id>();
+        for(Id theId: result){
+            mapResult.put(theId, theId);
+        }
+        system.assert(mapResult.get(ah1.Id) != null);
+        system.assert(mapResult.get(ah2.Id) != null);
+        Test.stopTest();
+    }   
     
     static Account agencyContentA1;
     static IATA_ISO_State__c isos;

@@ -43,7 +43,7 @@ private class AMS_2_MDM_ScheduleTest{
                                                             Web_Service_endpoint__c = 'https://pixid.iata.org/XISOAPAdapter/MessageServlet');
       insert sapSett;
 
-      AMS_ChangeCodes__c cc = new AMS_ChangeCodes__c(Name = 'test', Change_Code__c = 'TST', Billable__c = true, Integration_RecId__c='C');
+      AMS_ChangeCodes__c cc = new AMS_ChangeCodes__c(Name = 'test', Change_Code__c = 'TST', Billable__c = true);
       insert cc;
 
       List<Agency_Applied_Change_code__c> aacclist = new List<Agency_Applied_Change_code__c>();

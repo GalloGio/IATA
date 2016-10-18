@@ -949,10 +949,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>IRIS_Client_Balance__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>CS_Rep_ACC_TER__c</field>
             </layoutItems>
         </layoutColumns>

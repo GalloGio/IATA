@@ -227,7 +227,7 @@ System.debug('au3: ' + au3);
         Set<Id> agenciesValidateError = new Set<Id>();
         Set<Id> agenciesInvalid = new Set<Id>();
         for(Account au: aulist){
-
+System.debug('Account au: ' + au);  
             Boolean bError = false;
             Boolean bErrorLog = false;
             Boolean bInvalid = false;
@@ -283,7 +283,7 @@ System.debug('au3: ' + au3);
             //Validates if In case change code created will be sent with C or T (change or terminate) to sap check if the account is in status 
             //      “New application pending” and if yes, do not mark the account for update
             //result: on Fail - will NOT create the Agency Update Record Status and will NOT create a Log entry
-            if(au.Status__c != null && au.Status__c.equalsIgnoreCase('New application pending') && sRecId != 'A' && bToValidate){
+            if(au.Status__c.equalsIgnoreCase('New application pending') && sRecId != 'A' && bToValidate){
                 bError = true;
                 bErrorLog = false;
                 bInvalid = false;
