@@ -109,7 +109,7 @@
             <name>AMS_Notify_OSCAR_Owner_on_case_Approval_by_Manager</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>AMS_OSCAR__c.Status__c</field>
             <operation>equals</operation>
