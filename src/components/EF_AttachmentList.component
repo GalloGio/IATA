@@ -233,6 +233,8 @@
             var efExpiryDate = $("[id$='dataToSubmit_Expiry_Date__c']").val();
             var efExpired = $("[id$='dataToSubmit_Expired__c']").prop("checked");
             var efSapNumber = $("[id$='dataToSubmit_SAP_Number__c']").val();
+            var additionalInformation = $("[id$='dataToSubmit_Additional_Information__c']").val();
+            var efPrivate = $("[id$='dataToSubmit_EF_Private__c']").prop("checked");
 
             console.warn('efSubCategory: '+efSubCategory);
 
@@ -246,6 +248,8 @@
                  efExpiryDate,
                  efExpired,
                  efSapNumber,
+                 additionalInformation,
+                 efPrivate,
                  function(result, event){}
                );
 
@@ -499,7 +503,7 @@
                         <apex:outputLabel value="{!$ObjectType.AmazonFile__c.fields.EF_Private__c.Label}"/>
                         <apex:outputPanel layout="block" styleClass="requiredInput">
                             <apex:outputPanel layout="block" styleClass="requiredBlock hidden" />
-                            <apex:inputField id="dataToSubmit_EF_Private__c" value="{!amazonFileToUpload.EF_Private__c}"/>
+                            <apex:inputCheckbox id="dataToSubmit_EF_Private__c" value="{!amazonFileToUpload.EF_Private__c}"/>
                         </apex:outputPanel>
                     </apex:pageBlockSectionItem>
 

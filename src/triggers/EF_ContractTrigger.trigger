@@ -46,7 +46,10 @@ trigger EF_ContractTrigger on Contract (
 				EF_ContractHandler.startApprovalProcesses(efContractList);
             }
 
-            //manage critical field notifications on after update
-            EF_ContractHandler.manageCriticalFieldChanges(trigger.new, trigger.oldMap);
+            if(Trigger.isUpdate)
+            {
+	            //manage critical field notifications on after update
+	            EF_ContractHandler.manageCriticalFieldChanges(trigger.new, trigger.oldMap);
+	        }
         }
 }

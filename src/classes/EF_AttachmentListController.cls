@@ -116,7 +116,7 @@ global with sharing class EF_AttachmentListController {
 			this.listAttachments = new List<WrapperAttach>();
 
 			for(WrapperAttach wr : tmpListWrapper) {
-				if(wr.fileAmazon.amazonFile.EF_Private__c == false || this.viewPrivateFiles == true) {
+				if(wr.fileAmazon == null || wr.fileAmazon.amazonFile.EF_Private__c == false || this.viewPrivateFiles == true ) {
 					this.listAttachments.add(wr);
 				}
 			}
@@ -326,7 +326,8 @@ global with sharing class EF_AttachmentListController {
 
     @RemoteAction
     global static boolean createAmazonFileObject(String amazonKey, Long filesize, String parentId, String recordType,
-    												String efCategory, String efSubCategory, String efExpiryDate, Boolean efExpired, String efSapNumber) {
+    												String efCategory, String efSubCategory, String efExpiryDate, Boolean efExpired, String efSapNumber,
+													String additionalInformation, Boolean efPrivate) {
 
         EF_AttachmentListController.runningForEF = true;
 
@@ -346,6 +347,8 @@ global with sharing class EF_AttachmentListController {
                 Expired__c = efExpired,
                 Expiry_Date__c = (String.isEmpty(efExpiryDate) ? null : Date.parse(efExpiryDate)),
                 SAP_Number__c = efSapNumber,
+				Additional_Information__c = additionalInformation,
+				EF_Private__c = efPrivate,
                 Size_MB__c = filesize* 0.000001 //convert to MB
             );
 

@@ -17,6 +17,7 @@ private class EF_AccountTriggerHandlerTest {
                 Category__c = 'ANSP',
                 EF_type__c = 'E&F Client',
                 EF_Status__c = 'Active',
+                EF_SubStatus__c = 'Chapter 7',
                 EF_Effective_Date__c = Date.today(),
                 Reason_for_creation__c = 'new client needed'
                 );
@@ -35,6 +36,7 @@ private class EF_AccountTriggerHandlerTest {
                 Category__c = 'ANSP',
                 EF_type__c = 'E&F Client',
                 EF_Status__c = 'Active',
+                EF_SubStatus__c = 'Chapter 7',
                 EF_Effective_Date__c = Date.today(),
                 Reason_for_creation__c = 'new client needed'
                 );
@@ -46,6 +48,7 @@ private class EF_AccountTriggerHandlerTest {
                 Category__c = 'ANSP',
                 EF_type__c = 'E&F Operator',
                 EF_Status__c = 'Active',
+                EF_SubStatus__c = 'Chapter 7',
                 EF_Effective_Date__c = Date.today(),
                 Reason_for_creation__c = 'new customer needed'
                 );
@@ -57,6 +60,7 @@ private class EF_AccountTriggerHandlerTest {
                 Category__c = 'ANSP',
                 EF_type__c = 'E&F Operator',
                 EF_Status__c = 'Active',
+                EF_SubStatus__c = 'Chapter 7',
                 EF_Effective_Date__c = Date.today(),
                 Reason_for_creation__c = 'new customer needed'
                 );
