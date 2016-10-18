@@ -26,6 +26,17 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Airline_Billing_Agreement_Fields__c</fullName>
+        <description>E&amp;F - Fields to be tracked on Airline Billing Agreements.</description>
+        <externalId>false</externalId>
+        <label>Airline Billing Agreement Fields</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Contact_Fields__c</fullName>
         <description>E&amp;F - Fields to be tracked on Contacts.</description>
         <externalId>false</externalId>
