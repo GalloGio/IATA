@@ -102,7 +102,7 @@
             if (sforce.console.isInConsole()) {
                 ServiceConsoleIntegration(redirectUrl);
             } else {
-                window.open(redirectUrl, '_blank');
+                window.top.location= "/apex/TransferCaseAttachments?id={!relatedCase.Id}";
             }
         }
 
