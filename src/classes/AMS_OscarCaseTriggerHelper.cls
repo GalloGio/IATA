@@ -362,9 +362,9 @@ public class AMS_OscarCaseTriggerHelper {
                 c.Type_of_customer__c = typeOfCustomer;
 
             String newCaseSubject = null;
-      
-      if(c.reason1__c != null)
-        newCaseSubject = c.reason1__c + ' - ' + oscars.get(c.Oscar__c).Account__r.Name;
+			
+			if(c.reason1__c != null)
+				newCaseSubject = c.reason1__c + ' - ' + oscars.get(c.Oscar__c).Account__r.Name;
 
             if(newCaseSubject != null && c.Subject != newCaseSubject)
                 c.Subject = newCaseSubject;
