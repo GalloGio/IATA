@@ -235,12 +235,12 @@ public class IECEBC_Utility {
 		Decimal mk = bodyEncoded.length();
 		
 		//file larger than maximum allowed
-		if ((mk/(1024*1024)>FILE_SIZE_MAX)) throw new Attachment_Size_Exceeds_Capacity_Exception('Attachment size exceeds Maximum File Size allowed ('+String.ValueOf(FILE_SIZE_MAX)+' MB.)');
+		if ((mk/(1024*1024)>FILE_SIZE_MAX)) throw new Attachment_Size_Exceeds_Capacity_Exception('Maximum file size ('+String.ValueOf(FILE_SIZE_MAX)+' MB.) exceeded. Please decrease the size of your image.');
 		
 		mb = mb +mk;
 		mb = (mb / (STORAGE_CAPACITY * 1024*1024))*100;
 		if (mb>=105) {
-			throw new Attachment_Size_Exceeds_Capacity_Exception('Attachment size exceeds total storage capacity allowed ('+String.ValueOf(STORAGE_CAPACITY)+' MB.)');
+			throw new Attachment_Size_Exceeds_Capacity_Exception('Maximum storage capacity exceeded ('+String.ValueOf(STORAGE_CAPACITY)+' MB.)');
 		}
 		
 		// Checking if file name is already used

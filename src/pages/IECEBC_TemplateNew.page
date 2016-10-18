@@ -39,7 +39,8 @@
                                 <apex:outputText rendered="{!newTemplateStepNumber == 1}">
                                     <div >
                                         <h3 class="step-title">Audience</h3>
-                                        <p>Please select lorem dolor sit amet nulla vel sodales mauris. Maecenas ante magna, henderite at mollis quis.</p>
+                                        <p>Select the audience this template is destined for. This selection conditions the merge fields you will be able to use in your template design.</p>
+                                        <p><strong>Important:</strong> Once saved, the template audience can no longer be changed.</p>
                                         
                                         <ul class="list list-radio-select js-radio-list js-form-continue-validation" data-target-button="#js-continue-to-geo-selection" id="js-radio-list-audience">
                                             <li class="{!IF(newTemplate.Audience__c == 'Agency', 'is-selected', '')}">
@@ -54,6 +55,7 @@
                                                         <label class="custom-radio" for="new-template-agency"><i class="icon"></i></label>
                                                     </div>
                                                     <label class="input-label" for="new-template-agency">IATA Travel Agencies</label>
+                                                    <p>Can be used to target agencies only. All applicable merge fields available.</p>
                                                 </div>
                                             </li>
                                             <apex:outputText rendered="{!isIDCARDSelectionAllowed}">
@@ -71,6 +73,7 @@
                                                     </div>
                                                     
                                                     <label class="input-label" for="new-template-agent">IATA/IATAN ID Cardholders</label>
+                                                    <p>Can be used to target travel professionals only. All applicable merge fields available.</p>
                                                 </div>
                                             </li>
                                             </apex:outputText>
@@ -86,7 +89,8 @@
                                                         
                                                         <label class="custom-radio" for="new-template-neutral"><i class="icon"></i></label>
                                                     </div>
-                                                    <label class="input-label" for="new-template-neutral">Neutral</label>
+                                                    <label class="input-label" for="new-template-neutral">General Audience</label>
+                                                    <p>Can be used to target both agencies and travel professionals. Offers a limited number of merge fields.</p>
                                                 </div>
                                             </li>
                                         </ul>

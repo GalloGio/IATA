@@ -101,7 +101,7 @@
                         
                         
                         <apex:variable var="isOptionDisabled" value="{!NOT(ISBLANK(limitToAudience)) && limitToAudience != 'Agency'}" />
-                        <li class="{!IF(isOptionDisabled, ' disabled', '')}">
+                        <li class="{!IF(isOptionDisabled, ' disabled', '')} {!IF(newFilter.Audience__c == 'Agency', 'is-selected', '')}">
                             <div class="radio-box">
                                 <div class="custom-user-input radio">
                                     <apex:outputText rendered="{!NOT(isOptionDisabled)}">
@@ -123,7 +123,7 @@
                         
                         <apex:outputText rendered="{!isIDCARDSelectionAllowed}"> 
                             <apex:variable var="isOptionDisabled" value="{!NOT(ISBLANK(limitToAudience)) && limitToAudience != 'Agent'}" />
-                            <li class="{!IF(isOptionDisabled, ' disabled', '')}">
+                            <li class="{!IF(isOptionDisabled, ' disabled', '')} {!IF(newFilter.Audience__c == 'Agent', 'is-selected', '')}">
                                 <div class="radio-box">
                                     <div class="custom-user-input radio">
                                         <apex:outputText rendered="{!NOT(isOptionDisabled)}">
@@ -146,7 +146,7 @@
                         </apex:outputText>
                         <apex:outputText rendered="{!isCodeSelectionAllowed}"> 
                             <apex:variable var="isOptionDisabled" value="{!NOT(ISBLANK(limitToAudience)) && limitToAudience != 'Custom'}" />
-                            <li class="{!IF(isOptionDisabled, ' disabled', '')}">
+                            <li class="{!IF(isOptionDisabled, ' disabled', '')} {!IF(newFilter.Audience__c == 'Custom', 'is-selected', '')}">
                                 <div class="radio-box">
                                     <div class="custom-user-input radio">
                                         <apex:outputText rendered="{!NOT(isOptionDisabled)}">
@@ -165,7 +165,7 @@
                                     </div>
                                     <label class="input-label" for="new-list-3">Provide a list of IATA Numeric Codes</label>
                                 </div>
-                                <apex:outputPanel rendered="{!newFilter.Audience__c == 'Custom'}">
+                                <apex:outputPanel rendered="{!newFilter.Audience__c == 'Custom'}" styleClass="show-hide-toggle">
                                     <div class="field-group textarea">
                                         <label>
                                             <span class="input-label">Paste your list of IATA Numeric Codes in the box below</span>
@@ -214,7 +214,7 @@
                     
                     <ul class="list list-radio-select js-radio-list js-form-continue-validation" id="js-radio-list-geo-selection" data-target-button="#js-continue-to-refinement">
                         <apex:repeat value="{!geoFilterPresets}" var="globalGeoFilterId">
-                            <li>
+                            <li class="{!IF(globalGeoFilterId == geoFilterPreset, 'is-selected', '')}">
                                 <div class="radio-box">
                                     <div class="custom-user-input radio">
                                         <apex:outputText rendered="{!globalGeoFilterId == geoFilterPreset}">
@@ -231,7 +231,7 @@
                                 </div>
                             </li>
                         </apex:repeat>
-                        <li>
+                        <li class="{!IF('custom-filter' == geoFilterPreset, 'is-selected', '')}">
                             <div class="radio-box">
                                 <div class="custom-user-input radio">
                                     <apex:outputText rendered="{!geoFilterPreset == 'custom-filter'}">
@@ -244,7 +244,7 @@
                                 </div>
                                 <label class="input-label" for="custom-filter">Custom Geo-Selection</label>
                             </div>
-                            <div id="custom-filter-block" style="{!IF(geoFilterPreset == 'custom-filter', '', 'display: none;')}">
+                            <div id="custom-filter-block" class="show-hide-toggle" style="{!IF(geoFilterPreset == 'custom-filter', '', 'display: none;')}">
                                 <div class="group-container custom-geo-selection">
                                     <div class="field-group recipents-match select default">
                                         Recipients matching 
@@ -296,17 +296,17 @@
                                                         </apex:selectList>
                                                     </apex:outputPanel>
                                                     
-                                                    <apex:commandLink styleClass="action-link" action="{!removeGeoFilter}" rerender="geoFilters">
-                                                        <i class="icon fa fa-minus-circle" aria-hidden="true"></i>Remove
-                                                        <apex:param name="firstParam" assignTo="{!geoFilterIndex}" value="{!ind}" />
-                                                    </apex:commandLink>
                                                 </apex:outputText>
+                                                <apex:commandLink styleClass="action-link" action="{!removeGeoFilter}" rerender="geoFilters">
+                                                    <i class="icon fa fa-minus-circle" aria-hidden="true"></i>Remove
+                                                    <apex:param name="firstParam" assignTo="{!geoFilterIndex}" value="{!ind}" />
+                                                </apex:commandLink>
                                             </apex:outputPanel>
                                         </apex:repeat>
                                     </apex:outputPanel>
                                     
                                     <div class="action add-field">
-                                        <a class="js-add-field" onclick="addGeoFilter(); return false;">
+                                        <a class="js-add-field" href="#" onclick="addGeoFilter(); return false;">
                                             <i class="icon fa fa-plus-circle" aria-hidden="true"></i>Add
                                         </a> 
                                     </div>
@@ -423,7 +423,7 @@
                         </apex:outputPanel>
                         
                         <div class="action add-field">
-                            <a class="js-add-field" onclick="addRefinementFilter(); return false;">
+                            <a class="js-add-field" href="#" onclick="addRefinementFilter(); return false;">
                                 <i class="icon fa fa-plus-circle" aria-hidden="true"></i>Add
                             </a> 
                         </div>

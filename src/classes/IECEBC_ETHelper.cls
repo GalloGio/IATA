@@ -49,7 +49,7 @@ public class IECEBC_ETHelper {
     public static String createXMLBody(String bodyContent){
         return CreateXMLHeader() + bodyContent + CreateXMLFooter();
     }
-    
+    /*
     // create xml for TSD create request
     public static String createRequestTSD(String triggeredParam, String templateId){
         return '<CreateRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">'
@@ -78,7 +78,7 @@ public class IECEBC_ETHelper {
                         +'<AutoAddSubscribers>false</AutoAddSubscribers>'
                         +'</Objects>'
                         +' </CreateRequest>';
-    }
+    }*/
     
     // create xml for Email Template retrieve request
     public static String retrieveRequestEmailTemplate(String emailTemplateName){

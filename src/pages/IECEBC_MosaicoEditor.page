@@ -231,7 +231,7 @@
                                                 viewModel.notifier.error(viewModel.t('Email Address has been rejected'));
                                                 console.log(e);
                                             } else if ('undefined' != typeof(e.faultstring) && e.faultstring.indexOf('DailyLimitReached_Exception') != -1) {
-                                                viewModel.notifier.error(viewModel.t('Daily limit of 10 tests for this design/template has been reached.'));
+                                                viewModel.notifier.error(viewModel.t('Daily limit of 10 test emails for this design/template has been reached.'));
                                                 console.log(e);
                                             } else {
                                                 viewModel.notifier.error(viewModel.t('Unknown error!'));
