@@ -375,7 +375,7 @@ public class AMS_OSCARTriggerHandler {
 						system.debug(LoggingLevel.ERROR,'[LF]: AMS_OSCARTriggerHandler() Processing change of location type in sanity checks');
 
 						changesContainer.add(AMS_ChangeCodesHelper.generateChangeCodes(oscar, config, accounts, accountsChangeCode, AMS_Utils.SANITYCHECK, new Set<Id> {oscar.Account__c, hierarchyHO}));
-						accountsToUpdate.putAll(AMS_Utils.copyDataToAccountForAgencyChanges(oscar, new Set<Id> {oscar.Account__c, hierarchyHO}, oscar.Type_of_change__c, accounts, oscarOnlineAccreditation));
+						//accountsToUpdate.putAll(AMS_Utils.copyDataToAccountForAgencyChanges(oscar, new Set<Id> {oscar.Account__c, hierarchyHO}, oscar.Type_of_change__c, accounts, oscarOnlineAccreditation));
 					}
 					// here there are several possible cases:
 					else if (nonCascadingTOCs.length() > 0 && cascadingTOCs.length() > 0) {
