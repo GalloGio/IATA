@@ -22576,6 +22576,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>EF_Location_Code__c.Contract_BA_Id__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>EF_Location_Code__c.Contract__c</field>
         <readable>true</readable>
@@ -22583,6 +22588,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>EF_Location_Code__c.EF_Airline_Billing_Agreement__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>EF_Location_Code__c.Location_Code_Details__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

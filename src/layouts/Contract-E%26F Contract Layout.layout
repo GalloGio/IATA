@@ -326,6 +326,8 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Location_Code__c</fields>
+        <fields>Location_Code_Details__c</fields>
         <relatedList>EF_Location_Code__c.Contract__c</relatedList>
     </relatedLists>
     <relatedLists>
