@@ -22399,6 +22399,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>EF_Billing_Agreement__c.Airline_Location_ID__c</field>
+        <readable>true</readable>
+    </fieldPermissions> 
+    <fieldPermissions>
+        <editable>false</editable>
         <field>EF_Billing_Agreement__c.Allow_Billing_Agreements__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -22415,6 +22420,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>EF_Billing_Agreement__c.Billing_Currency__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>EF_Billing_Agreement__c.Bill_to__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -22499,6 +22509,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>EF_Billing_Agreement__c.Payer__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>EF_Billing_Agreement__c.Payment_Currency__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -22535,6 +22550,16 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>EF_Billing_Agreement__c.Send_to_SAP__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>EF_Billing_Agreement__c.Ship_to__c</field>
+        <readable>true</readable>
+    </fieldPermissions> 
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>EF_Billing_Agreement__c.Sold_to__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
