@@ -29,10 +29,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>NewEvent</actionName>
         <type>Default</type>
     </actionOverrides>
