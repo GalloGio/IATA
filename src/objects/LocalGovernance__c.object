@@ -468,7 +468,7 @@
     <fields>
         <fullName>Maximum_Number_of_Participiants__c</fullName>
         <externalId>false</externalId>
-        <label>Maximum Number of Participiants</label>
+        <label>Maximum Number of Participants</label>
         <precision>18</precision>
         <required>false</required>
         <scale>0</scale>
