@@ -318,7 +318,7 @@ public class EF_ContractHandler
                 Utility.sendEmail(new List <String> {c.EF_DT_Specialist_Email__c, c.EF_IA_Specialist_Email__c}, 'E&F Contract Critical Changes Notification ', emailBody, true, null);
            }else if(c.EF_DT_Specialist__c==null && c.EF_IA_Specialist__c!=null){
                 Utility.sendEmail(new List <String> {c.EF_IA_Specialist_Email__c}, 'E&F Contract Critical Changes Notification ', emailBody, true, null);
-           }else{
+           }else if(c.EF_DT_Specialist__c!=null && c.EF_IA_Specialist__c==null){
                 Utility.sendEmail(new List <String> {c.EF_DT_Specialist_Email__c}, 'E&F Contract Critical Changes Notification ', emailBody, true, null);
            }
            
