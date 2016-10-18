@@ -35,6 +35,17 @@
         <reevaluateOnChange>true</reevaluateOnChange>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>IRR_Expire</fullName>
+        <description>Expire Irregularities 1 year after effective date</description>
+        <field>Irregularities_Expired__c</field>
+        <literalValue>1</literalValue>
+        <name>IRR: Expire</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>Update_IRR_Unique_Id</fullName>
         <description>Update unique Id</description>
         <field>AIMS_ID__c</field>
@@ -43,6 +54,7 @@
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
         <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
     </fieldUpdates>
     <rules>
         <fullName>Change Code - Change Recordtype Irregularities</fullName>
