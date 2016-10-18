@@ -243,8 +243,6 @@ global class AmsIataCodeGenerator{
                         Integer minRange = Integer.valueOf(String.valueOf(range.Min_Range__c).left(1));
                         Integer maxRange = Integer.valueOf(String.valueOf(range.Max_Range__c).left(1));
                         
-                        //looking only into the fisrt left number on the range to avoid querying all the specific iata code
-                        //we will refine the searh later
                         System.debug('****************** min: '+minRange);
                         System.debug('****************** max: '+maxRange);
                         
@@ -292,25 +290,21 @@ global class AmsIataCodeGenerator{
                         // List<AggregateResult> rangeAgenciesBeforeFilter = [select IATACode__c from Account where IATACode__c like :infLimit + '%' group by IATACode__c order by IATACode__c];
                         List<Account> rangeAgencies = new List<Account>();
                         Set<String> tempStorage = new Set<String>();
-                        Integer minRangeInt = Integer.valueOf(String.valueOf(range.Min_Range__c).replace(',', ''));
-                        Integer maxRangeInt = Integer.valueOf(String.valueOf(range.Max_Range__c).replace(',', ''));
-
-                        System.debug('Min range ---> ' + minRangeInt);
-                        System.debug('Max range ---> ' + maxRangeInt);
-                        
                         if(rangeAgenciesBeforeFilter == null)
                         {
                             rangeAgenciesBeforeFilter = new List<AggregateResult>();
                         }
                         for(AggregateResult ag : rangeAgenciesBeforeFilter)
                         {
-                            
                             String iatacode = (String) ag.get('IATACode__c');
                             
                             if(iatacode.length() >= 8)
                             {
-                            usedValuesInRange.add(Integer.valueOf(iatacode.subString(3, 7)));
+                                tempStorage.add(iatacode.subString(0, 7));
                             }
+                            else if(iatacode.length() == 7)
+                            {
+                                tempStorage.add(iatacode);
                             } else
                             {
                                 // Incorrect IATACode format
@@ -326,8 +320,10 @@ global class AmsIataCodeGenerator{
                         {
                             rangeAgencies = new List<Account>();
                         }
-
-
+                        System.debug('**** [IATA CODE GENerator] System calc '+rangeAgencies.size()+' existing codes for Range '+range.Name);
+                        
+                        
+                        System.debug('**** JH: rangeAgencies.size(): '+rangeAgencies.size() + ' max range: ' + range.Max_Range__c + ' - min range: ' +range.Min_Range__c);
                         //test if there enought place in this range
                         if(rangeAgencies.size() <= (range.Max_Range__c-range.Min_Range__c))
                         {
@@ -335,7 +331,7 @@ global class AmsIataCodeGenerator{
                             //TODO
                             
                             //other case
-                        System.debug('Max range ---> ' + maxRangeInt);
+                            System.debug('**** rangeAgencies ' +rangeagencies.size());
                             for(Integer i =1; i < rangeAgencies.size(); i++)
                             {
                                 // JH: Try to find a hole (Number difference greater than 1!):
