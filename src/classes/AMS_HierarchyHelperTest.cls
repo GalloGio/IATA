@@ -257,12 +257,12 @@ static testMethod void migrateAccountsToExistingHierarchyTestScenario1() {
         Map<Id, List<AMS_Agencies_relationhip__c>> hierarchies = AMS_HierarchyHelper.getAccountsHierarchies(new Set<Id>{HO.Id, HO2.Id});
         system.assertEquals(0, hierarchies.get(HO2.Id).size(), 'migrateAccountsToExistingHierarchy() Scenario1: the HO2 hierarchy should be empty');
 
-        AMS_HierarchyHelper.HierarchyStruct res = AMS_HierarchyHelper.migrateAccountsToExistingHierarchy(HO.Id, 
+        /*AMS_HierarchyHelper.HierarchyStruct res = AMS_HierarchyHelper.migrateAccountsToExistingHierarchy(HO.Id, 
                                                                                                          hierarchies.get(HO.Id), 
                                                                                                          HO2.Id,
                                                                                                          hierarchies.get(HO2.Id), 
                                                                                                          allIds, accounts);
-
+		*/
         
         // nothing to delete
         //system.assertEquals(null, res.relationsToDelete, 'migrateAccountsToExistingHierarchy() Scenario 1: the result should not include any relationship to be deleted');
