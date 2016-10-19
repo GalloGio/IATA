@@ -12931,6 +12931,7 @@ jQuery(document).ready(function($) {
             if (!$(this).hasClass('disabled')) {
                 var targetModal = $(this).data('target-modal');
                 $('.modal-content').addClass(className.hidden);
+                console.log('st');
                 $(targetModal).removeClass(className.hidden);
                 openModal();
             }

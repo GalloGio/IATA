@@ -83,3 +83,12 @@
 .ellipsis-inner {
     display: inline-block;
 }
+
+.tooltip-wrapper {
+    position: relative;
+
+    .tooltip-container {
+        left: 260px;
+        top: -12px;
+    }
+}

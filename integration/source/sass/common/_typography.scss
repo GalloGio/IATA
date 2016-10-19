@@ -72,3 +72,26 @@ p.description {
 .flat {
     margin: 0;
 }
+
+.text-green {
+    color: #238f53;
+}
+.text-orange {
+    color: #fe9e07;
+}
+
+.lead {
+    font-size: 1.6rem;
+}
+
+.line-stroke {
+    text-decoration: line-through;
+}
+
+.accent {
+    color: $link-color;
+}
+
+.text-right {
+    text-align: right;
+}
