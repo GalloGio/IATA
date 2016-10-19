@@ -75,7 +75,7 @@ public with sharing class AMS_AccountRoleCreatorTest {
         List<AMS_Account_Role__c> roleList = [select id from AMS_Account_Role__c];
         delete roleList;
                 
-        Account ownerAccount = new Account(Name='OwnerAccount', Location_Type__c = 'HO', Type='CASS Associate', Sector__c = 'Travel Agent', IATAcode__c = '0004141234', AIMS_ID__c = '98765431', Source_System__c = 'AIMS2', Reason_for_creation__c = 'New agent');
+        Account ownerAccount = new Account(Name='OwnerAccount', Location_Type__c = 'HO', Type='CASS Associate', Sector__c = 'Travel Agent', IATAcode__c = '0004141234', AIMS_ID__c = '98765431', Source_System__c = 'AIMS2');
         insert ownerAccount;
         
         List<AMS_Accreditation_Contact__c> acList = [select Id, Contact__c, Person_AMS__c, AMS_Employee_Role__c, AMS_Ownership_Role__c, AMS_Pax_Accreditation_Form__c from AMS_Accreditation_Contact__c];

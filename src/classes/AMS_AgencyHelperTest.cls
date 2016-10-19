@@ -28,10 +28,10 @@ public class AMS_AgencyHelperTest {
 
         Test.startTest();
 
-        Account accCargo = new Account(Name='Test Account', IATAcode__c = '12345678', IATA_ISO_Country__c = ctry.id, Sector__c = 'Cargo Agent', Location_Type__c ='HO', Reason_for_creation__c = 'New agent');
+        Account accCargo = new Account(Name='Test Account', IATAcode__c = '12345678', IATA_ISO_Country__c = ctry.id, Sector__c = 'Cargo Agent', Location_Type__c ='HO');
         insert accCargo;
 
-        Account accTravel = new Account(Name='Test Account', IATAcode__c = '12345671', IATA_ISO_Country__c = ctry.id, Sector__c = 'Travel Agent', Reason_for_creation__c = 'New agent');
+        Account accTravel = new Account(Name='Test Account', IATAcode__c = '12345671', IATA_ISO_Country__c = ctry.id, Sector__c = 'Travel Agent');
         insert accTravel;
 
         List<AMS_Agency_Operations__c> agoperations = [SELECT Account__c, Operation__c FROM AMS_Agency_Operations__c];
