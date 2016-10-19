@@ -97,7 +97,13 @@
         
         function TransferAttachments() 
         {
-            window.top.location= "{!$Label.SF_Base_URL}/apex/TransferCaseAttachments?id={!relatedCase.Id}";
+            var redirectUrl = "/apex/TransferCaseAttachments?id={!relatedCase.Id}";
+
+            if (sforce.console.isInConsole()) {
+                ServiceConsoleIntegration(redirectUrl);
+            } else {
+                window.top.location= "/apex/TransferCaseAttachments?id={!relatedCase.Id}";
+            }
         }
 
         function EditAttachment(id)
