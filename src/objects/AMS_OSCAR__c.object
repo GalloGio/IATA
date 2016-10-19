@@ -5365,6 +5365,10 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
                 <default>false</default>
             </values>
             <values>
+                <fullName>Closed_Withdrawn</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>On Hold_External</fullName>
                 <default>false</default>
             </values>
@@ -7004,6 +7008,10 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
                 <default>false</default>
             </values>
             <values>
+                <fullName>Closed_Withdrawn</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>On Hold_External</fullName>
                 <default>false</default>
             </values>
@@ -8639,6 +8647,10 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
                 <default>false</default>
             </values>
             <values>
+                <fullName>Closed_Withdrawn</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>On Hold_External</fullName>
                 <default>false</default>
             </values>
@@ -10216,6 +10228,10 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
             </values>
             <values>
                 <fullName>Closed_Rejected</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Closed_Withdrawn</fullName>
                 <default>false</default>
             </values>
             <values>
