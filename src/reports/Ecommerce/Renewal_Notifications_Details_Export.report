@@ -85,7 +85,13 @@
         <field>ORDER_ITEM_UNITPRICE</field>
     </columns>
     <columns>
+        <field>OrderItem.Discount__c</field>
+    </columns>
+    <columns>
         <field>Order.SubTotal_Amount__c</field>
+    </columns>
+    <columns>
+        <field>Order.Discount_Amount__c</field>
     </columns>
     <columns>
         <field>Order.Total_handling_charges__c</field>
