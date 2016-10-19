@@ -562,7 +562,6 @@ E&amp;F CRM Project</description>
         <visibleLines>4</visibleLines>
     </fields>
     <fields>
-        <required>false</required>
         <fullName>EF_Payment_Currency__c</fullName>
         <externalId>false</externalId>
         <globalPicklist>EF_Currency</globalPicklist>
