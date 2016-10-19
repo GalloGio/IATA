@@ -35,13 +35,24 @@
         <senderType>OrgWideEmailAddress</senderType>
         <template>AMS/AMS_Notify_OSCAR_Owner_on_Manager_Approval</template>
     </alerts>
+    <alerts>
+        <fullName>AMS_Notify_OSCAR_Owner_on_case_Rejection_by_Manager</fullName>
+        <description>AMS Notify OSCAR Owner on case Rejection by Manager</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderAddress>noreply@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>AMS/AMS_Notify_OSCAR_Owner_on_Manager_Rejection</template>
+    </alerts>
     <rules>
         <fullName>AMS Notify Case Team Members on OSCAR Pending Approval</fullName>
         <actions>
             <name>AMS_Notify_Managers_of_Pending_Approval</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>AMS_OSCAR__c.Status__c</field>
             <operation>equals</operation>
@@ -56,7 +67,7 @@
             <name>AMS_Notify_Assistant_Managers_of_Pending_Validation</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>AMS_OSCAR__c.Status__c</field>
             <operation>equals</operation>
