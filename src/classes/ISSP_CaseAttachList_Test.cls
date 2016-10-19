@@ -104,8 +104,7 @@ public class ISSP_CaseAttachList_Test {
 	                            PortalRole = 'Manager',
 	                            CommunityNickname = contact.email.substring(0, contact.email.indexOf('@'))+Datetime.now().formatLong().substring(10,15),
 	                            ProfileId = profileId,
-	                            IsActive = true,
-	                            Community__c = 'IEC');
+	                            IsActive = true);
     	insert newUser;
     	
     	AttachmentListLimitedAccess__c access = new AttachmentListLimitedAccess__c();
@@ -165,8 +164,7 @@ public class ISSP_CaseAttachList_Test {
 	                            PortalRole = 'Manager',
 	                            CommunityNickname = contact.email.substring(0, contact.email.indexOf('@'))+Datetime.now().formatLong().substring(10,15),
 	                            ProfileId = profileId,
-	                            IsActive = true,
-	                            Community__c = 'IEC');
+	                            IsActive = true);
     	insert newUser;
     	
     	AttachmentListLimitedAccess__c access = new AttachmentListLimitedAccess__c();

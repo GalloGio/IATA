@@ -21,10 +21,12 @@
                     <apex:form >
                     
                     <apex:outputPanel id="itemList" style="padding: 10px 0;" layout="block">
-					<apex:inputHidden value="{!selectedTemplateId}" id="selectedTemplate" />
+                        <apex:inputHidden value="{!selectedTemplateId}" id="selectedTemplate" required="{!newTemplateStepNumber == 2}" />
                         
                         <apex:actionFunction action="{!doNothing}" name="setAudience" rerender="create-template"> 
                             <apex:param assignTo="{!newTemplate.Audience__c}" name="firstParam" value="" /> 
+                        </apex:actionFunction>
+                        <apex:actionFunction action="{!doNothing}" name="rerenderFooterActions" rerender="footerActions">
                         </apex:actionFunction>
                         <script type="text/javascript">
                         function resetTemplate(recordId) {
@@ -37,10 +39,11 @@
                                 <apex:outputText rendered="{!newTemplateStepNumber == 1}">
                                     <div >
                                         <h3 class="step-title">Audience</h3>
-                                        <p>Please select lorem dolor sit amet nulla vel sodales mauris. Maecenas ante magna, henderite at mollis quis.</p>
+                                        <p>Select the audience this template is destined for. This selection conditions the merge fields you will be able to use in your template design.</p>
+                                        <p><strong>Important:</strong> Once saved, the template audience can no longer be changed.</p>
                                         
                                         <ul class="list list-radio-select js-radio-list js-form-continue-validation" data-target-button="#js-continue-to-geo-selection" id="js-radio-list-audience">
-                                            <li>
+                                            <li class="{!IF(newTemplate.Audience__c == 'Agency', 'is-selected', '')}">
                                                 <div class="radio-box">
                                                     <div class="custom-user-input radio">
                                                         <apex:outputText rendered="{!newTemplate.Audience__c == 'Agency'}">
@@ -52,10 +55,11 @@
                                                         <label class="custom-radio" for="new-template-agency"><i class="icon"></i></label>
                                                     </div>
                                                     <label class="input-label" for="new-template-agency">IATA Travel Agencies</label>
+                                                    <p>Can be used to target agencies only. All applicable merge fields available.</p>
                                                 </div>
                                             </li>
                                             <apex:outputText rendered="{!isIDCARDSelectionAllowed}">
-                                            <li>
+                                            <li class="{!IF(newTemplate.Audience__c == 'Agent', 'is-selected', '')}">
                                                 <div class="radio-box">
                                                     <div class="custom-user-input radio">
                                                         <apex:outputText rendered="{!newTemplate.Audience__c == 'Agent'}">
@@ -69,10 +73,11 @@
                                                     </div>
                                                     
                                                     <label class="input-label" for="new-template-agent">IATA/IATAN ID Cardholders</label>
+                                                    <p>Can be used to target travel professionals only. All applicable merge fields available.</p>
                                                 </div>
                                             </li>
                                             </apex:outputText>
-                                            <li>
+                                            <li class="{!IF(newTemplate.Audience__c == 'Neutral', 'is-selected', '')}">
                                                 <div class="radio-box">
                                                     <div class="custom-user-input radio">
                                                         <apex:outputText rendered="{!newTemplate.Audience__c == 'Neutral'}">
@@ -84,7 +89,8 @@
                                                         
                                                         <label class="custom-radio" for="new-template-neutral"><i class="icon"></i></label>
                                                     </div>
-                                                    <label class="input-label" for="new-template-neutral">Neutral</label>
+                                                    <label class="input-label" for="new-template-neutral">General Audience</label>
+                                                    <p>Can be used to target both agencies and travel professionals. Offers a limited number of merge fields.</p>
                                                 </div>
                                             </li>
                                         </ul>
@@ -177,7 +183,7 @@
 									-->
                                 </apex:outputText>
                                 
-                                <apex:outputText >
+                                <apex:outputPanel id="footerActions">
                                   
                                         <div class="footer-actions text-right">
                                             <ul class="list actions">
@@ -191,11 +197,10 @@
                                                     <apex:commandLink rendered="{!AND(newTemplateStepNumber == 1, NOT(ISBLANK(newTemplate.Audience__c)))}" onclick="jQuery('body').css('cursor', 'wait');" action="{!validateNewTemplate}" styleClass="button" value="Continue" rerender="create-template,bottom2" oncomplete="jQuery('body').css('cursor', 'auto');">
                                                         <apex:param assignTo="{!newTemplateStepNumber}" name="firstParam" value="2" />
                                                     </apex:commandLink>
-                                                    
-													<apex:outputText rendered="{!AND(newTemplateStepNumber == 2, ISBLANK(newTemplate.Audience__c))}">
+													<apex:outputText rendered="{!newTemplateStepNumber == 2 && (ISBLANK(selectedTemplateId) || selectedTemplateId == null)}">
                                                         <a href="javascript:void(0);" class="button disabled" data-default-state="disabled">Continue</a> 
                                                     </apex:outputText>
-                                                    <apex:commandLink rendered="{!AND(newTemplateStepNumber == 2,NOT(ISBLANK(newTemplate.Audience__c)))}" onclick="jQuery('body').css('cursor', 'wait');" action="{!validateNewTemplate}" styleClass="button" value="Continue" rerender="create-template" oncomplete="jQuery('body').css('cursor', 'auto');">
+                                                    <apex:commandLink rendered="{!newTemplateStepNumber == 2 && NOT(ISBLANK(selectedTemplateId) || selectedTemplateId == null)}" onclick="jQuery('body').css('cursor', 'wait');" action="{!validateNewTemplate}" styleClass="button" value="Continue" rerender="create-template" oncomplete="jQuery('body').css('cursor', 'auto');">
                                                         <apex:param assignTo="{!newTemplateStepNumber}" name="firstParam" value="3" />
                                                     </apex:commandLink>
                                                     
@@ -210,7 +215,7 @@
                                             </ul>
                                         </div>
                                     
-                                </apex:outputText>
+                                </apex:outputPanel>
                                 <BR/>
                             </apex:outputPanel>
                         </section>

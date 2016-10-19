@@ -4,15 +4,21 @@
     
     <apex:outputPanel id="campaignListContainer">
     	<apex:outputText rendered="{!IF(CampaignsCount > 0, true, false)}">
-            <div class="action-box text-right create-campaign">
-                <apex:outputLink value="{!URLFOR($Page.IECEBC_Campaign)}" styleClass="button">Create campaign</apex:outputLink>
-            </div>
+            <apex:outputText rendered="{!IF(isLimitedComponent, true, false)}">
+                <div class="action-box text-right create-campaign">
+                    <apex:outputLink value="{!URLFOR($Page.IECEBC_Campaign)}" styleClass="button">Create campaign</apex:outputLink>
+                </div>
+            </apex:outputText>
+            
             <table class="data-table campaign">
-                <apex:repeat value="{!campaigns}" var="c">
+                <tbody>
+                    
+                   <apex:repeat value="{!campaigns}" var="c">
                     <apex:variable var="iconClass" value="" rendered="{!IF(c.Status__c == 'Setup' || c.Status__c == '', true, false)}" />
                     <apex:variable var="iconClass" value="clock" rendered="{!IF(c.Status__c == 'Scheduled', true, false)}" />
                     <apex:variable var="iconClass" value="check-circle" rendered="{!IF(c.Status__c == 'Sent', true, false)}" />
                     
+                   
                     <tr id="{!c.Id}">
                         <td class="icon">
                             <apex:outputText rendered="{!c.Status__c == 'DRAFT'}"><i class="js-icon-status icon icon-status" data-icon-type="draft"></i></apex:outputText>
@@ -91,7 +97,8 @@
                             </div>
                         </td>
                     </tr>
-                </apex:repeat>
+                    </apex:repeat>
+                </tbody>
             </table>
             <apex:outputText rendered="{!LOWER($CurrentPage.Name) == LOWER('IECEBC_Dashboard')}">
                 <div class="action-box text-right">

@@ -422,9 +422,6 @@
                                         </apex:form>
                                         <!-- payment confirmation section: the detail and total begin -->
                                     </div>
-                                    
-                                    
-                                    
                                     <div class="footer-actions">
                                         
                                         <apex:form id="footerActionForm" >
@@ -435,7 +432,7 @@
                                                 <li><apex:commandLink action="{!saveAndContinue}" styleClass="button" value="Send" /></li>
                                                 -->
                                                 <apex:outputText rendered="{!newEmailBalance < 0}">
-                                                    <li><apex:commandLink action="{!goToPaymentPage}" styleClass="button" value="Send" /></li>
+                                                    <li><apex:commandLink action="{!goToPaymentPage}" styleClass="button" value="Proceed to payment" /></li>
                                                     <!-- 
                                                     <li>
                                                         <apex:commandButton value="Buy now" action="{!addToCart}">
@@ -451,12 +448,7 @@
                                             </ul>
                                             
                                             <div class="footer-actions text-right">
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
+                                             
                                             </div>
                                         </apex:form>
                                     </div>
@@ -465,8 +457,6 @@
                             
                         </div>
                     </apex:outputText>
-                    
-                    
                     
                 </div>
             </main>

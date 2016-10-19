@@ -11,7 +11,7 @@
                 <field>Name</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Required</behavior>
+                <behavior>Edit</behavior>
                 <field>URL__c</field>
             </layoutItems>
             <layoutItems>
@@ -37,6 +37,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Event_Date_Timestamp__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>External_Id__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>

@@ -27,10 +27,6 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Mass_order_Application__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>Payment_Type__c</field>
             </layoutItems>
             <layoutItems>

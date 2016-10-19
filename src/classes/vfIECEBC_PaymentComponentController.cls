@@ -1465,7 +1465,7 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
         System.debug('UseCasePricing >>>'+UseCasePricing);
         // Retrieve the SoldTo Location for the current contact
 	    Location__c oLocSoldTo = new Location_Sel().getSoldToLocationByContactId(new Set<Id> {loggedCustomer.RelatedContact.Id}).get(loggedCustomer.RelatedContact.Id);
-        
+        System.Debug('oLocSoldTo >>>'+oLocSoldTo);
         // Initialize a fake OrderItem DTO for tax and shipping calculation
         OrderItem_DTO dtoOrderItem = new OrderItem_DTO();
         String uiUpgradableRatePlan='';
@@ -1484,21 +1484,27 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
             //uiUpgradableRatePlan.productRatePlanInfo.Product_Rate_Plan__r.zqu__ZuoraId__c
             //Get Product Info
             Map<String, Product2> mapProductRatePlanZId_Product = Product_Sel.getProductsByProductRatePlan(new Set<String> {uiUpgradableRatePlan});
-            
+            System.Debug('mapProductRatePlanZId_Product >>>'+mapProductRatePlanZId_Product);
             if (mapProductRatePlanZId_Product == null || mapProductRatePlanZId_Product.isEmpty())
                 throw new IECApplicationException('Unable to locate a Salesforce Product for the ProductRatePlan: ' + uiUpgradableRatePlan);
             else
             {
                 Product2 oProduct = mapProductRatePlanZId_Product.get(uiUpgradableRatePlan);
+                System.Debug('oProduct >>>'+oProduct);
                 String sProductNumber = oProduct.SAP_Material_Number__c;
                 // Get the Parent SAP Code as this is the one to be used with the TAX webservice
                 String sParentProductNumber = oProduct.IEC_Parent_Product__r.SAP_Material_Number__c;
                 
                 String sCustomerType = User_Sel.getCustomerType(UserInfo.getUserId());
+                
+                PriceDetail_DTO detailprice = new PriceDetail_DTO();
+                detailprice.unitPrice=subTotalAmount;
+                PriceInfo_DTO priceinfo = new PriceInfo_DTO();
+                priceinfo.standardPrice = new List<PriceDetail_DTO> {detailprice};
                 // Retrieve the price for the upgrade product
                 Map<String, PriceInfo_DTO> mapProductNumber_Price = new Product_Sel().getProductPriceInfo(new Set<String> {sProductNumber}, sCustomerType, null, null, true);
-                
-                dtoOrderItem.PriceInfo = mapProductNumber_Price.get(sProductNumber);
+                System.Debug('mapProductNumber_Price >>>'+mapProductNumber_Price);
+                dtoOrderItem.PriceInfo = priceinfo; //mapProductNumber_Price.get(sProductNumber);
                 dtoOrderItem.sapProductCode = sParentProductNumber;
                 dtoOrderItem.quantity = 1;
                 dtoOrderItem.chargeShipping = false;
@@ -1540,7 +1546,6 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
         return TotalTax;
     } //*** end of "getSAP_Freight_Tax"
    
-    
     
     
     /**

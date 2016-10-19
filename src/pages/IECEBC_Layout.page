@@ -22,6 +22,9 @@
                 jQuery(document).ready(function(){resetForms()});
             </script>
             <apex:insert name="pageHeadAdditions" />
+            <style type="text/css">
+                main { margin-bottom: 140px; }
+            </style>
         </head>
         <body data-is-modal-open="false" id="page-top">
             <div class="app-container">
@@ -70,7 +73,7 @@
                                                             <td>{!productRatePlan.Name}</td>
                                                         </tr>
                                                         <tr>
-                                                            <th>Cost per e-mail:</th>
+                                                            <th>Cost per email:</th>
                                                             <td>
                                                                 <apex:outputText value="${0, number, ###,###,##0.00}"><apex:param value="{!productRatePlan.EBC_Currency_Cost_Per_Email__c}"/></apex:outputText><br />
                                                                 <apex:outputLink value="{!URLFOR($Page.IECEBC_AccountRatePlan)}" rendered="{!productRatePlan.Name != 'Premium Edition'}">Lower your cost per email</apex:outputLink>
@@ -78,7 +81,7 @@
                                                         </tr>
                                                         <tr>
                                                             <th>Account Balance:</th>
-                                                            <td><apex:outputText value="{0, number, ###,###,##0}"><apex:param value="{!billingAccount.eBroadcast_Email_Balance__c}"/></apex:outputText> e-mail(s)</td>
+                                                            <td><apex:outputText value="{0, number, ###,###,##0}"><apex:param value="{!billingAccount.eBroadcast_Email_Balance__c}"/></apex:outputText> email(s)</td>
                                                         </tr>
                                                         <apex:outputText rendered="{!productRatePlan.EBC_SubscriptionType__c == 'Pre-Paid' && subscription.Zuora__NextRenewalDate__c >= TODAY()}">
                                                             <tr>
@@ -188,8 +191,8 @@
                     </div>
                 </header>
                 <apex:insert name="pageContent"/>
-        
-                <footer class="page-footer" data-is-sticky="false">
+        		
+                <footer class="page-footer" data-is-sticky="true">
                     <div class="inner-wrapper">
                         <div class="group-container">
                             <strong class="group-title">Products:</strong>
@@ -211,9 +214,6 @@
                         </div>
                     </div>
                 </footer>
-                <script type="text/javascript">
-                    jQuery(".page-footer").css("position", "relative");
-                </script>
                 <!--
                 <div class="modal-container is-hidden" id="js-modal">
                     <div class="overlay"></div>

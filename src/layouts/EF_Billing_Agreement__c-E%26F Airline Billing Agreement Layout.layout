@@ -157,7 +157,15 @@
         <fields>EF_Material__c</fields>
         <relatedList>EF_Material_Line_Item__c.EF_Relationship__c</relatedList>
     </relatedLists>
-
+    <relatedLists>
+        <customButtons>Mass_Update_Contact_Billing_Agreement</customButtons>
+        <fields>NAME</fields>
+        <fields>Contact__c</fields>
+        <fields>Contact_Account__c</fields>
+        <fields>Status__c</fields>
+        <fields>Role__c</fields>
+        <relatedList>EF_Contact_Relationship__c.EF_Airline_Billing_Agreement__c</relatedList>
+    </relatedLists>
     <relatedLists>
         <fields>CreatedDate</fields>
         <fields>StepStatus</fields>

@@ -12,6 +12,7 @@
   *  - 20160721-sl: initial version
   *  - 20160810-sl: graph is added
   *  - 20160826-sl: add Renew Link
+  *  - 20161010-ab: activity UAT-162
   */
 
 
@@ -190,6 +191,7 @@ public with sharing class vfIECEBC_AccountManage extends vfIECEBC_Abstract_List
 			+ ' FROM EBC_Activity__c '
 			+ ' Where  Related_Billing_Account__c = \'' + billingAccount.Id + '\' '
 			+ selectedActivityTypeClause;
+        sortBy='Createddate desc';
 		//System.debug( 'getQuery: ' + query);
 		currentQuery = query;
 		return query;

@@ -255,6 +255,12 @@
                                 </apex:repeat>
                             </tbody>
                         </table>
+                        <apex:outputText rendered="{!filters.Size==0}">
+                         <ul class="nav tabs">
+                             
+                           <li></li>
+                         </ul>
+                        </apex:outputText>
                     </apex:outputPanel>
                 </div>
             </main>

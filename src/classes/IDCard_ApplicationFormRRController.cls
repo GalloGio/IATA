@@ -19,7 +19,7 @@ public with sharing class IDCard_ApplicationFormRRController extends  IDCardAbst
   public ID_Card__c associatedIDCard {get; set;}
   // public Attachment attachmentProof {get; set;}
 
-  public list<SelectOption> itdiCourses; 
+  public list<SelectOption> itdiCourses;
   private String[] selectedITDICourses;
 
   public String geographyinTravelPlanning_Description {get; set;}
@@ -53,7 +53,6 @@ public with sharing class IDCard_ApplicationFormRRController extends  IDCardAbst
   public Boolean isEmployee {get; set;}
   public Boolean DocUploaded {get; set;}
   public Boolean HasNotUploadedImage {get; set;}
-  
   public Boolean reissue {
     get {
       if (IDCardApplicationRR.Type_of_application__c == IDCardUtil.APPLICATIONTYPE_REISSUE)
@@ -1132,12 +1131,5 @@ public with sharing class IDCard_ApplicationFormRRController extends  IDCardAbst
     this.upload();
     this.back();
     this.next();
-  }
-
-  public Boolean IsNewApplication { //INC271394
-    get{
-      return IDCardApplicationRR != null && IDCardApplicationRR.Type_of_application__c == IDCardUtil.APPLICATIONTYPE_NEW;
-    }
-    set;
   }
 }

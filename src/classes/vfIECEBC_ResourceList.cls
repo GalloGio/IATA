@@ -60,7 +60,8 @@ public class vfIECEBC_ResourceList extends vfIECEBC_Abstract_List {
     public override List<SelectOption> getSortByOptions() {
         List<SelectOption> options = new List<SelectOption>();
         if (getIsFirstTimeLoadPage()) options.add(new SelectOption('CreatedDate DESC','Sort by'));
-        options.add(new SelectOption('CreatedDate DESC','Upload Date')); 
+        options.add(new SelectOption('CreatedDate DESC','Upload Date DESC')); 
+        options.add(new SelectOption('CreatedDate ASC','Upload Date ASC'));
         options.add(new SelectOption('Image_size__c DESC','Image Size'));
         options.add(new SelectOption('Image_Type__c DESC','Image Type'));
         options.add(new SelectOption('Name ASC','Name'));

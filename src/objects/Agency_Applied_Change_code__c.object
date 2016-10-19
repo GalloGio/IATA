@@ -353,22 +353,6 @@
         <type>Date</type>
     </fields>
     <fields>
-        <fullName>For_Integration__c</fullName>
-        <externalId>false</externalId>
-        <formula>IF( ISNULL(Account__r.Last_Integration_Date__c), 
-    true, 
-    IF( CreatedDate &gt; Account__r.Last_Integration_Date__c,
-        true,
-        false
-    )
-)</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>For Integration</label>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Checkbox</type>
-    </fields>
-    <fields>
         <fullName>Irregularities_Expired__c</fullName>
         <defaultValue>false</defaultValue>
         <description>If true, irregularities points are not summed in the account. It expires 12 months after the Effective_Date__c</description>
@@ -768,27 +752,6 @@
         <type>Date</type>
     </fields>
     <label>Agency Applied Change code</label>
-    <listViews>
-        <fullName>AMS</fullName>
-        <columns>NAME</columns>
-        <columns>Change_Code__c</columns>
-        <columns>Active__c</columns>
-        <columns>OSCAR__c</columns>
-        <columns>Account__c</columns>
-        <columns>Sent_to_external_system__c</columns>
-        <columns>UPDATEDBY_USER</columns>
-        <columns>LAST_UPDATE</columns>
-        <columns>CREATEDBY_USER</columns>
-        <columns>CREATED_DATE</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Account__c</field>
-            <operation>equals</operation>
-            <value>CUSTOMS INTERNATIONAL SERVICE SRL CHO CHANGE</value>
-        </filters>
-        <label>AMS</label>
-        <language>en_US</language>
-    </listViews>
     <nameField>
         <displayFormat>AACC-{000000}</displayFormat>
         <label>Agency Applied Change code Name</label>

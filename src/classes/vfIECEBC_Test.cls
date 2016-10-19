@@ -1,10 +1,8 @@
 @isTest (seeAllData=true)
 public class vfIECEBC_Test {
-
 	public static testMethod void testPageLoadDashboard() {
         vfIECEBC_TestSuite.testPageLoadDashboard();
     }
-
     public static testMethod void testCampaignListing() { 
         vfIECEBC_TestSuite.testCampaignListing();
     } 
@@ -43,21 +41,28 @@ public class vfIECEBC_Test {
     public static testMethod void testCampaignConfirmUpdateCount() {
         vfIECEBC_TestSuite.testCampaignConfirmUpdateCount();
     }
-    /*
-    public static testMethod void testCampaignPayWithCredit() {
-        vfIECEBC_TestSuite.testCampaignPayWithCredit();
-    }*/
+    public static testMethod void testCampaignPayWithCreditTrusted() {
+        vfIECEBC_TestSuite.testCampaignPayWithCreditTrusted();
+    }
+    public static testMethod void testCampaignPayWithCreditNotTrusted() {
+        vfIECEBC_TestSuite.testCampaignPayWithCreditNotTrusted();
+    }
+    public static testMethod void testCampaignSendMassMailing() {
+        vfIECEBC_TestSuite.testCampaignSendMassMailing();
+    }
+	public static testMethod void testOptOut() {
+        vfIECEBC_TestSuite.testOptOut();
+    }
     
+	public static testMethod void testResubscribe() {
+        vfIECEBC_TestSuite.testResubscribe();
+    }
+	public static testMethod void testCleanOutOfDateOptOut() {
+        vfIECEBC_TestSuite.testCleanOutOfDateOptOut();
+    }
+     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
+     
     /*
      * Those methods become useless once we test the Pay Using Credits
 	public static testMethod void testCampaignApproval() {
@@ -90,4 +95,6 @@ public class vfIECEBC_Test {
     }
     */
     
+    
+        
 }

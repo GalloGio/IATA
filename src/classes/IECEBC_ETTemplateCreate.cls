@@ -43,6 +43,7 @@ public class IECEBC_ETTemplateCreate {
     }     
     
     // retrieve the email template attachments list from SFDC using the email template ID
+    /*
     static String getEmailTempalteAttachments(Id emailTempId) { 
         String att = '';
         List<Attachment> attachments = [Select Id, ParentId, Name, body, ContentType From Attachment where ParentId = :emailTempId];
@@ -60,7 +61,7 @@ public class IECEBC_ETTemplateCreate {
             }
         }                
         return att;
-    }
+    }*/
     
     // Update email template in ExactTarget using SOAP API (XML)  
     public static void updateEmailTemplate(String emailTempId, String subject){

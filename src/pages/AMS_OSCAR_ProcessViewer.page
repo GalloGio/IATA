@@ -369,6 +369,15 @@ function buildFunctionCall(func, argList){
     </div>
 </apex:pageBlock>
 
+<apex:pageBlock rendered="{!IF(oscar != null &&  isAgencyChange &&oscar.Change_effective_as_of__c!=null && oscar.Change_effective_as_of__c > TODAY(),true,false)}">
+    <div class="overlay">
+    <div class="overlay-content">
+        <p style="font-size: 36px;">LOCKED</p>
+        <p> This OSCAR should not be processed until the date "Change effective as of" will be reached ({!EffectiveDate})</p>
+      </div>
+    </div>
+</apex:pageBlock>
+
 <apex:form id="oscarForm" rendered="{!IF(oscar != null && oscar.Process__c!=null ,true, false)}">
     <apex:outputPanel id="theProcess">
     <apex:pageBlock >
@@ -425,7 +434,7 @@ function buildFunctionCall(func, argList){
                     <br/><h2>{!stepFieldsData[sf].fieldLabel}</h2>
                     <div id="{!sf}">
                         <apex:inputField value="{!oscar[sf]}" styleClass="inputElem" rendered="{!IF(stepFieldsData[sf].picklistvalues != null, false, true)}"/>
-
+                        
                         <apex:outputPanel rendered="{!$ObjectType.AMS_OSCAR__c.fields[stepFieldsData[sf].fieldApiName].Updateable}">
                             <apex:selectList size="1" rendered="{!IF(stepFieldsData[sf].picklistvalues != null, true, false)}" styleClass="inputElem">
                                 <apex:selectOptions value="{!stepFieldsData[sf].picklistvalues}"/>
