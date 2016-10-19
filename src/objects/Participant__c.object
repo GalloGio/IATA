@@ -411,7 +411,7 @@ First Name, Last Name, Title, Email and Account Name. Please complete these info
     </validationRules>
     <validationRules>
         <fullName>Verified_Account</fullName>
-        <active>true</active>
+        <active>false</active>
         <description>The Account needs to be verified</description>
         <errorConditionFormula>OR( ISPICKVAL (Contact__r.Account.ACLI_Status__c,&apos;Inactive company&apos;), 
 NOT(OR( Contact__r.Account.RecordType.DeveloperName = &quot;IATA_Airline&quot; || Contact__r.Account.RecordType.DeveloperName = &quot;IATA_Agency&quot; || Contact__r.Account.RecordType.DeveloperName = &quot;IATA_Airline_BR&quot; || Contact__r.Account.RecordType.DeveloperName = &quot;IATA_GSA&quot;)) 
