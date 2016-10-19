@@ -156,6 +156,11 @@
             <field>Parent_Account__c.Top_Parent__c.Location_Type__c</field>
             <table>AMS_Agencies_relationhip__c</table>
         </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Hierarchy__c.Hierarchy_Name__c</field>
+            <table>AMS_Agencies_relationhip__c</table>
+        </columns>
         <masterLabel>AMS Agencies relationships</masterLabel>
     </sections>
 </ReportType>
