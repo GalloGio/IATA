@@ -123,7 +123,7 @@
     color: #666;
 }
 
-.is-selected {
+.list-item.is-selected {
     .currency-per-year,
     .billed-annually {
         color: #fff;
@@ -195,7 +195,7 @@
     > li {
         width: 25%;
         display: inline-block;
-        min-height: 170px;
+        min-height: 180px;
         vertical-align: top;
         margin-right: 17px;
         position: relative;
