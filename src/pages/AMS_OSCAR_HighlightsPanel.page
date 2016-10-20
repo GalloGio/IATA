@@ -175,6 +175,8 @@
                 </apex:panelGrid>-->
                 
            </apex:outputPanel>
+           <!-- KPI section hidden until functionality development
+           
             <apex:outputPanel id="kpisection" layout="block" style="float:left; width:15%; padding-top: 10px; font-size: 110%;">
                 <apex:panelGrid columns="2" style="vertical-align: middle;">
                     <apex:image url="{!URLFOR($Resource.AMS_Icons, 'KPIgreen.png')}"/><apex:outputText >KPI 1</apex:outputText>
@@ -182,6 +184,8 @@
                     <apex:image url="{!URLFOR($Resource.AMS_Icons, 'KPIgreen.png')}"/><apex:outputText >KPI 3</apex:outputText>
                 </apex:panelGrid>
             </apex:outputPanel>
+            
+            -->
         </apex:outputPanel>
     </apex:pageBlock>
     </apex:form>
