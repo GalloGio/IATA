@@ -108,7 +108,8 @@ public class EF_BillingAgreementHandler
         Set<Id> contractIds = new Set<Id>();
         for(EF_Billing_Agreement__c ba : agreementList)
         {
-            contractIds.add(ba.Contract__c);
+            if(!ba.Skip_Approval__c)
+                contractIds.add(ba.Contract__c);
         }
 
         Set<Id> withApprovalIds = new Set<Id>();
