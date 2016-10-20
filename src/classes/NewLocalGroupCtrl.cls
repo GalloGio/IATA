@@ -28,6 +28,10 @@ global  class NewLocalGroupCtrl {
                 setLocalGroupRecordTypes.add(rt.Id);
             }
         }
+        String recordId =  ApexPages.currentPage().getParameters().get('id');
+        if(recordId != null) {
+            lg = [SELECT Id, Name, RecordTypeId, RecordType.Name FROM LocalGovernance__c WHERE Id = :recordId];
+        }
         System.debug(lg.RecordTypeId + ' ' + lg.RecordType.Name);
         // 1. if there is already a recordtype set redirect accordingly
         if(setRegDivRecordTypes.contains(lg.RecordTypeId)) { redirect = true;}
@@ -46,7 +50,6 @@ global  class NewLocalGroupCtrl {
         if(redirect){
         String prURL = '/apex/AMP_NewIATAGroup?';
 
-        String recordId =  ApexPages.currentPage().getParameters().get('id');
         if(recordId != null) prUrl +='id='+recordId;
         String recordType =  ApexPages.currentPage().getParameters().get('RecordType');
         if(recordType != null) prUrl +='RecordType='+recordType;
