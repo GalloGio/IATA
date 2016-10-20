@@ -43,6 +43,7 @@ public with sharing class EF_Utilities
             {
                 if(newValue.get(field) != oldValue.get(field))
                 {
+                	System.debug('*********** changed: '+field + ': '+oldValue.get(field)+' -> '+newValue.get(field));
                     valueChanged = true;
                 }
             }

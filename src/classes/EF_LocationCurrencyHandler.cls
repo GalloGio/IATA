@@ -320,8 +320,8 @@ public class EF_LocationCurrencyHandler {
             for(EF_Billing_Agreement__c ba : baList)
             {
                 ba.Skip_Approval__c = false;
-                // ba.Requested_Changes__c = '';
-                // ba.Require_Approval__c = false;
+                ba.Requested_Changes__c = '';
+                ba.Require_Approval__c = false;
             }
             update baList;
         }

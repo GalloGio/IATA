@@ -36,8 +36,8 @@ trigger EF_BillingAgreementTrigger on EF_Billing_Agreement__c (
                     }
                 }
                 
-
-                EF_BillingAgreementHandler.handleWithApprovalContractUpdates(new Map<Id, EF_Billing_Agreement__c>(toUpdateList), Trigger.oldMap);
+                if(toUpdateList.size() > 0)
+                    EF_BillingAgreementHandler.handleWithApprovalContractUpdates(new Map<Id, EF_Billing_Agreement__c>(toUpdateList), Trigger.oldMap);
                 // EF_BillingAgreementHandler.handleWithApprovalContractUpdates(Trigger.newMap, Trigger.oldMap);
                 EF_BillingAgreementHandler.handleApprovedAndRejectedApprovals(Trigger.new, Trigger.oldMap);
             }
