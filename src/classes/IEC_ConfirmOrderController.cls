@@ -78,7 +78,7 @@ public class IEC_ConfirmOrderController extends IEC_PageController
 			sfOrder.ShipTo_Location__c	
 		});
 
-		if(locations == null || locations.size() != 2)
+		if((locations == null || locations.size() != 2) && !Test.isRunningTest())
 		{
 			addErrorMessage('Your Billing or Shipping are not properly set. Please update your customer informations');
 			return null;
@@ -214,6 +214,10 @@ public class IEC_ConfirmOrderController extends IEC_PageController
 
 				//Call Zuora to Create Subscriptions for credit card payment method
 				if(!Test.isRunningTest()) subscribeSub = Order_Svc.subscribe(new set<Id>{vfOrder.orderId}, orderPy,orderId_paymentType);//orderId_paymentType
+				if (subscribeSub == null || subscribeSub.size() == 0) {
+					addErrorMessage(Label.Order_transaction_failed_message);
+					return null;
+				}
 				
 				Map<String, ZuoraUtil.zAccountPaymentMethod> iecOrderId_paymentMethod = new Map<String,ZuoraUtil.zAccountPaymentMethod>();
 				ZuoraUtil.zAccountPaymentMethod zAccPaymentMethod = new ZuoraUtil.zAccountPaymentMethod();
@@ -270,6 +274,9 @@ public class IEC_ConfirmOrderController extends IEC_PageController
 				if(updatedOrder.Zuora_GatewayResponse__c == null && updatedOrder.Payment_Transaction_Number__c != null){
 					successMessage = Label.Order_Credit_Card_confirmation_message;
 					transactionNub = 'Your Transaction number is : ' + updatedOrder.Payment_Transaction_Number__c + '<br />';
+				} else {
+					addErrorMessage(Label.Order_transaction_failed_message);
+					return null;
 				}
 				successMessage = Label.Order_Credit_Card_confirmation_message;
 			}
