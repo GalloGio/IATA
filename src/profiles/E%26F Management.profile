@@ -39622,7 +39622,7 @@
         <layout>EF_Billing_Agreement__c-E%26F Airline Billing Agreement Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>EF_Contact_EF_Contract__c-E%26F Contact in E%26 Contract Layout</layout>
+        <layout>EF_Contact_EF_Contract__c-E%26F Contact in E%26F Contract Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>EF_Contact_Relationship__c-E%26F Contact Relationship Layout</layout>

@@ -15,5 +15,6 @@
             <field>Id</field>
             <table>Account</table>
         </columns>
+     	<masterLabel>Accounts</masterLabel>
    	</sections>
 </ReportType>
