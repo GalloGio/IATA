@@ -1,4 +1,0 @@
-Dear {!Case.ACCA_Owner__c},
-Pls note that IATA has changed the Escalated Status ACCA of above ACR to '{!Case.Escalated_Status_ACCA__c}'.
-
-For direct access to the ACR, please click on this link {!Case.Link}.

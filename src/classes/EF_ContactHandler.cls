@@ -55,7 +55,12 @@ public class EF_ContactHandler {
             
                 for(String s: criticalContactFieldList){
                   
-                    if(c.get(s)!=oldMap.get(c.Id).get(s)){                       
+                    // just notify when there are changes and the EF signatory is true, except ifis the signatory the one changing.
+                    if(c.get(s)!=oldMap.get(c.Id).get(s) && c.EF_Signatory__c){                       
+                        contactsNoti.put(c.Id, c);
+                    }
+                    //but notify if there has been a change on signatory
+                    if(c.EF_Signatory__c!=oldMap.get(c.Id).EF_Signatory__c){
                         contactsNoti.put(c.Id, c);
                     }
                 }          

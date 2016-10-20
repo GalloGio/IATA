@@ -253,6 +253,7 @@ E&amp;F CRM Project</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -309,6 +310,34 @@ E&amp;F CRM Project</description>
         <trackHistory>true</trackHistory>
     </fields>
     <fields>
+        <fullName>Dunning_Procedure__c</fullName>
+        <externalId>false</externalId>
+        <label>Dunning Procedure</label>
+        <picklist>
+            <picklistValues>
+                <fullName>EF01</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>EF02</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>EF03</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>005</fullName>
+                <default>false</default>
+            </picklistValues>
+            <restrictedPicklist>true</restrictedPicklist>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+    </fields>
+    <fields>
         <fullName>EF_Admin_Fee__c</fullName>
         <externalId>false</externalId>
         <label>E&amp;F Admin Fee</label>
@@ -323,6 +352,7 @@ E&amp;F CRM Project</description>
         <externalId>false</externalId>
         <globalPicklist>EF_Allow_Billing_Agreements</globalPicklist>
         <label>E&amp;F Allow Billing Agreements</label>
+        <required>false</required>
         <trackHistory>true</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -383,6 +413,7 @@ E&amp;F CRM Project</description>
             <restrictedPicklist>true</restrictedPicklist>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>true</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
@@ -392,6 +423,7 @@ E&amp;F CRM Project</description>
         <externalId>false</externalId>
         <globalPicklist>EF_Currency</globalPicklist>
         <label>E&amp;F Billing Currency</label>
+        <required>false</required>
         <trackHistory>true</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
@@ -401,6 +433,7 @@ E&amp;F CRM Project</description>
         <externalId>false</externalId>
         <globalPicklist>EF_Frequency</globalPicklist>
         <label>E&amp;F Billing Frequency</label>
+        <required>false</required>
         <trackHistory>true</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -452,6 +485,7 @@ E&amp;F CRM Project</description>
         <externalId>false</externalId>
         <globalPicklist>EF_Currency</globalPicklist>
         <label>E&amp;F Data Currency</label>
+        <required>false</required>
         <trackHistory>true</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
@@ -522,6 +556,7 @@ E&amp;F CRM Project</description>
             <restrictedPicklist>true</restrictedPicklist>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>true</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
@@ -531,6 +566,7 @@ E&amp;F CRM Project</description>
         <externalId>false</externalId>
         <globalPicklist>EF_Currency</globalPicklist>
         <label>E&amp;F Payment Currency</label>
+        <required>false</required>
         <trackHistory>true</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
@@ -569,6 +605,7 @@ E&amp;F CRM Project</description>
         <externalId>false</externalId>
         <globalPicklist>EF_Payment_Terms</globalPicklist>
         <label>E&amp;F Payment Terms</label>
+        <required>false</required>
         <trackHistory>true</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -577,6 +614,7 @@ E&amp;F CRM Project</description>
         <externalId>false</externalId>
         <globalPicklist>EF_Frequency</globalPicklist>
         <label>E&amp;F Reporting Frequency</label>
+        <required>false</required>
         <trackHistory>true</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -596,6 +634,7 @@ E&amp;F CRM Project</description>
             <restrictedPicklist>true</restrictedPicklist>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>true</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
@@ -634,6 +673,7 @@ E&amp;F CRM Project</description>
         <externalId>false</externalId>
         <globalPicklist>EF_Status</globalPicklist>
         <label>E&amp;F Status</label>
+        <required>false</required>
         <trackHistory>true</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -795,6 +835,7 @@ IF(ISPICKVAL(Third_Party__c, &quot;Berlitz&quot;), 0.10,
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -911,6 +952,7 @@ IF(ISPICKVAL(Third_Party__c, &quot;Berlitz&quot;), 0.10,
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -1055,6 +1097,7 @@ IF(ISPICKVAL(Third_Party__c, &quot;Berlitz&quot;), 0.10,
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -1073,6 +1116,7 @@ IF(ISPICKVAL(Third_Party__c, &quot;Berlitz&quot;), 0.10,
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -1371,6 +1415,25 @@ IF(ISPICKVAL(Third_Party__c, &quot;Berlitz&quot;), 0.10,
             </values>
             <values>
                 <fullName>None</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Dunning_Procedure__c</picklist>
+            <values>
+                <fullName>005</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EF01</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EF02</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EF03</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

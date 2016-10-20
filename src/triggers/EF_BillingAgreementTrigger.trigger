@@ -37,6 +37,10 @@ trigger EF_BillingAgreementTrigger on EF_Billing_Agreement__c (
                 if(toApprove.size() > 0)
                     EF_BillingAgreementHandler.startApprovalProcesses(toApprove);                
             }
+
+            if(Trigger.isUpdate){
+                EF_BillingAgreementHandler.manageCriticalFieldChanges(Trigger.new, Trigger.oldMap);
+            }
         }
 
 }

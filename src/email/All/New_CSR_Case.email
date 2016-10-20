@@ -1,9 +1,0 @@
-Dear DPC Team,
-
-Please note that a new Customer Service Request has been created.
-
-Case #: {!Case.CaseNumber}
-Subject: {!Case.Subject}
-Description: {!Case.Description}
-
-For direct access, please click on this link {!Case.Link}.

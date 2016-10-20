@@ -225,7 +225,11 @@ public class EF_AccountTriggerHandler {
            }
            emailBody = emailBody + '</table>';
            if(a.RecordTypeId==Schema.SObjectType.Account.getRecordTypeInfosByName().get('Others').getRecordTypeId()){
+           		if(a.EF_Client_Services_Specialist_Email__c!=null){
            		Utility.sendEmail(new List <String> {'efs@iata.org', a.EF_Client_Services_Specialist_Email__c}, 'E&F Account Critical Changes Notification ', emailBody, true, null);
+           }else{
+           		Utility.sendEmail(new List <String> {'efs@iata.org'}, 'E&F Account Critical Changes Notification ', emailBody, true, null);
+           }
            }else{
            		Utility.sendEmail(new List <String> {'efs@iata.org'}, 'E&F Account Critical Changes Notification ', emailBody, true, null);
            }

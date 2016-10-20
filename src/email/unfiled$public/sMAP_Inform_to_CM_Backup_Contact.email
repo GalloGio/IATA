@@ -1,0 +1,9 @@
+Dear {!Case.Country_Manager__c}, {!Case.Country_Manager_Backup__c} & {!Case.Country_Manager_Backup_2__c}
+
+Please click the link below to review the sales data for the Agent classified as Red Alert and request the Airlines to investigate and provide their feedback within 48 hours from receiving this message
+
+{!Case.Link}.
+
+Click on the link below to access the dashboard with all inputs and cases
+
+https://iata.my.salesforce.com/01Zw0000000oQzW

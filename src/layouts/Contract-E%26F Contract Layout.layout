@@ -49,6 +49,10 @@
                 <behavior>Required</behavior>
                 <field>EF_Status__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Dunning_Procedure__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -321,6 +325,12 @@
         <relatedList>EF_Location_Currency__c.Contract__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <fields>NAME</fields>
+        <fields>Location_Code__c</fields>
+        <fields>Location_Code_Details__c</fields>
+        <relatedList>EF_Location_Code__c.Contract__c</relatedList>
+    </relatedLists>
+    <relatedLists>
         <customButtons>Edit_All</customButtons>
         <fields>NAME</fields>
         <fields>Client__c</fields>
@@ -374,7 +384,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h26000000GCh7</masterLabel>
+        <masterLabel>00hw000000hfUjI</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

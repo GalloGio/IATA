@@ -257,8 +257,8 @@ margin-top:50px;
       <div class="row"><!-- row 1 -->
            <div class="col-md-12">
                <p>
-                  <apex:outputLabel value="{!$Label.ISSP_File}" for="file" rendered="{!AND(isCase, AND(tmpCase.CaseArea__c != 'Accreditation Process',tmpCase.CaseArea__c != 'Accreditation Products',tmpCase.CaseArea__c != 'Remittance & Settlement'))}"/>
-                  <apex:inputFile value="{!attachment.body}" filename="{!attachment.name}" id="file" rendered="{!AND(isCase, AND(tmpCase.CaseArea__c != 'Accreditation Process',tmpCase.CaseArea__c != 'Accreditation Products',tmpCase.CaseArea__c != 'Remittance & Settlement'))}"/>
+                  <apex:outputLabel value="{!$Label.ISSP_File}" for="file" rendered="{!AND(isCase, !isOSCARCase)}"/>
+                  <apex:inputFile value="{!attachment.body}" filename="{!attachment.name}" id="file" rendered="{!AND(isCase, !isOSCARCase)}"/>
                </p>
               
                <!-- this functionality allows the user to add a description to the file they upload
@@ -274,11 +274,11 @@ margin-top:50px;
     <div class="row">
        <hr />
           <div class="col-md-3">
-            <apex:commandButton action="{!upload}" value="{!$Label.IFAP_Save}" StyleClass="btn_iata btn-sm btn-block btn-success" rendered="{!AND(isCase, AND(tmpCase.CaseArea__c != 'Accreditation Process',tmpCase.CaseArea__c != 'Accreditation Products',tmpCase.CaseArea__c != 'Remittance & Settlement'))}"/>
-            <apex:commandButton action="/ISSP_Case?Caseid={!tmpCase.Id}" value="{!$Label.ISSP_Return_to_Case}" StyleClass="btn_iata btn-sm btn-block btn-success" rendered="{!AND(IsOSCARCase, OR(tmpCase.CaseArea__c == 'Accreditation Process',tmpCase.CaseArea__c == 'Accreditation Products',tmpCase.CaseArea__c == 'Remittance & Settlement'))}"/>
+            <apex:commandButton action="{!upload}" value="{!$Label.IFAP_Save}" StyleClass="btn_iata btn-sm btn-block btn-success" rendered="{!AND(isCase, !isOSCARCase)}"/>
+            <apex:commandButton action="/ISSP_Case?Caseid={!tmpCase.Id}" value="{!$Label.ISSP_Return_to_Case}" StyleClass="btn_iata btn-sm btn-block btn-success" rendered="{!AND(isCase, IsOSCARCase)}"/>
             </div>
           <div class="col-md-3">
-           <apex:commandButton action="/ISSP_Case?Caseid={!tmpCase.Id}" value="{!$Label.ISSP_Cancel}" StyleClass="btn_iata btn-sm btn-block btn-danger" rendered="{!AND(isCase, AND(tmpCase.CaseArea__c != 'Accreditation Process',tmpCase.CaseArea__c != 'Accreditation Products',tmpCase.CaseArea__c != 'Remittance & Settlement'))}" />
+           <apex:commandButton action="/ISSP_Case?Caseid={!tmpCase.Id}" value="{!$Label.ISSP_Cancel}" StyleClass="btn_iata btn-sm btn-block btn-danger" rendered="{!AND(isCase, !IsOSCARCase)}" />
          <!--
            <apex:commandButton action="/ISSP_Baggage_Proration_Claim?id={!tmpClaim.Id}" value="{!$Label.ISSP_Cancel}" StyleClass="btn_iata btn-sm btn-block btn-danger" rendered="{!isClaim}" /> 
           -->   
@@ -310,7 +310,7 @@ margin-top:50px;
             reqName="{!IF(OR(BEGINS(tmpCase.Reason1__c, 'New SA'), tmpCase.Reason1__c=='CLO - Closure', tmpCase.Reason1__c=='TIDS'), $Label.ISSP_AMS_Upload_Form, $Label.ISSP_AMS_Case_Attach)}"
             reqDescription="{!IF(OR(BEGINS(tmpCase.Reason1__c, 'New SA'), tmpCase.Reason1__c=='CLO - Closure', tmpCase.Reason1__c=='TIDS'), $Label.ISSP_AMS_Upload_Form_message + ' - ' + newCase.Subject, $Label.ISSP_AMS_Case_Attach_Description)}"
             reqIdentifier="PORTAL_CASE_DIRECT"
-            rendered="{!AND(isOSCARCase, tmpCase.Status!='Draft', OR(tmpCase.CaseArea__c == 'Accreditation Process',tmpCase.CaseArea__c == 'Accreditation Products', tmpCase.CaseArea__c == 'Remittance & Settlement'))}"
+            rendered="{!AND(isOSCARCase, tmpCase.Status!='Draft', OR(tmpCase.CaseArea__c == 'Accreditation Process',tmpCase.CaseArea__c == 'Accreditation Products', tmpCase.CaseArea__c == 'Remittance & Settlement Process'))}"
         />
     <!-- EO PORTAL_DIRECT Upload -->
 
