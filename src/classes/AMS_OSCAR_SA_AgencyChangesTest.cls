@@ -78,7 +78,7 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
         //open the OSCAR in a BR which has child SA agencies
         AMS_OSCAR__c oscar = new AMS_OSCAR__c(RecordTypeId = rtChange, Account__c = oscarAccount.Id,
                                                Type_of_change__c = typeOfChange, Change_of_location_type_behavior__c = changeLocTypeBehavior, 
-                                               AMS_Target_Agency__c = targetAgencyId, Change_effective_as_of__c = date.today());
+                                               Change_effective_as_of__c = date.today());
         insert oscar;
 
         ID rtCommCase = Schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
@@ -97,6 +97,7 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
         insert stagingArea;
 
         oscar.AMS_Online_Accreditation__c = stagingArea.Id;
+        oscar.AMS_Target_Agency__c = targetAgencyId;
         update oscar;
 
         return [SELECT Id, Account__c, Type_of_change__c,Change_effective_as_of__c FROM AMS_OSCAR__c LIMIT 1];
