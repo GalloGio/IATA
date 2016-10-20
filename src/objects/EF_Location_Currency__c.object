@@ -176,6 +176,15 @@ It contains a currency to make the correspondance between contract + location + 
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
+	<fields>
+        <fullName>Skip_Validation__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Helper fields for mass-updating values from Contract to be rolled down to Billing Agreements without starting an approval process.</description>
+        <externalId>false</externalId>
+        <label>Skip Validation</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
     <label>E&amp;F Location Currency</label>
     <nameField>
         <displayFormat>Loc-{00000000}</displayFormat>
