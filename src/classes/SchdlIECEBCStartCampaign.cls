@@ -82,7 +82,7 @@ global class SchdlIECEBCStartCampaign implements Database.Batchable<sObject>, Da
                     'EMAIL' => a.Email_Address__c,
                     'BILLINGACCOUNT_ID_ENC' => IECUtil.EncryptEncodeParameter(c.Billing_Account__c),
                     'BILLINGACCOUNT_NAME_ENC' => IECUtil.EncryptEncodeParameter(c.Billing_Account__r.Name),
-                    'AGENCY_NAME' => a.Trading_Name__c,
+                    'AGENCY_NAME' => a.EBC_Agency_Name__c,
                     'AGENCY_STATE' => a.State_Province__c,
                     'AGENCY_COUNTRY' => a.Country_Name__c,
                     'AGENCY_ACCREDITATIONCLASS' => a.Accreditation_Class__c,
@@ -192,7 +192,7 @@ global class SchdlIECEBCStartCampaign implements Database.Batchable<sObject>, Da
                 columns = new List<String>{
                     'Id',
                     'Email_Address__c',
-                    'Trading_Name__c',
+                    'EBC_Agency_Name__c',
                     'State_Province__c',
                     'Country_Name__c',
                     'Accreditation_Class__c',
