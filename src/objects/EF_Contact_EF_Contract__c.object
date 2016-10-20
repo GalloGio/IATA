@@ -131,4 +131,28 @@
         <searchFilterFields>NAME</searchFilterFields>
     </searchLayouts>
     <sharingModel>ControlledByParent</sharingModel>
+    <validationRules>
+        <fullName>CannotAddInactiveContact</fullName>
+        <active>true</active>
+        <description>The contact selected is Inactive for E&amp;F and can&apos;t be selected</description>
+        <errorConditionFormula>AND(
+ISNEW(),
+OR( 
+ISBLANK(TEXT(Contact__r.EF_Status__c)),
+ISPICKVAL(Contact__r.EF_Status__c,&apos;Inactive&apos;)
+)
+)</errorConditionFormula>
+        <errorMessage>The contact selected is Inactive for E&amp;F and can&apos;t be selected</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>StatusMustBeConsistentWithEFStatusConta</fullName>
+        <active>true</active>
+        <description>Status can&apos;t be active if Contact E&amp;F Status is Inactive</description>
+        <errorConditionFormula>AND(
+ISPICKVAL(EF_Status__c, &apos;Active&apos;),
+ISPICKVAL(Contact__r.EF_Status__c, &apos;Inactive&apos;)
+)</errorConditionFormula>
+        <errorDisplayField>EF_Status__c</errorDisplayField>
+        <errorMessage>Status can&apos;t be active if Contact E&amp;F Status is Inactive</errorMessage>
+    </validationRules>
 </CustomObject>
