@@ -92,13 +92,12 @@
     </fields>
     <fields>
         <fullName>External_Id__c</fullName>
-        <externalId>true</externalId>
+        <externalId>false</externalId>
         <label>External Id</label>
-        <precision>18</precision>
-        <required>false</required>
-        <scale>0</scale>
+        <length>255</length>
+        <required>true</required>
         <trackTrending>false</trackTrending>
-        <type>Number</type>
+        <type>Text</type>
         <unique>false</unique>
     </fields>
     <fields>

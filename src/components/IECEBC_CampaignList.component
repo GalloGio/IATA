@@ -342,7 +342,7 @@
                         window.open('/iec/IECEBC_CampaignPreview?id=' + campaign.EBC_Design__c);
                         break;
                     case 'report':
-                        window.open('/iec/IECEBC_ManageReportsDetails?id=' + campaign.Id); 
+                        location.href = '/iec/IECEBC_ManageReportsDetails?id=' + campaign.Id; 
                         break;
                 	default:
                         alert('The action ' + $(this).val() + ' has not been defined yet.');

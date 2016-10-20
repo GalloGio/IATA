@@ -127,21 +127,6 @@ public class vfIECEBC_CampaignTracking extends vfIECEBC_Controller{
         private set;
     }
     
-  
-    /*
-    public Integer HardBounced {
-        get {
-            List<AggregateResult> emailExclusCount = [Select Count(Id) numberOfBounced
-                                                      From EBC_Email_Exclusion__c
-                                                      Where Source_Campaign__r.Id = :campaign.Id
-                                                     And Type__c = 'HARDBOUNCE'];
-            
-            return Integer.valueOf(emailExclusCount[0].get('numberOfBounced')); 
-        }
-        private set;
-    }
-    */
-    
     public Integer OptOuts {
         get {           
          	List<AggregateResult> emailExclusCount = [Select Count(Id) numberOptOut                            	
@@ -157,83 +142,35 @@ public class vfIECEBC_CampaignTracking extends vfIECEBC_Controller{
     //=======================================================================================
     //    Manage Top Links
     //=======================================================================================
-   
-    public Map<String, List<Integer>> TotalClickMap {
+
+    public Map<String, Map<String, Integer>> campaignLinkStats {
         get {
-            if (TotalClickMap == null) {
-                TotalClickMap = new Map<String, List<Integer>>();
+            if (campaignLinkStats == null) {
+                campaignLinkStats = new Map<String, Map<String, Integer>>();
+                List<AggregateResult> ars = [Select count(Id) cnt, count_distinct(Subscriber_Key__c) unique_cnt, External_Id__c 
+                                             from EBC_Click_Event__c
+                                             Where EBC_Campaign__c = :campaign.Id
+                                             GROUP BY External_Id__c
+                                             ORDER BY count(Id) DESC
+                                             LIMIT 5
+                                            ];
                 
-                List<EBC_Click_Event__c> My_Event_ClickLink = new List<EBC_Click_Event__c>();
-                My_Event_ClickLink = [Select URL__c, External_Id__c, Subscriber_Key__c
-                                      From EBC_Click_Event__c 
-                                      Where EBC_Campaign__r.Id = :campaign.Id //'a768E000000CuzMQAS'//  ApexPages.currentPage().getParameters().get('id') //'a768E000000CuzMQAS' //'a768E000000CuuHQAS'                                                          
-                                     ];
-                
-                for (EBC_Click_Event__c ebc_ce: My_Event_ClickLink){
-                    List<Integer> My_IntegerList = new List<Integer>();
-                    String totalClick= String.valueOf(ebc_ce.url__c);
-                    My_IntegerList.add(getTotalLink(Integer.valueOf(ebc_ce.External_Id__c), campaign.Id));
-                    My_IntegerList.add((Integer)getUniqueTotalLink(Integer.valueOf(ebc_ce.External_Id__c), campaign.Id)[0].get('unique'));
-                    TotalClickMap.put(ebc_ce.url__c, My_IntegerList);
-                }
-            }            
-            return TotalClickMap;
-        }	
-        set;
-    }
-    
-    public List<String> getSortedKeys() {
-        List<String> ascSortedKeys = new List<String>(countToUrl.keySet());
-        ascSortedKeys.sort();
-        
-        List<String> descSortedKeys = new List<String>();
-        Integer count = 0;
-        for(Integer i = (ascSortedKeys.size() - 1); i >= 0; i--) {
-            descSortedKeys.add(ascSortedKeys[i]);
-            count++;
-            if (count >= 5) break;
-        }
-        
-        return descSortedKeys;
-    }
-    
-    public Map<String, String> countToUrl {
-        get {
-            if (countToUrl == null) {
-                countToUrl = new Map<String, String>();
-                
-                for(String url : TotalClickMap.keySet()) {
-                    String tempKey = (String.valueOf(TotalClickMap.get(url)[0])).leftPad(9);
-                    // Result will be '        5'
+                for(AggregateResult ar : ars) {
+                    String extId = (String)ar.get('External_Id__c');
+                    EBC_Click_Event__c ece = [Select URL__c From EBC_Click_Event__c Where External_Id__c = :extId LIMIT 1];
                     
-                    countToUrl.put(tempKey + '_' + url, url);
+                    campaignLinkStats.put(ece.URL__c, new Map<String, Integer>{
+                        'count' => (Integer)ar.get('cnt'),
+                        'unique_count' => (Integer)ar.get('unique_cnt')
+                    });
                 }
             }
-            return countToUrl;
+            
+            return campaignLinkStats;
         }
         set;
     }
     
-    public static Integer getTotalLink(Integer extId, Id campId){
-        
-        Integer total = [Select count() 
-                         from EBC_Click_Event__c 
-                         where External_Id__c = :extId 
-                         And EBC_Campaign__r.Id = :campId            //ApexPages.currentPage().getParameters().get('id') //'a768E000000CuzMQAS' 
-                        ];
-        return total;
-    }
-    
-    public static List<AggregateResult> getUniqueTotalLink(Integer externalId, Id campId){
-        
-        List<AggregateResult> uniqueTotal = [Select count_distinct(Subscriber_Key__c) unique 
-                                             from EBC_Click_Event__c 
-                                             where EBC_Campaign__r.Id = :campId                 //ApexPages.currentPage().getParameters().get('id') 
-                                             and External_Id__c = :externalId
-                                            ];
-        return uniqueTotal;
-    }
-
     //==============================================================
     // Graphs
     // ==============================================================

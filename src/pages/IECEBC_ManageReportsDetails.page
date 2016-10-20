@@ -436,17 +436,21 @@ Monthly activity graph showing year to date email credit transactions
                                                         <thead>
                                                             <tr>
                                                                 <th class="activity-type">Links</th>
-                                                                <th class="Cumulative-Opens">Cumulative Cliks</th>
+                                                                <th class="Cumulative-Opens">Cumulative Clicks</th>
                                                                 <th class="Unique-Clicks">Unique Click</th>
                                                             </tr>                               
                                                         </thead>
                                                         <tbody>
-                                                            <apex:repeat value="{!sortedKeys}" var="sortedKey">
-                                                                <apex:variable var="url" value="{!countToUrl[sortedKey]}" />
+                                                            <apex:repeat value="{!campaignLinkStats}" var="url">
                                                                 <tr>
-                                                                    <td><a href="url"><apex:outputText value="{!url}" /></a></td>
-                                                                    <td><apex:outputText value="{!TotalClickMap[url][0]}" /></td>
-                                                                    <td><apex:outputText value="{!TotalClickMap[url][1]}" /></td>
+                                                                    <td>
+                                                                        <apex:outputText rendered="{!url == 'Unsubscribe'}" value="{!url}" />
+                                                                        <apex:outputText rendered="{!url != 'Unsubscribe'}">
+                                                                            <a href="{!url}" onclick="window.open(this.href); return false;">{!url}</a>
+                                                                        </apex:outputText>
+                                                                    </td>
+                                                                    <td><apex:outputText value="{!campaignLinkStats[url]['count']}" /></td>
+                                                                    <td><apex:outputText value="{!campaignLinkStats[url]['unique_count']}" /></td>
                                                                 </tr>
                                                             </apex:repeat>                                                            
                                                         </tbody>

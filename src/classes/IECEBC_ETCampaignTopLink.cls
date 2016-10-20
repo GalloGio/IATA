@@ -101,7 +101,7 @@ public class IECEBC_ETCampaignTopLink {
                 EventClickLink.Event_Date_Timestamp__c = eventDate.getTime();
                 EventClickLink.Subscriber_Key__c = subscriberk;
                 EventClickLink.URL__c = URL;
-                EventClickLink.External_Id__c = Integer.valueOf(ListMap.get('URLID'));
+                EventClickLink.External_Id__c = ListMap.get('URLID');
 
                 myList.add(EventClickLink); 
                 
