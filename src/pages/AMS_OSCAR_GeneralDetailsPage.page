@@ -9,7 +9,8 @@
             if('{!oscarObj}' != null){
                 rerenderDetailInfo();
                 rerenderwarningInspPanel();
-                refreshTab();
+                // INC273249 : avoid to refresh the whole page when switching between a Case sub-tabs (loss of unsaved information)
+                // refreshTab();
             }
         };
         sforce.console.onFocusedSubtab(eventHandler);
