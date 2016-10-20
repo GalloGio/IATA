@@ -193,20 +193,25 @@ public with sharing class EF_BaContractApprovalHelper
 				req.setProcessDefinitionNameOrId(processNameOrId);
 				req.setSkipEntryCriteria(true); 	
 			}
-			
-			Approval.ProcessResult result = Approval.process(req);
-			if(!result.isSuccess())
+			try
 			{
-				String msg = '';
-				for(Database.Error err : result.getErrors())
+				Approval.ProcessResult result = Approval.process(req);
+				if(!result.isSuccess())
 				{
-					msg += '\n'+err.getMessage();
+					String msg = '';
+					for(Database.Error err : result.getErrors())
+					{
+						msg += '\n'+err.getMessage();
+					}
+					msg = msg.substring(2);
+					throw new ApprovalException(msg);
 				}
-				msg = msg.substring(2);
-				throw new ApprovalException(msg);
-			}
-			System.debug('************ success: '+result);
-			return result.getNewWorkitemIds();
+				return result.getNewWorkitemIds();
+				} catch(Exception e)
+				{
+					System.debug('************ approval error: '+e);
+					return null;
+				}
 		} else
 		{
 			return null;

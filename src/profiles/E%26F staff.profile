@@ -22644,7 +22644,12 @@
         <editable>true</editable>
         <field>EF_Billing_Agreement__c.Ship_to__c</field>
         <readable>true</readable>
-    </fieldPermissions> 
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>true</editable>
+        <field>EF_Billing_Agreement__c.Skip_Approval__c</field>
+        <readable>true</readable>
+    </fieldPermissions>	
     <fieldPermissions>
         <editable>true</editable>
         <field>EF_Billing_Agreement__c.Sold_to__c</field>
@@ -22738,6 +22743,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>EF_Location_Currency__c.Require_Approval__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>false</editable>
+        <field>EF_Location_Currency__c.Skip_Validation__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

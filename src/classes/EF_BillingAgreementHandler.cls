@@ -46,7 +46,7 @@ public class EF_BillingAgreementHandler
         }
     }
 
-    // Queries for any Accounts that do only allow Billing Agreements to be updated with approval
+    // Queries for any Contracts that do only allow Billing Agreements to be updated with approval
     public static void handleWithApprovalContractUpdates(Map<Id, EF_Billing_Agreement__c> newAgreements, Map<Id, EF_Billing_Agreement__c> oldAgreements)
     {
         Set<Id> contractIds = new Set<Id>();
@@ -168,7 +168,7 @@ public class EF_BillingAgreementHandler
         List <EF_Billing_Agreement__c> relWithLocation = new List <EF_Billing_Agreement__c>();
 
         for(EF_Billing_Agreement__c rel: relationshipList){
-            if(rel.EF_Location_ID__c!=null){
+            if(rel.EF_Location_ID__c!=null && !rel.Skip_Approval__c){
                 relWithLocation.add(rel);
             }
         }
