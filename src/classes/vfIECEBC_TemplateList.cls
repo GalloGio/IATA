@@ -253,7 +253,7 @@ public class vfIECEBC_TemplateList extends vfIECEBC_Abstract_List {
     }
     
     public Id selectedTemplateId { get; set; }
-        private Set<String> SelectionAllowed {
+    private Set<String> SelectionAllowed {
         get {
             if (SelectionAllowed==null) {
                 List<SelectOption> options = new List<SelectOption>();

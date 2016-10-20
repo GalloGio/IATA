@@ -60,8 +60,7 @@ public class vfIECEBC_CampaignTemplate extends vfIECEBC_Controller {
                 customHtmlTemplate = [
                     SELECT
                         Id,
-                        Name,
-                        (Select Id, Name From Attachments where Name = '/edres/_full.png')
+                        Name
                     FROM EBC_Template__c
                     WHERE
                         Recordtype.DeveloperName = 'Global' AND 

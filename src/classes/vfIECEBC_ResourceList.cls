@@ -60,11 +60,13 @@ public class vfIECEBC_ResourceList extends vfIECEBC_Abstract_List {
     public override List<SelectOption> getSortByOptions() {
         List<SelectOption> options = new List<SelectOption>();
         if (getIsFirstTimeLoadPage()) options.add(new SelectOption('CreatedDate DESC','Sort by'));
-        options.add(new SelectOption('CreatedDate DESC','Upload Date DESC')); 
-        options.add(new SelectOption('CreatedDate ASC','Upload Date ASC'));
-        options.add(new SelectOption('Image_size__c DESC','Image Size'));
+        options.add(new SelectOption('Name ASC','Image Name'));
         options.add(new SelectOption('Image_Type__c DESC','Image Type'));
-        options.add(new SelectOption('Name ASC','Name'));
+        options.add(new SelectOption('Image_size__c DESC','Image Size'));    
+        
+        options.add(new SelectOption('CreatedDate DESC','Upload Date - Descending')); 
+        options.add(new SelectOption('CreatedDate ASC','Upload Date - Ascending'));
+
 
         return options;
        
@@ -121,7 +123,7 @@ public class vfIECEBC_ResourceList extends vfIECEBC_Abstract_List {
           AggregateResult[] groupedResults = [Select Sum(Image_Size__c) From EBC_Resource__c
                        			Where Billing_Account__c=:vfIECEBC.billingAccount.Id];
           
-          gaugestorage ='0mb of 10mb';
+          gaugestorage ='0mb of '+String.ValueOf(STORAGE_CAPACITY.Setscale(0))+'mb';
           for (AggregateResult ar : groupedResults)  {
                 //MB
                 Decimal mb=0;
