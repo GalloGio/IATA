@@ -9,9 +9,6 @@ trigger EF_LocationCurrencyTrigger on EF_Location_Currency__c (
         
         if (Trigger.isBefore)
         {
-	    	//Delete billing currency from contract
-	    	EF_LocationCurrencyHandler.validateLocationCurrencyRemoval(Trigger.new, Trigger.oldMap);
-	    	
 	    	if (Trigger.isInsert)
 	    	{
 				EF_LocationCurrencyHandler.handleWithApprovalInserts(Trigger.new);
@@ -21,6 +18,8 @@ trigger EF_LocationCurrencyTrigger on EF_Location_Currency__c (
 
 	    	if(Trigger.isUpdate)
 	    	{
+	    		//Delete billing currency from contract
+		    	EF_LocationCurrencyHandler.validateLocationCurrencyRemoval(Trigger.newMap, Trigger.oldMap);
 	    		EF_LocationCurrencyHandler.handleWithApprovalUpdates(Trigger.newMap, Trigger.oldMap);
 	            EF_LocationCurrencyHandler.handleApprovedAndRejectedApprovals(Trigger.new, Trigger.oldMap);
 	    	}
@@ -37,9 +36,4 @@ trigger EF_LocationCurrencyTrigger on EF_Location_Currency__c (
 				EF_LocationCurrencyHandler.startApprovalProcesses(Trigger.new);
 	        }
         }
-
-
-         
-
-
 }

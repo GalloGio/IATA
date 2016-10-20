@@ -30,6 +30,11 @@
             <operation>equals</operation>
             <value>True</value>
         </criteriaItems>
+        <criteriaItems>
+            <field>EF_Billing_Agreement__c.Skip_Approval__c</field>
+            <operation>equals</operation>
+            <value>False</value>
+        </criteriaItems>
     </entryCriteria>
     <finalApprovalActions>
         <action>
