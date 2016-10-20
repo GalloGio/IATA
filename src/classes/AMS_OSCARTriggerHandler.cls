@@ -435,6 +435,14 @@ public class AMS_OSCARTriggerHandler {
                         else{ //default swap with parent, create change code for both accounts involved in the swap
                             Id oscarAccountParent = accounts.get(oscar.Account__c).ParentId;
                             accAffected = new Set<Id> {oscar.Account__c, oscarAccountParent};
+                            //need to save this parent in hierarchy account selection, because after this operation it will become a child
+                            //and we need to keep track of it for the approval process
+                            if( pds!= null && pds.size() > 0)
+                                throw new AMSException('Change of Location Type processes should not have any account selected in the Hierarchy Account Selection');
+
+                            AMS_Process_Detail__c parentAccount = new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = oscarAccountParent);
+                            insert parentAccount;
+
                         }
 
 
@@ -539,8 +547,10 @@ public class AMS_OSCARTriggerHandler {
                         if(oscar.Change_of_location_type_behavior__c == AMS_Utils.CHLOCTYPEBEHAVIOR_NOSWAP)
                             accAffected = new Set<Id> {oscar.Account__c};
                         else{ //default swap with parent, create change code for both accounts involved in the swap
-                            Id oscarAccountParent = accounts.get(oscar.Account__c).ParentId;
-                            accAffected = new Set<Id> {oscar.Account__c, oscarAccountParent};
+                            if(pds == null || (pds != null && pds.size() != 1))
+                                throw new AMSException('Something went wrong! The Hierarchy Account selection for Change of Location Type must have a single entry for this Oscar. Please contact your administrator.');
+
+                            accAffected = new Set<Id> {oscar.Account__c, pds.get(0).Account__c};
                         }
 
                         changesContainer.add(AMS_ChangeCodesHelper.generateChangeCodes(oscar, config, accounts, accountsChangeCode, AMS_Utils.APPROVAL, accAffected));
@@ -641,7 +651,18 @@ public class AMS_OSCARTriggerHandler {
                     if (nonCascadingTOCs.length() > 0 && nonCascadingTOCs.containsIgnoreCase(AMS_Utils.LOCATION_TYPE)) {
                         System.debug('AGENCY CHANGES: Processing Location Type Change Codes on Withdrawal.');
 
-                        changesContainer.add(AMS_ChangeCodesHelper.generateChangeCodes(oscar, config, accounts, accountsChangeCode, AMS_Utils.WITHDRAWAL, new Set<Id> {oscar.Account__c, hierarchyHO}));
+                        Set<Id> accAffected;
+                        //In this situation we only need to create change code for the oscar account
+                        if(oscar.Change_of_location_type_behavior__c == AMS_Utils.CHLOCTYPEBEHAVIOR_NOSWAP)
+                            accAffected = new Set<Id> {oscar.Account__c};
+                        else{ //default swap with parent, create change code for both accounts involved in the swap
+                            if(pds == null || (pds != null && pds.size() != 1))
+                                throw new AMSException('Something went wrong! The Hierarchy Account selection for Change of Location Type must have a single entry for this Oscar. Please contact your administrator.');
+
+                            accAffected = new Set<Id> {oscar.Account__c, pds.get(0).Account__c};
+                        }
+
+                        changesContainer.add(AMS_ChangeCodesHelper.generateChangeCodes(oscar, config, accounts, accountsChangeCode, AMS_Utils.WITHDRAWAL, accAffected));
                     } else if (nonCascadingTOCs.length() > 0 && cascadingTOCs.length() > 0) {
                         changesContainer.add(AMS_ChangeCodesHelper.generateChangeCodes(oscar, config2, accounts, accountsChangeCode, AMS_Utils.WITHDRAWAL, agenciesAffected));
 
