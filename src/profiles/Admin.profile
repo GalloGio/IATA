@@ -22562,11 +22562,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>EF_Contact_EF_Contract__c.Contact__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>EF_Contact_EF_Contract__c.Role__c</field>
         <readable>true</readable>
     </fieldPermissions>
