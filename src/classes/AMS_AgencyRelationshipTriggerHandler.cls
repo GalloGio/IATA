@@ -122,13 +122,17 @@ public class AMS_AgencyRelationshipTriggerHandler {
             system.debug('CHECK setStandardHierarchyRelationship Acc Id ' + account + ' Name ' + accounts.get(account).Name + ' Id ' + accounts.get(account).Id + ' parent ' + accounts.get(account).ParentId + ' top parent ' + accounts.get(account).Top_Parent__c);
 
         }
+        
+        Map<Id, Account> accountsInitialState = new Map<Id, Account>();
 
         Map<Id, String> accountsInitialLocType = new Map<Id, String>();
         Map<Id, String> hierarchyHOLocType = new Map<Id, String>();
 
         //need to keep a backup of the data to know the original Location Type of the accounts
-        for (Account a : accounts.values())
+        for (Account a : accounts.values()){
             accountsInitialLocType.put(a.Id, a.Location_Type__c);
+            accountsInitialState.put(a.Id, a.clone());
+        }
 
         // for each relationship, I update parentid and location type on the accounts
         for (AMS_Agencies_relationhip__c rel : rels) {
@@ -205,10 +209,11 @@ public class AMS_AgencyRelationshipTriggerHandler {
 
         for (Account acc : accounts.values()) {
             //if (acc.ParentId == null) {
+            if(acc.Location_Type__c != accountsInitialState.get(acc.Id).Location_Type__c || acc.ParentId != accountsInitialState.get(acc.Id).ParentId || acc.Top_Parent__c != accountsInitialState.get(acc.Id).Top_Parent__c){
                 accsToUpdate.add(acc);
                 system.debug(LoggingLevel.ERROR, 'setStandardHierarchyRelationship() --> account ' + acc.Name + ' with id ' + acc.id + ', parent id = ' + acc.ParentId + ' and location type = ' + acc.Location_Type__c);
                 system.debug(LoggingLevel.ERROR, 'CHECK setStandardHierarchyRelationship() --> account ' + acc.Name + ' with id ' + acc.id + ', parent id = ' + acc.ParentId + ' and Top parent = ' + acc.Top_Parent__c);
-            //}
+            }
         }
         system.debug(LoggingLevel.ERROR, 'setStandardHierarchyRelationship() --> FIRST UPDATE');
         update accsToUpdate;
