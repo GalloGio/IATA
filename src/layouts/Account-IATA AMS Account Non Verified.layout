@@ -2,55 +2,9 @@
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
     <customButtons>Zuora__Sync_Data_from_ZBilling</customButtons>
     <customButtons>Start_Oscar_Wizard</customButtons>
-    <customConsoleComponents>
-        <primaryTabComponents>
-            <containers>
-                <isContainerAutoSizeEnabled>false</isContainerAutoSizeEnabled>
-                <region>Left</region>
-                <sidebarComponents>
-                    <componentType>VisualForcePage</componentType>
-                    <label>Cases</label>
-                    <page>AMS_DemoCaseListPage</page>
-                </sidebarComponents>
-                <sidebarComponents>
-                    <componentType>VisualForcePage</componentType>
-                    <label>Hierarchy</label>
-                    <page>AMS_DemoTreeViewPage</page>
-                </sidebarComponents>
-                <style>Tabs</style>
-                <unit>Pixel</unit>
-                <width>200</width>
-            </containers>
-            <containers>
-                <height>90</height>
-                <isContainerAutoSizeEnabled>false</isContainerAutoSizeEnabled>
-                <region>Top</region>
-                <sidebarComponents>
-                    <componentType>VisualForcePage</componentType>
-                    <page>AMSAgencyKPI</page>
-                    <unit>Percentage</unit>
-                    <width>100</width>
-                </sidebarComponents>
-                <style>Stack</style>
-                <unit>Pixel</unit>
-            </containers>
-        </primaryTabComponents>
-        <subtabComponents>
-            <containers>
-                <isContainerAutoSizeEnabled>false</isContainerAutoSizeEnabled>
-                <region>Right</region>
-                <sidebarComponents>
-                    <componentType>VisualForcePage</componentType>
-                    <height>100</height>
-                    <page>AMS_Translation_Account_Page</page>
-                    <unit>Percentage</unit>
-                </sidebarComponents>
-                <style>Stack</style>
-                <unit>Pixel</unit>
-                <width>50</width>
-            </containers>
-        </subtabComponents>
-    </customConsoleComponents>
+    <excludeButtons>DataDotComAccountInsights</excludeButtons>
+    <excludeButtons>DataDotComClean</excludeButtons>
+    <excludeButtons>DataDotComCompanyHierarchy</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
         <customLabel>true</customLabel>
@@ -67,7 +21,7 @@
                 <field>Quality__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>ParentId</field>
             </layoutItems>
             <layoutItems>
@@ -83,7 +37,7 @@
                 <field>Portal_Service_Report__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>Company_Type__c</field>
             </layoutItems>
         </layoutColumns>
@@ -93,7 +47,7 @@
                 <field>Key_Customer__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>Identify_as_Key_Customer__c</field>
             </layoutItems>
             <layoutItems>
@@ -109,11 +63,11 @@
                 <field>Check_Digit__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Required</behavior>
                 <field>Sector__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Required</behavior>
                 <field>Category__c</field>
             </layoutItems>
             <layoutItems>
@@ -121,7 +75,7 @@
                 <field>Last_SIDRA_Date__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>Number_of_open_Financial_Review_Cases__c</field>
             </layoutItems>
             <layoutItems>
@@ -142,15 +96,15 @@
         <label>Address Information</label>
         <layoutColumns>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>BillingAddress</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Required</behavior>
                 <field>IATA_ISO_Country__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>Iso_State__c</field>
             </layoutItems>
             <layoutItems>
@@ -201,11 +155,11 @@
         <label>Agent information</label>
         <layoutColumns>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Required</behavior>
                 <field>Location_Type__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Required</behavior>
                 <field>Location_Class__c</field>
             </layoutItems>
             <layoutItems>
@@ -213,11 +167,11 @@
                 <field>Is_Branch_Abroad__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>VAT_Number__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>VAT_Number_2__c</field>
             </layoutItems>
             <layoutItems>
@@ -247,15 +201,15 @@
                 <field>Status__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>Accreditation_date__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>Expiry_Date__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>License_Number__c</field>
             </layoutItems>
             <layoutItems>
@@ -267,7 +221,7 @@
                 <field>BSP_Name__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>Operation__c</field>
             </layoutItems>
             <layoutItems>
@@ -292,7 +246,7 @@
                 <field>Accumulated_Irregularities__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>Financial_Year_End__c</field>
             </layoutItems>
             <layoutItems>
@@ -300,15 +254,15 @@
                 <field>Guaranteed_amount__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>Remittance_frequency__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>CCG_IRR_Distribution_list__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>CCG_Participant__c</field>
             </layoutItems>
         </layoutColumns>
@@ -318,7 +272,7 @@
                 <field>Assessment_Performed_Date__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>Financial_Review_Result__c</field>
             </layoutItems>
             <layoutItems>
@@ -330,7 +284,7 @@
                 <field>Next_Financial_security_Expiry_date__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>Fin_statements_submission_deadline__c</field>
             </layoutItems>
         </layoutColumns>
@@ -374,11 +328,11 @@
                 <field>OwnerId</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>Reason_for_creation__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>Source_System__c</field>
             </layoutItems>
         </layoutColumns>
@@ -392,11 +346,11 @@
                 <field>RecordTypeId</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>AIMS_ID__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>WebStar_ID__c</field>
             </layoutItems>
         </layoutColumns>
@@ -618,7 +572,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00hw000000i1Enq</masterLabel>
+        <masterLabel>00h3E000000EtbW</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>
