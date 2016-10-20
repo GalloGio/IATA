@@ -5,6 +5,8 @@
     <customButtons>Community</customButtons>
     <customButtons>Log_Phone_Case</customButtons>
     <excludeButtons>DataDotComClean</excludeButtons>
+    <customButtons>SAP_Airline_Request</customButtons>
+    <customButtons>SIS_Airline_Request</customButtons>
     <excludeButtons>DisableCustomerPortal</excludeButtons>
     <excludeButtons>DisablePartnerPortal</excludeButtons>
     <excludeButtons>EnableCustomerPortal</excludeButtons>
@@ -452,6 +454,22 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Contact_cleanup_remarks__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <style>OneColumn</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>false</editHeading>
+        <label>Fiiles</label>
+        <layoutColumns>
+            <layoutItems>
+                <height>350</height>
+                <page>EF_Contact_Attachment_List</page>
+                <showLabel>false</showLabel>
+                <showScrollbars>true</showScrollbars>
+                <width>100%</width>
             </layoutItems>
         </layoutColumns>
         <style>OneColumn</style>
