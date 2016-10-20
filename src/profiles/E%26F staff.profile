@@ -22657,6 +22657,31 @@
     </fieldPermissions>   
     <fieldPermissions>
         <editable>false</editable>
+        <field>EF_Contact_EF_Contract__c.Contact_Account__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>EF_Contact_EF_Contract__c.Contact__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>EF_Contact_EF_Contract__c.Contract__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>EF_Contact_EF_Contract__c.Role__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>EF_Contact_EF_Contract__c.EF_Status__c</field>
+        <readable>true</readable>
+    </fieldPermissions>    
+    <fieldPermissions>
+        <editable>false</editable>
         <field>EF_Contact_Relationship__c.Contact_Account__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -38736,6 +38761,9 @@
         <layout>EF_Billing_Agreement__c-E%26F Airline Billing Agreement Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>EF_Contact_EF_Contract__c-E%26F Contact in E%26 Contract Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>EF_Contact_Relationship__c-E%26F Contact Relationship Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -39909,6 +39937,15 @@
         <allowRead>true</allowRead>
         <modifyAllRecords>true</modifyAllRecords>
         <object>EF_Billing_Agreement__c</object>
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>true</modifyAllRecords>
+        <object>EF_Contact_EF_Contract__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
