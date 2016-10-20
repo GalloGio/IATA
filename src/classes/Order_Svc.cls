@@ -1041,7 +1041,7 @@ public without sharing class Order_Svc
     public static string orderSubscription(set<Id> orderIds,Map<Id,IECZuoraHelper.PaymentMethod> orderId_paymentMethod,Map<Id,String> orderId_paymentType){
         try{
             Map<Id,Zuora.zApi.SubscribeResult> subscribeResults = subscribe(orderIds,orderId_paymentMethod,orderId_paymentType);
-            if (subscribeResults == null || subscribeResults.size() == 0)
+            if (subscribeResults == null)
                 return Label.Order_transaction_failed_message;
 
             Map<String,ZuoraUtil.zAccountPaymentMethod> orderId_zAccountPaymentMethod = new Map<String,ZuoraUtil.zAccountPaymentMethod>();
@@ -1626,7 +1626,9 @@ public without sharing class Order_Svc
                     //Threw an exception when Zuora exception occur
                     //*** do not throw error in order to rollback -> prepare to rollback if having successful subscriptions
                     //throw new OrderException(ex.getMessage() + ' +++ ' + ex.getStackTraceString() + ' +++ ' + ex.getLineNumber());
-                    if (orderItemId_subscribeResult.size() > 0)
+                    if (orderItemId_subscribeResult.size() == 0)
+                        orderItemId_subscribeResult = null;
+                    else
                         for (Integer e1 = 0; e1 < OrderItemSend.size(); e1++)
                             if (!orderItemId_subscribeResult.containsKey((OrderItemSend[e1].Id != null) ? OrderItemSend[e1].Id : OrderItemSend[e1].OrderId))
                                 orderItemId_subscribeResult.put((OrderItemSend[e1].Id != null) ? OrderItemSend[e1].Id : OrderItemSend[e1].OrderId, null);
