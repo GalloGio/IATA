@@ -92,12 +92,13 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
             //USED ON: HO,BR,TIDS,GSA,AHA,GSSA,MSO,SA
             oscar.Dossier_Reception_Date__c = Date.today();
 
-            //removed in issue AMS-1584
-            //oscar.Sanity_check_deadline__c = Date.today() + 15;
-
+            oscar.Sanity_check_deadline__c = Date.today() + 30;
+            
+            if(AMS_Utils.getRecordType(oscar.RecordTypeId) == AMS_Utils.getRecordType('AMS_OSCAR__c', 'NEW')){
+            	oscar.OSCAR_Deadline__c = Date.today() + 30;
+            }
 
             oscars.add(oscar);
-
         }
 
         if (!oscars.isEmpty()){
