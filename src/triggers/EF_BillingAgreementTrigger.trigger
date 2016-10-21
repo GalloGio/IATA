@@ -30,9 +30,12 @@ trigger EF_BillingAgreementTrigger on EF_Billing_Agreement__c (
                 List<EF_Billing_Agreement__c> toUpdateList = new List<EF_Billing_Agreement__c>();
                 for(EF_Billing_Agreement__c ba : Trigger.new)
                 {
-                    if(EF_Utilities.findIfKeyFieldsChanged((sObject) ba, (sObject) Trigger.oldMap.get(ba.Id), schema.SObjectType.EF_Billing_Agreement__c.fields.getMap(), new List<String>{'Skip_Approval__c', 'Billing_Currency__c'}))
+                    if(!ba.Skip_Approval__c)
                     {
-                        toUpdateList.add(ba);
+                        if(EF_Utilities.findIfKeyFieldsChanged((sObject) ba, (sObject) Trigger.oldMap.get(ba.Id), schema.SObjectType.EF_Billing_Agreement__c.fields.getMap(), new List<String>{'Skip_Approval__c', 'Billing_Currency__c'}))
+                        {
+                            toUpdateList.add(ba);
+                        }
                     }
                 }
                 
@@ -40,6 +43,7 @@ trigger EF_BillingAgreementTrigger on EF_Billing_Agreement__c (
                     EF_BillingAgreementHandler.handleWithApprovalContractUpdates(new Map<Id, EF_Billing_Agreement__c>(toUpdateList), Trigger.oldMap);
                 // EF_BillingAgreementHandler.handleWithApprovalContractUpdates(Trigger.newMap, Trigger.oldMap);
                 EF_BillingAgreementHandler.handleApprovedAndRejectedApprovals(Trigger.new, Trigger.oldMap);
+                EF_BillingAgreementHandler.revertSkipApprovalIfNecessary(Trigger.new, Trigger.oldMap);
             }
         } else if (Trigger.isAfter && !Trigger.isDelete)
         {

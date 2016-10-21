@@ -62,7 +62,7 @@ public class EF_BillingAgreementHandler
             List<EF_Billing_Agreement__c> agreementsToApprove = new List<EF_Billing_Agreement__c>();
             for(EF_Billing_Agreement__c allAgreements : newAgreements.values())
             {
-                if(contractsInvolved.get(allAgreements.Contract__c) != null)
+                if(contractsInvolved.get(allAgreements.Contract__c) != null && !allAgreements.Skip_Approval__c)
                     agreementsToApprove.add(allAgreements);
             }
 
@@ -109,7 +109,9 @@ public class EF_BillingAgreementHandler
         for(EF_Billing_Agreement__c ba : agreementList)
         {
             if(!ba.Skip_Approval__c)
+            {
                 contractIds.add(ba.Contract__c);
+            }
         }
 
         Set<Id> withApprovalIds = new Set<Id>();
@@ -288,6 +290,17 @@ public class EF_BillingAgreementHandler
                         rel.Payment_Currency__c.addError(errorMessage);
                     }   
                 }
+            }
+        }
+    }
+
+    public static void revertSkipApprovalIfNecessary(List<EF_Billing_Agreement__c> newList, Map<Id,EF_Billing_Agreement__c> oldMap)
+    {
+        for(EF_Billing_Agreement__c ba : newList)
+        {
+            if(ba.Skip_Approval__c && !oldMap.get(ba.Id).Skip_Approval__c)
+            {
+                ba.Skip_Approval__c = false;
             }
         }
     }
