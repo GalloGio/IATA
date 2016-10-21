@@ -126,14 +126,14 @@ public class vfIECEBC_CampaignTracking extends vfIECEBC_Controller{
         }
         private set;
     }
-    
-    public Integer OptOuts {
+    public Integer Adjustments {
         get {           
-         	List<AggregateResult> emailExclusCount = [Select Count(Id) numberOptOut                            	
-                                                      From EBC_Email_Exclusion__c
-                                                      Where Source_Campaign__r.Id = :campaign.Id
-                                                     And Type__c = 'OPTOUT'];
-            return  Integer.valueOf(emailExclusCount[0].get('numberOptOut'));
+         	List<AggregateResult> rec = [Select Sum(Total_Count__c) cnt                            	
+                                                      From EBC_Activity__c
+                                                      Where EBC_Campaign__c = :campaign.Id
+                                                     And Activity_Type__c = 'Adjustment'
+                                                     ];
+            return  Integer.valueOf(rec[0].get('cnt'));
         }
         private set;
     }
@@ -152,17 +152,24 @@ public class vfIECEBC_CampaignTracking extends vfIECEBC_Controller{
                                              Where EBC_Campaign__c = :campaign.Id
                                              GROUP BY External_Id__c
                                              ORDER BY count(Id) DESC
-                                             LIMIT 5
+                                             LIMIT 6
                                             ];
                 
+               Integer cnt = 0;
                 for(AggregateResult ar : ars) {
                     String extId = (String)ar.get('External_Id__c');
                     EBC_Click_Event__c ece = [Select URL__c From EBC_Click_Event__c Where External_Id__c = :extId LIMIT 1];
+                    
+                    if (ece.URL__c == 'Unsubscribe') continue;
+                    
+                    cnt++;
                     
                     campaignLinkStats.put(ece.URL__c, new Map<String, Integer>{
                         'count' => (Integer)ar.get('cnt'),
                         'unique_count' => (Integer)ar.get('unique_cnt')
                     });
+                    
+                    if (cnt == 5) break;
                 }
             }
             

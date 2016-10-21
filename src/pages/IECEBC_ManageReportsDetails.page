@@ -250,11 +250,11 @@
                                         <li>
                                             <div class="account-box">
                                                 <strong class="number">
-                                                    <apex:outputText value="{0, number, ###,###,##0}"><apex:param value="{!OptOuts}" /></apex:outputText>
+                                                    <apex:outputText value="{0, number, ###,###,##0}"><apex:param value="{!Adjustments}" /></apex:outputText>
                                                 </strong>
-                                                <span class="label">Opt-out</span>
+                                                <span class="label">Adjustments</span>
                                                 <div class="icon">
-                                                    <i class="fa fa-hand-paper-o" aria-hidden="true"></i>
+                                                    <i class="fa fa-asterisk" aria-hidden="true"></i>
                                                 </div>
                                             </div>
                                         </li>
