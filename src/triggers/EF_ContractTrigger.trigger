@@ -37,6 +37,10 @@ trigger EF_ContractTrigger on Contract (
                 EF_ContractHandler.handleWithApprovalAccountInserts(efContractList);
             } else
             {
+            	for(Contract c : Trigger.new)
+            	{
+            		EF_Utilities.findIfKeyFieldsChanged((sObject) c, (sObject) Trigger.oldMap.get(c.Id), schema.SObjectType.Contract.fields.getMap(), new List<String>{''});
+            	}
             	EF_ContractHandler.validateContractCurrencyRemoval(Trigger.new, Trigger.oldMap);
                 EF_ContractHandler.handleWithApprovalAccountUpdates(efContractMap, Trigger.oldMap);
                 EF_ContractHandler.handleApprovedAndRejectedApprovals(efContractList, Trigger.oldMap);

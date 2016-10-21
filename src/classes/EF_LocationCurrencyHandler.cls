@@ -131,7 +131,7 @@ public class EF_LocationCurrencyHandler {
     }
     
     public static void manageUpdateLocationCurrency () {
-        
+
         List<EF_Location_Currency__c> locationCurrencyListNew = (List<EF_Location_Currency__c>) Trigger.new;
         Map<Id, EF_Location_Currency__c> locationCurrencyMapOld = (Map<Id, EF_Location_Currency__c>) Trigger.oldMap;
         List <EF_Location_Currency__c> locs2Notify = new List <EF_Location_Currency__c> ();
@@ -180,7 +180,7 @@ public class EF_LocationCurrencyHandler {
         try{
             update mapContract.values();
             if(!locs2Notify.isEmpty()){
-                // notifyOnUpdate(locs2Notify, locationCurrencyMapOld);
+                notifyOnUpdate(locs2Notify, locationCurrencyMapOld);
             }
             
         }catch(Exception e){
@@ -314,6 +314,8 @@ public class EF_LocationCurrencyHandler {
             {
                 ba.Billing_Currency__c = currencyMap.get(ba.EF_Location_ID__c).EF_Billing_Currency__c;
                 ba.Skip_Approval__c = true;
+                ba.Require_Approval__c = false;
+                ba.Requested_Changes__c = '';
             }
             update baList;
             
@@ -323,7 +325,6 @@ public class EF_LocationCurrencyHandler {
                 ba.Requested_Changes__c = '';
                 ba.Require_Approval__c = false;
             }
-            update baList;
         }
     }
 
