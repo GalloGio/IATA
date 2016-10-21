@@ -190,14 +190,14 @@
             <!-- Start of Page Content -->
             <main class="main-content manage-account">
                 <div class="inner-wrapper">
-                    <h1 class="page-title">Campaign Details</h1>
+                    <h1 class="page-title">{!EBC_Campaign__c.Name}</h1>
                     
-                    <h2 class="section-title recipents"><i class="fa fa-users" aria-hidden="true"></i> {!CampaignProperties['NumberofRecipients']} recipients</h2>
+                    <h2 class="section-title recipents"><i class="fa fa-users" aria-hidden="true"></i> Sent to {!CampaignProperties['NumberofRecipients']} recipients</h2>
                     <div class="tab-container"> 
                         <div class="tab-content js-tabs">
                             <div class="tab-pane is-open" id="pane-1">                              
                                 <ul class="list campaign-info">
-                                    <li>List used for this Campaign: <strong>{!CampaignProperties['Name']}</strong></li>
+                                    <li>List used for the Campaign: <strong>{!CampaignProperties['Name']}</strong></li>
                                     <li>Subject of the Campaign: <strong>{!CampaignProperties['Subject']}</strong></li>
                                     <li>Campaign sent on: <strong>{!CampaignProperties['SendDatetime']}</strong></li>
                                 </ul>

@@ -97,8 +97,7 @@
 										
 										<apex:outputPanel id="upgradeOptionMessage" rendered="{!IF((showUpgradeOption),true,false)}">
 											<h2 class="heading-2 strong">Change your plan</h2>
-											<h2 class="heading-3 flat">Prepaid</h2>
-											<p class="description light small">The following are available prepaid rate plans</p>
+                                            <p class="description light small">Choose one of the following pre-paid plans to secure a lower cost per email.<br />Each rate plan buys you a defined number of emails at the corresponding cost per unit.</p>
 										</apex:outputPanel>
 										
 										<apex:form id="productRatePlanForm" >   										
@@ -180,7 +179,7 @@
 																			</div>
 																		</apex:outputPanel>
 																		<apex:outputPanel id="paymentInfoNoShow" rendered="{!!showPaymentConfirmation}">
-																			<strong>Please select the upgrade plan!</strong>
+																			Please make a selection
 																		</apex:outputPanel>
 																		</th>
 																			
@@ -192,10 +191,10 @@
 																	</tr>
 																	
 																	<tr class="total">
-																		<th>Total</th>
+																		<th>Subtotal</th>
 																		<td class="price">
 																			<strong>
-																				<apex:outputText value="${0, number,###,###,##0.00}"><apex:param value="{!totalNewPurchaseAmount}" /></apex:outputText>
+																				<apex:outputText value="${0, number,###,###,##0.00}"><apex:param value="{!totalNewPurchaseAmount}" /></apex:outputText> USD
 																			</strong>
 																		</td>
 																	</tr>
@@ -205,7 +204,7 @@
 														<div class="footer-actions">
 															<ul class="list actions sectionActions">
 																<li><apex:commandLink onclick="ShowWaitingStatus('.sectionActions');window.location='{!URLFOR($Page.IECEBC_AccountRatePlan)}';" styleClass="text-link" value="Cancel"/></li>
-															    <li><apex:commandLink onclick="ShowWaitingStatus('.sectionActions');" action="{!goToPaymentPage}" styleClass="button" value="Submit payment" rendered="{!selectedProductRatePlan!=null}"/></li>
+															    <li><apex:commandLink onclick="ShowWaitingStatus('.sectionActions');" action="{!goToPaymentPage}" styleClass="button" value="Proceed to payment" rendered="{!selectedProductRatePlan!=null}"/></li>
 															</ul>
 														</div>
 													</apex:outputPanel>
