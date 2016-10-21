@@ -38,12 +38,12 @@
                                 <li>
                                     <apex:outputText rendered="{!IF(c.Status__c == 'DRAFT', true, false)}">
                                         <apex:outputText value="{0,date,EEE MMM dd yyyy hh:mm:ss}">
-                                            <apex:param value="{!c.LastModifiedDate}" /> 
+                                            <apex:param value="{!c.LastModifiedDate + timezoneOffset}" /> 
                                         </apex:outputText>
                                     </apex:outputText>
                                     <apex:outputText rendered="{!IF(c.Status__c == 'PENDING_APPROVAL' || c.Status__c == 'APPROVED' || c.Status__c == 'SENT', true, false)}">
                                          <apex:outputText value="{0,date,EEE MMM dd yyyy hh:mm:ss}">
-                                            <apex:param value="{!c.Scheduled_Date__c}" /> 
+                                            <apex:param value="{!c.Scheduled_Date__c + timezoneOffset}" /> 
                                         </apex:outputText>
                                     </apex:outputText>
                                 </li>

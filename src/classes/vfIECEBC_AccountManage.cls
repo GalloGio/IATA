@@ -31,7 +31,7 @@ public with sharing class vfIECEBC_AccountManage extends vfIECEBC_Abstract_List
 	public vfIECEBC_AccountManage()
 	{
 		// settings related to activityList
-		itemsPerPage = 5; // number of items per page
+		itemsPerPage = 10; // number of items per page
 		sortBy = 'Activity_Date_Time__c ASC, LastModifiedDate ASC'; // set order direction
 		
 		prepareGraphDataYearAfterYear();

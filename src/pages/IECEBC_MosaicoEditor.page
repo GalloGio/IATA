@@ -224,6 +224,9 @@
                                             if ('undefined' != typeof(e.faultstring) && e.faultstring.indexOf('ResourceNotReady_Exception') != -1) {
                                                 viewModel.notifier.error(viewModel.t('Some of the images you are using are not yet ready.'));
                                                 console.log(e);
+                                            } else if ('undefined' != typeof(e.faultstring) && e.faultstring.indexOf('EmptyTemplate_Exception') != -1) {
+                                                viewModel.notifier.error(viewModel.t('Please save your design before sending a test email'));
+                                                console.log(e);
                                             } else if ('undefined' != typeof(e.faultstring) && e.faultstring.indexOf('ResourceMissing_Exception') != -1) {
                                                 viewModel.notifier.error(viewModel.t('Some of the images has been deleted. Please repleace them by existing resources.'));
                                                 console.log(e);

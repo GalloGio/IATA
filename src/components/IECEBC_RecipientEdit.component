@@ -403,7 +403,16 @@
                                             </apex:selectList>
                                         </div>
                                         <apex:inputText rendered="{!dataType == 'Text'}" value="{!f.Field_Value__c}" styleClass="filter{!ind}dependant user-input text" />
-                                        <apex:inputField rendered="{!dataType == 'Date'}" value="{!f.Field_Value__c}" styleClass="filter{!ind}dependant user-input text" />
+                                        <apex:outputText rendered="{!dataType == 'Date'}">
+                                            <div class="datepicker">
+                                                <apex:inputField value="{!f.Field_Value__c}" styleClass="filter{!ind}dependant js-datepicker humanCampaignDate user-input text" />
+                                            </div>
+                                            <script type="text/javascript">
+                                            jQuery('.filter{!ind}dependant').datepicker({ 
+                                                dateFormat: 'yy-mm-dd'
+                                            });
+                                            </script>
+                                        </apex:outputText>
                                         
                                         <apex:outputPanel layout="block" styleClass="custom-user-input select" rendered="{!dataType == 'Picklist' && f.EBC_Application_Filter__c != null}">
                                             <i class="icon angle-down"></i>	

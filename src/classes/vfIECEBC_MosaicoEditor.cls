@@ -127,6 +127,7 @@ global class vfIECEBC_MosaicoEditor extends vfIECEBC_Controller {
     }
     
     public class DailyLimitReached_Exception extends Exception {}
+    public class EmptyTemplate_Exception extends Exception {}
     
     webService static void sendTest(Id templateId, String email) {
         datetime dt = System.now()-1;
@@ -148,6 +149,10 @@ global class vfIECEBC_MosaicoEditor extends vfIECEBC_Controller {
         ];
         
         String body = vfIECEBC_Template.getTemplateHtml(template.Id, true, null, null);
+        
+        if (body == 'No Content') {
+            throw new EmptyTemplate_Exception('Please fill your template with content and save before sending a test email.');
+        }
         
         System.debug('Sending a test email to ' + email);
         

@@ -6,8 +6,9 @@ public class vfIECEBC_CampaignTracking extends vfIECEBC_Controller{
     
     public EBC_Campaign__c campaign {get; set;}
     
-    public vfIECEBC_CampaignTracking() {
-        
+    public vfIECEBC_CampaignTracking(ApexPages.StandardController stdController) {
+        this.campaign = (EBC_Campaign__c)stdController.getRecord();
+        /*
 		campaign = [SELECT Id, Name, Subject__c, Send_Datetime__c, Number_of_Recipients__c, 
                         NumberofClicks__c, NumberSent__c, NumberofOpens__c,
                         Clicks24Hours__c, Clicks48Hours__c, Bounced24Hours__c, Bounced48Hours__c, Bounced7Days__c,
@@ -19,6 +20,7 @@ public class vfIECEBC_CampaignTracking extends vfIECEBC_Controller{
                         ClickRate24Hours__c, ClickRate48Hours__c, ClickRate7Days__c
                    		FROM EBC_Campaign__c
                         WHERE Id = :ApexPages.currentPage().getParameters().get('id')];
+*/
     }
     
     public Map<String, String> CampaignProperties {
@@ -126,14 +128,14 @@ public class vfIECEBC_CampaignTracking extends vfIECEBC_Controller{
         }
         private set;
     }
-    
-    public Integer OptOuts {
+    public Integer Adjustments {
         get {           
-         	List<AggregateResult> emailExclusCount = [Select Count(Id) numberOptOut                            	
-                                                      From EBC_Email_Exclusion__c
-                                                      Where Source_Campaign__r.Id = :campaign.Id
-                                                     And Type__c = 'OPTOUT'];
-            return  Integer.valueOf(emailExclusCount[0].get('numberOptOut'));
+         	List<AggregateResult> rec = [Select Sum(Total_Count__c) cnt                            	
+                                                      From EBC_Activity__c
+                                                      Where EBC_Campaign__c = :campaign.Id
+                                                     And Activity_Type__c = 'Adjustment'
+                                                     ];
+            return  Integer.valueOf(rec[0].get('cnt'));
         }
         private set;
     }
@@ -152,17 +154,24 @@ public class vfIECEBC_CampaignTracking extends vfIECEBC_Controller{
                                              Where EBC_Campaign__c = :campaign.Id
                                              GROUP BY External_Id__c
                                              ORDER BY count(Id) DESC
-                                             LIMIT 5
+                                             LIMIT 6
                                             ];
                 
+               Integer cnt = 0;
                 for(AggregateResult ar : ars) {
                     String extId = (String)ar.get('External_Id__c');
                     EBC_Click_Event__c ece = [Select URL__c From EBC_Click_Event__c Where External_Id__c = :extId LIMIT 1];
+                    
+                    if (ece.URL__c == 'Unsubscribe') continue;
+                    
+                    cnt++;
                     
                     campaignLinkStats.put(ece.URL__c, new Map<String, Integer>{
                         'count' => (Integer)ar.get('cnt'),
                         'unique_count' => (Integer)ar.get('unique_cnt')
                     });
+                    
+                    if (cnt == 5) break;
                 }
             }
             
