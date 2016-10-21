@@ -1,4 +1,4 @@
-<apex:page id="thePage" controller="vfIECEBC_CampaignTracking" applyHtmlTag="false" applyBodyTag="false" sidebar="false" showheader="false" 
+<apex:page id="thePage" standardController="EBC_Campaign__c" extensions="vfIECEBC_CampaignTracking" applyHtmlTag="false" applyBodyTag="false" sidebar="false" showheader="false" 
            standardStylesheets="false" language="en" docType="html-5.0">
     
     <apex:message id="msg" />
@@ -250,7 +250,8 @@
                                         <li>
                                             <div class="account-box">
                                                 <strong class="number">
-                                                    <apex:outputText value="{0, number, ###,###,##0}"><apex:param value="{!Adjustments}" /></apex:outputText>
+                                                    <apex:outputText value="{0, number, ###,###,##0}" rendered="{!Adjustments != null}"><apex:param value="{!Adjustments}" /></apex:outputText>
+                                                    <apex:outputText value="0" rendered="{!Adjustments == null}" />
                                                 </strong>
                                                 <span class="label">Adjustments</span>
                                                 <div class="icon">

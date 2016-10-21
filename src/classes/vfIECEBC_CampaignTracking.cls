@@ -6,8 +6,9 @@ public class vfIECEBC_CampaignTracking extends vfIECEBC_Controller{
     
     public EBC_Campaign__c campaign {get; set;}
     
-    public vfIECEBC_CampaignTracking() {
-        
+    public vfIECEBC_CampaignTracking(ApexPages.StandardController stdController) {
+        this.campaign = (EBC_Campaign__c)stdController.getRecord();
+        /*
 		campaign = [SELECT Id, Name, Subject__c, Send_Datetime__c, Number_of_Recipients__c, 
                         NumberofClicks__c, NumberSent__c, NumberofOpens__c,
                         Clicks24Hours__c, Clicks48Hours__c, Bounced24Hours__c, Bounced48Hours__c, Bounced7Days__c,
@@ -19,6 +20,7 @@ public class vfIECEBC_CampaignTracking extends vfIECEBC_Controller{
                         ClickRate24Hours__c, ClickRate48Hours__c, ClickRate7Days__c
                    		FROM EBC_Campaign__c
                         WHERE Id = :ApexPages.currentPage().getParameters().get('id')];
+*/
     }
     
     public Map<String, String> CampaignProperties {
