@@ -21,7 +21,7 @@
                 <header class="page-header">
                     <div class="inner-wrapper">
                         <h1 class="site-logo">
-                            <a href="?page=dashboard">
+                            <a href="http://www.iata.org">
                                 <!--[if lte IE 8]>
 <img src="{!URLFOR($Resource.eBroadcastAssets, '/assets/img/common/logo-IATA-international-air-transport-association.png')}" alt="IATA: International Air Transport Association" width="70" />
 <![endif]-->
@@ -45,7 +45,7 @@
                             <li><a target="_blank" class="icon twitter" href="//twitter.com/iata"><span class="reader-only">Twitter</span></a></li>
                             <li><a target="_blank" class="icon youtube" href="//www.youtube.com/iatatv"><span class="reader-only">YouTube</span></a></li>
                         </ul>
-                        <a class="contact-us" href="#">Contact us</a>
+                        <a class="contact-us" href="mailto:globaldata@iata.org">Contact us</a>
                         <small class="copyright">&copy; International Air Transport Association (IATA) 2016. All rights reserved</small>
                     </div>
                 </footer>
