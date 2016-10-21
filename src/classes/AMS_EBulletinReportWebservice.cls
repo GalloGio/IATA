@@ -2,7 +2,8 @@ global class AMS_EBulletinReportWebservice {
 
 	private static String objectBaseQuery = 'Agency_Applied_Change_code__c';
 	private static String objectHistBaseQuery = 'AMS_Agency_A_Change_code_History__c';
-	private static String typeEBulletin;
+	private static String eBulletinCSVFormat = '","';
+	private static String typeEBulletin = 'D';
 
 	/** 
 		 Generate CSV main method to be called from an External Service
@@ -42,7 +43,7 @@ global class AMS_EBulletinReportWebservice {
 	private static String getHeader(){
 
 		System.debug('Get CSV Header...');
-		AMS_EBulletinReportHelper.getEBulletinFields(typeEBulletin,objectBaseQuery,'";"');
+		AMS_EBulletinReportHelper.getEBulletinFields(typeEBulletin,objectBaseQuery,eBulletinCSVFormat);
 
 		return AMS_EBulletinReportHelper.headerCSV;
 	}
@@ -52,7 +53,7 @@ global class AMS_EBulletinReportWebservice {
 
 		AMS_EBulletinReportHelper EbulletinHelper = new AMS_EBulletinReportHelper();
 
-		return EbulletinHelper.processEBulletinRecords(typeEBulletin,objectBaseQuery,objectHistBaseQuery,'";"');
+		return EbulletinHelper.processEBulletinRecords(typeEBulletin,objectBaseQuery,objectHistBaseQuery,eBulletinCSVFormat);
 
 
 	}

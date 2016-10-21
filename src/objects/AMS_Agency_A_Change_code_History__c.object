@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -81,21 +77,17 @@
         <fullName>Field_New_Value__c</fullName>
         <externalId>false</externalId>
         <label>Field New Value</label>
-        <length>80</length>
         <required>false</required>
         <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
+        <type>TextArea</type>
     </fields>
     <fields>
         <fullName>Field_Old_Value__c</fullName>
         <externalId>false</externalId>
         <label>Field Old Value</label>
-        <length>80</length>
         <required>false</required>
         <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
+        <type>TextArea</type>
     </fields>
     <fields>
         <fullName>Object_API_Name__c</fullName>
