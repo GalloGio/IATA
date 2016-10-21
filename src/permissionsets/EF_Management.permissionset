@@ -7745,11 +7745,6 @@
         <field>EF_Billing_Agreement__c.Sold_to__c</field>
         <readable>true</readable>
     </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>EF_Billing_Agreement__c.Status__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
 	<fieldPermissions>
         <editable>true</editable>
         <field>EF_Billing_Agreement__c.EF_Submitter_Email__c</field>
