@@ -17762,7 +17762,7 @@ Also, the package has changed the setting to prevent the creation of Contacts an
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Response message</shortDescription>
-        <value>The attachments transfer operation completed with {0} success(es) and {1} error(s).\n\n&lt;a href=&quot;/{2}&quot;&gt;Click here&lt;/a&gt; to return to the case.&apos;</value>
+        <value>The attachments transfer operation completed with {0} success(es) and {1} error(s).\n\n&lt;a href=&quot;/{2}&quot; onClick=&quot;testCloseTab()&quot;&gt;Click here&lt;/a&gt; to return to the case.&apos;</value>
     </labels>
     <labels>
         <fullName>SF_Base_URL</fullName>
