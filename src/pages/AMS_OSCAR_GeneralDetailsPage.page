@@ -184,7 +184,7 @@
         <apex:pageMessage
             severity="WARNING"
             strength="1"
-            summary="Field editting will be available based on the selected {!$ObjectType.AMS_OSCAR__c.fields.Type_of_Change__c.label}"
+            summary="Field editing will be available based on the selected {!$ObjectType.AMS_OSCAR__c.fields.Type_of_Change__c.label}"
             rendered="{!not(hasEditableFields)}"
         />
     
