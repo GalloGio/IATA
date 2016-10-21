@@ -172,7 +172,7 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Status__c</field>
+            <field>EF_Status__c</field>
             <table>EF_Billing_Agreement__c</table>
         </columns>
         <masterLabel>E&amp;F Airline Billing Agreements</masterLabel>
