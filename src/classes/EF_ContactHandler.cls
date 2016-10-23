@@ -8,6 +8,8 @@ public class EF_ContactHandler {
 
         Map<id, String> contactMap = new Map<id, String>();
         
+        //Handles inactivation/activation of contact for E&F. 
+        //Then we inactivate the contact in a billing agreement, and in contract.
         if(contactListNew != null)
         {
             for (Contact c : contactListNew)
@@ -22,15 +24,28 @@ public class EF_ContactHandler {
             }
     
             if(contactMap.size() != 0) {
-                List<EF_Contact_Relationship__c> crList = [Select id, status__c, Contact__c From EF_Contact_Relationship__c Where Contact__c in :contactMap.keySet()];
-        
-                if(crList.size() != null) {
-                    for (EF_Contact_Relationship__c cr : crList) {
+                //query for contacts in billing agreements
+                Map<Id,EF_Contact_Relationship__c> crMap = new Map <Id,EF_Contact_Relationship__c> ([Select id, Status__c, Contact__c From EF_Contact_Relationship__c Where Contact__c in :contactMap.keySet()]);
+                
+                //query for contacts in contracts
+                Map <Id, EF_Contact_EF_Contract__c> ccMap = new Map <Id, EF_Contact_EF_Contract__c>([Select id, EF_status__c, Contact__c From EF_Contact_EF_Contract__c Where Contact__c in :contactMap.keySet()]);
+                
+                if(!crMap.isEmpty()) {
+                    for (EF_Contact_Relationship__c cr : crMap.values()) {
                         cr.Status__c = contactMap.get(cr.Contact__c);
-                    }
-                    
-                    try{update crList;}catch(Exception e){System.debug('## [EF_ContactHandler.handleAfterUpdate]  error ' +e);}
+                    } 
+
+                    try{update crMap.values();}catch(Exception e){System.debug('## [EF_ContactHandler.handleAfterUpdate]  error ' +e);}                   
+                   
                 }
+                if(!ccMap.isEmpty()){
+                    for(EF_Contact_EF_Contract__c cc : ccMap.values()){
+                        cc.EF_Status__c = contactMap.get(cc.Contact__c);
+                    }
+
+                    try{ update ccMap.values();}catch(Exception e){ system.debug(e);}
+                }
+                
             }
         }
     }   
