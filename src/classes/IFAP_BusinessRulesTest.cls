@@ -1,5 +1,5 @@
 @isTest
-private class IFAP_BusinessRulesTest {
+public class IFAP_BusinessRulesTest {
 
     /**
      * Test the method IFAP_BusinessRules.isCountryValid()
@@ -210,14 +210,9 @@ private class IFAP_BusinessRulesTest {
 
     }
 
-    static testmethod void testCheckFinancialAssessmentContactExist() {
-
-        //create IATA_ISO_Country__c
-        createIsoCountry();
-
-
-        RecordType StandardAccountRecordType = [Select r.Id, r.Name from RecordType r where r.Name = 'IATA Standard Account' limit 1];
-        RecordType StandardContactRecordType = [Select r.Id, r.Name from RecordType r where r.Name = 'IATA Standard Contact' limit 1];
+     static testmethod void testCheckFinancialAssessmentContactExist() {
+        RecordType StandardAccountRecordType = [Select r.Id, r.Name from RecordType r where r.Name = 'Standard Account' and r.SobjectType = 'Account' limit 1];
+        RecordType StandardContactRecordType = [Select r.Id, r.Name from RecordType r where r.Name = 'Standard' and r.SobjectType = 'Contact' limit 1];
         ID IFAPcaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('IATA Financial Review');
         List<Account> accounts = new List<Account>();
 
@@ -272,7 +267,7 @@ private class IFAP_BusinessRulesTest {
         }
         Test.stopTest();
     }
-
+ 
     static testmethod void testVFEmailTemplateController() {
 
         //create IATA_ISO_Country__c
@@ -954,24 +949,7 @@ private class IFAP_BusinessRulesTest {
       Test.stopTest();
     }
 
-    static testmethod void testAssignAssessmentTemplateToAccountsWhereMissing(){
-      //prepare test data
-      RecordType StandardAccountRecordType = [Select r.Id, r.Name from RecordType r where r.Name = 'IATA Standard Account' limit 1];
 
-      Account account1 = createAccount();
-      account1.RecordTypeId = StandardAccountRecordType.Id;
-      insert account1;
-
-      Assessment_Template__c assTemplate = createAssessmentTemplate();
-      insert assTemplate;
-
-      Test.startTest();
-
-      Boolean assignmentResult = IFAP_BusinessRules.assignAssessmentTemplateToAccountsWhereMissing(1);
-      system.assertEquals(true,assignmentResult);
-
-      Test.stopTest();
-    }
 
     static testmethod void testIsReassessmentAccountingIssueLinked(){
       //prepare test data
@@ -1098,7 +1076,7 @@ private class IFAP_BusinessRulesTest {
     /**
      * Creates IATA_ISO_Country__c records for Canada and France
      */
-    private static void createIsoCountry(){
+    public static void createIsoCountry(){
 
         List<IATA_ISO_Country__c> isoCountriesCA = new List<IATA_ISO_Country__c>();
         isoCountriesCA = [SELECT Name, ISO_Code__c, Iso_Code_Numeric__c, CurrencyIsoCode, VAT_Validation_Required__c, AIMS_Area_ID__c FROM IATA_ISO_Country__c WHERE ISO_Code__c = 'CA' limit 1];
