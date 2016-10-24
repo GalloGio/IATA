@@ -444,7 +444,7 @@
                             <span class="recipientCountContainer" style="display: none">
                                 <strong><span class="newFilterCount">n/a</span> recipients</strong> in this segment.
                             </span>
-                            <a href="javascript:void(0);" styleClass="button secondary" onclick="saveRefinementStateAndRefreshCount();"><i class="icon fa fa-refresh" aria-hidden="true"></i> Calculate recipients count</a>
+                            <a href="javascript:void(0);" styleClass="button secondary" onclick="saveRefinementStateAndRefreshCount();"><i class="icon fa fa-refresh" aria-hidden="true"></i> Refresh count</a>
                             <div style="display: none" class="recipientCountContainer"><strong>Note:</strong> The number of recipients is also based on any geo filters you may have set.</div>
                         </div>
                     </div>

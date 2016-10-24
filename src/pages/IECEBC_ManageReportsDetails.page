@@ -342,7 +342,7 @@ Monthly activity graph showing year to date email credit transactions
                                                                     <apex:outputText value="{0, number, ###,###,##0}"><apex:param value="{!Kpis['uniqueOpens24Hours']}" /></apex:outputText> 
                                                                 </td>
                                                                 <td>
-                                                                    <apex:outputText value="{0, number, ###,###,##0}%" rendered="{!if(Kpis['openRate24Hours'] == -1, false, true)}"><apex:param value="{!Kpis['openRate24Hours']}" /></apex:outputText> 
+                                                                    <apex:outputText value="{0, number, ###,###,##0.00}%" rendered="{!if(Kpis['openRate24Hours'] == -1, false, true)}"><apex:param value="{!Kpis['openRate24Hours']}" /></apex:outputText> 
                                                                 </td>
                                                                 <td>
                                                                     <apex:outputText value="{0, number, ###,###,##0}"><apex:param value="{!Kpis['numberClicks24Hours']}" /></apex:outputText> 
@@ -351,7 +351,7 @@ Monthly activity graph showing year to date email credit transactions
                                                                     <apex:outputText value="{0, number, ###,###,##0}"><apex:param value="{!Kpis['uniqueClicks24Hours']}" /></apex:outputText> 
                                                                 </td>
                                                                 <td>
-                                                                    <apex:outputText value="{0, number, ###,###,##0}%" rendered="{!if(Kpis['clickRate24Hours'] == -1, false, true)}"><apex:param value="{!Kpis['clickRate24Hours']}" /></apex:outputText> 
+                                                                    <apex:outputText value="{0, number, ###,###,##0.00}%" rendered="{!if(Kpis['clickRate24Hours'] == -1, false, true)}"><apex:param value="{!Kpis['clickRate24Hours']}" /></apex:outputText> 
                                                                 </td>
                                                                 <td>
                                                                     
@@ -366,7 +366,7 @@ Monthly activity graph showing year to date email credit transactions
                                                                     <apex:outputText value="{0, number, ###,###,##0}"><apex:param value="{!Kpis['uniqueOpens48Hours']}" /></apex:outputText> 
                                                                 </td>
                                                                 <td>
-                                                                    <apex:outputText value="{0, number, ###,###,##0}%" rendered="{!if(Kpis['openRate48Hours'] == -1, false, true)}"><apex:param value="{!Kpis['openRate48Hours']}" /></apex:outputText>  
+                                                                    <apex:outputText value="{0, number, ###,###,##0.00}%" rendered="{!if(Kpis['openRate48Hours'] == -1, false, true)}"><apex:param value="{!Kpis['openRate48Hours']}" /></apex:outputText>  
                                                                 </td>
                                                                 <td>
                                                                     <apex:outputText value="{0, number, ###,###,##0}"><apex:param value="{!Kpis['numberClicks48Hours']}" /></apex:outputText> 
@@ -375,7 +375,7 @@ Monthly activity graph showing year to date email credit transactions
                                                                     <apex:outputText value="{0, number, ###,###,##0}"><apex:param value="{!Kpis['uniqueClicks48Hours']}" /></apex:outputText> 
                                                                 </td>
                                                                 <td>
-                                                                    <apex:outputText value="{0, number, ###,###,##0}%" rendered="{!if(Kpis['clickRate48Hours'] == -1, false, true)}"><apex:param value="{!Kpis['clickRate48Hours']}" /></apex:outputText>   
+                                                                    <apex:outputText value="{0, number, ###,###,##0.00}%" rendered="{!if(Kpis['clickRate48Hours'] == -1, false, true)}"><apex:param value="{!Kpis['clickRate48Hours']}" /></apex:outputText>   
                                                                 </td>
                                                                 <td>
                                                                     
@@ -390,7 +390,7 @@ Monthly activity graph showing year to date email credit transactions
                                                                     <apex:outputText value="{0, number, ###,###,##0}"><apex:param value="{!Kpis['uniqueOpens7Days']}" /></apex:outputText> 
                                                                 </td>
                                                                 <td>
-                                                                    <apex:outputText value="{0, number, ###,###,##0}%" rendered="{!if(Kpis['openRate7Days'] == -1, false, true)}"><apex:param value="{!Kpis['openRate7Days']}" /></apex:outputText>  
+                                                                    <apex:outputText value="{0, number, ###,###,##0.00}%" rendered="{!if(Kpis['openRate7Days'] == -1, false, true)}"><apex:param value="{!Kpis['openRate7Days']}" /></apex:outputText>  
                                                                 </td>
                                                                 <td>
                                                                     <apex:outputText value="{0, number, ###,###,##0}"><apex:param value="{!Kpis['numberClicks7Days']}" /></apex:outputText> 
@@ -399,7 +399,7 @@ Monthly activity graph showing year to date email credit transactions
                                                                     <apex:outputText value="{0, number, ###,###,##0}"><apex:param value="{!Kpis['uniqueClicks7Days']}" /></apex:outputText> 
                                                                 </td>
                                                                 <td>
-                                                                    <apex:outputText value="{0, number, ###,###,##0}%" rendered="{!if(Kpis['clickRate7Days'] == -1, false, true)}"><apex:param value="{!Kpis['clickRate7Days']}" /></apex:outputText>  
+                                                                    <apex:outputText value="{0, number, ###,###,##0.00}%" rendered="{!if(Kpis['clickRate7Days'] == -1, false, true)}"><apex:param value="{!Kpis['clickRate7Days']}" /></apex:outputText>  
                                                                 </td>
                                                                 <td>
                                                                     

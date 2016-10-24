@@ -129,9 +129,17 @@ global class vfIECEBC_MosaicoEditor extends vfIECEBC_Controller {
     public class DailyLimitReached_Exception extends Exception {}
     public class EmptyTemplate_Exception extends Exception {}
     
-    webService static void sendTest(Id templateId, String email) {
+    public Integer getDailyCount() {
+		return getStaticDailyCount(template.Id);        
+    }
+    
+    public static Integer getStaticDailyCount(Id templateId) {
         datetime dt = System.now()-1;
-        Integer dailyCount = Database.countQuery('SELECT count() FROM EBC_Template_Test__c WHERE EBC_Template__c = :templateId AND Event_Date__c > :dt');
+        return Database.countQuery('SELECT count() FROM EBC_Template_Test__c WHERE EBC_Template__c = :templateId AND Event_Date__c > :dt');
+    }
+    
+    webService static void sendTest(Id templateId, String email) {
+        Integer dailyCount = getStaticDailyCount(templateId);
 
         if (dailyCount >= 10) {
             throw new DailyLimitReached_Exception('Daily limit of 10 tests for that design/template has been reached.');

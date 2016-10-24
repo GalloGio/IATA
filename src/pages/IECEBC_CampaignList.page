@@ -23,14 +23,21 @@
                             
                             <tr >
                              <td width="50%">
-                                Sort By: 
-                                 <div class="custom-user-input select">
-                                     <i class="icon angle-down"></i>
-                                     <apex:selectList value="{!sortBy}" styleClass="user-input select" size="1">
-                                         <apex:selectOptions value="{!sortByOptions}"/>
-                                         <apex:actionSupport event="onchange" action="{!doNothing}" reRender="campaignList" />
-                                     </apex:selectList> 
-                                 </div> 
+                                 <div class="sort-by">
+                                     <apex:outputpanel id="Sortselection">
+                                         <div class="custom-user-input select">
+                                             <i class="icon angle-down"></i>
+                                             <apex:selectList value="{!sortBy}" styleClass="user-input select" size="1">
+                                                 <apex:selectOptions value="{!sortByOptions}"  />
+                                                 <apex:actionSupport event="onchange" action="{!doNothing}" reRender="campaignList,Sortselection" />
+                                             </apex:selectList> 
+                                         </div>
+                                     </apex:outputpanel>
+                                 </div>
+                                 
+                                 
+                                 
+                                 
                              </td>
                              <td width="50%" >
                                  <div class="action-box text-right ">

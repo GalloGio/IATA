@@ -151,11 +151,17 @@ public class vfIECEBC_CampaignList extends vfIECEBC_Controller {
             sortBy = value;
             
             campaigns = null;
-        }
-    }
+        } 
+    } 
+    
+    private boolean firsttimepageload=true;
+    private Boolean getIsFirstTimeLoadPage() { 
+        if (firsttimepageload) {firsttimepageload=false; return true;}
+        return false;} 
     
     public List<SelectOption> getSortByOptions() {
         List<SelectOption> options = new List<SelectOption>();
+        if (getIsFirstTimeLoadPage()) options.add(new SelectOption(sortBy,'Sort by'));
         options.add(new SelectOption('Name','Campaign Name'));
         options.add(new SelectOption('Status__c','Campaign  Status'));
         options.add(new SelectOption('CreatedDate DESC','Created Date - Descending'));
