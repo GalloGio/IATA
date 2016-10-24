@@ -319,7 +319,7 @@
             };
             
 			$(document).on('change', 'select[name="campaign-action"]', function(e){
-                jQuery('body').css('cursor', 'wait');
+                if ($(this).val() != 'preview') jQuery('body').css('cursor', 'wait');
                 var campaign = campaigns[$(this).attr('data-target-campaign-id')];
                 switch ($(this).val()) {
                     case 'delete':

@@ -5,9 +5,9 @@
         <section class="group-container schedule">
             <h2 class="icon schedule group-title">Schedule</h2>
             <div class="group-content">
-                <p class="lead"><strong>Please confirm the date you want your campaign to be sent.</strong></p>
+                <p class="lead"><strong>Please select the date you want your campaign to be sent.</strong></p>
                 <apex:outputText rendered="{!NOT(billingAccount.eBroadcast_Trusted_Sender__c) && c.Status__c != 'APPROVED'}">
-	                <p class="note"><strong>NOTE:</strong> 48 business hours are necessary for IATA to perform the campaign review process.</p>
+	                <p class="note"><strong>NOTE:</strong> 48 business hours are necessary for IATA to perform a review of your campaign.</p>
                 </apex:outputText>
                 <p class="label"><strong>The below date is the earliest your campaign can be sent:</strong></p>
                 <div class="field-group default field-datepicker">

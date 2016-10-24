@@ -178,15 +178,15 @@ global class vfIECEBC_MosaicoEditor extends vfIECEBC_Controller {
         IECEBC_ETTriggeredSendDefinitionStart.updateTriggeredSendDefinition(mailingId);
         
         Map<String, String> attributes = new Map<String, String>();
-        attributes.put('AGENCY_NAME', 'John Doe Inc.');
+        attributes.put('AGENCY_NAME', 'Agency Inc.');
         attributes.put('SFID', '1234');
         attributes.put('EMAIL', email);
         
         if (template.Audience__c == 'Agency') {
-            attributes.put('AGENCY_STATE', 'New York');
-            attributes.put('AGENCY_COUNTRY', 'United States of America');
-            attributes.put('AGENCY_ACCREDITATIONCLASS', 'Airline Member Sales Office');
-            attributes.put('AGENCY_LOCATIONTYPE', 'Administrative Office');
+            attributes.put('AGENCY_STATE', 'Sample State');
+            attributes.put('AGENCY_COUNTRY', 'Sample Country');
+            attributes.put('AGENCY_ACCREDITATIONCLASS', 'Sample Class');
+            attributes.put('AGENCY_LOCATIONTYPE', 'Sample Type');
         } else if (template.Audience__c == 'Agent') {
             attributes.put('AGENT_FIRSTNAME', 'John');
             attributes.put('AGENT_LASTNAME', 'Doe');

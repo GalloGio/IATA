@@ -190,16 +190,21 @@
             <!-- Start of Page Content -->
             <main class="main-content manage-account">
                 <div class="inner-wrapper">
-                    <h1 class="page-title">{!EBC_Campaign__c.Name}</h1>
+                    <h1 class="page-title"><a href="{!URLFOR($Page.IECEBC_CampaignPreview, null, [id=EBC_Campaign__c.EBC_Design__c])}" onclick="window.open(this.href); return false;">{!EBC_Campaign__c.Name}</a></h1>
                     
-                    <h2 class="section-title recipents"><i class="fa fa-users" aria-hidden="true"></i> Sent to {!CampaignProperties['NumberofRecipients']} recipients</h2>
+                    <h2 class="section-title recipents"><i class="fa fa-users" aria-hidden="true"></i> Sent to {!EBC_Campaign__c.Number_of_Recipients__c} recipients</h2>
                     <div class="tab-container"> 
                         <div class="tab-content js-tabs">
                             <div class="tab-pane is-open" id="pane-1">                              
                                 <ul class="list campaign-info">
-                                    <li>List used for the Campaign: <strong>{!CampaignProperties['Name']}</strong></li>
-                                    <li>Subject of the Campaign: <strong>{!CampaignProperties['Subject']}</strong></li>
-                                    <li>Campaign sent on: <strong>{!CampaignProperties['SendDatetime']}</strong></li>
+                                    <li>List used for the Campaign: <strong>{!EBC_Campaign__c.Name}</strong></li>
+                                    <li>Subject of the Campaign: <strong>{!EBC_Campaign__c.Subject__c}</strong></li>
+                                    <li>Campaign sent on: 	<strong>
+                                                                <apex:outputText value="{0,date,EEE MMM dd yyyy hh:mm:ss}">
+                                                                    <apex:param value="{!EBC_Campaign__c.Send_Datetime__c + timezoneOffset}" /> 
+                                                                </apex:outputText>
+                                                            </strong>
+                                    </li>
                                 </ul>
                                 <section class="group-container account-activity">
                                     <ul class="list grid-5">
@@ -314,15 +319,7 @@ Monthly activity graph showing year to date email credit transactions
                                                     <table class="data-table manage-lists">
                                                         <thead>
                                                             <tr>
-                                                                <th class="activity-type" >
-                                                                    <div id="divactivitytypesort">
-                                                                        <a class="pcjs-toggle-type-sort" href="#" id="activitytypesort">Activity Type <i class="fa fa-caret-down" aria-hidden="true"></i></a>
-                                                                        <div class="type-sort" id="actPopUpMenu">
-                                                                            <ul class="list">
-                                                                            </ul>
-                                                                        </div>
-                                                                    </div>
-                                                                </th>
+                                                                <th class="activity-type" >&nbsp;</th>
                                                                 
                                                                 <th class="total-count">Cumulative Opens</th>
                                                                 <th class="total-count">Unique Open</th>
@@ -417,15 +414,6 @@ Monthly activity graph showing year to date email credit transactions
                                                         $j(this).toggleClass(className.open).next().toggleClass(className.open);
                                                     });
                                                     </script> 
-                                                    
-                                                    <div class="pagination">
-                                                        <div class="page-number">
-                                                            Page
-                                                            <div class="custom-user-input select">
-                                                                <i class="icon angle-down"></i>
-                                                            </div>
-                                                        </div>
-                                                    </div>
                                                 </div>
                                             </apex:form>
                                         </div>
@@ -466,14 +454,6 @@ Monthly activity graph showing year to date email credit transactions
                                                         $j(this).toggleClass(className.open).next().toggleClass(className.open);
                                                     });
                                                     </script> 
-                                                    <div class="pagination">
-                                                        <div class="page-number">
-                                                            Page
-                                                            <div class="custom-user-input select">
-                                                                <i class="icon angle-down"></i>  
-                                                            </div>
-                                                        </div>
-                                                    </div>
                                                 </div>
                                             </apex:form>
                                         </div>

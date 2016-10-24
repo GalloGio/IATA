@@ -93,7 +93,7 @@
             
             <apex:outputText rendered="{!newListStepNumber == 1}">
                 
-                <div class="modal-body">
+                <div class="{!IF(c != NULL, 'modal-body', '')}">
                     <h3 class="step-title">Audience</h3>
                     <p>Select the audience you want to reach. Note that the audience cannot be changed after the list is saved.</p>
                     
@@ -208,7 +208,7 @@
             </apex:outputText>
             <apex:outputText rendered="{!newListStepNumber == 2}">
                 
-                <div class="modal-body">
+                <div class="{!IF(c != NULL, 'modal-body', '')}">
                     <h3 class="step-title">Geo-Selection</h3>
                     <p>For your convenience, we have ready-made Geo-Selections. Select one of the following or create your own Geo-Selection.</p>
                     
@@ -345,7 +345,7 @@
             </apex:outputText>
             <apex:outputText rendered="{!newListStepNumber == 3}">
                 
-                <div class="modal-body">
+                <div class="{!IF(c != NULL, 'modal-body', '')}">
                     <h3 class="step-title">Refinement</h3>
                     
                     <div class="group-container custom-geo-selection">
@@ -466,7 +466,7 @@
             </apex:outputText>
             <apex:outputText rendered="{!newListStepNumber == 4}">
                 
-                <div class="modal-body">
+                <div class="{!IF(c != NULL, 'modal-body', '')}">
                     <h3 class="step-title">Confirmation</h3>
                     
                     <div class="row">
