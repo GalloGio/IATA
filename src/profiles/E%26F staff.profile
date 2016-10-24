@@ -22558,11 +22558,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>EF_Material_Line_Item__c.Requested_Changes__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>EF_Related_Records__c.FIR_Code_Name__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -37533,10 +37528,6 @@
         <recordType>Account.IATA_Airline</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Account-E%26F Operators and Suppliers Account Page Layout</layout>
-        <recordType>Account.IATA</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
         <layout>Account-GDP Accounts Page Layout Regular Users</layout>
         <recordType>Account.GDP_Account</recordType>
     </layoutAssignments>
@@ -38398,9 +38389,6 @@
     <layoutAssignments>
         <layout>Contact-Standard Contact</layout>
         <recordType>Contact.Standard_Contact</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Contact__c-Contact Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>ContentVersion-General</layout>
@@ -41003,10 +40991,6 @@
         <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
-        <apexPage>IFAP_Upload_File_Successfull_Message</apexPage>
-        <enabled>true</enabled>
-    </pageAccesses>
-    <pageAccesses>
         <apexPage>IFAP_forgot_password</apexPage>
         <enabled>false</enabled>
     </pageAccesses>
@@ -43041,10 +43025,6 @@
     <tabVisibilities>
         <tab>Complaint__c</tab>
         <visibility>DefaultOn</visibility>
-    </tabVisibilities>
-    <tabVisibilities>
-        <tab>Contact__c</tab>
-        <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>Coupon_Used__c</tab>
