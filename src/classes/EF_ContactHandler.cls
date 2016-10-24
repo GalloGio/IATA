@@ -99,7 +99,7 @@ public class EF_ContactHandler {
            for(String s: criticalFieldList){
                          
                 if(c.get(s)!=oldContactMap.get(c.Id).get(s)){
-                    emailBody = emailBody + '<tr><td border="1"><a href="'+baseUrl+'/'+c.Id+'">'+c.FirstName+' '++c.LastName+'</a></td><td border="1">'+s+'</td><td border="1">'+c.get(s)+'</td><td border="1">'+oldContactMap.get(c.Id).get(s)+'</td></tr>';
+                    emailBody = emailBody + '<tr><td border="1"><a href="'+baseUrl+'/'+c.Id+'">'+c.FirstName+' '+c.LastName+'</a></td><td border="1">'+s+'</td><td border="1">'+c.get(s)+'</td><td border="1">'+oldContactMap.get(c.Id).get(s)+'</td></tr>';
                 }
            }
            emailBody = emailBody + '</table>';
