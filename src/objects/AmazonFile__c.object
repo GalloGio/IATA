@@ -468,6 +468,17 @@
         <type>TextArea</type>
     </fields>
     <fields>
+        <fullName>Owner_Email__c</fullName>
+        <defaultValue>$User.Email</defaultValue>
+        <externalId>false</externalId>
+        <label>Owner Email</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Review_Status__c</fullName>
         <externalId>false</externalId>
         <label>Review Status</label>
