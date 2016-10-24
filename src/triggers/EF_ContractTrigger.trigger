@@ -27,6 +27,9 @@ trigger EF_ContractTrigger on Contract (
 			}
 		}
 
+		if (!efContractMap.isEmpty()) {
+
+
 		if (Trigger.isBefore && (Trigger.isUpdate || Trigger.isInsert)) {
 
             if(Trigger.isInsert)
@@ -46,4 +49,5 @@ trigger EF_ContractTrigger on Contract (
 				EF_ContractHandler.startApprovalProcesses(efContractList);
             }
         }
+    }
 }

@@ -4042,7 +4042,7 @@ Your ID Card application manager has been informed of your request.</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ID Card Application Type Reissue</shortDescription>
-        <value>Replace</value>
+        <value>Reprint</value>
     </labels>
     <labels>
         <fullName>ID_Card_Application_Type_Renewal</fullName>
@@ -4056,7 +4056,7 @@ Your ID Card application manager has been informed of your request.</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ID Card Application Type Replacement</shortDescription>
-        <value>Change</value>
+        <value>Change of Agency</value>
     </labels>
     <labels>
         <fullName>ID_Card_Cannot_Update_Card_Err_Msg</fullName>

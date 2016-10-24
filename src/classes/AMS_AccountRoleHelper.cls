@@ -106,7 +106,7 @@ public class AMS_AccountRoleHelper {
 		if(!personsToUpdate.isEmpty()) update personsToUpdate;
 	}
 
-	public void verifyAccountRole(List<AMS_Account_Role__c> newAccountRoles) {
+	/*public void verifyAccountRole(List<AMS_Account_Role__c> newAccountRoles) {
 		System.debug('verifyAccountRole ' + newAccountRoles);
 		Set<Id> stAccountIds = new Set<Id>();
 		Map<Id, Decimal> mpAccountTotalOwnerShip = new Map<Id, Decimal>();
@@ -182,5 +182,5 @@ public class AMS_AccountRoleHelper {
 				}
 			}
 		}
-	}
+	}*/
 }

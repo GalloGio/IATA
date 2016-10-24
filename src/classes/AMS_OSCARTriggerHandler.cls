@@ -496,12 +496,12 @@ public class AMS_OSCARTriggerHandler {
 
 						// Apply cascade changes: change code + data migration
 						accountsToUpdate.addAll(AMS_Utils.copyDataToAccountForAgencyChanges(oscar, agenciesWithSingleCode, cascadingTOCs, accounts, oscarOnlineAccreditation));
-						changesContainer.add(AMS_ChangeCodesHelper.generateChangeCodes(oscar, config2, accounts, accountsChangeCode, AMS_Utils.SANITYCHECK, agenciesWithSingleCode));
+						changesContainer.add(AMS_ChangeCodesHelper.generateChangeCodes(oscar, config2, accounts, accountsChangeCode, AMS_Utils.APPROVAL, agenciesWithSingleCode));
 
 
 						// Apply cascade + no cascade changes: change code + data migration
 						accountsToUpdate.addAll(AMS_Utils.copyDataToAccountForAgencyChanges(oscar, agenciesWithMultipleCode, oscar.Type_of_change__c, accounts, oscarOnlineAccreditation));
-						changesContainer.add(AMS_ChangeCodesHelper.generateChangeCodes(oscar, config, accounts, accountsChangeCode, AMS_Utils.SANITYCHECK, agenciesWithMultipleCode));
+						changesContainer.add(AMS_ChangeCodesHelper.generateChangeCodes(oscar, config, accounts, accountsChangeCode, AMS_Utils.APPROVAL, agenciesWithMultipleCode));
 
 
 						// Apply change of location to children SAs not explicitly involved in the change
@@ -902,7 +902,8 @@ public class AMS_OSCARTriggerHandler {
 		if(updatedOscars.isEmpty()) return;
 
 		List<Case> casesToUpdate = new List<Case>();
-		for(Case c : [SELECT Id, Status, OwnerId, Oscar__c, Process_Start_Date__c from CASE WHERE Oscar__c != null and RecordType.Name = 'OSCAR Communication' and Oscar__c IN :updatedOscars AND ParentId = null]){
+		for(Case c : [SELECT Id, Status, OwnerId, Oscar__c, Process_Start_Date__c from CASE WHERE Oscar__c != null AND RecordType.Name = 'OSCAR Communication' AND Oscar__c IN :updatedOscars
+						AND ((Oscar__r.Process__c = 'BANK.ACCOUNT.CHANGES' AND ParentId = null) OR (Oscar__r.Process__c != 'BANK.ACCOUNT.CHANGES'))]){
 
 			AMS_OSCAR__c updatedOSCAR = newMap.get(c.Oscar__c);
 			Boolean caseChanged = false;
