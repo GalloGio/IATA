@@ -23,13 +23,7 @@ public class AMS_EBulletinReportHelper {
 	public static final String CHANGECODEREASON = '15-Change Code';
 	public static final String STATE = '7-Country or State';
 	public static final String COUNTRY = '8-Country or State';
-	//Fields to Ignore when querying the base object Agency_Applied_Change_code__c
-	//
-	private static final Set <String> QUERYFIELDSTOIGNORE =  
-					 new Set <String> {STATE,COUNTRY,CHANGECODE,CHANGECODEREASON,OWNERS};
 
-	private static final Set <String> HEADERFIELDSTOIGNORE =  
-					 new Set <String> {CHANGECODEREASON,COUNTRY};
 
 	public static String fieldsQuery;
 	public static String filterCCQuery = '';
@@ -75,7 +69,9 @@ public class AMS_EBulletinReportHelper {
 	*/
 	public static void getEBulletinFields(String typeEBulletin, String objectBaseQuery,String csvFormat )
 	{
-		getEBulletinSettings();
+		
+		String typeEBulletinField = TYPEEBULLETINMAP.get(typeEBulletin);
+		getEBulletinSettings(typeEBulletinField);
 
 		/****** INI1 Alternative method to recover directly the field labels to use has columns headers ****
 		
@@ -89,15 +85,18 @@ public class AMS_EBulletinReportHelper {
 
 
 		Integer position = 0;
+
+
 		for (AMS_CustomSettingsUtils.AMS_EBulletinSetting eBulletinSettingG : eBulletinSettingsList)
 		{
+			system.debug('eBulletinSettingG: ' + eBulletinSettingG);
 
-			if((Boolean)eBulletinSettingG.eBulletinSetting.get(TYPEEBULLETINMAP.get(typeEBulletin)))
+			if((Boolean)eBulletinSettingG.eBulletinSetting.get(typeEBulletinField))
 			{
-				if(!HEADERFIELDSTOIGNORE.contains(eBulletinSettingG.eBulletinSetting.Name))
+				if(!eBulletinSettingG.eBulletinSetting.Do_not_show__c)
 					headersList.add(eBulletinSettingG.eBulletinSetting.Label__c);
 
-				if(!QUERYFIELDSTOIGNORE.contains(eBulletinSettingG.eBulletinSetting.Name)) 
+				if(!eBulletinSettingG.eBulletinSetting.Do_not_query__c) 
 					fieldsList.add(eBulletinSettingG.eBulletinSetting.API_Name__c);
 				else
 					customFields.setWrapperCustomField(position,eBulletinSettingG);
@@ -154,8 +153,7 @@ public class AMS_EBulletinReportHelper {
 		
 		//system.debug('Records query: ' + AMS_QueryUtils.getFieldsQuery(objectBaseQuery,fieldsQuery, ' Change_Code__c in ( ' + convertToCSV(new List<String>(AMS_CustomSettingsUtils.ccNameSectionMap.keyset()), '\',\'') + ') '));
 
-		Set <String> ccNamesToRecover = AMS_CustomSettingsUtils.ccNameSectionMap.keyset();
-
+		
 
 		List<String> ccFieldToReturn = new List <String>();
 		//FIX TO QUERY THESE EXTRA FIELDS CHANGECODE,STATE,COUNTRY
@@ -168,12 +166,14 @@ public class AMS_EBulletinReportHelper {
 			
 		//Changes codes to Query
 		//
-
-		system.debug('ccList: ' + AMS_QueryUtils.getFieldsQuery(objectBaseQuery,fieldsQuery + ( ccFieldToReturn.isEmpty() ? '' : ',') + convertToCSV(ccFieldToReturn,','), ' Change_Code__c IN :ccNamesToRecover order by Account__r.IATA_ISO_Country__r.Name,createdDate '));
-
+		
+		Set <String> ccNamesToRecover = AMS_CustomSettingsUtils.ccNameSectionMap.keyset();
+		
 		List <Agency_Applied_Change_code__c> ccList = 
 				Database.query(
-					AMS_QueryUtils.getFieldsQuery(objectBaseQuery,fieldsQuery + ( ccFieldToReturn.isEmpty() ? '' : ',') + convertToCSV(ccFieldToReturn,','), ' Change_Code__c IN :ccNamesToRecover order by Account__r.IATA_ISO_Country__r.Name,createdDate ')
+					AMS_QueryUtils.getFieldsQuery(objectBaseQuery,
+												  fieldsQuery + ( ccFieldToReturn.isEmpty() ? '' : ',') + convertToCSV(ccFieldToReturn,','), 
+												  ' Change_Code__c IN :ccNamesToRecover order by Account__r.IATA_ISO_Country__r.Name,createdDate ')
 					);
 
 
@@ -182,19 +182,32 @@ public class AMS_EBulletinReportHelper {
 		//Recover current active Owners Info from the Accounts linked to the Change Codes
 		//
 
-
+		system.debug('isOWNERS: ' + customFields.isHeaderCustomField(OWNERS));
 		if(customFields.isHeaderCustomField(OWNERS)) customFields.ownersMap = getOwnersfromAACCAccounts(ccList);
+
+		system.debug('customFields.ownersMap: ' + customFields.ownersMap);
 		
 		//Changes codes History Objects to print
-		//
-		List <AMS_Agency_A_Change_code_History__c> ccHistList = 
-				Database.query(
-					AMS_QueryUtils.getAllFieldQuery(objectHistBaseQuery,objectBaseQuery.replace('__c', '__r.Id') + ' IN :ccList', false)
-					);
-	
+		//Map representing  Change Code ID => List<ChangeCodeChanges> from the AMS_Agency_A_Change_code_History__c
+		
+		Map<ID,List<AMS_ChangeCodesHelper.ObjectChange>> ccHistChangesMap = new Map <ID, List<AMS_ChangeCodesHelper.ObjectChange>>();	
 
-		//system.debug('ccList: ' + ccList);
+		for(AMS_Agency_A_Change_code_History__c ccHist : Database.query( AMS_QueryUtils.getAllFieldQuery(objectHistBaseQuery, objectBaseQuery + ' IN :ccList', false) )){
+
+			if(ccHistChangesMap.containsKey(ccHist.Agency_Applied_Change_Code__c))
+				ccHistChangesMap.get(ccHist.Agency_Applied_Change_Code__c).add(
+					new AMS_ChangeCodesHelper.ObjectChange(ccHist.Object_API_Name__c, ccHist.Field_API_Name__c, ccHist.Field_Old_Value__c, ccHist.Field_New_Value__c));
+			else
+				ccHistChangesMap.put(ccHist.Agency_Applied_Change_Code__c,new List<AMS_ChangeCodesHelper.ObjectChange>{
+					new AMS_ChangeCodesHelper.ObjectChange(ccHist.Object_API_Name__c, ccHist.Field_API_Name__c, ccHist.Field_Old_Value__c, ccHist.Field_New_Value__c)
+					});
+
+		}
+
+
+
 		//system.debug('ccHistList: ' + ccHistList);
+		
 
 		getEBulletinCCSections();
 
@@ -204,11 +217,10 @@ public class AMS_EBulletinReportHelper {
 
 		for (Agency_Applied_Change_code__c ccRecord : ccList) 
 		{
-
-			List<String> recordList = getRecordsFromAACC(ccRecord);
-
 			String ccRecordSection = AMS_CustomSettingsUtils.ccNameSectionMap.get((String) ccRecord.get(ccFieldToReturn.get(0)));
 			
+			List<String> recordList = getRecordsFromAACC(ccRecord,ccRecordSection,ccHistChangesMap.get(ccRecord.Id));
+
 			if(recordsCSVMap.containsKey(ccRecordSection))
 				recordsCSVMap.get(ccRecordSection).add(convertToCSV(recordList, csvFormat) + '\n');
 			else
@@ -236,12 +248,14 @@ public class AMS_EBulletinReportHelper {
 	/** 
 		 Get EBulletin Settings with the Account / Oscar / Change Codes fields to be recovered 
 	*/
-	private static void getEBulletinSettings()
+	private static void getEBulletinSettings(String typeEBulletin)
 	{
-		//TODO condition to get the fiels for EBulletin Daily our Weekly
+		//Condition to get the fiels for EBulletin Daily our Weekly
 
 		for(AMSEBulletinSettings__c setting : AMSEBulletinSettings__c.getAll().values()){
-			eBulletinSettingsList.add( new AMS_CustomSettingsUtils.AMS_EBulletinSetting(setting,'Number_Order__c'));
+
+			if( (Boolean) setting.get(typeEBulletin))
+				eBulletinSettingsList.add( new AMS_CustomSettingsUtils.AMS_EBulletinSetting(setting,'Number_Order__c'));
 
 		}
 		eBulletinSettingsList.sort();
@@ -354,32 +368,34 @@ public class AMS_EBulletinReportHelper {
 	/** 
 		 Process Parent Objects fields (up to 5 Parents?)
 	*/
-	private List<String> getRecordsFromAACC(Agency_Applied_Change_code__c cc)
+	private List<String> getRecordsFromAACC(Agency_Applied_Change_code__c cc,String ccRecordSection,List<AMS_ChangeCodesHelper.ObjectChange> ccHistChangesMap)
 	{
+
+		system.debug('cc.change_code__c: ' + cc.change_code__c);
+		system.debug('ccRecordSection: ' + ccRecordSection);
+		system.debug('ccHistChangesMap: ' + ccHistChangesMap);
+		
 		List<String> recordsList = new List <String>();
 
-		Integer customMapCounter = 0 , position = 0;
+		Integer customFieldsCounter = 0, positionMax = headersList.size();
 
-		system.debug('fieldsList: ' + fieldsList);
-		system.debug('customFields.headersCustomMap: ' + customFields.headersCustomMap);
-
-		for (String headerCol : headersList)
+		for (Integer position = 0 ; position < positionMax ; position++)
 		{	
 
 			if(customFields.headersCustomMap.containsKey(position))
 			{
+				AMSEBulletinSettings__c headerVal = customFields.headersCustomMap.get(position).eBulletinSetting;
+				
+				if(!headerVal.Do_not_show__c) 
+					recordsList.add(processCustomHeader(headerVal.name,cc));
+				else
+					positionMax++;
 
-				String headerVal = customFields.headersCustomMap.get(position).eBulletinSetting.name;
-
-				if(!HEADERFIELDSTOIGNORE.contains(headerVal)) recordsList.add(processCustomHeader(headerVal,cc));
-
-				customMapCounter++;
+				customFieldsCounter++;
 			}
 			else
-				recordsList.add(processParentDependecies(fieldsList.get(position - customMapCounter),cc));
+				recordsList.add(processParentDependecies(fieldsList.get(position - customFieldsCounter),cc));
 
-			position++;
-		
 		}
 
 		return recordsList;
@@ -484,7 +500,7 @@ public class AMS_EBulletinReportHelper {
 
 
 	/** 
-	 Wrapper Object for Custom mapping of records present in the Set HEADERFIELDSTOIGNORE
+	 Wrapper Object for representing the fiels that will not be queried or showed
 
 	*/
 	private class WrapperCustomFields {
