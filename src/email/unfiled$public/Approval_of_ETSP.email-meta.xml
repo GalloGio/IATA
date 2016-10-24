@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Used to inform the owner that the ETSP application has been approved</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>Approval of ETSP application</name>
+    <style>none</style>
+    <subject>ETSP application with case nbr {!eTSP_Certification__c.Certification_Process_Case__c} for {!eTSP_Certification__c.Account__c} has been approved</subject>
+    <type>text</type>
+</EmailTemplate>
