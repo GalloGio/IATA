@@ -2,7 +2,7 @@ public class EF_AccountTriggerHandler {
 
 	public static boolean run = true; 
 	private static List  <Account> childAccsList = new List <Account> ();
-
+	private static Map <Id, EF_Material_Line_Item__c> matMap = new Map <Id, EF_Material_Line_Item__c>();
 
 
 	public static void handleAfterUpdate(List<Account> accs, Map<Id,Account> oldMap) {
@@ -37,7 +37,7 @@ public class EF_AccountTriggerHandler {
             //
             // Add the child id's too
             // 
-			inactiveEFContracts(inactiveAccsSet);
+			inactiveEFContracts(inactiveAccsSet); 
 
 		}else if(!inactiveAccsSet.isEmpty() && run){
             inactiveEFContracts(inactiveAccsSet);
@@ -50,15 +50,18 @@ public class EF_AccountTriggerHandler {
 		Id contractRTId = AMS_Utils.getId('Contract', 'EF_Client_Agreement');
 
 		//query for Contracts, Billing Agreements and Related Contacts on the accounts inactivated.
-		Map <Id,Contract> contractMap = new Map <Id,Contract> ([Select Id, EF_Status__c, 
-			(Select Id, EF_Status__c from EF_Relationships__r) from Contract where AccountId in: inactiveAccsSet and RecordTypeId =: contractRTId]);
+		Map <Id,Contract> contractMap = new Map <Id,Contract> ([Select Id, EF_Status__c, EF_Comments__c,
+			(Select Id, EF_Status__c, EF_Comments__c from EF_Relationships__r), (Select Id, EF_Status__c from EF_Contacts_EF_Contracts__r), 
+			(select Id, EF_Status__c from  EF_Material_Line_Items__r) from Contract where AccountId in: inactiveAccsSet and RecordTypeId =: contractRTId]);
         
 		List <Contract> contracts2Inactivate = new List <Contract> ();
 		Set <Id> BA2Inactivate = new Set <Id> ();
+		List <EF_Contact_EF_Contract__c> contractContacs2InactList = new List <EF_Contact_EF_Contract__c> ();
 
 			for(Contract c: contractMap.values()){
 				if(c.EF_Status__c != 'Inactive'){
 					c.EF_Status__c = 'Inactive';
+					c.EF_Comments__c= 'Inactive due to Account Inactivation';
 					contracts2Inactivate.add(c);
 				}
 
@@ -67,10 +70,27 @@ public class EF_AccountTriggerHandler {
 						BA2Inactivate.add(ba.Id);
 					}
 				}
+
+				for(EF_Contact_EF_Contract__c cc: c.EF_Contacts_EF_Contracts__r){
+					if(cc.EF_Status__c!='Inactive'){
+						cc.EF_Status__c='Inactive';
+						contractContacs2InactList.add(cc);
+					}
+				}
+
+				for(EF_Material_Line_Item__c mli: c.EF_Material_Line_Items__r){
+					if(mli.EF_Status__c!='Inactive'){
+						mli.EF_Status__c='Inactive';
+						matMap.put(mli.Id, mli);
+					}
+				}
 			}
 
 		if(!contracts2Inactivate.isEmpty()){
-			try{ update contracts2Inactivate; 
+			try{ update contracts2Inactivate;
+				if(!contractContacs2InactList.isEmpty()){
+					update contractContacs2InactList;
+				} 
 				if(!BA2Inactivate.isEmpty() && run){ 
                     Set<Id> emptySet = new Set<Id>();
                     inactiveEFBillingAgreement(BA2Inactivate, emptySet); 
@@ -79,7 +99,13 @@ public class EF_AccountTriggerHandler {
                     run=false; 
                     inactiveChildAccounts(childAccsList);
                 }
-			}catch(Exception e){System.debug('## Error inactivating EF Contracts ' +e);}
+
+                if(!matMap.isEmpty()){
+					inactiveMaterialLineItems(matMap);
+				}
+			}catch(Exception e){System.debug('## Error inactivating EF Contracts ' +e); 
+			throw new AccountException('Error Inactivating Contracts ' +e);
+		}
 		}else{
 			if(!inactiveAccsSet.isEmpty() && run){ 
                  	Set<Id> emptySet = new Set<Id>();
@@ -90,26 +116,32 @@ public class EF_AccountTriggerHandler {
                     inactiveChildAccounts(childAccsList);
                 }
 		}
-	}
 
-	public static void inactiveEFBillingAgreement(Set <Id> BASet, Set <Id> AccSet ){
+		
+	}
+	
+
+	public static void inactiveEFBillingAgreement(Set <Id> BASet, Set <Id> AccSet){
 
 		List <EF_Contact_Relationship__c> BAContacs2InactList = new List <EF_Contact_Relationship__c> ();
 
 		Map <Id, EF_Billing_Agreement__c> baMap = new Map <Id, EF_Billing_Agreement__c> ();
         
-		System.debug('#### calling the method with parameters  ' + BASet +'----'+ AccSet );
+		//System.debug('#### calling the method with parameters  ' + BASet +'----'+ AccSet );
         
 		if(!BASet.isEmpty() && AccSet.isEmpty()){
-            System.debug('#### on the first if');
-			baMap= new Map <Id, EF_Billing_Agreement__c> ([select Id, EF_Status__c,  (Select Id, Status__c from EF_Contact_Relationships__r) from EF_Billing_Agreement__c where Id in: BASet]);
+            //System.debug('#### on the first if');
+			baMap= new Map <Id, EF_Billing_Agreement__c> ([select Id, EF_Status__c, EF_Comments__c,  (Select Id, Status__c from EF_Contact_Relationships__r),
+															(Select Id, EF_status__c from EF_Material_Line_Items__r) from EF_Billing_Agreement__c where Id in: BASet]);
 		}else if(BASet.isEmpty() && !AccSet.isEmpty()){
-            System.debug('#### on the second if');
-			baMap= new Map <Id, EF_Billing_Agreement__c> ([select Id, EF_Status__c, Airline__c, (Select Id, Status__c from EF_Contact_Relationships__r) from EF_Billing_Agreement__c where Airline__c in: AccSet]);
+            //System.debug('#### on the second if');
+			baMap= new Map <Id, EF_Billing_Agreement__c> ([select Id, EF_Status__c, Airline__c, EF_Comments__c, (Select Id, Status__c from EF_Contact_Relationships__r), 
+															(Select Id, EF_status__c from EF_Material_Line_Items__r) from EF_Billing_Agreement__c where Airline__c in: AccSet]);
 		}
 
 		for(EF_Billing_Agreement__c ba: baMap.values()){
 			ba.EF_Status__c='Inactive';
+			ba.EF_Comments__c='Inactive due to Account Inactivation';
 			
 			for(EF_Contact_Relationship__c bac: ba.EF_Contact_Relationships__r){
 				if(bac.Status__c!='Inactive'){
@@ -117,7 +149,16 @@ public class EF_AccountTriggerHandler {
 				}
 				
 			}
+
+			for(EF_Material_Line_Item__c mli: ba.EF_Material_Line_Items__r){
+				if(mli.EF_Status__c!='Inactive'){
+					mli.EF_Status__c='Inactive';
+					matMap.put(mli.Id, mli);
+				}
+				
+			}
 		}
+
 
 		try{ update baMap.values(); 
                 if(!BAContacs2InactList.isEmpty() && run){
@@ -126,8 +167,17 @@ public class EF_AccountTriggerHandler {
                     run=false;
                     inactiveChildAccounts(childAccsList);
                 }
-			}catch(Exception e){System.debug('## [EF_AccountTriggerHandler.inactiveEFBillingAgreement ] Error ' +e );}	
 
+                if(!matMap.isEmpty()){
+					inactiveMaterialLineItems(matMap);
+				}
+			}catch(Exception e){System.debug('## [EF_AccountTriggerHandler.inactiveEFBillingAgreement ] Error ' +e ); throw new AccountException('Error Inactivating Billing Agreements '+e);}	
+
+	}
+
+	public static void inactiveMaterialLineItems(Map <Id, EF_Material_Line_Item__c> materialMap){
+
+		try{ update materialMap.values(); } catch(Exception e){System.debug('#### error on materials ' + e); throw new AccountException('Error inactivating material line items '+e);}
 	}
 
 	public static void inactiveEF_BAContacts(List <EF_Contact_Relationship__c> bacList){
@@ -141,7 +191,22 @@ public class EF_AccountTriggerHandler {
             if(childAccsList.size()>0 && run){
                 inactiveChildAccounts(childAccsList);
             }			
-		}catch(Exception e){System.debug('## [EF_AccountTriggerHandler.inactiveEF_BAContacts ] Error ' +e );}	
+		}catch(Exception e){System.debug('## [EF_AccountTriggerHandler.inactiveEF_BAContacts ] Error ' +e ); throw new AccountException('Error Inactivating Contacts from  Billing Agreement '+e);}	
+
+	}
+
+	public static void inactiveEF_Contract_Contacts(List <EF_Contact_EF_Contract__c> ccList){
+
+		for(EF_Contact_EF_Contract__c cc: ccList){
+			cc.EF_Status__c = 'Inactive';
+		}
+
+		try{ 	
+            update ccList;
+            if(childAccsList.size()>0 && run){
+                inactiveChildAccounts(childAccsList);
+            }			
+		}catch(Exception e){System.debug('## [EF_AccountTriggerHandler.inactiveEF_BAContacts ] Error ' +e ); throw new AccountException('Error Inactivating Contacts from Contracts '+e);}	
 
 	}
 
@@ -150,7 +215,7 @@ public class EF_AccountTriggerHandler {
 		try{
 			update accs;
             run=false;
-		}catch(Exception e){System.debug('### [EF_AccountTriggerHandler.inactiveChildAccounts] Error inactivating child accounts ' + e);}
+		}catch(Exception e){System.debug('### [EF_AccountTriggerHandler.inactiveChildAccounts] Error inactivating child accounts ' + e); throw new AccountException('Error inactivating child Accounts '+e);}
 
 	}
 
@@ -225,7 +290,7 @@ public class EF_AccountTriggerHandler {
            }
            emailBody = emailBody + '</table>';
            if(a.RecordTypeId==Schema.SObjectType.Account.getRecordTypeInfosByName().get('Others').getRecordTypeId()){
-           		if(a.EF_Client_Services_Specialist_Email__c!=null){
+           		if(a.EF_Client_Services_Specialist__c!=null){
            		Utility.sendEmail(new List <String> {'efs@iata.org', a.EF_Client_Services_Specialist_Email__c}, 'E&F Account Critical Changes Notification ', emailBody, true, null);
            }else{
            		Utility.sendEmail(new List <String> {'efs@iata.org'}, 'E&F Account Critical Changes Notification ', emailBody, true, null);
@@ -237,5 +302,7 @@ public class EF_AccountTriggerHandler {
         }            
               
     }
+
+     public class AccountException extends Exception {}
 	
 }
