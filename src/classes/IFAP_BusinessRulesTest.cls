@@ -1104,7 +1104,7 @@ public class IFAP_BusinessRulesTest {
         if(!isoCountriesFR.isEmpty()){
             isoCountriesFR[0].name = 'France';
             isoCountriesFR[0].ISO_Code__c = 'FR';
-            isoCountriesFR[0].ISO_Code_Numeric__c = 456; //not real code
+            isoCountriesFR[0].ISO_Code_Numeric__c = 356; //not real code
             isoCountriesFR[0].currencyIsoCode = 'EUR';
             isoCountriesFR[0].AIMS_Area_ID__c = '2'; //not real code
             update isoCountriesFR[0];
@@ -1112,7 +1112,7 @@ public class IFAP_BusinessRulesTest {
             IATA_ISO_Country__c isoCountryFR = new  IATA_ISO_Country__c();
             isoCountryFR.name = 'France';
             isoCountryFR.ISO_Code__c = 'FR';
-            isoCountryFR.ISO_Code_Numeric__c = 456; //not real code
+            isoCountryFR.ISO_Code_Numeric__c = 356; //not real code
             isoCountryFR.currencyIsoCode = 'EUR';
             isoCountryFR.AIMS_Area_ID__c = '2'; //not real code
             insert isoCountryFR;
@@ -1123,7 +1123,7 @@ public class IFAP_BusinessRulesTest {
         isoCountriesEG = [SELECT Name, ISO_Code__c, Iso_Code_Numeric__c, CurrencyIsoCode, VAT_Validation_Required__c, AIMS_Area_ID__c FROM IATA_ISO_Country__c WHERE ISO_Code__c = 'EG' limit 1];
 
         if(!isoCountriesEG.isEmpty()){
-            isoCountriesEG[0].name = 'France';
+            isoCountriesEG[0].name = 'Frasdce';
             isoCountriesEG[0].ISO_Code__c = 'EG';
             isoCountriesEG[0].ISO_Code_Numeric__c = 456; //not real code
             isoCountriesEG[0].currencyIsoCode = 'EUR';
@@ -1131,7 +1131,7 @@ public class IFAP_BusinessRulesTest {
             update isoCountriesEG[0];
         }else{
             IATA_ISO_Country__c isoCountryFR = new  IATA_ISO_Country__c();
-            isoCountryFR.name = 'France';
+            isoCountryFR.name = 'Fradsce';
             isoCountryFR.ISO_Code__c = 'EG';
             isoCountryFR.ISO_Code_Numeric__c = 456; //not real code
             isoCountryFR.currencyIsoCode = 'EUR';
