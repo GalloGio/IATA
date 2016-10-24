@@ -1,7 +1,7 @@
 @isTest
 public class IFAP_BusinessRulesTest {
 
-    /**
+    /**IFAP_BusinessRulesTest.createIsoCountry
      * Test the method IFAP_BusinessRules.isCountryValid()
      */
 
@@ -1117,6 +1117,28 @@ public class IFAP_BusinessRulesTest {
             isoCountryFR.AIMS_Area_ID__c = '2'; //not real code
             insert isoCountryFR;
         }
+
+//SO_Code__c IN ('EG')])
+        List<IATA_ISO_Country__c> isoCountriesEG = new List<IATA_ISO_Country__c>();
+        isoCountriesEG = [SELECT Name, ISO_Code__c, Iso_Code_Numeric__c, CurrencyIsoCode, VAT_Validation_Required__c, AIMS_Area_ID__c FROM IATA_ISO_Country__c WHERE ISO_Code__c = 'FR' limit 1];
+
+        if(!isoCountriesEG.isEmpty()){
+            isoCountriesEG[0].name = 'France';
+            isoCountriesEG[0].ISO_Code__c = 'EG';
+            isoCountriesEG[0].ISO_Code_Numeric__c = 456; //not real code
+            isoCountriesEG[0].currencyIsoCode = 'EUR';
+            isoCountriesEG[0].AIMS_Area_ID__c = '2'; //not real code
+            update isoCountriesEG[0];
+        }else{
+            IATA_ISO_Country__c isoCountryFR = new  IATA_ISO_Country__c();
+            isoCountryFR.name = 'France';
+            isoCountryFR.ISO_Code__c = 'EG';
+            isoCountryFR.ISO_Code_Numeric__c = 456; //not real code
+            isoCountryFR.currencyIsoCode = 'EUR';
+            isoCountryFR.AIMS_Area_ID__c = '2'; //not real code
+            insert isoCountryFR;
+        }
+
     }
 
     /**
