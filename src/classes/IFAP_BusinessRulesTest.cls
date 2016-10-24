@@ -1120,7 +1120,7 @@ public class IFAP_BusinessRulesTest {
 
 //SO_Code__c IN ('EG')])
         List<IATA_ISO_Country__c> isoCountriesEG = new List<IATA_ISO_Country__c>();
-        isoCountriesEG = [SELECT Name, ISO_Code__c, Iso_Code_Numeric__c, CurrencyIsoCode, VAT_Validation_Required__c, AIMS_Area_ID__c FROM IATA_ISO_Country__c WHERE ISO_Code__c = 'FR' limit 1];
+        isoCountriesEG = [SELECT Name, ISO_Code__c, Iso_Code_Numeric__c, CurrencyIsoCode, VAT_Validation_Required__c, AIMS_Area_ID__c FROM IATA_ISO_Country__c WHERE ISO_Code__c = 'EG' limit 1];
 
         if(!isoCountriesEG.isEmpty()){
             isoCountriesEG[0].name = 'France';
