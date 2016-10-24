@@ -72,5 +72,5 @@
         <unique>false</unique>
     </fields>
     <label>AMS Change Codes</label>
-    <visibility>Public</visibility>
+    <visibility>Protected</visibility>
 </CustomObject>
