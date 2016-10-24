@@ -39,7 +39,7 @@
                 <field>Event_Date_Timestamp__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Required</behavior>
                 <field>External_Id__c</field>
             </layoutItems>
         </layoutColumns>
