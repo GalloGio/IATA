@@ -150,7 +150,7 @@ public class EF_ContractHandler
                 }
                 if(errorBillingCurrencyListingMap.get(c.Id) != null)
                 {
-                    c.EF_Billing_Currency__c.addError('Can not update Billing Currency list, because the following currencies are used in Billing Agreements: '+errorBillingCurrencyListingMap.get(c.Id));
+                    // c.EF_Billing_Currency__c.addError('Can not update Billing Currency list, because the following currencies are used in Billing Agreements: '+errorBillingCurrencyListingMap.get(c.Id));
                 }
                 if(errorPaymentCurrencyListingMap.get(c.Id) != null)
                 {
