@@ -131,7 +131,7 @@ global without sharing class Comm_User_Helper {
             profileName = ISSP_Constant.profilNameByUserTypeMap.get('User').get('Agency');
         }
         else if (newAirline){
-          profileName = ISSP_Constant.profilNameByUserTypeMap.get('User').get('Airline');
+        	profileName = ISSP_Constant.profilNameByUserTypeMap.get('User').get('Airline');
         }
         
         system.debug('profileName: ' + profileName);
@@ -310,15 +310,15 @@ global without sharing class Comm_User_Helper {
         
         List <User> userList = [SELECT Id FROM User WHERE ContactId = :con.Id AND UserType = 'PowerPartner'];
         if (!userList.isEmpty()){
-          system.debug('SENDING MAIL TO USER');
-          EmailMessageWrapper.sendEmail(new List<EmailMessageWrapper>{ew},emailTemplateDeveloperName, userList[0].Id);
+        	system.debug('SENDING MAIL TO USER');
+        	EmailMessageWrapper.sendEmail(new List<EmailMessageWrapper>{ew},emailTemplateDeveloperName, userList[0].Id);
         }
         else{
-          system.debug('SENDING MAIL TO ADDRESS');
-          EmailMessageWrapper.sendEmail(new List<EmailMessageWrapper>{ew},emailTemplateDeveloperName);
+        	system.debug('SENDING MAIL TO ADDRESS');
+        	EmailMessageWrapper.sendEmail(new List<EmailMessageWrapper>{ew},emailTemplateDeveloperName);
         }
         
-    } catch (exception ex) {
+		} catch (exception ex) {
        
        transformationHelper.sendSFDevsAlertMessage('error ' ,  '   con  ' +    con +  '   ' +ex.getmessage() + '   '+ ex.getstackTraceString(),  new list<string>{'salvatore.viticchie@b-i.com','viticchies@iata.org','tiago.ferreira@kerensen.com'});
 
@@ -330,15 +330,6 @@ global without sharing class Comm_User_Helper {
     //ISS_Portal_Airline_User
     @Future 
     public static void permissionASS(list<Id> USersID){
-    
-      permissionASSNotFuture(USersID);
-    }
-
-
-   //ISS_Portal
-    //ISS_Portal_Airline_User
-   
-    public static void permissionASSNotFuture(list<Id> USersID){
     
     try { 
     
@@ -361,10 +352,6 @@ global without sharing class Comm_User_Helper {
         }
     
     }
-
-
-
-
     
     
     public static list<User> getUserListByNameOrEmail(String nameOrEmail) {
@@ -464,7 +451,7 @@ global without sharing class Comm_User_Helper {
                                     where (u.Email = :email )
                                     and (IsActive = true OR Portal_User_Frozen_Checkbox__c = true)
                                     and ContactID != ''];
-      system.debug('resetPassword users: ' + users);
+			system.debug('resetPassword users: ' + users);
             if (users == null || users.size() == 0)
                 throw new IECApplicationException(email + ' is not a valid email for existing users');
                 

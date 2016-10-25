@@ -241,9 +241,6 @@ public without sharing class IECTestUtil {
         insert u;
         trgPortalUserAfterInserUpdate = true;
         String userId = Site.createPortalUser(u, newAccount.Id, 'testpassword');
-     
-        Comm_User_Helper.permissionASSNotFuture(new list<Id>{u.id});
-
       //  trgPortalUserAfterInserUpdate = false;
         /*
         // assign Permission Set to provide access to objects
@@ -315,8 +312,7 @@ public without sharing class IECTestUtil {
             insert oPermissionSetAssignment;
         }
         */
-                Comm_User_Helper.permissionASSNotFuture(new list<Id>{u.id});
-
+        
         IECUserManager.login(u.Username, 'testpassword', null);
            
         return u;
