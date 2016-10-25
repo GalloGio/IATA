@@ -462,7 +462,7 @@
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>false</editHeading>
-        <label>Fiiles</label>
+        <label>Files</label>
         <layoutColumns>
             <layoutItems>
                 <height>350</height>

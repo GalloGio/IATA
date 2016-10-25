@@ -315,15 +315,16 @@
     </relatedContent>
     <relatedLists>
         <fields>NAME</fields>
-        <fields>Contact.ISSP_Contact_Name__c</fields>
+        <fields>EF_Contact__c</fields>
         <fields>Contact_Account__c</fields>
-        <fields>Role__c</fields>
         <fields>EF_Status__c</fields>
-        <relatedList>EF_Contact_EF_Contract__c.Contract__c</relatedList>
+        <fields>Role__c</fields>
+        <relatedList>EF_Contact_EF_Contract__c.EF_Contract__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
         <fields>EF_Material__c</fields>
+        <fields>EF_Status__c</fields>
         <relatedList>EF_Material_Line_Item__c.Contract__c</relatedList>
     </relatedLists>
     <relatedLists>

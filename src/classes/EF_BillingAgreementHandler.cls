@@ -393,6 +393,8 @@ public class EF_BillingAgreementHandler
                 Utility.sendEmail(new List <String> {contractMap.get(ba.Contract__c).EF_IA_Specialist_Email__c, 'efs@iata.org'}, 'E&F Airline Billing Agreement Critical Changes Notification ', emailBody, true, null);
            }else if(contractMap.containsKey(ba.Contract__c) && contractMap.get(ba.Contract__c).EF_DT_Specialist__c!=null && contractMap.get(ba.Contract__c).EF_IA_Specialist__c==null){
                 Utility.sendEmail(new List <String> {contractMap.get(ba.Contract__c).EF_DT_Specialist_Email__c, 'efs@iata.org'}, 'E&F Airline Billing Agreement Critical Changes Notification ', emailBody, true, null);
+           }else{
+                Utility.sendEmail(new List <String> {'efs@iata.org'}, 'E&F Airline Billing Agreement Critical Changes Notification ', emailBody, true, null);
            }
            
         }            
