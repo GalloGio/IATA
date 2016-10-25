@@ -206,11 +206,11 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>EF_Contract__c</field>
+                <field>EF_Airline_Billing_Agreement__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>EF_Airline_Billing_Agreement__c</field>
+                <field>EF_Contract__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>

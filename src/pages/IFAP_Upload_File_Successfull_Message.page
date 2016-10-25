@@ -1,0 +1,22 @@
+<apex:page standardController="Case" sidebar="false" 
+    extensions="clsIFAP_CaseInProcessControllerExtension">
+<script> {!Case.Status} </script>
+<apex:outputPanel layout="block" Rendered="{!isRendered}">
+    <!-- table cellpadding="2" cellspacing="2">
+        <tr>
+            <td><apex:outputText value="{!MessageEn}" /><br/></td>
+        </tr>
+        <tr>
+            <td><apex:outputText value="{!MessageFr}" /><br/></td>
+        </tr>
+        <tr>
+            <td><apex:outputText value="{!MessageEs}" /><br/></td>
+        </tr>
+    </table-->
+    <ul style="line-height: 1.5em;">
+    	<li><apex:outputText value="{!MessageEn}" /></li>
+    	<li><apex:outputText value="{!MessageFr}" /></li>
+    	<li><apex:outputText value="{!MessageEs}" /></li>
+    </ul>
+</apex:outputPanel>
+</apex:page>

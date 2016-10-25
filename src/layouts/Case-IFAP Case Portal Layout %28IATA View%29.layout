@@ -99,10 +99,6 @@
                 <behavior>Edit</behavior>
                 <field>Reason_for_change_to_AssessmentPerformed__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>IsComplaint__c</field>
-            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>

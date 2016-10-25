@@ -65,7 +65,8 @@ public with sharing class AMP_OwnershipController {
         list<AMS_Account_Role__c> tmplstOwners = [SELECT Id, Percentage__c, Account__c, Account__r.Name, Account__r.Membership_status__c, Account__r.Sector__c, Owner_Account__c
                         FROM AMS_Account_Role__c
                         WHERE Owner_Account__c = :AccountId
-                        AND Percentage__c >= 50];
+                        //AND Percentage__c >= 50
+                        ];
 
         for (AMS_Account_Role__c ar : tmplstOwners) {
             if (ar.Account__c != null && (ar.Account__r.Membership_status__c == null || ar.Account__r.Membership_status__c == '')) {
@@ -87,7 +88,7 @@ public with sharing class AMP_OwnershipController {
     public void AddNewOwner() {
         try {
             AMS_Account_Role__c newLine = new AMS_Account_Role__c();
-            newLine.Percentage__c = 0;
+            //newLine.Percentage__c = 0;
             newLine.Account__c = acc.Id;
             newLine.RecordTypeId = OwnershipRtId;
             //insert newLine;
@@ -107,7 +108,7 @@ public with sharing class AMP_OwnershipController {
     public void AddNewSubsidiary() {
         try {
             AMS_Account_Role__c newLine = new AMS_Account_Role__c();
-            newLine.Percentage__c = 0;
+            //newLine.Percentage__c = 0;
             newLine.Owner_Account__c = acc.Id;
             newLine.RecordTypeId = OwnershipRtId;
             //insert newLine;

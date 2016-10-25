@@ -91,7 +91,6 @@ public class AMS_AgencyRelationshipTriggerHandler {
                 ORDER BY IATAcode__c]);
 
         Map<Id, String> accountsInitialLocType = new Map<Id, String>();
-        Map<Id, String> hierarchyHOLocType = new Map<Id, String>();
 
         //need to keep a backup of the data to know the original Location Type of the accounts
         for (Account a : accounts.values())
@@ -137,15 +136,7 @@ public class AMS_AgencyRelationshipTriggerHandler {
             }
 
 
-            //if (accounts.get(rel.Child_Account__c).Location_Type__c == AMS_Utils.HO) accounts.get(rel.Child_Account__c).Location_Type__c = AMS_Utils.BR;
-            if(accounts.get(rel.Child_Account__c).Location_Type__c == AMS_Utils.HO){
-                accounts.get(rel.Child_Account__c).Location_Type__c = AMS_Utils.BR;
-                hierarchyHOLocType.put(rel.Parent_Account__c, AMS_Utils.HO);
-            }
-            if(accounts.get(rel.Child_Account__c).Location_Type__c == AMS_Utils.AO){
-                accounts.get(rel.Child_Account__c).Location_Type__c = AMS_Utils.BR;
-                hierarchyHOLocType.put(rel.Parent_Account__c, AMS_Utils.AO);
-            }
+            if (accounts.get(rel.Child_Account__c).Location_Type__c == AMS_Utils.HO) accounts.get(rel.Child_Account__c).Location_Type__c = AMS_Utils.BR;
             
         }
 
@@ -156,12 +147,7 @@ public class AMS_AgencyRelationshipTriggerHandler {
         for (Account a : accounts.values()) {
             if (parentAccountIds.contains(a.Id)) {
                 a.ParentId = null;
-                if(a.Location_Type__c != AMS_Utils.HO  && a.Location_Type__c != AMS_Utils.AO){
-                    if(hierarchyHOLocType.get(a.Id)!=null)
-                        a.Location_Type__c = hierarchyHOLocType.get(a.Id);
-                    else
-                        a.Location_Type__c = 'HO';
-                }
+                a.Location_Type__c = 'HO';
                 system.debug('setStandardHierarchyRelationship() --> update parent account ' + a.Name + ' with Parentid = ' + a.ParentId + ', Location type = ' + a.Location_Type__c);
             }
             system.debug('setStandardHierarchyRelationship() --> found account ' + a.Name + ' with id ' + a.id + ' and location type = ' + a.Location_Type__c);
@@ -188,7 +174,6 @@ public class AMS_AgencyRelationshipTriggerHandler {
         }
 
         system.debug(LoggingLevel.ERROR, 'setStandardHierarchyRelationship() --> SECOND UPDATE');
-        TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
         update accsToUpdate;
 
     }

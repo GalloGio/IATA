@@ -15,5 +15,4 @@ public with sharing class AMP_AccountManagementController {
             WHERE Id = :accountId
                LIMIT 1];
     }
-
 }

@@ -177,7 +177,7 @@ public class AMS_AccountTriggerHandler {
                             String accountNewValue = String.valueOf(acct.get(fieldName));
                             String accountOldValue = String.valueOf(oldMap.get(acct.Id).get(fieldName));
 
-                            AMS_RecordCreatorWebservice.AccountChanges acctChange = new AMS_RecordCreatorWebservice.AccountChanges(accountFieldName,accountNewValue,accountOldValue);
+                            AMS_RecordCreatorWebservice.AccountChanges acctChange = new AMS_RecordCreatorWebservice.AccountChanges(accountFieldName,accountOldValue,accountNewValue);
 
                             accountChanges.add(acctChange);
                         }
@@ -257,14 +257,17 @@ public class AMS_AccountTriggerHandler {
 
         }
 
-        AMS_Utils.createAAChangeCodes(changeCodesToProcess, oscarsToProcess, accountsToProcess,false);
+        List<AMS_ChangeCodesHelper.ObjectChangesStruct> objectChanges = AMS_ChangeCodesHelper.convertAccountToObjectChanges(accountChanges);
+
+
+        AMS_ChangeCodesHelper.createAAChangeCodes( objectChanges, changeCodesToProcess, oscarsToProcess, accountsToProcess,false);
 
     }
 
     public class AccountChangesStruct {
 
-        private List<AMS_RecordCreatorWebservice.AccountChanges> changes{get;set;}
-        private Account acct{get;set;}
+        public List<AMS_RecordCreatorWebservice.AccountChanges> changes{get;set;}
+        public Account acct{get;set;}
 
         public AccountChangesStruct(List<AMS_RecordCreatorWebservice.AccountChanges> changes, Account acct){
 

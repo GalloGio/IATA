@@ -283,6 +283,19 @@
         <visibleLines>3</visibleLines>
     </fields>
     <fields>
+        <fullName>Group_Owner_Text__c</fullName>
+        <description>Group owner in free text for Reg/Div Groups</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Name of Group Owner</inlineHelpText>
+        <label>Group Owner</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Group_Owner__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
@@ -455,7 +468,7 @@
     <fields>
         <fullName>Maximum_Number_of_Participiants__c</fullName>
         <externalId>false</externalId>
-        <label>Maximum Number of Participiants</label>
+        <label>Maximum Number of Participants</label>
         <precision>18</precision>
         <required>false</required>
         <scale>0</scale>
@@ -1890,8 +1903,8 @@ Record Type + Group Type + ISO_Country_Name</description>
     </recordTypes>
     <searchLayouts>
         <excludedStandardButtons>Accept</excludedStandardButtons>
-        <excludedStandardButtons>Forward</excludedStandardButtons>
         <excludedStandardButtons>ChangeOwner</excludedStandardButtons>
+        <excludedStandardButtons>Forward</excludedStandardButtons>
     </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <validationRules>

@@ -10,10 +10,6 @@
         <submitter>jeffrey@iata.org</submitter>
         <type>user</type>
     </allowedSubmitters>
-    <allowedSubmitters>
-        <submitter>kalajil@iata.org</submitter>
-        <type>user</type>
-    </allowedSubmitters>
     <approvalPageFields>
         <field>CaseNumber</field>
         <field>Account</field>

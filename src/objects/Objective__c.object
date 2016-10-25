@@ -966,7 +966,7 @@ Object used to store objectives that can be independent, related to other object
         <description>By when this objective is expected to be complete</description>
         <externalId>false</externalId>
         <inlineHelpText>By when this objective is expected to be complete</inlineHelpText>
-        <label>Forecast Date</label>
+        <label>Forecast Deadline</label>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
@@ -991,7 +991,7 @@ Object used to store objectives that can be independent, related to other object
         <description>Forecast at the end of the forecast deadline date</description>
         <externalId>false</externalId>
         <inlineHelpText>How much is expected to be acomplished (Current values) by the forecast deadline date</inlineHelpText>
-        <label>Forecast Value</label>
+        <label>Forecast</label>
         <precision>18</precision>
         <required>false</required>
         <scale>3</scale>
@@ -4562,7 +4562,7 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
             </values>
             <values>
                 <fullName>Not Started</fullName>
-                <default>true</default>
+                <default>false</default>
             </values>
             <values>
                 <fullName>On hold</fullName>
@@ -6101,7 +6101,7 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
             </values>
             <values>
                 <fullName>Not Started</fullName>
-                <default>true</default>
+                <default>false</default>
             </values>
             <values>
                 <fullName>On hold</fullName>
@@ -6154,8 +6154,8 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
         <customTabListAdditionalFields>Description__c</customTabListAdditionalFields>
         <customTabListAdditionalFields>Target_Progress__c</customTabListAdditionalFields>
         <excludedStandardButtons>Accept</excludedStandardButtons>
-        <excludedStandardButtons>Forward</excludedStandardButtons>
         <excludedStandardButtons>ChangeOwner</excludedStandardButtons>
+        <excludedStandardButtons>Forward</excludedStandardButtons>
         <lookupDialogsAdditionalFields>Division__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>Region__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>Area__c</lookupDialogsAdditionalFields>

@@ -1,4 +1,5 @@
-@isTest class AMS_OSCAR_TriggerTest {
+@isTest
+private class AMS_OSCAR_TriggerTest {
     
     @testSetup static void setup(){
 		AMS_OSCAR_TestDataFactory.createOSCARwithInspectionsTestData();
@@ -560,7 +561,7 @@
      @isTest static void changeCodeGenOnApprovalDisapproval() {
         
         Test.startTest();
-        Account a = [SELECT id from Account where Name = 'Test1 Agency' LIMIT 1];
+        Account a = [SELECT id,Status__c from Account where Name = 'Test1 Agency' LIMIT 1];
 
         ID newRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
 
@@ -568,6 +569,17 @@
         for (AMS_OSCAR__c oscarT : [SELECT id, STEP1__c, STEP10__c, STEP11__c, STEP12__c, STEP13__c, STEP14__c, STEP15__c, STEP16__c, STEP17__c, STEP18__c, STEP19__c, STEP2__c,STEP20__c,
             STEP3__c, STEP4__c, STEP5__c, STEP6__c, STEP7__c, STEP8__c, STEP9__c, Status__c,OwnerId,RPM_Approval__c from AMS_OSCAR__c limit 2])
         {
+
+            AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
+
+            changeCode.name = 'NEW';
+            changeCode.reasonCode = '21';
+
+            changeCode.memoText = 'New application in progress';
+            changeCode.reasonDesc  = 'NEW APPLICATION';
+            changeCode.status  = '2';
+
+            AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode>{changeCode}, new List<AMS_OSCAR__c>{oscarT}, new List<Account> {a}, true); 
 
             oscarT.recordTypeID = newRT;
             oscarT.STEP2__c = 'Not Started';
@@ -683,9 +695,7 @@
         oscar.recordTypeID = newRT;
         oscar.STEP6__c = AMS_Utils.PASSED;
         oscar.Type_of_change__c = 'Name';
-        oscar.Change_effective_as_of__c = date.today();
-
-
+        
         Test.startTest();
             
             update oscar;

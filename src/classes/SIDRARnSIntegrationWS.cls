@@ -321,10 +321,6 @@ global class SIDRARnSIntegrationWS {
             if (listAccount.isEmpty() && Client.length() == 11) {
                 listAccount = [Select id, Site from Account where Site = :Client.left(10)];
             }
-            // if not found again then try with first 7 digits
-            if (listAccount.isEmpty()) {
-                listAccount = [Select id, Site from Account where Site = :Client.left(7)];
-            }
             if (listAccount.isEmpty() ) {
                 return GetXmlResponse(STATUSFAIL, '', 'There is no client with code ' + Client, '');
             }

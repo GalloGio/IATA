@@ -4,8 +4,6 @@
     <apex:includeScript value="/support/console/20.0/integration.js"/>
     <apex:includeScript value="{!$Resource.jquery2_1_4}"/>
     <apex:includeScript value="{!URLFOR($Resource.Tablesorter, 'jquery.tablesorter.js')}"/>
-    <apex:includeScript value="{!URLFOR($Resource.jszip, '/jszip.min.js')}"/>
-    <apex:includeScript value="{!URLFOR($Resource.jszip, '/zippack.js')}"/>
     <apex:stylesheet value="{!URLFOR($Resource.Tablesorter,'/themes/blue/style.css')}" />
 
     <c:Loading />
@@ -169,19 +167,6 @@
                 } 
             });
         }
-        
-        function downloadZIP() {
-          startLoading();
-          AMS_OSCAR_Attachments.getAllExpiringLink("{!caseId}",function(result, event){
-          // alert(result);
-          try {
-            downloadAndZipFiles(result, "files.zip");
-          } catch (e) {
-            alert(e);
-          }
-          stopLoading();
-          }, {buffer: true, escape: false, timeout: 120000} );
-        }
     </script>
 
     <apex:form id="mainform" >
@@ -196,7 +181,6 @@
                 <apex:commandButton value="{!$Label.Make_All_Public}" action="{!makeAllPublic}" oncomplete="refreshPage();" />
                 <apex:commandButton value="{!$Label.Make_All_Private}" action="{!makeAllPrivate}" oncomplete="refreshPage()" />
                 <apex:commandButton value="{!$Label.site.save}" action="{!updateAllAttach}" oncomplete="refreshPage()" styleClass="saveButton" />
-                <input type="button" class="btn" value="Download All Files" onclick="downloadZIP(); return false;"/>
             </apex:pageblockButtons>
 
             <apex:pageMessages />
