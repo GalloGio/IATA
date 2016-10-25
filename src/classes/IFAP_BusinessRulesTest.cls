@@ -421,7 +421,7 @@ public class IFAP_BusinessRulesTest {
     }
 
 
-    static testmethod void testIsStatusCanBeSelected() {
+   static testmethod void testIsStatusCanBeSelected() {
 
         ID IFAPcaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('IATA Financial Review');
 
