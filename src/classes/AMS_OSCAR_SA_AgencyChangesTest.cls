@@ -5,7 +5,7 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
     private static String CATEGORYPAX = 'IATA Passenger Sales Agent';
     private static String LOCCLASSPAX = 'P';
 
-    private static Account HO1, HO2, BR1, BR2, SA1, SA2, SA3, SA4;
+    private static Account HO1, HO2, HO3, BR1, BR2, BR3, SA1, SA2, SA3, SA4;
     private static Contact C1;
 
     private static void getUpdatedAccountData(){
@@ -16,10 +16,14 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
                 HO1 = acc;
             else if(acc.Name == 'Ice Travels HO2')
                 HO2 = acc;
+            else if(acc.Name == 'Psycho Travels HO3')
+                HO3 = acc;
             else if(acc.Name == 'Fire Travels BR1')
                 BR1 = acc;
             else if(acc.Name == 'Water Travels BR2')
                 BR2 = acc;
+            else if(acc.Name == 'Wonder Travels BR3')
+                BR3 = acc;
             else if(acc.Name == 'Water Travels SA1')
                 SA1 = acc;
             else if(acc.Name == 'Earth Travels SA2')
@@ -40,10 +44,14 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
                 HO1 = acc;
             else if(acc.Id == HO2.Id)
                 HO2 = acc;
+            else if(acc.Id == HO3.Id)
+                HO3 = acc;
             else if(acc.Id == BR1.Id)
                 BR1 = acc;
             else if(acc.Id == BR2.Id)
                 BR2 = acc;
+            else if(acc.Id == BR3.Id)
+                BR3 = acc;
             else if(acc.Id == SA1.Id)
                 SA1 = acc;
             else if(acc.Id == SA2.Id)
@@ -70,7 +78,7 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
         //open the OSCAR in a BR which has child SA agencies
         AMS_OSCAR__c oscar = new AMS_OSCAR__c(RecordTypeId = rtChange, Account__c = oscarAccount.Id,
                                                Type_of_change__c = typeOfChange, Change_of_location_type_behavior__c = changeLocTypeBehavior, 
-                                               AMS_Target_Agency__c = targetAgencyId, Change_effective_as_of__c = date.today());
+                                               Change_effective_as_of__c = date.today());
         insert oscar;
 
         ID rtCommCase = Schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
@@ -89,6 +97,7 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
         insert stagingArea;
 
         oscar.AMS_Online_Accreditation__c = stagingArea.Id;
+        oscar.AMS_Target_Agency__c = targetAgencyId;
         update oscar;
 
         return [SELECT Id, Account__c, Type_of_change__c,Change_effective_as_of__c FROM AMS_OSCAR__c LIMIT 1];
@@ -110,7 +119,11 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
                                   Sector__c = SECTORPAX, Category__c = CATEGORYPAX,
                                   Location_Class__c = LOCCLASSPAX, Location_Type__c = 'HO', Status__c = AMS_Utils.ACC_S9_APPROVED);
 
-        List<Account> hos = new List<Account> {HO1, HO2};
+        HO3 = new Account(RecordTypeId = rtAgency, Name = 'Psycho Travels HO3', IATAcode__c = '1122322', IATA_ISO_Country__c = portugal.id,
+                                  Sector__c = SECTORPAX, Category__c = CATEGORYPAX,
+                                  Location_Class__c = LOCCLASSPAX, Location_Type__c = 'HO', Status__c = AMS_Utils.ACC_S9_APPROVED);
+
+        List<Account> hos = new List<Account> {HO1, HO2, HO3};
         insert hos;
 
         BR1 = new Account(RecordTypeId = rtAgency, Name = 'Fire Travels BR1', IATAcode__c = '7654321', IATA_ISO_Country__c = portugal.id,
@@ -121,7 +134,11 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
                                   Sector__c = SECTORPAX, Category__c = CATEGORYPAX, Status__c = AMS_Utils.ACC_S9_APPROVED,
                                   Location_Class__c = LOCCLASSPAX, Location_Type__c = 'BR', ParentId = HO1.Id);
 
-        List<Account> brs = new List<Account> {BR1, BR2};
+        BR3 = new Account(RecordTypeId = rtAgency, Name = 'Wonder Travels BR3', IATAcode__c = '7234323', IATA_ISO_Country__c = portugal.id,
+                                  Sector__c = SECTORPAX, Category__c = CATEGORYPAX, Status__c = AMS_Utils.ACC_S9_APPROVED,
+                                  Location_Class__c = LOCCLASSPAX, Location_Type__c = 'BR', ParentId = HO3.Id);
+
+        List<Account> brs = new List<Account> {BR1, BR2, BR3};
         insert brs;
 
         SA1 = new Account(RecordTypeId = rtAgency, Name = 'Water Travels SA1', IATAcode__c = '7654324', IATA_ISO_Country__c = portugal.id,
@@ -149,7 +166,8 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
 
         //Create hierarchy
         AMS_Agencies_Hierarchy__c H1 = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Hierarchy 1');
-        List<AMS_Agencies_Hierarchy__c> hs = new List<AMS_Agencies_Hierarchy__c> {H1};
+        AMS_Agencies_Hierarchy__c H3 = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Hierarchy 3');
+        List<AMS_Agencies_Hierarchy__c> hs = new List<AMS_Agencies_Hierarchy__c> {H1, H3};
         insert hs;
 
         List<AMS_Agencies_relationhip__c> rels = new List<AMS_Agencies_relationhip__c>();
@@ -159,6 +177,8 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
         rels.add(new AMS_Agencies_relationhip__c(Hierarchy__c = H1.Id, Parent_Account__c = BR1.Id, Child_Account__c = SA2.Id));
         rels.add(new AMS_Agencies_relationhip__c(Hierarchy__c = H1.Id, Parent_Account__c = BR1.Id, Child_Account__c = SA3.Id));
         rels.add(new AMS_Agencies_relationhip__c(Hierarchy__c = H1.Id, Parent_Account__c = HO1.Id, Child_Account__c = SA4.Id));
+
+        rels.add(new AMS_Agencies_relationhip__c(Hierarchy__c = H3.Id, Parent_Account__c = HO3.Id, Child_Account__c = BR3.Id));
 
         insert rels;
 
@@ -1052,6 +1072,108 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
         Test.stopTest();
 
     }
+
+    //Change of ownership IATA buys IATA: SA and parent included in the change (migrate one Branch) (migration to existing hierarchy)
+    @isTest static void ChangeOwnershipIATAToIATA4() {
+
+        getUpdatedAccountData();
+
+        AMS_OSCAR__c oscar = createOSCAR(BR1, 'Ownership to IATA Agent', null, HO3);
+
+        //Adding the SAs which have BR1 as parent
+        List<AMS_Process_Detail__c> pds = new List<AMS_Process_Detail__c>();
+        pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = SA2.Id));
+        pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = SA3.Id));
+
+        insert pds;
+
+        Test.startTest();
+
+        //oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
+        oscar.STEP6__c = AMS_Utils.PASSED;
+        update oscar;
+
+        getUpdatedAccountDataV2();
+
+        AMS_Agencies_Hierarchy__c H1 = [SELECT Id FROM AMS_Agencies_Hierarchy__c WHERE Hierarchy_Name__c = 'Hierarchy 1' limit 1];
+
+        //validate the origin hierarchy structure (after migrating agencies)
+        List<AMS_Agencies_relationhip__c> relsH1 = [SELECT ID, Child_Account__c, Child_Account__r.Location_Type__c, Parent_Account__c, Parent_Account__r.Location_Type__c, Child_Account__r.ParentId FROM AMS_Agencies_relationhip__c WHERE Hierarchy__c = : H1.Id];
+        System.assertEquals(3, relsH1.size());
+
+        Integer countConditions = 0;
+
+        for (AMS_Agencies_relationhip__c rel : relsH1) {
+            if (rel.Child_Account__c == BR2.Id) {
+                System.assertEquals('BR', rel.Child_Account__r.Location_Type__c);
+                System.assertEquals(HO1.Id, rel.Parent_Account__c);
+                System.assertEquals('HO', rel.Parent_Account__r.Location_Type__c);
+                System.assertEquals(HO1.Id, rel.Child_Account__r.ParentId);
+                countConditions++;
+            } else if (rel.Child_Account__c == SA1.Id) {
+                System.assertEquals('SA', rel.Child_Account__r.Location_Type__c);
+                System.assertEquals(HO1.Id, rel.Parent_Account__c);
+                System.assertEquals('HO', rel.Parent_Account__r.Location_Type__c);
+                System.assertEquals(HO1.Id, rel.Child_Account__r.ParentId);
+                countConditions++;
+            } else if (rel.Child_Account__c == SA4.Id) {
+                System.assertEquals('SA', rel.Child_Account__r.Location_Type__c);
+                System.assertEquals(HO1.Id, rel.Parent_Account__c);
+                System.assertEquals('HO', rel.Parent_Account__r.Location_Type__c);
+                System.assertEquals(HO1.Id, rel.Child_Account__r.ParentId);
+                countConditions++;
+            }
+        }
+
+
+        //get the new hierarchy created by the system
+        AMS_Agencies_Hierarchy__c H3 = [SELECT Id FROM AMS_Agencies_Hierarchy__c WHERE Hierarchy_Name__c = 'Hierarchy 3' limit 1];
+
+        //validate the destination hierarchy structure (after migrating agencies)
+        List<AMS_Agencies_relationhip__c> relsH3 = [SELECT ID, Child_Account__c, Child_Account__r.Location_Type__c, Parent_Account__c, Parent_Account__r.Location_Type__c, Child_Account__r.ParentId FROM AMS_Agencies_relationhip__c WHERE Hierarchy__c = : H3.Id];
+        System.assertEquals(4, relsH3.size());
+
+        for (AMS_Agencies_relationhip__c rel : relsH3) {
+            if (rel.Child_Account__c == BR1.Id) {
+                System.assertEquals('BR', rel.Child_Account__r.Location_Type__c);
+                System.assertEquals(HO3.Id, rel.Parent_Account__c);
+                System.assertEquals('HO', rel.Parent_Account__r.Location_Type__c);
+                System.assertEquals(HO3.Id, rel.Child_Account__r.ParentId);
+                countConditions++;
+            } else if (rel.Child_Account__c == SA2.Id) {
+                System.assertEquals('SA', rel.Child_Account__r.Location_Type__c);
+                System.assertEquals(BR1.Id, rel.Parent_Account__c);
+                System.assertEquals('BR', rel.Parent_Account__r.Location_Type__c);
+                System.assertEquals(BR1.Id, rel.Child_Account__r.ParentId);
+                countConditions++;
+            } else if (rel.Child_Account__c == SA3.Id) {
+                System.assertEquals('SA', rel.Child_Account__r.Location_Type__c);
+                System.assertEquals(BR1.Id, rel.Parent_Account__c);
+                System.assertEquals('BR', rel.Parent_Account__r.Location_Type__c);
+                System.assertEquals(BR1.Id, rel.Child_Account__r.ParentId);
+                countConditions++;
+            }
+            else if (rel.Child_Account__c == BR3.Id) {
+                System.assertEquals('BR', rel.Child_Account__r.Location_Type__c);
+                System.assertEquals(HO3.Id, rel.Parent_Account__c);
+                System.assertEquals('HO', rel.Parent_Account__r.Location_Type__c);
+                System.assertEquals(HO3.Id, rel.Child_Account__r.ParentId);
+                countConditions++;
+            }
+
+        }
+
+        System.assertEquals(HO1.ParentId, null);
+        System.assertEquals(HO3.ParentId, null);
+
+        //all the conditions inside the loop must happen
+        System.assertEquals(countConditions, 7);
+
+        Test.stopTest();
+
+    }
+
+
 
     //Change of ownership non IATA buys IATA: both SA and parent included (Complete migration and HO remains the same)
     @isTest static void ChangeOwnershipIATAToNonIATA1() {
