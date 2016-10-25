@@ -1158,6 +1158,89 @@ public without sharing class AMS_Utils {
 
 }
 
+//Map data from staging area (AMS Online Accreditation) to account
+    public static AMS_Pax_Accreditation_Form__c CopyDataFromAccountToStaging(String typesOfChange, Account account, AMS_Pax_Accreditation_Form__c onlineAccreditation) {
+
+        System.debug('AGENCY CHANGES: Types of Change (' + typesOfChange + ') ');
+
+        Set<String> fieldsToMigrate = AMS_AgencyChangesConfigHelper.getFieldsToMigrate(typesOfChange);
+
+        System.debug('AGENCY CHANGES: fields to migrate (' + fieldsToMigrate + ') for accounts: ' + account);
+
+        Map<String, String> fieldsMapping = new Map<String, String> {'Name' => 'Account_Name__c'
+                                                                    ,'IATACode__c' => 'IATACode__c'
+                                                                    ,'Short_Name__c' => 'Short_Name__c'
+                                                                    ,'TradeName__c' => 'Trade_Name__c'
+                                                                    ,'License_Number__c' => 'ISSP_AMS_License_No__c'
+                                                                    ,'VAT_Number__c' => 'ISSP_AMS_VAT_number__c'
+                                                                    ,'BillingStreet' => 'Branch_Office_Street_name_number__c'
+                                                                    ,'Website' => 'Website__c'
+                                                                    ,'BillingPostalCode' => 'Branch_Office_Postal_code__c'
+                                                                    ,'BillingCity' => 'Branch_Office_City__c'
+                                                                    ,'IATA_ISO_Country__c' => 'Branch_Office_Country__c'
+                                                                    ,'Iso_State__c' => 'IATA_ISO_State__c'
+                                                                    ,'ShippingStreet' => 'Shipping_Street__c'
+                                                                    ,'ShippingPostalCode' => 'Shipping_Postal_Code__c'
+                                                                    ,'Email__c' => 'Branch_Office_Email__c'
+                                                                    ,'Phone' => 'Branch_Office_Phone__c'
+                                                                    ,'Fax' => 'Branch_Office_FAX__c'
+                                                                    ,'ShippingCity' => 'Shipping_City__c'
+                                                                    ,'Operation__c' => 'Operation__c'
+                                                                    ,'Abbreviated_name__c' => 'Abbreviated_name__c'
+                                                                    ,'Abbreviated_address__c' => 'Abbreviated_Address__c'
+                                                                    ,'Remittance_frequency__c' => 'Remittance_frequency__c'
+                                                                    ,'Solicitation_Flag__c' => 'Solicitation_Flag__c'
+                                                                    ,'VAT_Number_2__c' => 'VAT_Number_2__c'
+                                                                    ,'CASS_Number__c' => 'CASS_Number__c'
+                                                                    ,'Location_Class__c' => 'Location_Class__c'
+                                                                    ,'Location_Type__c' => 'Location_Type__c'
+                                                                    ,'Mobile__c' => 'Mobile__c'
+                                                                    ,'Is_your_firm_handling_Dangerous_Goods__c' => 'Is_your_firm_handling_Dangerous_Goods__c'
+                                                                    ,'IATA_ISO_Billing_State__c' => 'IATA_ISO_State__c'
+                                                                    ,'IATA_ISO_Shipping_Country__c' => 'Shipping_ISO_Country__c'
+                                                                    ,'IATA_ISO_Shipping_State__c' => 'Shipping_ISO_State__c'};
+
+        if (fieldsToMigrate != null && onlineAccreditation != null) {
+                Map<String, Object> onlineAccreditationFieldNewValue = new Map<String,Object>();
+
+                for (String key : fieldsMapping.keySet()) {
+                    String value = fieldsMapping.get(key);
+                    if (fieldsToMigrate.contains(value)) {
+                    
+                        onlineAccreditationFieldNewValue.put(value, account.get(key));
+                        System.debug('copying stuff from target agency ' + value + ':' + account.get(key));
+                    }
+                }
+
+                //fields that require transformation
+                if (fieldsToMigrate.contains('ISSP_AMS_Premises_located_at_airport__c'))
+                    onlineAccreditationFieldNewValue.put('ISSP_AMS_Premises_located_at_airport__c', (account.In_a_Airport__c == true) ? 'Yes' : 'No');
+                if (fieldsToMigrate.contains('ISSP_AMS_Legal_Status__c'))
+                    onlineAccreditationFieldNewValue.put('ISSP_AMS_Legal_Status__c', account.Company_Type__c);
+                if (fieldsToMigrate.contains('ISSP_AMS_GDS_with_signed_contract__c'))
+                    onlineAccreditationFieldNewValue.put('ISSP_AMS_GDS_with_signed_contract__c', account.GDS__c);
+
+
+                for(String accredFieldApiName: onlineAccreditationFieldNewValue.keySet())
+                {
+                    
+                    Schema.SObjectField field = Schema.SObjectType.AMS_Pax_Accreditation_Form__c.fields.getMap().get(accredFieldApiName);
+                    Schema.DisplayType fldType = field.getDescribe().getType();
+                        
+                    system.debug('Field value to migrate to online accreditation: ' + accredFieldApiName);
+                    system.debug('Field Type to migrate to online accreditation: ' + fldType);
+
+                    onlineAccreditation.put(accredFieldApiName, onlineAccreditationFieldNewValue.get(accredFieldApiName));
+                }
+
+        }
+
+        system.debug('Online Accreditation fields populated: ' + onlineAccreditation);
+
+        return onlineAccreditation;
+
+    }
+
 //get Inspections from oscar
     public static void UpdateInspectionsFromOscar(List<AMS_OSCAR__c> oscars){
 
