@@ -51,7 +51,7 @@ public class EF_AccountTriggerHandler {
 
 		//query for Contracts, Billing Agreements and Related Contacts on the accounts inactivated.
 		Map <Id,Contract> contractMap = new Map <Id,Contract> ([Select Id, EF_Status__c, EF_Comments__c,
-			(Select Id, EF_Status__c, EF_Comments__c from EF_Relationships__r), (Select Id, EF_Status__c from EF_Contacts_EF_Contracts__r), 
+			(Select Id, EF_Status__c, EF_Comments__c from EF_Relationships__r), (Select Id, EF_Status__c from EF_Contacts_in_EF_Contracts__r), 
 			(select Id, EF_Status__c from  EF_Material_Line_Items__r) from Contract where AccountId in: inactiveAccsSet and RecordTypeId =: contractRTId]);
         
 		List <Contract> contracts2Inactivate = new List <Contract> ();
@@ -71,7 +71,7 @@ public class EF_AccountTriggerHandler {
 					}
 				}
 
-				for(EF_Contact_EF_Contract__c cc: c.EF_Contacts_EF_Contracts__r){
+				for(EF_Contact_EF_Contract__c cc: c.EF_Contacts_in_EF_Contracts__r){
 					if(cc.EF_Status__c!='Inactive'){
 						cc.EF_Status__c='Inactive';
 						contractContacs2InactList.add(cc);

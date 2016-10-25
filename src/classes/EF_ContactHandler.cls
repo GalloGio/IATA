@@ -28,7 +28,7 @@ public class EF_ContactHandler {
                 Map<Id,EF_Contact_Relationship__c> crMap = new Map <Id,EF_Contact_Relationship__c> ([Select id, Status__c, Contact__c From EF_Contact_Relationship__c Where Contact__c in :contactMap.keySet()]);
                 
                 //query for contacts in contracts
-                Map <Id, EF_Contact_EF_Contract__c> ccMap = new Map <Id, EF_Contact_EF_Contract__c>([Select id, EF_status__c, Contact__c From EF_Contact_EF_Contract__c Where Contact__c in :contactMap.keySet()]);
+                Map <Id, EF_Contact_EF_Contract__c> ccMap = new Map <Id, EF_Contact_EF_Contract__c>([Select id, EF_status__c, EF_Contact__c From EF_Contact_EF_Contract__c Where Contact__c in :contactMap.keySet()]);
                 
                 if(!crMap.isEmpty()) {
                     for (EF_Contact_Relationship__c cr : crMap.values()) {
@@ -40,7 +40,7 @@ public class EF_ContactHandler {
                 }
                 if(!ccMap.isEmpty()){
                     for(EF_Contact_EF_Contract__c cc : ccMap.values()){
-                        cc.EF_Status__c = contactMap.get(cc.Contact__c);
+                        cc.EF_Status__c = contactMap.get(cc.EF_Contact__c);
                     }
 
                     try{ update ccMap.values();}catch(Exception e){ system.debug(e);}

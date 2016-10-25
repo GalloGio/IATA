@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <actionOverrides>
         <actionName>Accept</actionName>
         <type>Default</type>
@@ -55,7 +55,7 @@
     <fields>
         <fullName>Contact_Account__c</fullName>
         <externalId>false</externalId>
-        <formula>Contact__r.Account.Name</formula>
+        <formula>EF_Contact__r.Account.Name</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Contact Account</label>
         <required>false</required>
@@ -64,30 +64,28 @@
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>Contact__c</fullName>
+        <fullName>EF_Contact__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
         <label>Contact</label>
         <referenceTo>Contact</referenceTo>
-        <relationshipLabel>E&amp;F Contacts in E&amp;F Contracts</relationshipLabel>
-        <relationshipName>EF_Contacts_EF_Contracts</relationshipName>
-        <relationshipOrder>0</relationshipOrder>
-        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <relationshipLabel>E&amp;F Contacts in E&amp;F Contracts (Contact)</relationshipLabel>
+        <relationshipName>EF_Contacts_in_EF_Contracts</relationshipName>
+        <required>false</required>
         <trackTrending>false</trackTrending>
-        <type>MasterDetail</type>
-        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+        <type>Lookup</type>
     </fields>
     <fields>
-        <fullName>Contract__c</fullName>
+        <fullName>EF_Contract__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
         <label>Contract</label>
         <referenceTo>Contract</referenceTo>
-        <relationshipLabel>E&amp;F Contacts in E&amp;F Contracts</relationshipLabel>
-        <relationshipName>EF_Contacts_EF_Contracts</relationshipName>
-        <relationshipOrder>1</relationshipOrder>
-        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <relationshipLabel>E&amp;F Contacts in E&amp;F Contracts (Contract)</relationshipLabel>
+        <relationshipName>EF_Contacts_in_EF_Contracts</relationshipName>
+        <required>false</required>
         <trackTrending>false</trackTrending>
-        <type>MasterDetail</type>
-        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+        <type>Lookup</type>
     </fields>
     <fields>
         <fullName>EF_Status__c</fullName>
@@ -116,21 +114,21 @@
     </nameField>
     <pluralLabel>E&amp;F Contacts in E&amp;F Contracts</pluralLabel>
     <searchLayouts>
-        <lookupDialogsAdditionalFields>Contact__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields xsi:nil="true"/>
         <lookupDialogsAdditionalFields>Role__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>EF_Status__c</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>Contract__c</lookupDialogsAdditionalFields>
-        <lookupPhoneDialogsAdditionalFields>Contact__c</lookupPhoneDialogsAdditionalFields>
-        <lookupPhoneDialogsAdditionalFields>Contract__c</lookupPhoneDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields xsi:nil="true"/>
+        <lookupPhoneDialogsAdditionalFields xsi:nil="true"/>
+        <lookupPhoneDialogsAdditionalFields xsi:nil="true"/>
         <lookupPhoneDialogsAdditionalFields>Role__c</lookupPhoneDialogsAdditionalFields>
         <lookupPhoneDialogsAdditionalFields>EF_Status__c</lookupPhoneDialogsAdditionalFields>
-        <searchFilterFields>Contact__c</searchFilterFields>
-        <searchFilterFields>Contract__c</searchFilterFields>
+        <searchFilterFields xsi:nil="true"/>
+        <searchFilterFields xsi:nil="true"/>
         <searchFilterFields>Role__c</searchFilterFields>
         <searchFilterFields>EF_Status__c</searchFilterFields>
         <searchFilterFields>NAME</searchFilterFields>
     </searchLayouts>
-    <sharingModel>ControlledByParent</sharingModel>
+    <sharingModel>ReadWrite</sharingModel>
     <validationRules>
         <fullName>CannotAddInactiveContact</fullName>
         <active>true</active>
@@ -138,8 +136,8 @@
         <errorConditionFormula>AND(
 ISNEW(),
 OR( 
-ISBLANK(TEXT(Contact__r.EF_Status__c)),
-ISPICKVAL(Contact__r.EF_Status__c,&apos;Inactive&apos;)
+ISBLANK(TEXT(EF_Contact__r.EF_Status__c)),
+ISPICKVAL( EF_Contact__r.EF_Status__c,&apos;Inactive&apos;)
 )
 )</errorConditionFormula>
         <errorMessage>The contact selected is Inactive for E&amp;F and can&apos;t be selected</errorMessage>
@@ -150,7 +148,7 @@ ISPICKVAL(Contact__r.EF_Status__c,&apos;Inactive&apos;)
         <description>Status can&apos;t be active if Contact E&amp;F Status is Inactive</description>
         <errorConditionFormula>AND(
 ISPICKVAL(EF_Status__c, &apos;Active&apos;),
-ISPICKVAL(Contact__r.EF_Status__c, &apos;Inactive&apos;)
+ISPICKVAL(EF_Contact__r.EF_Status__c, &apos;Inactive&apos;)
 )</errorConditionFormula>
         <errorDisplayField>EF_Status__c</errorDisplayField>
         <errorMessage>Status can&apos;t be active if Contact E&amp;F Status is Inactive</errorMessage>

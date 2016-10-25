@@ -13,11 +13,11 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
-                <field>Contact__c</field>
+                <field>EF_Contact__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
-                <field>Contract__c</field>
+                <field>EF_Contract__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
