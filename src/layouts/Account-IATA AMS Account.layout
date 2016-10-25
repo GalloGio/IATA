@@ -51,6 +51,9 @@
             </containers>
         </subtabComponents>
     </customConsoleComponents>
+    <excludeButtons>DataDotComAccountInsights</excludeButtons>
+    <excludeButtons>DataDotComClean</excludeButtons>
+    <excludeButtons>DataDotComCompanyHierarchy</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
         <customLabel>true</customLabel>
@@ -292,7 +295,7 @@
                 <field>Accumulated_Irregularities__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>Financial_Year_End__c</field>
             </layoutItems>
             <layoutItems>
@@ -330,7 +333,7 @@
                 <field>Next_Financial_security_Expiry_date__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>Fin_statements_submission_deadline__c</field>
             </layoutItems>
         </layoutColumns>
