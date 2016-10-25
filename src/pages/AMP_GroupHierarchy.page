@@ -11,13 +11,13 @@
 				</div>
 		</div>
 
-		<apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" />
+        <apex:includeScript value="{!$Resource.jQuery172}" />
 		<script>
 			var recordId = '{!recordId}';
 			var hierarchy = jQuery.parseJSON('{!JSONHierarchy}');
 			hierarchy.forEach(function(item,index){
 
-				var link = $('<a  href="/'+item.Id+'" target="_top">' + item.Name + '</a>');
+                var link = $('<a href="javascript:void(0);" class="nocursor">' + item.Name + '</a>');
 				var listItem = $('<li class="slds-list__item slds-text-heading--label "></li>').append(link); // slds-is-incomplete
 				if(recordId === item.Id) listItem.addClass('amp-is-current');
 
@@ -27,6 +27,7 @@
 
 		<style>
 			.amp-is-current { font-weight: bold;}
+            a.nocursor{ cursor: default !important; }
 		</style>
 
 </apex:page>
