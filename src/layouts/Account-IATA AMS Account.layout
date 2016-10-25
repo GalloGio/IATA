@@ -67,7 +67,7 @@
                 <field>Quality__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>ParentId</field>
             </layoutItems>
             <layoutItems>
@@ -87,7 +87,7 @@
                 <field>Portal_Service_Report__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>Company_Type__c</field>
             </layoutItems>
         </layoutColumns>
@@ -97,7 +97,7 @@
                 <field>Key_Customer__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>Identify_as_Key_Customer__c</field>
             </layoutItems>
             <layoutItems>
@@ -113,11 +113,11 @@
                 <field>Check_Digit__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Required</behavior>
+                <behavior>Readonly</behavior>
                 <field>Sector__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Required</behavior>
+                <behavior>Readonly</behavior>
                 <field>Category__c</field>
             </layoutItems>
             <layoutItems>
@@ -125,7 +125,7 @@
                 <field>Last_SIDRA_Date__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>Number_of_open_Financial_Review_Cases__c</field>
             </layoutItems>
             <layoutItems>
@@ -146,15 +146,15 @@
         <label>Address Information</label>
         <layoutColumns>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>BillingAddress</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Required</behavior>
+                <behavior>Readonly</behavior>
                 <field>IATA_ISO_Country__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>Iso_State__c</field>
             </layoutItems>
             <layoutItems>
@@ -205,11 +205,11 @@
         <label>Agent information</label>
         <layoutColumns>
             <layoutItems>
-                <behavior>Required</behavior>
+                <behavior>Readonly</behavior>
                 <field>Location_Type__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Required</behavior>
+                <behavior>Readonly</behavior>
                 <field>Location_Class__c</field>
             </layoutItems>
             <layoutItems>
@@ -217,11 +217,11 @@
                 <field>Is_Branch_Abroad__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>VAT_Number__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>VAT_Number_2__c</field>
             </layoutItems>
             <layoutItems>
@@ -255,11 +255,11 @@
                 <field>Accreditation_date__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>Expiry_Date__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>License_Number__c</field>
             </layoutItems>
             <layoutItems>
@@ -271,7 +271,7 @@
                 <field>BSP_Name__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>Operation__c</field>
             </layoutItems>
             <layoutItems>
@@ -296,7 +296,7 @@
                 <field>Accumulated_Irregularities__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>Financial_Year_End__c</field>
             </layoutItems>
             <layoutItems>
@@ -304,15 +304,15 @@
                 <field>Guaranteed_amount__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>Remittance_frequency__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>CCG_IRR_Distribution_list__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>CCG_Participant__c</field>
             </layoutItems>
         </layoutColumns>
@@ -322,7 +322,7 @@
                 <field>Assessment_Performed_Date__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>Financial_Review_Result__c</field>
             </layoutItems>
             <layoutItems>
@@ -334,7 +334,7 @@
                 <field>Next_Financial_security_Expiry_date__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>Fin_statements_submission_deadline__c</field>
             </layoutItems>
         </layoutColumns>
@@ -378,11 +378,11 @@
                 <field>OwnerId</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>Reason_for_creation__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>Source_System__c</field>
             </layoutItems>
         </layoutColumns>
@@ -396,11 +396,11 @@
                 <field>RecordTypeId</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>AIMS_ID__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>WebStar_ID__c</field>
             </layoutItems>
         </layoutColumns>
