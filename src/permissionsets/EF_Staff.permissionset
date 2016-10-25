@@ -7555,6 +7555,11 @@
         <field>EF_Approval__c.EF_Payment_Terms__c</field>
         <readable>true</readable>
     </fieldPermissions>
+	<fieldPermissions>
+        <editable>true</editable>
+        <field>EF_Approval__c.EF_Status__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>EF_Approval__c.Location_Code__c</field>
@@ -7578,11 +7583,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>EF_Approval__c.SAP_Contract_Number__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-	<fieldPermissions>
-        <editable>true</editable>
-        <field>EF_Approval__c.Status__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -7734,15 +7734,15 @@
         <editable>true</editable>
         <field>EF_Billing_Agreement__c.Ship_to__c</field>
         <readable>true</readable>
-    </fieldPermissions> 
-    <fieldPermissions>
+    </fieldPermissions>
+	<fieldPermissions>
         <editable>true</editable>
-        <field>EF_Billing_Agreement__c.Sold_to__c</field>
+        <field>EF_Billing_Agreement__c.Skip_Approval__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>EF_Billing_Agreement__c.Status__c</field>
+        <field>EF_Billing_Agreement__c.Sold_to__c</field>
         <readable>true</readable>
     </fieldPermissions>
 	<fieldPermissions>
@@ -7828,6 +7828,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>EF_Location_Currency__c.Requested_Changes__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>false</editable>
+        <field>EF_Location_Currency__c.Skip_Validation__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -8851,7 +8856,7 @@
     </objectPermissions>
     <objectPermissions>
         <allowCreate>true</allowCreate>
-        <allowDelete>false</allowDelete>
+        <allowDelete>true</allowDelete>
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>true</modifyAllRecords>

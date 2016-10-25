@@ -46,7 +46,7 @@ public class EF_BillingAgreementHandler
         }
     }
 
-    // Queries for any Accounts that do only allow Billing Agreements to be updated with approval
+    // Queries for any Contracts that do only allow Billing Agreements to be updated with approval
     public static void handleWithApprovalContractUpdates(Map<Id, EF_Billing_Agreement__c> newAgreements, Map<Id, EF_Billing_Agreement__c> oldAgreements)
     {
         Set<Id> contractIds = new Set<Id>();
@@ -62,7 +62,7 @@ public class EF_BillingAgreementHandler
             List<EF_Billing_Agreement__c> agreementsToApprove = new List<EF_Billing_Agreement__c>();
             for(EF_Billing_Agreement__c allAgreements : newAgreements.values())
             {
-                if(contractsInvolved.get(allAgreements.Contract__c) != null)
+                if(contractsInvolved.get(allAgreements.Contract__c) != null && !allAgreements.Skip_Approval__c)
                     agreementsToApprove.add(allAgreements);
             }
 
@@ -108,7 +108,10 @@ public class EF_BillingAgreementHandler
         Set<Id> contractIds = new Set<Id>();
         for(EF_Billing_Agreement__c ba : agreementList)
         {
-            contractIds.add(ba.Contract__c);
+            if(!ba.Skip_Approval__c)
+            {
+                contractIds.add(ba.Contract__c);
+            }
         }
 
         Set<Id> withApprovalIds = new Set<Id>();
@@ -168,7 +171,7 @@ public class EF_BillingAgreementHandler
         List <EF_Billing_Agreement__c> relWithLocation = new List <EF_Billing_Agreement__c>();
 
         for(EF_Billing_Agreement__c rel: relationshipList){
-            if(rel.EF_Location_ID__c!=null){
+            if(rel.EF_Location_ID__c!=null && !rel.Skip_Approval__c){
                 relWithLocation.add(rel);
             }
         }
@@ -287,6 +290,17 @@ public class EF_BillingAgreementHandler
                         rel.Payment_Currency__c.addError(errorMessage);
                     }   
                 }
+            }
+        }
+    }
+
+    public static void revertSkipApprovalIfNecessary(List<EF_Billing_Agreement__c> newList, Map<Id,EF_Billing_Agreement__c> oldMap)
+    {
+        for(EF_Billing_Agreement__c ba : newList)
+        {
+            if(ba.Skip_Approval__c && !oldMap.get(ba.Id).Skip_Approval__c)
+            {
+                ba.Skip_Approval__c = false;
             }
         }
     }

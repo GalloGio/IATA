@@ -22765,6 +22765,11 @@
         <field>EF_Location_Currency__c.Require_Approval__c</field>
         <readable>true</readable>
     </fieldPermissions>
+	<fieldPermissions>
+        <editable>false</editable>
+        <field>EF_Location_Currency__c.Skip_Validation__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>EF_Material_Line_Item__c.Base_URL__c</field>
@@ -38751,7 +38756,7 @@
         <layout>EF_Billing_Agreement__c-E%26F Airline Billing Agreement Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>EF_Contact_EF_Contract__c-E%26F Contact in E%26 Contract Layout</layout>
+        <layout>EF_Contact_EF_Contract__c-E%26F Contact in E%26F Contract Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>EF_Contact_Relationship__c-E%26F Contact Relationship Layout</layout>
@@ -39931,7 +39936,7 @@
     </objectPermissions>
     <objectPermissions>
         <allowCreate>true</allowCreate>
-        <allowDelete>false</allowDelete>
+        <allowDelete>true</allowDelete>
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>true</modifyAllRecords>

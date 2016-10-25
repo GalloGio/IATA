@@ -150,7 +150,7 @@ public class EF_ContractHandler
                 }
                 if(errorBillingCurrencyListingMap.get(c.Id) != null)
                 {
-                   // c.EF_Billing_Currency__c.addError('Can not update Billing Currency list, because the following currencies are used in Billing Agreements: '+errorBillingCurrencyListingMap.get(c.Id));
+                    // c.EF_Billing_Currency__c.addError('Can not update Billing Currency list, because the following currencies are used in Billing Agreements: '+errorBillingCurrencyListingMap.get(c.Id));
                 }
                 if(errorPaymentCurrencyListingMap.get(c.Id) != null)
                 {
@@ -278,15 +278,15 @@ public class EF_ContractHandler
         Map<String, Schema.SobjectField> fields = contracts.getSObjectType().getDescribe().fields.getMap();
 
         //loop over accounts to check if any of them need to trigger a notification.
-        for(Contract c: contracts){           
+        for(Contract c: contracts){
             //check fields for Clients
             if(c.RecordTypeId==Schema.SObjectType.Contract.getRecordTypeInfosByName().get('E&F Client Agreement').getRecordTypeId() ){
                 
                 for(String s: criticalContractFieldList){
                     SObjectField f = fields.get(s);                 
-                    if(c.get(s)!=oldMap.get(c.Id).get(s)){                       
-                        contractsNoti.put(c.Id, c);
-                    }
+                        if(c.get(s)!=oldMap.get(c.Id).get(s)){                       
+                            contractsNoti.put(c.Id, c);
+                        }
                 }
             }
         }

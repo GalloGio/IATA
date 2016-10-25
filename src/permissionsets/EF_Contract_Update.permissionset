@@ -32582,7 +32582,16 @@
         <object>EF_Material_Line_Item__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
-    <recordTypeVisibilities>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>true</modifyAllRecords>
+        <object>EF_Related_Records__c</object>
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
+	<recordTypeVisibilities>
         <recordType>ACCA_Service_Request__c.Agent_Group_Maintenance</recordType>
         <visible>false</visible>
     </recordTypeVisibilities>
