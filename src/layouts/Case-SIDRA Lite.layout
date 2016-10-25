@@ -3,8 +3,6 @@
     <customButtons>Approve_Default</customButtons>
     <customButtons>EasyUpload</customButtons>
     <customButtons>Reset_New_interactions</customButtons>
-    <customButtons>Send_Email</customButtons>
-    <customButtons>Send_Email_with_Attachment</customButtons>
     <emailDefault>false</emailDefault>
     <excludeButtons>Clone</excludeButtons>
     <excludeButtons>Delete</excludeButtons>
