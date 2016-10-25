@@ -3458,6 +3458,7 @@ The product will only appear on the Online Store when the date entered in this f
         <columns>PRODUCT2.CREATED_DATE</columns>
         <columns>PRODUCT2.LAST_UPDATE</columns>
         <columns>RCRM_Product__c</columns>
+        <columns>PRODUCT2.RECORD_TYPE</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>PRODUCT2.ACTIVE</field>
