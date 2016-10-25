@@ -88,7 +88,7 @@ public with sharing class AMP_OwnershipController {
     public void AddNewOwner() {
         try {
             AMS_Account_Role__c newLine = new AMS_Account_Role__c();
-            //newLine.Percentage__c = 0;
+            // newLine.Percentage__c = 0;
             newLine.Account__c = acc.Id;
             newLine.RecordTypeId = OwnershipRtId;
             //insert newLine;
@@ -108,7 +108,7 @@ public with sharing class AMP_OwnershipController {
     public void AddNewSubsidiary() {
         try {
             AMS_Account_Role__c newLine = new AMS_Account_Role__c();
-            //newLine.Percentage__c = 0;
+            // newLine.Percentage__c = 0;
             newLine.Owner_Account__c = acc.Id;
             newLine.RecordTypeId = OwnershipRtId;
             //insert newLine;
