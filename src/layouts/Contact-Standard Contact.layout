@@ -69,6 +69,10 @@
                 <behavior>Readonly</behavior>
                 <field>Services__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Allow_Contact_LastName_Change__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

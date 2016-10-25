@@ -1132,4 +1132,11 @@ public with sharing class IDCard_ApplicationFormRRController extends  IDCardAbst
     this.back();
     this.next();
   }
+
+  public Boolean IsNewApplication { //INC271394
+    get{
+      return IDCardApplicationRR != null && IDCardApplicationRR.Type_of_application__c == IDCardUtil.APPLICATIONTYPE_NEW;
+    }
+    set;
+  }
 }

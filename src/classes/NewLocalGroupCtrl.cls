@@ -50,7 +50,6 @@ global  class NewLocalGroupCtrl {
         if(redirect){
         String prURL = '/apex/AMP_NewIATAGroup?';
 
-        
         if(recordId != null) prUrl +='id='+recordId;
         String recordType =  ApexPages.currentPage().getParameters().get('RecordType');
         if(recordType != null) prUrl +='RecordType='+recordType;
@@ -67,16 +66,16 @@ global  class NewLocalGroupCtrl {
     public void onChangeGroupType(){
         // I cannot do that by filtered lookup because it's from parent to child
         nton = [SELECT IATA_ISO_Country__c, IATA_ISO_Country__r.Name, Cluster__c, Cluster__r.Name,
-                        Cluster__r.Local_Group_type__c,  Cluster__r.Region__c, Cluster__r.Country_Manager__c, Cluster__r.IATA_Local_Office__c
+                		Cluster__r.Local_Group_type__c,  Cluster__r.Region__c, Cluster__r.Country_Manager__c, Cluster__r.IATA_Local_Office__c
                 FROM Cluster_to_ISO_Country__c 
                 WHERE Cluster__r.Local_Group_type__c = :lg.Local_Governance_type__c];
-        system.debug(LoggingLevel.ERROR,'###### CERCO PER TYPE = '+lg.Local_Governance_type__c);
+       	system.debug(LoggingLevel.ERROR,'###### CERCO PER TYPE = '+lg.Local_Governance_type__c);
         set<Id> displayedClusters = new set<Id>();
         allClusters = new List<SelectOption>();
         allClusters.add(new SelectOption('','-- None --'));
         for(Cluster_to_ISO_Country__c c : nton){
             if(!displayedClusters.contains(c.Cluster__c)){
-                allClusters.add(new SelectOption(c.Cluster__c,c.Cluster__r.Name));
+            	allClusters.add(new SelectOption(c.Cluster__c,c.Cluster__r.Name));
                 displayedClusters.add(c.Cluster__c);
                 system.debug(LoggingLevel.ERROR,'###### '+c.Cluster__r.Name);
             }
@@ -86,16 +85,16 @@ global  class NewLocalGroupCtrl {
     
     public PageReference MySave(){
         //if(nton==null)
-            onChangeGroupType();
+        	onChangeGroupType();
         if(lg.Country__c==null && lg.Cluster__c==null){
-            ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, 'You must choose a country or a cluster.'));
-            return null;
+        	ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, 'You must choose a country or a cluster.'));
+        	return null;
         }else if(lg.Country__c!=null && lg.Cluster__c!=null){
-            ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, 'You cannot choose both a country and a cluster.'));
-            return null;
-        
-        }else if(lg.Cluster__c!=null){
-            boolean clusterAllowed = false;
+        	ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, 'You cannot choose both a country and a cluster.'));
+        	return null;
+    	
+    	}else if(lg.Cluster__c!=null){
+        	boolean clusterAllowed = false;
             for(Cluster_to_ISO_Country__c c2c : nton)
                 if(c2c.Cluster__c == lg.Cluster__c){
                     clusterAllowed = true;
@@ -104,12 +103,12 @@ global  class NewLocalGroupCtrl {
             
             if(!clusterAllowed){
                 ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, 'This cluster is not allowed for Local Group Type '+lg.Local_Governance_type__c));
-                return null;
+        		return null;
             }
             
         }else if(lg.Country__c!=null){
-            boolean countryAllowed = true;
-            String clustername = '';
+			boolean countryAllowed = true;
+			String clustername = '';
             for(Cluster_to_ISO_Country__c c2c : nton)
                 if(c2c.IATA_ISO_Country__c == lg.Country__c){
                     countryAllowed = false;
@@ -119,7 +118,7 @@ global  class NewLocalGroupCtrl {
             
             if(!countryAllowed){
                 ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, 'This country is not allowed for Local Group Type '+lg.Local_Governance_type__c+' because it is part of cluster '+clustername));
-                return null;
+        		return null;
             }
 
         }
@@ -155,7 +154,7 @@ global  class NewLocalGroupCtrl {
             }
             return '';
         }else
-            return 'Internal error. Please contact administrator';
+        	return 'Internal error. Please contact administrator';
     }
 
 }
