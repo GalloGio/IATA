@@ -2,12 +2,9 @@
 <Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
     <alerts>
         <fullName>EF_Doc_Expired_Notification</fullName>
+        <ccEmails>efs@iata.org</ccEmails>
         <description>EF Doc Expiration Notification</description>
         <protected>false</protected>
-        <recipients>
-            <field>Owner_Email__c</field>
-            <type>email</type>
-        </recipients>
         <senderType>DefaultWorkflowUser</senderType>
         <template>E_F_Services/EF_Expired_Amazon_Attachment</template>
     </alerts>

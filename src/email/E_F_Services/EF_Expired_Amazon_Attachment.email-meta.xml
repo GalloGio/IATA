@@ -6,7 +6,7 @@
     <name>E&amp;F Expired Amazon Attachment</name>
     <style>none</style>
     <subject>Attachment Expired in Salesforce</subject>
-    <textOnly>Dear {!User.FirstName},
+    <textOnly>Dear Recipient,
 
 The attachment called {!AmazonFile__c.Name} has been set as expired.
 Link to File: {!AmazonFile__c.Base_URL__c}{!AmazonFile__c.Id}</textOnly>
