@@ -314,11 +314,11 @@ public class EF_ContractHandler
            }
            emailBody = emailBody + '</table>';
            if(c.EF_DT_Specialist__c!=null && c.EF_IA_Specialist__c!=null){
-                Utility.sendEmail(new List <String> {c.EF_DT_Specialist_Email__c, c.EF_IA_Specialist_Email__c}, 'E&F Contract Critical Changes Notification ', emailBody, true, null);
+                Utility.sendEmail(new List <String> {c.EF_DT_Specialist_Email__c, c.EF_IA_Specialist_Email__c, 'efs@iata.org'}, 'E&F Contract Critical Changes Notification ', emailBody, true, null);
            }else if(c.EF_DT_Specialist__c==null && c.EF_IA_Specialist__c!=null){
-                Utility.sendEmail(new List <String> {c.EF_IA_Specialist_Email__c}, 'E&F Contract Critical Changes Notification ', emailBody, true, null);
+                Utility.sendEmail(new List <String> {c.EF_IA_Specialist_Email__c, 'efs@iata.org'}, 'E&F Contract Critical Changes Notification ', emailBody, true, null);
            }else if(c.EF_DT_Specialist__c!=null && c.EF_IA_Specialist__c==null){
-                Utility.sendEmail(new List <String> {c.EF_DT_Specialist_Email__c}, 'E&F Contract Critical Changes Notification ', emailBody, true, null);
+                Utility.sendEmail(new List <String> {c.EF_DT_Specialist_Email__c, 'efs@iata.org'}, 'E&F Contract Critical Changes Notification ', emailBody, true, null);
            }else{
                 Utility.sendEmail(new List <String> {'efs@iata.org'}, 'E&F Contract Critical Changes Notification ', emailBody, true, null);
            }
