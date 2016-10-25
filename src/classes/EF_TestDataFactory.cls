@@ -88,7 +88,15 @@ public with sharing class EF_TestDataFactory
         insert locCurrency;
     }
     
-    
+    public static void createLocationCodes()
+    {
+        Id locCodeId = AMS_Utils.getId('EF_Related_Records__c', 'Location_Code');
+        EF_Related_Records__c rr1 = new EF_Related_Records__c(Name='ABC1', Location_Code_Details__c = 'Details 1', RecordTypeId=locCodeId);
+        EF_Related_Records__c rr2 = new EF_Related_Records__c(Name='ABC2', Location_Code_Details__c = 'Details 2', RecordTypeId=locCodeId);
+        EF_Related_Records__c rr3 = new EF_Related_Records__c(Name='ABC3', Location_Code_Details__c = 'Details 3', RecordTypeId=locCodeId);
+        insert new List<EF_Related_Records__c>{rr1, rr2, rr3};
+    }
+
      public static void createBaseDataWithoutLocCurr()
     {
         createCustomSettings();
