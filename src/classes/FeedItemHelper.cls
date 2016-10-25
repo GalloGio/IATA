@@ -1,22 +1,23 @@
 public with sharing class FeedItemHelper {
-	
+
 	/*
 	 *  This method checks that hashtags exist in the feed items attached to Accounts, to ensure that topics have
 	 *  been used. Otherwise, an error is thrown.
 	 *  Validation put in place for the Account Management project.
 	 */
 	public static void CheckPostTopics(list<FeedItem> lstTriggerNew) {
-		
-		String strAcceptedValues = '';
 
+		String strAcceptedValues = '';
+		List <String> lsTopics = new List<String>();
 		for (AMP_Account_Topics__c at : AMP_Account_Topics__c.getAll().Values()) {
 			strAcceptedValues += (strAcceptedValues == '' ? '' : ', ') + at.Name;
+			lsTopics.add(at.Name);
 		}
 
 		// get the accounts of interest to which the feed items are linked - we only apply the logic to Airline HQ accounts that are IATA Members
 		set<Id> setRelatedAccountIds = new set<Id>();
 		for (FeedItem fi : lstTriggerNew) {
- 	   		if (String.valueOf(fi.ParentId).startsWith('001') && !fi.Body.contains('#') && fi.Type == 'TextPost') {
+ 	   		if (String.valueOf(fi.ParentId).startsWith('001') /*&& fi.Body.contains('#')*/ && fi.Type == 'TextPost') {
  	   			setRelatedAccountIds.add(fi.ParentId);
  	   		}
  	   	}
