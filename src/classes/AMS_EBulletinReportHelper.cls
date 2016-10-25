@@ -163,7 +163,8 @@ public class AMS_EBulletinReportHelper {
 				ccFieldToReturn.add(customFields.getAPIFieldValue(header));
 				}
 		}
-			
+		
+		system.debug('ccFieldToReturn:' + ccFieldToReturn);
 		//Changes codes to Query
 		//
 		
@@ -211,7 +212,8 @@ public class AMS_EBulletinReportHelper {
 
 		getEBulletinCCSections();
 
-	
+		Map<String,Boolean> trackChangePerSectionMap = getCCSectionsWithHistory(eBulletinCCSectionsList);
+
 		//Map change Codes (Values) by Section (Key)
 		Map<String,List<String>> recordsCSVMap = new Map <String,List<String>>();	
 
@@ -219,7 +221,14 @@ public class AMS_EBulletinReportHelper {
 		{
 			String ccRecordSection = AMS_CustomSettingsUtils.ccNameSectionMap.get((String) ccRecord.get(ccFieldToReturn.get(0)));
 			
-			List<String> recordList = getRecordsFromAACC(ccRecord,ccRecordSection,ccHistChangesMap.get(ccRecord.Id));
+			List<String> recordList;
+
+			if(trackChangePerSectionMap.get(ccRecordSection)){
+				recordList = getRecordsFromAACCHist(ccRecordSection,ccRecord,ccHistChangesMap.get(ccRecord.Id));			}
+			//,ccRecordSection,ccHistChangesMap.get(ccRecord.Id)
+			//,String ccRecordSection,List<AMS_ChangeCodesHelper.ObjectChange> ccHistChangesMap
+			else
+				recordList = getRecordsFromAACC(ccRecord);
 
 			if(recordsCSVMap.containsKey(ccRecordSection))
 				recordsCSVMap.get(ccRecordSection).add(convertToCSV(recordList, csvFormat) + '\n');
@@ -231,7 +240,7 @@ public class AMS_EBulletinReportHelper {
 		
 		String recordsCSV = '';	
 		
-		//List With sections already sorted
+		//List With sorted sections 
 		for (AMS_CustomSettingsUtils.AMS_EBulletinCCSection sectionEntry :  eBulletinCCSectionsList)
 		{
 			if(recordsCSVMap.containsKey(sectionEntry.eBulletinCCSection.Name)) recordsCSV += String.join(recordsCSVMap.get(sectionEntry.eBulletinCCSection.Name),'');	
@@ -294,6 +303,18 @@ public class AMS_EBulletinReportHelper {
 		System.debug('EBulletin Sections to recover: ' + eBulletinCCSectionsList);
 	}
 
+	/** 
+		 recover the field Track_CC_History__c from the List of EBulletin Sections (list recovered from the Custom Setting AMSEBulletinCCSections) 
+	*/
+	private static Map<String,Boolean> getCCSectionsWithHistory(List<AMS_CustomSettingsUtils.AMS_EBulletinCCSection> sectionsList)
+	{
+		Map<String,Boolean> trackChangePerSectionMap = new Map<String,Boolean>();
+
+		for (AMS_CustomSettingsUtils.AMS_EBulletinCCSection sectionObj : sectionsList)
+			trackChangePerSectionMap.put(sectionObj.eBulletinCCSection.name,sectionObj.eBulletinCCSection.Track_CC_History__c);
+
+		return trackChangePerSectionMap;
+	}
 	/** 
 		 Get Account IDs from Change Codes recovered 
 	*/
@@ -366,14 +387,10 @@ public class AMS_EBulletinReportHelper {
 	}
 
 	/** 
-		 Process Parent Objects fields (up to 5 Parents?)
+		  Get Record Value from change Codes
 	*/
-	private List<String> getRecordsFromAACC(Agency_Applied_Change_code__c cc,String ccRecordSection,List<AMS_ChangeCodesHelper.ObjectChange> ccHistChangesMap)
+	private List<String> getRecordsFromAACC(Agency_Applied_Change_code__c cc)
 	{
-
-		system.debug('cc.change_code__c: ' + cc.change_code__c);
-		system.debug('ccRecordSection: ' + ccRecordSection);
-		system.debug('ccHistChangesMap: ' + ccHistChangesMap);
 		
 		List<String> recordsList = new List <String>();
 
@@ -395,6 +412,26 @@ public class AMS_EBulletinReportHelper {
 			}
 			else
 				recordsList.add(processParentDependecies(fieldsList.get(position - customFieldsCounter),cc));
+
+		}
+
+		return recordsList;
+	}
+
+	/** 
+		  Get Record Value from CC History Objects
+	*/
+	private List<String> getRecordsFromAACCHist(String ccRecordSection, Agency_Applied_Change_code__c cc, List<AMS_ChangeCodesHelper.ObjectChange> ccHistChangesList)
+	{
+		
+		List<String> recordsList = new List <String>();
+
+		Integer customFieldsCounter = 0, positionMax = headersList.size();
+
+		for (Integer position = 0 ; position < positionMax ; position++)
+		{	
+
+			recordsList.add(processParentDependecies(fieldsList.get(position - customFieldsCounter),cc));
 
 		}
 
@@ -433,7 +470,6 @@ public class AMS_EBulletinReportHelper {
 	{
 		//Country ISO Code
 		//
-
 		String countryIsoCode = processParentDependecies(countryStateList.get(0).split(',').get(1),cc);
 
 		//return State if
@@ -445,7 +481,7 @@ public class AMS_EBulletinReportHelper {
 
 
 	/** 
-		 Get Record Value from Field
+		Process Parent Objects fields (up to 5 Parents?)
 	*/
 	private String processParentDependecies(String field , Agency_Applied_Change_code__c cc)
 	{

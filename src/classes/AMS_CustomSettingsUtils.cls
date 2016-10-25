@@ -112,6 +112,11 @@ This Custom Setting recovers the Collumns used In the EBulletin Reports
 			}
 			set;}
 
+	public static Map<String,Boolean> ccTrackCCHistPerSectionMap{ 
+			get{ 
+				if(ccTrackCCHistPerSectionMap == null) ccTrackCCHistPerSectionMap = new Map<String,Boolean>();return ccTrackCCHistPerSectionMap;
+			}
+			set;}
 
 	public class AMS_EBulletinCCExtraction  implements CustomSetting {
 
