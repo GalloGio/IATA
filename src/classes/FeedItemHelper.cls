@@ -1,22 +1,23 @@
 public with sharing class FeedItemHelper {
-	
+
 	/*
 	 *  This method checks that hashtags exist in the feed items attached to Accounts, to ensure that topics have
 	 *  been used. Otherwise, an error is thrown.
 	 *  Validation put in place for the Account Management project.
 	 */
 	public static void CheckPostTopics(list<FeedItem> lstTriggerNew) {
-		
-		String strAcceptedValues = '';
 
+		String strAcceptedValues = '';
+		List <String> lsTopics = new List<String>();
 		for (AMP_Account_Topics__c at : AMP_Account_Topics__c.getAll().Values()) {
 			strAcceptedValues += (strAcceptedValues == '' ? '' : ', ') + at.Name;
+			lsTopics.add(at.Name);
 		}
 
 		// get the accounts of interest to which the feed items are linked - we only apply the logic to Airline HQ accounts that are IATA Members
 		set<Id> setRelatedAccountIds = new set<Id>();
 		for (FeedItem fi : lstTriggerNew) {
- 	   		if (String.valueOf(fi.ParentId).startsWith('001') && !fi.Body.contains('#') && fi.Type == 'TextPost') {
+ 	   		if (String.valueOf(fi.ParentId).startsWith('001') /*&& fi.Body.contains('#')*/ && fi.Type == 'TextPost') {
  	   			setRelatedAccountIds.add(fi.ParentId);
  	   		}
  	   	}
@@ -26,17 +27,28 @@ public with sharing class FeedItemHelper {
 																		WHERE Id IN :setRelatedAccountIds
 																		AND RecordType.DeveloperName = 'IATA_Airline'
 																		AND Membership_status__c = 'IATA member']);
-
 			// if there are IATA member Airline HQ accounts that have invalid feeditems posted to them, raise the error
 			if (!mapAccountsPerId.values().isEmpty()) {
 
 
 				for (FeedItem fi : lstTriggerNew) {
- 	   			fi.addError ('Please use hashtags (#) to define the topic(s) of your post.\r\nYou can choose one or more of the following topics:\r\n' + strAcceptedValues);
+					if(mapAccountsPerId.keySet().contains(fi.ParentId)) {
+
+						Boolean found = false;
+						for(String topic : lsTopics) {
+							if(fi.Body.contains('#'+topic)) {
+								found = true;
+								break;
+							}
+						}
+						if(!found) {
+							fi.addError ('Please use hashtags (#) to define the topic(s) of your post.\r\nYou can choose one or more of the following topics:\r\n' + strAcceptedValues);
+						}
+					}
 					// if (String.valueOf(fi.ParentId).startsWith('001') && !fi.Body.contains('#') && fi.Type == 'TextPost') {
 					// }
 				}
- 	   		}
+			}
  	   	}
 
 	}
