@@ -38,12 +38,12 @@
                                 <li>
                                     <apex:outputText rendered="{!IF(c.Status__c == 'DRAFT', true, false)}">
                                         <apex:outputText value="{0,date,EEE MMM dd yyyy hh:mm:ss}">
-                                            <apex:param value="{!c.LastModifiedDate}" /> 
+                                            <apex:param value="{!c.LastModifiedDate + timezoneOffset}" /> 
                                         </apex:outputText>
                                     </apex:outputText>
                                     <apex:outputText rendered="{!IF(c.Status__c == 'PENDING_APPROVAL' || c.Status__c == 'APPROVED' || c.Status__c == 'SENT', true, false)}">
                                          <apex:outputText value="{0,date,EEE MMM dd yyyy hh:mm:ss}">
-                                            <apex:param value="{!c.Scheduled_Date__c}" /> 
+                                            <apex:param value="{!c.Scheduled_Date__c + timezoneOffset}" /> 
                                         </apex:outputText>
                                     </apex:outputText>
                                 </li>
@@ -319,7 +319,7 @@
             };
             
 			$(document).on('change', 'select[name="campaign-action"]', function(e){
-                jQuery('body').css('cursor', 'wait');
+                if ($(this).val() != 'preview') jQuery('body').css('cursor', 'wait');
                 var campaign = campaigns[$(this).attr('data-target-campaign-id')];
                 switch ($(this).val()) {
                     case 'delete':
@@ -342,7 +342,7 @@
                         window.open('/iec/IECEBC_CampaignPreview?id=' + campaign.EBC_Design__c);
                         break;
                     case 'report':
-                        window.open('/iec/IECEBC_ManageReportsDetails?id=' + campaign.Id); 
+                        location.href = '/iec/IECEBC_ManageReportsDetails?id=' + campaign.Id; 
                         break;
                 	default:
                         alert('The action ' + $(this).val() + ' has not been defined yet.');

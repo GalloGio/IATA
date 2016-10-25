@@ -207,7 +207,7 @@
 								<div class="row">
 									<div class="columns medium-8">
 										<h2 class="heading-2">Current plan: <strong>{!productRatePlan.Name}</strong></h2>
-										<h3 class="heading-3">Current cost per email: ${!productRatePlan.EBC_Currency_Cost_Per_Email__c}</h3>
+										<h3 class="heading-3">Current cost per email: <apex:outputText value="${0, number, ###,###,##0.000}"><apex:param value="{!productRatePlan.EBC_Currency_Cost_Per_Email__c}"/></apex:outputText></h3>
 										<apex:outputPanel rendered="{!showSubscriptionEnd}">
 											<p>This cost per email is guaranteed until the end of your subscription 
 												<strong>
@@ -363,7 +363,7 @@
 																	</td>																
 																	<td class="name">{!act.Name}</td>
 																	<td class="id">{!act.EBC_Campaign__r.Campaign_ID__c}</td>
-																	<td class="total-count">email(s)</td>
+																	<td class="total-count">{!act.Total_Count__c} email(s)</td>
 																</tr>
 															</apex:repeat>
 															

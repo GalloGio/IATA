@@ -653,3 +653,14 @@ $pagination-color: $link-color;
         margin-right: 5px;
     }
 }
+
+.list.angle-double-right {
+    margin-bottom: 15px;
+
+    a::before {
+        font-family: FontAwesome;
+        content: '\f101';
+        display: inline-block;
+        margin-right: 5px;
+    }
+}

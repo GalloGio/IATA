@@ -54,8 +54,7 @@
                                                         </apex:outputText>
                                                         <label class="custom-radio" for="new-template-agency"><i class="icon"></i></label>
                                                     </div>
-                                                    <label class="input-label" for="new-template-agency">IATA Travel Agencies</label>
-                                                    <p>Can be used to target agencies only. All applicable merge fields available.</p>
+                                                    <label class="input-label" for="new-template-agency">IATA Travel Agencies<br />Can be used to target agencies only. All applicable merge fields available.</label>
                                                 </div>
                                             </li>
                                             <apex:outputText rendered="{!isIDCARDSelectionAllowed}">
@@ -72,8 +71,7 @@
                                                         
                                                     </div>
                                                     
-                                                    <label class="input-label" for="new-template-agent">IATA/IATAN ID Cardholders</label>
-                                                    <p>Can be used to target travel professionals only. All applicable merge fields available.</p>
+                                                    <label class="input-label" for="new-template-agent">IATA/IATAN ID Cardholders<br />Can be used to target travel professionals only. All applicable merge fields available.</label>
                                                 </div>
                                             </li>
                                             </apex:outputText>
@@ -89,8 +87,7 @@
                                                         
                                                         <label class="custom-radio" for="new-template-neutral"><i class="icon"></i></label>
                                                     </div>
-                                                    <label class="input-label" for="new-template-neutral">General Audience</label>
-                                                    <p>Can be used to target both agencies and travel professionals. Offers a limited number of merge fields.</p>
+                                                    <label class="input-label" for="new-template-neutral">General Audience<br />Can be used to target both agencies and travel professionals. Offers a limited number of merge fields.</label>
                                                 </div>
                                             </li>
                                         </ul>

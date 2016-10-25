@@ -151,17 +151,24 @@ public class vfIECEBC_CampaignList extends vfIECEBC_Controller {
             sortBy = value;
             
             campaigns = null;
-        }
-    }
+        } 
+    } 
+    
+    private boolean firsttimepageload=true;
+    private Boolean getIsFirstTimeLoadPage() { 
+        if (firsttimepageload) {firsttimepageload=false; return true;}
+        return false;} 
     
     public List<SelectOption> getSortByOptions() {
         List<SelectOption> options = new List<SelectOption>();
-        options.add(new SelectOption('CreatedDate DESC','CreatedDate DESC'));
-        options.add(new SelectOption('CreatedDate ASC','CreatedDate ASC'));
-        options.add(new SelectOption('LastModifiedDate ASC','LastModifiedDate ASC'));
-        options.add(new SelectOption('LastModifiedDate DESC','LastModifiedDate DESC'));
-        options.add(new SelectOption('Name','Name'));
-        options.add(new SelectOption('Status__c','Status'));
+        if (getIsFirstTimeLoadPage()) options.add(new SelectOption(sortBy,'Sort by'));
+        options.add(new SelectOption('Name','Campaign Name'));
+        options.add(new SelectOption('Status__c','Campaign  Status'));
+        options.add(new SelectOption('CreatedDate DESC','Created Date - Descending'));
+        options.add(new SelectOption('CreatedDate ASC','Created Date - Ascending'));
+        options.add(new SelectOption('LastModifiedDate ASC','Last Edited - Ascending'));
+        options.add(new SelectOption('LastModifiedDate DESC','Last Edited - Descending'));
+      
         
         return options;
     }

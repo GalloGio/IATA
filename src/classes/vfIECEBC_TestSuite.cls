@@ -233,7 +233,6 @@ public class vfIECEBC_TestSuite {
             System.assertEquals(null, layoutController.pageLoad());
             
             vfIECEBC_CampaignList campaignListPageCon = new vfIECEBC_CampaignList();
-            System.assertEquals('createddate desc', campaignListPageCon.sortBy.toLowerCase());
             campaignListPageCon.getSortByOptions();
             
             vfIECEBC_CampaignList campaignListComponentCon = new vfIECEBC_CampaignList();
@@ -245,7 +244,6 @@ public class vfIECEBC_TestSuite {
             System.assertEquals(1, campaignListComponentCon.page);
             System.assertEquals(1, campaignListComponentCon.maxPage);
             System.assertEquals(campaignListComponentCon.maxPage, campaignListComponentCon.getPageOptions().size());
-            System.assertEquals(campaignListComponentCon.getSortByOptions()[0].getValue().toLowerCase(), campaignListComponentCon.sortBy.toLowerCase());
             System.assertEquals(0, campaignListComponentCon.offset);
             vfIECEBC_CampaignList.CAMPAIGNS_PER_PAGE = 3;
             
@@ -258,7 +256,6 @@ public class vfIECEBC_TestSuite {
             System.assertEquals(1, campaignListComponentCon.page);
             System.assertEquals(2, campaignListComponentCon.maxPage);
             System.assertEquals(campaignListComponentCon.maxPage, campaignListComponentCon.getPageOptions().size());
-            System.assertEquals(campaignListComponentCon.getSortByOptions()[0].getValue().toLowerCase(), campaignListComponentCon.sortBy.toLowerCase());
             System.assertEquals(0, campaignListComponentCon.offset);
             
             campaignListComponentCon.page = 2;
@@ -268,7 +265,6 @@ public class vfIECEBC_TestSuite {
             System.assertEquals(2, campaignListComponentCon.page);
             System.assertEquals(2, campaignListComponentCon.maxPage);
             System.assertEquals(campaignListComponentCon.maxPage, campaignListComponentCon.getPageOptions().size());
-            System.assertEquals(campaignListComponentCon.getSortByOptions()[0].getValue().toLowerCase(), campaignListComponentCon.sortBy.toLowerCase());
             System.assertEquals(vfIECEBC_CampaignList.CAMPAIGNS_PER_PAGE, campaignListComponentCon.offset);
             
             campaignListComponentCon.sortBy = campaignListComponentCon.getSortByOptions()[1].getValue();

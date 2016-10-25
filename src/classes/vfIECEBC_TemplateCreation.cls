@@ -34,7 +34,7 @@ public class vfIECEBC_TemplateCreation extends vfIECEBC_Controller
                     	LastModifiedDate
                     from EBC_Template__c
                     where Is_Reusable__c = true
-                        and OwnerId =: userinfo.getUserId()
+                        and Billing_Account__c = :billingAccount.Id
                         and RecordType.DeveloperName != 'Global'
                         and (Audience__c = :audience or Audience__c = 'Neutral')
                 ];

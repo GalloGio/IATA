@@ -172,7 +172,7 @@
         <label>EBC Currency Cost Per Email</label>
         <precision>18</precision>
         <required>false</required>
-        <scale>2</scale>
+        <scale>3</scale>
         <trackTrending>false</trackTrending>
         <type>Currency</type>
     </fields>

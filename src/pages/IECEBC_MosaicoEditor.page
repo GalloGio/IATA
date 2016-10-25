@@ -200,7 +200,7 @@
                             testCmd.execute = function() {
                                 testCmd.enabled(false);
                                 
-                                var email = window.prompt(viewModel.t("Test email address\n\nNote: Test emails will only reflect saved changes"), '{!JSENCODE(preferences.PrimaryContact_Email__c)}');
+                                var email = window.prompt(viewModel.t("Total test emails sent today: {!dailyCount}/10\n\nNote: Test emails will only reflect saved changes\n\n Enter test email address"), '{!JSENCODE(preferences.PrimaryContact_Email__c)}');
                                 
                                 if (email != null) {
                                     viewModel.notifier.options.onShown = function() {
@@ -223,6 +223,9 @@
                                             
                                             if ('undefined' != typeof(e.faultstring) && e.faultstring.indexOf('ResourceNotReady_Exception') != -1) {
                                                 viewModel.notifier.error(viewModel.t('Some of the images you are using are not yet ready.'));
+                                                console.log(e);
+                                            } else if ('undefined' != typeof(e.faultstring) && e.faultstring.indexOf('EmptyTemplate_Exception') != -1) {
+                                                viewModel.notifier.error(viewModel.t('Please save your design before sending a test email'));
                                                 console.log(e);
                                             } else if ('undefined' != typeof(e.faultstring) && e.faultstring.indexOf('ResourceMissing_Exception') != -1) {
                                                 viewModel.notifier.error(viewModel.t('Some of the images has been deleted. Please repleace them by existing resources.'));

@@ -93,7 +93,7 @@
             
             <apex:outputText rendered="{!newListStepNumber == 1}">
                 
-                <div class="modal-body">
+                <div class="{!IF(c != NULL, 'modal-body', '')}">
                     <h3 class="step-title">Audience</h3>
                     <p>Select the audience you want to reach. Note that the audience cannot be changed after the list is saved.</p>
                     
@@ -208,7 +208,7 @@
             </apex:outputText>
             <apex:outputText rendered="{!newListStepNumber == 2}">
                 
-                <div class="modal-body">
+                <div class="{!IF(c != NULL, 'modal-body', '')}">
                     <h3 class="step-title">Geo-Selection</h3>
                     <p>For your convenience, we have ready-made Geo-Selections. Select one of the following or create your own Geo-Selection.</p>
                     
@@ -345,7 +345,7 @@
             </apex:outputText>
             <apex:outputText rendered="{!newListStepNumber == 3}">
                 
-                <div class="modal-body">
+                <div class="{!IF(c != NULL, 'modal-body', '')}">
                     <h3 class="step-title">Refinement</h3>
                     
                     <div class="group-container custom-geo-selection">
@@ -403,7 +403,16 @@
                                             </apex:selectList>
                                         </div>
                                         <apex:inputText rendered="{!dataType == 'Text'}" value="{!f.Field_Value__c}" styleClass="filter{!ind}dependant user-input text" />
-                                        <apex:inputField rendered="{!dataType == 'Date'}" value="{!f.Field_Value__c}" styleClass="filter{!ind}dependant user-input text" />
+                                        <apex:outputText rendered="{!dataType == 'Date'}">
+                                            <div class="datepicker">
+                                                <apex:inputField value="{!f.Field_Value__c}" styleClass="filter{!ind}dependant js-datepicker humanCampaignDate user-input text" />
+                                            </div>
+                                            <script type="text/javascript">
+                                            jQuery('.filter{!ind}dependant').datepicker({ 
+                                                dateFormat: 'yy-mm-dd'
+                                            });
+                                            </script>
+                                        </apex:outputText>
                                         
                                         <apex:outputPanel layout="block" styleClass="custom-user-input select" rendered="{!dataType == 'Picklist' && f.EBC_Application_Filter__c != null}">
                                             <i class="icon angle-down"></i>	
@@ -435,7 +444,7 @@
                             <span class="recipientCountContainer" style="display: none">
                                 <strong><span class="newFilterCount">n/a</span> recipients</strong> in this segment.
                             </span>
-                            <a href="javascript:void(0);" styleClass="button secondary" onclick="saveRefinementStateAndRefreshCount();"><i class="icon fa fa-refresh" aria-hidden="true"></i> Calculate recipients count</a>
+                            <a href="javascript:void(0);" styleClass="button secondary" onclick="saveRefinementStateAndRefreshCount();"><i class="icon fa fa-refresh" aria-hidden="true"></i> Refresh count</a>
                             <div style="display: none" class="recipientCountContainer"><strong>Note:</strong> The number of recipients is also based on any geo filters you may have set.</div>
                         </div>
                     </div>
@@ -457,7 +466,7 @@
             </apex:outputText>
             <apex:outputText rendered="{!newListStepNumber == 4}">
                 
-                <div class="modal-body">
+                <div class="{!IF(c != NULL, 'modal-body', '')}">
                     <h3 class="step-title">Confirmation</h3>
                     
                     <div class="row">

@@ -593,4 +593,16 @@ public virtual class vfIECEBC_Controller {
 		return paymentPage;
 	} // end of goToRenewalPaymentPage
 	
+    public Double timezoneOffset {
+        get {
+            if (timezoneOffset == null) {
+                TimeZone tz = UserInfo.getTimeZone();
+                //Milliseconds to Day
+                timezoneOffset = tz.getOffset(DateTime.now()) / (1000 * 3600 * 24.0);
+            }
+            return timezoneOffset;
+        }
+        set;
+    }
+
 } // end of vfIECEBC_Controller

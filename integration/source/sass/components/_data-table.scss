@@ -199,6 +199,23 @@
     tr:nth-child(odd) td {
         background: #e0f1f1;
     }
+
+    tr:last-child th,
+    tr:last-child td {
+        border-bottom: 1px solid #23828c;
+    }
+}
+
+.summary-box {
+    .zibra {
+        .item-name {
+            margin: 0;
+        }
+
+        .item-description {
+            margin-top: 5px;
+        }
+    }
 }
 
 .campaign {

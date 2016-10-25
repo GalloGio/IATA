@@ -85,7 +85,7 @@
                                                         </tr>
                                                         <apex:outputText rendered="{!productRatePlan.EBC_SubscriptionType__c == 'Pre-Paid' && subscription.Zuora__NextRenewalDate__c >= TODAY()}">
                                                             <tr>
-                                                                <th>Rate Plan End Date:</th>
+                                                                <th>Next Renewal Date:</th>
                                                                 <td>
                                                                     <apex:outputText value="{0, date, d MMMM yyyy}"><apex:param value="{!subscription.Zuora__SubscriptionEndDate__c}" /></apex:outputText><br />
                                                                     <apex:outputLink value="{!renewalPageUrl}" rendered="{!showRenewNow}">

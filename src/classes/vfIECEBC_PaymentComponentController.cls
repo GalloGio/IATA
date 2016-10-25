@@ -87,6 +87,7 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
 	private void initialization()
 	{
 		//shoppingCartController = VfIECShoppingCart();
+		isPaymentCompleted=false;
 		showBankTransferText=false;
 		showICHText=false;
 		editMode = false;
@@ -332,7 +333,7 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
 	// ========================================================================
 	// Payment Method / Credit Card section
 	// ------------------------------------------------------------------------
-	
+	public String selectedTermsConditions { get; set; }
 	public String selectedPaymentMethodType { get; set; }
 	public String selectedCreditCardPaymentId { get; set; }
 	
@@ -535,15 +536,17 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
 	// newSubscriptionTermStartDate 
 	public Date newSubscriptionTermStartDate{
 		get{
-			Date newDate = (isSubscriptionDescriptionVisible && subscription.Zuora__TermEndDate__c != null) ? subscription.Zuora__TermEndDate__c.addDays(1) : Date.today();
-			return newDate; 
+			Date newDate = (isRenewal && subscription.Zuora__TermEndDate__c != null) ? subscription.Zuora__TermEndDate__c : Date.today();
+			if (payNewRatePlan) newDate = Date.today();
+            return newDate; 
 		}
 	}
 	
 	public Date newSubscriptionTermEndDate{
 		get{
-			Date newDate = (isSubscriptionDescriptionVisible && subscription.Zuora__TermEndDate__c != null) ? subscription.Zuora__TermEndDate__c.addMonths(12) : Date.today().addMonths(12).addDays(-1);
-			return newDate; 
+			Date newDate = (isRenewal && subscription.Zuora__TermEndDate__c != null) ? subscription.Zuora__TermEndDate__c.addMonths(12).addDays(-1) : Date.today().addMonths(12).addDays(-1);
+			if (payNewRatePlan) newDate = Date.today().addMonths(12).addDays(-1);
+            return newDate; 
 		}
 	}
 	
@@ -1030,10 +1033,17 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
     private static final String EBC_PAYMENT_TARGET_ACCOUNT_ADD_ON_REPORT = 'addon reporting';
 	private static final String EBC_PAYMENT_TARGET_RENEWAL = 'renewal'; 
     
+    public boolean isPaymentCompleted  {get;set;}
     
     public PageReference EBCSubscribeNow(){
+        ErrorMessage='';
+        isPaymentCompleted=EBCSubscribe();
         //If everything is good redirect to the account manage page
-        if (!EBCSubscribe()) return null;
+        ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.ERROR,ErrorMessage);
+        if (!isPaymentCompleted) {ApexPages.addMessage(myMsg);return null;}
+        return null;
+    }
+    public PageReference GoToAccountManage(){
         PageReference newPage=Page.IECEBC_AccountManage;
         return newPage.setRedirect(true);
     }
@@ -1048,7 +1058,7 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
         
        if (paymentTarget.equals(EBC_PAYMENT_TARGET_ACCOUNT_EMAIL_PACKAGE)) UseCasePricing=0;
        if (paymentTarget.equals(EBC_PAYMENT_TARGET_RENEWAL)) UseCasePricing=3;
-       if (paymentTarget.equals(EBC_PAYMENT_TARGET_ACCOUNT_ADD_ON_STORAGE)) UseCasePricing=0;
+       if (paymentTarget.equals(EBC_PAYMENT_TARGET_ACCOUNT_ADD_ON_STORAGE)) UseCasePricing=4; //0;
        if (paymentTarget.equals(EBC_PAYMENT_TARGET_ACCOUNT_ADD_ON_REPORT)) UseCasePricing=2;
        if (paymentTarget.equals(EBC_PAYMENT_TARGET_ACCOUNT_RATE_PLAN)) UseCasePricing=4;
         return UseCasePricing;
@@ -1155,6 +1165,7 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
                 if (Zuora.zApi.currentLogger != null) {
                     system.debug('SOAP Upgrade Request >>> ' + Zuora.zApi.currentLogger.request );
                     system.debug('SOAP Upgrade Response >>> ' + Zuora.zApi.currentLogger.response );
+                    ErrorMessage=Zuora.zApi.currentLogger.request+Zuora.zApi.currentLogger.response;
                 }
     
                 ///////////////////////////////////////////////
@@ -1168,6 +1179,10 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
                             List<Zuora.SyncResult> lstSyncResults = OnDemandSyncAccounts(new Set<String> {(String) loggedCustomer.RelatedZuoraAccount.getValue('Id')});
                         }
                   
+                    }
+                    else
+                    {
+                        ErrorMessage=ErrorMessage+'Error Processing your request';
                     }
                    
                 }
@@ -1331,7 +1346,7 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
 					if (((String)loggedCustomer.RelatedZuoraAccount.getValue('DefaultPaymentMethodId')) != ((String)oSubsRequest.ZAccount.getValue('DefaultPaymentMethodId')) && !Test.isRunningTest()) {
 						Zuora.zApi.SaveResult result = IECZuoraHelper.updateDefaultPaymentMethod((String)loggedCustomer.RelatedZuoraAccount.getValue('Id'), (String)oSubsRequest.ZAccount.getValue('DefaultPaymentMethodId'));
 						if (!result.Success)
-							throw new IECApplicationException(Label.IEC_Error_Cannot_update_default_payment_method);
+							ErrorMessage=Label.IEC_Error_Cannot_update_default_payment_method;
 						else
 							loggedCustomer.RelatedZuoraAccount.setValue('DefaultPaymentMethodId', oSubsRequest.ZAccount.getValue('DefaultPaymentMethodId'));
 					}
@@ -1358,7 +1373,7 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
 					if (String.isNotBlank(selectedCreditCardPaymentId))
 						oSubsRequest.PaymentMethod.setValue('Id', selectedCreditCardPaymentId);
 					else 
-						throw new IECApplicationException('paymentMethodZId was not provided');
+						ErrorMessage='paymentMethodZId was not provided';
 				}
 				
 				listSubscribeRequests.add(oSubsRequest);
@@ -1414,18 +1429,19 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
 				}
 				*/
             }
+            if (!ErrorMessage.equals('')) return false;
 			purchaseFulfillment();
 			return true;
 		}
 		catch (IECApplicationException ex) {
-			throw ex;
+			ErrorMessage='Could not subscribe: ' + ex.getMessage();
 		}
 		catch (Exception ex) {
 			if (Zuora.zApi.currentLogger != null) {
 				system.debug('SOAP Request >>> ' + Zuora.zApi.currentLogger.request );
 				system.debug('SOAP Response >>> ' + Zuora.zApi.currentLogger.response );
 			}
-			throw new IECApplicationException('Could not subscribe: ' + ex.getMessage() + ' ' + ex.getStacktraceString());
+			ErrorMessage='Could not subscribe: ' + ex.getMessage();
 		}
         return false;
 	}	
@@ -1451,11 +1467,14 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
     }
     
     //Tax calculation from SAP
-    //
+    //And Error Message
     public PageReference CalculateTaxNow(){
+        ErrorMessage='';
         TaxAmount=getSAP_Freight_Tax();
         showTaxButtons=false;
-        if (TaxAmount==-1) {showTaxButtons=true; TaxAmount=0;}
+        //return null;
+        ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.ERROR,ErrorMessage);
+        if (TaxAmount==-1) {showTaxButtons=true; TaxAmount=0;ApexPages.addMessage(myMsg);}
         return null;
     }
     public decimal getSAP_Freight_Tax() {
@@ -1527,7 +1546,7 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
                                                                          , new List<OrderItem_DTO> {dtoOrderItem});
                     
                     System.debug('Callout SAP Result >>>: ' + result);
-                    if (result != null) return -1;
+                    if (result != null) {ErrorMessage=result; return -1;}
                 }
                 else
                 {
@@ -1541,6 +1560,7 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
            
         } catch (Exception e) {
           system.debug('Issue >>>' + e.getMessage());
+          ErrorMessage=e.getMessage();
           return -1;
         } //*** end of call out
         return TotalTax;

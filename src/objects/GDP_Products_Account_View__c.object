@@ -595,6 +595,22 @@ IF(RIGHT(AIMS_ID__c,3)=&quot;GDP&quot;,Left(AIMS_ID__c,LEN(AIMS_ID__c)-3),AIMS_I
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>EBC_Agency_Name__c</fullName>
+        <description>IF Trading Name is NOT NULL, use Trading Name for Agency Merge Field
+IF Trading Name is NULL, use Legal Name for Agency Merge Field</description>
+        <externalId>false</externalId>
+        <formula>IF(ISBLANK(Trading_Name__c), Legal_Name__c, Trading_Name__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>IF Trading Name is NOT NULL, use Trading Name for Agency Merge Field
+IF Trading Name is NULL, use Legal Name for Agency Merge Field</inlineHelpText>
+        <label>EBC_Agency_Name</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Email_Address__c</fullName>
         <externalId>false</externalId>
         <label>Email Address</label>

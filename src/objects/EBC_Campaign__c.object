@@ -839,7 +839,7 @@ The value is determined by ExactTarget, and this is is only populated once a cam
         <externalId>false</externalId>
         <inlineHelpText>The number of unique clicks during the first 24 hours</inlineHelpText>
         <label>Unique Clicks 24 Hours</label>
-        <summarizedField>EBC_Campaign_Email_Tracking__c.NumberofClicks__c</summarizedField>
+        <summarizedField>EBC_Campaign_Email_Tracking__c.NumberofUniqueClicks__c</summarizedField>
         <summaryFilterItems>
             <field>EBC_Campaign_Email_Tracking__c.Rank__c</field>
             <operation>lessOrEqual</operation>
