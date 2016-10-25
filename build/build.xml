@@ -346,7 +346,7 @@
  <move file="${basedir}/src/approvalPackage.xml" tofile="${basedir}/Code/package.xml"/>  
       
       <antcallback target="deployCodeLocal" />
-        <antcallback target="deployDontRetrieve" /> 
+     <!--   <antcallback target="deployDontRetrieve" />  -->
 
   </target> 
 
