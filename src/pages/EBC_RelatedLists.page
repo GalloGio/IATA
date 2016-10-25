@@ -1,17 +1,15 @@
-<apex:page standardController="Zuora__CustomerAccount__c" extensions="vfEBC_RelatedLists">
+<apex:page standardController="Zuora__CustomerAccount__c">
     <apex:pageBlock title="Customer-Specific Reports">
 
     <apex:form >   
 
             <!--<apex:commandButton action="{!URLFOR($Action.Zuora__CustomerAccount__c.Campaigns_Sent, Zuora__CustomerAccount__c.Name)}" id="reportButton1" value="Campaigns Sent Report"/>-->
-             <apex:commandButton action="{!URLFOR($Action.EBC_Campaign__c.Campaign_Tracking)}" id="reportButton2" value="Customer's Preferred Audience"/>
-             <apex:commandButton action="{!URLFOR($Action.EBC_Campaign__c.Campaign_Tracking)}" id="reportButton3" value="Test e-mails Report"/>
-             <apex:commandButton action="{!URLFOR($Action.EBC_Campaign__c.Campaign_Tracking)}" id="reportButton4" value="Opt-Out Report"/>
-             <apex:commandButton action="{!URLFOR($Action.EBC_Campaign__c.Campaign_Tracking)}" id="reportButton5" value="Hard Bounce Report"/>
-             <apex:commandButton action="{!URLFOR($Action.EBC_Campaign__c.Campaign_Tracking)}" id="reportButton6" value="E-mail Sent Report"/>
-
+            <apex:commandButton action="{!URLFOR($Action.EBC_Campaign__c.Campaign_Tracking)}" id="reportButton2" value="Customer's Preferred Audience"/>
+            <apex:commandButton action="{!URLFOR($Action.EBC_Campaign__c.Campaign_Tracking)}" id="reportButton3" value="Test e-mails Report"/>
+            <apex:commandButton action="{!URLFOR($Action.EBC_Campaign__c.Campaign_Tracking)}" id="reportButton4" value="Opt-Out Report"/>
+            <apex:commandButton action="{!URLFOR($Action.EBC_Campaign__c.Campaign_Tracking)}" id="reportButton5" value="Hard Bounce Report"/>
+            <apex:commandButton action="{!URLFOR($Action.EBC_Campaign__c.Campaign_Tracking)}" id="reportButton6" value="E-mail Sent Report"/>
     </apex:form>
-    
 
     </apex:pageBlock>
 
