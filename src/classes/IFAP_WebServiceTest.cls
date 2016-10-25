@@ -155,7 +155,7 @@ TransformationHelper.CalculateBusinessHoursAges = true;
 CaseChildHelper.noValidationsOnTrgCAseIFAP  = true;
         // get the IFAP case recordtype
         RecordType IFAPcaseRecordType = [Select r.Id, r.Name from RecordType r where r.Name = 'IATA Financial Review' limit 1];
-        IFAP_BusinessRulesTest.createIsoCountry();
+        
         // create test account
         Account account1 = new Account();
         account1.Name = 'Test account';
