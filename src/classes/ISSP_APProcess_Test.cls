@@ -3,12 +3,12 @@
  * Last update by: Niv.Goldenberg, 11-11-14.
  */
 @isTest
-private class ISSP_APProcess_Test
+private class ISSP_APProcess_Test 
 {
 
-    @isTest static void test_method_a()
+    @isTest static void test_method_a() 
     {
-        //ISSP_ObjectFactory.fiilIncludedFields();
+        //ISSP_ObjectFactory.fiilIncludedFields();                    
         //Account parent =  (Account)ISSP_ObjectFactory.createSObject('Account',false,1);
         Account parent = ISSP_ObjectFactory.createNewAccount();
         parent.BillingCity = 'test';
@@ -80,7 +80,7 @@ private class ISSP_APProcess_Test
 
     }
 
-    @isTest static void test_method_b()
+    @isTest static void test_method_b() 
     {
         //ISSP_ObjectFactory.fiilIncludedFields();
         //Account parent =  (Account)ISSP_ObjectFactory.createSObject('Account',false,1);
@@ -99,7 +99,6 @@ private class ISSP_APProcess_Test
         child.Top_Parent__c = null;
         update child;
         System.debug('child Id: ' + child.Id);
-
         Contact con = ISSP_ObjectFactory.createNewContact();
         //Contact con = (Contact)ISSP_ObjectFactory.createSObject('Contact',false,1);
         con.AccountId= child.Id;
@@ -109,35 +108,21 @@ private class ISSP_APProcess_Test
         con.Email = 'testas123as1@test.com';
         insert con;
         System.debug('con Id: ' + con.Id);
-
         User newUser = ISSP_ObjectFactory.createPortalUser(con);
         System.debug('newUser Id: ' + newUser.Id);
         con.OwnerId = newUser.Id;
         update con;
-
-        // AP_Process_Form__c ap = (AP_Process_Form__c)ISSP_ObjectFactory.createSObject('AP_Process_Form__c',false,1);
-        // ap.Case__c = testCase2.Id;
-        // ap.Accept_payment_Cards_for_BSP_ticket__c = 'Yes';
-        // ap.Accept_terms_and_conditions__c = true;
-
-        // ap.Contact_Resp_Job_Title__c = concernedCon.Title;
-        // ap.Contact_Resp_F_Name__c = concernedCon.FirstName;
-        // ap.Contact_Resp_L_Name__c = concernedCon.LastName;
-        // ap.Contact_Resp_Email__c = concernedCon.Email;
-        //
-        // insert ap;
-        // System.debug('ap Id: ' + ap.Id);
-
+        
         IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'test', ISO_Code__c = 'CN', Case_BSP_Country__c = 'test');
         insert country;
-
+        
         AP_Country_Cities__c csCity = new AP_Country_Cities__c(Country_ISO_Code__c = 'CN',
                                                                 Operation__c = 'BSP',
                                                                 City__c = 'test',
                                                                 Name = 'test1');
         insert csCity;
-
-
+        
+        Test.startTest();
         System.runAs(newUser)
         {
 
@@ -158,7 +143,18 @@ private class ISSP_APProcess_Test
             insert testCase;
             System.debug('testCase Id: ' + testCase.Id);
 
-            Test.startTest();
+            //AP_Process_Form__c ap = (AP_Process_Form__c)ISSP_ObjectFactory.createSObject('AP_Process_Form__c',false,1);
+            //ap.Case__c = testCase.Id;
+            //ap.Accept_payment_Cards_for_BSP_ticket__c = 'Yes';
+            //ap.Accept_terms_and_conditions__c = true;
+
+            //ap.Contact_Resp_Job_Title__c = con.Title;
+            //ap.Contact_Resp_F_Name__c = con.FirstName;
+            //ap.Contact_Resp_L_Name__c = con.LastName;
+            //ap.Contact_Resp_Email__c = con.Email;
+
+            //insert ap;
+            //System.debug('ap Id: ' + ap.Id);
 
             PageReference pr = Page.ISSP_APCases;
             pr.getParameters().put('cdupetype', 'test');
@@ -181,8 +177,7 @@ private class ISSP_APProcess_Test
             ctrl.strOperationType = 'CASS Export';
             ctrl.save();
             System.assertEquals(ctrl.newForm.Case__c, testCase.Id);
-
-
+            
             ctrl.getAPTypes();
             ctrl.APQueue('Airline Participation - Head Office');
 
@@ -222,14 +217,12 @@ private class ISSP_APProcess_Test
             System.assert(prSteps == null);
             List<Attachment> lstAttachcs = ctrl.getAttachList();
             System.assertEquals(lstAttachcs.size(), 0);
-            options = ctrl.countryNameList;
-            System.assertEquals('test', options[1].getValue());
         }
         Test.stopTest();
 
     }
 
-    @isTest static void test_method_c()
+    @isTest static void test_method_c() 
     {
         //ISSP_ObjectFactory.fiilIncludedFields();
         //Account parent =  (Account)ISSP_ObjectFactory.createSObject('Account',false,1);
@@ -257,12 +250,12 @@ private class ISSP_APProcess_Test
         System.debug('newUser Id: ' + newUser.Id);
         con.OwnerId = newUser.Id;
         update con;
-
+        
         AP_Country_Cities__c csCity = new AP_Country_Cities__c(Country_ISO_Code__c = 'CN',
                                                                 Operation__c = 'BSP',
                                                                 City__c = 'test',
                                                                 Name = 'test1');
-        insert csCity;
+        insert csCity;  
 
         Test.startTest();
         System.runAs(newUser)
@@ -303,7 +296,7 @@ private class ISSP_APProcess_Test
             testSpec.Link_label__c = 'Test1';
             testSpec.Download_URL__c = 'Test1';
             insert testSpec;
-
+            
             ISSP_AP_Cities inlinepage = new ISSP_AP_Cities(new Apexpages.Standardcontroller(ap));
 
             pr.getParameters().put('cdupetype', 'test');
@@ -330,8 +323,8 @@ private class ISSP_APProcess_Test
         Test.stopTest();
 
     }
-
-    @isTest static void test_method_d()
+    
+    @isTest static void test_method_d() 
     {
         //ISSP_ObjectFactory.fiilIncludedFields();
         //Account parent =  (Account)ISSP_ObjectFactory.createSObject('Account',false,1);
@@ -359,7 +352,7 @@ private class ISSP_APProcess_Test
         System.debug('newUser Id: ' + newUser.Id);
         con.OwnerId = newUser.Id;
         update con;
-
+        
         AP_Country_Cities__c csCity = new AP_Country_Cities__c(Country_ISO_Code__c = 'CN',
                                                                 Operation__c = 'BSP',
                                                                 City__c = 'test',
@@ -403,7 +396,7 @@ private class ISSP_APProcess_Test
             testSpec.Link_label__c = 'Test1';
             testSpec.Download_URL__c = 'Test1';
             insert testSpec;
-
+            
             ISSP_AP_Cities inlinepage = new ISSP_AP_Cities(new Apexpages.Standardcontroller(ap));
 
             pr.getParameters().put('cdupetype', 'test');
@@ -426,16 +419,12 @@ private class ISSP_APProcess_Test
             System.assert(prAttach == null);
             List<Attachment> lstAttachcs = ctrl.getAttachList();
             System.assertEquals(lstAttachcs.size(), 1);
-
-
         }
-
-
         Test.stopTest();
 
     }
-
-    @isTest static void test_method_e()
+   
+    @isTest static void test_method_e() 
     {
         Account parent = ISSP_ObjectFactory.createNewAccount();
         parent.BillingCity = 'test';
@@ -455,28 +444,28 @@ private class ISSP_APProcess_Test
         User newUser = ISSP_ObjectFactory.createPortalUser(con);
         con.OwnerId = newUser.Id;
         update con;
-
+        
         AP_Country_Cities__c csCity = new AP_Country_Cities__c(Country_ISO_Code__c = 'PT',
                                                                 Operation__c = 'BSP',
                                                                 City__c = 'test1',
                                                                 Name = 'test1');
         insert csCity;
-
+        
         AP_Country_Cities__c csCity2 = new AP_Country_Cities__c(Country_ISO_Code__c = 'PT',
                                                                 Operation__c = 'BSP',
                                                                 City__c = 'test2',
                                                                 Name = 'test2');
         insert csCity2;
-
+        
         AP_Country_Cities__c csCity3 = new AP_Country_Cities__c(Country_ISO_Code__c = 'PT',
                                                                 Operation__c = 'BSP',
                                                                 City__c = 'test3',
                                                                 Name = 'test3');
         insert csCity3;
-
+        
         IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'Portugal', ISO_Code__c = 'PT', Case_BSP_Country__c = 'Portugal');
         insert country;
-
+        
         AP_Country_Requierment__c cReq = new AP_Country_Requierment__c(
                                         Country__c = country.Id,
                                         Line_of_business__c = 'BSP');
@@ -515,7 +504,7 @@ private class ISSP_APProcess_Test
             testSpec.Link_label__c = 'Test1';
             testSpec.Download_URL__c = 'Test1';
             insert testSpec;
-
+            
             PageReference pr = Page.ISSP_APCases;
             pr.getParameters().put('caseId', testCase.Id);
             pr.getParameters().put('cdupetype', 'test');
@@ -535,8 +524,8 @@ private class ISSP_APProcess_Test
         Test.stopTest();
 
     }
-
-    @isTest static void test_method_1()
+    
+    @isTest static void test_method_1() 
     {
         Account parent = ISSP_ObjectFactory.createNewAccount();
         parent.BillingCity = 'test';
@@ -556,28 +545,28 @@ private class ISSP_APProcess_Test
         User newUser = ISSP_ObjectFactory.createPortalUser(con);
         con.OwnerId = newUser.Id;
         update con;
-
+        
         AP_Country_Cities__c csCity = new AP_Country_Cities__c(Country_ISO_Code__c = 'PT',
                                                                 Operation__c = 'BSP',
                                                                 City__c = 'test1',
                                                                 Name = 'test1');
         insert csCity;
-
+        
         AP_Country_Cities__c csCity2 = new AP_Country_Cities__c(Country_ISO_Code__c = 'PT',
                                                                 Operation__c = 'BSP',
                                                                 City__c = 'test2',
                                                                 Name = 'test2');
         insert csCity2;
-
+        
         AP_Country_Cities__c csCity3 = new AP_Country_Cities__c(Country_ISO_Code__c = 'PT',
                                                                 Operation__c = 'BSP',
                                                                 City__c = 'test3',
                                                                 Name = 'test3');
         insert csCity3;
-
+        
         IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'Portugal', ISO_Code__c = 'PT', Case_BSP_Country__c = 'Portugal');
         insert country;
-
+        
         AP_Country_Requierment__c cReq = new AP_Country_Requierment__c(
                                         Country__c = country.Id,
                                         Line_of_business__c = 'BSP');
@@ -603,7 +592,6 @@ private class ISSP_APProcess_Test
             insert testCase;
             System.debug('testCase Id: ' + testCase.Id);
 
-
             AP_Process_Form__c ap = new AP_Process_Form__c();
             ap.Case__c = testCase.Id;
             ap.Accept_payment_Cards_for_BSP_ticket__c = 'Yes';
@@ -617,7 +605,7 @@ private class ISSP_APProcess_Test
             testSpec.Link_label__c = 'Test1';
             testSpec.Download_URL__c = 'Test1';
             insert testSpec;
-
+            
             PageReference pr = Page.ISSP_APCases;
             pr.getParameters().put('caseId', testCase.Id);
             pr.getParameters().put('cdupetype', 'test');
@@ -643,7 +631,7 @@ private class ISSP_APProcess_Test
             ctrl.strCountryspecLinkLabel3 = 'as';
             ctrl.strGSSAName = 'as';
             ctrl.gssaCountryISOCode = 'as';
-            ctrl.category = 'IBCS consolidator';
+            ctrl.category = 'IBCS consolidator';            
             ctrl.getAPTypes();
             ctrl.category = 'test';
             ctrl.getAPTypes();
@@ -655,8 +643,8 @@ private class ISSP_APProcess_Test
             ctrl.APQueue('Airline Participation - Drafts');
             ctrl.goToFinalStep();
             ctrl.getChangeItems();
-
-
+            
+            
             PageReference prSteps = ctrl.saveBSPFormAndGoForward();
             System.assert(prSteps.getUrl().endsWith('step=4'));
 
