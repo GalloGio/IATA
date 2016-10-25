@@ -1076,70 +1076,38 @@ public class IFAP_BusinessRulesTest {
     /**
      * Creates IATA_ISO_Country__c records for Canada and France
      */
-    public static void createIsoCountry(){
-
-        List<IATA_ISO_Country__c> isoCountriesCA = new List<IATA_ISO_Country__c>();
-        isoCountriesCA = [SELECT Name, ISO_Code__c, Iso_Code_Numeric__c, CurrencyIsoCode, VAT_Validation_Required__c, AIMS_Area_ID__c FROM IATA_ISO_Country__c WHERE ISO_Code__c = 'CA' limit 1];
-
-        if(!isoCountriesCA.isEmpty()){
-            isoCountriesCA[0].name = 'Canada';
-            isoCountriesCA[0].ISO_Code__c = 'CA';
-            isoCountriesCA[0].ISO_Code_Numeric__c = 123; //not real code
-            isoCountriesCA[0].CurrencyIsoCode = 'CAD';
-            isoCountriesCA[0].AIMS_Area_ID__c = '1'; //not real code
-            update isoCountriesCA[0];
-        }else{
-            IATA_ISO_Country__c isoCountryCA = new  IATA_ISO_Country__c();
-            isoCountryCA.name = 'Canada';
-            isoCountryCA.ISO_Code__c = 'CA';
-            isoCountryCA.ISO_Code_Numeric__c = 123; //not real code
-            isoCountryCA.CurrencyIsoCode = 'CAD';
-            isoCountryCA.AIMS_Area_ID__c = '1'; //not real code
-            insert isoCountryCA;
-        }
-
-        List<IATA_ISO_Country__c> isoCountriesFR = new List<IATA_ISO_Country__c>();
-        isoCountriesFR = [SELECT Name, ISO_Code__c, Iso_Code_Numeric__c, CurrencyIsoCode, VAT_Validation_Required__c, AIMS_Area_ID__c FROM IATA_ISO_Country__c WHERE ISO_Code__c = 'FR' limit 1];
-
-        if(!isoCountriesFR.isEmpty()){
-            isoCountriesFR[0].name = 'France';
-            isoCountriesFR[0].ISO_Code__c = 'FR';
-            isoCountriesFR[0].ISO_Code_Numeric__c = 356; //not real code
-            isoCountriesFR[0].currencyIsoCode = 'EUR';
-            isoCountriesFR[0].AIMS_Area_ID__c = '2'; //not real code
-            update isoCountriesFR[0];
-        }else{
-            IATA_ISO_Country__c isoCountryFR = new  IATA_ISO_Country__c();
-            isoCountryFR.name = 'France';
-            isoCountryFR.ISO_Code__c = 'FR';
-            isoCountryFR.ISO_Code_Numeric__c = 356; //not real code
-            isoCountryFR.currencyIsoCode = 'EUR';
-            isoCountryFR.AIMS_Area_ID__c = '2'; //not real code
-            insert isoCountryFR;
-        }
 
 //SO_Code__c IN ('EG')])
-        List<IATA_ISO_Country__c> isoCountriesEG = new List<IATA_ISO_Country__c>();
-        isoCountriesEG = [SELECT Name, ISO_Code__c, Iso_Code_Numeric__c, CurrencyIsoCode, VAT_Validation_Required__c, AIMS_Area_ID__c FROM IATA_ISO_Country__c WHERE ISO_Code__c = 'EG' limit 1];
 
-        if(!isoCountriesEG.isEmpty()){
-            isoCountriesEG[0].name = 'Frasdce';
-            isoCountriesEG[0].ISO_Code__c = 'EG';
-            isoCountriesEG[0].ISO_Code_Numeric__c = 456; //not real code
-            isoCountriesEG[0].currencyIsoCode = 'EUR';
-            isoCountriesEG[0].AIMS_Area_ID__c = '2'; //not real code
-            update isoCountriesEG[0];
-        }else{
-            IATA_ISO_Country__c isoCountryFR = new  IATA_ISO_Country__c();
-            isoCountryFR.name = 'Fradsce';
-            isoCountryFR.ISO_Code__c = 'EG';
-            isoCountryFR.ISO_Code_Numeric__c = 456; //not real code
-            isoCountryFR.currencyIsoCode = 'EUR';
-            isoCountryFR.AIMS_Area_ID__c = '2'; //not real code
-            insert isoCountryFR;
-        }
+
+
+    public static void createIsoCountry(){
+
+        List<IATA_ISO_Country__c> isoCountriesCA = new List<IATA_ISO_Country__c>{
+            new  IATA_ISO_Country__c(
+            name = 'Canada',
+            ISO_Code__c = 'CA',
+            ISO_Code_Numeric__c = 123, //not real code
+            CurrencyIsoCode = 'CAD',
+            AIMS_Area_ID__c = '1'),
+        new  IATA_ISO_Country__c(
+            name = 'France',
+            ISO_Code__c = 'FR',
+            ISO_Code_Numeric__c = 356, //not real code
+            currencyIsoCode = 'EUR',
+            AIMS_Area_ID__c = '2'),
+        new  IATA_ISO_Country__c( 
+            name = 'Fradsce',
+            ISO_Code__c = 'EG',
+            ISO_Code_Numeric__c = 456,//not real code
+            currencyIsoCode = 'EUR',
+            AIMS_Area_ID__c = '2')
+        };
+       database.insert(isoCountriesCA,false);
 
     }
+
+
 
     /**
      * Creates an Account record
