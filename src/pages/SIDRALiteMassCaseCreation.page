@@ -1,0 +1,296 @@
+<apex:page controller="SIDRALiteMassCaseCreationController" sidebar="false" id="MassCaseCreationNonCompliance">
+
+
+  <apex:form id="massCaseCreationForm">
+
+  <apex:pageBlock title="Batch Non-Compliance Case Creation" mode="edit">
+
+  <apex:pageMessages id="errors" />
+
+  <table width="100%" border="0">
+  <tr>
+    <td width="200" valign="top">
+
+      <apex:pageBlock title="Filters" mode="edit" id="criteria">
+
+      <script type="text/javascript">
+
+      function checkAll(cb){
+
+        //alert("SelAllAccount");
+        var inputElem = document.getElementsByTagName("input");
+
+        for(var i=0; i<inputElem.length; i++)
+        {
+            //alert(inputElem[i].id);
+
+            if(inputElem[i].id.indexOf("accSelected")!=-1)
+                inputElem[i].checked = cb.checked;
+        }
+
+        //displayNbrSelectedAgents();
+      }
+
+      </script>
+
+
+
+      <table cellpadding="2" cellspacing="2">
+      <tr>
+         Batch Number:
+                  <apex:inputField id="batchNumber" value="{!CaseParameter.BatchNumber__c}" />
+      </tr>
+
+      <br/><br/>
+
+      <tr>
+       Deadline date:
+                  <apex:inputField id="deadlineDate" value="{!CaseParameter.Deadline_Date__c}" />
+      </tr>
+
+     <br/><br/>
+
+      <tr>
+        Case Status:
+            <apex:selectList value="{!caseStatus}" size="1" >
+             <apex:selectOptions value="{!caseStatusItems}"/>
+            </apex:selectList>
+      </tr>
+
+    <br/><br/>
+
+      <tr>
+        <td>
+            <apex:commandButton value="Search"   rerender="results, errors"  action="{!runSearch}" status="searchStatus"/>
+        </td>
+      </tr>
+
+
+      </table>
+
+      </apex:pageBlock>
+
+
+
+    </td>
+    <td valign="top">
+
+
+    <apex:pageBlock mode="edit" id="results" >
+
+
+     <center>
+
+       <apex:actionStatus id="searchStatus">
+            <apex:facet name="start"><h1>Searching Agents...<img src="/apexpages/devmode/img/saveStatus.gif" /></h1>
+                </apex:facet>
+            <apex:facet name="stop"><h1>&nbsp; </h1></apex:facet>
+       </apex:actionStatus>
+
+       <apex:actionStatus id="selectStatus" >
+            <apex:facet name="start"><h1>Selecting Agents...<img src="/apexpages/devmode/img/saveStatus.gif" /></h1>
+                </apex:facet>
+            <apex:facet name="stop"><h1> &nbsp;</h1></apex:facet>
+       </apex:actionStatus>
+
+      <apex:actionStatus id="createStatus" >
+            <apex:facet name="start"><h1>Creating Cases...<img src="/apexpages/devmode/img/saveStatus.gif" /></h1>
+                </apex:facet>
+            <apex:facet name="stop"><h1> &nbsp;</h1></apex:facet>
+      </apex:actionStatus>
+
+       </center>
+
+            <apex:pageBlockButtons >
+                <apex:commandButton value="Create Cases"  action="{!createCases}"   rerender="results, errors" status="createStatus" />
+            </apex:pageBlockButtons>
+
+
+       <apex:pageBlockTable value="{!Cases}" var="c" id="cases" >
+
+            <apex:column >
+                <apex:facet name="header">
+                     <apex:inputCheckbox id="SelAllAccount" value="{!SelAllIsChecked}" >
+                         <apex:actionSupport event="onclick" action="{!SelectAll}" reRender="results" status="selectStatus" />
+                         <!--  <apex:actionSupport event="onclick" onsubmit="checkAll(this)" action="{!SelectAll}" reRender="results" /> -->
+                     </apex:inputCheckbox>
+                </apex:facet>
+                <apex:inputCheckbox value="{!c.Selected}" id="accSelected">
+                    <apex:actionSupport event="onclick" action="{!updateNbrSelectedRecords}" reRender="NbrRecordsPanel" />
+                </apex:inputCheckbox>
+
+            </apex:column>
+
+             <apex:column >
+                <apex:facet name="header">
+                    <apex:commandLink value="Case Number" action="{!toggleSort}" rerender="results">
+                        <apex:param name="sortField" value="c.casenumber" assignTo="{!sortField}"/>
+                    </apex:commandLink>
+                </apex:facet>
+
+              <a href ="{!$Label.SF_Base_URL}/{!c.c.ID}" style="color:black; cursor:pointer;" >
+              <apex:outputField value="{!c.c.CaseNumber}"/>
+              </a>
+
+            </apex:column>
+
+
+            <apex:column >
+                <apex:facet name="header">
+                    <apex:commandLink value="Agent Name" action="{!toggleSort}" rerender="results">
+                        <apex:param name="sortField" value="account.name" assignTo="{!sortField}"/>
+                    </apex:commandLink>
+                </apex:facet>
+                <apex:outputField value="{!c.c.account.name}"/>
+            </apex:column>
+
+            <apex:column >
+                <apex:facet name="header">
+                    <apex:commandLink value="Agent Code" action="{!toggleSort}" rerender="results">
+                        <apex:param name="sortField" value="account.IATACode__c" assignTo="{!sortField}"/>
+                    </apex:commandLink>
+                </apex:facet>
+                <apex:outputField value="{!c.c.account.IATACode__c}"/>
+            </apex:column>
+
+             <apex:column >
+                <apex:facet name="header">
+                    <apex:commandLink value="Case Status" action="{!toggleSort}" rerender="results">
+                        <apex:param name="sortField" value="c.Status" assignTo="{!sortField}"/>
+                    </apex:commandLink>
+                </apex:facet>
+                <apex:outputField value="{!c.c.Status}"/>
+            </apex:column>
+
+            <apex:column >
+                <apex:facet name="header">
+                    <apex:commandLink value="Agent Status" action="{!toggleSort}" rerender="results">
+                        <apex:param name="sortField" value="account.Status__c" assignTo="{!sortField}"/>
+                    </apex:commandLink>
+                </apex:facet>
+                <apex:outputField value="{!c.c.account.Status__c}"/>
+            </apex:column>
+
+              <apex:column >
+                <apex:facet name="header">
+                    <apex:commandLink value="Agent Type" action="{!toggleSort}" rerender="results">
+                        <apex:param name="sortField" value="account.Type" assignTo="{!sortField}"/>
+                    </apex:commandLink>
+                </apex:facet>
+                <apex:outputField value="{!c.c.account.Type}"/>
+            </apex:column>
+
+            <apex:column >
+                <apex:facet name="header">
+                    <apex:commandLink value="Agent Location Type" action="{!toggleSort}" rerender="results">
+                        <apex:param name="sortField" value="account.Location_Type__c" assignTo="{!sortField}"/>
+                    </apex:commandLink>
+                </apex:facet>
+                <apex:outputField value="{!c.c.account.Location_Type__c}"/>
+            </apex:column>
+
+            <apex:column >
+                <apex:facet name="header">
+                    <apex:commandLink value="Country" action="{!toggleSort}" rerender="results">
+                        <apex:param name="sortField" value="account.BillingCountry" assignTo="{!sortField}"/>
+                    </apex:commandLink>
+                </apex:facet>
+                <apex:outputField value="{!c.c.account.BillingCountry}"/>
+                <input type="hidden" id="hiddenCountry" value="{!c.c.account.BillingCountry}" />
+            </apex:column>
+
+            <apex:column >
+                <apex:facet name="header">
+                    <apex:commandLink value="Contact Name" action="{!toggleSort}" rerender="results">
+                        <apex:param name="sortField" value="Name" assignTo="{!sortField}"/>
+                    </apex:commandLink>
+                </apex:facet>
+                <apex:outputField value="{!c.c.Contact.Name}"/>
+            </apex:column>
+
+            <apex:column >
+                <apex:facet name="header">
+                    <apex:commandLink value="Contact Email" action="{!toggleSort}" rerender="results">
+                        <apex:param name="sortField" value="Email" assignTo="{!sortField}"/>
+                    </apex:commandLink>
+                </apex:facet>
+                <apex:outputField value="{!c.c.Contact.Email}"/>
+            </apex:column>
+
+        </apex:pageBlockTable>
+
+        <apex:panelGrid columns="3" width="100%" style="height: 26px; background-color: #F2F2F2;">
+            <apex:panelGroup layout="inline" rendered="{!isNbrRecordsDisplayed}">
+                <apex:commandLink action="{!first}" rendered="{!hasFirst}" rerender="results" title="First">&lt;&lt;&nbsp;</apex:commandlink>
+                <apex:outputlabel value="<<" rendered="{!not(hasFirst)}" style="color: #C0C0C0" />&nbsp;
+                <apex:commandLink action="{!previous}" rendered="{!hasPrevious}" rerender="results">&lt;&nbsp;Previous</apex:commandlink>
+                <apex:outputlabel value="< Previous" rendered="{!not(hasPrevious)}" style="color: #C0C0C0" />&nbsp;&nbsp;
+                <apex:commandLink action="{!next}" rendered="{!hasNext}" rerender="results">Next&nbsp;&gt;</apex:commandlink>
+                <apex:outputlabel value="Next >" rendered="{!not(hasNext)}" style="color: #C0C0C0" />&nbsp;
+                <apex:commandLink action="{!last}" rendered="{!hasLast}" rerender="results" title="Last">&nbsp;&gt;&gt;</apex:commandlink>
+                <apex:outputlabel value=">>" rendered="{!not(hasLast)}" style="color: #C0C0C0" />&nbsp;&nbsp;&nbsp;
+            </apex:panelGroup>
+
+            <apex:panelGroup id="NbrRecordsPanel" layout="block" rendered="{!isNbrRecordsDisplayed}">
+                <apex:outputText style="font-style:italic" value="{0} / {1} record(s) selected">
+                   <apex:param value="{!nbrSelectedRecords}"/>
+                   <apex:param value="{!nbrFoundRecords}"/>
+                </apex:outputText>
+
+            </apex:panelGroup>
+
+
+            <apex:panelGroup layout="block" rendered="{!isNbrRecordsDisplayed}" style="text-align: center">
+                <apex:outputText style="font-style:italic" value="page {0} of {1}" rendered="{!isNbrRecordsDisplayed}">
+                   <apex:param value="{!currentPage}"/>
+                   <apex:param value="{!totalPage}"/>
+                </apex:outputText>
+            </apex:panelGroup>
+        </apex:panelGrid>
+
+        <br/>
+
+        <apex:pageBlock title="Non Compliance Case Information" mode="edit" id="cCreationParams">
+
+           <table cellpadding="2" cellspacing="2" width="80%" >
+               <tr>
+                    <td>Subject<br/>
+                        <apex:outputPanel styleClass="requiredInput" layout="block">
+                        <apex:outputPanel styleClass="requiredBlock" layout="block"/>
+                        <apex:inputText id="caseSubject" value="{!CaseParameter.Subject}" style="width:85%;" />
+                        </apex:outputPanel>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Description <br/>
+                    <apex:outputPanel styleClass="requiredInput" layout="block">
+                        <apex:outputPanel styleClass="requiredBlock" layout="block"/>
+                        <apex:inputTextArea id="caseDescription" style="width:90%;" value="{!CaseParameter.Description}" />
+                        </apex:outputPanel>
+                    </td>
+                </tr>
+
+                <tr style="display:{!IF(isAgentCargoOrCASS,'','none')}">
+                    <td>New Deadline date<br/>
+                    <apex:outputPanel styleClass="requiredInput" layout="block">
+                        <apex:outputPanel styleClass="requiredBlock" layout="block"/>
+                        <apex:inputField id="caseDeadline" value="{!CaseParameter.New_IFAP_Deadline_date__c}" />
+                        </apex:outputPanel>
+                    </td>
+                </tr>
+            </table>
+
+
+        </apex:pageBlock>
+    </apex:pageBlock>
+
+    </td>
+  </tr>
+  </table>
+
+
+  </apex:pageBlock>
+
+  </apex:form>
+</apex:page>
