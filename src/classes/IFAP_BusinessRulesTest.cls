@@ -423,6 +423,10 @@ public class IFAP_BusinessRulesTest {
 
    static testmethod void testIsStatusCanBeSelected() {
 
+        Id userID = [Select ID from User where ID !=: userinfo.getuserid()][0].id;
+        UtilityCS__c util = new UtilityCS__c(name = 'IFAP Bypass Rules',value__c = userID);
+        insert util;
+
         ID IFAPcaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('IATA Financial Review');
 
         /*non Sys Admin, non Portal user profile*/

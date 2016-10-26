@@ -44,7 +44,7 @@ private class ISSP_PortalUserStatusChangeTest {
     }
 
     public static testMethod void testISSP_PortalUserStatusChangeTest2() {
-    	//ISSP_ObjectFactory.fiilIncludedFields();
+        //ISSP_ObjectFactory.fiilIncludedFields();
         //Account acc =  (Account)ISSP_ObjectFactory.createSObject('Account',false,1);
         Account acc = ISSP_ObjectFactory.createNewAccount();
         insert acc;
@@ -62,39 +62,39 @@ private class ISSP_PortalUserStatusChangeTest {
 
     public static testMethod void testISSP_PortalUserStatusChangeTest3() {
 
-     	//ISSP_ObjectFactory.fiilIncludedFields();
-    	String profileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal DPC' LIMIT 1].Id;
-    	//Account acc = (Account)ISSP_ObjectFactory.createSObject('Account',false,4);
-    	Account acc = ISSP_ObjectFactory.createNewAccount();
-		insert acc;
-		//Contact contact = (Contact)ISSP_ObjectFactory.createSObject('Contact',false,1);
-		Contact contact = ISSP_ObjectFactory.createNewContact();
+        //ISSP_ObjectFactory.fiilIncludedFields();
+        String profileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal DPC' LIMIT 1].Id;
+        //Account acc = (Account)ISSP_ObjectFactory.createSObject('Account',false,4);
+        Account acc = ISSP_ObjectFactory.createNewAccount();
+        insert acc;
+        //Contact contact = (Contact)ISSP_ObjectFactory.createSObject('Contact',false,1);
+        Contact contact = ISSP_ObjectFactory.createNewContact();
         contact.AccountId = acc.Id;
         contact.User_Portal_Status__c = 'Pending Approval';
         insert contact;
         User newUser = new User(alias = 'dsfsdfds',
-	                            email = contact.email,
-	                            emailencodingkey = 'UTF-8',
-	                            firstname = contact.firstName,
-	                            lastname = contact.lastname,
-	                            languagelocalekey = 'en_US',
-	                            localesidkey = 'en_US',
-	                            contactId = contact.Id,
-	                            timezonesidkey = 'Asia/Dubai',
-	                            username = contact.email+'dfgdf',
-	                            PortalRole = 'Manager',
-	                            CommunityNickname = contact.email.substring(0, contact.email.indexOf('@'))+Datetime.now().formatLong().substring(10,15),
-	                            ProfileId = profileId,
-	                            IsActive = true);
-    	insert newUser;
+                                email = contact.email,
+                                emailencodingkey = 'UTF-8',
+                                firstname = contact.firstName,
+                                lastname = contact.lastname,
+                                languagelocalekey = 'en_US',
+                                localesidkey = 'en_US',
+                                contactId = contact.Id,
+                                timezonesidkey = 'Asia/Dubai',
+                                username = contact.email+'dfgdf',
+                                PortalRole = 'Manager',
+                                CommunityNickname = contact.email.substring(0, contact.email.indexOf('@'))+Datetime.now().formatLong().substring(10,15),
+                                ProfileId = profileId,
+                                IsActive = true);
+        insert newUser;
 
         Test.startTest();
-    	ISSP_PortalUserStatusChange controler = new ISSP_PortalUserStatusChange(new Apexpages.Standardcontroller(contact));
-    	controler.contactId = contact.Id;
-    	controler.sendEmailToUser();
+        ISSP_PortalUserStatusChange controler = new ISSP_PortalUserStatusChange(new Apexpages.Standardcontroller(contact));
+        controler.contactId = contact.Id;
+        controler.sendEmailToUser();
 
         ISSP_PortalUserStatusChange.preformActionFuture(contact.Id,'Active','Approved User');
-     	ISSP_PortalUserStatusChange.preformActionImmediate(contact.Id,'Pending Approval','Approved User');
+        ISSP_PortalUserStatusChange.preformActionImmediate(contact.Id,'Pending Approval','Approved User');
 
         ISSP_PortalUserStatusChange.DisableTheUser action = new ISSP_PortalUserStatusChange.DisableTheUser();
         action.processAction(contact.Id);
@@ -103,7 +103,7 @@ private class ISSP_PortalUserStatusChangeTest {
     }
 
     public static testMethod void testISSP_PortalUserStatusChangeTest4() {
-    	//ISSP_ObjectFactory.fiilIncludedFields();
+        //ISSP_ObjectFactory.fiilIncludedFields();
         //Account acc =  (Account)ISSP_ObjectFactory.createSObject('Account',false,1);
         Account acc = ISSP_ObjectFactory.createNewAccount();
         insert acc;
@@ -127,7 +127,7 @@ private class ISSP_PortalUserStatusChangeTest {
     }
 
     public static testMethod void testISSP_PortalUserStatusChangeTest5() {
-    	//ISSP_ObjectFactory.fiilIncludedFields();
+        //ISSP_ObjectFactory.fiilIncludedFields();
         //Account acc =  (Account)ISSP_ObjectFactory.createSObject('Account',false,1);
         Account acc = ISSP_ObjectFactory.createNewAccount();
         insert acc;
@@ -398,7 +398,7 @@ private class ISSP_PortalUserStatusChangeTest {
         Controller.con = con;
         controller.saveNewStatus();
 
-        System.assert([SELECT Id, ProfileId, Name FROM User WHERE ProfileId =:portalProfile.Id].size() > 0, 'User should have been created');
+        System.assert([SELECT Id, ProfileId, Name FROM User WHERE ProfileId =:portalProfile.Id limit 10 ].size() > 0, 'User should have been created');
 
         Test.stopTest();
     }
