@@ -104,17 +104,17 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Charge_Code__c</field>
+                <field>EF_Charge_Code__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Legacy_Charge_Code__c</field>
+                <field>EF_Legacy_Charge_Code__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Charge_Code_Type__c</field>
+                <field>EF_Charge_Code_Type__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
