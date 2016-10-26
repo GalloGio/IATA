@@ -191,9 +191,9 @@ This is needed because there is bad data with &apos;|&apos; in Address_Line_1__c
 The source of information is taken from IATA_ISO_State.
 In case the dash (-) does not exist,  e.g. CA60, it will only display the Country ISO Code.</description>
         <externalId>false</externalId>
-        <formula>IF( CONTAINS(IATA_ISO_State__r.ISO_Code__c, &apos;-&apos;) 
-   , SUBSTITUTE(IATA_ISO_State__r.ISO_Code__c, IATA_ISO_Country__r.ISO_Code__c+ &apos;-&apos;, &apos;&apos;) 
-   , IATA_ISO_Country__r.ISO_Code__c 
+        <formula>IF( CONTAINS(IATA_ISO_State__r.ISO_Code__c, &apos;-&apos;)
+, SUBSTITUTE(IATA_ISO_State__r.ISO_Code__c, IATA_ISO_Country__r.ISO_Code__c+ &apos;-&apos;, &apos;&apos;)
+, IATA_ISO_Country__r.ISO_Code__c
 )</formula>
         <inlineHelpText>State Code without the preceding country code. 
 The source of information is taken from IATA_ISO_State.</inlineHelpText>
