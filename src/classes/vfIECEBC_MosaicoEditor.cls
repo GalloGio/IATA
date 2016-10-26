@@ -129,9 +129,17 @@ global class vfIECEBC_MosaicoEditor extends vfIECEBC_Controller {
     public class DailyLimitReached_Exception extends Exception {}
     public class EmptyTemplate_Exception extends Exception {}
     
-    webService static void sendTest(Id templateId, String email) {
+    public Integer getDailyCount() {
+		return getStaticDailyCount(template.Id);        
+    }
+    
+    public static Integer getStaticDailyCount(Id templateId) {
         datetime dt = System.now()-1;
-        Integer dailyCount = Database.countQuery('SELECT count() FROM EBC_Template_Test__c WHERE EBC_Template__c = :templateId AND Event_Date__c > :dt');
+        return Database.countQuery('SELECT count() FROM EBC_Template_Test__c WHERE EBC_Template__c = :templateId AND Event_Date__c > :dt');
+    }
+    
+    webService static void sendTest(Id templateId, String email) {
+        Integer dailyCount = getStaticDailyCount(templateId);
 
         if (dailyCount >= 10) {
             throw new DailyLimitReached_Exception('Daily limit of 10 tests for that design/template has been reached.');
@@ -170,15 +178,15 @@ global class vfIECEBC_MosaicoEditor extends vfIECEBC_Controller {
         IECEBC_ETTriggeredSendDefinitionStart.updateTriggeredSendDefinition(mailingId);
         
         Map<String, String> attributes = new Map<String, String>();
-        attributes.put('AGENCY_NAME', 'John Doe Inc.');
+        attributes.put('AGENCY_NAME', 'Agency Inc.');
         attributes.put('SFID', '1234');
         attributes.put('EMAIL', email);
         
         if (template.Audience__c == 'Agency') {
-            attributes.put('AGENCY_STATE', 'New York');
-            attributes.put('AGENCY_COUNTRY', 'United States of America');
-            attributes.put('AGENCY_ACCREDITATIONCLASS', 'Airline Member Sales Office');
-            attributes.put('AGENCY_LOCATIONTYPE', 'Administrative Office');
+            attributes.put('AGENCY_STATE', 'Sample State');
+            attributes.put('AGENCY_COUNTRY', 'Sample Country');
+            attributes.put('AGENCY_ACCREDITATIONCLASS', 'Sample Class');
+            attributes.put('AGENCY_LOCATIONTYPE', 'Sample Type');
         } else if (template.Audience__c == 'Agent') {
             attributes.put('AGENT_FIRSTNAME', 'John');
             attributes.put('AGENT_LASTNAME', 'Doe');

@@ -8,45 +8,12 @@ public class vfIECEBC_CampaignTracking extends vfIECEBC_Controller{
     
     public vfIECEBC_CampaignTracking(ApexPages.StandardController stdController) {
         this.campaign = (EBC_Campaign__c)stdController.getRecord();
-        /*
-		campaign = [SELECT Id, Name, Subject__c, Send_Datetime__c, Number_of_Recipients__c, 
-                        NumberofClicks__c, NumberSent__c, NumberofOpens__c,
-                        Clicks24Hours__c, Clicks48Hours__c, Bounced24Hours__c, Bounced48Hours__c, Bounced7Days__c,
-                        Opens24Hours__c, Opens48Hours__c, Sent24Hours__c, Sent48Hours__c,
-                        UniqueOpens24Hours__c, UniqueOpens48Hours__c, UniqueOpens7Days__c,
-                        UniqueClicks24Hours__c, UniqueClicks48Hours__c, UniqueClicks7Days__c,
-                        Delivered24Hours__c, Delivered48Hours__c, Delivered7Days__c,
-                        OpenRate24Hours__c, OpenRate48Hours__c, OpenRate7Days__c,
-                        ClickRate24Hours__c, ClickRate48Hours__c, ClickRate7Days__c
-                   		FROM EBC_Campaign__c
-                        WHERE Id = :ApexPages.currentPage().getParameters().get('id')];
-*/
     }
-    
-    public Map<String, String> CampaignProperties {
-        get{
-            EBC_Campaign__c campaign = [SELECT Id, Name, Subject__c, Send_Datetime__c, Number_of_Recipients__c                        
-                   						FROM EBC_Campaign__c
-                       					WHERE Id = :ApexPages.currentPage().getParameters().get('id')]; 
-            
-            Map<String, String> campProp = new Map<String, String>();
-            
-            campProp.put('Name', campaign.Name);
-            campProp.put('Subject', campaign.Subject__c);
-            campProp.put('SendDatetime', String.valueOf(campaign.Send_Datetime__c));
-            campProp.put('NumberofRecipients', String.valueOf(campaign.Number_of_Recipients__c));
-            
-            return campProp;
-        }
-        private set;
-    }
-    
     
     // ===========================================================
     // Campaign Tracking Top Page
     // Campaign Tracking Data Table Analysis
     // ===========================================================
-    
     
     public Map<String, Integer> Kpis {
         get{

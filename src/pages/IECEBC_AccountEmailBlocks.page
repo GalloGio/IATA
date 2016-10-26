@@ -217,20 +217,19 @@
 										</apex:form>
 									</div>
 									
-									
 									<!-- payment confirmation section on the right side-->
 									<div class="columns sub-container payment-confirmation" id="paymentconfirmation">
-										<div class="is-sticky-confirmation">
+										<div class="is-sticky-confirmation" style="">
 											<div class="wrapper">
 												<apex:form id="paymentConfirmationForm" rendered="{!isEbcPrepaid}">
 													<h2 class="section-title">Payment Confirmation</h2>
 													<div class="table-container">
 														<table class="data-table table-payment table-confirmation">
 															<tbody>
-																<tr class="item">
+																<tr class="item no-space">
 																	<th>
 																		<strong>
-																			<apex:outputText value="Please made the selection!" rendered="{!showPurchasedSelectionMessage}"/>
+																			<apex:outputText value="Please make a selection!" rendered="{!showPurchasedSelectionMessage}"/>
 																			<apex:outputText value="{!selectedProductRatePlanWrapper.name}" rendered="{!!showPurchasedSelectionMessage}"/>
 																		</strong>
 																	</th>
@@ -263,6 +262,7 @@
 											</div>
 										</div>
 									</div>
+                                    
 								</div>
 							</div>
 						</div>
@@ -272,4 +272,5 @@
 			<!-- End of Page Content -->
 		</apex:define>
 	</apex:composition>
+    
 </apex:page>

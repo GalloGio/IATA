@@ -14,12 +14,12 @@
             
                     <h1 class="page-title">Summary &amp; Schedule</h1>
                     
-                    <p class="lead">Review these important campaign details before scheduling you campaign.</p>
+                    <p class="lead">Review these important details before scheduling you campaign.</p>
             
                     <apex:outputPanel layout="block" styleClass="alert subject-line" rendered="{!campaign.Status__c == 'DRAFT'}">
                         <div class="alert-message icon check-circle">
                             <h2 class="title">Subject Line <a class="text-link" href="https://{!$Site.Domain}{!URLFOR($Page.IECEBC_Campaign)}?id={!campaign.id}">(edit)</a></h2>
-                            <p>The Email Subject currently setup is "<strong>{!campaign.Subject__c}</strong>". Please make sure this is accurate.</p>
+                            <p>The Email Subject currently setup is <strong>{!campaign.Subject__c}</strong></p>
                         </div>
                     </apex:outputPanel>
             
@@ -27,7 +27,7 @@
                         <div class="alert-message icon check-circle">
                             <h2 class="title">Recipients</h2>
                             <p>
-                                Your message will be delivered using the <strong>{!campaign.EBC_Master_Filter__r.Name}</strong> list.<br />
+                                Your message will be delivered using the list <strong>{!campaign.EBC_Master_Filter__r.Name}</strong><br />
                                 Total of <strong><apex:outputText value="{0,number,###,###,##0}"><apex:param value="{!numberOfRecipients}" /></apex:outputText> recipients</strong>
                             </p>
                         </div>

@@ -6,12 +6,13 @@
 	<h1 class="page-title">Payment</h1>
 	
 	<apex:form id="messageForm">
-		<apex:pageMessages id="msg"/>
+		<apex:pageMessages id="msg2"/>
 	</apex:form>
 	
 	<script>
 		function selectPaymentMethod( methodName, creditCardExternalId)
 		{
+            
 			console.log( 'selectPaymentMethod: ( methodName:' + methodName + ' ; cardExtId:'+ creditCardExternalId + ')') ;
             //Credit Card Selection only if not blank
             if (creditCardExternalId!='')
@@ -22,6 +23,7 @@
             if (methodName=='ICH') sChooseICHMethod();
             if (methodName=='BANK_TRANSFER') sChooseBankTransferMethod();
             if (methodName=='CREDIT_CARD') sChooseCreditCardMethod();
+            if (creditCardExternalId=='') RadioButtonNotorSelectable(true);
 		}
 		
 		/*
@@ -99,6 +101,10 @@
          }
          
     }
+    function RadioButtonNotorSelectable(flag){
+        //Radio Button Selectable
+        jQuery('input[type=radio]').attr('disabled', flag);
+    }
 	</script>
 	
 	<div class="row row-payment">
@@ -116,8 +122,8 @@
                                             <th>Contact name</th>
                                             <td>
                                                 <apex:outputField rendered="{!!editMode}" value="{!billingAccount.Contact__r.Name}" />                                               
-                                        		<apex:inputField rendered="{!editMode}" value="{!oPaymentBillingContact.FirstName}" styleClass="user-input text" />                                                
-                                                <apex:inputField rendered="{!editMode}" value="{!oPaymentBillingContact.LastName}" styleClass="user-input text"/>
+                                        		<apex:inputField rendered="{!editMode}" value="{!oPaymentBillingContact.FirstName}" styleClass="user-input text" html-placeholder="First name" />                                                
+                                                <apex:inputField rendered="{!editMode}" value="{!oPaymentBillingContact.LastName}" styleClass="user-input text" html-placeholder="Last name"/>
                                             </td>
                                         </tr>
                                         <tr>
@@ -274,7 +280,7 @@
 							<p>Please read the Terms and Conditions before proceeding with payment.</p>
 							<div class="checkbox-box">
 								<div class="custom-user-input checkbox">
-									<input class="user-input checkbox js-enable-accordion" data-target="#accordion-payment-method" type="checkbox" id="terms-and-conditions"/>
+									<input class="user-input checkbox js-enable-accordion" data-target="#accordion-payment-method" type="checkbox" id="terms-and-conditions" onClick="ShowWaitingStatus('.sectionActions');sDoNothing();RadioButtonNotorSelectable(true);"/>
 									<label class="custom-checkbox" for="terms-and-conditions"><i class="icon"></i></label>
 								</div>
 								<label class="input-label" for="terms-and-conditions">I agree to the CheckACode Profesionnal <a href="#">Terms &amp; Conditions</a></label>
@@ -325,6 +331,7 @@
 											
 									</div>
 								</div>
+                                
 								<apex:form id="paymentMethodsection">
                                 <div class="payment-method-container">
 									<table class="data-table table-saved-cards js-card-data-table">
@@ -389,6 +396,19 @@
 									</div>
 									-->
 								</div>
+                                <!-- Bank transfer -->
+                                <div class="payment-method-container bank is-hidden">
+                                    <div class="alert note">
+                                        <div class="alert-message">
+                                            <p>if you want to pay by bank transfer, please contact globaldata@iata.org.</p>
+                                            <div class="text-right sectionBankTransferActions">
+                                                <apex:outputText id="BankTransferText">
+                                                    <li><apex:commandLink onclick="ShowWaitingStatus('.sectionBankTransferActions');redirectmail();" value="Back to account details" styleClass="button secondary" reRender="BankTransferText" oncomplete="sReturnToManageAccountPage();"/></li>
+                                                </apex:outputText>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 </apex:form>
 							</div>
 						    <!-- New credit card -->
@@ -533,36 +553,66 @@
                     <apex:actionFunction action="{!ReturnToManageAccountPage}" name="sReturnToManageAccountPage" reRender="formShoppingCart"/>
                     <apex:actionFunction action="{!CancelToManageAccountPage}" name="sCancelToManageAccountPage" reRender="formShoppingCart"/>
                     <!--
-                    <apex:actionStatus id="statusId" onstart="showLoading();" onstop="hideLoading();" />
+                    <apex:actionFunction action="{!EBCSubscribeNow}" name="sEBCSubscribeNow" reRender="formShoppingCart"/>
                     -->
-                    <!--
-                    <apex:actionFunction name="pageLoadAction" action="{!pageLoad}" rerender="campaignConfirmBillingDetailForm" status="loadingCartStatus"/>
-                    -->
-                     <apex:inputHidden value="{!selectedPaymentMethodType}" id="hiddenSelectedPaymentType" />
-                     <apex:actionFunction action="{!readMethodofPayment}" name="readMethodofPaymentBackend" rerender="paymentMethodsection"   />
+                    <apex:actionFunction action="{!clickCancelBillingDetailButton}" name="sDoNothing" reRender="formShoppingCart"/>
+                     
+                    <apex:inputHidden value="{!selectedPaymentMethodType}" id="hiddenSelectedPaymentType" />
+                    <apex:actionFunction action="{!readMethodofPayment}" name="readMethodofPaymentBackend" rerender="paymentMethodsection"   />
                     
-                     <apex:inputHidden value="{!selectedCreditCardPaymentId}" id="hiddenSelectedCreditCardPaymentId" />
-                     <apex:actionFunction action="{!displayCallBackfailure}" name="displayCallBackfailureJS" rerender="js-modal-newcreditcard-item-wrapper">
+                    <apex:inputHidden value="{!selectedCreditCardPaymentId}" id="hiddenSelectedCreditCardPaymentId" />
+                    <apex:actionFunction action="{!displayCallBackfailure}" name="displayCallBackfailureJS" rerender="js-modal-newcreditcard-item-wrapper">
                         <apex:param name="errMsg" value="" assignTo="{!sErrorMsgFromHPM}"/>
                     </apex:actionFunction>
 	
 					<apex:outputPanel id="actionButtons" >
+                        <apex:pageMessages id="msg"/>
 						<div class="footer-actions">
 							<ul class="list actions sectionActions"> 
-                                <apex:outputText rendered="{!AND(OR(showPaymentButtons,showTaxButtons), NOT(showBankTransferText))}">
-									<li><apex:commandLink onclick="ShowWaitingStatus('.sectionActions');sCancelToManageAccountPage();" value="Cancel" styleClass="text-link" /></li>
+                                <apex:outputText rendered="{!AND(OR(showPaymentButtons,showTaxButtons), NOT(showBankTransferText),NOT(isPaymentCompleted))}">
+									<li><apex:commandLink onclick="ShowWaitingStatus('.sectionActions');history.back(1);" value="Cancel" styleClass="text-link" /></li>
 								</apex:outputText>
-                                <apex:outputText rendered="{!AND(showPaymentButtons,NOT(showBankTransferText))}">
-									<li><apex:commandLink onclick="ShowWaitingStatus('.sectionActions');" action="{!EBCSubscribeNow}" styleClass="button" value="Submit payment" /></li>
+                                <apex:outputText rendered="{!AND(showPaymentButtons,NOT(showBankTransferText),NOT(isPaymentCompleted))}">
+									<li id="buttonSubmitPayment"><apex:commandLink action="{!EBCSubscribeNow}"  onclick="ShowWaitingStatus('.sectionActions');" styleClass="button" value="Submit payment"  /></li>
 								</apex:outputText>
-                                <apex:outputText rendered="{!AND(showTaxButtons,NOT(showBankTransferText))}">
+                                <apex:outputText rendered="{!AND(showTaxButtons,NOT(showBankTransferText),NOT(isPaymentCompleted))}">
 									<li><apex:commandLink action="{!CalculateTaxNow}" onclick="ShowWaitingStatus('.sectionActions');" styleClass="button" value="Calculate Tax"  reRender="actionButtons,paymentConfirmationForm"/></li>
 								</apex:outputText>
-                                <apex:outputText rendered="{!showBankTransferText}" id="BankTransferText">
-                  					<li><apex:commandLink onclick="ShowWaitingStatus('.sectionActions');redirectmail();" value="Contact us to make a Bank Transfer payment" styleClass="text-link" reRender="BankTransferText" oncomplete="sReturnToManageAccountPage();"/></li>
-			                    </apex:outputText>
+                                
 							</ul>
 						</div>
+                        <apex:outputText rendered="{!isPaymentCompleted}">
+                        <div class="modal-container" id="js-modal">
+                            <div class="overlay"></div>
+                            <div class="modal-dialog" id="js-modal-dialog">
+                                <section id="js-payment-confirmation" class="modal-content">
+                                    <header class="modal-header">
+                                        <h2 class="modal-title">Confirmation</h2>
+                                        <a href="#" class="icon-close js-close-modal js-clear-form"><i class="fa fa-times"></i></a>
+                                    </header>
+                                    <div class="modal-body">
+                                        <p>your transaction was successfully processed</p>
+                                    </div>
+                                    <footer class="modal-footer">
+                                        <div class="footer-actions text-right">
+                                            <apex:commandLink action="{!GoToAccountManage}" styleclass="button" value="Go To home" />
+                                        </div>
+                                    </footer>
+                                </section>
+                            </div>
+                        </div>
+                        </apex:outputText>
+                        <apex:outputText rendered="{!AND(showPaymentButtons,NOT(showBankTransferText))}">
+                           <script>
+                            var isTermsSelected=(jQuery('#terms-and-conditions').is(':checked') ) ? 1 : 0;
+                            if (isTermsSelected==0)  jQuery('#buttonSubmitPayment').replaceWith('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" Class="button disabled">Submit payment</a>');
+                            if (isTermsSelected==1) RadioButtonNotorSelectable(false);
+                            </script>
+                        </apex:outputText>
+                        <script>
+                           var isTermsSelected=(jQuery('#terms-and-conditions').is(':checked') ) ? 1 : 0;
+                           if (isTermsSelected==1) RadioButtonNotorSelectable(false);                                                                                       
+                        </script>
 					</apex:outputPanel>                          
 				</apex:form>
 			</div>

@@ -22,12 +22,13 @@
                                         <tr> 
                                             <td class="name">
                                                 <ul class="list campaign">
-                                                    <li><a href="{!URLFOR($Page.IECEBC_Campaign, null, [id=c.Id])}" class="js-campaign-name">{!c.Name}</a></li>
-                                                    <li><strong>{!c.EBC_Master_Filter__r.Name}</strong></li>
-                                                    <li>
+                                                    <li><a href="{!URLFOR($Page.IECEBC_ManageReportsDetails, null, [id=c.Id])}" class="js-campaign-name">{!c.Name}</a></li>
+                                                    <li>Recipient list: <strong>{!c.EBC_Master_Filter__r.Name}</strong></li>
+                                                    <li>Sent on <strong>
                                                         <apex:outputText value="{0,date,EEE MMM dd yyyy hh:mm:ss}">
                                                             <apex:param value="{!c.Send_Datetime__c}" /> 
                                                         </apex:outputText>
+                                                        </strong>
                                                     </li>
                                                 </ul>
                                             </td>
