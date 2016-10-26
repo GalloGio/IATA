@@ -78,6 +78,7 @@ public class SidraLiteManagerTest {
 
         Case cse = new Case(
             RecordtypeId = recordtypeId,
+            BSPCountry__c = 'Canada',
             Subject = 'Test Case 1',
             Status = 'Agent to be Notified',
             Origin = 'Agent Financial Review Notification',

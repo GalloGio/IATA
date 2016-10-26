@@ -7,6 +7,7 @@ public class WSSidraLiteTest {
             RecordtypeId = SidraLiteManager.RECORDTYPE_SIDRA_LITE,
             ParentId = parent.Id,
             accountId = parent.accountId,
+            BSPCountry__c = 'Canada',
             SIDRA_Lite_Reason__c = SidraLiteManager.isFS(parent)? 'Financial Security Non-compliance': 'Financial Review Non-compliance'
         );
         return cse;
