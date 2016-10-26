@@ -168,8 +168,8 @@ global class AMS_OSCAR_Webservice {
             List<AMS_OSCAR__c> oscar = [select Name, Account__c, Account__r.Name, Account__r.IATA_ISO_Country__r.Region__c, Account__r.IATA_ISO_Country__r.Name from AMS_OSCAR__c where Id =: oscarId];
             if(oscar!=null && oscar.size()>0){
 
-                Case oscarCommCase = [select Id from Case where OSCAR__c =: oscar[0].Id AND ParentId = null limit 1];
-
+                Case oscarCommCase = [select Id from Case where OSCAR__c =: oscar[0].Id AND ( ParentId = null or Parent.RecordType.Name != 'OSCAR Communication' ) limit 1];
+                
                 if(oscarCommCase == null){
                     result = 'Could not find a the Oscar Communication case related to this OSCAR.';
                     return 'ERROR: ' + result;
