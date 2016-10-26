@@ -3432,6 +3432,17 @@ $Label.ISSP_AMS_LS_Sole_Owner)</formula>
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>New_Head_Office_IATA_Code__c</fullName>
+        <externalId>false</externalId>
+        <label>New Head Office IATA Code</label>
+        <length>13</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>No_Consignments_Last_Year__c</fullName>
         <externalId>false</externalId>
         <label>* Total No. of Consignments (last year)</label>
