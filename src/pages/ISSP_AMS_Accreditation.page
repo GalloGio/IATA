@@ -387,6 +387,10 @@
     function resetUploadBarOnDelete() {
         $('.uploadbar-' + vReqNo).css('width', '0%');
     }
+                 
+    function redirectToPDF() {
+         window.open('/ISSP_AMS_PDF_NoC?caseId={!newCase.Id}&isNoticeOfChange=true&mode=pdf', '_blank');
+    }
    
     </script>
 
@@ -597,8 +601,8 @@
                             </div>
 
                             <!-- apex:outputpanel id="langGSA" rendered="{!NOT(BEGINS(sectorValue,'Cargo_Agent')) || isNoticeOfChange}" -->
-                            <apex:outputpanel id="langGSA" >
-                            <apex:outputpanel rendered="{!NOT(BEGINS(sectorValue,'Cargo_Agent'))}">
+                            <apex:outputpanel id="langGSA">
+                            <apex:outputpanel rendered="{!NOT(AND(BEGINS(sectorValue,'Cargo_Agent'), NOT(isNoticeOfChange)))}">
          
                                 <div class="form-group"> 
                                 <label for="applylanguage" class="col-lg-3 control-label">{!$Label.ISSP_AMS_Step1_Lang_Display}</label>
@@ -735,7 +739,17 @@
     <apex:outputText rendered="{!isStep5}"> 
         <div class="panel-primary">
             <div class="panel-heading head_panel_green">
-                <h3 class="panel-title">{!IF(BEGINS(sectorValue,'Travel_Agent'), $Label.ISSP_AMS_StepsAll_Travel_Title, 'Application for approval as' + IF(OR(BEGINS(newForm.Agent_Type__c, 'I'),BEGINS(newForm.Agent_Type__c, 'E')), ' an ', ' a ') + newForm.Agent_Type__c)}</h3>
+                <h3 class="panel-title">
+                <!--{ ! IF(BEGINS(sectorValue,'Travel_Agent'), $Label.ISSP_AMS_StepsAll_Travel_Title, 'Application for approval as' + IF(OR(BEGINS(newForm.Agent_Type__c, 'I'),BEGINS(newForm.Agent_Type__c, 'E')), ' an ', ' a ') + newForm.Agent_Type__c) } -->
+                {!IF(BEGINS(sectorValue,'Travel_Agent'), $Label.ISSP_AMS_StepsAll_Travel_Title, 
+                        IF(newForm.Agent_Type__c == 'IATA Cargo Agent', $Label.ISSP_AMS_StepsAll_Cargo_Title, 
+                            IF(newForm.Agent_Type__c == 'IATA Passenger Sales Agent', $Label.ISSP_AMS_StepsAll_Passenger_Title, 
+                                IF(newForm.Agent_Type__c == 'EACP Intermediary', $Label.ISSP_AMS_StepsAll_Cargo_EACP_Intermediary_Title, 
+                                    IF(newForm.Agent_Type__c == 'CASS Associate', $Label.ISSP_AMS_StepsAll_Cargo_CASS_Associate_Title, 
+                                        IF(newForm.Agent_Type__c == 'Import Agent', $Label.ISSP_AMS_StepsAll_Import_Agent_Title, 
+                                            IF(newForm.Agent_Type__c == 'Courier', $Label.ISSP_AMS_StepsAll_Courier_Title, $Label.ISSP_AMS_StepsAll_Application_Approval_Title)))))))}    
+
+                </h3>
             </div>
     <div class="panel-body" id="body-enquiries">
         <apex:form >
@@ -763,10 +777,13 @@
             <img src="{!URLFOR($Resource.PDF_icon_large)}" style="vertical-align:middle"/>
             <a href="/ISSP_AMS_PDF_CGO?caseId={!newCase.Id}&mode=pdf" target="_new">download a PDF version</a> of your {!newForm.Agent_Type__c} {!amsOfficeType} application.
         </apex:outputPanel>
-        <apex:outputPanel rendered="{!isNoticeOfChange && !isBankAccountChange}">
+        <apex:form >
+        <apex:outputPanel rendered="{!isNoticeOfChange && !isBankAccountChange}" id="pdfnoc">
             <img src="{!URLFOR($Resource.PDF_icon_large)}" style="vertical-align:middle"/>
-            <a href="/ISSP_AMS_PDF_NoC?caseId={!newCase.Id}&isNoticeOfChange=true&mode=pdf" target="_new">{!$Label.ISSP_AMS_download_a_PDF_version}</a> {!$Label.ISSP_AMS_download_of}
+            <apex:commandLink action="{!goToDownloadPDF}" value="{!$Label.ISSP_AMS_download_a_PDF_version}" id="DownloadPDF" oncomplete="if ({!passedFormValidation}){redirectToPDF();}" reRender="NoCForm"/> {!$Label.ISSP_AMS_download_of}
+            <!--a href="/ISSP_AMS_PDF_NoC?caseId={!newCase.Id}&isNoticeOfChange=true&mode=pdf" target="_new">{!$Label.ISSP_AMS_download_a_PDF_version}</a> {!$Label.ISSP_AMS_download_of} -->
         </apex:outputPanel>
+        </apex:form>
             <br/>
 
         <apex:variable var="cnt" value="{!0}" />
@@ -796,7 +813,8 @@
         <div class="col-md-12"></div>
             <div class="apcontainer">
                 <apex:include pageName="{!includedSummaryPage}" rendered="{!isStep5}" />
-                <apex:form >
+                <apex:form id="PAXForm">
+                <apex:pageMessages />
                 <apex:pageBlock >
                 <apex:pageBlockSection title="{!$Label.ISSP_TC_Accept}" columns="1" collapsible="false" rendered="{!BEGINS(sectorValue, 'Travel_Agent')}">
                     <div class="aplabel">
@@ -808,9 +826,18 @@
                 </apex:pageBlockSection> 
                 <br/>
                 <div style="text-align:center;">
-                    <apex:commandButton action="{!goToStep4}" value="{!$Label.ISSP_Back}"/>
-                    <apex:commandButton action="{!goToFinalStep}" value="{!$Label.ISSP_AMS_Submit_IATA}"/>
-                    <apex:commandButton action="{!saveAMSFormAndLeave}" value="{!$Label.ISSP_Save_Draft}" style="float:right"/>
+                    <apex:actionStatus id="buttonLoadingStep5PAX">
+                    <apex:facet name="stop"><apex:outputPanel >
+                    <apex:commandButton action="{!goToStep4}" value="{!$Label.ISSP_Back}" status="buttonLoadingStep5PAX"/>
+                    <apex:commandButton action="{!goToFinalStep}" value="{!$Label.ISSP_AMS_Submit_IATA}" status="buttonLoadingStep5PAX" reRender="PAXForm"/>
+                    <apex:commandButton action="{!saveAMSFormAndLeave}" value="{!$Label.ISSP_Save_Draft}" style="float:right" status="buttonLoadingStep5PAX"/>
+                    	</apex:outputPanel></apex:facet>
+                    <apex:facet name="start"><apex:outputPanel >
+                    <apex:commandButton action="{!goToStep4}" value="{!$Label.ISSP_Back}" disabled="true"/>
+                    <apex:commandButton action="{!goToFinalStep}" value="{!$Label.ISSP_AMS_Submit_IATA}..." disabled="true"/>
+                    <apex:commandButton action="{!saveAMSFormAndLeave}" value="{!$Label.ISSP_Save_Draft}" style="float:right" disabled="true"/>
+                         </apex:outputPanel></apex:facet>
+                    </apex:actionStatus>
                 </div>
                 </apex:pageBlock> 
                 </apex:form> 
@@ -831,7 +858,8 @@
         <div class="apcontainer">
             <apex:include pageName="{!includedSummaryPage}" rendered="{!isStep5}" />
         </div>
-        <apex:form >
+        <apex:form id="CGOForm">
+        <apex:pageMessages />
         <apex:pageBlock >
         <!--Accept terms and conditions for CGO--> 
         <c:ISSP_AMS_CGO_T_Cs ></c:ISSP_AMS_CGO_T_Cs>
@@ -840,9 +868,18 @@
          </apex:pageBlockSection>
           <br/>
        <div style="text-align:center;">
-            <apex:commandButton action="{!goToStep4}" value="{!$Label.ISSP_Back}"/>
-            <apex:commandButton action="{!goToFinalStep}" value="{!$Label.ISSP_AMS_Submit_IATA}"/>
-            <apex:commandButton action="{!saveAMSFormAndLeave}" value="{!$Label.ISSP_Save_Draft}" style="float:right"/>
+        <apex:actionStatus id="buttonLoadingStep5CGO">
+             <apex:facet name="stop"><apex:outputPanel >
+            <apex:commandButton action="{!goToStep4}" value="{!$Label.ISSP_Back}" status="buttonLoadingStep5CGO"/>
+            <apex:commandButton action="{!goToFinalStep}" value="{!$Label.ISSP_AMS_Submit_IATA}" status="buttonLoadingStep5CGO" reRender="CGOForm"/>
+            <apex:commandButton action="{!saveAMSFormAndLeave}" value="{!$Label.ISSP_Save_Draft}" style="float:right" status="buttonLoadingStep5CGO"/>
+           	</apex:outputPanel></apex:facet>
+            <apex:facet name="start"><apex:outputPanel >
+           <apex:commandButton action="{!goToStep4}" value="{!$Label.ISSP_Back}" disabled="true"/>
+            <apex:commandButton action="{!goToFinalStep}" value="{!$Label.ISSP_AMS_Submit_IATA}..." disabled="true"/>
+            <apex:commandButton action="{!saveAMSFormAndLeave}" value="{!$Label.ISSP_Save_Draft}" style="float:right" disabled="true"/>
+           </apex:outputPanel></apex:facet>
+          </apex:actionStatus>
         </div>
         </apex:pageBlock>
        </apex:form>
@@ -881,11 +918,11 @@
                 </apex:pageBlockSection>  
                 <br/>
                 <div style="text-align:center;">
-                    <apex:actionStatus id="buttonLoadingStep5">
+                    <apex:actionStatus id="buttonLoadingStep5NoC">
                         <apex:facet name="stop"><apex:outputPanel >
-                    	<apex:commandButton action="{!goToStep4}" value="{!$Label.ISSP_Back}" status="buttonLoadingStep5"/>
-                    	<apex:commandButton action="{!goToFinalStep}" value="{!$Label.ISSP_AMS_Submit_IATA}" status="buttonLoadingStep5" reRender="NoCForm"/>
-                    	<apex:commandButton action="{!saveAMSFormAndLeave}" value="{!$Label.ISSP_Save_Draft}" style="float:right" status="buttonLoadingStep5"/>
+                    	<apex:commandButton action="{!goToStep4}" value="{!$Label.ISSP_Back}" status="buttonLoadingStep5NoC"/>
+                    	<apex:commandButton action="{!goToFinalStep}" value="{!$Label.ISSP_AMS_Submit_IATA}" status="buttonLoadingStep5NoC" reRender="NoCForm"/>
+                    	<apex:commandButton action="{!saveAMSFormAndLeave}" value="{!$Label.ISSP_Save_Draft}" style="float:right" status="buttonLoadingStep5NoC"/>
                  	</apex:outputPanel></apex:facet>
                     <apex:facet name="start"><apex:outputPanel >
                         <apex:commandButton value="{!$Label.ISSP_Back}" disabled="true"/>
