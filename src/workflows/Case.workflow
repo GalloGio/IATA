@@ -11256,7 +11256,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <value>Complete DSR</value>
         </criteriaItems>
         <description>DPC DSR: this is the time when the case is completed by DPC (it is automaticaly populated on the case status COMPLETED)</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
         <fullName>DPC%3A Date %2F Time Scheduled</fullName>
@@ -11268,6 +11268,10 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.Planned_Start_CR__c</field>
             <operation>notEqual</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.DPC_Date_Time_Scheduled__c</field>
+            <operation>equals</operation>
         </criteriaItems>
         <description>DPC DSR: This is a time when DPC user fill the field Planned start CSR</description>
         <triggerType>onAllChanges</triggerType>
