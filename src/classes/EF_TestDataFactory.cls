@@ -178,7 +178,7 @@ public with sharing class EF_TestDataFactory
     public static void createCustomSettings()
     {
         EF_Approve_Fields__c appr1 = new EF_Approve_Fields__c();
-        appr1.Billing_Agreement_Fields__c = 'Airline__c,Billing_Currency__c,EF_Location_ID__c,Payment_Currency__c,Payment_Method__c,Location_Code__c,Status__c';
+        appr1.Billing_Agreement_Fields__c = 'Airline__c,Billing_Currency__c,EF_Location_ID__c,Payment_Currency__c,Payment_Method__c,Location_Code__c,EF_Status__c';
         appr1.Name = 'BillingAgreement';
         EF_Approve_Fields__c appr2 = new EF_Approve_Fields__c();
         appr2.Contract_Fields__c = 'EF_Payment_Terms__c,EF_Billing_Frequency__c,EF_Admin_Fee__c,CCF_Number__c,EF_Group_Code__c';
