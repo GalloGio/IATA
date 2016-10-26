@@ -423,7 +423,7 @@ public class IFAP_BusinessRulesTest {
 
    static testmethod void testIsStatusCanBeSelected() {
 
-        Id userID = [Select ID from User where ID !=: userinfo.getuserid()][0].id;
+        Id userID = [Select ID from User where ID !=: userinfo.getuserid() limit 1][0].id;
         UtilityCS__c util = new UtilityCS__c(name = 'IFAP Bypass Rules',value__c = userID);
         insert util;
 
