@@ -1,4 +1,4 @@
-Dear {!User.FirstName},
+Dear Recipient,
 <p>
 The attachment called {!AmazonFile__c.Name} has been set as expired.
 <br />
