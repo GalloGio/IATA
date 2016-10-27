@@ -1,15 +1,16 @@
-<apex:page standardController="Zuora__CustomerAccount__c">
+<apex:page standardController="Zuora__CustomerAccount__c" extensions="vfEBC_RelatedLists">
     <apex:pageBlock title="Customer-Specific Reports">
 
     <apex:form >   
 
-            <apex:commandButton action="{!URLFOR($Action.Zuora__CustomerAccount__c.Campaigns_Sent, Zuora__CustomerAccount__c.Name)}" id="reportButton1" value="Campaigns Sent Report"/>
-            <apex:commandButton action="{!URLFOR($Action.EBC_Campaign__c.Campaign_Tracking)}" id="reportButton2" value="Customer's Preferred Audience"/>
-            <apex:commandButton action="{!URLFOR($Action.EBC_Campaign__c.Campaign_Tracking)}" id="reportButton3" value="Test e-mails Report"/>
-            <apex:commandButton action="{!URLFOR($Action.EBC_Campaign__c.Campaign_Tracking)}" id="reportButton4" value="Opt-Out Report"/>
-            <apex:commandButton action="{!URLFOR($Action.EBC_Campaign__c.Campaign_Tracking)}" id="reportButton5" value="Hard Bounce Report"/>
-            <apex:commandButton action="{!URLFOR($Action.EBC_Campaign__c.Campaign_Tracking)}" id="reportButton6" value="E-mail Sent Report"/>
+            <apex:commandButton action="/{!reports['LINK_Number_of_Campaigns'].Id}?pv0={!URLENCODE(Zuora__CustomerAccount__c.Name)}" id="reportButton1" value="Campaigns Sent Report"/>
+            <apex:commandButton action="/{!reports['LINK_Number_of_Emails_Sent'].Id}?pv0={!URLENCODE(Zuora__CustomerAccount__c.Name)}" id="reportButton2" value="E-mail Sent Report"/>
+            <apex:commandButton action="/{!reports['LINK_Number_of_Test_Emails_sent'].Id}?pv0={!URLENCODE(Zuora__CustomerAccount__c.Name)}" id="reportButton3" value="Test e-mails Report"/>
+            <apex:commandButton action="/{!reports['LINK_Volume_of_Opt_Out_Generated'].Id}?pv0={!URLENCODE(Zuora__CustomerAccount__c.Name)}" id="reportButton4" value="Opt-Out Report"/>
+            <apex:commandButton action="/{!reports['LINK_Volume_of_Hard_Bounces'].Id}?pv0={!URLENCODE(Zuora__CustomerAccount__c.Name)}" id="reportButton5" value="Hard Bounce Report"/>
+
     </apex:form>
+    
 
     </apex:pageBlock>
 

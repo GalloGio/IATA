@@ -12623,6 +12623,23 @@ jQuery(document).ready(function($) {
 
     $('.js-remaining-characters').parents('.field-group text');
 
+    var body = $('body');
+
+    body.on('click', function() {
+        closeModal();
+        $('.tooltip-container').removeClass(className.open);
+    });
+
+    $('.modal-header, .modal-body, .modal-footer, .tooltip-container').on('click', function(event) {
+        var target = event.target;
+        if (!$(target).hasClass('fa-times') || !$(target).hasClass('fa-exclamation-triangle')) {
+            event.stopPropagation();
+            console.log(target);
+        }
+    });
+
+
+
     $(document).on('keyup', '.js-remaining-characters', function() {
         var targetElement = $(this).data('target-element'),
         targetID = $(this).data('target-id'),
@@ -12767,6 +12784,7 @@ jQuery(document).ready(function($) {
 
     $(document).on('vclick click', '.js-tooltip', function(event) {
         event.preventDefault();
+
         $(this).next().toggleClass(className.open);
     });
 
@@ -12931,7 +12949,6 @@ jQuery(document).ready(function($) {
             if (!$(this).hasClass('disabled')) {
                 var targetModal = $(this).data('target-modal');
                 $('.modal-content').addClass(className.hidden);
-                console.log('st');
                 $(targetModal).removeClass(className.hidden);
                 openModal();
             }
