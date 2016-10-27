@@ -126,7 +126,7 @@ global class AMS_OSCAR_Webservice {
                     return 'ERROR: ' + result;
                 }
 
-                Case oscarCommCase = [select Id,Reason1__c from Case where OSCAR__c =: oscar[0].Id AND ParentId = null limit 1];
+                Case oscarCommCase = [select Id,Reason1__c from Case where OSCAR__c =: oscar[0].Id AND ( ParentId = null or Parent.RecordType.Name != 'OSCAR Communication' ) limit 1];
 
                 if(oscarCommCase == null){
                     result = 'Could not find a the Oscar Communication case related to this OSCAR.';

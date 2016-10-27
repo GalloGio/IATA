@@ -6,6 +6,7 @@
     <customButtons>Reset_New_interactions</customButtons>
     <customButtons>Create_IFAP_case</customButtons>
     <customButtons>EasyUpload</customButtons>
+    <customButtons>SIDRA_Lite_Action</customButtons>
     <emailDefault>false</emailDefault>
     <excludeButtons>Delete</excludeButtons>
     <excludeButtons>Share</excludeButtons>

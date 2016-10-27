@@ -68,7 +68,7 @@ public class VfIECShoppingCart_tst {
     }
     
     static testMethod void TestShoppingCart() {
-
+IFAP_BusinessRulesTest.createIsoCountry();
         //Set current page to Shopping Cart
         PageReference pgRef = Page.IECShoppingCart;
         Test.setCurrentPage(pgRef);
@@ -209,8 +209,8 @@ public class VfIECShoppingCart_tst {
     
     
     
-      static testMethod void TestShoppingCart2() {
-
+ static testMethod void TestShoppingCart2() {
+        IFAP_BusinessRulesTest.createIsoCountry();
         //Set current page to Shopping Cart
         PageReference pgRef = Page.IECShoppingCart;
         Test.setCurrentPage(pgRef);
@@ -273,7 +273,7 @@ public class VfIECShoppingCart_tst {
                 oBillingAdd.City__c = 'San Francisco';
                 oBillingAdd.Contact__c = usr.ContactId;
                 oBillingAdd.Address_Type__c = IECConstants.IECAddress_AddressType_Billing;
-                oBillingAdd.ISO_Country__c = lsttest[1].getValue();  //*** (Thai) add this line according to new structure
+                oBillingAdd.ISO_Country__c =  ([SELECT Id FROM IATA_ISO_Country__c WHERE ISO_Code__c IN ('EG')])[0].Id;//lsttest[1].getValue();  //*** (Thai) add this line according to new structure
                 insert oBillingAdd;
                 
                 // refresh page
@@ -291,7 +291,7 @@ public class VfIECShoppingCart_tst {
                 pgCont.oBillingAddress.State__c = 'CA';
                 pgCont.oBillingAddress.ZipCode__c = '12345';
                 pgCont.oBillingAddress.City__c = 'San Francisco';  //*** (Thai) add this 2 lines according to new structure
-                pgCont.oBillingAddress.ISO_Country__c = lsttest[1].getValue();
+                pgCont.oBillingAddress.ISO_Country__c = ([SELECT Id FROM IATA_ISO_Country__c WHERE ISO_Code__c IN ('EG')])[0].Id;//lsttest[1].getValue();
                 
                 // udpate Billing Address
                 pgCont.updateContactInfo();
@@ -300,7 +300,8 @@ public class VfIECShoppingCart_tst {
                 system.assertEquals(true, pgCont.isCountryFilled, 'The flag isCountryFilled should be set to true because we just updated it');
             }
             catch(Exception ex) {
-                system.assert(false, 'Test units on contact Billing Address should not fail');
+
+                system.assert(false, 'Test units on contact Billing Address should not fail ' +ex.getStackTraceString() + '   ' + ex.getMessage());
             }
 
             
@@ -358,7 +359,6 @@ public class VfIECShoppingCart_tst {
             
         }
     }
-    
     
     
     

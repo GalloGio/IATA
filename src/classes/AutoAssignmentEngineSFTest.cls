@@ -25,7 +25,7 @@ private class AutoAssignmentEngineSFTest {
         
         List<Case> casesToAssign = AutoAssignmentEngineSF.getPendingCases();
        // system.assertEquals(casesToAssign.size(), 1);
-        
+        test.startTest();
         // 1) Log off all agents
         Agents__c[] aAgent=[select id, Logged_on__c from Agents__c];
         for (Agents__c a:aAgent)
@@ -105,7 +105,8 @@ private class AutoAssignmentEngineSFTest {
                '0 0 0 15 3 ? 2022', 
         new AutoAssignmentEngineScheduler ());
         
-        
+                test.stopTest();
+
     }
     
 }
