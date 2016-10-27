@@ -1659,7 +1659,7 @@
     <fields>
         <fullName>Give_details_for_authorization_to_act__c</fullName>
         <externalId>false</externalId>
-        <label>* Please give details</label>
+        <label>If Yes please provide details</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -1668,7 +1668,7 @@
     <fields>
         <fullName>Give_details_for_the_change_of_ownership__c</fullName>
         <externalId>false</externalId>
-        <label>* Please give details</label>
+        <label>If Yes please provide details</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -3436,6 +3436,17 @@ $Label.ISSP_AMS_LS_Sole_Owner)</formula>
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>New_Head_Office_IATA_Code__c</fullName>
+        <externalId>false</externalId>
+        <label>New Head Office IATA Code</label>
+        <length>13</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>No_Consignments_Last_Year__c</fullName>
         <externalId>false</externalId>
         <label>* Total No. of Consignments (last year)</label>
@@ -3576,7 +3587,7 @@ $Label.ISSP_AMS_LS_Sole_Owner)</formula>
         <fullName>Please_provide_details_for_the_change__c</fullName>
         <description>Please provide details</description>
         <externalId>false</externalId>
-        <label>* Please provide details</label>
+        <label>If Yes please provide details</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -3741,7 +3752,7 @@ $Label.ISSP_AMS_LS_Sole_Owner)</formula>
     <fields>
         <fullName>Provide_details_for_change_affect_staff__c</fullName>
         <externalId>false</externalId>
-        <label>* Please give details</label>
+        <label>If Yes please provide details</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -4530,7 +4541,7 @@ $Label.ISSP_AMS_LS_Sole_Owner)</formula>
     </fields>
     <fields>
         <fullName>Will_such_change_affect_the_premises__c</fullName>
-        <description>Will such change affect the premises that were investigated in the course of approving the Agent’s application for registration?</description>
+        <description>Will such change affect the premises that were investigated in the course of approving the Agent's application for registration?</description>
         <externalId>false</externalId>
         <label>Will such change affect the premises</label>
         <picklist>
