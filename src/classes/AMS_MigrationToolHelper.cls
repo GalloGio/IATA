@@ -38,7 +38,7 @@ public with sharing class AMS_MigrationToolHelper {
 
 		} catch(Exception e) {
 			System.debug(e.getMessage());
-			cont.errorMessage = e.getMessage(); //or other stuff
+			cont.errorMessage = e.getMessage() + e.getStackTraceString(); //or other stuf
 			cont.migrated = true;
 			cont.processing = false;
 
