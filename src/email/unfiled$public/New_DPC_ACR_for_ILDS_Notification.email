@@ -1,9 +1,0 @@
-Dear ITS BJS team,
-
-Please note that a new Applcaition Change Request has been created with the ILDS.
-
-Case #: {!Case.CaseNumber}
-Subject: {!Case.Subject}
-Description: {!Case.Description}
-
-For direct access, please click on this link {!Case.Link}.
