@@ -1,8 +1,7 @@
 global with sharing class EF_AttachmentListController {
-
+	
 	public static Boolean runningForEF{get;set;}
-	public Boolean viewPrivateFiles{get;set;}
-
+	
     public String uploader {get;set;}
     public String source {get;set;}
     public Boolean scroll {get;set;}
@@ -37,7 +36,7 @@ global with sharing class EF_AttachmentListController {
 	public String amazonPath  {
 		get { return WrapperAttach.getAmazonFolder(this.Id); }
 	}
-
+	
 	public list<WrapperAttach> listAttachments {get; set;}
 	public Id editAttachmentId {get; set;}
 	public WrapperAttach editAttachment {get; set;}
@@ -46,20 +45,8 @@ global with sharing class EF_AttachmentListController {
     public AmazonFile__c amazonFileToUpload{get{
 
         if(this.amazonFileToUpload == null) {
-			// set the default EF_Private__c
-			Boolean efPrivate = false;
-			if(this.id != null) {
-				String sId = (String)this.id;
-				List<EF_Amazonfile_Private__c> lsObjectTypes = EF_Amazonfile_Private__c.getAll().Values();
-                for(EF_Amazonfile_Private__c cs : lsObjectTypes) {
-                    // if the first 3 chars of the SObject Id match, use the Boolean value from the custom setting
-                    if(sid.left(3) == cs.SObject_3_first_chars__c) {
-                        efPrivate = cs.EF_Private__c;
-                        break;
-                    }
-                }
-			}
-            this.amazonFileToUpload = new AmazonFile__c(EF_Private__c = efPrivate);
+
+            this.amazonFileToUpload = new AmazonFile__c();
         }
 
         return this.amazonFileToUpload;
@@ -75,20 +62,16 @@ global with sharing class EF_AttachmentListController {
 			}
 		}
 	}
-
+	
 	public EF_AttachmentListController() {
-
+		
 		runningForEF = true;
 	}
-
+	
 	/**
 		check all assignTo calls have been done and execute initial methods
 	**/
 	private void init() {
-		Group efViewPrivateFiles = [SELECT Id, Name FROM Group Where DeveloperName='EF_Private_Document_Access'];
-		List<GroupMember> lsGroupMembers = [SELECT Id FROM GroupMember WHERE GroupId =: efViewPrivateFiles.Id AND UserOrGroupId =:UserInfo.getUserId()];
-		this.viewPrivateFiles = false;
-		if(!lsGroupMembers.isEmpty()) this.viewPrivateFiles = true;
 		if (this.id == null ) return;
 
 		//IE9 hack
@@ -96,11 +79,11 @@ global with sharing class EF_AttachmentListController {
 		if(browserType != null && browserType.contains('MSIE')){
 		    Apexpages.currentPage().getHeaders().put('X-UA-Compatible', 'IE=edge');
 		}
-
+		
 		// check if current user is Admin
         Profile profile = [Select id, Name from Profile where Id = :UserInfo.getProfileId()];
         this.isAdminUser = profile.Name.startsWithIgnoreCase('System Administrator') || profile.Name.startsWithIgnoreCase('Developer');
-
+		
 		refreshList();
 	}
 
@@ -111,15 +94,7 @@ global with sharing class EF_AttachmentListController {
 
 		try {
 			EF_AttachmentListController.runningForEF = true;
-
-			List<WrapperAttach> tmpListWrapper = WrapperAttach.getListAttachments(this.id);
-			this.listAttachments = new List<WrapperAttach>();
-
-			for(WrapperAttach wr : tmpListWrapper) {
-				if(wr.fileAmazon == null || wr.fileAmazon.amazonFile.EF_Private__c == false || this.viewPrivateFiles == true ) {
-					this.listAttachments.add(wr);
-				}
-			}
+			this.listAttachments = WrapperAttach.getListAttachments(this.id);
 			this.listAttachments.sort();
 
 			amazonFileToUpload = null;
@@ -134,9 +109,9 @@ global with sharing class EF_AttachmentListController {
 	**/
 	@RemoteAction
 	global static string getExpiringLink(string fileName ) {
-
+		
 		EF_AttachmentListController.runningForEF = true;
-
+		
 		Integer secondsValid = 300;
 		String link = AmazonRest.genPublicExpiringAWSLink( fileName, WrapperAttach.CREDENTIAL, secondsValid);
 		return link;
@@ -147,9 +122,9 @@ global with sharing class EF_AttachmentListController {
 	**/
 	@RemoteAction
 	global static boolean deleteAttachment(string strId, String fullName) {
-
+		
 		EF_AttachmentListController.runningForEF = true;
-
+		
 		String idType = String.ValueOf(Id.valueOf(strId).getSObjectType());
 		Boolean result = false;
 		if (idType.equals('Attachment')) {
@@ -164,7 +139,7 @@ global with sharing class EF_AttachmentListController {
 		//System.debug('EF_AttachmentListController.deleteAttachment: ' + strId + ' object not recognized');
 		return result;
 	}
-
+	
 	/**
 		Delete a standard attachment in Salesforce
 	**/
@@ -177,7 +152,7 @@ global with sharing class EF_AttachmentListController {
 			return false;
 		}
 	}
-
+	
 	/**
 		Delete an archived attachment object
 	**/
@@ -190,7 +165,7 @@ global with sharing class EF_AttachmentListController {
 			return false;
 		}
 	}
-
+	
 	/**
 		Delete a file in Amazon Bucket, including AmazonFile object in Amazon
 	**/
@@ -200,27 +175,27 @@ global with sharing class EF_AttachmentListController {
 			WrapperAttach attach = WrapperAttach.getAmazonAttachment( sObjectId, fullName);
 			Boolean result = attach.moveToBucket();
 			return result;
-
+			
 		} catch (Exception e) {
 			System.debug('EF_AttachmentListController.deleteAmazonAttachment' + e.getMessage());
 			return false;
 		}
 	}
-
+	
 	/**
 		Change all Attachments to public
 	**/
 	public void makeAllPublic() {
 		changePermissionToAll(true);
 	}
-
+	
 	/**
 		Change all Attachments to private
 	**/
 	public void makeAllPrivate() {
 		changePermissionToAll(false);
 	}
-
+	
 	/**
 		Set the same permission to all attachments
 	**/
@@ -229,7 +204,7 @@ global with sharing class EF_AttachmentListController {
 			attachment.changePermission(value);
 		}
 	}
-
+	
 	/**
 		redirect to the Trasnfer Attachments page
 	**/
@@ -239,13 +214,13 @@ global with sharing class EF_AttachmentListController {
 		pageref.setRedirect(true);
 		return pageref.getUrl();
 	}
-
+	
 	public void callEditAttachment() {
-
+				
 		for ( WrapperAttach attach: listAttachments ) {
 			if (attach.id == this.editAttachmentId) {
 				this.editAttachment = attach;
-				System.debug(loggingLevel.Debug, '____ [cls EF_AttachmentListController - callEditAttachment] editAttachment.fileAmazon.amazonFile.Expired__c - ' + editAttachment.fileAmazon.amazonFile.Expired__c);
+				System.debug(loggingLevel.Debug, '____ [cls EF_AttachmentListController - callEditAttachment] editAttachment.fileAmazon.amazonFile.EF_Expired__c - ' + editAttachment.fileAmazon.amazonFile.EF_Expired__c);
 				return;
 			}
 		}
@@ -259,7 +234,7 @@ global with sharing class EF_AttachmentListController {
 		this.editAttachmentId = null;
 		return null;
 	}
-
+	
 	/**
 		Close the edit attachment popup saving changes
 	**/
@@ -271,7 +246,7 @@ global with sharing class EF_AttachmentListController {
 		}
 		return cancelPopupAttach();
 	}
-
+    
     public PageReference goToAttachmentPage() {
         return new Pagereference('/ISSP_AddAttachment?caseId=' + id + '&retURL=%2F' + id);
     }
@@ -282,9 +257,9 @@ global with sharing class EF_AttachmentListController {
 
     @RemoteAction
     global static UploadFile createUploadFile(String id, String filenameupload, String contentType, Long filesize, String folder, String credentialName) {
-
+        
         EF_AttachmentListController.runningForEF = true;
-
+        
         AmazonCredentials credential = AmazonCredentials.getCredentials(credentialName);
 
         // remove all repeated spaces
@@ -325,12 +300,11 @@ global with sharing class EF_AttachmentListController {
     }
 
     @RemoteAction
-    global static boolean createAmazonFileObject(String amazonKey, Long filesize, String parentId, String recordType,
-    												String efCategory, String efSubCategory, String efExpiryDate, Boolean efExpired, String efSapNumber,
-													String additionalInformation, Boolean efPrivate) {
-
+    global static boolean createAmazonFileObject(String amazonKey, Long filesize, String parentId, String recordType, 
+    												String efCategory, String efSubCategory, String efExpiryDate, Boolean efExpired, String efSapNumber) {
+        
         EF_AttachmentListController.runningForEF = true;
-
+        
         try {
             list<String> parts = amazonKey.split('/');
             String filename = parts.isEmpty()? '': parts.get( parts.size() - 1 );
@@ -341,14 +315,12 @@ global with sharing class EF_AttachmentListController {
                 Name = filename,
                 sObject_Id__c = parentId,
                 Full_Name_Unique__c = amazonKey,
-                Category__c = efCategory,
-                Subcategory__c = efSubCategory,
-                Document_Date__c = System.today(),
-                Expired__c = efExpired,
-                Expiry_Date__c = (String.isEmpty(efExpiryDate) ? null : Date.parse(efExpiryDate)),
-                SAP_Number__c = efSapNumber,
-				Additional_Information__c = additionalInformation,
-				EF_Private__c = efPrivate,
+                EF_Category__c = efCategory,
+                EF_Subcategory__c = efSubCategory,
+                EF_Document_Date__c = System.today(),
+                EF_Expired__c = efExpired,
+                EF_Expiry_Date__c = (String.isEmpty(efExpiryDate) ? null : Date.parse(efExpiryDate)),
+                EF_SAP_Number__c = efSapNumber,
                 Size_MB__c = filesize* 0.000001 //convert to MB
             );
 
@@ -362,7 +334,7 @@ global with sharing class EF_AttachmentListController {
             if (parentId.startsWith('500')) {
                 amazonFile.Case__c = parentId;
             }
-
+            
             upsert amazonFile;
 
             return true;
