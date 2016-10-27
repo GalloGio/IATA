@@ -581,8 +581,9 @@
     </fields>
     <fields>
         <fullName>EF_Charge_Category__c</fullName>
+        <description>SIS Charge Category. EF CRM Project</description>
         <externalId>false</externalId>
-        <label>Charge Category</label>
+        <label>XML Charge Category</label>
         <picklist>
             <picklistValues>
                 <fullName>Airport</fullName>
@@ -601,9 +602,10 @@
     </fields>
     <fields>
         <fullName>EF_Charge_Code_Type__c</fullName>
-        <description>EF CRM. Mandatory field if Charge Code is Fee</description>
+        <description>EF CRM. Mandatory field if Charge Code is Fee
+SIS Charge Code Type.</description>
         <externalId>false</externalId>
-        <label>Charge Code Type</label>
+        <label>XML Charge Code Type</label>
         <picklist>
             <picklistValues>
                 <fullName>Air</fullName>
@@ -746,8 +748,9 @@
     </fields>
     <fields>
         <fullName>EF_Charge_Code__c</fullName>
+        <description>SIS Charge Code. EF CRM Project</description>
         <externalId>false</externalId>
-        <label>Charge Code</label>
+        <label>XML Charge Code</label>
         <picklist>
             <controllingField>EF_Charge_Category__c</controllingField>
             <picklistValues>
