@@ -11,6 +11,7 @@
     }
     function saveGeoStateAndRefreshCount() {
         jQuery('.newFilterCount').html('<img src="/img/loading.gif" />');
+        jQuery('.recipientCountContainer').show();
         saveGeoStateAndRefreshCountAF();
     }
     function getNewFilterCount() {
@@ -23,6 +24,7 @@
     
     function saveRefinementStateAndRefreshCount() {
         jQuery('.newFilterCount').html('<img src="/img/loading.gif" />');
+        jQuery('.recipientCountContainer').show();
         saveRefinementStateAndRefreshCountAF();
     }
     </script>
@@ -296,11 +298,11 @@
                                                         </apex:selectList>
                                                     </apex:outputPanel>
                                                     
-                                                </apex:outputText>
                                                 <apex:commandLink styleClass="action-link" action="{!removeGeoFilter}" rerender="geoFilters">
                                                     <i class="icon fa fa-minus-circle" aria-hidden="true"></i>Remove
                                                     <apex:param name="firstParam" assignTo="{!geoFilterIndex}" value="{!ind}" />
                                                 </apex:commandLink>
+                                                </apex:outputText>
                                             </apex:outputPanel>
                                         </apex:repeat>
                                     </apex:outputPanel>
@@ -442,7 +444,7 @@
                         
                         <div class="action refresh-count">
                             <span class="recipientCountContainer" style="display: none">
-                                <strong><span class="newFilterCount">n/a</span> recipients</strong> in this segment.
+                                <strong><span class="newFilterCount"><img src="/img/loading.gif" style="display: none;" /> n/a</span> recipients</strong> in this segment.
                             </span>
                             <a href="javascript:void(0);" styleClass="button secondary" onclick="saveRefinementStateAndRefreshCount();"><i class="icon fa fa-refresh" aria-hidden="true"></i> Refresh count</a>
                             <div style="display: none" class="recipientCountContainer"><strong>Note:</strong> The number of recipients is also based on any geo filters you may have set.</div>

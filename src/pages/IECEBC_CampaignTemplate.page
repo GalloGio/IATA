@@ -35,10 +35,10 @@
                             </ul>
                             <div class="tab-content">
                                 <div class="tab-pane is-open" id="pane-1">
-                                    <c:IECEBC_TemplateList selectedTemplatedId="{!selectedTemplate}" global="true" limitToAudience="{!campaign.Audience__c}" />
+                                    <c:IECEBC_TemplateList selectedTemplatedId="{!selectedTemplate}" global="true" limitToAudience="{!audience}" />
                                 </div>
                                 <div class="tab-pane" id="pane-2">
-                                    <c:IECEBC_TemplateList selectedTemplatedId="{!selectedTemplate}" global="false" limitToAudience="{!campaign.Audience__c}" />
+                                    <c:IECEBC_TemplateList selectedTemplatedId="{!selectedTemplate}" global="false" limitToAudience="{!audience}" />
                                 </div>
                                 <div class="tab-pane" id="pane-3"> 
                                     <c:IECEBC_TemplateCustomCode />

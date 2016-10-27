@@ -22,10 +22,12 @@
 -->
             <div class="inner-wrapper">
                 <div class="group-container confirmation">
-                    <h1 class="page-title">Confirmation</h1>
+                    <h1 class="page-title">Your preferences have been saved.</h1>
                     <div class="confirmation-box">
-                        <p>Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam quis risus eget urna mollis ornare vel eu leo. Donec sed odio dui.</p>
-                        <a href="#">Lorem ipsum dolor sit amet</a>
+                        <p><strong>We'll miss you!</strong>
+                            <br />You will receive one final email to confirm that we unsubscribed you. You may still get marketing emails from us since they are on a different system. They all have unsubscribe links if you want to stop getting those too.
+                        </p>
+                        <strong>Changed your mind? </strong><a href="/iec/iecebc_resubscribe">Opt back in from here</a>
                     </div>
                 </div>
             </div>

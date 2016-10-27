@@ -53,6 +53,10 @@ public class vfIECEBC_CampaignTemplate extends vfIECEBC_Controller {
         campaign.EBC_Design__c = d.Id;
     }
     
+    public String getAudience() {
+    	return campaign.Audience__c != 'Custom' ? campaign.Audience__c : 'Agency';
+    }
+    
     public EBC_Template__c customHtmlTemplate {
         get {
             
@@ -60,11 +64,11 @@ public class vfIECEBC_CampaignTemplate extends vfIECEBC_Controller {
                 customHtmlTemplate = [
                     SELECT
                         Id,
-                        Name
+                        Name 
                     FROM EBC_Template__c
                     WHERE
                         Recordtype.DeveloperName = 'Global' AND 
-                        Audience__c = :campaign.Audience__c AND
+                        Audience__c = :getAudience() AND
                     	External_Id__c LIKE 'customhtml-%'
                     LIMIT 1
                 ];
