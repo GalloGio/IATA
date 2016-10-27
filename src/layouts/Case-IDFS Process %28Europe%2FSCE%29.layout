@@ -7,6 +7,7 @@
     <customButtons>Reset_New_interactions</customButtons>
     <customButtons>Create_IFAP_case</customButtons>
     <customButtons>EasyUpload</customButtons>
+    <customButtons>SIDRA_Lite_Action</customButtons>
     <emailDefault>false</emailDefault>
     <excludeButtons>Delete</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
@@ -633,6 +634,7 @@
     <relatedLists>
         <fields>CASES.CASE_NUMBER</fields>
         <fields>Case_Type__c</fields>
+        <fields>CASES.RECORDTYPE</fields>
         <fields>CASES.SUBJECT</fields>
         <fields>CASES.PRIORITY</fields>
         <fields>CASES.CREATED_DATE</fields>

@@ -70,14 +70,26 @@ private class IECQuoteManager_tst {
           system.assert(false, 'submitQuote() with invalid arguments should throw an error');
         }
         catch(Exception ex) {
-          system.assert(true, 'submitQuote() with invalid arguments should throw an error');
+
+          system.assert(true, 'submitQuote() with invalid arguments should throw an error' );
         }
+
+
+        zqu__Quote_Template__c zqt = new zqu__Quote_Template__c(Name = 'sqt',zqu__Template_Id__c = 'asdsad');
+        insert zqt;
         
+       IEC_Settings__c iecs = IEC_Settings__c.getOrgDefaults();
+      // throw new transformationException(' iecs ' +iecs);
+      // iecs.id = IEC_Settings__c.getInstance().id;
+       iecs.Quote_Template_ID_New_Subscription__c=zqt.id;// [Customer_Permission_Set_Id__c, PaymentMethod_Bank_Transfer_Zuora_ID__c, PaymentMethod_Other_Zuora_ID__c, Quote_Template_Zuora_ID_New_Subscription__c, SchdlIECCompileUsage_Class_ID__c, CAC_Web_Service_API_Gateway__c, CAC_Web_Service_Usage_Url__c, SchdlCACWSUsageUpdate_Class_ID__c);
+       // 
+        update iecs;
         // Test #2 - submitquote and opportunity creation
         try {
           oQuote = IECQuoteManager.submitQuote(IECCustomer.getCurrentIECCustomer(), oProductRatePlanInfo, bAutoRenew, dQuoteAmount, sComments, null, null);
         }
         catch(Exception ex) {
+         /// throw new transformationException(ex.getStacktraceString() + ex.getMessage());
           system.assert(false, 'Should not throw an error: ' + ex.getMessage());
         }
         

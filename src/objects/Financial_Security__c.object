@@ -21,6 +21,10 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -609,17 +613,20 @@ AND(ISPICKVAL(Region__c , &quot;China &amp; north Asia&quot;), ISPICKVAL(Securit
         <fullName>Status_image__c</fullName>
         <description>Image status</description>
         <externalId>false</externalId>
-        <formula>IF( ISPICKVAL( Security_Status__c , &quot;Active&quot;), IMAGE(&quot;/servlet/servlet.FileDownload?file=015200000011tpe&quot;,&quot;Active&quot;,30,30),
+        <formula>IF( ISPICKVAL( Security_Status__c , &quot;Active&quot;), IMAGE(&quot;/servlet/servlet.FileDownload?file=015200000011tpe&quot;,&quot;Active&quot;,30,30), 
 
 IF(or( ISPICKVAL( Security_Status__c , &quot;Released&quot;), ISPICKVAL( Security_Status__c , &quot;Encashed&quot;),ISPICKVAL( Security_Status__c , &quot;Not Active Yet&quot;) ),
 IMAGE(&quot;/servlet/servlet.FileDownload?file=015200000011tpf&quot;,&quot;Released&quot;,30,30),
 
-IF( ISPICKVAL( Security_Status__c , &quot;Expired&quot;),
+IF( ISPICKVAL( Security_Status__c , &quot;Expired&quot;),  
 IMAGE(&quot;/servlet/servlet.FileDownload?file=015200000011tpg&quot;,&quot;Expired&quot;,30,30),
 
-IF(ISPICKVAL( Security_Status__c , &quot;Close to Expiry Date&quot;),
+IF( ISPICKVAL( Security_Status__c , &quot;Encashment in progress&quot;),  
+IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000004RhqP&quot;,&quot;Encashment in progress&quot;,30,30),
+
+IF(ISPICKVAL( Security_Status__c , &quot;Close to Expiry Date&quot;), 
 IMAGE(&quot;/servlet/servlet.FileDownload?file=015200000011tph&quot;,&quot;Requested&quot;,30,30), &quot;error&quot;
-))))</formula>
+)))))</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Status image</label>
         <required>false</required>
