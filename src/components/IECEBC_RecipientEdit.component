@@ -296,11 +296,11 @@
                                                         </apex:selectList>
                                                     </apex:outputPanel>
                                                     
-                                                </apex:outputText>
                                                 <apex:commandLink styleClass="action-link" action="{!removeGeoFilter}" rerender="geoFilters">
                                                     <i class="icon fa fa-minus-circle" aria-hidden="true"></i>Remove
                                                     <apex:param name="firstParam" assignTo="{!geoFilterIndex}" value="{!ind}" />
                                                 </apex:commandLink>
+                                                </apex:outputText>
                                             </apex:outputPanel>
                                         </apex:repeat>
                                     </apex:outputPanel>
