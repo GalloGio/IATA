@@ -283,6 +283,19 @@
         <visibleLines>3</visibleLines>
     </fields>
     <fields>
+        <fullName>Group_Owner_Text__c</fullName>
+        <description>Group owner in free text for Reg/Div Groups</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Name of Group Owner</inlineHelpText>
+        <label>Group Owner</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Group_Owner__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
@@ -455,7 +468,7 @@
     <fields>
         <fullName>Maximum_Number_of_Participiants__c</fullName>
         <externalId>false</externalId>
-        <label>Maximum Number of Participiants</label>
+        <label>Maximum Number of Participants</label>
         <precision>18</precision>
         <required>false</required>
         <scale>0</scale>
@@ -967,7 +980,7 @@ Record Type + Group Type + ISO_Country_Name</description>
     <listViews>
         <fullName>Reg_Div_Groups</fullName>
         <columns>NAME</columns>
-        <columns>Group_Owner__c</columns>
+        <columns>Group_Owner_Text__c</columns>
         <columns>Reporting_to__c</columns>
         <columns>AM_Under__c</columns>
         <filterScope>Everything</filterScope>
@@ -976,13 +989,18 @@ Record Type + Group Type + ISO_Country_Name</description>
             <operation>equals</operation>
             <value>LocalGovernance__c.Reg_Div_Groups</value>
         </filters>
+        <filters>
+            <field>NAME</field>
+            <operation>notEqual</operation>
+            <value>Annual General Meeting of IATA Members,Director General</value>
+        </filters>
         <label>Reg / Div Groups</label>
         <language>en_US</language>
     </listViews>
     <listViews>
         <fullName>Reg_Div_Groups_Pending_Approval</fullName>
         <columns>NAME</columns>
-        <columns>Group_Owner__c</columns>
+        <columns>Group_Owner_Text__c</columns>
         <columns>Reporting_to__c</columns>
         <columns>AM_Under__c</columns>
         <filterScope>Everything</filterScope>
@@ -1928,8 +1946,11 @@ Record Type + Group Type + ISO_Country_Name</description>
         <active>true</active>
         <description>Name of the group cannot be modified after being approved</description>
         <errorConditionFormula>AND(
+  NOT( $User.Profile_Name__c =&quot;System Administrator&quot;), 
+  AND(
   RecordType.DeveloperName = &quot;Reg_Div_Groups&quot;,
   ISCHANGED(Name)
+)
 )</errorConditionFormula>
         <errorMessage>Name of the group cannot be modified after being approved</errorMessage>
     </validationRules>
