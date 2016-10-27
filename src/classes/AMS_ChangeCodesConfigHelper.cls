@@ -57,11 +57,11 @@ public class AMS_ChangeCodesConfigHelper {
 			changeCode.memoText += createMemoText(tocs);
 
 			if(action == AMS_Utils.SANITYCHECK)
-				changeCode.memoText += ' '+AMS_Utils.AACC_INPROGRESS;
+				changeCode.memoText += ' in process';
 			else if(action == AMS_Utils.APPROVAL)
-				changeCode.memoText += ' '+AMS_Utils.AACC_FINALIZED;
+				changeCode.memoText += ' finalized';
 			else if(action == AMS_Utils.WITHDRAWAL)
-				changeCode.memoText += ' '+AMS_Utils.AACC_WITHDRAWAL;
+				changeCode.memoText += ' withdrawn';
 
 		}
 
