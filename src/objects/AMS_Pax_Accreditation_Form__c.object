@@ -21,6 +21,10 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -5202,7 +5206,27 @@ $Label.ISSP_AMS_LS_Sole_Owner)</formula>
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
+                <fullName>10 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3-days</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Daily</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fortnightly - Bi-Monthly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Monthly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Weekly</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -5890,7 +5914,27 @@ $Label.ISSP_AMS_LS_Sole_Owner)</formula>
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
+                <fullName>10 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3-days</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Daily</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fortnightly - Bi-Monthly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Monthly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Weekly</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -6578,7 +6622,27 @@ $Label.ISSP_AMS_LS_Sole_Owner)</formula>
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
+                <fullName>10 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3-days</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Daily</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fortnightly - Bi-Monthly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Monthly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Weekly</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -7266,7 +7330,27 @@ $Label.ISSP_AMS_LS_Sole_Owner)</formula>
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
+                <fullName>10 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3-days</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Daily</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fortnightly - Bi-Monthly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Monthly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Weekly</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -7955,7 +8039,27 @@ $Label.ISSP_AMS_LS_Sole_Owner)</formula>
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
+                <fullName>10 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3-days</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Daily</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fortnightly - Bi-Monthly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Monthly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Weekly</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -8644,7 +8748,27 @@ $Label.ISSP_AMS_LS_Sole_Owner)</formula>
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
+                <fullName>10 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3-days</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Daily</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fortnightly - Bi-Monthly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Monthly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Weekly</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -9333,7 +9457,27 @@ $Label.ISSP_AMS_LS_Sole_Owner)</formula>
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
+                <fullName>10 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3-days</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Daily</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fortnightly - Bi-Monthly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Monthly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Weekly</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -10022,7 +10166,27 @@ $Label.ISSP_AMS_LS_Sole_Owner)</formula>
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
+                <fullName>10 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3-days</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Daily</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fortnightly - Bi-Monthly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Monthly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Weekly</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -11544,7 +11708,27 @@ $Label.ISSP_AMS_LS_Sole_Owner)</formula>
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
+                <fullName>10 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3-days</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Daily</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fortnightly - Bi-Monthly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Monthly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Weekly</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -12232,7 +12416,27 @@ $Label.ISSP_AMS_LS_Sole_Owner)</formula>
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
+                <fullName>10 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3-days</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Daily</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fortnightly - Bi-Monthly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Monthly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Weekly</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -14321,6 +14525,33 @@ $Label.ISSP_AMS_LS_Sole_Owner)</formula>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Remittance_frequency__c</picklist>
+            <values>
+                <fullName>10 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3-days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Daily</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fortnightly - Bi-Monthly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Monthly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Weekly</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Wholly_managed_by_this_Head_Office__c</picklist>
             <values>
                 <fullName>No</fullName>
@@ -14960,7 +15191,27 @@ $Label.ISSP_AMS_LS_Sole_Owner)</formula>
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
+                <fullName>10 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3-days</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Daily</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fortnightly - Bi-Monthly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Monthly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Weekly</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -16478,7 +16729,27 @@ $Label.ISSP_AMS_LS_Sole_Owner)</formula>
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
+                <fullName>10 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3-days</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Daily</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fortnightly - Bi-Monthly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Monthly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Weekly</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
