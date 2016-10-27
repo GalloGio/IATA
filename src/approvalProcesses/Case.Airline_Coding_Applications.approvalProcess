@@ -3,6 +3,10 @@
     <active>true</active>
     <allowRecall>true</allowRecall>
     <allowedSubmitters>
+        <submitter>DistributionAirlineManagementHO</submitter>
+        <type>role</type>
+    </allowedSubmitters>
+    <allowedSubmitters>
         <submitter>farrella@iata.org</submitter>
         <type>user</type>
     </allowedSubmitters>
@@ -12,6 +16,10 @@
     </allowedSubmitters>
     <allowedSubmitters>
         <submitter>kalajil@iata.org</submitter>
+        <type>user</type>
+    </allowedSubmitters>
+    <allowedSubmitters>
+        <submitter>szajkod@iata.org</submitter>
         <type>user</type>
     </allowedSubmitters>
     <approvalPageFields>
