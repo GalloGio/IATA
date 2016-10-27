@@ -31,11 +31,11 @@ public class AMS_AccountTriggerHandler {
         disallowedSources.add('WebStar');
         disallowedSources.add('DataLoader');
         for(Account ag : accs){
-	if(!disallowedSources.contains(ag.Source_System__c))
-       	{
-		if(ag.Sector__c == AMS_Utils.SECTOR_PASSENGER || ag.Sector__c == AMS_Utils.SECTOR_CARGO){
+    if(!disallowedSources.contains(ag.Source_System__c))
+        {
+        if(ag.Sector__c == AMS_Utils.SECTOR_PASSENGER || ag.Sector__c == AMS_Utils.SECTOR_CARGO){
 
-			setCassNumberOnHO(ag);
+            setCassNumberOnHO(ag);
 
                     if(ag.Cass_Number__c!=null && ag.Cass_number__c.isNumeric()){
                         ag.Cass_Number__c = AMS_AgencyHelper.resizeNumericString(ag.Cass_Number__c,3);
@@ -177,7 +177,7 @@ public class AMS_AccountTriggerHandler {
                             String accountNewValue = String.valueOf(acct.get(fieldName));
                             String accountOldValue = String.valueOf(oldMap.get(acct.Id).get(fieldName));
 
-                            AMS_RecordCreatorWebservice.AccountChanges acctChange = new AMS_RecordCreatorWebservice.AccountChanges(accountFieldName,accountOldValue,accountNewValue);
+                            AMS_RecordCreatorWebservice.AccountChanges acctChange = new AMS_RecordCreatorWebservice.AccountChanges(accountFieldName,accountNewValue,accountOldValue);
 
                             accountChanges.add(acctChange);
                         }
@@ -257,17 +257,14 @@ public class AMS_AccountTriggerHandler {
 
         }
 
-        List<AMS_ChangeCodesHelper.ObjectChangesStruct> objectChanges = AMS_ChangeCodesHelper.convertAccountToObjectChanges(accountChanges);
-
-
-        AMS_ChangeCodesHelper.createAAChangeCodes( objectChanges, changeCodesToProcess, oscarsToProcess, accountsToProcess,false);
+        AMS_Utils.createAAChangeCodes(changeCodesToProcess, oscarsToProcess, accountsToProcess,false);
 
     }
 
     public class AccountChangesStruct {
 
-        public List<AMS_RecordCreatorWebservice.AccountChanges> changes{get;set;}
-        public Account acct{get;set;}
+        private List<AMS_RecordCreatorWebservice.AccountChanges> changes{get;set;}
+        private Account acct{get;set;}
 
         public AccountChangesStruct(List<AMS_RecordCreatorWebservice.AccountChanges> changes, Account acct){
 
@@ -397,7 +394,7 @@ public class AMS_AccountTriggerHandler {
     }
     
     
-	
+    
     /** This method is called to verify if the Account field changes should create a new record into AMS Agency Updates table. The scenarios are:
      *  1) Status__c changes => Create a new record
      *  2) Status__c DOES NOT change && another field value changes => Create a new record
