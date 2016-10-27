@@ -20,8 +20,6 @@
     <aura:handler event="c:AMP_IssueOrPriorityError" action="{!c.HandleIssueOrPriorityError}"/>
     
     <ltng:require styles="/resource/SLDS102/assets/styles/salesforce-lightning-design-system-ltng.css" />
-    <ltng:require scripts="{!join(',',
-                           $Resource.jQuery172)}"  afterScriptsLoaded="{!c.jsLoaded}" />
     
     <!-- <tr> -->
     <td  >
@@ -150,20 +148,7 @@
     <aura:renderIf isTrue="{!!v.isEditMode}">
         <td><ui:outputText value="{!v.issue.Name}"/></td>
         <td><ui:outputText value="{!v.issue.AM_Source_Text__c}"/></td>
-        <td>
-            <div class="slds-p-right--medium">
-                <ui:outputRichText value="{!v.issue.Details__c}" class="slds-truncate" aura:id="details"/>
-                
-                <aura:renderIf isTrue="{!v.issue.Details__c != null}">
-                    <button aura:id="show-more-button" class="slds-button slds-button--icon slds-m-around--xx-small show-more-button" onclick="{!c.showMore}" >
-                        <c:svg xlinkHref="{!$Resource.SLDS102 + '/assets/icons/utility-sprite/svg/symbols.svg#zoomin'}" class="slds-button__icon slds-button__icon--large" />
-                    </button>
-                    <button aura:id="show-less-button" class="slds-button slds-button--icon slds-hide show-more-button" onclick="{!c.showLess}" >
-                        <c:svg xlinkHref="{!$Resource.SLDS102 + '/assets/icons/utility-sprite/svg/symbols.svg#zoomout'}" class="slds-button__icon slds-button__icon--large" />
-                    </button>
-                </aura:renderIf>
-            </div>
-        </td>
+        <td><c:AMP_LongText text="{!v.issue.Details__c}" /></td>
         <td><ui:outputText value="{!v.issue.AM_Level_of_importance__c}"/></td>
         <!-- <td><ui:outputCheckbox value="{!v.issue.AM_Can_IATA_support_the_airline__c}" /></td> -->
         <td><ui:outputText value="{!v.issue.Status__c}"/></td>

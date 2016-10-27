@@ -150,7 +150,7 @@
         <referenceTo>User</referenceTo>
         <relationshipName>Products1</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>Lookup</type>
     </fields>
     <fields>
@@ -276,6 +276,7 @@
             </picklistValues>
             <sorted>true</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -365,6 +366,7 @@
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
@@ -477,6 +479,7 @@
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
@@ -520,9 +523,10 @@
       TEXT(Inventory_Status__c) = &quot;Out of stock&quot;, 
       NOT(ISBLANK(Expected_Availability_Date__c))
     )
-  ), 
+  ),
   Post_to_Ecommerce_Date__c &lt;= TODAY(),
-  NOT(ISBLANK(SAP_Material_Number__c))
+  NOT(ISBLANK(SAP_Material_Number__c)),
+  IF( (IEC_Parent_Product__c &lt;&gt; null &amp;&amp; IEC_Parent_Product__r.IEC_Product_Information__c &lt;&gt; null || IEC_Product_Information__c &lt;&gt; null), Sell_through_eCommerce__c, true)
 )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Display to eCommerce</label>
@@ -560,6 +564,7 @@
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -569,6 +574,16 @@
         <externalId>false</externalId>
         <label>Division</label>
         <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>EF_IATA_Ticket_Tax_Code__c</fullName>
+        <externalId>false</externalId>
+        <label>IATA Ticket Tax Code</label>
+        <length>8</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Text</type>
@@ -1206,6 +1221,7 @@
             </picklistValues>
             <sorted>true</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -1228,6 +1244,7 @@
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -1485,6 +1502,7 @@
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
@@ -1556,6 +1574,7 @@
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
@@ -1675,7 +1694,7 @@
         <fullName>IEC_Subscribe_to_Zuora__c</fullName>
         <description>Determine if to subscribe the product to Zuora on purchase</description>
         <externalId>false</externalId>
-        <formula>IF(ISBLANK(IEC_Parent_Product__c), Available_for_Subscription__c = true &amp;&amp; Is_Shippable__c != true, IEC_Parent_Product__r.Available_for_Subscription__c = true &amp;&amp; IEC_Parent_Product__r.Is_Shippable__c != true)</formula>
+        <formula>IF(ISBLANK(IEC_Parent_Product__c), Available_for_Subscription__c = true &amp;&amp; Is_Shippable__c != true &amp;&amp; CONTAINS(&apos;-030-031-032-033-034-035-036-037-038-039-&apos;, SAP_Media_Code__c), IEC_Parent_Product__r.Available_for_Subscription__c = true &amp;&amp; IEC_Parent_Product__r.Is_Shippable__c != true &amp;&amp; CONTAINS(&apos;-030-031-032-033-034-035-036-037-038-039-&apos;, IEC_Parent_Product__r.SAP_Media_Code__c))</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Subscribe to Zuora</label>
         <trackHistory>false</trackHistory>
@@ -1807,6 +1826,7 @@
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -1848,6 +1868,7 @@ IF(Name = &quot;ICH&quot;, HYPERLINK(&quot;https://iata--iccs.cs18.my.salesforce
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -2086,6 +2107,7 @@ IF(Name = &quot;ICH&quot;, HYPERLINK(&quot;https://iata--iccs.cs18.my.salesforce
             </picklistValues>
             <sorted>true</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -2137,6 +2159,7 @@ IF(Name = &quot;ICH&quot;, HYPERLINK(&quot;https://iata--iccs.cs18.my.salesforce
             </picklistValues>
             <sorted>true</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -2295,6 +2318,7 @@ IF(Name = &quot;ICH&quot;, HYPERLINK(&quot;https://iata--iccs.cs18.my.salesforce
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -2314,6 +2338,7 @@ IF(Name = &quot;ICH&quot;, HYPERLINK(&quot;https://iata--iccs.cs18.my.salesforce
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -2378,6 +2403,7 @@ IF(Name = &quot;ICH&quot;, HYPERLINK(&quot;https://iata--iccs.cs18.my.salesforce
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -2625,7 +2651,8 @@ The product will only appear on the Online Store when the date entered in this f
             </picklistValues>
             <sorted>true</sorted>
         </picklist>
-        <trackHistory>false</trackHistory>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
         <type>Picklist</type>
     </fields>
     <fields>
@@ -2637,7 +2664,7 @@ The product will only appear on the Online Store when the date entered in this f
         <referenceTo>User</referenceTo>
         <relationshipName>Products</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>Lookup</type>
     </fields>
     <fields>
@@ -2668,6 +2695,7 @@ The product will only appear on the Online Store when the date entered in this f
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -2718,6 +2746,7 @@ The product will only appear on the Online Store when the date entered in this f
             </picklistValues>
             <sorted>true</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -2884,6 +2913,7 @@ The product will only appear on the Online Store when the date entered in this f
             </picklistValues>
             <sorted>true</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -2932,6 +2962,7 @@ The product will only appear on the Online Store when the date entered in this f
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -2961,8 +2992,13 @@ The product will only appear on the Online Store when the date entered in this f
                 <fullName>Multilingual</fullName>
                 <default>false</default>
             </picklistValues>
+            <picklistValues>
+                <fullName>Russian</fullName>
+                <default>false</default>
+            </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -2989,6 +3025,7 @@ The product will only appear on the Online Store when the date entered in this f
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -3055,6 +3092,7 @@ The product will only appear on the Online Store when the date entered in this f
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>true</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
@@ -3257,6 +3295,7 @@ The product will only appear on the Online Store when the date entered in this f
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -3348,6 +3387,7 @@ The product will only appear on the Online Store when the date entered in this f
             </picklistValues>
             <sorted>true</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -3422,6 +3462,7 @@ The product will only appear on the Online Store when the date entered in this f
         <columns>PRODUCT2.CREATED_DATE</columns>
         <columns>PRODUCT2.LAST_UPDATE</columns>
         <columns>RCRM_Product__c</columns>
+        <columns>PRODUCT2.RECORD_TYPE</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>PRODUCT2.ACTIVE</field>
@@ -3666,7 +3707,7 @@ The product will only appear on the Online Store when the date entered in this f
         <filters>
             <field>PRODUCT2.NAME</field>
             <operation>equals</operation>
-            <value>GAD Single License for Non-Members</value>
+            <value>GAD Single License for Non-Members,Global Agency Directory</value>
         </filters>
         <label>GDP/GAD for Non Members</label>
         <language>en_US</language>
@@ -4133,6 +4174,22 @@ The product will only appear on the Online Store when the date entered in this f
         </filters>
         <label>RCRM Products</label>
         <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>samson</fullName>
+        <columns>PRODUCT2.NAME</columns>
+        <columns>SAP_Material_Number__c</columns>
+        <columns>Effective_From__c</columns>
+        <columns>Effective_To__c</columns>
+        <columns>SAP_Language_Code__c</columns>
+        <columns>Edition__c</columns>
+        <columns>Refinement_Language__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>CDS View</label>
+        <language>en_US</language>
+        <sharedTo>
+            <role>DirectSalesAssociateArea1</role>
+        </sharedTo>
     </listViews>
     <recordTypeTrackHistory>false</recordTypeTrackHistory>
     <recordTypes>
@@ -6042,6 +6099,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>German</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Russian</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -8193,6 +8254,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>German</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Russian</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -10492,6 +10557,7 @@ The product will only appear on the Online Store when the date entered in this f
         <lookupDialogsAdditionalFields>Activity_Code__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>Product_Segment__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>PRODUCT2.DESCRIPTION</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>EF_IATA_Ticket_Tax_Code__c</lookupDialogsAdditionalFields>
         <lookupPhoneDialogsAdditionalFields>PRODUCT2.NAME</lookupPhoneDialogsAdditionalFields>
         <lookupPhoneDialogsAdditionalFields>PRODUCT2.CUSTOMER_PRODUCT_ID</lookupPhoneDialogsAdditionalFields>
         <lookupPhoneDialogsAdditionalFields>PRODUCT2.DESCRIPTION</lookupPhoneDialogsAdditionalFields>

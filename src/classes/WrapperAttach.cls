@@ -28,6 +28,14 @@ global class WrapperAttach implements Comparable {
     public String viewURL {get;set;}
     public String fullName {get;set;}
     public Boolean isPublic {get;set;}
+
+    public String efCategory { get; set; }
+    public String efSubcategory { get; set; }
+    public String efSAPNumber { get; set; }
+    public Date efDocumentDate { get; set; }
+    public Date efExpiryDate { get; set; }
+    public Boolean efExpired { get; set; }
+    public Boolean efSkipValidation { get; set; }
     
     public ISSPAttachmentPermission__c permission {get;set;}
     public Attachment fileAttachment {get;set;}
@@ -95,6 +103,13 @@ global class WrapperAttach implements Comparable {
         this.viewURL = '';
         this.fullName = file.getFullName();
         this.isPublic = file.getIsPublic();
+        this.efCategory = file.getEFCategory();
+        this.efSubcategory = file.getEFSubcategory();
+        this.efDocumentDate = file.getEFDocumentDate();
+        this.efSAPNumber = file.getEFSAPNumber();
+        this.efExpiryDate = file.getEFExpiryDate();
+        this.efExpired = file.getEFExpired();
+        this.efSkipValidation = file.getEFSkipValidation();
     }
         
     private void setPermission() {

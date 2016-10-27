@@ -143,7 +143,7 @@ public class BatchCreateCasesFromPWCTest {
         Account account = new Account( Name = 'Test Account', AIMS_ID__c = aimsid, IATA_ISO_Country__c  = isoCountry.Id, Type = 'IATA Cargo Agent', Location_Type__c = 'HO');
         insert account;
 
-        Recordtype recordtypeStandardContact = [Select Id, DeveloperName From RecordType where Name like 'IATA Standard Contact' and sObjectType = 'Contact'];
+        Recordtype recordtypeStandardContact = [Select Id, DeveloperName From RecordType where Name like 'Standard' and sObjectType = 'Contact'];
         Contact contact = new Contact(
             RecordtypeId = recordtypeStandardContact.Id,
             Preferred_Language__c = language,

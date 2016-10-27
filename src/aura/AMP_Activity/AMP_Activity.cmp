@@ -85,37 +85,11 @@
                 </div>
             </td>
             <td><ui:outputText value="{!v.activity.Name}" class="slds-truncate"/></td>
-            <td>
-                <div class="slds-p-right--medium">
-                    <ui:outputRichText value="{!v.activity.Details__c}" class="slds-truncate" aura:id="details"/>
-                    
-                    <aura:renderIf isTrue="{!v.activity.Details__c != null}">
-                        <button aura:id="show-more-button" class="slds-button slds-button--icon slds-m-around--xx-small show-more-button" onclick="{!c.showMore}" >
-                            <c:svg xlinkHref="{!$Resource.SLDS102 + '/assets/icons/utility-sprite/svg/symbols.svg#zoomin'}" class="slds-button__icon slds-button__icon--large" />
-                        </button>
-                        <button aura:id="show-less-button" class="slds-button slds-button--icon slds-hide show-more-button" onclick="{!c.showLess}" >
-                            <c:svg xlinkHref="{!$Resource.SLDS102 + '/assets/icons/utility-sprite/svg/symbols.svg#zoomout'}" class="slds-button__icon slds-button__icon--large" />
-                        </button>
-                    </aura:renderIf>
-                </div>
-            </td>
+            <td><c:AMP_LongText text="{!v.activity.Details__c}" /></td>
             <td><ui:outputText value="{!v.activity.Status__c}" /></td>
             <td><ui:outputDate value="{!v.activity.Deadline__c}" class="slds-truncate"/></td>
             <td><ui:outputText value="{!v.activity.Account_Issue_or_Priority__r.Name}" /></td>
-            <td>
-                <div class="slds-p-right--medium">
-                    <ui:outputRichText value="{!v.activity.Benefits_to_Account__c}" class="slds-truncate" aura:id="benefits"/>
-                    
-                    <aura:renderIf isTrue="{!v.activity.Benefits_to_Account__c != null}">
-                        <button aura:id="show-more-benefits-button" class="slds-button slds-button--icon slds-m-around--xx-small show-more-button" onclick="{!c.showMoreBenefits}" >
-                            <c:svg xlinkHref="{!$Resource.SLDS102 + '/assets/icons/utility-sprite/svg/symbols.svg#zoomin'}" class="slds-button__icon slds-button__icon--large" />
-                        </button>
-                        <button aura:id="show-less-benefits-button" class="slds-button slds-button--icon slds-hide show-more-button" onclick="{!c.showLessBenefits}" >
-                            <c:svg xlinkHref="{!$Resource.SLDS102 + '/assets/icons/utility-sprite/svg/symbols.svg#zoomout'}" class="slds-button__icon slds-button__icon--large" />
-                        </button>
-                    </aura:renderIf>
-                </div>
-            </td>
+            <td><c:AMP_LongText text="{!v.activity.Benefits_to_Account__c}" /></td>
         </aura:set>
     </aura:if>
     <!-- </tr> -->

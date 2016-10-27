@@ -55,6 +55,7 @@ private class GenerateLateRemittanceCSVControllerTest {
         Date dToday = date.newInstance(2015,3,20); //date.today();
         DateTime dtNow = Datetime.newInstance(2015,3,20); // Datetime.now();
         
+        List <Case> csList = new List <Case> ();        
         // create an IFAP case, will be selected by the 3rd report when generating the CSV
         Case cs = new Case(recordtypeID = IFAPcaseRecordTypeID,
                           Status = 'Financial Security Requested',
@@ -79,8 +80,8 @@ private class GenerateLateRemittanceCSVControllerTest {
                           CS_Rep_Acc_DEF__c = UserInfo.getUserId(),
                           Update_AIMS_DEF__c = dtNow,
                           DEF_Withdrawal_Reason__c = 'Bank error');
-        insert cs;
-        
+        //insert cs;
+        csList.add(cs);
         // create a SIDRA case, that will be selected by the 2nd report when generating the CSV
         Case cs2 = new Case(recordtypeID = SIDRAcaseRecordTypeID,
                           Status = 'New',
@@ -97,7 +98,8 @@ private class GenerateLateRemittanceCSVControllerTest {
                           Late_Payment_Date__c = dToday.addDays(2),
                           Remittance_Period__c = '--',
                           DEF_Withdrawal_Reason__c = 'Bank error');
-        insert cs2;
+        //insert cs2;
+        csList.add(cs2);
         
         // create a SIDRA case, that will be selected by the 1st report when generating the CSV
         Case cs3 = new Case(recordtypeID = SIDRAcaseRecordTypeID,
@@ -115,7 +117,9 @@ private class GenerateLateRemittanceCSVControllerTest {
                           Late_Payment_Date__c = dToday.addDays(2),
                           Remittance_Period__c = '-',
                           IRR_Withdrawal_Reason__c = 'Bank Error');
-        insert cs3;
+        //insert cs3;
+        csList.add(cs3);
+        insert csList;
         
         
         

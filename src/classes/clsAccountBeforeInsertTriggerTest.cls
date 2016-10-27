@@ -7,7 +7,7 @@ private class clsAccountBeforeInsertTriggerTest {
     static testMethod void testAssessmentTemplateAssignation() {
         
         // get the IATA Standard Account record type
-        List<RecordType> accountRecordTypes = [Select r.Id, r.Name From RecordType r Where r.SobjectType  = 'Account' and r.Name = 'IATA Standard Account'];
+        List<RecordType> accountRecordTypes = [Select r.Id, r.Name From RecordType r Where r.SobjectType  = 'Account' and r.Name = 'Standard Account'];
         Id standardAccountRecordTypeId = null;
         
         if (accountRecordTypes != null && accountRecordTypes.size() > 0) {

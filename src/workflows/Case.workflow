@@ -1287,7 +1287,15 @@
             <type>user</type>
         </recipients>
         <recipients>
+            <recipient>ogandoi@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>paredesc@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>sanchezc@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -2915,6 +2923,33 @@
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
         <template>SCESIDRACases/DEF_DEFWITH01_DefaultWithdrawalProposedbyCM</template>
+    </alerts>
+    <alerts>
+        <fullName>SIDRA_IRIS_CLIENT_BALANCE</fullName>
+        <description>SIDRA_IRIS_CLIENT_BALANCE</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>SIDRA ACC &amp; Risk</recipient>
+            <type>caseTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>SIDRA ACC &amp; Risk &amp; LO</recipient>
+            <type>caseTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>SIDRA Approvals &amp; ACC &amp; Risk</recipient>
+            <type>caseTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>SIDRA LO &amp; RISK</recipient>
+            <type>caseTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>SIDRA RISK</recipient>
+            <type>caseTeam</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>unfiled$public/IRIS_Client_Balance</template>
     </alerts>
     <alerts>
         <fullName>SIDRA_IRRDEF02_IrregularityDefaultapprovedby2hoursMailtoRSESPTCY</fullName>
@@ -4783,7 +4818,7 @@
     <fieldUpdates>
         <fullName>DPCtoJOliver</fullName>
         <field>Product_Manager_ACR__c</field>
-        <lookupValue>oliverj@iata.org</lookupValue>
+        <lookupValue>kalasha@iata.org</lookupValue>
         <lookupValueType>User</lookupValueType>
         <name>DPCtoJOliver</name>
         <notifyAssignee>false</notifyAssignee>
@@ -5344,7 +5379,7 @@ IF(IsClosed, &quot;Closed&quot;, &quot;Open&quot;)</formula>
         <description>SIDRA</description>
         <field>Acc_IRR_leading_to_DEF__c</field>
         <formula>CASE( Region__c , 
-&quot;Europe&quot;, IF(OR(ISPICKVAL( BSPCountry__c, &quot;Hungary&quot; ),ISPICKVAL( BSPCountry__c, &quot;Switzerland &amp; Liechtenstein&quot; ),ISPICKVAL( BSPCountry__c, &quot;Poland&quot; )),6,4), &quot;Africa &amp; middle east&quot;,4, &quot;Asia &amp; pacific&quot;, IF(OR(ISPICKVAL( BSPCountry__c , &quot;Nepal&quot;), AND(ISPICKVAL( BSPCountry__c , &quot;India&quot;),ISPICKVAL( BSP_CASS__c ,&quot;BSP&quot;))), 6,4),&quot;China &amp; North Asia&quot;, IF(AND(ISPICKVAL( BSPCountry__c , &quot;People&apos;s republic of China&quot;),ISPICKVAL( BSP_CASS__c ,&quot;BSP&quot;)),10,4),&quot;Americas&quot;, 
+&quot;Europe&quot;, IF(AND(OR(ISPICKVAL( BSPCountry__c, &quot;Hungary&quot; ),ISPICKVAL( BSPCountry__c, &quot;Switzerland &amp; Liechtenstein&quot; ),ISPICKVAL( BSPCountry__c, &quot;Poland&quot; )),ISPICKVAL( BSP_CASS__c ,&quot;BSP&quot;)),6,4), &quot;Africa &amp; middle east&quot;,4, &quot;Asia &amp; pacific&quot;, IF(OR(ISPICKVAL( BSPCountry__c , &quot;Nepal&quot;), AND(ISPICKVAL( BSPCountry__c , &quot;India&quot;),ISPICKVAL( BSP_CASS__c ,&quot;BSP&quot;))), 6,4),&quot;China &amp; North Asia&quot;, IF(AND(ISPICKVAL( BSPCountry__c , &quot;People&apos;s republic of China&quot;),ISPICKVAL( BSP_CASS__c ,&quot;BSP&quot;)),10,4),&quot;Americas&quot;, 
 
 IF(ISPICKVAL( BSP_CASS__c ,&quot;CASS&quot;), 4, IF(OR(ISPICKVAL( BSPCountry__c , &quot;Argentina&quot;),ISPICKVAL( BSPCountry__c , &quot;Uruguay&quot;),ISPICKVAL( BSPCountry__c , &quot;Paraguay&quot;)),8,6)),-1 
 )</formula>
@@ -12687,7 +12722,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
-            <value>12/19/2013 6:00 PM</value>
+            <value>12/20/2013</value>
         </criteriaItems>
         <description>SIDRA</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
@@ -13442,7 +13477,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         </actions>
         <active>true</active>
         <description>SIDRA</description>
-        <formula>AND( NOT(SIDRA_workflow_flag__c), RecordType.Name = &quot;SIDRA&quot;, OR(AND(ISPICKVAL(Total_Irregularities__c,&quot;4&quot;), Acc_IRR_leading_to_DEF__c = 4), AND(ISPICKVAL(Total_Irregularities__c,&quot;6&quot;), Acc_IRR_leading_to_DEF__c = 6), AND(ISPICKVAL(Total_Irregularities__c,&quot;8&quot;), Acc_IRR_leading_to_DEF__c = 8), AND(ISPICKVAL(Total_Irregularities__c,&quot;10&quot;), Acc_IRR_leading_to_DEF__c = 10), AND( REI_Previous_12_Months_CASS_only__c , ispickval( Region__c ,&quot;europe&quot;))))</formula>
+        <formula>AND( NOT(SIDRA_workflow_flag__c), RecordType.Name = &quot;SIDRA&quot;, OR(AND(ISPICKVAL(Total_Irregularities__c,&quot;4&quot;), Acc_IRR_leading_to_DEF__c = 4),  AND(ISPICKVAL(Total_Irregularities__c,&quot;6&quot;), Acc_IRR_leading_to_DEF__c = 6),  AND(ISPICKVAL(Total_Irregularities__c,&quot;8&quot;), Acc_IRR_leading_to_DEF__c = 8),  AND(ISPICKVAL(Total_Irregularities__c,&quot;10&quot;), Acc_IRR_leading_to_DEF__c = 10),  AND( REI_Previous_12_Months_CASS_only__c , ispickval( Region__c ,&quot;europe&quot;))))</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -17017,6 +17052,17 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
             <value>Israel</value>
         </criteriaItems>
         <description>SCE</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>SIDRA_IRIS_Client_Balance</fullName>
+        <actions>
+            <name>SIDRA_IRIS_CLIENT_BALANCE</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <description>Sending notifications to ARM when R&amp;S update the IRIS Client balance</description>
+        <formula>AND ((RecordType.Name = &quot;SIDRA&quot;), AND(NOT(ISBLANK(IRIS_Client_Balance__c))))</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>

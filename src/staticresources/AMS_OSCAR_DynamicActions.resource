@@ -9,6 +9,7 @@ var dyn_functions = {
                 var result2;
                 var result3;
                 var bUpdate = false;
+                var createNewChangeCode = true;
                 var sResult = '';
                 if (r == true) {
                     
@@ -57,21 +58,24 @@ var dyn_functions = {
                         sResult = '- IATA code already generated \n\r';
                     }
 
-                    if (recordsFlag[0].Flag_IATACode_Formula__c == 'true' && recordsCC.length == 0)
-                        sforce.apex.execute("AMS_OSCAR_Webservice", "createChangeCodeNEW", {oscarId: argList[2]});
 
                     if (records.length>0 && recordsFlag[0].Flag_IATACode_Formula__c == 'true' && records[0].Flag_Data_to_Account__c == 'false') {
                         result2 = sforce.apex.execute("AMS_OSCAR_Webservice", "copyDataToAccount", {oscarId: argList[2]});
                         if(result2 != 'OK'){
                             sResult = sResult + '- Move Data To Account - Failed to copy data to Account. Please contact your Administrator.\n(Error: ' + result2 +')\n\r';
+                            createNewChangeCode = false;
                         }else{
                             records[0].Flag_Data_to_Account__c = 'true';
                             bUpdate = true;
                             sResult = sResult + '- Move Data To Account - Success!\n\r';
                         }
+
                     }else{
                         sResult = sResult + '- Move Data To Account - ByPassed! \n\r';
                     }
+
+                    if (createNewChangeCode && recordsFlag[0].Flag_IATACode_Formula__c == 'true' && recordsCC.length == 0)
+                        sforce.apex.execute("AMS_OSCAR_Webservice", "createChangeCodeNEW", {oscarId: argList[2]});
                
                     if (records.length>0 && recordsFlag[0].Flag_IATACode_Formula__c == 'true' && records[0].Flag_Data_to_Account__c == 'true' 
                             && records[0].Flag_Data_to_SAPECC__c == 'false') {

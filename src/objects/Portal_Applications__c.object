@@ -314,7 +314,8 @@ Name
       &quot;Simplified Interline Settlement&quot;, $Label.ISSP_SIS_1_Description,
       &quot;SIS Help Desk&quot;, $Label.ISSP_SIS_2_Description, 
       &quot;SIS&quot;, $Label.ISSP_SIS_3_Description, 
-      &quot;Payment Link&quot;, $Label.ISSP_Payment_Link_Description, 
+      &quot;Payment Link&quot;, $Label.ISSP_Payment_Link_Description,
+      &quot;Standards Setting Workspace&quot;, $Label.Standards_Setting_Workspace,
       &quot;&quot;
       )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -339,6 +340,7 @@ Name
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -369,6 +371,7 @@ Name
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
         <visibleLines>5</visibleLines>
@@ -412,6 +415,7 @@ Name
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
         <visibleLines>5</visibleLines>
@@ -419,39 +423,35 @@ Name
     <fields>
         <fullName>Visible__c</fullName>
         <externalId>false</externalId>
-        <formula>OR(
-   AND(
-      Agency__c = true, 
-      CONTAINS($User.Customer_type__c,&quot;Agency&quot;)
-   ),
-   AND(
-      Not_ICH_Airline__c = true,
-      CONTAINS($User.Customer_type__c,&quot;Airline&quot;),
-      NOT(CONTAINS($User.Customer_type__c,&quot;ICH&quot;))
-   ),
-   AND(
-      ICH_Airline__c = true,
-      CONTAINS($User.Customer_type__c,&quot;Airline&quot;),
-      CONTAINS($User.Customer_type__c,&quot;ICH&quot;)
-   ),
-   AND(
-      GSA__c = true,
-      CONTAINS($User.Customer_type__c,&quot;GSA&quot;)
-   ),
-    AND(
-      GSSA__c = true,
-      CONTAINS($User.Customer_type__c,&quot;GSSA&quot;)
-   ),
-   AND(
-      Name = &quot;Resource Center&quot;,
-      CONTAINS($UserRole.Name ,&quot;General Public&quot;)
-   ),
-   AND(
-      Name = &quot;Standards Setting Workspace&quot;,
-      NOT CONTAINS(LOWER($UserRole.Name) ,&quot;general public&quot;)
-   ),
-   Name = &quot;Payment Link&quot;,
-   Name = &quot;Resource Center&quot;
+        <formula>OR( 
+AND( 
+Agency__c = true, 
+CONTAINS($User.Customer_type__c,&quot;Agency&quot;) 
+), 
+AND( 
+Not_ICH_Airline__c = true, 
+CONTAINS($User.Customer_type__c,&quot;Airline&quot;), 
+NOT(CONTAINS($User.Customer_type__c,&quot;ICH&quot;)) 
+), 
+AND( 
+ICH_Airline__c = true, 
+CONTAINS($User.Customer_type__c,&quot;Airline&quot;), 
+CONTAINS($User.Customer_type__c,&quot;ICH&quot;) 
+), 
+AND( 
+GSA__c = true, 
+CONTAINS($User.Customer_type__c,&quot;GSA&quot;) 
+), 
+AND( 
+GSSA__c = true, 
+CONTAINS($User.Customer_type__c,&quot;GSSA&quot;) 
+), 
+AND( 
+Name = &quot;Resource Center&quot;, 
+CONTAINS($UserRole.Name ,&quot;General Public&quot;) 
+), 
+Name = &quot;Payment Link&quot;, 
+Name = &quot;Resource Center&quot; 
 )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Visible</label>

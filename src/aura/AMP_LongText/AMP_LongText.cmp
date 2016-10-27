@@ -1,0 +1,10 @@
+<aura:component >
+    <aura:attribute name="text" type="String" />
+    <aura:attribute name="truncate" type="Boolean" default="true" />
+	<ui:outputRichText value="{!v.text}" class="{!v.truncate==true ? 'slds-truncate'  :  ''}" aura:id="text" />
+
+    <aura:renderIf isTrue="{!v.text != null}">
+        <ui:outputText value="[show more]" click="{!c.showMore}" aura:id="show-more-button" class="link"/>
+        <ui:outputText value="[show less]" click="{!c.showLess}" aura:id="show-less-button" class="link slds-hide"/>
+    </aura:renderIf>
+</aura:component>

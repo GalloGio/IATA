@@ -366,6 +366,12 @@ public with sharing class IFAP_BusinessRules {
             if (caseStatus == SCF)
                 if (oldCaseStatus == QI_REJECTED || oldCaseStatus == FINANCIAL_STATEMENTS_UPLOADED)
                     return true;
+
+            if(caseStatus == QI_REQUEST_APPROVED || caseStatus == QI_REJECTED){ //TD - INC276565
+                if(oldCaseStatus == QI_REQUEST_PENDING_APPROVAL){
+                    return true;
+                }
+            }
         }
         /*// default value is false ...*/
         System.debug('** Default Response -- This status change is not valid! **');
@@ -536,7 +542,7 @@ public with sharing class IFAP_BusinessRules {
      */
     public static Boolean assignAssessmentTemplateToAccountsWhereMissing(Integer maxLimit) {
 
-        List<RecordType> accountRecordTypes = [Select r.Id, r.Name From RecordType r Where r.SobjectType  = 'Account' and r.Name = 'IATA Standard Account'];
+        List<RecordType> accountRecordTypes = [Select r.Id, r.Name From RecordType r Where r.SobjectType  = 'Account' and r.Name = 'Standard Account'];
         Account[] listAccountToAssign = [Select a.Id, a.Name, a.Type, a.BillingCountry, a.Assessment_Template__c From Account a where a.Assessment_Template__c = null and a.RecordTypeId = :accountRecordTypes.get(0).Id limit :maxLimit];
 
         for (Account a : listAccountToAssign) {

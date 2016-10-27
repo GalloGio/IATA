@@ -24,10 +24,14 @@ after update, before delete, before insert, before update) {
         ISSP_FillTopParent.accountsAfterDeleteTopParent(trigger.oldMap);
     }
     else if(trigger.isBefore && trigger.isUpdate){
-        acctToUpdate = // Get accts to update 
-            ISSP_FillTopParent.getAcctsToUpdate(trigger.newMap, trigger.oldMap);
-        // Update the accounts:
-        ISSP_FillTopParent.accountsBeforeUpdateTopParent(acctToUpdate, trigger.oldMap, trigger.newMap);
+        system.debug('CHECK OUT TopParentBeforeUpdate');
+        if(!AMS_AgencyRelationshipTriggerHandler.AMS_HierarchyProcess){
+            system.debug('CHECK IN TopParentBeforeUpdate');
+            acctToUpdate = // Get accts to update 
+                ISSP_FillTopParent.getAcctsToUpdate(trigger.newMap, trigger.oldMap);
+            // Update the accounts:
+            ISSP_FillTopParent.accountsBeforeUpdateTopParent(acctToUpdate, trigger.oldMap, trigger.newMap);
+        }
     }
     
         

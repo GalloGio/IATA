@@ -2223,6 +2223,7 @@ Received from AIMS and needed in synchronization file but never displayed and up
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -2245,6 +2246,7 @@ Received from AIMS and needed in synchronization file but never displayed and up
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -2277,6 +2279,7 @@ Received from AIMS and needed in synchronization file but never displayed and up
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
@@ -2312,6 +2315,7 @@ Received from AIMS and needed in synchronization file but never displayed and up
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -2386,6 +2390,7 @@ Received from AIMS and needed in synchronization file but never displayed and up
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -2461,8 +2466,8 @@ Received from AIMS and needed in synchronization file but never displayed and up
     <fields>
         <fullName>AM_Job_Title_English__c</fullName>
         <externalId>false</externalId>
-        <inlineHelpText>The English translation of the job title (only if Job Title is given in another language)</inlineHelpText>
-        <label>Job Title - English</label>
+        <inlineHelpText>The English translation of the title (only if Title is given in another language)</inlineHelpText>
+        <label>Title - English</label>
         <length>255</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -2768,6 +2773,7 @@ Received from AIMS and needed in synchronization file but never displayed and up
             </picklistValues>
             <sorted>true</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>10</visibleLines>
@@ -2993,6 +2999,7 @@ IF(Membership_Main_Contact__c,IMAGE(&quot;/resource/Main_Contact_image&quot; ,&q
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>10</visibleLines>
@@ -3049,6 +3056,7 @@ IF(Membership_Main_Contact__c,IMAGE(&quot;/resource/Main_Contact_image&quot; ,&q
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>true</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -3087,6 +3095,7 @@ IF(Membership_Main_Contact__c,IMAGE(&quot;/resource/Main_Contact_image&quot; ,&q
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -3245,6 +3254,7 @@ IF(Membership_Main_Contact__c,IMAGE(&quot;/resource/Main_Contact_image&quot; ,&q
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
@@ -4357,6 +4367,7 @@ IF(Membership_Main_Contact__c,IMAGE(&quot;/resource/Main_Contact_image&quot; ,&q
             </picklistValues>
             <sorted>true</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -5414,6 +5425,7 @@ IF(Account.IATACode__c != &apos;&apos;
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -5486,6 +5498,7 @@ IF(Account.IATACode__c != &apos;&apos;
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -5568,6 +5581,7 @@ IF(Account.IATACode__c != &apos;&apos;
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>3</visibleLines>
@@ -5615,6 +5629,7 @@ IF(Account.IATACode__c != &apos;&apos;
             </picklistValues>
             <sorted>true</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -5653,6 +5668,82 @@ IF(Account.IATACode__c != &apos;&apos;
         <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>EF_Account_Type__c</fullName>
+        <description>E&amp;F CRM Project. (EF-1042) Flag an account as an E&amp;F account
+Formula field that copies the E&amp;F Type.</description>
+        <externalId>false</externalId>
+        <formula>TEXT (Account.EF_Type__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>E&amp;F Account Type</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>EF_Role__c</fullName>
+        <externalId>false</externalId>
+        <globalPicklist>EF_Role</globalPicklist>
+        <label>E&amp;F Role</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>MultiselectPicklist</type>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
+        <fullName>EF_Services_Used__c</fullName>
+        <externalId>false</externalId>
+        <label>E&amp;F Services Used</label>
+        <picklist>
+            <picklistValues>
+                <fullName>BDG</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>E&amp;F Customer Portal</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Efleet</fullName>
+                <default>false</default>
+            </picklistValues>
+            <restrictedPicklist>true</restrictedPicklist>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>MultiselectPicklist</type>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
+        <fullName>EF_Signatory__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>E&amp;F Signatory</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>EF_Status__c</fullName>
+        <externalId>false</externalId>
+        <label>E&amp;F Status</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Active</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Inactive</fullName>
+                <default>false</default>
+            </picklistValues>
+            <restrictedPicklist>true</restrictedPicklist>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
     </fields>
     <fields>
         <fullName>Email</fullName>
@@ -5697,6 +5788,7 @@ IF(Account.IATACode__c != &apos;&apos;
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -5747,6 +5839,7 @@ IF(Account.IATACode__c != &apos;&apos;
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -5777,6 +5870,7 @@ IFAP Application.</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -5816,6 +5910,10 @@ IFAP Application.</description>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>IT</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>Legal</fullName>
                 <default>false</default>
             </picklistValues>
@@ -5824,7 +5922,7 @@ IFAP Application.</description>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>None</fullName>
+                <fullName>Media</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -5851,8 +5949,9 @@ IFAP Application.</description>
                 <fullName>Training</fullName>
                 <default>false</default>
             </picklistValues>
-            <sorted>false</sorted>
+            <sorted>true</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>3</visibleLines>
@@ -5972,6 +6071,7 @@ IFAP Application.</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>10</visibleLines>
@@ -5999,6 +6099,7 @@ IFAP Application.</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -6104,6 +6205,7 @@ IFAP Application.</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -6223,6 +6325,7 @@ IFAP Application.</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
@@ -6278,6 +6381,7 @@ IFAP Application.</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
@@ -6330,6 +6434,7 @@ TotalRows-Successes-Errors</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -6366,6 +6471,7 @@ TotalRows-Successes-Errors</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
@@ -6393,6 +6499,7 @@ TotalRows-Successes-Errors</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
@@ -6424,6 +6531,7 @@ TotalRows-Successes-Errors</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
@@ -6455,6 +6563,7 @@ TotalRows-Successes-Errors</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>5</visibleLines>
@@ -6729,6 +6838,7 @@ TotalRows-Successes-Errors</description>
             </picklistValues>
             <sorted>true</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>5</visibleLines>
@@ -6875,6 +6985,7 @@ TotalRows-Successes-Errors</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -6936,6 +7047,7 @@ TotalRows-Successes-Errors</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
@@ -6989,6 +7101,7 @@ TotalRows-Successes-Errors</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -7022,15 +7135,7 @@ TotalRows-Successes-Errors</description>
         <label>Job Function</label>
         <picklist>
             <picklistValues>
-                <fullName>Gen.Management</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Technical</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Commercial</fullName>
+                <fullName>Aeropolitical</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -7038,27 +7143,7 @@ TotalRows-Successes-Errors</description>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Finance</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Other</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Legal</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Operations</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Safety</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Aeropolitical</fullName>
+                <fullName>Commercial</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -7066,7 +7151,23 @@ TotalRows-Successes-Errors</description>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>Finance</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Gen.Management</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>Human Resources</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>IT</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Legal</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -7074,23 +7175,36 @@ TotalRows-Successes-Errors</description>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>Media</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Operations</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Safety</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>Security&amp; Facilitation</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Technical</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>Training</fullName>
                 <default>false</default>
             </picklistValues>
-            <picklistValues>
-                <fullName>Media</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>IT</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
+            <sorted>true</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
@@ -7098,9 +7212,7 @@ TotalRows-Successes-Errors</description>
     <fields>
         <fullName>Membership_Main_Contact__c</fullName>
         <defaultValue>false</defaultValue>
-        <description>This box serves as a flag to show whether the contact represents the main contact for the airline. Used for the Account Management project.</description>
         <externalId>false</externalId>
-        <inlineHelpText>Shows whether the contact represents the main contact for the whole airline</inlineHelpText>
         <label>Main Contact</label>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
@@ -7138,6 +7250,7 @@ TotalRows-Successes-Errors</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
@@ -7165,6 +7278,7 @@ TotalRows-Successes-Errors</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
@@ -7192,6 +7306,7 @@ TotalRows-Successes-Errors</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
@@ -7491,6 +7606,7 @@ TotalRows-Successes-Errors</description>
             </picklistValues>
             <sorted>true</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -7531,6 +7647,7 @@ TotalRows-Successes-Errors</description>
             </picklistValues>
             <sorted>true</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -7573,6 +7690,7 @@ TotalRows-Successes-Errors</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -7632,6 +7750,7 @@ TotalRows-Successes-Errors</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -8418,6 +8537,7 @@ TotalRows-Successes-Errors</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>10</visibleLines>
@@ -8444,6 +8564,26 @@ TotalRows-Successes-Errors</description>
         <label>Revenue Confirmation</label>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>SIS_Contact_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>SIS Contact Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>User</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Super User</fullName>
+                <default>false</default>
+            </picklistValues>
+            <restrictedPicklist>true</restrictedPicklist>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
     </fields>
     <fields>
         <fullName>SIS_ID__c</fullName>
@@ -8590,6 +8730,7 @@ TotalRows-Successes-Errors</description>
             </picklistValues>
             <sorted>true</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>3</visibleLines>
@@ -8643,6 +8784,7 @@ TotalRows-Successes-Errors</description>
             </picklistValues>
             <sorted>true</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>5</visibleLines>
@@ -8902,6 +9044,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>3</visibleLines>
@@ -8957,6 +9100,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -9015,6 +9159,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -9064,6 +9209,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>true</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -9118,6 +9264,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
@@ -9159,6 +9306,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -9213,6 +9361,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -9289,6 +9438,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>true</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -9323,6 +9473,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>true</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -9428,6 +9579,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -11059,6 +11211,32 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>EF_Services_Used__c</picklist>
+            <values>
+                <fullName>BDG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>E%26F Customer Portal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Efleet</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>EF_Status__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inactive</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Email_Status__c</picklist>
             <values>
                 <fullName>Bad Email</fullName>
@@ -11658,6 +11836,17 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>SIS_Contact_Type__c</picklist>
+            <values>
+                <fullName>Super User</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>User</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Sales_Region__c</picklist>
             <values>
                 <fullName>ASIA</fullName>
@@ -11860,7 +12049,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
     </recordTypes>
     <recordTypes>
         <fullName>IATAStandardContact</fullName>
-        <active>true</active>
+        <active>false</active>
         <description>Used for all standard Contacts</description>
         <label>IATA Standard Contact</label>
         <picklistValues>
@@ -12216,6 +12405,32 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </values>
             <values>
                 <fullName>Show</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>EF_Services_Used__c</picklist>
+            <values>
+                <fullName>BDG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>E%26F Customer Portal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Efleet</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>EF_Status__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inactive</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -12895,6 +13110,17 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>SIS_Contact_Type__c</picklist>
+            <values>
+                <fullName>Super User</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>User</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Sales_Region__c</picklist>
             <values>
                 <fullName>ASIA</fullName>
@@ -13461,6 +13687,32 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>EF_Services_Used__c</picklist>
+            <values>
+                <fullName>BDG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>E%26F Customer Portal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Efleet</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>EF_Status__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inactive</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Email_Status__c</picklist>
             <values>
                 <fullName>Bad Email</fullName>
@@ -14060,6 +14312,17 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </values>
             <values>
                 <fullName>9%2E South America</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SIS_Contact_Type__c</picklist>
+            <values>
+                <fullName>Super User</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>User</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -14598,6 +14861,32 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>EF_Services_Used__c</picklist>
+            <values>
+                <fullName>BDG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>E%26F Customer Portal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Efleet</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>EF_Status__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inactive</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Email_Status__c</picklist>
             <values>
                 <fullName>Bad Email</fullName>
@@ -15197,6 +15486,17 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </values>
             <values>
                 <fullName>9%2E South America</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SIS_Contact_Type__c</picklist>
+            <values>
+                <fullName>Super User</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>User</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -15748,6 +16048,32 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </values>
             <values>
                 <fullName>Show</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>EF_Services_Used__c</picklist>
+            <values>
+                <fullName>BDG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>E%26F Customer Portal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Efleet</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>EF_Status__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inactive</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -16455,6 +16781,17 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>SIS_Contact_Type__c</picklist>
+            <values>
+                <fullName>Super User</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>User</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Sales_Region__c</picklist>
             <values>
                 <fullName>ASIA</fullName>
@@ -17022,6 +17359,32 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </values>
             <values>
                 <fullName>Show</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>EF_Services_Used__c</picklist>
+            <values>
+                <fullName>BDG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>E%26F Customer Portal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Efleet</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>EF_Status__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inactive</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -17701,6 +18064,17 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>SIS_Contact_Type__c</picklist>
+            <values>
+                <fullName>Super User</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>User</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Sales_Region__c</picklist>
             <values>
                 <fullName>ASIA</fullName>
@@ -18179,6 +18553,32 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </values>
             <values>
                 <fullName>Show</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>EF_Services_Used__c</picklist>
+            <values>
+                <fullName>BDG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>E%26F Customer Portal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Efleet</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>EF_Status__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inactive</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -18838,6 +19238,17 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </values>
             <values>
                 <fullName>9%2E South America</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SIS_Contact_Type__c</picklist>
+            <values>
+                <fullName>Super User</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>User</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -20410,6 +20821,32 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>EF_Services_Used__c</picklist>
+            <values>
+                <fullName>BDG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>E%26F Customer Portal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Efleet</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>EF_Status__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inactive</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Email_Status__c</picklist>
             <values>
                 <fullName>Bad Email</fullName>
@@ -20498,7 +20935,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
                 <default>false</default>
             </values>
             <values>
-                <fullName>None</fullName>
+                <fullName>Media</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -21139,6 +21576,17 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </values>
             <values>
                 <fullName>9%2E South America</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SIS_Contact_Type__c</picklist>
+            <values>
+                <fullName>Super User</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>User</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -22777,6 +23225,32 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>EF_Services_Used__c</picklist>
+            <values>
+                <fullName>BDG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>E%26F Customer Portal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Efleet</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>EF_Status__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inactive</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Email_Status__c</picklist>
             <values>
                 <fullName>Bad Email</fullName>
@@ -22857,6 +23331,10 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
                 <default>false</default>
             </values>
             <values>
+                <fullName>IT</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Legal</fullName>
                 <default>false</default>
             </values>
@@ -22865,7 +23343,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
                 <default>false</default>
             </values>
             <values>
-                <fullName>None</fullName>
+                <fullName>Media</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -23616,6 +24094,17 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </values>
             <values>
                 <fullName>9%2E South America</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SIS_Contact_Type__c</picklist>
+            <values>
+                <fullName>Super User</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>User</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -25298,6 +25787,91 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>EF_Role</picklist>
+            <values>
+                <fullName>Account Manager</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Accounts Payable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Accounts Receivable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Debt Management</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Dispute Management</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Finance %28Other%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>General Management</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Invoicing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Operations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Reporting</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Revenue Accounting</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sales %26 Marketing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Technical Support</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>EF_Services_Used__c</picklist>
+            <values>
+                <fullName>BDG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>E%26F Customer Portal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Efleet</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>EF_Status__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inactive</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Email_Status__c</picklist>
             <values>
                 <fullName>Bad Email</fullName>
@@ -25378,6 +25952,10 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
                 <default>false</default>
             </values>
             <values>
+                <fullName>IT</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Legal</fullName>
                 <default>false</default>
             </values>
@@ -25386,7 +25964,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
                 <default>false</default>
             </values>
             <values>
-                <fullName>None</fullName>
+                <fullName>Media</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -26236,6 +26814,17 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>SIS_Contact_Type__c</picklist>
+            <values>
+                <fullName>Super User</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>User</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Sales_Region__c</picklist>
             <values>
                 <fullName>ASIA</fullName>
@@ -26662,6 +27251,14 @@ ISCHANGED(ISSP_Contact_Name__c )
         <errorMessage>You cannot change your own status</errorMessage>
     </validationRules>
     <validationRules>
+        <fullName>Contact_email_change_BSPlink</fullName>
+        <active>true</active>
+        <description>prevents changes of email address for BSPlink users.</description>
+        <errorConditionFormula>aND(S_BSPlink__c&lt;&gt;0,ischanged(Email),$User.Username&lt;&gt;&quot;oscarl@iata.org&quot;,$User.Username&lt;&gt;&quot;rovedar@iata.org&quot;,
+NOT(Contains($Profile.Name, &quot;System Administrator&quot;)))</errorConditionFormula>
+        <errorMessage>Changing a BSPlink user&apos;s email may cause problems with SSO.If the user&apos;s access to BSPlink is to be switched to another email, do the changes in BSPlink. Otherwise if the contact is changing their email, please post a comment on the portal chatter group</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>Email_Update_Date_Must_be_Added</fullName>
         <active>false</active>
         <errorConditionFormula>AND(ISCHANGED( Email_Status__c ), OR( Email_Status_Update__c    &lt;    TODAY(), ISNULL( Email_Status_Update__c  )))</errorConditionFormula>
@@ -26672,7 +27269,13 @@ ISCHANGED(ISSP_Contact_Name__c )
         <fullName>IFAP_Contact_Under_Branch_Account</fullName>
         <active>true</active>
         <description>Prevent creation of IFAP contacts under Branch Account.</description>
-        <errorConditionFormula>IF($RecordType.Name  = &apos;IATA Standard Contact&apos;  &amp;&amp;  Financial_Assessment_Contact__c  &amp;&amp; (NOT(ISPICKVAL(Account.Location_Type__c , &apos;AO&apos;))  &amp;&amp; NOT(ISPICKVAL(Account.Location_Type__c , &apos;HO&apos;)) &amp;&amp; NOT(ISPICKVAL(Account.Location_Type__c , &apos;BR&apos;))) , true ,false)</errorConditionFormula>
+        <errorConditionFormula>IF($RecordType.Name  = &apos;IATA Standard Contact&apos;  &amp;&amp;  
+        Financial_Assessment_Contact__c  &amp;&amp; 
+        (NOT(ISPICKVAL(Account.Location_Type__c , &apos;AO&apos;)) &amp;&amp; 
+         NOT(ISPICKVAL(Account.Location_Type__c , &apos;HO&apos;)) &amp;&amp; 
+         NOT(ISPICKVAL(Account.Location_Type__c , &apos;BR&apos;)) &amp;&amp;
+         NOT(ISPICKVAL(Account.Type , &apos;Import Agent&apos;)) &amp;&amp;
+         NOT(ISPICKVAL(Account.Category__c , &apos;Import Agent&apos;))), true ,false)</errorConditionFormula>
         <errorMessage>A contact can be a &quot;Financial Assessment Contact&quot; only if the Account types is HO, AO or BR .</errorMessage>
     </validationRules>
     <validationRules>
@@ -26729,8 +27332,37 @@ Account.Is_Branch_Abroad__c = &apos;No&apos; &amp;&amp;
         <errorMessage>Only an admin can assign a Financial Assessment contact to a branch agency (BR).</errorMessage>
     </validationRules>
     <webLinks>
+        <fullName>APXTConga4__Conga_Composer_OAuth</fullName>
+        <availability>online</availability>
+        <description>*** DO NOT USE THIS BUTTON ON A PAGE LAYOUT *** 
+
+OAuth buttons require additional setup. Please see the Composer Installation Guide for more details.
+
+COPY THE URL FROM THIS BUTTON and paste it into your own custom button or link. Then add optional parameters to finely tune the button&apos;s behavior. See the Composer Configuration Guide for details.</description>
+        <displayType>button</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>660</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>Conga Composer (OAuth)</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>/apex/APXTConga4__Conga_Composer
+?id={!Contact.Id}</url>
+        <width>900</width>
+    </webLinks>
+    <webLinks>
         <fullName>APXTConga4__Conga_Mail_Merge</fullName>
         <availability>online</availability>
+        <description>*** DO NOT USE THIS BUTTON ON A PAGE LAYOUT *** 
+
+COPY THE URL FROM THIS BUTTON and paste it into your own custom button or link. Then add optional parameters to finely tune the button&apos;s behavior. See the Conga Configuration Guide for details.</description>
         <displayType>button</displayType>
         <encodingKey>UTF-8</encodingKey>
         <hasMenubar>false</hasMenubar>
@@ -26739,13 +27371,16 @@ Account.Is_Branch_Abroad__c = &apos;No&apos; &amp;&amp;
         <height>450</height>
         <isResizable>false</isResizable>
         <linkType>url</linkType>
-        <masterLabel>Conga Merge</masterLabel>
+        <masterLabel>Conga Composer</masterLabel>
         <openType>newWindow</openType>
         <position>none</position>
         <protected>false</protected>
         <showsLocation>false</showsLocation>
         <showsStatus>false</showsStatus>
-        <url>https://www.appextremes.com/apps/Conga/PointMerge.aspx?sessionId={!API.Session_ID}&amp;serverUrl={!API.Partner_Server_URL_80}&amp;id={!Contact.Id}</url>
+        <url>https://composer.congamerge.com
+?sessionId={!API.Session_ID}
+&amp;serverUrl={!API.Partner_Server_URL_290}
+&amp;id={!Contact.Id}</url>
         <width>625</width>
     </webLinks>
     <webLinks>
@@ -27271,6 +27906,58 @@ myuser={!User.Id}</url>
         <openType>sidebar</openType>
         <protected>false</protected>
         <url>https://members.s6.exacttarget.com/Integration/SalesforceUI/SFResubscribe.aspx?subtype=Contact&amp;sfid={!Contact.Id}&amp;sessid={!API.Session_ID}&amp;sessurl={!API.Partner_Server_URL_60}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>SAP_Airline_Request</fullName>
+        <availability>online</availability>
+        <description>E&amp;F Request to SAP to create airline account</description>
+        <displayType>button</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>SAP Airline Request</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>https://composer.congamerge.com
+?sessionId={!API.Session_ID}
+&amp;serverUrl={!API.Partner_Server_URL_290}
+&amp;id={!Contact.Id}
+&amp;templateId=a87w00000009Nkg
+&amp;AC0=0
+&amp;DS7=3</url>
+    </webLinks>
+    <webLinks>
+        <fullName>SIS_Airline_Request</fullName>
+        <availability>online</availability>
+        <description>E&amp;F SIS Request to create SIS Code for Airline</description>
+        <displayType>button</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>SIS Airline Request</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>https://composer.congamerge.com
+?sessionId={!API.Session_ID}
+&amp;serverUrl={!API.Partner_Server_URL_290}
+&amp;id={!Contact.Id}
+&amp;templateId=a87w00000009Nkl
+&amp;AC0=0
+&amp;DS7=3</url>
     </webLinks>
     <webLinks>
         <fullName>ScheduleFollowup</fullName>

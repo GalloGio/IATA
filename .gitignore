@@ -22,7 +22,6 @@ src/layouts/Case-IDFS\ Order of\ AWBs\ %28Europe%2FItaly%29.layout
 src/layouts/Case-IDFS\ Training\ %28Europe%2FItaly%29.layout
 src/layouts/Case-IDFS\ myIATA\ %28Europe%2FSCE%29.layout
 src/layouts/Case-MACS\ Customer\ Care\ Layout.layout
-src/profiles/Admin.profile
 Referenced Packages/
 .settings/com.salesforce.ide.core.prefs
 salesforce.schema
@@ -64,7 +63,6 @@ config
 build/SfApexDocs
 SfApexDocLog.txt
 .project
-src/profiles/Admin.profile
 Referenced Packages/
 .settings/com.salesforce.ide.core.prefs
 salesforce.schema

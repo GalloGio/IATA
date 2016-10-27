@@ -949,6 +949,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>IRIS_Client_Balance__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>CS_Rep_ACC_TER__c</field>
             </layoutItems>
         </layoutColumns>
@@ -1210,6 +1214,7 @@
     <relatedLists>
         <fields>CASES.CASE_NUMBER</fields>
         <fields>Case_Type__c</fields>
+        <fields>CASES.RECORDTYPE</fields>
         <fields>CASES.SUBJECT</fields>
         <fields>CASES.PRIORITY</fields>
         <fields>CASES.CREATED_DATE</fields>

@@ -168,7 +168,46 @@
         <type>Text</type>
         <unique>false</unique>
     </fields>
+    <fields>
+        <fullName>Would_you_like_to_keep_your_subscription__c</fullName>
+        <externalId>false</externalId>
+        <label>Would you like to keep your subscription</label>
+        <picklist>
+            <picklistValues>
+                <fullName>I would like to keep my subscription to AIRS/CAIRS bulletin</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Please cancel my subscription to AIRS/CAIRS bulletin</fullName>
+                <default>false</default>
+            </picklistValues>
+            <restrictedPicklist>true</restrictedPicklist>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
     <label>TTY Setup</label>
+    <listViews>
+        <fullName>AMS_e_bulletin</fullName>
+        <columns>NAME</columns>
+        <columns>Airline_2_letter_code__c</columns>
+        <columns>Airline_Name__c</columns>
+        <columns>Contact_email__c</columns>
+        <columns>Country__c</columns>
+        <columns>First_Name__c</columns>
+        <columns>Last_Name__c</columns>
+        <columns>Would_you_like_to_keep_your_subscription__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Would_you_like_to_keep_your_subscription__c</field>
+            <operation>notEqual</operation>
+        </filters>
+        <label>AMS e bulletin</label>
+        <language>en_US</language>
+    </listViews>
     <listViews>
         <fullName>All</fullName>
         <columns>NAME</columns>

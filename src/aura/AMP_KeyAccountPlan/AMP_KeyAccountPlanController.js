@@ -1,9 +1,9 @@
 ({
     doInit : function(component, event, helper) {
-        
+
         helper.filterView(component);
         helper.getTasks(component);
-        
+
     },
     setActivityId : function(component, event, helper) {
         var idx = event.getSource().get("id");
@@ -14,7 +14,7 @@
         filterView = 'history';
         component.set("v.filterView", filterView);
         helper.filterView(component);
-        
+
         var currentButton = component.find("currentButton");
         $A.util.removeClass(currentButton, "slds-button--brand");
         var historyButton = component.find("historyButton");
@@ -25,7 +25,7 @@
         filterView = 'current';
         component.set("v.filterView", filterView);
         helper.filterView(component);
-        
+
         var currentButton = component.find("currentButton");
         $A.util.addClass(currentButton, "slds-button--brand");
         var historyButton = component.find("historyButton");
@@ -34,9 +34,9 @@
     addActivity : function(component, event, helper ){
         var activities = component.get("v.activities");
         var newActivity = JSON.parse(JSON.stringify(component.get("v.newActivity")));
-        
+
         activities.push(newActivity);
-        
+
         component.set("v.activities", activities);
     },
     handleUpdateActivity : function(component, event, helper) {
@@ -45,7 +45,7 @@
         var isNewLine = false;
         if(activity.Id === undefined) isNewLine = true;
         if (activity.Account__c === 'accountId') { activity.Account__c = component.get("v.accountId");}
-                
+
         var action = component.get("c.upsertActivity");
         action.setParams({
             "activity": activity
@@ -58,38 +58,38 @@
                 var activities = component.get("v.activities");
                 activities[index] = activity; // replace the line with the one returned from the database
                 component.set("v.activities", activities);
-                
+
                 helper.filterView(component);
             }
             else if (state === "ERROR") {
                 var errors = response.getError();
                 console.log('errors: ' + JSON.stringify(errors));
-                
+
                 console.log("firing error event for index [" + index + "] and activity id [" + activity.Id + "] w message " + errors[0].pageErrors[0].message);
-                
+
                 var errorEvent = $A.get("e.c:AMP_KAPActivityError");
                 errorEvent.setParams({ "errorMessage": errors[0].pageErrors[0].message, "index":index, "activityId": activity.Id });
                 errorEvent.fire();
-                
+
             }
-            
+
         });
-        
+
         $A.enqueueAction(action);
     },
     handleDeleteActivity : function(component, event, helper) {
         console.log("handleDeleteActivity");
         var activity = event.getParam("issue");
         var activities = component.get("v.activities");
-        
+
         if(activity.Id === undefined) {
-            
+
             activities.pop(); // the last item of the list is the unsaved, so we can pop()
             component.set("v.activities", activities);
-            
+
         }
         else {
-            
+
             var action = component.get("c.deleteActivity");
             action.setParams({
                 "activity": activity
@@ -105,7 +105,7 @@
                         }
                     }
                     component.set("v.activities", items);
-                                        
+
                     helper.filterView(component);
                 }
             });
@@ -113,9 +113,9 @@
         }
     },
     handleShowMilestones : function(component, event, helper) {
-        
+
         var activity = event.getParam("issue");
-        
+
         if(activity === '') {
             component.set("v.isActivityMode", true);
             helper.filterView(component);
@@ -123,21 +123,21 @@
         if(activity.Id !== '') {
             component.set("v.activity", activity);
             component.set("v.activityId", activity.Id);
-            
+
             helper.getActivityName(component);
-            
-            var bu = component.get("v.milestonesAll");
+
+            var bu = component.get("v.milestonesBackup");
             var items = new Array();
             for(var i = 0; i < bu.length; i++) {
                 if(activity.Id === bu[i].WhatId) {
                     items.push(bu[i]);
                 }
             }
-            
+
             component.set("v.milestones", items);
             component.set("v.isActivityMode", false);
         }
-        
+
     },
     setAM : function(component, event, helper) {
         component.set("v.isActivityMode", false);

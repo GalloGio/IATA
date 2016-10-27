@@ -53,7 +53,7 @@
 			//
 			// 	}
 			// }
-				component.set("v.milestonesAll", milestones);
+				component.set("v.milestonesBackup", milestones);
 		});
 		$A.enqueueAction(action);
 	},

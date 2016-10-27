@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Notification e-mail HTML sent when a contact with active E&amp;F status becomes a non active contact</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>IATADynamicSkyLetterhead</letterhead>
+    <name>E&amp;F_Contact Deactivation Notification</name>
+    <style>freeForm</style>
+    <subject>E&amp;F contact {!Contact.Name} of the account {!Account.Name} has been deactivated</subject>
+    <textOnly>Note that this is an automatic message. Please do not respond to this email.
+
+
+Dear E&amp;F member,
+
+Please note that the E&amp;F contact {!Contact.Name} of the account {!Account.Name} has been deactivated (new status: {!Contact.Status__c}).
+
+
+Best regards,
+
+IATA E&amp;F Services</textOnly>
+    <type>html</type>
+</EmailTemplate>

@@ -232,7 +232,13 @@ public with sharing class AMP_KeyAccountPlanExtension {
 		isNewLine = true;
 		isEditMode = true;
 		lsObjectives = getObjectives(accountId);
-		lsObjectivesActive.add(newObjective);
+		// lsObjectivesActive.add(newObjective);
+
+		List<Objective__c> newList = new List<Objective__c>();
+		newList.add(newObjective);
+		newList.addAll(lsObjectivesActive);
+		lsObjectivesActive.clear();
+		lsObjectivesActive.addAll(newList);
 	}
 
 	public void newTask() {
@@ -253,7 +259,13 @@ public with sharing class AMP_KeyAccountPlanExtension {
 				tmpTask.Subject = '';
 				tmpTask.ActivityDate = System.Today();
 				tmpTask.RecordTypeId = taskRecordTypeId;
-				lsMilestones.add(tmpTask);
+
+				List<Task> newList = new List<Task>();
+				newList.add(tmpTask);
+				newList.addAll(lsMilestones);
+				lsMilestones.clear();
+				lsMilestones.addAll(newList);
+				// lsMilestones.add(tmpTask);
 				isTaskEditMode = true;
 			}
 			else {

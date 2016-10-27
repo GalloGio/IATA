@@ -1,0 +1,5 @@
+Dear User,
+
+The document ({!AmazonFile__c.Name}) attached to the following record ({!AmazonFile__c.sObject_Id__c}) expired.
+
+Best regards.

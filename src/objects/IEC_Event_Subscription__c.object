@@ -162,11 +162,6 @@
     </fields>
     <label>IEC Event Subscription</label>
     <listViews>
-        <fullName>All</fullName>
-        <filterScope>Everything</filterScope>
-        <label>All</label>
-    </listViews>
-    <listViews>
         <fullName>All1</fullName>
         <columns>Subscriber__c</columns>
         <columns>Product_Number__c</columns>
@@ -175,6 +170,23 @@
         <filterScope>Everything</filterScope>
         <label>All</label>
         <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>CDS_Subscriptions_View</fullName>
+        <columns>NAME</columns>
+        <columns>Customer_Type__c</columns>
+        <columns>Subscriber__c</columns>
+        <columns>Quantity__c</columns>
+        <columns>Product_Number__c</columns>
+        <columns>Start_Date__c</columns>
+        <columns>Material_Number__c</columns>
+        <columns>OBJECT_ID</columns>
+        <filterScope>Everything</filterScope>
+        <label>CDS Subscriptions View</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>MACSDirectSalesAll</group>
+        </sharedTo>
     </listViews>
     <nameField>
         <displayFormat>S-{000000}</displayFormat>

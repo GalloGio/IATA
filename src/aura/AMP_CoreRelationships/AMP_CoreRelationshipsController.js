@@ -34,6 +34,7 @@ console.log(JSON.stringify(account));
 							 if(participants[i].Local_Governance__r.Name === groupNames[j]) {
 								found = true;
 								var pWrapper = {
+									GroupId : participants[i].Local_Governance__c,
 									GroupName : participants[i].Local_Governance__r.Name,
 									Role : participants[i].Participant_Type__c.replace(/^\d+\s/,''),
 									Salutation : participants[i].Contact__r.Salutation,

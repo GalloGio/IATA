@@ -13,7 +13,7 @@ public class AcctNoDupe {
     public static map<integer, Account> PerformSearch(map<Integer,Account> TriggerNewMap,  map<Integer, Case> CasePerInt){
         
                 
-            final set<string> REASONSFORCREATIONTOEXCLUDE = new set<string>{'Created by customer','Headquarter is missing','Airline Headquarter applying for a code'};
+            final set<string> REASONSFORCREATIONTOEXCLUDE = new set<string>{'Created by customer','Headquarter is missing','Airline Headquarter applying for a code','New for E&F'};
             
             final string IATA_Airline = 'IATA_Airline';
             

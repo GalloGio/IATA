@@ -3,14 +3,20 @@ public class IfapRest_Test {
 
 static void createAmazonCredential() {
         insert new UtilityCS__c(name='ifapBatchSize', Value__c = '5');
-
+        
         Amazon_Cred__c Amazon_Cred =  new Amazon_Cred__c(
             name = IfapToolManager.IFAPCONFIGARATIONNAME,
             Prod_Configuration__c = IfapToolManager.IFAPCONFIGARATIONNAME,
             Dev_Configuration__c = IfapToolManager.IFAPCONFIGARATIONNAME
         );
-        insert Amazon_Cred;
-
+        Amazon_Cred__c GenericAttach =  new Amazon_Cred__c(name = 'GenericAttach', Prod_Configuration__c = IfapToolManager.IFAPCONFIGARATIONNAME, Dev_Configuration__c = IfapToolManager.IFAPCONFIGARATIONNAME);
+        Amazon_Cred__c recycleBin =  new Amazon_Cred__c(name = 'RecycleBin', Prod_Configuration__c = IfapToolManager.IFAPCONFIGARATIONNAME, Dev_Configuration__c = IfapToolManager.IFAPCONFIGARATIONNAME);
+        List<Amazon_Cred__c> creds = new List<Amazon_Cred__c>();
+        creds.add(Amazon_Cred);
+        creds.add(GenericAttach);
+        creds.add(recycleBin);
+        insert creds;
+        
         AWSKey__c credential = new AWSKey__c(
             name = IfapToolManager.IFAPCONFIGARATIONNAME,
             Key__c = 'asd',

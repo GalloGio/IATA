@@ -1,0 +1,6 @@
+<table border="0" cellpadding="5" width="550" cellspacing="5" height="400" >
+<tr valign="top" height="400" >
+<td tEditID="c1r1" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
+<![CDATA[<p dir="ltr" style="margin-right: 0px;"><font face="arial">Dear Colleagues,</font></p><p dir="ltr" style="margin-right: 0px;"><font face="arial"><br></font></p><p dir="ltr" style="margin-right: 0px;"><font face="arial">The contract renewal for the opportunity &nbsp;{!Contract.Current_Opportunity__c} has been started by {!User.Name}.</font></p><p dir="ltr" style="margin-right: 0px;"><font face="arial"><br></font></p><p dir="ltr" style="margin-right: 0px;"><font face="arial">You are receiving this notification because you are either the sales manger or the product manager related to this opportunity. As the renewal can be started independently of your role and renewal responsibility, please check you don't have any concerns with this renewal.</font></p><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><br></div>]]></td>
+</tr>
+</table>

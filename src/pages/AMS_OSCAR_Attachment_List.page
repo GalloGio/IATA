@@ -1,9 +1,11 @@
 <apex:page controller="AMS_OSCAR_Attachments" title="Manage Attachments" >
     <!-- <c:GenericAttachmentList sobjectId="{!oscCase.Id}" uploaderWizard="AMS_File" sourceSystem="Internal" scrollable="true"/> -->
     
-    <apex:includeScript value="/support/console/20.0/integration.js"/>
+    <apex:includeScript value="/support/console/30.0/integration.js"/>
     <apex:includeScript value="{!$Resource.jquery2_1_4}"/>
     <apex:includeScript value="{!URLFOR($Resource.Tablesorter, 'jquery.tablesorter.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.jszip, '/jszip.min.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.jszip, '/zippack.js')}"/>
     <apex:stylesheet value="{!URLFOR($Resource.Tablesorter,'/themes/blue/style.css')}" />
 
     <c:Loading />
@@ -108,9 +110,15 @@
             return false;
         }
 
-        function redirect(page) {
-            window.top.location=page;
-            return false;
+        function redirect() {
+            //window.top.location=page;
+            //return false;
+            var redirectUrl = "/apex/transferattachmenttocase?id={!caseId}";
+            if (sforce.console.isInConsole()) {
+                srcUp(redirectUrl);
+            } else {
+                window.top.location=redirectUrl;
+            }
         }
 
         function refreshPage(){
@@ -167,6 +175,19 @@
                 } 
             });
         }
+        
+        function downloadZIP() {
+          startLoading();
+          AMS_OSCAR_Attachments.getAllExpiringLink("{!caseId}",function(result, event){
+          // alert(result);
+          try {
+            downloadAndZipFiles(result, "files.zip");
+          } catch (e) {
+            alert(e);
+          }
+          stopLoading();
+          }, {buffer: true, escape: false, timeout: 120000} );
+        }
     </script>
 
     <apex:form id="mainform" >
@@ -177,10 +198,11 @@
 <!--            BUTTONS -->
             <apex:pageblockButtons location="top" >
                 <c:UploadMultipleFileToAmazonButton sObjectId="{!caseId}" AmazonCredential="{!credentialName}" path="{!amazonPath}" uploaderWizard="AMS_File" sourceSystem="Internal"/>
-                <apex:commandButton value="{!$Label.Transfer_Attachments}" onclick="redirect('{!TransferAttachmentsUrl}');" immediate="true" />
+                <apex:commandButton value="{!$Label.Transfer_Attachments}" onclick="redirect();" immediate="true" />
                 <apex:commandButton value="{!$Label.Make_All_Public}" action="{!makeAllPublic}" oncomplete="refreshPage();" />
                 <apex:commandButton value="{!$Label.Make_All_Private}" action="{!makeAllPrivate}" oncomplete="refreshPage()" />
                 <apex:commandButton value="{!$Label.site.save}" action="{!updateAllAttach}" oncomplete="refreshPage()" styleClass="saveButton" />
+                <input type="button" class="btn" value="Download All Files" onclick="downloadZIP(); return false;"/>
             </apex:pageblockButtons>
 
             <apex:pageMessages />

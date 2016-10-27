@@ -46,6 +46,7 @@ public with sharing class IEC_ProductListController extends IEC_PageController
     public List<FilterWrapper> filters{get;set;}
 
     public String selectedFilters{get;set;}
+    public String pageNumber{get;set;}
 
 
     /**************************************************************************************************************

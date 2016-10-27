@@ -338,6 +338,7 @@ public class vfIECHistActiveSubscriptions_tst {
             //Instantiate Controller
             vfIECHistActiveSubscriptions pgCont = new vfIECHistActiveSubscriptions();
                     
+            Test.startTest();   //*** (Thai 2016-10-07) fix # of SOQL queries
             pgCont.sSelectedSubscriptionId = subscription.Id;
             pgCont.selectSubscription();
 
@@ -355,6 +356,7 @@ public class vfIECHistActiveSubscriptions_tst {
             // Test 004: ReNew Item
             Pagereference referenceRenew = pgCont.renewRatePlan();
             //system.assertNotEquals(referenceRenew, null);  //*** (Thai) commented for quickfix
+            Test.stopTest();   //*** (Thai 2016-10-07) fix # of SOQL queries
         }
 
         System.debug('Unit Test: Finish: TestSimilarProductsAndRenew');
@@ -382,6 +384,7 @@ public class vfIECHistActiveSubscriptions_tst {
             //Instantiate Controller
             vfIECHistActiveSubscriptions pgCont = new vfIECHistActiveSubscriptions();
                     
+            Test.startTest();   //*** (Thai 2016-10-07) fix # of SOQL queries
             pgCont.sSelectedSubscriptionId = subscription.Id;
             pgCont.selectSubscription();
 
@@ -391,6 +394,7 @@ public class vfIECHistActiveSubscriptions_tst {
 
             // Test 002: Make sure the Attachment ID has been loaded and match
             system.assertEquals(pgCont.sAttachTermsId, oAttachment.Id);
+            Test.stopTest();   //*** (Thai 2016-10-07) fix # of SOQL queries
         }
 
         System.debug('Unit Test: Finish: TestTermsAndConditions');

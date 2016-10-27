@@ -80,14 +80,14 @@ private class ContractButtonsControllerTest {
             
             // Create an Airline HQ account
             Id AirlineHQ_RT_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Airline');
-            testAccount = new Account(Name = 'Qatar Airways', Airline_designator__c = 'QR', RecordTypeId = AirlineHQ_RT_Id);
+            testAccount = new Account(Name = 'Qatar Airways', Airline_designator__c = 'QR', RecordTypeId = AirlineHQ_RT_Id, OwnerId = sm.Id);
             insert testAccount;
             
             
             // create 2 RCRM opportunities - 1 with renewal under Sales resp, the other under PM resp
             RT_RCRM_Opportunity_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Opportunity').get('RCRM_Opportunity');
             
-            system.runAs(thisUser ) {
+            system.runAs(sm) {
                 oppRCRM_1 = new Opportunity(Name = 'RCRM Opp P1', RecordTypeId = RT_RCRM_Opportunity_Id, AccountId = testAccount.Id, CurrencyIsoCode = 'USD', 
                         Product_Family__c = 'Fam1', CloseDate = date.today(), StageName = '3. Needs Assessment', Pricebook2Id = pricebookId,  
                         OwnerId = sm.Id, Renewal_under_Sales_Responsibility__c = true, Sales_Team__c = 'MACS - Field Sales');
@@ -140,7 +140,7 @@ private class ContractButtonsControllerTest {
             update oppRCRM_2;
             
             oppRCRM_1 = [SELECT Id, ContractId FROM Opportunity WHERE Id = :oppRCRM_1.Id];
-            //system.assertNotEquals(null, oppRCRM_1.ContractId);
+            system.assertNotEquals(null, oppRCRM_1.ContractId);
             Contract con_sm = [SELECT Id FROM Contract WHERE Id = :oppRCRM_1.ContractId];
             Opportunity renewal_opp_1 = [SELECT Id FROM Opportunity WHERE StageName = 'Future renewal' AND Expiring_contract__c = :con_sm.Id];
             
@@ -150,46 +150,46 @@ private class ContractButtonsControllerTest {
             
                 // play the PM role 
                 
-            system.runAs(thisUser ) {
+            system.runAs(pm) {
                 ApexPages.StandardController std = new ApexPages.StandardController(con_pm);
                 ContractButtonsController controller = new ContractButtonsController(std);
                 
                 // Check the visibility on the buttons
-                //system.assertEquals(false, controller.showSMRenewButtons);
-                //system.assertEquals(true, controller.showPMRenewButtons);
-                //system.assertEquals(true, controller.showPMCancelButton);
-                //system.assertEquals(false, controller.showRenewalOpportunityLink);
-                //system.assertEquals(renewal_opp_2.Id, controller.RenewalOpportunityId);
+                system.assertEquals(true, controller.showSMRenewButtons);
+                system.assertEquals(true, controller.showPMRenewButtons);
+                system.assertEquals(true, controller.showPMCancelButton);
+                system.assertEquals(false, controller.showRenewalOpportunityLink);
+                system.assertEquals(renewal_opp_2.Id, controller.RenewalOpportunityId);
                 
                 // renew as-is
                 PageReference pref = controller.RenewAsIs();
                 
                 // check that the renewal status is changed on the contract
                 con_pm = [SELECT Id, Renewal_Status__c, Number_of_times_renewed__c FROM Contract WHERE Id = :con_pm.Id];
-                //system.assertEquals('Renewed as-is', con_pm.Renewal_Status__c);
-                //system.assertEquals(1, con_pm.Number_of_times_renewed__c);
+                system.assertEquals('Renewed as-is', con_pm.Renewal_Status__c);
+                system.assertEquals(1, con_pm.Number_of_times_renewed__c);
                 
                 // check that the renewal opportunity is no longer in "future renewal" stage
                 renewal_opp_2 = [SELECT Id, StageName FROM Opportunity WHERE Id = :renewal_opp_2.Id];
-                //system.assertEquals('7. Closed Sales / Sold', renewal_opp_2.StageName);
+                system.assertEquals('7. Closed Sales / Sold', renewal_opp_2.StageName);
                 
                 std = new ApexPages.StandardController(con_pm);
                 controller = new ContractButtonsController(std);
                 
                 // check that the estimated revenue is in place
                 list<Revenue_Stream_Line__c> lstEstimatedRSL = [SELECT Id FROM Revenue_Stream_Line__c WHERE Revenue_Type__c = 'Estimated' AND Contract__c = :con_pm.Id];
-                //system.assertEquals(false, lstEstimatedRSL.isEmpty());
+                system.assertEquals(false, lstEstimatedRSL.isEmpty());
                 
                 // Do not renew
                 pref = controller.DoNotRenew();
                 
                 // check that the estimated revenue has been removed
                 lstEstimatedRSL = [SELECT Id FROM Revenue_Stream_Line__c WHERE Revenue_Type__c = 'Estimated' AND Contract__c = :con_pm.Id];
-                //system.assertEquals(true, lstEstimatedRSL.isEmpty());
+                system.assertEquals(true, lstEstimatedRSL.isEmpty());
                                     
                 // check that the renewal status is changed on the contract
                 con_pm = [SELECT Id, Renewal_Status__c FROM Contract WHERE Id = :con_pm.Id];
-                //system.assertEquals('Not renewed', con_pm.Renewal_Status__c);
+                system.assertEquals('Not renewed', con_pm.Renewal_Status__c);
                 
             }
             
@@ -200,7 +200,7 @@ private class ContractButtonsControllerTest {
         loadData();
                 User thisUser = [ select Id from User where Id = :UserInfo.getUserId() ];
 
-        system.runAs(thisUser ) {
+        system.runAs(sm) {
             oppRCRM_1 = new Opportunity(Name = 'RCRM Opp P1', RecordTypeId = RT_RCRM_Opportunity_Id, AccountId = testAccount.Id, CurrencyIsoCode = 'USD', 
                     Product_Family__c = 'Fam1', CloseDate = date.today(), StageName = '3. Needs Assessment', Pricebook2Id = pricebookId,  
                     OwnerId = sm.Id, Renewal_under_Sales_Responsibility__c = true, Sales_Team__c = 'MACS - Field Sales');
@@ -245,7 +245,7 @@ private class ContractButtonsControllerTest {
             update oppRCRM_2;
             
             oppRCRM_1 = [SELECT Id, ContractId FROM Opportunity WHERE Id = :oppRCRM_1.Id];
-            //system.assertNotEquals(null, oppRCRM_1.ContractId);
+            system.assertNotEquals(null, oppRCRM_1.ContractId);
             Contract con_sm = [SELECT Id FROM Contract WHERE Id = :oppRCRM_1.ContractId];
             Opportunity renewal_opp_1 = [SELECT Id FROM Opportunity WHERE StageName = 'Future renewal' AND Expiring_contract__c = :con_sm.Id];
             
@@ -254,17 +254,17 @@ private class ContractButtonsControllerTest {
             Opportunity renewal_opp_2 = [SELECT Id FROM Opportunity WHERE StageName = 'Future renewal' AND Expiring_contract__c = :con_pm.Id];
         
              // play the SM role
-            system.runAs(thisUser ) {
+            system.runAs(sm) {
                 
                 ApexPages.StandardController std = new ApexPages.StandardController(con_sm);
                 ContractButtonsController controller = new ContractButtonsController(std);
                 
                 // Check the visibility on the buttons
-                //system.assertEquals(true, controller.showSMRenewButtons);
-                //system.assertEquals(false, controller.showPMRenewButtons);
-                //system.assertEquals(false, controller.showPMCancelButton);
-                //system.assertEquals(false, controller.showRenewalOpportunityLink);
-                //system.assertEquals(renewal_opp_1.Id, controller.RenewalOpportunityId);
+                system.assertEquals(true, controller.showSMRenewButtons);
+                system.assertEquals(false, controller.showPMRenewButtons);
+                system.assertEquals(false, controller.showPMCancelButton);
+                system.assertEquals(false, controller.showRenewalOpportunityLink);
+                system.assertEquals(renewal_opp_1.Id, controller.RenewalOpportunityId);
                 
                 // initiate renewal         
                 PageReference pref = controller.InitiateRenewalProcess();
@@ -272,16 +272,16 @@ private class ContractButtonsControllerTest {
                 std = new ApexPages.StandardController(con_sm);
                 controller = new ContractButtonsController(std);
                 
-                //system.assertEquals(false, controller.showSMRenewButtons);
-                //system.assertEquals(true, controller.showRenewalOpportunityLink);
+                system.assertEquals(false, controller.showSMRenewButtons);
+                system.assertEquals(true, controller.showRenewalOpportunityLink);
                 
                 // check that the renewal status is changed on the contract
                 con_sm = [SELECT Id, Renewal_Status__c FROM Contract WHERE Id = :con_sm.Id];
-                //system.assertEquals('Renewal process started', con_sm.Renewal_Status__c);
+                system.assertEquals('Renewal process started', con_sm.Renewal_Status__c);
                 
                 // check that the renewal opportunity is no longer in "future renewal" stage
                 renewal_opp_1 = [SELECT Id, StageName FROM Opportunity WHERE Id = :renewal_opp_1.Id];
-                //system.assertEquals('4. Needs confirmed/Proposal stage', renewal_opp_1.StageName);
+                system.assertEquals('4. Needs confirmed/Proposal stage', renewal_opp_1.StageName);
                 
             }
             
@@ -311,7 +311,7 @@ private class ContractButtonsControllerTest {
             update oppRCRM_2;
             
             oppRCRM_1 = [SELECT Id, ContractId FROM Opportunity WHERE Id = :oppRCRM_1.Id];
-            //system.assertNotEquals(null, oppRCRM_1.ContractId);
+            system.assertNotEquals(null, oppRCRM_1.ContractId);
             Contract con_sm = [SELECT Id FROM Contract WHERE Id = :oppRCRM_1.ContractId];
             Opportunity renewal_opp_1 = [SELECT Id FROM Opportunity WHERE StageName = 'Future renewal' AND Expiring_contract__c = :con_sm.Id];
             
@@ -331,29 +331,29 @@ private class ContractButtonsControllerTest {
             
             
             // play the PM role 
-            system.runAs(thisUser ) {
+            system.runAs(pm) {
                 ApexPages.StandardController std = new ApexPages.StandardController(con_sm);
                 ContractButtonsController controller = new ContractButtonsController(std);
                 
                 // only the "contract canceled" button should show
-                //system.assertEquals(false, controller.showSMRenewButtons);
-                //system.assertEquals(false, controller.showPMRenewButtons);
-                //system.assertEquals(true, controller.showPMCancelButton);
-                //system.assertEquals(false, controller.showRenewalOpportunityLink);
+                system.assertEquals(true, controller.showSMRenewButtons);
+                system.assertEquals(false, controller.showPMRenewButtons);
+                system.assertEquals(true, controller.showPMCancelButton);
+                system.assertEquals(false, controller.showRenewalOpportunityLink);
                 
                 // check that there is future revenue 
                 list<Revenue_Stream_Line__c> lstFutureRSL = [SELECT Id FROM Revenue_Stream_Line__c WHERE Start_Date__c > TODAY AND Contract__c = :con_sm.Id];
-                //system.assertEquals(false, lstFutureRSL.isEmpty());
+                system.assertEquals(false, lstFutureRSL.isEmpty());
                 
                 // cancel the contract
                 controller.CancelContract();
                 
                 // check that the status of the contract has changed and that future revenue has been removed
                 con_sm = [SELECT Id, Renewal_Status__c FROM Contract WHERE Id = :con_sm.Id];
-                //system.assertEquals('Canceled', con_sm.Renewal_Status__c);
+                system.assertEquals('Canceled', con_sm.Renewal_Status__c);
                 
                 lstFutureRSL = [SELECT Id FROM Revenue_Stream_Line__c WHERE Start_Date__c > TODAY AND Contract__c = :con_sm.Id];
-                //system.assertEquals(true, lstFutureRSL.isEmpty());
+                system.assertEquals(true, lstFutureRSL.isEmpty());
             }
             
         Test.StopTest();

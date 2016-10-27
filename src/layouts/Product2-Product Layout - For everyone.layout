@@ -43,6 +43,14 @@
                 <behavior>Edit</behavior>
                 <field>Sales_Channel__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>SAP_Material_Number__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>EF_IATA_Ticket_Tax_Code__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -124,6 +132,9 @@
         <fields>CREATED_DATE</fields>
         <fields>OWNER.ALIAS</fields>
         <relatedList>ICCS_Product_Country__c.Product__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <relatedList>RelatedEntityHistoryList</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>true</showHighlightsPanel>

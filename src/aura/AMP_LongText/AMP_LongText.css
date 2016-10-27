@@ -1,0 +1,9 @@
+.THIS.link {
+    display: block;
+    cursor: pointer;
+    text-decoration: underline;
+}
+.THIS.popup {
+	max-width: 100%;
+	white-space: normal;
+}

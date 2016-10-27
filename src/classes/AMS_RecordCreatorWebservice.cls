@@ -276,7 +276,7 @@ global without sharing class AMS_RecordCreatorWebservice {
 
     private static AMS_Pax_Accreditation_Form__c fetchAccreditationObject(String accreditationId){
 
-        return [select Id, Notify_Change_Legal_Details__c, Notify_Change_Location__c, Notify_Change_Ownership__c, Scope_of_Change__c, Agency_Codes_Concerned__c from AMS_Pax_Accreditation_Form__c where Id = :accreditationId LIMIT 1];
+        return [select Id, Notify_Change_Legal_Details__c, Notify_Change_Location__c, Notify_Change_Ownership__c, Scope_of_Change__c, Agency_Codes_Concerned__c, Effective_Date_Of_Change__c from AMS_Pax_Accreditation_Form__c where Id = :accreditationId LIMIT 1];
 
     }
 

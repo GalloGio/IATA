@@ -144,8 +144,9 @@ trigger AMS_AddressTrigger on AMS_Address__c (after insert,   after update) {
             addToBeReportedOldPrimary.add(oldPrimaryAddress);
           }     
         }
-        if(Trigger.isAfter )
-            AMS_AgencyUpdateHelper.agencyUpdate(Trigger.new);
+        //FM - 22-09-2016 - stop creating "agency update" Records
+        //if(Trigger.isAfter )
+        //    AMS_AgencyUpdateHelper.agencyUpdate(Trigger.new);
         
         
         

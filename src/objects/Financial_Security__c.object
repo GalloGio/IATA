@@ -282,6 +282,7 @@ AND(ISPICKVAL(Region__c , &quot;China &amp; north Asia&quot;), ISPICKVAL(Securit
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -336,6 +337,7 @@ AND(ISPICKVAL(Region__c , &quot;China &amp; north Asia&quot;), ISPICKVAL(Securit
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -396,6 +398,7 @@ AND(ISPICKVAL(Region__c , &quot;China &amp; north Asia&quot;), ISPICKVAL(Securit
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -469,8 +472,13 @@ AND(ISPICKVAL(Region__c , &quot;China &amp; north Asia&quot;), ISPICKVAL(Securit
                 <fullName>Not Active yet</fullName>
                 <default>false</default>
             </picklistValues>
+            <picklistValues>
+                <fullName>Encashment in progress</fullName>
+                <default>false</default>
+            </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -583,6 +591,7 @@ AND(ISPICKVAL(Region__c , &quot;China &amp; north Asia&quot;), ISPICKVAL(Securit
             </picklistValues>
             <sorted>true</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -612,9 +621,12 @@ IMAGE(&quot;/servlet/servlet.FileDownload?file=015200000011tpf&quot;,&quot;Relea
 IF( ISPICKVAL( Security_Status__c , &quot;Expired&quot;),  
 IMAGE(&quot;/servlet/servlet.FileDownload?file=015200000011tpg&quot;,&quot;Expired&quot;,30,30),
 
+IF( ISPICKVAL( Security_Status__c , &quot;Encashment in progress&quot;),  
+IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000004RhqP&quot;,&quot;Encashment in progress&quot;,30,30),
+
 IF(ISPICKVAL( Security_Status__c , &quot;Close to Expiry Date&quot;), 
 IMAGE(&quot;/servlet/servlet.FileDownload?file=015200000011tph&quot;,&quot;Requested&quot;,30,30), &quot;error&quot;
-))))</formula>
+)))))</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Status image</label>
         <required>false</required>
@@ -2332,11 +2344,11 @@ ISPICKVAL(Security_Type__c,&quot;Bank Guarantee&quot;)
     <validationRules>
         <fullName>Region_must_be_informed_for_FS</fullName>
         <active>true</active>
-        <errorConditionFormula>AND( 
-NOT( ISPICKVAL( Region__c , &quot;Europe&quot;) ), 
-NOT( ISPICKVAL( Region__c , &quot;Africa &amp; Middle East&quot;) ), 
-NOT( ISPICKVAL( Region__c , &quot;Asia &amp; Pacific&quot;) ), 
-NOT( ISPICKVAL( Region__c , &quot;Americas&quot;) ), 
+        <errorConditionFormula>AND(
+NOT( ISPICKVAL( Region__c , &quot;Europe&quot;) ),
+NOT( ISPICKVAL( Region__c , &quot;Africa &amp; Middle East&quot;) ),
+NOT( ISPICKVAL( Region__c , &quot;Asia &amp; Pacific&quot;) ),
+NOT( ISPICKVAL( Region__c , &quot;Americas&quot;) ),
 NOT( ISPICKVAL( Region__c , &quot;China &amp; North Asia&quot;) )
 )</errorConditionFormula>
         <errorDisplayField>Region__c</errorDisplayField>
@@ -2383,7 +2395,7 @@ NOT( ISPICKVAL( Region__c , &quot;China &amp; North Asia&quot;) )
     <validationRules>
         <fullName>SARA_reception_information_mandatory</fullName>
         <active>true</active>
-        <errorConditionFormula>AND( ISNEW() , 
+        <errorConditionFormula>AND( ISNEW() ,
 OR( ISPICKVAL(Reasonforrequest__c, &quot;&quot;) ,  ISBLANK( Reception_Date__c ) , ISBLANK( Reception_Case__c )  ))</errorConditionFormula>
         <errorDisplayField>Account__c</errorDisplayField>
         <errorMessage>Please make sure that all the information regarding the reception of the security is filled in: Reception date, request reason and related case.</errorMessage>
@@ -2446,6 +2458,6 @@ NOT( ISPICKVAL(  Security_Type__c  , &quot;Financial Guarantee&quot;) )
         <protected>false</protected>
         <showsLocation>false</showsLocation>
         <showsStatus>false</showsStatus>
-        <url>https://www.appextremes.com/apps/Conga/pointMerge.aspx?sessionId={!API.Session_ID}&amp;serverUrl={!API.Partner_Server_URL_80}&amp;id={!Financial_Security__c.Id}&amp;fp0=1&amp;ds1=0&amp;ds5=0&amp;LG3=2&amp;OFN=IATA+Notification+Letter+-+{!Financial_Security__c.IATA_code__c}&amp;ds4=0&amp;ReportId=00O20000003q4lt</url>
+        <url>https://composer.congamerge.com/composer8/index.html?sessionId={!API.Session_ID}&amp;serverUrl={!API.Partner_Server_URL_290}&amp;id={!Financial_Security__c.Id}&amp;fp0=1&amp;ds1=0&amp;ds5=0&amp;LG3=2&amp;OFN=IATA+Notification+Letter+-+{!Financial_Security__c.IATA_code__c}&amp;ds4=0&amp;ReportId=00O20000003q4lt</url>
     </webLinks>
 </CustomObject>

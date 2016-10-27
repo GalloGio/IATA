@@ -9,7 +9,7 @@
 			});
 			action.setCallback(this, function(a) {
 				 var participants = a.getReturnValue();
-				 
+
 				 var state = a.getState();
 				 var ParticipantWrappers = new Array();
 				 if (component.isValid() && state === "SUCCESS") {
@@ -45,6 +45,7 @@
 						 var pWrapper = {
 							 Rowspan : rowspan,
                              Under : previousUnder != currentUnder ? currentUnder : '',
+							 GroupId : participants[i].Local_Governance__c,
 							 GroupName : participants[i].Local_Governance__r.Name,
 							 GroupOwner : ownerName,
 							 Mission : participants[i].Local_Governance__r.Mission__c,
@@ -58,8 +59,8 @@
                          previousUnder = currentUnder;
 					 }
 
-						component.set("v.participants", participants);
-						
+						// component.set("v.participants", participants);
+
 						component.set("v.ParticipantWrappers", ParticipantWrappers);
 
 				 }

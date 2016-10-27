@@ -1460,6 +1460,27 @@ Case description: {!Case.Description}
         <value>Download Invoice</value>
     </labels>
     <labels>
+        <fullName>EF_Account_Disallow_BA</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>E&amp;F Disallow Account Relationships</shortDescription>
+        <value>The selected Client or Airline has E&amp;F setting for &quot;Allow Airline Billing Agreements&quot; set to &quot;Not Allowed&quot;. Please change this before creating a new Billing Agreement or select a different Account.</value>
+    </labels>
+    <labels>
+        <fullName>EF_Currency_Not_In_Contract_Error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>E&amp;F Currency Not In Contract Error</shortDescription>
+        <value>The currency select needs to be present in the related Contract</value>
+    </labels>
+    <labels>
+        <fullName>EF_Line_Item_Not_In_Contract_Error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>E&amp;F Line Item Not In Contract Error</shortDescription>
+        <value>Can&apos;t select E&amp;F Material not present in the related Contract</value>
+    </labels>
+    <labels>
         <fullName>E_mail_to_Case_IS_Help_Desk</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -4021,7 +4042,7 @@ Your ID Card application manager has been informed of your request.</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ID Card Application Type Reissue</shortDescription>
-        <value>Replace</value>
+        <value>Reprint</value>
     </labels>
     <labels>
         <fullName>ID_Card_Application_Type_Renewal</fullName>
@@ -4035,7 +4056,7 @@ Your ID Card application manager has been informed of your request.</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ID Card Application Type Replacement</shortDescription>
-        <value>Change</value>
+        <value>Change of Agency</value>
     </labels>
     <labels>
         <fullName>ID_Card_Cannot_Update_Card_Err_Msg</fullName>
@@ -17741,7 +17762,7 @@ Also, the package has changed the setting to prevent the creation of Contacts an
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Response message</shortDescription>
-        <value>The attachments transfer operation completed with {0} success(es) and {1} error(s).\n\n&lt;a href=&quot;/{2}&quot;&gt;Click here&lt;/a&gt; to return to the case.&apos;</value>
+        <value>The attachments transfer operation completed with {0} success(es) and {1} error(s).\n\n&lt;a href=&quot;/{2}&quot; onClick=&quot;testCloseTab()&quot;&gt;Click here&lt;/a&gt; to return to the case.&apos;</value>
     </labels>
     <labels>
         <fullName>SF_Base_URL</fullName>
@@ -18035,7 +18056,7 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Signaturit Allowed Users</shortDescription>
-        <value>005w0000004ohsY;00520000000rfl7AAA;005w00000047RhzAAE;00520000001VbBNAA0;005w0000002te47AAA;00520000001WIUJ;00520000001Wo2s;00520000002PRqS;00520000002qSkO;005w0000003Z3il;00520000002Q7A4;005200000014b1i;00520000002OqCK;00520000000lGDb;005w00000048WJD;00520000000hdUI;00520000001UEA0;00520000001VhfB;00520000001WToeAAG;005w0000003VyOAAA0</value>
+        <value>005w0000004ohsY;00520000000rfl7AAA;005w00000047RhzAAE;00520000001VbBNAA0;005w0000002te47AAA;00520000001WIUJ;00520000001Wo2s;00520000002PRqS;00520000002qSkO;005w0000003Z3il;00520000002Q7A4;005200000014b1i;00520000002OqCK;00520000000lGDb;005w00000048WJD;00520000000hdUI;00520000001UEA0;00520000001VhfB;00520000001WToeAAG;005w0000003VyOAAA0;00520000002rzLU;00520000001Wfth;00520000002Q38Y;005w0000004gSUJ;005w0000003X6vd;005w0000004BVdv</value>
     </labels>
     <labels>
         <fullName>Signaturit_Endpoint</fullName>
@@ -18067,6 +18088,15 @@ title,Title,Name</value>
         <protected>false</protected>
         <shortDescription>Source IP</shortDescription>
         <value>Source IP</value>
+    </labels>
+    <labels>
+        <fullName>Standards_Setting_Workspace</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Standards Setting Workspace</shortDescription>
+        <value>IATA is building a new collaboration environment for standards development activities. This is primarily intended to support the activities under the Passenger and Cargo Services Conferences. The project is in its pilot phase and it is not yet active for most standards groups. Initial pilot participants from selected groups will be invited to join in the coming months. &lt;/br&gt;
+
+&lt;b&gt;&lt;u&gt;WARNING:&lt;/b&gt;&lt;/u&gt; This service is being piloted and is specific to the following groups: PADIS EDIFACT RES &amp; APTS, Interline EMD Baggage Group and Cargo Operations and Technology Board (COTB) with 2 subgroups (Cargo XML Task Force (CXMLTF) and Piece Level Tracking Task Force (PLTTF). If you are not part of these groups, please do not use this service.</value>
     </labels>
     <labels>
         <fullName>Start_date</fullName>

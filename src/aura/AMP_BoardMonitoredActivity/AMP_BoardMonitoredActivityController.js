@@ -49,49 +49,5 @@
 
 		component.set("v.isEditMode", false);
 
-	},
-	showMore : function(component, event, helper) {
-		var details = component.find("details");
-		$A.util.removeClass(details, 'slds-truncate');
-		$A.util.addClass(details, 'popup');
-        
-        var showMore = component.find("show-more-button");
-        $A.util.addClass(showMore, 'slds-hide');
-        var showLess = component.find("show-less-button");
-        $A.util.removeClass(showLess, 'slds-hide');
-        $A.util.addClass(showLess, 'popup-button');
-	},
-	showLess : function(component, event, helper) {
-		var details = component.find("details");
-		$A.util.addClass(details, 'slds-truncate');
-		$A.util.removeClass(details, 'popup');
-        
-        var showMore = component.find("show-more-button");
-        $A.util.removeClass(showMore, 'slds-hide');
-        var showLess = component.find("show-less-button");
-        $A.util.addClass(showLess, 'slds-hide');
-        $A.util.removeClass(showLess, 'popup-button');
-	},
-	showMoreTarget : function(component, event, helper) {
-		var details = component.find("target");
-		$A.util.removeClass(details, 'slds-truncate');
-		$A.util.addClass(details, 'popup');
-        
-        var showMore = component.find("show-more-target-button");
-        $A.util.addClass(showMore, 'slds-hide');
-        var showLess = component.find("show-less-target-button");
-        $A.util.removeClass(showLess, 'slds-hide');
-        $A.util.addClass(showLess, 'popup-button');
-	},
-	showLessTarget : function(component, event, helper) {
-		var details = component.find("target");
-		$A.util.addClass(details, 'slds-truncate');
-		$A.util.removeClass(details, 'popup');
-        
-        var showMore = component.find("show-more-target-button");
-        $A.util.removeClass(showMore, 'slds-hide');
-        var showLess = component.find("show-less-target-button");
-        $A.util.addClass(showLess, 'slds-hide');
-        $A.util.removeClass(showLess, 'popup-button');
 	}
 })

@@ -443,7 +443,7 @@ public with sharing class TestDataGenerator
         }
 
         if(doInsert)
-            insert zCustomerAccount;
+            database.insert(   zCustomerAccount,false);
 
         return zCustomerAccount;
     }
@@ -491,7 +491,7 @@ public with sharing class TestDataGenerator
         }
 
         if(doInsert)
-            insert paymentMethodes;
+           database.insert(  paymentMethodes, false);
 
         return paymentMethodes;
 
@@ -512,7 +512,7 @@ public with sharing class TestDataGenerator
         }
         
         if(doInsert)
-            insert pricebookEntry;
+            database.insert(  pricebookEntry,false);
 
         return pricebookEntry;
     }
@@ -565,7 +565,7 @@ public with sharing class TestDataGenerator
         {
             pricebookEntries.addAll(generatePricebookEntry(Test.getStandardPricebookId(),prod.Id,1,false));
         }
-        insert pricebookEntries;
+        database.insert(  pricebookEntries,false);
     
         for(Integer i = 0; i < nb; i++)
         {
@@ -579,7 +579,7 @@ public with sharing class TestDataGenerator
             ));
         }
         if(doInsert)
-            insert orderItems;
+            database.insert(  orderItems,false);
 
         return orderItems;
     }
@@ -595,7 +595,7 @@ public with sharing class TestDataGenerator
         {
             pricebookEntries.addAll(generatePricebookEntry(Test.getStandardPricebookId(),prod.Id,1,false));
         }
-        insert pricebookEntries;
+        database.insert(pricebookEntries,false);
     
         for(Integer i = 0; i < products.size(); i++)
         {
@@ -609,7 +609,7 @@ public with sharing class TestDataGenerator
             ));
         }
         if(doInsert)
-            insert orderItems;
+            database.insert( orderItems,false);
 
         return orderItems;
     }
