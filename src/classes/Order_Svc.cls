@@ -1041,6 +1041,8 @@ public without sharing class Order_Svc
     public static string orderSubscription(set<Id> orderIds,Map<Id,IECZuoraHelper.PaymentMethod> orderId_paymentMethod,Map<Id,String> orderId_paymentType){
         try{
             Map<Id,Zuora.zApi.SubscribeResult> subscribeResults = subscribe(orderIds,orderId_paymentMethod,orderId_paymentType);
+            if (subscribeResults == null)
+                return Label.Order_transaction_failed_message;
 
             Map<String,ZuoraUtil.zAccountPaymentMethod> orderId_zAccountPaymentMethod = new Map<String,ZuoraUtil.zAccountPaymentMethod>();
             
@@ -1622,8 +1624,14 @@ public without sharing class Order_Svc
                     IECErrorLogger.logErrors(new list<IEC_Error_Log__c>{errorLog});
                     
                     //Threw an exception when Zuora exception occur
-                    //*** do not throw error in order to rollback
+                    //*** do not throw error in order to rollback -> prepare to rollback if having successful subscriptions
                     //throw new OrderException(ex.getMessage() + ' +++ ' + ex.getStackTraceString() + ' +++ ' + ex.getLineNumber());
+                    if (orderItemId_subscribeResult.size() == 0)
+                        orderItemId_subscribeResult = null;
+                    else
+                        for (Integer e1 = 0; e1 < OrderItemSend.size(); e1++)
+                            if (!orderItemId_subscribeResult.containsKey((OrderItemSend[e1].Id != null) ? OrderItemSend[e1].Id : OrderItemSend[e1].OrderId))
+                                orderItemId_subscribeResult.put((OrderItemSend[e1].Id != null) ? OrderItemSend[e1].Id : OrderItemSend[e1].OrderId, null);
                 }
             }
         
@@ -1709,7 +1717,7 @@ public without sharing class Order_Svc
                     Zuora.zApi.SubscribeResult subResponse = orderItemResponse.get(ordItem.Id != null ? ordItem.Id : ordItem.OrderId);
                     iecOrderId_paymentMethod = orderId_zAccountPaymentMethod.get(order.Id);
 
-                    if (subResponse.Success) {
+                    if (subResponse != null && subResponse.Success) {
                         //*** save Zuora subscription information
                         if (ordItem.Id != null)
                         {
@@ -1772,10 +1780,13 @@ public without sharing class Order_Svc
 
                     }else{
                         //If one subscription failed
-                        Zuora.zObject[] subErrors = subResponse.errors;
-                        String errorText = '';
-                        for (Zuora.zObject error : subErrors) {
-                            errorText = errorText + (String)error.getValue('Code') + ': ' + (String)error.getValue('Message');
+                        String errorText = 'Error';
+                        if (subResponse != null)
+                        {
+                            errorText = '';
+                            Zuora.zObject[] subErrors = subResponse.errors;
+                            for (Zuora.zObject error : subErrors)
+                                errorText = errorText + (String)error.getValue('Code') + ': ' + (String)error.getValue('Message');
                         }
                         orderIdsForFailedSub.put(ordItem.OrderId,errorText);
                         errors = true;
