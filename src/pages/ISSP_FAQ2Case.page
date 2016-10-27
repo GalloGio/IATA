@@ -280,12 +280,12 @@
                         </li>
                          <apex:outputPanel rendered="{!isCompliment}"><!-- compliment message -->
                            <apex:outputText escape="false" value="{!$Label.ISSP_CaseComplimentMessage}"  style="color:#3174AF;font-style: italic;"/><br /><br />
-                             
+
                          </apex:outputPanel>
-                       
-                        
+
+
                             <apex:outputpanel id="countryPnl">
-                                <li style=" display:{!IF(currentButtonsToShow == 'CancelAndSubmit','block','none')}">
+                                <!-- <li style=" display:{!IF(currentButtonsToShow == 'CancelAndSubmit','block','none')}"> --><!-- will show always as it is requested for chat -->
                                     <!-- Country -->
                                     <div class="row form-group">
                                         <label class="col-lg-5 control-label" for="exampleInputEmail1"> {!$ObjectType.Case.Fields.Country_concerned_by_the_query__c.Label}</label>
@@ -302,14 +302,14 @@
                                                     <apex:selectoptions value="{!countryList}" />
                                                 </apex:selectlist>
                                             </div>
-                                             
-                 
+
+
                                             <div class="hiddenerror" style="display: none;">
                                                 <p class="errormsg" style="line-height: 26px;">ERROR</p>
                                             </div>
                                         </div>
                                     </div>
-                                </li>
+                                <!-- </li> -->
                             </apex:outputpanel>
 
                             <apex:outputpanel id="AirlinesPnl" rendered="{!AND(isAgencyUser, currentButtonsToShow == 'CancelAndSubmit')}">
@@ -502,6 +502,21 @@
                                 </div>
                               </div>
                             </apex:outputPanel>
+
+							<br></br>
+							<apex:outputtext value="{!$Label.LiveAgentChatLabel}" style="font-weight: 600; color: #4a4a56;" rendered="{!AND(newCase.IFAP_Country_ISO__c = 'UK', Sector='Airline')}"/>
+							<br></br>
+							<div id="liveAgentIframes" class="row" style="margin-left: -3%">
+							  <div class="col-md-1">
+							
+							    <div rendered="{!region='Europe'}">
+							      <apex:iframe id="iframeLiveAgentEng" src="/LiveAgentButtonFAQ2Case?selTopics={!topic}.{!subtopic}&topiclbl={!encTopicLbl}&subtopiclbl={!encSubtopiclbl}&concernedCountry={!encIsoCountry}&csButton=AirlineEnglish" height="38px" width="210px" scrolling="false" rendered="{!AND(newCase.IFAP_Country_ISO__c = 'UK', Sector='Airline')}"/>
+							      <apex:iframe id="iframeLiveAgentSpa" src="/LiveAgentButtonFAQ2Case?selTopics={!topic}.{!subtopic}&topiclbl={!encTopicLbl}&subtopiclbl={!encSubtopiclbl}&concernedCountry={!encIsoCountry}&csButton=AirlineSpanish" height="38px" width="210px" scrolling="false" rendered="{!AND(newCase.IFAP_Country_ISO__c = 'UK', Sector='Airline')}"/>
+							      <apex:iframe id="iframeLiveAgentIta" src="/LiveAgentButtonFAQ2Case?selTopics={!topic}.{!subtopic}&topiclbl={!encTopicLbl}&subtopiclbl={!encSubtopiclbl}&concernedCountry={!encIsoCountry}&csButton=AirlineItalian" height="38px" width="210px" scrolling="false" rendered="{!AND(newCase.IFAP_Country_ISO__c = 'UK', Sector='Airline')}"/>
+							      <apex:iframe id="iframeLiveAgentFra" src="/LiveAgentButtonFAQ2Case?selTopics={!topic}.{!subtopic}&topiclbl={!encTopicLbl}&subtopiclbl={!encSubtopiclbl}&concernedCountry={!encIsoCountry}&csButton=AirlineFrench" height="38px" width="210px" scrolling="false" rendered="{!AND(newCase.IFAP_Country_ISO__c = 'UK', Sector='Airline')}"/>
+							      <apex:iframe id="iframeLiveAgentPor" src="/LiveAgentButtonFAQ2Case?selTopics={!topic}.{!subtopic}&topiclbl={!encTopicLbl}&subtopiclbl={!encSubtopiclbl}&concernedCountry={!encIsoCountry}&csButton=AirlinePortuguese" height="38px" width="210px" scrolling="false" rendered="{!AND(newCase.IFAP_Country_ISO__c = 'UK', Sector='Airline')}"/>
+							      <!-- <apex:iframe id="iframeLiveAgentGer" src="/LiveAgentButtonFAQ2Case?selTopics={!topic}.{!subtopic}&topiclbl={!encTopicLbl}&subtopiclbl={!encSubtopiclbl}&concernedCountry={!encIsoCountry}&csButton=AirlineGerman" height="38px" width="210px" scrolling="false" rendered="{!AND(newCase.IFAP_Country_ISO__c = 'UK', Sector='Airline')}"/> -->
+							</div>
                     </apex:outputPanel> 
             
                 

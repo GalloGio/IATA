@@ -1,0 +1,128 @@
+public with sharing class LiveAgentButtonFAQ2CaseController {
+
+    public Set<String>topicsToShowButton {
+        get{
+            if (topicsToShowButton == null){
+                List<ISSP_FAQ2CaseLiveAgentTopics__c> topics = [SELECT name, value__c FROM ISSP_FAQ2CaseLiveAgentTopics__c];
+                System.debug('topics: '+topics);
+                topicsToShowButton = new Set<String>();
+                for (ISSP_FAQ2CaseLiveAgentTopics__c topic :topics){
+                    topicsToShowButton.add(topic.value__c);
+                }
+            }
+            return topicsToShowButton;
+        }
+        set;
+    }
+    public String selectedTopics {
+        get{
+            return ApexPages.currentPage().getParameters().get('selTopics');
+        }
+        set;
+    }
+    public String topicLabel {
+        get{
+            return ApexPages.currentPage().getParameters().get('topiclbl');
+        }
+        set;
+    }
+    public String subTopicLabel{
+        get{
+            return ApexPages.currentPage().getParameters().get('subtopiclbl');
+        }
+        set;
+    }
+    public LiveAgentButtonSettings__c liveAgentBtn {
+        get{
+            LiveAgentButtonSettings__c labs = new LiveAgentButtonSettings__c();
+            try{
+                labs = LiveAgentButtonSettings__c.getAll().get(csButton);
+            }catch(Exception e){
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'{!$Label.LiveAgentCustomSettingNotFound} '+e));
+            }
+            return labs ;
+        }
+    }
+    public String csButton{
+        get{
+            return ApexPages.currentPage().getParameters().get('csButton');
+        }
+        set;
+    }
+    public Boolean showButton {
+        get{
+            if(topicsToShowButton.contains(selectedTopics)){
+                return true;
+            }
+            return false;
+        }
+        set;
+    }
+    public Contact userContact {
+        get{
+            if (userContact == null){
+                User user = DAL_ISSP.getUser(Userinfo.getUserId());
+                userContact = DAL_ISSP.getContact(user.contactId);
+            }
+            return userContact;
+        }
+        set;
+    }
+    private String caseRecordTypeName{
+        get{
+            if (countryRegion == 'Europe'){
+                return 'CasesEurope';
+            }else if(countryRegion == 'Americas'){
+                return 'CasesAmericas';
+            }
+            return null;// add more RT names if needed
+        }
+    }
+    public String countryConcerned{
+        get{
+            return ApexPages.currentPage().getParameters().get('concernedCountry');
+        }
+        set;
+    }
+
+    public Id getContactId() {
+        if (userContact != null){
+            return userContact.Id;
+        }
+        return null;
+    }
+
+    public Id getAccountId() {
+        if (userContact != null){
+            return userContact.AccountId;
+        }
+        return null;
+    }
+
+    public String getContactFirstName() {
+        if (userContact.FirstName != null){
+            return userContact.FirstName;
+        }
+        return 'Guest';
+    }
+
+    public String getCaseRecordTypeId() {
+
+         return RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get(caseRecordTypeName);
+    }
+
+    private String countryRegion{
+        get{
+            IATA_ISO_Country__c country = [SELECT Id, Name, ISO_Code__c, Region__c
+                                            FROM IATA_ISO_Country__c
+                                            WHERE Case_BSP_Country__c != null AND Case_BSP_Country__c != '' AND Name = :countryConcerned
+                                            LIMIT 1][0];
+            return country.Region__c;
+        }
+        set;
+    }
+
+    public LiveAgentButtonFAQ2CaseController() {
+
+    }
+}
