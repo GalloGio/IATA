@@ -516,6 +516,8 @@
 							      <apex:iframe id="iframeLiveAgentFra" src="/LiveAgentButtonFAQ2Case?selTopics={!topic}.{!subtopic}&topiclbl={!encTopicLbl}&subtopiclbl={!encSubtopiclbl}&concernedCountry={!encIsoCountry}&csButton=AirlineFrench" height="38px" width="210px" scrolling="false" rendered="{!AND(newCase.IFAP_Country_ISO__c = 'UK', Sector='Airline')}"/>
 							      <apex:iframe id="iframeLiveAgentPor" src="/LiveAgentButtonFAQ2Case?selTopics={!topic}.{!subtopic}&topiclbl={!encTopicLbl}&subtopiclbl={!encSubtopiclbl}&concernedCountry={!encIsoCountry}&csButton=AirlinePortuguese" height="38px" width="210px" scrolling="false" rendered="{!AND(newCase.IFAP_Country_ISO__c = 'UK', Sector='Airline')}"/>
 							      <!-- <apex:iframe id="iframeLiveAgentGer" src="/LiveAgentButtonFAQ2Case?selTopics={!topic}.{!subtopic}&topiclbl={!encTopicLbl}&subtopiclbl={!encSubtopiclbl}&concernedCountry={!encIsoCountry}&csButton=AirlineGerman" height="38px" width="210px" scrolling="false" rendered="{!AND(newCase.IFAP_Country_ISO__c = 'UK', Sector='Airline')}"/> -->
+								</div>
+							  </div>
 							</div>
                     </apex:outputPanel> 
             

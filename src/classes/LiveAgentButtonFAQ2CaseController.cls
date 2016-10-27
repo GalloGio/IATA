@@ -68,16 +68,6 @@ public with sharing class LiveAgentButtonFAQ2CaseController {
         }
         set;
     }
-    private String caseRecordTypeName{
-        get{
-            if (countryRegion == 'Europe'){
-                return 'CasesEurope';
-            }else if(countryRegion == 'Americas'){
-                return 'CasesAmericas';
-            }
-            return null;// add more RT names if needed
-        }
-    }
     public String countryConcerned{
         get{
             return ApexPages.currentPage().getParameters().get('concernedCountry');
@@ -120,6 +110,17 @@ public with sharing class LiveAgentButtonFAQ2CaseController {
             return country.Region__c;
         }
         set;
+    }
+
+    private String caseRecordTypeName{
+        get{
+            if (countryRegion == 'Europe'){
+                return 'CasesEurope';
+            }else if(countryRegion == 'Americas'){
+                return 'CasesAmericas';
+            }
+            return null;// add more RT names if needed
+        }
     }
 
     public LiveAgentButtonFAQ2CaseController() {
