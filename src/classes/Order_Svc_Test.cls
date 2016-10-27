@@ -918,7 +918,7 @@ private class Order_Svc_Test
         lstProduct[0].Product_Type__c = null;
         lstProduct[0].Is_Shippable__c = true;
         lstProduct[0].Charge_Shipping__c = true;
-        insert lstProduct;
+        databse.insert(lstProduct,false);
         List<PricebookEntry> lstPriceBookEntry = TestDataGenerator.generatePricebookEntry(Test.getStandardPricebookId(), lstProduct[0].Id, 1, true);
 
         //*** generate price
