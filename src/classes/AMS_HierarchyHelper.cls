@@ -248,7 +248,7 @@ global class AMS_HierarchyHelper {
 	// currentHierarchy = mainAccount's hierarhcy
 	// targetHO = the HO of the target hierarchy
 	// agenciesToMigrate = the list of the agencies which will be migrated: the mainAccount + all the others
-	public static HierarchyStruct migrateAccountsToExistingHierarchy(List<AMS_Agencies_relationhip__c> currentHierarchy, Id targetAccount, List<AMS_Agencies_relationhip__c> newHierarchy, Set<Id> agenciesToMigrate, Map<Id, Account> accounts) {
+	public static HierarchyStruct migrateAccountsToExistingHierarchy(Id oldHO, List<AMS_Agencies_relationhip__c> currentHierarchy, Id targetAccount, List<AMS_Agencies_relationhip__c> newHierarchy, Set<Id> agenciesToMigrate, Map<Id, Account> accounts) {
 		// check if the old hierarchy is completely migrated
 		Set<Id> agenciesNotMigrated = getAccountNotMigratedExcludingTerminated(currentHierarchy, agenciesToMigrate, accounts);
 		boolean completeMigration = (agenciesNotMigrated.size() == 0);
@@ -256,7 +256,7 @@ global class AMS_HierarchyHelper {
 		List<Account> accountsToUpdate = new List<Account>();
 
 		// check if the old HO is the same as the new HO
-		Id oldHO = getHierarchyHO(currentHierarchy);
+		//Id oldHO = getHierarchyHO(currentHierarchy);
 		boolean needNewHierarchy = newHierarchy.size() == 0;
 
 		//FM - Needed to place this here because the test class keep on failing on NULL!
@@ -445,7 +445,7 @@ global class AMS_HierarchyHelper {
 			system.debug('DEVO VALIDARE ' + a.Name + ' - iata code ' + a.IATAcode__c + ' - Location type ' + a.Location_Type__c + ' - ParentId ' + a.ParentId);
 
 			//whenever a child agency (active) is left without a parent an error should be raised
-			if (a.Location_Type__c != AMS_Utils.HO && !agenciesNotMigrated.contains(a.ParentId) &&
+			if (a.Location_Type__c != AMS_Utils.HO && a.Location_Type__c != AMS_Utils.AO && !agenciesNotMigrated.contains(a.ParentId) &&
 			        a.Status__c != AMS_Utils.ACC_S0_TERMINATED && a.Status__c != AMS_Utils.ACC_S1_NOTACCREDITED)
 
 				errorMessage += (errorMessage == '' ? '' : '\n' ) +
