@@ -19,7 +19,8 @@ public class AMS_OSCAR_JSONHelper {
         }
 
         try{
-            StaticResource jsonFile = [select Id , Name , Body from StaticResource where Name = :staticResource];
+            StaticResource jsonFile = [select Id , Name , Body from 
+            StaticResource where Name = :staticResource];
 
             String jSONContent = convertToString(jsonFile.Body);
 
@@ -163,10 +164,10 @@ public class AMS_OSCAR_JSONHelper {
                             {
                                 AMS_OSCAR_JSON.ChangeCode changeCode = a.changeCode;
                                 if(changeCode != null){
-                                    //AMS_ChangeCodesHelper.createAAChangeCode(changeCode, oscar, oscar.Account__c);    
+                                    //AMS_Utils.createAAChangeCode(changeCode, oscar, oscar.Account__c);    
                                     Account acct = new Account(Id = oscar.Account__c);
                                     System.debug('Creating Agency Applied changeCode for Account ' + acct.Id);
-                                    AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode>{changeCode}, new List<AMS_OSCAR__c>{oscar}, new List<Account>{acct}, true);
+                                    AMS_Utils.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode>{changeCode}, new List<AMS_OSCAR__c>{oscar}, new List<Account>{acct}, true);
                                     System.debug('Done creating Agency Applied changeCode for Account ' + acct.Id);
                                 }
                                 AMS_OSCAR_AutomationManager am = new AMS_OSCAR_AutomationManager();
