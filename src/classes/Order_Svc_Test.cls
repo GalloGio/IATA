@@ -918,7 +918,7 @@ private class Order_Svc_Test
         lstProduct[0].Product_Type__c = null;
         lstProduct[0].Is_Shippable__c = true;
         lstProduct[0].Charge_Shipping__c = true;
-        databse.insert(lstProduct,false);
+        database.insert(lstProduct,false);
         List<PricebookEntry> lstPriceBookEntry = TestDataGenerator.generatePricebookEntry(Test.getStandardPricebookId(), lstProduct[0].Id, 1, true);
 
         //*** generate price
@@ -993,7 +993,7 @@ private class Order_Svc_Test
         system.runAs(lstUser[0]) {
             lstOrder = TestDataGenerator.generateOrder(1, lstAccount[0].Id, lstContact[0].Id, lstContact[0].Id, true);
             testOrderItem = new OrderItem(PriceBookEntryId=lstPriceBookEntry[0].Id, OrderId=lstOrder[0].Id, Quantity=1, UnitPrice=1, ServiceDate=Date.Today());
-            insert testOrderItem;
+            database.insert(testOrderItem,false);
         }
         OrderItem_Sel itemsSelector = new OrderItem_Sel();
         OrderItem_DTO testOrderItemDTO = OrderItem_DTO.format2DTO(itemsSelector.getOrderItems(new Set<Id>{lstOrder[0].Id}).get(lstOrder[0].Id), mapProductNumber_Price)[0];
