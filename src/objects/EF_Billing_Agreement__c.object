@@ -57,6 +57,19 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
+        <fullName>Airline_ID__c</fullName>
+        <description>E&amp;F Salesforce Airline Id for reporting purposes</description>
+        <externalId>false</externalId>
+        <formula>Airline__r.Id</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Airline ID</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Airline_Location_ID__c</fullName>
         <externalId>false</externalId>
         <formula>Airline__r.EF_SIS_Location_ID__c</formula>
@@ -160,6 +173,19 @@
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Contract_Group_Code__c</fullName>
+        <description>E&amp;F Contract Group Code for reporting purposes</description>
+        <externalId>false</externalId>
+        <formula>Contract__r.EF_Group_Code__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Contract Group Code</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Contract_Payment_Terms__c</fullName>
