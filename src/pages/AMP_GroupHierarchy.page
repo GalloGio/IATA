@@ -17,7 +17,7 @@
 			var hierarchy = jQuery.parseJSON('{!JSONHierarchy}');
 			hierarchy.forEach(function(item,index){
 
-				var link = $('<a  href="/'+item.Id+'" target="_top">' + item.Name + '</a>');
+				var link = $('<a href="javascript:void(0);" class="nocursor">' + item.Name + '</a>');
 				var listItem = $('<li class="slds-list__item slds-text-heading--label "></li>').append(link); // slds-is-incomplete
 				if(recordId === item.Id) listItem.addClass('amp-is-current');
 
