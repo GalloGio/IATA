@@ -21,6 +21,10 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -4324,6 +4328,7 @@ The product will only appear on the Online Store when the date entered in this f
         <columns>PRODUCT2.CREATED_DATE</columns>
         <columns>PRODUCT2.LAST_UPDATE</columns>
         <columns>RCRM_Product__c</columns>
+        <columns>PRODUCT2.RECORD_TYPE</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>PRODUCT2.ACTIVE</field>
@@ -4568,7 +4573,7 @@ The product will only appear on the Online Store when the date entered in this f
         <filters>
             <field>PRODUCT2.NAME</field>
             <operation>equals</operation>
-            <value>GAD Single License for Non-Members</value>
+            <value>GAD Single License for Non-Members,Global Agency Directory</value>
         </filters>
         <label>GDP/GAD for Non Members</label>
         <language>en_US</language>
