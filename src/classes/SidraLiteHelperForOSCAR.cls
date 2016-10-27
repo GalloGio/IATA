@@ -1,0 +1,45 @@
+/**
+    Methods to process SIDRA Lite when parent Case is OSCAR
+**/
+public with sharing class SidraLiteHelperForOSCAR {
+
+
+    /**
+        Create a new sidra lite case from an OSCAR case
+    **/
+    public static Case createCase(Case cse){
+        try {
+            if (cse.Cases != null && ! cse.Cases.isEmpty()) {
+                throw new WSSidraLite.SidraLiteException('SIDRA Lite case already created, cannot create another one');
+            }
+            if (cse.OSCAR__r==null || cse.OSCAR__r.RPM_Approval__c != 'Authorize Disapproval') {
+                throw new WSSidraLite.SidraLiteException('You cannot create a SIDRA Lite case if the Change Disapproval is not Authorized');
+            }
+            if (cse.Reason1__c == null) {
+                throw new WSSidraLite.SidraLiteException('You cannot create a SIDRA Lite under no reason');
+            }
+            set<String> setValidReason = new set<String>{'CHO / CHS – Change of Ownership / Legal Status','CHC – Change of Shareholding','CHN - Change of Name','CHL - Change of Location'};
+            if (!setValidReason.contains(cse.Reason1__c)) {
+                throw new WSSidraLite.SidraLiteException('You cannot create a SIDRA Lite under reason "' + cse.Reason1__c + '"');
+            }
+            Case newCase = new Case();
+            newCase.RecordTypeId = SidraLiteManager.RECORDTYPE_SIDRA_LITE;
+            newCase.Subject = 'SIDRA Lite – Non-Compliance due to "' + cse.Reason1__c + '"';
+            newCase.ParentId = cse.Id;
+            newCase.AccountId = cse.AccountId;
+            newCase.ContactId = cse.ContactId;
+            newCase.Region__c = cse.Region__c;
+            newCase.BSPCountry__c = cse.BSPCountry__c;
+            newCase.SIDRA_Lite_Reason__c = 'Late/Absence of Notification of Change';
+            newCase.SIDRA_Lite_Default_Date__c = Date.Today();
+            newCase.Reason_for_Default__c = 'Disapproval of Change';
+            newCase.Termination_date_manual_entry__c = SidraLiteUtil.lastMonthDay(Date.today().addMonths(1));
+            newCase.Total_Irregularities__c = String.ValueOf(cse.account.Accumulated_Irregularities__c);
+            newCase.BSP_CASS__c = SidraLiteUtil.getBSPCASS(cse.account);
+            return newCase;
+
+        } catch(Exception e) {
+            throw new WSSidraLite.SidraLiteException(e.getMessage());
+        }
+    }
+}
