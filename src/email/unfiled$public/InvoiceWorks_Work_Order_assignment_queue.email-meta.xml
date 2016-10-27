@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Notification e-mail on work order assignment to a queue</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>InvoiceWorks_Work Order assignment - queue</name>
+    <style>none</style>
+    <subject>ASSIGNED Work Order {!Work_Order__c.Name}</subject>
+    <type>text</type>
+</EmailTemplate>

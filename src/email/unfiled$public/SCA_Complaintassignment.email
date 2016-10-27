@@ -1,0 +1,10 @@
+The following complaint has been assigned to you. 
+
+Account site: {!Case.Account} 
+Case number: {!Complaint__c.Related_Case_Number__c} 
+Complaint number: {!Complaint__c.Name} 
+Case subject: {!Case.Subject} 
+Case description: {!Case.Description} 
+
+Case: {!Case.Link} 
+Complaint: {!Complaint__c.Link}

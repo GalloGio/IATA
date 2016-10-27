@@ -1,0 +1,7 @@
+The following case has been assigned to the queue  {!Case.OwnerFullName}.
+
+Case number: {!Case.CaseNumber} 
+Case subject: {!Case.Subject} 
+Case description: {!Case.Description} 
+
+{!Case.Link}

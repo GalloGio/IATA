@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>automates creation of internal case for OCIT when complaint is logged out of a query</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>Complaint out of query</name>
+    <style>none</style>
+    <subject>#C {!Case.CaseNumber} {!Case.Subject}</subject>
+    <type>text</type>
+</EmailTemplate>

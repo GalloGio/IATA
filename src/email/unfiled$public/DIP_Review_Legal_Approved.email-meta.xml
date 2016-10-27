@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>IATADynamicSkyLetterhead</letterhead>
+    <name>DIP Review - Legal Approved</name>
+    <style>freeForm</style>
+    <subject>Case {!Case.CaseNumber}: {!Case.Subject} has been approved by the Legal</subject>
+    <type>html</type>
+</EmailTemplate>

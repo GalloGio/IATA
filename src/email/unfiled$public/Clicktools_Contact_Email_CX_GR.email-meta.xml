@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Contact Email sent for CX Instant Surveys</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>IATADynamicSkyLetterhead</letterhead>
+    <name>Clicktools Contact Email_CX_GR</name>
+    <style>freeForm</style>
+    <subject>&quot;Η γνώμη σας μετρά για την IATA!&quot; βοηθήστε μας να υπερβούμε τις προσδοκίες σας.</subject>
+    <type>html</type>
+</EmailTemplate>

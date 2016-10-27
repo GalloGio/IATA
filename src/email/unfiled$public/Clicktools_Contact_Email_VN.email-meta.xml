@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Contact Email sent for Instant Surveys</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>IATADynamicSkyLetterhead</letterhead>
+    <name>Clicktools Contact Email_VN</name>
+    <style>freeForm</style>
+    <subject>IATA trân trọng ý kiến của bạn!</subject>
+    <type>html</type>
+</EmailTemplate>

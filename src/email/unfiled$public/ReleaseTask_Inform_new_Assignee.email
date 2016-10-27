@@ -1,0 +1,19 @@
+Hi, 
+
+there is a new task for you or your task has changed. 
+
+Release: {!Release_Task__c.Release__c}
+Release Task: {!Release_Task__c.Name} 
+Owner: {!Release_Task__c.OwnerFullName} 
+Assigned To: {!Release_Task__c.Assigned_to__c} 
+Status: {!Release_Task__c.Status__c} 
+Due Date: {!Release_Task__c.Due_date__c} 
+Priority: {!Release_Task__c.Priority__c} 
+Development Component: {!Release_Task__c.Development_Component__c} 
+Subject: {!Release_Task__c.Subject__c} 
+Description: {!Release_Task__c.Description__c} 
+
+You can access this task here: {!Release_Task__c.Link} 
+
+Regards, 
+Your Release Task System

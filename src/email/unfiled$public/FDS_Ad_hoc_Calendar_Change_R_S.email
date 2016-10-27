@@ -1,0 +1,8 @@
+Dear,
+
+Please check the calendar change case number {!Case.CaseNumber}  in {!Case.BSPCountry__c} for your approval due to {!Case.Calendar_Change_Reason__c}.
+
+Case link: {!Case.Link}
+
+Thanks,
+{!Case.OwnerFullName}

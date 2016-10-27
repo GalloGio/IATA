@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>IATADynamicSkyLetterhead</letterhead>
+    <name>Clicktools Contact Email_CX_KO</name>
+    <style>freeForm</style>
+    <subject>“IATA는 고객의 의견을 소중히 여깁니다!” 여러분의 기대에 부응할 수 있도록 도움을 부탁합니다.</subject>
+    <type>html</type>
+</EmailTemplate>

@@ -147,7 +147,7 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Payment_Terms__c</field>
+            <field>Contract_Payment_Terms__c</field>
             <table>EF_Billing_Agreement__c</table>
         </columns>
         <columns>
@@ -168,11 +168,6 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>Send_to_SAP__c</field>
-            <table>EF_Billing_Agreement__c</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Status__c</field>
             <table>EF_Billing_Agreement__c</table>
         </columns>
         <masterLabel>E&amp;F Airline Billing Agreements</masterLabel>
@@ -235,7 +230,7 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Role__c</field>
+            <field>EF_Role__c</field>
             <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
         </columns>
         <columns>

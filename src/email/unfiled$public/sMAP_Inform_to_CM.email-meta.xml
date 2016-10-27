@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>E-mail alert to inform about Airline Input by Local Staff</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>sMAP - Input entered by other - inform CM</name>
+    <style>none</style>
+    <subject>Airline Input done by Staff : {!Airline_Input__c.Name}</subject>
+    <type>text</type>
+</EmailTemplate>

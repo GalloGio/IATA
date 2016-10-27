@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Used in a workflow to inform ACCA when IATA has changed the Escalated Status ACCA</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>ACCA: Changed Escalated Status ACCA</name>
+    <style>none</style>
+    <subject>IATA has changed the &apos;Escalated Status ACCA&apos; of ACR No {!Case.CaseNumber} to {!Case.Escalated_Status_ACCA__c}</subject>
+    <type>text</type>
+</EmailTemplate>

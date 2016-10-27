@@ -1,0 +1,5 @@
+Pls note that new Case Comment has been added.
+
+{!Case.Last_Case_Comment}
+
+For direct access to the BSPLink CSR, please click on this link {!Case.Link}.

@@ -6,13 +6,13 @@
     <customButtons>Log_Phone_Case</customButtons>
     <customButtons>SAP_Airline_Request</customButtons>
     <customButtons>SIS_Airline_Request</customButtons>
-    <customButtons>APXTConga4__Conga_Mail_Merge</customButtons>
     <excludeButtons>DataDotComClean</excludeButtons>
     <excludeButtons>DisableCustomerPortal</excludeButtons>
     <excludeButtons>DisablePartnerPortal</excludeButtons>
     <excludeButtons>EnableCustomerPortal</excludeButtons>
     <excludeButtons>EnablePartnerPortalUser</excludeButtons>
     <excludeButtons>EnableSelfService</excludeButtons>
+    <excludeButtons>RequestUseSfdc</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <excludeButtons>ViewSelfService</excludeButtons>
     <layoutSections>
@@ -227,7 +227,7 @@
                 <field>User_IECPortal_Status__c</field>
             </layoutItems>
             <layoutItems>
-                <height>200</height>
+                <height>50</height>
                 <page>ISSP_Contact_User</page>
                 <showLabel>false</showLabel>
                 <showScrollbars>false</showScrollbars>
@@ -455,6 +455,22 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Contact_cleanup_remarks__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <style>OneColumn</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>false</editHeading>
+        <label>Files</label>
+        <layoutColumns>
+            <layoutItems>
+                <height>350</height>
+                <page>EF_Contact_Attachment_List</page>
+                <showLabel>false</showLabel>
+                <showScrollbars>true</showScrollbars>
+                <width>100%</width>
             </layoutItems>
         </layoutColumns>
         <style>OneColumn</style>
@@ -753,8 +769,15 @@
         <fields>NAME</fields>
         <fields>EF_Airline_Billing_Agreement__c</fields>
         <fields>Status__c</fields>
-        <fields>Role__c</fields>
+        <fields>EF_Role__c</fields>
         <relatedList>EF_Contact_Relationship__c.Contact__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>EF_Contract__c</fields>
+        <fields>EF_Status__c</fields>
+        <fields>Role__c</fields>
+        <relatedList>EF_Contact_EF_Contract__c.EF_Contact__c</relatedList>
     </relatedLists>
     <relatedObjects>AccountId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>

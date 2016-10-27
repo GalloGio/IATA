@@ -1,0 +1,4 @@
+Dear {!Case.OwnerFirstName},
+Pls note that ACCA has changed the Escalated Status ACCA of above ACR to '{!Case.Escalated_Status_ACCA__c}' to {!Case.Escalated_Status_ACCA__c}.
+
+For direct access to the ACR, please click on this link {!Case.Link}.

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>IATADynamicSkyLetterhead</letterhead>
+    <name>Clicktools Contact Email_CX_ZH</name>
+    <style>freeForm</style>
+    <subject>IATA 十分重视您的意见！”帮助我们超越您的期望。</subject>
+    <type>html</type>
+</EmailTemplate>
