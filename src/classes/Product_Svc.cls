@@ -276,7 +276,7 @@ public class Product_Svc
             {
                 p.IsNewVersion__c = false;
             }
-            update oldVersionProducts;
+            database.update(oldVersionProducts,false);
         }
     }
   
