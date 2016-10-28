@@ -22377,6 +22377,11 @@
     </fieldPermissions>
 	<fieldPermissions>
         <editable>false</editable>
+        <field>EF_Billing_Agreement__c.Airline_ID__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>false</editable>
         <field>EF_Billing_Agreement__c.Airline_Name__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -22469,6 +22474,11 @@
         <editable>false</editable>
         <field>EF_Billing_Agreement__c.EF_Submitter_Email__c</field>
         <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>EF_Billing_Agreement__c.Contract_Group_Code__c</field>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -36413,6 +36423,16 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>User.EF_Billing_Agreement_Approver__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>User.EF_Client_Reactivation__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>User.EF_Customer_Reactivation__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
