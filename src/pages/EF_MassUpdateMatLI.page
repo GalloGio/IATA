@@ -13,6 +13,7 @@
         <apex:pageBlockSection title="" showHeader="false"
 				collapsible="false" columns="1" id="sampleComponent">
 				<apex:inputField value="{!sampleMaterial.EF_Material__c}" styleClass="EF_Material__c" onchange="updateSelected('EF_Material__c', this.value, this);" />
+				<apex:inputField value="{!sampleMaterial.EF_Status__c}" styleClass="EF_Status__c" onchange="updateSelected('EF_Status__c', this.value, this);" />
 
 		</apex:pageBlockSection>
 
@@ -39,6 +40,9 @@
                 </apex:column>
                 <apex:column headerValue="Material">
            			<apex:inputField value="{!mat.mmli.EF_Material__c}" styleClass="EF_Material__c"/>
+                </apex:column>
+                <apex:column headerValue="Status">
+           			<apex:inputField value="{!mat.mmli.EF_Status__c}" styleClass="EF_Status__c"/>
                 </apex:column>
             </apex:pageBlockTable>
             </apex:pageBlockSection>
