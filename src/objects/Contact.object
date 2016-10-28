@@ -27282,21 +27282,36 @@ NOT(Contains($Profile.Name, &quot;System Administrator&quot;)))</errorConditionF
         <fullName>Key_Contacts_Data_Quality</fullName>
         <active>true</active>
         <description>Put in place for the Account Management Project, this rule is meant to ensure data quality for the key contacts.</description>
-        <errorConditionFormula>AND(
-RecordType.DeveloperName = &apos;Standard_Contact&apos;,
-OR(
- TEXT(CEO_CFO__c)=&quot;CEO&quot;,
- TEXT(CEO_CFO__c)=&quot;CFO&quot;,
- TEXT(CEO_CFO__c)=&quot;COO&quot;,
- Membership_Main_Contact__c,
- NOT(ISBLANK(Function__c))
-),
-OR(
- ISBLANK(FirstName ) ,
- ISBLANK(LastName),
- ISBLANK(Title ) ,
- ISBLANK(Email) ,
- ISBLANK(AccountId ) ))</errorConditionFormula>
+        <errorConditionFormula>AND( 
+ RecordType.DeveloperName = &apos;Standard_Contact&apos;, 
+ OR( 
+  AND( 
+   OR( 
+    TEXT(CEO_CFO__c)=&quot;CEO&quot;, 
+    TEXT(CEO_CFO__c)=&quot;CFO&quot;, 
+    TEXT(CEO_CFO__c)=&quot;COO&quot;, 
+    Membership_Main_Contact__c 
+   ), 
+  ISBLANK(Function__c) 
+  ), 
+ AND( 
+  NOT(OR( 
+    TEXT(CEO_CFO__c)=&quot;CEO&quot;, 
+    TEXT(CEO_CFO__c)=&quot;CFO&quot;, 
+    TEXT(CEO_CFO__c)=&quot;COO&quot;, 
+    Membership_Main_Contact__c, 
+    NOT(ISBLANK(Function__c)) 
+  )), 
+ OR( 
+   ISBLANK(FirstName ) , 
+   ISBLANK(LastName), 
+   ISBLANK(Title ) , 
+   ISBLANK(Email) , 
+   ISBLANK(AccountId ) 
+  ) 
+ ) 
+) 
+)</errorConditionFormula>
         <errorMessage>Please make sure you filled in all the following fields: First Name, Last Name, Job Title, Job Function, Email address and Account</errorMessage>
     </validationRules>
     <validationRules>
