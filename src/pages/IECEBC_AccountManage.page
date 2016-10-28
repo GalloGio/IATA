@@ -359,7 +359,7 @@
 																<tr class="js-sort-type-credits">
 																	<td class="activity-type">{!act.Activity_Type__c}</td>
 																	<td class="activity-date">
-																		   <apex:outputText value="{0, date, d MMMM yyyy HH:mm} GMT"><apex:param value="{!act.Activity_Date_Time__c}" /></apex:outputText>																
+																		   <apex:outputText value="{0, date, d MMMM yyyy HH:mm} GMT"><apex:param value="{!act.Activity_Date_Time__c + timezoneOffset}" /></apex:outputText>																
 																	</td>																
 																	<td class="name">{!act.Name}</td>
 																	<td class="id">{!act.EBC_Campaign__r.Campaign_ID__c}</td>
