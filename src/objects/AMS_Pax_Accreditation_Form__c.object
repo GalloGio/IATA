@@ -4541,7 +4541,7 @@ $Label.ISSP_AMS_LS_Sole_Owner)</formula>
     </fields>
     <fields>
         <fullName>Will_such_change_affect_the_premises__c</fullName>
-        <description>Will such change affect the premises that were investigated in the course of approving the Agent's application for registration?</description>
+        <description>Will such change affect the premises that were investigated in the course of approving the Agent&apos;s application for registration?</description>
         <externalId>false</externalId>
         <label>Will such change affect the premises</label>
         <picklist>
