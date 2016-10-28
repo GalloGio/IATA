@@ -225,7 +225,16 @@ private class IDCard_AdmUserListAndFormTest {
                                                     Application_Status__c = 'Pending',
                                                     Type_Of_Application__c = 'New',
             										IATA_Code__c = a.IATAcode__c,
-            										RecordTypeId = rt
+            										RecordTypeId = rt,
+            										Title__c = 'MR',
+	        										Gender__c = 'Male',
+	        										Hours_worked__c = '35 h or more',
+	        										Position_in_Current_Agency__c = 'Director',
+	        										Duties_in_Current_Agency__c = 'Administration',
+	        										Start_Date_Agency_Month__c = 'January',
+	        										Start_Date_Agency_Year__c = '2012',
+	        										Start_Date_Industry__c = '2012',
+	        										Email_admin__c = 'xpto@xpto.com'
             										
 		        ));
 		        system.debug(LoggingLevel.ERROR, '------------ PENDING APP for contact with ver = '+cs[i].VER_Number_2__c);
@@ -386,7 +395,16 @@ private class IDCard_AdmUserListAndFormTest {
                                                     Application_Status__c = 'Pending',
                                                     Type_Of_Application__c = 'New',
             										IATA_Code__c = a.IATAcode__c,
-            										RecordTypeId = rt
+            										RecordTypeId = rt,
+            										Title__c = 'MR',
+	        										Gender__c = 'Male',
+	        										Hours_worked__c = '35 h or more',
+	        										Position_in_Current_Agency__c = 'Director',
+	        										Duties_in_Current_Agency__c = 'Administration',
+	        										Start_Date_Agency_Month__c = 'January',
+	        										Start_Date_Agency_Year__c = '2012',
+	        										Start_Date_Industry__c = '2012',
+	        										Email_admin__c = 'xpto@xpto.com'
 		        ));
 	        //}
 				        
@@ -590,7 +608,16 @@ private class IDCard_AdmUserListAndFormTest {
                                                 Application_Status__c = IDCardUtil.APPLICATIONSTATUS_PENDING,
                                                 Type_Of_Application__c = 'New',
         										IATA_Code__c = a.IATAcode__c,
-        										RecordTypeId = rt
+        										RecordTypeId = rt,
+        										Title__c = 'MR',
+        										Gender__c = 'Male',
+        										Hours_worked__c = '35 h or more',
+        										Position_in_Current_Agency__c = 'Director',
+        										Duties_in_Current_Agency__c = 'Administration',
+        										Start_Date_Agency_Month__c = 'January',
+        										Start_Date_Agency_Year__c = '2012',
+        										Start_Date_Industry__c = '2012',
+        										Email_admin__c = 'xpto@xpto.com'
 	        ));
 	        insert  apps;
 	        id firstappid = apps[0].id;
@@ -615,6 +642,7 @@ private class IDCard_AdmUserListAndFormTest {
 	        ctrl.app.IATA_Code__c = 'Fake Iata code';
 	        ctrl.app.Email_admin__c = 'test1@contact.com';
 	        ctrl.app.Photo__c = 'myphoto.jpg';
+	        ctrl.app.Displayed_Name__c = 'Test 01 Contact 01';
 	        system.assertEquals(null,ctrl.SaveContact());
 	        
 	        
@@ -693,6 +721,7 @@ private class IDCard_AdmUserListAndFormTest {
 			// FINALLY THIS WILL SUCCEED
 			ctrl.app.First_Name__c = 'NEW Test';
 			ctrl.app.Last_Name__c = 'NEW Contact';
+			ctrl.app.Displayed_Name__c = 'NEW Test NEW Contact';
 	        system.assertEquals(Page.IDCard_AdmUserList.getUrl(),ctrl.SaveContact().getUrl());
 	        
 	        // I should have an application with: Type = "New", Status = "Pending", Temporary VER, NO UIR
@@ -799,6 +828,7 @@ private class IDCard_AdmUserListAndFormTest {
             cs[3].Start_Date_Agency_Month__c = 'January';
             cs[3].Start_Date_Agency_Year__c = date.today().year();
             cs[3].Start_Date_Industry__c = date.today().year();
+
 		        
 			update cs[3];
  	   		
@@ -807,12 +837,12 @@ private class IDCard_AdmUserListAndFormTest {
 	        for(integer i=0; i <4; i++){
 	        	idcs.add(new ID_Card__c(Related_Contact__c = cs[i].id,
 		                                Valid_To_Date__c = date.today().addMonths(5),
-		                                Name_on_ID_Card__c = cs[i].FirstName + ' '+cs[i].LastName,
+		                                Name_on_ID_Card__c = cs[i].FirstName + ' '+cs[i].LastName,	
 		                                Card_status__c = IDCardUtil.CARDSTATUS_PRINTED_DELIVERED,
 		                                VER_Number__c = cs[i].VER_Number_2__c,
 		                                Agency_IATA_Code__c = a.IATAcode__c,
 		                                Photo__c = 'uselessstring.jpg',
-		                                Date_of_birth__c = cs[i].Date_of_birth__c, 
+		                                Date_of_birth__c = date.today().addYears(-30), 
 		                                FirstName__c = cs[i].FirstName,
 		                                LastName__c = cs[i].LastName,
 		                                Email__c = cs[i].Email,
@@ -827,10 +857,14 @@ private class IDCard_AdmUserListAndFormTest {
 		                                Start_Date_Industry__c = ''+cs[i].Start_Date_Industry__c
 	        	));
 	        }
+
+
+
 	        idcs[0].BlackListed__c = true;
 	        idcs[2].Card_status__c = IDCardUtil.CARDSTATUS_CANCELED;
 	        idcs[1].Card_status__c = IDCardUtil.CARDSTATUS_APPROVED;
 	        idcs[1].Valid_To_Date__c = date.today().addMonths(-5);
+
 	        insert idcs;
 	        
 	        
@@ -844,12 +878,29 @@ private class IDCard_AdmUserListAndFormTest {
                                                 Application_Status__c = IDCardUtil.APPLICATIONSTATUS_PENDING,
                                                 Type_Of_Application__c = 'New',
         										IATA_Code__c = a.IATAcode__c,
-        										RecordTypeId = rt
+        										RecordTypeId = rt,
+        										Title__c = 'MR',
+        										Gender__c = 'Male',
+        										Hours_worked__c = '35 h or more',
+        										Position_in_Current_Agency__c = 'Director',
+        										Duties_in_Current_Agency__c = 'Administration',
+        										Start_Date_Agency_Month__c = 'January',
+        										Start_Date_Agency_Year__c = '2012',
+        										Start_Date_Industry__c = '2012',
+        										Email_admin__c = 'xpto@xpto.com'
+
+
 	        ));
+
+	                /*'Email_admin__c','First_Name__c','Date_of_birth__c','Last_Name__c','IATA_Code__c',
+                                               'Gender__c','Hours_worked__c','Position_in_Current_Agency__c','Duties_in_current_Agency__c',
+                                               'Start_date_agency_month__c','Start_date_agency_year__c','Start_date_industry__c'*/
+
 	        insert  apps;
 	        id firstappid = apps[0].id;
 	        
 	        test.startTest();
+	        
 	        
 	        //Contact 1 -> ID card blacklisted
  	   		//Contact 2 -> ID card expired
@@ -1107,7 +1158,16 @@ private class IDCard_AdmUserListAndFormTest {
                                                     Application_Status__c = 'Pending',
                                                     Type_Of_Application__c = 'New',
             										IATA_Code__c = a.IATAcode__c,
-            										RecordTypeId = rt
+            										RecordTypeId = rt,
+            										Title__c = 'MR',
+	        										Gender__c = 'Male',
+	        										Hours_worked__c = '35 h or more',
+	        										Position_in_Current_Agency__c = 'Director',
+	        										Duties_in_Current_Agency__c = 'Administration',
+	        										Start_Date_Agency_Month__c = 'January',
+	        										Start_Date_Agency_Year__c = '2012',
+	        										Start_Date_Industry__c = '2012',
+	        										Email_admin__c = 'xpto@xpto.com'
             										
 		        ));
 		        system.debug(LoggingLevel.ERROR, '------------ PENDING APP for contact with ver = '+cs[i].VER_Number_2__c);

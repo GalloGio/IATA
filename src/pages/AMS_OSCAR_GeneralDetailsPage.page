@@ -1,6 +1,6 @@
-<apex:page extensions="AMS_OSCAR_Case_Detail_Controller" standardController="Case">
+<apex:page controller="AMS_OSCAR_Case_Detail_Controller">
    
-         <!-- <c:AMS_CrossObjectViewer displayedObject="{!AMS_OSCAR__c}"/> -->
+    <!-- <c:AMS_CrossObjectViewer displayedObject="{!AMS_OSCAR__c}"/> -->
     <apex:includeScript value="/support/console/34.0/integration.js"/>
     <apex:includeScript value="{!$Resource.jquery2_1_4}"/>
 
@@ -9,13 +9,12 @@
             if('{!oscarObj}' != null){
                 rerenderDetailInfo();
                 rerenderwarningInspPanel();
-                refreshTab();
+                // INC273249 : avoid to refresh the whole page when switching between a Case sub-tabs (loss of unsaved information)
+                // refreshTab();
             }
         };
         sforce.console.onFocusedSubtab(eventHandler);
-    </script>
 
-    <script>
         function RefreshPrimaryTab(id) 
         {
              if (sforce.console.isInConsole())
@@ -151,6 +150,15 @@
                 display: block; /* Display block instead of inline */
                 line-height: 30%;
             }
+            
+            .editable{
+                background-color: lightyellow;
+            }
+            th.editable:before{
+                content: "*";
+                color: red;
+                font-weight: bold;
+            }
 
      </style>
 
@@ -165,169 +173,53 @@
        </apex:outputPanel>
     </apex:outputPanel>
      
-        <apex:pageBlock mode="maindetail" tabStyle="AMS_Pax_Accreditation_Form__c" title="Account Detail" rendered="{!accreditationObj != null}">
+    <apex:pageBlock mode="maindetail" tabStyle="AMS_Pax_Accreditation_Form__c" title="Account Detail" rendered="{!accreditationObj != null}">
 
-        
-            <apex:pageBlockButtons location="both">
-                <apex:commandButton value="Save" action="{!save}" id="saveButton" style="display: none;"/>
-                <apex:commandButton value="Cancel" action="{!cancel}" id="cancelButton" style="display: none;"/>
-            </apex:pageBlockButtons>
-        
-            <apex:pageBlockSection columns="2" id="AccountInformation" collapsible="false">
-                <apex:pageBlockSectionItem >
-                    <apex:outputLabel value="Account"></apex:outputLabel>
-                     <apex:outputLink value="#" onclick="openPrimaryTab('/{!oscarObj.Account__c}?inContextPane=true','{!JSINHTMLENCODE(oscarObj.Account__r.name)}');return false;" >{!oscarObj.Account__r.name}</apex:outputLink>
+    
+        <apex:pageBlockButtons location="both">
+            <apex:commandButton value="Save" action="{!save}" id="saveButton" style="display: none;"/>
+            <apex:commandButton value="Cancel" action="{!cancel}" id="cancelButton" style="display: none;"/>
+        </apex:pageBlockButtons>
+
+        <apex:pageMessage severity="WARNING"
+            strength="1"
+            summary="Field editing will be available based on the selected {!$ObjectType.AMS_OSCAR__c.fields.Type_of_change__c.label}"
+            rendered="{!not(hasEditableFields)}"
+        />
+    
+        <apex:pageBlockSection columns="2" id="AccountInformation" collapsible="false">
+            <apex:pageBlockSectionItem >
+                <apex:outputLabel value="Account"></apex:outputLabel>
+                 <apex:outputLink value="#" onclick="openPrimaryTab('/{!oscarObj.Account__c}?inContextPane=true','{!JSINHTMLENCODE(oscarObj.Account__r.name)}');return false;" >{!oscarObj.Account__r.name}</apex:outputLink>
+            </apex:pageBlockSectionItem>
+            <apex:pageBlockSectionItem >&nbsp;</apex:pageBlockSectionItem>
+
+            <apex:repeat value="{!accreditationFields}" var="field">
+                <apex:pageBlockSectionItem labelStyleClass="{!IF(isAgencyChanges, field.styleClass, '')}" dataStyleClass="{!IF(isAgencyChanges, field.styleClass, '')}">
+                    <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields[field.name].Label}" />
+                    <apex:outputField value="{!accreditationObj[field.name]}" >
+                        <apex:inlineEditSupport event="{!field.event}" showonEdit="saveButton,cancelButton" disabled="{!NOT(field.inlineEdit)}" />
+                    </apex:outputField>
                 </apex:pageBlockSectionItem>
-                <apex:pageBlockSectionItem >&nbsp;</apex:pageBlockSectionItem>
-                <apex:outputField value="{!accreditationObj.Account_Name__c}">
-                    <apex:inlineEditSupport event="ondblClick" showonEdit="saveButton,cancelButton" />
-                </apex:outputField>
-                <apex:outputField value="{!accreditationObj.IATACode__c}" >
-                   <!-- <apex:inlineEditSupport event="ondblClick" showonEdit="saveButton,cancelButton" /> -->
-                </apex:outputField>
-                <apex:outputField value="{!accreditationObj.ISSP_AMS_Legal_Status__c}" >
-                    <apex:inlineEditSupport event="ondblClick" showonEdit="saveButton,cancelButton" />
-                </apex:outputField>
-                <apex:outputField value="{!accreditationObj.CASS_Number__c}" >
-                    <apex:inlineEditSupport event="ondblClick" showonEdit="saveButton,cancelButton" />
-                </apex:outputField>
-                <apex:outputField value="{!accreditationObj.Short_Name__c}">
-                    <apex:inlineEditSupport event="ondblClick" showonEdit="saveButton,cancelButton" />
-                </apex:outputField>
-                <apex:outputField value="{!accreditationObj.Location_Class__c}" >
-                    <apex:inlineEditSupport event="ondblClick" showonEdit="saveButton,cancelButton" />
-                </apex:outputField>
-                <apex:outputField value="{!accreditationObj.Location_Type__c}" >
-                    <apex:inlineEditSupport event="ondblClick" showonEdit="saveButton,cancelButton" />
-                </apex:outputField>
-                <apex:outputField value="{!accreditationObj.Trade_Name__c}" >
-                    <apex:inlineEditSupport event="ondblClick" showonEdit="saveButton,cancelButton" />
-                </apex:outputField>
-                <apex:outputField value="{!accreditationObj.ISSP_AMS_License_No__c}" >
-                    <apex:inlineEditSupport event="ondblClick" showonEdit="saveButton,cancelButton" />
-                </apex:outputField>
-                <apex:outputField value="{!accreditationObj.ISSP_AMS_VAT_number__c}">
-                    <apex:inlineEditSupport event="ondblClick" showonEdit="saveButton,cancelButton" />
-                </apex:outputField>
-                <apex:outputField value="{!accreditationObj.ISSP_AMS_GDS_with_signed_contract__c}">
-                    <apex:inlineEditSupport event="ondblClick" showonEdit="saveButton,cancelButton" />
-                </apex:outputField>
-                <apex:outputField value="{!accreditationObj.Branch_Office_Country__c}" id="Branch_Office_Country" >
-                    <apex:inlineEditSupport event="onclick" showonEdit="saveButton,cancelButton"  />
-                </apex:outputField>
-                <apex:outputField value="{!accreditationObj.Branch_Office_Street_name_number__c}" >
-                    <apex:inlineEditSupport event="ondblClick" showonEdit="saveButton,cancelButton" />
-                </apex:outputField>
-                <apex:outputField value="{!accreditationObj.Branch_Office_Postal_code__c}" >
-                    <apex:inlineEditSupport event="ondblClick" showonEdit="saveButton,cancelButton" />
-                </apex:outputField>
-                <!-- 
-                DT: Removed as per request
-                <apex:outputField value="{!accreditationObj.Billing_State__c}" >
-                    <apex:inlineEditSupport event="ondblClick" showonEdit="saveButton,cancelButton" />
-                </apex:outputField>
-                 -->
-                 <!-- DT: Added as per request -->
-                <!--<apex:outputField value="{!accreditationObj.ISO_Country__c}" >
-                    <apex:inlineEditSupport event="ondblClick" showonEdit="saveButton,cancelButton" />
-                </apex:outputField>
-                -->
-                <apex:outputField value="{!accreditationObj.Branch_Office_City__c}" >
-                    <apex:inlineEditSupport event="ondblClick" showonEdit="saveButton,cancelButton" />
-                </apex:outputField>
-                <apex:outputField value="{!accreditationObj.IATA_ISO_State__c}" id="IATA_ISO_State" >
-                    <apex:inlineEditSupport event="onclick" showonEdit="saveButton,cancelButton"  />
-                </apex:outputField>
-                <!-- 
-                DT: Removed as per request
-                <apex:outputField value="{!accreditationObj.Shipping_Country__c}" >
-                    <apex:inlineEditSupport event="ondblClick" showonEdit="saveButton,cancelButton" />
-                </apex:outputField>
-                -->
-                <apex:outputField value="{!accreditationObj.Shipping_Street__c}" >
-                    <apex:inlineEditSupport event="ondblClick" showonEdit="saveButton,cancelButton" />
-                </apex:outputField>
-                <apex:outputField value="{!accreditationObj.Shipping_Postal_Code__c}" >
-                    <apex:inlineEditSupport event="ondblClick" showonEdit="saveButton,cancelButton" />
-                </apex:outputField>
-                <!-- DT: Added as per request -->
-                <apex:outputField value="{!accreditationObj.Shipping_ISO_Country__c}" >
-                    <apex:inlineEditSupport event="ondblClick" showonEdit="saveButton,cancelButton" />
-                </apex:outputField>
-                <!-- DT: Added as per request -->
-                <apex:outputField value="{!accreditationObj.Shipping_ISO_State__c}" >
-                    <apex:inlineEditSupport event="ondblClick" showonEdit="saveButton,cancelButton" />
-                </apex:outputField>
-                <!-- 
-                DT: Removed as per request
-                <apex:outputField value="{!accreditationObj.Shipping_State__c}" >
-                    <apex:inlineEditSupport event="ondblClick" showonEdit="saveButton,cancelButton" />
-                </apex:outputField>
-                -->
-                <apex:outputField value="{!accreditationObj.Shipping_City__c}" >
-                    <apex:inlineEditSupport event="ondblClick" showonEdit="saveButton,cancelButton" />
-                </apex:outputField>
-                <apex:outputField value="{!accreditationObj.Branch_Office_Email__c}" >
-                    <apex:inlineEditSupport event="ondblClick" showonEdit="saveButton,cancelButton" />
-                </apex:outputField>
-                <apex:outputField value="{!accreditationObj.Website__c}" >
-                    <apex:inlineEditSupport event="ondblClick" showonEdit="saveButton,cancelButton" />
-                </apex:outputField>
-                <apex:outputField value="{!accreditationObj.Branch_Office_Phone__c}" >
-                    <apex:inlineEditSupport event="ondblClick" showonEdit="saveButton,cancelButton" />
-                </apex:outputField>
-                <apex:outputField value="{!accreditationObj.Branch_Office_FAX__c}" >
-                    <apex:inlineEditSupport event="ondblClick" showonEdit="saveButton,cancelButton" />
-                </apex:outputField>
-                <apex:outputField value="{!accreditationObj.ISSP_AMS_Premises_located_at_airport__c}" >
-                    <apex:inlineEditSupport event="ondblClick" showonEdit="saveButton,cancelButton" />
-                </apex:outputField>
-                <apex:outputField value="{!accreditationObj.Mobile__c}" >
-                    <apex:inlineEditSupport event="ondblClick" showonEdit="saveButton" />
-                </apex:outputField>
-                <apex:outputField value="{!accreditationObj.Abbreviated_name__c}" >
-                    <apex:inlineEditSupport event="ondblClick" showonEdit="saveButton,cancelButton" />
-                </apex:outputField>
-                <apex:outputField value="{!accreditationObj.Abbreviated_Address__c}" >
-                    <apex:inlineEditSupport event="ondblClick" showonEdit="saveButton,cancelButton" />
-                </apex:outputField>
-                <apex:outputField value="{!accreditationObj.Remittance_frequency__c}" >
-                    <apex:inlineEditSupport event="ondblClick" showonEdit="saveButton,cancelButton" />
-                </apex:outputField>
-                <apex:outputField value="{!accreditationObj.Solicitation_Flag__c}" >
-                    <apex:inlineEditSupport event="ondblClick" showonEdit="saveButton,cancelButton" />
-                </apex:outputField>
-                <apex:outputField value="{!accreditationObj.VAT_Number_2__c}" >
-                    <apex:inlineEditSupport event="ondblClick" showonEdit="saveButton,cancelButton" />
-                </apex:outputField>
+            </apex:repeat>
 
-            </apex:pageBlockSection>
-                 
+        </apex:pageBlockSection>
+             
 
-        </apex:pageBlock>
-        
-        <script>
-            (function ($) {
-                    $("[id$='Branch_Office_Country']").dblclick(function() {
-                      openSubTab('/{!accreditationObj.Branch_Office_Country__c}','','',true);return false;
-                    });
-            })(jQuery);
-        </script>
+    </apex:pageBlock>
+    
+    <script>
+        $(".branchOffice").dblclick(function() {
+          openSubTab('/{!accreditationObj.Branch_Office_Country__c}','','',true);return false;
+        });
+        $(".isoState").dblclick(function() {
+          openSubTab('/{!accreditationObj.IATA_ISO_State__c}','','',true);return false;
+        });
 
-        <script>
-            (function ($) {
-                    $("[id$='IATA_ISO_State']").dblclick(function() {
-                      openSubTab('/{!accreditationObj.IATA_ISO_State__c}','','',true);return false;
-                    });
-            })(jQuery);
-        </script>
-        
-            
-        <script>
-            if({!saveAction}){
-                refreshTab();
-            }
-        </script>
+        if({!saveAction}){
+            refreshTab();
+        }
+    </script>
     
     <apex:actionFunction name="rerenderDetailInfo" rerender="detailInfo" />
     <apex:actionFunction name="rerenderwarningInspPanel" rerender="warningInspPanelContainer" />

@@ -78,7 +78,7 @@
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>All/Kavi_Notify_contact_of_access_grantedVF</template>
+        <template>unfiled$public/Kavi_Notify_contact_of_access_grantedVF</template>
     </alerts>
     <alerts>
         <fullName>Notification_that_user_receive_after_an_access_request</fullName>
@@ -586,7 +586,7 @@ Field update of user &apos;Treasury Dashboard User&apos; = True</description>
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <formula>AND(  ISPICKVAL (Right__c , &apos;Access Granted&apos;),  NOT ( OR(CONTAINS(Application_Name__c, &apos;Treasury Dashboard&apos;), CONTAINS(Application_Name__c, &apos;Standards Setting Workspace&apos;) )),  Portal_Application__c !=  $Setup.ISSP_Portal_Service_Ids__c.AgencyAccreditation__c )</formula>
+        <formula>AND( ISPICKVAL (Right__c , &apos;Access Granted&apos;), NOT ( OR(CONTAINS(Application_Name__c, &apos;Treasury Dashboard&apos;), CONTAINS(Application_Name__c, &apos;Standards Setting Workspace&apos;) )))</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>

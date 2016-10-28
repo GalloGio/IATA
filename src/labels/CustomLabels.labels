@@ -4042,7 +4042,7 @@ Your ID Card application manager has been informed of your request.</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ID Card Application Type Reissue</shortDescription>
-        <value>Replace</value>
+        <value>Reprint</value>
     </labels>
     <labels>
         <fullName>ID_Card_Application_Type_Renewal</fullName>
@@ -4056,7 +4056,7 @@ Your ID Card application manager has been informed of your request.</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ID Card Application Type Replacement</shortDescription>
-        <value>Change</value>
+        <value>Change of Agency</value>
     </labels>
     <labels>
         <fullName>ID_Card_Cannot_Update_Card_Err_Msg</fullName>
@@ -17762,7 +17762,7 @@ Also, the package has changed the setting to prevent the creation of Contacts an
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Response message</shortDescription>
-        <value>The attachments transfer operation completed with {0} success(es) and {1} error(s).\n\n&lt;a href=&quot;/{2}&quot;&gt;Click here&lt;/a&gt; to return to the case.&apos;</value>
+        <value>The attachments transfer operation completed with {0} success(es) and {1} error(s).\n\n&lt;a href=&quot;/{2}&quot; onClick=&quot;testCloseTab()&quot;&gt;Click here&lt;/a&gt; to return to the case.&apos;</value>
     </labels>
     <labels>
         <fullName>SF_Base_URL</fullName>
@@ -18088,6 +18088,15 @@ title,Title,Name</value>
         <protected>false</protected>
         <shortDescription>Source IP</shortDescription>
         <value>Source IP</value>
+    </labels>
+    <labels>
+        <fullName>Standards_Setting_Workspace</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Standards Setting Workspace</shortDescription>
+        <value>IATA is building a new collaboration environment for standards development activities. This is primarily intended to support the activities under the Passenger and Cargo Services Conferences. The project is in its pilot phase and it is not yet active for most standards groups. Initial pilot participants from selected groups will be invited to join in the coming months. &lt;/br&gt;
+
+&lt;b&gt;&lt;u&gt;WARNING:&lt;/b&gt;&lt;/u&gt; This service is being piloted and is specific to the following groups: PADIS EDIFACT RES &amp; APTS, Interline EMD Baggage Group and Cargo Operations and Technology Board (COTB) with 2 subgroups (Cargo XML Task Force (CXMLTF) and Piece Level Tracking Task Force (PLTTF). If you are not part of these groups, please do not use this service.</value>
     </labels>
     <labels>
         <fullName>Start_date</fullName>

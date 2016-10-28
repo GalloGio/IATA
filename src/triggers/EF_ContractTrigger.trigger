@@ -27,6 +27,9 @@ trigger EF_ContractTrigger on Contract (
 			}
 		}
 
+		if (!efContractMap.isEmpty()) {
+
+
 		if (Trigger.isBefore && (Trigger.isUpdate || Trigger.isInsert)) {
 
             if(Trigger.isInsert)
@@ -34,6 +37,10 @@ trigger EF_ContractTrigger on Contract (
                 EF_ContractHandler.handleWithApprovalAccountInserts(efContractList);
             } else
             {
+            	for(Contract c : Trigger.new)
+            	{
+            		EF_Utilities.findIfKeyFieldsChanged((sObject) c, (sObject) Trigger.oldMap.get(c.Id), schema.SObjectType.Contract.fields.getMap(), new List<String>{''});
+            	}
             	EF_ContractHandler.validateContractCurrencyRemoval(Trigger.new, Trigger.oldMap);
                 EF_ContractHandler.handleWithApprovalAccountUpdates(efContractMap, Trigger.oldMap);
                 EF_ContractHandler.handleApprovedAndRejectedApprovals(efContractList, Trigger.oldMap);
@@ -45,5 +52,12 @@ trigger EF_ContractTrigger on Contract (
             {
 				EF_ContractHandler.startApprovalProcesses(efContractList);
             }
+
+            if(Trigger.isUpdate)
+            {
+	            //manage critical field notifications on after update
+	            EF_ContractHandler.manageCriticalFieldChanges(trigger.new, trigger.oldMap);
+	        }
         }
+    }
 }

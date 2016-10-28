@@ -97,6 +97,7 @@ It contains a currency to make the correspondance between contract + location + 
         <externalId>false</externalId>
         <globalPicklist>EF_Currency</globalPicklist>
         <label>Billing Currency</label>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -176,6 +177,15 @@ It contains a currency to make the correspondance between contract + location + 
         <description>Helper field that gets set to TRUE if any changes to Material__c or Status__c field is made.</description>
         <externalId>false</externalId>
         <label>Require Approval</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+	<fields>
+        <fullName>Skip_Validation__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Helper fields for mass-updating values from Contract to be rolled down to Billing Agreements without starting an approval process.</description>
+        <externalId>false</externalId>
+        <label>Skip Validation</label>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>

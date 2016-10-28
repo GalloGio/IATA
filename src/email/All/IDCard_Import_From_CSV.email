@@ -1,9 +1,0 @@
-<html>
-<body>
-<p>Dear Customer,<br/>
-the applicant CSV file has been imported with #SUCC# successes and #ERR# errors.<br/>
-<br/>
-Best Regards
-</p>
-</body>
-</html>

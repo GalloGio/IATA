@@ -1,8 +1,0 @@
-The following case has been escalated to you, or your team:
-
-Company: {!Account.Name}
-Area: {!Case_Area}
-Case number: {!Case.CaseNumber}
-Case subject: {!Case.Subject}
-
-{!Case.Link}

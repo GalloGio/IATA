@@ -174,6 +174,17 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Location_Code_Details__c</fullName>
+        <description>Location Code Details (ex. &quot;APG BSP Brazil BRL&quot;)</description>
+        <externalId>false</externalId>
+        <label>Location Code Details</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Type__c</fullName>
         <description>Used to define if is an Airport or an FIR.</description>
         <externalId>false</externalId>
@@ -190,6 +201,7 @@
             <restrictedPicklist>true</restrictedPicklist>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -280,6 +292,23 @@
         <active>true</active>
         <description>Used to Store Location+Currency information, related to one contract.</description>
         <label>Location</label>
+        <picklistValues>
+            <picklist>Type__c</picklist>
+            <values>
+                <fullName>Airport</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FIR</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Location_Code</fullName>
+        <active>true</active>
+        <description>Location Code Ex. (LOS, CCJ...)</description>
+        <label>Location Code</label>
         <picklistValues>
             <picklist>Type__c</picklist>
             <values>

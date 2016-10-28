@@ -30,15 +30,23 @@ public class EF_BillingAgreementHandler
         {
             // If approval occurred, copies the approved values from temporary storage onto the record itself
             EF_BaContractApprovalHelper.copyValuesFromTempStorageOnRecordApproval(approvedList, fields, 'EF_Billing_Agreement__c');
+            for(EF_Billing_Agreement__c approved : approvedList)
+            {
+                approved.Requested_Changes__c = '';
+            }
         }
         if(rejectedList.size() > 0)
         {
             // Or if rejected or recalled, simply ignore the changes and get rid of the temp storage record
             EF_BaContractApprovalHelper.removeTempStorageRecordOnRecordRejection(rejectedList, 'EF_Billing_Agreement__c');
+            for(EF_Billing_Agreement__c rejected : rejectedList)
+            {
+                rejected.Requested_Changes__c = '';
+            }
         }
     }
 
-    // Queries for any Accounts that do only allow Billing Agreements to be updated with approval
+    // Queries for any Contracts that do only allow Billing Agreements to be updated with approval
     public static void handleWithApprovalContractUpdates(Map<Id, EF_Billing_Agreement__c> newAgreements, Map<Id, EF_Billing_Agreement__c> oldAgreements)
     {
         Set<Id> contractIds = new Set<Id>();
@@ -54,7 +62,7 @@ public class EF_BillingAgreementHandler
             List<EF_Billing_Agreement__c> agreementsToApprove = new List<EF_Billing_Agreement__c>();
             for(EF_Billing_Agreement__c allAgreements : newAgreements.values())
             {
-                if(contractsInvolved.get(allAgreements.Contract__c) != null)
+                if(contractsInvolved.get(allAgreements.Contract__c) != null && !allAgreements.Skip_Approval__c)
                     agreementsToApprove.add(allAgreements);
             }
 
@@ -73,11 +81,6 @@ public class EF_BillingAgreementHandler
                     f = 'Airline_Name__c';
 
                 fields.add(f);
-            }
-
-            for(String f : fields)
-            {
-                System.debug('************ f: '+f);
             }
 
             // If there are any Billing Agreements that require approval, start the process to temporarily store them into another object
@@ -105,7 +108,10 @@ public class EF_BillingAgreementHandler
         Set<Id> contractIds = new Set<Id>();
         for(EF_Billing_Agreement__c ba : agreementList)
         {
-            contractIds.add(ba.Contract__c);
+            if(!ba.Skip_Approval__c)
+            {
+                contractIds.add(ba.Contract__c);
+            }
         }
 
         Set<Id> withApprovalIds = new Set<Id>();
@@ -165,7 +171,7 @@ public class EF_BillingAgreementHandler
         List <EF_Billing_Agreement__c> relWithLocation = new List <EF_Billing_Agreement__c>();
 
         for(EF_Billing_Agreement__c rel: relationshipList){
-            if(rel.EF_Location_ID__c!=null){
+            if(rel.EF_Location_ID__c!=null && !rel.Skip_Approval__c){
                 relWithLocation.add(rel);
             }
         }
@@ -288,6 +294,17 @@ public class EF_BillingAgreementHandler
         }
     }
 
+    public static void revertSkipApprovalIfNecessary(List<EF_Billing_Agreement__c> newList, Map<Id,EF_Billing_Agreement__c> oldMap)
+    {
+        for(EF_Billing_Agreement__c ba : newList)
+        {
+            if(ba.Skip_Approval__c && !oldMap.get(ba.Id).Skip_Approval__c)
+            {
+                ba.Skip_Approval__c = false;
+            }
+        }
+    }
+
     // helper method to stop Billing Agreement Trigger from running more than once per update
     public static boolean runOnce()
     {
@@ -317,5 +334,70 @@ public class EF_BillingAgreementHandler
             }            
 
         }
+    }
+
+    //E&F Notification of fields identified as critical. List of fields set on custom setting.
+    public static void manageCriticalFieldChanges(List<EF_Billing_Agreement__c> bas, Map<Id,EF_Billing_Agreement__c> oldMap){
+        List<EF_Critical_Field_Notification__c> fieldList = EF_Utilities.getCriticalFields();
+
+        List  <String> criticalBAFieldList = new List <String> ();
+
+        for(EF_Critical_Field_Notification__c cfn: fieldList){
+            criticalBAFieldList= cfn.Airline_Billing_Agreement_Fields__c.split(',');                     
+        }
+        
+        Map <Id,EF_Billing_Agreement__c> basNoti = new Map <Id,EF_Billing_Agreement__c>();
+       
+        Map<String, Schema.SobjectField> fields = bas.getSObjectType().getDescribe().fields.getMap();
+
+        //loop over Billing Agreements to check if any of them need to trigger a notification.
+        for(EF_Billing_Agreement__c ba: bas){           
+            //check fields for Billing Agreement
+            for(String s: criticalBAFieldList){                    
+                    if(ba.get(s)!=oldMap.get(ba.Id).get(s)){                       
+                        basNoti.put(ba.Id, ba);
+                    }
+                }            
+        }
+
+        if(!basNoti.isEmpty()){
+            notifyOnCriticalFields(basNoti, oldMap, criticalBAFieldList);
+        
+        }
+    }
+
+    public static void notifyOnCriticalFields (Map <Id, EF_Billing_Agreement__c> newBAs, Map <Id,EF_Billing_Agreement__c> oldBAMap, List <String> criticalFieldList ) {
+
+        Set <Id> contractIdSet = new Set <Id>();
+        for(EF_Billing_Agreement__c ba: newBAs.values()){
+            contractIdSet.add(ba.Contract__c);
+        }
+        Map <Id, Contract> contractMap = new Map <Id, Contract>([select Id, EF_DT_Specialist__c, EF_IA_Specialist__c, EF_DT_Specialist_Email__c, EF_IA_Specialist_Email__c from Contract where id in: contractIdSet]);
+
+        Map<String, Schema.SobjectField> fields = newBAs.getSObjectType().getDescribe().fields.getMap();
+        String baseUrl = System.URL.getSalesforceBaseUrl().toExternalForm();
+         
+        for(EF_Billing_Agreement__c ba: newBAs.values()){
+            String emailBody = 'Dear team member, <br/><br/>the following Airline Billing Agreement values been UPDATED:<br/><br/>';
+            emailBody = emailBody + '<table width="600px" border="1"><tr border="1"><th border="1">Contract</th><th border="1">Field:</th><th border="1">New Value:</th><th border="1">Old Value:</th></tr>';
+        
+           for(String s: criticalFieldList){              
+                if(ba.get(s)!=oldBAMap.get(ba.Id).get(s)){
+                    emailBody = emailBody + '<tr><td border="1"><a href="'+baseUrl+'/'+ba.Id+'">'+ba.Billing_Agreement_Name__c+'</a></td><td border="1">'+s+'</td><td border="1">'+ba.get(s)+'</td><td border="1">'+oldBAMap.get(ba.Id).get(s)+'</td></tr>';
+                }
+           }
+           emailBody = emailBody + '</table>';
+           if(contractMap.containsKey(ba.Contract__c) &&  contractMap.get(ba.Contract__c).EF_DT_Specialist__c!=null && contractMap.get(ba.Contract__c).EF_IA_Specialist__c!=null){
+                Utility.sendEmail(new List <String> {contractMap.get(ba.Contract__c).EF_DT_Specialist_Email__c, contractMap.get(ba.Contract__c).EF_IA_Specialist_Email__c, 'efs@iata.org'}, 'E&F Airline Billing Agreement Critical Changes Notification ', emailBody, true, null);
+           }else if(contractMap.containsKey(ba.Contract__c) && contractMap.get(ba.Contract__c).EF_DT_Specialist__c==null && contractMap.get(ba.Contract__c).EF_IA_Specialist__c!=null){
+                Utility.sendEmail(new List <String> {contractMap.get(ba.Contract__c).EF_IA_Specialist_Email__c, 'efs@iata.org'}, 'E&F Airline Billing Agreement Critical Changes Notification ', emailBody, true, null);
+           }else if(contractMap.containsKey(ba.Contract__c) && contractMap.get(ba.Contract__c).EF_DT_Specialist__c!=null && contractMap.get(ba.Contract__c).EF_IA_Specialist__c==null){
+                Utility.sendEmail(new List <String> {contractMap.get(ba.Contract__c).EF_DT_Specialist_Email__c, 'efs@iata.org'}, 'E&F Airline Billing Agreement Critical Changes Notification ', emailBody, true, null);
+           }else{
+                Utility.sendEmail(new List <String> {'efs@iata.org'}, 'E&F Airline Billing Agreement Critical Changes Notification ', emailBody, true, null);
+           }
+           
+        }            
+              
     }
 }

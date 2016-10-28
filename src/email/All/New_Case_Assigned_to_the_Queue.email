@@ -1,9 +1,0 @@
-This case was just assigned to the queue:
-
-Case Number: {!Case.CaseNumber}
-Subject: {!Case.Subject}
-Case description: {!Case.Description} 
-Link: {!Case.Link}
-
-
-{!Case.Thread_Id}

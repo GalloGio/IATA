@@ -191,11 +191,11 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>EF_Additional_SAP_Nr__c</field>
+                <field>SAP_Number__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>SAP_Number__c</field>
+                <field>EF_Additional_SAP_Nr__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>

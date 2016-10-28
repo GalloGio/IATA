@@ -1,9 +1,0 @@
-Dear {!Case.CreatedBy},
-
-Please note that your calendar change request number {!Case.CaseNumber} has been rejected. 
-
-Additional comments:
-{!ApprovalRequest.Comments}
-
-Best Regards,
-{!ApprovalRequest.Process_Approver}

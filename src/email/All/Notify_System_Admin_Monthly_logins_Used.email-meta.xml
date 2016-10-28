@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
-    <available>true</available>
-    <encodingKey>UTF-8</encodingKey>
-    <name>Notify System Admin - Monthly logins Used</name>
-    <style>none</style>
-    <subject>Warning: Customer Portal Monthly Logins Used {!UserLicense.MonthlyLoginsUsed}</subject>
-    <type>text</type>
-</EmailTemplate>

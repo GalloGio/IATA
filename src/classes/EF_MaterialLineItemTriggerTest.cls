@@ -19,6 +19,7 @@ public class EF_MaterialLineItemTriggerTest {
                 Category__c = 'ANSP',
                 EF_type__c = 'E&F Client',
                 EF_Status__c = 'Active',
+                EF_SubStatus__c = 'Chapter 7',
                 EF_Effective_Date__c = Date.today(),
                 Reason_for_creation__c = 'new client needed'
                 );
@@ -33,6 +34,7 @@ public class EF_MaterialLineItemTriggerTest {
                 Category__c = 'ANSP',
                 EF_type__c = 'E&F Client',
                 EF_Status__c = 'Active',
+                EF_SubStatus__c = 'Chapter 7',
                 EF_Effective_Date__c = Date.today(),
                 Reason_for_creation__c = 'new client needed'
                 );
@@ -47,6 +49,7 @@ public class EF_MaterialLineItemTriggerTest {
                 Category__c = 'ANSP',
                 EF_type__c = 'E&F Client',
                 EF_Status__c = 'Active',
+                EF_SubStatus__c = 'Chapter 7',
                 EF_Effective_Date__c = Date.today(),
                 Reason_for_creation__c = 'new client needed'
                 );
@@ -61,6 +64,7 @@ public class EF_MaterialLineItemTriggerTest {
                 Category__c = 'ANSP',
                 EF_type__c = 'E&F Operator',
                 EF_Status__c = 'Active',
+                EF_SubStatus__c = 'Chapter 7',
                 EF_Effective_Date__c = Date.today(),
                 Reason_for_creation__c = 'new customer needed'
                 );
@@ -307,11 +311,11 @@ public class EF_MaterialLineItemTriggerTest {
     }
     
     @isTest static void EF_MaterialLineItemTrigger_InsertMaterialLineItemInsertAndDeleteSeveralLines() {        
-        EF_Billing_Agreement__c rel = [Select id From EF_Billing_Agreement__c where Location_Code__c = '1234'];
+        EF_Billing_Agreement__c rel = [Select id, Contract__c From EF_Billing_Agreement__c where Location_Code__c = '1234'];
         Product2 prd = [Select id From Product2 where Name = 'Test product 1'];
         
         Product2 prd3 = [Select id From Product2 where Name = 'Test product 3'];
-                
+        
         EF_Material_Line_Item__c mli = new EF_Material_Line_Item__c(
             RecordTypeId = Schema.SObjectType.EF_Material_Line_Item__c.getRecordTypeInfosByName().get('Relationship Line Item').getRecordTypeId(),
             EF_Relationship__c = rel.id,

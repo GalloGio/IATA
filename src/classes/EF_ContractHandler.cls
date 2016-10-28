@@ -150,7 +150,7 @@ public class EF_ContractHandler
                 }
                 if(errorBillingCurrencyListingMap.get(c.Id) != null)
                 {
-                    c.EF_Billing_Currency__c.addError('Can not update Billing Currency list, because the following currencies are used in Billing Agreements: '+errorBillingCurrencyListingMap.get(c.Id));
+                    // c.EF_Billing_Currency__c.addError('Can not update Billing Currency list, because the following currencies are used in Billing Agreements: '+errorBillingCurrencyListingMap.get(c.Id));
                 }
                 if(errorPaymentCurrencyListingMap.get(c.Id) != null)
                 {
@@ -261,6 +261,70 @@ public class EF_ContractHandler
             }
         }
         return false;
+    }
+
+    //E&F Notification of fields identified as critical. List of fields set on custom setting.
+    public static void manageCriticalFieldChanges(List<Contract> contracts, Map<Id,Contract> oldMap){
+        List<EF_Critical_Field_Notification__c> fieldList = EF_Utilities.getCriticalFields();
+
+        List  <String> criticalContractFieldList = new List <String> ();
+
+        for(EF_Critical_Field_Notification__c cfn: fieldList){
+            criticalContractFieldList= cfn.Contract_Fields__c.split(',');                     
+        }
+        
+        Map <Id,Contract> contractsNoti = new Map <Id,Contract>();
+       
+        Map<String, Schema.SobjectField> fields = contracts.getSObjectType().getDescribe().fields.getMap();
+
+        //loop over accounts to check if any of them need to trigger a notification.
+        for(Contract c: contracts){
+            //check fields for Clients
+            if(c.RecordTypeId==Schema.SObjectType.Contract.getRecordTypeInfosByName().get('E&F Client Agreement').getRecordTypeId() ){
+                
+                for(String s: criticalContractFieldList){
+                    SObjectField f = fields.get(s);                 
+                        if(c.get(s)!=oldMap.get(c.Id).get(s)){                       
+                            contractsNoti.put(c.Id, c);
+                        }
+                }
+            }
+        }
+
+        if(!contractsNoti.isEmpty()){
+            notifyOnCriticalFields(contractsNoti, oldMap, criticalContractFieldList);
+        
+        }
+    }
+
+    public static void notifyOnCriticalFields (Map <Id, Contract> newContracts, Map <Id,Contract> oldContractMap, List <String> criticalFieldList ) {
+
+        Map<String, Schema.SobjectField> fields = newContracts.getSObjectType().getDescribe().fields.getMap();
+        String baseUrl = System.URL.getSalesforceBaseUrl().toExternalForm();
+         
+        for(Contract c: newContracts.values()){
+            String emailBody = 'Dear team member, <br/><br/>the following Contract values been UPDATED:<br/><br/>';
+            emailBody = emailBody + '<table width="600px" border="1"><tr border="1"><th border="1">Contract</th><th border="1">Field:</th><th border="1">New Value:</th><th border="1">Old Value:</th></tr>';
+        
+           for(String s: criticalFieldList){
+                SObjectField f = fields.get(s);                 
+                if(c.get(s)!=oldContractMap.get(c.Id).get(s)){
+                    emailBody = emailBody + '<tr><td border="1"><a href="'+baseUrl+'/'+c.Id+'">'+c.Name+'</a></td><td border="1">'+s+'</td><td border="1">'+c.get(s)+'</td><td border="1">'+oldContractMap.get(c.Id).get(s)+'</td></tr>';
+                }
+           }
+           emailBody = emailBody + '</table>';
+           if(c.EF_DT_Specialist__c!=null && c.EF_IA_Specialist__c!=null){
+                Utility.sendEmail(new List <String> {c.EF_DT_Specialist_Email__c, c.EF_IA_Specialist_Email__c, 'efs@iata.org'}, 'E&F Contract Critical Changes Notification ', emailBody, true, null);
+           }else if(c.EF_DT_Specialist__c==null && c.EF_IA_Specialist__c!=null){
+                Utility.sendEmail(new List <String> {c.EF_IA_Specialist_Email__c, 'efs@iata.org'}, 'E&F Contract Critical Changes Notification ', emailBody, true, null);
+           }else if(c.EF_DT_Specialist__c!=null && c.EF_IA_Specialist__c==null){
+                Utility.sendEmail(new List <String> {c.EF_DT_Specialist_Email__c, 'efs@iata.org'}, 'E&F Contract Critical Changes Notification ', emailBody, true, null);
+           }else{
+                Utility.sendEmail(new List <String> {'efs@iata.org'}, 'E&F Contract Critical Changes Notification ', emailBody, true, null);
+           }
+           
+        }            
+              
     }
 
     public static boolean runOnce()

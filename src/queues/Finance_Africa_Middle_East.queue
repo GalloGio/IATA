@@ -2,7 +2,7 @@
 <Queue xmlns="http://soap.sforce.com/2006/04/metadata">
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>bahoud@iata.org</email>
-    <name>Finance - Africa &amp; Middle East</name>
+    <name>Finance AR - Africa &amp; Middle East</name>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>

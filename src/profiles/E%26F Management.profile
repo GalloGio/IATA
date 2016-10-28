@@ -11708,6 +11708,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.EF_Client_Services_Specialist_Email__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Account.EF_Client_Services_Specialist__c</field>
         <readable>true</readable>
@@ -21619,6 +21624,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Contract.Dunning_Procedure__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Contract.EF_Admin_Fee__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -21658,6 +21668,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Contract.EF_DT_Specialist_Email__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Contract.EF_DT_Specialist__c</field>
         <readable>true</readable>
@@ -21675,6 +21690,11 @@
 	<fieldPermissions>
         <editable>true</editable>
         <field>Contract.EF_History__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Contract.EF_IA_Specialist_Email__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -22374,6 +22394,11 @@
     </fieldPermissions>
 	<fieldPermissions>
         <editable>false</editable>
+        <field>EF_Billing_Agreement__c.Airline_ID__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>false</editable>
         <field>EF_Billing_Agreement__c.Airline_Name__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -22382,6 +22407,11 @@
         <field>EF_Billing_Agreement__c.Airline__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>EF_Billing_Agreement__c.Airline_Location_ID__c</field>
+        <readable>true</readable>
+    </fieldPermissions> 
     <fieldPermissions>
         <editable>false</editable>
         <field>EF_Billing_Agreement__c.Allow_Billing_Agreements__c</field>
@@ -22400,6 +22430,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>EF_Billing_Agreement__c.Billing_Currency__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>EF_Billing_Agreement__c.Bill_to__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -22459,6 +22494,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>EF_Billing_Agreement__c.Contract_Group_Code__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>EF_Billing_Agreement__c.Invoice_Distribution_Method_Code__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -22480,6 +22520,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>EF_Billing_Agreement__c.Manager_Approval__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>EF_Billing_Agreement__c.Payer__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -22523,6 +22568,41 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>EF_Billing_Agreement__c.Ship_to__c</field>
+        <readable>true</readable>
+    </fieldPermissions> 
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>EF_Billing_Agreement__c.Sold_to__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>EF_Contact_EF_Contract__c.Contact_Account__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>EF_Contact_EF_Contract__c.EF_Contact__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>EF_Contact_EF_Contract__c.EF_Contract__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>EF_Contact_EF_Contract__c.Role__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>EF_Contact_EF_Contract__c.EF_Status__c</field>
+        <readable>true</readable>
+    </fieldPermissions>    
+    <fieldPermissions>
         <editable>false</editable>
         <field>EF_Contact_Relationship__c.Contact_Account__c</field>
         <readable>true</readable>
@@ -22545,6 +22625,26 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>EF_Contact_Relationship__c.Status__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>EF_Location_Code__c.Contract_BA_Id__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>EF_Location_Code__c.Contract__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>EF_Location_Code__c.EF_Airline_Billing_Agreement__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>EF_Location_Code__c.Location_Code_Details__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -22590,6 +22690,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>EF_Location_Currency__c.Require_Approval__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>true</editable>
+        <field>EF_Location_Currency__c.Skip_Validation__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -22680,6 +22785,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>EF_Related_Records__c.FIR_Code_Name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>EF_Related_Records__c.Location_Code_Details__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -39527,7 +39637,21 @@
         <layout>EF_Billing_Agreement__c-E%26F Airline Billing Agreement Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>EF_Contact_EF_Contract__c-E%26F Contact in E%26F Contract Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>EF_Contact_Relationship__c-E%26F Contact Relationship Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>EF_Location_Code__c-E%26F Location Code BA Layout</layout>
+        <recordType>EF_Location_Code__c.EF_BA_Location_Code</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>EF_Location_Code__c-E%26F Location Code Contract Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>EF_Location_Code__c-E%26F Location Code Contract Layout</layout>
+        <recordType>EF_Location_Code__c.EF_Contract_Location_Code</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>EF_Location_Currency__c-E%26F Location Currency Layout</layout>
@@ -39549,6 +39673,10 @@
     <layoutAssignments>
         <layout>EF_Related_Records__c-E%26F FIR Code Page Layout</layout>
         <recordType>EF_Related_Records__c.FIR_Code</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>EF_Related_Records__c-E%26F Location Code Page Layout</layout>
+        <recordType>EF_Related_Records__c.Location_Code</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>EF_Related_Records__c-E%26F Location Page Layout</layout>
@@ -40691,12 +40819,30 @@
     </objectPermissions>
     <objectPermissions>
         <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>true</modifyAllRecords>
+        <object>EF_Contact_EF_Contract__c</object>
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
         <allowDelete>false</allowDelete>
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
         <object>EF_Contact_Relationship__c</object>
         <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>EF_Location_Code__c</object>
+        <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
         <allowCreate>true</allowCreate>
@@ -41381,6 +41527,10 @@
         <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
+        <apexPage>EF_Account_Attachment_List</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
         <apexPage>EF_Billing_Agreement_Attachment_List</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
@@ -41389,7 +41539,19 @@
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
+        <apexPage>EF_Contact_Attachment_List</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>EF_Contact_Relationship_Attachment_List</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
         <apexPage>EF_ContractHistoryPage</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>EF_ContactContract_Attachment_List</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
@@ -43474,6 +43636,16 @@
         <visible>false</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>EF_Location_Code__c.EF_BA_Location_Code</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>true</default>
+        <recordType>EF_Location_Code__c.EF_Contract_Location_Code</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
         <default>true</default>
         <personAccountDefault>true</personAccountDefault>
         <recordType>EF_Material_Line_Item__c.Contract_Line_Item</recordType>
@@ -43491,6 +43663,11 @@
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>EF_Related_Records__c.Location</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+	<recordTypeVisibilities>
         <default>false</default>
         <recordType>EF_Related_Records__c.Location</recordType>
         <visible>true</visible>

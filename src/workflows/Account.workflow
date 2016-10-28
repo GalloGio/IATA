@@ -84,7 +84,7 @@
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>All/SURVEY_a1Q20000000UD7AEAW</template>
+        <template>unfiled$public/SURVEY_a1Q20000000UD7AEAW</template>
     </alerts>
     <fieldUpdates>
         <fullName>AIMS_Accounts_RT_Assignment</fullName>

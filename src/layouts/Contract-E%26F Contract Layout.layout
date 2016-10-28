@@ -43,11 +43,11 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Pricebook2Id</field>
+                <field>CustomerSignedDate</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Required</behavior>
-                <field>EF_Status__c</field>
+                <behavior>Edit</behavior>
+                <field>Pricebook2Id</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -62,10 +62,6 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>IATA_Contract_Value__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>CustomerSignedDate</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -105,6 +101,10 @@
         <label>E&amp;F</label>
         <layoutColumns>
             <layoutItems>
+                <behavior>Required</behavior>
+                <field>EF_Status__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>EF_Group_Code__c</field>
             </layoutItems>
@@ -126,15 +126,15 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Dunning_Procedure__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>EF_Payment_Terms__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>EF_Payment_Terms_Code__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Required</behavior>
-                <field>EF_Comments__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -169,6 +169,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>EF_Allow_Billing_Agreements__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Required</behavior>
+                <field>EF_Comments__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -311,7 +315,16 @@
     </relatedContent>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>EF_Contact__c</fields>
+        <fields>Contact_Account__c</fields>
+        <fields>EF_Status__c</fields>
+        <fields>Role__c</fields>
+        <relatedList>EF_Contact_EF_Contract__c.EF_Contract__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
         <fields>EF_Material__c</fields>
+        <fields>EF_Status__c</fields>
         <relatedList>EF_Material_Line_Item__c.Contract__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -319,6 +332,12 @@
         <fields>EF_Related_Records__c.NAME</fields>
         <fields>EF_Billing_Currency__c</fields>
         <relatedList>EF_Location_Currency__c.Contract__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Location_Code__c</fields>
+        <fields>Location_Code_Details__c</fields>
+        <relatedList>EF_Location_Code__c.Contract__c</relatedList>
     </relatedLists>
     <relatedLists>
         <customButtons>Edit_All</customButtons>
@@ -374,7 +393,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h26000000GCh7</masterLabel>
+        <masterLabel>00hw000000hfUjI</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

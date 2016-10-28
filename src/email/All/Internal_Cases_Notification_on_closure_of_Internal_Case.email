@@ -1,3 +1,0 @@
-For your information, the internal Case that you raised in regards to the customer Case of number {!Case.CaseNumber}  has now been closed. To access your customer Case (the Parent Case) click on below link.
-
-{!Case.Link}
