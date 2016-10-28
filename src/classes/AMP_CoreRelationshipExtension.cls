@@ -41,6 +41,22 @@ public with sharing class AMP_CoreRelationshipExtension {
 		}
 
 		@AuraEnabled
+		public static List<LocalGovernance__c> getGroups() {
+			List<AMPCoreGroups__c> lsCoreGroups = AMPCoreGroups__c.getAll().Values();
+			lsCoreGroups.sort();
+			List<String> groupNames = new List<String>();
+			Integer min = 0;
+			while (min <= lsCoreGroups.size()) {
+
+				for(AMPCoreGroups__c a : lsCoreGroups) {
+					if( a.Order__c == min) groupNames.add(a.Name);
+				}
+				min++;
+			}
+			return [SELECT Id, Name FROM LocalGovernance__c WHERE Name IN :groupNames];
+		}
+
+		@AuraEnabled
 		public static List<Participant__c> getParticipants(Id accountId) {
 			List<String> groupNames = getGroupNames();
 			List<Participant__c> lsParticipants = new List<Participant__c>();
@@ -57,16 +73,18 @@ public with sharing class AMP_CoreRelationshipExtension {
 		@AuraEnabled
 		public static List<Participant> getParticipantWrappers(Id accountId) {
 
-			List<String> groupNames = getGroupNames();
+			// List<String> groupNames = getGroupNames();
+			List<LocalGovernance__c> lsGroups = getGroups();
 			List<Participant__c> lsParticipants = getParticipants(accountId);
 			List<Participant> lsParticipantWrappers = new List<Participant>();
-			for(String groupname : groupNames) {
+			// for(String groupname : groupNames) {
+			for(LocalGovernance__c grp : lsGroups) {
 				Boolean found = false;
 				for(Participant__c pa : lsParticipants) {
-					if(pa.Local_Governance__r.Name == groupname) {
+					if(pa.Local_Governance__c == grp.Id) {
 						Participant p = new Participant();
 						p.groupId = pa.Local_Governance__c;
-						p.groupName = groupname;
+						p.groupName = grp.name;
 						p.role = pa.Participant_Type__c.replaceAll('^\\d+\\s','');// remove leading number from participant type;
 						p.salutation = pa.Contact__r.Salutation;
 						p.firstName = pa.Contact__r.FirstName;
@@ -79,7 +97,8 @@ public with sharing class AMP_CoreRelationshipExtension {
 				}
 				if(!found) {
 					Participant p = new Participant();
-					p.groupName = groupname;
+					p.groupId = grp.Id;
+					p.groupName = grp.name;
 					p.role = 'not at this time';
 					lsParticipantWrappers.add(p);
 				}
