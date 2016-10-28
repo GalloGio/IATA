@@ -2804,6 +2804,14 @@ IF(ISPICKVAL(Third_Party__c, &quot;Berlitz&quot;), 0.10,
 )</errorConditionFormula>
         <errorMessage>Only Client Services Specialists, Client Services Head and Business Development Managers can modify E&amp;F Contracts.</errorMessage>
     </validationRules>
+    <validationRules>
+        <fullName>EF_Contract_Only_On_Active_Account</fullName>
+        <active>true</active>
+        <description>EF Contracts can be created just if the account is active.</description>
+        <errorConditionFormula>AND( ISNEW(),   RecordType.DeveloperName=&apos;EF_Client_Agreement&apos;,
+ISPICKVAL(Account.EF_Status__c, &apos;Inactive&apos;))</errorConditionFormula>
+        <errorMessage>E&amp;F Contracts can&apos;t be created if the Account is Inactive for E&amp;F</errorMessage>
+    </validationRules>
     <webLinks>
         <fullName>APXTConga4__Conga_Composer_OAuth</fullName>
         <availability>online</availability>

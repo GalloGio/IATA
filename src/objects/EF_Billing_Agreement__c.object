@@ -579,6 +579,14 @@
     <searchLayouts/>
     <sharingModel>ControlledByParent</sharingModel>
     <validationRules>
+        <fullName>EF_Prevent_For_Inactive_Accounts</fullName>
+        <active>true</active>
+        <description>Prevent creation of Billing Agreements if the Airline or client accounts are inactive</description>
+        <errorConditionFormula>AND( ISNEW(),
+OR(ISPICKVAL( Airline__r.EF_Status__c , &apos;Inactive&apos;), ISPICKVAL( Client__r.EF_Status__c , &apos;Inactive&apos;)))</errorConditionFormula>
+        <errorMessage>Billing Agreements can&apos;t be created if either the Client or Airline are Inactive</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>EF_Prevent_For_Not_Allowed_Contracts</fullName>
         <active>true</active>
         <description>Prevents the creation or update of Billing Agreements if Contract is set to not to allow billing agreements.</description>
