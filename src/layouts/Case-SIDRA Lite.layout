@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customButtons>Accept_Case</customButtons>
     <customButtons>Approve_Default</customButtons>
     <customButtons>EasyUpload</customButtons>
     <customButtons>Reset_New_interactions</customButtons>
@@ -760,7 +761,7 @@
     <showRunAssignmentRulesCheckbox>true</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>true</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h8E000000FCOJ</masterLabel>
+        <masterLabel>00hw000000hfUzF</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>1</sizeY>
         <summaryLayoutItems>
