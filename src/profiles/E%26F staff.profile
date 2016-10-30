@@ -42340,7 +42340,7 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Account.Operator</recordType>
-        <visible>true</visible>
+        <visible>false</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
@@ -42350,7 +42350,7 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Account.IATA</recordType>
-        <visible>true</visible>
+        <visible>false</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
@@ -42365,7 +42365,7 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Account.IATA_Airline</recordType>
-        <visible>true</visible>
+        <visible>false</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
@@ -42375,7 +42375,7 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Account.IATA_Airline_BR</recordType>
-        <visible>true</visible>
+        <visible>false</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
@@ -42405,7 +42405,7 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Account.Others</recordType>
-        <visible>true</visible>
+        <visible>false</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
