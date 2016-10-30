@@ -252,9 +252,8 @@ public with sharing class vfIECEBC_AccountExtras extends vfIECEBC_Controller
 			description = '';
 			for (Product_Rate_Plan_Information__c prpi : prp.Product_Rate_Plan_Informations__r)
 			{
-				if (prpi.Long_Description__c != null) { 
-					description = prpi.Long_Description__c.replaceAll('<[^>]+>',' '); // remove html tagging
-				}
+				if (prpi.Long_Description__c != null) description = prpi.Long_Description__c.replaceAll('<[^>]+>',' '); // remove html tagging
+				if (prpi.Short_Description__c !=null) name=prpi.Short_Description__c;
 			}
 		} // ProductRatePlanWrapper
 		

@@ -153,6 +153,16 @@
         <type>Number</type>
         <unique>false</unique>
     </fields>
+    <fields>
+        <fullName>Transaction__c</fullName>
+        <description>Internal Transaction #</description>
+        <displayFormat>TR-{YYYY}-{0000000000}</displayFormat>
+        <externalId>false</externalId>
+        <inlineHelpText>Internal Transaction #</inlineHelpText>
+        <label>Transaction #</label>
+        <trackTrending>false</trackTrending>
+        <type>AutoNumber</type>
+    </fields>
     <label>EBC Activity</label>
     <listViews>
         <fullName>All</fullName>
