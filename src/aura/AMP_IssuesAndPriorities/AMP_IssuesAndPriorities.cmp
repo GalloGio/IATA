@@ -1,9 +1,9 @@
 <aura:component controller="AMP_IssuesAndPrioritiesExtension">
     <aura:attribute name="accountId" type="String" />
     <!-- 'sobjectType': 'Objective__c',-->
-    <aura:attribute name="sortOrder" type="String" access="private"/>
-    <aura:attribute name="issues" type="Objective__c[]" access="private"/>
-    <aura:attribute name="issuesBackup" type="Objective__c[]" access="private"/>
+    <aura:attribute name="sortOrder" type="String" />
+    <aura:attribute name="issues" type="Objective__c[]" />
+    <aura:attribute name="issuesBackup" type="Objective__c[]" /><!-- access="private"-->
     <aura:attribute name="newIssue" type="Objective__c"
                     default="{     'sobjectType' : 'Objective__c',
                              'Account__c' : 'accountId',
