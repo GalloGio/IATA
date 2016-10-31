@@ -28,6 +28,8 @@ public with sharing class SidraLiteHelperForIFAP {
                     returnCase.Propose_Irregularity__c = DateTime.now();
                     returnCase.IRR_Approval_Rejection_Date__c = DateTime.now();
                     returnCase.IRR_Type__c =  'Double Irregularity';
+                    returnCase.SIDRA_Lite_Default_Date__c = Date.today();
+                    returnCase.Reason_for_Default__c =  'Suspension - FS Non Compliance';
                 } else {
                     returnCase.IRR_Withdrawal_Reason__c  = 'Default Prev';
                 }
@@ -125,7 +127,10 @@ public with sharing class SidraLiteHelperForIFAP {
                     throw new WSSidraLite.SidraLiteException('Cannot proceed with the 2nd FS non-compliance. The 2nd FS Deadline is ' + parentCase.FS_Second_Deadline_Date__c.format());
                 }
                 parentCase.secondFSnonComplianceDate__c = Date.today();
-                parentCase.FS_Third_Deadline_Date__c = parentCase.secondFSnonComplianceDate__c.addDays(30);
+                parentCase.FS_Third_Deadline_Date__c = SidraLiteUtil.lastMonthDay(Date.today().addMonths(1));
+                if (SidraLiteUtil.isPAssenger(account) && SidraLiteUtil.isAccountActive(account)) {
+                    childCase.NOT_Date__c = Date.today();
+                }
                 if (SidraLiteUtil.isCargoCASS(account) && SidraLiteUtil.isAccountActive(account)) {
                     parentCase.SIDRA_Lite_Default_Date__c = Date.today();
                 }
@@ -166,12 +171,13 @@ public with sharing class SidraLiteHelperForIFAP {
                     throw new WSSidraLite.SidraLiteException('Cannot udpate a 2nd FA non-compliance case. The 2nd FA Deadline is ' + parentCase.FA_Second_Deadline_Date__c.format());
                 }
                 parentCase.secondFAnonComplianceDate__c = Date.today();
-                parentCase.FA_Third_Deadline_Date__c = parentCase.secondFAnonComplianceDate__c.addDays(30);
+                parentCase.FA_Third_Deadline_Date__c = SidraLiteUtil.lastMonthDay(Date.today().addMonths(1));
                 if ( SidraLiteUtil.isAccountActive(account) ) {
                     childCase.SIDRA_Lite_Default_Date__c = Date.today();
                 }
                 //update child
                 childCase.Termination_date_manual_entry__c = SidraLiteUtil.lastMonthDay(Date.today().addMonths(1));
+                childCase.Reason_for_Default__c  = 'Suspension - FA Non Compliance';
             }
             // Third non-compliance, allowed
             else if (parentCase.Third_FA_non_Compliance_Date__c == null ) {
