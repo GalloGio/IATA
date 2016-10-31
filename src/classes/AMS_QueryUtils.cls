@@ -1,7 +1,12 @@
 public class AMS_QueryUtils {
 
 	/*returns a query string with all the updateable fields of the object*/
-	public static String getAllFieldQuery(String objectName, String filters, Boolean onlyUpdateables) {
+	public static String getAllFieldQuery(String objectName, List<String> extraFields, String filters, Boolean onlyUpdateables) {
+
+        String pfString = '';
+        if(extraFields != null && !extraFields.isEmpty()) 
+            for(String f : extraFields) pfString += f+', ';
+
 
         String fields = ' ';
 
@@ -30,7 +35,7 @@ public class AMS_QueryUtils {
         if(!fields.contains(' Id')) fields += ', Id';
         if(!fields.contains(' Name')) fields += ', Name';
         
-        return 'SELECT ' + fields + ' FROM ' + objectName + (String.isNotEmpty(filters) ? ' WHERE '+filters : '');
+        return 'SELECT ' + pfString + fields + ' FROM ' + objectName + (String.isNotEmpty(filters) ? ' WHERE '+filters : '');
     }
 
     /*returns a query string with child records*/

@@ -1134,14 +1134,25 @@ public without sharing class AMS_Utils {
                         system.debug('Field value to migrate to account: ' + accFieldApiName);
                         system.debug('Field Type to migrate to account: ' + fldType);
 
-                     
                         //Add Account Changes to be used when generating the Change Codes History Entities
-                           
-                        String oldValue = String.valueOf(acc.get(accFieldApiName));
-                        String newValue =  String.valueOf(accountFieldNewValue.get(accFieldApiName));
+                        
+                        String newValue,oldValue,oldValueLookupID,newValueLookupID;
+                        if (String.valueOf(fldType) == 'REFERENCE'){
+
+                            oldValue = processParentDependecies(accFieldApiName.replace('__c','__r.Name'),acc);
+                            newValue = processParentDependecies(fieldsMapping.get(accFieldApiName).replace('__c','__r.Name'),oscarOnlineAccreditation); 
+                            oldValueLookupID = String.valueOf(acc.get(accFieldApiName));
+                            newValueLookupID = String.valueOf(accountFieldNewValue.get(accFieldApiName));
+                            
+                        }
+                        else{
+                       
+                            oldValue = String.valueOf(acc.get(accFieldApiName));
+                            newValue = String.valueOf(accountFieldNewValue.get(accFieldApiName));
+                       }
                         
                         if (oldValue != newValue)
-                            objectChangesList.add(new AMS_ChangeCodesHelper.ObjectChange('Account',accFieldApiName,oldValue,newValue));
+                            objectChangesList.add(new AMS_ChangeCodesHelper.ObjectChange('Account',accFieldApiName,oldValue,newValue,oldValueLookupID,newValueLookupID));
                             
 
                         acc.put(accFieldApiName, accountFieldNewValue.get(accFieldApiName));
@@ -1851,6 +1862,66 @@ public static String fetchTypeOfCustomer (String locationType , String category)
 
     public static Date lastDayOfMonth(Date dateField) {
         return dateField.addMonths(1).toStartOfMonth().addDays(-1);
+    }
+
+
+    /** 
+        Process Parent Objects fields (up to 5 Parents?)
+    */
+    public static String processParentDependecies(String field , sObject sObj)
+    {
+
+            if(field.contains('.'))
+            {
+                //Get the Object directly related to the field
+                wrapperData wDObj = new wrapperData(sObj,field);
+                
+                return
+                    String.valueOf(
+                        (
+                            wDObj.sObj == null || wDObj.sObj.get(wDObj.fieldName) == null ) ? '' :wDObj.sObj.get(wDObj.fieldName)
+                        )
+                    ;
+            }
+
+            else
+                return
+                    String.valueOf(
+                        (
+                            sObj.get(field) == null) ? '' : sObj.get(field)
+                        )
+                    ;
+    }
+
+    /** 
+     Wrapper Object for Mapping the Entity for Field 
+     Example : change_code__r.Account__r.name 
+
+    */
+    private class wrapperData {
+        
+        private sObject sObj{get;set;}
+        private String fieldName{get;set;}
+    /** 
+         Get Object for the Field  (up to 5 Parents?)
+    */
+        private wrapperData(SObject sObjParent, String field){
+
+            List <String> strList = field.split('\\.');
+            integer lastPos = strList.size() -1;
+        
+            sObject sObj = sObjParent;
+
+            for(integer i = 0 ; i < lastPos ; i++) //avoid last element
+            {               
+                sObj = sObj.getSObject(strList.get(i));
+            }
+
+            this.sObj   = sObj;
+            this.fieldName = strList.get(lastPos); 
+
+        }
+
     }
 
 }

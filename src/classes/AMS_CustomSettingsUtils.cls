@@ -36,13 +36,11 @@ This Custom Setting recovers the Collumns used In the EBulletin Reports
 	        return -1;        
 	    }
 
-
-		public void getColumns(String typeEBulletin)
+		public void filterAndSort()
 		{
 		}
 
-
-		public void filterAndSort()
+		public void getColumns(String typeEBulletin)
 		{
 		}
 
@@ -109,12 +107,6 @@ This Custom Setting recovers the Collumns used In the EBulletin Reports
 	public static Map<String,List<String>> ccNamePerSectionMap{ 
 			get{ 
 				if(ccNamePerSectionMap == null) ccNamePerSectionMap = new Map<String,List<String>>();return ccNamePerSectionMap;
-			}
-			set;}
-
-	public static Map<String,Boolean> ccTrackCCHistPerSectionMap{ 
-			get{ 
-				if(ccTrackCCHistPerSectionMap == null) ccTrackCCHistPerSectionMap = new Map<String,Boolean>();return ccTrackCCHistPerSectionMap;
 			}
 			set;}
 
