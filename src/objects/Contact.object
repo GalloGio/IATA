@@ -27292,7 +27292,7 @@ NOT(Contains($Profile.Name, &quot;System Administrator&quot;)))</errorConditionF
     TEXT(CEO_CFO__c)=&quot;COO&quot;, 
     Membership_Main_Contact__c 
    ), 
-  ISBLANK(Function__c) 
+  ISBLANK( Membership_Function__c ) 
   ), 
  AND( 
   NOT(OR( 
