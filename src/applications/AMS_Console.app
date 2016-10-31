@@ -214,6 +214,7 @@
     <tab>Code_Range__c</tab>
     <tab>standard-Chatter</tab>
     <tab>APXTConga4__Conga_Template__c</tab>
+    <tab>SIDRA_Lite_Mass_Approval</tab>
     <workspaceMappings>
         <mapping>
             <tab>APXTConga4__Conga_Template__c</tab>
@@ -223,6 +224,9 @@
         </mapping>
         <mapping>
             <tab>IATA_Code_Loader</tab>
+        </mapping>
+        <mapping>
+            <tab>SIDRA_Lite_Mass_Approval</tab>
         </mapping>
         <mapping>
             <tab>standard-Account</tab>
