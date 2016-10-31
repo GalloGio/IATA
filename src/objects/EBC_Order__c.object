@@ -81,6 +81,19 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Email_Debit__c</fullName>
+        <description>Email Debit applied usually after payment of a campaign</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Email Debit applied usually after payment of a campaign</inlineHelpText>
+        <label>Email Debit</label>
+        <precision>10</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Status__c</fullName>
         <description>As long as the payment is not done there is no fulfillment, the status is pending and after the payment the status is changed to Payment.</description>
         <externalId>false</externalId>
