@@ -20,7 +20,7 @@
             <!-- <apex:commandButton value="Next Year" action="{!showNext}" reRender="theBlock" /> -->
 
             <apex:outputPanel id="thisPanel" >
-            <apex:outputPanel rendered="{!!showMilestones}" >
+            <!-- <apex:outputPanel rendered="{!!showMilestones}" > -->
                 <apex:pageMessages />
 
                 <apex:pageBlockTable value="{!lsObjectivesActive}" var="objective">
@@ -101,7 +101,7 @@
 
 
 
-          </apex:outputPanel>
+          <!-- </apex:outputPanel> -->
           </apex:outputPanel>
 
             <apex:commandButton action="{!newObjective}" value="New Planned Activity" rendered="{!visibleTab != 'previous'}" reRender="thisPanel"/>
