@@ -405,11 +405,11 @@
         <field>EBC_Campaign__c.Status__c</field>
         <readable>true</readable>
     </fieldPermissions>
-    <fieldPermissions>
+ <!--   <fieldPermissions>
         <editable>false</editable>
         <field>EBC_Campaign__c.Test_Email_Last_Send_Time_Stamp__c</field>
         <readable>true</readable>
-    </fieldPermissions>
+    </fieldPermissions> 
     <fieldPermissions>
         <editable>false</editable>
         <field>EBC_Campaign__c.Test_Email_Total_Sent_On_Stamp_Period__c</field>
@@ -419,7 +419,7 @@
         <editable>false</editable>
         <field>EBC_Campaign__c.Test_Email_Total_Sent_Today__c</field>
         <readable>true</readable>
-    </fieldPermissions>
+    </fieldPermissions>-->
     <fieldPermissions>
         <editable>true</editable>
         <field>EBC_Customer_Filter__c.API_Name__c</field>
