@@ -22295,6 +22295,11 @@
         <field>EF_Approval__c.Contract__c</field>
         <readable>true</readable>
     </fieldPermissions>
+	<fieldPermissions>
+        <editable>true</editable>
+        <field>EF_Approval__c.Data_Currency__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>EF_Approval__c.EF_Admin_Fee__c</field>
