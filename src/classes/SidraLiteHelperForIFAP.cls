@@ -137,6 +137,7 @@ public with sharing class SidraLiteHelperForIFAP {
                 //update child
                 childCase.SIDRA_Lite_Default_Date__c = Date.today();
                 childCase.Termination_date_manual_entry__c = SidraLiteUtil.lastMonthDay(Date.today().addMonths(1));
+                childCase.Status = 'Re-opened';
             }
             // Third non-compliance, allowed
             else if(parentCase.FS_third_non_compliance_date__c==null) {
@@ -149,6 +150,7 @@ public with sharing class SidraLiteHelperForIFAP {
                  parentCase.FS_third_non_compliance_date__c = Date.today();
                  //update child
                  childCase.Propose_Default__c = DateTime.now();
+                 childCase.Status = 'Re-opened';
             }
             // Fourth non-compliance, not allowed
             else {
@@ -178,6 +180,7 @@ public with sharing class SidraLiteHelperForIFAP {
                 //update child
                 childCase.Termination_date_manual_entry__c = SidraLiteUtil.lastMonthDay(Date.today().addMonths(1));
                 childCase.Reason_for_Default__c  = 'Suspension - FA Non Compliance';
+                childCase.Status = 'Re-opened';
             }
             // Third non-compliance, allowed
             else if (parentCase.Third_FA_non_Compliance_Date__c == null ) {
@@ -190,6 +193,7 @@ public with sharing class SidraLiteHelperForIFAP {
                 parentCase.Third_FA_non_Compliance_Date__c = Date.today();
                 //update child
                 childCase.Propose_Default__c = DateTime.now();
+                childCase.Status = 'Re-opened';
             }
             // Fourth non-compliance, not allowed
             else {
