@@ -9037,7 +9037,7 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <recordType>Account.IATA_Airline</recordType>
-        <visible>true</visible>
+        <visible>false</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <recordType>Account.IATA_Airline_Account</recordType>
@@ -9045,7 +9045,7 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <recordType>Account.IATA_Airline_BR</recordType>
-        <visible>true</visible>
+        <visible>false</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <recordType>Account.IATA_GSA</recordType>
@@ -9069,11 +9069,11 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <recordType>Account.Operator</recordType>
-        <visible>true</visible>
+        <visible>false</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <recordType>Account.Others</recordType>
-        <visible>true</visible>
+        <visible>false</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <recordType>Account.Standard_Account</recordType>
