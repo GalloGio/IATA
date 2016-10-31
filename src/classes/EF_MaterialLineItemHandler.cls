@@ -2,6 +2,60 @@ public class EF_MaterialLineItemHandler
 {
     private static boolean run = true;
 
+    public static void validateNoInactiveMaterialsFromContract(Map<Id, EF_Material_Line_Item__c> newMap)
+    {
+        Map<Id, EF_Material_Line_Item__c> relevantMaterials  = new Map<Id, EF_Material_Line_Item__c>();
+        for(EF_Material_Line_Item__c mat : newMap.values())
+        {
+            if(mat.EF_Relationship__c != null)
+            {
+                relevantMaterials.put(mat.Id, mat);
+            }
+        }
+
+        if(relevantMaterials.size() > 0)
+        {
+            List<EF_Material_Line_Item__c> allMaterials = [select Id, EF_Material__c, EF_Relationship__r.Contract__c, EF_Status__c, Name from EF_Material_Line_Item__c where Id in :relevantMaterials.keySet()];
+            Set<Id> contractIds = new Set<Id>();
+            for(EF_Material_Line_Item__c mat : allMaterials)
+            {
+                contractIds.add(mat.EF_Relationship__r.Contract__c);
+            }
+
+            Map<Id, List<EF_Material_Line_Item__c>> contractIdMaterialsMap = new Map<Id, List<EF_Material_Line_Item__c>>();
+            
+            // Only select Inactive materials to reduce the amount of records to loop through later on
+            List<EF_Material_Line_Item__c> contractMaterials = [select Id, EF_Material__c, EF_Status__c, Contract__c, Name from EF_Material_Line_Item__c where Contract__c in :contractIds and EF_Status__c = 'Inactive'];
+            for(EF_Material_Line_Item__c contractMaterial : contractMaterials)
+            {
+                if(contractIdMaterialsMap.get(contractMaterial.Contract__c) != null)
+                {
+                    contractIdMaterialsMap.get(contractMaterial.Contract__c).add(contractMaterial);
+                } else
+                {
+                    contractIdMaterialsMap.put(contractMaterial.Contract__c, new List<EF_Material_Line_Item__c>());
+                    contractIdMaterialsMap.get(contractMaterial.Contract__c).add(contractMaterial);
+                }
+            }
+
+            for(EF_Material_Line_Item__c mat : allMaterials)
+            {
+                if(contractIdMaterialsMap.get(mat.EF_Relationship__r.Contract__c) != null)
+                {
+                    // Loop through the INACTIVE Contract's Material Line Items and identify if the same EF_Material__c linking exists
+                    // If it does, it means that the Contract's Material Line Item for that Material is Inactive => Throw an error
+                    for(EF_Material_Line_Item__c contractMaterial : contractIdMaterialsMap.get(mat.EF_Relationship__r.Contract__c))
+                    {
+                        if(mat.EF_Material__c == contractMaterial.EF_Material__c)
+                        {
+                            newMap.get(mat.Id).addError('The selected Material is set to Inactive state on the Contract level. Please select an active one instead.');
+                            return;
+                        }
+                    }
+                }
+            }
+        }
+    }
 
     public static void handleApprovedAndRejectedApprovals(List<EF_Material_Line_Item__c> newValues, Map<Id, EF_Material_Line_Item__c> oldValues)
     {

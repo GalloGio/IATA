@@ -2,7 +2,6 @@ trigger EF_MaterialLineItemTrigger on EF_Material_Line_Item__c (after delete, af
 {
 	if(Trigger.isBefore)
 	{
-		
 		if(Trigger.isInsert)
 		{
 			// EF_MaterialLineItemHandler.testSomething(Trigger.new);
@@ -22,6 +21,8 @@ trigger EF_MaterialLineItemTrigger on EF_Material_Line_Item__c (after delete, af
 	}
 	else if (Trigger.isAfter && (Trigger.isInsert || Trigger.isUpdate))
 	{
+		EF_MaterialLineItemHandler.validateNoInactiveMaterialsFromContract(Trigger.newMap);
+
     	// EF_MaterialLineItemHandler.emailIfMaterialChanges(Trigger.new, Trigger.oldMap);
     	if(Trigger.isInsert)
     		EF_MaterialLineItemHandler.checkBillingAgreementContractItems(Trigger.new);
