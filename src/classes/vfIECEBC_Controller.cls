@@ -539,6 +539,7 @@ public virtual class vfIECEBC_Controller {
 	//  - token will be calculated
 	// the amount detail on the product rate plan charge will be recalculated and reselected
 	// this ensure the data integrity and simplify the caller
+	// 
 	public PageReference goToPaymentPageBase( PageReference paymentPageBase 
 					, String ebcPaymentTarget
 					, String ebcPaymentCampaignOption
@@ -546,6 +547,7 @@ public virtual class vfIECEBC_Controller {
 					, Id productRatePlanId
 					, Id campaignId 
 					, Integer creditAmount
+                    
  		)
 	{
 		//String theToken = IECEBC_Utility.generatePaymentToken(ebcCampaignId + '-' + paidProductRatePlanId + '-' + campaignPaymentOption);
@@ -583,6 +585,7 @@ public virtual class vfIECEBC_Controller {
         paymentBillingAccount.eBroadcast_Payment_Campaign_Option__c = ebcPaymentCampaignOption; // EBC_PAYMENT_CAMPAIGN_NONE
         paymentBillingAccount.eBroadcast_Payment_Email_Credit_Amount__c = creditAmount;
         paymentBillingAccount.Email_Credit__c=0;
+        paymentBillingAccount.Email_Debit__c=0;
         paymentBillingAccount.Status__c='Pending';
 														
 		upsert paymentBillingAccount;
