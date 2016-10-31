@@ -569,7 +569,7 @@ global class SIDRARnSIntegrationWS {
     webService static List<pFinancialSecurity> GetFSAmounts(String region) {
 
         List<Financial_Security__c> fslist = [SELECT Account__c, IATA_code__c, Amount__c, CurrencyIsoCode from Financial_Security__c
-                                              WHERE Region__c = : region AND (Security_Status__c = 'Active' OR Security_Status__c = 'Close to Expiry Date')];
+                                              WHERE Region__c = : region AND (Security_Status__c = 'Active' OR Security_Status__c = 'Close to Expiry Date' OR Security_Status__c = 'Encashment in progress')];
 
         Map<Id, Map<String, pFinancialSecurity>> mapAccountPerCurrencyPerFS = new Map<Id, Map<String, pFinancialSecurity>>();
 

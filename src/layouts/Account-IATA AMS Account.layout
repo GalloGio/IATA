@@ -220,11 +220,11 @@
                 <field>Is_Branch_Abroad__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>VAT_Number__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>VAT_Number_2__c</field>
             </layoutItems>
             <layoutItems>
@@ -399,7 +399,7 @@
                 <field>RecordTypeId</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>AIMS_ID__c</field>
             </layoutItems>
             <layoutItems>
