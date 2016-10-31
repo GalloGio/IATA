@@ -76870,7 +76870,7 @@ RecordType.Name=&apos;Others&apos;
         <active>true</active>
         <description>E&amp;F Status on Customers can be reactivated if the user has the correct setting on his user</description>
         <errorConditionFormula>AND(
-NOT($User.EF_Client_Reactivation__c),  
+NOT($User.EF_Customer_Reactivation__c),  
 OR(ISPICKVAL(EF_Status__c, &apos;Active&apos;), ISPICKVAL(EF_Status__c, &apos;&apos;) ),
 TEXT(PRIORVALUE(EF_Status__c))=&apos;Inactive&apos;,
 OR(RecordType.Name=&apos;Operator&apos;, RecordType.Name=&apos;Airline Branch&apos;, RecordType.Name=&apos;Airline Headquarters&apos;) 
