@@ -42,7 +42,7 @@ public with sharing class AMP_KeyAccountPlanExtension {
 		updateLists();
 		lsMilestones = new List<Task>();
 		if(objectiveId != null) {
-			lsMilestones = getTasks(accountId);
+			lsMilestones = getTasks(objectiveId);
 			objectiveName = [SELECT Id, Name FROM Objective__c WHERE Id =:objectiveId LIMIT 1].Name;
 		}
     }
@@ -149,7 +149,7 @@ public with sharing class AMP_KeyAccountPlanExtension {
 
 	public void cancelTaskEdit() {
 		isTaskEditMode = false;
-		lsMilestones = getTasks(accountId);
+		lsMilestones = getTasks(objectiveId);
 	}
 
 	public void saveTask() {
@@ -163,7 +163,7 @@ public with sharing class AMP_KeyAccountPlanExtension {
 
 			upsert tmpTask;
 			isTaskEditMode = false;
-			lsMilestones = getTasks(accountId);
+			lsMilestones = getTasks(objectiveId);
 
 		} catch(Exception e) {}
 	}
@@ -183,7 +183,7 @@ public with sharing class AMP_KeyAccountPlanExtension {
 			delete tmpTask;
 			isTaskEditMode = false;
 			lsObjectives =  getObjectives(accountId);
-			lsMilestones = getTasks(accountId);
+			lsMilestones = getTasks(objectiveId);
 
 		} catch(Exception e) {}
 
