@@ -13519,6 +13519,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>AmazonFile__c.EF_Private__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>AmazonFile__c.Expired__c</field>
         <readable>true</readable>
     </fieldPermissions>

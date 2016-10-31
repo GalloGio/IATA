@@ -1787,6 +1787,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>AmazonFile__c.EF_Private__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>AmazonFile__c.Expired__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -9037,7 +9042,7 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <recordType>Account.IATA_Airline</recordType>
-        <visible>true</visible>
+        <visible>false</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <recordType>Account.IATA_Airline_Account</recordType>
@@ -9045,7 +9050,7 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <recordType>Account.IATA_Airline_BR</recordType>
-        <visible>true</visible>
+        <visible>false</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <recordType>Account.IATA_GSA</recordType>
@@ -9069,11 +9074,11 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <recordType>Account.Operator</recordType>
-        <visible>true</visible>
+        <visible>false</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <recordType>Account.Others</recordType>
-        <visible>true</visible>
+        <visible>false</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <recordType>Account.Standard_Account</recordType>
