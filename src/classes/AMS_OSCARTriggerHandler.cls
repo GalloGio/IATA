@@ -1018,7 +1018,7 @@ public class AMS_OSCARTriggerHandler {
         		caseChanged = true;
         	}
         	if(c.Process_Start_Date__c == null){
-        		c.Process_Start_Date__c = updatedOSCAR.Sanity_check_received__c;
+        		c.Process_Start_Date__c = updatedOSCAR.Process_Start_Date__c;
         		caseChanged = true;
         	}
 

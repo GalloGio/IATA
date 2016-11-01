@@ -92,12 +92,13 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
             //USED ON: HO,BR,TIDS,GSA,AHA,GSSA,MSO,SA
             oscar.Dossier_Reception_Date__c = Date.today();
 
-            //removed in issue AMS-1584
-            //oscar.Sanity_check_deadline__c = Date.today() + 15;
-
+            oscar.Sanity_check_deadline__c = Date.today() + 30;
+            
+            if(AMS_Utils.getRecordType(oscar.RecordTypeId) == AMS_Utils.getRecordType('AMS_OSCAR__c', 'NEW')){
+            	oscar.OSCAR_Deadline__c = Date.today() + 30;
+            }
 
             oscars.add(oscar);
-
         }
 
         if (!oscars.isEmpty()){
@@ -337,7 +338,7 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
             'Confirm_DGR_DGA__c'                        => 'DGR_DGA_confirmed__c',
             'Issue_rejection_notification_pack__c'      => 'Rejection_notification_sent__c',
             'Roll_back_account_data__c'                 => 'Account_data_rolled_back__c',
-            'Issue_billing_document__c'                 => 'Process_Start_Date__c'
+            'Issue_billing_document__c'                 => 'Invoice_Requested__c'
             };
            //Map to update Date related checkbox values
         for (String oscarDateFieldKey: oscarDateFieldsMap.keyset())
