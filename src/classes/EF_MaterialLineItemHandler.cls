@@ -10,9 +10,12 @@ public class EF_MaterialLineItemHandler
         {
             if(mat.RecordTypeId == baMaterialRtId)
             {
-                if(mat.Allow_Billing_Agreements__c.equalsIgnoreCase('Allowed with Approval'))
+                if(mat.Allow_Billing_Agreements__c != null)
                 {
-                    toApproveList.add(mat);
+                    if(mat.Allow_Billing_Agreements__c.equalsIgnoreCase('Allowed with Approval'))
+                    {
+                        toApproveList.add(mat);
+                    }
                 }
             } else
             {
