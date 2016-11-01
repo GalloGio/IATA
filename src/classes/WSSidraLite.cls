@@ -270,9 +270,10 @@ global class WSSidraLite {
         this method throws an error if the country is not in the list
     **/
     public static void testSidraLiteCountries(Case cse) {
-        set<string> validCountries = new set<String>{'South Africa','Canada','Brazil','Hong Kong (SAR), China','Spain & Andorra', 'Spain', 'Andorra','Pakistan','Bangladesh'};
-        if (!validCountries.contains(cse.BSPCountry__c)) {
-            throw new SidraLiteException('This country is not part of the Sidra Lite Pilot: ' + cse.BSPCountry__c);
+        set<string> validCountries = SidraLiteAllowedCountries__c.getAll().keyset();
+        if (!validCountries.contains(cse.BSPCountry__c) && !validCountries.contains(cse.Account_Billing_Country__c)) {
+            String country = cse.BSPCountry__c!=null? cse.BSPCountry__c: cse.Account_Billing_Country__c;
+            throw new SidraLiteException('This country is not part of the Sidra Lite Pilot: ' + country);
         }
     }
 }
