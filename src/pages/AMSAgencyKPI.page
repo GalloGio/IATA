@@ -15,7 +15,7 @@ body .bPageBlock .pbBody .labelCol, body .bPageBlock .pbBody .dataCol, body .bPa
       <apex:outputText value="{!HO.IATACode__c}"/><apex:outputText value="{!HO.IATA_ISO_Country__r.Name}" label="Country"/>
       <apex:outputText value="{!HO.Status__c}" label="Agency Status/Reason"/><!--<apex:outputText value="{!HQ.Primary_address__r.City__c}"/>-->
       <apex:outputText value="{!HO.TradeName__c}"/><!--<apex:outputText value="{!HQ.Primary_address__r.AMS_ZipCode__c}"/>-->
-      <apex:outputText value="{!HO.Accumulated_Irregularities__c}"/><apex:outputField value="{!HO.Guaranteed_amount__c}" label="Financial Security - Amount"/>
+      <apex:outputText value="{!HO.Accumulated_Irregularities__c}"/><apex:outputText value="{!HO.Guaranteed_amount__c}" label="Financial Security - Amount"/>
               
               
               
@@ -39,7 +39,7 @@ body .bPageBlock .pbBody .labelCol, body .bPageBlock .pbBody .dataCol, body .bPa
       <apex:outputText value="{!ag.IATACode__c}"/><apex:outputText value="{!ag.IATA_ISO_Country__r.Name}" label="Country"/>
       <apex:outputText value="{!ag.Status__c}" label="Agency Status/Reason"/>
       <apex:outputText value="{!ag.TradeName__c}"/>
-      <apex:outputText value="{!HO.Accumulated_Irregularities__c}" label="Head Office Accumulated Irregularities"/><apex:outputField value="{!HO.Guaranteed_amount__c}" label="Head Office Financial Security - Amount"/>
+      <apex:outputText value="{!HO.Accumulated_Irregularities__c}" label="Head Office Accumulated Irregularities"/><apex:outputText value="{!HO.Guaranteed_amount__c}" label="Head Office Financial Security - Amount"/>
 </apex:pageBlockSection>
 </apex:pageBlock>
 </apex:page>
