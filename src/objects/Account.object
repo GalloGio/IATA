@@ -77609,14 +77609,13 @@ userid={!User.Id}</url>
     <webLinks>
         <fullName>Web_App_View</fullName>
         <availability>online</availability>
-        <description>?accountId={!Account.Id}</description>
         <displayType>button</displayType>
         <encodingKey>UTF-8</encodingKey>
         <linkType>url</linkType>
         <masterLabel>Account Profile &gt;</masterLabel>
         <openType>replace</openType>
         <protected>false</protected>
-        <url>https://{! MID($Api.Partner_Server_URL_370, 9, FIND( &apos;.&apos;, $Api.Partner_Server_URL_370 )-9 ) }.lightning.force.com/c/AccountProfile.app</url>
+        <url>https://{! MID($Api.Partner_Server_URL_370, 9, FIND( &apos;.&apos;, $Api.Partner_Server_URL_370 )-9 ) }.lightning.force.com/c/AccountProfile.app?accountId={!Account.Id}</url>
     </webLinks>
     <webLinks>
         <fullName>Zuora__Sync_Data_from_ZBilling</fullName>
