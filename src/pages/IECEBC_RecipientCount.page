@@ -1,3 +1,0 @@
-<apex:page controller="restIECEBC_RecipientsCount" readOnly="true" applyBodyTag="false" applyHtmlTag="false" cache="false" contentType="application/json" sidebar="false" showHeader="false">
-{!count}
-</apex:page>

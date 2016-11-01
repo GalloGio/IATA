@@ -2,8 +2,6 @@
  * This class contains unit tests for validating the behavior of class IECApplicationsManager
  * Change log:
  *  20160415-sl: bug fix, split testCustomerSearch into 4 test methods and move shared data preparation out
- *  20160603-sl: add test method for testing isEbcAccessGrantedFoContact
- *  20160803-sl: merge code from Ebroadcast old repository to new repository (20160728 version)
  * 
  */
 @isTest
@@ -376,8 +374,8 @@ private class IECApplicationsManager_tst {
             lstSearchResult = IECApplicationsManager.customerSearchAgencyByAdvancedFilters(oFilter,
                                                 IECConstants.ProductCategory_SF_CACPRO,
                                                  IECCustomer.getCurrentIECCustomer());
-            
-            
+  
+
           } // end runAs
           test.stopTest();  
     } // testCustomerSearch3_GAD
@@ -687,42 +685,4 @@ private class IECApplicationsManager_tst {
         
     } // end of testOtherStuff2
     
-    // ====================================================================
-    // test isEbcAccessGrantedForContact()
-    // this method only check based on the value of related Zuora__CustomerAccount__c.eBroadcast_Product_Access__c 
-    @isTest(SeeAllData=false)
-    static void testIsEbcAccessGrantedForContact() {
-        // simplified data preparation
-        Account oTestAccount = IECTestUtil.createSampleAccount();
-        insert oTestAccount;
-        System.assertNotEquals( null, oTestAccount.Id, 'AccountId is null');
-        
-        Contact oTestContact = IECTestUtil.createSampleContact(oTestAccount);
-        insert oTestContact;
-        System.assertNotEquals( null, oTestContact.Id, 'ContactId is null');
-        
-        Zuora__CustomerAccount__c oTestBillingAccount = IECTestUtil.createSampleBillingAccount(oTestAccount, oTestContact);
-        oTestBillingAccount.Contact__c = oTestContact.Id;
-        oTestBillingAccount.Zuora__Status__c = 'Active';
-        oTestBillingAccount.eBroadcast_Product_Access__c = false;
-        insert oTestBillingAccount;
-        System.assertNotEquals( null, oTestBillingAccount.Id, 'CustomerAccountId is null');
-        
-        Boolean bPermissionGranted;
-        
-        // initial case: no access to EBC
-        bPermissionGranted = IECApplicationsManager.isEbcAccessGrantedForContact(oTestContact.Id);
-        System.assertEquals( false, bPermissionGranted, 'Permission to access EBC should not be granted based on BillingAccount setting');
-        
-        // test second case: no access to EBC
-        Zuora__CustomerAccount__c oTestBillingAccountUpdate = new Zuora__CustomerAccount__c( Id = oTestBillingAccount.Id
-            , eBroadcast_Product_Access__c = true);
-        update oTestBillingAccountUpdate;
-
-        
-        Boolean resetPreviouslyStoredBillingAcct = true;
-        bPermissionGranted = IECApplicationsManager.isEbcAccessGrantedForContact(oTestContact.Id, resetPreviouslyStoredBillingAcct); // 
-        System.assertEquals( true, bPermissionGranted, 'Permission to access EBC should be granted based on BillingAccount setting');
-        
-    } // testIsEbcAccessGrantedForContact
 } // end of IECApplicationsManager_tst
