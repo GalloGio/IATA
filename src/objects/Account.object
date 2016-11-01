@@ -8041,6 +8041,19 @@ WSPN-Worldspan</inlineHelpText>
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Higher_Level_Customer__c</fullName>
+        <description>Top parent SAP customer number for this account. Manually populated by the AMP team.</description>
+        <externalId>false</externalId>
+        <label>Higher Level Customer (SAP)</label>
+        <precision>4</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Holds_FS_first_call_letter__c</fullName>
         <description>used in SIDRA process to flag the cases where first call letter is required</description>
         <externalId>false</externalId>
@@ -10498,6 +10511,28 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>SAP_BW_report_with_sales_figures__c</fullName>
+        <externalId>false</externalId>
+        <formula>HYPERLINK(&quot;https://sap.iata.org/irj/servlet/prt/portal/prtroot/pcd!3aportal_content!2fcom.sap.pct!2fplatform_add_ons!2fcom.sap.ip.bi!2fiViews!2fcom.sap.ip.bi.bex?QUERY=ZVSD_M07_Q010&amp;VARIABLE_SCREENX&amp;DUMMY=1&amp;BI_COMMAND_1-BI_COMMAND_TYPE=SET_VARIABLES_STATE&amp;BI_COMMAND_1-VARIABLE_VALUES-VARIABLE_VALUE_1-VARIABLE_TYPE=VARIABLE_INPUT_STRING&amp;BI_COMMAND_1-VARIABLE_VALUES-VARIABLE_VALUE_1-VARIABLE=UMI_CUSTOMER_001&amp;BI_COMMAND_1-VARIABLE_VALUES-VARIABLE_VALUE_1-VARIABLE_TYPE-VARIABLE_INPUT_STRING=&quot; &amp; TEXT( Higher_Level_Customer__c ) , &quot; SAP/BW report with sales figures &quot;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Main Products Purchased</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SAP_BW_report_without_sales_figures__c</fullName>
+        <externalId>false</externalId>
+        <formula>HYPERLINK(&quot;https://sap.iata.org/irj/servlet/prt/portal/prtroot/pcd!3aportal_content!2fcom.sap.pct!2fplatform_add_ons!2fcom.sap.ip.bi!2fiViews!2fcom.sap.ip.bi.bex?QUERY=ZVSD_M07_Q011&amp;VARIABLE_SCREENX&amp;DUMMY=1&amp;BI_COMMAND_1-BI_COMMAND_TYPE=SET_VARIABLES_STATE&amp;BI_COMMAND_1-VARIABLE_VALUES-VARIABLE_VALUE_1-VARIABLE_TYPE=VARIABLE_INPUT_STRING&amp;BI_COMMAND_1-VARIABLE_VALUES-VARIABLE_VALUE_1-VARIABLE=UMI_CUSTOMER_001&amp;BI_COMMAND_1-VARIABLE_VALUES-VARIABLE_VALUE_1-VARIABLE_TYPE-VARIABLE_INPUT_STRING=&quot; &amp; TEXT( Higher_Level_Customer__c ) , &quot; SAP/BW report without sales figures &quot;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Main Products Purchased</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>SAP_Number__c</fullName>
@@ -77574,13 +77609,14 @@ userid={!User.Id}</url>
     <webLinks>
         <fullName>Web_App_View</fullName>
         <availability>online</availability>
+        <description>?accountId={!Account.Id}</description>
         <displayType>button</displayType>
         <encodingKey>UTF-8</encodingKey>
         <linkType>url</linkType>
         <masterLabel>Account Profile &gt;</masterLabel>
         <openType>replace</openType>
         <protected>false</protected>
-        <url>https://{! MID($Api.Partner_Server_URL_370, 9, FIND( &apos;.&apos;, $Api.Partner_Server_URL_370 )-9 ) }.lightning.force.com/c/AccountProfile.app?accountId={!Account.Id}</url>
+        <url>https://{! MID($Api.Partner_Server_URL_370, 9, FIND( &apos;.&apos;, $Api.Partner_Server_URL_370 )-9 ) }.lightning.force.com/c/AccountProfile.app</url>
     </webLinks>
     <webLinks>
         <fullName>Zuora__Sync_Data_from_ZBilling</fullName>
