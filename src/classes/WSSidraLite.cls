@@ -24,7 +24,6 @@ global class WSSidraLite {
                     Account.Id, Account.Type, Account.Status__c
                     from Cases
                     where RecordtypeId = :SidraLiteManager.RECORDTYPE_SIDRA_LITE
-                    and isClosed = false
                 )
             from Case
             where Id = :caseId];
@@ -271,7 +270,7 @@ global class WSSidraLite {
         this method throws an error if the country is not in the list
     **/
     public static void testSidraLiteCountries(Case cse) {
-        set<string> validCountries = new set<String>{'South Africa','Canada','Brazil','Indonesia','Hong Kong (SAR), China','Spain & Andorra', 'Spain', 'Andorra','Korea, Republic of'};
+        set<string> validCountries = new set<String>{'South Africa','Canada','Brazil','Hong Kong (SAR), China','Spain & Andorra', 'Spain', 'Andorra','Pakistan','Bangladesh'};
         if (!validCountries.contains(cse.BSPCountry__c)) {
             throw new SidraLiteException('This country is not part of the Sidra Lite Pilot: ' + cse.BSPCountry__c);
         }
