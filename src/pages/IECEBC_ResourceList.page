@@ -1,0 +1,298 @@
+<apex:page controller="vfIECEBC_ResourceList" applyHtmlTag="false" applyBodyTag="false" sidebar="false" showheader="false" standardStylesheets="false" language="en" docType="html-5.0">
+	<apex:composition template="IECEBC_Layout">
+        <apex:define name="pageHeadAdditions">
+            <!-- Start of Page <head> -->
+            <title>eBroadcast Manage Resources</title>
+            <!-- End of Page </head> -->
+        </apex:define>
+        <apex:define name="pageScriptAdditions">
+            
+           
+            
+            <div class="modal-container is-hidden" id="js-modaldel">
+                <div class="overlay"></div>
+                <div class="modal-dialog" id="js-modal-dialog">
+                    
+                    <apex:form id="js-modal-delete-item-wrapper">
+                        <apex:actionFunction name="deleteItem" rerender="js-modal-delete-item-wrapper" onbeforedomupdate="jQuery('#js-modaldel .modal-content:not(.is-hidden)').addClass('is-hidden');" oncomplete="actionFunctionCompleted();">
+                            <apex:param name="firstParam" assignTo="{!selectedItemId}" value="" />
+                        </apex:actionFunction>
+                        <section id="js-modal-delete-item" class="modal-content">
+                            <header class="modal-header">
+                                <h2 class="modal-title">Are you sure?</h2>
+                                <a href="#" class="icon-close js-close-modaldel"><i class="fa fa-times"></i></a>
+                            </header>
+                            <div class="modal-body">
+                                <p>You are about to delete a resource called <strong class="placeholder-name">{!selectedFilter.Name}</strong>.</p>
+                            </div>
+                            <footer class="modal-footer">
+                                <ul class="list actions">
+                                    <li>
+                                        <button class="text-link js-close-modaldel">Cancel</button>
+                                    </li>
+                                    <li>
+                                        <apex:commandLink onclick="jQuery('body').css('cursor', 'wait');" action="{!deleteItem}" styleClass="button" value="Confirm" reRender="itemList,paginator" oncomplete="closeModal();" />
+                                    </li>
+                                </ul>
+                            </footer>
+                        </section>
+                    </apex:form>
+                    
+                </div>
+            </div>
+            
+            <div class="modal-container is-hidden" id="js-modal">
+                <div class="overlay"></div>
+                <div class="modal-dialog" id="js-modal-dialog">
+                    <apex:form > 
+                    <section id="js-modal-upload-resources" class="modal-content">
+                        <header class="modal-header">
+                            <h2 class="modal-title">Upload resources</h2>
+                            <a href="#" class="icon-close js-close-modal"><i class="fa fa-times"></i></a>
+                        </header>
+            
+                        <div class="modal-body">
+                            <div class="field-group text">
+                                <label>
+                                    <span class="input-label">Import images to your gallery</span>
+                                    
+                                    <span class="custom-user-input file">
+                                        <span class="button">Browse</span>
+                                        <apex:inputFile styleClass="user-input file js-input-file" id="file" value="{!attachment.body}" contentType="{!attachment.contentType}" filename="{!attachment.name}"/>
+                                        <input type="text" class="user-input text file-disabled" disabled=""/>
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+                        <footer class="modal-footer">
+                            <ul class="list actions">
+                                <li>
+                                    <button class="text-link js-close-modal">Cancel</button>
+                                </li>
+                                <li>
+                                    <apex:commandButton value="Upload"  action="{!SaveAttachments}" styleClass="button wide" />
+                                  
+                                </li>
+                            </ul>
+                        </footer>
+            		</section>
+                   </apex:form>
+            	</div>
+            </div>
+            <apex:form rendered="{!MessageFlag}">
+                <div class="modal-container" id="js-modal">
+                    <div class="overlay"></div>
+                    <div class="modal-dialog" id="js-modal-dialog">                     
+                        <section id="js-modal-upload-resources" class="modal-content">
+                            <header class="modal-header">
+                                <h2 class="modal-title">Warning</h2>                                
+                            </header>            
+                            <div class="modal-body">
+                                <div class="field-group text">
+                                    <label>
+                                        <span class="input-label">{!MessageContent}</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <footer class="modal-footer">
+                                <ul class="list actions">
+                                    <li>
+                                        <apex:commandButton value="Close"  action="{!ClearMessage}" styleClass="button" />                                  
+                                    </li>
+                                </ul>
+                            </footer>
+                        </section>
+                       
+                    </div>
+                </div>
+            </apex:form>
+        </apex:define>
+        <apex:define name="pageContent">
+            <!-- Start of Page Content -->
+            <main class="main-content manage-resources">
+                <div class="inner-wrapper">
+           	      <h1 class="page-title">Manage <span class="tab-pane is-open pane-1">resources</span></h1>
+                  <div class="tab-container">
+                     <ul class="nav tabs"> 
+                       <li><a href="{!URLFOR($Page.IECEBC_TemplateList)}">Templates</a></li>
+                       <li class="active"><a href="{!URLFOR($Page.IECEBC_ResourceList)}">Resources</a></li>
+                     </ul>
+                   
+                    <div class="sort-by">
+                        <apex:form id="Sortselection">
+                            <div class="custom-user-input select">
+                                <i class="icon angle-down"></i>
+                                <apex:selectList value="{!sortBy}" styleClass="user-input select" size="1">
+                                    <apex:selectOptions value="{!sortByOptions}"  />
+                                    <apex:actionSupport event="onchange" action="{!doNothing}" reRender="itemList,Sortselection" />
+                                </apex:selectList> 
+                            </div>
+                        </apex:form>
+                    </div>
+                    <apex:outputPanel id="itemList" style="padding: 10px 0;" layout="block">
+                        <script type="text/javascript">
+                        jQuery.noConflict();
+                        
+                        var filters = {};
+                        <apex:repeat value="{!filters}" var="c">
+                            filters['{!c.Id}'] = {
+                                Id: '{!c.Id}',
+                                Name: '{!JSENCODE(c.Name)}'
+                            }
+                        </apex:repeat>
+                        
+                        function closeModal() {
+                            $ = jQuery;
+                            $('#js-modaldel').addClass('is-hidden');
+                            //$('#js-modal').addClass('is-hidden');
+                            $('body').attr('data-is-modal-open', 'false');
+                            
+                            jQuery('body').css('cursor', 'auto');
+                        }
+                        
+                        
+                        jQuery( document ).ready(function( $ ) {
+                        
+                            $(document).on('click', 'a[name="item-action"]', function(e){
+                                jQuery('body').css('cursor', 'wait');
+                                var item = filters[$(this).attr('data-target-item-id')];
+                                deleteItem(item.Id);
+                              
+                                      
+                            });
+                            $(document).on('click', '.js-close-modaldel', function(e){
+                                closeModal();
+                                      
+                            });
+                         });
+                        function actionFunctionCompleted(){
+                            jQuery('#js-modaldel').removeClass('is-hidden');
+                            jQuery('body').css('cursor', 'auto');
+                        }
+                        
+                        </script>
+                        <div class="gage-container">
+                            <div class="clearfix">
+                                <span class="title">Image Gallery Capacity</span>
+                                <span class="light">{!gaugestorage}</span>
+                            </div>
+                            <div class="gage">
+                                <div class="gage-meter" style="width: {!gaugepercent}">
+    
+                                </div>
+                            </div>
+                            <a class="button secondary" href="{!URLFOR($Page.IECEBC_AccountExtras)}">Get more storage</a>
+                        </div>
+                        <table class="data-table manage-lists">
+                            <tbody>
+                                <tr>
+                                  
+                                    <th class="name" colspan="2">Resource Name</th>
+                                    <th class="type">Type</th>
+                                    <th class="size">Size (Kb)</th>
+                                    <th class="date created-on">Upload Date</th>
+                                
+                                    <th class="actions">
+                                        
+                                        <a class="button wide js-open-modal" data-target-modal="#js-modal-upload-resources" href="#" id="actionupload"><i class="fa fa-upload" aria-hidden="true"></i> Upload</a>
+                                        <apex:outputText rendered="{!NOT(loadmoreimage)}" >
+                                            <script type="text/javascript">
+                                                $ = jQuery;
+                                        		$('#actionupload').hide();
+                                            </script>
+                                        </apex:outputText>
+                                        <apex:outputText rendered="{!loadmoreimage}" >
+                                            <script type="text/javascript">
+                                                $ = jQuery;
+                                        		$('#actionupload').show();
+                                                $('#actionupload').off("click");
+                                                $('.js-open-modal').on('click', function(event) {
+                                                if (!$(this).hasClass('select')) {
+                                                    event.preventDefault();
+                                        
+                                                    if (!$(this).hasClass('disabled')) {
+                                                        var targetModal = $(this).data('target-modal');
+                                                        $('.modal-content').addClass(className.hidden);
+                                                        $(targetModal).removeClass(className.hidden);
+                                                        
+                                                            $('#js-modal').removeClass(className.hidden);
+                                                            body.attr('data-is-modal-open', 'true');
+                                                      
+                                                    }
+                                                    }
+                                                 });
+                                             </script>
+                                        </apex:outputText>
+                                    </th>
+                                </tr>
+                                
+                                <apex:repeat value="{!filters}" var="i">
+                                    <tr>
+                                        <td class="type">
+                                            <img src="{!i.Thumbnail_URL__c}" alt="Resource" width="50px"/>
+                                        </td>
+                                        <td class="name">
+                                            <a href="{!i.Image_URL__c}" onclick="window.open(this.href); return false;">{!i.Name}</a>
+                                            <!--
+                                            <apex:outputText rendered="{!i.eBroadcast_Campaigns__r.size > 0}">
+	                                            <a href="#" class="tooltip-icon js-tooltip"><i class="fa fa-exclamation-triangle"></i></a>
+                                            </apex:outputText>
+                                            <apex:outputPanel layout="block" rendered="{!i.eBroadcast_Campaigns__r.size > 0}" styleClass="tooltip-container">
+                                                <div class="tooltip-description">
+                                                    <p>You cannot edit this list as it is used in a campaign.</p>
+                                                </div>
+                                            </apex:outputPanel>
+											-->
+                                        </td>
+                                        <td class="type">
+                                            {!i.Image_Type__c}
+                                        </td>
+                                        <td class="size">
+                                            <apex:outputField value="{!i.Size_KBytes__c}" />
+                                        </td>
+                                        <td class="date created-on">
+                                            <apex:outputText value="{0,date,EEE MMM dd yyyy hh:mm:ss}">
+                                                <apex:param value="{!i.CreatedDate}" /> 
+                                            </apex:outputText>
+                                        </td>
+                                        
+                                        <td class="actions">                                     
+                                    		<a href="#" data-target-item-id="{!i.Id}" name="item-action"><i class="fa fa-trash fa-4" aria-hidden="true"></i></a>
+                                        </td>
+                                    </tr>
+                                </apex:repeat>
+                                
+                            </tbody>
+                        </table>
+                        <apex:outputText rendered="{!filters.Size==0}">
+                         <ul class="nav tabs">
+                             
+                           <li></li>
+                         </ul>
+                        </apex:outputText>
+                    </apex:outputPanel>
+                   </div>
+                </div>
+            </main>
+            <apex:outputPanel id="paginator">
+                <apex:form >
+                    <Center>
+                        <apex:outputPanel styleClass="paginator" rendered="{!maxPage > 1}">
+                            Page
+                            <div class="custom-user-input select">
+                                <i class="icon angle-down"></i>
+                                <apex:selectList value="{!page}" styleClass="user-input select" size="1">
+                                    <apex:selectOptions value="{!pageOptions}"/>
+                                    <apex:actionSupport event="onchange" action="{!doNothing}" reRender="itemList" />
+                                </apex:selectList> 
+                            </div>
+                            of {!maxPage}
+                        </apex:outputPanel>
+                    </Center>
+                </apex:form>
+            </apex:outputPanel>
+            <!-- End of Page Content -->
+            
+        </apex:define>
+    </apex:composition>
+</apex:page>

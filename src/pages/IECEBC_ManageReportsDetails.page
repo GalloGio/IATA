@@ -1,0 +1,470 @@
+<apex:page id="thePage" standardController="EBC_Campaign__c" extensions="vfIECEBC_CampaignTracking" applyHtmlTag="false" applyBodyTag="false" sidebar="false" showheader="false" 
+           standardStylesheets="false" language="en" docType="html-5.0">
+    
+    <apex:message id="msg" />
+    <style>
+        .highcharts-container{width:100% !important; height:100% !important;}
+    </style>
+    
+    <apex:composition template="IECEBC_Layout">
+        <apex:define name="pageHeadAdditions">
+            <!-- Start of Page <head> -->
+            <title>eBroadcast Overview</title>
+            
+            <!-- End of Page </head> -->
+        </apex:define>
+        <apex:define name="pageScriptAdditions">
+            <!-- If any page specific .js, add them here -->
+            
+            <!-- include highcharts.com library -->
+            <script src="{!URLFOR($Resource.Highcharts, 'js/highcharts.js')}"> </script>
+            <script src="{!URLFOR($Resource.Highcharts, 'js/modules/exporting.js')}"> </script>
+            
+            <script type="text/javascript">
+            
+            jQuery( document ).ready(function( $ ) {                    
+                //SetFilter();
+                
+                renderFirst24hActivityGraph();
+                //renderFirst48hActivityGraph();                   
+                //renderFirst7dActivityGraph();                   
+            });
+            
+            jQuery('#pane-1-a-first-24-hours-tab').on('click',  function(event) {
+                //renderFirst24hActivityGraph();
+            });
+            jQuery('#pane-1-a-first-48-hours-tab').on('click',  function(event) {
+                setTimeout('renderFirst48hActivityGraph();', 1);
+            });            	
+            
+            jQuery('#pane-1-a-first-7-days-tab').on('click',  function(event) {
+                setTimeout('renderFirst7dActivityGraph();', 1);
+            });
+            
+            // ============================================================
+            // activity graph definition
+            var chart1; // first 24 hours
+            var chart2; // first 48  hours
+            var chart3; // first 7 days 
+            
+            //24 hours opens and clicks
+            var array24Opens = {!First24HOpensV3};
+            var array24Clicks = {!First24HClicksV3};
+            var array24XAxis = ['1am', '2am', '3am', '4am', '5am'
+                                , '6am', '7am', '8am', '9am', '10am', '11am', '12pm'
+                                , '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm'
+                                , '8pm', '9pm', '10pm', '11pm', '12pm'];
+            
+            //48 hours opens and clicks
+            var array48Opens = {!First48HOpensV3};
+            var array48Clicks = {!First48HClicksV3};
+            var array48XAxis = ['1am', '2am', '3am', '4am', '5am'
+                                , '6am', '7am', '8am', '9am', '10am', '11am', '12pm'
+                                , '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm'
+                                , '8pm', '9pm', '10pm', '11pm', '12pm', 
+                                '1am', '2am', '3am', '4am', '5am'
+                                , '6am', '7am', '8am', '9am', '10am', '11am', '12pm'
+                                , '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm'
+                                , '8pm', '9pm', '10pm', '11pm', '12pm'];
+            
+            //7 days Opens and cliks                
+            var array7Opens = {!First7DOpens};
+            var array7Clicks = {!First7DClicks};
+            var array7XAxis = {!XAxis7d};
+            
+            // ============================================================
+            // define the first 24 hours Activity Graph
+            function renderFirst24hActivityGraph()
+            {
+                chart1=renderActivityGraph(chart1
+                                           , '#first24hoursActivityGraph'
+                                           , 'Account Activities - First 24 Hours'
+                                           , '{!SentDate}'
+                                           , array24Opens, array24Clicks, array24XAxis);
+            }
+            
+            // ============================================================
+            // define the first 48 hours Activity Graph
+            function renderFirst48hActivityGraph()
+            {
+                chart2=renderActivityGraph(chart2
+                                           , '#first48hoursActivityGraph'
+                                           , 'Account Activities - First 48 Hours'
+                                           , '{!SentDate}'
+                                           , array48Opens, array48Clicks, array48XAxis);
+            }
+            
+            // ============================================================
+            // define the first 7 days Activity Graph
+            function renderFirst7dActivityGraph()
+            {
+                chart3=renderActivityGraph(chart3
+                                           , '#first7daysActivityGraph'
+                                           , 'Account Activities - First 7 days'
+                                           , '{!SentDate}'
+                                           , array7Opens, array7Clicks, array7XAxis);                    
+            }
+            // ============================================================
+            
+            // define the Activity Graph
+            function renderActivityGraph( chart, graphId, graphLabel
+                                         , sentDate
+                                         , opensData, clicksData, timeLine)  
+            {
+                
+                chart=jQuery(graphId).highcharts({
+                    chart: {
+                        type: 'spline'
+                    },
+                    title: {
+                        text: graphLabel
+                    },
+                    subtitle: {
+                        text: sentDate
+                    },
+                    xAxis: {
+                        categories: timeLine
+                        //type: 'category'
+                    },
+                    yAxis: {
+                        title: {
+                            text: 'Campaign Tracking'
+                        },
+                        labels: {
+                            formatter: function () {
+                                return this.value;
+                            }
+                        }
+                    },
+                    tooltip: {
+                        crosshairs: true,
+                        shared: true
+                    },
+                    plotOptions: {
+                        spline: {
+                            marker: {
+                                radius: 4,
+                                lineColor: '#666666',
+                                lineWidth: 1
+                            }
+                        }
+                    },
+                    credits: {
+							enabled: false,
+						},
+					exporting: {
+						buttons: {
+							contextButton: {
+								enabled: false
+								}    
+							}
+						},
+                    series: [{
+                        name: 'Opens',
+                        marker: {
+                            symbol: 'square'
+                        },
+                        data: opensData
+                        
+                    }, {
+                        name: 'Clicks',
+                        marker: {
+                            symbol: 'diamond'
+                        },
+                        data: clicksData
+                    }]
+                });
+                chart.reflow();
+                jQuery(window).resize();
+                return chart;
+            } // end of render24hActivityGraph
+            </script>
+            
+        </apex:define>
+        <apex:define name="pageContent">
+            <!--
+<script type="text/javascript">
+
+</script>
+-->
+            <!-- Start of Page Content -->
+            <main class="main-content manage-account">
+                <div class="inner-wrapper">
+                    <h1 class="page-title"><a href="{!URLFOR($Page.IECEBC_CampaignPreview, null, [id=EBC_Campaign__c.EBC_Design__c])}" onclick="window.open(this.href); return false;">{!EBC_Campaign__c.Name}</a></h1>
+                    
+                    <h2 class="section-title recipents"><i class="fa fa-users" aria-hidden="true"></i> Sent to {!EBC_Campaign__c.Number_of_Recipients__c} recipients</h2>
+                    <div class="tab-container"> 
+                        <div class="tab-content js-tabs">
+                            <div class="tab-pane is-open" id="pane-1">                              
+                                <ul class="list campaign-info">
+                                    <li>List used for the Campaign: <strong>{!EBC_Campaign__c.Name}</strong></li>
+                                    <li>Subject of the Campaign: <strong>{!EBC_Campaign__c.Subject__c}</strong></li>
+                                    <li>Campaign sent on: 	<strong>
+                                                                <apex:outputText value="{0,date,EEE MMM dd yyyy hh:mm:ss}">
+                                                                    <apex:param value="{!EBC_Campaign__c.Send_Datetime__c + timezoneOffset}" /> 
+                                                                </apex:outputText>
+                                                            </strong>
+                                    </li>
+                                </ul>
+                                <section class="group-container account-activity">
+                                    <ul class="list grid-5">
+                                        <li>
+                                            <div class="account-box">
+                                                <strong class="number">
+                                                    <apex:outputText value="{0, number, ###,###,##0}"><apex:param value="{!Kpis['delivered7Days']}" /></apex:outputText>
+                                                </strong>
+                                                <span class="label">Delivered</span>
+                                                <div class="icon">
+                                                    <i class="fa fa-at" aria-hidden="true"></i>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="account-box">
+                                                <strong class="number">
+                                                    <apex:outputText value="{0, number, ###,###,##0}"><apex:param value="{!Kpis['numberOpens7Days']}" /></apex:outputText>
+                                                </strong>
+                                                <span class="label">Opened</span>
+                                                <div class="icon">
+                                                    <i class="fa fa-folder-open" aria-hidden="true"></i>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="account-box">
+                                                <strong class="number">
+                                                    <apex:outputText value="{0, number, ###,###,##0}"><apex:param value="{!Kpis['numberClicks7Days']}" /></apex:outputText>
+                                                </strong>
+                                                <span class="label">Clicked</span>
+                                                <div class="icon">
+                                                    <i class="fa fa-hand-pointer-o" aria-hidden="true"></i>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="account-box">
+                                                <strong class="number">
+                                                    <apex:outputText value="{0, number, ###,###,##0}"><apex:param value="{!Kpis['bounced7Days']}" /></apex:outputText>
+                                                </strong>
+                                                <span class="label">Bounced</span>
+                                                <div class="icon">
+                                                    <i class="fa fa-reply" aria-hidden="true"></i>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="account-box">
+                                                <strong class="number">
+                                                    <apex:outputText value="{0, number, ###,###,##0}" rendered="{!Adjustments != null}"><apex:param value="{!Adjustments}" /></apex:outputText>
+                                                    <apex:outputText value="0" rendered="{!Adjustments == null}" />
+                                                </strong>
+                                                <span class="label">Adjustments</span>
+                                                <div class="icon">
+                                                    <i class="fa fa-asterisk" aria-hidden="true"></i>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </section>
+                                
+                                <div class="separator"></div>
+                                
+                                <div class="tab-container">
+                                    <ul class="nav tabs">
+                                        <li data-target="#pane-1-a" class="active"><a href="#">Time-Based Analysis</a></li>
+                                        <li data-target="#pane-1-b" class=""><a href="#">Data Table Analysis</a></li>
+                                        <li data-target="#pane-top-links" class=""><a href="#">In-Depth Analysis</a></li>    
+                                    </ul>
+                                    
+                                    <div class="tab-content">
+                                        <div class="tab-pane is-open" id="pane-1-a">
+                                            <apex:form id="dataGraphForm">                                                
+                                                <ul class="nav tabs secondary">
+                                                    <li id="pane-1-a-first-24-hours-tab" data-target="#pane-1-a-first-24-hours" class="active"><a href="#">First 24 hours</a></li>
+                                                    <li id="pane-1-a-first-48-hours-tab" data-target="#pane-1-a-first-48-hours"><a href="#">First 48 hours</a></li>
+                                                    <li id="pane-1-a-first-7-days-tab" data-target="#pane-1-a-first-7-days"><a href="#">First 7 days</a></li>
+                                                </ul>                                                
+                                                <div class="tab-content">      
+                                                    <div class="tab-pane is-open" id="pane-1-a-first-24-hours">
+                                                        <apex:outputPanel id="f24hGraphOutputPanel">
+                                                            <div style="border: 1px solid #ccc; padding: 10px; width:100%;" >
+                                                                <!--
+Monthly activity graph showing year to date email credit transactions
+-->
+                                                                <div id="first24hoursActivityGraph" style="min-width: 310px; height: 400px; width:100%; margin: 0 auto"></div>
+                                                            </div>
+                                                        </apex:outputPanel>
+                                                    </div>
+                                                    <div class="tab-pane" id="pane-1-a-first-48-hours">
+                                                        <apex:outputPanel id="f48hGraphOutputPanel">
+                                                            <div style="border: 1px solid #ccc; padding: 10px; width:100%;">
+                                                                <div id="first48hoursActivityGraph" style="min-width: 310px; height: 400px; width:100%; margin: 0 auto"></div>
+                                                            </div>
+                                                        </apex:outputPanel>
+                                                    </div>                                                    
+                                                    <div class="tab-pane" id="pane-1-a-first-7-days">
+                                                        <apex:outputPanel id="f7dGraphOutputPanel">
+                                                            <div style="border: 1px solid #ccc; padding: 10px; width:100%;">
+                                                                <div id="first7daysActivityGraph" style="min-width: 310px; height: 400px; width:100%; margin: 0 auto"></div>
+                                                            </div>
+                                                        </apex:outputPanel>
+                                                    </div>
+                                                </div>
+                                            </apex:form>
+                                        </div>
+                                        
+                                        <div class="tab-pane" id="pane-1-b">
+                                            <apex:form id="dataTableForm">
+                                                <div class="table-container data-table-container">
+                                                    <table class="data-table manage-lists">
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="activity-type" >&nbsp;</th>
+                                                                
+                                                                <th class="total-count">Cumulative Opens</th>
+                                                                <th class="total-count">Unique Open</th>
+                                                                <th class="total-count">Open Rate</th>
+                                                                <th class="total-count">Cumulative Clicks</th>
+                                                                <th class="total-count">Unique Click</th>
+                                                                <th class="total-count">Click Rate</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td> First 24 hours </td>
+                                                                <td> 
+                                                                    <apex:outputText value="{0, number, ###,###,##0}"><apex:param value="{!Kpis['numberOpens24Hours']}" /></apex:outputText> 
+                                                                </td>
+                                                                <td>
+                                                                    <apex:outputText value="{0, number, ###,###,##0}"><apex:param value="{!Kpis['uniqueOpens24Hours']}" /></apex:outputText> 
+                                                                </td>
+                                                                <td>
+                                                                    <apex:outputText value="{0, number, ###,###,##0.00}%" rendered="{!if(Kpis['openRate24Hours'] == -1, false, true)}"><apex:param value="{!Kpis['openRate24Hours']}" /></apex:outputText> 
+                                                                </td>
+                                                                <td>
+                                                                    <apex:outputText value="{0, number, ###,###,##0}"><apex:param value="{!Kpis['numberClicks24Hours']}" /></apex:outputText> 
+                                                                </td>
+                                                                <td>
+                                                                    <apex:outputText value="{0, number, ###,###,##0}"><apex:param value="{!Kpis['uniqueClicks24Hours']}" /></apex:outputText> 
+                                                                </td>
+                                                                <td>
+                                                                    <apex:outputText value="{0, number, ###,###,##0.00}%" rendered="{!if(Kpis['clickRate24Hours'] == -1, false, true)}"><apex:param value="{!Kpis['clickRate24Hours']}" /></apex:outputText> 
+                                                                </td>
+                                                                <td>
+                                                                    
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td> First 48 hours </td>
+                                                                <td> 
+                                                                    <apex:outputText value="{0, number, ###,###,##0}"><apex:param value="{!Kpis['numberOpens48Hours']}" /></apex:outputText> 
+                                                                </td>
+                                                                <td>
+                                                                    <apex:outputText value="{0, number, ###,###,##0}"><apex:param value="{!Kpis['uniqueOpens48Hours']}" /></apex:outputText> 
+                                                                </td>
+                                                                <td>
+                                                                    <apex:outputText value="{0, number, ###,###,##0.00}%" rendered="{!if(Kpis['openRate48Hours'] == -1, false, true)}"><apex:param value="{!Kpis['openRate48Hours']}" /></apex:outputText>  
+                                                                </td>
+                                                                <td>
+                                                                    <apex:outputText value="{0, number, ###,###,##0}"><apex:param value="{!Kpis['numberClicks48Hours']}" /></apex:outputText> 
+                                                                </td>
+                                                                <td>
+                                                                    <apex:outputText value="{0, number, ###,###,##0}"><apex:param value="{!Kpis['uniqueClicks48Hours']}" /></apex:outputText> 
+                                                                </td>
+                                                                <td>
+                                                                    <apex:outputText value="{0, number, ###,###,##0.00}%" rendered="{!if(Kpis['clickRate48Hours'] == -1, false, true)}"><apex:param value="{!Kpis['clickRate48Hours']}" /></apex:outputText>   
+                                                                </td>
+                                                                <td>
+                                                                    
+                                                                </td>                                                            
+                                                            </tr>
+                                                            <tr>
+                                                                <td> First 7 days </td>
+                                                                <td> 
+                                                                    <apex:outputText value="{0, number, ###,###,##0}"><apex:param value="{!Kpis['numberOpens7Days']}" /></apex:outputText> 
+                                                                </td>
+                                                                <td>
+                                                                    <apex:outputText value="{0, number, ###,###,##0}"><apex:param value="{!Kpis['uniqueOpens7Days']}" /></apex:outputText> 
+                                                                </td>
+                                                                <td>
+                                                                    <apex:outputText value="{0, number, ###,###,##0.00}%" rendered="{!if(Kpis['openRate7Days'] == -1, false, true)}"><apex:param value="{!Kpis['openRate7Days']}" /></apex:outputText>  
+                                                                </td>
+                                                                <td>
+                                                                    <apex:outputText value="{0, number, ###,###,##0}"><apex:param value="{!Kpis['numberClicks7Days']}" /></apex:outputText> 
+                                                                </td>
+                                                                <td>
+                                                                    <apex:outputText value="{0, number, ###,###,##0}"><apex:param value="{!Kpis['uniqueClicks7Days']}" /></apex:outputText> 
+                                                                </td>
+                                                                <td>
+                                                                    <apex:outputText value="{0, number, ###,###,##0.00}%" rendered="{!if(Kpis['clickRate7Days'] == -1, false, true)}"><apex:param value="{!Kpis['clickRate7Days']}" /></apex:outputText>  
+                                                                </td>
+                                                                <td>
+                                                                    
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    <script>
+                                                    $j = jQuery.noConflict();
+                                                    
+                                                    $j('#activitytypesort').removeClass(className.open).next().removeClass(className.open);
+                                                    $j('#activitytypesort').on('click',  function(event) {
+                                                        event.preventDefault();
+                                                        event.stopPropagation();
+                                                        $j(this).toggleClass(className.open).next().toggleClass(className.open);
+                                                    });
+                                                    </script> 
+                                                </div>
+                                            </apex:form>
+                                        </div>
+                                        
+                                        <div class="tab-pane" id="pane-top-links">
+                                            <apex:form id="dataTableForm2">
+                                                <div class="table-container data-table-container">
+                                                    <table class="data-table manage-lists">
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="activity-type">Links</th>
+                                                                <th class="Cumulative-Opens">Cumulative Clicks</th>
+                                                                <th class="Unique-Clicks">Unique Click</th>
+                                                            </tr>                               
+                                                        </thead>
+                                                        <tbody>
+                                                            <apex:repeat value="{!campaignLinkStats}" var="url">
+                                                                <tr>
+                                                                    <td>
+                                                                        <apex:outputText rendered="{!url == 'Unsubscribe'}" value="{!url}" />
+                                                                        <apex:outputText rendered="{!url != 'Unsubscribe'}">
+                                                                            <a href="{!url}" onclick="window.open(this.href); return false;">{!url}</a>
+                                                                        </apex:outputText>
+                                                                    </td>
+                                                                    <td><apex:outputText value="{!campaignLinkStats[url]['count']}" /></td>
+                                                                    <td><apex:outputText value="{!campaignLinkStats[url]['unique_count']}" /></td>
+                                                                </tr>
+                                                            </apex:repeat>                                                            
+                                                        </tbody>
+                                                    </table>
+                                                    <script>
+                                                    $j = jQuery.noConflict();
+                                                    
+                                                    $j('#activitytypesort').removeClass(className.open).next().removeClass(className.open);
+                                                    $j('#activitytypesort').on('click',  function(event) {
+                                                        event.preventDefault();
+                                                        event.stopPropagation();
+                                                        $j(this).toggleClass(className.open).next().toggleClass(className.open);
+                                                    });
+                                                    </script> 
+                                                </div>
+                                            </apex:form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+            <!-- End of Page Content -->
+        </apex:define>
+    </apex:composition>
+</apex:page>
