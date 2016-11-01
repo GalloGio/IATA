@@ -3,10 +3,6 @@
 * @date 2016
 * @group CACW
 * @description This is the controller used to show the monthly and historic consumption for CACWeb
-* 
-* Change logs:
-*  - 20160708-Sonny Leman: bug fix on calculating the Max API for unused CAC Subscription for IEC_CACWDetail 
-*
 */
 public  class vfIEC_CACWMonthlyConsumption {
     private final vfIEC_CACW iecCacWeb;
@@ -169,7 +165,7 @@ public  class vfIEC_CACWMonthlyConsumption {
                     p.APICallsForPeriodConsumed = used;
                     p.label = matrix.get(key).label;
                     p.detailSegment = matrix.get(key).detailSegment;
-                    p.APICallsForPeriodAllowed = Integer.ValueOf(aggrResult.maxusage); // this APICallsForPeriodAllowed will be corrected later in applySubscriptionDetails
+                    p.APICallsForPeriodAllowed = Integer.ValueOf(aggrResult.maxusage);
                     
                     /*p.APICallsForPeriodAllowed = matrix.get(key).APICallsForPeriodAllowed;
                     p.Credits = matrix.get(key).Credits;*/
@@ -228,35 +224,20 @@ public  class vfIEC_CACWMonthlyConsumption {
         private set;
                       
     }
-    
-    // ========================================================================
-    // applySubscriptionDetails uses SubscriptionDetails to complete the CACWebAPIPeriodConsumption: 
-    // credit and APICallsForPeriodAllowed 
-    // the complexity lies on the can of service upgrade, where the system deactivated previous CAC_Subscription_Detail
-    // but not putting the execution date
-    // to know the current APICallsForPeriodAllowed is easy, but to know the previous period APICallsForPeriodAllowed might be more difficult
-    // for current version: APICallsForPeriodAllowed is set to the current valid values.
-    private void applySubscriptionDetails(Map<String, CACWebAPIPeriodConsumption> matrix) 
-    {
+    private void applySubscriptionDetails(Map<String, CACWebAPIPeriodConsumption> matrix) {
         List<CAC_Subscription_Detail__c> details = [
             Select Max_API_Call_Per_Month__c,
-                CreatedDate,
-                Status__c, 
                 (Select Id, Credit__c, Date__c From CAC_Subscription_Credits__r Where Date__c >= :startDate AND Date__c <= :endDate),
                 (SELECT NewValue,OldValue, CreatedDate FROM Histories WHERE Field = 'Max_API_Call_Per_Month__c' ORDER BY CreatedDate DESC)
             From CAC_Subscription_Detail__c
             Where Subscription__c = :s.Id
             AND Status__c='Active'
-            order by CreatedDate desc
         ];
 
         Map<Date, Integer> credits = new Map<Date, Integer>();
         Map<Date, Integer> limits = new Map<Date, Integer>();
         Integer originalLimit = 0;
-        decimal currentSubscriptionMaxApiCallPerMonth = 0;
         for(CAC_Subscription_Detail__c detail : details) {
-            currentSubscriptionMaxApiCallPerMonth += (detail.Max_API_Call_Per_Month__c == null)? 0 : detail.Max_API_Call_Per_Month__c; 
-            
             for(CAC_Subscription_Credit__c detailCredit : detail.CAC_Subscription_Credits__r) {
                 Integer credit = (credits.containsKey(detailCredit.Date__c) ? (credits.get(detailCredit.Date__c)) : 0);
                 credit += Integer.valueOf(detailCredit.Credit__c);
@@ -297,99 +278,10 @@ public  class vfIEC_CACWMonthlyConsumption {
 
         for(String key : matrixKeys) {
             CACWebAPIPeriodConsumption p = matrix.get(key);
-            
             for(Date d : credits.keySet()) {
                 if (p.periodStartDate > d || p.periodEndDate < d) continue;
                 p.Credits += credits.get(d);
             }
-            
-            // this will set the APICallForPeriodAllowed for the current valid values
-            // for historical value, the value might be incorrect
-            p.APICallsForPeriodAllowed = Integer.valueOf(currentSubscriptionMaxApiCallPerMonth); // this corrects previous maxusage calculation
-            // SL Note: need to check about why the code below was commented out.
-             /*  
-            List<Date> limitKeys = new List<Date>(limits.keySet());
-            limitKeys.sort();
-
-            for(Date d : limitKeys) {
-                if (p.periodStartDate > d || p.periodEndDate < d) continue;
-
-                previousLimit = limits.get(d);
-                p.APICallsForPeriodAllowed = limits.get(d);
-            }
-
-            if (p.APICallsForPeriodAllowed == 0) p.APICallsForPeriodAllowed = previousLimit;
-            */
-        }
-    } // end of applySubscriptionDetails
-    
-    // original, plus update p.APICallsForPeriodAllowed = currentSubscriptionMaxApiCallPerMonth;  for the current month
-    private void applySubscriptionDetailsORIGINAL(Map<String, CACWebAPIPeriodConsumption> matrix) {
-        List<CAC_Subscription_Detail__c> details = [
-            Select Max_API_Call_Per_Month__c,
-                (Select Id, Credit__c, Date__c From CAC_Subscription_Credits__r Where Date__c >= :startDate AND Date__c <= :endDate),
-                (SELECT NewValue,OldValue, CreatedDate FROM Histories WHERE Field = 'Max_API_Call_Per_Month__c' ORDER BY CreatedDate DESC)
-            From CAC_Subscription_Detail__c
-            Where Subscription__c = :s.Id
-            AND Status__c='Active'
-        ];
-
-        Map<Date, Integer> credits = new Map<Date, Integer>();
-        Map<Date, Integer> limits = new Map<Date, Integer>();
-        Integer originalLimit = 0;
-        decimal currentSubscriptionMaxApiCallPerMonth = 0;
-        for(CAC_Subscription_Detail__c detail : details) {
-            currentSubscriptionMaxApiCallPerMonth += (detail.Max_API_Call_Per_Month__c == null)? 0 : detail.Max_API_Call_Per_Month__c; 
-            
-            for(CAC_Subscription_Credit__c detailCredit : detail.CAC_Subscription_Credits__r) {
-                Integer credit = (credits.containsKey(detailCredit.Date__c) ? (credits.get(detailCredit.Date__c)) : 0);
-                credit += Integer.valueOf(detailCredit.Credit__c);
-                credits.put(detailCredit.Date__c, credit);
-            }
-
-            System.debug(detail.Histories);
-
-            Integer i = 0;
-            Date lastDateChecked;
-            for(CAC_Subscription_Detail__History detailHistory : detail.Histories) {
-                i++;
-                if (i == detail.Histories.size()) { // Store the original value
-                    originalLimit += Integer.valueOf(detailHistory.OldValue);
-                }
-
-                Date d = Date.newInstance(detailHistory.CreatedDate.year(), detailHistory.CreatedDate.month(), detailHistory.CreatedDate.day());
-
-                if (d == lastDateChecked) continue;
-                lastDateChecked = d;
-
-                Integer l = (limits.containsKey(d) ? (limits.get(d)) : 0);
-                System.debug(l);
-
-                l += Integer.valueOf(detailHistory.NewValue);
-                limits.put(d, l);
-            }
-
-            if (detail.Histories == null || detail.Histories.size() == 0) originalLimit += Integer.valueOf(detail.Max_API_Call_Per_Month__c);
-        }
-
-        if (!limits.containsKey(matrix.values()[0].periodStartDate)) limits.put(matrix.values()[0].periodStartDate, originalLimit);
-
-        Integer previousLimit; 
-        List<String> matrixKeys = new List<String>(matrix.keySet());
-        matrixKeys.sort();
-
-
-        for(String key : matrixKeys) {
-            CACWebAPIPeriodConsumption p = matrix.get(key);
-            
-            for(Date d : credits.keySet()) {
-                if (p.periodStartDate > d || p.periodEndDate < d) continue;
-                p.Credits += credits.get(d);
-            }
-            
-            
-            p.APICallsForPeriodAllowed = Integer.valueOf(currentSubscriptionMaxApiCallPerMonth); // this corrects previous maxusage calculation
-            // SL Note: need to check about why the code below was commented out.
              /*  
             List<Date> limitKeys = new List<Date>(limits.keySet());
             limitKeys.sort();
@@ -428,13 +320,9 @@ public  class vfIEC_CACWMonthlyConsumption {
         }
     }
 
-    // ========================================================================
-    // getAggregateResult return the list of UsageAggregateResult
-    // based on IEC_Compiled_Usage_Tracker for this Zuora__Subscription
-    // usageMax is IEC_Compiled_Usage_Tracker.Max_API_Call_Per_Month__c
-    // cntTotal is the sum of IEC_Compiled_Usage_Tracker__c.Counter
-    // calculation for usagemax is only correct if all active CAC_Subscription_Detail has related IEC_Compiled_Usage_Tracker 
     private List<UsageAggregateResult> getAggregateResult() {
+        
+
         
         List<IEC_Compiled_Usage_Tracker__c> ulist = new List<IEC_Compiled_Usage_Tracker__c>();
         ulist=[SELECT
@@ -449,8 +337,6 @@ public  class vfIEC_CACWMonthlyConsumption {
                     AND Date__c <= :endDate                 
                 ORDER BY Date__c Asc
                LIMIT 100000];
-            
-            
         //compute statistics by period of time
         decimal usagemax=0;
         integer year=0;

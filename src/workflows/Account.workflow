@@ -35,7 +35,7 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>pacificoa@iata.org</recipient>
+            <recipient>kalajil@iata.org</recipient>
             <type>user</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>

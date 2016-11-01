@@ -1,5 +1,0 @@
-<messaging:emailTemplate subject="Your campaign has been cancelled" recipientType="Contact" relatedToType="EBC_Campaign__c">
-<messaging:plainTextEmailBody >
-Your campaign {!relatedTo.Name} has been cancelled.
-</messaging:plainTextEmailBody>
-</messaging:emailTemplate>
