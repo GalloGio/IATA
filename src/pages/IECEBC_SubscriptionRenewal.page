@@ -1,0 +1,8 @@
+<apex:page id="thePage" controller="vfIECEBC_SubscriptionRenewal" 
+	action="{!goToRenewalPaymentPage}" 
+	applyHtmlTag="false" applyBodyTag="false" sidebar="false" showheader="false"
+	standardStylesheets="false" language="en" docType="html-5.0">
+	
+	<apex:message id="msg" />
+
+</apex:page>
