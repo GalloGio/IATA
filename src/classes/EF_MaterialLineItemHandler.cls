@@ -2,6 +2,26 @@ public class EF_MaterialLineItemHandler
 {
     private static boolean run = true;
 
+    public static List<EF_Material_Line_Item__c> identifyToApproveRecords(List<EF_Material_Line_Item__c> newValues)
+    {
+        List<EF_Material_Line_Item__c> toApproveList = new List<EF_Material_Line_Item__c>();
+        Id baMaterialRtId = AMS_Utils.getId('EF_Material_Line_Item__c', 'Relationship_Line_Item');
+        for(EF_Material_Line_Item__c mat : newValues)
+        {
+            if(mat.RecordTypeId == baMaterialRtId)
+            {
+                if(mat.Allow_Billing_Agreements__c.equalsIgnoreCase('Allowed with Approval'))
+                {
+                    toApproveList.add(mat);
+                }
+            } else
+            {
+                toApproveList.add(mat);
+            }
+        }
+        return toApproveList;
+    }
+
     public static void validateNoInactiveMaterialsFromContract(Map<Id, EF_Material_Line_Item__c> newMap)
     {
         Map<Id, EF_Material_Line_Item__c> relevantMaterials  = new Map<Id, EF_Material_Line_Item__c>();
