@@ -19,7 +19,7 @@
 .THIS th.wideColumn-30 {
   width: 30%;
 }
-.THIS th.narrowColumn > a > span.slds-truncate {
+.THIS th.narrowColumn > span.slds-truncate {
   white-space: normal !important;
 }
 .THIS .uiMenuList--default .uiMenuItem>a {
