@@ -22547,7 +22547,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>EF_Billing_Agreement__c.EEF_Airline_Id__c</field>
+        <field>EF_Billing_Agreement__c.EF_Airline_Id__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
