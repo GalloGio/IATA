@@ -130,6 +130,7 @@ This is set based on Billing Account eBroadcast Product Access</inlineHelpText>
             <restrictedPicklist>true</restrictedPicklist>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -174,6 +175,7 @@ This is set based on Billing Account eBroadcast Product Access</inlineHelpText>
             <restrictedPicklist>true</restrictedPicklist>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -291,6 +293,7 @@ Used for Account Monthly Status and Renewal Notification</description>
             <restrictedPicklist>true</restrictedPicklist>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -468,8 +471,8 @@ It is the version of the username seen by the end user.</description>
         <customTabListAdditionalFields>Notification_Date__c</customTabListAdditionalFields>
         <customTabListAdditionalFields>Notification_Type__c</customTabListAdditionalFields>
         <excludedStandardButtons>Accept</excludedStandardButtons>
-        <excludedStandardButtons>Forward</excludedStandardButtons>
         <excludedStandardButtons>ChangeOwner</excludedStandardButtons>
+        <excludedStandardButtons>Forward</excludedStandardButtons>
         <lookupDialogsAdditionalFields>Billing_Account__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>Contact_Name__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>Email__c</lookupDialogsAdditionalFields>

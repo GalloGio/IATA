@@ -56,13 +56,10 @@
 				                        <td class="service-name" data-label="Service name">
 				                            CheckACode Professional
 				                        </td>
-										<td class="link" data-label="Link">
-											<apex:commandLink action="{!NavigateTo}">
-												CheckACode Professional
-												<apex:param name="sPageName" value="IECCAC" assignTo="{!sPageName}"/> 
-												<apex:param name="sProductCode" value="CACPRO" assignTo="{!sProductCode}"/>
-											</apex:commandLink>
-										</td>
+				                        <td class="link" data-label="Link">
+				                            <!-- <a href="#">Lorem ipsum</a> -->
+				                            <a href="{!$Page.IECCAC}" target="_blank">CheckACode Professional</a>
+				                        </td>
 				                    </tr>
 			                    </apex:outputpanel>
 			                    <apex:outputpanel id="panelAccessGAD" layout="none" rendered="{!bProdAccessGAD}">
@@ -85,11 +82,7 @@
 				                            E-Broadcast
 				                        </td>
 				                        <td class="link" data-label="Link">
-				                            <apex:commandLink action="{!NavigateTo}">
-												E-Broadcast
-												<apex:param name="sPageName" value="IECEBC_Dashboard" assignTo="{!sPageName}"/>
-												<apex:param name="sProductCode" value="EBC" assignTo="{!sProductCode}"/>
-						                    </apex:commandLink>
+				                            <a href="#">E-Broadcast</a>
 				                        </td>
 				                    </tr>
 				          		</apex:outputpanel>

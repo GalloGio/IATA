@@ -116,23 +116,25 @@
             </div>
         </apex:variable>
         
-		<div class="infoHolder">
-			<table>
-				<tbody>
-					<tr>
-						<td width="175px">
-							<p class="label">Service Upgrade:</p>
-						</td>
-						<td>
-							<p class="data">
-								<apex:commandLink onclick="changeCursorProgress(this);"  styleClass="commandLink" value="View Options" action="{!infoController.upgrade}" rendered="{!infoController.bDisplayUpgradeBtn}" rerender="errorMessage"/>
-								<apex:outputText value="No Available Options" rendered="{!infoController.bDisplayUpgradeBtn==false}" />
-							</p>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
+        <apex:outputText rendered="{!infoController.isNotEvergreen}">
+			<div class="infoHolder">
+				<table>
+					<tbody>
+						<tr>
+							<td width="175px">
+								<p class="label">Service Upgrade:</p>
+							</td>
+							<td>
+								<p class="data">
+									<apex:commandLink onclick="changeCursorProgress(this);"  styleClass="commandLink" value="View Options" action="{!infoController.upgrade}" rendered="{!infoController.bDisplayUpgradeBtn}" rerender="errorMessage"/>
+									<apex:outputText value="No Available Options" rendered="{!infoController.bDisplayUpgradeBtn==false}" />
+								</p>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</apex:outputText>
 	</apex:outputPanel>
 	
 	<apex:outputPanel layout="none" rendered="{!infoController.oSubscription == null}">
