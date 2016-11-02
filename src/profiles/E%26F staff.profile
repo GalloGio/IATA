@@ -22546,6 +22546,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>EF_Billing_Agreement__c.EEF_Airline_Id__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>EF_Billing_Agreement__c.EF_Approver_Email__c</field>
         <readable>true</readable>
