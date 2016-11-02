@@ -12,7 +12,7 @@ private class EF_AccountTriggerHandlerTest {
             //create parent client account
             Account parentClient = new Account(
                 Name='Test Account Parent Client',
-                RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Standard Account').getRecordTypeId(),
+                RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Airline Headquarters').getRecordTypeId(), // Standard Account
                 Sector__c = 'IATA Supplier',
                 Category__c = 'ANSP',
                 EF_type__c = 'E&F Client',
@@ -30,7 +30,7 @@ private class EF_AccountTriggerHandlerTest {
 
             Account childClient = new Account(
                 Name='Test Account Child Client',
-                RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Standard Account').getRecordTypeId(),
+                RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Others').getRecordTypeId(), //
                 ParentId = parentClient.Id,
                 Sector__c = 'IATA Supplier',
                 Category__c = 'ANSP',
@@ -38,8 +38,12 @@ private class EF_AccountTriggerHandlerTest {
                 EF_Status__c = 'Active',
                 EF_SubStatus__c = 'Chapter 7',
                 EF_Effective_Date__c = Date.today(),
+                EF_SIS_Code__c = 'test',
+                EF_SIS_Designator__c = 'te',
+                EF_SIS_Code_Verified__c = true,
                 Reason_for_creation__c = 'new client needed'
                 );
+
 
             Account customer1 = new Account(
                 Name='Test Account customer 1',
@@ -168,6 +172,20 @@ private class EF_AccountTriggerHandlerTest {
             relationships.add(relationship1);
             relationships.add(relationship2);
             insert relationships;
+
+            EF_Critical_Field_Notification__c criticalFields = new EF_Critical_Field_Notification__c();
+            criticalFields.name = 'test';
+            criticalFields.Airline_Billing_Agreement_Fields__c = 'Bill_To__c,Ship_To__c,Payer__c,Sold_To__c';
+            criticalFields.Account_Airline_Fields__c = 'EF_Status__c,EF_Legacy_Code__c,EF_Airline_ID__c,EF_SIS_Code__c,EF_SIS_Designator__c,EF_SIS_Code_Verified__c';
+            criticalFields.Account_Client_Fields__c = 'Legal_name__c,EF_SIS_Code__c,EF_SIS_Designator__c,EF_SIS_Code_Verified__c,EF_Status__c';
+            criticalFields.Contract_Fields__c = 'EF_Group_Code__c,EF_Admin_Fee__c,EF_Payment_Terms__c';
+            insert criticalFields;
+
+            EF_Material_Line_Item__c mli = new EF_Material_Line_Item__c();
+            mli.Contract__c = parentContract.Id;
+            mli.EF_Relationship__c = parentBillingAgreement.Id;
+            mli.EF_Status__c = 'active';
+            insert mli;
         }
 
 
@@ -200,6 +218,11 @@ private class EF_AccountTriggerHandlerTest {
         for(EF_Contact_Relationship__c relationship : relationships){
             System.assertEquals(relationship.Status__c, 'Inactive');
         }
-        
+
+        List<EF_Material_Line_Item__c> materialLineItems = [select Id, EF_Status__c from EF_Material_Line_Item__c];
+        for(EF_Material_Line_Item__c materialLineItem : materialLineItems){
+            System.assertEquals(materialLineItem.EF_Status__c, 'Inactive');
+        }
+
     }
 }
