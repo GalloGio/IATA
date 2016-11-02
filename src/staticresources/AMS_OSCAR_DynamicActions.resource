@@ -16,7 +16,7 @@ var dyn_functions = {
 					var argList = args.split(", ");
 
                     // Query the database to check if the flags for :IATACODE, Copy Data to Account and send Data to SAP ECC 
-                    var resultOscarData = sforce.connection.query("SELECT Flag_Data_to_Account__c,Flag_Data_to_SAPECC__c,ID, STEP10__c,STEP8__c,Process_Start_Date__c,recordTypeID FROM AMS_OSCAR__C WHERE Id ='" + argList[2] + "'");
+                    var resultOscarData = sforce.connection.query("SELECT Flag_Data_to_Account__c,Flag_Data_to_SAPECC__c,ID, STEP10__c,STEP8__c,Invoice_Requested__c,recordTypeID FROM AMS_OSCAR__C WHERE Id ='" + argList[2] + "'");
                     var records = resultOscarData.getArray("records");
 
                     var resultOscarDataFlag = sforce.connection.query("SELECT Flag_IATACode_Formula__c FROM AMS_OSCAR__C WHERE Id ='" + argList[2] + "'");
@@ -99,10 +99,10 @@ var dyn_functions = {
            issueInvoice:function (args) { 
                 var argList = args.split(", ");
                 // Query the database to check if invoice has already been sent
-                var result = sforce.connection.query("SELECT Process_Start_Date__c FROM AMS_OSCAR__C WHERE Id ='" + argList[1] + "'");
+                var result = sforce.connection.query("SELECT Invoice_Requested__c FROM AMS_OSCAR__C WHERE Id ='" + argList[1] + "'");
                 var record = result.getArray("records");
 
-                if (record.length>0 && record[0].Process_Start_Date__c != null) {
+                if (record.length>0 && record[0].Invoice_Requested__c != null) {
                     alert('Billing Document has already been issued');
                 }
 

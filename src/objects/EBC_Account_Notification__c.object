@@ -1,0 +1,494 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>This object is used to create email notification. 
+Initial design is intended for Account Activity.
+Records will be created/deleted automatically by a scheduled job.
+Email will be sent by using workflow.</description>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>false</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Billing_Account_Name__c</fullName>
+        <description>Billing Account Name formula</description>
+        <externalId>false</externalId>
+        <formula>Billing_Account__r.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Billing Account Name (formula)</inlineHelpText>
+        <label>Billing Account Name</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Billing_Account__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Related Zuora__CustomerAccount  of whom the notification is all about.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Related Billing Account  of whom the notification is all about.</inlineHelpText>
+        <label>Billing Account</label>
+        <referenceTo>Zuora__CustomerAccount__c</referenceTo>
+        <relationshipLabel>EBC Account Notifications</relationshipLabel>
+        <relationshipName>EBC_Account_Notifications</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Contact_Name__c</fullName>
+        <description>Contact Name from the Billing Account (formula).</description>
+        <externalId>false</externalId>
+        <formula>Billing_Account__r.Contact__r.FirstName 
++ &quot; &quot;
++ Billing_Account__r.Contact__r.LastName</formula>
+        <inlineHelpText>Contact Name from the Billing Account.</inlineHelpText>
+        <label>Contact Name</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Create_New_Campaign_URL__c</fullName>
+        <description>The link to create new Campaign Url for eBroadcast community page.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The link to create new Campaign Url for eBroadcast community page.</inlineHelpText>
+        <label>Create New Campaign URL</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Url</type>
+    </fields>
+    <fields>
+        <fullName>EBC_Account_Status__c</fullName>
+        <description>EBC Subscription Status for this Billing Account.
+This is set based on Zuora__CustomerAccount__c eBroadcast_Product_Access__c (true will set the value to Active)</description>
+        <externalId>false</externalId>
+        <inlineHelpText>EBC Subscription Status for this Billing Account.
+This is set based on Billing Account eBroadcast Product Access</inlineHelpText>
+        <label>EBC Account Status</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Active</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Inactive</fullName>
+                <default>false</default>
+            </picklistValues>
+            <restrictedPicklist>true</restrictedPicklist>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>EBC_Dashboard_URL__c</fullName>
+        <description>Link to the EBC Dashboard.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Link to the EBC Dashboard.</inlineHelpText>
+        <label>EBC Dashboard URL</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Url</type>
+    </fields>
+    <fields>
+        <fullName>EBC_Rate_Plan_Name__c</fullName>
+        <defaultValue>&quot;&quot;</defaultValue>
+        <description>Selected eBroadcast rate plan name. The value is set to the EBC Product Rate Plan.Name</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Selected eBroadcast rate plan name. The value is set to the EBC Product Rate Plan.Name</inlineHelpText>
+        <label>EBC Rate Plan Name</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>EBC_Subscription_Type__c</fullName>
+        <description>eBroadcast Subscription Type of this user, based on productRatePlan.EBC_SubscriptionType__c</description>
+        <externalId>false</externalId>
+        <inlineHelpText>eBroadcast Subscription Type of this user, based on Product Rate Plan&apos;s EBC SubscriptionType</inlineHelpText>
+        <label>EBC Subscription Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Pre-Paid</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Pay-As-You-Go</fullName>
+                <default>false</default>
+            </picklistValues>
+            <restrictedPicklist>true</restrictedPicklist>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Email_Balance__c</fullName>
+        <description>The amount of current email credit balance</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The amount of current email credit balance</inlineHelpText>
+        <label>Email Balance</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Email__c</fullName>
+        <description>Recipient Email Address of this notification.
+This is set based on the EBC Preference.PrimaryContact_Email.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Recipient Email Address of this notification. 
+This is set based on the EBC Preference&apos;s Primary Contact Email.</inlineHelpText>
+        <label>Email</label>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Manage_My_Account_URL__c</fullName>
+        <description>URL pointing to my manage account page.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>URL pointing to my manage account page.</inlineHelpText>
+        <label>Manage My Account URL</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Url</type>
+    </fields>
+    <fields>
+        <fullName>Next_Renewal_Date_String__c</fullName>
+        <description>Next Renewal Date in string, with format DD Month YYYY. 
+This is needed to display as required in the email template.</description>
+        <externalId>false</externalId>
+        <formula>TEXT(DAY(Next_Renewal_Date__c)) 
++ CASE(MONTH(Next_Renewal_Date__c) 
+,1, &quot; January &quot;,2,&quot; February &quot;,3,&quot; March &quot;,4,&quot; April &quot;,5,&quot; May &quot;, 6,&quot; June &quot; 
+,7,&quot; July &quot;,8,&quot; August &quot;,9,&quot; September &quot;,10,&quot; October &quot;,11,&quot; November &quot;,12,&quot; December &quot; 
+,&quot;-???-&quot;) 
++ TEXT(YEAR(Next_Renewal_Date__c))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Next Renewal Date in string, with format DD Month YYYY.</inlineHelpText>
+        <label>Next Renewal Date String</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Next_Renewal_Date__c</fullName>
+        <description>Zuora__Subscription__r.Zuora__NextRenewalDate__c for this EBC Subscription.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Zuora Subscription Next Renewal Date  for this EBC Subscription.</inlineHelpText>
+        <label>Next Renewal Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Notification_Date_String__c</fullName>
+        <description>Notification Date in string, with format DD Month YYYY. 
+This is needed to display as required in the email template.</description>
+        <externalId>false</externalId>
+        <formula>TEXT(DAY(Notification_Date__c)) 
++ CASE(MONTH(Notification_Date__c) 
+,1, &quot; January &quot;,2,&quot; February &quot;,3,&quot; March &quot;,4,&quot; April &quot;,5,&quot; May &quot;, 6,&quot; June &quot; 
+,7,&quot; July &quot;,8,&quot; August &quot;,9,&quot; September &quot;,10,&quot; October &quot;,11,&quot; November &quot;,12,&quot; December &quot; 
+,&quot;-???-&quot;) 
++ TEXT(YEAR(Notification_Date__c))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Notification Date in string, with format DD Month YYYY.</inlineHelpText>
+        <label>Notification Date String</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Notification_Date__c</fullName>
+        <defaultValue>Today()</defaultValue>
+        <description>Email notification date on the letter. For simplicity, this will be set as the date of record creation, but that can be modify later</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Email notification date on the letter. For simplicity, this will be set as the date of record creation, but that can be modify later</inlineHelpText>
+        <label>Notification Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Notification_Type__c</fullName>
+        <description>Notification Type is used to define which email template that will be used to sent.
+Used for Account Monthly Status and Renewal Notification</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Notification Type is used to define which email template that will be used to sent.</inlineHelpText>
+        <label>Notification Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Account Status</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Renewal Offer</fullName>
+                <default>false</default>
+            </picklistValues>
+            <restrictedPicklist>true</restrictedPicklist>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Number_of_Campaigns_Last_Month__c</fullName>
+        <defaultValue>0</defaultValue>
+        <description>Total number of campaigns executed in the previous month of the Notification Date. 
+This value is collected from related EBC_Activity records.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Total number of campaigns executed in the previous month of the Notification Date. 
+This value is collected from related EBC_Activity records.</inlineHelpText>
+        <label>Number of Campaigns Last Month</label>
+        <precision>6</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Number_of_Email_Recipients_Last_Month__c</fullName>
+        <defaultValue>0</defaultValue>
+        <description>Total number of email recipients in the previous months.
+This is calculated based on the EBC Activities.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Total number of email recipients in the previous months.
+This is calculated based on the EBC Activities.</inlineHelpText>
+        <label>Number of Email Recipients Last Month</label>
+        <precision>10</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Primary_Contact_Name__c</fullName>
+        <defaultValue>&quot;&quot;</defaultValue>
+        <description>Primary Contact Name, copied from EBC_Preference PrimaryContact_Name</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Primary Contact Name, copied from EBC_Preference PrimaryContact_Name</inlineHelpText>
+        <label>Primary Contact Name</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Subscription_End_Date_String__c</fullName>
+        <description>Subscription End Date in string, with format DD Month YYYY.
+This is needed to display as required in the email template.</description>
+        <externalId>false</externalId>
+        <formula>TEXT(DAY(Subscription_End_Date__c)) 
++ CASE(MONTH(Subscription_End_Date__c)
+,1, &quot; January &quot;,2,&quot; February &quot;,3,&quot; March &quot;,4,&quot; April &quot;,5,&quot; May &quot;, 6,&quot; June &quot;
+,7,&quot; July &quot;,8,&quot; August &quot;,9,&quot; September &quot;,10,&quot; October &quot;,11,&quot; November &quot;,12,&quot; December &quot;
+,&quot;-???-&quot;)
++ TEXT(YEAR(Subscription_End_Date__c))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Subscription End Date in string, with format DD Month YYYY.</inlineHelpText>
+        <label>Subscription End Date String</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Subscription_End_Date__c</fullName>
+        <description>Subscription End Date (Zuora__Subscription__r.Zuora__TermEndDate__c), only set if the user has Active Prepaid EBC Subscription. 
+Active is defined as Zuora__Status=Active and Zuora__TermEndDate__c &gt;= Today</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Value of  Zuora Subscription&apos;s  Zuora TermEndDate, only set if the user has Active Prepaid EBC Subscription.
+Active is defined as Zuora Status=Active and Zuora TermEndDate__c &gt;= Today</inlineHelpText>
+        <label>Subscription End Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Username__c</fullName>
+        <description>Related User.Email for this billing account. 
+It is the version of the username seen by the end user.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Related Username (User.Email) for this billing account.</inlineHelpText>
+        <label>Username</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>EBC Account Notification</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Billing_Account__c</columns>
+        <columns>Username__c</columns>
+        <columns>Email__c</columns>
+        <columns>Primary_Contact_Name__c</columns>
+        <columns>EBC_Rate_Plan_Name__c</columns>
+        <columns>Subscription_End_Date__c</columns>
+        <columns>Email_Balance__c</columns>
+        <columns>Number_of_Campaigns_Last_Month__c</columns>
+        <columns>Number_of_Email_Recipients_Last_Month__c</columns>
+        <columns>Notification_Date__c</columns>
+        <columns>Create_New_Campaign_URL__c</columns>
+        <columns>Manage_My_Account_URL__c</columns>
+        <columns>Notification_Type__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Monthly_Status</fullName>
+        <columns>NAME</columns>
+        <columns>Billing_Account__c</columns>
+        <columns>Username__c</columns>
+        <columns>Email__c</columns>
+        <columns>Primary_Contact_Name__c</columns>
+        <columns>EBC_Rate_Plan_Name__c</columns>
+        <columns>Subscription_End_Date__c</columns>
+        <columns>Email_Balance__c</columns>
+        <columns>Number_of_Campaigns_Last_Month__c</columns>
+        <columns>Number_of_Email_Recipients_Last_Month__c</columns>
+        <columns>Notification_Date__c</columns>
+        <columns>Create_New_Campaign_URL__c</columns>
+        <columns>Manage_My_Account_URL__c</columns>
+        <columns>Notification_Type__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Notification_Type__c</field>
+            <operation>equals</operation>
+            <value>Account Status</value>
+        </filters>
+        <label>Monthly Status</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Renewal_Offer_Notifications</fullName>
+        <columns>NAME</columns>
+        <columns>Billing_Account__c</columns>
+        <columns>Username__c</columns>
+        <columns>Email__c</columns>
+        <columns>Primary_Contact_Name__c</columns>
+        <columns>EBC_Rate_Plan_Name__c</columns>
+        <columns>Next_Renewal_Date__c</columns>
+        <columns>Subscription_End_Date__c</columns>
+        <columns>Notification_Date__c</columns>
+        <columns>Create_New_Campaign_URL__c</columns>
+        <columns>Manage_My_Account_URL__c</columns>
+        <columns>Notification_Type__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Notification_Type__c</field>
+            <operation>equals</operation>
+            <value>Renewal Offer</value>
+        </filters>
+        <label>Renewal Offer Notifications</label>
+        <language>en_US</language>
+    </listViews>
+    <nameField>
+        <label>EBC Account Notification Name</label>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>EBC Account Notifications</pluralLabel>
+    <searchLayouts>
+        <customTabListAdditionalFields>Billing_Account__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Username__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>EBC_Rate_Plan_Name__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Subscription_End_Date__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Email_Balance__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Number_of_Campaigns_Last_Month__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Number_of_Email_Recipients_Last_Month__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Notification_Date__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Notification_Type__c</customTabListAdditionalFields>
+        <excludedStandardButtons>Accept</excludedStandardButtons>
+        <excludedStandardButtons>ChangeOwner</excludedStandardButtons>
+        <excludedStandardButtons>Forward</excludedStandardButtons>
+        <lookupDialogsAdditionalFields>Billing_Account__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Contact_Name__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Email__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Notification_Date__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Notification_Type__c</lookupDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Billing_Account__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Contact_Name__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Email__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Notification_Date__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Notification_Type__c</lookupPhoneDialogsAdditionalFields>
+        <searchResultsAdditionalFields>Billing_Account__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Contact_Name__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Email__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Notification_Date__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Notification_Type__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ReadWrite</sharingModel>
+    <startsWith>Vowel</startsWith>
+</CustomObject>
