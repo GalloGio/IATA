@@ -171,6 +171,7 @@ public with sharing class EF_TestDataFactory
             EF_Status__c='Active'
             );
         insert contract2;
+        }
 
     }
 
