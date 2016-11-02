@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <actionOverrides>
         <actionName>Accept</actionName>
         <type>Default</type>
@@ -78,7 +78,6 @@ Dedicated to the eBroadcast application.</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -154,7 +153,6 @@ Dedicated to the eBroadcast application.</description>
             <restrictedPicklist>true</restrictedPicklist>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -223,7 +221,6 @@ Dedicated to the eBroadcast application.</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -258,6 +255,7 @@ Dedicated to the eBroadcast application.</description>
         <customTabListAdditionalFields>Filter_Description__c</customTabListAdditionalFields>
         <customTabListAdditionalFields>Data_Type__c</customTabListAdditionalFields>
         <customTabListAdditionalFields>Data_Source_Object__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields xsi:nil="true"/>
         <customTabListAdditionalFields>Filter_Field__c</customTabListAdditionalFields>
         <customTabListAdditionalFields>LAST_UPDATE</customTabListAdditionalFields>
     </searchLayouts>

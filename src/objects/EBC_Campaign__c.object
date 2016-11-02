@@ -816,7 +816,6 @@ The value is determined by ExactTarget, and this is is only populated once a cam
             <restrictedPicklist>true</restrictedPicklist>
             <sorted>false</sorted>
         </picklist>
-        <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -958,15 +957,22 @@ The value is determined by ExactTarget, and this is is only populated once a cam
         <label>All</label>
         <language>en_US</language>
     </listViews>
-    <listViews>
+ <!--   <listViews>
         <fullName>EBC_Approvers_EBC_Campaign</fullName>
+        <columns>NAME</columns>
+        <columns>Campaign_ID__c</columns>
+        <columns>Status__c</columns>
+        <columns>Audience__c</columns>
+        <columns>Billing_Account__c</columns>
+        <columns>EBC_Master_Filter__c</columns>
+        <columns>Scheduled_Date__c</columns>
+        <columns>Exact_Target_Campaign_Id__c</columns>
+        <columns>EBC_Design__c</columns>
         <filterScope>Queue</filterScope>
         <label>eBroadcast Approvers</label>
+        <language>en_US</language>
         <queue>EBC_Approvers</queue>
-        <sharedTo>
-            <allInternalUsers></allInternalUsers>
-        </sharedTo>
-    </listViews>
+    </listViews> -->
     <nameField>
         <label>eBroadcast Campaign Name</label>
         <trackHistory>false</trackHistory>
