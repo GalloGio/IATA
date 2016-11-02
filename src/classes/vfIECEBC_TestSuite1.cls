@@ -1,0 +1,341 @@
+public class vfIECEBC_TestSuite1 {
+    public static Account IECTestUtil_Account { get { return vfIECEBC_TestSuite.IECTestUtil_Account; } set { vfIECEBC_TestSuite.IECTestUtil_Account = value; } }
+    public static Contact IECTestUtil_Contact { get { return vfIECEBC_TestSuite.IECTestUtil_Contact; } set { vfIECEBC_TestSuite.IECTestUtil_Contact = value; } }
+    public static User IECTestUtil_User { get { return vfIECEBC_TestSuite.IECTestUtil_User; } set { vfIECEBC_TestSuite.IECTestUtil_User = value; } }
+    public static Id IECTestUtil_UserId { get { return vfIECEBC_TestSuite.IECTestUtil_UserId; } set { vfIECEBC_TestSuite.IECTestUtil_UserId = value; } }
+    public static Zuora__CustomerAccount__c IECTestUtil_BillingAccount { get { return vfIECEBC_TestSuite.IECTestUtil_BillingAccount; } set { vfIECEBC_TestSuite.IECTestUtil_BillingAccount = value; } }
+    
+    private static Product_Category__c oProductCategory { get { return vfIECEBC_TestSuite.oProductCategory; } set { vfIECEBC_TestSuite.oProductCategory = value; } }
+    private static Product_Information__c oProductInfo { get { return vfIECEBC_TestSuite.oProductInfo; } set { vfIECEBC_TestSuite.oProductInfo = value; } }
+    private static zqu__ZProduct__c oProduct { get { return vfIECEBC_TestSuite.oProduct; } set { vfIECEBC_TestSuite.oProduct = value; } }
+    private static zqu__ProductRatePlan__c oProductRatePlan { get { return vfIECEBC_TestSuite.oProductRatePlan; } set { vfIECEBC_TestSuite.oProductRatePlan = value; } }
+    private static zqu__ProductRatePlanCharge__c oProductRatePlanCharge { get { return vfIECEBC_TestSuite.oProductRatePlanCharge; } set { vfIECEBC_TestSuite.oProductRatePlanCharge = value; } }
+    private static Product_Rate_Plan_Information__c oProductRatePlanInfo { get { return vfIECEBC_TestSuite.oProductRatePlanInfo; } set { vfIECEBC_TestSuite.oProductRatePlanInfo = value; } }
+    private static Zuora__Subscription__c subscription { get { return vfIECEBC_TestSuite.subscription; } set { vfIECEBC_TestSuite.subscription = value; } }
+    private static Zuora__SubscriptionProductCharge__c subscriptionCharge { get { return vfIECEBC_TestSuite.subscriptionCharge; } set { vfIECEBC_TestSuite.subscriptionCharge = value; } }
+    private static Zuora__CustomerAccount__c oBillingAccount  { get { return vfIECEBC_TestSuite.oBillingAccount; } set { vfIECEBC_TestSuite.oBillingAccount = value; } }
+    private static EBC_Preference__c oPref { get { return vfIECEBC_TestSuite.oPref; } set { vfIECEBC_TestSuite.oPref = value; } }
+    
+    private static IECCustomer currentCustomer { get { return vfIECEBC_TestSuite.currentCustomer; } set { vfIECEBC_TestSuite.currentCustomer = value; } }
+
+    public static User initPreRunAs(Boolean grantEBCAccess) { return vfIECEBC_TestSuite.initPreRunAs(grantEBCAccess); }
+    
+    public static void initPostRunAs() { vfIECEBC_TestSuite.initPostRunAs(); }
+    
+    public static List<GDP_Products_Account_View__c> createGDPProductsAccountViews() {
+        return vfIECEBC_TestSuite.createGDPProductsAccountViews();
+    }
+    /////////////////
+    public static void testTemplateList() {
+		PageReference pageRef = Page.IECEBC_TemplateList;
+        Test.setCurrentPage(pageRef);
+
+        User usr = initPreRunAs(true);
+        
+        Account a1 = new Account(Name = 'a1');
+        insert a1;
+        Contact c1 = new Contact(FirstName = 'c1', LastName = 'c2', Email = 'w00t@test.com', AccountId = a1.Id);
+        insert c1;
+        Zuora__CustomerAccount__c ba1 = IECTestUtil.createSampleBillingAccount(a1, c1);
+        insert ba1;
+        
+        
+        EBC_Template__c tpl = new EBC_Template__c();
+        tpl.Name = 'unittesttemplate';
+        tpl.Audience__c = 'Agency';
+        tpl.RecordTypeId = Schema.SObjectType.EBC_Template__c.getRecordTypeInfosByName().get('Global').getRecordTypeId();
+        insert tpl;
+        
+        Id userRecTypeId = Schema.SObjectType.EBC_Template__c.getRecordTypeInfosByName().get('User Templates').getRecordTypeId();
+        List<EBC_Template__c> tpls = new List<EBC_Template__c>{
+            new EBC_Template__c(Name = 'a1', RecordTypeId = userRecTypeId, Audience__c = 'Agency', Billing_Account__c = oBillingAccount.Id, Is_Reusable__c = true, Parent_Template__c = tpl.Id),
+            new EBC_Template__c(Name = 'a2', RecordTypeId = userRecTypeId, Audience__c = 'Agency', Billing_Account__c = oBillingAccount.Id, Is_Reusable__c = true, Parent_Template__c = tpl.Id),
+            new EBC_Template__c(Name = 'a3', RecordTypeId = userRecTypeId, Audience__c = 'Agency', Billing_Account__c = oBillingAccount.Id, Is_Reusable__c = true, Parent_Template__c = tpl.Id),
+            new EBC_Template__c(Name = 'a4', RecordTypeId = userRecTypeId, Audience__c = 'Agency', Billing_Account__c = ba1.Id, Is_Reusable__c = true, Parent_Template__c = tpl.Id),
+            new EBC_Template__c(Name = 'a5', RecordTypeId = userRecTypeId, Audience__c = 'Agency', Billing_Account__c = oBillingAccount.Id, Is_Reusable__c = false, Parent_Template__c = tpl.Id)
+        };
+        insert tpls;
+        
+        
+        System.runAs(usr) {
+            initPostRunAs();
+        	Test.startTest();
+            
+            // Layout PageLoad
+        	vfIECEBC_Layout layoutController = new vfIECEBC_Layout();
+            System.assertEquals(null, layoutController.pageLoad());
+            
+            vfIECEBC_TemplateList listCon = new vfIECEBC_TemplateList();
+            
+            System.assertNotEquals(null, listCon.sortBy);
+            System.assertNotEquals(null, listCon.getSortByOptions());
+            
+            List<EBC_Template__c> conTpls = listCon.getFilters();
+            System.assertEquals(3, conTpls.size());
+            
+            EBC_Resource__c res = new EBC_Resource__c(Billing_Account__c = oBillingAccount.Id);
+            insert res;
+            insert new Attachment(ParentId = conTpls[0].Id, Name = 'test.html', ContentType = 'plain/text', Body = Blob.valueOf('test'));
+            insert new EBC_Template_Resource__c(EBC_Template__c = conTpls[0].Id, EBC_Resource__c = res.Id);
+        
+            
+            listCon.selectedItemId = conTpls[0].Id;
+            listCon.getSelectedFilter().Name = 'New Name';
+            listCon.duplicate();
+            
+            listCon = new vfIECEBC_TemplateList();
+            conTpls = listCon.getFilters();
+            System.assertEquals(4, conTpls.size());
+            
+            listCon.selectedItemId = conTpls[0].Id;
+            listCon.getSelectedFilter().Name = 'New Name 2';
+            listCon.save();
+            
+            listCon.deleteItem();
+            
+            listCon = new vfIECEBC_TemplateList();
+            conTpls = listCon.getFilters();
+            System.assertEquals(3, conTpls.size());
+        }
+        
+    }
+
+    public static void testPageLoadDashboard() {
+		PageReference pageRef = Page.IECEBC_Dashboard;
+        Test.setCurrentPage(pageRef); 
+        
+        Account newAccount = new Account();
+        newAccount.Name = 'Hello World';
+        insert newAccount;
+        Contact newContact = new Contact();
+        newContact.LastName = 'w00t';
+        insert newContact;
+        
+        Zuora__CustomerAccount__c otherBillingAccount = IECTestUtil.createSampleBillingAccount(newAccount, newContact);
+        insert otherBillingAccount;  
+        
+        User usr = initPreRunAs(true);
+        
+        List<EBC_Campaign__c> campaigns = new List<EBC_Campaign__c>{
+            new EBC_Campaign__c(Name = 'Foo Bar 1', Subject__c = 'Foo Bar 1', From_Name__c = 'FooBar1', Billing_Account__c = oBillingAccount.Id),
+            new EBC_Campaign__c(Name = 'Foo Bar 2', Subject__c = 'Foo Bar 2', From_Name__c = 'FooBar2', Billing_Account__c = oBillingAccount.Id),
+            new EBC_Campaign__c(Name = 'Foo Bar 3', Subject__c = 'Foo Bar 3', From_Name__c = 'FooBar3', Billing_Account__c = oBillingAccount.Id),
+            new EBC_Campaign__c(Name = 'Foo Bar 4', Subject__c = 'Foo Bar 4', From_Name__c = 'FooBar4', Billing_Account__c = oBillingAccount.Id),
+            new EBC_Campaign__c(Name = 'Hello World 1', Subject__c = 'Hello World 1', From_Name__c = 'HelloWorld1', Billing_Account__c = otherBillingAccount.Id)
+        };
+            
+        insert campaigns;
+        
+        
+        System.runAs(usr) {
+            initPostRunAs();
+        	Test.startTest();
+            
+        	vfIECEBC_Layout layoutController = new vfIECEBC_Layout();
+            System.assertEquals(null, layoutController.pageLoad());
+            layoutController.getSProdCACPro();
+            layoutController.getSProdGAD();
+            layoutController.getSProdMDP();
+            layoutController.getSProdGSS();
+            layoutController.getSContactEmail();
+            layoutController.getSContactSubject();
+            
+            vfIECEBC_Dashboard dashboardCon = new vfIECEBC_Dashboard();
+            System.assertEquals(4, dashboardCon.campaignsCount);
+            System.assertNotEquals(null, dashboardCon.showRenewNow);
+            System.assertNotEquals(null, dashboardCon.renewalPageUrl);
+            
+            vfIECEBC_CampaignList campaignListComponent = new vfIECEBC_CampaignList();
+            campaignListComponent.isLimitedComponent = true;
+            
+            System.assertEquals('LastModifiedDate DESC', campaignListComponent.sortBy);
+            System.assertEquals(dashboardCon.campaignsCount, campaignListComponent.CampaignsCount);
+            System.assertEquals(2, campaignListComponent.campaigns.size());
+            
+        }
+    }
+    
+    public static void testCampaignRecipient() {
+        
+		PageReference pageRef = Page.IECEBC_CampaignRecipients;
+        Test.setCurrentPage(pageRef);
+        
+        User usr = initPreRunAs(true);
+        /*
+        GDP_Reference_Table__c grt = new GDP_Reference_Table__c(Code__c = '4');
+        insert grt;
+        Accreditation__c accr = new Accreditation__c(Status__c = grt.Id);
+        insert accr;
+            
+        List<GDP_Products_Account_View__c> gpavs = new List<GDP_Products_Account_View__c>{
+            new GDP_Products_Account_View__c(Name = 'a',				Related_Accreditation_Class__c = accr.Id,	GDP_Opt_In__c = true,	Email_Address__c = 'a@b.com',			Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'b',			Related_Accreditation_Class__c = accr.Id,	GDP_Opt_In__c = true,	Email_Address__c = 'b@b.com',			Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'c',			Related_Accreditation_Class__c = accr.Id,	GDP_Opt_In__c = true,	Email_Address__c = 'c@b.com',			Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'd',			Related_Accreditation_Class__c = accr.Id,	GDP_Opt_In__c = true,	Email_Address__c = 'd@b.com',			Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'e',			Related_Accreditation_Class__c = accr.Id,	GDP_Opt_In__c = true,	Email_Address__c = 'e@b.com',			Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'f',			Related_Accreditation_Class__c = accr.Id,	GDP_Opt_In__c = true,	Email_Address__c = 'f@b.com',			Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'notincluded',	Related_Accreditation_Class__c = accr.Id,	GDP_Opt_In__c = true,	Email_Address__c = 'notincluded@b.com',	Preferred_Language__c = 'X1'),
+                new GDP_Products_Account_View__c(Name = 'optout',		Related_Accreditation_Class__c = accr.Id,	GDP_Opt_In__c = false,	Email_Address__c = 'optout@b.com',		Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'duplicate',	Related_Accreditation_Class__c = accr.Id,	GDP_Opt_In__c = true,	Email_Address__c = 'duplicate@b.com',	Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'duplicate1',	Related_Accreditation_Class__c = accr.Id,	GDP_Opt_In__c = true,	Email_Address__c = 'duplicate@b.com',	Preferred_Language__c = 'X0')
+            };
+        insert gpavs;*/
+        List<GDP_Products_Account_View__c> gpavs = createGDPProductsAccountViews();
+        
+        EBC_Master_Filter__c masterFilter = new EBC_Master_Filter__c();
+        masterFilter.Audience__c = 'Agency';
+        masterFilter.Billing_Account__c = oBillingAccount.Id;
+        insert masterFilter;
+        
+        EBC_Template__c tpl = new EBC_Template__c();
+        insert tpl;
+        
+        EBC_Campaign__c camp = new EBC_Campaign__c();
+        // Step 1
+        camp.Name = 'Foo Bar';
+        camp.Subject__c = 'Foo Subject';
+        camp.From_Name__c = 'Foo From Name';
+        camp.Is_Google_Analytics_Tracker_Active__c = true;
+        camp.Google_Analytics_Tracking_Code__c = 'UA-XXXXXX';
+        camp.Billing_Account__c = oBillingAccount.Id;
+        // Step 2
+//        camp.EBC_Master_Filter__c = masterFilter.Id;
+        insert camp;
+        
+        System.runAs(usr) {
+            initPostRunAs();
+        	Test.startTest();
+            
+            // Layout PageLoad
+        	vfIECEBC_Layout layoutController = new vfIECEBC_Layout();
+            System.assertEquals(null, layoutController.pageLoad());
+            
+            ApexPages.StandardController sc = new ApexPages.StandardController(camp);
+            vfIECEBC_Campaign campaignExtCon = new vfIECEBC_Campaign(sc);
+            
+            System.debug(campaignExtCon.campaign); 
+            vfIECEBC_CampaignRecipient recipientExtCon = new vfIECEBC_CampaignRecipient(sc);
+            
+            // Check existing list
+            List<SelectOption> masterFilters = recipientExtCon.getMasterFilters();
+            System.assertEquals(1, masterFilters.size());
+            
+			// Step 1
+            vfIECEBC_RecipientEdit recipientEditCon = new vfIECEBC_RecipientEdit();
+            recipientEditCon.campaign = camp;
+            System.assertEquals(1, recipientEditCon.newListStepNumber);
+            recipientEditCon.newFilter.Audience__c = 'Agency';
+            recipientEditCon.reset();
+            recipientEditCon.newListStepNumber = 2;
+            recipientEditCon.validateNewFilter();
+            System.assertEquals(2, recipientEditCon.newListStepNumber);
+            
+            // Step 2
+            for(Id geoFilterPresetId : recipientEditCon.geoFilterPresets.keySet()) {
+                EBC_Master_Filter__c f = recipientEditCon.geoFilterPresets.get(geoFilterPresetId);
+                if (f.Name == 'Worldwide') {
+                    recipientEditCon.geoFilterPreset = geoFilterPresetId;
+                    break;
+                }
+            }
+            recipientEditCon.newListStepNumber = 3;
+            recipientEditCon.validateNewFilter();
+            System.assertEquals(3, recipientEditCon.newListStepNumber);
+            
+            Integer cnt = vfIECEBC_RecipientEdit.getNewFilterCnt(recipientEditCon.getNewFilterJSON());
+            System.assert(cnt > 0);
+            recipientEditCon.newFilter.Number_of_Recipients__c = cnt;
+            recipientEditCon.newListStepNumber = 4;
+            recipientEditCon.validateNewFilter();
+            System.assertEquals(4, recipientEditCon.newListStepNumber);
+            
+            
+            recipientEditCon.newFilter.Name = 'New filter name';
+            recipientEditCon.save();
+            
+            EBC_Master_Filter__c nf = [Select Id From EBC_Master_Filter__c Where Name = :recipientEditCon.newFilter.Name];
+            EBC_Campaign__c c = [Select Id, EBC_Master_Filter__c From EBC_Campaign__c Where Id = :camp.Id];
+            
+            System.assertEquals(nf.Id, c.EBC_Master_Filter__c);
+        }
+    }
+    public static void testCampaignTemplate() {
+        
+		PageReference pageRef = Page.IECEBC_CampaignTemplate;
+        Test.setCurrentPage(pageRef);
+        
+        User usr = initPreRunAs(true);
+        
+        List<EBC_Template__c> globTpl = new List<EBC_Template__c>{
+            new EBC_Template__c(Name = 'Global Agent 1', Audience__c = 'Agent', RecordTypeId = Schema.SObjectType.EBC_Template__c.getRecordTypeInfosByName().get('Global').getRecordTypeId()),
+            new EBC_Template__c(Name = 'Global Neutral 1', Audience__c = 'Neutral', RecordTypeId = Schema.SObjectType.EBC_Template__c.getRecordTypeInfosByName().get('Global').getRecordTypeId()),
+            new EBC_Template__c(Name = 'Global Agency 1', Audience__c = 'Agency', RecordTypeId = Schema.SObjectType.EBC_Template__c.getRecordTypeInfosByName().get('Global').getRecordTypeId()),
+            new EBC_Template__c(Name = 'Global Agency 2', Audience__c = 'Agency', RecordTypeId = Schema.SObjectType.EBC_Template__c.getRecordTypeInfosByName().get('Global').getRecordTypeId()),
+            new EBC_Template__c(Name = 'Custom Agency 2', External_Id__c = 'customhtml-agencytest', Audience__c = 'Agency', RecordTypeId = Schema.SObjectType.EBC_Template__c.getRecordTypeInfosByName().get('Global').getRecordTypeId())
+        };
+        upsert globTpl; 
+        
+        insert new List<EBC_Template__c>{
+            new EBC_Template__c(Is_Reusable__c = true, Billing_Account__c = oBillingAccount.Id, Name = 'UD Agent 1', Audience__c = 'Agent', RecordTypeId = Schema.SObjectType.EBC_Template__c.getRecordTypeInfosByName().get('User Templates').getRecordTypeId(), Parent_Template__c = globTpl[0].Id),
+            new EBC_Template__c(Is_Reusable__c = true, Billing_Account__c = oBillingAccount.Id, Name = 'UD Neutral 1', Audience__c = 'Neutral', RecordTypeId = Schema.SObjectType.EBC_Template__c.getRecordTypeInfosByName().get('User Templates').getRecordTypeId(), Parent_Template__c = globTpl[1].Id),
+            new EBC_Template__c(Is_Reusable__c = true, Billing_Account__c = oBillingAccount.Id, Name = 'UD Agency 1', Audience__c = 'Agency', RecordTypeId = Schema.SObjectType.EBC_Template__c.getRecordTypeInfosByName().get('User Templates').getRecordTypeId(), Parent_Template__c = globTpl[2].Id)
+        };
+        
+        List<GDP_Products_Account_View__c> gpavs = createGDPProductsAccountViews();
+        
+        EBC_Master_Filter__c masterFilter = new EBC_Master_Filter__c();
+        masterFilter.Audience__c = 'Agency';
+        masterFilter.Billing_Account__c = oBillingAccount.Id;
+        insert masterFilter;
+        
+        EBC_Campaign__c camp = new EBC_Campaign__c();
+        // Step 1
+        camp.Name = 'Foo Bar';
+        camp.Subject__c = 'Foo Subject';
+        camp.From_Name__c = 'Foo From Name';
+        camp.Is_Google_Analytics_Tracker_Active__c = true;
+        camp.Google_Analytics_Tracking_Code__c = 'UA-XXXXXX';
+        camp.Billing_Account__c = oBillingAccount.Id;
+        camp.EBC_Master_Filter__c = masterFilter.Id;
+        insert camp;
+        
+        camp = [
+            Select
+            	Id,
+            	Name,
+            	Subject__c,
+                From_Name__c,
+                Is_Google_Analytics_Tracker_Active__c,
+                Google_Analytics_Tracking_Code__c,
+                Billing_Account__c,
+                EBC_Master_Filter__c,
+                Audience__c
+            From EBC_Campaign__c
+            Where Id = :camp.Id
+        ];
+        
+        System.runAs(usr) {
+            initPostRunAs();
+        	Test.startTest();
+            
+            // Layout PageLoad
+        	vfIECEBC_Layout layoutController = new vfIECEBC_Layout();
+            System.assertEquals(null, layoutController.pageLoad());
+            
+            ApexPages.StandardController sc = new ApexPages.StandardController(camp);
+            vfIECEBC_Campaign campaignExtCon = new vfIECEBC_Campaign(sc);
+            
+            vfIECEBC_CampaignTemplate templateExtCon = new vfIECEBC_CampaignTemplate(sc);
+            
+            vfIECEBC_TemplateCreation templateListCon = new vfIECEBC_TemplateCreation();
+            templateListCon.audience = 'Agency';
+            System.debug(templateListCon.globalTemplates);
+            System.assert(templateListCon.globalTemplates.size() >= 3);
+            System.assertEquals(2, templateListCon.userEditableTemplates.size());
+            
+            templateExtCon.selectedTemplate = templateExtCon.customHtmlTemplate.Id;
+            templateExtCon.upsertDesignAndContinue();
+        }
+    }
+    ///////
+}
