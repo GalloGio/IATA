@@ -112,7 +112,6 @@ public with sharing class EF_TestDataFactory
                 recordTypeId = Schema.SObjectType.EF_Related_Records__c.getRecordTypeInfosByName().get('Location').getRecordTypeId() 
                 );
             locationList.add(location);
-        }
 
         insert locationList;
 
@@ -185,6 +184,16 @@ public with sharing class EF_TestDataFactory
         appr2.Name = 'Contract';
         List<EF_Approve_Fields__c> approvals = new List<EF_Approve_Fields__c>{appr1, appr2};
         insert approvals;
+
+        EF_Critical_Field_Notification__c cfn = new EF_Critical_Field_Notification__c ();
+        cfn.Name='criticalFieldChangesTracking';
+        cfn.Account_Airline_Fields__c = 'EF_Status__c,EF_Legacy_Code__c,EF_Airline_ID__c,EF_SIS_Code__c,EF_SIS_Designator__c,EF_SIS_Code_Verified__c';
+        cfn.Account_Client_Fields__c='Legal_name__c,EF_SIS_Code__c,EF_SIS_Designator__c,EF_SIS_Code_Verified__c,EF_Status__c';
+        cfn.Airline_Billing_Agreement_Fields__c='Bill_To__c,Ship_To__c,Payer__c,Sold_To__c';
+        cfn.Contact_Fields__c='EF_Signatory__c,Email,FirstName,LastName,EF_Status__c';
+        cfn.Contract_Fields__c='EF_Group_Code__c,EF_Admin_Fee__c,EF_Payment_Terms__c';
+        insert cfn;
+
     }
 
     public static User getEfProfileAndRole(Integer profileNumber, Integer roleNumber)
