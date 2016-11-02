@@ -76904,6 +76904,15 @@ NOT(CONTAINS($Profile.Name, &quot;Developer&quot;))
         <errorMessage>Airline head office accounts can be created only by an administrator</errorMessage>
     </validationRules>
     <validationRules>
+        <fullName>EF_AS_Specialist_Prevent_Client_Edit</fullName>
+        <active>true</active>
+        <description>If User is Airline Service Specialist prevent editing Client Accounts</description>
+        <errorConditionFormula>AND( 
+ISPICKVAL($User.EF_User_Role__c, &apos;Airline Services Specialists&apos;), 
+RecordType.Name=&apos;Others&apos; )</errorConditionFormula>
+        <errorMessage>You don&apos;t have the right level of access to edit Client Accounts</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>EF_Account_Client_Reactivation</fullName>
         <active>true</active>
         <description>E&amp;F Status on Client can be reactivated if the user has the correct setting on his user</description>
