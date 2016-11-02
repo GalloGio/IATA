@@ -22,8 +22,6 @@ public class vfIECEBC_TestSuite {
 
     public static User initPreRunAs(Boolean grantEBCAccess) {
         User usr = IECTestUtil.createSampleGuestUserAndLogin();
-        
-        IECTestUtil_Account.OwnerId = IEC_Settings__c.getOrgDefaults().Account_Owner_Id__c;
 
         if (grantEBCAccess) {
             oBillingAccount.eBroadcast_Product_Access__c = true;

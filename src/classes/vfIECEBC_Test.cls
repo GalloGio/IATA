@@ -61,6 +61,10 @@ public class vfIECEBC_Test {
         vfIECEBC_TestSuite.testCleanOutOfDateOptOut();
     }
      
+	public static testMethod void testTemplateList() {
+        vfIECEBC_TestSuite1.testTemplateList();
+    }
+    
     
      
     /*
