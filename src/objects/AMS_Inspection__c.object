@@ -141,16 +141,16 @@
     </fields>
     <fields>
         <fullName>Accreditation_Endorsement_organisation__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
         <label>Accreditation/Endorsement organisation</label>
         <referenceTo>AMS_Accreditation_Organization__c</referenceTo>
+        <relationshipLabel>Appointments (AMS)</relationshipLabel>
         <relationshipName>Inspections_AMS</relationshipName>
-        <relationshipOrder>0</relationshipOrder>
-        <reparentableMasterDetail>true</reparentableMasterDetail>
+        <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
-        <type>MasterDetail</type>
-        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+        <type>Lookup</type>
     </fields>
     <fields>
         <fullName>Agency__c</fullName>
@@ -165,6 +165,60 @@
         <type>Lookup</type>
     </fields>
     <fields>
+        <fullName>Airline_Code__c</fullName>
+        <externalId>false</externalId>
+        <formula>Airline__r.Airline_designator__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Airline Code</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Airline__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Airline</label>
+        <lookupFilter>
+            <active>true</active>
+            <errorMessage>The selected Account must be an Airline Headquarter</errorMessage>
+            <filterItems>
+                <field>Account.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Airline Headquarters</value>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Appointments (AMS) (Airline)</relationshipLabel>
+        <relationshipName>Appointments_AMS</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>BSPLink_or_CASSLink_activation__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>BSPLink or CASSLink activation</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Comments__c</fullName>
+        <externalId>false</externalId>
+        <label>Comments</label>
+        <length>32768</length>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
         <fullName>Date_Organisation_Status_attained__c</fullName>
         <externalId>false</externalId>
         <label>Date Organisation Status attained</label>
@@ -172,6 +226,18 @@
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>IATA_Non_IATA_Carrier__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(Airline__r.Membership_status__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>IATA/Non-IATA Carrier</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Last_synchronization__c</fullName>
@@ -233,6 +299,41 @@
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
+    <fields>
+        <fullName>Territory_country__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Territory country</label>
+        <referenceTo>IATA_ISO_Country__c</referenceTo>
+        <relationshipLabel>Appointments (AMS)</relationshipLabel>
+        <relationshipName>Appointments_AMS</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Territory_state__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Territory state</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>IATA_ISO_State__c.IATA_ISO_Country__r.Id</field>
+                <operation>equals</operation>
+                <valueField>$Source.Territory_country__c</valueField>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
+        <referenceTo>IATA_ISO_State__c</referenceTo>
+        <relationshipLabel>Appointments (AMS)</relationshipLabel>
+        <relationshipName>Appointments_AMS1</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
     <label>Appointment (AMS)</label>
     <nameField>
         <displayFormat>INS-{0000000}</displayFormat>
@@ -242,6 +343,30 @@
     </nameField>
     <pluralLabel>Appointments (AMS)</pluralLabel>
     <searchLayouts/>
-    <sharingModel>ControlledByParent</sharingModel>
+    <sharingModel>ReadWrite</sharingModel>
     <startsWith>Vowel</startsWith>
+    <validationRules>
+        <fullName>AMS_Accreditation_Organization_mandatory</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND( 
+NOT(REGEX(TEXT(OSCAR__r.Process__c),  &quot;NEW.GSA.1.0|NEW.MSO.1.0|NEW.GSA.1.0.BSP|NEW.GSSA.1.0|NEW.AHA.1.0.BSP|NEW.AHA.1.0|NEW.TIDS.1.0&quot;)), 
+OR( 
+NOT(ISBLANK( Airline__c )), 
+ISBLANK( Accreditation_Endorsement_organisation__c ) 
+) 
+)</errorConditionFormula>
+        <errorMessage>On this Appointment the loopkup for Accreditation Endorsement organisation must be filled and the lookup for Airline must be empty</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>AMS_Airline_required_for_MSOs_and_GSAs</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+REGEX(TEXT(OSCAR__r.Process__c), &quot;NEW.GSA.1.0|NEW.MSO.1.0|NEW.GSA.1.0.BSP|NEW.GSSA.1.0|NEW.AHA.1.0.BSP|NEW.AHA.1.0|NEW.TIDS.1.0&quot;),
+OR(
+ISBLANK( Airline__c ),
+NOT(ISBLANK( Accreditation_Endorsement_organisation__c ))
+) 
+)</errorConditionFormula>
+        <errorMessage>On Appointments for MSO, GSA, GSSA, AHA and TIDS the lookup for Airline is mandatory and the lookup for Accreditation Endorsement organisation must be empty</errorMessage>
+    </validationRules>
 </CustomObject>

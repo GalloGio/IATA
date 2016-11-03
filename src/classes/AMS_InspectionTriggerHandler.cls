@@ -2,16 +2,17 @@ public with sharing class AMS_InspectionTriggerHandler {
 
 
 	public static void handleBeforeInsert(List<AMS_Inspection__c> inspections) {
-
+		
 	}
 
 	public static void handleBeforeUpdate(List<AMS_Inspection__c> oldValues,List<AMS_Inspection__c> newValues) {
-
+		
 	}
 
 	public static void handleAfterInsert(List<AMS_Inspection__c> oldValues,List<AMS_Inspection__c> newValues) {
 
 		processAgency(cleanListWithoutAgencyId(oldValues),cleanListWithoutAgencyId(newValues));
+		enforce1To1RelationshipAppointmentMSO();
 	
 	}
 
@@ -21,6 +22,7 @@ public with sharing class AMS_InspectionTriggerHandler {
         //AMS_AgencyUpdateHelper.agencyUpdate(cleanListWithoutAgencyId(newValues));
 
 		processAgency(cleanListWithoutAgencyId(oldValues),cleanListWithoutAgencyId(newValues));
+		enforce1To1RelationshipAppointmentMSO();
 	
 	}
 
@@ -46,6 +48,31 @@ public with sharing class AMS_InspectionTriggerHandler {
 		}
 
 		return toReturn;
+	}
+
+	private static void enforce1To1RelationshipAppointmentMSO(){
+
+		Set<Id> appointmentAgencies = new Set<Id>();
+		Map<Id, Integer> appointmentsPerAccount = new Map<Id, Integer>();
+
+		for(AMS_Inspection__c app: (List<AMS_Inspection__c>)Trigger.New){
+			appointmentAgencies.add(app.Account__c);
+		}
+
+		List<AMS_Inspection__c> allAppointments = new List<AMS_Inspection__c>([SELECT Id, Account__c FROM AMS_Inspection__c WHERE Account__r.Category__c = 'MSO Member Sales Office']);
+
+		for(AMS_Inspection__c app: allAppointments){
+			if(app.Account__c!=null){
+				if(!appointmentsPerAccount.containsKey(app.Account__c))
+					appointmentsPerAccount.put(app.Account__c, 0);
+
+				Integer nAppointments = appointmentsPerAccount.get(app.Account__c) + 1;
+				if(nAppointments > 1)
+					throw new AMS_ApplicationException('##An MSO Agency can only have 1 Appointment##');
+
+				appointmentsPerAccount.put(app.Account__c, nAppointments);
+			}
+		}
 	}
 
 
