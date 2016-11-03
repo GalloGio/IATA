@@ -39,8 +39,8 @@ public with sharing class AMP_IATAGroupExtension {
 						return null;
 					}
 
-					if(lg.Division__c == null) lg.Division__c = 'N/A';
-					if(lg.Region__c == null) lg.Region__c = 'N/A';
+					// if(lg.Division__c == null) lg.Division__c = 'N/A';
+					// if(lg.Region__c == null) lg.Region__c = 'N/A';
 
 	        database.UpsertResult sr = database.upsert(lg,false);
 	        if(!sr.isSuccess()){

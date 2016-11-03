@@ -221,6 +221,10 @@
         <label>Frequency of Face to Face Meetings</label>
         <picklist>
             <picklistValues>
+                <fullName>None</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>At least 1</fullName>
                 <default>false</default>
             </picklistValues>
@@ -1087,6 +1091,10 @@ Record Type + Group Type + ISO_Country_Name</description>
                 <fullName>At least 6</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>None</fullName>
+                <default>true</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Local_Governance_type__c</picklist>
@@ -1678,6 +1686,10 @@ Record Type + Group Type + ISO_Country_Name</description>
                 <fullName>At least 6</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>None</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Local_Governance_type__c</picklist>
@@ -1929,7 +1941,7 @@ Record Type + Group Type + ISO_Country_Name</description>
     </validationRules>
     <validationRules>
         <fullName>Either_a_Division_or_a_Region</fullName>
-        <active>true</active>
+        <active>false</active>
         <errorConditionFormula>AND(
   RecordType.DeveloperName = &quot;Reg_Div_Groups&quot;,
 
