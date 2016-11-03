@@ -1,0 +1,113 @@
+34.0 APEX_CODE,DEBUG;APEX_PROFILING,FINEST;CALLOUT,INFO;DB,INFO;SYSTEM,FINE;VALIDATION,INFO;VISUALFORCE,INFO;WORKFLOW,INFO
+16:13:16.0 (323531)|USER_INFO|[EXTERNAL]|005w0000003Pu27|luukkaa@iata.org.prod.amp2|Central European Time|GMT+02:00
+16:13:16.0 (365781)|EXECUTION_STARTED
+16:13:16.0 (371231)|CODE_UNIT_STARTED|[EXTERNAL]|066w0000001Fz6g|VF: /apex/AMP_GroupHierarchy
+16:13:16.0 (6303553)|SYSTEM_MODE_ENTER|true
+16:13:16.0 (6827052)|SYSTEM_MODE_ENTER|false
+16:13:16.0 (6835583)|SYSTEM_MODE_EXIT|false
+16:13:16.0 (6904846)|SYSTEM_MODE_ENTER|false
+16:13:16.0 (6956274)|SYSTEM_METHOD_ENTRY|[8]|ApexPages.StandardController.getRecord()
+16:13:16.0 (12981642)|SYSTEM_METHOD_EXIT|[8]|ApexPages.StandardController.getRecord()
+16:13:16.0 (13043645)|SYSTEM_METHOD_ENTRY|[9]|AMP_GroupHierarchyExtension.__sfdc_recordId(Id)
+16:13:16.0 (13072695)|SYSTEM_METHOD_EXIT|[9]|AMP_GroupHierarchyExtension.__sfdc_recordId(Id)
+16:13:16.0 (13098375)|SYSTEM_METHOD_ENTRY|[10]|System.debug(ANY)
+16:13:16.0 (13148593)|USER_DEBUG|[10]|DEBUG|LocalGovernance__c:{CurrencyIsoCode=USD, Id=a0A5E000000D1cXUAS, RecordTypeId=012w0000000V43JAAS}
+16:13:16.0 (13156531)|SYSTEM_METHOD_EXIT|[10]|System.debug(ANY)
+16:13:16.0 (13524684)|SOQL_EXECUTE_BEGIN|[28]|Aggregations:0|SELECT Id, Name, Reporting_to__c FROM LocalGovernance__c WHERE Id = :tmpVar1
+16:13:16.0 (14971905)|SOQL_EXECUTE_END|[28]|Rows:1
+16:13:16.0 (15265529)|SYSTEM_CONSTRUCTOR_ENTRY|[29]|<init>()
+16:13:16.0 (15401157)|SYSTEM_CONSTRUCTOR_EXIT|[29]|<init>()
+16:13:16.0 (15486129)|SYSTEM_METHOD_ENTRY|[30]|System.debug(ANY)
+16:13:16.0 (15532820)|USER_DEBUG|[30]|DEBUG|LocalGovernance__c:{Id=a0A5E000000D1cXUAS, Name=Passenger Tariff Conference, RecordTypeId=012w0000000V43JAAS, CurrencyIsoCode=USD}
+16:13:16.0 (15560766)|SYSTEM_METHOD_EXIT|[30]|System.debug(ANY)
+16:13:16.0 (15599572)|SYSTEM_METHOD_ENTRY|[32]|List<LocalGovernance__c>.add(Object)
+16:13:16.0 (15643611)|SYSTEM_METHOD_EXIT|[32]|List<LocalGovernance__c>.add(Object)
+16:13:16.0 (15853651)|SOQL_EXECUTE_BEGIN|[43]|Aggregations:0|SELECT Id, Name, Reporting_to__c FROM LocalGovernance__c WHERE Id = :tmpVar1
+16:13:16.0 (16697370)|SOQL_EXECUTE_END|[43]|Rows:0
+16:13:16.0 (16748061)|SYSTEM_METHOD_ENTRY|[44]|List<LocalGovernance__c>.isEmpty()
+16:13:16.0 (16773274)|SYSTEM_METHOD_EXIT|[44]|List<LocalGovernance__c>.isEmpty()
+16:13:16.0 (16800538)|SYSTEM_METHOD_ENTRY|[36]|System.debug(ANY)
+16:13:16.0 (16814606)|USER_DEBUG|[36]|DEBUG|null
+16:13:16.0 (16822525)|SYSTEM_METHOD_EXIT|[36]|System.debug(ANY)
+16:13:16.0 (16908922)|SYSTEM_CONSTRUCTOR_ENTRY|[17]|<init>()
+16:13:16.0 (17008645)|SYSTEM_CONSTRUCTOR_EXIT|[17]|<init>()
+16:13:16.0 (17026641)|SYSTEM_METHOD_ENTRY|[19]|List<LocalGovernance__c>.size()
+16:13:16.0 (17049342)|SYSTEM_METHOD_EXIT|[19]|List<LocalGovernance__c>.size()
+16:13:16.0 (17078720)|SYSTEM_METHOD_ENTRY|[20]|List<LocalGovernance__c>.add(Object)
+16:13:16.0 (17105442)|SYSTEM_METHOD_EXIT|[20]|List<LocalGovernance__c>.add(Object)
+16:13:16.0 (17563966)|SYSTEM_METHOD_ENTRY|[13]|AMP_GroupHierarchyExtension.__sfdc_JSONHierarchy(String)
+16:13:16.0 (17580095)|SYSTEM_METHOD_EXIT|[13]|AMP_GroupHierarchyExtension.__sfdc_JSONHierarchy(String)
+16:13:16.0 (17585923)|SYSTEM_MODE_EXIT|false
+16:13:16.0 (24560941)|SYSTEM_MODE_ENTER|true
+16:13:16.0 (24644341)|SYSTEM_MODE_ENTER|true
+16:13:16.27 (27051328)|CUMULATIVE_LIMIT_USAGE
+16:13:16.27 (27051328)|LIMIT_USAGE_FOR_NS|(default)|
+  Number of SOQL queries: 2 out of 100
+  Number of query rows: 1 out of 50000
+  Number of SOSL queries: 0 out of 20
+  Number of DML statements: 0 out of 150
+  Number of DML rows: 0 out of 10000
+  Maximum CPU time: 0 out of 10000
+  Maximum heap size: 0 out of 6000000
+  Number of callouts: 0 out of 100
+  Number of Email Invocations: 0 out of 10
+  Number of future calls: 0 out of 50
+  Number of queueable jobs added to the queue: 0 out of 50
+  Number of Mobile Apex push calls: 0 out of 10
+
+16:13:16.27 (27051328)|TOTAL_EMAIL_RECIPIENTS_QUEUED|0
+16:13:16.27 (27051328)|STATIC_VARIABLE_LIST|
+  char[]:DigitTens:0
+  long:serialVersionUID:0
+  long:serialVersionUID:0
+  String:__sfdcProperties:0
+  String:_sfdcAdditionalCodeLocations:0
+  double:MAX_VALUE:0
+  Boolean:FALSE:0
+  long:serialVersionUID:0
+  String:_sfdcAdditionalCodeLocations:0
+  double:MIN_VALUE:0
+  int:SIZE:0
+  double:NEGATIVE_INFINITY:0
+  int:MAX_VALUE:0
+  char[]:digits:0
+  double:NaN:0
+  Boolean:TRUE:0
+  int:MIN_VALUE:0
+  char[]:DigitOnes:0
+  String:_sfdcSuppressedCodeLocations:0
+  int:BYTES:0
+  String:_sfdcAdditionalCodeLocations:0
+  int:MIN_EXPONENT:0
+  int[]:sizeTable:0
+  int:MAX_EXPONENT:0
+  int:SIZE:0
+  double:POSITIVE_INFINITY:0
+  double:MIN_NORMAL:0
+  int:BYTES:0
+
+16:13:16.27 (27051328)|CUMULATIVE_LIMIT_USAGE_END
+
+16:13:16.0 (27171766)|CODE_UNIT_FINISHED|VF: /apex/AMP_GroupHierarchy
+16:13:16.0 (27942463)|EXECUTION_FINISHED
+16:13:16.29 (29407114)|CUMULATIVE_PROFILING_BEGIN
+16:13:16.29 (29407114)|CUMULATIVE_PROFILING|SOQL operations|
+Class.AMP_GroupHierarchyExtension.getHierarchy: line 28, column 1: [SELECT Id, Name, 	Reporting_to__c	FROM LocalGovernance__c	WHERE Id = :lgId]: executed 1 time in 2 ms
+Class.AMP_GroupHierarchyExtension.getParent: line 43, column 1: [SELECT Id, Name, Reporting_to__c FROM LocalGovernance__c WHERE Id = :child.Reporting_to__c ]: executed 1 time in 1 ms
+
+16:13:16.29 (29407114)|CUMULATIVE_PROFILING|No profiling information for SOSL operations
+16:13:16.29 (29407114)|CUMULATIVE_PROFILING|No profiling information for DML operations
+16:13:16.29 (29407114)|CUMULATIVE_PROFILING|method invocations|
+External entry point: public void <init>(ApexPages.StandardController): executed 1 time in 11 ms
+Class.AMP_GroupHierarchyExtension.<init>: line 8, column 1: global SObject getRecord(): executed 1 time in 6 ms
+Class.AMP_GroupHierarchyExtension.<init>: line 11, column 1: public List<LocalGovernance__c> getHierarchy(Id): executed 1 time in 3 ms
+Class.AMP_GroupHierarchyExtension.getHierarchy: line 34, column 1: LocalGovernance__c getParent(LocalGovernance__c): executed 1 time in 1 ms
+Class.AMP_GroupHierarchyExtension.getHierarchy: line 32, column 1: global public Object add(Object): executed 1 time in 0 ms
+Class.AMP_GroupHierarchyExtension.getHierarchy: line 36, column 1: global public static void debug(ANY): executed 1 time in 0 ms
+Class.AMP_GroupHierarchyExtension.<init>: line 9, column 1: public void __sfdc_recordId(Id): executed 1 time in 0 ms
+Class.AMP_GroupHierarchyExtension.<init>: line 10, column 1: global public static void debug(ANY): executed 1 time in 0 ms
+Class.AMP_GroupHierarchyExtension.getParent: line 44, column 1: global public Boolean isEmpty(): executed 1 time in 0 ms
+Class.AMP_GroupHierarchyExtension.<init>: line 12, column 1: public List<LocalGovernance__c> reverse(List<LocalGovernance__c>): executed 1 time in 0 ms
+Class.AMP_GroupHierarchyExtension.<init>: line 13, column 1: global static String serialize(Object): executed 2 times in 0 ms
+
+16:13:16.29 (29407114)|CUMULATIVE_PROFILING_END

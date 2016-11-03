@@ -1,3 +1,0 @@
-<apex:page >
-    <c:EasyUpload parentId="{!$CurrentPage.parameters.parentId}"/>
-</apex:page>

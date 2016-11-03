@@ -1,3 +1,0 @@
-<apex:page showHeader="false" sidebar="false" standardStylesheets="true" standardController="AMS_Person__c" TabStyle="AMS_Person__c">
-    <c:AMS_Translated_Panel camsPersonId="{!AMS_Person__c.Id}"/>
-</apex:page>

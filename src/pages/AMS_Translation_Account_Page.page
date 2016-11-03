@@ -1,3 +1,0 @@
-<apex:page showHeader="false" sidebar="false" standardStylesheets="true" standardController="Account" TabStyle="Account">
-    <c:AMS_Translated_Panel caccountId="{!Account.Id}"/>
-</apex:page>

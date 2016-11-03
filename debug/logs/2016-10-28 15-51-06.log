@@ -1,0 +1,52 @@
+31.0 APEX_CODE,DEBUG;APEX_PROFILING,INFO;CALLOUT,INFO;DB,INFO;SYSTEM,DEBUG;VALIDATION,INFO;VISUALFORCE,INFO;WORKFLOW,INFO
+15:50:46.0 (62340)|USER_INFO|[EXTERNAL]|005w0000003Pu27|luukkaa@iata.org.prod.amp2|Central European Time|GMT+02:00
+15:50:46.0 (99667)|EXECUTION_STARTED
+15:50:46.0 (104686)|CODE_UNIT_STARTED|[EXTERNAL]|066w0000001Fz6p|VF: /apex/AM_AccountManagerDetails
+15:50:46.23 (23309330)|CUMULATIVE_LIMIT_USAGE
+15:50:46.23 (23309330)|LIMIT_USAGE_FOR_NS|(default)|
+  Number of SOQL queries: 0 out of 100
+  Number of query rows: 0 out of 50000
+  Number of SOSL queries: 0 out of 20
+  Number of DML statements: 0 out of 150
+  Number of DML rows: 0 out of 10000
+  Maximum CPU time: 0 out of 10000
+  Maximum heap size: 0 out of 6000000
+  Number of callouts: 0 out of 100
+  Number of Email Invocations: 0 out of 10
+  Number of future calls: 0 out of 50
+  Number of queueable jobs added to the queue: 0 out of 50
+  Number of Mobile Apex push calls: 0 out of 10
+
+15:50:46.23 (23309330)|CUMULATIVE_LIMIT_USAGE_END
+
+15:50:46.0 (23360399)|CODE_UNIT_FINISHED|VF: /apex/AM_AccountManagerDetails
+15:50:46.0 (24116424)|EXECUTION_FINISHED
+:0|SELECT Id, Percentage__c, Account__c, Account__r.Name, Account__r.Membership_status__c, Account__r.Sector__c, Owner_Account__c FROM AMS_Account_Role__c WHERE Owner_Account__c = :tmpVar1
+15:50:45.0 (38951448)|SOQL_EXECUTE_END|[65]|Rows:0
+15:50:45.0 (39098494)|USER_DEBUG|[77]|DEBUG|AccountId: 0015E000002JkyZQAS
+15:50:45.0 (39143710)|USER_DEBUG|[78]|DEBUG|getSubs: ()
+15:50:45.0 (39163463)|SYSTEM_MODE_EXIT|false
+15:50:45.0 (39255170)|SYSTEM_MODE_ENTER|true
+15:50:45.0 (39565081)|SYSTEM_MODE_ENTER|true
+15:50:45.0 (49006784)|VF_SERIALIZE_VIEWSTATE_BEGIN|066w0000001Fz6Z
+15:50:45.0 (56694850)|VF_SERIALIZE_VIEWSTATE_END
+15:50:45.58 (58911493)|CUMULATIVE_LIMIT_USAGE
+15:50:45.58 (58911493)|LIMIT_USAGE_FOR_NS|(default)|
+  Number of SOQL queries: 3 out of 100
+  Number of query rows: 1 out of 50000
+  Number of SOSL queries: 0 out of 20
+  Number of DML statements: 0 out of 150
+  Number of DML rows: 0 out of 10000
+  Maximum CPU time: 0 out of 10000
+  Maximum heap size: 0 out of 6000000
+  Number of callouts: 0 out of 100
+  Number of Email Invocations: 0 out of 10
+  Number of future calls: 0 out of 50
+  Number of queueable jobs added to the queue: 0 out of 50
+  Number of Mobile Apex push calls: 0 out of 10
+
+15:50:45.58 (58911493)|CUMULATIVE_LIMIT_USAGE_END
+
+15:50:45.0 (58948438)|CODE_UNIT_FINISHED|VF: /apex/AMP_AccountOwners
+15:50:45.0 (59712989)|EXECUTION_FINISHED
+ION_FINISHED

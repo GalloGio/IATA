@@ -1,0 +1,58 @@
+34.0 APEX_CODE,DEBUG;APEX_PROFILING,INFO;CALLOUT,INFO;DB,INFO;SYSTEM,DEBUG;VALIDATION,INFO;VISUALFORCE,INFO;WORKFLOW,INFO
+16:03:35.0 (303386)|USER_INFO|[EXTERNAL]|005w0000003Pu27|luukkaa@iata.org.prod.amp2|Central European Time|GMT+02:00
+16:03:35.0 (345068)|EXECUTION_STARTED
+16:03:35.0 (351513)|CODE_UNIT_STARTED|[EXTERNAL]|066w0000001Fz6n|VF: /apex/AMP_KeyContacts
+16:03:35.0 (5381849)|SYSTEM_MODE_ENTER|true
+16:03:35.0 (5886993)|SYSTEM_MODE_ENTER|false
+16:03:35.0 (5896737)|SYSTEM_MODE_EXIT|false
+16:03:35.0 (5924227)|SYSTEM_MODE_ENTER|false
+16:03:35.0 (15625377)|SOQL_EXECUTE_BEGIN|[14]|Aggregations:0|SELECT Id, ParentId FROM Account WHERE Id = :tmpVar1
+16:03:35.0 (17022682)|SOQL_EXECUTE_END|[14]|Rows:1
+16:03:35.0 (21965669)|SOQL_EXECUTE_BEGIN|[46]|Aggregations:0|SELECT Id, Name, Airline_Contact_Type__c, Title, Phone, MobilePhone, Email, Membership_Function__c, Function__c, AM_First_Name_Latin_Char__c, AM_Last_Name_Latin_Char__c, AM_Job_Title_English__c, CEO_CFO__c, Membership_Main_Contact__c FROM Contact WHERE ((AccountId = :tmpVar1 OR Account.ParentId = :tmpVar2) AND Account_Management_Key_Contact__c = TRUE) ORDER BY CEO_CFO__c ASC NULLS LAST
+16:03:35.0 (37494638)|SOQL_EXECUTE_END|[46]|Rows:1
+16:03:35.0 (38262867)|SYSTEM_MODE_EXIT|false
+16:03:35.0 (38363438)|SYSTEM_MODE_ENTER|true
+16:03:35.51 (51982112)|CUMULATIVE_LIMIT_USAGE
+16:03:35.51 (51982112)|LIMIT_USAGE_FOR_NS|(default)|
+  Number of SOQL queries: 2 out of 100
+  Number of query rows: 2 out of 50000
+  Number of SOSL queries: 0 out of 20
+  Number of DML statements: 0 out of 150
+  Number of DML rows: 0 out of 10000
+  Maximum CPU time: 0 out of 10000
+  Maximum heap size: 0 out of 6000000
+  Number of callouts: 0 out of 100
+  Number of Email Invocations: 0 out of 10
+  Number of future calls: 0 out of 50
+  Number of queueable jobs added to the queue: 0 out of 50
+  Number of Mobile Apex push calls: 0 out of 10
+
+16:03:35.51 (51982112)|CUMULATIVE_LIMIT_USAGE_END
+
+16:03:35.0 (52015086)|CODE_UNIT_FINISHED|VF: /apex/AMP_KeyContacts
+16:03:35.0 (52793788)|EXECUTION_FINISHED
+ :tmpVar3 AND AM_Related_to_Categories__c INCLUDES (:tmpVar4))
+16:03:35.0 (65567886)|SOQL_EXECUTE_END|[73]|Rows:0
+16:03:35.0 (65623670)|SYSTEM_MODE_EXIT|false
+16:03:35.0 (65727446)|SYSTEM_MODE_ENTER|true
+16:03:35.0 (75399769)|VF_SERIALIZE_VIEWSTATE_BEGIN|066w0000001Fz6c
+16:03:35.0 (79239377)|VF_SERIALIZE_VIEWSTATE_END
+16:03:35.82 (82685444)|CUMULATIVE_LIMIT_USAGE
+16:03:35.82 (82685444)|LIMIT_USAGE_FOR_NS|(default)|
+  Number of SOQL queries: 6 out of 100
+  Number of query rows: 4 out of 50000
+  Number of SOSL queries: 0 out of 20
+  Number of DML statements: 0 out of 150
+  Number of DML rows: 0 out of 10000
+  Maximum CPU time: 0 out of 10000
+  Maximum heap size: 0 out of 6000000
+  Number of callouts: 0 out of 100
+  Number of Email Invocations: 0 out of 10
+  Number of future calls: 0 out of 50
+  Number of queueable jobs added to the queue: 0 out of 50
+  Number of Mobile Apex push calls: 0 out of 10
+
+16:03:35.82 (82685444)|CUMULATIVE_LIMIT_USAGE_END
+
+16:03:35.0 (82722593)|CODE_UNIT_FINISHED|VF: /apex/AMP_BoardMonitoredActivities
+16:03:35.0 (83471533)|EXECUTION_FINISHED

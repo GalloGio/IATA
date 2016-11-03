@@ -1,4 +1,0 @@
-<apex:page controller="IECFirstLoginCtrl" action="{!DoNext}">
-<apex:pageMessages rendered="true" ></apex:pageMessages>
-
-</apex:page>

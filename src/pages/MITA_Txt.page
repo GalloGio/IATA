@@ -1,3 +1,0 @@
-<apex:page controller="MITA_TxtCtrl" contentType="text/csv#{!title}" >
-{!content}
-</apex:page>

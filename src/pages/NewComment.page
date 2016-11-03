@@ -1,3 +1,0 @@
-<apex:page standardcontroller="Comment__c" extensions="NewCommentController" action="{!redirect}" >
-
-</apex:page>

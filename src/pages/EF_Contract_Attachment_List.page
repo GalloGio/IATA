@@ -1,3 +1,0 @@
-<apex:page standardController="Contract">
-    <c:EF_AttachmentList sobjectId="{!Contract.Id}"/>
-</apex:page>

@@ -1,4 +1,0 @@
-<apex:component controller="ISSP_LastCaseComment"  access="global">
-<apex:attribute assignTo="{!caseId}" name="aCaseId" description=""  type="string" />
-{!caseComment} 
-</apex:component>

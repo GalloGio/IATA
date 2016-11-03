@@ -1,3 +1,0 @@
-<apex:page standardController="AMS_Employee__c" showHeader="false" sidebar="false">
-         <c:AMS_CrossObjectViewer displayedObject="{!AMS_Employee__c}"/>
-</apex:page>

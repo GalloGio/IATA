@@ -1,5 +1,0 @@
-<apex:page standardController="DIP_Details__c">
-	<script>
-		window.top.location.href = "/{!DIP_Details__c.Case__c}";
-	</script>
-</apex:page>

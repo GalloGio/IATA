@@ -1,5 +1,0 @@
-<apex:page >
-<flow:interview name="UAT_Flow">
-<apex:param name="UserID" value="{!$User.Id}" /> 
- </flow:interview>
-</apex:page>

@@ -1,0 +1,387 @@
+38.0 APEX_CODE,DEBUG;APEX_PROFILING,INFO;CALLOUT,INFO;DB,INFO;SYSTEM,DEBUG;VALIDATION,INFO;VISUALFORCE,INFO;WORKFLOW,INFO
+16:05:30.0 (75875)|USER_INFO|[EXTERNAL]|005w0000003Pu27|luukkaa@iata.org.prod.amp2|Central European Time|GMT+02:00
+16:05:30.0 (117473)|EXECUTION_STARTED
+16:05:30.0 (122908)|CODE_UNIT_STARTED|[EXTERNAL]|aura
+16:05:30.0 (1507790)|CODE_UNIT_STARTED|[EXTERNAL]|01pw0000003cmlE|AMP_OwnershipController.getOwners
+16:05:30.0 (2038683)|SYSTEM_MODE_ENTER|false
+16:05:30.0 (2050308)|SYSTEM_MODE_EXIT|false
+16:05:30.0 (2061283)|SYSTEM_MODE_ENTER|false
+16:05:30.0 (3284759)|SOQL_EXECUTE_BEGIN|[28]|Aggregations:0|SELECT Id, Percentage__c, Owner_Account__c, Owner_Account__r.Name, Owner_Account__r.Membership_status__c, Owner_Account__r.Sector__c, Account__c FROM AMS_Account_Role__c WHERE Account__c = :tmpVar1
+16:05:30.0 (15260783)|SOQL_EXECUTE_END|[28]|Rows:0
+16:05:30.0 (15541059)|SYSTEM_MODE_EXIT|false
+16:05:30.15 (15571069)|CUMULATIVE_LIMIT_USAGE
+16:05:30.15 (15571069)|LIMIT_USAGE_FOR_NS|(default)|
+  Number of SOQL queries: 1 out of 100
+  Number of query rows: 0 out of 50000
+  Number of SOSL queries: 0 out of 20
+  Number of DML statements: 0 out of 150
+  Number of DML rows: 0 out of 10000
+  Maximum CPU time: 0 out of 10000
+  Maximum heap size: 0 out of 6000000
+  Number of callouts: 0 out of 100
+  Number of Email Invocations: 0 out of 10
+  Number of future calls: 0 out of 50
+  Number of queueable jobs added to the queue: 0 out of 50
+  Number of Mobile Apex push calls: 0 out of 10
+
+16:05:30.15 (15571069)|CUMULATIVE_LIMIT_USAGE_END
+
+16:05:30.0 (15613545)|CODE_UNIT_FINISHED|AMP_OwnershipController.getOwners
+16:05:30.0 (17090249)|CODE_UNIT_STARTED|[EXTERNAL]|01pw0000003cmlE|AMP_OwnershipController.getSubsidiaries
+16:05:30.0 (17126093)|SYSTEM_MODE_ENTER|false
+16:05:30.0 (17459198)|SOQL_EXECUTE_BEGIN|[65]|Aggregations:0|SELECT Id, Percentage__c, Account__c, Account__r.Name, Account__r.Membership_status__c, Account__r.Sector__c, Owner_Account__c FROM AMS_Account_Role__c WHERE Owner_Account__c = :tmpVar1
+16:05:30.0 (25884581)|SOQL_EXECUTE_END|[65]|Rows:0
+16:05:30.0 (26052817)|USER_DEBUG|[77]|DEBUG|AccountId: 0015E000002JkyZQAS
+16:05:30.0 (26096283)|USER_DEBUG|[78]|DEBUG|getSubs: ()
+16:05:30.0 (26107396)|SYSTEM_MODE_EXIT|false
+16:05:30.26 (26125703)|CUMULATIVE_LIMIT_USAGE
+16:05:30.26 (26125703)|LIMIT_USAGE_FOR_NS|(default)|
+  Number of SOQL queries: 2 out of 100
+  Number of query rows: 0 out of 50000
+  Number of SOSL queries: 0 out of 20
+  Number of DML statements: 0 out of 150
+  Number of DML rows: 0 out of 10000
+  Maximum CPU time: 0 out of 10000
+  Maximum heap size: 0 out of 6000000
+  Number of callouts: 0 out of 100
+  Number of Email Invocations: 0 out of 10
+  Number of future calls: 0 out of 50
+  Number of queueable jobs added to the queue: 0 out of 50
+  Number of Mobile Apex push calls: 0 out of 10
+
+16:05:30.26 (26125703)|CUMULATIVE_LIMIT_USAGE_END
+
+16:05:30.0 (26153259)|CODE_UNIT_FINISHED|AMP_OwnershipController.getSubsidiaries
+16:05:30.0 (27558978)|CODE_UNIT_STARTED|[EXTERNAL]|01pw0000003cmlB|AMP_KeyContactsController.getKeyContacs
+16:05:30.0 (27675424)|SYSTEM_MODE_ENTER|false
+16:05:30.0 (27680615)|SYSTEM_MODE_EXIT|false
+16:05:30.0 (27690572)|SYSTEM_MODE_ENTER|false
+16:05:30.0 (28943513)|SOQL_EXECUTE_BEGIN|[46]|Aggregations:0|SELECT Id, Name, Airline_Contact_Type__c, Title, Phone, MobilePhone, Email, Membership_Function__c, Function__c, AM_First_Name_Latin_Char__c, AM_Last_Name_Latin_Char__c, AM_Job_Title_English__c, CEO_CFO__c, Membership_Main_Contact__c FROM Contact WHERE ((AccountId = :tmpVar1 OR Account.ParentId = :tmpVar2) AND Account_Management_Key_Contact__c = TRUE) ORDER BY CEO_CFO__c ASC NULLS LAST
+16:05:30.0 (72626003)|SOQL_EXECUTE_END|[46]|Rows:1
+16:05:30.0 (73372244)|SYSTEM_MODE_EXIT|false
+16:05:30.73 (73410656)|CUMULATIVE_LIMIT_USAGE
+16:05:30.73 (73410656)|LIMIT_USAGE_FOR_NS|(default)|
+  Number of SOQL queries: 3 out of 100
+  Number of query rows: 1 out of 50000
+  Number of SOSL queries: 0 out of 20
+  Number of DML statements: 0 out of 150
+  Number of DML rows: 0 out of 10000
+  Maximum CPU time: 0 out of 10000
+  Maximum heap size: 0 out of 6000000
+  Number of callouts: 0 out of 100
+  Number of Email Invocations: 0 out of 10
+  Number of future calls: 0 out of 50
+  Number of queueable jobs added to the queue: 0 out of 50
+  Number of Mobile Apex push calls: 0 out of 10
+
+16:05:30.73 (73410656)|CUMULATIVE_LIMIT_USAGE_END
+
+16:05:30.0 (73460319)|CODE_UNIT_FINISHED|AMP_KeyContactsController.getKeyContacs
+16:05:30.0 (75129752)|CODE_UNIT_STARTED|[EXTERNAL]|01pw0000003cml7|AMP_IssuesAndPrioritiesExtension.getIssuesAndPriorities
+16:05:30.0 (75254243)|SYSTEM_MODE_ENTER|false
+16:05:30.0 (75259774)|SYSTEM_MODE_EXIT|false
+16:05:30.0 (75270298)|SYSTEM_MODE_ENTER|false
+16:05:30.0 (75607020)|SOQL_EXECUTE_BEGIN|[122]|Aggregations:0|SELECT Id FROM RecordType WHERE (SObjectType = 'Objective__c' AND DeveloperName = 'Account_Issues_and_Priorities')
+16:05:30.0 (90212573)|SOQL_EXECUTE_END|[122]|Rows:1
+16:05:30.0 (90486299)|USER_DEBUG|[134]|DEBUG|SELECT Id, Name, Description__c, AM_Can_IATA_support_the_airline__c, AM_Global__c, AM_Regional__c, AM_Local__c, AM_Issue_with_IATA__c, AM_Public__c, AM_Level_of_importance__c, Status__c, Details__c, AM_Source_Text__c FROM Objective__c WHERE Account__c ='0015E000002JkyZQAS' AND RecordTypeId = '012w0000000V43KAAS'
+16:05:30.0 (90959619)|SOQL_EXECUTE_BEGIN|[135]|Aggregations:0|SELECT Id, Name, Description__c, AM_Can_IATA_support_the_airline__c, AM_Global__c, AM_Regional__c, AM_Local__c, AM_Issue_with_IATA__c, AM_Public__c, AM_Level_of_importance__c, Status__c, Details__c, AM_Source_Text__c FROM Objective__c WHERE Account__c ='0015E000002JkyZQAS' AND RecordTypeId = '012w0000000V43KAAS'
+16:05:30.0 (100420551)|SOQL_EXECUTE_END|[135]|Rows:0
+16:05:30.0 (100583805)|SYSTEM_MODE_EXIT|false
+16:05:30.100 (100612105)|CUMULATIVE_LIMIT_USAGE
+16:05:30.100 (100612105)|LIMIT_USAGE_FOR_NS|(default)|
+  Number of SOQL queries: 5 out of 100
+  Number of query rows: 2 out of 50000
+  Number of SOSL queries: 0 out of 20
+  Number of DML statements: 0 out of 150
+  Number of DML rows: 0 out of 10000
+  Maximum CPU time: 0 out of 10000
+  Maximum heap size: 0 out of 6000000
+  Number of callouts: 0 out of 100
+  Number of Email Invocations: 0 out of 10
+  Number of future calls: 0 out of 50
+  Number of queueable jobs added to the queue: 0 out of 50
+  Number of Mobile Apex push calls: 0 out of 10
+
+16:05:30.100 (100612105)|CUMULATIVE_LIMIT_USAGE_END
+
+16:05:30.0 (100655252)|CODE_UNIT_FINISHED|AMP_IssuesAndPrioritiesExtension.getIssuesAndPriorities
+16:05:30.0 (102054166)|CODE_UNIT_STARTED|[EXTERNAL]|01pw0000003cmkz|AMP_CoreRelationshipExtension.getGroupNames
+16:05:30.0 (102110939)|SYSTEM_MODE_ENTER|false
+16:05:30.0 (102116208)|SYSTEM_MODE_EXIT|false
+16:05:30.0 (102125188)|SYSTEM_MODE_ENTER|false
+16:05:30.0 (117104210)|SYSTEM_MODE_EXIT|false
+16:05:30.117 (117152075)|CUMULATIVE_LIMIT_USAGE
+16:05:30.117 (117152075)|LIMIT_USAGE_FOR_NS|(default)|
+  Number of SOQL queries: 5 out of 100
+  Number of query rows: 2 out of 50000
+  Number of SOSL queries: 0 out of 20
+  Number of DML statements: 0 out of 150
+  Number of DML rows: 0 out of 10000
+  Maximum CPU time: 0 out of 10000
+  Maximum heap size: 0 out of 6000000
+  Number of callouts: 0 out of 100
+  Number of Email Invocations: 0 out of 10
+  Number of future calls: 0 out of 50
+  Number of queueable jobs added to the queue: 0 out of 50
+  Number of Mobile Apex push calls: 0 out of 10
+
+16:05:30.117 (117152075)|CUMULATIVE_LIMIT_USAGE_END
+
+16:05:30.0 (117189931)|CODE_UNIT_FINISHED|AMP_CoreRelationshipExtension.getGroupNames
+16:05:30.0 (118204142)|CODE_UNIT_STARTED|[EXTERNAL]|01pw0000003cmkz|AMP_CoreRelationshipExtension.getParticipants
+16:05:30.0 (118239749)|SYSTEM_MODE_ENTER|false
+16:05:30.0 (132578642)|SOQL_EXECUTE_BEGIN|[64]|Aggregations:0|SELECT Id, Local_Governance__c, Local_Governance__r.Name, Participant_Type__c, Contact__r.Salutation, Contact__r.FirstName, Contact__r.LastName, Contact__r.Title FROM Participant__c WHERE (Contact__r.AccountId = :tmpVar1 AND Local_Governance__r.Name IN :tmpVar2)
+16:05:30.0 (166426342)|SOQL_EXECUTE_END|[64]|Rows:0
+16:05:30.0 (166527413)|SYSTEM_MODE_EXIT|false
+16:05:30.166 (166557274)|CUMULATIVE_LIMIT_USAGE
+16:05:30.166 (166557274)|LIMIT_USAGE_FOR_NS|(default)|
+  Number of SOQL queries: 6 out of 100
+  Number of query rows: 2 out of 50000
+  Number of SOSL queries: 0 out of 20
+  Number of DML statements: 0 out of 150
+  Number of DML rows: 0 out of 10000
+  Maximum CPU time: 0 out of 10000
+  Maximum heap size: 0 out of 6000000
+  Number of callouts: 0 out of 100
+  Number of Email Invocations: 0 out of 10
+  Number of future calls: 0 out of 50
+  Number of queueable jobs added to the queue: 0 out of 50
+  Number of Mobile Apex push calls: 0 out of 10
+
+16:05:30.166 (166557274)|CUMULATIVE_LIMIT_USAGE_END
+
+16:05:30.0 (166603893)|CODE_UNIT_FINISHED|AMP_CoreRelationshipExtension.getParticipants
+16:05:30.0 (168295642)|CODE_UNIT_STARTED|[EXTERNAL]|01pw0000003cml3|AMP_Groups_ParticipationController.getParticipants
+16:05:30.0 (168368479)|SYSTEM_MODE_ENTER|false
+16:05:30.0 (168374357)|SYSTEM_MODE_EXIT|false
+16:05:30.0 (168385215)|SYSTEM_MODE_ENTER|false
+16:05:30.0 (170151867)|SOQL_EXECUTE_BEGIN|[14]|Aggregations:0|SELECT Id, Contact__r.FirstName, Contact__r.LastName, Contact__r.Salutation, Contact__r.Title, Contact__r.AM_First_Name_Latin_Char__c, Contact__r.AM_Last_Name_Latin_Char__c, Contact__r.AM_Job_Title_English__c, Participant_Type__c, Local_Governance__r.Name, Local_Governance__r.Mission__c, Local_Governance__r.Group_Owner__r.Name, Local_Governance__r.AM_Under__r.Name FROM Participant__c WHERE (Head_Quartier__c = :tmpVar1 AND Local_Governance__r.AM_Under__c != NULL) ORDER BY Local_Governance__r.AM_Under__r.Name ASC NULLS FIRST, Local_Governance__r.Name ASC NULLS FIRST, Participant_Type__c ASC NULLS FIRST
+16:05:30.0 (190820306)|SOQL_EXECUTE_END|[14]|Rows:0
+16:05:30.0 (190867034)|SYSTEM_MODE_EXIT|false
+16:05:30.190 (190882849)|CUMULATIVE_LIMIT_USAGE
+16:05:30.190 (190882849)|LIMIT_USAGE_FOR_NS|(default)|
+  Number of SOQL queries: 7 out of 100
+  Number of query rows: 2 out of 50000
+  Number of SOSL queries: 0 out of 20
+  Number of DML statements: 0 out of 150
+  Number of DML rows: 0 out of 10000
+  Maximum CPU time: 0 out of 10000
+  Maximum heap size: 0 out of 6000000
+  Number of callouts: 0 out of 100
+  Number of Email Invocations: 0 out of 10
+  Number of future calls: 0 out of 50
+  Number of queueable jobs added to the queue: 0 out of 50
+  Number of Mobile Apex push calls: 0 out of 10
+
+16:05:30.190 (190882849)|CUMULATIVE_LIMIT_USAGE_END
+
+16:05:30.0 (190910263)|CODE_UNIT_FINISHED|AMP_Groups_ParticipationController.getParticipants
+16:05:30.0 (192304547)|CODE_UNIT_STARTED|[EXTERNAL]|01pw0000003cmkw|AMP_BoardMonitoredActivitiesExtension.getDivisionBMAs
+16:05:30.0 (192358938)|SYSTEM_MODE_ENTER|false
+16:05:30.0 (192363707)|SYSTEM_MODE_EXIT|false
+16:05:30.0 (192372167)|SYSTEM_MODE_ENTER|false
+16:05:30.0 (192565227)|SOQL_EXECUTE_BEGIN|[85]|Aggregations:0|SELECT Id, Sector__c, Category__c FROM Account WHERE Id = :tmpVar1 LIMIT 1
+16:05:30.0 (202332457)|SOQL_EXECUTE_END|[85]|Rows:1
+16:05:30.0 (202640435)|SOQL_EXECUTE_BEGIN|[86]|Aggregations:0|SELECT Id FROM RecordType WHERE (SObjectType = 'Objective__c' AND DeveloperName = 'Account')
+16:05:30.0 (206007303)|SOQL_EXECUTE_END|[86]|Rows:1
+16:05:30.0 (206209921)|SOQL_EXECUTE_BEGIN|[87]|Aggregations:0|SELECT Id FROM RecordType WHERE (SObjectType = 'Objective__c' AND DeveloperName = 'Division')
+16:05:30.0 (209381035)|SOQL_EXECUTE_END|[87]|Rows:1
+16:05:30.0 (210214971)|SOQL_EXECUTE_BEGIN|[90]|Aggregations:1|SELECT Id, Name, Details__c, Type__c, Status__c, AM_Comments__c, (SELECT Id, Name, Detail__c, Status__c FROM Comments__r WHERE Account__c = :tmpVar1 ORDER BY CreatedDate DESC NULLS FIRST LIMIT 1) FROM Objective__c WHERE (RecordTypeId = :tmpVar2 AND AM_Related_to_Sector__c = :tmpVar3 AND AM_Related_to_Categories__c INCLUDES (:tmpVar4))
+16:05:30.0 (219354951)|SOQL_EXECUTE_END|[90]|Rows:0
+16:05:30.0 (219402583)|SYSTEM_MODE_EXIT|false
+16:05:30.219 (219420499)|CUMULATIVE_LIMIT_USAGE
+16:05:30.219 (219420499)|LIMIT_USAGE_FOR_NS|(default)|
+  Number of SOQL queries: 11 out of 100
+  Number of query rows: 5 out of 50000
+  Number of SOSL queries: 0 out of 20
+  Number of DML statements: 0 out of 150
+  Number of DML rows: 0 out of 10000
+  Maximum CPU time: 0 out of 10000
+  Maximum heap size: 0 out of 6000000
+  Number of callouts: 0 out of 100
+  Number of Email Invocations: 0 out of 10
+  Number of future calls: 0 out of 50
+  Number of queueable jobs added to the queue: 0 out of 50
+  Number of Mobile Apex push calls: 0 out of 10
+
+16:05:30.219 (219420499)|CUMULATIVE_LIMIT_USAGE_END
+
+16:05:30.0 (219451613)|CODE_UNIT_FINISHED|AMP_BoardMonitoredActivitiesExtension.getDivisionBMAs
+16:05:30.0 (220926998)|CODE_UNIT_STARTED|[EXTERNAL]|01pw0000003cmkw|AMP_BoardMonitoredActivitiesExtension.getBMAs
+16:05:30.0 (220964360)|SYSTEM_MODE_ENTER|false
+16:05:30.0 (221138992)|SOQL_EXECUTE_BEGIN|[41]|Aggregations:0|SELECT Id, Sector__c, Category__c FROM Account WHERE Id = :tmpVar1 LIMIT 1
+16:05:30.0 (229205819)|SOQL_EXECUTE_END|[41]|Rows:1
+16:05:30.0 (229417144)|SOQL_EXECUTE_BEGIN|[42]|Aggregations:0|SELECT Id FROM RecordType WHERE (SObjectType = 'Objective__c' AND DeveloperName = 'Account')
+16:05:30.0 (232690296)|SOQL_EXECUTE_END|[42]|Rows:1
+16:05:30.0 (232882785)|SOQL_EXECUTE_BEGIN|[43]|Aggregations:0|SELECT Id FROM RecordType WHERE (SObjectType = 'Objective__c' AND DeveloperName = 'Division')
+16:05:30.0 (236128205)|SOQL_EXECUTE_END|[43]|Rows:1
+16:05:30.0 (236597605)|SOQL_EXECUTE_BEGIN|[48]|Aggregations:1|SELECT Id, Name, Details__c, Type__c, Status__c, AM_Comments__c, (SELECT Id, Name, Detail__c FROM Comments__r ORDER BY CreatedDate DESC NULLS FIRST LIMIT 1) FROM Objective__c WHERE (Account__c = :tmpVar1 AND RecordTypeId = :tmpVar2)
+16:05:30.0 (244846500)|SOQL_EXECUTE_END|[48]|Rows:0
+16:05:30.0 (244892564)|SYSTEM_MODE_EXIT|false
+16:05:30.244 (244914452)|CUMULATIVE_LIMIT_USAGE
+16:05:30.244 (244914452)|LIMIT_USAGE_FOR_NS|(default)|
+  Number of SOQL queries: 15 out of 100
+  Number of query rows: 8 out of 50000
+  Number of SOSL queries: 0 out of 20
+  Number of DML statements: 0 out of 150
+  Number of DML rows: 0 out of 10000
+  Maximum CPU time: 0 out of 10000
+  Maximum heap size: 0 out of 6000000
+  Number of callouts: 0 out of 100
+  Number of Email Invocations: 0 out of 10
+  Number of future calls: 0 out of 50
+  Number of queueable jobs added to the queue: 0 out of 50
+  Number of Mobile Apex push calls: 0 out of 10
+
+16:05:30.244 (244914452)|CUMULATIVE_LIMIT_USAGE_END
+
+16:05:30.0 (244950189)|CODE_UNIT_FINISHED|AMP_BoardMonitoredActivitiesExtension.getBMAs
+16:05:30.0 (246439472)|CODE_UNIT_STARTED|[EXTERNAL]|01pw0000003cml9|AMP_KeyAccountPlanExtension.getObjectives
+16:05:30.0 (246500908)|SYSTEM_MODE_ENTER|false
+16:05:30.0 (246505875)|SYSTEM_MODE_EXIT|false
+16:05:30.0 (246516306)|SYSTEM_MODE_ENTER|false
+16:05:30.0 (246665609)|SOQL_EXECUTE_BEGIN|[112]|Aggregations:0|SELECT Id FROM RecordType WHERE (SObjectType = 'Objective__c' AND DeveloperName = 'Key_Account_Plan')
+16:05:30.0 (250139232)|SOQL_EXECUTE_END|[112]|Rows:1
+16:05:30.0 (251518538)|SOQL_EXECUTE_BEGIN|[115]|Aggregations:1|SELECT Id, Name, Account_Issue_or_Priority__c, Account_Issue_or_Priority__r.Name, Benefits_to_Account__c, Details__c, AM_Level_of_importance__c, Status__c, Deadline__c, (SELECT Id, Subject, Description, ActivityDate, Status, Owner.Name, OwnerId, AM_Involved__c, AM_Responsible__c, AM_Support_Required_from_Account__c FROM Tasks ORDER BY CreatedDate DESC NULLS FIRST) FROM Objective__c WHERE (Account__c = :tmpVar1 AND RecordTypeId = :tmpVar2) ORDER BY Deadline__c ASC NULLS FIRST
+16:05:30.0 (260618497)|SOQL_EXECUTE_END|[115]|Rows:0
+16:05:30.0 (260663871)|SYSTEM_MODE_EXIT|false
+16:05:30.260 (260679129)|CUMULATIVE_LIMIT_USAGE
+16:05:30.260 (260679129)|LIMIT_USAGE_FOR_NS|(default)|
+  Number of SOQL queries: 17 out of 100
+  Number of query rows: 9 out of 50000
+  Number of SOSL queries: 0 out of 20
+  Number of DML statements: 0 out of 150
+  Number of DML rows: 0 out of 10000
+  Maximum CPU time: 0 out of 10000
+  Maximum heap size: 0 out of 6000000
+  Number of callouts: 0 out of 100
+  Number of Email Invocations: 0 out of 10
+  Number of future calls: 0 out of 50
+  Number of queueable jobs added to the queue: 0 out of 50
+  Number of Mobile Apex push calls: 0 out of 10
+
+16:05:30.260 (260679129)|CUMULATIVE_LIMIT_USAGE_END
+
+16:05:30.0 (260706155)|CODE_UNIT_FINISHED|AMP_KeyAccountPlanExtension.getObjectives
+16:05:30.0 (261944986)|CODE_UNIT_STARTED|[EXTERNAL]|01pw0000003cml9|AMP_KeyAccountPlanExtension.getTasksByAccount
+16:05:30.0 (262045485)|SYSTEM_MODE_ENTER|false
+16:05:30.0 (262269844)|SOQL_EXECUTE_BEGIN|[112]|Aggregations:0|SELECT Id FROM RecordType WHERE (SObjectType = 'Objective__c' AND DeveloperName = 'Key_Account_Plan')
+16:05:30.0 (264345626)|SOQL_EXECUTE_END|[112]|Rows:1
+16:05:30.0 (265022895)|SOQL_EXECUTE_BEGIN|[115]|Aggregations:1|SELECT Id, Name, Account_Issue_or_Priority__c, Account_Issue_or_Priority__r.Name, Benefits_to_Account__c, Details__c, AM_Level_of_importance__c, Status__c, Deadline__c, (SELECT Id, Subject, Description, ActivityDate, Status, Owner.Name, OwnerId, AM_Involved__c, AM_Responsible__c, AM_Support_Required_from_Account__c FROM Tasks ORDER BY CreatedDate DESC NULLS FIRST) FROM Objective__c WHERE (Account__c = :tmpVar1 AND RecordTypeId = :tmpVar2) ORDER BY Deadline__c ASC NULLS FIRST
+16:05:30.0 (268302100)|SOQL_EXECUTE_END|[115]|Rows:0
+16:05:30.0 (268830350)|SOQL_EXECUTE_BEGIN|[157]|Aggregations:0|SELECT Id, Subject, Description, ActivityDate, Status, Owner.Name, OwnerId, AM_Involved__c, AM_Responsible__c, AM_Support_Required_from_Account__c, WhatId FROM Task WHERE WhatId IN :tmpVar1 ORDER BY CreatedDate DESC NULLS FIRST
+16:05:30.0 (274099791)|SOQL_EXECUTE_END|[157]|Rows:0
+16:05:30.0 (274151890)|SYSTEM_MODE_EXIT|false
+16:05:30.274 (274167171)|CUMULATIVE_LIMIT_USAGE
+16:05:30.274 (274167171)|LIMIT_USAGE_FOR_NS|(default)|
+  Number of SOQL queries: 20 out of 100
+  Number of query rows: 10 out of 50000
+  Number of SOSL queries: 0 out of 20
+  Number of DML statements: 0 out of 150
+  Number of DML rows: 0 out of 10000
+  Maximum CPU time: 0 out of 10000
+  Maximum heap size: 0 out of 6000000
+  Number of callouts: 0 out of 100
+  Number of Email Invocations: 0 out of 10
+  Number of future calls: 0 out of 50
+  Number of queueable jobs added to the queue: 0 out of 50
+  Number of Mobile Apex push calls: 0 out of 10
+
+16:05:30.274 (274167171)|CUMULATIVE_LIMIT_USAGE_END
+
+16:05:30.0 (274193999)|CODE_UNIT_FINISHED|AMP_KeyAccountPlanExtension.getTasksByAccount
+16:05:30.0 (275535329)|CODE_UNIT_STARTED|[EXTERNAL]|01pw0000003cmkt|AMP_AccountNewsFeedExtension.getNewsFeedBaseOnId
+16:05:30.0 (275637095)|SYSTEM_MODE_ENTER|false
+16:05:30.0 (275642433)|SYSTEM_MODE_EXIT|false
+16:05:30.0 (275651648)|SYSTEM_MODE_ENTER|false
+16:05:30.0 (275825999)|SOQL_EXECUTE_BEGIN|[29]|Aggregations:0|SELECT Id, Name FROM Account WHERE Id = :tmpVar1
+16:05:30.0 (279182354)|SOQL_EXECUTE_END|[29]|Rows:1
+16:05:30.0 (279667325)|CALLOUT_REQUEST|[49]|System.HttpRequest[Endpoint=https://news.google.com/news?cf=all&hl=en&pz=1&ned=us&output=rss&q=SAS, Method=GET]
+16:05:30.0 (378927719)|CALLOUT_RESPONSE|[49]|System.HttpResponse[Status=OK, StatusCode=200]
+16:05:30.0 (396641979)|SYSTEM_MODE_EXIT|false
+16:05:30.396 (396731958)|CUMULATIVE_LIMIT_USAGE
+16:05:30.396 (396731958)|LIMIT_USAGE_FOR_NS|(default)|
+  Number of SOQL queries: 21 out of 100
+  Number of query rows: 11 out of 50000
+  Number of SOSL queries: 0 out of 20
+  Number of DML statements: 0 out of 150
+  Number of DML rows: 0 out of 10000
+  Maximum CPU time: 26 out of 10000
+  Maximum heap size: 0 out of 6000000
+  Number of callouts: 1 out of 100
+  Number of Email Invocations: 0 out of 10
+  Number of future calls: 0 out of 50
+  Number of queueable jobs added to the queue: 0 out of 50
+  Number of Mobile Apex push calls: 0 out of 10
+
+16:05:30.396 (396731958)|CUMULATIVE_LIMIT_USAGE_END
+
+16:05:30.0 (396805805)|CODE_UNIT_FINISHED|AMP_AccountNewsFeedExtension.getNewsFeedBaseOnId
+16:05:30.0 (398199662)|CODE_UNIT_STARTED|[EXTERNAL]|Aura
+16:05:30.0 (398375564)|CODE_UNIT_FINISHED|Aura
+16:05:30.0 (399160740)|CODE_UNIT_STARTED|[EXTERNAL]|Aura
+16:05:30.0 (399221171)|CODE_UNIT_FINISHED|Aura
+16:05:30.0 (399912702)|CODE_UNIT_STARTED|[EXTERNAL]|Aura
+16:05:30.0 (399969524)|CODE_UNIT_FINISHED|Aura
+16:05:30.0 (400679652)|CODE_UNIT_STARTED|[EXTERNAL]|Aura
+16:05:30.0 (400737722)|CODE_UNIT_FINISHED|Aura
+16:05:30.0 (401417513)|CODE_UNIT_STARTED|[EXTERNAL]|Aura
+16:05:30.0 (401469481)|CODE_UNIT_FINISHED|Aura
+16:05:30.0 (402163185)|CODE_UNIT_STARTED|[EXTERNAL]|Aura
+16:05:30.0 (402249290)|CODE_UNIT_FINISHED|Aura
+16:05:30.0 (402988579)|CODE_UNIT_STARTED|[EXTERNAL]|Aura
+16:05:30.0 (403071208)|CODE_UNIT_FINISHED|Aura
+16:05:30.0 (403797293)|CODE_UNIT_STARTED|[EXTERNAL]|Aura
+16:05:30.0 (404241082)|CODE_UNIT_FINISHED|Aura
+16:05:30.0 (404956638)|CODE_UNIT_STARTED|[EXTERNAL]|Aura
+16:05:30.0 (405016541)|CODE_UNIT_FINISHED|Aura
+16:05:30.0 (405711040)|CODE_UNIT_STARTED|[EXTERNAL]|Aura
+16:05:30.0 (405791933)|CODE_UNIT_FINISHED|Aura
+16:05:30.0 (406939863)|CODE_UNIT_STARTED|[EXTERNAL]|01pw0000003cmkt|AMP_AccountNewsFeedExtension.getAccountName
+16:05:30.0 (406995598)|SYSTEM_MODE_ENTER|false
+16:05:30.0 (407361126)|SOQL_EXECUTE_BEGIN|[29]|Aggregations:0|SELECT Id, Name FROM Account WHERE Id = :tmpVar1
+16:05:30.0 (410454373)|SOQL_EXECUTE_END|[29]|Rows:1
+16:05:30.0 (410605490)|SYSTEM_MODE_EXIT|false
+16:05:30.410 (410629858)|CUMULATIVE_LIMIT_USAGE
+16:05:30.410 (410629858)|LIMIT_USAGE_FOR_NS|(default)|
+  Number of SOQL queries: 22 out of 100
+  Number of query rows: 12 out of 50000
+  Number of SOSL queries: 0 out of 20
+  Number of DML statements: 0 out of 150
+  Number of DML rows: 0 out of 10000
+  Maximum CPU time: 26 out of 10000
+  Maximum heap size: 0 out of 6000000
+  Number of callouts: 1 out of 100
+  Number of Email Invocations: 0 out of 10
+  Number of future calls: 0 out of 50
+  Number of queueable jobs added to the queue: 0 out of 50
+  Number of Mobile Apex push calls: 0 out of 10
+
+16:05:30.410 (410629858)|CUMULATIVE_LIMIT_USAGE_END
+
+16:05:30.0 (410674134)|CODE_UNIT_FINISHED|AMP_AccountNewsFeedExtension.getAccountName
+16:05:30.0 (412093515)|CODE_UNIT_STARTED|[EXTERNAL]|01pw0000003cmks|AMP_AccountManagementController.getAccount
+16:05:30.0 (412148179)|SYSTEM_MODE_ENTER|false
+16:05:30.0 (412152927)|SYSTEM_MODE_EXIT|false
+16:05:30.0 (412163485)|SYSTEM_MODE_ENTER|false
+16:05:30.0 (413549368)|SOQL_EXECUTE_BEGIN|[5]|Aggregations:0|SELECT Id, Name, Industry, Type, Phone, Company_Logo__c, IATA_ISO_Country__r.Name, Legal_name__c, Name_on_AOC__c, TradeName__c, Quality__c, Airline_designator__c, IATACode__c, ICAO_designator__c, Airline_Prefix__c, Category__c, Sector__c, Website, IATATrainingUrl__c, Region__c, AM_Ownership_Type__c, Membership_status__c, Admission_Date__c, IATA_Membership_History__c, BSP_Participant_value__c, CASS_Participant_value__c, Airline_BSP_Participations__c, Airline_CASS_Participations__c, RecordType.Name, Region_formula__c, MITA_Member__c, Membership_SITA__c, AM_Account_Manager__c, AM_Account_Manager__r.Name, AM_Account_Manager__r.Email, AM_Account_Manager__r.Phone, AM_Account_Manager__r.PPD_Tittle__c, AM_Account_Manager__r.PPD_Office__c, AM_Account_Manager__r.MobilePhone FROM Account WHERE Id = :tmpVar1 LIMIT 1
+16:05:30.0 (453235280)|SOQL_EXECUTE_END|[5]|Rows:1
+16:05:30.0 (453345646)|SYSTEM_MODE_EXIT|false
+16:05:30.453 (453372204)|CUMULATIVE_LIMIT_USAGE
+16:05:30.453 (453372204)|LIMIT_USAGE_FOR_NS|(default)|
+  Number of SOQL queries: 23 out of 100
+  Number of query rows: 13 out of 50000
+  Number of SOSL queries: 0 out of 20
+  Number of DML statements: 0 out of 150
+  Number of DML rows: 0 out of 10000
+  Maximum CPU time: 26 out of 10000
+  Maximum heap size: 0 out of 6000000
+  Number of callouts: 1 out of 100
+  Number of Email Invocations: 0 out of 10
+  Number of future calls: 0 out of 50
+  Number of queueable jobs added to the queue: 0 out of 50
+  Number of Mobile Apex push calls: 0 out of 10
+
+16:05:30.453 (453372204)|CUMULATIVE_LIMIT_USAGE_END
+
+16:05:30.0 (453420418)|CODE_UNIT_FINISHED|AMP_AccountManagementController.getAccount

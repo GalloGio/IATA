@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<ApexComponent xmlns="http://soap.sforce.com/2006/04/metadata">
-    <apiVersion>29.0</apiVersion>
-    <description>Visual Component showing a list of Archive attachement with their link on AWS and a link to the record</description>
-    <label>Archive Attachment list component</label>
-</ApexComponent>

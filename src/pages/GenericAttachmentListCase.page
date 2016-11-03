@@ -1,5 +1,0 @@
-<apex:page standardController="Case" >
-
-	<c:GenericAttachmentList sobjectId="{!case.Id}" />
-
-</apex:page>

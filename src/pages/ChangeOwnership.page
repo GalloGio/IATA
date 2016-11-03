@@ -1,3 +1,0 @@
-<apex:page standardController="Contact" extensions="ChangeOwnershipCtrl"  action="{!returnToContact}" >
- <apex:pageMessages ></apex:pageMessages>
-</apex:page>

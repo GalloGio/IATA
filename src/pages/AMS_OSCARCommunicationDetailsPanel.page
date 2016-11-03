@@ -1,5 +1,0 @@
-<apex:page standardController="Case">
-
-	<apex:detail subject="{!Case.OSCAR__c}" relatedList="false" relatedListHover="false" title="false"/>
-	
-</apex:page>

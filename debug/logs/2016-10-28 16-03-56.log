@@ -1,0 +1,41 @@
+34.0 APEX_CODE,DEBUG;APEX_PROFILING,INFO;CALLOUT,INFO;DB,INFO;SYSTEM,DEBUG;VALIDATION,INFO;VISUALFORCE,INFO;WORKFLOW,INFO
+16:03:36.0 (66757)|USER_INFO|[EXTERNAL]|005w0000003Pu27|luukkaa@iata.org.prod.amp2|Central European Time|GMT+02:00
+16:03:36.0 (112258)|EXECUTION_STARTED
+16:03:36.0 (117481)|CODE_UNIT_STARTED|[EXTERNAL]|066w0000001Fz6Y|VF: /apex/AMP_AccountNewsFeed
+16:03:36.0 (4789482)|SYSTEM_MODE_ENTER|true
+16:03:36.0 (5278600)|SYSTEM_MODE_ENTER|false
+16:03:36.0 (5286079)|SYSTEM_MODE_EXIT|false
+16:03:36.0 (5307844)|SYSTEM_MODE_ENTER|false
+16:03:36.0 (12132264)|SOQL_EXECUTE_BEGIN|[29]|Aggregations:0|SELECT Id, Name FROM Account WHERE Id = :tmpVar1
+16:03:36.0 (13859012)|SOQL_EXECUTE_END|[29]|Rows:1
+16:03:36.0 (14501193)|CALLOUT_REQUEST|[49]|System.HttpRequest[Endpoint=https://news.google.com/news?cf=all&hl=en&pz=1&ned=us&output=rss&q=SAS, Method=GET]
+16:03:36.0 (530113528)|CALLOUT_RESPONSE|[49]|System.HttpResponse[Status=OK, StatusCode=200]
+16:03:36.0 (540287938)|SYSTEM_MODE_EXIT|false
+16:03:36.0 (540433262)|SYSTEM_MODE_ENTER|true
+16:03:36.0 (540693979)|SYSTEM_MODE_ENTER|true
+16:03:36.542 (542983707)|CUMULATIVE_LIMIT_USAGE
+16:03:36.542 (542983707)|LIMIT_USAGE_FOR_NS|(default)|
+  Number of SOQL queries: 1 out of 100
+  Number of query rows: 1 out of 50000
+  Number of SOSL queries: 0 out of 20
+  Number of DML statements: 0 out of 150
+  Number of DML rows: 0 out of 10000
+  Maximum CPU time: 0 out of 10000
+  Maximum heap size: 0 out of 6000000
+  Number of callouts: 1 out of 100
+  Number of Email Invocations: 0 out of 10
+  Number of future calls: 0 out of 50
+  Number of queueable jobs added to the queue: 0 out of 50
+  Number of Mobile Apex push calls: 0 out of 10
+
+16:03:36.542 (542983707)|CUMULATIVE_LIMIT_USAGE_END
+
+16:03:36.0 (543039257)|CODE_UNIT_FINISHED|VF: /apex/AMP_AccountNewsFeed
+16:03:36.0 (544714146)|EXECUTION_FINISHED
+f queueable jobs added to the queue: 0 out of 50
+  Number of Mobile Apex push calls: 0 out of 10
+
+16:03:36.40 (40213563)|CUMULATIVE_LIMIT_USAGE_END
+
+16:03:36.0 (40249849)|CODE_UNIT_FINISHED|VF: /apex/AMP_Groups_Participation
+16:03:36.0 (41026335)|EXECUTION_FINISHED

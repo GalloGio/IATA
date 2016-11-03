@@ -1,0 +1,34 @@
+34.0 APEX_CODE,DEBUG;APEX_PROFILING,INFO;CALLOUT,INFO;DB,INFO;SYSTEM,DEBUG;VALIDATION,INFO;VISUALFORCE,INFO;WORKFLOW,INFO
+15:50:46.0 (71248)|USER_INFO|[EXTERNAL]|005w0000003Pu27|luukkaa@iata.org.prod.amp2|Central European Time|GMT+02:00
+15:50:46.0 (110627)|EXECUTION_STARTED
+15:50:46.0 (116306)|CODE_UNIT_STARTED|[EXTERNAL]|066w0000001Fz6Y|VF: /apex/AMP_AccountNewsFeed
+15:50:46.0 (6936317)|SYSTEM_MODE_ENTER|true
+15:50:46.0 (7473371)|SYSTEM_MODE_ENTER|false
+15:50:46.0 (7483636)|SYSTEM_MODE_EXIT|false
+15:50:46.0 (7746693)|SYSTEM_MODE_ENTER|false
+15:50:46.0 (14554041)|SOQL_EXECUTE_BEGIN|[29]|Aggregations:0|SELECT Id, Name FROM Account WHERE Id = :tmpVar1
+15:50:46.0 (16222285)|SOQL_EXECUTE_END|[29]|Rows:1
+15:50:46.0 (16834885)|CALLOUT_REQUEST|[49]|System.HttpRequest[Endpoint=https://news.google.com/news?cf=all&hl=en&pz=1&ned=us&output=rss&q=SAS, Method=GET]
+15:50:46.0 (535227417)|CALLOUT_RESPONSE|[49]|System.HttpResponse[Status=OK, StatusCode=200]
+15:50:46.0 (545215868)|SYSTEM_MODE_EXIT|false
+15:50:46.0 (545363280)|SYSTEM_MODE_ENTER|true
+15:50:46.0 (545618530)|SYSTEM_MODE_ENTER|true
+15:50:46.547 (547592002)|CUMULATIVE_LIMIT_USAGE
+15:50:46.547 (547592002)|LIMIT_USAGE_FOR_NS|(default)|
+  Number of SOQL queries: 1 out of 100
+  Number of query rows: 1 out of 50000
+  Number of SOSL queries: 0 out of 20
+  Number of DML statements: 0 out of 150
+  Number of DML rows: 0 out of 10000
+  Maximum CPU time: 0 out of 10000
+  Maximum heap size: 0 out of 6000000
+  Number of callouts: 1 out of 100
+  Number of Email Invocations: 0 out of 10
+  Number of future calls: 0 out of 50
+  Number of queueable jobs added to the queue: 0 out of 50
+  Number of Mobile Apex push calls: 0 out of 10
+
+15:50:46.547 (547592002)|CUMULATIVE_LIMIT_USAGE_END
+
+15:50:46.0 (547646099)|CODE_UNIT_FINISHED|VF: /apex/AMP_AccountNewsFeed
+15:50:46.0 (549225364)|EXECUTION_FINISHED

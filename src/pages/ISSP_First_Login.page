@@ -1,4 +1,0 @@
-<apex:page controller="ISSP_First_Login" action="{!DoNext}">
-<apex:pageMessages rendered="true" ></apex:pageMessages>
-
-</apex:page>

@@ -1,3 +1,0 @@
-<apex:component controller="IDCardAbstractController">
-<apex:commandLink action="{!logout}" id="btnLogout" styleClass="btn-BlueButtonWAR" style="margin-top:40px" immediate="true"><span>{!$Label.IDCard_Logout}</span></apex:commandLink>
-</apex:component>

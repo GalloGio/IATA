@@ -156,6 +156,15 @@
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
         <workflowTimeTriggers>
             <actions>
+                <name>One_day_defore_Effective_Date_Reached</name>
+                <type>Alert</type>
+            </actions>
+            <offsetFromField>Product2.Effective_To__c</offsetFromField>
+            <timeLength>-1</timeLength>
+            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+        <workflowTimeTriggers>
+            <actions>
                 <name>day_That_the_Effective_to</name>
                 <type>Alert</type>
             </actions>
@@ -183,15 +192,6 @@
             </actions>
             <offsetFromField>Product2.Effective_To__c</offsetFromField>
             <timeLength>-10</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-        <workflowTimeTriggers>
-            <actions>
-                <name>One_day_defore_Effective_Date_Reached</name>
-                <type>Alert</type>
-            </actions>
-            <offsetFromField>Product2.Effective_To__c</offsetFromField>
-            <timeLength>-1</timeLength>
             <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
         </workflowTimeTriggers>
     </rules>

@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<ApexComponent xmlns="http://soap.sforce.com/2006/04/metadata">
-    <apiVersion>29.0</apiVersion>
-    <description>View component based on Archived Message and his linked EmailMessage</description>
-    <label>Archived Message View Compoment</label>
-</ApexComponent>
