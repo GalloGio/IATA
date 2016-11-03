@@ -1,0 +1,53 @@
+<apex:component layout="none">
+   <apex:attribute name="ProductLine" description="Product Line" type="String" required="false"/>
+   
+ 
+     <h3>Search Options</h3>
+         	
+			<table width="100%">
+		    <tbody>
+		    	<tr>
+		        	<td class="searchOptionTD">
+		        		<apex:commandLink value="Quick Search" action="{!URLFOR($Page.IECGAD)}" styleClass="searchOptionLink"/>
+		            </td>
+		   	        <td  class="searchOptionTD -right">
+			   	        <!-- 
+			   	        <apex:commandLink styleClass="searchOptionLink"  action="{!URLFOR($Page.IECGAD)}">
+							<apex:image value="{!URLFOR($Resource.IEC_Arrow_R)}" style="width: 24px;opacity: 0.4;filter: alpha(opacity=40);"/>
+						</apex:commandLink>
+						-->
+		   	        </td>
+		        </tr>
+		        
+		        <tr>
+		        	<td class="searchOptionTD">
+		        		<apex:commandLink value="Advanced Search" action="{!URLFOR($Page.IECGADAdvanced)}" styleClass="searchOptionLink"/>
+		            </td>
+		   	        <td  class="searchOptionTD -right">
+			   	       <!-- 
+			   	        <apex:commandLink styleClass="searchOptionLink"  action="{!URLFOR($Page.IECGADAdvanced)}">
+							<apex:image value="{!URLFOR($Resource.IEC_Arrow_R)}" style="width: 24px;opacity: 0.4;filter: alpha(opacity=40);"/>
+						</apex:commandLink>
+						-->
+		   	        </td>
+		        </tr>
+		        
+		        <tr>
+		        	<td class="searchOptionTD">
+                        <apex:commandLink value="Interactive Statistics"  styleClass="searchOptionLink"  action="{!URLFOR($Page.IECGADMaps)}" rendered="{!IF(ProductLine == 'PAL' || ProductLine == 'CAL' || ProductLine == 'ASL', false, true)}" />
+                        <apex:commandLink value="Statistics"  styleClass="searchOptionLink"  action="{!URLFOR($Page.IATAPassengersList)}" rendered="{!IF(ProductLine == 'PAL' || ProductLine == 'CAL' || ProductLine == 'ASL', true, false)}" />
+		            </td>
+		   	        <td  class="searchOptionTD -right">
+		   	        <!-- 
+			   	        <apex:commandLink styleClass="searchOptionLink" action="{!URLFOR($Page.IECGADMaps)}" >
+							<apex:image value="{!URLFOR($Resource.IEC_Arrow_R)}" style="width: 24px;opacity: 0.4;filter: alpha(opacity=40);"/>
+						</apex:commandLink>
+					-->
+		   	        </td>
+		        </tr>
+		        
+		       </tbody>
+			</table>
+	
+
+</apex:component>

@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>Used to save advanced search filters by customers so they can reuse them (for now only for GAD)</description>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Agency_Name_Search_Condition__c</fullName>
+        <externalId>false</externalId>
+        <label>Agency Name Search Condition</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Trading Name</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Legal Name</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Both</fullName>
+                <default>true</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Agency_Name_Search_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Agency Name Search Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Exact match</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Starts with</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Contains</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Agency_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Agency Name</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Agency_Program__c</fullName>
+        <externalId>false</externalId>
+        <label>Agency Program</label>
+        <length>131072</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Area_of_Activity__c</fullName>
+        <externalId>false</externalId>
+        <label>Area of Activity</label>
+        <picklist>
+            <picklistValues>
+                <fullName>All</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Travel Agency</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Airline Sales Office</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>General Sales Agent</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>City_Search_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>City Search Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Exact match</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Starts with</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Contains</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>City__c</fullName>
+        <externalId>false</externalId>
+        <label>City</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Country__c</fullName>
+        <externalId>false</externalId>
+        <label>Country</label>
+        <length>131072</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Filter_Name__c</fullName>
+        <description>The filter name given by the customer</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The filter name given by the customer</inlineHelpText>
+        <label>Filter Name</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Filter_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Filter Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Advanced</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Basic</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Hierarchy__c</fullName>
+        <externalId>false</externalId>
+        <label>Hierarchy</label>
+        <picklist>
+            <picklistValues>
+                <fullName>All</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Administrative Office</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Branch Office</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>European STP</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Head Office</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Specific Sales Activity</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Satellite Ticket Printer</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
+        <fullName>IATA_Code__c</fullName>
+        <description>Agency IATA code</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Agency IATA code</inlineHelpText>
+        <label>IATA Code</label>
+        <length>11</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Product_Line__c</fullName>
+        <defaultValue>&apos;GAD&apos;</defaultValue>
+        <description>Product Line to create isolation between GAD, PAL, CAL ASL</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Product Line to create isolation between GAD, PAL, CAL ASL</inlineHelpText>
+        <label>Product Line</label>
+        <length>5</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Related_Contact__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>The related contact</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The related contact</inlineHelpText>
+        <label>Related Contact</label>
+        <referenceTo>Contact</referenceTo>
+        <relationshipLabel>IEC Application Filters</relationshipLabel>
+        <relationshipName>IEC_Application_Filters</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>State__c</fullName>
+        <externalId>false</externalId>
+        <label>State</label>
+        <length>131072</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Sub_Continent__c</fullName>
+        <externalId>false</externalId>
+        <label>Sub Continent</label>
+        <length>100</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>System_Generated__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>System Generated?</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Zip_Code_Search_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Zip Code Search Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Exact match</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Starts with</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Contains</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Zip_Code__c</fullName>
+        <externalId>false</externalId>
+        <label>Zip Code</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>IEC Application Filter</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Related_Contact__c</columns>
+        <columns>Filter_Name__c</columns>
+        <columns>Filter_Type__c</columns>
+        <columns>System_Generated__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
+    <nameField>
+        <displayFormat>IEC-AF-{00000}</displayFormat>
+        <label>IEC Application Filter Name</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>IEC Application Filters</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+</CustomObject>

@@ -1,0 +1,982 @@
+<apex:page title="Sign Up" sidebar="false" showHeader="false" language="en" controller="vfIECUserRegistration" standardStylesheets="false" docType="html-5.0">
+      <Title>Sign Up</Title> 
+    
+    <div class="gdpwrapper">    
+    <div class="gdpbody">
+        
+    <apex:includeScript value="{!$Resource.postmessage_js}" />
+    <apex:includeScript value="{!$Resource.IECjQuery172}" />
+  
+    <apex:stylesheet value="{!URLFOR($Resource.IECStyles, 'register.css')}" />
+     
+    <apex:includeScript value="{!URLFOR($Resource.IECStyles, 'register.js')}"/>
+     
+    <c:IECSiteHeader id="componentHeader" />
+    
+      
+        <script>
+        function registerNewAccount() {
+        
+            var btnBack2ToSearchAccount = this.document.getElementById('{!$Component.activeSubscriptionForm.back2ToSearchAccount}');
+            var btnRegisterNewAccount = this.document.getElementById('{!$Component.activeSubscriptionForm.registerNewAccount}');
+                
+            changeCursorProgress(btnBack2ToSearchAccount);
+            changeCursorProgress(btnRegisterNewAccount);
+
+            disableControl(btnBack2ToSearchAccount);
+            disableControl(btnRegisterNewAccount);
+            
+            proceedToRregisteNewAccount();
+        }
+    
+        function registerExistingAccount() {
+        
+            var btnRegisterContact = this.document.getElementById('{!$Component.activeSubscriptionForm.registerContact}');
+            var btnCreateAccount = this.document.getElementById('{!$Component.activeSubscriptionForm.createAccount}');
+                
+            changeCursorProgress(btnRegisterContact);
+            changeCursorProgress(btnCreateAccount);
+
+            disableControl(btnRegisterContact);
+            disableControl(btnCreateAccount);
+            
+            proceedToRregisterPortalUser();
+        }
+    
+        
+        
+        function registerWithEmailChange() {
+        
+        
+            var btnBackToSearchAccount = this.document.getElementById('{!$Component.activeSubscriptionForm.backToSearchAccount}');
+            var btnRegisterContactWithNewEmail = this.document.getElementById('{!$Component.activeSubscriptionForm.registerContactWithNewEmail}');
+                
+            changeCursorProgress(btnBackToSearchAccount);
+            changeCursorProgress(btnRegisterContactWithNewEmail);
+
+            disableControl(btnBackToSearchAccount);
+            disableControl(btnRegisterContactWithNewEmail);
+            
+            proceedToRegisterUserWithEmailChange();
+        }
+        
+    
+    </script>
+ <!--    
+ <style type="text/css">
+             [id*=picklistCategory] {
+                    border-left: 2px solid #FA0606;
+                    color: #3B3B3B;
+                     font-family: helvetica,arial,sans-serif;
+                     font-size: 13px;
+                     font-style: normal;
+                     font-variant: normal;
+                     font-weight: normal;
+                     line-height: 18px;
+                     margin-bottom: 16px;
+                     min-width: 224px;
+                     padding: 6px 10px;
+                     text-align: left;
+                     text-decoration: none;
+                     text-indent: 0;
+                     text-overflow: clip;
+                     text-shadow: none;
+                     text-transform: none;
+                     width: 100%;
+             }
+      </style>
+    
+    
+    -->
+    
+   <style> 
+
+    .errorM3{
+
+    color: #3B3B3B;  
+    font-family: helvetica,arial,sans-serif;  
+    font-size: 15px;
+    font-weight: bolder;  
+    padding-left: 153px;
+    margin-bottom: -40px;
+    margin-top: 30px;       
+    }
+    
+    .warningM3{
+
+    color: #3B3B3B;  
+    font-family: helvetica,arial,sans-serif;  
+    font-size: 15px;
+    font-weight: bolder;  
+    padding-left: 153px;
+    margin-bottom: -40px;
+    margin-top: 30px;       
+    }
+    
+    </style>
+    
+    
+    
+        <!-----------------  static carousel  START -------------------------->
+      <div class="carouselWrapper static">  
+       <div id="register">
+       
+        <div class="gradient"></div>    
+        <div class="carousel">
+          <ul class="carousel__list">   
+            <li class="carousel__slide" style="background-image:url({!$Resource.IECBannerHome})">
+             <div class="autoAdjustMargin">
+                <div class="carousel__slide-wrapper">
+                  <h2 class="carousel__slide-text -heading"><span>User Registration</span><br/> 
+                  
+                            <apex:outputText value=" Step  1/3" rendered="{!iRegistrationStep == constEMAILCAPTURE}"/>
+                            <apex:outputText value=" Step  2/3" rendered="{!iRegistrationStep == constCONTACTINFO}"/>
+                            <apex:outputText value=" Step  3/3" rendered="{!iRegistrationStep == constACCOUNTSEARCH}"/>
+                            <apex:outputText value=" Step  3/3" rendered="{!iRegistrationStep == constCREATENEWACCOUNT}"/>
+                  
+                  
+                  </h2>
+                    <br/>
+                     <a class="carousel__slide-anchor customButton" href="mailto:globaldata@iata.org?subject=eCommerce" style="margin-bottom: 20px;  width: 99px; color:black" onMouseOver="this.style.color='white'"  onMouseOut="this.style.color='black'" >Contact us</a>
+
+                </div>
+              </div>
+            </li>           
+          </ul>
+        </div>
+    
+    <!-----------------  static carousel  END -------------------------->  
+    
+    
+    
+    
+
+     <apex:form id="activeSubscriptionForm" forceSSL="true">
+    
+ 
+     <apex:actionFunction action="{!registerPortalUser}" name="proceedToRregisterPortalUser" />   
+     <apex:actionFunction action="{!registerNewAccount}" name="proceedToRregisteNewAccount" />   
+     <apex:actionFunction action="{!registerUserWithEmailChange}" name="proceedToRegisterUserWithEmailChange" />   
+       
+     
+     
+     
+     
+     <!-- ERROR MESSAGE  -->
+     
+                
+        <div class="content-container tab">
+
+                <apex:outputPanel id="errorMessage">                       
+                        <apex:pageMessages escape="no"/>                        
+              </apex:outputPanel>    
+                 
+             </div>    
+                  
+  
+       
+<!------------------------ ---Special Cases -------------------------------------->
+       
+
+        <!-- Step 5 -->
+       <apex:outputPanel id="congratulationsPanel" rendered="{!iRegistrationStep == constEMAILCONFIRMATION}">             
+            <div class="content-container tab">
+
+                <div class="box register large">
+                  <div class="header">
+                    <p>Success</p>
+                  </div>
+                  <div class="content" style="margin-bottom:200px;">
+                     <h3>Thank you for your registration</h3>   
+                        <p style="margin-bottom:25px;">Please check your mail box to finalize your registration.</p>
+                  </div>
+              </div>
+               <div class="clear"></div>
+           </div>
+      </apex:outputPanel>
+
+
+<!-- Email not registered for  -->
+
+        <!-- Step 6 -->
+        <apex:outputPanel id="emailChangePanel" rendered="{!iRegistrationStep == constCHANGEEMAIL}">
+                
+            <div class="content-container tab">
+                <div class="box register large">
+                  <div class="header">
+                    <p>Email Confirmation</p>
+                  </div>
+                  <div class="content">
+                     <h3>Note:</h3> 
+                    <apex:outputText value="Your are using an email address not registered under account domains." styleClass="account-outputText -messageRed" />                    
+                    <apex:outputText value="In order to enjoy all benefits and prices, you are required to register with your professional email address." /> 
+                     <!-- <p style="margin-bottom:25px;">bla bla </p> -->
+                    <br/>
+                    <apex:outputText value="Otherwise you may continue the registration with '{!con.Email}' without benefits and prices under selected account"  />
+                
+                <br/><br/>
+                
+                    <!-- Email -->
+                    <div class="customInputLabelIn">
+                          <label for="{!$Component.specialEmail}"><span class="alert">*</span> Email</label>
+                           <apex:inputText value="{!con.Email}"  id="specialEmail" rendered="{!con.Id == ''}"  style="padding-left: 86px; width: 263px;"/>
+                     </div>
+               
+               
+                  <br/><br/>
+                             
+                <table>
+                  <tr>
+                    <td>
+                       <apex:commandButton action="{!goToSearchAccount}" value="Back" id="backToSearchAccount" styleClass="customButton lastElm" style="width:437px;background:#c8c8c8;"/>
+                    </td>
+                    <td>
+                       <apex:commandButton onclick="registerWithEmailChange()" value="Register" id="registerContactWithNewEmail" styleClass="customButton lastElm" style="width:437px;margin-left:-1px;"/>
+                    </td>
+                  </tr>
+                </table>
+    
+                 </div>
+              </div>
+               <div class="clear"></div>
+           </div>
+
+      </apex:outputPanel>
+        
+        
+        
+        
+    <!----- Step 7 ------->    
+       <apex:outputPanel id="alreadyRegisteredPanel" rendered="{!iRegistrationStep == constALREADYREGISTERED}">
+       
+           <div class="content-container tab">
+
+                <div class="box register large">
+                  <div class="header">
+                    <p>Alert</p>
+                  </div>
+                  <div class="content" style="margin-bottom:200px;">
+                    
+                        <h3> You are already logged in.</h3>
+                        <br/>
+                        <apex:outputText value="To register a new user account, please logout and try again" />
+                        
+                        <br/> <br/>                    
+                        <apex:commandLink action="{!logout}" value="Logout here"  styleClass="customButton lastElm" style="width:437px;background:#c8c8c8;" />
+                        
+                  </div>
+              </div>
+               <div class="clear"></div>
+           </div>
+           
+           
+            
+            
+        </apex:outputPanel>
+            
+       
+ <!-- ------------------------------------------------- -->
+       
+       
+       
+        
+                    
+            
+          <!----------------------- STEP 1 ------------------------------>
+        <apex:outputPanel id="emailBox" rendered="{!iRegistrationStep == constEMAILCAPTURE}">
+              
+         <div class="content-container tab">
+               
+             
+                 <apex:outputPanel id="existingEmailPanel" rendered="{!bExistingEmail}">
+                     <div class="registration_alert-warning">
+                        <apex:outputText value="This Email is already registered in customer portal." styleClass="account-outputText -messageRed" />
+                        <apex:outputText value="You can use another email or 'Login/Reset Password' on the right side" styleClass="account-outputText -message" /> 
+                     </div>
+                </apex:outputPanel>
+                
+        
+
+                    <div class="box register" >
+                      <div class="header">
+                        <p>Register Now</p>
+                      </div>
+                      <div class="content"  >
+                      
+                        
+                        
+                         <div class="customInputLabelIn">
+                              <label for="{!$Component.registerEmail}"><span class="alert">*</span> Your email</label>              
+                              <apex:inputText id="registerEmail" value="{!con.Email}" styleclass="customInputLabelIn input" style="padding: 0 0 0; padding-left: 87px; width: 279px;"/>
+                        </div>
+                         
+                        <div class="termsHolder">                         
+                          <apex:inputCheckbox value="{!bAccept}"  id="checkboxTermsOfUse" /> <label for="j_id0:activeSubscriptionForm:checkboxTermsOfUse">I have read and accept the <a href="{!$Site.BaseUrl}/iecTerms" target="_blank">Terms of Use</a></label>                       
+                        </div>
+                        
+                        <apex:panelGrid columns="1" id="reCAPTCHAGrid" rendered="{!bShowRECAPTCHA}" style="margin-left: 45px;" >
+                            <c:IECreCAPTCHA cttr="{!reCAPTCHA}"/>
+                        </apex:panelGrid>  
+                        
+                         <apex:commandButton action="{!validateUserEmail}" styleClass="customButton"  style="width: 390px;"  value="Next step (2/3)" id="submitEmail"/>
+                         
+                      </div>
+                    </div>
+                    
+                    
+                
+                    <div class="box login">
+
+                    <!--  <c:IECLogin RerenderComponentId="errorMessage" hideRegisterLink="true" withUserName="{!sExistingUserName}" /> -->
+                      <div class="header">
+                       <p>Already have an account? Log in!</p>
+                      </div>
+                      
+                      <div class="content" >
+
+                        <div class="customInputLabelIn">
+                          <label for="{!$Component.loginEmail}"><span class="alert">*</span> Your email</label>
+                          <input id="loginEmail" type="email"  style="padding-left: 87px; width: 279px;"/>
+                        </div>
+                        <div class="customInputLabelIn">
+                          <label for="{!$Component.loginPassword}"><span class="alert">*</span> Your password</label>
+                          <input id="loginPassword" type="password" style="padding-left: 114px; width: 252px;" />
+                        </div>
+                                        
+                        <p class="forgotPassword" > Forgot you password? <a href="{!$Site.BaseUrl}/ieclogin?respw=true">Click here</a>
+                        </p>                                          
+                        <a href="{!$Site.BaseUrl}/ieclogin" class="customButton">Log in</a>                    
+                      
+                      </div>                
+                    </div>
+                  
+                    <div class="clear"></div>
+                  
+                  </div>                      
+            
+        </apex:outputPanel>
+        
+ <!--------------------- STEP one END  -------------------------------->       
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ <!-------------  STEP TWO  Start ----------------------  -->
+ 
+ 
+<apex:outputPanel id="contactBox" rendered="{!iRegistrationStep == constCONTACTINFO}">  
+        
+        
+        
+    <div class="content-container tab">
+
+    <div class="box register large">
+      <div class="header">
+        <p>User information</p>
+      </div>
+      
+       <div class="content">
+
+         
+         <!-- NEW CONTACT -->
+         <apex:outputPanel id="newContactPanel" rendered="{!con.Id == ''}"> 
+                                    
+                     <div class="customInputLabelIn">
+                      <label for="{!$Component.registerEmail2}"><span class="alert">*</span> Your email</label>
+                      <apex:inputText id="registerEmail2"  value="{!con.Email}" disabled="true"/>
+                    </div>
+                     
+            
+            
+                    <table>
+                      <tr>
+                        <td style="vertical-align:top;">
+                          <div class="customSelect" style="width:108px;">
+                            <i class="fa fa-caret-down"></i>
+                            <span class="alert select">*</span>
+                                          
+                             <apex:selectList styleclass="rec" value="{!con.Salutation}" size="1"  rendered="{!con.Id == ''}">
+                                        <apex:selectOption itemValue="" itemLabel="Salutation"/>
+                                        <apex:selectOption itemValue="Mr." itemLabel="Mr."/>
+                                        <apex:selectOption itemValue="Mrs." itemLabel="Mrs."/>
+                                   </apex:selectList>                              
+                          </div>
+                        </td>
+                        <td>
+                          <div class="customInputLabelIn" style="width:360px;">
+                            <label for="{!$Component.registerFirstName}"><span class="alert">*</span> First name</label>
+                             <apex:inputText id="registerFirstName" value="{!con.FirstName}" rendered="{!con.Id == ''}"  style="padding-left: 87px; width: 261px;" />
+                          </div>
+                        </td>
+                        <td>
+                          <div class="customInputLabelIn" style="width:361px;">
+                            <label for="{!$Component.registerLastName}"><span class="alert">*</span> Last name</label>                
+                            <apex:inputText value="{!con.LastName}"  id="registerLastName" rendered="{!con.Id == ''}"  style="padding-left: 86px; width: 263px;"/>
+                          </div>
+                        </td>
+                      </tr>
+                    </table>
+            
+            
+                    <table>
+                      <tr>
+                        <td>
+                          <div class="customInputLabelIn" style="width:430px;">
+                            <label for="{!$Component.registerJobTitle}"><span class="alert">*</span> Job title</label>
+                             <apex:inputText id="registerJobTitle" value="{!con.Title}" rendered="{!con.Id == ''}" />
+                          </div>
+                        </td>
+                        <td>
+                          <div class="customInputLabelIn" style="width:429px;">
+                            <label for="{!$Component.registerPhone}"><span class="alert">*</span> Phone</label>
+                            <apex:inputText id="registerPhone" value="{!con.Phone}" rendered="{!con.Id == ''}"  />
+                          </div>
+                        </td>
+                      </tr>
+                    </table>
+                    
+                               
+                     <apex:commandButton action="{!goToSearchAccount}" styleClass="customButton lastElm" value="Next step (3/3)" id="nextWithNewContact" style="width:380px;"/>                                                             
+                           
+         </apex:outputPanel>
+        
+         
+       
+       
+       <!-- Existing contact --> 
+         <apex:outputPanel id="exisitngContactPanel" rendered="{!con.Id != ''}">
+         
+         
+         
+                 <apex:outputText value="A contact was found on our portal with the same entered email." styleClass="account-outputText"/>
+                 <apex:outputText value="If you continue the registration process, you may change your contact information under 'My Account' section once logged." styleClass="account-outputText"/>
+                    
+                                           
+                    <div class="customInputLabelIn">
+                      <label for="{!$Component.registerEmail3}"><span class="alert">*</span> Your email</label>
+                      <apex:inputText id="registerEmail3"  value="{!con.Email}" disabled="true"/>
+                    </div>
+                    
+                    
+                    
+                    
+                    <table>
+                      <tr>
+        
+                        <td>
+                          <div class="customInputLabelIn" style="width:430px;">
+                            <label for="{!$Component.registerFirstName2}"><span class="alert">*</span> First name</label>
+                             <apex:outputText id="registerFirstName2" value="{!con.FirstName}" style="padding-left: 87px; width: 261px;" />
+                          </div>
+                        </td>
+                        <td>
+                          <div class="customInputLabelIn" style="width:429px;">
+                            <label for="{!$Component.registerLastName2}"><span class="alert">*</span> Last name</label>                
+                            <apex:outputText value="{!con.LastName}"  id="registerLastName2"  style="padding-left: 86px; width: 263px;"/>
+
+                          </div>
+                        </td>
+                      </tr>
+               
+                      <tr>
+                        <td>
+                          <div class="customInputLabelIn" style="width:430px;">
+                            <label for="{!$Component.compname}"><span class="alert">*</span> Company Name</label>
+                             <apex:outputText id="compname" value="{!acc.Name}"  style="padding-left: 120px; width: 263px;" />
+                          </div>
+                        </td>
+                        <td>
+                          <div class="customInputLabelIn" style="width:429px;">
+                            <label for="{!$Component.address}"><span class="alert">*</span> Address</label>
+                            <apex:outputText id="address" value="{!acc.BillingStreet}"  style="padding-left: 90px; width: 263px;"/>
+                          </div>
+                        </td>
+                      </tr>
+                      
+                      
+                      <tr>
+                        <td>
+                          <div class="customInputLabelIn" style="width:430px;">
+                            <label for="{!$Component.city}"><span class="alert">*</span> City</label>
+                             <apex:outputText id="city" value="{!acc.BillingCity}" style="padding-left: 41px; width: 263px;" />
+                          </div>
+                        </td>
+                        <td>
+                          <div class="customInputLabelIn" style="width:429px;">
+                            <label for="{!$Component.provin}"><span class="alert">*</span> State/Province</label>
+                            <apex:outputText id="provin" value="{!acc.BillingState}" style="padding-left: 120px; width: 263px;" />
+                          </div>
+                        </td>
+                      </tr>
+                      
+                      
+                      
+                      <tr>
+                        <td>
+                          <div class="customInputLabelIn" style="width:430px;">
+                            <label for="{!$Component.country}"><span class="alert">*</span> Country</label>
+                             <apex:outputText id="country" value="{!acc.IATA_ISO_Country__r.Name}"  style="padding-left: 80px; width: 263px;"/>
+                          </div>
+                        </td>
+                        <td></td>
+
+                      </tr>
+                      
+                    </table>
+                    
+                    
+               <!-- Next Button -->                       
+                <apex:commandButton action="{!goToSearchAccount}" styleClass="customButton lastElm" value="Next step (3/3)" id="nextWithExistingContact" style="width:380px;"/> 
+         
+         
+         
+         </apex:outputPanel>
+
+        
+        
+        
+    </div>
+    </div>
+  <div class="clear"></div>
+ </div>
+
+</apex:outputPanel>
+       
+ 
+ <!--------------------- STEP two END  -------------------------------->      
+ 
+ 
+ 
+ 
+    
+     
+     
+ <!----------  STEP threeee  Account Search -------------------->        
+<apex:actionFunction name="AJAXRefresh" action="{!TypeOfCustomerChange}"/>
+<apex:outputPanel id="accountSearchBox" rendered="{!iRegistrationStep == constACCOUNTSEARCH}">  
+        
+        <div class="content-container tab">
+        
+          <div class="box register large">
+              <div class="header">
+                <p>Account selection</p>
+              </div>
+           <div class="content">
+        
+              
+
+         <!-- Customer Type -->
+                   <div class="customSelect" style="width:888px;">
+                      <i class="fa fa-caret-down"></i>
+                      <span class="alert select">*</span>
+                        <apex:selectList id="TypeSelect" value="{!selectedCustomerType}" size="1" onchange="AJAXRefresh();">
+                                <apex:selectOptions value="{!CustomerTypes}"/>
+                        </apex:selectList>
+                    </div>
+                    
+        
+        
+        
+         <table>
+          <tr>
+            <td style="vertical-align:top;">
+                  
+                      <!-- IATA Code -->
+                        <apex:outputPanel id="IATACodePanel" rendered="{!bShowIATACode}">
+                         <div class="customInputLabelIn" style="width:429px;">                           
+                             <label for="{!$Component.iatacode}"><span class="alert">*</span> IATA Code</label>
+                             <apex:inputText id="iatacode" value="{!sIATACode}" />
+                         </div>  
+                        </apex:outputPanel>   
+                       
+                       
+                      <!-- Company Name -->
+                        <apex:outputPanel id="CompanyNamePanel" rendered="{!bShowCompanyName}">
+                         <div class="customInputLabelIn" style="width:429px;">                           
+                             <label for="{!$Component.companyName}"><span class="alert">*</span> Company Name</label>
+                             <apex:inputText id="companyName" value="{!sCompanyName}" />
+                         </div>  
+                        </apex:outputPanel>    
+                                     
+            </td>
+            <td>
+                    
+                        <apex:outputPanel id="IATALocationCountryPanel" rendered="{!bShowIATALocation}">
+                            <div class="customSelect" style="width:430px;">                         
+                                    <apex:selectList value="{!sIATALocation}" rendered="{!NOT(bShowIATALocation && bShowCompanyName==false)}" size="1" >                                
+                                         <i class="fa fa-caret-down"></i>
+                                            <span class="alert select">*</span>
+                                            <apex:selectOption itemValue="" itemLabel="-Select a Country-"/>
+                                            <apex:selectOptions value="{!ISOCountry}"/>
+                                    </apex:selectList>
+                                    
+                                    <apex:selectList value="{!sIATALocation}" rendered="{!bShowIATALocation && bShowCompanyName==false}" size="1">
+                                         <i class="fa fa-caret-down"></i>
+                                            <span class="alert select"></span>
+                                            <apex:selectOption itemValue="" itemLabel="-Select a Country-"/>
+                                            <apex:selectOptions value="{!ISOCountry}"/>                         
+                                    </apex:selectList>   
+                            </div>
+                      </apex:outputPanel>    
+                      
+              
+            </td>
+          </tr>
+        </table>
+        
+        <apex:outputPanel rendered="{!lSearchOptios != null && lSearchOptios.size == 0  && not(bInvalidIATACode)}"> 
+            
+        <table>
+          <tr>
+             <td>               
+                   <apex:commandButton action="{!goToSearchAccount}" value="Back" styleclass="customButton lastElm"  style="width:285px;background:#c8c8c8;"  id="back2ToContactInfo1"/>
+             </td>
+              <td>        
+                   <apex:commandButton action="{!searchAccount}" value="Search"  styleclass="customButton lastElm"  style="width:285px;background:#737d87;" id="searchAccount1"/>           
+              </td>
+              <td>    
+                   <apex:commandButton action="{!nextToCreateAccount}" value="Create new Account"  styleclass="customButton lastElm" style="width:285px;" id="createAccountEmptyResult"  rendered="{!lSearchOptios != null && lSearchOptios.size == 0  && not(bInvalidIATACode)}"/>
+             </td>
+         </tr>
+        </table>
+         
+        </apex:outputPanel>        
+        
+        
+       <apex:outputPanel rendered="{!Not(lSearchOptios != null && lSearchOptios.size == 0  && not(bInvalidIATACode))}"> 
+            
+        <table>
+          <tr>
+             <td>               
+                   <apex:commandButton action="{!goToSearchAccount}" value="Back" styleclass="customButton lastElm"  style="width:437px;background:#c8c8c8;"  id="back2ToContactInfo"/>
+             </td>
+              <td>        
+                   <apex:commandButton action="{!searchAccount}" value="Search"  styleclass="customButton lastElm"  style="width:437px;margin-left:-1px;" id="searchAccount"/>           
+              </td>
+         </tr>
+        </table>
+         
+        </apex:outputPanel>        
+        
+        
+        
+        <div class="lineSep"></div>
+        <br/><br/> 
+        
+        <!-- Results -->
+            <apex:outputPanel id="searchResult" rendered="{!lSearchOptios != null && lSearchOptios.size > 0}">
+                <div class="searchResults">
+                   <h3>Search Results</h3>
+                   
+                       <div class="settings-item">
+                            <apex:selectRadio value="{!sSelectedAccount}" layout="pageDirection" styleClass="account-labelText">
+                                <apex:selectOptions value="{!lSearchOptios}" />
+                            </apex:selectRadio><p/>
+                            <br/>
+                       </div>
+                                                                                        
+                <table>
+                  <tr>
+                     <td>  
+                           <apex:commandButton action="{!nextToCreateAccount}" value="Account not Listed" id="createAccount" styleclass="customButton lastElm"  style="width:437px;margin-left:-1px; background:#c8c8c8;"/>                                        
+                     </td>
+                      <td>        
+                           <apex:commandButton value="Register" id="registerContact" onclick="registerExistingAccount(); return false;"  styleclass="customButton lastElm" style="width:437px;" />
+                      </td>
+                 </tr>
+                </table>
+
+              </div>
+           </apex:outputPanel>
+            
+            
+
+
+                
+       </div>
+     </div>
+    <div class="clear"></div>
+    </div>          
+        
+    </apex:outputPanel>
+ <!--------------------------- Account search END  ------------------------------------>       
+        
+        
+        
+        
+        
+  <!----------------------------- Account creation -----------------------------------------> 
+  <apex:actionFunction name="AJAXCountryChange" action="{!CountryChanged}" rerender="accountCreationPage, errorMessage"/>
+  
+        
+        <apex:outputPanel id="accountCreationPage" rendered="{!iRegistrationStep == constCREATENEWACCOUNT}">
+         
+          <div class="content-container tab">
+
+            <div class="box register large">
+              <div class="header">
+                <p>Account selection</p>
+              </div>
+              <div class="content">
+                                    
+              <h3>Company Information</h3>
+                 
+          
+               <div class="customInputLabelIn">
+                  <label for="{!$Component.registerCompanyName}"><span class="alert">*</span> Company name</label>              
+                  <apex:inputText id="registerCompanyName" value="{!acc.Name}" disabled="{!sCompanyName != null && sCompanyName != ''}" style="padding-left: 115px; width: 305px;"/>
+               </div>          
+               <div class="customInputLabelIn">
+                  <label for="{!$Component.registerLegalName}">Legal name</label>
+                   <apex:inputText id="registerLegalName" value="{!acc.Legal_name__c}" style="padding-left: 85px; width: 791px;" />               
+               </div>
+               <div class="customInputLabelIn">
+                  <label for="{!$Component.registerTradeName}">Trade name</label>
+                  <apex:inputText id="registerTradeName" value="{!acc.TradeName__c}"  style="padding-left: 88px; width: 788px;" />                
+               </div>
+          
+              
+               <!-- IATA Code -->
+               <apex:outputPanel id="IATACodePanel2" rendered="{!bShowIATACode}">
+                  <div class="customInputLabelIn">
+                        <label for="{!$Component.registerIATACode}">IATA Code</label>
+                        <apex:inputText id="registerIATACode"  value="{!acc.IATACode__c}" disabled="{!sIATACode != null && sIATACode != ''}" style="padding-left: 88px; width: 770px;"/>                  
+                 </div>                        
+               </apex:outputPanel>
+                    
+
+             <table>
+                      <tr>
+                        <td style="vertical-align:top;">
+                        
+                               <div class="customSelect" style="width:429px;">
+                                                <i class="fa fa-caret-down"></i>
+                                                <span class="alert select">*<span style="color: #969696; margin-left: 5px;">Sector</span></span>
+                                                 <apex:inputField value="{!acc.Sector__c}"  style="margin-left: 10px; width: 90%;"/>                                                
+                                </div>
+                                              
+                        
+                        </td>
+                        <td style="vertical-align:top;">
+                         
+                                      <div class="customSelect" style="width:430px;">
+                                                <i class="fa fa-caret-down"></i>
+                                                <span class="alert select">*<span style="color: #969696; margin-left: 5px;">Category</span></span>
+                                                 <apex:inputField value="{!acc.Category__c}"  style="margin-left: 10px; width: 77%;"/>                                                  
+                                       </div>
+                          
+                        </td>
+                      </tr>
+           </table>
+        
+        
+                                                 
+                                              
+                                         
+            
+           <h3>Address information</h3>
+
+            <div class="customInputLabelIn">
+              <label for="{!$Component.registerStreet}"><span class="alert">*</span> Street</label>           
+              <apex:inputText id="registerStreet" value="{!acc.BillingStreet}" style="padding-left: 57px; width: 819px;"/>
+            </div>
+
+             <div class="customInputLabelIn">
+              <label for="{!$Component.registerCity}"><span class="alert">*</span> City</label>           
+              <apex:inputText id="registerCity" value="{!acc.BillingCity}" style="padding-left: 43px; width: 833px;"/>
+            </div>
+                
+             <div class="customSelect">
+                <i class="fa fa-caret-down"></i>
+                <span class="alert select">*</span>          
+                    <apex:selectList value="{!acc.BillingCountry}" size="1" onchange="AJAXCountryChange();" >
+                            <apex:selectOptions value="{!Countries}"/>
+                      </apex:selectList> 
+            </div>  
+
+
+              <!-- Province/State -->
+              <!-- 
+              <apex:outputText styleClass="account-labelText" value="Province/State" rendered="{!acc.BillingCountry == 'Canada' || acc.BillingCountry == 'United States'}"/>
+              <apex:outputText styleClass="account-labelText" value="Province/State" rendered="{!acc.BillingCountry != 'Canada' && acc.BillingCountry != 'United States'}"/>
+              <apex:inputText styleClass="account-inputText" value="{!acc.BillingState}" rendered="{!acc.BillingCountry != 'Canada' && acc.BillingCountry != 'United States'}"/>
+              -->
+              
+              
+            <table>
+              <tr>
+                <td style="vertical-align:top;">
+                  <div class="customSelect" style="width:430px;">
+                    <i class="fa fa-caret-down"></i>
+                        <span class="alert select">*<span style="color: #969696; margin-left: 5px;">State</span></span>
+                        
+                     <apex:selectList value="{!acc.BillingState}" size="1"  rendered="{!acc.BillingCountry == 'Canada'}" >
+                        <apex:selectOptions value="{!CanadaProvinces}"/>
+                     </apex:selectList>  
+                    
+                     <apex:selectList value="{!acc.BillingState}" size="1"  rendered="{!acc.BillingCountry == 'United States'}"  >
+                        <apex:selectOptions value="{!USAStates}"/>
+                     </apex:selectList>  
+                        
+                     <apex:inputText value="{!acc.BillingState}" rendered="{!acc.BillingCountry != 'Canada' && acc.BillingCountry != 'United States'}" style="width: 375px;  height: 41px;  border: none;  margin-left: 10px;"/>   
+                        
+                  </div>
+                </td>
+                
+                <td>
+                   <div class="customInputLabelIn"  style="width:428px;">
+                    <label for="{!$Component.registerPostalCode}"> <span class="alert"><apex:outputText value="*" rendered="{!acc.BillingCountry == 'Canada' || acc.BillingCountry == 'United States'}" /></span>  Zip/Postal Code</label>
+                     <apex:inputText id="registerPostalCode" value="{!acc.BillingPostalCode}" style="padding-left: 115px; width: 305px;" />
+                  </div> 
+                </td>
+                
+              </tr>
+            </table>
+                            
+
+        <table>
+          <tr>
+            <td>
+              <div class="customInputLabelIn" style="width:430px;">
+                <label for="{!$Component.registerCompanyPhone}"><span class="alert">*</span> Company Phone</label>
+                <apex:inputText id="registerCompanyPhone" value="{!acc.Phone}" style="padding-left: 125px; width: 293px;" />
+              </div>
+            </td>
+            <td>
+              <div class="customInputLabelIn" style="width:428px;">
+                <label for="{!$Component.registerCompanyEmail}">Company Email</label>
+                <apex:inputText id="registerCompanyEmail" value="{!acc.Email__c}"  style="padding-left: 110px; width: 307px;"/>
+              </div>
+            </td>
+          </tr>
+        </table>
+                                 
+
+                
+      
+
+          
+          <apex:outputPanel id="panelVATEdit" layout="none" rendered="{!vatConfig <> NULL && vatConfig.ShowTax1 }">
+            <div class="registration-row">
+                <h3>Tax Information</h3>
+
+                    <!-- Tax IDs-->
+                    
+                        <apex:outputPanel id="panelTax1Edit" layout="none" rendered="{!vatConfig.ShowTax1}">
+                            
+                            <!-- <apex:outputText styleClass="account-labelText" value="{!vatConfig.Tax1Label + IF(vatConfig.TaxIDMandatory, ' *', '')}"/> -->
+                           
+                                     <apex:outputPanel rendered="{!vatConfig.VATValidationRequired}">                             
+                                                              
+                                        <div class="customInputLabelIn">
+                                             <label for="{!$Component.tax1}"><span class="alert"></span> {!vatConfig.CountryCode}</label>             
+                                             <apex:inputText id="tax1" value="{!con.Tax_1_ID__c}" style="padding-left: 115px; width: 770px;"  />
+                                         </div>
+                                    
+                                      
+                                    </apex:outputPanel>
+                                    
+                                    <apex:outputPanel rendered="{!NOT(vatConfig.VATValidationRequired)}" >
+                                            
+                                             <div class="customInputLabelIn">
+                                                     <label for="{!$Component.tax11}"><span class="alert"></span>{!vatConfig.Tax1Label + IF(vatConfig.TaxIDMandatory, ' *', '')}</label>              
+                                                     <apex:inputText id="tax11" value="{!con.Tax_1_ID__c}" style="padding-left: 118px; width: 770px;" />
+                                            </div>
+                                    
+                                    </apex:outputPanel>
+                                                                          
+                        </apex:outputPanel>
+                        
+                       
+                        <apex:outputPanel id="panelTax2Edit" layout="none" rendered="{!vatConfig.ShowTax2}">
+                            
+                            <div class="customInputLabelIn">
+                                    <label for="{!$Component.tax2}"><span class="alert"></span>{!vatConfig.Tax2Label + IF(vatConfig.TaxIDMandatory, ' *', '')}</label>            
+                                    <apex:inputText id="tax2" value="{!con.Tax_2_ID__c}"  style="padding-left: 118px; width: 770px;" />
+                            </div>
+                            
+                        </apex:outputPanel>
+                        
+              
+               
+            </div>
+          </apex:outputPanel>
+          
+            
+                                                                                    
+                <table>
+                  <tr>
+                     <td>  
+                          <apex:commandButton action="{!goToSearchAccount}" value="Back" id="back2ToSearchAccount" styleClass="customButton lastElm"  style="width:437px;background:#c8c8c8;"/>                                        
+                     </td>
+                      <td>                                 
+                           <apex:commandButton value="Register" id="registerNewAccount" onclick="registerNewAccount();return false;" styleClass="customButton lastElm" style="width:437px;margin-left:-1px;"/>
+                      </td>
+                 </tr>
+                </table>
+            
+            
+    
+           </div>
+       </div>
+            
+    <div class="clear"></div>        
+     </div>
+     
+            
+  </apex:outputPanel>
+        
+ <!------------------------- ACcount creation END ---------------------->       
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ <!-- --------------------------------------------- -->
+ 
+ 
+ 
+ 
+ 
+ </apex:form>
+          </div>
+        </div>
+        
+     </div>
+      <div class="gadfooter">
+        <!-- Footer 
+        <c:IECSiteFooter /> -->
+       </div>
+    </div>
+
+   <!-- <style> 
+        
+        html, body {
+            height:100%;    
+            margin:0;
+            padding:0;
+        }               
+        .gdpwrapper {
+            min-height:100%;
+            position:relative;
+        }
+        .gdpbody{
+         padding-bottom:141px; 
+        }
+        .gadfooter{
+            width:100%;
+            height:100px; 
+            position:absolute;
+            bottom:0;
+            left:0;        
+        }
+  </style> -->
+ 
+ 
+</apex:page>

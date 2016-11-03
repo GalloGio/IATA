@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Action_Items_Status_Comments__c</fullName>
+        <description>Long text area status fields to support comments, next steps, etc.  to help track this item  to close</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Long text area status field to support comments, next steps, etc. to help track this item  to close</inlineHelpText>
+        <label>Action Items/Status Comments</label>
+        <length>32000</length>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>5</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Assigned_To_Name__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Name of the resource responsible for execution and management of this item to close</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Name of the resource responsible for execution and management of this item to close</inlineHelpText>
+        <label>Assigned To Name</label>
+        <referenceTo>Contact</referenceTo>
+        <relationshipLabel>Lessons Learned (Assigned To Name)</relationshipLabel>
+        <relationshipName>Lessons_Learned1</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Category__c</fullName>
+        <description>Used to classify or group this item</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Used to classify or group this item</inlineHelpText>
+        <label>Category</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Release Process Change</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Test Case Add/Update/Del</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Release Task Candidate</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Completed_before_in_Release_Number__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Identifies the release in which this item was resolved</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Identifies the release in which this item was resolved</inlineHelpText>
+        <label>Completed before/in Release Number</label>
+        <referenceTo>Release__c</referenceTo>
+        <relationshipLabel>Lessons Learned (Completed before/in Release Number)</relationshipLabel>
+        <relationshipName>Lessons_Learned1</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Details__c</fullName>
+        <description>Long text area field that outlines the detailed description of the lesson learned. Includes any initial thoughts on how to tackle this item</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Long text area field that outlines the detailed description of the lesson learned. Includes any initial thoughts on how to tackle this item</inlineHelpText>
+        <label>Details</label>
+        <length>32000</length>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>5</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Level_of_Effort__c</fullName>
+        <description>Amount of effort required to implement this item</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Amount of effort required to implement this item</inlineHelpText>
+        <label>Level of Effort</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Very High</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>High</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Medium</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Low</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Originating_Release_Number__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Release in which this item was captured</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Release in which this item was captured</inlineHelpText>
+        <label>Originating Release Number</label>
+        <referenceTo>Release__c</referenceTo>
+        <relationshipLabel>Lessons Learned</relationshipLabel>
+        <relationshipName>Lessons_Learned</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Publish_to_Business__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Flag to indicate if this item should be reviewed with business partners</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Flag to indicate if this item should be reviewed with business partners</inlineHelpText>
+        <label>Publish to Business?</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Resolution__c</fullName>
+        <description>Long text area field that outlines the detailed resolution of this item</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Long text area field that outlines the detailed resolution of this item</inlineHelpText>
+        <label>Resolution</label>
+        <length>32000</length>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>5</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Source_Name__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Name of the resource who identified this item</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Name of the resource who identified this item</inlineHelpText>
+        <label>Source Name</label>
+        <referenceTo>Contact</referenceTo>
+        <relationshipLabel>Lessons Learned</relationshipLabel>
+        <relationshipName>Lessons_Learned</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Status__c</fullName>
+        <description>Short version status field for use in reporting and list views</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Short version status field for use in reporting and list views</inlineHelpText>
+        <label>Status</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Not Started</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Completed</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Canceled</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Target_Date__c</fullName>
+        <description>Current goal date for resolution of this item</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Current goal date for resolution of this item</inlineHelpText>
+        <label>Target Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <label>Lesson Learned</label>
+    <listViews>
+        <fullName>All</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <displayFormat>LL-{000000}</displayFormat>
+        <label>Lessons Learned Name</label>
+        <trackHistory>false</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Lessons Learned</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+    <validationRules>
+        <fullName>Resolution_Req_Status_Completed_Canceled</fullName>
+        <active>true</active>
+        <description>Resolution is Required if Status Equals Completed or Canceled</description>
+        <errorConditionFormula>AND (OR (ISPICKVAL(Status__c, &quot;Completed&quot;),
+ISPICKVAL(Status__c, &quot;Canceled&quot;)),
+ISBLANK(Resolution__c))</errorConditionFormula>
+        <errorDisplayField>Resolution__c</errorDisplayField>
+        <errorMessage>Resolution is Required if Status Equals &quot;Completed&quot; or &quot;Canceled&quot;</errorMessage>
+    </validationRules>
+</CustomObject>

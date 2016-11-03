@@ -1,0 +1,55 @@
+<apex:page standardController="Account" extensions="AccountContactOrder_Ext" >
+
+<apex:pageMessages escape="false" />
+
+<apex:form >
+    <apex:pageBlock >
+        <apex:pageBlockButtons location="top">
+            <apex:commandButton value="New" onclick="window.top.location='{! newURL}';" />
+        </apex:pageBlockButtons>
+        
+        <apex:dataTable id="orderData" value="{!vfOrder}" var="order" cellPadding="2" width="100%" >
+            <apex:column >
+                <apex:outputLink value="{! editURL + LEFT(order.orderInfo.Id, 15)}" target="_top" rendered="{! order.allowEdit}">Edit</apex:outputLink>
+            </apex:column>
+            <apex:column >
+                <apex:commandLink value="Del" action="{! deleteOrder}" reRender="orderData" onclick="if(!confirm('Are you sure?')){return};" rendered="{! order.allowDelete}">
+                    <apex:param name="deleteId" value="{! order.orderInfo.Id}" assignTo="{!orderIdToDelete}" />
+                </apex:commandlink>
+            </apex:column>
+            <apex:column >
+                <apex:facet name="header">{! $ObjectType.Order.Fields.OrderNumber.Label}</apex:facet>
+                <apex:outputLink value="{! viewURL + LEFT(order.orderInfo.Id, 15)}" target="_top">{! order.orderInfo.OrderNumber}</apex:outputLink>
+            </apex:column>
+            <apex:column >
+                <apex:facet name="header">{! $ObjectType.Order.Fields.EffectiveDate.Label}</apex:facet>
+                <apex:outputField value="{! order.orderInfo.EffectiveDate}" />
+            </apex:column>
+            <apex:column >
+                <apex:facet name="header">{! $ObjectType.Order.Fields.Status.Label}</apex:facet>
+                <apex:outputField value="{! order.orderInfo.Status}" />
+            </apex:column>
+            <apex:column >
+                <apex:facet name="header">{! $ObjectType.Order.Fields.Order_Channel__c.Label}</apex:facet>
+                <apex:outputField value="{! order.orderInfo.Order_Channel__c}" />
+            </apex:column>
+            <apex:column >
+                <apex:facet name="header">{! $ObjectType.Order.Fields.Source__c.Label}</apex:facet>
+                <apex:outputField value="{! order.orderInfo.Source__c}" />
+            </apex:column>
+            <apex:column >
+                <apex:facet name="header">Sold To Account</apex:facet>
+                <apex:outputField value="{! order.orderInfo.AccountId}" />
+            </apex:column>
+            <apex:column >
+                <apex:facet name="header">Bill To Contact</apex:facet>
+                <apex:outputField value="{! order.orderInfo.BillToContactId}" />
+            </apex:column>
+            <apex:column >
+                <apex:facet name="header">Ship To Contact</apex:facet>
+                <apex:outputField value="{! order.orderInfo.ShipToContactId}" />
+            </apex:column>
+        </apex:dataTable>
+    </apex:pageBlock>
+</apex:form>
+</apex:page>

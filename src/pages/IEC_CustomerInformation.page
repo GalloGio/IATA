@@ -1,0 +1,295 @@
+<apex:page controller="IEC_CustomerInformationController" action="{!onLoadAction}" language="{!language}" id="pgCustomerInfo"
+    docType="html-5.0"  applyBodyTag="false" applyHtmlTag="false" showHeader="false" sidebar="false" standardStylesheets="false" cache="false">
+    
+    <!--[if lte IE 8]>
+    <html lang="en" class="ie lte-ie8 no-svg">
+    <![endif]-->
+    <!--[if IE 9]>
+        <html lang="en" class="ie ie9">
+    <![endif]-->
+    <!--[if !IE]><!-->
+    
+    <html lang="{!language}">
+    <!--<![endif]-->
+        
+        <head>
+            <meta charset="UTF-8"/>
+            <meta name="viewport" content="width=device-width, initial-scale=1"/>
+            <apex:stylesheet value="{!URLFOR($Resource.EcommerceAssets, 'css/styles.min.css')}" />
+            <apex:stylesheet value="{!URLFOR($Resource.ValidationEngine, 'css/validationEngine.jquery.css')}" />
+            <apex:stylesheet value="{!URLFOR($Resource.jQueryUI, 'jquery-ui.min.css')}" />
+            <title>{!$Label.PageTitleCustomerInformation} - {!$Label.SiteTitle}</title>         
+        </head>
+
+        <body data-media-size="" class="page-checkout" id="page-top">
+            
+            <div id="js-breakpoint-finder">
+                <span class="device-xs screen-xsmall"/>
+                <span class="device-sm screen-small"/>
+                <span class="device-md screen-medium"/>
+                <span class="device-lg screen-large"/>
+                <span class="device-xl screen-xlarge"/>
+            </div>
+
+            <div id="js-app-container" class="app-container">
+                <!-- Page Header -->
+                <c:IEC_PageHeader is_checkout="true" />
+
+                <div id="js-page-container" class="page-container">
+                    
+                    <main class="main-content">
+                        <apex:form id="frmCustomerInfo" styleClass="frmCustomerInfo">
+
+                            <apex:actionFunction name="refreshBillToProvinces" oncomplete="selectDefaultState()" reRender="billToStateBloc,postalCodeBlock" action="{!refreshBillToProvinces}" status="btStatus">
+                                <apex:param name="countryCode" value="" />
+                                <apex:param name="stateCode" assignTo="{!selectedStateCode}" value="" />
+                                
+                            </apex:actionFunction>
+
+                            <div class="inner-wrapper">
+                                <div class="process">
+                                    <ol class="list steps">
+                                        <li class="step step-1 active"><a href="javascript:void(0);">{!$Label.PageTitleCustomerInformation}</a></li>
+                                        <li class="step step-2 disabled"><a href="javascript:void(0);">{!$Label.PageTitleShippingPayment}</a></li>
+                                        <li class="step step-3 disabled"><a href="javascript:void(0);">{!$Label.PageTitleConfirmOrder}</a></li>
+                                    </ol>
+                                </div>
+
+                                <apex:outputPanel styleClass="alert error" rendered="{!hasError}" layout="block">
+                                    <apex:pageMessages escape="false"/>
+                                </apex:outputPanel>
+                                
+                                <apex:variable var="cartNotEmpty" value="1" rendered="{!AND(vfOrder.orderItems != null, vfOrder.orderItems.size > 0)}">
+                                    <section class="checkout-container">
+                                        <h1 class="page-title">{!$Label.PageTitleCustomerInformation}</h1>
+
+                                        <section class="group-container personal-info">
+                                            <h2 class="group-title">Personal information</h2>                                   
+                                            <div class="row">
+                                                <div class="columns small-12 medium-6">
+                                                    <div class="field-group text inline">
+                                                        <label>
+                                                            <span class="input-label">{!$Label.Company_name}</span>
+                                                            <apex:inputText id="company_name" value="{!loggedCustomer.sfAccount.Name}" disabled="true" styleClass="company_name user-input text" />
+                                                        </label>
+                                                    </div>
+
+                                                    <div class="field-group select inline mandatory {!IF(errors['salutation']!='false', ' error','')}" data-placement="right">
+                                                        <span class="input-label">{!$Label.Salutation}</span>
+                                                        <div class="custom-user-input select">
+                                                            <i class="icon chevron-down"></i>
+                                                            <apex:selectList id="salutation" value="{!loggedCustomer.sfContact.Salutation}" size="1" styleClass="salutation user-input select validate[required]">
+                                                                <apex:selectOptions value="{!availableSalutations}"/>
+                                                            </apex:selectList>
+                                                        </div>
+                                                    </div>  
+
+                                                    <div class="field-group text inline mandatory {!IF(errors['FirstName']!='false', ' error','')}" data-placement="right">
+                                                        <label>
+                                                            <span class="input-label">{!$Label.First_name}</span>
+                                                            <apex:inputText id="first_name" value="{!loggedCustomer.sfContact.FirstName}" styleClass="first_name user-input text validate[required]" />
+                                                        </label>                                                    
+                                                    </div>
+
+                                                    <div class="field-group text inline mandatory {!IF(errors['LastName']!='false', ' error','')}" data-placement="right">
+                                                        <label>
+                                                            <span class="input-label">{!$Label.Last_name}</span>
+                                                            <apex:inputText id="last_name" value="{!loggedCustomer.sfContact.LastName}" styleClass="last_name user-input text validate[required]" />
+                                                        </label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="columns small-12 medium-6">
+                                                    <div class="field-group text inline mandatory {!IF(errors['phone']!='false', ' error','')}" data-placement="left">
+                                                        <label>
+                                                            <span class="input-label">{!$Label.Phone}</span>
+                                                            <apex:inputText id="phone" value="{!vfOrder.billToAddress.phone}" styleClass="phone user-input text validate[required, custom[phone]]" />
+                                                        </label>
+                                                    </div>
+
+                                                    <div class="field-group text inline mandatory {!IF(errors['email']!='false', ' error','')}" data-placement="left">
+                                                        <label>
+                                                            <span class="input-label">{!$Label.Email_address}</span>
+                                                            <apex:inputText id="email" value="{!vfOrder.billToAddress.email}" styleClass="email user-input text validate[required, custom[email]]" />
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </section>
+
+                                        <section class="group-container billing-address">
+                                            <h2 class="group-title">Billing address</h2>
+                                            <div class="row">
+                                                <div class="columns small-12 medium-6">
+                                                    <div class="field-group text inline mandatory {!IF(errors['street1']!='false', ' error','')}" data-placement="right">
+                                                        <label>
+                                                            <span class="input-label text">{!$Label.Address_Line_1}</span>
+                                                            {!vfOrder.billToAddress}
+                                                            <apex:inputText id="billingAddress1" value="{!vfOrder.billToAddress.street1}" styleClass="billingAddress1 user-input text validate[required]"/>
+                                                        </label>
+                                                    </div>
+
+                                                    <apex:outputPanel id="postalCodeBlock" styleClass="field-group text inline mandatory {!IF(errors['postalCode']!='false', ' error','')}" layout="block" html-data-placement="right">
+                                                        <label>
+                                                            <span class="input-label text">{!$Label.Postal_code}</span>
+                                                            <apex:inputText id="billingPostalCode" value="{!vfOrder.billToAddress.postalCode}" styleClass="billingPostalCode user-input text {!IF(vfOrder.billToAddress.isPostalCodeRequired,'validate[required]','')}"/>
+                                                        </label>
+                                                    </apex:outputPanel>
+
+                                                    <div class="field-group text inline mandatory {!IF(errors['city']!='false', ' error','')}" data-placement="right">
+                                                        <label>
+                                                            <span class="input-label">{!$Label.City}</span>
+                                                            <apex:inputText id="billingCity" value="{!vfOrder.billToAddress.city}" styleClass="billingCity user-input text validate[required]"/>                                                        
+                                                        </label>
+                                                    </div>
+
+                                                    <div class="field-group select inline mandatory {!IF(errors['countryCode']!='false', ' error','')}" data-placement="right">
+                                                        <span class="input-label">{!$Label.Country}</span>
+
+                                                        <div class="custom-user-input select">
+                                                            <i class="icon chevron-down"></i>
+                                                            <apex:selectList id="billingCountry" value="{!vfOrder.billToAddress.countryCode}" size="1" styleClass="billingCountry user-input select validate[required]">
+                                                                <apex:selectOptions value="{!availableCountries}"/>
+                                                                <apex:actionSupport event="onchange" action="{!refreshBillToProvinces}" reRender="billToStateBloc, postalCodeBlock" status="btStatus" />
+                                                            </apex:selectList>
+                                                            <apex:actionStatus id="btStatus">
+                                                                <apex:facet name="start">&nbsp;<img src="{!$Resource.IEC_progress}" alt="x" /></apex:facet>
+                                                            </apex:actionStatus>
+                                                        </div>
+                                                    </div>
+
+                                                    <apex:outputPanel styleClass="field-group select inline mandatory {!IF(errors['stateCode']!='false', ' error','')}" id="billToStateBloc" layout="block">
+                                                        <input type="hidden" id="hiddenBillingRegion" />
+                                                        <apex:outputPanel styleClass="input-label" rendered="{!billToAvailableStates.size > 0}">{!$Label.Region}</apex:outputPanel>
+                                                        <apex:outputPanel styleClass="custom-user-input select" layout="block" rendered="{!billToAvailableStates.size > 0}">
+                                                            <i class="icon chevron-down"></i>
+                                                            <apex:selectList id="billingRegion" value="{!vfOrder.billToAddress.stateCode}" styleClass="billingRegion user-input select validate[required]" size="1">
+                                                                <apex:selectOptions value="{!billToAvailableStates}"/>
+                                                                <apex:actionSupport event="onchange" action="{!regionChanged}" reRender="billToStateBloc" status="btStatus" />
+                                                            </apex:selectList>
+                                                        </apex:outputPanel>
+                                                    </apex:outputPanel>
+
+                                                </div>
+                                                
+
+                                                <div class="columns small-12 medium-6">
+                                                    <div class="field-group text inline">
+                                                        <label>
+                                                            <span class="input-label">{!$Label.PO_number} <span class="optional">optional</span></span>
+                                                            <apex:inputText value="{!vfOrder.orderPONumber}" styleClass="user-input text"/>
+                                                        </label>
+                                                    </div>
+
+                                                    <div class="field-group text inline">
+                                                        <label>
+                                                            <span class="input-label">{!$Label.Invoice_text} <span class="optional">optional</span></span>
+                                                            <apex:inputText value="{!vfOrder.billToInvoiceText}" styleClass="user-input text"/>
+                                                        </label>
+                                                    </div>
+
+                                                    <div class="field-group text inline">
+                                                        <label>
+                                                            <span class="input-label">{!$Label.VAT_number} <span class="optional">optional</span></span>
+                                                            <apex:inputText value="{!vfOrder.billToAddress.vatNumber}" styleClass="user-input text"/>
+                                                        </label>
+                                                        <p class="input-description">
+                                                            <apex:outputText value="{!$Label.VAT_Tax_Msg}" escape="false" />
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </section>
+                                    </section>                              
+
+                                    <div class="footer-actions text-right">
+                                        <apex:actionFunction name="saveCustomerInformation" reRender="frmCustomerInfo" action="{!saveCustomerInformation}" status="saveStatus" />
+                                            
+                                        <button class="button wide" type="button" onclick="saveCustomerInformation();">
+                                            {!$Label.IDCard_Continue_Button}
+                                            <apex:actionStatus id="saveStatus">
+                                                <apex:facet name="start"><img src="{!$Resource.IEC_progress}" style="margin-top: 5px; margin-left: 5px;" alt="x" /></apex:facet>
+                                            </apex:actionStatus>
+                                        </button>
+
+                                        <!-- <apex:commandButton value="Continue" action="{!saveCustomerInformation}" status="saveStatus" reRender="frmCustomerInfo" styleClass="button wide" />
+                                        <apex:actionStatus id="saveStatus">
+                                            <apex:facet name="start">&nbsp;<img src="{!$Resource.IEC_progress}" alt="x" /></apex:facet>
+                                        </apex:actionStatus> -->
+                                    </div>
+                                </apex:variable>
+
+                                <!-- Cart Empty -->
+                                <apex:variable var="cartEmpty" value="0" rendered="{!OR(vfOrder.orderItems == null, vfOrder.orderItems.size == 0)}">
+                                    <div class="footer-actions text-right">
+                                        <a href="{!$Site.BaseUrl}/IEC_ProductList" class="button wide">{!$Label.Button_Continue_Shopping}</a>
+                                    </div>
+                                </apex:variable>
+                            </div>
+                        </apex:form>
+                    </main>
+                    <!-- Page Footer  -->
+                    <c:Footer is_checkout="true" />
+                </div>
+            </div>
+
+            <!-- Modal Box -->
+            <div class="modal-container is-hidden" id="js-modal">
+                <div class="overlay"></div>
+                <div class="modal-dialog" id="js-modal-dialog"></div>
+            </div>
+
+            <script src="{!URLFOR($Resource.EcommerceAssets, 'js/vendor.min.js')}"></script>
+            <script src="{!URLFOR($Resource.EcommerceAssets, 'js/script.js')}"></script>
+            
+            <script src="{!URLFOR($Resource.jQueryUI, 'jquery-ui.min.js')}"></script>
+
+            <apex:variable var="validationLanguage" value="js/languages/jquery.validationEngine-{!language}.js"/>
+            <script src="{!URLFOR($Resource.ValidationEngine, validationLanguage)}"></script>
+            <script src="{!URLFOR($Resource.ValidationEngine, 'js/jquery.validationEngine.js')}"></script>
+
+            <script type="text/javascript">
+
+                $(document).ready(function(){
+                    var populateBillingAddressFields = function(data){
+                        $('input[id$=billingAddress1]').val(data.Street__c);
+                        // $('input[id$=billingAddress2]').val(data.Street2__c);
+                        $('input[id$=billingCity]').val(data.City__c);
+                        $('input[id$=billingPostalCode]').val(data.ZipCode__c);
+                        $('select[id$=billingCountry]').val(data.ISO_Country_Code__c);
+
+                        refreshBillToProvinces(data.ISO_Country_Code__c, data.ISO_State_Code__c);
+
+                        $('#hiddenBillingRegion').val(data.ISO_State_Code__c);
+                    }
+
+                    var selectDefaultState = function(stateCode){
+                        $('select[id$=billingRegion]').val($('#hiddenBillingRegion').val());
+                    }
+
+                    //-- Auto complete when changing Address 1
+                    $('input[id$=billingAddress1]').autocomplete({
+                        source: function( request, response ) {
+                            IEC_CustomerInformationController.findIECAddresses(request.term, function(result, event){
+                                response( $.map( result , function( item ) {
+                                    return {
+                                        label: item.Full_Address__c,
+                                        value: item.Street__c,
+                                        address:item
+                                    }
+                                }));
+                            });
+                        },
+                        select: function( event, ui ) {
+                           populateBillingAddressFields(ui.item.address);
+                        }
+                    });
+
+                    $("form").validationEngine();
+                });
+            </script>
+
+
+        </body>
+    </html>
+</apex:page>

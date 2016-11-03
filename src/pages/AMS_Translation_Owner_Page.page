@@ -1,0 +1,3 @@
+<apex:page showHeader="false" sidebar="false" standardStylesheets="true" standardController="AMS_Owner__c" TabStyle="AMS_Owner__c">
+    <c:AMS_Translated_Panel cownerId="{!AMS_Owner__c.Id}"/>
+</apex:page>

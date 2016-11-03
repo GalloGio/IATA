@@ -1,0 +1,229 @@
+<apex:page controller="IEC_HomeController" action="{!onLoadAction}" language="{!language}" 
+    docType="html-5.0"  applyBodyTag="false" applyHtmlTag="false" showHeader="false" sidebar="false" standardStylesheets="false" cache="false">
+    
+    <!--[if lte IE 8]>
+    <html lang="en" class="ie lte-ie8 no-svg">
+    <![endif]-->
+    <!--[if IE 9]>
+        <html lang="en" class="ie ie9">
+    <![endif]-->
+    <!--[if !IE]><!-->
+    
+    <html lang="{!language}">
+    <!--<![endif]-->
+
+        <head>
+            <meta charset="UTF-8"/>
+            <meta name="viewport" content="width=device-width, initial-scale=1"/>
+            <apex:stylesheet value="{!URLFOR($Resource.EcommerceAssets, 'css/styles.min.css')}" />
+            <title>{!$Label.SiteTitle}</title>
+        </head>
+
+        <body data-media-size="">
+            <div id="js-breakpoint-finder">
+                <span class="device-xs screen-xsmall"/>
+                <span class="device-sm screen-small"/>
+                <span class="device-md screen-medium"/>
+                <span class="device-lg screen-large"/>
+                <span class="device-xl screen-xlarge"/>
+            </div>
+
+            <div id="js-app-container" class="app-container">
+                <!-- Page Header -->
+                <c:IEC_PageHeader is_store_front="true" />
+
+                <div id="js-page-container" class="page-container">
+                    <main class="main-content home">
+                        <div class="reader-only" id="reader-main-content">Main Content</div>
+
+                        <div class="section top-banner">
+                            <div class="inner-wrapper">
+                                <h2 class="lead"><apex:outputText value="{!$Label.Welcome_Message}" escape="false" /></h2>
+                            </div>
+                        </div>
+
+                        <!-- services section -->
+                        <section class="section services">
+                            <div class="inner-wrapper">
+                                <h2 class="section-title is-hidden">{!$Label.Section_Services}</h2>
+                                <div class="tab-accordion-container vertical js-tab-accordion">
+                                    <!-- panel headers -->
+                                    <ul class="nav nav-vertical-tabs">
+                                        <apex:variable var="tabCounter" value="{!1}" />
+                                        <apex:repeat var="cat" value="{!categories}">
+                                            <li class="tab" data-target="panel-{!tabCounter}"><a href="#">{!cat.label}</a></li>
+                                            <apex:variable var="tabCounter" value="{!tabCounter+1}" />
+                                        </apex:repeat>
+                                        <!-- <li class="tab" data-target="panel-1"><a href="#">{!$Label.Button_Publications}</a></li> -->
+                                        <!-- <li class="tab" data-target="panel-2"><a href="#">{!$Label.Button_Data_Statistics}</a></li> -->
+                                        <li class="tab is-selected" data-target="panel-{!tabCounter}"><a href="#">{!$Label.Button_New_Releases}</a></li>
+                                    </ul>
+
+                                    <!-- panel's content -->
+                                    <div class="panel-container">
+                                        <!-- Products Categories -->
+                                        <apex:variable var="contentCounter" value="{!1}" />
+                                        <apex:repeat var="cat" value="{!categories}">
+                                            <section class="panel" data-id="panel-{!contentCounter}">
+                                                <h3 class="panel-title"><a href="#">{!cat.label}</a></h3>
+                                                <div class="panel-content">
+                                                    <p class="lead"><abbr title="International Air Transport Association">IATA</abbr> offers the air transport industry a comprehensive suite of information products on a multitude of subjects. More than 300 titles, among which many free downloads are available that touch on all aspects of aviation.</p>
+
+                                                    <div class="group-wrapper">
+                                                        <div class="group-container browse-by-category">
+                                                            <h4 class="group-title">{!$Label.Browse_by_category}</h4>
+
+                                                            <div class="nav-content">
+                                                                <ul class="nav">
+                                                                    <apex:repeat value="{!subCategories[cat.value]}" var="topic">
+                                                                        <li><a href="{!$Site.BaseUrl}/IEC_ProductList?category={!cat.value}&topic={!topic.value}">{!topic.label}</a></li>
+                                                                    </apex:repeat>
+                                                                </ul>
+                                                                <!-- Customer Types -->
+                                                                <apex:variable var="isPublicationCategory" value="1" rendered="{!cat.value == 'publications'}">
+                                                                    <ul class="nav">
+                                                                        <apex:repeat var="ct" value="{!customerTypes}">
+                                                                            <li><a href="{!$Site.BaseUrl}/IEC_ProductList?category=publications&customer_type={!ct}">{!ct}</a></li>
+                                                                        </apex:repeat>
+                                                                    </ul>
+                                                                </apex:variable>
+
+                                                                <div class="button-container">
+                                                                    <a class="button" href="{!$Site.BaseUrl}/IEC_ProductList?category={!cat.value}">{!$Label.Button_View_all}</a>
+                                                                </div>                                                          
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="group-container new-releases">
+                                                            <h4 class="group-title">New releases</h4>
+                                                            <apex:variable var="hasReleases" value="1" rendered="{!newReleases[cat.value] != null}">
+                                                                <ul class="list new-releases">
+                                                                    <apex:repeat value="{!newReleases[cat.value]}" var="prod">
+                                                                    <li class="release-item">
+                                                                        <h5 class="item-name"><a href="{!$Site.BaseUrl}/IEC_ProductDetails?id={!prod.ProductNumber}">{!prod.ProductName}</a></h5>
+                                                                        <h6 class="item-description-title">{!prod.Media}</h6>
+                                                                        <p class="item-description">{!prod.ProductShortDesc}</p>
+                                                                    </li>
+                                                                    </apex:repeat>
+                                                                </ul>
+                                                            </apex:variable>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </section>
+                                            <apex:variable var="contentCounter" value="{!contentCounter+1}" />
+                                        </apex:repeat> 
+
+                                        <section class="panel is-open" data-id="panel-{!contentCounter}">
+                                            <h3 class="panel-title"><a href="#">New Releases</a></h3>
+                                            <div class="panel-content">
+                                                <div class="owl-carousel-container">
+                                                    <div class="owl-carousel js-owl-carousel">
+                                                        <apex:repeat value="{!newReleases['publications']}" var="prod">
+                                                            <div class="item">
+                                                                <h5>{!prod.ProductName}</h5>
+                                                                <p>{!prod.ProductShortDesc}</p>
+                                                                <a class="icon arrow-right" href="{!$Site.BaseUrl}/IEC_ProductDetails?id={!prod.ProductNumber}">View details</a>
+                                                            </div>
+                                                        </apex:repeat>
+                                                    </div>
+                                                </div>
+                                                <p>{!$Label.Home_Page_New_Release_Msg}</p>
+                                            </div>
+                                        </section>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- top-sellers section -->
+                        <section class="section top-sellers">
+                            <div class="inner-wrapper">
+                                <h2 class="section-title">{!$Label.Section_Title_Top_Sellers}</h2>
+                                <div class="iata-carousel" id="js-iata-carousel">
+                                    <div class="carousel-control prev">
+                                        <a class="icon angle-left" href="#"><span class="reader-only">{!$Label.Button_Previous}</span></a>
+                                    </div>
+                                    <div class="carousel-stage">
+                                        <ul class="list product-list">
+                                            <apex:repeat value="{!topSellers}" var="prod">
+                                                <li class="list-item">
+                                                    <div class="item-wrapper">
+                                                        <figure class="item-image"><a href="{!$Site.BaseUrl}/IEC_ProductDetails?id={!prod.ProductNumber}"><img src="{!URLFOR($Resource.Product_Images, prod.ImageName)}" alt="{!prod.ProductName}" /></a></figure>
+                                                        <h3 class="item-name"><a href="{!$Site.BaseUrl}/IEC_ProductDetails?id={!prod.ProductNumber}">{!prod.ProductName}</a></h3>
+                                                        <h4 class="item-description-title">{!prod.Media}</h4>
+                                                        <p class="item-description">
+                                                            Edition: {!prod.Edition} <br />
+                                                            Language: {!prod.Language}
+                                                        </p>
+                                                        <p class="item-description">{!prod.ProductShortDesc}</p>
+                                                        <!-- Scenario 1: In Stock -->
+                                                        <apex:outputPanel layout="block" styleClass="item-stock in-stock" rendered="{!prod.InventoryStatus == 'In stock'}">
+                                                            {!prod.InventoryStatus}
+                                                        </apex:outputPanel>
+                                                        <!-- Scenario 2: Out of Stock -->
+                                                        <apex:outputPanel layout="block" styleClass="item-stock out-of-stock" rendered="{!AND(prod.InventoryStatus != 'In stock' , prod.AvailabilityDate !=null,prod.EffectiveFrom <=TODAY(),TODAY() <=prod.EffectiveTo)}">
+                                                            {!prod.InventoryStatus}
+                                                        </apex:outputPanel>
+
+                                                        <!-- Scenario 3: Pre-order -->
+                                                        <apex:outputPanel layout="block" styleClass="item-label pre-order" rendered="{!TODAY() <=prod.EffectiveFrom}">
+                                                            <span class="text">{!$Label.Button_Pre_Order}</span>
+                                                        </apex:outputPanel>
+
+                                                        <!-- Regular Price if exist -->
+                                                        <apex:outputPanel styleClass="item-price regular-price {!IF(AND(prod.CustomerPrice!=null , prod.CustomerPrice>0),'line-stroke','')}" layout="block" rendered="{! prod.RegularPrice!=null && prod.RegularPrice > 0}">
+                                                            <apex:outputText styleClass="price-value" value="{0, number, currency}">
+                                                                <apex:param value="{!prod.RegularPrice}" />
+                                                            </apex:outputText>
+                                                            <span class="price-label">{!$Label.regular_price}</span>
+                                                        </apex:outputPanel>
+
+                                                        <!-- Discounted price if exist -->
+                                                        <apex:outputPanel styleClass="item-price discounted-price" layout="block" rendered="{! prod.CustomerPrice!=null && prod.CustomerPrice > 0}">
+                                                            <apex:outputText styleClass="price-value" value="{0, number, currency}">
+                                                                <apex:param value="{!prod.CustomerPrice}" />
+                                                            </apex:outputText>
+                                                            <span class="label-value">{!$Label.discounted_price}</span>
+                                                        </apex:outputPanel>
+
+                                                        <!-- Price not exit: Direct Sales -->
+                                                        <apex:outputPanel styleClass="item-price regular-price" layout="block" rendered="{! AND(prod.RegularPrice==null, prod.CustomerPrice==null)}">
+                                                            <span class="price-label">{!$Label.Direct_Sales}</span>
+                                                        </apex:outputPanel>
+                                                    
+                                                        <a class="button" href="{!$Site.BaseUrl}/IEC_ProductDetails?id={!prod.ProductNumber}">{!$Label.Button_Select}</a>
+                                                    </div>
+                                                </li>
+                                            </apex:repeat>
+                                        </ul>
+                                    </div>
+                                    <div class="carousel-control next">
+                                        <a class="icon angle-right" href="#"><span class="reader-only">{!$Label.Button_Next}</span></a>
+                                    </div>
+                                    <div class="view-more">
+                                        <a class="button secondary wide" href="#">{!$Label.Button_View_More}</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </main>
+                    <!-- Page Footer  -->
+                    <c:Footer is_store_front="true" />
+                </div>
+            </div>
+
+            <div class="modal-container is-hidden" id="js-modal">
+                <div class="overlay"></div>
+                <div class="modal-dialog" id="js-modal-dialog"></div>
+            </div>
+
+            <script src="{!URLFOR($Resource.EcommerceAssets, 'js/vendor.min.js')}"></script>
+            <script src="{!URLFOR($Resource.EcommerceAssets, 'js/script.js')}"></script>
+
+            <script type="text/javascript">
+                //Custom JS
+            </script>
+        </body>
+    </html>
+</apex:page>

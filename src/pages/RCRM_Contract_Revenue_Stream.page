@@ -1,0 +1,40 @@
+<apex:page standardcontroller="Contract" extensions="RCRMContractRevenueStreamController">
+	<apex:form >
+		<b>SAP Contract Number:</b>&nbsp;&nbsp;<apex:inputField value="{!con.SAP_Contract_Number__c}" style="width:60px;"/> &nbsp;&nbsp;
+		<apex:commandButton value="Save SAP Contract Number" action="{!SaveSAPContractNumber}" rendered="{!showSaveButton}"/>
+		
+		<apex:pageBlock >
+			<apex:pageBlockTable value="{!lstRSLs}" var="rsl" columns="6">
+				<apex:column headerValue="Product" style="width:30%;">
+	                <apex:outputField value="{!rsl.Product__r.Name}"/>
+	            </apex:column>
+	            
+				<apex:column headerValue="Year" style="width:10%;">
+	                <apex:outputField value="{!rsl.Year__c}"/>
+	            </apex:column>
+	            
+	            <apex:column headerValue="Revenue From" style="width:10%;">
+	                <apex:outputField value="{!rsl.Start_Date__c}" style="width:60px;"/>
+	            </apex:column>
+	            
+	            <apex:column headerValue="Revenue To" style="width:10%;">
+	                <apex:outputField value="{!rsl.End_Date__c}" style="width:60px;"/>
+	            </apex:column>
+	            
+	            <apex:column headerValue="Annualized value" style="width:20%;">
+	                <apex:inputField value="{!rsl.Annualized_value__c}" style="width:100px;"/>
+	            </apex:column>
+	            
+				<apex:column headerValue="Revenue Type" style="width:20%;">
+	                <span style="color:{!IF(rsl.Revenue_Type__c == 'Estimated', 'red', 'green')};">{!rsl.Revenue_Type__c}</span>
+	            </apex:column>
+			</apex:pageBlockTable>
+			
+			<apex:outputpanel layout="block" style="width: 100%; text-align: center;">
+				<apex:commandButton value="Save Revenue Stream modifications" action="{!SaveRS}" rendered="{!showSaveButton}"/>
+			</apex:outputpanel>
+			<apex:pageMessages />
+			
+		</apex:pageBlock>
+	</apex:form>
+</apex:page>

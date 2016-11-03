@@ -1,0 +1,2463 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>SARA</description>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Account_Case_BSP_Country__c</fullName>
+        <description>Country value that is transmitted to the automatically created renewal case.</description>
+        <externalId>false</externalId>
+        <formula>TEXT( Account__r.IATA_ISO_Country__r.Case_BSP_Country__c )</formula>
+        <label>Account Case BSP Country</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Account_Country__c</fullName>
+        <description>SARA</description>
+        <externalId>false</externalId>
+        <formula>IF(Account__r.BillingCountry &lt;&gt; &quot;Serbia&quot;,Account__r.BillingCountry ,  Financial_Institution__r.Country__c )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Account Country</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Account__c</fullName>
+        <description>SARA</description>
+        <externalId>false</externalId>
+        <label>Account</label>
+        <lookupFilter>
+            <active>true</active>
+            <errorMessage>The Account must have Agency record type.</errorMessage>
+            <filterItems>
+                <field>Account.RecordType.Name</field>
+                <operation>equals</operation>
+                <value>Agency</value>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Financial Securities</relationshipLabel>
+        <relationshipName>Financial_Securities</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>true</reparentableMasterDetail>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Amount__c</fullName>
+        <description>Amount with currency</description>
+        <externalId>false</externalId>
+        <label>Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Days_to_Expiry_date__c</fullName>
+        <description>calculates the days left until the expiry date</description>
+        <externalId>false</externalId>
+        <formula>IF(OR(ISPICKVAL(Security_Status__c ,&quot;Not Active Yet&quot;), ISPICKVAL(Security_Status__c ,&quot;Active&quot;),ispickval(Security_Status__c ,&quot;Close to Expiry Date&quot;)), Expiry_Date__c - DATEVALUE(now()),0)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>calculates the days left until the expiry date</inlineHelpText>
+        <label>Days to Expiry date</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Encashment_Date__c</fullName>
+        <description>SARA</description>
+        <externalId>false</externalId>
+        <label>Encashment Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Expiry_Date__c</fullName>
+        <description>SARA - Bank guarantee expiry date</description>
+        <externalId>false</externalId>
+        <label>Expiry Date</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>External_Security_ID__c</fullName>
+        <description>SARA</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Optional, in case the security has an external identifier</inlineHelpText>
+        <label>External Security ID</label>
+        <length>22</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Financial_Institution__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>SARA</description>
+        <externalId>false</externalId>
+        <inlineHelpText>It is mandatory to link the security with an institution. If the institution does not exist, create it first and then create the security related to it</inlineHelpText>
+        <label>Financial Institution</label>
+        <referenceTo>Financial_Institution__c</referenceTo>
+        <relationshipLabel>Financial Securities</relationshipLabel>
+        <relationshipName>Financial_Securities</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Financial_Security_Validation__c</fullName>
+        <description>ACR 06749697 - This field to validate FS in order to prevent fraudulent financial securities.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Fill the date when the financial security is validated with the financial institution issuer upon receipt.</inlineHelpText>
+        <label>Financial Security Validation</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>First_Call_Letter_required__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(OR(
+ISPICKVAL(Security_Type__c , &quot;Financial Guarantee&quot;),
+AND( ISPICKVAL(Region__c , &quot;Americas&quot;),ISPICKVAL(Security_Type__c , &quot;Insurance Bond&quot;)),
+AND( ISPICKVAL(Region__c , &quot;Americas&quot;),ISPICKVAL(Security_Type__c , &quot;Surety Bond&quot;)),
+AND( ISPICKVAL(Region__c , &quot;Asia &amp; Pacific&quot;), OR(ISPICKVAL(Security_Type__c , &quot;Insurance Bond&quot;),ISPICKVAL(Security_Type__c , &quot;TAANZ Bonding Scheme&quot;),ISPICKVAL(Security_Type__c , &quot;DIP&quot;))),
+
+AND(ISPICKVAL(Region__c , &quot;Africa &amp; middle East&quot;), OR( ISPICKVAL(Security_Type__c , &quot;DIP&quot;), ISPICKVAL(Security_Type__c , &quot;CWA Mutual Fund&quot;))),
+
+AND(ISPICKVAL(Region__c , &quot;China &amp; north Asia&quot;), ISPICKVAL(Security_Type__c , &quot;Insurance Bond&quot;))),&quot;Yes&quot;,&quot;No&quot;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>First Call Letter required</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>IATA_code__c</fullName>
+        <externalId>false</externalId>
+        <formula>Account__r.IATACode__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>IATA code comes from the acccount object related to this security</inlineHelpText>
+        <label>IATA code</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Last_updated_by_source__c</fullName>
+        <externalId>false</externalId>
+        <label>Last Updated by Source</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Minimumrelease__c</fullName>
+        <description>SARA</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Specify the date before which this guarantee shall not be release</inlineHelpText>
+        <label>Should not be released before</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Reasonforrequest__c</fullName>
+        <description>SARA</description>
+        <externalId>false</externalId>
+        <label>Request Reason</label>
+        <picklist>
+            <picklistValues>
+                <fullName>New Application</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>ACC change</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Financial Review</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Default</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Previous Security Update</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Irregularities</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>CASS Associate</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Reception_Case__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Reception Case</label>
+        <referenceTo>Case</referenceTo>
+        <relationshipLabel>Financial Securities</relationshipLabel>
+        <relationshipName>Financial_Securities</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Reception_Date__c</fullName>
+        <description>SARA</description>
+        <externalId>false</externalId>
+        <label>Reception Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Region__c</fullName>
+        <externalId>false</externalId>
+        <label>Region</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Europe</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Africa &amp; Middle East</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Asia &amp; Pacific</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Americas</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>China &amp; North Asia</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Release_Case__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <inlineHelpText>Fill in the case number related to the release of the financial security</inlineHelpText>
+        <label>Release Case</label>
+        <referenceTo>Case</referenceTo>
+        <relationshipLabel>Financial Securities (Release Case)</relationshipLabel>
+        <relationshipName>Financial_SecuritiesReleased</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Release_Date__c</fullName>
+        <description>SARA</description>
+        <externalId>false</externalId>
+        <label>Release Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Release_Reason__c</fullName>
+        <description>SARA</description>
+        <externalId>false</externalId>
+        <label>Release Reason</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Renewal</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Voluntary Relinquishment</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Favorable Financial Situation</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Security Update</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Encashment</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Termination</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Remarks__c</fullName>
+        <description>SARA- Bank guarantee remarks</description>
+        <externalId>false</externalId>
+        <label>Remarks</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Renewal_Case_Creation_Date__c</fullName>
+        <externalId>false</externalId>
+        <formula>DATEVALUE( Renewal_Case__r.CreatedDate )</formula>
+        <label>Renewal Case Creation Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Renewal_Case__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>This is the renewal case that is automatically created 75 days before the expiry date of the Financial Security record.</description>
+        <externalId>false</externalId>
+        <label>Renewal Case</label>
+        <referenceTo>Case</referenceTo>
+        <relationshipLabel>Financial Securities (Renewal Case)</relationshipLabel>
+        <relationshipName>Financial_Securities1</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Security_Status__c</fullName>
+        <description>SARA - status of the financial security</description>
+        <externalId>false</externalId>
+        <label>Security Status</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Close to Expiry Date</fullName>
+                <color>#F3D904</color>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Active</fullName>
+                <color>#B6E32E</color>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Expired</fullName>
+                <color>#CC0000</color>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Released</fullName>
+                <color>#2F5D85</color>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Encashed</fullName>
+                <color>#0B6FCE</color>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Not Active yet</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Encashment in progress</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Security_Type__c</fullName>
+        <description>SARA - Security type</description>
+        <externalId>false</externalId>
+        <label>Security Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Bank Guarantee</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>CCG</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Cross Border Guarantee</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>CWA Mutual Fund</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>DIP</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Financial Guarantee</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Hong Kong Trust Fund</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Insurance Bond</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Ireland Trust Fund</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Joint Bank Guarantee (India)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Letter Of Credit</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Letter Of Undertaking</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>MCBG</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>MCPG</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Others</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>OTOC</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Parent Company Guarantee</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Recapitalization</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Standby Letter Of Credit</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Statement Of Assignment</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Surety Bond</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>TAANZ Bonding Scheme</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Time Deposit</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Time Deposit Pledge</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Transit Account</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>true</sorted>
+        </picklist>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Source__c</fullName>
+        <defaultValue>&quot;Manual entry&quot;</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>reflects the source of the Fin. Security</inlineHelpText>
+        <label>Source</label>
+        <length>18</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Status_image__c</fullName>
+        <description>Image status</description>
+        <externalId>false</externalId>
+        <formula>IF( ISPICKVAL( Security_Status__c , &quot;Active&quot;), IMAGE(&quot;/servlet/servlet.FileDownload?file=015200000011tpe&quot;,&quot;Active&quot;,30,30), 
+
+IF(or( ISPICKVAL( Security_Status__c , &quot;Released&quot;), ISPICKVAL( Security_Status__c , &quot;Encashed&quot;),ISPICKVAL( Security_Status__c , &quot;Not Active Yet&quot;) ),
+IMAGE(&quot;/servlet/servlet.FileDownload?file=015200000011tpf&quot;,&quot;Released&quot;,30,30),
+
+IF( ISPICKVAL( Security_Status__c , &quot;Expired&quot;),  
+IMAGE(&quot;/servlet/servlet.FileDownload?file=015200000011tpg&quot;,&quot;Expired&quot;,30,30),
+
+IF( ISPICKVAL( Security_Status__c , &quot;Encashment in progress&quot;),  
+IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000004RhqP&quot;,&quot;Encashment in progress&quot;,30,30),
+
+IF(ISPICKVAL( Security_Status__c , &quot;Close to Expiry Date&quot;), 
+IMAGE(&quot;/servlet/servlet.FileDownload?file=015200000011tph&quot;,&quot;Requested&quot;,30,30), &quot;error&quot;
+)))))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Status image</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Unlimited_Security__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Indicates the bank guarantee has no expiration date</inlineHelpText>
+        <label>Unlimited Validity</label>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Validity_Start_Date__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Date as from when the financial security is valid</inlineHelpText>
+        <label>Validity Start Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <label>Financial Security</label>
+    <listViews>
+        <fullName>A1_AR_PY_UY</fullName>
+        <columns>Status_image__c</columns>
+        <columns>NAME</columns>
+        <columns>Security_Status__c</columns>
+        <columns>Account__c</columns>
+        <columns>Amount__c</columns>
+        <columns>Days_to_Expiry_date__c</columns>
+        <columns>Security_Type__c</columns>
+        <columns>Account_Country__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Account_Country__c</field>
+            <operation>equals</operation>
+            <value>Argentina,Paraguay,Uruguay</value>
+        </filters>
+        <label>A1 - AR PY UY</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>IATAArgentina</group>
+            <group>IDFSAmericasAgencyManagement</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>A1_Active_Securities</fullName>
+        <columns>Status_image__c</columns>
+        <columns>NAME</columns>
+        <columns>Security_Status__c</columns>
+        <columns>Account__c</columns>
+        <columns>Amount__c</columns>
+        <columns>Days_to_Expiry_date__c</columns>
+        <columns>Security_Type__c</columns>
+        <columns>Account_Country__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Region__c</field>
+            <operation>equals</operation>
+            <value>Americas</value>
+        </filters>
+        <filters>
+            <field>Security_Status__c</field>
+            <operation>equals</operation>
+            <value>Active,Close to Expiry Date</value>
+        </filters>
+        <label>A1 All Active Securities</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>IDFSAmericasAgencyManagement</group>
+            <group>IDFSAmericasallusers</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>A1_BO</fullName>
+        <columns>Status_image__c</columns>
+        <columns>NAME</columns>
+        <columns>Security_Status__c</columns>
+        <columns>Account__c</columns>
+        <columns>Amount__c</columns>
+        <columns>Days_to_Expiry_date__c</columns>
+        <columns>Security_Type__c</columns>
+        <columns>Account_Country__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Account_Country__c</field>
+            <operation>equals</operation>
+            <value>Bolivia</value>
+        </filters>
+        <label>A1 - BO</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>IATABolivia</group>
+            <group>IDFSAmericasAgencyManagement</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>A1_BR</fullName>
+        <columns>Status_image__c</columns>
+        <columns>NAME</columns>
+        <columns>Security_Status__c</columns>
+        <columns>Account__c</columns>
+        <columns>Amount__c</columns>
+        <columns>Days_to_Expiry_date__c</columns>
+        <columns>Security_Type__c</columns>
+        <columns>Account_Country__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Account_Country__c</field>
+            <operation>equals</operation>
+            <value>Brazil</value>
+        </filters>
+        <label>A1 - BR</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>IATABrazil</group>
+            <group>IDFSAmericasAgencyManagement</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>A1_BS_VG</fullName>
+        <columns>Status_image__c</columns>
+        <columns>NAME</columns>
+        <columns>Security_Status__c</columns>
+        <columns>Account__c</columns>
+        <columns>Amount__c</columns>
+        <columns>Days_to_Expiry_date__c</columns>
+        <columns>Security_Type__c</columns>
+        <columns>Account_Country__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Account_Country__c</field>
+            <operation>equals</operation>
+            <value>Bahamas,British Virgin</value>
+        </filters>
+        <label>A1 - BS VG</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>IATAEasternCaribbean</group>
+            <group>IDFSAmericasAgencyManagement</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>A1_BZ</fullName>
+        <columns>Status_image__c</columns>
+        <columns>NAME</columns>
+        <columns>Security_Status__c</columns>
+        <columns>Account__c</columns>
+        <columns>Amount__c</columns>
+        <columns>Days_to_Expiry_date__c</columns>
+        <columns>Security_Type__c</columns>
+        <columns>Account_Country__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Account_Country__c</field>
+            <operation>equals</operation>
+            <value>Belize</value>
+        </filters>
+        <label>A1 - BZ</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>IATACentralAmerica</group>
+            <group>IDFSAmericasAgencyManagement</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>A1_CA_BM_PM</fullName>
+        <columns>Status_image__c</columns>
+        <columns>NAME</columns>
+        <columns>Security_Status__c</columns>
+        <columns>Account__c</columns>
+        <columns>Amount__c</columns>
+        <columns>Days_to_Expiry_date__c</columns>
+        <columns>Security_Type__c</columns>
+        <columns>Account_Country__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Account_Country__c</field>
+            <operation>equals</operation>
+            <value>Canada,Bermuda</value>
+        </filters>
+        <label>A1 - CA BM PM</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>IATACanada</group>
+            <group>IDFSAmericasAgencyManagement</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>A1_CL</fullName>
+        <columns>Status_image__c</columns>
+        <columns>NAME</columns>
+        <columns>Security_Status__c</columns>
+        <columns>Account__c</columns>
+        <columns>Amount__c</columns>
+        <columns>Days_to_Expiry_date__c</columns>
+        <columns>Security_Type__c</columns>
+        <columns>Account_Country__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Account_Country__c</field>
+            <operation>equals</operation>
+            <value>Chile</value>
+        </filters>
+        <label>A1 - CL</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>IATAChile</group>
+            <group>IDFSAmericasAgencyManagement</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>A1_CO</fullName>
+        <columns>Status_image__c</columns>
+        <columns>NAME</columns>
+        <columns>Security_Status__c</columns>
+        <columns>Account__c</columns>
+        <columns>Amount__c</columns>
+        <columns>Days_to_Expiry_date__c</columns>
+        <columns>Security_Type__c</columns>
+        <columns>Account_Country__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Account_Country__c</field>
+            <operation>equals</operation>
+            <value>Colombia</value>
+        </filters>
+        <label>A1 - CO</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>IATAColombia</group>
+            <group>IDFSAmericasAgencyManagement</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>A1_CR</fullName>
+        <columns>Status_image__c</columns>
+        <columns>NAME</columns>
+        <columns>Security_Status__c</columns>
+        <columns>Account__c</columns>
+        <columns>Amount__c</columns>
+        <columns>Days_to_Expiry_date__c</columns>
+        <columns>Security_Type__c</columns>
+        <columns>Account_Country__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Account_Country__c</field>
+            <operation>equals</operation>
+            <value>Costa Rica</value>
+        </filters>
+        <label>A1 - CR</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>IATACentralAmerica</group>
+            <group>IDFSAmericasAgencyManagement</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>A1_Closetoexpiry_Securities</fullName>
+        <columns>Status_image__c</columns>
+        <columns>NAME</columns>
+        <columns>Days_to_Expiry_date__c</columns>
+        <columns>Account__c</columns>
+        <columns>Amount__c</columns>
+        <columns>Security_Type__c</columns>
+        <columns>Security_Status__c</columns>
+        <columns>Account_Country__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Region__c</field>
+            <operation>equals</operation>
+            <value>Americas</value>
+        </filters>
+        <filters>
+            <field>Security_Status__c</field>
+            <operation>equals</operation>
+            <value>Close to Expiry Date</value>
+        </filters>
+        <label>A1 All Close to expiry Securities</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>IDFSAmericasAgencyManagement</group>
+            <group>IDFSAmericasallusers</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>A1_DO</fullName>
+        <columns>Status_image__c</columns>
+        <columns>NAME</columns>
+        <columns>Security_Status__c</columns>
+        <columns>Account__c</columns>
+        <columns>Amount__c</columns>
+        <columns>Days_to_Expiry_date__c</columns>
+        <columns>Security_Type__c</columns>
+        <columns>Account_Country__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Account_Country__c</field>
+            <operation>equals</operation>
+            <value>Dominican Republic</value>
+        </filters>
+        <label>A1 - DO</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>IATAWesternCaribbean</group>
+            <group>IDFSAmericasAgencyManagement</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>A1_EAC</fullName>
+        <columns>Status_image__c</columns>
+        <columns>NAME</columns>
+        <columns>Security_Status__c</columns>
+        <columns>Account__c</columns>
+        <columns>Amount__c</columns>
+        <columns>Days_to_Expiry_date__c</columns>
+        <columns>Security_Type__c</columns>
+        <columns>Account_Country__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Account_Country__c</field>
+            <operation>equals</operation>
+            <value>Anguilla,Antigua and Barbuda,Aruba,Bahamas,Barbados,Saint Kitts and Nevis</value>
+        </filters>
+        <filters>
+            <field>Account_Country__c</field>
+            <operation>equals</operation>
+            <value>Dominica,Grenada,Guyana,Montserrat,Netherland Antilles</value>
+        </filters>
+        <filters>
+            <field>Account_Country__c</field>
+            <operation>equals</operation>
+            <value>Saint Lucia,Saint Vincent and the Grenadines,Suriname,Curaçao,Saint Maarten</value>
+        </filters>
+        <filters>
+            <field>Account_Country__c</field>
+            <operation>equals</operation>
+            <value>Eastern Caribbean,Trinidad,Tobago,&quot;Bonaire, Saba, St. Eustatius&quot;,Curacao</value>
+        </filters>
+        <label>A1 - EAC</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>IATAEasternCaribbean</group>
+            <group>IDFSAmericasAgencyManagement</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>A1_EC</fullName>
+        <columns>Status_image__c</columns>
+        <columns>NAME</columns>
+        <columns>Security_Status__c</columns>
+        <columns>Account__c</columns>
+        <columns>Amount__c</columns>
+        <columns>Days_to_Expiry_date__c</columns>
+        <columns>Security_Type__c</columns>
+        <columns>Account_Country__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Account_Country__c</field>
+            <operation>equals</operation>
+            <value>Ecuador</value>
+        </filters>
+        <label>A1 - EC</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>IATAColombia</group>
+            <group>IATAEcuador</group>
+            <group>IDFSAmericasAgencyManagement</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>A1_Expired_Securities</fullName>
+        <columns>Status_image__c</columns>
+        <columns>NAME</columns>
+        <columns>Security_Status__c</columns>
+        <columns>Security_Type__c</columns>
+        <columns>Account__c</columns>
+        <columns>Amount__c</columns>
+        <columns>Expiry_Date__c</columns>
+        <columns>Account_Country__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Region__c</field>
+            <operation>equals</operation>
+            <value>Americas</value>
+        </filters>
+        <filters>
+            <field>Security_Status__c</field>
+            <operation>equals</operation>
+            <value>Expired</value>
+        </filters>
+        <label>A1 All Expired Securities</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>IDFSAmericasAgencyManagement</group>
+            <group>IDFSAmericasallusers</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>A1_GT</fullName>
+        <columns>Status_image__c</columns>
+        <columns>NAME</columns>
+        <columns>Security_Status__c</columns>
+        <columns>Account__c</columns>
+        <columns>Amount__c</columns>
+        <columns>Days_to_Expiry_date__c</columns>
+        <columns>Security_Type__c</columns>
+        <columns>Account_Country__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Account_Country__c</field>
+            <operation>equals</operation>
+            <value>Guatemala</value>
+        </filters>
+        <label>A1 - GT</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>IATACentralAmerica</group>
+            <group>IDFSAmericasAgencyManagement</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>A1_HN</fullName>
+        <columns>Status_image__c</columns>
+        <columns>NAME</columns>
+        <columns>Security_Status__c</columns>
+        <columns>Account__c</columns>
+        <columns>Amount__c</columns>
+        <columns>Days_to_Expiry_date__c</columns>
+        <columns>Security_Type__c</columns>
+        <columns>Account_Country__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Account_Country__c</field>
+            <operation>equals</operation>
+            <value>Honduras</value>
+        </filters>
+        <label>A1 - HN</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>IATACentralAmerica</group>
+            <group>IDFSAmericasAgencyManagement</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>A1_HT</fullName>
+        <columns>Status_image__c</columns>
+        <columns>NAME</columns>
+        <columns>Security_Status__c</columns>
+        <columns>Account__c</columns>
+        <columns>Amount__c</columns>
+        <columns>Days_to_Expiry_date__c</columns>
+        <columns>Security_Type__c</columns>
+        <columns>Account_Country__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Account_Country__c</field>
+            <operation>equals</operation>
+            <value>Haiti</value>
+        </filters>
+        <label>A1 - HT</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>IATAWesternCaribbean</group>
+            <group>IDFSAmericasAgencyManagement</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>A1_JM</fullName>
+        <columns>Status_image__c</columns>
+        <columns>NAME</columns>
+        <columns>Security_Status__c</columns>
+        <columns>Account__c</columns>
+        <columns>Amount__c</columns>
+        <columns>Days_to_Expiry_date__c</columns>
+        <columns>Security_Type__c</columns>
+        <columns>Account_Country__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Account_Country__c</field>
+            <operation>equals</operation>
+            <value>Jamaica</value>
+        </filters>
+        <label>A1 - JM</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>IATAWesternCaribbean</group>
+            <group>IDFSAmericasAgencyManagement</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>A1_KY</fullName>
+        <columns>Status_image__c</columns>
+        <columns>NAME</columns>
+        <columns>Security_Status__c</columns>
+        <columns>Account__c</columns>
+        <columns>Amount__c</columns>
+        <columns>Days_to_Expiry_date__c</columns>
+        <columns>Security_Type__c</columns>
+        <columns>Account_Country__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Account_Country__c</field>
+            <operation>equals</operation>
+            <value>Cayman Islands</value>
+        </filters>
+        <label>A1 - KY</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>IATAWesternCaribbean</group>
+            <group>IDFSAmericasAgencyManagement</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>A1_MX</fullName>
+        <columns>Status_image__c</columns>
+        <columns>NAME</columns>
+        <columns>Security_Status__c</columns>
+        <columns>Account__c</columns>
+        <columns>Amount__c</columns>
+        <columns>Days_to_Expiry_date__c</columns>
+        <columns>Security_Type__c</columns>
+        <columns>Account_Country__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Account_Country__c</field>
+            <operation>equals</operation>
+            <value>Mexico</value>
+        </filters>
+        <label>A1 - MX</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>IATAMexico</group>
+            <group>IDFSAmericasAgencyManagement</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>A1_NI</fullName>
+        <columns>Status_image__c</columns>
+        <columns>NAME</columns>
+        <columns>Security_Status__c</columns>
+        <columns>Account__c</columns>
+        <columns>Amount__c</columns>
+        <columns>Days_to_Expiry_date__c</columns>
+        <columns>Security_Type__c</columns>
+        <columns>Account_Country__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Account_Country__c</field>
+            <operation>equals</operation>
+            <value>Nicaragua</value>
+        </filters>
+        <label>A1 - NI</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>IATACentralAmerica</group>
+            <group>IDFSAmericasAgencyManagement</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>A1_PA</fullName>
+        <columns>Status_image__c</columns>
+        <columns>NAME</columns>
+        <columns>Security_Status__c</columns>
+        <columns>Account__c</columns>
+        <columns>Amount__c</columns>
+        <columns>Days_to_Expiry_date__c</columns>
+        <columns>Security_Type__c</columns>
+        <columns>Account_Country__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Account_Country__c</field>
+            <operation>equals</operation>
+            <value>Panama</value>
+        </filters>
+        <label>A1 - PA</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>IATACentralAmerica</group>
+            <group>IDFSAmericasAgencyManagement</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>A1_PE</fullName>
+        <columns>Status_image__c</columns>
+        <columns>NAME</columns>
+        <columns>Security_Status__c</columns>
+        <columns>Account__c</columns>
+        <columns>Amount__c</columns>
+        <columns>Days_to_Expiry_date__c</columns>
+        <columns>Security_Type__c</columns>
+        <columns>Account_Country__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Account_Country__c</field>
+            <operation>equals</operation>
+            <value>Peru</value>
+        </filters>
+        <label>A1 - PE</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>IATAPeru</group>
+            <group>IDFSAmericasAgencyManagement</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>A1_SV</fullName>
+        <columns>Status_image__c</columns>
+        <columns>NAME</columns>
+        <columns>Security_Status__c</columns>
+        <columns>Account__c</columns>
+        <columns>Amount__c</columns>
+        <columns>Days_to_Expiry_date__c</columns>
+        <columns>Security_Type__c</columns>
+        <columns>Account_Country__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Account_Country__c</field>
+            <operation>equals</operation>
+            <value>El Salvador</value>
+        </filters>
+        <label>A1 - SV</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>IATACentralAmerica</group>
+            <group>IDFSAmericasAgencyManagement</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>A1_Securities</fullName>
+        <columns>Status_image__c</columns>
+        <columns>NAME</columns>
+        <columns>Security_Status__c</columns>
+        <columns>Amount__c</columns>
+        <columns>Security_Type__c</columns>
+        <columns>Account__c</columns>
+        <columns>Account_Country__c</columns>
+        <columns>Days_to_Expiry_date__c</columns>
+        <columns>OBJECT_ID</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Region__c</field>
+            <operation>equals</operation>
+            <value>Americas</value>
+        </filters>
+        <label>A1 All Securities</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>IDFSAmericasAgencyManagement</group>
+            <group>IDFSAmericasallusers</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>A1_TC</fullName>
+        <columns>Status_image__c</columns>
+        <columns>NAME</columns>
+        <columns>Security_Status__c</columns>
+        <columns>Account__c</columns>
+        <columns>Amount__c</columns>
+        <columns>Days_to_Expiry_date__c</columns>
+        <columns>Security_Type__c</columns>
+        <columns>Account_Country__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Account_Country__c</field>
+            <operation>equals</operation>
+            <value>Turks and Caicos</value>
+        </filters>
+        <label>A1 - TC</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>IATAWesternCaribbean</group>
+            <group>IDFSAmericasAgencyManagement</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>A1_VE</fullName>
+        <columns>Status_image__c</columns>
+        <columns>NAME</columns>
+        <columns>Security_Status__c</columns>
+        <columns>Account__c</columns>
+        <columns>Amount__c</columns>
+        <columns>Days_to_Expiry_date__c</columns>
+        <columns>Security_Type__c</columns>
+        <columns>Account_Country__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Account_Country__c</field>
+            <operation>equals</operation>
+            <value>Venezuela</value>
+        </filters>
+        <label>A1 - VE</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>IATAVenezuela</group>
+            <group>IDFSAmericasAgencyManagement</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>A1_encashed_Securities</fullName>
+        <columns>Status_image__c</columns>
+        <columns>NAME</columns>
+        <columns>Security_Status__c</columns>
+        <columns>Security_Type__c</columns>
+        <columns>Account__c</columns>
+        <columns>Amount__c</columns>
+        <columns>Expiry_Date__c</columns>
+        <columns>Account_Country__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Region__c</field>
+            <operation>equals</operation>
+            <value>Americas</value>
+        </filters>
+        <filters>
+            <field>Security_Status__c</field>
+            <operation>equals</operation>
+            <value>Encashed</value>
+        </filters>
+        <label>A1 All Encashed Securities</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>IDFSAmericasAgencyManagement</group>
+            <group>IDFSAmericasallusers</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>A1_released_Securities</fullName>
+        <columns>Status_image__c</columns>
+        <columns>NAME</columns>
+        <columns>Security_Status__c</columns>
+        <columns>Security_Type__c</columns>
+        <columns>Account__c</columns>
+        <columns>Amount__c</columns>
+        <columns>Expiry_Date__c</columns>
+        <columns>Account_Country__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Region__c</field>
+            <operation>equals</operation>
+            <value>Americas</value>
+        </filters>
+        <filters>
+            <field>Security_Status__c</field>
+            <operation>equals</operation>
+            <value>Released</value>
+        </filters>
+        <label>A1 All Released Securities</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>IDFSAmericasAgencyManagement</group>
+            <group>IDFSAmericasallusers</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>AME_Securities</fullName>
+        <columns>Status_image__c</columns>
+        <columns>NAME</columns>
+        <columns>Security_Status__c</columns>
+        <columns>Amount__c</columns>
+        <columns>Security_Type__c</columns>
+        <columns>Account_Country__c</columns>
+        <columns>Account__c</columns>
+        <columns>Days_to_Expiry_date__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Region__c</field>
+            <operation>equals</operation>
+            <value>Africa &amp; Middle East</value>
+        </filters>
+        <label>AME All Securities</label>
+        <language>en_US</language>
+        <sharedTo>
+            <roleAndSubordinatesInternal>AfricaMEAccManager</roleAndSubordinatesInternal>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>AME_closetoexpiry</fullName>
+        <columns>Status_image__c</columns>
+        <columns>NAME</columns>
+        <columns>Security_Status__c</columns>
+        <columns>Amount__c</columns>
+        <columns>Security_Type__c</columns>
+        <columns>Account_Country__c</columns>
+        <columns>Account__c</columns>
+        <columns>Days_to_Expiry_date__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Region__c</field>
+            <operation>equals</operation>
+            <value>Africa &amp; Middle East</value>
+        </filters>
+        <filters>
+            <field>Security_Status__c</field>
+            <operation>equals</operation>
+            <value>Close to Expiry Date</value>
+        </filters>
+        <label>AME Close to Expiry date</label>
+        <language>en_US</language>
+        <sharedTo>
+            <roleAndSubordinatesInternal>AfricaMEAccManager</roleAndSubordinatesInternal>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>AME_expiredsecurities</fullName>
+        <columns>Status_image__c</columns>
+        <columns>NAME</columns>
+        <columns>Security_Status__c</columns>
+        <columns>Amount__c</columns>
+        <columns>Security_Type__c</columns>
+        <columns>Account_Country__c</columns>
+        <columns>Account__c</columns>
+        <columns>Days_to_Expiry_date__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Region__c</field>
+            <operation>equals</operation>
+            <value>Africa &amp; Middle East</value>
+        </filters>
+        <filters>
+            <field>Expiry_Date__c</field>
+            <operation>lessThan</operation>
+            <value>TODAY</value>
+        </filters>
+        <filters>
+            <field>Security_Status__c</field>
+            <operation>notEqual</operation>
+            <value>Released,Encashed</value>
+        </filters>
+        <label>AME Expired Securities</label>
+        <language>en_US</language>
+        <sharedTo>
+            <roleAndSubordinatesInternal>AfricaMEAccManager</roleAndSubordinatesInternal>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>AME_expirytoday</fullName>
+        <columns>Status_image__c</columns>
+        <columns>NAME</columns>
+        <columns>Security_Status__c</columns>
+        <columns>Amount__c</columns>
+        <columns>Security_Type__c</columns>
+        <columns>Account_Country__c</columns>
+        <columns>Account__c</columns>
+        <columns>Days_to_Expiry_date__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Region__c</field>
+            <operation>equals</operation>
+            <value>Africa &amp; Middle East</value>
+        </filters>
+        <filters>
+            <field>Expiry_Date__c</field>
+            <operation>equals</operation>
+            <value>TODAY</value>
+        </filters>
+        <filters>
+            <field>Security_Status__c</field>
+            <operation>notEqual</operation>
+            <value>Released,Encashed</value>
+        </filters>
+        <label>AME Expiry date TODAY</label>
+        <language>en_US</language>
+        <sharedTo>
+            <roleAndSubordinatesInternal>AfricaMEAccManager</roleAndSubordinatesInternal>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>A_P_Active_Securities</fullName>
+        <columns>Status_image__c</columns>
+        <columns>NAME</columns>
+        <columns>Security_Status__c</columns>
+        <columns>Account__c</columns>
+        <columns>Amount__c</columns>
+        <columns>Days_to_Expiry_date__c</columns>
+        <columns>Security_Type__c</columns>
+        <columns>Account_Country__c</columns>
+        <columns>Expiry_Date__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Region__c</field>
+            <operation>equals</operation>
+            <value>Asia &amp; Pacific</value>
+        </filters>
+        <filters>
+            <field>Security_Status__c</field>
+            <operation>equals</operation>
+            <value>Active,Close to Expiry Date</value>
+        </filters>
+        <label>A&amp;P Active Securities</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>IDFSAmericasAgencyManagement</group>
+            <group>IDFS_Americas_AM_RPM</group>
+            <roleAndSubordinatesInternal>APAgencyManagement</roleAndSubordinatesInternal>
+            <roleAndSubordinatesInternal>APAgencyManagementStaff</roleAndSubordinatesInternal>
+            <roleAndSubordinatesInternal>A_P_Agency_Risk_Management_Staff</roleAndSubordinatesInternal>
+            <roleAndSubordinatesInternal>ChinaNAsiaAgencyManagementMgr</roleAndSubordinatesInternal>
+            <roleAndSubordinatesInternal>ChinaNAsiaAgencyManagementStaff</roleAndSubordinatesInternal>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>A_P_All_Securities</fullName>
+        <columns>Status_image__c</columns>
+        <columns>IATA_code__c</columns>
+        <columns>Account__c</columns>
+        <columns>Expiry_Date__c</columns>
+        <columns>Amount__c</columns>
+        <columns>Security_Type__c</columns>
+        <columns>Account_Country__c</columns>
+        <columns>Days_to_Expiry_date__c</columns>
+        <columns>Security_Status__c</columns>
+        <columns>NAME</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Region__c</field>
+            <operation>equals</operation>
+            <value>Asia &amp; Pacific</value>
+        </filters>
+        <label>A&amp;P All Securities</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>IDFSAmericasAgencyManagement</group>
+            <group>IDFS_Americas_AM_RPM</group>
+            <roleAndSubordinatesInternal>APAgencyManagement</roleAndSubordinatesInternal>
+            <roleAndSubordinatesInternal>APAgencyManagementStaff</roleAndSubordinatesInternal>
+            <roleAndSubordinatesInternal>A_P_Agency_Risk_Management_Staff</roleAndSubordinatesInternal>
+            <roleAndSubordinatesInternal>ChinaNAsiaAgencyManagementMgr</roleAndSubordinatesInternal>
+            <roleAndSubordinatesInternal>ChinaNAsiaAgencyManagementStaff</roleAndSubordinatesInternal>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>A_P_Close_to_Expiry_date</fullName>
+        <columns>Status_image__c</columns>
+        <columns>NAME</columns>
+        <columns>Security_Status__c</columns>
+        <columns>Amount__c</columns>
+        <columns>Security_Type__c</columns>
+        <columns>Account_Country__c</columns>
+        <columns>Account__c</columns>
+        <columns>Days_to_Expiry_date__c</columns>
+        <columns>Expiry_Date__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Region__c</field>
+            <operation>equals</operation>
+            <value>Asia &amp; Pacific</value>
+        </filters>
+        <filters>
+            <field>Security_Status__c</field>
+            <operation>equals</operation>
+            <value>Close to Expiry Date</value>
+        </filters>
+        <label>A&amp;P Close to Expiry date</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>IDFSAmericasAgencyManagement</group>
+            <group>IDFS_Americas_AM_RPM</group>
+            <roleAndSubordinatesInternal>APAgencyManagement</roleAndSubordinatesInternal>
+            <roleAndSubordinatesInternal>APAgencyManagementStaff</roleAndSubordinatesInternal>
+            <roleAndSubordinatesInternal>A_P_Agency_Risk_Management_Staff</roleAndSubordinatesInternal>
+            <roleAndSubordinatesInternal>ChinaNAsiaAgencyManagementMgr</roleAndSubordinatesInternal>
+            <roleAndSubordinatesInternal>ChinaNAsiaAgencyManagementStaff</roleAndSubordinatesInternal>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>A_P_Expired_Securities</fullName>
+        <columns>Status_image__c</columns>
+        <columns>NAME</columns>
+        <columns>Security_Status__c</columns>
+        <columns>Amount__c</columns>
+        <columns>Security_Type__c</columns>
+        <columns>Account_Country__c</columns>
+        <columns>Account__c</columns>
+        <columns>Days_to_Expiry_date__c</columns>
+        <columns>Expiry_Date__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Region__c</field>
+            <operation>equals</operation>
+            <value>Asia &amp; Pacific</value>
+        </filters>
+        <filters>
+            <field>Expiry_Date__c</field>
+            <operation>lessThan</operation>
+            <value>TODAY</value>
+        </filters>
+        <filters>
+            <field>Security_Status__c</field>
+            <operation>notEqual</operation>
+            <value>Released,Encashed</value>
+        </filters>
+        <label>A&amp;P Expired Securities</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>IDFSAmericasAgencyManagement</group>
+            <group>IDFS_Americas_AM_RPM</group>
+            <roleAndSubordinates>APAgencyManagement</roleAndSubordinates>
+            <roleAndSubordinates>APAgencyManagementStaff</roleAndSubordinates>
+            <roleAndSubordinates>A_P_Agency_Risk_Management_Staff</roleAndSubordinates>
+            <roleAndSubordinatesInternal>ChinaNAsiaAgencyManagementMgr</roleAndSubordinatesInternal>
+            <roleAndSubordinatesInternal>ChinaNAsiaAgencyManagementStaff</roleAndSubordinatesInternal>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>A_P_Expiry_date_TODAY</fullName>
+        <columns>Status_image__c</columns>
+        <columns>NAME</columns>
+        <columns>Security_Status__c</columns>
+        <columns>Amount__c</columns>
+        <columns>Security_Type__c</columns>
+        <columns>Account_Country__c</columns>
+        <columns>Account__c</columns>
+        <columns>Days_to_Expiry_date__c</columns>
+        <columns>Expiry_Date__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Region__c</field>
+            <operation>equals</operation>
+            <value>Asia &amp; Pacific</value>
+        </filters>
+        <filters>
+            <field>Expiry_Date__c</field>
+            <operation>equals</operation>
+            <value>TODAY</value>
+        </filters>
+        <filters>
+            <field>Security_Status__c</field>
+            <operation>notEqual</operation>
+            <value>Released,Encashed</value>
+        </filters>
+        <label>A&amp;P Expiry date TODAY</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>IDFSAmericasAgencyManagement</group>
+            <group>IDFS_Americas_AM_RPM</group>
+            <roleAndSubordinatesInternal>APAgencyManagement</roleAndSubordinatesInternal>
+            <roleAndSubordinatesInternal>APAgencyManagementStaff</roleAndSubordinatesInternal>
+            <roleAndSubordinatesInternal>A_P_Agency_Risk_Management_Staff</roleAndSubordinatesInternal>
+            <roleAndSubordinatesInternal>ChinaNAsiaAgencyManagementMgr</roleAndSubordinatesInternal>
+            <roleAndSubordinatesInternal>ChinaNAsiaAgencyManagementStaff</roleAndSubordinatesInternal>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>A_P_Released_Securities</fullName>
+        <columns>Status_image__c</columns>
+        <columns>NAME</columns>
+        <columns>Security_Status__c</columns>
+        <columns>Security_Type__c</columns>
+        <columns>Account__c</columns>
+        <columns>Amount__c</columns>
+        <columns>Expiry_Date__c</columns>
+        <columns>Account_Country__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Region__c</field>
+            <operation>equals</operation>
+            <value>Asia &amp; Pacific</value>
+        </filters>
+        <filters>
+            <field>Security_Status__c</field>
+            <operation>equals</operation>
+            <value>Released</value>
+        </filters>
+        <label>A&amp;P Released Securities</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>IDFSAmericasAgencyManagement</group>
+            <group>IDFS_Americas_AM_RPM</group>
+            <roleAndSubordinatesInternal>APAgencyManagement</roleAndSubordinatesInternal>
+            <roleAndSubordinatesInternal>APAgencyManagementStaff</roleAndSubordinatesInternal>
+            <roleAndSubordinatesInternal>A_P_Agency_Risk_Management_Staff</roleAndSubordinatesInternal>
+            <roleAndSubordinatesInternal>ChinaNAsiaAgencyManagementMgr</roleAndSubordinatesInternal>
+            <roleAndSubordinatesInternal>ChinaNAsiaAgencyManagementStaff</roleAndSubordinatesInternal>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>China_securities</fullName>
+        <columns>Status_image__c</columns>
+        <columns>NAME</columns>
+        <columns>Security_Status__c</columns>
+        <columns>Amount__c</columns>
+        <columns>Security_Type__c</columns>
+        <columns>Account__c</columns>
+        <columns>Remarks__c</columns>
+        <columns>Days_to_Expiry_date__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Account_Country__c</field>
+            <operation>equals</operation>
+            <value>people&apos;s republic of china</value>
+        </filters>
+        <label>N.Asia Securities China</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>HubMadridACC</group>
+            <group>IDFSChinaNAsiaAgencyManagement</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>EUR_IL_All_Securities</fullName>
+        <columns>Status_image__c</columns>
+        <columns>NAME</columns>
+        <columns>Security_Status__c</columns>
+        <columns>Amount__c</columns>
+        <columns>Security_Type__c</columns>
+        <columns>Account__c</columns>
+        <columns>IATA_code__c</columns>
+        <columns>Days_to_Expiry_date__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Account_Country__c</field>
+            <operation>equals</operation>
+            <value>israel</value>
+        </filters>
+        <label>EUR Israel</label>
+        <language>en_US</language>
+        <sharedTo>
+            <roleAndSubordinatesInternal>CountryManagerIsrael</roleAndSubordinatesInternal>
+            <roleAndSubordinatesInternal>MADHubHeadofSCE</roleAndSubordinatesInternal>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Europe_Active_Securities</fullName>
+        <columns>Status_image__c</columns>
+        <columns>NAME</columns>
+        <columns>Security_Status__c</columns>
+        <columns>Account__c</columns>
+        <columns>Amount__c</columns>
+        <columns>Days_to_Expiry_date__c</columns>
+        <columns>Security_Type__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Region__c</field>
+            <operation>equals</operation>
+            <value>Europe</value>
+        </filters>
+        <filters>
+            <field>CREATED_DATE</field>
+            <operation>equals</operation>
+            <value>THIS_WEEK</value>
+        </filters>
+        <label>EUR Securities Created this week</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>HUBMadrid</group>
+            <group>IDFSEuropeallusers</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Europe_Active_Securities2</fullName>
+        <columns>Status_image__c</columns>
+        <columns>NAME</columns>
+        <columns>Security_Status__c</columns>
+        <columns>Account__c</columns>
+        <columns>Amount__c</columns>
+        <columns>Days_to_Expiry_date__c</columns>
+        <columns>Security_Type__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Region__c</field>
+            <operation>equals</operation>
+            <value>Europe</value>
+        </filters>
+        <filters>
+            <field>Security_Status__c</field>
+            <operation>equals</operation>
+            <value>Active,Close to Expiry Date</value>
+        </filters>
+        <label>EUR All active Securities</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>HUBMadrid</group>
+            <group>IDFSEuropeallusers</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Europe_AzSecurities</fullName>
+        <columns>Status_image__c</columns>
+        <columns>NAME</columns>
+        <columns>Security_Status__c</columns>
+        <columns>Amount__c</columns>
+        <columns>Security_Type__c</columns>
+        <columns>Account__c</columns>
+        <columns>Remarks__c</columns>
+        <columns>Days_to_Expiry_date__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Region__c</field>
+            <operation>equals</operation>
+            <value>Europe</value>
+        </filters>
+        <filters>
+            <field>Account_Country__c</field>
+            <operation>equals</operation>
+            <value>Azerbaijan</value>
+        </filters>
+        <label>EUR Azerbaijan</label>
+        <language>en_US</language>
+        <sharedTo>
+            <roleAndSubordinatesInternal>MADHubHeadofSCE</roleAndSubordinatesInternal>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Europe_Closetoexpiry_Securities</fullName>
+        <columns>Status_image__c</columns>
+        <columns>NAME</columns>
+        <columns>Days_to_Expiry_date__c</columns>
+        <columns>Account__c</columns>
+        <columns>Amount__c</columns>
+        <columns>Security_Type__c</columns>
+        <columns>Security_Status__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Region__c</field>
+            <operation>equals</operation>
+            <value>Europe</value>
+        </filters>
+        <filters>
+            <field>Security_Status__c</field>
+            <operation>equals</operation>
+            <value>Close to Expiry Date</value>
+        </filters>
+        <label>EUR All Close to expiry Securities</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>HUBMadrid</group>
+            <group>IDFSEuropeallusers</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Europe_Expired_Securities</fullName>
+        <columns>Status_image__c</columns>
+        <columns>NAME</columns>
+        <columns>Security_Status__c</columns>
+        <columns>Security_Type__c</columns>
+        <columns>Account__c</columns>
+        <columns>Amount__c</columns>
+        <columns>Expiry_Date__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Region__c</field>
+            <operation>equals</operation>
+            <value>Europe</value>
+        </filters>
+        <filters>
+            <field>Security_Status__c</field>
+            <operation>equals</operation>
+            <value>Expired</value>
+        </filters>
+        <label>EUR All Expired Securities</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>HUBMadrid</group>
+            <group>IDFSEuropeallusers</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Europe_PTSecurities</fullName>
+        <columns>Status_image__c</columns>
+        <columns>NAME</columns>
+        <columns>Security_Status__c</columns>
+        <columns>Amount__c</columns>
+        <columns>Security_Type__c</columns>
+        <columns>Account__c</columns>
+        <columns>Days_to_Expiry_date__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Region__c</field>
+            <operation>equals</operation>
+            <value>Europe</value>
+        </filters>
+        <filters>
+            <field>Account_Country__c</field>
+            <operation>equals</operation>
+            <value>portugal</value>
+        </filters>
+        <label>EUR Portugal</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>HUBMadrid</group>
+            <group>IDFSPortugal</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Europe_Russia</fullName>
+        <columns>Status_image__c</columns>
+        <columns>NAME</columns>
+        <columns>Security_Status__c</columns>
+        <columns>Amount__c</columns>
+        <columns>Security_Type__c</columns>
+        <columns>Account__c</columns>
+        <columns>Remarks__c</columns>
+        <columns>Days_to_Expiry_date__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Region__c</field>
+            <operation>equals</operation>
+            <value>Europe</value>
+        </filters>
+        <filters>
+            <field>Account_Country__c</field>
+            <operation>equals</operation>
+            <value>Russia</value>
+        </filters>
+        <label>EUR Russia</label>
+        <language>en_US</language>
+        <sharedTo>
+            <roleAndSubordinatesInternal>MADHubHeadofSCE</roleAndSubordinatesInternal>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Europe_Securities</fullName>
+        <columns>Status_image__c</columns>
+        <columns>NAME</columns>
+        <columns>Security_Status__c</columns>
+        <columns>Amount__c</columns>
+        <columns>Security_Type__c</columns>
+        <columns>Account_Country__c</columns>
+        <columns>Account__c</columns>
+        <columns>Days_to_Expiry_date__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Region__c</field>
+            <operation>equals</operation>
+            <value>Europe</value>
+        </filters>
+        <label>EUR All Securities</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>HUBMadrid</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Europe_Ukraine</fullName>
+        <columns>Status_image__c</columns>
+        <columns>NAME</columns>
+        <columns>Security_Status__c</columns>
+        <columns>Amount__c</columns>
+        <columns>Security_Type__c</columns>
+        <columns>Account__c</columns>
+        <columns>Remarks__c</columns>
+        <columns>Days_to_Expiry_date__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Region__c</field>
+            <operation>equals</operation>
+            <value>Europe</value>
+        </filters>
+        <filters>
+            <field>Account_Country__c</field>
+            <operation>equals</operation>
+            <value>Ukraine</value>
+        </filters>
+        <label>EUR Ukraine</label>
+        <language>en_US</language>
+        <sharedTo>
+            <roleAndSubordinatesInternal>MADHubHeadofSCE</roleAndSubordinatesInternal>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Europe_encashed_Securities</fullName>
+        <columns>Status_image__c</columns>
+        <columns>NAME</columns>
+        <columns>Security_Status__c</columns>
+        <columns>Security_Type__c</columns>
+        <columns>Account__c</columns>
+        <columns>Amount__c</columns>
+        <columns>Expiry_Date__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Region__c</field>
+            <operation>equals</operation>
+            <value>Europe</value>
+        </filters>
+        <filters>
+            <field>Security_Status__c</field>
+            <operation>equals</operation>
+            <value>Encashed</value>
+        </filters>
+        <label>EUR All Encashed Securities</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>HUBMadrid</group>
+            <group>IDFSEuropeallusers</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Europe_frSecurities</fullName>
+        <columns>Status_image__c</columns>
+        <columns>NAME</columns>
+        <columns>Security_Status__c</columns>
+        <columns>Amount__c</columns>
+        <columns>Security_Type__c</columns>
+        <columns>Account__c</columns>
+        <columns>Remarks__c</columns>
+        <columns>Days_to_Expiry_date__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Region__c</field>
+            <operation>equals</operation>
+            <value>Europe</value>
+        </filters>
+        <filters>
+            <field>Account_Country__c</field>
+            <operation>equals</operation>
+            <value>France</value>
+        </filters>
+        <label>EUR France</label>
+        <language>en_US</language>
+        <sharedTo>
+            <roleAndSubordinatesInternal>MADHubHeadofSCE</roleAndSubordinatesInternal>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Europe_released_Securities</fullName>
+        <columns>Status_image__c</columns>
+        <columns>NAME</columns>
+        <columns>Security_Status__c</columns>
+        <columns>Security_Type__c</columns>
+        <columns>Account__c</columns>
+        <columns>Amount__c</columns>
+        <columns>Expiry_Date__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Region__c</field>
+            <operation>equals</operation>
+            <value>Europe</value>
+        </filters>
+        <filters>
+            <field>Security_Status__c</field>
+            <operation>equals</operation>
+            <value>Released</value>
+        </filters>
+        <label>EUR All Released Securities</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>HUBMadrid</group>
+            <group>IDFSEuropeallusers</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Financial_Securities_Actives_BSP_FR</fullName>
+        <columns>Status_image__c</columns>
+        <columns>IATA_code__c</columns>
+        <columns>NAME</columns>
+        <columns>Security_Status__c</columns>
+        <columns>Amount__c</columns>
+        <columns>Security_Type__c</columns>
+        <columns>Account__c</columns>
+        <columns>Remarks__c</columns>
+        <columns>Days_to_Expiry_date__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Region__c</field>
+            <operation>equals</operation>
+            <value>Europe</value>
+        </filters>
+        <filters>
+            <field>Account_Country__c</field>
+            <operation>equals</operation>
+            <value>France</value>
+        </filters>
+        <label>Financial Securities Actives - BSP FR</label>
+        <language>en_US</language>
+        <sharedTo>
+            <roleAndSubordinatesInternal>StaffFrance</roleAndSubordinatesInternal>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>N_ASIA_Active_Securities</fullName>
+        <columns>Status_image__c</columns>
+        <columns>NAME</columns>
+        <columns>Security_Status__c</columns>
+        <columns>Account__c</columns>
+        <columns>Amount__c</columns>
+        <columns>Days_to_Expiry_date__c</columns>
+        <columns>Security_Type__c</columns>
+        <columns>Account_Country__c</columns>
+        <columns>Expiry_Date__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Region__c</field>
+            <operation>equals</operation>
+            <value>China &amp; North Asia</value>
+        </filters>
+        <filters>
+            <field>Security_Status__c</field>
+            <operation>equals</operation>
+            <value>Active,Close to Expiry Date</value>
+        </filters>
+        <label>N.ASIA Active Securities</label>
+        <language>en_US</language>
+        <sharedTo>
+            <roleAndSubordinatesInternal>ChinaNAsiaAgencyManagementMgr</roleAndSubordinatesInternal>
+            <roleAndSubordinatesInternal>ChinaNAsiaAgencyManagementStaff</roleAndSubordinatesInternal>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>N_ASIA_All_Securities</fullName>
+        <columns>Status_image__c</columns>
+        <columns>NAME</columns>
+        <columns>Security_Status__c</columns>
+        <columns>Amount__c</columns>
+        <columns>Security_Type__c</columns>
+        <columns>Account_Country__c</columns>
+        <columns>Account__c</columns>
+        <columns>Days_to_Expiry_date__c</columns>
+        <columns>Expiry_Date__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Region__c</field>
+            <operation>equals</operation>
+            <value>China &amp; North Asia</value>
+        </filters>
+        <label>N.ASIA All Securities</label>
+        <language>en_US</language>
+        <sharedTo>
+            <roleAndSubordinatesInternal>ChinaNAsiaAgencyManagementMgr</roleAndSubordinatesInternal>
+            <roleAndSubordinatesInternal>ChinaNAsiaAgencyManagementStaff</roleAndSubordinatesInternal>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>N_ASIA_Close_to_Expiry_date</fullName>
+        <columns>Status_image__c</columns>
+        <columns>NAME</columns>
+        <columns>Security_Status__c</columns>
+        <columns>Amount__c</columns>
+        <columns>Security_Type__c</columns>
+        <columns>Account_Country__c</columns>
+        <columns>Account__c</columns>
+        <columns>Days_to_Expiry_date__c</columns>
+        <columns>Expiry_Date__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Region__c</field>
+            <operation>equals</operation>
+            <value>China &amp; North Asia</value>
+        </filters>
+        <filters>
+            <field>Security_Status__c</field>
+            <operation>equals</operation>
+            <value>Close to Expiry Date</value>
+        </filters>
+        <label>N.ASIA Close to Expiry date</label>
+        <language>en_US</language>
+        <sharedTo>
+            <roleAndSubordinatesInternal>ChinaNAsiaAgencyManagementMgr</roleAndSubordinatesInternal>
+            <roleAndSubordinatesInternal>ChinaNAsiaAgencyManagementStaff</roleAndSubordinatesInternal>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>N_ASIA_Expired_Securities</fullName>
+        <columns>Status_image__c</columns>
+        <columns>NAME</columns>
+        <columns>Security_Status__c</columns>
+        <columns>Amount__c</columns>
+        <columns>Security_Type__c</columns>
+        <columns>Account_Country__c</columns>
+        <columns>Account__c</columns>
+        <columns>Days_to_Expiry_date__c</columns>
+        <columns>Expiry_Date__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Region__c</field>
+            <operation>equals</operation>
+            <value>China &amp; North Asia</value>
+        </filters>
+        <filters>
+            <field>Expiry_Date__c</field>
+            <operation>lessThan</operation>
+            <value>TODAY</value>
+        </filters>
+        <filters>
+            <field>Security_Status__c</field>
+            <operation>notEqual</operation>
+            <value>Released,Encashed</value>
+        </filters>
+        <label>N.ASIA Expired Securities</label>
+        <language>en_US</language>
+        <sharedTo>
+            <roleAndSubordinatesInternal>ChinaNAsiaAgencyManagementMgr</roleAndSubordinatesInternal>
+            <roleAndSubordinatesInternal>ChinaNAsiaAgencyManagementStaff</roleAndSubordinatesInternal>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>N_ASIA_Expiry_date_TODAY</fullName>
+        <columns>Status_image__c</columns>
+        <columns>NAME</columns>
+        <columns>Security_Status__c</columns>
+        <columns>Amount__c</columns>
+        <columns>Security_Type__c</columns>
+        <columns>Account_Country__c</columns>
+        <columns>Account__c</columns>
+        <columns>Days_to_Expiry_date__c</columns>
+        <columns>Expiry_Date__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Region__c</field>
+            <operation>equals</operation>
+            <value>China &amp; North Asia</value>
+        </filters>
+        <filters>
+            <field>Expiry_Date__c</field>
+            <operation>equals</operation>
+            <value>TODAY</value>
+        </filters>
+        <filters>
+            <field>Security_Status__c</field>
+            <operation>notEqual</operation>
+            <value>Released,Encashed</value>
+        </filters>
+        <label>N.ASIA Expiry date TODAY</label>
+        <language>en_US</language>
+        <sharedTo>
+            <roleAndSubordinates>ChinaNAsiaAgencyManagementMgr</roleAndSubordinates>
+            <roleAndSubordinates>ChinaNAsiaAgencyManagementStaff</roleAndSubordinates>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>N_ASIA_Released_Securities</fullName>
+        <columns>Status_image__c</columns>
+        <columns>NAME</columns>
+        <columns>Security_Status__c</columns>
+        <columns>Security_Type__c</columns>
+        <columns>Account__c</columns>
+        <columns>Amount__c</columns>
+        <columns>Expiry_Date__c</columns>
+        <columns>Account_Country__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Region__c</field>
+            <operation>equals</operation>
+            <value>China &amp; North Asia</value>
+        </filters>
+        <filters>
+            <field>Security_Status__c</field>
+            <operation>equals</operation>
+            <value>Released</value>
+        </filters>
+        <label>N.ASIA Released Securities</label>
+        <language>en_US</language>
+        <sharedTo>
+            <roleAndSubordinatesInternal>ChinaNAsiaAgencyManagementMgr</roleAndSubordinatesInternal>
+            <roleAndSubordinatesInternal>ChinaNAsiaAgencyManagementStaff</roleAndSubordinatesInternal>
+        </sharedTo>
+    </listViews>
+    <nameField>
+        <displayFormat>FS-{YYYY}{000000}</displayFormat>
+        <label>Financial Security Name</label>
+        <trackHistory>false</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Financial Securities</pluralLabel>
+    <searchLayouts>
+        <customTabListAdditionalFields>Status_image__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Account__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Security_Type__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Amount__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Security_Status__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Expiry_Date__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Financial_Institution__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Remarks__c</customTabListAdditionalFields>
+        <lookupDialogsAdditionalFields>Account__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Amount__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>IATA_code__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Financial_Institution__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>External_Security_ID__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Region__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Reception_Case__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Security_Status__c</lookupDialogsAdditionalFields>
+        <searchFilterFields>NAME</searchFilterFields>
+        <searchFilterFields>Account_Country__c</searchFilterFields>
+        <searchFilterFields>Region__c</searchFilterFields>
+        <searchFilterFields>Security_Status__c</searchFilterFields>
+        <searchFilterFields>Security_Type__c</searchFilterFields>
+        <searchFilterFields>CREATEDBY_USER</searchFilterFields>
+        <searchFilterFields>Amount__c</searchFilterFields>
+        <searchResultsAdditionalFields>Account__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>IATA_code__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Account_Country__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Amount__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Days_to_Expiry_date__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Expiry_Date__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Financial_Institution__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ControlledByParent</sharingModel>
+    <validationRules>
+        <fullName>Financial_Security_Validation_is_mandato</fullName>
+        <active>true</active>
+        <description>ACR 06749697 - A validation rule to force the user update the field &quot;Financial Security Validation&quot;</description>
+        <errorConditionFormula>ISNULL(Financial_Security_Validation__c)==TRUE
+&amp;&amp;
+ISPICKVAL(Security_Type__c,&quot;Bank Guarantee&quot;)
+&amp;&amp;
+(Account__r.IATA_ISO_Country__r.Name=&quot;Nigeria&quot;||Account__r.IATA_ISO_Country__r.Name=&quot;South Africa&quot;||Account__r.IATA_ISO_Country__r.Name=&quot;Benin&quot;||Account__r.IATA_ISO_Country__r.Name=&quot;Senegal&quot;||Account__r.IATA_ISO_Country__r.Name=&quot;Mali&quot;||Account__r.IATA_ISO_Country__r.Name=&quot;Cote D&apos;ivoire&quot;||Account__r.IATA_ISO_Country__r.Name=&quot;Togo&quot;||Account__r.IATA_ISO_Country__r.Name=&quot;Niger&quot;||Account__r.IATA_ISO_Country__r.Name=&quot;Gabon&quot;||Account__r.IATA_ISO_Country__r.Name=&quot;Congo&quot;||Account__r.IATA_ISO_Country__r.Name=&quot;Chad&quot;||Account__r.IATA_ISO_Country__r.Name=&quot;Mauritania&quot;||Account__r.IATA_ISO_Country__r.Name=&quot;Cameroon&quot;||Account__r.IATA_ISO_Country__r.Name=&quot;Burkina Faso&quot;)
+&amp;&amp;ISNEW()</errorConditionFormula>
+        <errorDisplayField>Financial_Security_Validation__c</errorDisplayField>
+        <errorMessage>Please validate the FS and update this field</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Financial_institution_is_mandatory</fullName>
+        <active>true</active>
+        <errorConditionFormula>ISBLANK(Financial_Institution__c )</errorConditionFormula>
+        <errorDisplayField>Financial_Institution__c</errorDisplayField>
+        <errorMessage>The financial institution is mandatory</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Region_must_be_informed_for_FS</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+NOT( ISPICKVAL( Region__c , &quot;Europe&quot;) ),
+NOT( ISPICKVAL( Region__c , &quot;Africa &amp; Middle East&quot;) ),
+NOT( ISPICKVAL( Region__c , &quot;Asia &amp; Pacific&quot;) ),
+NOT( ISPICKVAL( Region__c , &quot;Americas&quot;) ),
+NOT( ISPICKVAL( Region__c , &quot;China &amp; North Asia&quot;) )
+)</errorConditionFormula>
+        <errorDisplayField>Region__c</errorDisplayField>
+        <errorMessage>Inform the region</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>SARA_Expiry_date_and_Unlimited_Security</fullName>
+        <active>true</active>
+        <description>Ensures that a financial security is not set as no unlimited security with expiry date</description>
+        <errorConditionFormula>and(Unlimited_Security__c ,  NOT(ISNULL(Expiry_Date__c )))</errorConditionFormula>
+        <errorMessage>The security is set as unlimited security (with no expiry date) and at the same time as having an expiry date. Please correct this inconsistency before saving.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>SARA_Fill_Release_Encashment_Date</fullName>
+        <active>true</active>
+        <description>SARA</description>
+        <errorConditionFormula>AND(OR (ISPICKVAL(Security_Status__c , &quot;Released&quot;), ISPICKVAL(Security_Status__c , &quot;Encashed&quot;)), ISNULL( Release_Date__c ))</errorConditionFormula>
+        <errorDisplayField>Release_Date__c</errorDisplayField>
+        <errorMessage>Please fill the date of release or encashment of this guarantee using the field &quot;Release / Encashment Date&quot;</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>SARA_Fill_Release_reason</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(ISPICKVAL( Security_Status__c , &quot;Released&quot;) , ISPICKVAL(  Release_Reason__c , &quot;&quot;))</errorConditionFormula>
+        <errorDisplayField>Release_Reason__c</errorDisplayField>
+        <errorMessage>Please fill the reason why this security has been released from this picklist</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>SARA_Security_expiry_date_mandatory</fullName>
+        <active>true</active>
+        <description>Request the financial security expiry date or that it is set to &quot;unlimited security&quot;</description>
+        <errorConditionFormula>and ( ISNULL(Expiry_Date__c ),  Unlimited_Security__c = FALSE)</errorConditionFormula>
+        <errorDisplayField>Expiry_Date__c</errorDisplayField>
+        <errorMessage>Please set the expiry date of the security. If it has no expiry, then select the checkbox field &quot;Unlimited Security&quot; below.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>SARA_Security_must_be_linked_to_HO</fullName>
+        <active>true</active>
+        <description>check that the financial security is linked to the HO account of the agent (except for cross border guarantees).</description>
+        <errorConditionFormula>AND(NOT(ISPICKVAL(Account__r.Location_Type__c , &quot;HO&quot;)),NOT(ISPICKVAL(Account__r.Location_Type__c , &quot;AO&quot;)) , ISNEW(),  not(ispickval(Security_Type__c , &quot;Cross Border Guarantee&quot;)))</errorConditionFormula>
+        <errorDisplayField>Account__c</errorDisplayField>
+        <errorMessage>The financial security must be linked to the HO/AO account of the agent, never to a branch. Please classify the security accordingly or contact your administrator if any doubts.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>SARA_reception_information_mandatory</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND( ISNEW() ,
+OR( ISPICKVAL(Reasonforrequest__c, &quot;&quot;) ,  ISBLANK( Reception_Date__c ) , ISBLANK( Reception_Case__c )  ))</errorConditionFormula>
+        <errorDisplayField>Account__c</errorDisplayField>
+        <errorMessage>Please make sure that all the information regarding the reception of the security is filled in: Reception date, request reason and related case.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>SARA_validity_start_date_mandatory</fullName>
+        <active>true</active>
+        <description>validity start date mandatory for all securities from 19 July 2012</description>
+        <errorConditionFormula>AND( isnull(Validity_Start_Date__c ),  ISNEW(), DATEVALUE(CreatedDate ) &gt; DATE(2012,07,18))</errorConditionFormula>
+        <errorDisplayField>Validity_Start_Date__c</errorDisplayField>
+        <errorMessage>Please enter the validity start date for this security</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Security_Type_Verification</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+NOT( ISPICKVAL(  Security_Type__c  , &quot;Bank Guarantee&quot;) ),
+NOT( ISPICKVAL(  Security_Type__c  , &quot;CCG&quot;) ),
+NOT( ISPICKVAL(  Security_Type__c  , &quot;Cross Border Guarantee&quot;) ),
+NOT( ISPICKVAL(  Security_Type__c  , &quot;CWA Mutual Fund&quot;) ),
+NOT( ISPICKVAL(  Security_Type__c  , &quot;DIP&quot;) ),
+NOT( ISPICKVAL(  Security_Type__c  , &quot;Hong Kong Trust Fund&quot;) ),
+NOT( ISPICKVAL(  Security_Type__c  , &quot;Insurance Bond&quot;) ),
+NOT( ISPICKVAL(  Security_Type__c  , &quot;Ireland Trust Fund&quot;) ),
+NOT( ISPICKVAL(  Security_Type__c  , &quot;Joint Bank Guarantee (India)&quot;) ),
+NOT( ISPICKVAL(  Security_Type__c  , &quot;Letter Of Credit&quot;) ),
+NOT( ISPICKVAL(  Security_Type__c  , &quot;Letter Of Undertaking&quot;) ),
+NOT( ISPICKVAL(  Security_Type__c  , &quot;MCBG&quot;) ),
+NOT( ISPICKVAL(  Security_Type__c  , &quot;MCPG&quot;) ),
+NOT( ISPICKVAL(  Security_Type__c  , &quot;Others&quot;) ),
+NOT( ISPICKVAL(  Security_Type__c  , &quot;OTOC&quot;) ),
+NOT( ISPICKVAL(  Security_Type__c  , &quot;Parent Company Guarantee&quot;) ),
+NOT( ISPICKVAL(  Security_Type__c  , &quot;Recapitalization&quot;) ),
+NOT( ISPICKVAL(  Security_Type__c  , &quot;Standby Letter Of Credit&quot;) ),
+NOT( ISPICKVAL(  Security_Type__c  , &quot;Statement Of Assignment&quot;) ),
+NOT( ISPICKVAL(  Security_Type__c  , &quot;Surety Bond&quot;) ),
+NOT( ISPICKVAL(  Security_Type__c  , &quot;TAANZ Bonding Scheme&quot;) ),
+NOT( ISPICKVAL(  Security_Type__c  , &quot;Time Deposit&quot;) ),
+NOT( ISPICKVAL(  Security_Type__c  , &quot;Time Deposit Pledge&quot;) ),
+NOT( ISPICKVAL(  Security_Type__c  , &quot;Transit Account&quot;) ),
+NOT( ISPICKVAL(  Security_Type__c  , &quot;Financial Guarantee&quot;) )
+)</errorConditionFormula>
+        <errorDisplayField>Security_Type__c</errorDisplayField>
+        <errorMessage>Invalid Security Type</errorMessage>
+    </validationRules>
+    <webLinks>
+        <fullName>Create_PDF_letter</fullName>
+        <availability>online</availability>
+        <displayType>link</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>Create PDF letter</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>https://composer.congamerge.com/composer8/index.html?sessionId={!API.Session_ID}&amp;serverUrl={!API.Partner_Server_URL_290}&amp;id={!Financial_Security__c.Id}&amp;fp0=1&amp;ds1=0&amp;ds5=0&amp;LG3=2&amp;OFN=IATA+Notification+Letter+-+{!Financial_Security__c.IATA_code__c}&amp;ds4=0&amp;ReportId=00O20000003q4lt</url>
+    </webLinks>
+</CustomObject>

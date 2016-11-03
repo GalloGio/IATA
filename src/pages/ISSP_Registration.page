@@ -1,0 +1,168 @@
+<apex:page controller="ISSP_Registration" showHeader="false" sidebar="false" standardStylesheets="false" language="{!lang}">
+    
+  <head>
+    <title>IATA</title>
+ </head>
+ 
+  <apex:outputPanel rendered="{!displayNewCaseForm}" >
+
+  </apex:outputPanel>
+  
+  <apex:outputPanel rendered="{!show90Days}" >
+    <script>
+    alert('{!$Label.ISSP_Frozen_User_Alert_Message}');
+    if ("{!sRefererCommunity}"=="iss")  window.location.replace('/ISSP_Login');
+    else if ("{!sRefererCommunity}"=="iec") {
+      if (document.URL.indexOf("/iec")!=-1) window.location.replace('/iec/IEC_Home');
+      else window.location.replace('/IEC_Home');
+    }
+    </script>
+  </apex:outputPanel>
+
+  <apex:composition template="{!templatename}">
+    <apex:define name="body">
+      <!-- FIRST LOG BOX  -->
+      <div class="registration_page" id="Registration">
+        <div class="logo"> </div>
+        <div class="col-md-6 col-md-push-3">
+          <div class="panel panel-default">
+            <div class="panel-heading2">
+              <h3 class="panel-title"> {!$Label.ISSP_Registration_RegistrationProcess}</h3>
+            </div>
+            
+            <!-- MESSAGE BOX -->
+          <div class="panel panel-default" style="display:{!if(showConfirmMessage,'','none')}" id="confirmMessage">
+            <div class="panel-body">
+              <h4 class="list-group-item-heading">{!$Label.ISSP_Registration_Thank_you}</h4>
+              
+              <script>
+              var val = '{!showConfirmMessage}';
+              if (val == "true") { 
+                   setTimeout(function(){
+                         var url = document.URL;
+                         var first;
+                         var domain;
+                         if (url.indexOf(".org/")!=-1) { 
+                            domain = ".org/";
+                         }
+                         else if (url.indexOf(".com/")!=-1) {
+                            domain = ".com/";
+                         }
+                         //alert("domain: " +domain);
+                         
+                         first=url.split(domain);
+                        
+                         var redir = first[0] + domain + '{!urlredirect}'; 
+                         if (redir.indexOf("iec/IEC_Login")!=-1 && domain == ".org/")
+                            redir = "IEC_Login";
+                         location.href = redir;
+                         },
+                   5000);
+               }
+              </script>
+              <p class="list-group-item-text">{!$Label.ISSP_Registration_PleaseCheckYourMail}</p>
+              <p class="list-group-item-text">{!$Label.ISSP_Registration_Redirection}</p>
+            </div>
+          </div>
+          <!-- END MESSAGE BOX  -->
+          
+          
+          
+          
+          
+        
+        
+        
+            
+            <apex:form styleclass="login_box" forceSSL="true" rendered="{!(!showConfirmMessage)}">
+              <div class="alert alert-danger" style="display:{!if(errorMessage.size==0,'none','')}">
+                <strong>{!$Label.ISSP_Error} </strong>
+                <apex:repeat value="{!errorMessage}" var="er" id="theRepeat">
+                    <p><apex:outputText value="{!er}" escape="false" /></p>
+                </apex:repeat>
+              </div>
+              <div class="form-group">
+                <label for="exampleInputEmail1"><span class="required">*</span>{!$ObjectType.Contact.fields.Email.Label}</label>
+                  <div class="hiddenerror" style="display: none;">
+                    <p class="errormsg" style="line-height: 26px;">{!$Label.ISSP_Registration_Error_Email}</p>
+                  </div>                  
+                <apex:inputField styleclass="form-control rec"  id="email" value="{!con.email}"/>
+              </div>
+              <div class="form-group" style="{!if(whichcountry=="CN",'display:none','')}">
+                 <div>
+                  <apex:panelGrid columns="1" id="reCAPTCHAGrid" style="margin-left: 45px;" >
+                            <c:IECreCAPTCHA cttr="{!reCAPTCHA}" lang="{!lang}"/>
+                 </apex:panelGrid>
+                 
+                 <!-- 
+                    <img src="//captchator.com/captcha/image/{!captchaId}" />
+                    <br/><br/>
+                    <apex:inputText value="{!captchaAnswer}" html-placeholder="{!$Label.ISSP_Enter_Value}" />
+                  -->
+                
+                </div>
+              </div>
+              <!--
+              <div class="form-group" style="display:{!IF(reCAPTCHA.verified,'none','')}">
+                 <div>
+                  <c:ISSP_reCAPTCHA cttr="{!reCAPTCHA}"/>
+                </div>
+              </div>
+              -->
+              <!-- T&C Section is hidden, but checked/accepted by default -->
+              <!-- <div class="form-group" style="display:none"> -->
+              <div class="form-group" >
+                <div class="checkbox">
+                  <label>
+                    <apex:inputCheckbox value="{!accept}" selected="false"/>
+                    <a target="_blank" href="http://www.iata.org/customer-portal/Pages/terms.aspx">{!$Label.ISSP_Registration_acceptGeneralConditions}</a> 
+                  </label>
+                </div>
+              </div>
+              <div class="form-group">
+                <apex:commandButton styleclass="btn_iata btn-lg btn-block btn-success2" onClick="if(!validateNewUser())return false;" action="{!submitUser}" value="{!$Label.ISSP_Next}" id="next"/>
+              </div>
+            </apex:form> 
+          </div>
+          <!-- END FIRST LOG BOX  -->
+         
+        </div>
+      </div>
+    </apex:define>
+  </apex:composition>
+  
+  
+  
+  
+              <script>
+              
+                <!--alert("{!lang}"); -->
+              //in registration page
+                if ({!displayNewCaseForm})
+                    $("#NewCasePopUp").modal('show');
+                
+                function validateNewUser(){
+                    var type = $("select[id*='TypeSelect']").val();
+                    var flag = true;
+                    $('#recFields').hide();
+                    $('.rec').each(function (){
+                            $(this).parents('.form-group').removeClass('has-error');
+                            if(!$(this).val()){
+                                flag = false;
+                                $(this).parents('.form-group').addClass('has-error');
+                            }
+                            
+                        }
+                    )
+                    if(flag == false){
+                        $('#recFields').show();
+                    }
+                    
+                    return flag;
+                    
+                 }
+                
+              </script>
+        
+
+</apex:page>

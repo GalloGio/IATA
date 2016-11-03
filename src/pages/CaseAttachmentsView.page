@@ -1,0 +1,3 @@
+<apex:page showHeader="false" sidebar="false" standardStylesheets="true" standardController="Case" TabStyle="Case">
+    <c:Archive_Attachment_List_Component caseId="{!Case.Id}" StandardRedirect="true"></c:Archive_Attachment_List_Component>
+</apex:page>

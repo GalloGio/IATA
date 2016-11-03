@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>List</customSettingsType>
+    <description>Set what trigger notification for which object and with a given template</description>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>FieldSetAPIName__c</fullName>
+        <description>API Name of the field set which will show dynamically as part of the notification message, for example:
+Field Set: Name, Phone Number
+Notification Message: Hello {0}, your phone number is: {1}
+Message shown to user: Hello User, you phone number is: 123456789</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Use example:
+Field Set: Name, Phone Number
+Notification Message: Hello {0}, your phone number is: {1}
+Message shown to user: Hello User, you phone number is: 123456789</inlineHelpText>
+        <label>FieldSetAPIName</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Notification_Template_Id__c</fullName>
+        <description>The notification template Id to use for the notification</description>
+        <externalId>false</externalId>
+        <label>Notification Template Id</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>ISSP Notifications Trigger</label>
+    <visibility>Protected</visibility>
+</CustomObject>

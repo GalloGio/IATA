@@ -1,0 +1,9 @@
+<apex:page >
+<!-- Begin Default Content REMOVE THIS -->
+<h1>Congratulations</h1>
+<li class="header__navigation-li -right">
+                    <a href="{!$Site.BaseUrl}" class="header__navigation-link -cart"><i class="fa fa-shopping-cart"></i> Shopping Area</a>
+</li>
+
+<!-- End Default Content REMOVE THIS -->
+</apex:page>

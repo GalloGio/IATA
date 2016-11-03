@@ -1,0 +1,622 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>Contains the main product categories and their related information to be displayed on the product viewer page, and some extra configurations used for browsing products and rate plans.</description>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>false</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Active__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Determine whether the product is active to be displayed to the front-end website</inlineHelpText>
+        <label>Active</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Application_URL__c</fullName>
+        <description>URL of the application</description>
+        <externalId>false</externalId>
+        <inlineHelpText>URL of the application</inlineHelpText>
+        <label>Application URL</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Url</type>
+    </fields>
+    <fields>
+        <fullName>Auto_Renewal_Window__c</fullName>
+        <description>Number of days allowed before end of subscription to change the Auto-Renew flag</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Number of days allowed before end of subscription to change the Auto-Renew flag</inlineHelpText>
+        <label>Auto Renewal Window</label>
+        <picklist>
+            <picklistValues>
+                <fullName>0</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>30</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>60</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>90</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>900</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Banner_Image_Small__c</fullName>
+        <externalId>false</externalId>
+        <label>Banner Image Small</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Url</type>
+    </fields>
+    <fields>
+        <fullName>Banner_Image__c</fullName>
+        <description>Image used in Product Viewer page</description>
+        <externalId>false</externalId>
+        <label>Banner Image</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Url</type>
+    </fields>
+    <fields>
+        <fullName>Button_Type__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Determines whether to show the buttons on the sections as &quot;Buy now&quot; or as &quot;Get a Quote&quot;</inlineHelpText>
+        <label>Button Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Buy Now</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Get a Quote</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Buy/Quote</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Display_Name__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Display name (ex: Global System Solutions) that will be used in the product landing page as the display name at the top of the page.</inlineHelpText>
+        <label>Display Name</label>
+        <length>50</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Feature_1_Description__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Description used to describe feature #1</inlineHelpText>
+        <label>Feature 1 - Description</label>
+        <length>32768</length>
+        <trackTrending>false</trackTrending>
+        <type>Html</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Feature_1_Image__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Image used to be displayed beside the feature #1 description.</inlineHelpText>
+        <label>Feature 1 - Image</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Url</type>
+    </fields>
+    <fields>
+        <fullName>Feature_2_Description__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Description used to describe feature #2</inlineHelpText>
+        <label>Feature 2 - Description</label>
+        <length>32768</length>
+        <trackTrending>false</trackTrending>
+        <type>Html</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Feature_2_Image__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Image used to be displayed beside the feature #2 description.</inlineHelpText>
+        <label>Feature 2 - Image</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Url</type>
+    </fields>
+    <fields>
+        <fullName>Feature_3_Description__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Description used to describe feature #3</inlineHelpText>
+        <label>Feature 3 - Description</label>
+        <length>32768</length>
+        <trackTrending>false</trackTrending>
+        <type>Html</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Feature_3_Image__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Image used to be displayed beside the feature #3 description.</inlineHelpText>
+        <label>Feature 3 - Image</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Url</type>
+    </fields>
+    <fields>
+        <fullName>Feature_4_Description__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Description used to describe feature #4</inlineHelpText>
+        <label>Feature 4 - Description</label>
+        <length>32768</length>
+        <trackTrending>false</trackTrending>
+        <type>Html</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Feature_4_Image__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Image used to be displayed beside the feature #4 description.</inlineHelpText>
+        <label>Feature 4 - Image</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Url</type>
+    </fields>
+    <fields>
+        <fullName>Feature_5_Description__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Description used to describe feature #5</inlineHelpText>
+        <label>Feature 5 - Description</label>
+        <length>32768</length>
+        <trackTrending>false</trackTrending>
+        <type>Html</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Feature_5_Image__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Image used to be displayed beside the feature #5 description.</inlineHelpText>
+        <label>Feature 5 - Image</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Url</type>
+    </fields>
+    <fields>
+        <fullName>Feature_6_Description__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Description used to describe feature #6</inlineHelpText>
+        <label>Feature 6 - Description</label>
+        <length>32768</length>
+        <trackTrending>false</trackTrending>
+        <type>Html</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Feature_6_Image__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Image used to be displayed beside the feature #6 description.</inlineHelpText>
+        <label>Feature 6 - Image</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Url</type>
+    </fields>
+    <fields>
+        <fullName>Is_Quantifiable_Product__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Indicates if Product Category associated Rate Plans are quantifiable or not</inlineHelpText>
+        <label>Is Quantifiable Product</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Long_Description__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Description that will be used to describe the selected products and will be displayed below the banner.</inlineHelpText>
+        <label>Long Description</label>
+        <length>32768</length>
+        <trackTrending>false</trackTrending>
+        <type>Html</type>
+        <visibleLines>15</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Product_Feature__c</fullName>
+        <description>Grouping of the product category. These 3 features are displayed on the home page</description>
+        <externalId>false</externalId>
+        <label>Product Feature</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Data</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Lookup</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Marketing</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Product_Icon__c</fullName>
+        <externalId>false</externalId>
+        <label>Product Icon</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Url</type>
+    </fields>
+    <fields>
+        <fullName>Recommended_Product_Category_1__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Recommended Product 1</label>
+        <referenceTo>Product_Category__c</referenceTo>
+        <relationshipLabel>Product Categories</relationshipLabel>
+        <relationshipName>Product_Categories</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Recommended_Product_Category_2__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Recommended Product 2</label>
+        <referenceTo>Product_Category__c</referenceTo>
+        <relationshipLabel>Product Categories (Recommended Product Category 2)</relationshipLabel>
+        <relationshipName>Product_Categories1</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Renewal_Window__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Number of days allowed for the renewal window</inlineHelpText>
+        <label>Renewal Window</label>
+        <picklist>
+            <picklistValues>
+                <fullName>0</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>30</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>60</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>90</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>400</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Resource_1_Description__c</fullName>
+        <externalId>false</externalId>
+        <label>Resource 1 - Description</label>
+        <length>32768</length>
+        <trackTrending>false</trackTrending>
+        <type>Html</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Resource_1_File__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Resource 1 File link</inlineHelpText>
+        <label>Resource 1 - File</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Url</type>
+    </fields>
+    <fields>
+        <fullName>Resource_2_Description__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Resource 2  Description</inlineHelpText>
+        <label>Resource 2 - Description</label>
+        <length>32768</length>
+        <trackTrending>false</trackTrending>
+        <type>Html</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Resource_2_File__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Resource 2  File</inlineHelpText>
+        <label>Resource 2 - File</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Url</type>
+    </fields>
+    <fields>
+        <fullName>Resource_3_Description__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Resource 3  Description</inlineHelpText>
+        <label>Resource 3 - Description</label>
+        <length>32768</length>
+        <trackTrending>false</trackTrending>
+        <type>Html</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Resource_3_File__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Resource 3  File</inlineHelpText>
+        <label>Resource 3 - File</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Url</type>
+    </fields>
+    <fields>
+        <fullName>Resources_Main_Text__c</fullName>
+        <externalId>false</externalId>
+        <label>Resources - Main Text</label>
+        <length>32768</length>
+        <trackTrending>false</trackTrending>
+        <type>Html</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Section_1_Show__c</fullName>
+        <defaultValue>true</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Show/Hide Section #1</inlineHelpText>
+        <label>Section 1: Show</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Section_2_Description__c</fullName>
+        <description>A generic RTF description and contents</description>
+        <externalId>false</externalId>
+        <label>Section 2: Description</label>
+        <length>32768</length>
+        <trackTrending>false</trackTrending>
+        <type>Html</type>
+        <visibleLines>25</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Section_2_Name__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>The name to be displayed on section #2</inlineHelpText>
+        <label>Section 2: Name</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Section_2_Show__c</fullName>
+        <defaultValue>true</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Show/Hide Section #2</inlineHelpText>
+        <label>Section 2: Show</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Section_3_Description__c</fullName>
+        <description>Generic RTF contents</description>
+        <externalId>false</externalId>
+        <label>Section 3: Description</label>
+        <length>32768</length>
+        <trackTrending>false</trackTrending>
+        <type>Html</type>
+        <visibleLines>25</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Section_3_Name__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>The name to be displayed on section #3</inlineHelpText>
+        <label>Section 3: Name</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Section_3_Show__c</fullName>
+        <defaultValue>true</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Show/Hide Section #3</inlineHelpText>
+        <label>Section 3: Show</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Section_4_Show__c</fullName>
+        <defaultValue>true</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Show/Hide Section #4</inlineHelpText>
+        <label>Section 4: Show</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Section_5_Description__c</fullName>
+        <description>Generic RTF contents</description>
+        <externalId>false</externalId>
+        <label>Section 5: Description</label>
+        <length>32768</length>
+        <trackTrending>false</trackTrending>
+        <type>Html</type>
+        <visibleLines>25</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Section_5_Name__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>The name to be displayed on section #5</inlineHelpText>
+        <label>Section 5: Name</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Section_5_Show__c</fullName>
+        <defaultValue>true</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Show/Hide Section #5</inlineHelpText>
+        <label>Section 5: Show</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Section_6_Show__c</fullName>
+        <defaultValue>true</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Show/Hide Section #6</inlineHelpText>
+        <label>Section 6: Show</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Short_Description__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Short description can be used at the top of the page under the product display name.</inlineHelpText>
+        <label>Short Description</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Show_price_on_eCommerce__c</fullName>
+        <externalId>false</externalId>
+        <label>Show price on eCommerce?</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Yes</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>No - Validation Required</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Trial_available_for_this_Product__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Trial available for this Product?</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <label>Product Category</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Display_Name__c</columns>
+        <columns>Active__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
+    <nameField>
+        <label>Product Category Code</label>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Product Categories</pluralLabel>
+    <searchLayouts>
+        <customTabListAdditionalFields>Display_Name__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Active__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Is_Quantifiable_Product__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Long_Description__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Product_Feature__c</customTabListAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ReadWrite</sharingModel>
+</CustomObject>

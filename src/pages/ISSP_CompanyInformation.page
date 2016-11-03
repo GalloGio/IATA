@@ -1,0 +1,464 @@
+<apex:page controller="ISSP_PersonalInformation" extensions="ISSP_PersonalInformationWithoutSharing"  standardStylesheets="false" showHeader="false" sidebar="false"  applyBodyTag="false" applyHtmlTag="false">
+ <html>
+ <c:ISSP_Header ></c:ISSP_Header>    
+ <body>
+     <link rel="stylesheet" href="{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/build/css/intlTelInput.css')}"/>
+     <script type="text/javascript">
+     $(document).ready(function() {
+  		if({!isEditMode}){
+  			$('.saveMode').hide();
+            $('.editMode').show();
+            $('.editModeBtn').show();
+    	} else {
+    		$('.selected-flag').hide();
+    	}
+         //alert({!isEditMode});
+  		});
+     </script>
+      <style>
+           	.has-error .hiddenerror {display: inline !important;}
+           	.errormsg {font-weight: bold; font-size: 14px; color: #C90435;}
+           	.btn-success2 {color: #ffffff;background-color: #a1bc00;border: 1px solid #4E8E15;font-weight: bold;cursor: pointer;}
+         	.required {color: #C90435;font-size: 24px;padding: 0 5px 0 0;}
+    </style>
+
+    <div class="container">
+        <c:ISSP_CustomNavigation />
+        <apex:form id="companyProfile">
+        <div class="panel panel-primary">
+            <div class="panel-heading head_panel_green">
+                <h3 class="panel-title">{!$Label.ISSP_Registration_MyCompany}</h3>
+            </div>
+            <div class="panel-body">
+                <div class="alert alert-danger" style="display:{!if(errorMessage.size==0,'none','')}" >
+                    <strong>Error: </strong>
+                    <apex:repeat value="{!errorMessage}" var="er" id="theRepeat">
+                        <p> {!er}</p>
+                    </apex:repeat>
+                </div>
+                <div class="row">
+                    <!-- My Company panel  -->
+                    <div class="col-md-6">
+                        <div class="panel-body form-horizontal" style="padding-top: 0px;" >
+                            <div class="row">
+                                <label class="lbl col-lg-5" style="padding-left:28px" for="exampleInputEmail1">{!$ObjectType.Account.fields.Legal_name__c.Label}</label>
+                                <div class="col-lg-7">
+                                    {!con.Account.Name}
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                 <div class="col-lg-5">
+                                <label class="lbl" style="padding-left:10px">{!$ObjectType.Account.fields.TradeName__c.Label}</label>
+                                </div>
+                                <div class="col-lg-7">
+                                <apex:inputField styleclass="form-control editMode editModeTradeName" value="{!con.Account.TradeName__c}"/>
+                               	<span class="saveMode saveModeTradeName" style="line-height: 24px;">
+                                	<apex:outputField value="{!con.Account.TradeName__c}"/>
+                                    <apex:outputLink value="#" styleClass="saveMode" onclick="$('.saveModeTradeName').hide();$('.editModeTradeName').show();$('.editModeBtn').show();" rendered="{!AND(bIsAdmin,isIATAAgencyAcct,bIsMinorChangeEnabled, NOT(bBlockTradeNameChange))}"> [{!$Label.ISSP_edit_lowercase}]</apex:outputLink>
+                                    </span>
+                            	</div>
+                            </div>
+                            <!-- end row -->
+                           
+                                <apex:outputText rendered="{!isIATAAirlineAcct}">
+                                    <div class="row">
+                                        <label class="lbl col-lg-5" style="padding-left:28px">{!$ObjectType.Account.fields.Airline_designator__c.Label}</label>
+                                        <div class="col-lg-7">{!con.Account.Airline_designator__c}</div>
+                                     </div>
+                                     <!-- end row -->
+                                    <div class="row">
+                                        <label class="lbl col-lg-5" style="padding-left:28px">{!$ObjectType.Account.fields.ICAO_designator__c.Label}</label>
+                                        <div class="col-lg-7">{!con.Account.ICAO_designator__c}</div>
+                                     </div>
+                                     <!-- end row -->
+                                </apex:outputText>
+                           
+                            <div class="row">
+                                <apex:outPutPanel layout="block" rendered="{!con.Account.Status__c != 'New application pending'}">
+                                    <label class="lbl col-lg-5" style="padding-left:28px">{!$ObjectType.Account.fields.IATACode__c.Label}</label>
+                                    <div class="col-lg-7">
+                                        <div>{!con.Account.IATACode__c} </div>
+                                    </div>
+                                </apex:outPutPanel>
+                            </div>
+                            
+                            <div class="row">
+                                <apex:outputPanel rendered="{!con.Account.Sector__c != null}" layout="block">
+                                    <label class="lbl col-lg-5" style="padding-left:28px">{!$ObjectType.Account.fields.Sector__c.Label}</label>
+                                    <div class="col-lg-7">
+                                        {!con.Account.Sector__c}
+                                    </div>
+                                </apex:outputPanel>
+                            </div>
+                            <!-- end row -->
+                            <div class="row">
+                                <apex:outputPanel rendered="{!con.Account.Category__c!= null}" layout="block">
+                                    <label class="lbl col-lg-5" style="padding-left:28px">{!$ObjectType.Account.fields.Category__c.Label}</label>
+                                    <div class="col-lg-7">
+                                        {!con.Account.Category__c}
+                                    </div>
+                                </apex:outputPanel>
+                            </div>
+                            <!-- end row -->
+                            
+                            <apex:outputText rendered="{!isIATAAirlineAcct}">
+                                <div class="row">
+                                    <apex:outputLabel styleClass="lbl col-lg-5" style="padding-left:28px" value="{!$ObjectType.Account.fields.Field_Head_Office__c.Label}" />
+                                    <div class="col-lg-7"><apex:outPutField value="{!con.Account.Field_Head_Office__c}"/></div>
+                                </div>    
+                             </apex:outputText>
+                                
+                             <apex:outputText rendered="{!isIATAAgencyAcct}">
+                                  <div class="row">
+                                    <apex:outputLabel styleClass="lbl col-lg-5" style="padding-left:28px" value="{!$ObjectType.Account.fields.Location_Type__c.Label}" />
+                                    <div class="col-lg-7"><apex:outPutField value="{!con.Account.Location_Type__c}"/></div>
+                                  </div>
+                                 </apex:outputText>
+                            
+                            <apex:outputText rendered="{!isIATAAirlineAcct}">
+                                <div class="row">
+                                <apex:outputLabel styleClass="lbl col-lg-5" style="padding-left:28px" value="{!$ObjectType.Account.fields.Membership_status__c.Label}" />
+                                    <div class="col-lg-7">
+                                        <apex:outPutField value="{!con.Account.Membership_status__c}"/>
+                                    </div>
+                             </div>
+                        </apex:outputText>
+                        
+                        <div class="form-group row">
+                            <div class="lbl col-lg-5">
+                                <label class="lbl" for="exampleInputEmail1"><apex:outputText escape="false" value="{!IF(isIATAAgencyAcct,'*', '&nbsp;')}" styleClass="required"/>{!$Label.ISSP_Registration_BusinessPhone}</label>
+                           	</div>
+                            
+                            <div class="col-lg-7 phone">
+                                    <apex:inputHidden id="businessphone" value="{!con.Account.Phone}" />
+                                    <apex:inputField id="businessphoneinput" styleclass="form-control editMode editModePhone col-lg-8 rec" value="{!con.Account.PhoneNational__c}" onblur="setInternationalPhoneNo('phone');"/>
+                                    <div class="hiddenerror" style="display: none;">
+                    					<p class="errormsg" style="line-height: 26px;">{!$Label.ISSP_Registration_Error_BusinessPhone}</p>
+                  					</div>   
+                                    <span class="saveMode saveModePhone" style="line-height: 36px;">
+                                        <apex:outputField value="{!con.Account.Phone}"/>
+                                        <span style="padding-left:10px"><apex:outputLink value="#" styleClass="saveMode" onclick="$('.saveModePhone').hide();$('.phone .selected-flag').show();$('.editModePhone').show();$('.editModeBtn').show()" rendered="{!AND(bIsAdmin,isIATAAgencyAcct,bIsMinorChangeEnabled)}">[{!$Label.ISSP_edit_lowercase}]</apex:outputLink></span>
+                                    </span>
+                                </div>
+                         </div>
+                         
+                            <div class="row form-group">
+                                <div class="col-md-5" style="padding-left:28px">
+                                    <label class="lbl" for="exampleInputEmail1">{!$ObjectType.Contact.fields.Fax.Label}</label>
+                                </div>
+                                <div class="col-md-7 fax">
+                                    <apex:inputHidden id="businessfax" value="{!con.Account.Fax}" />
+                                    <apex:inputField id="businessfaxinput" styleclass="form-control editMode editModeFax col-lg-8" value="{!con.Account.FAXNational__c}" onblur="setInternationalPhoneNo('fax');"/>
+                                    <span class="saveMode saveModeFax">
+                                        <apex:outputField value="{!con.Account.Fax}"/>
+                                        <span style="padding-left:10px"><apex:outputLink value="#" styleClass="saveMode" onclick="$('.saveModeFax').hide();$('.fax .selected-flag').show();$('.editModeFax').show();$('.editModeBtn').show()" rendered="{!AND(bIsAdmin,isIATAAgencyAcct,bIsMinorChangeEnabled)}">[{!$Label.ISSP_edit_lowercase}]</apex:outputLink></span>
+                                    </span>
+                                </div>
+                            </div>
+                            
+                            <div class="row form-group">
+                                <div class="col-md-5" style="padding-left:28px">
+                                    <label class="lbl" for="businessemailinput">{!$Label.ISSP_Office_Email}</label>
+                                </div>
+                                <div class="col-md-7 email">
+                                    <apex:inputHidden id="businessemail" value="{!con.Account.Email__c}" />
+                                    <apex:inputField id="businessemailinput" styleclass="form-control editMode editModeEmail col-lg-8" value="{!con.Account.Email__c}"/>
+                                    <span class="saveMode saveModeEmail">
+                                        <apex:outputField value="{!con.Account.Email__c}"/>
+                                        <span style="padding-left:10px"><apex:outputLink value="#" styleClass="saveMode" onclick="$('.saveModeEmail').hide();$('.editModeEmail').show();$('.editModeBtn').show()" rendered="{!AND(bIsAdmin,isIATAAgencyAcct,bIsMinorChangeEnabled)}">[{!$Label.ISSP_edit_lowercase}]</apex:outputLink></span>
+                                    </span>
+                                </div>
+                            </div>
+                            
+                            <div class="row form-group">
+                                <div class="col-md-5" style="padding-left:28px">
+                                    <label class="lbl" for="businessinputwebsite">Web site</label>
+                                </div>
+                                <div class="col-md-7 email">
+                                    <apex:inputHidden id="businesswebsite" value="{!con.Account.WebSite}" />
+                                    <apex:inputField id="businesswebsiteinput" styleclass="form-control editMode editModeWebSite col-lg-8" value="{!con.Account.WebSite}"/>
+                                    <span class="saveMode saveModeWebSite">
+                                        <apex:outputField value="{!con.Account.WebSite}"/>
+                                        <span style="padding-left:10px"><apex:outputLink value="#" styleClass="saveMode" onclick="$('.saveModeWebSite').hide();$('.editModeWebSite').show();$('.editModeBtn').show()" rendered="{!AND(bIsAdmin,isIATAAgencyAcct,bIsMinorChangeEnabled)}">[{!$Label.ISSP_edit_lowercase}]</apex:outputLink></span>
+                                    </span>
+                                </div>
+                            </div>
+                            <!-- end row -->
+                           
+                            <div class="row">
+                                <label class="lbl col-lg-5" style="padding-left:28px">{!$ObjectType.Account.fields.IATA_ISO_Country__c.Label}</label>
+                                <div class="col-lg-7">
+                                    <div>{!con.Account.IATA_ISO_Country__r.Name}</div>
+                                </div>
+                </div>
+                            <!-- end row -->
+                            <div class="row">
+                                <label class="lbl col-lg-5" style="padding-left:28px">{!$label.ISSP_CompanyAddressInformation}</label>
+                                <div class="col-lg-7">
+                                    {!con.Account.BillingStreet}<br/>
+                                    {!con.Account.BillingCity} 
+                                    {!con.Account.BillingPostalCode}<br/>
+                                    {!con.Account.BillingState}<br/>
+                                    
+                                     {!con.Account.BillingCountry}<br/>
+                                    
+                                </div>
+                            </div>
+                            <!-- end row --> 
+                            
+                            <!-- DTULLO 20160202. Add DDS Section -->
+                            <apex:outputPanel rendered="{!AND(bIsAdmin, con.Account.DDS_Status__c=='Opt-Out')}">
+	                            <div class="row">
+	                            	<apex:outputLabel styleClass="lbl col-lg-5" style="padding-left:28px" value="{!$ObjectType.Account.fields.DDS_Status__c.Label}" />
+	                                <div class="col-lg-7">
+	                                	<apex:outPutField value="{!con.Account.DDS_Status__c}"/>
+	                                </div>
+	                            </div>
+	                            <div class="row">
+	                            	<apex:outputLabel styleClass="lbl col-lg-5" style="padding-left:28px" value="{!$ObjectType.Account.fields.DDS_Last_Update_Date__c.Label}" />
+	                                <div class="col-lg-7">
+	                                	<apex:outPutField value="{!con.Account.DDS_Last_Update_Date__c}"/>&nbsp;
+	                                	<apex:outputLink value="/ISSP_ChangeDDS_OI">{!$Label.ISSP_Opt_In}</apex:outputLink>
+	                                </div>
+	                            </div>
+	                        </apex:outputPanel>
+                            <!-- end row --> 
+                            
+                            <apex:outputpanel rendered="{!isValidatedAirlineUser}">
+                                <div class="row">
+                                    <label class="lbl col-lg-5" style="padding-left:28px">{!$ObjectType.Contact.fields.Airline_Credit_Risk_Manager__c.Label}</label>
+                                    <div class="col-lg-7">
+                                        {!ValidatedAirlineUser_Str}
+                                    </div>
+                                </div>
+                            </apex:outputpanel>
+                        </div>
+                        <!-- end panel -->
+                    </div>
+                    <!-- end col -->
+                    <div class="col-md-6 col-sm-12">
+                      <div class="panel-body form-horizontal" style="padding-top: 0px;" >
+                          <apex:outputText rendered="{!showIrregularities}">
+                           <div class="row">
+                                    <label class="lbl col-lg-8">{!$Label.ISSP_Homepage_Irregularities}</label> 
+                                <div class="col-lg-4">
+                                    <span class="{!if(noirr=='0',"badge ","badge redbadge")}">{!blankvalue(noirr,"0")}</span>
+                                    
+                               </div>
+                            </div>
+                           
+                          <div class="row">
+                              <div style="display:{!if(noirr=='0' || noirr=='',"none","block")}" class="col-md-12">
+                                       <i>{!$Label.ISSP_PageDescription_ISSP_CompanyInformation}</i> 
+                                    </div>
+                          </div>
+                             
+                          <hr />
+                          </apex:outputText>
+                           <apex:outputText rendered="{!if(OpenDebts!='',true,false)}">
+                           <b><apex:outputText escape="false" value="{!$Label.ISSP_outstanding_invoices}"/> </b>
+                          </apex:outputText>
+                          
+                          <hr />
+                             
+                          <apex:outputText rendered="{!if(FinSubmission!='',true,false)}">
+                          <div class="row">
+                                <apex:outputLabel styleClass="lbl col-xs-5" value="{!$ObjectType.Account.fields.Fin_statements_submission_deadline__c.Label}" />
+                                <div class="col-md-7">
+                                   {!FinSubmission}
+                                </div>
+                             </div>
+                          </apex:outputText> 
+                     <apex:outputPanel rendered="{!ifapName != ''}">
+                        <div class="row">
+                            <label class="lbl col-lg-4 ">{!$Label.ISSP_IFAP_Name}</label>
+                            <div class="col-lg-8">{!ifapName}</div>
+                        </div>
+                     
+                     <hr />
+                     
+                        <div class="row">
+                            <label class="lbl col-lg-4">{!$Label.ISSP_IFAP_Email}</label>
+                            <div class="col-lg-8">{!ifapEmail}</div>
+                        </div>
+                             
+                        <div class="row">
+                            
+                            <div class="col-lg-8">
+                                    <apex:commandButton action="{!AssignIFAPContact}" styleclass="btn btn_iata_primary btn-block" value="{!$Label.ISSP_Assign_IFAP}" id="assignIFAP"/>
+                            </div>
+                        </div>
+                    
+                </apex:outputPanel>
+                        </div>
+                    </div>
+                    <!-- end col -->
+                </div>
+                <!--- end row -->
+                <!-- Admin information for Active users -->
+                <apex:outputPanel rendered="{!AND(portalAdmins.size>0, theUserContact.User_Portal_Status__c != 'Pending Approval')}">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h5 class="blueback">{!$Label.ISSP_Homepage_Portal_Delegates_Administrators}</h5>
+                                <table class="table table-hover">
+                                    <div style="margin-left: 100px;">
+                                        <apex:repeat value="{!portalAdmins}" var="admin">
+                                            <tr>
+                                                <td>
+                                                    <apex:outputText value="({0}) {1} {2} ">
+                                                        <apex:param value="{!admin.TeamMemberRole}"/>
+                                                        <apex:param value="{!admin.User.Contact.Salutation}"/>
+                                                        <apex:param value="{!admin.User.Contact.Name}"/>
+                                                    </apex:outputText>
+                                                </td>
+                                                <td>
+                                                    <apex:outputField value="{!admin.User.Contact.Email}"/>
+                                                </td>
+                                                <td>
+                                                    <apex:outputText value=" {0}">
+                                                        <apex:param value="{!admin.User.Contact.Account.BillingCountry}"/>
+                                                    </apex:outputText>
+                                                </td>
+                                            </tr>
+                                            <!-- AEF -->
+                                            <div style="display:none;">
+                                                <apex:outputField value="{!admin.User.Contact.AccountId}" />
+                                            </div>
+                                        </apex:repeat>
+                                    </div>
+                                </table>
+                            </div>
+                            <!-- end col -->
+                        </div>
+                    </div>
+                </apex:outputPanel>
+                <!-- Admin information for Pending Approval users -->
+                <apex:outputPanel rendered="{!AND(portalAdmins.size>0, theUserContact.User_Portal_Status__c == 'Pending Approval')}">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h5 class="blueback">{!$Label.ISSP_Homepage_Portal_Delegates_Administrators}</h5>
+                                <table class="table table-hover">
+                                    <div style="margin-left: 100px;">
+                                        <apex:repeat value="{!portalAdmins}" var="admin">
+                                            <tr>
+                                                <td>
+                                                    <apex:outputText value="({0}) {1} {2} ">
+                                                        <apex:param value="{!admin.TeamMemberRole}"/>
+                                                        <apex:param value="{!admin.User.Contact.Salutation}"/>
+                                                        <apex:param value="{!admin.User.Contact.Name}"/>
+                                                    </apex:outputText>
+                                                </td>
+                                            </tr>
+                                        </apex:repeat>
+                                    </div>
+                                </table>
+                            </div>
+                            <!-- end col -->
+                        </div>
+                    </div>
+                </apex:outputPanel>
+                <div class="row">
+           		<div class="ol-md-3 col-md-offset-10 "  style="clear: both; ">
+               		<apex:commandButton styleclass="btn_iata btn-success btn_save editModeBtn" onClick="if(!validateCompanyProfile())return false;" action="{!saveAccount}" value="{!$Label.site.save}" id="loginButton"/>
+                	<button type="button" class="btn_iata btn-danger btn_cancel editModeBtn" onClick="clearErrorMessages();$('.saveMode').show();$('.editMode').hide();$('.editModeBtn').hide();$('.alert').hide();$('.selected-flag').hide();" >{!$Label.site.cancel}</button>
+            	</div>
+         	</div>
+               
+                <!-- end My Company panel  -->
+            </div>
+            <!-- end panel body -->
+        </div>
+        
+         <script>
+            $('.editMode').hide();
+            $('.editModeBtn').hide();
+         </script>
+        </apex:form>
+        <!-- end  div class="panel panel-primary"-->
+          <c:ISSP_CustomFooter />
+    </div>
+    <script>
+      function validateCompanyProfile(){
+      	var flag = true;
+        	$('#recFields').hide();
+            $('.rec').each(function (){
+                            $(this).parents('.form-group').removeClass('has-error');
+                            if(!$(this).val()){
+                                flag = false;
+                                $(this).parents('.form-group').addClass('has-error');
+                            }
+                            
+                        }
+                    )
+                    if(flag == false){
+                        $('#recFields').show();
+                    }
+                    return flag;
+                 }
+              
+              function clearErrorMessages() {
+              	$('.rec').each(function (){
+                	$(this).parents('.form-group').removeClass('has-error');
+                 }
+              	)
+              }
+                    
+              </script>
+        <script src="{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/build/js/intlTelInput.js')}"></script>      
+        <script>
+        var natphone = $("input[name='{!$Component.companyProfile.businessphoneinput}']");
+        var phone = $("input[name='{!$Component.companyProfile.businessphone}']");
+        
+        natphone.intlTelInput({
+            defaultCountry: '{!accountCountryISOCode}',
+            nationalMode: true,
+            preferredCountries: [""],
+            numberType: "FIXED_LINE",
+          utilsScript: "{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/lib/libphonenumber/build/utils.js')}"
+        });
+                    
+        natphone.intlTelInput("setNumber", phone.val());
+                    
+        var natmobile = $("input[name='{!$Component.companyProfile.businessmobileinput}']");
+        var mobile = $("input[name='{!$Component.companyProfile.businessmobile}']");
+        
+        natmobile.intlTelInput({
+            defaultCountry: '{!accountCountryISOCode}',
+            nationalMode: true,
+            preferredCountries: [""],
+            numberType: "MOBILE",
+          utilsScript: "{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/lib/libphonenumber/build/utils.js')}"
+        });
+                    
+        natmobile.intlTelInput("setNumber", mobile.val());
+                    
+        var natfax = $("input[name='{!$Component.companyProfile.businessfaxinput}']");
+        var fax = $("input[name='{!$Component.companyProfile.businessfax}']");
+        
+        natfax.intlTelInput({
+            defaultCountry: '{!accountCountryISOCode}',
+            nationalMode: true,
+            preferredCountries: [""],
+            numberType: "FIXED_LINE",
+          utilsScript: "{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/lib/libphonenumber/build/utils.js')}"
+        });
+                    
+    	natfax.intlTelInput("setNumber", fax.val());
+        
+        function setInternationalPhoneNo(p) {
+            if(p=='phone') {
+                phone.val(natphone.intlTelInput("getNumber"));
+            } else if(p=='mobile') {
+                mobile.val(natmobile.intlTelInput("getNumber"));
+            } else {
+                fax.val(natfax.intlTelInput("getNumber"));
+            }
+        }
+          
+      </script>
+          
+     </body>
+    </html>
+</apex:page>

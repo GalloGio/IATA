@@ -1,0 +1,277 @@
+<apex:page title="{!sApplicationTitle}" controller="vfIECGSS" sidebar="false" showheader="false" language="en" action="{!pageLoad}" standardStylesheets="false" readOnly="true" cache="true">
+    <title>{!sApplicationTitle}</title>
+    <div class="gdpwrapper">
+        <div class="gdpbody">
+            <c:IECAppHeader applicationTitle="{!sApplicationTitleUpperCase}" applicationCode="{!sProductCode}" subInfoController="{!ctrSubsInfo}" showSearchOptions="false" showLastOfUpdate="false"/>
+            <c:IECApp_Tootip />
+            <apex:stylesheet value="{!URLFOR($Resource.IECStyles, 'profile.css')}" />
+
+
+    <style type="text/css">
+       
+        .tabs {
+          height: 100vh !important;
+            overflow: visible !important;
+        }
+
+        .gdpbody {
+         padding-bottom: 100px !important;
+        }
+
+        
+   .subscriptionInfos{
+        margin-top: 15px !important;
+    }
+    
+    #register .row .settings-item {
+    width: 685px;
+    }
+        
+    #subscriptions th{
+    padding: 30px;
+    font-weight: 700; 
+    }
+    #subscriptions td{
+    padding: 15px;
+    vertical-align: middle;
+    border: 1px solid #dcdcdc;
+    }
+    a{
+    color: #54bed2;
+    }
+    #subscriptions td:nth-child(2) {
+    font-weight: initial; 
+    vertical-align: middle;
+    }
+    
+    
+    .errorPanel{
+    margin-bottom: 0px;
+    margin-top:0px;
+    }
+    
+
+        .custPopup{
+                background-color: white;
+                border-width: 2px;
+                border-style: solid;
+                z-index: 9999;
+                left: 50%;
+                padding:10px;
+                position: absolute;
+                /* These are the 3 css properties you will need to change so the popup 
+                displays in the center of the screen. First set the width. Then set 
+                margin-left to negative half of what the width is. You can add 
+                the height property for a fixed size pop up if you want.*/
+                width: 500px;
+                margin-left: -250px;
+                top:100px;
+            }
+            .popupBackground{
+                background-color:black;
+                opacity: 0.20;
+                filter: alpha(opacity = 20);
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                top: 0;
+                left: 0;
+                z-index: 9998;
+            }
+
+            div.row {
+                display: block;
+                border-bottom: 1px solid #EBEBEB;
+                margin-bottom: 12px;
+                padding-bottom: 11px;
+                font-family: helvetica,arial,sans-serif;
+            }
+            .row h3 {
+                width: 160px;
+                
+            }
+            .row h3 {
+                display: inline-block;
+                font-weight: bold;
+                font-size:14px;
+                margin: 0 28px 0 0;
+                vertical-align: top;
+            }
+            .row .settings-item {
+                width: 480px;
+            }
+            .row .settings-item {
+                display: inline-block;
+            }
+
+            .summaryLabel {
+                color: #666666;
+                text-align: left;
+                font-size:13px;
+                width:30%;
+                vertical-align:top;
+            }
+            .summaryData {
+                height: 20px;
+                font-size:13px;
+                width:35%;
+                vertical-align:top;
+                font-family: helvetica,arial,sans-serif;
+                text-align: left;               
+            }
+            .summaryNumber {
+                height: 20px;
+                font-size:13px;
+                width:35%;
+                vertical-align:top;
+            }
+            .unitsleft {
+                font: 300 32px/100% helvetica-light,"Helvetica",helvetica,arial,sans-serif;
+                text-align: right;
+                color: #5FB336;
+            }
+            .unitsleftlabel {
+                font: 18px,"helvetica,arial,sans-serif";
+                margin-top: -4px;
+                text-align: right;
+                color: #5FB336;
+            }
+            .paid-yes {
+                font: 300 32px/100% helvetica-light,"Helvetica",helvetica,arial,sans-serif;
+                text-align: right;
+                color: #5FB336;
+            }
+            .paid-no {
+                font: 300 32px/100% helvetica-light,"Helvetica",helvetica,arial,sans-serif;
+                text-align: right;
+                color: #F00;
+            }
+            .subscription-title {
+                font-family: helvetica,arial,sans-serif;
+                font-size: 18px;
+                margin-top: -4px;
+                text-align: left;
+                color: #333;
+            }
+            .footer-private {
+                width: 674px;
+                clear: both;
+                float: right;
+                height: 40px;
+                margin-bottom: 0;
+                margin-top:25px;
+                padding: 0 32px;
+                position: relative;
+                text-align: center;
+                z-index: 1;
+                background: none repeat scroll 0 0 rgba(0, 0, 0, 0);
+                border: 0 none;
+            }
+            .footer-private .footer-entry {
+                border-right: 1px solid #ABABAB;
+                color: #ABABAB;
+                font-family: helvetica,arial,sans-serif;
+                font-size: 11px;
+                font-style: normal;
+                font-variant: normal;
+                font-weight: normal;
+                line-height: 18px;
+                padding: 0 15px;
+                text-align: center;
+                text-decoration: none;
+                text-indent: 0;
+                text-overflow: clip;
+                text-shadow: none;
+                text-transform: none;
+            }
+            .footer-private .footer-entry.link {
+                color: #4A8DB8;
+                font-size: 13px;
+            }
+            .footer-private .footer-entry.last {
+                border: 0 none;
+            }
+        </style>
+            <apex:form id="GSSForm" forcessl="true">
+                <!-- Content panel controlling the access to the application -->
+                <apex:outputpanel id="panelAccess" layout="block" rendered="{!ctrSubsInfo.hasPageAccess}">
+                    <table class="tableHolder">
+                        <tr>
+                            <td class="menu-Panel">
+                                <c:IEC_CACWMenu disableMenu="true" ProductCode="{!sProductCode}"/>
+                            </td>
+                            <td class="account-Panel">
+                              <div class="tableList-component">
+                                <!-- <div class="content-container"> -->
+                                    <div id="register">
+                                        <div class="box register fit1024">
+                                            <div class="header">
+                                                <p>Please select a subscription</p>
+                                            </div>
+                                            <apex:outputPanel id="errorMessage">
+                                                <div class="errorPanel">
+                                                    <apex:pageMessages escape="no"/>
+                                                </div>
+                                            </apex:outputPanel>
+                                            <apex:outputText rendered="{!lstListActiveSubscriptions == null}" styleClass="payment-labelText" value="There are no active subscriptions."/>
+                                            <apex:outputPanel rendered="{!lstListActiveSubscriptions != null}" layout="none">
+                                                <apex:outputPanel id="panelSubscriptionTable">
+                                                    <div id="subscriptionsHolder">
+                                                        <table id="subscriptions">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Subscription ID</th>
+                                                                    <th>Product</th>
+                                                                    <th>Start Date</th>
+                                                                    <th>End Date</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <apex:repeat value="{!lstListActiveSubscriptions}" var="subscription" id="subscriptionTable" rendered="{!lstListActiveSubscriptions != null && lstListActiveSubscriptions.size > 0}">
+                                                                    <tr>
+                                                                        <td>
+                                                                            <apex:commandLink value="{!subscription.Name}" action="{!selectSubscription}" rerender="subscriptionDetailPanel, errorMessage" status="searchStatus">
+                                                                                <apex:param name="sSelectedSubscriptionName" value="{!subscription.Name}" assignTo="{!sSelectedSubscriptionName}"/>
+                                                                            </apex:commandLink>
+                                                                        </td>
+                                                                        <td>
+                                                                            <apex:repeat var="prod" value="{!subscription.Zuora__Subscription_Product_Charges__r}"  rows="1">
+                                                                                <apex:outputText value="{!prod.Zuora__ProductName__c}" style="display:block;"/>
+                                                                                <apex:outputText value="{!prod.Zuora__RatePlanName__c}" style="display:block;"/>
+                                                                            </apex:repeat>
+                                                                        </td>
+                                                                        <td>
+                                                                            <apex:outputText value="{0,date,dd MMM yyyy}">
+                                                                                <apex:param value="{!subscription.Zuora__SubscriptionStartDate__c}" />
+                                                                            </apex:outputText>
+                                                                        </td>
+                                                                        <td>
+                                                                            <apex:outputText value="{0,date,dd MMM yyyy}">
+                                                                                <apex:param value="{!subscription.Zuora__SubscriptionEndDate__c}" />
+                                                                            </apex:outputText>
+                                                                        </td>
+                                                                    </tr>
+                                                                </apex:repeat>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </apex:outputPanel>
+                                            </apex:outputPanel>
+                                        </div>
+                                        <div class="clear"></div>
+                                    </div>
+                                <!-- </div> -->
+                              </div>
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="footter"> </div>
+                </apex:outputpanel>
+                <!-- Content panel without access to the application -->
+                <apex:outputpanel id="panelNotAccess" layout="block" rendered="{!NOT(ctrSubsInfo.hasPageAccess)}" />
+            </apex:form>
+        </div>
+        <!-- GDP Footer -->
+        <c:IECGDPFooter />
+    </div>
+</apex:page>

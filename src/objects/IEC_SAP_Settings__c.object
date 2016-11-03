@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>Hierarchy</customSettingsType>
+    <description>Stores default setting value when sending Invoices to SAP</description>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>Activate_SAP_Invoice_Interface__c</fullName>
+        <defaultValue>true</defaultValue>
+        <description>If checked, the SFDC to SAP interface will run; it will send all invoices/invoice items that are ready to be sent to SAP for creation</description>
+        <externalId>false</externalId>
+        <inlineHelpText>If checked, the SFDC to SAP interface will run; it will send all invoices/invoice items that are ready to be sent to SAP for creation</inlineHelpText>
+        <label>Activate SAP Invoice Interface</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Activate_Zuora_Payment_Interface__c</fullName>
+        <defaultValue>true</defaultValue>
+        <description>If checked, the SFDC to Zuora interface will be activated; it will create payments in Zuora that have been processed in SAP</description>
+        <externalId>false</externalId>
+        <inlineHelpText>If checked, the SFDC to Zuora interface will be activated; it will create payments in Zuora that have been processed in SAP</inlineHelpText>
+        <label>Activate Zuora Payment Interface</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>DistChan__c</fullName>
+        <defaultValue>&quot;01&quot;</defaultValue>
+        <externalId>false</externalId>
+        <label>DistChan</label>
+        <length>20</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Division__c</fullName>
+        <defaultValue>&quot;50&quot;</defaultValue>
+        <externalId>false</externalId>
+        <label>Division</label>
+        <length>20</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>DocType__c</fullName>
+        <defaultValue>&quot;ZC01&quot;</defaultValue>
+        <externalId>false</externalId>
+        <label>DocType</label>
+        <length>20</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Employee_Responsible__c</fullName>
+        <defaultValue>&quot;801140&quot;</defaultValue>
+        <externalId>false</externalId>
+        <label>Employee Responsible</label>
+        <length>40</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SFDCtoSAPBatchClassId__c</fullName>
+        <defaultValue>&apos;01p110000001AL2&apos;</defaultValue>
+        <description>The class id of the class BtchIECSendInvoicesToSAP. This is to prevent multiple instances of the same batch running at the same time.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The class id of the class BtchIECSendInvoicesToSAP. This is to prevent multiple instances of the same batch running at the same time.</inlineHelpText>
+        <label>SFDCtoSAPBatchClassId</label>
+        <length>18</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SalesOffice__c</fullName>
+        <defaultValue>&quot;CA35&quot;</defaultValue>
+        <externalId>false</externalId>
+        <label>SalesOffice</label>
+        <length>20</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SalesOrg__c</fullName>
+        <defaultValue>&quot;YMQ1&quot;</defaultValue>
+        <externalId>false</externalId>
+        <label>SalesOrg</label>
+        <length>20</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Schedule_Period__c</fullName>
+        <defaultValue>15</defaultValue>
+        <externalId>false</externalId>
+        <label>Schedule Period (min)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Web_Service_Password__c</fullName>
+        <defaultValue>&quot;ENCRYPTED_PASSWORD&quot;</defaultValue>
+        <description>The password to use when calling the SAP Web Service to send invoices (encrypted with the encryption key in IEC Settings)</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The password to use when calling the SAP Web Service to send invoices (encrypted with the encryption key in IEC Settings)</inlineHelpText>
+        <label>Web Service Password</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Web_Service_Username__c</fullName>
+        <defaultValue>&quot;WS_SFORCE&quot;</defaultValue>
+        <description>The username to use when calling the SAP web service to send invoices</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The username to use when calling the SAP web service to send invoices</inlineHelpText>
+        <label>Web Service Username</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Web_Service_endpoint__c</fullName>
+        <defaultValue>&quot;https://sapws.iata.org/XISOAPAdapter/MessageServlet&quot;</defaultValue>
+        <description>Endpoint of the SAP web service for contract creation</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Endpoint of the SAP web service for contract creation</inlineHelpText>
+        <label>Web Service endpoint</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>IEC SAP Settings</label>
+    <visibility>Public</visibility>
+</CustomObject>

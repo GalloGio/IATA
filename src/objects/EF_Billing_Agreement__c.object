@@ -1,0 +1,467 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>Relationship between a Client and an Airline for E&amp;F stating what charges we bill in what currency and payment method.</description>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>false</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Airline__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Airline</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipName>EF_Relationships_Airline</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Allow_Billing_Agreements__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(ISPICKVAL(Contract__r.EF_Allow_Billing_Agreements__c, &apos;Allowed&apos;),&apos;Allowed&apos;, &apos;Other&apos;)</formula>
+        <label>Allow Billing Agreements</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Base_URL__c</fullName>
+        <externalId>false</externalId>
+        <formula>LEFT($Api.Enterprise_Server_URL_300, FIND(&apos;/services&apos;,$Api.Enterprise_Server_URL_300))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Base URL</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Billing_Agreement_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Billing Agreement Name</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Billing_Currency__c</fullName>
+        <externalId>false</externalId>
+        <globalPicklist>EF_Currency</globalPicklist>
+        <label>Billing Currency</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Client__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Client</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipName>EF_Relationships_Client</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Contract__c</fullName>
+        <externalId>false</externalId>
+        <label>Contract</label>
+        <referenceTo>Contract</referenceTo>
+        <relationshipName>EF_Relationships</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Currency_Read_Only__c</fullName>
+        <description>E&amp;F Project. Currency field is just visible on edit mode, so a formula that shows it on detail mode is needed.</description>
+        <externalId>false</externalId>
+        <formula>TEXT(CurrencyIsoCode)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Currency</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Data_Currency__c</fullName>
+        <externalId>false</externalId>
+        <globalPicklist>EF_Currency</globalPicklist>
+        <label>Data Currency</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>EF_Approver_Email__c</fullName>
+        <externalId>false</externalId>
+        <label>E&amp;F Approver Email</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>EF_Location_ID__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>E&amp;F Location ID</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>EF_Related_Records__c.RecordType.Name</field>
+                <operation>equals</operation>
+                <value>Location</value>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
+        <referenceTo>EF_Related_Records__c</referenceTo>
+        <relationshipName>EF_LocationRelationships</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>EF_Status__c</fullName>
+        <externalId>false</externalId>
+        <globalPicklist>EF_Status</globalPicklist>
+        <label>E&amp;F Status</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>EF_Submitter_Email__c</fullName>
+        <externalId>false</externalId>
+        <label>E&amp;F Submitter Email</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Invoice_Distribution_Method_Code__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(
+	ISPICKVAL(Invoice_Distribution_Method__c, &apos;Electronic Via Platform&apos;), &apos;XBS4&apos;,
+	IF(
+		ISPICKVAL(Invoice_Distribution_Method__c, &apos;Electronic Via Email&apos;), &apos;XBE4&apos;,
+		IF(
+			ISPICKVAL(Invoice_Distribution_Method__c, &apos;Paper&apos;), &apos;XBP4&apos;,
+			IF(
+				ISPICKVAL(Invoice_Distribution_Method__c, &apos;No Invoice&apos;), &apos;XBN4&apos;,
+				&apos;&apos;
+			)
+		)
+	)
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Invoice Distribution Method Code</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Invoice_Distribution_Method__c</fullName>
+        <externalId>false</externalId>
+        <globalPicklist>EF_Invoice_Distribution</globalPicklist>
+        <label>Invoice Distribution Method</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Location_Code_Details__c</fullName>
+        <externalId>false</externalId>
+        <label>Location Code Details</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Location_Code__c</fullName>
+        <description>LDC. for me this field should be deleted</description>
+        <externalId>false</externalId>
+        <label>Location Code</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Manager_Approval__c</fullName>
+        <description>Helper field for &quot;require approval&quot; functionality.</description>
+        <externalId>false</externalId>
+        <label>Manager Approval</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Not Started</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Approved</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Rejected</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Recalled</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Payment_Currency__c</fullName>
+        <externalId>false</externalId>
+        <globalPicklist>EF_Currency</globalPicklist>
+        <label>Payment Currency</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Payment_Method_Code__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(
+	ISPICKVAL(Payment_Method__c, &apos;Credit Card&apos;), &apos;1&apos;,
+	IF(
+		ISPICKVAL(Payment_Method__c, &apos;SPCR / SPDR&apos;), &apos;A&apos;,
+		IF(
+			ISPICKVAL(Payment_Method__c, &apos;ICH&apos;), &apos;I&apos;,
+			IF(
+				ISPICKVAL(Payment_Method__c, &apos;Bank transfer&apos;), &apos;T&apos;,
+				IF(
+					ISPICKVAL(Payment_Method__c, &apos;Virtual Account Payment&apos;), &apos;V&apos;,
+					IF(
+						ISPICKVAL(Payment_Method__c, &apos;ICCS payments&apos;), &apos;Y&apos;,
+						&apos;&apos;
+					)
+				)
+			)
+		)
+	)
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Payment Method Code</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Payment_Method__c</fullName>
+        <externalId>false</externalId>
+        <globalPicklist>EF_Payment_Method</globalPicklist>
+        <label>Payment Method</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Payment_Terms_Code__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(
+	ISPICKVAL(Payment_Terms__c, &apos;Payable immediately due net&apos;), &apos;0001&apos;,
+	IF(
+		ISPICKVAL(Payment_Terms__c, &apos;30 days after invoice date&apos;), &apos;0011&apos;,
+		IF(
+			ISPICKVAL(Payment_Terms__c, &apos;10 days after invoice date&apos;), &apos;0012&apos;,
+			IF(
+				ISPICKVAL(Payment_Terms__c, &apos;15 days after invoice date&apos;), &apos;0013&apos;,
+				IF(
+					ISPICKVAL(Payment_Terms__c, &apos;20 days after invoice date&apos;), &apos;0018&apos;,
+					IF(
+						ISPICKVAL(Payment_Terms__c, &apos;07 days after invoice date&apos;), &apos;Z007&apos;,
+						&apos;&apos;
+					)
+				)
+			)
+		)
+	)
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Payment Terms Code</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Payment_Terms__c</fullName>
+        <externalId>false</externalId>
+        <globalPicklist>EF_Payment_Terms</globalPicklist>
+        <label>Payment Terms</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Requested_Changes__c</fullName>
+        <externalId>false</externalId>
+        <label>Requested Changes</label>
+        <length>10000</length>
+        <trackTrending>false</trackTrending>
+        <type>Html</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Require_Approval__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Helper field that gets set to TRUE if one of the Billing Agreements &quot;require approval&quot; fields gets changed.</description>
+        <externalId>false</externalId>
+        <label>Require Approval</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Send_to_SAP__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Helper field for &quot;require approval&quot; functionality.</description>
+        <externalId>false</externalId>
+        <label>Send to SAP</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Status__c</fullName>
+        <description>Helper field for &quot;require approval&quot; functionality.</description>
+        <externalId>false</externalId>
+        <globalPicklist>EF_Status</globalPicklist>
+        <label>Status</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <label>E&amp;F Airline Billing Agreement</label>
+    <listViews>
+        <fullName>All</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <displayFormat>E&amp;F ABA-{0000}{MM}{YY}</displayFormat>
+        <label>E&amp;F Airline Billing Agreement Number</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>E&amp;F Airline Billing Agreements</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ControlledByParent</sharingModel>
+    <validationRules>
+        <fullName>EF_Prevent_For_Not_Allowed_Contracts</fullName>
+        <active>true</active>
+        <description>Prevents the creation or update of Billing Agreements if Contract is set to not to allow billing agreements.</description>
+        <errorConditionFormula>ISPICKVAL(Contract__r.EF_Allow_Billing_Agreements__c, &apos;Not Allowed&apos;)</errorConditionFormula>
+        <errorDisplayField>Contract__c</errorDisplayField>
+        <errorMessage>The selected Contract record has &quot;Allow Billing Agreements&quot; set to &quot;Not Allowed&quot;. Please choose a different Contract or update the currently selected Contract to allow Billing Agreements.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>EF_Prevent_Update_From_General_Access</fullName>
+        <active>true</active>
+        <description>Prevents &quot;Allowed&quot; but not &quot;Allowed with Approval&quot; updates from Business Development Managers and E&amp;F General Access User Roles.</description>
+        <errorConditionFormula>AND
+(
+   OR
+   (
+     ISPICKVAL($User.EF_User_Role__c, &apos;Manager, Business Development&apos;),
+     ISPICKVAL($User.EF_User_Role__c, &apos;E&amp;F General Access&apos;)
+   ),
+   Allow_Billing_Agreements__c == &apos;Allowed&apos;
+)</errorConditionFormula>
+        <errorMessage>Business Development Managers and E&amp;F General Access roles are not allowed to update or create Airline Billing Agreements.</errorMessage>
+    </validationRules>
+    <webLinks>
+        <fullName>Edit_All</fullName>
+        <availability>online</availability>
+        <displayType>massActionButton</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Edit All</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <requireRowSelection>false</requireRowSelection>
+        <url>window.open(&apos;/apex/EF_Mass_Update_Billing_Agreements?id={!Contract.Id}&apos;);</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Edit_All_Airline_BA</fullName>
+        <availability>online</availability>
+        <displayType>massActionButton</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Edit All Airline BA</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <requireRowSelection>false</requireRowSelection>
+        <url>window.open(&apos;/apex/EF_MassUpdateAirlineBillingAgreements?id={!Account.Id}&apos;);</url>
+    </webLinks>
+</CustomObject>

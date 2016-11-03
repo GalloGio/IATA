@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>List</customSettingsType>
+    <description>The mapping of the second language for the Customer Service documents per country.</description>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>Country_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Country Name</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Language__c</fullName>
+        <externalId>false</externalId>
+        <label>Language</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>Airline Suspension 2nd Language</label>
+    <visibility>Protected</visibility>
+</CustomObject>

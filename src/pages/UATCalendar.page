@@ -1,0 +1,3 @@
+<apex:page controller="CalendarController" action="/00U/c?cType=1&cal_lkid={!calendarId}&md0={!YEAR(TODAY())}&md1={!MONTH(TODAY())-1}">
+Please wait...
+</apex:page>

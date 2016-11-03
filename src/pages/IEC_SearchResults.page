@@ -1,0 +1,370 @@
+<apex:page controller="IEC_SearchResultsController" action="{!onLoadAction}" language="{!language}" 
+	docType="html-5.0"  applyBodyTag="false" applyHtmlTag="false" showHeader="false" sidebar="false" standardStylesheets="false" cache="true">
+	
+	<!--[if lte IE 8]>
+    <html lang="en" class="ie lte-ie8 no-svg">
+	<![endif]-->
+	<!--[if IE 9]>
+	    <html lang="en" class="ie ie9">
+	<![endif]-->
+	<!--[if !IE]><!-->
+	
+	<html lang="{!language}">
+	<!--<![endif]-->
+
+		<head>
+			<meta charset="UTF-8"/>
+			<meta name="viewport" content="width=device-width, initial-scale=1"/>
+			<apex:stylesheet value="{!URLFOR($Resource.EcommerceAssets, 'css/styles.min.css')}" />
+			<title>{!$Label.PageTitleProductList} - {!$Label.SiteTitle}</title>
+		</head>
+
+		<body data-media-size="" data-is-modal-open="false" id="page-top">
+			<div id="js-breakpoint-finder">
+				<span class="device-xs screen-xsmall"/>
+				<span class="device-sm screen-small"/>
+				<span class="device-md screen-medium"/>
+				<span class="device-lg screen-large"/>
+				<span class="device-xl screen-xlarge"/>
+			</div>
+			
+			<div id="js-app-container" class="app-container">
+
+				<!-- Page Header -->
+				<c:IEC_PageHeader />
+
+				<div id="js-page-container" class="page-container">
+					
+					<!-- Page Main Content -->
+					<main class="main-content publications">
+						<div class="reader-only" id="reader-main-content">Main Content</div>
+
+						<div class="section top-banner">
+							<div class="inner-wrapper">
+								<h2 class="lead"><apex:outputText value="{!$Label.Welcome_Message}" escape="false" /></h2>
+							</div>
+						</div>
+
+						<div class="inner-wrapper">
+							<ol class="list breadcrumb">
+								<li><a href="{!$Site.BaseUrl}">{!$Label.Home}</a></li>
+								<li>Search Result</li>
+							</ol>
+							<h1 class="page-title search-results">Search Results</h1>
+							
+
+							<apex:outputPanel styleClass="sub-container refine-container">
+								<div class="search-container">
+					                <form class="form form-search" action="{!$Site.BaseUrl}/IEC_SearchResults" name="form-search-results">
+					                    <label>
+					                        <span class="reader-only">{!$Label.Search}</span>
+					                        <input class="user-input text" type="text" name="site-search" placeholder="{!$Label.Search}" value="{!searchToken}" />
+					                    </label>
+					                    <button class="button icon search" type="submit"><span class="reader-only">{!$Label.Search}</span></button>
+					                </form>
+					            </div>
+
+								<section class="group-container refine-by">
+									<apex:form id="frmFilters" styleClass="frmFilters">
+										<h2 class="group-title">{!$Label.Refine_by}:</h2>
+										<div class="accordion-container select-deselect">
+	                    					<dl class="list refine-by">
+						                        <apex:variable value="{!1}" var="index1" />
+						                        <apex:repeat value="{!filters}" var="filter">
+						                            <dt>
+						                                <div class="accordion-title js-toggle is-open" data-target="{!filter.field}" data-target-element=".accortion-panel">{!$Label.Select} {!filter.label}</div>
+						                                <div class="list-title is-open">
+						                                    {!filter.label}
+						                                    
+						                                    <apex:variable var="picklistSelectAll" value="1" rendered="{!filter.type_x =='PICKLIST'}">
+							                                    <a class="select-all refine-select-all" data-is-visible="true" data-target="{!filter.field}" data-target-element=".js-checkbox-container" href="#">({!$Label.select_all})</a>
+							                                    <a class="deselect-all refine-deselect-all" data-is-visible="false" data-target="{!filter.field}" data-target-element=".js-checkbox-container" href="#">({!$Label.deselect_all})</a>
+						                                    </apex:variable>
+
+						                                </div>
+						                            </dt>
+						                            <dd class="accortion-panel js-checkbox-container is-open" data-id="{!filter.field}">
+						                                <ul class="list">
+						                                	<apex:variable value="{!1}" var="index2" />
+						                                	
+						                                	<!-- PickList or Yes/No filters -->
+						                                	<apex:variable var="picklistFilters" value="1" rendered="{!OR(filter.type_x =='PICKLIST', filter.type_x =='BOOLEAN')}">
+							                                	<apex:repeat value="{!filter.values}" var="item">
+								                                    <li>
+								                                        <div class="field-group checkbox inline">
+								                                            <div class="checkbox-box">
+								                                                <div class="custom-user-input checkbox">
+								                                                    <input class="user-input checkbox" type="checkbox" id="refine-checkbox{!index1}-{!index2}" value="{!filter.field}|{!item.value}" />
+								                                                    <label class="custom-checkbox" for="refine-checkbox{!index1}-{!index2}"><i class="icon"></i></label>
+								                                                </div>
+								                                                <label class="input-label" for="refine-checkbox{!index1}-{!index2}">{!item.label}</label>
+								                                            </div>
+								                                        </div>
+								                                    </li>
+																	<apex:variable value="{!index2 +1}" var="index2" />
+							                                    </apex:repeat>
+						                                    </apex:variable>
+						
+						                                    <!-- Free text Filters -->
+						                                    <apex:variable var="freeTextFilters" value="1" rendered="{!filter.type_x =='STRING'}">
+																<li>
+																	<div class="field-group input inline">
+																		<input type="text" id="refine-input{!index1}" data-field="{!filter.field}" />
+																	</div>
+																</li>
+						                                    </apex:variable>
+
+						                                </ul>
+						                            </dd>
+						                            <apex:variable value="{!index1 +1}" var="index1" />
+						                        </apex:repeat>
+						                    </dl>
+						                    <div class="footer-actions">	
+												<apex:inputHidden id="selectedFilters" value="{!selectedFilters}" />
+
+						                    	<apex:commandButton styleClass="button secondary" value="{!$Label.Refine}" action="{!refine}" reRender="main_container" status="sortByStatus" 
+						                    		oncomplete="javascript:$('.product-list .list-item').matchHeight();"/>
+						                    </div>
+						                </div>
+					                </apex:form>
+								</section>
+							</apex:outputPanel>
+
+							<apex:outputPanel styleClass="main-container" layout="block" rendered="{!searchToken==null}">
+								<div class="alert error">Please specify search token</div>							
+							</apex:outputPanel>
+							<apex:outputPanel styleClass="main-container" layout="block" rendered="{!len(searchToken) <2}">
+								<div class="alert error">You should specify 2 characters for searching</div>							
+							</apex:outputPanel>
+
+							<apex:outputPanel styleClass="main-container" rendered="{!AND(searchToken!=null,len(searchToken) >=2)}" id="main_container">
+								<apex:outputPanel layout="block" styleClass="alert error" rendered="{!products.size == 0}">
+									NO PRODUCT FOUND
+								</apex:outputPanel>
+
+								<apex:outputPanel layout="block" styleClass="sort-by" rendered="{!products.size > 0}">
+									<p class="note-results">
+										<strong class="number-of-results">{!allProducts.size}</strong> items contain the word(s): <strong class="search-keyword">{!searchToken}</strong>
+									</p>
+
+									<div class="sort-by">
+						                <label for="sort-by" class="input-label">{!$Label.SortBy}</label>
+						                <div class="custom-user-input select">
+						                    <apex:form >
+												<i class="icon chevron-down"></i>
+												<apex:selectList id="sort-by" value="{!sortBy}" styleClass="user-input select" size="1">
+		                                			<apex:selectOptions value="{!sortingFields}"/>
+		                                			<apex:actionSupport event="onchange" oncomplete="javascript:$('.product-list .list-item').matchHeight();" 
+		                                				action="{!sortProducts}" status="sortByStatus" reRender="main_container" />
+		                            			</apex:selectList>
+		                            			<apex:actionStatus id="sortByStatus">
+		                            				<apex:facet name="start">
+														<div class="overlay"></div>
+														<div class="modal-dialog" id="js-modal-dialog"><img src="{!$Resource.IEC_progress}" border="0" width="43" height="15" /></div>
+		                                        	</apex:facet>                                        	
+		                            			</apex:actionStatus>                                                
+	                            			</apex:form>
+						                </div>
+						            </div>
+								</apex:outputPanel>
+
+								<apex:outputPanel layout="block" id="productList" rendered="{!products.size > 0}">
+									<ul class="list product-list">
+										<apex:repeat value="{!products}" var="prod">
+											<li class="list-item">
+												<div class="item-wrapper">
+													<figure class="item-image">
+														<a href="{!$Site.BaseUrl}/IEC_ProductDetails?id={!prod.ProductNumber}">
+															<img src="{!URLFOR($Resource.Product_Images, prod.ImageName)}" alt="{!prod.ProductName}" />
+														</a>
+													</figure>
+													<h2 class="item-name">
+														<a href="{!$Site.BaseUrl}/IEC_ProductDetails?id={!prod.ProductNumber}">{!prod.ProductName}</a>
+													</h2>
+													<h3 class="item-description-title">{!prod.Media}</h3>
+													<p class="item-description">
+														Edition: {!prod.Edition} <br />
+														Language: {!prod.Language}
+													</p>
+													<p class="item-description">{!prod.ProductShortDesc}</p>
+													
+													<!-- Scenario 1: In Stock -->
+													<apex:outputPanel layout="block" styleClass="item-stock in-stock" rendered="{!prod.InventoryStatus == 'In stock'}">
+		                                                {!prod.InventoryStatus}
+		                                            </apex:outputPanel>
+		                                            <!-- Scenario 2: Out of Stock -->
+													<apex:outputPanel layout="block" styleClass="item-stock out-of-stock" rendered="{!prod.InventoryStatus != 'In stock'}">
+		                                                {!prod.InventoryStatus}
+		                                            </apex:outputPanel>
+
+		                                            <!-- Scenario 3: Pre-order -->
+		                                            <apex:outputPanel layout="block" styleClass="item-label pre-order" rendered="{!prod.InventoryStatus != 'In stock' && prod.Is_Electronic_Product != true}">
+		                                                <span class="text">{!$Label.Button_Pre_Order}</span>
+		                                            </apex:outputPanel>
+
+		                                            <!-- Regular Price if exist -->
+		                                            <apex:outputPanel styleClass="item-price regular-price {!IF(AND(prod.CustomerPrice!=null , prod.CustomerPrice>0),'line-stroke','')}" layout="block" rendered="{! prod.RegularPrice!=null && prod.RegularPrice > 0}">
+														<apex:outputText styleClass="price-value" value="{0, number, currency}">
+		                                                    <apex:param value="{!prod.RegularPrice}" />
+		                                                </apex:outputText>
+														<span class="price-label">{!$Label.regular_price}</span>
+													</apex:outputPanel>
+
+													<!-- Discounted price if exist -->
+													<apex:outputPanel styleClass="item-price discounted-price" layout="block" rendered="{! prod.CustomerPrice!=null && prod.CustomerPrice > 0}">
+														<apex:outputText styleClass="price-value" value="{0, number, currency}">
+		                                                    <apex:param value="{!prod.CustomerPrice}" />
+		                                                </apex:outputText>
+														<span class="label-value">{!$Label.discounted_price}</span>
+													</apex:outputPanel>
+
+													<!-- Price not exit: Direct Sales -->
+													<apex:outputPanel styleClass="item-price regular-price" layout="block" rendered="{! AND(prod.RegularPrice==null, prod.CustomerPrice==null)}">
+														<span class="price-label">{!$Label.Direct_Sales}</span>
+													</apex:outputPanel>
+
+													<a class="button" href="{!$Site.BaseUrl}/IEC_ProductDetails?id={!prod.ProductNumber}">{!$Label.Select}</a>
+												</div>
+											</li>
+										</apex:repeat>
+									</ul>
+								</apex:outputPanel>
+
+								<!-- Pagination AJAX functions -->
+								<apex:form id="frmPagination">
+									<apex:actionFunction name="gotoPage" reRender="main_container" action="{!gotoPage}" status="sortByStatus" oncomplete="javascript:$('.product-list .list-item').matchHeight();">
+				                        <apex:param name="pageNum" value="" />
+				                    </apex:actionFunction>
+
+				                    <apex:actionFunction name="gotoNext" reRender="main_container" action="{!gotoNext}" status="sortByStatus" oncomplete="javascript:$('.product-list .list-item').matchHeight();" />
+
+				                    <apex:actionFunction name="gotoPrevious" reRender="main_container" action="{!gotoPrevious}" status="sortByStatus" oncomplete="javascript:$('.product-list .list-item').matchHeight();" />
+								</apex:form>
+								
+								<!-- Pagination -->
+								<div class="pagination tablet desktop">
+					                <div class="page-number">
+					                    <ol class="list page-number">
+					                        <apex:variable var="btnPrevious" value="1" rendered="{!showPrevious}">
+					                        	<li class="prev"><a href="javascript:gotoPrevious();"><span class="reader-only">Previous</span><i class="fa fa-chevron-left" aria-hidden="true"></i></a></li>
+											</apex:variable>
+					                        <apex:repeat value="{!pages}" var="page">
+					                        	<li class="page-number{!IF(currentPageNumber==page,' selected','')}"><a href="javascript:gotoPage({!page});">{!page}</a></li>
+					                        </apex:repeat>
+					                        <apex:variable var="btnNext" value="1" rendered="{!showNext}">
+					                        	<li class="next"><a href="javascript:gotoNext();"><span class="reader-only">Next</span><i class="fa fa-chevron-right" aria-hidden="true"></i></a></li>
+				                        	</apex:variable>
+					                    </ol>
+					                </div>
+					            </div>
+
+					            <div class="pagination mobile">
+					            	<apex:variable var="btnPreviousMobile" value="1" rendered="{!showPrevious}">
+						                <div class="control prev">
+						                    <a href="javascript:gotoPrevious();">
+						                        <span class="reader-only">Previous</span>
+						                        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+						                    </a>
+						                </div>
+					                </apex:variable>
+
+					                <div class="page-number mobile">
+					                    <ol class="list page-number">
+					                        <apex:repeat value="{!pages}" var="page">
+					                        <li class="page-number{!IF(currentPageNumber==page,' selected','')}"><a href="javascript:gotoPage({!page});">{!page}</a></li>
+					                        </apex:repeat>
+					                        <li class="page-number"><a href="#">...</a></li>
+					                    </ol>
+					                </div>
+					                <apex:variable var="btnNextMobile" value="1" rendered="{!showNext}">
+						                <div class="control next">
+						                    <a href="javascript:gotoNext();">
+						                        <span class="reader-only">Next</span>
+						                        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+						                    </a>
+						                </div>
+					                </apex:variable>
+					            </div>
+											
+							</apex:outputPanel>
+
+						</div>
+					</main>
+
+					<!-- Page Footer  -->
+					<c:Footer />
+				</div>
+
+			</div>
+
+			<div class="modal-container is-hidden" id="js-modal">
+        		<div class="overlay"></div>
+        		<div class="modal-dialog" id="js-modal-dialog"></div>
+    		</div>
+
+			<script src="{!URLFOR($Resource.EcommerceAssets, 'js/vendor.min.js')}"></script>
+			<script src="{!URLFOR($Resource.EcommerceAssets, 'js/script.js')}"></script>
+
+			<script type="text/javascript">
+				$(document).ready(function(){
+
+					var selected_filters;
+
+					var updateSelectedFilters = function(){
+						selected_filters = [];
+						$(".frmFilters input[type='checkbox']:checked").each(function(idx, item){
+							selected_filters.push($(item).val());
+						});
+
+						// add free text filters 
+						$(".frmFilters input[type='text']").each(function(idx, item){
+							if($(item).val().trim() !='')
+								selected_filters.push($(this).data('field') + '|' +$(item).val().trim());
+						});
+
+						$('input[id$=selectedFilters]').val(selected_filters.join(':'));
+
+						
+						console.log(selected_filters);
+					}
+
+					$(".frmFilters input[type='text']").on('change',function(event){
+						updateSelectedFilters();
+					});
+
+					$('.select-deselect')
+						.on('click', '.refine-select-all', function(event) {
+							event.preventDefault();
+							var targetID = $(this).data('target'),
+								targetElement = $(this).data('target-element'),
+								targetCheckbox = targetElement+'[data-id="'+targetID+'"] .user-input';
+
+							$(this).parents('.select-deselect').find(targetCheckbox).prop('checked', true);
+							updateSelectedFilters();
+
+							$(this).attr('data-is-visible', 'false');
+							$(this).siblings().attr('data-is-visible', 'true');
+						})
+						.on('click', '.refine-deselect-all', function(event) {
+							event.preventDefault();
+							var targetID = $(this).data('target'),
+								targetElement = $(this).data('target-element'),
+								// checkboxContainer = targetElement+'[data-id="'+targetID+'"]',
+								targetCheckbox = targetElement+'[data-id="'+targetID+'"] .user-input';
+
+							$(this).parents('.select-deselect').find(targetCheckbox).prop('checked', false);
+							updateSelectedFilters();
+
+							$(this).attr('data-is-visible', 'false');
+							$(this).siblings().attr('data-is-visible', 'true');
+						})
+						.on('click', '.user-input', function() {
+							updateSelectedFilters();
+						}
+					);
+
+				});
+			</script>
+		</body>
+	</html>
+</apex:page>

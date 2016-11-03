@@ -1,0 +1,33 @@
+<apex:page docType="html-4.01-strict" title="IFAP Email Template Preview" sidebar="false" showHeader="false" controller="IFAP_EmailTemplatePreviewController" >
+	<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>IFAP Email Template preview</title>
+        <style type="text/css">
+        body {
+        	font-family: 'Times New Roman';
+        	font-size: 12pt
+        }
+        .sfdc_richtext {
+        
+        }
+        </style>
+    </head>
+    
+    <body>
+        <div id="page_wrapper" style="width:800px; margin:0 auto; margin-top:15px;">
+        <b>IFAP Email Template preview</b>:
+            <apex:form forceSSL="true" id="emailTemplatePreviewForm">
+            	<div style="border: 1px black solid; margin-top:15px; padding:10px">
+	                <c:VFEmailTemplatePreview contactId="{!$CurrentPage.parameters.contactId}" 
+	                	emailTemplateId="{!$CurrentPage.parameters.emailTemplateId}" 
+	                	subject="{!$CurrentPage.parameters.subject}" 
+	                	financialReviewType="{!$CurrentPage.parameters.financialReviewType}" 
+	                	deadlineDate="{!$CurrentPage.parameters.deadlineDate}" 
+	                	financialYear="{!$CurrentPage.parameters.financialYear}" />
+                </div>
+            </apex:form>
+        </div>
+    </body>
+    </html>
+</apex:page>

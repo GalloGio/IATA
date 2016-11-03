@@ -1,0 +1,1358 @@
+<apex:page title="Upgrade" cache="false" sidebar="false" showHeader="false" language="en" controller="vfIECUpgrade" action="{!pageLoad}" standardStylesheets="false">
+    <title>Upgrade</title>
+   
+    <div class="gdpwrapper">    
+    <div class="gdpbody">
+        
+    <apex:includeScript value="{!$Resource.postmessage_js}" />
+    <apex:includeScript value="{!$Resource.IECjQuery172}" />
+    <c:IECSiteHeader id="componentHeader" />
+
+
+    <!-- only used for confirmation divs -->
+    <apex:stylesheet value="{!URLFOR($Resource.IECStyles, 'register.css')}" />
+
+    <apex:stylesheet value="{!URLFOR($Resource.IECStyles, 'cart.css')}" />
+
+    <apex:stylesheet value="{!URLFOR($Resource.IECStyles, 'renew.css')}" />
+    <apex:stylesheet value="{!URLFOR($Resource.IECStyles, 'upgrade.css')}" />
+
+
+    <script>
+        $(function () {
+            $(".hideShowUpgradeDetails").click(function () {
+                var elm = $(this).parent().parent().find(".elmToHide");
+                if (elm.hasClass("hidden")) {
+                    elm.removeClass("hidden");
+                    $(this).html("&gt;&gt;&nbsp;Hide calculation details");
+                } else {
+                    elm.addClass("hidden");
+                    $(this).html("&gt;&gt;&nbsp;Show calculation details");
+                }
+            });
+        });
+    </script>
+
+
+    <style>
+    
+	#cart .subTdContent .label {
+    font-family: "Raleway",sans-serif !important;
+    font-size: 15px !important;
+    }
+    
+    #cart .subTdContent .label .price {
+	color: #1EBEC8;
+	}
+	
+    .paymentMethodRadio {
+		padding-top: 15px;
+		}
+		
+		.checkout-wrapper .checkout-submit{
+			margin: 0px 0 0 auto;
+		}
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 75%;
+        }
+        hr {
+            width: 80%;
+            margin: 15px;
+        }
+        table {
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+        div.subscribeError {
+            background-color: #ffc;
+            border-style: solid;
+            border-width: 1px;
+            color: #000;
+            padding: 6px 8px 6px 6px;
+            margin: 4px 20px;
+            border-color: #c00;
+        }
+        .paymentMethod {
+            padding-top: 2px;
+            font-weight: bold;
+        }
+        #cart .checkout-wrapper .checkout-info tr td:first-child {
+		padding-left: 15px;
+		padding-right: 15px;
+		}
+    </style>
+   
+   
+       <script type="text/javascript">
+       
+                
+            
+    
+        function setSelected(selectedUpgradeRatePlanID, selectedUpgradeProductInfoID, selectedUpgradeRatePlanInfoID,OptionNumber) {
+        
+            displayLoading(true);
+        
+            document.getElementById('{!$Component.formUpgrade.hiddenSelectedUpgrade}').value = selectedUpgradeRatePlanID;
+            document.getElementById('{!$Component.formUpgrade.hiddenSelectedUpgradeProductInfoID}').value = selectedUpgradeProductInfoID;
+            document.getElementById('{!$Component.formUpgrade.hiddenSelectedUpgradeRatePlanInfoID}').value = selectedUpgradeRatePlanInfoID;
+            selectUpgrade();
+            
+            hideOtherOptions(OptionNumber);
+          //  previewUpgrades();
+        }
+        
+        function hideOtherOptions(OptionNumber){
+		
+		 for (i = 0; i < document.getElementsByName('UpgradesTR').length; i++) {		 		
+		 		if(i != OptionNumber -1)
+                	document.getElementsByName('UpgradesTR')[i].style.display = 'none';
+         }
+            
+         
+          for (i = 0; i < document.getElementsByName('upgradeNow').length; i++) {
+                	document.getElementsByName('upgradeNow')[i].style.display = 'none';
+          }
+            
+            
+         for (i = 0; i < document.getElementsByName('totalPanelTable').length; i++) {
+                	document.getElementsByName('totalPanelTable')[i].style.display = '';
+            }
+            
+        
+        }
+
+		function showUpgrades()
+		{
+			 for (i = 0; i < document.getElementsByName('UpgradesTR').length; i++) {
+		 
+                document.getElementsByName('UpgradesTR')[i].style.display = '';
+            }
+        
+            for (i = 0; i < document.getElementsByName('upgradeNow').length; i++) {
+                	document.getElementsByName('upgradeNow')[i].style.display = '';
+            }
+            
+                   
+       		 for (i = 0; i < document.getElementsByName('totalPanelTable').length; i++) {
+                	document.getElementsByName('totalPanelTable')[i].style.display = 'none';
+            }
+        
+		}        
+        
+        
+        function displayLoading(val) {
+            for (i = 0; i < document.getElementsByName('divLoadingGif').length; i++) {
+                document.getElementsByName('divLoadingGif')[i].style.display = (val==true ? '' : 'none');
+            }
+        }
+        
+        function toggleDetails(panelId) {
+            if (document.getElementById(panelId) != null) {
+                document.getElementById(panelId).style.display = (document.getElementById(panelId).style.display == 'none' ? '' : 'none');
+            }
+            else {
+                document.getElementById(panelId).style.display = 'null';
+            }
+        }
+        
+        var newPaymentMethod = null;
+        
+        
+        function disablePaymentButtons() {
+            var proceedButton = this.document.getElementById('{!$Component.formUpgrade.buttonProceedPayment}');
+            var proceedNewCardButton = this.document.getElementById('{!$Component.formUpgrade.buttonProceedWithNewCard}');
+                
+            changeCursorProgress(proceedButton);
+            changeCursorProgress(proceedNewCardButton);
+
+            disableControl(proceedButton);
+            disableControl(proceedNewCardButton);
+        }
+
+        function enablePaymentButtons() {
+            var proceedButton = this.document.getElementById('{!$Component.formUpgrade.buttonProceedPayment}');
+            var proceedNewCardButton = this.document.getElementById('{!$Component.formUpgrade.buttonProceedWithNewCard}');
+                
+                
+            changeCursorDefault(proceedButton);
+            changeCursorDefault(proceedNewCardButton);
+
+            //enableControl(proceedButton);
+            enableControl(proceedNewCardButton);
+            
+            togglePaymentMethodType();
+        }
+                
+
+        function proceedToPayment() {
+            var pmType = getSelectedPaymentMethodType();
+
+            // check if a new payment method was entered
+            if (pmType == 'CREDIT_CARD' && getSelectedCreditCardPaymentMethodId() == 'NEW') {
+                // submit HPM iFrame
+                submitHostedPage('z_hppm_iframe');
+            }
+            else {
+                proceedToPaymentBackend();
+                disablePaymentButtons();
+            }
+        }
+
+        function proceedToAddNew() {
+            submitHostedPage('z_hppm_iframe');
+        }
+
+    
+        function getSelectedPaymentMethodType() {
+            for (i = 0; i < document.getElementsByName('radiopaymentmethodtype').length; i++) {
+                if(document.getElementsByName('radiopaymentmethodtype')[i].checked == true) {
+                    var pmType = document.getElementsByName('radiopaymentmethodtype')[i].value;
+                    return pmType;
+                    break;
+                }
+            }
+            return null;
+        }
+        
+        function getSelectedCreditCardPaymentMethodId() {
+            for (i = 0; i < document.getElementsByName('radiopaymentmethodid').length; i++) {
+                if(document.getElementsByName('radiopaymentmethodid')[i].checked == true) {
+                    var pmValue = document.getElementsByName('radiopaymentmethodid')[i].value;
+                    return pmValue;
+                    break;
+                }
+            }
+            return null;
+        }
+        
+        function callbacksuccess(pmid) {
+            setSelectedCreditCardPaymentMethodId(pmid);
+            proceedToPaymentBackend();
+        }
+        
+        function callbackfailure( paramString ) {          
+            displayCallBackfailureJS(paramString);
+        }
+        
+        function setSelectedCreditCardPaymentMethodId(paymentMethodId) {
+            this.document.getElementById('{!$Component.formUpgrade.hiddenSelectedCreditCardPaymentId}').value = paymentMethodId;
+        }
+        
+        function togglePaymentMethodType() {
+
+            var btnProceedPayment = this.document.getElementById('{!$Component.formUpgrade.buttonProceedPayment}');;
+        
+            var creditCardSelected = (getSelectedPaymentMethodType() == 'CREDIT_CARD');
+            var ICHSelected = (getSelectedPaymentMethodType() == 'ICH');
+            
+            if (ICHSelected) {
+                btnProceedPayment.disabled = false;
+            }
+            else if (creditCardSelected) {
+                btnProceedPayment.disabled = (getSelectedCreditCardPaymentMethodId() == null);
+            }
+            else {
+                btnProceedPayment.disabled = true;
+            }
+            
+                        
+            // enable or disable the credit card radios based on the payment type selected
+            var creditCardRadios = document.getElementsByName('radiopaymentmethodid');
+            for (var i = 0, length = creditCardRadios.length; i < length; i++) {
+                creditCardRadios[i].disabled = !creditCardSelected;
+            }
+            
+            // hide Auto-Renew for Bank Transfer
+            //if (getSelectedPaymentMethodType() == 'BANK_TRANSFER') {
+            //  this.document.getElementById('{!$Component.formUpgrade.panelAutoRenew}').style.display = 'none';
+            //}
+            //else {
+            //  this.document.getElementById('{!$Component.formUpgrade.panelAutoRenew}').style.display = '';
+            //}
+            
+            // Show credit-card options only when Credit Card is selected
+            if (this.document.getElementById('{!$Component.formUpgrade.panelCreditCard}') != null) {
+                if (creditCardSelected) {
+                    this.document.getElementById('{!$Component.formUpgrade.panelCreditCard}').style.display = '';
+                }
+                else {
+                    this.document.getElementById('{!$Component.formUpgrade.panelCreditCard}').style.display = 'none';
+                }
+            }
+            
+            // store payment method type in hidden field
+            this.document.getElementById('{!$Component.formUpgrade.hiddenSelectedPaymentType}').value = getSelectedPaymentMethodType();
+            
+            //resizeIFrame();
+        }
+        
+        function resizeIFrame() {
+            if (this.document.getElementById('z_hppm_iframe') == null || this.document.getElementById('z_hppm_iframe') == 'undefined')
+                return;
+                
+            if (getSelectedCreditCardPaymentMethodId() == 'NEW') {
+                this.document.getElementById('z_hppm_iframe').height="390";
+            }
+            else {
+                this.document.getElementById('z_hppm_iframe').height="0";
+            }
+        }
+        
+        function changeTextColor(object) {
+            
+            if (object.value == null || object.value == '') {
+                object.style.color = '#aaa';
+            }
+            else
+            {
+                object.style.color = '#000';
+            }
+        }           
+    </script>
+   
+   
+    <apex:form id="formUpgrade" forceSSL="true">
+
+
+        <div id="cart">
+
+
+            <!-- Static caousel -->
+            <div class="carouselWrapper static">
+
+                <div class="gradient"></div>
+
+                <div class="carousel">
+                    <ul class="carousel__list">
+
+                        <li class="carousel__slide" style="background-image:url({!$Resource.IECBannerHome}); width: 1263px;">
+                            <div class="autoAdjustMargin">
+                                <div class="carousel__slide-wrapper">
+                                    <!--<h1>About Us</h1>-->
+                                    <h2 class="carousel__slide-text -heading"><span>Upgrade your subscription</span></h2>
+                                    <br/>
+                                    <a class="carousel__slide-anchor customButton" style="color: #373C41;background: #fff;color: black;" href="mailto:globaldata@iata.org?subject=eCommerce">Contact us</a>
+                                </div>
+                            </div>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+
+
+
+
+            <apex:inputHidden id="hiddenSelectedUpgrade" value="{!selectedUpgradeRatePlanZuoraID}" />
+            <apex:inputHidden id="hiddenSelectedUpgradeProductInfoID" value="{!selectedUpgradeProductInfoID}" />
+            <apex:inputHidden id="hiddenSelectedUpgradeRatePlanInfoID" value="{!selectedUpgradeRatePlanInfoID}" />
+            <apex:inputHidden id="hiddenSelectedCreditCardPaymentId" value="{!selectedCreditCardPaymentId}" />
+            <apex:inputHidden id="hiddenSelectedPaymentType" value="{!selectedPaymentMethodType}" />
+
+
+            <apex:actionFunction action="{!selectUpgrade}" name="selectUpgrade" rerender="errorMessage,panelActionButtons,panelRight,panelPONumber,totalPanel" oncomplete="displayLoading(false)" />
+            <apex:actionFunction action="{!previewUpgrades}" name="previewUpgrades" rerender="errorMessage,panelUpgradePrice,panelDetails,panelPONumber" status="previewingUpgrades" />
+            <apex:actionStatus id="previewingUpgrades" onstart="displayLoading(true)" onstop="displayLoading(false)" />
+            <apex:actionFunction action="{!proceedToUpgrade}" name="proceedToPaymentBackend" rerender="pageContent,errorMessage" status="proceedingToPaymentStatus" />
+            <apex:actionFunction action="{!displayCallBackfailure}" name="displayCallBackfailureJS" rerender="errorMessage, panelHPM">
+                <apex:param name="errMsg" value="" assignTo="{!sErrorMsgFromHPM}" />
+            </apex:actionFunction>
+
+            <apex:outputPanel id="pageContent" styleClass="pageContent" layout="block" style="margin:15px">
+                <apex:outputPanel id="errorMessage">
+                    <div class="errorPanel">
+                        <apex:pageMessages escape="no" />
+                    </div>
+                </apex:outputPanel>
+
+
+<!--                 <div class="sepEmptyDiv"></div> -->
+
+
+                <!-- Main upgrade panel -->
+                <apex:outputPanel id="panelUpgrade" layout="block" rendered="{!NOT(upgradeSuccessful) && hasRatePlanUpgradeSource}" style="width: 100%">
+
+                    <div class="content-container tab">
+                        <div class="content-container">
+                            <div class="checkout-wrapper">
+
+                                <div class="checkout-total">
+
+                                    <!-- Upgrade from -->
+                                    <apex:outputPanel id="panelUpgradeFrom" rendered="{!oRatePlanInfoSourceUpgrade != null}">
+
+                                        <h2 class="checkout-info__heading headingMod">Your current subscription</h2>
+                                        <br />
+
+                                        <table class="checkout-table">
+                                            <thead>
+                                                <tr>
+                                                    <th class="checkout-table__heading -item" style="width: 45%">Product Name</th>
+                                                    <th class="checkout-table__heading -price">Term</th>
+                                                    <th class="checkout-table__heading -price">Quantity</th>
+                                                    <th class="checkout-table__heading -price">Paid</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <apex:repeat id="repeater" var="product" value="{!oSubscription.Zuora__Subscription_Product_Charges__r}" rendered="{!oSubscription != null && oSubscription.Zuora__Subscription_Product_Charges__r != null && oSubscription.Zuora__Subscription_Product_Charges__r.size > 0}">
+                                                    <tr>
+                                                        <td style="width: 45%">
+                                                            <apex:outputText styleClass="checkout-table__item-text" value="{!product.Zuora__ProductName__c}" />
+                                                            <apex:outputText styleClass="checkout-table__item-text" value="{!product.Zuora__RatePlanName__c}" />                                                    
+                                                        </td>
+                                                        <td>
+                                                            <apex:outputText value="{0,date,yyyy'/'MM'/'dd}" styleClass="checkout-table__price">
+                                                                <apex:param value="{!oSubscription.Zuora__SubscriptionStartDate__c}" />
+                                                            </apex:outputText>
+                                                            <br/>
+                                                            <apex:outputText value="{0,date,yyyy'/'MM'/'dd}" styleClass="checkout-table__price">
+                                                                <apex:param value="{!oSubscription.Zuora__SubscriptionEndDate__c}" />
+                                                            </apex:outputText>
+                                                        </td>
+                                                        <td>
+                                                            <apex:outputText value="{0, number,###,###,##0}" styleClass="checkout-table__price">
+                                                                <apex:param value="{!product.Zuora__Quantity__c}" />
+                                                            </apex:outputText>
+                                                        </td>
+                                                        <td>
+                                                            <apex:outputText value="${0, number,###,###,##0.00}" styleClass="checkout-table__price">
+                                                                <apex:param value="{!product.Zuora__Price__c}" />
+                                                            </apex:outputText>
+                                                        </td>
+                                                    </tr>
+                                                </apex:repeat>
+
+                                            </tbody>
+                                        </table>
+                                    </apex:outputPanel>
+
+
+                                    <br/>
+                                    <br/>
+                                    <br/>
+                                    <br/>
+
+                                    <!-- Upgrade to section-->
+
+                                    <h2 class="checkout-info__heading headingMod">Subscription Upgrade Options:</h2>
+                                    <br />
+                              <apex:outputPanel id="panelUpgradeTo" layout="block">
+
+                                        <apex:variable var="i" value="{!0}" />
+                                        <table class="checkout-table">
+                                            <thead>
+                                                <tr>
+                                                    <th class="checkout-table__heading -item" style="width: 45%">Product Name</th>
+                                                    <th class="checkout-table__heading -price" style="width:100px;">Term</th>
+                                                    <th class="checkout-table__heading -price">&nbsp;</th>
+                                                    <th class="checkout-table__heading -price">Cost</th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+
+                                 <table class="checkout-table">
+                                     <tbody>
+                                        <apex:repeat id="repeatUpgrades" var="ratePlanUpgrade" value="{!lstUIRatePlanInfoUpgradeTargets}">
+
+                                            <apex:outputPanel layout="block"  rendered="{!selectedUpgradeRatePlanZuoraID==ratePlanUpgrade.productRatePlanInfo.Product_Rate_Plan__r.zqu__ZuoraId__c||selectedUpgradeRatePlanZuoraID==''}">
+
+
+                                                        <tr name="UpgradesTR">
+                                                        
+                                                            <td style="width: 45%;">
+                                                                <apex:outputText styleClass="checkout-table__item-text  upgradeOption" value="Upgrade Option {!i+1}" rendered="{!selectedUpgradeRatePlanZuoraID==''}" />
+                                                                <apex:outputText styleClass="checkout-table__item-text" value="{!ratePlanUpgrade.productRatePlanInfo.Related_Product_Information__r.Related_Product_Category__r.Display_Name__c}" />
+                                                                <apex:outputText styleClass="checkout-table__item-text" value="{!ratePlanUpgrade.productRatePlanInfo.Product_Rate_Plan__r.Name}" />
+
+                                                                <!--  Calculation details start -->
+                                                               
+
+                                                                <apex:outputPanel id="panelCalculationDetails" layout="block">
+
+<!--                                                                     <apex:outputLink value="#" style="display:{!IF(selectedUpgradeProductInfoID == '', '', 'none')}" onclick="toggleDetails('j_id0:formUpgrade:repeatUpgrades:{!i}:panelDetails')">&gt;&gt;&nbsp;Show/Hide calculation details</apex:outputLink> -->
+                                                                    
+                                                                    <div class="subTdContent">
+                                                       					 <a href="javascript:void(0);" class="hideShowUpgradeDetails">&gt;&gt;&nbsp;Show calculation details</a>
+                                                      				</div>
+
+                                                                   
+                                                                    
+                                                                    <apex:outputPanel id="panelDetails" layout="block" >
+                                                                        
+                                                                            <apex:repeat id="repeatUpgradeInvoiceItem" var="invoiceItem" value="{!ratePlanUpgrade.lstPreviewInvoiceItems}">
+                                                                                
+                                                                               <div class="subTdContent elmToHide hidden">  
+                                                                                    <span class="label">   
+                                                                                            <apex:outputText rendered="{!invoiceItem.chargeAmount!=0.0}" title="{!invoiceItem.chargeName}" value="{!IF(invoiceItem.chargeAmount > 0, 'Prorated Charge', 'Prorated Credit')}" />                                                                                        
+	                                                                                      <span class="price">  		                                                                             
+		                                                                                            <apex:outputText value="${0, number,###,###,##0.00}" rendered="{!invoiceItem.chargeAmount!=0.0}">
+		                                                                                                <apex:param value="{!invoiceItem.chargeAmount}" />
+		                                                                                            </apex:outputText>
+	                                                                                        </span>
+	                                                                                        <br/>
+	                                                                                        
+	                                                                                      	from&nbsp;
+	                                                                                       	 <apex:outputText value="{0,date,yyyy'/'MM'/'dd}" styleClass="checkout-table__price">
+	                                                                                            <apex:param value="{!invoiceItem.serviceStartDate}" />
+	                                                                                        </apex:outputText>
+	                                                                                        &nbsp;to&nbsp;
+	                                                                                        <apex:outputText value="{0,date,yyyy'/'MM'/'dd}" styleClass="checkout-table__price">
+	                                                                                            <apex:param value="{!invoiceItem.serviceEndDate}" />
+	                                                                                        </apex:outputText>
+	                                                                                        
+                                                                                        </span>                                                                                 
+                                                                                  </div>
+                                                                                   <br/>
+                                                                               </apex:repeat>         
+                                                                            
+                                                                            <!--  requested to be hidden by Luc -->                                                     
+                                                                            <apex:outputPanel id="panelTaxes" rendered="false">
+                                                                                  <div class="subTdContent elmToHide hidden">  
+                                                                                    <br/><br/><br/><br/>
+                                                                                    <span class="label">                                                                                
+                                                                                        <apex:outputText value="Subtotal" />
+                                                                                        <span class="price">     
+                                                                                               <apex:outputText value="${0, number,###,###,##0.00}">
+                                                                                                 <apex:param value="{!ratePlanUpgrade.subTotal}" /></apex:outputText>
+                                                                                          </span>
+                                                                                      </span>
+                                                                                  
+                                                                                  <br/>
+                                                                                      
+                                                                                   
+                                                                                    <span class="label">                   
+                                                                                            <apex:outputText value="Taxes" />
+                                                                                            <span class="price">  
+                                                                                                  <apex:outputText value="${0, number,###,###,##0.00}">
+                                                                                                     <apex:param value="{!ratePlanUpgrade.taxCharge}" /></apex:outputText>
+                                                                                             </span>
+                                                                                     </span>
+                                                                                     
+                                                                                     <br/>
+                                                                                     
+                                                                                    <span class="label">                   
+                                                                                            <apex:outputText value="Shipping" />
+                                                                                            <span class="price">  
+                                                                                                  <apex:outputText value="${0, number,###,###,##0.00}">
+                                                                                                     <apex:param value="{!ratePlanUpgrade.shippingCharge}" /></apex:outputText>
+                                                                                             </span>
+                                                                                     </span>
+                                                                                     
+                                                                                     <br/>
+                                                                                   
+                                                                                     <span class="label">           
+                                                                                             <apex:outputText value="Total" />
+																							 <span class="price">
+                                                                                                    <apex:outputText value="${0, number,###,###,##0.00}">
+                                                                           		                          <apex:param value="{!ratePlanUpgrade.total}" /></apex:outputText>
+                                                                           					</span>
+                                                                           			  </span>
+                                                                           			  <br/>
+                                                                           	  </div>
+ 																			<br/>
+                                                                            </apex:outputPanel>
+                                                                                                                                                                                                                                   
+                                                                    </apex:outputPanel>
+																
+                                                                </apex:outputPanel>
+                                                                <apex:variable var="i" value="{!i+1}" />
+
+                                                                <br/>
+                                                                <div class="subTdContent" style="margin-top: 0px;">
+                                                                    <input name="upgradeNow" class="customButton" style="width: 175px; margin-top: 5px; display:{!IF(selectedUpgradeProductInfoID == '', 'initial', 'none')}" type="button" value="Upgrade Now!" onclick="setSelected('{!ratePlanUpgrade.productRatePlanInfo.Product_Rate_Plan__r.zqu__ZuoraId__c}','{!ratePlanUpgrade.productRatePlanInfo.Related_Product_Information__c}','{!ratePlanUpgrade.productRatePlanInfo.Id}','{!i}');"  rerender="panelPONumber"/>
+                                                                </div>
+ 
+                                                                <!-- Calculation details end -->
+
+                                                            </td>
+															
+															<!-- TERM -->
+                                                            <td style="width:100px; vertical-align: initial;padding-top: 30px;">
+                                                                <apex:outputText value="{0,date,yyyy'/'MM'/'dd}" styleClass="checkout-table__price">
+                                                                    <apex:param value="{!TODAY()}" />
+                                                                </apex:outputText>
+                                                                <br/>
+                                                                <apex:outputText value="{0,date,yyyy'/'MM'/'dd}" styleClass="checkout-table__price">
+                                                                    <apex:param value="{!oSubscription.Zuora__SubscriptionEndDate__c}" />
+                                                                </apex:outputText>
+                                                            </td>
+
+                                                            <td>&nbsp;</td>
+															
+															<!--  COST -->
+                                                            <td style="vertical-align: initial;padding-top: 30px;">
+                                                                <apex:outputPanel id="panelUpgradePrice" layout="block">
+                                                                    <!-- Display subtotal without taxes for all upgrades -->
+                                                                    <apex:outputText value="${0, number,###,###,##0.00}" styleClass="checkout-table__price" rendered="{!ratePlanUpgrade.subtotal!=null && selectedUpgradeRatePlanZuoraID==''}">
+                                                                        <apex:param value="{!ratePlanUpgrade.subtotal}" />
+                                                                    </apex:outputText>
+                                                                    <!-- Display total with taxes only when the upgrade is selected -->
+                                                                    <apex:outputText value="${0, number,###,###,##0.00}" styleClass="checkout-table__price" rendered="{!ratePlanUpgrade.total!=null && selectedUpgradeRatePlanZuoraID==ratePlanUpgrade.productRatePlanInfo.Product_Rate_Plan__r.zqu__ZuoraId__c}">
+                                                                        <apex:param value="{!ratePlanUpgrade.total}" />
+                                                                    </apex:outputText>
+                                                                </apex:outputPanel>
+                                                                <div name="divLoadingGif" style="display:none; width:100%; height: 100%; opacity:0.4; filter:alpha(opacity=40); text-align: center">
+                                                                    <img style="padding-left: 1px;" src="{!$Resource.IEC_Ajax_loader}" border="0" width="16" height="16" />
+                                                                </div>
+                                                            </td>
+
+
+                                                        </tr>
+
+												
+                                            </apex:outputPanel>
+                                        </apex:repeat>
+ 									</tbody>
+                                    </table>
+                                                
+                            </apex:outputPanel>
+
+
+							<apex:outputPanel id="totalPanel"  >
+
+									    <table class="checkout-table" name="totalPanelTable" >
+									        <tbody>
+									
+									            <tr>
+									
+									                <td colspan="2">
+									                    <h4 class="checkout-table__total-heading">Subtotal</h4>
+									                </td>
+									                <td>			
+									                    <span class="price">
+	                                                                  <apex:outputText value="${0, number,###,###,##0.00}">
+	                                                                   <apex:param value="{!subTotal}" /></apex:outputText>
+	                                                 </span>
+									                </td>
+									            </tr>
+									            <tr>
+									                <td colspan="2">
+									                    <h4 class="checkout-table__total-heading">Taxes</h4>
+									                </td>
+									                <td>									
+									                    <span class="price">
+	                                                                  <apex:outputText value="${0, number,###,###,##0.00}">
+	                                                                   <apex:param value="{!taxCharge}" /></apex:outputText>
+	                                                 </span>
+									                </td>
+									            </tr>
+									            <tr>
+									                <td colspan="2">
+									                    <h4 class="checkout-table__total-heading">Shipping</h4>
+									                </td>
+									                <td>									
+									                    <span class="price">
+	                                                                  <apex:outputText value="${0, number,###,###,##0.00}">
+	                                                                   <apex:param value="{!shippingCharge}" /></apex:outputText>
+	                                                 </span>
+									                </td>
+									            </tr>
+									            <tr>
+									                <td colspan="2">
+									                    <h4 class="checkout-table__total-heading">Order Total</h4>
+									                </td>
+									                <td>									
+									                    <span class="price">
+                                                                 <apex:outputText value="${0, number,###,###,##0.00}">
+                                                                  <apex:param value="{!total}" /></apex:outputText>
+												       </span>
+									                </td>
+									            </tr>																		
+									        </tbody>
+									    </table>
+									
+						</apex:outputPanel>
+						
+						<script>
+						 for (i = 0; i < document.getElementsByName('totalPanelTable').length; i++) {
+				                	document.getElementsByName('totalPanelTable')[i].style.display = 'none';
+				            }
+						
+						</script>
+
+
+                           <apex:outputPanel id="panelNoUpgrade" layout="block" rendered="{!NOT(hasUpgradesAvailable)}">
+                               No upgrades available for this product.
+                           </apex:outputPanel>
+
+
+                              <!-- Action buttons -->
+                              <apex:outputPanel id="panelActionButtons" layout="block" style="margin-top:-20px" rendered="{!NOT(upgradeSuccessful)}">
+                                  <apex:commandButton id="cancelUpgradeBtn" styleClass="checkout-submit_2buttons -left" value="Cancel" action="{!onClickCancel}" rendered="{!NOT(inEditContactInfo)}" />&nbsp;
+                                  <apex:commandButton id="changeSelectionBtn" styleClass="checkout-submit_2buttons -right" style="background:#737d87;" value="Change selection" action="{!changeSelection}" rendered="{!selectedUpgradeRatePlanZuoraID!=''}" rerender="errorMessage,panelActionButtons,panelRight,panelPONumber" onclick="showUpgrades()"/>
+                              </apex:outputPanel>
+
+
+
+
+
+                                    <apex:outputPanel id="panelPONumber" layout="block" styleClass="checkout-submitPanel">
+                                        <br/>
+                                        <div id="test" style="background-color: #efefef; width: 106%; padding: 0px; margin-left: -17px;  border: 1px solid #ccc;   border-left: 0px; border-right: 0px;   box-sizing: border-box; height: 20px;"> &nbsp;</div>
+                                        <br/>
+                                        <table class="checkout-table">
+
+                                            <tr>
+                                                <td class="checkout-table__item">
+                                                    <span>
+			                           		<!-- img class="checkout-table__icon" src="https://icons.iconarchive.com/icons/visualpharm/icons8-metro-style/256/Accounting-Purchase-order-icon.png"/> -->
+			                               	<h2 class="checkout-info__billingdetails-label">Purchase Order Number to appear on your invoice </h2>
+			                            </span>
+                                                </td>
+                                                <td>
+                                                    <apex:inputText id="txtPO" value="{!sPurchaseOrder}" styleClass="checkout-input" maxlength="40" />
+                                                </td>
+                                            </tr>
+                                        </table>                                  
+                                    </apex:outputPanel>
+
+
+                                </div>
+
+
+                                <!-- RIGHT - T&Cs, auto-renew and payments panel -->
+                                <apex:outputPanel id="panelRight" layout="block">
+
+                                    <!-- Purchase panel only accessible if user has selected an upgrade and preview was successful -->
+                                    <apex:outputPanel id="panelPurchaseSteps" layout="block" rendered="{! upgradePreviewSuccessful && selectedUpgradeRatePlanZuoraID!=''}">
+
+                                        <apex:inputHidden value="{!autoRenewSubscription}" />
+
+                                        <div class="checkout-info">
+
+                                            <!-- Billing address -->
+                                            <div class="checkout-info__section -short">
+                                                <apex:commandlink rendered="{!NOT(bExpandedBilling) && NOT(inEditContactInfo) }" action="{!toggleBilling}" value="Billing Details" rerender="panelPurchaseSteps" styleClass="checkout-info__heading -link" />
+
+                                                <apex:outputPanel id="panelContactInfo" layout="block" rendered="{!bExpandedBilling || inEditContactInfo}">
+                                                    <h2 class="checkout-info__heading">Billing Details</h2>
+
+                                                    <apex:outputPanel id="errorMessageContactInfo">
+                                                        <apex:pageMessages escape="no" />
+                                                    </apex:outputPanel>
+                                                    <apex:outputText rendered="{!needToFillContactInfo}">
+                                                        <p class="checkout-info__subHeading">Please fill your contact information in order to continue</p>
+                                                    </apex:outputText>
+
+                                                    <!-- Non etidable Contact and Billing Address Information -->
+                                                    <apex:outputPanel id="panelReadOnlyContactInfo" layout="block" rendered="{!NOT(inEditContactInfo)}">
+                                                        <table style="width:100%; margin-left:20px;">
+                                                                       
+                                                            
+                                                     <tr>
+                                                        <td colspan="2">
+                                                            &nbsp;
+                                                        </td>
+                                                    </tr>
+                                                    
+                                                    <tr>
+                                                        <td colspan="2" class="checkout-info__billingdetails-value" style="font-size: 17px; font-family: 'Raleway', sans-serif;font-weight: 700;color: #1ebec8;">{!oAccount.Name}</td>
+                                                    </tr>
+                                                    
+                                                    <tr>
+                                                        <td colspan="2" class="checkout-info__billingdetails-value">
+                                                            <span style="display:{!IF(NOT(oContact.Salutation == ''), '', 'none')}">{!oContact.Salutation}&nbsp;</span>
+                                                            {!oContact.FirstName}&nbsp;{!oContact.LastName}
+                                                        </td>
+                                                    </tr>
+                                                            
+                                                            
+                                                            
+                                                  
+                                                            <tr>
+                                                                <td colspan="2">
+                                                                    <p class="checkout-info__subHeading">Billing Address</p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td colspan="2" class="checkout-info__billingdetails-value">{!oBillingAddress.Street__c}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td colspan="2" class="checkout-info__billingdetails-value">
+                                                                    {!oBillingAddress.City__c}
+                                                                    <span style="display:{!IF(NOT(oBillingAddress.City__c == ''), '', 'none')}">,&nbsp;</span> {!oBillingAddress.ISO_State_Name__c}
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td colspan="2" class="checkout-info__billingdetails-value">
+                                                                    {!oBillingAddress.ZipCode__c}
+                                                                    <span style="display:{!IF(NOT(oBillingAddress.ZipCode__c == ''), '', 'none')}">-&nbsp;</span> {!oBillingAddress.ISO_Country_Name__c}
+                                                                </td>
+                                                            </tr>
+                                                            <apex:outputPanel id="panelVATReadOnly" layout="none" rendered="{!vatConfig <> NULL}">
+                                                                <tr>
+                                                                    <td colspan="2">
+                                                                        <p class="checkout-info__subHeading">Tax Information</p>
+                                                                    </td>
+                                                                </tr>
+                                                                <apex:outputPanel id="panelTax1ReadOnly" layout="none" rendered="{!vatConfig.ShowTax1}">
+                                                                    <tr>
+                                                                        <td class="checkout-info__billingdetails-label">{!vatConfig.Tax1Label}</td>
+                                                                        <td class="checkout-info__billingdetails-value">{!IF(vatConfig.VATValidationRequired, vatConfig.CountryCode, '')}{!oContact.Tax_1_ID__c}</td>
+                                                                    </tr>
+                                                                </apex:outputPanel>
+                                                                <apex:outputPanel id="panelTax2ReadOnly" layout="none" rendered="{!vatConfig.ShowTax2}">
+                                                                    <tr>
+                                                                        <td class="checkout-info__billingdetails-label">{!vatConfig.Tax2Label}</td>
+                                                                        <td class="checkout-info__billingdetails-value">{!oContact.Tax_2_ID__c}</td>
+                                                                    </tr>
+                                                                </apex:outputPanel>
+                                                            </apex:outputPanel>
+                                                        </table>
+                                                        <apex:commandButton styleClass="checkout-submit -fixed100" id="btnModifyContactInfo" value="Modify" action="{!modifyContactInfo}" rerender="panelPurchaseSteps" />
+                                                    </apex:outputPanel>
+
+
+                                                    <!-- Editable Contact and Billing Information -->
+                                                    <apex:outputPanel id="panelEditContactInfo" layout="block" rendered="{!inEditContactInfo}">
+                                                        <table style="width:100%;">
+                                                            <tr>
+                                                                <td colspan="2">
+                                                                    <p class="checkout-info__subHeading">Contact Details</p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <!-- 
+                                                        <td class="checkout-info__billingdetails-label">First Name<span class="required">*</span></td>
+                                                        -->
+                                                                <td>
+                                                                    <apex:inputText value="{!oContact.FirstName}" styleClass="login__input -required" html-placeholder="First Name" title="First Name" />
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <!-- 
+                                                        <td class="checkout-info__billingdetails-label">Last Name<span class="required">*</span></td>
+                                                        -->
+                                                                <td>
+                                                                    <apex:inputText value="{!oContact.LastName}" styleClass="login__input -required" html-placeholder="Last Name" title="Last Name" />
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <!-- 
+                                                        <td class="checkout-info__billingdetails-label">Title<span class="required">*</span></td>
+                                                        -->
+                                                                <td>
+                                                                    <apex:inputText value="{!oContact.Title}" styleClass="login__input -required" html-placeholder="Job Title" title="Job Title" />
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <!-- 
+                                                        <td class="checkout-info__billingdetails-label">Phone<span class="required">*</span></td>
+                                                        -->
+                                                                <td>
+                                                                    <apex:inputText value="{!oContact.Phone}" styleClass="login__input -required" html-placeholder="Phone" title="Phone" />
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <!-- 
+                                                        <td class="checkout-info__billingdetails-label">Email<span class="required">*</span></td>
+                                                        -->
+                                                                <td>
+                                                                    <apex:inputText value="{!oContact.Email}" styleClass="login__input -required" html-placeholder="Email" title="Email" disabled="{!IF(oContact.Email=='', 'false', 'true')}" />
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td colspan="2">
+                                                                    <p class="checkout-info__subHeading">Billing Address</p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <!-- 
+                                                        <td class="checkout-info__billingdetails-label">Street<span class="required">*</span></td>
+                                                        -->
+                                                                <td>
+                                                                    <apex:inputText value="{!oBillingAddress.Street__c}" styleClass="login__input -required" html-placeholder="Address" title="Address" />
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <!-- 
+                                                        <td class="checkout-info__billingdetails-label">City<span class="required">*</span></td>
+                                                        -->
+                                                                <td>
+                                                                    <apex:inputText value="{!oBillingAddress.City__c}" styleClass="login__input -required" html-placeholder="City" title="City" />
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <!-- 
+                                                        <td class="checkout-info__billingdetails-label">Country<span class="required">*</span></td>
+                                                        -->
+                                                                <td>
+                                                                    <apex:selectList style="color: {!IF(oBillingAddress.ISO_Country__c != null, '#000', '#aaa')}" title="Country" value="{!oBillingAddress.ISO_Country__c}" size="1" styleClass="login__input -required">
+                                                                        <apex:selectOptions value="{!lstISOCountries}" />
+                                                                        <apex:actionsupport event="onchange" action="{!onChangeBillingCountry}" rerender="panelEditContactInfo, panelVATEdit" />
+                                                                    </apex:selectList>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <!-- 
+                                                        <td class="checkout-info__billingdetails-label">State/Province<span class="required" style="display:{!IF(oBillingAddress.Country__c == 'Canada' || oBillingAddress.Country__c == 'United States', '', 'none')}">*</span></td>
+                                                        -->
+                                                                <td>
+                                                                    <apex:outputPanel id="panelBillingStatesProvince" layout="inline">
+                                                                        <apex:selectList onchange="changeTextColor(this);" style="color: {!IF(oBillingAddress.ISO_State__c != null, '#000', '#aaa')}" title="Province" value="{!oBillingAddress.ISO_State__c}" size="1" styleClass="login__input -required">
+                                                                            <apex:selectOptions value="{!lstStateProvince}" />
+                                                                        </apex:selectList>
+                                                                    </apex:outputPanel>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <!-- 
+                                                        <td class="checkout-info__billingdetails-label">Zip/Postal code<span class="required" style="display:{!IF(oBillingAddress.Country__c == 'Canada' || oBillingAddress.Country__c == 'United States', '', 'none')}">*</span></td>
+                                                        -->
+                                                                <td>
+                                                                    <apex:inputText value="{!oBillingAddress.ZipCode__c}" styleClass="login__input" html-placeholder="Zip/Postal code" title="Zip/Postal code" />
+                                                                </td>
+                                                            </tr>
+                                                            <apex:outputPanel id="panelVATEdit" layout="none" rendered="{!vatConfig <> NULL}">
+                                                                <tr>
+                                                                    <td colspan="2">
+                                                                        <p class="checkout-info__subHeading">Tax Information</p>
+                                                                    </td>
+                                                                </tr>
+                                                                <apex:outputPanel id="panelTax1Edit" layout="none" rendered="{!vatConfig.ShowTax1}">
+                                                                    <tr>
+                                                                        <!-- 
+                                                                <td class="checkout-info__billingdetails-label">{!vatConfig.Tax1Label}<apex:outputPanel id="panelTax1Required" rendered="{!vatConfig.TaxIDMandatory}"><span class="required">*</span></apex:outputPanel></td>
+                                                        -->
+                                                                        <td>
+                                                                            <apex:outputPanel rendered="{!vatConfig.VATValidationRequired}">
+                                                                                <table style="width:100%">
+                                                                                    <tr>
+                                                                                        <td style="width:40px;padding-left: 0px;">
+                                                                                            <apex:inputText styleClass="login__input" value="{!vatConfig.CountryCode}" disabled="true" />
+                                                                                        </td>
+                                                                                        <td style="width:5px">&nbsp;</td>
+                                                                                        <td>
+                                                                                            <apex:inputText styleClass="login__input -required" html-placeholder="{!vatConfig.Tax1Label}" title="{!vatConfig.Tax1Label}" value="{!oContact.Tax_1_ID__c}" maxlength="20" />
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                </table>
+                                                                            </apex:outputPanel>
+                                                                            <apex:inputText maxlength="20" value="{!oContact.Tax_1_ID__c}" styleClass="login__input" html-placeholder="{!vatConfig.Tax1Label}" title="{!vatConfig.Tax1Label}" rendered="{!NOT(vatConfig.VATValidationRequired)}" />
+                                                                        </td>
+                                                                    </tr>
+                                                                </apex:outputPanel>
+                                                                <apex:outputPanel id="panelTax2Edit" layout="none" rendered="{!vatConfig.ShowTax2}">
+                                                                    <tr>
+                                                                        <!-- 
+                                                                <td class="checkout-info__billingdetails-label">{!vatConfig.Tax2Label}<apex:outputPanel id="panelTax2Required" rendered="{!vatConfig.TaxIDMandatory}"><span class="required">*</span></apex:outputPanel></td>
+                                                        -->
+                                                                        <td>
+                                                                            <apex:inputText maxlength="20" value="{!oContact.Tax_2_ID__c}" styleClass="login__input" html-placeholder="{!vatConfig.Tax2Label}" title="{!vatConfig.Tax2Label}" />
+                                                                        </td>
+                                                                    </tr>
+                                                                </apex:outputPanel>
+                                                            </apex:outputPanel>
+                                                        </table>
+                                                        <apex:commandButton styleClass="checkout-submit -fixed100" value="Save new details" action="{!updateContactInfo}" rerender="errorMessageContactInfo, panelPurchaseSteps, panelTCs" oncomplete="refreshShoppingCartTotal();" />
+                                                        <apex:commandButton styleClass="checkout-submit -fixed100" value="Cancel" action="{!cancelUpdateContactInfo}" rerender="errorMessageContactInfo, panelPurchaseSteps, panelTCs" rendered="{!NOT(needToFillContactInfo)}" />
+                                                    </apex:outputPanel>
+
+                                                </apex:outputPanel>
+                                            </div>
+                                            <!-- Terms & conditions -->
+                                            <apex:outputPanel id="panelTCs" layout="block" rendered="{!needToAcceptTnC && NOT(inEditContactInfo)}">
+                                                <div class="checkout-info__section -short">
+                                                    <apex:outputPanel layout="block" rendered="{!NOT(needToFillContactInfo)}">
+                                                        <apex:commandlink rendered="{!NOT(bExpandedTCs)}" action="{!toggleTCs}" value="Terms and Conditions" rerender="panelPurchaseSteps" styleClass="checkout-info__heading -link" />
+                                                        <apex:outputPanel rendered="{!bExpandedTCs}">
+                                                            <h2 class="checkout-info__heading">Terms and Conditions</h2>
+                                                            <br />
+                                                            <p class="checkout-info__subHeading" style="text-transform: none;">Please read the Terms and Conditions before checkout</p>
+                                                            <div style="margin-left:15px;">
+                                                            <c:IECTermsAndConditions ProductInformationIDs="{!listProductInformationIDs}" IECPageController="{!this}" ComponentKey="{!TC_COMPONENT_KEY}" RerenderComponentId="{!$Component.formUpgrade.panelPurchaseSteps}" />
+                                                            </div>
+                                                        </apex:outputPanel>
+                                                    </apex:outputPanel>
+                                                </div>
+                                            </apex:outputPanel>
+
+
+
+                                            <!-- Auto-renew -->
+                                            <apex:outputPanel id="panelAutoRenew" layout="block" rendered="{!(hasAcceptedAllTnCs || NOT(needToAcceptTnC)) && NOT(inEditContactInfo)}">
+                                                <div class="checkout-info__section -short">
+                                                    <apex:commandlink rendered="{!NOT(bExpandedAutoRenewal)}" action="{!toggleAutoRenew}" styleClass="checkout-info__heading -link" value="Auto Renewal" rerender="panelPurchaseSteps" />
+                                                    <apex:outputPanel rendered="{!bExpandedAutoRenewal}">
+
+                                                        <h2 class="checkout-info__heading">Auto Renew</h2>
+                                                        
+                                                        <apex:outputPanel rendered="{!NOT(oSubscription.Zuora__AutoRenew__c)}" >
+                                                         <p class="checkout-info__subHeading" style="text-transform: none;"> Do you want your subscription(s) to auto-renew? </p>
+                                                         </apex:outputPanel>
+                                                       
+                                                         <apex:outputPanel rendered="{!oSubscription.Zuora__AutoRenew__c}" >
+                                                         <p class="checkout-info__subHeading" style="text-transform: none;"> As selected initially, your subscription will Auto-Renew at the end of the term. </p>
+                                                         </apex:outputPanel>
+                                                         
+                                                        <br />
+                                                        <div style="margin-left: 10px;">
+                                                        <apex:selectRadio value="{!autoRenewSubscription}" html-name="radAutoRenew{!oSubscription.Id}" disabled="{!oSubscription.Zuora__AutoRenew__c}" styleClass="checkout-info__checkbox-label" style="font-family: inherit !important; font-size: 15px;">
+                                                            <apex:selectOption itemValue="true" itemLabel="Yes" />
+                                                            <apex:selectOption itemValue="false" itemLabel="No" />
+                                                            <apex:actionsupport event="onchange" rerender="panelPurchaseSteps" />
+                                                        </apex:selectRadio>
+                                                        </div>
+                                                        
+                                                    </apex:outputPanel>
+                                                </div>
+                                            </apex:outputPanel>
+
+                                            <div class="checkout-info__mobile-divider"></div>
+
+                                            <!-- Payment Methods -->
+                                            <apex:outputPanel id="panelMETApaymentMethods" layout="block">
+
+
+                                                <apex:outputPanel id="panelPaymentMethods" layout="block" rendered="{!(hasAcceptedAllTnCs || NOT(needToAcceptTnC)) && hasFilledAutoRenewFlag && NOT(inEditContactInfo)}">
+                                                    <!-- Payment information -->
+                                                    <apex:outputPanel id="panelPayment" layout="block">
+                                                        <div class="checkout-info__section">
+                                                            <apex:commandlink rendered="{!NOT(bExpandedPaymentMethod)}" styleClass="checkout-info__heading -link" action="{!togglePaymentMethod}" value="Payment Methods" rerender="panelPurchaseSteps" />
+                                                            <apex:outputPanel rendered="{!bExpandedPaymentMethod}">
+
+
+                                                                <h2 class="checkout-info__heading">Payment Methods</h2>
+                                                                <br />
+                                                        		<p Class="checkout-table__price" style="font-size: initial; text-transform: none; padding-left: 30px; padding-right: 30px; font-family: 'Raleway', sans-serif; font-weight: 700; color: #969696;">Select an existing payment method or add a new one</p>
+                                                                <table style="margin-left: 10px;">
+                                                                    <!-- ICH is only available for customer that have an ICH Code -->
+                                                                    <tr style="display:{!IF(hasICHCode,'','none')}">
+                                                                        <td class="paymentMethodRadio">
+                                                                            <!-- work around for SF bug... -->
+                                                                            <apex:outputPanel rendered="{!defaultPaymentMethodIsICH && isPaymentAvailableWithICH}">
+                                                                                <input type="radio" id="radiopaymentmethodtype" name="radiopaymentmethodtype" value="ICH" onclick="togglePaymentMethodType()" checked="{!IF(isPaymentAvailableWithICH,'checked','')}" />
+                                                                            </apex:outputPanel>
+                                                                            <apex:outputPanel rendered="{!not(defaultPaymentMethodIsICH) && isPaymentAvailableWithICH}">
+                                                                                <input type="radio" id="radiopaymentmethodtype" name="radiopaymentmethodtype" value="ICH" onclick="togglePaymentMethodType()" />
+                                                                            </apex:outputPanel>
+                                                                            <apex:outputPanel rendered="{!NOT(isPaymentAvailableWithICH)}">
+                                                                                <input type="radio" id="radiopaymentmethodtype" name="radiopaymentmethodtype" value="ICH" disabled="disabled" />
+                                                                            </apex:outputPanel>
+                                                                            <span class="checkout-info__checkbox-label">ICH</span>
+                                                                            <span class="checkout-info__checkbox-label" style="padding-left: 14px;">IATA Clearing House</span>
+                                                                            <apex:outputPanel rendered="{!NOT(isPaymentAvailableWithICH)}" styleClass="checkout-info__checkbox-label" style="font-style: italic; padding-left: 10px;">
+                                                                                &nbsp;
+                                                                                <br />Minimum amount for payment through ICH is&nbsp;
+                                                                                <apex:outputText value="${0, number,###,###,##0.00}" styleClass="checkout-table__total">
+                                                                                    <apex:param value="{!dICHMinAmount}" />
+                                                                                </apex:outputText>
+                                                                            </apex:outputPanel>
+                                                                        </td>
+                                                                        <td></td>
+                                                                    </tr>
+                                                                    <!-- Bank Transfer is not part of this phase of the project -->
+                                                                    <!-- 
+                                            <tr>
+                                                <td class="paymentMethodRadio">
+                                                    <!-- work around for SF bug... ->
+                                                    <apex:outputPanel rendered="{!defaultPaymentMethodIsBankTransfer && isPaymentAvailableWithBankTransfer}">
+                                                        <input type="radio" id="radiopaymentmethodtype" name="radiopaymentmethodtype" value="BANK_TRANSFER" onclick="togglePaymentMethodType()" checked="checked" />
+                                                    </apex:outputPanel>
+                                                    <apex:outputPanel rendered="{!not(defaultPaymentMethodIsBankTransfer) && isPaymentAvailableWithBankTransfer}">
+                                                        <input type="radio" id="radiopaymentmethodtype" name="radiopaymentmethodtype" value="BANK_TRANSFER" onclick="togglePaymentMethodType()" />
+                                                    </apex:outputPanel>
+                                                    <apex:outputPanel rendered="{!NOT(isPaymentAvailableWithBankTransfer)}">
+                                                        <input type="radio" id="radiopaymentmethodtype" name="radiopaymentmethodtype" value="BANK_TRANSFER" disabled="disabled" />
+                                                    </apex:outputPanel>
+                                                    <span class="paymentMethod">Bank Transfer</span>&nbsp;<apex:outputPanel rendered="{!NOT(isPaymentAvailableWithBankTransfer)}" style="font-style: italic; padding-left: 10px;">This payment method has been disabled because it is not allowed for the total cart amount.</apex:outputPanel>
+                                                </td>
+                                                <td></td>
+                                            </tr>
+                                            -->
+                                                                    <tr>
+                                                                        <td class="paymentMethodRadio">
+                                                                            <!-- work around for SF bug... -->
+                                                                            <apex:outputPanel rendered="{!not(defaultPaymentMethodIsICH) && not(defaultPaymentMethodIsBankTransfer) && isPaymentAvailableWithCreditCard}">
+                                                                                <input type="radio" id="radiopaymentmethodtype" name="radiopaymentmethodtype" value="CREDIT_CARD" onclick="togglePaymentMethodType()" checked="checked" />
+                                                                            </apex:outputPanel>
+                                                                            <apex:outputPanel rendered="{!(defaultPaymentMethodIsICH || defaultPaymentMethodIsBankTransfer) && isPaymentAvailableWithCreditCard}">
+                                                                                <input type="radio" id="radiopaymentmethodtype" name="radiopaymentmethodtype" value="CREDIT_CARD" onclick="togglePaymentMethodType()" />
+                                                                            </apex:outputPanel>
+                                                                            <apex:outputPanel rendered="{!NOT(isPaymentAvailableWithCreditCard)}">
+                                                                                <input type="radio" id="radiopaymentmethodtype" name="radiopaymentmethodtype" value="CREDIT_CARD" disabled="disabled" />
+                                                                            </apex:outputPanel>
+                                                                            <span class="checkout-info__checkbox-label">Credit Card</span>
+                                                                            <apex:outputPanel styleClass="checkout-info__checkbox-label" rendered="{!NOT(isPaymentAvailableWithCreditCard)}" style="font-style: italic; padding-left: 10px;">
+                                                                                &nbsp;Maximum amount for payment by credit card is&nbsp;
+                                                                                <apex:outputText value="${0, number,###,###,##0.00}" styleClass="checkout-table__total">
+                                                                                    <apex:param value="{!dCreditCardMaxAmount}" />
+                                                                                </apex:outputText>
+                                                                            </apex:outputPanel>
+                                                                            <script>
+                                                                                togglePaymentMethodType();
+                                                                            </script>
+                                                                        </td>
+                                                                        <td></td>
+                                                                    </tr>
+                                                                </table>
+                                                            </apex:outputPanel>
+                                                        </div>
+
+
+                                                        <apex:outputPanel id="panelCreditCard" layout="block" rendered="{!isPaymentAvailableWithCreditCard && bExpandedPaymentMethod}">
+                                                            <!-- Existing (credit card) payment methods -->
+                                                            <div class="checkout-info__section">
+                                                                <apex:outputPanel layout="block" rendered="{!hasPaymentMethods}">
+                                                                    <table class="checkout-table">
+                                                                        <apex:repeat var="pm" value="{!paymentMethods}">
+                                                                            <tr class="checkout-table__row">
+                                                                                <td>
+                                                                                    <table>
+                                                                                        <tr><td>&nbsp;</td></tr>
+                                                                                        <tr>
+                                                                                            <td colspan="2">
+                                                                                                <!-- work around for SF bug... -->
+                                                                                                <apex:outputPanel rendered="{!(pm.zId == defaultPaymentMethodId)}">
+                                                                                                    <input type="radio" id="radiopaymentmethodid" name="radiopaymentmethodid" value="{!pm.zId}" onclick="setSelectedCreditCardPaymentMethodId('{!pm.zId}');togglePaymentMethodType();" checked="checked" />
+                                                                                                    <script>
+                                                                                                        // set the default one as the selected
+                                                                                                        setSelectedCreditCardPaymentMethodId('{!pm.zId}');
+                                                                                                        //togglePaymentMethodType();
+                                                                                                    </script>
+                                                                                                </apex:outputPanel>
+                                                                                                <apex:outputPanel rendered="{!(pm.zId != defaultPaymentMethodId)}">
+                                                                                                    <input type="radio" id="radiopaymentmethodid" name="radiopaymentmethodid" value="{!pm.zId}" onclick="setSelectedCreditCardPaymentMethodId('{!pm.zId}');togglePaymentMethodType();" />
+                                                                                                </apex:outputPanel>
+                                                                                                <span class="checkout-info__subHeading">{!IF(pm.zId == defaultPaymentMethodId,'Default','Credit Card')}</span> 
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td class="checkout-info__creditcard-label" style="font-family: 'Helvetica Neue',Helvetica,Arial,'Lucida Grande',sans-serif; text-align: right;">Card holder name:</td>
+                                                                                            <td class="checkout-info__creditcard-value" style="font-family: 'Helvetica Neue',Helvetica,Arial,'Lucida Grande',sans-serif; text-align: right;">{!pm.CreditCardHolderName}</td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td class="checkout-info__creditcard-label" style="font-family: 'Helvetica Neue',Helvetica,Arial,'Lucida Grande',sans-serif; text-align: right;">Card Number:</td>
+                                                                                            <td class="checkout-info__creditcard-value" style="font-family: 'Helvetica Neue',Helvetica,Arial,'Lucida Grande',sans-serif; text-align: right;">{!pm.CreditCardMaskNumber}</td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td class="checkout-info__creditcard-label" style="font-family: 'Helvetica Neue',Helvetica,Arial,'Lucida Grande',sans-serif; text-align: right;">Card Type:</td>
+                                                                                            <td class="checkout-info__creditcard-value" style="font-family: 'Helvetica Neue',Helvetica,Arial,'Lucida Grande',sans-serif; text-align: right;">{!pm.creditCardType}</td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td class="checkout-info__creditcard-label" style="font-family: 'Helvetica Neue',Helvetica,Arial,'Lucida Grande',sans-serif; text-align: right;">Expiration Date:</td>
+                                                                                            <td class="checkout-info__creditcard-value" style="font-family: 'Helvetica Neue',Helvetica,Arial,'Lucida Grande',sans-serif; text-align: right;">
+                                                                                                <apex:outputText value="{0, number,00}">
+                                                                                                    <apex:param value="{!pm.creditCardExpirationMonth}" /></apex:outputText>/{!pm.creditCardExpirationYear}
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                 		<tr><td>&nbsp;</td></tr>
+                                                                                    </table>
+                                                                                </td>
+                                                                            </tr>  
+                                                                                                                                        
+                                                                        </apex:repeat>
+                                                                    </table>
+                                                                </apex:outputPanel>
+
+
+                                                                <!-- New credit card -->
+                                                                <apex:commandButton id="buttonProceedWithNewCard" value="Pay with new Credit Card" action="{!showPopup}" rerender="tstpopup" styleClass="checkout-submit" style="padding-left: 10px; padding-right: 10px; margin-left: 19px; width: 265px !important; margin-bottom: -12px; margin-top: 10px;" onclick="disablePaymentButtons()" />
+
+                                                                <apex:outputPanel id="tstpopup">
+                                                                    <apex:outputPanel styleClass="checkout-popupBackground" layout="block" rendered="{!displayPopUp}" />
+                                                                    <apex:outputPanel styleClass="checkout-popup" layout="block" rendered="{!displayPopUp}">
+
+
+                                                                        <apex:outputPanel id="panelHPM" layout="block" rendered="{!NOT(hasConfigError)}">
+                                                                            <apex:outputPanel id="errorMessageHPM">
+                                                                                <apex:pageMessages escape="no" />
+                                                                            </apex:outputPanel>
+                                                                            <iframe id="z_hppm_iframe" name="z_hppm_iframe" width="100%" height="390" src="{!iframeSrc}" frameborder="0"></iframe>
+                                                                        </apex:outputPanel>
+                                                                        <apex:outputPanel layout="block" style="margin-left: 20px; height: 100%;" rendered="{!hasConfigError}">
+                                                                            HPM Configuration error(s) !
+                                                                        </apex:outputPanel>
+                                                                        <br/>
+                                                                        <apex:commandLink value="Cancel" styleClass="checkout-submit_2buttons -left" rerender="tstpopup, errorMessage" action="{!closePopup}" onclick="enablePaymentButtons()" />
+                                                                        <apex:commandLink value="Submit" styleClass="checkout-submit_2buttons -right" rerender="errorMessage" onclick="proceedToAddNew();" />
+                                                                    </apex:outputPanel>
+                                                                </apex:outputPanel>
+
+                                                            </div>
+
+                                                        </apex:outputPanel>
+                                                    </apex:outputPanel>
+                                                </apex:outputPanel>
+
+                                                <!-- Proceed to Checkout button -->
+
+                                                <apex:outputPanel id="panelSubmitButton" layout="block" style="text-align: center; margin-bottom: 50px;" rendered="{!NOT(inEditContactInfo)}">
+                                                    <!--    
+                                            <apex:commandButton id="buttonProceedPayment" value="Proceed to Payment >>" onclick="proceedToPayment()" styleClass="checkout-submit" style="width:100%;" rerender="errorMessage" disabled="{!(needToAcceptTnC && NOT(hasAcceptedAllTnCs)) || NOT(hasFilledAutoRenewFlag) || (NOT(isPaymentAvailableWithCreditCard) && NOT(isPaymentAvailableWithICH && hasICHCode)) || (selectedPaymentMethodType=='CREDIT_CARD' && (paymentMethods == null || paymentMethods.size == 0 || defaultPaymentMethodId == null || defaultPaymentMethodId=='' )) }"  status="proceedingToPaymentStatus" />
+-->
+                                                    <apex:commandButton id="buttonProceedPayment" value="Proceed to Payment >>" onclick="proceedToPayment()" styleClass="checkout-submit" style="width:300px;" rerender="errorMessage" />
+
+                                                    <script>
+                                                        togglePaymentMethodType();
+                                                    </script>
+
+                                                    <br/>
+                                                    <apex:actionStatus id="proceedingToPaymentStatus">
+                                                        <apex:facet name="start">
+                                                            <div style="width:100%; height: 100%; opacity:0.75; filter:alpha(opacity=75);">
+                                                                <img style="padding-left: 1px;" src="{!$Resource.IEC_progress}" border="0" width="43" height="11" />
+                                                            </div>
+                                                        </apex:facet>
+                                                    </apex:actionStatus>
+                                                </apex:outputPanel>
+
+                                            </apex:outputPanel>
+
+                                        </div>
+                                    </apex:outputPanel>
+
+                                </apex:outputPanel>
+                            </div>
+                        </div>
+                    </div>
+                </apex:outputPanel>
+
+                <!-- Upgrade successful panel -->
+                <apex:outputPanel id="panelUpgradeSuccessful" layout="block" rendered="{!upgradeSuccessful && NOT(hasSubscriptionResult)}" styleClass="message confirmM3" html-role="alert">
+                   <div id="register">                   
+                    <div class="content-container tab">
+                            <div class="box register large">
+                              <div class="header">
+                                <p>Success</p>
+                                </div>
+                                 <div class="content">
+                    
+					                    <table border="0" cellpadding="0" cellspacing="0" class="messageTable" style="padding:0px;margin:0px;">
+					                        <tbody>
+					                            <tr valign="top">
+					                                <td><img alt="CONFIRM" class="msgIcon" src="/s.gif" title="CONFIRM" />
+					                                </td>
+					                                <td class="messageCell">
+					                                    <div class="messageText">
+					                                        <span><h4>Success:</h4></span> 
+					                                        You successfully upgraded your&nbsp;
+					                                        <apex:outputText value="{!oRatePlanInfoSourceUpgrade.Related_Product_Information__r.Related_Product_Category__r.Display_Name__c}" rendered="{!oRatePlanInfoSourceUpgrade != null}" /> subscription from&nbsp;
+					                                        <apex:outputText value="{!oRatePlanInfoSourceUpgrade.Product_Rate_Plan__r.Name}" rendered="{!oRatePlanInfoSourceUpgrade != null}" /> to&nbsp;
+					                                        <apex:outputText value="{!oRatePlanInfoTargetUpgrade.Product_Rate_Plan__r.Name}" rendered="{!oRatePlanInfoTargetUpgrade != null}" />.
+					                                        <br />
+					                                        <br /> Transaction #{!paymentTransactionNumber}
+					                                        <br />
+					                                        <br /> You can access the application here <a href="{!sAppURL}">{!sAppURL}</a>
+					                                        <br />
+					                                        <br /> Click <a href="https://{!$Site.Domain}{!$Page.IEC_MyInvoices}">here</a> to access your invoices
+					                                        <br /> Click <a href="https://{!$Site.Domain}{!$Page.IEC_DataStatisticsSubscriptions}">here</a> to view your subscriptions
+					                                        <br />
+					                                        <br />
+					                                    </div>
+					                                </td>
+					                            </tr>
+					                        </tbody>
+					                    </table>
+      								</div>
+                              </div>
+                               <div class="clear"></div>
+                         </div>  
+                      </div>    
+                </apex:outputPanel>
+
+                <!-- Panel shown once the upgrade from a Trial has been submitted to Zuora -->
+                <apex:outputPanel id="panelSubscriptionResults" layout="block" rendered="{!hasSubscriptionResult}">
+                    <apex:repeat id="subsRepeater" var="subsResult" value="{!listSubscriptionResultToDisplay}">
+
+                        <!-- Subscription succeeded -->
+                        <apex:outputPanel layout="block" rendered="{!subsResult.Success}" styleClass="message confirmM3" html-role="alert">
+                            <table border="0" cellpadding="0" cellspacing="0" class="messageTable" style="padding:0px;margin:0px;">
+                                <tbody>
+                                    <tr valign="top">
+                                        <td><img alt="CONFIRM" class="msgIcon" src="/s.gif" title="CONFIRM" />
+                                        </td>
+                                        <td class="messageCell">
+                                            <div class="messageText">
+                                                <span><h4>Success:</h4></span> You successfully subscribed to {!subsResult.productLabel}.
+                                                <br />
+                                                <br /> Transaction #{!subsResult.transactionNumber}
+                                                <br /> Subscription :{!subsResult.subscriptionNumber}
+                                                <br />
+                                                <br /> You can access the application here <a href="{!subsResult.appUrl}">{!subsResult.appUrl}</a>
+                                                <br />
+                                                <br /> Click <a href="https://{!$Site.Domain}{!$Page.IEC_MyInvoices}">here</a> to access your invoices
+                                                <br /> Click <a href="https://{!$Site.Domain}{!$Page.IEC_DataStatisticsSubscriptions}">here</a> to view your subscriptions
+                                                <br />
+                                                <br />
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </apex:outputPanel>
+                        <br />
+
+                        <!-- Subscription failed -->
+                        <apex:outputPanel layout="block" rendered="{!not(subsResult.Success)}" styleClass="message errorM3" html-role="alert">
+                            <table border="0" cellpadding="0" cellspacing="0" class="messageTable" style="padding:0px;margin:0px;">
+                                <tbody>
+                                    <tr valign="top">
+                                        <td><img alt="ERROR" class="msgIcon" src="/s.gif" title="ERROR" />
+                                        </td>
+                                        <td class="messageCell">
+                                            <div class="messageText">
+                                                <span style="color:#cc0000"><h4>Error:</h4></span> Could not upgrade to product {!subsResult.productLabel} for the following reason(s):
+                                                <br />
+                                                <ul>
+                                                    <apex:repeat id="errorsRepeater" var="errMsg" value="{!subsResult.listErrorCodeAndMessage}">
+                                                        <li>{!errMsg}</li>
+                                                    </apex:repeat>
+                                                </ul>
+                                            </div>
+                                            Please contact support.
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </apex:outputPanel>
+
+                    </apex:repeat>
+                </apex:outputPanel>
+
+            </apex:outputPanel>
+
+            <script type="text/javascript">
+                previewUpgrades();
+            </script>
+
+        </div>
+
+
+    </apex:form>
+
+
+
+
+     </div>
+      <div class="gadfooter">
+        <!-- Footer -->
+        <c:IECSiteFooter />
+       </div>
+    </div>
+
+    <style> 
+	 	html, body {
+			height:100%;	
+			margin:0;
+			padding:0;
+		}				
+		.gdpwrapper {
+			min-height:100%;
+			position:relative;
+		}
+		.gdpbody{
+ 		 padding-bottom:141px; 
+		}
+        .gadfooter{
+            width:100%;
+            height:100px; 
+            position:absolute;
+            bottom:0;
+            left:0;        
+        }
+  </style>
+    
+</apex:page>

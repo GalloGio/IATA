@@ -1,0 +1,71 @@
+<apex:page standardController="AMS_OSCAR__c" extensions="OscarWizzardFlowController" TabStyle="AMS_OSCAR__c" sidebar="false" showHeader="false" wizard="true">
+
+    <apex:includeScript value="/support/console/30.0/integration.js"/>
+    <apex:stylesheet value="{!URLFOR($Resource.jquerytools,'/jquery.dataTables.css')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.jquerytools, '/jquery-1.10.2.min.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.jquerytools, '/jquery.dataTables.js')}"/>
+
+    <script>
+
+        function openPrimaryTab(tabId,tabName) {
+            var changeTab = function(result){
+                if(result.success == false){
+                    sforce.console.focusPrimaryTabByName(tabId);
+                }
+            };
+            sforce.console.openPrimaryTab(null, tabId, true,tabName, changeTab, tabId);
+        }
+
+        function closeFlow() {
+            //First find the ID of the current tab to close it
+            sforce.console.getEnclosingTabId(closeSubtab);
+        }
+        
+        var closeSubtab = function closeSubtab(result) {
+            //Now that we have the tab ID, we can close it
+            var tabId = result.id;
+            sforce.console.closeTab(tabId);
+        };
+
+    </script>
+
+    
+<flow:interview name="Wizard_OSCAR_Creation_2_0" interview="{!myflow}"  buttonLocation="bottom"  rerender="myPageBlock" buttonStyle="color:black; background-color:#fed; border:1px solid;"  >
+
+    <style type="text/css">
+        .dataCol, .labelCol{
+            padding-top: 5px !important;
+            padding-bottom: 5px !important;
+            
+        }
+        
+    </style>
+
+
+        </flow:interview>
+    
+    <apex:form >
+       
+         <apex:pageBlock mode="maindetail" tabStyle="AMS_OSCAR__c" id="myPageBlock"> 
+            <apex:pageBlockSection columns="2" rendered="{!NOT(OR(ISNULL(caseId),ISBLANK(caseId)))}" collapsible="false">
+                        <script type="text/javascript">
+                            openPrimaryTab('/{!caseId}','{!oscarName}');
+                            closeFlow();
+                        </script>
+            </apex:pageBlockSection>
+
+        </apex:pageBlock>
+        
+<!--
+                 <apex:pageBlock mode="maindetail" tabStyle="AMS_OSCAR__c" id="myPageBlock2"> 
+            <apex:pageBlockSection columns="2" rendered="{!NOT(OR(ISNULL(errorMessage),ISBLANK(errorMessage)))}" collapsible="false">
+                        <script type="text/javascript">
+                           alert("Something just went wrong ...");
+                        </script>
+            </apex:pageBlockSection>
+
+        </apex:pageBlock>
+-->
+
+    </apex:form>
+</apex:page>

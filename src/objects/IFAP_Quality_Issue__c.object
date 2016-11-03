@@ -1,0 +1,407 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>Use for providing reassessment feedback (based on PwC&apos;s checklist)</description>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Approved_Date__c</fullName>
+        <description>Contain the approval and rejection date of the quality issue</description>
+        <externalId>false</externalId>
+        <label>RPM Approval/Rejection Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Assessment_using_wrong_template__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Assessment performed using a wrong template</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Assessment performed using a wrong template</inlineHelpText>
+        <label>Assessment using wrong template</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Challenge_Source__c</fullName>
+        <externalId>false</externalId>
+        <label>Challenge Source</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Internal</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>External</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Financials_not_audited_certified__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Financials not audited/certified but reviewed</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Financials not audited/certified but reviewed</inlineHelpText>
+        <label>Accounts not audited/cert but assessed</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Formatting_Issue_details__c</fullName>
+        <description>Formatting Issue details</description>
+        <externalId>false</externalId>
+        <inlineHelpText>4.	For formatting issue, please specify the details of the error and the actions to be requested to GFA</inlineHelpText>
+        <label>Formatting Issue details</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Incorrect_sales_used_for_the_assessment__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Incorrect sales used for the assessment</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Incorrect sales used for the assessment</inlineHelpText>
+        <label>Incorrect sales used for the assessment</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Incorrect_sanity_check_failure__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Incorrect sanity check failure</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Incorrect sanity check failure</inlineHelpText>
+        <label>Incorrect sanity check failure</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Missing_value_in_fields__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Missing value in fields</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Missing value in fields</inlineHelpText>
+        <label>Missing value in fields</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Need_to_update_the_template_instructions__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Is there a need to update the template instructions ?</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Review the template instructions for the applicable country and ensure that this error has been specified in the template instructions.</inlineHelpText>
+        <label>Need to update the template instructions</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Other_Issue_details__c</fullName>
+        <description>Other Issue details</description>
+        <externalId>false</externalId>
+        <inlineHelpText>For other issue, please specify the details of the error and the actions to be requested to GFA</inlineHelpText>
+        <label>Other Issue details</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Other__c</fullName>
+        <description>Other, please specify</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Other, please specify</inlineHelpText>
+        <label>Other</label>
+        <length>512</length>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>5</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Output_is_empty_not_completed_has_errors__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>The assessment output is empty, not fully completed, or have value errors</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The assessment output is empty, not fully completed, or have value errors</inlineHelpText>
+        <label>Pdf is empty/not complete/w value errors</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Parent_company_accounts_not_reviewed__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Parent company accounts were uploaded but not reviewed</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Parent company accounts were uploaded but not reviewed</inlineHelpText>
+        <label>Parent company accounts not reviewed</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>QI_Raised_On__c</fullName>
+        <description>When the quality issue was raised.</description>
+        <externalId>false</externalId>
+        <label>Raised On</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>QI_Reassessment_performed_on__c</fullName>
+        <externalId>false</externalId>
+        <label>Reassessment performed on</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>QI_Rejected_on__c</fullName>
+        <externalId>false</externalId>
+        <label>Rejected on</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Reassessment_Rejection_Reason__c</fullName>
+        <description>Reason why the Quality issue was rejected by PwC</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Reason why the Quality issue was rejected by PwC</inlineHelpText>
+        <label>Quality issue rejection reason</label>
+        <length>510</length>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Related_Case__c</fullName>
+        <deleteConstraint>Restrict</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Related Case</label>
+        <referenceTo>Case</referenceTo>
+        <relationshipName>IFAP_Reassessments</relationshipName>
+        <required>true</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Status__c</fullName>
+        <description>Describe the status of the Quality issue object­.</description>
+        <externalId>false</externalId>
+        <label>Status</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Awaiting</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Pending approval</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Approved</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Rejected</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Sent to GFA</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Template_working_properly__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Template working properly ?</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Review the template for the applicable country and ensure that the template is working properly to perform the assessments correctly</inlineHelpText>
+        <label>Template working properly ?</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>The_printout_of_the_result_is_unreadable__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>The printout of the result is unreadable (file incorrectly formatted)</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The printout of the result is unreadable (file incorrectly formatted)</inlineHelpText>
+        <label>The printout of the result is unreadable</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Wrong_figure_was_extracted__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Wrong figure was extracted from the financial statements</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Wrong figure was extracted from the financial statements</inlineHelpText>
+        <label>Wrong figure was extracted</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Wrong_financial_year__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Financials reviewed are for wrong financial year</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Financials reviewed are for wrong financial year</inlineHelpText>
+        <label>Wrong financial year</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <label>IFAP Quality Issue</label>
+    <nameField>
+        <displayFormat>R-{0000}</displayFormat>
+        <label>IFAP Quality Issue Name</label>
+        <trackHistory>false</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>IFAP Quality Issues</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+    <validationRules>
+        <fullName>Move_QI_to_another_case</fullName>
+        <active>true</active>
+        <description>this rule prevents users from moving quality issues from one case to another - it can cause problems with the gfa connector.</description>
+        <errorConditionFormula>ISCHANGED( Related_Case__c )</errorConditionFormula>
+        <errorDisplayField>Related_Case__c</errorDisplayField>
+        <errorMessage>You can&apos;t change the related case of an IFAP Quality Issue.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>New_Quality_Issues_with_IATA_code</fullName>
+        <active>true</active>
+        <description>Avoids the creation of a new quality issue if the related account does not have an IATA Code</description>
+        <errorConditionFormula>AND(ISNEW(),
+ ISBLANK(VALUE(Related_Case__r.Account.IATACode__c)))</errorConditionFormula>
+        <errorMessage>The Quality Issue cannot be created before the related Account have an IATA Code</errorMessage>
+    </validationRules>
+    <webLinks>
+        <fullName>Submit_for_Approval</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Submit for Approval</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/26.0/connection.js&quot;)} 
+{!REQUIRESCRIPT(&quot;/soap/ajax/26.0/apex.js&quot;)} 
+sforce.connection.sessionId = &quot;{!$Api.Session_ID}&quot;; 
+try{ 
+   if(confirm(&quot;{!$Label.IFAP_Submit_for_approval_message}&quot;))
+   {
+	   var caseId = &apos;{!IFAP_Quality_Issue__c.Related_CaseId__c}&apos;;
+	   var qualityId = &apos;{!IFAP_Quality_Issue__c.Id}&apos;;
+	   var status = &apos;{!IFAP_Quality_Issue__c.Status__c}&apos;;
+
+	   if(status == &apos;Awaiting&apos; || status == &apos;Rejected&apos;){ 
+		   var st= sforce.apex.execute(&quot;IFAP_WebService&quot;,&quot;CallReassessmentApprovalProcess&quot;, {caseId:caseId,QualityIssueID:qualityId}); 
+
+		   var ret = st.toString().split(&quot;,&quot;);
+		   if(ret[0] == &apos;OK&apos;) 
+		   { 
+			  alert(&quot;{!$Label.IFAP_Quality_Issue_Submitted_for_Approval}&quot;); 
+			  window.location.reload(); 
+		   } 
+		   else { 
+			  alert(&quot;Cannot send the case for approval for the following reason: \n&quot; +   ret[1]); 
+		   }
+		}
+		else{
+			alert(&quot;The quality issue have already been submitted for approval&quot;);
+		}
+	}  
+} 
+catch(err) 
+{ 
+alert(err); 
+}</url>
+    </webLinks>
+</CustomObject>

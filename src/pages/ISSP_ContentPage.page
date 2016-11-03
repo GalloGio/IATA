@@ -1,0 +1,379 @@
+<apex:page controller="ISSP_Ctrl_ContentPage" standardstylesheets="false" showheader="false" sidebar="false" applybodytag="false" applyhtmltag="false" readOnly="true">
+
+    <html>
+ 
+    <c:ISSP_Header ></c:ISSP_Header> 
+    
+    <!--<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/u/dt/jq-2.2.3,dt-1.10.12,r-2.1.0/datatables.min.css"/>-->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css"/>
+   
+    <style>
+        thead, thead select{
+            width: 100%;
+            padding: 3px;
+            box-sizing: border-box;
+        } 
+		
+		.dataTables_wrapper .dataTables_length {
+            float: right;
+         }
+    
+        .dataTables_wrapper .dataTables_filter{
+        	width: 950px;
+        }
+        
+        .dataTables_filter {
+        	display: none;
+        }
+        .resetButton {
+            margin-top: 10px;
+        }
+      
+        
+    </style>
+    <script type="text/javascript" 
+        src="https://code.jquery.com/jquery-1.12.3.js">
+    </script>    
+        
+    <script type="text/javascript" 
+        src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js">
+    </script>
+ 
+    <script type="text/javascript"    
+        src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js">
+    </script>
+ 
+    
+
+    <script>
+        window.hideTags = function() {
+
+             if(window.flag == false){
+                $("[id$=tags],[id$=tagsheader],[id$=tagsfooter] ").hide();
+            }
+
+        }
+
+        $(document).ready(function(){
+            loadTableDocs();
+            window.flag = false;
+            window.hideTags();
+            $("#hidefilter").click(function(){
+                    window.flag = !window.flag;
+                    $("[id$=tags],[id$=tagsheader],[id$=tagsfooter],[id$=filtcol]").toggle();
+                    $("#resulttable").toggleClass("col-sm-8");
+                    $("#resulttable").toggleClass("col-sm-12");
+            }); 
+            
+        });
+
+
+        function loadTableDocs(){
+        $(document).ready(function() {
+        // set the countries of publication to ', ' to automatically fit the table size 
+            $(".countrylist").each(function(){
+                $(this).text($(this).text().replace(/\;/g, ', '));
+                
+            });
+            
+        var table = $(".docsTable").DataTable( { 
+        //pagination and show entries at the bottom of the table
+        "dom": '<"search"f><"top">rt<"bottom"ilp><"clear">',
+        pagingType: "numbers",
+        
+       // customize the label of search box
+        oLanguage: {
+           sSearch: "Search: "
+        },
+        aaSorting : [], // disable sorting from title (default) and consider the sorting of the ContentVersions from Controller 
+        initComplete: function () { 
+            var setOfDistinctCountries = [];
+            var allCountriesOfPublication ='{!allCountriesList}';
+            var allLanguages ='{!allLanguagesList}';
+            var allFileTypes ='{!allFileTypesList}';
+            var allDocumentCategory ='{!allDocumentCategoryList}';
+            var userCountry = '{!UserPortalCountry}';
+ 
+            allCountriesOfPublication = allCountriesOfPublication.replace(/]|\[/g, '');
+            allLanguages = allLanguages.replace(/]|\[/g, '');
+            allFileTypes = allFileTypes.replace(/]|\[/g, '');
+            allDocumentCategory = allDocumentCategory.replace(/]|\[/g, '');
+          
+            this.api().columns([5,2]).every( function (columnIndex) {// search only available for country of publication and document category columns
+                       
+                var column = this;
+                var select = $('<select><option value="">'+'-None-'+'</option></select>')
+
+                .appendTo( $(column.header()))
+                
+                
+                
+                .on( 'change', function () {
+                        var val = $.fn.dataTable.util.escapeRegex(
+                            $(this).val()
+                        );
+                        
+                        column
+                        .search( val ? '/*'+val+'/*' : '', true, false )
+                            .draw();
+                    } )
+                
+                .on( 'click', function(){
+                    return false; //disable click event on select var
+                    });
+                
+                //filter item
+                select.addClass("form-control");
+                $('#leftFilter').append('Filter by ' + select.parent().children().first().text());       
+                $('#leftFilter').append(select);
+                
+                var setOfOptions = [];
+                
+                column.rows().every(function() {
+                    var row = this;
+                    
+                    function parseTitleColumn(d) {
+                                if (d != ''){
+                                    if(d.includes("<a href=")){ //if d is the title link, select only the title value
+                                        select.append( '<option value="'+$(d).html()+'">'+$(d).html()+'</option>' )
+                                        
+                                    } else {
+                                        select.append( '<option value="'+d+'">'+d+'</option>' )
+                                        
+                                    }
+                                }
+                    }
+                                   
+                    function appendColumnOptions(d) {
+                        var hasSpliter = d.match(/, /);
+                        if (hasSpliter) {
+                            var splitedstr = d.split(', ');
+                            for (var i = 0; i < splitedstr.length; i++)
+                            {
+                                if (splitedstr[i].length > 0 && setOfOptions.indexOf(splitedstr[i]) < 0) {
+                                    setOfOptions.push(splitedstr[i]);
+                                } 
+                            }
+                        } else {
+                                if (d != null && d.length > 0 && setOfOptions.indexOf(d) < 0) {
+                                    setOfOptions.push(d);
+                                } 
+                        }
+                    }
+                    
+                    switch(columnIndex)
+                    {
+                        case 0:
+                            parseTitleColumn(row.data()[columnIndex]); // title column
+                            break;
+                            
+                        case 2:
+                            appendColumnOptions(allCountriesOfPublication); // country of publication column
+                            break;
+                            
+                        case 3:
+                            appendColumnOptions(allLanguages); // Language column
+                            break;
+                            
+                        case 4:
+                            appendColumnOptions(row.data()[columnIndex]); // File Type column
+                            break;
+                            
+                        case 5:
+                            appendColumnOptions(allDocumentCategory); // Document Category column
+                            break;
+                    }
+  
+                }); 
+                
+                
+                if (columnIndex != 0)
+                {
+                    for(var j = 0; j < setOfOptions.length; j++){
+                        // add selected attribute to the line of the user country to be the default option on the picklist
+                        //var selected = setOfOptions[j] === userCountry ? 'selected' : '';
+                        var selected = setOfOptions[j];  
+                        select.append("<option "+selected+" value=\"" + setOfOptions[j] + "\">" + setOfOptions[j] + "</option>");
+                    }
+                    
+                setOfOptions = [];                    
+                }
+                
+                
+            });
+         
+            
+            $('#searchInput_').keyup(function(){
+                  table.search($(this).val()).draw();
+            });
+            
+            $('#leftFilter').append($('.resetButton'));
+            
+        }
+    } );
+    }  );
+    }
+        
+        
+        function clearHeader(tableId) { //clear all the filters on header picklists
+          var target = "table."+tableId+" tr:first th select";
+          var firstOption = $(target+" option:first").val();
+          $(target).val(firstOption);
+        }
+        
+            
+        
+
+    </script>
+    <body>
+        <div class="container">
+            <c:ISSP_CustomNavigation />
+             
+
+
+
+            <apex:form id="mainFrm">
+                <apex:pagemessages id="errors" />
+                <div class="row">
+                    <div class="col-md-12">
+                        <h4>
+                            {!$Label.ISSP_Resources} <span class="glyphicon glyphicon-chevron-right small " aria-hidden="true"></span>
+                            {!$Label.ISSP_Documents} <span class="glyphicon glyphicon-chevron-right small " aria-hidden="true"></span>
+                            <small>{!$Label.ISSP_PageDescription_ISSP_ContentPage}</small>
+                        </h4>
+                    </div>
+                </div><!-- end row-->
+
+                <div class="row">
+
+                </div>
+
+                <!-- results-->
+                <div class="col-md-12" id="results1">
+
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">{!$Label.LAQ_Search}</h3>
+                        </div>
+                        <div class="panel-body" id="body-results">
+                            
+
+                                 <apex:outputpanel id="opp_results">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" id="searchInput_" placeholder="{!$Label.ISSP_Search}"/>
+                                        </div>
+                                     </div>
+                                    <div class="col-md-3" id="leftFilter">
+                                      <apex:commandButton value="{!$Label.PKB2_Reset_Search}" styleClass="resetButton btn btn-danger btn-block" rerender="body-results,opp_results,mainFrm,results1,docstable,resulttable,errors" oncomplete="loadTableDocs();"/>
+                                     </div>
+                                     <div class="col-md-9" id="resulttable">
+                                        <div class="panel panel-default">
+                                            <!---------------------DOCUMENTS TABLE------------------------->
+                                            <!--<apex:pageblock mode="edit" id="results">-->
+                                                <!--<apex:pageblocktable id="docstable" value="{!ContentVersions}" var="ver" styleclass="table-hover table table-condensed table-responsive"> -->                                                
+                                                   <apex:dataTable id="docstable" value="{!ContentVersions}" var="ver" styleclass="docsTable table-hover table table-condensed table-responsive">  
+                                                    <!----------------------TITLE COLUMN------------------------>
+                                                       {!ver}
+                                                       
+                                                    <apex:column rendered="{!if(ver.FileType=='LINK','false','true')}">
+                                                        <apex:facet name="header">{!$Label.ISSP_Title}</apex:facet>
+                                                        <a href="{!csHost}/sfc/servlet.shepherd/version/download/{!ver.id}" target="_document">{!ver.title}</a>
+                                                    </apex:column>
+                                                       
+                                                    <apex:column rendered="{!if(ver.FileType=='LINK','true','false')}">
+                                                        <apex:facet name="header">{!$Label.ISSP_Title}</apex:facet>
+                                                        <a href="{!ver.ContentUrl}" target="_Blank">{!ver.title}</a>
+                                                    </apex:column>
+                                                    
+                                                    <!----------------------DESCRIPTION COLUMN------------------------>
+                                                    <apex:column >
+                                                        <apex:facet name="header">{!$Label.IDCard_Description}</apex:facet>
+                                                        {!ver.Description}
+                                                    </apex:column>
+
+                                                    <!----------------------COUNTRY OF PUBLICATION COLUMN------------------------>
+                                                    <apex:column >
+                                                        <apex:facet name="header">{!$Label.ISSP_Country_of_Publication}</apex:facet> <span class="countrylist">{!ver.Country_of_publication__c}</span>
+                                                        <!--<apex:actionSupport onComplete="countriesSeparateByComma({!ver.Country_of_publication__c}); "/> -->
+                                                    </apex:column> 
+                                                    
+                                                    <!-----------------------LANGUAGE COLUMN----------------------->
+                                                    <apex:column >
+                                                        <apex:facet name="header">{!$Label.IFAP_Language}</apex:facet>
+                                                        {!ver.Language__c}
+                                                    </apex:column>
+
+                                                    <!---------------------FILE SIZE COLUMN------------------------->
+                                                    <!--
+                                                    <apex:column >
+                                                        <apex:facet name="header">{!$Label.ISSP_File_Size}</apex:facet>
+                                                        {!ROUND(ver.ContentSize/1000,0)} KB
+                                                    </apex:column>
+                                                    -->
+                                                    <!---------------------TAGS COLUMN------------------------->
+                                                    <!--
+                                                    <apex:column headerValue="{!$Label.ISSP_Tags}">
+                                                        <apex:outputfield value="{!ver.TagCsv}"/>
+                                                    </apex:column>
+                                                    -->
+                                                    <!------------------------FILE TYPE COLUMN---------------------->
+                                                    <apex:column >
+                                                        <apex:facet name="header">{!$Label.ISSP_File_Type}</apex:facet>
+                                                        {!ver.FileType}
+                                                    </apex:column>
+
+                                                    <!------------------------COUNTRY VISIBILITY COLUMN---------------------->
+                                                    <!--
+                                                    <apex:column headerValue="Country Visibilty">
+                                                        <apex:outputfield value="{!ver.Country_visibilty__c}" />
+                                                    </apex:column>
+                                                    -->
+                                                    <!------------------------DOCUMENT CATEGORY COLUMN---------------------->
+                                                    <apex:column >
+                                                        <apex:facet name="header">{!$Label.ISSP_Document_Category}</apex:facet>
+                                                        {!ver.Document_Category__c}
+                                                    </apex:column>   
+                                                    
+                                                    
+                                               </apex:dataTable>        
+                
+                                               <!-- </apex:pageblocktable>-->
+                                            <!--</apex:pageblock>--> <!--end documents table -->
+                                     </div>
+                                   </div> <!--end row -->
+                                </apex:outputpanel>
+                            
+                                <div class="row"> 
+                                <div class="col-sm-4" id="filtcol">
+                                <div id="filtercriteria" class="" role="tabpanel">
+                                        <div class="panel-body" id="body-filter">
+
+                                            <apex:pageblock mode="edit" id="Filter">
+                                                 <div id="contactUs">
+                                                    Can't find what you need?<br /><a href="/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;mid=M1S1">
+                                                        Contact Us
+                                                    </a>
+                                                    <br /><br />
+                                                    Located in the United States?<br />
+                                                    Please Contact Us <a href="http://www.iatan.org/Pages/default.aspx">here</a>
+                                                    <p />
+
+                                                </div>
+                                            </apex:pageblock>
+                                        </div>
+                                    </div>
+                                </div>
+                             </div><!-- end side menu-->
+                            <!--</div> end body tags-->
+                        </div><!-- end panel     -->
+                    </div><!-- end results-->
+                </div><!-- end row-->
+
+            </apex:form>
+            <c:ISSP_CustomFooter />
+       
+        </div><!-- end container-->
+    </body>
+</html>
+</apex:page>

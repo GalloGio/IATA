@@ -1,0 +1,371 @@
+<apex:page setup="false" docType="html-4.01-strict"  language="{!Language}"  title="IATA/IATAN ID Card Online Platform" sidebar="false" showHeader="false" controller="IDCard_AdmUserForm" action="{!rediredctoToLogin}" cache="false" deferLastCommandUntilReady="true">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>IATA/IATAN ID Card Online Platform</title>
+    <meta http-equiv="Cache-Control" content="no-store" /> 
+    <style>
+        .contactTable td, .contactTable th {padding:0.5em;}
+                     body .tabLink   {
+                        text-decoration: bold;z
+                        font-size: 18px;
+                        color: #0c4177;
+                        margin:10px;
+                        padding:10px;
+                        height:40px;
+                        border-bottom: solid 1px #0c4177;
+                        //float:left;
+                        
+                    }
+                      body .tabLink  a {
+                        text-decoration: bold;
+                        font-size: 18px;
+                        color: #0c4177;
+                        
+                    }
+                    
+                    body .tabLink a:hover {
+                        text-decoration: bold;
+
+                        color: #0c4177;
+                    }
+                </style>
+
+<style>
+        .myLink{opacity:0.8;text-decoration:none; cursor:pointer;}
+        .myLink:hover{color:black;text-decoration:bold underline;opacity:1}
+        .myCmd{height:1.5em;width:1.5em;margin-left:2em;opacity:0.8;vertical-align:middle;}
+        .myPgCmd{height:1em;width:1em;margin-left:1em;margin-right:2em;opacity:0.8;
+                vertical-align:middle;font-size:1.5em;text-decoration: none;}
+        .myPage input{width:12em;}
+        #newEditPanel .myBtn {margin-left:0.5em;margin-right:0.5em;}
+        #newEditPanel {text-align:center}
+        #newEditPanel input{width:12em}
+        #newEditPanel .detailList{margin-left:auto;margin-right:auto;}
+        #ImportPanel {text-align:center;}
+        .dttd {
+        border-bottom: 1px solid #cccccc;
+        }
+        .myLink.myPgCmd.mybtnDisabled{opacity:0.4; cursor:default;}
+        .myLink.myPgCmd.mybtnDisabled:hover{opacity:0.4; cursor:default;}
+        a:hover{color:black}
+    </style>
+</head>
+
+<body>
+<c:IDCardToolsComponent />
+  <apex:includeScript value="/soap/ajax/10.0/apex.js" />
+  <apex:includeScript value="/soap/ajax/24.0/connection.js" />
+    <script type="text/javascript">
+     
+     String.prototype.capitalize = function(){
+        return this.toLowerCase().replace( /\b\w/g, function (m) {
+        return m.toUpperCase();
+        });
+    };
+
+    /**
+     **** Function responsible to calculate the displayed card name
+    */
+    function calculateDisplayedName () {
+        if (this.document.getElementById('{!$Component.idcardForm.pb1.sc1.last}'))
+        {   
+            var lastName = (removeDiacritics (this.document.getElementById('{!$Component.idcardForm.pb1.sc1.last}').value));   
+            var middleInitial = "";
+            if (this.document.getElementById('{!$Component.idcardForm.pb1.sc1.midle}') != null)
+              middleInitial = (removeDiacritics (this.document.getElementById('{!$Component.idcardForm.pb1.sc1.midle}').value)).trim().replace(".","").toUpperCase();
+                    
+              //alert('ola3'); 
+              var firstName = (removeDiacritics (this.document.getElementById('{!$Component.idcardForm.pb1.sc1.first}').value));
+              
+              var displayName = "";
+              if((firstName.length + lastName.length) != 0) {
+                  if(lastName.length > 22)
+                      displayName =  lastName.substring(0, 22);
+                  else {  
+                      // + 2 => (' ') for spaces
+                      if ((lastName.length + 2 + firstName.length + middleInitial.length) <= 22) {
+                          if (lastName.length != 0)
+                              displayName =  firstName + " " + middleInitial + " " + lastName;
+                          else
+                              displayName =  firstName+ " " + middleInitial;    
+                      }                   
+                      else {     
+                          if ((lastName.length + 3) <= 22)
+                              displayName =  firstName.substring(0,1) + "." + " " + lastName;
+                          else
+                              displayName = lastName;
+                      }
+                  }
+              }
+
+              document.getElementById('{!$Component.idcardForm.pb1.sc1.itemDisplayedName.txtDisplayedName}').value = displayName;
+              document.getElementById('{!$Component.idcardForm.pb1.sc1.last}').value = lastName;                
+              document.getElementById('{!$Component.idcardForm.pb1.sc1.first}').value = firstName;  
+                    
+              if((lastName + " " + firstName).length > 22)
+                  document.getElementById('{!$Component.idcardForm.pb1.sc1.itemDisplayedName.textDisplayedName_CharacterRemaining}').innerHTML = " " + ('{!$Label.IDCard_DisplayedName_RemainingCharacter}');
+              else
+                  document.getElementById('{!$Component.idcardForm.pb1.sc1.itemDisplayedName.textDisplayedName_CharacterRemaining}').innerHTML = "";   
+                    
+          }         
+    }      
+    
+    function workingFirstName() {
+        
+        var firstName = (removeDiacritics(this.document.getElementById('{!$Component.idcardForm.pb1.sc1.first}').value));
+        document.getElementById('{!$Component.idcardForm.pb1.sc1.first}').value = firstName.capitalize();
+        
+        //removing apostrophe 
+        var name = (removeDiacritics(this.document.getElementById('{!$Component.idcardForm.pb1.sc1.first}').value));
+        name = name.replace(/'/,' ');
+        document.getElementById('{!$Component.idcardForm.pb1.sc1.first}').value = name;
+
+        //removing dash
+        var name = (removeDiacritics(this.document.getElementById('{!$Component.idcardForm.pb1.sc1.first}').value));
+        name = name.replace(/-/,' ');
+        document.getElementById('{!$Component.idcardForm.pb1.sc1.first}').value = name;
+    }
+    
+    function workingLastName() {
+
+        var lastName = (removeDiacritics(this.document.getElementById('{!$Component.idcardForm.pb1.sc1.last}').value));
+        document.getElementById('{!$Component.idcardForm.pb1.sc1.last}').value = lastName.capitalize();
+
+        //removing apostrophe 
+        var name = (removeDiacritics(this.document.getElementById('{!$Component.idcardForm.pb1.sc1.last}').value));
+        name = name.replace(/'/,' ');
+        document.getElementById('{!$Component.idcardForm.pb1.sc1.last}').value = name;
+
+        //removing dash
+        var name = (removeDiacritics(this.document.getElementById('{!$Component.idcardForm.pb1.sc1.last}').value));
+        name = name.replace(/-/,' ');
+        document.getElementById('{!$Component.idcardForm.pb1.sc1.last}').value = name;
+    }
+
+</script>
+     <c:Loading />
+      
+    <c:IDCard_HeaderComponent />
+    <div id="page_wrapper">
+           <div class="HeaderIMGSmall"> 
+               <apex:form forceSSL="true" id="formSF">
+               <table width="80%">
+                <!--<tr><td></td><td><c:IDCard_logoutComponent /></td></tr>-->
+                   <tr>
+                  
+                   
+                       <td><apex:image styleClass="IATALogo" url="{!URLFOR($Resource.IDCard_Styles,'img/IATA_LOGO.png')}" /></td>
+                        <td>
+                        <div class="select-style">
+                          <apex:actionRegion >
+                             <apex:selectList id="langSelect" value="{!SelectedLanguage}" size="1" required="true">
+                             <apex:selectOptions value="{!LangItems}" />
+                             <apex:actionSupport event="onchange" onsubmit="refreshLanguage()" reRender=""></apex:actionSupport>
+                             </apex:selectList>
+                          </apex:actionRegion>
+                        </div>
+                    </td>
+                    <td><c:IDCard_logoutComponent /></td>
+                    </tr>
+               </table>
+               </apex:form>
+               <h1>{!$Label.IDCard_Landing_Title}</h1>
+           </div>
+        <apex:outputPanel >
+        <apex:form forceSSL="true" id="idcardForm">
+            <div class="background" style="min-height:600px;background-color:#C9E5FF">
+                <div class="tabs">
+                    <ul class="tab-links" style="margin-bottom:0px;">
+                        <li  class="active"><a>
+                            {!$Label.IDCard_PortalPage_MenuuserManagment}
+                        </a>  </li>
+                        <li ><a href="{! pagesurl['prefix']}/IDCard_AdmPendingOps"  >{!$Label.IDCard_PortalPage_MenuPendingOps}</a></li>
+                        <li><a href="{! pagesurl['prefix']}/IDCard_AdmPayments"  >
+                        {!$Label.IDCard_PortalPage_MenuPaymentSlip}
+                      </a></li>
+                    </ul>
+                </div>
+                <div class="tab-content">
+                    <apex:outputPanel id="messages">
+                        <apex:pageMessages escape="false" />
+                    </apex:outputPanel>
+                      
+            <br /> 
+            
+            
+            <apex:outputPanel id="newContactQuestion" >
+            <apex:outputPanel rendered="{!showNewContactQuestion}" >
+
+                <p>{!$Label.IDCard_Question_New_Or_Change}</p>
+                <apex:SelectList value="{!NewContactQuestionResult}" size="1">
+                    <apex:SelectOption itemvalue="true" itemlabel="{!$Label.IDCard_YES}" />
+                    <apex:SelectOption itemvalue="false" itemlabel="{!$Label.IDCard_NO}" />
+                </apex:SelectList>
+                <apex:commandButton value="OK" action="{!createOrChangeContact}" rerender="newContactQuestion,newContact,messages" status="Loading"/>
+            </apex:outputPanel>
+            </apex:outputPanel>
+            
+            <apex:outputPanel id="newContact" >
+            <apex:outputPanel rendered="{!showNewContact}">
+                <script>
+                $("[id*='Loading']").hide();
+                </script>
+                <div id="newEditPanel">
+                    <h2>{!IF(isNew,"New","Edit")} Applicant</h2>
+                   <apex:pageBlock mode="edit" id="pb1"><apex:pageBlockSection collapsible="false" id="sc1">
+          
+                       <apex:inputField value="{!app.Title__c}" styleclass="drawRedBar"/>
+                       <apex:inputField value="{!app.Email_admin__c}" styleclass="drawRedBar"/>
+                       
+                       <!--<apex:inputField value="{!app.First_Name__c}" styleclass="outputText2" rendered="{!isnew}" id="first" onkeyup="workingFirstName();calculateDisplayedName();"/>
+                       <apex:outputField value="{!app.First_Name__c}" rendered="{!NOT(isnew)}"/>-->
+                       <apex:inputField value="{!app.First_Name__c}" styleclass="drawRedBar" id="first" onkeyup="workingFirstName();calculateDisplayedName();"/>
+                       <script>
+                        if({!isnew}==false)
+                          document.getElementById('{!$Component.idcardForm.pb1.sc1.first}').setAttribute('readonly', 'readonly');
+                       </script>
+                       
+                       <apex:inputField value="{!app.Last_Name__c}" styleclass="drawRedBar" id="last" onkeyup="workingLastName();calculateDisplayedName();"/>
+                       <apex:inputField value="{!app.Date_of_Birth__c}" styleclass="drawRedBar" rendered="{!isnew}"/>
+                       <apex:outputField value="{!app.Date_of_Birth__c}"  rendered="{!NOT(isnew)}"/>
+                    
+                      <apex:pageBlockSectionItem id="itemDisplayedName">
+                          <apex:outputLabel value="{!$Label.ID_Card_Displayed_Name_Label}" />
+                          <apex:outputPanel styleClass="requiredInput" layout="block">
+                              <apex:outputPanel styleClass="requiredBlock" layout="block" />
+                              <apex:inputText styleClass="outputText2" id="txtDisplayedName" value="{!app.Displayed_Name__c}" style="width:150px;" onfocus="setMaxLength('{!$Component.txtDisplayedName}', 22);" />
+                              <apex:outputPanel id="textDisplayedName_Panel" rendered="true">
+                                  <apex:outputLabel id="textDisplayedName_CharacterRemaining" value="" />
+                              </apex:outputPanel>
+                              <script> document.getElementById('{!$Component.txtDisplayedName}').setAttribute('readonly', 'readonly');</script>
+                              </apex:outputPanel>
+                        </apex:pageBlockSectionItem>                      
+
+                       <apex:selectList value="{!app.IATA_Code__c}" label="{!$Label.IDCard_AgencyIATAcode}" size="1" styleclass="drawRedBar" rendered="{!NOT(moreThan1000Iatacodes)}">
+                            <apex:selectOptions value="{!accountCodes}"/>
+                            <apex:actionSupport event="onchange" action="{!changeAgency}" rerender="newContact, messages" 
+                                                onsubmit="if({!NOT(OR(isNew,isEditNew))})startLoading()" disabled="{!OR(isNew,isEditNew)}" />
+                        </apex:selectList>             
+                       <apex:inputText label="{!$Label.IDCard_AgencyIATAcode}" value="{!app.IATA_Code__c}" required="true" rendered="{!moreThan1000Iatacodes}" styleclass="drawRedBar">
+                            <apex:actionSupport event="onchange" action="{!changeAgency}" rerender="newContact, messages"  
+                                                disabled="{!OR(isNew,isEditNew)}" onsubmit="if({!NOT(OR(isNew,isEditNew))})startLoading()"/>
+                       </apex:inputText>
+
+
+                       <apex:inputField value="{!app.Gender__c}" styleclass="drawRedBar"/>
+                       <apex:inputField value="{!app.Hours_worked__c}" styleclass="drawRedBar"/>
+
+                       <apex:inputField value="{!app.Telephone__c}"/>
+                       <apex:inputField value="{!app.Position_in_Current_Agency__c}" styleclass="drawRedBar"/>
+
+                       <apex:inputField value="{!app.Duties_in_Current_Agency__c}" styleclass="drawRedBar"/>
+                       <apex:inputField value="{!app.Start_Date_Agency_Month__c}" styleclass="drawRedBar" rendered="{!OR(isnew, iseditnew, isReplacement)}"/>
+                       <apex:outputField value="{!app.Start_Date_Agency_Month__c}" rendered="{!NOT(OR(isnew, iseditnew, isReplacement))}"/>
+
+                       <apex:inputField value="{!app.Start_Date_Agency_Year__c}" styleclass="drawRedBar" rendered="{!OR(isnew,iseditnew,isReplacement)}"/>
+                       <apex:outputField value="{!app.Start_Date_Agency_Year__c}" rendered="{!NOT(OR(isnew, iseditnew, isReplacement))}"/>
+                       <apex:inputField value="{!app.Start_Date_Industry__c}" styleclass="drawRedBar" rendered="{!OR(isnew,iseditnew)}"/>
+                       <apex:outputField value="{!app.Start_Date_Industry__c}" rendered="{!NOT(OR(isnew,iseditnew))}"/>
+                       
+                       <apex:pageBlockSectionItem /><apex:pageBlockSectionItem /><apex:pageBlockSectionItem />
+                        
+                       <apex:pageBlockSectionItem rendered="{!AND(NOT(isNew),NOT(HasPhoto))}"/>
+                       <apex:outputPanel rendered="{!AND(NOT(isNew),NOT(HasPhoto))}">
+                           <a href="{! pagesurl['prefix']}/IDCard_AdmUserManagmentPicture?VER={!ImageLink}"  style="color:black"
+                                          styleClass="myLink"  >
+                               <img src="{!URLFOR($Resource.jquerytools,'/images/plus.png')}" class="myCmd" />
+                                   {!$Label.IDCard_Add_Picture}
+                               <apex:param name="VERNumber" value="{!app.VER_Number__c}"/>
+                           </a>
+                       </apex:outputPanel>
+                       
+                       <apex:outputPanel rendered="{!AND(NOT(isNew),HasPhoto)}" >
+                            <img src="{!$Label.IDCard_CroppingTool}/images/{!app.Photo__c}" style="height:120px; width:90px;"/>
+                       </apex:outputPanel>
+                       <apex:outputPanel rendered="{!AND(NOT(isNew),HasPhoto)}">
+                           <a href="{! pagesurl['prefix']}/IDCard_AdmUserManagmentPicture?VER={!ImageLink}"  style="color:black"
+                                          styleClass="myLink"  >
+                               <img src="{!URLFOR($Resource.jquerytools,'/images/plus.png')}" class="myCmd" />
+                                   {!$Label.IDCard_Update_Picture}
+                               <apex:param name="VERNumber" value="{!app.VER_Number__c}"/>
+                           </a>
+                       </apex:outputPanel>
+                      
+                       <br/><br/>
+                       
+                        <script>
+                            $.each($(".drawRedBar"),function(){
+                                $(this).parent().prepend('<div class="requiredInput"><div class="requiredBlock"></div></div>');
+                                $(this).appendTo($(this).parent().find(".requiredInput"));
+                            }); 
+                            stopLoading();
+                        </script>
+                </apex:pageBlockSection>
+
+                    <apex:outputPanel id="lowerPanel">
+                       <apex:outputPanel id="lowerPanel2" rendered="{!isNew=true}"><apex:pageBlockSection collapsible="false" columns="1">
+                          <apex:selectList value="{!app.Package_of_Travel_Professionals_Course_1__c}" label="{!$ObjectType.ID_Card_Application__c.fields.Package_of_Travel_Professionals_Course_1__c.Label}" size="1">
+                               <apex:selectOptions value="{!packages}"/>
+                          </apex:selectList>
+                          <apex:selectList value="{!app.Package_of_Travel_Professionals_Course_2__c}"  label="{!$ObjectType.ID_Card_Application__c.fields.Package_of_Travel_Professionals_Course_2__c.Label}" size="1">
+                               <apex:selectOptions value="{!packages}"/>
+                          </apex:selectList>
+                      </apex:pageBlockSection></apex:outputPanel>
+                       </apex:outputPanel>
+                       
+                       
+                           
+                        </apex:pageBlock>
+                        
+                        
+                        <br/><br/>
+                        <apex:commandButton value="{!$Label.IDCard_Save_Button}" action="{!SaveContact}" onclick="startLoading()" styleClass="myBtn"
+                                           rerender="newContact,searchTable,messages,idcardForm" status="Loading"/>
+                       
+                       <apex:commandButton value="{!$Label.IDCard_Cancel_Replacement}" action="{!Cancel}" styleClass="myBtn"
+                                           immediate="true" rerender="newContact,searchTable,idcardForm" status="Loading"/>
+ 
+                    
+                    
+                </div>
+            </apex:outputPanel>
+            </apex:outputPanel>
+            
+            
+        
+            <br/><br/>
+            </div>
+            </div>
+        </apex:form>
+        </apex:outputPanel>
+    </div>
+     
+      
+
+    <script>
+
+        
+         $(document).ready(function() {          
+    
+            //-----EDIT THE NEXT TWO LINES-----
+            var startYear=1930; //replace 1930 with whatever year you want to start with;
+            var endYear=2000; //replace 2034 with whatever year you want to end with;
+        
+            //-----EDIT BELLOW HERE AT YOUR OWN RISK-----
+            var optionsString='';
+        
+            if(startYear<endYear){
+                //Loops through each date and renders the string for an option tag and addes it to the Optrionsstring variable
+                for(i=startYear;i<endYear+1;i++){
+                    optionsString += "<option value=\""+i+"\">"+i+"</option>";
+                }
+        
+                //Replace the innerHTML of the calendar picker year select tag with the Optionsstring we constructed.
+                $('#calYearPicker').html(optionsString);
+            }
+        });
+        </script>
+
+</body>
+<c:IDCard_footerComponent />
+</apex:page>

@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>false</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Child_Account__c</fullName>
+        <deleteConstraint>Restrict</deleteConstraint>
+        <description>Child account in hierarchy relationship</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Child account in hierarchy relationship</inlineHelpText>
+        <label>Child Account</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>AMS Agencies relationships</relationshipLabel>
+        <relationshipName>AMS_Agencies_relationships</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Child_Agency__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Agency (AMS)</label>
+        <referenceTo>AMS_Agency__c</referenceTo>
+        <relationshipLabel>AMS Agencies relationships</relationshipLabel>
+        <relationshipName>AMS_Agencies_relationships</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>HO_Flag__c</fullName>
+        <externalId>true</externalId>
+        <inlineHelpText>This field is used to set a common branch for all Agency relationships with the same HQ</inlineHelpText>
+        <label>HO hierarchy Flag</label>
+        <length>25</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Hierarchy__c</fullName>
+        <externalId>false</externalId>
+        <label>Agency Hierarchy</label>
+        <referenceTo>AMS_Agencies_Hierarchy__c</referenceTo>
+        <relationshipLabel>Agency relationships</relationshipLabel>
+        <relationshipName>AMS_Agencies_relationships</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>true</reparentableMasterDetail>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Last_legacy_sync_direction__c</fullName>
+        <externalId>false</externalId>
+        <label>Last legacy sync direction</label>
+        <picklist>
+            <picklistValues>
+                <fullName>LEGACY 2 AMS</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>AMS 2 LEGACY</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Last_synchronization__c</fullName>
+        <externalId>false</externalId>
+        <label>Last synchronization</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Legacy_External_ID__c</fullName>
+        <externalId>true</externalId>
+        <label>Legacy Id</label>
+        <length>20</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Legacy_System__c</fullName>
+        <externalId>false</externalId>
+        <label>Legacy System</label>
+        <picklist>
+            <picklistValues>
+                <fullName>AIMS</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>WEBSTAR</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>CAIMS</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>CNS</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Parent_Account__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Parent account in relationship</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Parent account in relationship</inlineHelpText>
+        <label>Parent Account</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>AMS Agencies relationships (Parent Account)</relationshipLabel>
+        <relationshipName>AMS_Agencies_relationships1</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Parent_agency__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Agency (AMS)</label>
+        <referenceTo>AMS_Agency__c</referenceTo>
+        <relationshipLabel>AMS Agencies relationships (Agency (AMS))</relationshipLabel>
+        <relationshipName>AMS_Agencies_relationships1</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Relationship_details__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Please indicate nature of relationship</inlineHelpText>
+        <label>Relationship details</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>AMS Agencies relationship</label>
+    <nameField>
+        <displayFormat>AAR-{0000000}</displayFormat>
+        <label>AMS Agencies parentship Name</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>AMS Agencies relationships</pluralLabel>
+    <searchLayouts>
+        <lookupDialogsAdditionalFields>Hierarchy__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Child_Account__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Parent_Account__c</lookupDialogsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ControlledByParent</sharingModel>
+    <startsWith>Vowel</startsWith>
+</CustomObject>

@@ -1,0 +1,358 @@
+<apex:page title="Check A Code" controller="vfIECCAC" sidebar="false" showheader="false" language="en" action="{!pageLoad}" standardStylesheets="false">
+    <title>CheckACode Professional</title>
+    
+    <div class="gdpwrapper">
+    
+    <div class="gdpbody">
+    
+    <c:IECAppHeader applicationTitle="CHECKACODE PRO" subInfoController="{!ctrSubsInfo}" showSearchOptions="false" />
+
+    <c:IECApp_Tootip />
+    
+     <style>
+        a,div,h1,h2,h3,h4,h5,h6,img,p,span,table,tbody,td,tr,u,ul{
+            vertical-align: middle;
+        }
+        .features {
+		border-bottom: 1px dashed #1ebec8;
+		}
+		#register .box .informationTable td span {
+		color: black;
+		}
+		
+		
+    </style>
+
+
+
+
+
+    <script>
+        function isNumberKey(evt) {
+            var keycode;
+
+            if (window.event)
+                keycode = window.event.keyCode;
+            else if (evt)
+                keycode = (evt.which) ? evt.which : event.keyCode;
+            else
+                return true;
+
+            if (keycode == 13)
+                keyPressValidation();
+            else if (keycode > 31 && (keycode < 48 || keycode > 57))
+                return false;
+
+            return true;
+        }
+
+
+        function disableF5(e) {
+            if ((e.which || e.keyCode) == 116) {
+                e.preventDefault();
+                f5Popup('');
+            }
+        };
+
+        function f5Popup(value) {
+            var popupDiv = this.document.getElementById('f5Popup');
+            popupDiv.style.display = value;
+        }
+
+
+
+        // Disable f5 at page load
+        /* jQuery < 1.7 */
+        $(document).bind("keydown", disableF5);
+
+        /* OR jQuery >= 1.7 */
+        $(document).on("keydown", disableF5);
+    </script>
+    
+
+    <apex:form id="CACForm" forcessl="true">
+
+
+
+        <apex:outputPanel id="errorMessage">
+            <div class="errorPanel">
+                <apex:pageMessages escape="no" />
+            </div>
+        </apex:outputPanel>
+
+        <apex:actionFunction name="keyPressValidation" action="{!validateCode}" />
+
+        <div id="f5Popup" style="display: none;">
+            <div class="checkout-popupBackground">
+                &nbsp;
+            </div>
+            <div class="checkout-popup">
+                <span class="warningMessage">WARNING</span>
+                <br/>
+                <br/> Refresh using F5 is disabled to avoid impacts on your account usage.
+                <br/>
+                <br/> If your want to refresh the page, you can do it by using the refresh button on your browser
+                <br/>
+                <br/>
+                <br/>
+
+                <div style="width:100%; text-align: center">
+                    <apex:commandButton style="width: 100px;" id="f5Button" styleClass="validate-submit" value="Ok" onclick="f5Popup('none');return false;" />
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Content panel controlling the access to the application -->
+        <apex:outputpanel id="panelAccess" layout="block" rendered="{!ctrSubsInfo.hasPageAccess}">
+
+            <div class="content-container">
+                <div id="register">
+
+
+
+                    <!-- code format -->
+                    <div class="rightColumn">
+
+						<div class="box register small dark txt24">
+						    <div class="header">
+						        <p>Code Validation Formats</p>
+						    </div>
+						    <div class="content" style="height:183px;">
+						        <h2>Accepted formats are:</h2>
+						        <h3 class="newDim" style="margin-top: 23px;">Passengers Agency</h3>
+						        <p>7 or 8 Digit Numeric Code</p>
+						        <h3 class="newDim" style="margin-top: 23px;">Cargo Agency</h3>
+						        <p>11 or 12 Digit Numeric Code</p>
+						        <h3 class="newDim" style="margin-top: 23px;">Travel Agent ID Card</h3>
+						        <p>10 Digit Verification Number</p>
+						    </div>
+						</div>
+
+                    </div>
+
+                    <!--  form entry box -->
+                    <div class="box register medium">
+                        <div class="header">
+                            <p>CheckACode Professional</p>
+                        </div>
+                        <div class="content" style="height:183px;">
+                            <h2>Validate IATA Agency Codes and Travel Agent ID Cards</h2>
+                            <h3 style="font-weight: 100; text-transform: initial;">Enter IATA Numeric Code or Verification Number</h3>
+
+                            <table style="margin-top:40px;">
+                                <tr>
+                                    <td>
+                                        <div class="customInputLabelIn lastElm" style="width:350px;">
+                                            <apex:inputtext onkeypress="return isNumberKey(event)" html-onpaste="" styleClass="inputText -required" rendered="{!NOT(baskCASSCode)}" id="txtValidationCode1" value="{!sValidationCode}" maxlength="12" />
+                                            <apex:inputtext onkeypress="return isNumberKey(event)" html-onpaste="" styleClass="inputText" rendered="{!baskCASSCode}" id="txtValidationCode2" value="{!sValidationCode}" maxlength="12" />
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <apex:inputtext onkeypress="return isNumberKey(event)" style="width:55px; height:46px; border: 1px solid #dcdcdc;" rendered="{!baskCASSCode}" styleClass="inputText -required" id="txtCASSCode" value="{!sCASSCode}" maxlength="4" />
+                                    </td>
+                                    <td>
+                                        <apex:commandButton disabled="{!ctrSubsInfo.iUsageLeft == 0}" id="validateButton" styleClass="customButton lastElm" style="width:125px;" value="Validate" action="{!validateCode}" onclick="changeCursorProgress(this);" />
+                                    </td>
+                                </tr>
+
+                            </table>
+                        </div>
+                    </div>
+
+
+                    <apex:outputpanel id="panelResult2Colums" layout="block" rendered="{! bShowNoAgencyResults || bShowNoAgentResults || bshowInvalidCode || baskCASSCode ||bShowAgency || bShowAgent}">
+
+                        <div class="box register large">
+                            <div class="content">
+
+
+                                <!--  Error messages -->
+                                <apex:outputpanel id="panelNoAgencyResult" rendered="{!bShowNoAgencyResults}">
+                                    <h2 class="validation error" style="font-family: arial;"><img src="{!URLFOR($Resource.IECStyles,'img/')}code-error.png" />{!sAgencyCode} is an Invalid IATA Numeric Code</h2>
+                                </apex:outputpanel>
+
+
+                                <apex:outputpanel id="panelNoAgentResult" rendered="{!bShowNoAgentResults}">
+                                    <h2 class="validation error" style="font-family: arial;"><img src="{!URLFOR($Resource.IECStyles,'img/')}code-error.png" />{!sAgentCode} is an Invalid IATA/IATAN ID Card</h2>
+                                </apex:outputpanel>
+
+
+                                <apex:outputText rendered="{!bshowInvalidCode}">
+                                    <h2 class="validation error"><img src="{!URLFOR($Resource.IECStyles,'img/')}code-error.png" />Invalid code format. Please try again</h2>
+                                </apex:outputText>
+
+
+                                <apex:outputText rendered="{!baskCASSCode}">
+                                    <h2 class="validation error"><img src="{!URLFOR($Resource.IECStyles,'img/')}code-error.png" />Please enter the 3 or 4 digit CASS Number</h2>
+                                </apex:outputText>
+
+                                <apex:outputText rendered="{!ctrSubsInfo.iUsageLeft == 0}">
+                                    <h2 class="validation error" ><img src="{!URLFOR($Resource.IECStyles,'img/')}code-error.png" />There is no more usage available</h2>
+                                </apex:outputText>
+
+
+
+                                <!-- Agency info block -->
+                                <apex:outputpanel id="panelAgencyResult2Columns" rendered="{!NOT(bShowNoAgencyResults || bShowNoAgentResults) && bShowAgency}" layout="block">
+
+                                    <apex:outputpanel rendered="{!bIsValid}">
+                                        <h2 class="validation success" style="font-family: arial;"><img src="{!URLFOR($Resource.IECStyles,'img/')}code-check.png" />{!sAgencyCode} is a valid IATA Numeric Code</h2>
+                                    </apex:outputpanel>
+
+                                    <h3>Agency details</h3>
+
+                                    <table class="informationTable">
+                                        <tr>
+                                            <td>Trading Name</td>
+                                            <td>
+                                                <apex:outputText value="{!oAgency.Trading_Name__c}" rendered="{!NOT(ISNULL(oAgency.Trading_Name__c))}" />
+                                                <apex:outputText value="{!oAgency.Legal_Name__c}" rendered="{!ISNULL(oAgency.Trading_Name__c)}" />
+                                            </td>
+
+                                            <td>Address</td>
+                                            <td class="address">
+
+                                                <apex:outputPanel rendered="{!oAgency.Related_GDP_Address__r != null}">
+                                                    <apex:outputText styleClass="addressUppercase" value="{!oAgency.Related_GDP_Address__r.Address_Line_1__c}<br/>" escape="false" rendered="{!oAgency.Related_GDP_Address__r.Address_Line_1__c != null && oAgency.Related_GDP_Address__r.Address_Line_1__c != ''}" />
+                                                    <apex:outputText styleClass="addressUppercase" value="{!oAgency.Related_GDP_Address__r.Address_Line_2__c}<br/>" escape="false" rendered="{!oAgency.Related_GDP_Address__r.Address_Line_2__c != null && oAgency.Related_GDP_Address__r.Address_Line_2__c != ''}" />
+                                                    <apex:outputText styleClass="addressUppercase" value="{!oAgency.Related_GDP_Address__r.Address_City__c}, " escape="false" rendered="{!oAgency.Related_GDP_Address__r.Address_City__c != null && oAgency.Related_GDP_Address__r.Address_City__c != '' && (oAgency.Related_GDP_Address__r.Address_State_Name__c != null && oAgency.Related_GDP_Address__r.Address_State_Name__c != '')}" />
+                                                    <apex:outputText styleClass="addressUppercase" value="{!oAgency.Related_GDP_Address__r.Address_City__c}<br/>" escape="false" rendered="{!oAgency.Related_GDP_Address__r.Address_City__c != null && oAgency.Related_GDP_Address__r.Address_City__c != '' && NOT(oAgency.Related_GDP_Address__r.Address_State_Name__c != null && oAgency.Related_GDP_Address__r.Address_State_Name__c != '')}" />
+                                                    <apex:outputText styleClass="addressUppercase" value="{!oAgency.Related_GDP_Address__r.Address_State_Name__c}<br/>" escape="false" rendered="{!oAgency.Related_GDP_Address__r.Address_State_Name__c != null && oAgency.Related_GDP_Address__r.Address_State_Name__c != ''}" />
+                                                    <apex:outputText styleClass="addressUppercase" value="{!oAgency.Related_GDP_Address__r.Address_Postal_Code__c} - " escape="false" rendered="{!oAgency.Related_GDP_Address__r.Address_Postal_Code__c != null && oAgency.Related_GDP_Address__r.Address_Postal_Code__c != '' && (oAgency.Related_GDP_Address__r.Address_Country_Name__c != null && oAgency.Related_GDP_Address__r.Address_Country_Name__c != '')}" />
+                                                    <apex:outputText styleClass="addressUppercase" value="{!oAgency.Related_GDP_Address__r.Address_Postal_Code__c}<br/>" escape="false" rendered="{!oAgency.Related_GDP_Address__r.Address_Postal_Code__c != null && oAgency.Related_GDP_Address__r.Address_Postal_Code__c != '' && NOT(oAgency.Related_GDP_Address__r.Address_Country_Name__c != null && oAgency.Related_GDP_Address__r.Address_Country_Name__c != '')}" />
+                                                    <apex:outputText styleClass="addressUppercase" value="{!oAgency.Related_GDP_Address__r.Address_Country_Name__c}<br/>" escape="false" rendered="{!oAgency.Related_GDP_Address__r.Address_Country_Name__c != null && oAgency.Related_GDP_Address__r.Address_Country_Name__c != ''}" />
+                                                </apex:outputPanel>
+                                            </td>
+
+                                            <apex:image style="margin-top: -87px; top: initial; right:60px; position: absolute" value="{!URLFOR($Resource.IECFlags48, 'flags48/' + LOWER(oAgency.Related_GDP_Address__r.Address_ISO_Country_Code__c)  + '.png')}" rendered="{!oAgency.Related_GDP_Address__r.Address_ISO_Country_Code__c != null}" />
+                                        </tr>
+
+
+                                        <tr>
+                                            <td>Agency Class</td>
+                                            <td>
+                                                <apex:outputPanel rendered="{!oAgency.Related_Accreditation_Class__r != null && oAgency.Related_Accreditation_Class__r.Class__r != null && oAgency.Related_Accreditation_Class__r.Class__r.Definition__c != null && oAgency.Related_Accreditation_Class__r.Class__r.Definition__c != ''}">
+                                                    <span class="features simptip-position-right simptip-movable simptip-color" data-tooltip="{!oAgency.Related_Accreditation_Class__r.Class__r.Definition__c}">{!oAgency.Related_Accreditation_Class__r.Class__r.Name}</span>
+                                                </apex:outputPanel>
+                                                <apex:outputText value="{!oAgency.Related_Accreditation_Class__r.Class__r.Name}" rendered="{!oAgency.Related_Accreditation_Class__r != null && oAgency.Related_Accreditation_Class__r.Class__r != null && NOT(oAgency.Related_Accreditation_Class__r.Class__r.Definition__c != null && oAgency.Related_Accreditation_Class__r.Class__r.Definition__c != '')}" />
+
+                                            </td>
+
+                                            <td>Agency Type</td>
+                                            <td>
+                                                <apex:outputPanel rendered="{!oAgency.Location_Type__r != null && oAgency.Location_Type__r.Definition__c != null && oAgency.Location_Type__r.Definition__c != ''}">
+                                                    <span class="features simptip-position-right simptip-movable simptip-color" data-tooltip="{!oAgency.Location_Type__r.Definition__c}">{!oAgency.Location_Type__r.Name}</span>
+                                                </apex:outputPanel>
+                                                <apex:outputText value="{!oAgency.Location_Type__r.Name}" rendered="{!oAgency.Location_Type__r != null && NOT(oAgency.Location_Type__r.Definition__c != null && oAgency.Location_Type__r.Definition__c != '')}" />
+
+                                            </td>
+
+                                        </tr>
+
+                                        <tr>
+                                            <td>Approval Date</td>
+                                            <td>
+                                                <apex:outputText value="{0,date, dd MMM yyyy}" rendered="{!oAgency.Related_Accreditation_Class__r != null}">
+                                                    <apex:param value="{!oAgency.Related_Accreditation_Class__r.Date__c}" />
+                                                </apex:outputText>
+                                            </td>
+
+                                            <td>Phone</td>
+                                            <td>
+                                                <apex:outputText value="{!oAgency.Related_Main_Phone__r.Name}" rendered="{!oAgency.Related_Main_Phone__r != null}" />
+                                                <BR/>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </apex:outputpanel>
+
+
+                                <!--  ID Card info -->
+                                <apex:outputpanel id="panelAgentResult2Columns" rendered="{!NOT(bShowNoAgencyResults || bShowNoAgentResults) && bShowAgent}" layout="block">
+
+                                    <apex:outputpanel rendered="{!bIsValid}">
+                                        <h2 class="validation success" style="font-family: arial;"><img src="{!URLFOR($Resource.IECStyles,'img/')}code-check.png" />{!sAgentCode} is a valid IATA/IATAN ID Card</h2>
+                                    </apex:outputpanel>
+
+                                    <h3>ID Card Details</h3>
+
+
+                                    <table class="informationTable">
+
+
+                                        <tr>
+                                            <td style="width: 120px;">Cardholder Name</td>
+                                            <td>
+                                                <apex:outputText value="{!oAgent.Name_on_ID_Card__c}" rendered="{!oAgent.Name_on_ID_Card__c != null && oAgent.Name_on_ID_Card__c != ''}" />
+                                            </td>
+
+                                            <td style="width: 127px;">IATA Numeric Code</td>
+                                            <td>
+                                                <apex:outputText value="{!oAgent.Agency_IATA_Code__c}" rendered="{!oAgent.Agency_IATA_Code__c != null && oAgent.Agency_IATA_Code__c != ''}" />
+                                            </td>
+                                        </tr>
+
+
+                                        <tr>
+                                            <td>Expiration Date</td>
+                                            <td>
+                                                <apex:outputText value="{0,date,dd MMM yyyy}" rendered="{!oAgent.Valid_To_Date__c != null}">
+                                                    <apex:param value="{!oAgent.Valid_To_Date__c}" />
+                                                </apex:outputText>
+
+                                            </td>
+
+                                            <td>Trading Name</td>
+                                            <td>
+                                                <apex:outputText value="{!oAgent.Agency_Name__c}" rendered="{!oAgent.Agency_Name__c != null && oAgent.Agency_Name__c != ''}" />
+                                            </td>
+                                        </tr>
+<!--                                         <tr>
+                                            <td></td>
+                                            <td></td>
+
+                                            <td>Agency Type</td>
+                                            <td>
+                                                <apex:outputText value="{!oAgent.Type_of_ID_Card__c}" rendered="{!oAgent.Type_of_ID_Card__c != null && oAgent.Type_of_ID_Card__c != ''}" />
+                                                <BR/>
+                                            </td>
+                                        </tr>
+ -->    
+                                    </table>
+                                </apex:outputpanel>
+
+
+                            </div>
+                        </div>
+                    </apex:outputpanel>
+
+
+                    <!--  Recommended products -->
+                    <div class="box register large dark txt24">
+                        <c:IECRecommended ProductCategory="{!sProductCode}" />
+                    </div>
+
+
+                    <div class="clear"></div>
+
+                </div>
+            </div>
+
+            <div class="footter"> </div>
+        </apex:outputpanel>
+
+
+
+        <!-- Content panel without access to the application -->
+        <apex:outputpanel id="panelNotAccess" layout="block" rendered="{!NOT(ctrSubsInfo.hasPageAccess)}" />
+
+    </apex:form>
+
+
+	</div>
+    <!-- GDP Footer -->
+ 	<c:IECGDPFooter />
+</div>
+
+</apex:page>

@@ -1,0 +1,225 @@
+<apex:page title="Update Account" controller="vfIECUpdateAddress" sidebar="false" showHeader="false" standardStylesheets="false" language="en" action="{!pageLoad}">
+ <Title>Update Account</Title>
+    
+    <div class="gdpwrapper">    
+    <div class="gdpbody"> 
+    <c:IECSiteHeader />
+    
+     <!-- only used for confirmation divs -->
+    <apex:stylesheet value="{!URLFOR($Resource.IECStyles, 'register.css')}" />
+    <apex:stylesheet value="{!URLFOR($Resource.IECStyles, 'profile.css')}" />
+        
+<style>
+             .tabs {
+          height: 100vh !important;
+  			overflow: visible !important;
+        }
+
+		.gdpbody {
+ 		 padding-bottom: 100px !important;
+		}
+    
+    
+#register .content .customSelect select{
+top: 34%;
+transform: translate(0, -30%);
+margin-left: 45px;
+color: #000;
+font-size: 13px;
+}
+    
+    .billing-completeMessage {
+  color: black;
+  font-weight: 700;
+}
+    
+</style>
+
+
+<apex:form id="contactInformationForm" forceSSL="true">
+   <table class="tableHolder"> 
+    <tr>
+            
+    <!-- Left Menu -->
+    <td class="menu-Panel"><c:IECHistMenu /></td>
+            
+    <!-- Form  Panel Start-->
+    <td class="account-Panel">
+    <div class="tableList-component">       
+       <div id="register">
+        <div class="box register fit1024">       
+        
+        
+        <!-- Form  header-->
+          <div class="header">
+             <h1>Billing Details</h1>
+         </div>
+          <div class="content"> 
+        
+                <!-- conf. Messages -->  
+                    <apex:outputPanel id="errorMessage">
+                        <div class="errorPanel">
+                            <apex:pageMessages escape="no"/>
+                        </div>
+                    </apex:outputPanel>                     
+    
+                    <apex:outputPanel id="confirmationPanel" styleClass="billing-completeMessage" rendered="{!iRegistrationStep == constUPDATECONFIRMATION}">
+                        <apex:outputText >Your Billing information is now updated</apex:outputText><br/><br/>
+                    </apex:outputPanel>             
+            
+                <!-- action function -->            
+                <apex:actionFunction name="AJAXBillingCountryChange" action="{!BillingCountryChanged}" rerender="informationPanel, errorMessage"/>
+                
+                
+            <!-- form -->
+            <apex:outputPanel id="informationPanel">
+                <h2>Billing Address</h2>                
+                                        
+                       <!-- Company Name -->
+                        <div class="customInputLabelIn">
+                            <label for="{!$Component.registerCompany}">Company Name</label>
+                            <apex:inputText id="registerCompany" value="{!sAccountName}" disabled="true" style="padding-left: 115px; width: 600px;"/>
+                        </div>
+                    
+                         <!-- Billing Street  -->
+                         <div class="customInputLabelIn">
+                            <label for="{!$Component.address}"><span class="alert">*</span>Address</label>
+                            <apex:inputText id="address" value="{!oBillingAddress.Street__c}"  style="padding-left: 115px; width: 600px;"/>
+                        </div>
+                                               
+                         <!-- Billing City  -->
+                         <div class="customInputLabelIn">
+                            <label for="{!$Component.city}"><span class="alert">*</span>City</label>
+                            <apex:inputText id="city" value="{!oBillingAddress.City__c}"  style="padding-left: 115px; width: 600px;"/>
+                        </div>
+                    
+                        <!-- Billing Country  -->
+                        <div class="customSelect" style="width:99%;">
+                        <i class="fa fa-caret-down"></i>
+                        <span class="alert select">*<span style="color: #969696;">Country</span></span>
+                            <apex:selectList value="{!oBillingAddress.ISO_Country__c}" size="1" onchange="AJAXBillingCountryChange();" styleClass="billing-selectList -required" >
+                                <apex:selectOptions value="{!Countries}"/>
+                            </apex:selectList> 
+                       </div>      
+                 
+                        <!-- Billing States/Province  -->
+                        <apex:outputPanel id="panelStateProvince" layout="none" rendered="{!bStateAvailable}">
+	                        <div class="customSelect" style="width:99%;">
+	                        <i class="fa fa-caret-down"></i>
+	                        <span class="alert select">
+	                        <apex:outputText rendered="{!bStateAvailable}"> * </apex:outputText>
+	                        <span style="color: #969696;">
+	                            <apex:outputText value="State/Province" />
+	                        </span>
+	                        </span>
+	
+	                        <apex:selectList value="{!oBillingAddress.ISO_State__c}" size="1">
+	                            <apex:selectOptions value="{!StateProvince}"/>
+	                        </apex:selectList>
+	                       </div>
+                       </apex:outputPanel>
+                   
+           
+                        <!-- Billing Zip  -->
+                         <div class="customInputLabelIn">
+                            <label for="{!$Component.zip}">
+                            <apex:outputText rendered="{!bCountryRequireZipCode}" > <span class="alert">*</span>  </apex:outputText>                     
+                            <apex:outputText value="Zip/Postal Code" />
+                            </label>
+                            <apex:inputText id="zip" value="{!oBillingAddress.ZipCode__c}"  style="padding-left: 115px; width: 600px;" />                      
+                        </div>
+                                       
+
+                            
+    <!-- Tax IDs-->                               
+        <apex:outputPanel id="panelVATEdit" layout="none" rendered="{!vatConfig <> NULL}">
+        
+                <apex:outputPanel id="panelTax1Edit" layout="none" rendered="{!vatConfig.ShowTax1}">
+                   <h2 style="margin-top:30px;">Tax Information</h2>          
+                            <!-- <apex:outputText styleClass="account-labelText" value="{!vatConfig.Tax1Label + IF(vatConfig.TaxIDMandatory, ' *', '')}"/> -->
+                           
+                        <apex:outputPanel rendered="{!vatConfig.VATValidationRequired}">                  
+                                        <div class="customInputLabelIn">
+                                             <label for="{!$Component.tax1}"><span class="alert"></span> {!vatConfig.CountryCode}</label>             
+                                             <apex:inputText id="tax1" value="{!oContact.Tax_1_ID__c}" style="padding-left: 115px; width: 600px;"  />
+                                         </div>        
+                         </apex:outputPanel>
+                                    
+                        <apex:outputPanel rendered="{!NOT(vatConfig.VATValidationRequired)}" >
+                                            
+                                             <div class="customInputLabelIn">
+                                                     <label for="{!$Component.tax11}"><span class="alert"></span> {!vatConfig.Tax1Label}</label>              
+                                                     <apex:inputText id="tax11" value="{!oContact.Tax_1_ID__c}" style="padding-left: 118px; width: 600px;" />
+                                            </div>                                  
+                        </apex:outputPanel>
+                                                                             
+                 </apex:outputPanel>
+                        
+                <apex:outputPanel id="panelTax2Edit" layout="none" rendered="{!vatConfig.ShowTax2}">
+                            <div class="customInputLabelIn">
+                                    <label for="{!$Component.tax2}"><span class="alert"></span>{!vatConfig.Tax2Label + IF(vatConfig.TaxIDMandatory, ' *', '')}</label>            
+                                    <apex:inputText id="tax2" value="{!oContact.Tax_2_ID__c}"  style="padding-left: 118px; width: 600px;" />
+                            </div>
+                </apex:outputPanel>
+                                
+        </apex:outputPanel>
+                                    
+                
+            <!-- Submit Button -->    
+            <h2 style="margin-top:30px;">&nbsp;</h2>              
+            <table>
+                  <tr>
+                    <td>
+                      <apex:commandLink action="{!URLFOR($Page.IECUpdateContact)}" value="Cancel" id="cancelContactInformation" styleclass="customButton lastElm" style="width:290px;background:#c8c8c8"/>
+                    </td>
+                    <td>
+                        <apex:commandLink action="{!updateContact}" value="Submit" id="submitContactInformation" styleclass="customButton lastElm" style="width:290px;"/>
+                    </td>
+                  </tr>
+            </table>       
+
+
+
+
+    </apex:outputPanel>
+
+                </div>
+           
+        </div>
+       </div>
+    </div>    
+    </td>
+   </tr>
+</table>
+
+    </apex:form>
+    <!-- ************************************ -->
+ </div>
+      <div class="gadfooter">
+        <!-- Footer -->
+        <c:IECSiteFooter />
+       </div>
+    </div>
+
+    <style> 
+	 	html, body {
+			height:100%;	
+			margin:0;
+			padding:0;
+		}				
+		.gdpwrapper {
+			min-height:100%;
+			position:relative;
+		}
+		.gdpbody{
+ 		 padding-bottom:141px; 
+		}
+        .gadfooter{
+            width:100%;
+            height:100px; 
+            position:absolute;
+            bottom:0;
+            left:0;        
+        }
+  </style>
+</apex:page>

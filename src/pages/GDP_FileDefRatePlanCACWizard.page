@@ -1,0 +1,208 @@
+<apex:page standardController="zqu__ProductRatePlan__c"  extensions="GDP_FileDefRatePlanCACWizard" sidebar="true" id="pageManageLine"
+    title="File Definition for Product Rate Plan : {!theObj.zqu__ZProduct__r.name} : {!zqu__ProductRatePlan__c.Name}"
+>
+
+<apex:sectionHeader title="File Definition for Product Rate Plan : {!theObj.zqu__ZProduct__r.name} : {!zqu__ProductRatePlan__c.Name}" />
+<apex:messages style="color:red"/>
+<style>   
+    .headerRow .headerSubStyle{background-color:#638658;color:#FFFFFF}     
+    .search{
+        font-size:14pt;
+        margin-right: 20px;    
+    }
+    .fyi{
+        color:red;
+        font-style:italic;
+    }
+    .label{
+        margin-right:10px;
+        font-weight:bold;
+    }
+    .hideCurrDate span.dateInput span.dateFormat{
+       display:none;
+    }
+   div#containerz {
+        height:250px; 
+        border: 1px solid #E8E9EB; 
+        z-index: 1;
+       }
+   div#scrollable_contentz 
+   {
+      position: relative;
+      width: 100%;
+      border: 1px solid #E8E9EB;
+      height:250px;
+      z-index: 1;
+      overflow-y:auto;
+    }
+  .custPopupz{
+        border:0px solid #EEE;
+        border-radius:5px;
+        background-color: transparent;
+        border-width: 2px;
+        border-style: none;
+        z-index: 9999;
+        left: 35%;
+        padding:10px;
+        position: absolute;
+        width: 400px;
+        height: 70px;
+        margin-left: -250px;
+        top:200px;
+        left:550px;            
+    }
+    .popupBackgroundz{
+        background-color:black;
+        opacity: 0.20;
+        filter: alpha(opacity = 20);
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        z-index: 9997;
+    }
+    
+#newspaper-b
+{
+    font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+    font-size: 12px;
+    margin: 5px;
+    width: 200px;
+    text-align: left;
+    border-collapse: collapse;
+    border: 1px solid #69c;
+}
+#newspaper-b th
+{
+    padding: 5px 5px 5px 5px;
+    font-weight: normal;
+    font-size: 14px;
+    color: #039;
+}
+#newspaper-b tbody
+{
+    background: #e8edff;
+}
+#newspaper-b td
+{
+    padding: 5px;
+    color: #669;
+    border-top: 1px dashed #fff;
+}
+#newspaper-b tbody tr:hover td
+{
+    color: #339;
+    background: #d0dafd;
+}
+
+
+</style>
+<apex:form id="AccessGranted" >
+    <apex:outputPanel id="mainBody">
+        <apex:pageBlock mode="maindetail" id="pageblockManageLine" >
+            <apex:outputPanel id="rcstatus" >
+              <Table style="text-align:right" width="100%">
+                <tr>
+                 <td>
+                  <apex:outputText value="{!ErrorMessage}" style="color:red;word-wrap:break-word;width:100px"/>  
+                 </td>
+                </tr>
+              </table>
+            </apex:outputPanel>
+            <apex:pageBlockSection title="File Description List" id="selected" columns="1" collapsible="false"> 
+               <apex:pageBlock mode="maindetail" id="pageblockManageLine2" >
+                <apex:outputPanel id="panel1">
+                    <div id="containerz"> 
+                     <div id="scrollable_contentz">
+                     <apex:pageblockTable value="{!FileDescriptionItemList}" var="s" width="100%">                
+                        <apex:column headerValue="Actions" style="text-align:left;vertical-align:text-top;width:50px">
+                            <apex:outputText >
+                                <apex:commandLink value="Add" action="{!AddToFileDescriptionCart}" reRender="selected, selected2"   id="expanderHead" style="font-weight:bold"  status="searchingStatus">
+                                   <apex:param value="{!s.Counter}" assignTo="{!toSelect}" name="toSelect"/>
+                                </apex:commandLink>
+                                <apex:actionstatus id="searchingStatus" startText="...">
+                                    <apex:facet name="start">
+                                    <!-- {Resource.Loading} -->
+                                      <div id="divLoading" class="loading"><img src="" width="16" height="16"/>
+                                        <span class="loadingText">Loading...</span>
+                                      </div> 
+                                    </apex:facet>  
+                                    <apex:facet name="stop">
+                                    </apex:facet>
+                                </apex:actionstatus>
+                            </apex:outputText>
+                        </apex:column>
+                        <apex:column headerValue="{!$ObjectType.GDP_File_Description__c.Fields.Name.Label}" style="vertical-align:text-top;width:230px" >
+                            <apex:OutputField value="{!s.definition.Name}" style="width:230px" />
+                        </apex:column>  
+                        <apex:column headerValue="{!$ObjectType.GDP_File_Description__c.Fields.Product_Type__c.Label}" style="vertical-align:text-top;width:70px" >
+                            <apex:OutputField value="{!s.definition.Reference__r.Product_Type__c}" style="text-align:right;width:70px"/>
+                        </apex:column>                    
+                     </apex:pageBlockTable>
+                     </div>
+                    </div>
+                    <p/>
+                    
+                </apex:outputPanel>
+               </apex:pageBlock>
+            </apex:pageBlockSection>
+
+            <apex:pageBlockSection title="File Description Selected" id="selected2" columns="1" collapsible="false">                       
+               <apex:pageBlock mode="maindetail" id="pageblockManageLine3" >
+                <apex:outputPanel id="panel4">
+                    <div id="containerz"> 
+                     <div id="scrollable_contentz">
+                     <apex:pageblockTable value="{!FileDescriptionSelectedList}" var="s" width="100%">                
+                        <apex:column headerValue="Actions" style="text-align:left;vertical-align:text-top;width:50px">
+                            <apex:outputText >
+                                <apex:commandLink value="Remove" action="{!RemoveFileDescriptionCart}" reRender="selected, selected2"   id="expanderHead1" style="font-weight:bold"  status="searchingStatus">
+                                   <apex:param value="{!s.Counter}" assignTo="{!toSelect}" name="toSelect"/>
+                                </apex:commandLink>
+                                <apex:actionstatus id="searchingStatus" startText="...">
+                                    <apex:facet name="start">
+                                    <!-- {Resource.Loading} -->
+                                      <div id="divLoading" class="loading"><img src="" width="16" height="16"/>
+                                        <span class="loadingText">Loading...</span>
+                                      </div> 
+                                    </apex:facet>  
+                                    <apex:facet name="stop">
+                                    </apex:facet>
+                                </apex:actionstatus>
+                            </apex:outputText>
+                        </apex:column>
+                        <apex:column headerValue="{!$ObjectType.GDP_File_Description__c.Fields.Name.Label}" style="vertical-align:text-top;width:230px" >
+                            <apex:OutputField value="{!s.FileDescriptionSelected.GDP_File_Description__r.Name}"  style="width:230px" rendered="{!s.recordexists}"/>
+                            <apex:OutputField value="{!s.definition.Name}"  style="width:230px" rendered="{!NOT(s.recordexists)}"/>
+                        </apex:column>  
+                        <apex:column headerValue="{!$ObjectType.GDP_File_Description__c.Fields.Product_Type__c.Label}" style="vertical-align:text-top;width:70px" >
+                            <apex:OutputField value="{!s.FileDescriptionSelected.GDP_File_Description__r.Reference__r.Product_Type__c}" style="text-align:right;width:70px" rendered="{!s.recordexists}"/>
+                            <apex:OutputField value="{!s.definition.Reference__r.Product_Type__c}" style="text-align:right;width:70px" rendered="{!NOT(s.recordexists)}"/>
+                        </apex:column>                    
+                        <apex:column headerValue="{!$ObjectType.GDP_File_Description_To_Rate_Plan__c.Fields.Share_Authorized_Usage__c.Label}" style="vertical-align:text-top;width:45px" >
+                            <apex:InputField value="{!s.FileDescriptionSelected.Share_Authorized_Usage__c}" style="text-align:right;width:45px" rendered="{!s.recordexists}"/>
+                        </apex:column>                    
+                        <apex:column headerValue="{!$ObjectType.GDP_File_Description_To_Rate_Plan__c.Fields.Authorized_Usage__c.Label}" style="vertical-align:text-top;width:45px" >
+                            <apex:InputField value="{!s.FileDescriptionSelected.Authorized_Usage__c}" style="text-align:right;width:100px" rendered="{!s.recordexists}"/>
+                        </apex:column>                    
+                     </apex:pageBlockTable>
+                     </div>
+                    </div>
+                    <p/>
+                    <table width="100%">
+                        <tr>
+                         <td style="text-align:left"  width="50%">
+                            <apex:commandButton action="{!GoBack}" value="Return" style="width:70px" />
+                         </td>
+                         <td style="text-align:right"  width="50%">                        
+                            <apex:commandButton value="Update" action="{!DoUpdate}"  style="width:70px" id="invoicebtn" reRender="updatebtn,selected, selected2"/>
+                         </td>
+                        </tr>
+                    </table>
+                </apex:outputPanel>
+               </apex:pageBlock>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:outputPanel>
+</apex:form>
+</apex:page>

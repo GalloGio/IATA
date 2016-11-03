@@ -1,0 +1,106 @@
+<apex:page title="{!PageTitle}" controller="vfIATAPassengersList" sidebar="false" showheader="false" language="en" action="{!pageLoad}" standardStylesheets="false">
+    <title>{!PageTitle}</title>
+   
+    <style type="text/css">
+       .tg  {border-collapse:collapse;border-spacing:0; border-color:#dcdcdc}
+       .tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal; border-color:#dcdcdc}
+       .tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:bolder;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal; border-color:#dcdcdc}
+       .tg .tg-yw4l{vertical-align:top}
+    </style>
+    
+    <div class="gdpwrapper">
+    
+        <div class="gdpbody">
+            <c:IECAppHeader applicationTitle="{!PageTitle}" subInfoController="{!ctrSubsInfo}" savedFiltersController="{!ctrSavedFilters}" showSearchOptions="true" />
+            <br/>
+            <p class="descText" style="font-family: 'Raleway', sans-serif;font-weight: 100; text-align: center; margin-bottom: 20px;">{!ListTitle} as of : <apex:outputText value="{0, date, MMMM d','  yyyy}"><apex:param value="{!dataLastRefreshedOn}"/></apex:outputText></p>
+
+            <center>
+            <table class="tg" width="60%">
+              <!-- <apex:variable value="{!0}" var="grandTotal"/> -->
+              <tr>
+                <th class="tg-031e"  style="width:200px">Country</th>
+                <apex:outputText rendered="{!AO_flag}"><th class="tg-031e">AO</th></apex:outputText>
+                <apex:outputText rendered="{!SA_flag}"><th class="tg-031e">SA</th></apex:outputText>
+                <apex:outputText rendered="{!HO_flag}"><th class="tg-031e">HO</th></apex:outputText>
+                <apex:outputText rendered="{!BR_flag}"><th class="tg-031e">BR</th></apex:outputText>
+                <apex:outputText rendered="{!ES_flag}"><th class="tg-031e">ES</th></apex:outputText>
+                <apex:outputText rendered="{!EP_flag}"><th class="tg-031e">EP</th></apex:outputText>
+                <apex:outputText rendered="{!ST_flag}"><th class="tg-031e">ST</th></apex:outputText>
+         
+                <apex:outputText rendered="{!SE_flag}"><th class="tg-031e">SE</th></apex:outputText>
+                <apex:outputText rendered="{!SP_flag}"><th class="tg-031e">SP</th></apex:outputText>
+                <apex:outputText rendered="{!TD_flag}"><th class="tg-031e">TD</th></apex:outputText>
+                <apex:outputText rendered="{!IC_flag}"><th class="tg-031e">IC</th></apex:outputText>
+                <apex:outputText rendered="{!AA_flag}"><th class="tg-031e">AA</th></apex:outputText>
+                <apex:outputText rendered="{!AC_flag}"><th class="tg-031e">AC</th></apex:outputText>
+                <apex:outputText rendered="{!AW_flag}"><th class="tg-031e">AW</th></apex:outputText>
+                <apex:outputText rendered="{!EB_flag}"><th class="tg-031e">EB</th></apex:outputText>
+                <apex:outputText rendered="{!WH_flag}"><th class="tg-031e">WH</th></apex:outputText>
+                <apex:outputText rendered="{!CS_flag}"><th class="tg-031e">CS</th></apex:outputText>
+                <th class="tg-031e"><p><b>TOTAL</b></p></th>            
+              </tr>
+              <apex:repeat value="{!Statistics}" var="s">
+              <tr>    
+                <td class="tg-yw4l" style="width:200px">{!s.Country__c} {!s.State__c}</td>
+
+                <apex:outputText rendered="{!AO_flag}"><td class="tg-yw4l" align="right" >{!s.AO__c}</td></apex:outputText>
+                <apex:outputText rendered="{!SA_flag}"><td class="tg-yw4l" align="right" >{!s.SA__c}</td></apex:outputText>
+                <apex:outputText rendered="{!HO_flag}"><td class="tg-yw4l" align="right" >{!s.HO__c}</td></apex:outputText>
+                <apex:outputText rendered="{!BR_flag}"><td class="tg-yw4l" align="right" >{!s.BR__c}</td></apex:outputText>
+                <apex:outputText rendered="{!ES_flag}"><td class="tg-yw4l" align="right" >{!s.ES__c}</td></apex:outputText>
+                <apex:outputText rendered="{!EP_flag}"><td class="tg-yw4l" align="right" >{!s.EP__c}</td></apex:outputText>
+                <apex:outputText rendered="{!ST_flag}"><td class="tg-yw4l" align="right" >{!s.ST__c}</td></apex:outputText>
+             
+                <apex:outputText rendered="{!SE_flag}"><td class="tg-yw4l" align="right" >{!s.SE__c}</td></apex:outputText>
+                <apex:outputText rendered="{!SP_flag}"><td class="tg-yw4l" align="right" >{!s.SP__c}</td></apex:outputText>
+                <apex:outputText rendered="{!TD_flag}"><td class="tg-yw4l" align="right" >{!s.TD__c}</td></apex:outputText>
+                <apex:outputText rendered="{!IC_flag}"><td class="tg-yw4l" align="right" >{!s.IC__c}</td></apex:outputText>
+                <apex:outputText rendered="{!AA_flag}"><td class="tg-yw4l" align="right" >{!s.AA__c}</td></apex:outputText>
+                <apex:outputText rendered="{!AC_flag}"><td class="tg-yw4l" align="right" >{!s.AC__c}</td></apex:outputText>
+                <apex:outputText rendered="{!AW_flag}"><td class="tg-yw4l" align="right" >{!s.AW__c}</td></apex:outputText>
+                <apex:outputText rendered="{!EB_flag}"><td class="tg-yw4l" align="right" >{!s.EB__c}</td></apex:outputText>
+                <apex:outputText rendered="{!WH_flag}"><td class="tg-yw4l" align="right" >{!s.WH__c}</td></apex:outputText>
+                <apex:outputText rendered="{!CS_flag}"><td class="tg-yw4l" align="right" >{!s.CS__c}</td></apex:outputText>
+
+                 
+                <td class="tg-yw4l" align="right">{!s.Total__c}</td>                
+              </tr>
+              </apex:repeat>
+              <tr>
+                <td><p><strong>TOTAL</strong></p></td>
+
+                <apex:outputText rendered="{!AO_flag}"><td class="tg-yw4l" align="right" >{!AO_Total}</td></apex:outputText>
+                <apex:outputText rendered="{!SA_flag}"><td class="tg-yw4l" align="right" >{!SA_Total}</td></apex:outputText>
+                <apex:outputText rendered="{!HO_flag}"><td class="tg-yw4l" align="right" >{!HO_Total}</td></apex:outputText>
+                <apex:outputText rendered="{!BR_flag}"><td class="tg-yw4l" align="right" >{!BR_Total}</td></apex:outputText>
+                <apex:outputText rendered="{!ES_flag}"><td class="tg-yw4l" align="right" >{!ES_Total}</td></apex:outputText>
+                <apex:outputText rendered="{!EP_flag}"><td class="tg-yw4l" align="right" >{!EP_Total}</td></apex:outputText>
+                <apex:outputText rendered="{!ST_flag}"><td class="tg-yw4l" align="right" >{!ST_Total}</td></apex:outputText>
+             
+                <apex:outputText rendered="{!SE_flag}"><td class="tg-yw4l" align="right" >{!SE_Total}</td></apex:outputText>
+                <apex:outputText rendered="{!SP_flag}"><td class="tg-yw4l" align="right" >{!SP_Total}</td></apex:outputText>
+                <apex:outputText rendered="{!TD_flag}"><td class="tg-yw4l" align="right" >{!TD_Total}</td></apex:outputText>
+                <apex:outputText rendered="{!IC_flag}"><td class="tg-yw4l" align="right" >{!IC_Total}</td></apex:outputText>
+                <apex:outputText rendered="{!AA_flag}"><td class="tg-yw4l" align="right" >{!AA_Total}</td></apex:outputText>
+                <apex:outputText rendered="{!AC_flag}"><td class="tg-yw4l" align="right" >{!AC_Total}</td></apex:outputText>
+                <apex:outputText rendered="{!AW_flag}"><td class="tg-yw4l" align="right" >{!AW_Total}</td></apex:outputText>
+                <apex:outputText rendered="{!EB_flag}"><td class="tg-yw4l" align="right" >{!EB_Total}</td></apex:outputText>
+                <apex:outputText rendered="{!WH_flag}"><td class="tg-yw4l" align="right" >{!WH_Total}</td></apex:outputText>
+                <apex:outputText rendered="{!CS_flag}"><td class="tg-yw4l" align="right" >{!CS_Total}</td></apex:outputText>
+                <td class="tg-yw4l" align="right" >{!Grand_Total}</td>
+
+              </tr>
+                
+            </table> 
+            </center>
+        
+        
+        </div>
+        
+        <!-- GDP Footer -->
+        <c:IECGDPFooter />
+    
+    </div>
+    
+</apex:page>

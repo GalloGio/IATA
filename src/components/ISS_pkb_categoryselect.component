@@ -1,0 +1,86 @@
+<apex:component allowDML="true" >
+<apex:attribute name="pkbCon" type="pkb_Controller" required="false" description="handle to the pkb controller" />
+    
+    <apex:attribute name="catNum" type="Integer" required="true" description="value that corresponds to the custom settings category group being displayed" />
+    <apex:attribute name="catGroup" type="String" required="true" description="category group name" />
+    <apex:attribute name="catGroupLabel" type="String" required="true" description="category group label" />
+    <apex:attribute name="rootCat" type="String" required="true" description="root category name" />
+    
+    <apex:variable value="0" var="prevCatDepth"/>
+    <input type="text" id="pkbmenu_q" value="" class="input" style="margin:0em 1em 1em 1em; display:block; padding:4px; border-radius:4px; border:1px solid silver;" />
+    <div style="font-family: Arial, Helvetica, sans-serif; font-size: 12px; font-style:italic;margin-bottom:5px">{!$Label.PKB2_Narrow_Search_Help}</div>
+    <div id="pkbmenu">
+        
+            <knowledge:categoryList categoryVar="c" categoryGroup="{!catGroup}" rootCategory="{!rootCat}" level="-1">
+                <apex:outputText escape="false" value="{!IF (VALUE(prevCatDepth)==0, '</span><ul>', '')}" /> 
+                <apex:outputText escape="false" value="{!
+                                                       IF (MOD(c.depth,2) != 0 && MOD(VALUE(prevCatDepth),2) == 0 && VALUE(prevCatDepth) == 0, '<li id=\"' + catGroup + ':' + c.Name + '##' + c.Label + '\" >', 
+                                                       	IF (MOD(c.depth,2) == 0 && MOD(VALUE(prevCatDepth),2) == 0, '<li id=\"' + catGroup + ':' + c.Name + '##' + c.Label + '\" >',
+                                                       		IF (MOD(c.depth,2) == 0 && MOD(VALUE(prevCatDepth),2)!=0 , '<li id=\"' + catGroup + ':' + c.Name + '##' + c.Label + '\" >',
+                                                       			IF (MOD(c.depth,2)!=0 && MOD(VALUE(prevCatDepth),2) == 0 && VALUE(prevCatDepth) > 0, '</ul></li><li id=\"' + catGroup + ':' + c.Name + '##' + c.Label + '\" >', ''
+                                                       )
+                                                       	)
+                                                       		) 
+                                                       ) + HTMLENCODE(c.Label)}" />
+              	
+                <apex:outputText escape="false" value="{!
+                                                       IF (MOD(c.depth,2) != 0 && MOD(VALUE(prevCatDepth),2) == 0 && VALUE(prevCatDepth) == 0, '<ul id=\"' + catGroup + ':' + c.Name + '##' + c.Label + '\" >',
+                                                       IF (MOD(c.depth,2) == 0 && MOD(VALUE(prevCatDepth),2) == 0, '</li>',
+                                                       IF (MOD(c.depth,2) == 0 && MOD(VALUE(prevCatDepth),2)!=0 , '</li>',
+                                                       			IF (MOD(c.depth,2)!=0 && MOD(VALUE(prevCatDepth),2) == 0 && VALUE(prevCatDepth) > 0, '<ul id=\"' + catGroup + ':' + c.Name + '##' + c.Label + '\" >', ''
+                                                       )
+                                                       	)
+                                                       		)
+                                                				)
+                                 						}" />
+                
+                <apex:variable value="{!c.depth}" var="prevCatDepth"/>
+                
+            </knowledge:categoryList>
+           	<apex:outputText escape="false" value="</ul></li></ul>"/>
+    </div>
+    
+    <script type="text/javascript">
+    	$('#pkbmenu')
+  		// listen for event
+  			.on('select_node.jstree', function (e, data) {
+    		var i, j;
+            selectedCategories = new Array();
+    		for(i = 0, j = data.selected.length; i < j; i++) {
+      			selectedCategories.push(data.instance.get_node(data.selected[i]).id);
+      			//alert(data.instance.get_node(data.selected[i]).id);
+    		}
+                buildSearchHref();
+  				doSearch();
+  		})
+    
+    	$('#pkbmenu').jstree({
+            "core" : {
+                "multiple" : false,
+                "animation" : 250,
+    			"themes" : {
+                			"theme" : "default",
+            				"dots" : true,
+            				"icons" : false,
+                    		"stripes" : false
+    						},
+  				},
+            "search" : {  
+                 "case_insensitive" : true
+                },
+            "plugins" : [ "search", "sort" ]
+        });
+         var to = false;
+  		$('#pkbmenu_q').keyup(function () {
+    		if(to) { clearTimeout(to); }
+    		to = setTimeout(function () {
+      		var v = $('#pkbmenu_q').val();
+      		$('#pkbmenu').jstree(true).search(v);
+    	}, 250);
+  });
+    
+    $.jstree.reference('#pkbmenu').select_node(currCategories);
+    
+    </script>
+    
+</apex:component>

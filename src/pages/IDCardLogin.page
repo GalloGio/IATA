@@ -1,0 +1,370 @@
+<apex:page cache="true" expires="600" docType="html" title="IATA/IATAN ID Card Online Platform" sidebar="false"   showHeader="false" language="{!Language}"   controller="IDCardLoginController">
+
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+<title>IATA/IATAN ID Card Online Platform</title>
+
+<script src="https://www.google.com/recaptcha/api.js?hl={!language}&onload=myCallBack&render=explicit"  async="true" defer="true"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> 
+
+</head>
+    
+<body>
+<c:IDCard_HeaderComponent />
+
+
+<!-- Google Tag Manager INC245502 -->
+<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-T883LZ"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-T883LZ');</script>
+<!-- End Google Tag Manager -->
+
+<script>
+
+    String.prototype.capitalize = function(){
+            return this.toLowerCase().replace( /\b\w/g, function (m) {
+            return m.toUpperCase();
+        });
+    };   
+
+    var recaptcha1;     
+      var recaptcha2;       
+      function myCallBack() {       
+        recaptcha1 = grecaptcha.render('recaptcha1', {      
+          'sitekey' : '6LeFvAYTAAAAAJsxvMD0FIEU3PmZYrybMaPG20nW', //Replace this with your Site key 
+          'hl' : '{!Language}'      
+        });     
+                
+        recaptcha2 = grecaptcha.render('recaptcha2', {      
+          'sitekey' : '6LeFvAYTAAAAAJsxvMD0FIEU3PmZYrybMaPG20nW', //Replace this with your Site key
+          'hl' : '{!Language}'      
+        });     
+      };        
+    function myReset(){     
+        grecaptcha.reset(recaptcha1);       
+        grecaptcha.reset(recaptcha2);       
+    };
+   
+    $(document).ready(function(){
+        $(".btn-slideLoginWPI").click(function(){
+            $("#panelLoginWPI").slideToggle("slow");
+            $("#panelLoginWCodes").slideUp("slow");
+            
+            
+            $(this).toggleClass("activeLoginWPI"); return false;
+        });
+    });
+    
+    $(document).ready(function(){
+        $(".btn-slideLoginWCodes").click(function(){
+            $("#panelLoginWCodes").slideToggle("slow");
+            $("#panelLoginWPI").slideUp("slow");
+            
+            $("#Captcha_Submenu").appendTo("#CODEINFOCAPTCHA");
+                        
+            $(this).toggleClass("activeLoginWCodes"); return false;
+        });
+    }); 
+
+
+   
+
+
+    //You need to wrap everything in document.ready because the select tag we are taregting needs to
+    //be loaded in the DOM befire we can access it.
+    $(document).ready(function() {          
+    
+        //-----EDIT THE NEXT TWO LINES-----
+        var startYear=1930; //replace 1930 with whatever year you want to start with;
+        var endYear=2000; //replace 2034 with whatever year you want to end with;
+    
+        //-----EDIT BELLOW HERE AT YOUR OWN RISK-----
+        var optionsString='';
+    
+        if(startYear<endYear){
+            //Loops through each date and renders the string for an option tag and addes it to the Optrionsstring variable
+            for(i=startYear;i<endYear+1;i++){
+                optionsString += "<option value=\""+i+"\">"+i+"</option>";
+            }
+    
+            //Replace the innerHTML of the calendar picker year select tag with the Optionsstring we constructed.
+            $('#calYearPicker').html(optionsString);
+        }
+    });
+
+    //handles numbers for VER and IATA codes, blocks non digits from being entered.
+    function handleNum(e,obj)
+    {
+        if (!e) var e = window.event;
+        if (
+            event.keyCode == 8                                // backspace
+            || event.keyCode == 9                               // tab
+            || event.keyCode == 17                              // ctrl
+            || event.keyCode == 46                              // delete
+            || (event.keyCode >= 35 && event.keyCode <= 40)     // arrow keys/home/end
+            || (event.keyCode >= 48 && event.keyCode <= 57)     // numbers on keyboard
+            || (event.keyCode >= 96 && event.keyCode <= 105)    // number on keypad                
+            || (event.keyCode == 65 && event.ctrlKey )          // ctrl + a
+            || (event.keyCode == 67 && event.ctrlKey )          // ctrl + c
+            || (event.keyCode == 86 && event.ctrlKey )          // ctrl + v         
+            ) 
+        {
+            return true;
+        } 
+        else return false;
+    }
+
+    //doesnt allow numbers to be entered
+    function removeNums(e,obj)
+    {
+        if (!e) var e = window.event;
+        if (
+            (event.keyCode >= 48 && event.keyCode <= 57)     // numbers on keyboard
+            || (event.keyCode >= 96 && event.keyCode <= 105)    // number on keypad                
+            ) 
+        {
+            return false;
+        } 
+        else return true;
+    }
+
+    function workingFirstName() {
+       
+        var firstName = (removeDiacritics(this.document.getElementById('{!$Component.idcardForm.pb1.sec1.txtFIRSTNAME}').value));
+        document.getElementById('{!$Component.idcardForm.pb1.sec1.txtFIRSTNAME}').value = firstName.capitalize();
+
+        //removing apostrophe 
+        var name = (removeDiacritics(this.document.getElementById('{!$Component.idcardForm.pb1.sec1.txtFIRSTNAME}').value));
+        name = name.replace(/'/,' ');
+        document.getElementById('{!$Component.idcardForm.pb1.sec1.txtFIRSTNAME}').value = name;
+
+        //removing dash
+        var name = (removeDiacritics(this.document.getElementById('{!$Component.idcardForm.pb1.sec1.txtFIRSTNAME}').value));
+        name = name.replace(/-/,' ');
+        document.getElementById('{!$Component.idcardForm.pb1.sec1.txtFIRSTNAME}').value = name;
+    }
+    
+    function workingLastName() {
+
+        var lastName = (removeDiacritics(this.document.getElementById('{!$Component.idcardForm.pb1.sec1.txtLASTNAME}').value));
+        document.getElementById('{!$Component.idcardForm.pb1.sec1.txtLASTNAME}').value = lastName.capitalize();
+
+        //removing apostrophe 
+        var name = (removeDiacritics(this.document.getElementById('{!$Component.idcardForm.pb1.sec1.txtLASTNAME}').value));
+        name = name.replace(/'/,' ');
+        document.getElementById('{!$Component.idcardForm.pb1.sec1.txtLASTNAME}').value = name;
+
+        //removing dash
+        var name = (removeDiacritics(this.document.getElementById('{!$Component.idcardForm.pb1.sec1.txtLASTNAME}').value));
+        name = name.replace(/-/,' ');
+        document.getElementById('{!$Component.idcardForm.pb1.sec1.txtLASTNAME}').value = name;
+    }
+
+</script>
+    <c:IDCardToolsComponent />
+    <apex:outputpanel id="reloadCaptcha">       
+      <script src="https://www.google.com/recaptcha/api.js?hl={!language}&onload=myCallBack&render=explicit"  async="true" defer="true"></script>       
+      <script type="text/javascript"> myReset(); </script>      
+    </apex:outputpanel>
+
+    <div id="page_wrapper">
+        <apex:form forceSSL="true" id="idcardForm">
+
+         <!-- Header -->
+        <div class="HeaderIMG"> 
+            <table width="100%">
+                <tr>
+                    <td><apex:image styleClass="IATALogo" url="{!URLFOR($Resource.IDCard_Styles,'img/IATA_LOGO.png')}" /></td>
+                    <td><!--{!$Label.Language_Selection_Label}:-->
+                        <div class="select-style">
+                          <apex:actionRegion >
+                             <apex:selectList id="langSelect" value="{!SelectedLanguage}" size="1" required="true">
+                             <apex:selectOptions value="{!LangItems}" />
+                             <apex:actionSupport event="onchange" onsubmit="refreshLanguage()" reRender=""></apex:actionSupport>
+                             </apex:selectList>
+                          </apex:actionRegion>
+                        </div>
+                    </td>
+                 </tr>
+            </table>
+            <h1>{!$Label.IDCard_Landing_Title}</h1>
+        </div>
+         
+        <div class="background" style="height: 900px;">
+                
+            <center>
+                <apex:actionStatus id="saveStatus">
+                    <apex:facet name="start">
+                        <h1 style="color:white">
+                            <img src="{!URLFOR($Resource.LoadStatus)}" />
+                        </h1>
+                    </apex:facet>
+                    <apex:facet name="stop">
+                        <br/>
+                    </apex:facet>
+    
+                </apex:actionStatus>
+             <!-------------------------------------------------------------------------------->
+                <div id="PInfo"  class="LogMenuPanel">
+                    <!--<h1>--><apex:outputLabel value="{!$Label.IDCard_LoginWithPInfo}" escape="false" style="color:white" /><!--</h1>-->                                 
+                </div>
+                
+                <div id="panelLoginWPI"> 
+                    <div id="PInfo_Submenu" class="LogSubMenuPanel">
+                        <hr class="Thick" />
+                        <apex:pageBlock id="pb1">
+                            <apex:pageMessages id="Msgs2" escape="false" />
+                            <apex:outputLabel for="txtLabel"/>
+                            <apex:pageBlockSection id="sec1">   
+                                <apex:panelGrid columns="2">
+                                   
+                                    <apex:outputLabel value="{!$Label.IDCard_IATA_Code_Of_Location}:"
+                                        for="txtIATACodeLocation"/>
+                                    <apex:outputPanel styleClass="requiredInput" layout="block">
+                                        <apex:outputPanel styleClass="requiredBlock" layout="block" />
+                                        <apex:inputText id="txtIATACodeLocation" value="{!IATACodeLocation2}" onKeyDown="return handleNum(event,this);" onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')"/>
+                                    </apex:outputPanel>
+                                                                        
+                                    <apex:outputLabel value="{!$Label.IDCard_LastName}" for="txtLASTNAME" styleClass="labels" />
+                                    <apex:outputPanel styleClass="requiredInput" layout="block">
+                                        <apex:outputPanel styleClass="requiredBlock" layout="block" />
+                                        <apex:inputText id="txtLASTNAME" value="{!LNAME}" label="{!$Label.IDCard_LastName}" onkeyup="if (/\d/g.test(this.value)) this.value = this.value.replace(/\d/g,'');workingLastName();" onKeyDown="return removeNums(event,this);"/>
+                                    </apex:outputPanel>
+                                
+                                    <apex:outputLabel value="{!$Label.IDCard_FirstName}" for="txtFIRSTNAME" styleClass="labels" />
+                                    <apex:outputPanel styleClass="requiredInput" layout="block">
+                                        <apex:outputPanel styleClass="requiredBlock" layout="block" />
+                                        <apex:inputText id="txtFIRSTNAME" value="{!FNAME}"  label="{!$Label.IDCard_FirstName}" onkeyup="if (/\d/g.test(this.value)) this.value = this.value.replace(/\d/g,'');workingFirstName();" onKeyDown="return removeNums(event,this);"/>
+                                    </apex:outputPanel>
+
+                                    <apex:outputLabel value="{!$Label.IDCard_DOB}" for="txtDOB" styleClass="labels" />
+                                    <apex:outputPanel styleClass="requiredInput" layout="block" >
+                                        <apex:outputPanel styleClass="requiredBlock" layout="block" />
+                                        <apex:inputText id="txtDOB" value="{!DOB}"
+                                        label="{!$Label.IDCard_DOB}" onfocus="DatePicker.pickDate(false, this , false);" />&nbsp;{!$Label.IDCard_DateFormat}
+                                    </apex:outputPanel>
+                                </apex:panelGrid>
+
+                            </apex:pageBlockSection>
+                             <hr class="Thin" />
+                           
+                            <!--
+                            
+                            <div id="PINFOCAPTCHA">       
+                            
+                            </div>-->
+                                        <div id="recaptcha1" class="g-recaptcha" data-sitekey="6LeFvAYTAAAAAJsxvMD0FIEU3PmZYrybMaPG20nW" data-callback="myReset()"></div>
+
+                             <hr class="Thin" />
+                
+                
+                
+                            
+                            
+                            <apex:pageBlockButtons location="bottom">
+                                <apex:commandLink action="{!verifyAlternative}" id="btnVerify2" 
+                                    rerender="Msgs2,reloadCaptcha" styleClass="btn-BlueButtonWAR"  status="saveStatus">
+                                    <span>{!$Label.IDCard_Verify}</span>
+                                </apex:commandLink>
+                                <!--<apex:commandButton action="{!verifyAlternative}"
+                                    onclick="javascript:refreshCAPTCHA();"
+                                    value="{!$Label.IDCard_Verify}" id="btnVerify2"     rerender="Msgs2" 
+                                    style="width:100px; margin-left:-170px; margin-top: 170px;" status="saveStatus" />-->
+                            </apex:pageBlockButtons>
+                        </apex:pageBlock>
+                    </div>
+                 </div>
+                 <p class="slide">
+                     <a href="#" class="btn-slideLoginWPI activeLoginWPI">Login Now</a>
+                 </p>
+
+
+                <!-- Login with Code menu panel-->
+                <div id="Code" class="LogMenuPanel">
+                   
+                     <!--<h1>--><apex:outputLabel value="{!$Label.IDCard_LoginWithCodes}" escape="false" style="color:white"/><!--</h1>-->     
+                </div>
+                                                
+                <div id="panelLoginWCodes">
+                    <div id="Code_Submenu_Panel" class="LogSubMenuPanel" >
+                        <hr class="Thick" />
+                        <apex:pageBlock >
+                            <apex:pageMessages id="Msgs" escape="false" />
+                            
+                            <apex:pageBlockSection >
+                            
+                                <apex:panelGrid columns="2">
+                    
+                                    <apex:outputLabel value="VER # " />
+                                    <apex:outputPanel styleClass="requiredInput" layout="block" >
+                                        <apex:outputPanel styleClass="requiredBlock" layout="block" />
+                                        <apex:inputText id="txtVER" value="{!VERNumber}" onKeyDown="return handleNum(event,this);" onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" />
+                                    </apex:outputPanel>
+                    
+                                    <apex:outputLabel value="{!$Label.IDCard_IATA_Code_Of_Location}:"
+                                    for="txtIATACodeLocation" styleClass="labels" />
+                                    <apex:outputPanel styleClass="requiredInput" layout="block">
+                                        <apex:outputPanel styleClass="requiredBlock" layout="block" />
+                                        <apex:inputText id="txtIATACodeLocation" value="{!IATACodeLocation}"  onKeyDown="return handleNum(event,this);" onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')"/>
+                                    </apex:outputPanel>
+                                </apex:panelGrid>
+                                <apex:panelGrid />
+                            
+                            </apex:pageBlockSection>
+                            <hr class="Thin" />
+
+                            
+                            <!-- 
+                             <div id="CODEINFOCAPTCHA"> 
+                             
+                             
+                                      <div id="Captcha_Submenu" class="submenu"   style="  height:138px; margin-left: -75px; margin-top: 34px;">
+                                        <div id="Captcha_Submenu_Panel" class="LogSubMenuPanel_captcha">
+                                            <div style="margin-left:170px;">   
+                                                <div id="captchaEnter" title="Form Submission Validation">
+                                                    <script type="text/javascript"  src="https://www.google.com/recaptcha/api/challenge?k={!publicKey}"></script>
+                                                    <noscript>
+                                                        <iframe src="https://www.google.com/recaptcha/api/noscript?k={!publicKey}"  height="00" width="00" frameborder="0"></iframe>
+                                                        <br />
+                                                        <textarea name="recaptcha_challenge_field" rows="3" cols="40"></textarea>
+                                                        <input type="hidden" name="recaptcha_response_field" value="manual_challenge" />
+                                                    </noscript>
+                                                    <div id="validationResultDiv"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                             
+                            
+                             </div>
+                             -->
+                             <div id="recaptcha2" class="g-recaptcha" data-sitekey="6LeFvAYTAAAAAJsxvMD0FIEU3PmZYrybMaPG20nW" data-callback="myReset()"></div>
+                         <hr class="Thin" />
+                            
+                            <apex:pageBlockButtons location="bottom">
+
+                                <apex:commandLink action="{!verify}" id="btnVerify" 
+                                     rerender="Msgs,reloadCaptcha" styleClass="btn-BlueButtonWAR"  status="saveStatus" >
+                                    <span>{!$Label.IDCard_Verify}</span></apex:commandLink>
+                                <!--<apex:commandButton action="{!verify}"  onclick="javascript:refreshCAPTCHA();"  value="{!$Label.IDCard_Verify}" id="btnVerify"
+                                rerender="Msgs" style="width:100px ; margin-left:-170px; margin-top: 180px;" status="saveStatus" />-->
+                            </apex:pageBlockButtons>
+                        </apex:pageBlock>
+                    </div>
+                </div>
+                <p class="slide"><a href="#" class="btn-slideLoginWCodes activeLoginCodes">Login Now</a></p>
+       </center>
+</div>         
+        
+        </apex:form>
+    </div>
+
+    <c:IDCard_ExactTargetLanding />
+    <c:IDCard_footerComponent />
+</body>
+</apex:page>

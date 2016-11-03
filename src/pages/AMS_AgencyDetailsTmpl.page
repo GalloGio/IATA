@@ -1,0 +1,17 @@
+<apex:page docType="html-5.0" sidebar="false">
+    <!-- standardstylesheets="false" showHeader="false"<div class="modal-header">
+        <h4>Agency Details</h4>
+    </div>
+    <div class="modal-body">
+        <iframe frameborder="0" src="/apex/agencyDetail?id={{ag}}" style="width: 870px; height: 390px;"></iframe>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-warning cancel" ng-click="close(result)">Close</button>
+    </div>-->
+    <!--<script>
+    document.getElementById('AppBodyHeader').style.display = 'none';
+</script>-->
+    <form>
+		<apex:ListViews type="BatchNumber__c"/>
+	</form>
+</apex:page>

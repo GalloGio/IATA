@@ -1,0 +1,91 @@
+<apex:page docType="html-5.0"  applyBodyTag="false" applyHtmlTag="false" showHeader="false" sidebar="false" standardStylesheets="false" cache="true">
+	
+	<!--[if lte IE 8]>
+    <html lang="en" class="ie lte-ie8 no-svg">
+	<![endif]-->
+	<!--[if IE 9]>
+	    <html lang="en" class="ie ie9">
+	<![endif]-->
+	<!--[if !IE]><!-->
+	
+	<html lang="">
+	<!--<![endif]-->
+
+		<head>
+			<meta charset="UTF-8"/>
+			<meta name="viewport" content="width=device-width, initial-scale=1"/>
+			<apex:stylesheet value="{!URLFOR($Resource.EcommerceAssets, 'css/styles.min.css')}" />
+			<title>{!$Label.SiteTitle}</title>
+		</head>
+
+		<body data-media-size="">
+			<div id="js-breakpoint-finder">
+				<span class="device-xs screen-xsmall"/>
+				<span class="device-sm screen-small"/>
+				<span class="device-md screen-medium"/>
+				<span class="device-lg screen-large"/>
+				<span class="device-xl screen-xlarge"/>
+			</div>
+
+			<div id="js-app-container" class="app-container">
+				<!-- Page Header -->
+				<c:IEC_PageHeader is_store_front="true" />
+
+				<div id="js-page-container" class="page-container">
+					<main class="main-content home">
+						<div class="reader-only" id="reader-main-content">Main Content</div>
+
+						<div class="section top-banner">
+							<div class="inner-wrapper">
+								<h2 class="lead"><apex:outputText value="{!$Label.Welcome_Message}" escape="false" /></h2>
+							</div>
+						</div>
+
+                        <div class="inner-wrapper">
+
+					        <!-- <h1 class="page-title">{!$Label.Account_activity}</h1> -->
+					        
+					        <div class="group-container login-info">
+					            <!-- <h2 class="group-title">{!$Label.Login_information}</h2> -->
+					            <div class="field-group action-field-group field-user-name">
+					                
+					                <apex:iframe height="0" src="{!$Site.BaseUrl}/secur/logout.jsp" scrolling="false" id="logoutFrame"/>					
+								 
+					  	        	<h3>Please wait while logging out...</h3>
+					  	        	<br/>
+					  	        	<h4>You will be redirected soon</h4>
+
+					            </div>
+					        </div>
+
+					    </div>
+			    
+					</main>
+					<!-- Page Footer  -->
+					<c:Footer is_store_front="true" />
+				</div>
+			</div>
+
+			<div class="modal-container is-hidden" id="js-modal">
+        		<div class="overlay"></div>
+        		<div class="modal-dialog" id="js-modal-dialog"></div>
+    		</div>
+
+			<script src="{!URLFOR($Resource.EcommerceAssets, 'js/vendor.min.js')}"></script>
+			<script src="{!URLFOR($Resource.EcommerceAssets, 'js/script.js')}"></script>
+			<script src="{!URLFOR($Resource.DataTables, 'js/jquery.js')}"></script>
+	
+			<script type="text/javascript">
+				var j = jQuery.noConflict();
+				j(document).ready( function() {
+		        	setTimeout(
+		        		function(){ 
+		            		document.location = '{!$Site.BaseUrl}/IEC_Home?doLogout=true';
+			        	}, 
+			        	4500);
+		        
+		    	});
+			</script>
+		</body>
+	</html>
+</apex:page>

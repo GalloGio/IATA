@@ -1,0 +1,844 @@
+<apex:page controller="ISSP_Case" standardstylesheets="true"
+           showheader="false" sidebar="false"
+           applybodytag="false" applyhtmltag="false"
+           action="{!pageLoad}">
+    <html>
+    <c:ISSP_Header ></c:ISSP_Header>
+
+    <body>
+        <script type="text/javascript">
+
+        window.onload = function toggleButtons() {
+            window.document.getElementsByName('newComment')[0].style.display = 'none';
+        }
+
+        </script>
+        <script type="text/javascript">
+        function showArticle() {
+            $('#ModalShowArticle').modal('toggle');
+        }
+        </script>
+        <style>
+            ul li, ol li {
+                margin-left: inherit;
+                padding-left: inherit;
+            }
+
+            .pbBody a {
+                color: #337ab7;
+            }
+
+            html .brandTertiaryBgr {
+                background-color: #DDE4E9 !important;
+                color: #222222 !important;
+                background-image: none !important;
+            }
+
+            .pbSubheader h3 {
+                font-size: 1.1em;
+                font-weight: bold;
+                font-size: 91%;
+            }
+
+            .bPageBlock .pbTitle h2 {
+                vertical-align: middle;
+                font-weight: bold;
+                color: #222;
+                font-size: 91%;
+                width: 30%;
+                margin: 0;
+            }
+
+            .bPageBlock .pbTitle h3 {
+                vertical-align: middle;
+                font-weight: bold;
+                color: #222;
+                font-size: 91%;
+                width: 30%;
+                margin: 0;
+            }
+
+            div[id*="CustomListCon"] {
+                border-top: none;
+            }
+
+            .close {
+                float: right;
+                font-size: 21px;
+                font-weight: bold;
+                line-height: 1;
+                color: #000000;
+                text-shadow: 0 1px 0 #ffffff;
+                opacity: 0.2;
+                filter: alpha(opacity=20);
+            }
+
+                .close:hover,
+                .close:focus {
+                    color: #000000;
+                    text-decoration: none;
+                    cursor: pointer;
+                    opacity: 0.5;
+                    filter: alpha(opacity=50);
+                }
+
+            button.close {
+                padding: 0;
+                cursor: pointer;
+                background: transparent;
+                border: 0;
+                -webkit-appearance: none;
+            }
+
+            .modal-open {
+                overflow: hidden;
+            }
+
+                body.modal-open,
+                .modal-open .navbar-fixed-top,
+                .modal-open .navbar-fixed-bottom {
+                    margin-right: 15px;
+                }
+
+            .modal {
+                // position: fixed;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                z-index: 1040;
+                display: none;
+                overflow: auto;
+                overflow-y: scroll;
+            }
+
+                .modal.fade .modal-dialog {
+                    -webkit-transform: translate(0, -25%);
+                    -ms-transform: translate(0, -25%);
+                    transform: translate(0, -25%);
+                    -webkit-transition: -webkit-transform 0.3s ease-out;
+                    -moz-transition: -moz-transform 0.3s ease-out;
+                    -o-transition: -o-transform 0.3s ease-out;
+                    transition: transform 0.3s ease-out;
+                }
+
+                .modal.in .modal-dialog {
+                    -webkit-transform: translate(0, 0);
+                    -ms-transform: translate(0, 0);
+                    transform: translate(0, 0);
+                }
+
+            .modal-dialog {
+                margin-top: 50px;
+                z-index: 1050;
+                width: auto;
+                padding: 10px;
+                margin-right: auto;
+                margin-left: auto;
+            }
+
+            .modal-content {
+                position: relative;
+                background-color: #ffffff;
+                border: 1px solid #999999;
+                border: 1px solid rgba(0, 0, 0, 0.2);
+                border-radius: 6px;
+                outline: none;
+                -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
+                box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
+                background-clip: padding-box;
+            }
+
+            .modal-backdrop {
+                position: fixed;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                z-index: 1030;
+                background-color: #000000;
+            }
+
+                .modal-backdrop.fade {
+                    opacity: 0;
+                    filter: alpha(opacity=0);
+                }
+
+                .modal-backdrop.in {
+                    opacity: 0.5;
+                    filter: alpha(opacity=50);
+                }
+
+            .modal-header {
+                min-height: 16.428571429px;
+                padding: 15px;
+                border-bottom: 1px solid #e5e5e5;
+            }
+
+                .modal-header .close {
+                    margin-top: -2px;
+                }
+
+            .modal-title {
+                margin: 0;
+                line-height: 1.428571429;
+            }
+
+            .modal-body {
+                position: relative;
+                padding: 20px;
+            }
+
+            .modal-footer {
+                padding: 19px 20px 20px;
+                margin-top: 15px;
+                text-align: right;
+                border-top: 1px solid #e5e5e5;
+            }
+
+                .modal-footer:before,
+                .modal-footer:after {
+                    display: table;
+                    content: " ";
+                }
+
+                .modal-footer:after {
+                    clear: both;
+                }
+
+                .modal-footer:before,
+                .modal-footer:after {
+                    display: table;
+                    content: " ";
+                }
+
+                .modal-footer:after {
+                    clear: both;
+                }
+
+                .modal-footer .btn_iata + .btn_iata {
+                    margin-bottom: 0;
+                    margin-left: 5px;
+                }
+
+                .modal-footer .btn-group .btn_iata + .btn_iata {
+                    margin-left: -1px;
+                }
+
+                .modal-footer .btn-block + .btn-block {
+                    margin-left: 0;
+                }
+
+            @media screen and (min-width: 768px) {
+                .modal-dialog {
+                    right: auto;
+                    //left: 50%;
+                    width: 600px;
+                    padding-top: 30px;
+                    padding-bottom: 30px;
+                }
+
+                .modal-content {
+                    -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+                    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+                }
+            }
+        </style>
+        <!--  **************** New Case ********************** -->
+        <div class="container">
+            <c:ISSP_CustomNavigation />
+
+            <!--
+            <div class="ptBreadcrumb">&nbsp;&#171;&nbsp;
+                <a href="/apex/ISSP_CaseList">{!$Label.ISSP_BackLinkCaseList}</a>
+            </div>
+            -->
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading head_panel_green">
+                            <h3 class="panel-title">{!if(isNewCase, $Label.ISSP_NewCase, $Label.ISSP_CaseNumber+' - '+newCase.CaseNumber)}</h3>
+                        </div>
+                        <div class="panel panel-body">
+                            <!-- panel body -->
+                        <apex:form rendered="{!AND(isNewCase, isAccreditationUploadCase)}">
+                                <apex:pageBlock mode="edit" id="amsCase">
+                                    <apex:pagemessages /> 
+                                    <apex:pageblockbuttons style="padding-top:10px" location="bottom">
+                                        <apex:commandbutton action="{!saveAttach}" value="{!$Label.ISSP_SubmitAttach}" styleclass="btn btn_iata_success" /> 
+                                        <apex:commandbutton action="{!cancel}" value="{!$Label.ISSP_Cancel}" immediate="true" styleclass="btn btn_iata btn-danger" />
+                                    </apex:pageblockbuttons>
+                                   
+                                    <apex:pageblocksection title="" columns="1">
+                                        <apex:outputField value="{!newCase.Subject}" />
+                                        <apex:outputfield value="{!con.Name}" />
+                                        <!--
+                                        <apex:pageblocksectionitem rendered="{!(newCase.Reason1__c=='CLO - Closure')}">
+                                            <apex:outputlabel value="{!$ObjectType.Case.Fields.IATA_Code__c.Label}" />
+                                            <apex:inputfield value="{!newCase.IATAcode__c}" html-placeholder="Enter IATA Code of Office to be closed" style="width:35%" required="true" styleclass="form-control" />
+                                        </apex:pageblocksectionitem>
+                                        -->
+                                        <div class="well">
+                                            <apex:outputText escape="false" value="{!$Label.ISSP_AMS_Case_PDF_Download}"/>
+                                            <apex:dataList value="{!pdfPerAccreditationTypeList}" var="urlItem">
+                                                <apex:outputLink value="{!urlItem.Link_To_PDF__c}" target="_blank">{!urlItem.Address__c}</apex:outputLink>
+                                            </apex:dataList>
+                                        </div>
+                                    </apex:pageblocksection>
+                                  </apex:pageBlock>
+                            
+                            </apex:form>
+   
+                            <apex:form rendered="{!AND(isNewCase, NOT(isAccreditationUploadCase))}">
+                                <apex:pageblock mode="edit">
+                                    
+                                    <apex:pageblockbuttons style="padding-top:10px">
+                                        <apex:commandbutton action="{!save}" value="{!$Label.ISSP_Submit}" styleclass="btn btn_iata_success"/>
+                                        <apex:commandbutton action="{!saveAttach}" value="{!$Label.ISSP_SubmitAttach}" styleclass="btn btn_iata_success" />
+                                        <apex:commandbutton action="{!cancel}" value="{!$Label.ISSP_Cancel}" immediate="true" styleclass="btn btn_iata btn-danger" />
+
+                                    </apex:pageblockbuttons>
+
+                                    <apex:pagemessages />
+                                    <apex:pageblocksection title="" columns="1">
+                                        <apex:inputfield value="{!newCase.Subject}" required="true" styleclass="form-control" />
+                                        <apex:inputfield value="{!newCase.Description}" required="true" styleclass="form-control" style="height: 100px" />
+                                        <apex:pageblocksectionitem rendered="{!AND(NOT(isDPCUser), NOT(isFDSRecordType), NOT(isSISCase))}">
+                                        </apex:pageblocksectionitem>
+                                        <apex:pageblocksectionitem >
+                                            <!--<apex:outputpanel rendered="{!IF(newCase.status != 'Closed' && newCase.status != 'Draft' && isPWCCase == false && isDPCuser == false , true , false )}">-->
+                                            <!--<apex:outputpanel rendered="{!IF(newCase.status == 'Closed' && newCase.status != 'Draft' && isPWCCase == false && isDPCuser == false , true , false )}">
+
+                                                <apex:outputlink value="http://survey.clicktools.com/go?iv={!$Label.ISSP_SurveyClosedCase}={!newCase.Id}&q2={!newCase.CaseNumber}&q3={!newCase.ContactId}&q9={!newCase.Contact.FirstName}|{!newCase.Contact.LastName}|{!newCase.Contact.Email}|{!newCase.Contact.Phone}&language={!SurveyLanguage}" target="_blank">{!$Label.ISSP_Survey} </apex:outputlink>
+                                            </apex:outputpanel>-->
+                                        </apex:pageblocksectionitem>
+                                        <!-- Fields for non-DPC user -->
+                                        <!-- <apex:inputField styleClass="form-control" value="{!newCase.CaseArea__c}" required="true" rendered="{!AND(NOT(isDPCUser), NOT(isFDSRecordType))}"/> -->
+                                        <apex:pageblocksectionitem rendered="{!AND(NOT(isDPCUser), NOT(isFDSRecordType), NOT(isSISCase))}">
+                                            <apex:outputlabel value="{!$ObjectType.Case.Fields.Country_concerned_by_the_query__c.Label}" />
+                                            <apex:outputpanel layout="block" styleclass="requiredInput">
+                                                <apex:outputpanel layout="block" styleclass="requiredBlock" />
+                                                <!-- removed class requiredInput from selectList, because of a bug in IE7\8 -->
+                                                <apex:selectlist styleclass="form-control" value="{!newCase.Country_concerned_by_the_query__c}" required="true" size="1">
+                                                    <apex:selectoptions value="{!items}" />
+                                                </apex:selectlist>
+                                            </apex:outputpanel>
+                                        </apex:pageblocksectionitem>
+                                        <!-- TF - SP9-C5 -->
+                                        <apex:pageblocksectionitem rendered="{!OR(isSISCase, AND(isAgencyUser, NOT(isFDSRecordType)))}">
+                                            <apex:outputlabel value="{!$ObjectType.Case.Fields.IATA_Code__c.Label}" />
+                                            <apex:outputpanel layout="block">
+                                                <apex:outputpanel layout="block" />
+                                                <apex:inputfield value="{!newCase.IATAcode__c}" required="false" styleclass="form-control" />
+                                            </apex:outputpanel>
+                                        </apex:pageblocksectionitem>
+                                        <!-- TF - SP9-C5 -->
+                                        <apex:inputcheckbox value="{!isGSAOnly}" label="{!$Label.ISSP_GSA_Only}" rendered="{!AND(isGSAUser, NOT(isFDSRecordType))}" styleclass="form-control" />
+                                        <apex:pageblocksectionitem rendered="{!AND(isGSAUser, NOT(isFDSRecordType))}">
+                                            <apex:outputlabel value="{!$ObjectType.Case.Fields.Airline__c.Label}" />
+                                            <apex:outputpanel layout="block">
+                                                <apex:outputpanel layout="block" />
+                                                <apex:selectlist styleclass="form-control" value="{!newCase.IATAcode__c}" required="false" size="1">
+                                                    <apex:selectoptions value="{!airlines}" />
+                                                </apex:selectlist>
+                                            </apex:outputpanel>
+                                        </apex:pageblocksectionitem>
+                                        <apex:inputfield styleclass="form-control" value="{!newCase.Type_of_customer__c}" required="true" rendered="{!NOT(isDPCUser)}" />
+                                        <apex:inputfield styleclass="form-control" value="{!newCase.Priority}" required="true" rendered="{!AND(isPWCProfile,NOT(isDPCUser))}" />
+                                        <apex:inputfield styleclass="form-control" value="{!newCase.Reason}" required="true" rendered="{!NOT(isDPCUser)}" />
+                                        <!-- Fields for DPC user -->
+                                        <!--
+                                        <apex:inputField value="{!newCase.Type}" required="true" rendered="{!OR(isDPCUser, isSISCase)}"  styleClass="form-control" />
+                                        <apex:inputField value="{!newCase.Classification_SIS__c}" required="true" rendered="{!isSISCase}"  styleClass="form-control"/>
+                                        -->
+                                    
+                                        <apex:actionfunction name="refreshCaseClassification" action="{!null}" rerender="classificationlist">
+                                            <apex:param name="caseTypeSelection" value="" />
+                                        </apex:actionfunction>
+                                        <apex:actionfunction name="refreshCaseDefects" action="{!null}" rerender="defectlist">
+                                            <apex:param name="caseClassificationSelection" value="" />
+                                        </apex:actionfunction>
+                                      <!--
+                                        <apex:actionFunction name="selectPicklistValuesAF" action="{!null}">
+                                            <apex:param name="caseParam" assignTo="{!newCase.Type}" value="" />
+                                            <apex:param name="classificationParam" assignTo="{!newCase.Classification_SIS__c}" value="" />
+                                            <apex:param name="defectParam" assignTo="{!newCase.Defect_Issue__c}" value="" />
+                                        </apex:actionFunction>
+                                      -->
+                                        <apex:pageblocksectionitem rendered="{!isSISCase}">
+                                            <apex:outputlabel value="{!$ObjectType.Case.Fields.Type.Label}" />
+                                            <apex:outputpanel layout="block" styleclass="requiredInput">
+                                                <apex:outputpanel layout="block" styleclass="requiredBlock" />
+                                                <apex:selectlist id="caseTypeListId" onchange="refreshCaseClassification(this.value);" size="1" rendered="{!OR(isDPCUser, isSISCase)}" styleclass="form-control" value="{!newCase.Type}">
+                                                    <apex:selectoptions value="{!caseTypeItems}" />
+                                                </apex:selectlist><!--value="{!newCase.Type}"-->
+                                            </apex:outputpanel>
+                                        </apex:pageblocksectionitem>
+                                        <apex:pageblocksectionitem rendered="{!isSISCase}">
+                                            <apex:outputlabel value="{!$ObjectType.Case.Fields.Classification_SIS__c.Label}" />
+                                            <apex:outputpanel layout="block" styleclass="requiredInput" id="classificationlist">
+                                                <apex:outputpanel layout="block" styleclass="requiredBlock" />
+                                                <apex:selectlist id="classificationListId" onchange="refreshCaseDefects(this.value);" size="1" styleclass="form-control" value="{!newCase.Classification_SIS__c}">
+                                                    <apex:selectoptions value="{!caseClassificationItems}" />
+                                                </apex:selectlist><!--value="{!newCase.Classification_SIS__c}"-->
+                                            </apex:outputpanel>
+                                        </apex:pageblocksectionitem>
+                                        <apex:pageblocksectionitem rendered="{!isSISCase}">
+                                            <apex:outputlabel value="{!$ObjectType.Case.Fields.Defect_Issue__c.Label}" />
+                                            <apex:outputpanel layout="block" styleclass="requiredInput" id="defectlist">
+                                                <apex:outputpanel layout="block" styleclass="requiredBlock" />
+                                                <apex:selectlist id="defectListId" size="1" styleclass="form-control" value="{!newCase.Defect_Issue__c}">
+                                                    <apex:selectoptions value="{!caseDefectItems}" />
+                                                </apex:selectlist><!--value="{!newCase.Defect_Issue__c}"-->
+                                            </apex:outputpanel>
+                                        </apex:pageblocksectionitem>
+                                      
+                                        <!--
+                                        <apex:inputField value="{!newCase.Defect_Issue__c}" required="true" rendered="{!isSISCase}"  styleClass="form-control"/>
+                                        -->
+
+                                        <apex:inputfield value="{!newCase.Browser_Type__c}" required="true" rendered="{!isSISCase}" styleclass="form-control" />
+
+                                        <!--
+                                         <apex:inputField value="{!newCase.Sub_Type__c}" required="false" rendered="{!isDPCUser}"/>
+                                        -->
+                                        <apex:selectlist value="{!newCase.Sub_Type__c}" size="1" required="false" rendered="{!isDPCUser}" styleclass="form-control">
+                                            <apex:selectoptions value="{!caseSubTypeItems}" />
+                                        </apex:selectlist>
+
+                                        <apex:inputfield value="{!newCase.BSP_s_concerned__c}" required="true" rendered="{!isDPCUser}" styleclass="form-control" />
+                                        <apex:inputfield value="{!newCase.Priority}" required="true" rendered="{!isDPCUser}" styleclass="form-control" />
+                                    </apex:pageblocksection>
+                                 
+                                </apex:pageblock>
+                            </apex:form>
+
+                            <!--  **************** Existing Case ********************** -->
+                            <apex:form id="existingCaseForm">
+                                <apex:actionfunction name="getSelectArtical" action="{!getSelectArtical}"
+                                                     rerender="theSelectedAtricalAnswer, theSelectedAtricalTitle"
+                                                     oncomplete="showArticle()">
+                                    <apex:param name="artid" value="" />
+                                </apex:actionfunction>
+                                <apex:pageblock rendered="{!NOT(isNewCase)}">
+                                    <apex:pagemessages />
+                                    <apex:pageblockbuttons >
+                                        <apex:commandbutton action="{!assignToIATA}" value="Assign to IATA" rendered="{!AND(isPWCProfile && newCase.status != 'Closed', newCase.Owner.Name='GFA Communication queue')}" />
+                                        <apex:commandbutton action="{!close}" value="Close case" rendered="{!AND(isPWCCase,newCase.Status!='Closed')}" />
+                                        <apex:outputpanel rendered="{!isDPCUser}">
+                                            <apex:commandbutton action="{!edit}" value="Edit" rendered="{!AND(isACRAccepted, NOT(isEditMode), NOT(CaseStatus='CLOSED'))}" rerender="existingCaseForm" styleclass="btn btn_iata_primary" />
+                                            <apex:commandbutton action="{!DPCAccept}" value="Accept" rendered="{!AND(OR(CaseType='DPCSR',CaseType='ACR'), NOT(OR(isDPCAccepted,isACRAccepted)))}" rerender="existingCaseForm" styleclass="btn btn_iata_primary" />
+                                            <apex:commandbutton action="{!DPCCompleteDSR}" value="Complete DSR" rendered="{!AND(caseType='DPCSR',isDPCInvestigateMode)}" rerender="existingCaseForm" disabled="{!OR(newCase.Planned_Start_CR__c!=null, newCase.Planned_End_CR__c!=null)}" styleclass="btn btn_iata_primary" />
+                                            <apex:commandbutton action="{!DPCSave}" value="Save" rendered="{!AND(OR(isDPCInvestigateMode, isACRAccepted), isEditMode)}" rerender="existingCaseForm" styleclass="btn btn_iata_primary" />
+                                            <apex:commandbutton action="{!cancel}" value="{!$Label.ISSP_Cancel}" immediate="true" rendered="{!AND(OR(isDPCInvestigateMode, isACRAccepted), isEditMode)}" styleclass="btn btn_iata_primary" />
+                                            <apex:commandbutton action="{!DPCCompleteScheduleDSR}" value="Complete Scheduled DSR" rendered="{!AND(caseType='DPCSR',isDPCInvestigateMode)}" rerender="existingCaseForm" disabled="{!OR(newCase.Planned_Start_CR__c==null, newCase.Planned_End_CR__c==null)}" styleclass="btn btn_iata_primary" />
+                                            <apex:outputpanel layout="none" rendered=" {!AND(isDPCUser, NOT(isEditMode), OR(isDPCAccepted,isACRAccepted), OR(caseType='ACR', caseType='IATASR'))}">
+                                                <input type="button" class="btn" value="Change DPC Owner" onclick="openCustomlkp('{!newCase.id}')" styleclass="btn btn_iata_primary" />
+                                            </apex:outputpanel>
+                                            <apex:actionfunction action="{!changeDpcOwner}" name="changeDpcOwner" rerender="existingCaseForm" status="changeOwnerStatus" />
+                                            <apex:commandbutton action="{!close}" value="Close Case" rendered="{!AND(caseType='IATASR', newCase.isDPCCurrentUser__c, newCase.Status!='Closed')}" styleclass="btn btn_iata_primary" />
+                                        </apex:outputpanel>
+                                    </apex:pageblockbuttons>
+
+                                    <apex:pageblocksection title="{!$Label.IDCard_CaseDetails}" columns="1" rendered="{!NOT(isDPCUser)}">
+
+                                        <!--SURVEY BUTTON -->
+                                        <apex:outputpanel styleclass="btn pull-right" rendered="{!IF(newCase.status == 'Closed' && newCase.status != 'Draft' && isPWCCase == false && isDPCuser == false && isToShowSurveyBtn == true && caseType == '' && mySurveyCompletedVariable != true, true , false )}">
+                                            <apex:outputlink value="http://survey.clicktools.com/go?iv={!$Label.ISSP_SurveyClosedCase}&q1={!newCase.Id}&q2={!newCase.CaseNumber}&q3={!newCase.ContactId}&q9={!newCase.Contact.FirstName}|{!newCase.Contact.LastName}|{!newCase.Contact.Email}|{!newCase.Contact.Phone}&language={!SurveyLanguage}" target="_blank">{!$Label.ISSP_Survey} </apex:outputlink>
+                                        </apex:outputpanel> 
+                                        <!-- END SURVEY BUTTON -->
+                                        
+                                        <apex:outputfield value="{!newCase.CaseNumber}" />
+                                        <apex:outputfield styleclass="lbl" value="{!newCase.Portal_Case_Status__c}" />
+                                        <apex:outputfield value="{!newCase.Subject}" />
+                                        <apex:outputfield value="{!newCase.Description}" rendered="{!NOT(isOSCARCase)}" />
+                                        <!-- 222 STATUS = {!newCase.status}<br />PortalStatus = {!newCase.Portal_Case_Status__c }<br />caseType = {!caseType}<br />PWCCase = {!isPWCCase}<br />isDPCuser = {!isDPCUser}<br />isPWCProfile = {!isPWCProfile}-->
+                                        <!-- <apex:outPutField rendered="{!caseType !='AP'}" value="{!newCase.CaseArea__c}"/> -->
+                                        <apex:outputfield rendered="{!Or(caseType =='CSP', caseType =='ICC')}" value="{!newCase.BSPCountry__c}" />
+                                        <apex:outputfield rendered="{!and(caseType !='CSP', caseType !='ICC', caseType!='AP')}" value="{!newCase.Country_concerned_by_the_query__c}" />
+                                        <apex:outputfield rendered="{!isPWCCase}" value="{!newCase.Type_of_customer__c}" />
+                                        <apex:outputfield rendered="{!isPWCCase}" value="{!newCase.Priority}" />
+                                        <apex:outputfield rendered="{!isPWCCase}" value="{!newCase.Reason}" />
+
+                                        <apex:outputfield value="{!newCase.ContactId}" rendered="{!OR(caseType == 'PWC', caseType =='ACR', caseType =='DPCSR')}" />
+
+                                        <apex:outputtext label="{!$Label.Contact_Name}" rendered="{!NOT(OR(caseType == 'PWC', caseType =='ACR', caseType =='DPCSR'))}">
+                                            <apex:outputlink value="/ISSP_Contact?id={!newCase.ContactId}&mid=M1S2">{!newCase.Contact.Name}</apex:outputlink>
+                                        </apex:outputtext>
+
+                                        <apex:outputfield rendered="{!caseType =='PWC'}" value="{!newCase.ownerId}" />
+                                        <!-- <apex:outPutField rendered="{!isSAAMCase}" value="{!newCase.Dossier_reception_date__c}"/> -->
+
+                                        <apex:pageblocksectionitem rendered="{!showAP}">
+                                            <apex:outputlabel value="{!$Label.ISSP_AP_Form}" for="apFormLink" />
+                                            <apex:outputlink value="/ISSP_APProcess?caseId={!newCase.Id}&step=2" id="apFormLink">
+                                                {!CASE(newCase.Reason1__c, 'Minor database changes', 'Click here to continue with your BSP/CASS Change Request', 'Bank Account Instructions', 'Click here to continue with your BSP/CASS Bank Account Change',  $Label.ISSP_Click_Here)}
+                                            </apex:outputlink>
+                                        </apex:pageblocksectionitem>
+                                        <apex:pageblocksectionitem rendered="{!showAccreditation}">
+                                            <apex:outputlabel value="{!$Label.ISSP_AMS_Form}" for="amsFormLink" />
+                                            <apex:outputText >
+                                            <apex:outputLink value="/ISSP_AMS_Accreditation?caseId={!newCase.Id}&step=2" rendered="{!BEGINS(newCase.Reason1__c, 'New')}" id="amsFormLink">{!$Label.ISSP_AMS_Click_here}</apex:outputLink>
+                                            <apex:outputLink value="/ISSP_AMS_Accreditation?caseId={!newCase.Id}&isNoticeOfChange=true&isBankAccountChange=true&step=2" rendered="{!newCase.Reason1__c=='Bank Detail Update'}">{!$Label.ISSP_AMS_Click_here}</apex:outputLink>
+                                            <apex:outputLink value="/ISSP_AMS_Accreditation?caseId={!newCase.Id}&isNoticeOfChange=true&isBankAccountChange=false&step=2" rendered="{!NOT(OR(BEGINS(newCase.Reason1__c, 'New'),newCase.Reason1__c=='Bank Detail Update'))}">{!$Label.ISSP_AMS_Click_here}</apex:outputLink>
+                                            </apex:outputText>
+                                        </apex:pageblocksectionitem>
+
+                                        <apex:pageblocksectionitem rendered="{!AND(isOnlineOSCARCase, NOT(showAccreditation))}">
+                                            <apex:image value="{!URLFOR($Resource.PDF_icon_large)}" />
+                                            <apex:outputText >
+                                                <apex:outputlink value="{!IF(isTravelAccreditation, '/ISSP_AMS_PDF_ApplicationForm?caseId=', '/ISSP_AMS_PDF_CGO?caseId=') + newCase.Id}" id="amsFormLink" target="_new" rendered="{!BEGINS(newCase.Reason1__c, 'New')}">
+                                                    {!$Label.ISSP_AMS_Download_PDF_Copy}
+                                                </apex:outputlink>
+                                                <apex:outputlink value="{!'/ISSP_AMS_PDF_NOC?caseId=' + newCase.Id+'&isNoticeOfChange=true&isBankAccountChange=true'}" target="_new" rendered="{!newCase.Reason1__c=='Bank Detail Update'}">
+                                                    {!$Label.ISSP_AMS_Download_PDF_Copy}
+                                                </apex:outputlink>
+                                                <apex:outputlink value="{!'/ISSP_AMS_PDF_NOC?caseId=' + newCase.Id+'&isNoticeOfChange=true&isBankAccountChange=false'}"  target="_new" rendered="{!NOT(OR(BEGINS(newCase.Reason1__c, 'New'),newCase.Reason1__c=='Bank Detail Update'))}">
+                                                    {!$Label.ISSP_AMS_Download_PDF_Copy}
+                                                </apex:outputlink>
+                                            </apex:outputText>
+                                            <!--         <apex:commandLink action="{!redirectToPDF}" value="{!$Label.ISSP_AMS_Download_PDF_Copy}" id="theCommandLink"/>  -->
+                                        </apex:pageblocksectionitem>
+
+                                    </apex:pageblocksection>
+
+                                    <!-- ACR First Section -->
+                                    <apex:pageblocksection title="Description Information" columns="1" rendered="{!caseType='ACR'}">
+                                        <apex:outputfield value="{!newCase.CaseNumber}" />
+                                        <apex:outputfield value="{!newCase.Subject}" />
+                                        <apex:outputfield value="{!newCase.Status}" />
+                                        <apex:outputfield value="{!newCase.Priority}" />
+                                        <apex:outputfield value="{!newCase.Type}" />
+                                        <apex:outputfield value="{!newCase.Description}" />
+                                    </apex:pageblocksection>
+
+                                    <!--end  class="col-md-12"-->
+                                    <!--Fields to be displayed for SIS cases-->
+                                    <apex:pageblocksection rendered="{!isSISCase}" title="Case information" columns="2">
+                                        <apex:outputfield value="{!newCase.Priority}" />
+                                        <apex:outputfield value="{!newCase.Classification_SIS__c}" />
+                                        <apex:outputfield value="{!newCase.Type}" />
+                                        <apex:outputfield value="{!newCase.Defect_Issue__c}" />
+                                    </apex:pageblocksection>
+                                    <apex:pageblocksection rendered="{!isSISCase}" title="Customer information" columns="2">
+                                        <apex:outputfield value="{!newCase.Airline_Designator__c}" />
+                                        <apex:outputfield value="{!newCase.Member_Code_Numeric__c}" />
+                                        <apex:outputfield value="{!newCase.Contact.Name}" />
+                                        <apex:outputfield value="{!newCase.Contact.Email}" />
+                                        <apex:outputfield value="{!newCase.Contact.Phone}" />
+                                        <apex:outputfield value="{!newCase.Contact.MobilePhone}" />
+                                        <apex:outputfield value="{!newCase.Contact.Fax}" />
+                                    </apex:pageblocksection>
+                                    <apex:pageblocksection rendered="{!isSISCase}" title="System information" columns="2">
+                                        <apex:outputfield value="{!newCase.CreatedDate}" />
+                                        <apex:outputfield value="{!newCase.ClosedDate}" />
+                                    </apex:pageblocksection>
+                                    <!--Fields to be displayed for Kale users on SIS cases-->
+                                    <apex:pageblocksection rendered="{!isKaleRole && isSISCase}" title="Case Kale" columns="2"></apex:pageblocksection>
+                                    <!--Fields to be displayed for AP cases-->
+                                    <apex:pageblocksection rendered="{!isAPCase}" title="Case information" columns="2">
+                                        <apex:outputfield value="{!newCase.Region__c}" />
+                                        <apex:outputfield value="{!newCase.BSPCountry__c}" />
+                                        <apex:outputfield value="{!newCase.Reason1__c}" />
+                                        <apex:outputtext ></apex:outputtext>
+                                        <apex:outputfield value="{!newCase.Account.Name}" />
+                                        <apex:outputfield rendered="{!isGSAUser}" label="Account concerned" value="{!newCase.Account_Concerned__c}" />
+                                        <apex:outputfield value="{!newCase.Contact.Name}" />
+                                        <apex:outputtext ></apex:outputtext>
+                                        <apex:outputfield value="{!newCase.Contact.Email}" />
+                                        <apex:outputtext ></apex:outputtext>
+                                        <apex:outputfield value="{!newCase.Contact.Phone}" />
+                                    </apex:pageblocksection>
+                                    <apex:pageblocksection rendered="{!isAPCase}" title="Dossier reception" columns="2">
+                                        <apex:outputfield value="{!newCase.SAAM_Deadline_Date__c}" />
+                                        <apex:outputfield value="{!newCase.Process_Approved__c}" />
+                                        <apex:outputfield value="{!newCase.Process_Start_Date__c}" />
+                                        <apex:outputfield value="{!newCase.Missing_Documents_A_B_received__c}" />
+                                        <apex:outputfield value="{!newCase.Missing_Documents_A_B_requested__c}" />
+                                    </apex:pageblocksection>
+                                    <apex:pageblocksection rendered="{!isAPCase}" title="Dossier acceptance" columns="2">
+                                        <apex:outputfield value="{!newCase.Rejection_Withdrawal_remarks__c}" />
+                                    </apex:pageblocksection>
+                                    <!--Fields to be displayed for DPC cases -->
+                                    <apex:pageblocksection rendered="{!OR(caseType='DPCSR', caseType='IATASR')}" title="" columns="1" id="DPCDescription">
+
+                                        <apex:outputfield value="{!newCase.Subject}" />
+                                        <apex:outputfield value="{!newCase.Description}" />
+                                        <apex:outputfield value="{!newCase.Type}" />
+                                        <apex:outputfield value="{!newCase.Sub_Type__c}" />
+                                        <apex:outputfield value="{!newCase.IATA_office__c}" rendered="{!caseType='DPCSR'}" />
+                                        <apex:outputfield value="{!newCase.BSP_s_concerned__c}" />
+
+                                        <apex:outputfield value="{!newCase.Priority}" />
+                                        <apex:outputfield value="{!newCase.DPC_Software__c}" rendered="{!caseType='DPCSR'}" />
+                                        <apex:outputfield value="{!newCase.Status}" />
+                                        <apex:outputfield value="{!newCase.CaseNumber}" />
+                                        <apex:outputfield value="{!newCase.ParentId}" />
+                                        <apex:outputfield styleclass="table" value="{!newCase.Origin}" />
+                                        <apex:outputfield value="{!newCase.Account_Location_Type__c}" rendered="{!caseType='DPCSR'}" />
+
+                                        <!--
+                                        <apex:outputText label="{!$Label.ISSP_MyProfile_AccountName}">
+                                            <apex:outputLink value="/ISSP_Account?id={!newCase.AccountId}&mid=M1S2">{!newCase.Account.Name}</apex:outputLink>
+                                        </apex:outputText>
+                                         -->
+                                        <apex:outputfield value="{!newCase.ContactId}" rendered="{!AND(isDPCUser, caseType='DPCSR')}" />
+
+                                        <apex:outputfield value="{!newCase.SuppliedEmail}" rendered="{!caseType='DPCSR'}" />
+                                        <apex:outputfield value="{!newCase.ACCA_Owner__c}" rendered="{!AND(isDPCUser,OR(caseType='ACR', caseType='IATASR'))}" />
+                                        <apex:outputfield value="{!newCase.Type_of_customer__c}" rendered="{!caseType='DPCSR'}" />
+                                    </apex:pageblocksection>
+                                    <h5 class="blueback" style="display:{!if(AND(isDPCUser, caseType='DPCSR'), 'block', 'none')}">DPC Section</h5>
+                                    <apex:pageblocksection rendered="{!AND(isDPCUser, isDPCInvestigateMode, caseType='DPCSR')}" title="" columns="1">
+                                        <apex:inputfield value="{!newCase.DPC_Case_classification__c}" />
+                                        <apex:inputfield value="{!newCase.Planned_Start_CR__c}" />
+                                        <apex:inputfield value="{!newCase.Planned_End_CR__c}" />
+                                    </apex:pageblocksection>
+
+                                    <apex:pageblocksection rendered="{!AND(isDPCUser, !isDPCInvestigateMode, caseType='DPCSR')}" title="" columns="1">
+                                        <apex:outputfield value="{!newCase.DPC_Case_classification__c}" />
+                                        <apex:outputfield value="{!newCase.Planned_Start_CR__c}" />
+                                        <apex:outputfield value="{!newCase.Planned_End_CR__c}" />
+                                    </apex:pageblocksection>
+
+
+                                    <h5 class="blueback" style="display:{!if(caseType='DPCSR', 'block', 'none')}">Case Age Calculations</h5>
+                                    <apex:pageblocksection rendered="{!caseType='DPCSR'}" title="" columns="1">
+                                        <apex:outputfield value="{!newCase.DPC_Date_Time_New__c}" rendered="{!caseType='DPCSR'}" />
+                                        <apex:outputfield value="{!newCase.DPC_Date_Time_Scheduled__c}" rendered="{!caseType='DPCSR'}" />
+                                        <apex:outputfield value="{!newCase.DPC_Date_Time_Completed__c}" />
+                                        <apex:outputfield value="{!newCase.ACCA_Case_Age_for_Standard_CR__c}" />
+                                        <apex:outputfield value="{!newCase.ACCA_Case_Age_for_Scheduled_CR__c}" rendered="{!caseType='DPCSR'}" />
+                                    </apex:pageblocksection>
+                                    <!-- ACR Second Section - View Mode -->
+                                    <apex:pageblocksection rendered="{!AND(caseType='ACR', OR(NOT(caseStatusACR < 3.2), NOT(isEditMode)))}" title="{!$Label.ISSP_Cases_EvaluationSupplier}" columns="1">
+                                        <apex:outputfield value="{!newCase.ACCA_Owner__c}" />
+                                        <apex:outputfield value="{!newCase.Escalated_Status_ACCA__c}" label="DPC Status" rendered="{!NOT(isEditMode)}" />
+                                        <apex:inputfield value="{!newCase.Escalated_Status_ACCA__c}" label="DPC Status" rendered="{!isEditMode}" required="true" />
+                                        <apex:outputfield value="{!newCase.DPC_ACR_Number__c}" />
+                                        <apex:outputfield value="{!newCase.DPC_Person_in_Charge__c}" />
+                                        <apex:outputfield value="{!newCase.Object_Set_Up_Affected__c}" />
+                                        <apex:outputfield value="{!newCase.Evaluation_Effort__c}" />
+                                        <apex:outputfield value="{!newCase.Specification_Effort__c}" />
+                                        <apex:outputfield value="{!newCase.Coding_Effort__c}" />
+                                        <apex:outputfield value="{!newCase.Unit_Test_Effort__c}" />
+                                        <apex:outputfield value="{!newCase.System_Test_Effort__c}" />
+                                        <apex:outputfield value="{!newCase.QA_Effort__c}" />
+                                        <apex:outputfield value="{!newCase.Documentation_Effort__c}" />
+                                        <apex:outputfield value="{!newCase.Implementation_Effort__c}" />
+                                        <apex:outputfield value="{!newCase.Other_Impact_and_Effort__c}" />
+                                        <apex:outputfield value="{!newCase.Estimated_Total_Person_days__c}" />
+                                        <apex:outputfield value="{!newCase.Estimated_Delivery_Date__c}" rendered="{!NOT(AND(caseStatusACR>=3.2,isEditMode))}" />
+                                        <apex:inputfield value="{!newCase.Estimated_Delivery_Date__c}" rendered="{!AND(caseStatusACR>=3.2,isEditMode)}" required="true" />
+                                        <apex:outputfield value="{!newCase.Applicable_to_Which_Version_s__c}" />
+                                        <apex:outputfield value="{!newCase.Impact_Analysis_Completed_By__c}" />
+
+                                        <apex:outputfield value="{!newCase.Planned_Documentation_Date__c}" rendered="{!NOT(AND(caseStatusACR>=3.2,isEditMode))}" />
+                                        <apex:inputfield value="{!newCase.Planned_Documentation_Date__c}" rendered="{!AND(caseStatusACR>=3.2,isEditMode)}" required="{!caseDPCStatusACR >= 6.1}" />
+
+                                        <apex:outputfield value="{!newCase.Planned_Implementation_Date__c}" rendered="{!NOT(AND(caseStatusACR>=3.2,isEditMode))}" />
+                                        <apex:inputfield value="{!newCase.Planned_Implementation_Date__c}" rendered="{!AND(caseStatusACR>=3.2,isEditMode)}" required="{!caseDPCStatusACR >= 6.1}" />
+
+                                        <apex:outputfield value="{!newCase.Documentation_Complete__c}" label="Documentation completed" rendered="{!NOT(AND(caseStatusACR>=3.2,isEditMode))}" />
+                                        <apex:inputfield value="{!newCase.Documentation_Complete__c}" label="Documentation completed" rendered="{!AND(caseStatusACR>=3.2,isEditMode)}" required="{!caseDPCStatusACR >= 7.0}" />
+
+                                        <apex:outputfield value="{!newCase.Deployment_date_to_acca__c}" label="Deployment completed" rendered="{!NOT(AND(caseStatusACR>=3.2,isEditMode))}" />
+                                        <apex:inputfield value="{!newCase.Deployment_date_to_acca__c}" label="Deployment completed" rendered="{!AND(caseStatusACR>=3.2,isEditMode)}" required="{!caseDPCStatusACR >= 7.0}" />
+                                    </apex:pageblocksection>
+                                    <!-- ACR Second Section - Edit Mode -->
+                                    <apex:pageblocksection rendered="{!AND(caseType='ACR', caseStatusACR < 3.2, isEditMode)}" title="{!$Label.ISSP_Cases_EvaluationSupplier}" columns="1">
+                                        <apex:inputfield value="{!newCase.ACCA_Owner__c}" />
+                                        <!--                 <apex:inputField value="{!newCase.DPC_Case_classification__c}"/> -->
+                                        <apex:inputfield value="{!newCase.Escalated_Status_ACCA__c}" label="DPC status" />
+                                        <apex:inputfield value="{!newCase.DPC_ACR_Number__c}" />
+                                        <apex:inputfield value="{!newCase.DPC_Person_in_Charge__c}" />
+                                        <apex:inputfield value="{!newCase.Object_Set_Up_Affected__c}" style="width:210px; height:64px" />
+                                        <apex:inputfield value="{!newCase.Evaluation_Effort__c}" required="{!CaseDPCStatusACR >= 3.1}" />
+                                        <apex:inputfield value="{!newCase.Specification_Effort__c}" required="{!CaseDPCStatusACR >= 3.1}" />
+                                        <apex:inputfield value="{!newCase.Coding_Effort__c}" required="{!CaseDPCStatusACR >= 3.1}" />
+                                        <apex:inputfield value="{!newCase.Unit_Test_Effort__c}" required="{!CaseDPCStatusACR >= 3.1}" />
+                                        <apex:inputfield value="{!newCase.System_Test_Effort__c}" required="{!CaseDPCStatusACR >= 3.1}" />
+                                        <apex:inputfield value="{!newCase.QA_Effort__c}" required="{!CaseDPCStatusACR >= 3.1}" />
+                                        <apex:inputfield value="{!newCase.Documentation_Effort__c}" required="{!CaseDPCStatusACR >= 3.1}" />
+                                        <apex:inputfield value="{!newCase.Implementation_Effort__c}" required="{!CaseDPCStatusACR >= 3.1}" />
+                                        <apex:inputfield value="{!newCase.Other_Impact_and_Effort__c}" style="width:210px; height:64px" />
+                                        <apex:inputfield value="{!newCase.Estimated_Total_Person_days__c}" required="{!CaseDPCStatusACR >= 3.1}" />
+                                        <apex:outputfield value="{!newCase.Estimated_Delivery_Date__c}" />
+                                        <apex:inputfield value="{!newCase.Applicable_to_Which_Version_s__c}" />
+                                        <apex:inputfield value="{!newCase.Impact_Analysis_Completed_By__c}" />
+
+                                        <apex:inputfield value="{!newCase.Planned_Implementation_Date__c}" />
+                                        <apex:inputfield value="{!newCase.Planned_Documentation_Date__c}" />
+
+                                        <apex:inputfield value="{!newCase.Deployment_date_to_acca__c}" label="Deployment completed" />
+                                        <apex:inputfield value="{!newCase.Documentation_Complete__c}" label="Documentation completed" />
+                                    </apex:pageblocksection>
+                                    <!-- ACR Third Section - View Mode -->
+                                    <apex:pageblocksection rendered="{!AND(caseType='ACR', NOT(isEditMode))}" title="Estimated costs" columns="1">
+                                        <apex:outputfield value="{!newCase.PO_Number__c}" />
+                                        <apex:outputfield value="{!newCase.CurrencyIsoCode}" />
+                                        <apex:outputfield value="{!newCase.Estimated_Processing_Cost_if_appl__c}" />
+                                        <apex:outputfield value="{!newCase.Estimated_Total_Development_Cost__c}" />
+                                    </apex:pageblocksection>
+                                    <!-- ACR Third Section - Edit Mode -->
+                                    <apex:pageblocksection rendered="{!AND(caseType='ACR', isEditMode)}" title="Estimated costs" columns="1">
+                                        <apex:outputfield value="{!newCase.PO_Number__c}" />
+                                        <apex:inputfield value="{!newCase.CurrencyIsoCode}" required="true" />
+                                        <apex:inputfield value="{!newCase.Estimated_Processing_Cost_if_appl__c}" />
+                                        <apex:inputfield value="{!newCase.Estimated_Total_Development_Cost__c}" required="{!CaseDPCStatusACR >= 3.1}" />
+                                    </apex:pageblocksection>
+                                </apex:pageblock>
+                                <apex:inputhidden value="{!newCase.ACCA_Owner__c}" rendered="{!isDPCUser}" id="ACCA_Owner" />
+                            </apex:form>
+                            <apex:outputpanel >
+                                <apex:actionstatus id="changeOwnerStatus">
+                                    <apex:facet name="start">
+                                        <div class="waitingSearchDiv" id="el_loading" style="background-color: #fbfbfb;
+                           height: 100%;opacity:0.65;width:100%;">
+                                            <div class="waitingHolder" style="top: 74.2px; width: 91px;">
+                                                <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+                                                <span class="waitingDescription">Loading...</span>
+                                            </div>
+                                        </div>
+                                    </apex:facet>
+                                </apex:actionstatus>
+                            </apex:outputpanel>
+
+                            <c:GenericAttachmentList rendered="{!AND(NOT(isNewCase),NOT(isPWCProfile),NOT(isDPCUser))}" sobjectId="{!newCase.Id}" isPortal="true"/>
+                            
+                            <c:Archive_Attachment_List_Component rendered="{!AND(NOT(isNewCase),OR(isPWCProfile,isDPCUser))}" caseid="{!newCase.Id}"></c:Archive_Attachment_List_Component>
+                            
+                            <apex:form >
+                                <!-- <apex:detail subject="{!newCase.Id}" relatedList="true" title="false" rerender="{!!isNewCase}"/> -->
+                                <apex:pageblock id="CustomListCon" rendered="{!isDisplay_ContentTL}">
+                                    <apex:pageblocktable value="{!tmpContentVersion_Lst}" var="o" styleclass="table-hover table table-condensed table-responsive">
+                                        <apex:column headervalue="{!$Label.IFAP_Action}">
+                                            <a href="/apex/ISSP_ContentDisplay?id={!o.ContentDocumentId}&mid=M2S2">View</a>
+                                        </apex:column>
+                                        <apex:column headervalue="{!$Label.IFAP_name}">
+                                            <apex:outputtext value="{!o.Title}" />
+                                        </apex:column>
+                                        <apex:column headervalue="{!$Label.ISSP_File_Size}">
+                                            <apex:outputtext value="{!o.ContentSize}" />
+                                        </apex:column>
+                                        <apex:column headervalue="{!$Label.ISSP_Created_Date}">
+                                            <apex:outputtext value="{!o.CreatedDate}" />
+                                        </apex:column>
+                                    </apex:pageblocktable>
+                                </apex:pageblock>
+                                <apex:pageblock title="{!$Label.ISSP_Articles}" rendered="{!globalList != null && globalList.size>0}">
+                                    <apex:pageblocktable value="{!globalList}" var="article" styleclass="table-hover table table-condensed table-responsive">
+                                        <apex:column >
+                                            <apex:facet name="header">
+                                                {!$ObjectType.KnowledgeArticleVersion.Fields.Title.Label}
+                                            </apex:facet>
+                                            <a href="javascript:getSelectArtical('{!article.articleId}');">{!article.articleTitle}</a>
+                                        </apex:column>
+                                        <apex:column value="{!article.articleType}">
+                                            <apex:facet name="header">
+                                                {!$ObjectType.KnowledgeArticleVersion.Fields.ArticleType.Label}
+                                            </apex:facet>
+                                        </apex:column>
+                                    </apex:pageblocktable>
+                                </apex:pageblock>
+                                <apex:pageblock rendered="{!AND(NOT(isNewCase),newCase.Status != 'Draft')}" id="CustomList" title="{!$Label.ISSP_Registration_Comments}">
+                                    <apex:commandbutton rendered="{!!isNewCase}" action="{!AddComment}" value="{!$Label.ISSP_btn_AddComment}" style="padding:5px" />
+                                    <apex:pageblocktable value="{!List_CaseComment}" var="o" styleclass="table-hover table table-condensed table-responsive" rendered="{!IF(List_CaseComment.size > 0 , true , false)}">
+                                        <apex:column headervalue="{!$Label.ISSP_Created_Date}" value="{!o.CreatedDate}" />
+                                        <apex:column headervalue="{!$Label.ISSP_Email_Comment}" value="{!o.CommentBody}" />
+                                        <apex:column headervalue="{!$Label.ISSP_Created_By}" value="{!o.CreatedBy.Name}" />
+                                    </apex:pageblocktable>
+                                </apex:pageblock>
+
+                                <apex:pageblock rendered="{!AND(NOT(isNewCase), caseType=='ACR')}" id="casemilestones" title="Case Milestones">
+                                    <apex:pageblocktable value="{!List_CaseMilestones}" var="ms" styleclass="table-hover table table-condensed table-responsive" rendered="{!(List_CaseMilestones.size > 0)}">
+                                        <apex:column headervalue="Status Name" value="{!ms.StatusName__c}" />
+                                        <apex:column headervalue="Classification Phase" value="{!ms.Classification_Phase__c}" />
+                                        <apex:column headervalue="Milestone Date">
+                                            <apex:outputtext value="{0, date, d MMMM','  yyyy}">
+                                                <apex:param value="{!ms.Milestone_Date__c}" />
+                                            </apex:outputtext>
+                                        </apex:column>
+                                        <apex:column headervalue="End Date">
+                                            <apex:outputtext value="{0, date, d MMMM','  yyyy}">
+                                                <apex:param value="{!ms.End_Date__c}" />
+                                            </apex:outputtext>
+                                        </apex:column>
+
+                                        <apex:column headervalue="Milestone Length (days)" value="{!ms.Milestone_Length__c}" />
+                                    </apex:pageblocktable>
+                                </apex:pageblock>
+
+
+                            </apex:form>
+
+
+                            <script>
+        $('.bDetailBlock ').last().hide();
+
+        if ({!isDPCUser}) {
+            $(".listHoverLinks").remove();
+            $(".bRelatedList").each(function( index ) {
+                if ($(this).attr('id').search("RelatedCommentsList")
+                            <0 &&
+                    $(this).attr('id').search("RelatedEntityHistoryList")
+                                <0 ) {
+                    $(this).remove();
+                }
+            });
+        }
+        var openCustomlkp = function(caseId){
+          //var lkpWin = window.open('/apex/ISSP_CustomLkpPopUp?id=' + caseId,"Search for user","width=670, height=670");
+          openLookup('/apex/ISSP_CustomLkpPopUp?id=' + caseId,670,'1','');
+          //setTitle(lkpWin);
+        }
+        function setTitle(lkpWin) {
+            if(lkpWin.document) { // if loaded
+                lkpWin.document.title = "Search for user ~ IATA Portal"; // set title
+            } else { // if not loaded yet
+                setTimeout(setTitle, 10); // check in another 10ms
+            }
+        }
+        var changeOwner = function(Id){
+          debugger;
+          $("input[name$=ACCA_Owner]").val(Id);
+          changeDpcOwner();
+
+        }
+                            </script>
+                            <!-- Modal Article Preview-->
+                            <div class="modal" id="ModalShowArticle" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                            <apex:outputpanel id="theSelectedAtricalTitle">
+                                                <h4 class="modal-title"> {!selectedArtical.articleTitle}</h4>
+                                            </apex:outputpanel>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>
+                                                <apex:outputpanel id="theSelectedAtricalAnswer">
+                                                    <apex:outputtext value="{!selectedArtical.articleText}" escape="false" />
+                                                </apex:outputpanel>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end panel body-->
+                    </div>
+                    <!-- end  div class="panel panel-primary"-->
+                </div>
+                <!--end main col -->
+            </div>
+            <!--end main row -->
+            
+            <c:ISSP_CustomFooter />
+        </div>
+        <!-- end container-->
+    </body>
+</html>
+</apex:page>

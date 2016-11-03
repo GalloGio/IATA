@@ -1,0 +1,298 @@
+<apex:page title="My Quotes" controller="vfIECHistQuotes" sidebar="false" showHeader="false" language="en" action="{!pageLoad}" standardStylesheets="false">
+<title>My Quotes</title> 
+
+	<div class="gdpwrapper">    
+    <div class="gdpbody">
+        
+    <c:IECSiteHeader />
+        <apex:stylesheet value="{!URLFOR($Resource.IECStyles, 'register.css')}" />    
+        <apex:stylesheet value="{!URLFOR($Resource.IECStyles, 'profile.css')}" />
+    
+    
+        <style type="text/css">
+
+            
+                
+  #register .subscriptionInfos{
+        margin-top: 15px !important;
+    }
+    
+    #register .row .settings-item {
+  	width: 685px;
+	}
+            
+    #subscriptions th{
+    padding: 30px;
+    font-weight: 700; 
+    }
+    #subscriptions td{
+    padding: 15px;
+    vertical-align: middle;
+    border: 1px solid #dcdcdc;
+    }
+    a{
+    color: #54bed2;
+    }
+    #subscriptions td:nth-child(2) {
+    font-weight: initial; 
+    vertical-align: middle;
+    }
+    
+    /*
+    #subscriptions tbody {
+    max-height: 253px;
+    overflow: auto;
+    }
+    
+    #subscriptions thead > tr, tbody{
+    display:block;}
+    */
+    
+    .errorPanel{
+    margin-bottom: 0px;
+    margin-top:0px;
+    }
+
+            div.row { 
+                display: block; 
+                border-bottom: 1px solid #EBEBEB; 
+                margin-bottom: 12px; 
+                padding-bottom: 11px; 
+            } 
+            .row h3 { 
+                width: 160px; 
+            } 
+            .row h3 { 
+                display: inline-block; 
+                font-weight: bold; 
+                font-size:14px; 
+                margin: 0 28px 0 0; 
+                vertical-align: top; 
+            } 
+            .row .settings-item { 
+                width: 480px; 
+            } 
+            .row .settings-item { 
+                display: inline-block; 
+            } 
+            .subButton { 
+                -moz-user-select: none; 
+                background-image: none; 
+                background: -moz-linear-gradient(center top , #F5F5F5, #E6E6E6) repeat-x scroll 0 0 #EFEFEF; 
+                border: 1px solid #B2B2B2; 
+                border-radius: 2px; 
+                color: #3B3B3B; 
+                cursor: pointer; 
+                display: inline-block; 
+                float: none; 
+                font-family: helvetica,arial,sans-serif; 
+                font-size: 13px; 
+                font-style: normal; 
+                font-variant: normal; 
+                font-weight: normal; 
+                height: auto; 
+                line-height: 18px; 
+                margin: 0px; 
+                min-width: 100px; 
+                padding: 6px 10px; 
+                text-align: center; 
+                text-decoration: none; 
+                text-indent: 0; 
+                text-overflow: clip; 
+                text-shadow: none; 
+                text-transform: none; 
+                width: auto; 
+            } 
+            .summaryLabel { 
+                color: #666666; 
+                text-align: left; 
+                font-size:13px; 
+                width:30%; 
+                vertical-align:top; 
+            } 
+            .summaryData { 
+                height: 20px; 
+                font-size:13px; 
+                width:50%; 
+                vertical-align:top; 
+            } 
+            .summaryNumber { 
+                height: 20px; 
+                font-size:13px; 
+                width:35%; 
+                vertical-align:top; 
+            } 
+        </style>
+        
+<apex:form id="quotesForm" forceSSL="true">
+       
+    <table  class="tableHolder">
+          <tr>                        
+            <td class="menu-Panel"><c:IECHistMenu /></td>
+
+            <td class="account-Panel">
+               <div class="tableList-component">
+            
+                <div id="register">
+
+                    <div class="box register fit1024">
+                       <div class="header">
+                          <p>My Quotes</p>
+                       </div>
+              
+                         <apex:outputPanel id="errorMessage">
+                            <div class="errorPanel">
+                                <apex:pageMessages escape="no"/>
+                            </div>
+                         </apex:outputPanel>                        
+                        
+                        
+                        <apex:outputText rendered="{!lstQuotes == null}" styleClass="payment-labelText" value="There are no quotes."/>
+
+                    
+                        <apex:outputPanel rendered="{!lstQuotes != null}" layout="none">                           
+                             <div id="subscriptionsHolder">
+                                <table id="subscriptions">                                   
+                                    <thead >
+                                        <tr>
+                                        
+                                        <th>Quote ID</th>
+                                        
+                                        <th >Product</th>
+                                        
+                                        <th>Request Date</th>
+                                        
+                                        <th >Valid Until</th>
+                                        </tr>
+                                    </thead>
+                                    
+                                    <tbody id="tb">
+                                    <apex:repeat value="{!lstQuotes}" var="quote" id="quoteTable" rendered="{!lstQuotes != null && lstQuotes.size > 0}">
+                                        <tr >
+                                            <td >
+                                                <apex:commandLink value="{!quote.zqu__Number__c}" action="{!selectQuote}" rerender="quoteDetailPanel, errorMessage" status="searchStatus">
+                                                    <apex:param name="SelectedQuoteId" value="{!quote.Id}" assignTo="{!sSelectedQuoteId}"/>
+                                                </apex:commandLink>
+                                            </td>
+                                            <td >
+                                                <apex:repeat id="quoteRatePlans" var="quoteRatePlan" value="{!quote.zqu__Quote_Rate_Plans__r}">
+                                                    <apex:outputText value="{!quoteRatePlan.zqu__QuoteProductName__c}" /><br />
+                                                </apex:repeat>
+                                            </td>
+                                            <td >
+                                                <apex:outputText value="{0,date,dd MMM yyyy}">
+                                                    <apex:param value="{!quote.zqu__StartDate__c}" /> 
+                                                </apex:outputText>
+                                            </td>
+                                            <td >
+                                                <apex:outputText value="{0,date,dd MMM yyyy}">
+                                                    <apex:param value="{!quote.zqu__ValidUntil__c}" /> 
+                                                </apex:outputText>
+                                            </td>
+                                        </tr>
+                                    </apex:repeat>
+                                    </tbody>
+                                </table>
+                              </div>
+                                                        
+    
+                                <!-- Quote detail panel -->
+                                <apex:outputPanel id="quoteDetailPanel">
+                                    <apex:outputPanel rendered="{!oSelectedQuote != null}">
+                                        <div class="subscriptionInfos">
+                                        <apex:actionStatus startText="" stopText="" id="searchStatus" />
+                                        <h1 class="subscription-title">Quote {!oSelectedQuote.zqu__Number__c}</h1>      
+                                        <!-- Summary -->
+                                        <div class="row" style="margin-top:15px;">
+                                        <h3>Summary</h3>
+                                            <div class="settings-item">
+                                                <table border="0" bgcolor="#FFFFFF" style="width: 100%">
+                                                  <tbody class="rich-table-tbody">
+                                                    <tr>
+                                                        <td class="summaryLabel">Product Name:</td>
+                                                        <td class="summaryData">
+                                                            <apex:repeat id="quoteRatePlans" var="quoteRatePlan" value="{!oSelectedQuote.zqu__Quote_Rate_Plans__r}">
+                                                                <apex:outputText value="{!quoteRatePlan.zqu__QuoteProductName__c}" /><br />
+                                                            </apex:repeat>
+                                                        </td>
+                                                        <td align="right" class="auto-renewal">
+                                                                <!-- apex:outputLink value="https://apisandbox.zuora.com/apps/servlet/GenerateQuote?attachToOpportunity=false&format=pdf&quoteId={!oSelectedQuote.Id}&templateId=2c92c0f93d60e66d013d7ec960204360&serverUrl={!URLENCODE($Api.Partner_Server_URL_100)}&sessionId={!URLENCODE($Api.Session_ID)}&ZSession={!sZuoraSessionID}" target="_blank" styleClass="subButton">Download PDF</apex:outputLink-->
+                                                                <apex:outputLink rendered="{!bShowDownloadPDF}" value="{!sZuoraGenerateQuotePDFURL}?attachToOpportunity=false&format=pdf&quoteId={!oSelectedQuote.Id}&templateId={!sQuoteTemplateZuoraId}&serverUrl={!URLENCODE(sServerURL)}&sessionId={!URLENCODE(sUserSessionId)}&ZSession={!sZuoraSessionID}" target="_blank" styleClass="hist-submitButton" style="color: #ffffff">Download</apex:outputLink>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="summaryLabel">Option Name:</td>
+                                                        <td class="summaryData">
+                                                            <apex:repeat id="quoteCharges" var="quoteCharge" value="{!oSelectedQuote.zqu__QuoteCharge__r}">
+                                                                <apex:outputText value="{!quoteCharge.zqu__ProductRatePlanName__c}" /><br />
+                                                            </apex:repeat>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="summaryLabel">Creation date:</td>
+                                                        <td class="summaryData">
+                                                            <apex:outputText value="{0,date,dd MMM yyyy}">
+                                                                <apex:param value="{!oSelectedQuote.zqu__StartDate__c}" /> 
+                                                            </apex:outputText>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                                </table>
+                                             </div>                
+                                         </div>
+                                        <!-- Summary End -->
+    									</div>
+                                     </apex:outputPanel>
+                                </apex:outputPanel>
+                           
+                        </apex:outputPanel>
+                   
+                   
+                    </div>
+
+                </div>
+                </div>
+
+            </td>
+          </tr>
+        </table>
+
+</apex:form>
+     </div>
+      <div class="gadfooter">
+        <!-- Footer -->
+        <c:IECSiteFooter />
+       </div>
+    </div>
+
+    <style> 
+                .tabs {
+          height: 100vh !important;
+  			overflow: visible !important;
+        }
+
+		.gdpbody {
+ 		 padding-bottom: 100px !important;
+		}
+        
+	 	html, body {
+			height:100%;	
+			margin:0;
+			padding:0;
+		}				
+		.gdpwrapper {
+			min-height:100%;
+			position:relative;
+		}
+		.gdpbody{
+ 		 padding-bottom:141px; 
+		}
+        .gadfooter{
+            width:100%;
+            height:100px; 
+            position:absolute;
+            bottom:0;
+            left:0;        
+        }
+  </style>
+</apex:page>

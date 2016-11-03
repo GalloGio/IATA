@@ -1,0 +1,138 @@
+<apex:page controller="ISSP_Account" showHeader="false" sidebar="false" standardStylesheets="false"    applyBodyTag="false" applyHtmlTag="false">
+    <html>
+ <c:ISSP_Header ></c:ISSP_Header>    
+ <body>
+    <div class="container">
+        <c:ISSP_CustomNavigation />
+        <div class="panel panel-primary">
+            <div class="panel-heading head_panel_green">
+                <h3 class="panel-title">{!$Label.ISSP_Account_Information}</h3>
+            </div>
+            <apex:define name="body">
+                <div class="panel-body" id="body-enquiries">
+                    <div class="row">
+                    <!-- COL 1  START -->
+                    <div class="col-sm-6">
+                        <div class="row">
+                        	<label class="lbl col-xs-5">{!$ObjectType.Account.fields.Name.Label}</label>
+                        	<div class="col-sm-6">{!Account.name}  </div>
+                        </div>
+                        
+                        <div class="row">
+                            <label class="lbl col-xs-5">{!$ObjectType.Account.fields.TradeName__c.Label}</label>
+                         <div class="col-sm-6">
+                            <apex:outPutField value="{!Account.TradeName__c}"/>
+                        </div>
+                        </div>
+                        
+                        <apex:outputText rendered="{!isIATAAirlineAcct}">
+                            <div class="row">
+                                <apex:outputLabel styleClass="lbl col-xs-5" value="{!$ObjectType.Account.fields.Airline_designator__c.Label}" />
+                                <div class="col-sm-6"><apex:outPutField value="{!Account.Airline_designator__c}"/></div>
+                            </div>
+                            
+                            <div class="row">
+                                <apex:outputLabel styleClass="lbl col-xs-5" value="{!$ObjectType.Account.fields.ICAO_designator__c.Label}" />
+                                <div class="col-sm-6"><apex:outPutField value="{!Account.ICAO_designator__c}"/></div>
+                            </div>
+                          </apex:outputText>
+                        
+                         <div class="row">
+                             <apex:outputLabel styleClass="lbl col-xs-5" value="{!$ObjectType.Account.fields.IATACode__c.Label}" />
+                             <div class="col-sm-6"><apex:outPutField value="{!Account.IATACode__c}" /></div>            
+                          </div>  
+                        
+                        <apex:outputText rendered="{!isIATAAirlineAcct}">
+                        	<div class="row">
+                    			<apex:outputLabel styleClass="lbl col-xs-5" value="{!$ObjectType.Account.fields.Membership_status__c.Label}" />
+                       			<div class="col-sm-6">
+                            		<apex:outPutField value="{!Account.Membership_status__c}"/>
+                        		</div>
+                            </div>
+                        </apex:outputText>
+                        
+                        <apex:outputText rendered="{!Account.Sector__c != null}">
+                        <div class="row">
+                        	<label class="lbl col-xs-5">{!$ObjectType.Account.fields.Sector__c.Label}</label>
+                            <div class="col-sm-6">
+                      			{!Account.Sector__c}
+                      		</div>
+                             </div>
+                         </apex:outputText> 
+                
+                        <apex:outputText rendered="{!Account.Category__c!= null}">
+                                <div class="row">
+                            <div class="lbl col-xs-5"><label>{!$ObjectType.Account.fields.Category__c.Label}</label></div>
+                            <div class="col-sm-6">
+                          		{!Account.Category__c}
+                      		</div>
+                             </div>
+                        </apex:outputText>
+                               
+                    </div>  <!-- END COL 1 -->
+                    
+                    
+                    <div class="col-sm-5">  <!-- START COL 2 -->
+                        <div class="row">
+                            <apex:outputText rendered="{!isIATAAirlineAcct}">
+                                    <apex:outputLabel styleClass="lbl col-xs-5" value="{!$ObjectType.Account.fields.Field_Head_Office__c.Label}" />
+                                    <div class="col-md-7"><apex:outPutField value="{!Account.Field_Head_Office__c}"/></div>
+                                </apex:outputText>
+                                
+                                <apex:outputText rendered="{!isIATAAgencyAcct}">
+                                    <apex:outputLabel styleClass="lbl col-xs-5" value="{!$ObjectType.Account.fields.Location_Type__c.Label}" />
+                                    <div class="col-md-7"><apex:outPutField value="{!Account.Location_Type__c}"/></div>
+                                 </apex:outputText>
+                        </div>
+                 
+                        <apex:outputText rendered="{!isIATAAgencyAcct}">
+                            <div class="row">
+                    			<label class="lbl col-xs-5">{!$Label.ISSP_Homepage_Irregularities}</label> 
+                        		<div class="col-md-7">
+                            		<span class="{!if(noirr=='0',"badge ","badge redbadge")}">{!blankvalue(noirr,"0")}</span>    
+                             	</div>
+                            </div>
+                            
+                        	 <div class="row">
+                    			<apex:outputLabel styleClass="lbl col-xs-5" value="{!$ObjectType.Account.fields.Fin_statements_submission_deadline__c.Label}" />
+                       			<div class="col-md-7">
+                            		<apex:outPutField value="{!Account.Fin_statements_submission_deadline__c}"/>
+                        		</div>
+                             </div>
+                        </apex:outputText>
+                        
+                        <div class="row">
+                            <apex:outputLabel styleClass="lbl col-xs-5" value="{!$ObjectType.Account.fields.Phone.Label}" />
+                       		<div class="col-md-7">
+                            <apex:outPutField value="{!Account.Phone}"/>
+                        	</div>
+                        </div>
+                        
+                        <div class="row">
+                            <apex:outputLabel styleClass="lbl col-xs-5" value="{!$ObjectType.Account.fields.Fax.Label}" />
+                       		<div class="col-md-7"><apex:outPutField value="{!Account.Fax}"/></div>
+                        </div>
+                        
+                        <div class="row">
+                           <apex:outputLabel styleClass="lbl col-xs-5" value="{!$ObjectType.Account.fields.IATA_ISO_Country__c.Label}" />
+                       		<div class="col-md-7">
+                            	<apex:outPutField value="{!Account.IATA_ISO_Country__r.Name}"/>
+                        	</div> 
+                        </div>
+                        
+                      
+                    </div>
+  					</div><!-- end row -->
+                </div>
+              </apex:define>
+
+           
+            
+        </div>
+        <!-- end  div class="panel panel-primary"-->
+        <c:ISSP_CustomFooter />
+    </div>
+    <!-- end container-->
+        </body>
+    </html>
+</apex:page>

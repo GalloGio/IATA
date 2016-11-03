@@ -1,0 +1,118 @@
+<apex:page standardController="Case" extensions="TransferAttachmentToCaseController">
+    <apex:pageMessages escape="false" />
+    <apex:includeScript value="/support/console/30.0/integration.js"/>
+    
+    <script type="text/javascript">
+
+    function testCloseTab() {
+            //First find the ID of the current tab to close it
+            sforce.console.getEnclosingTabId(closeSubtab);
+        }
+
+        var closeSubtab = function closeSubtab(result) {
+        //Now that we have the tab ID, we can close it
+        var tabId = result.id;
+        sforce.console.closeTab(tabId);
+        };
+
+    </script>
+
+    <apex:form >
+        <apex:pageBlock id="mainBlock" rendered="{! AND(sourceCase <> null, isTransferDone == false)}">
+
+            <apex:pageBlockSection title="{!$Label.Select_the_attachments_to_copy}" columns="1" collapsible="false" >
+
+                <apex:pageBlockTable value="{!lstAttachments}" var="att" id="AttachmentTable" rendered="{!lstAttachments.size > 0}" >
+                    <apex:column >
+    			            <apex:facet name="header">
+    			              <apex:inputCheckbox id="SelectAll" value="{!SelectAllCheckbox}" >
+    			              <apex:actionSupport event="onclick" action="{!SelectAll}" rerender="AttachmentTable" />
+    			            </apex:inputCheckbox>
+    			            </apex:facet>
+    			            <apex:inputCheckbox value="{!att.isSelected}"/>
+    			          </apex:column>
+
+                    <apex:column >
+                        <apex:facet name="header">{!$Label.Attachment_Name}</apex:facet>
+                        <apex:outputText value="{!att.Name}" />
+                    </apex:column>
+
+                    <apex:column >
+                        <apex:facet name="header">{!$Label.File_Size}</apex:facet>
+                        <apex:outputText value="{0,number,0.##} MB">
+                           <apex:param value="{!att.size}" />
+                        </apex:outputText>
+                    </apex:column>
+
+                    <apex:column >
+                        <apex:facet name="header">{!$Label.Created_Date}</apex:facet>
+                        <apex:outputText value=" {0,date,d MMM yyyy HH:mm a}">
+                            <apex:param value="{!att.createdDate}" />
+                        </apex:outputText>
+                    </apex:column>
+                </apex:pageBlockTable>
+
+                <apex:outputPanel rendered="{!lstAttachments.size > 0}">
+                    {!$Label.The_attachments_you_select_will_be_copied_to_the_target_case}
+                </apex:outputPanel>
+
+                <apex:outputPanel rendered="{!lstAttachments.size == 0}">
+                    {!$Label.No_attachments_were_found_on_the_source_case}
+                </apex:outputPanel>
+
+            </apex:pageBlockSection>
+
+
+            <apex:pageBlockSection title="Select the target Case(s) to receive the attachments" columns="1" collapsible="false" >
+
+                <apex:outputPanel >
+                    {!$Label.Please_select_the_target_Case}
+                </apex:outputPanel>
+                <apex:inputField value="{!targetCase.ParentId}" label="Target Case"/>
+
+                <apex:outputPanel rendered="{!lstRelatedCases.size > 0}">
+                    {!$Label.Select_the_target_Case}
+                </apex:outputPanel>
+
+                <apex:pageBlockTable value="{!lstRelatedCases}" var="cs" id="CasesTable" rendered="{!lstRelatedCases.size > 0}" >
+                    <apex:column >
+                        <apex:facet name="header">{!$Label.Select}</apex:facet>
+                        <apex:inputCheckbox value="{!cs.isSelected}" />
+                    </apex:column>
+
+                    <apex:column >
+                        <apex:facet name="header">{!$Label.Relationship}</apex:facet>
+                        <apex:outputText value="{!cs.strRelationship}" />
+                    </apex:column>
+
+                    <apex:column value="{!cs.CaseRecord.CaseNumber}" />
+
+                    <apex:column value="{!cs.CaseRecord.Subject}" />
+
+                    <apex:column value="{!cs.CaseRecord.Status}" />
+
+                    <apex:column value="{!cs.CaseRecord.AccountId}" />
+
+                    <apex:column value="{!cs.CaseRecord.OwnerId}" />
+
+                    <apex:column value="{!cs.CaseRecord.RecordTypeId}" />
+
+                    <apex:column value="{!cs.CaseRecord.CreatedDate}" />
+                </apex:pageBlockTable>
+
+                <apex:outputPanel rendered="{!lstAttachments.size == 0}">
+                    {!$Label.No_related_cases_were_found}
+                </apex:outputPanel>
+            </apex:pageBlockSection>
+
+
+            <apex:outputPanel style="margin-left: 30%;">
+
+                <apex:commandButton action="{!TransferAttachments}" value="{!$Label.Transfer_Attachments}"  />
+                <apex:commandButton action="{!Cancel}" value="{!$Label.Cancel}" onClick="testCloseTab()" />
+
+            </apex:outputPanel>
+
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

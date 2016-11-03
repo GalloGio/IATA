@@ -1,0 +1,187 @@
+<apex:component allowDML="true">
+    <apex:attribute name="ctrl" description="The controller" type="ISSP_Registration" required="true"/>
+    
+    
+    <div class="modal fade" id="NewCasePopUp">
+      <div class="modal-dialog" >
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body">
+              <div class="panel panel-default">
+                
+                <!-- MESSAGE BOX -->
+              <div class="panel panel-default" style="display:{!if(ctrl.showConfirmMessage,'','none')}">
+                <div class="panel-body">
+                  <h4 class="list-group-item-heading">{!$Label.ISSP_Registration_Thank_you}</h4>
+                  <p class="list-group-item-text">{!$Label.ISSP_Registration_PleaseCheckYourMail}</p>
+                </div>
+              </div>
+              <!-- END MESSAGE BOX  -->
+         
+          <div class="panel panel-default">
+            <div>
+              <h3 class="panel-title">{!$Label.ISSP_Registation_LogCase2}</h3>
+            </div>
+            <br/>
+            <apex:form styleclass="login_box1" >
+              <div class="alert alert-danger" style="display:{!if(ctrl.errorMessage.size==0,'none','')}">
+                 <strong>{!$Label.ISSP_Error}</strong> 
+                 <apex:repeat value="{!ctrl.errorMessage}" var="er">
+                  <p> {!er}</p> 
+                </apex:repeat> 
+              </div>
+              <div id="recCaseFields" class="alert alert-danger" style="display:none">
+                <strong>{!$Label.ISSP_fill_required_fields}</strong>
+                <span></span>
+              </div>
+            
+            
+            
+            <div class="row form-group">                
+                <label class="col-lg-5 control-label" for="exampleInputEmail1"><span class="required">*</span>{!$ObjectType.Contact.fields.Email.Label}</label>
+                <div class="col-lg-7 input-group">
+                    <apex:inputField styleclass="form-control recCase" value="{!ctrl.con.Email}"/>
+                    <div class="hiddenerror" style="display: none;">
+                        <p class="errormsg" style="line-height: 26px;">{!$Label.ISSP_Registration_Error_Email}</p>
+                    </div>                        
+                </div>
+            </div>
+            <div class="row form-group">
+                <label class="col-lg-5 control-label" for="inputError">&nbsp;&nbsp;&nbsp;&nbsp;{!$ObjectType.Account.fields.IATACode__c.Label}</label>
+                <div class="col-lg-7">
+                    <apex:inputText styleclass="form-control" value="{!ctrl.searchIATACode}"/>
+                </div>
+            </div>
+            <!--
+            <div class="row form-group">
+                <label class="col-lg-5 control-label" for="exampleInputEmail1"><span class="required">*</span>{!$Label.ISSP_Type_of_Customer}</label>
+                <div class="col-lg-7">
+                    <apex:selectList styleclass="form-control recCase" value="{!ctrl.selectedCustomerType}" onchange="TypeOfCustomerChange()" size="1" required="true">
+                      <apex:selectOption itemValue="Airline" itemLabel="Airline"/>
+                      <apex:selectOption itemValue="GloballSalesAgent" itemLabel="Global Sales Agent"/>
+                      <apex:selectOption itemValue="Agency" itemLabel="Agency"/>
+                      <apex:selectOption itemValue="NonIATAAgent" itemLabel="Non IATA Agent"/>
+                      <apex:selectOption itemValue="TIESS" itemLabel="TIESS"/>
+                      <apex:selectOption itemValue="OtherCompany" itemLabel="Other Company"/>
+                      <apex:selectOption itemValue="GeneralPublic" itemLabel="General public"/>
+                    </apex:selectList>
+                  <div class="hiddenerror" style="display: none;">
+                    <p class="errormsg" style="line-height: 26px;">{!$Label.ISSP_Registration_Error_TypeofCustomer}</p>
+                  </div>                    
+                </div>
+            </div>
+            -->
+            <div class="row form-group"> 
+                <label class="col-lg-5 control-label" for="inputError"><span class="required">*</span>{!$Label.ISSP_Location}</label>
+                <div class="col-lg-7">
+                    <apex:selectList styleclass="form-control recCase" value="{!ctrl.con.ISO_Country__c}" size="1" >
+                        <apex:selectOption itemValue="" itemLabel="{!$Label.ISSP_Registration_CountryNone}"/>
+                        <apex:selectOptions value="{!ctrl.ISOCountry}"/>
+                    </apex:selectList>
+                  <div class="hiddenerror" style="display: none;">
+                    <p class="errormsg" style="line-height: 26px;">{!$Label.ISSP_Registration_Error_Location}</p>
+                  </div>                    
+                </div>
+            </div>
+            <div class="row form-group">
+                <label class="col-lg-5 control-label" for="exampleInputEmail1"><span class="required">*</span>{!$Label.ISSP_Salutation}</label>
+                <div class="col-lg-7">
+                    <apex:selectList styleclass="form-control recCase" value="{!ctrl.con.Salutation}" size="1" required="true">
+                      <apex:selectOption itemValue="" itemLabel="{!$Label.ISSP_Registration_None}"/>
+                      <apex:selectOption itemValue="Mr." itemLabel="{!$Label.ISSP_Registration_MR}"/>
+                      <apex:selectOption itemValue="Mrs." itemLabel="{!$Label.ISSP_Registration_MRS}"/>
+                      <apex:selectOption itemValue="Ms." itemLabel="{!$Label.ISSP_Registration_MS}"/>
+                      <apex:selectOption itemValue="Others " itemLabel="{!$Label.ISSP_Registration_Others}"/>
+                    </apex:selectList>
+                  <div class="hiddenerror" style="display: none;">
+                    <p class="errormsg" style="line-height: 26px;">{!$Label.ISSP_Registration_Error_Salutation}</p>
+                  </div>                        
+                </div>
+            </div>              
+            <div class="row form-group">                
+
+                    <label class="col-lg-5 control-label" for="exampleInputEmail1"><span class="required">*</span>{!$ObjectType.Contact.fields.FirstName.Label}</label>
+                    <div class="col-lg-7 input-group">
+                        <apex:inputField styleclass="form-control recCase" value="{!ctrl.con.FirstName}"/>
+                  <div class="hiddenerror" style="display: none;">
+                    <p class="errormsg" style="line-height: 26px;">{!$Label.ISSP_Registration_Error_FirstName}</p>
+                  </div>                        
+                    </div>
+    
+            </div>
+            <div class="row form-group">
+                <label class="col-lg-5 control-label" for="exampleInputEmail1"><span class="required">*</span>{!$ObjectType.Contact.fields.LastName.Label}</label>
+                <div class="col-lg-7 input-group">
+                    <apex:inputField styleclass="form-control recCase" value="{!ctrl.con.LastName}"/>
+                  <div class="hiddenerror" style="display: none;">
+                    <p class="errormsg" style="line-height: 26px;">{!$Label.ISSP_Registration_Error_LastName}</p>
+                  </div>                        
+                </div>
+            </div>
+            <div class="row form-group">
+                <label class="col-lg-5 control-label" for="exampleInputEmail1"><span class="required">*</span>{!$Label.ISSP_Registration_BusinessPhone}</label>
+                <div class="col-lg-7 input-group">
+                    <apex:inputField styleclass="form-control recCase" value="{!ctrl.con.Phone}"/>
+                  <div class="hiddenerror" style="display: none;">
+                    <p class="errormsg" style="line-height: 26px;">{!$Label.ISSP_Registration_Error_BusinessPhone}</p>
+                  </div>                        
+                </div>
+            </div> 
+            <div class="form-group">
+                <label class="col-lg-5 control-label" for="exampleInputEmail1"><span class="required">*</span>{!$Label.ISSP_Registration_Comments}</label>
+                <apex:inputTextarea styleclass="form-control recCase" value="{!ctrl.caseDescription}"/>
+                <div class="hiddenerror" style="display: none;">
+                    <p class="errormsg" style="line-height: 26px;">{!$Label.ISSP_Registration_Error_Comment}</p>
+                  </div>  
+            </div>
+            <apex:outputPanel id="thepanel" >
+            <div class="form-group"> 
+                <apex:commandButton styleclass="btn_iata btn-lg btn-block btn-success2" onClick="if(!validateNewCase())return false;" action="{!ctrl.submitCase}" value="{!$Label.site.submit}" rerender="thepanel" >
+                    <apex:param name="PassReset" value="true" assignTo="{!ctrl.passwordReset}" />
+                </apex:commandButton>
+            </div>
+            </apex:outputPanel>
+            </apex:form>
+          </div>
+            </div>
+         </div>
+        </div>
+      </div>
+   </div>
+  
+  
+  
+  
+  
+    
+          
+<Script>
+    function validateNewCase(){
+       var type = $("select[id*='TypeSelect']").val();
+       var flag = true;
+       $('#recCaseFields').hide();
+       $('.recCase').each(function (){
+               $(this).parents('.form-group').removeClass('has-error');
+               if($(this).hasClass("multiSelectFunction")){
+                   if($(this).find('select[id*="_selected"]').first().find('option').length==0){
+                       flag = false;
+                       $(this).parents('.form-group').addClass('has-error');
+                   }
+               }
+               else if(!$(this).val()){
+                   flag = false;
+                   $(this).parents('.form-group').addClass('has-error');
+               }
+               
+           }
+       )
+       if(flag == false){
+           $('#recFields').show();
+       }
+       return flag;
+    }
+</Script>
+
+</apex:component>

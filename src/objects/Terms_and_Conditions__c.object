@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>This object is used to store Attachments holding the terms and conditions on IEC Checkout page</description>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Effective_Start_Date__c</fullName>
+        <description>Datetime when the T&amp;C is effective</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Datetime when the T&amp;C is effective</inlineHelpText>
+        <label>Effective Start Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Is_Current__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>IS the latest version of T&amp;Cs</inlineHelpText>
+        <label>Is Current</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Product_Information__c</fullName>
+        <externalId>false</externalId>
+        <label>Related Product Information</label>
+        <referenceTo>Product_Information__c</referenceTo>
+        <relationshipLabel>Terms and Conditions</relationshipLabel>
+        <relationshipName>IEC_Terms_and_Conditions</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Product_Version_Formula__c</fullName>
+        <description>Formula that concatenates the product information ID and the version number for unicity check</description>
+        <externalId>false</externalId>
+        <formula>Product_Information__r.Id + &apos;_v&apos; + TEXT(Version__c)</formula>
+        <inlineHelpText>Formula that concatenates the product information ID and the version number for unicity check</inlineHelpText>
+        <label>Product Version Formula</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Status__c</fullName>
+        <description>Status of the T&amp;Cs. Can only be modified when it&apos;s Draft.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Status of the T&amp;Cs. Can only be modified when it&apos;s Draft.</inlineHelpText>
+        <label>Status</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Draft</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Final</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Unique_Product_Version__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <description>Text value copied from the formula field for unicity check</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Text value copied from the formula field for unicity check</inlineHelpText>
+        <label>Unique Product Version</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>Version__c</fullName>
+        <description>Version of the T&amp;C</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Version of the T&amp;C</inlineHelpText>
+        <label>Version</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <label>IEC Terms and Conditions</label>
+    <nameField>
+        <label>Terms and Conditions Name</label>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>IEC Terms and Conditions</pluralLabel>
+    <searchLayouts>
+        <lookupDialogsAdditionalFields>Effective_Start_Date__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Is_Current__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Product_Information__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Version__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>CREATEDBY_USER</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>CREATED_DATE</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>UPDATEDBY_USER</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>LAST_UPDATE</lookupDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Effective_Start_Date__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Is_Current__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Product_Information__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Version__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>CREATEDBY_USER</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>CREATED_DATE</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>UPDATEDBY_USER</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>LAST_UPDATE</lookupPhoneDialogsAdditionalFields>
+        <searchFilterFields>NAME</searchFilterFields>
+        <searchFilterFields>Effective_Start_Date__c</searchFilterFields>
+        <searchFilterFields>Is_Current__c</searchFilterFields>
+        <searchFilterFields>Product_Information__c</searchFilterFields>
+        <searchFilterFields>Version__c</searchFilterFields>
+        <searchFilterFields>CREATEDBY_USER</searchFilterFields>
+        <searchFilterFields>CREATED_DATE</searchFilterFields>
+        <searchFilterFields>UPDATEDBY_USER</searchFilterFields>
+        <searchFilterFields>LAST_UPDATE</searchFilterFields>
+    </searchLayouts>
+    <sharingModel>ControlledByParent</sharingModel>
+    <validationRules>
+        <fullName>IEC_Cant_change_TnC_when_Final</fullName>
+        <active>false</active>
+        <description>The T&amp;C can&apos;t be edited when the status is Final</description>
+        <errorConditionFormula>ISNEW()==false &amp;&amp; ISPICKVAL(PRIORVALUE(Status__c), &apos;Final&apos;) &amp;&amp;  ISCHANGED(Is_Current__c)==false</errorConditionFormula>
+        <errorMessage>The T&amp;Cs cannot be edit when the status is Final</errorMessage>
+    </validationRules>
+</CustomObject>

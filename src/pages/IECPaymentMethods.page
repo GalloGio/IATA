@@ -1,0 +1,511 @@
+<apex:page title="Maintain Payment Details" controller="vfIECPaymentMethods" cache="false" sidebar="false" showHeader="false" standardStylesheets="false" action="{!pageLoad}">
+ <Title>Maintain Payment Details</Title>
+ 	<div class="gdpwrapper">    
+    <div class="gdpbody">
+        
+    <apex:includeScript value="{!$Resource.postmessage_js}" />
+    <apex:includeScript value="{!$Resource.IECjQuery172}" />
+     
+    <c:IECSiteHeader id="componentHeader" />
+    	
+	 <!-- only used for confirmation divs -->
+    <apex:stylesheet value="{!URLFOR($Resource.IECStyles, 'register.css')}" />    
+    <apex:stylesheet value="{!URLFOR($Resource.IECStyles, 'profile.css')}" />
+    
+    
+    <style>
+    
+    
+	    .payment-labelTD{
+	   		 width: 20%;
+	    }
+	    .payment-labelText{
+	    font-weight: bold;
+	    }
+	    .payment-dataText{
+	    color: #969696;
+	    }
+        
+        .gdpButton
+        {
+       		background: #1ebec8;
+			border: none;			
+			text-align: center;
+			color: #fff;
+			width: 217px !important;
+			height: 50px;
+			font-weight: 300;
+			font-size: 20px;
+			font-family: 'Raleway', sans-serif;
+        
+        }
+
+    </style>
+  
+    <script type="text/javascript">    
+        function proceedToAddNew() {
+            submitHostedPage('z_hppm_iframe');
+        }
+        
+        function callbacksuccess(paymentMethodId) {
+            this.document.getElementById('{!$Component.formCreditCards.hiddenNewCreditCardPaymentId}').value = paymentMethodId;
+            proceedToAddNewBackend();
+        }
+        
+        function callbackfailure( paramString ) {          
+            displayCallBackfailureJS(paramString);
+        }
+        
+        function resizeIFrame() {
+            if (this.document.getElementById('z_hppm_iframe') == null || this.document.getElementById('z_hppm_iframe') == 'undefined')
+                return;
+                
+            if (this.document.getElementById('{!$Component.formCreditCards.hiddenIsAddNew}').value == 'true') {
+                this.document.getElementById('z_hppm_iframe').height="390";
+            }
+            else {
+                this.document.getElementById('z_hppm_iframe').height="0";
+            }
+        }
+        
+        function switchAddNewUI(paramSwitch) {
+            this.document.getElementById('{!$Component.formCreditCards.hiddenIsAddNew}').value = paramSwitch;
+            if (paramSwitch == 'true') resizeIFrame();
+        }
+    </script>
+    
+    
+    <apex:form id="formCreditCards" forceSSL="true">
+        <apex:inputHidden value="{!newCreditCardPaymentId}" id="hiddenNewCreditCardPaymentId" />
+        <apex:inputHidden id="hiddenIsAddNew" />
+
+        <apex:actionFunction action="{!addCard}" name="proceedToAddNewBackend" status="proceedingToAddNewStatus" rerender="panelCreditCards, errorMessage, divDefaultPM"/>
+        <apex:actionFunction action="{!displayCallBackfailure}" name="displayCallBackfailureJS" rerender="errorMessage, panelHPM">
+            <apex:param name="errMsg" value="" assignTo="{!sErrorMsgFromHPM}"/>
+        </apex:actionFunction>
+        
+        
+        
+      <table class="tableHolder">
+        <tr>
+            <td class="menu-Panel"><c:IECHistMenu /></td>
+           
+            
+	        <td class="account-Panel">
+		        <div class="tableList-component">
+		            
+		          <div id="register">
+		
+		            <div class="box register fit1024"><!-- large -->
+		              <div class="header">
+		                <h1>Maintain payment details</h1>
+		              </div>
+		             
+	            
+              <div class="content">
+                    
+                        <div class="account-messagePanel">
+                            <apex:outputPanel id="errorMessage">
+	                            <div class="errorPanel">
+	                                    <apex:pageMessages escape="no" />
+	                       		 </div>
+                            </apex:outputPanel> 
+                        </div>
+                        
+
+                
+               
+                   
+                        <!-- Default Payment Methods -->
+                        <apex:outputPanel id="divDefaultPM">
+                            <apex:outputPanel id="defaultpm" layout="block" rendered="{!creditCardToEdit=='' && NOT(isAddNew)}">
+                                
+                                    <h2>Default Payment Method </h2>
+                                
+                                        <p> Define the payment method used by default for your transactions. </p>
+                                         <p> <span style="width: 54px;">Important:</span> This is the payment method used for your auto-renewals. </p>
+                                     
+                                     <br/>
+                                     
+						                <table>
+						                  <tr>
+						                    <td>
+						                      <div class="customSelect" style="width:430px;">
+						                        <i class="fa fa-caret-down"></i>
+						                        <span class="alert select">*<span style="color: #969696; margin-left: 5px;">Payment Method</span></span>
+						                       
+						                        <apex:selectList id="PM" value="{!customerDefaultPaymentMethodId}" size="1"   disabled="{!customerDefaultPaymentMethodId==''}" style="margin-left: 10px; width: 77%;">
+                                           			 <apex:selectOptions value="{!DefaultPaymentMethodsItems}"/>
+                                      		 	 </apex:selectList>
+                                      		 	 
+						                      </div>
+						                    </td>
+						                   
+						                    <td>
+						                      <apex:outputPanel id="ajax_loader" style="vertical-align: middle;">
+	                                            <apex:actionStatus id="updateStatus">
+	                                                <apex:facet name="start">
+	                                                    <div style="margin-left:10px;width:auto; height: 100%;opacity:0.75; filter:alpha(opacity=75);"> 
+	                                                        <img src="{!$Resource.IEC_progress}" border="0" width="43" height="15" />
+	                                                    </div>
+	                                                </apex:facet>
+	                                                <apex:facet name="stop"> 
+	                                                    <apex:commandLink value="Update" action="{!updateDefaultPaymentMethod}" rendered="{!customerDefaultPaymentMethodId!=''}" styleClass="customButton lastElm" style="width:215px;"  rerender="panelCreditCards, errorMessage, divDefaultPM" status="updateStatus" />
+	                                                </apex:facet>
+	                                            </apex:actionStatus>
+	                                        </apex:outputPanel>
+                                        
+                                        
+                                        
+						                    </td>
+						                
+						                
+						                  </tr>
+						                </table>
+						                
+						                <br/>
+								
+								<h2>Saved Payment Methods</h2>
+                            </apex:outputPanel>
+                             
+                        </apex:outputPanel>
+                        
+                        
+                        
+                        <!-- Credit Card Panel -->
+                        <apex:outputPanel id="panelCreditCards" >
+    
+                            <div  style="display:{!IF(isAddNew,'none','')}">
+                               
+                                <div class="settings-item">
+                                
+                                
+                                <!---- ICH  ----->                                  
+                                    <apex:outputPanel id="panelICH" layout="block"  styleClass="divCreditCard"  rendered="{!IF(isICHCustomer && hasCreditCards && creditCardToEdit=='', 'true', 'false')}">
+                                        <table border="0" style="width: 100%">
+                                                <tr>
+                                                    <td class="payment-labelTD">
+                                                        <apex:outputText styleClass="payment-labelText" value="Type:" />
+                                                    </td>
+                                                    <td class="payment-dataTD">
+                                                        <apex:outputText styleClass="payment-dataText" value="IATA Clearing House"/>
+                                                    </td>
+                                                    </tr>
+                                                  
+                                                    <tr>
+                                                     <td class="payment-buttonTD" rowspan="6">
+                                                    <apex:outputPanel id="ajax_loaderDefaultCard" style="vertical-align: middle;" rendered="{!IF(customerDefaultPaymentMethodId != ICHID, 'true', 'false')}">
+                                                                <apex:actionStatus id="updateDetaultStatus">
+                                                                    <apex:facet name="start">
+                                                                        <div style="margin-left:10px;width:100%; height: 100%;opacity:0.75; filter:alpha(opacity=75);"> 
+                                                                            <img src="{!$Resource.IEC_progress}" border="0" width="43" height="15" />
+                                                                        </div>
+                                                                    </apex:facet>
+                                                                    <apex:facet name="stop">
+                                                                        <apex:commandLink value="Make default" action="{!makeThisDefaltCreditCard}" style="color: #1ebec8; text-decoration: underline;"  rerender="panelCreditCards, errorMessage, divDefaultPM" status="updateDetaultStatus">
+                                                                         <apex:param name="DefaultCardId"
+                                                                                value="{!ICHID}"
+                                                                                assignTo="{!sDefaultCreditCardId}"/>
+                                                                        </apex:commandLink>
+                                                                    </apex:facet>
+                                                                </apex:actionStatus>
+                                                   </apex:outputPanel>
+                                                   
+                                                   <apex:outputPanel id="layoutfix" >&nbsp;&nbsp;&nbsp;&nbsp;</apex:outputPanel>
+                                                   </td>
+                                                 </tr>
+                                                  
+                                        </table>    
+                                        <div class="payment-separator"></div>                                           
+                                    </apex:outputPanel>
+                                
+                                
+                                <!-- no cards registered message -->
+                                 <apex:outputText rendered="{!NOT(hasCreditCards)}"  styleClass="payment-labelText" value="There are no registered payment methods."/>
+                                
+                                  
+                                  <!-- credit cards -->
+                                    <apex:repeat var="creditcard" value="{!creditCards}" rendered="{!hasCreditCards && NOT(isAddNew)}">
+    
+                                        <apex:outputPanel id="panelCreditCard" layout="block" styleClass="divCreditCard" rendered="{!(creditCardToEdit==''||creditCardToEdit==creditcard.zId)}">
+                                            <table border="0" style="width: 100%">
+                                               
+                                             <!--  
+                                                <tr>
+                                                    <td class="payment-labelTD"><apex:outputText styleClass="payment-labelText" value="Type:" /></td>
+                                                    <td class="payment-dataTD"><apex:outputText styleClass="payment-dataText" value="{!creditcard.CreditCardType}"/></td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td class="payment-labelTD"><apex:outputText styleClass="payment-labelText" value="Number:" /></td>
+                                                    <td class="payment-dataTD"><apex:outputText styleClass="payment-dataText" value="{!creditcard.CreditCardMaskNumber}"/></td>
+                                                </tr>
+                                             -->
+                                                                                          
+                                                 <h2 style="display:{!IF(creditCardToEdit==creditcard.zId,'','none')}">Update Credit Card {!creditcard.CreditCardType}{!creditcard.CreditCardMaskNumber}</h2>
+                                              
+                                                <tr style="display:{!IF(creditCardToEdit!=creditcard.zId,'','none')}">
+                                                    <td class="payment-labelTD"><apex:outputText styleClass="payment-labelText" value="Credit Card:" /></td>
+                                                    <td class="payment-dataTD"> <apex:outputText styleClass="payment-dataText" value="{!creditcard.CreditCardType}{!creditcard.CreditCardMaskNumber}"/> </td>
+                                                </tr>
+                                               
+                                                
+                                                
+                                                <tr style="display:{!IF(creditCardToEdit==creditcard.zId,'','none')}">
+                                                    <td class="payment-labelTD"><apex:outputText styleClass="payment-labelText" value="Card Security Code (CVV):" /></td>
+                                                    <td class="payment-dataTD"><apex:inputText styleClass="payment-inputText" value="{!creditcard.CreditCardCVV}" /></td>
+                                                </tr>
+                                              
+                                              
+                                                <tr>
+                                                    <td class="payment-labelTD"><apex:outputText styleClass="payment-labelText" value="Expiration date:" /></td>
+                                                    <td class="payment-dataTD">
+                                                        <!-- readonly -->
+                                                        <apex:outputPanel rendered="{!creditCardToEdit!=creditcard.zId}">
+                                                            <apex:outputText styleClass="payment-dataText" value="{0, number,00}">
+                                                                <apex:param value="{!creditcard.ExpirationMonth}"/>
+                                                            </apex:outputText>
+                                                            <apex:outputText styleClass="payment-dataText" value="/{!creditcard.ExpirationYear}" />
+                                                        </apex:outputPanel>
+                                                        <!-- editable -->
+                                                        <apex:outputPanel rendered="{!creditCardToEdit==creditcard.zId}">
+                                                            <apex:selectList value="{!creditcard.ExpirationMonth}" size="1" style="margin-left: 2px; width:50px; height: 33px;">
+                                                                <apex:selectOptions value="{!MonthsSelectOptionItems}"/>
+                                                            </apex:selectList>&nbsp;
+                                                            <apex:selectList value="{!creditcard.ExpirationYear}" size="1" style="width:60px;height: 33px; margin-bottom: 10px;">
+                                                                <apex:selectOptions value="{!YearsSelectOptionItems}"/>
+                                                            </apex:selectList>
+                                                        </apex:outputPanel>
+                                                    </td>
+                                                </tr>
+                                                <apex:outputPanel rendered="{!creditCardToEdit!=creditcard.zId}" > 
+                                                <tr>
+                                                    <td class="payment-labelTD"><apex:outputText styleClass="payment-labelText" value="Last Transaction Status:"   /></td>
+                                                    <td class="payment-dataTD" ><apex:outputText styleClass="payment-dataText" value="{!creditcard.LastTransactionStatus}"/></td>
+                                                </tr>
+                                                </apex:outputPanel>
+                                                <tr>
+                                                    <td class="payment-labelTD"><apex:outputText styleClass="payment-labelText" value="Cardholder Name" /></td>
+                                                    <td class="payment-dataTD">
+                                                        <apex:outputText styleClass="payment-dataText" value="{!creditcard.HolderName}" rendered="{!creditCardToEdit!=creditcard.zId}"/>
+                                                        <apex:inputText styleClass="payment-inputText" value="{!creditcard.HolderName}" rendered="{!creditCardToEdit==creditcard.zId}"/>
+                                                    </td>
+                                                </tr>
+                                                <tr style="display:{!IF(creditCardToEdit==creditcard.zId,'','none')}">
+                                                    <td class="payment-labelTD"><apex:outputText styleClass="payment-labelText" value="Country:" /></td>
+                                                    <td class="payment-dataTD">
+                                                        <apex:selectList id="Country" value="{!creditcard.Country}" size="1" styleClass="payment-selectList">
+                                                            <apex:selectOptions value="{!CountriesItems}"/>
+                                                        </apex:selectList>
+                                                    </td>
+                                                </tr>
+                                                <tr style="display:{!IF(creditCardToEdit==creditcard.zId,'','none')}">
+                                                    <td class="payment-labelTD"><apex:outputText styleClass="payment-labelText" value="Address 1:" /></td>
+                                                    <td class="payment-dataTD"><apex:inputText styleClass="payment-inputText" value="{!creditcard.AddresLine1}"/></td>
+                                                </tr>
+                                                <tr style="display:{!IF(creditCardToEdit==creditcard.zId,'','none')}">
+                                                    <td class="payment-labelTD"><apex:outputText styleClass="payment-labelText" value="Address 2:" /></td>
+                                                    <td class="payment-dataTD"><apex:inputText styleClass="payment-inputText" value="{!creditcard.AddresLine2}"/></td>
+                                                </tr>
+                                                <tr style="display:{!IF(creditCardToEdit==creditcard.zId,'','none')}">
+                                                    <td class="payment-labelTD"><apex:outputText styleClass="payment-labelText" value="City:" /></td>
+                                                    <td class="payment-dataTD"><apex:inputText styleClass="payment-inputText" value="{!creditcard.City}"/></td>
+                                                </tr>
+                                                <tr style="display:{!IF(creditCardToEdit==creditcard.zId,'','none')}">
+                                                    <td class="payment-labelTD"><apex:outputText styleClass="payment-labelText" value="State/Province:" /></td>
+                                                    <td class="payment-dataTD"><apex:inputText styleClass="payment-inputText" value="{!creditcard.StateProvince}"/></td>
+                                                </tr>
+                                                <tr style="display:{!IF(creditCardToEdit==creditcard.zId,'','none')}">
+                                                    <td class="payment-labelTD"><apex:outputText styleClass="payment-labelText" value="Postal Code:" /></td>
+                                                    <td class="payment-dataTD"><apex:inputText styleClass="payment-inputText" value="{!creditcard.PostalCode}"/></td>
+                                                </tr>
+                                                
+                                                
+                                            <!-- Edit/Delete buttons -->    
+                                              <tr>
+                                                   <td class="payment-buttonTD" rowspan="6">
+                                                        <apex:outputPanel rendered="{!creditCardToEdit==''}">
+                                                            
+                                                            <apex:commandLink value="Edit" style="color: #1ebec8; text-decoration: underline;" action="{!editButton}"  rerender="panelCreditCards, errorMessage, divDefaultPM">
+                                                                <apex:param name="creditCardToEdit" value="{!creditcard.zId}" assignTo="{!creditCardToEdit}"/>
+                                                            </apex:commandLink>
+                                                          
+                                                           &nbsp;|&nbsp; 
+                                                            <apex:outputPanel id="ajax_loader" >
+                                                               
+                                                                <apex:actionStatus id="deleteStatus">
+                                                                  
+                                                                    <apex:facet name="start">
+                                                                        <img style="padding-left: 1px;" src="{!$Resource.IEC_Ajax_loader}" border="0" width="16" height="16" />
+                                                                    </apex:facet>
+                                                                    <apex:facet name="stop">                                                                      
+                                                                        <apex:commandLink value="Delete" style="color: #1ebec8; text-decoration: underline;" action="{!deleteCard}" rendered="true"  rerender="panelCreditCards, errorMessage, divDefaultPM" status="deleteStatus">
+                                                                            <apex:param name="creditCardToDelete" value="{!creditcard.zId}" assignTo="{!creditCardToDelete}"/>
+                                                                        </apex:commandLink>                                                                      
+                                                                    </apex:facet>
+                                                                  
+                                                                </apex:actionStatus>
+                                                                 
+                                                            </apex:outputPanel>
+                                                      
+                                                            <apex:outputPanel id="ajax_loaderDefaultCard" rendered="{!IF(customerDefaultPaymentMethodId != creditcard.zId, 'true', 'false')}">
+                                                               &nbsp;|&nbsp; 
+                                                                <apex:actionStatus id="updateDetaultStatus">
+                                                                    <apex:facet name="start">
+                                                                        <div style="margin-left:10px;width:100%; height: 100%;opacity:0.75; filter:alpha(opacity=75);"> 
+                                                                            <img src="{!$Resource.IEC_progress}" border="0" width="43" height="15" />
+                                                                        </div>
+                                                                    </apex:facet>
+                                                                    <apex:facet name="stop">
+                                                                     
+                                                                        <apex:commandLink value="Make default" style="color: #1ebec8; text-decoration: underline;" action="{!makeThisDefaltCreditCard}"   rerender="panelCreditCards, errorMessage, divDefaultPM" status="updateDetaultStatus">
+                                                                            <apex:param name="DefaultCardId"
+                                                                                value="{!creditcard.zId}"
+                                                                                assignTo="{!sDefaultCreditCardId}"/>                                                                    
+                                                                            </apex:commandLink>
+                                                                          
+                                                                    </apex:facet>
+                                                                </apex:actionStatus>
+                                                            </apex:outputPanel>
+                                                            
+                                                        </apex:outputPanel>
+                                                    </td>
+                                             </tr>
+                                                
+                                                
+                                            </table>
+                                            <div class="payment-separator"></div>
+                                            <!-- Save/Cancel buttons -->
+                                            <apex:outputPanel layout="block"  rendered="{!creditCardToEdit==creditcard.zId}">
+                                              <table><tr><td>
+                                                <apex:commandLink action="{!cancelButton}"  styleClass="customButton" style="width:295px;background:#c8c8c8"  value="Cancel" rerender="panelCreditCards, errorMessage, divDefaultPM" />
+                                                </td>
+                                                <td>                                          
+                                                <apex:commandLink action="{!saveCard}"  styleClass="customButton" style="width:295px;" value="Save" rerender="panelCreditCards, errorMessage, divDefaultPM" />
+                                                </td></tr></table>
+                                            </apex:outputPanel>
+                                        </apex:outputPanel>
+                                    </apex:repeat>
+                                </div>
+                            </div>                                 
+                                   
+                            <apex:outputPanel rendered="{!(NOT(isAddNew) && creditCardToEdit=='' && hasZuoraAccount) || isAddNew}" >
+                            
+                            <div >
+                               
+                               
+                                <div >
+                                    <apex:outputPanel id="panelNewCreditCard" layout="block" styleClass="divNewCreditCard" rendered="{!isAddNew}">
+                                        <table border="0" style="width: 100%">
+                                            <tr>
+                                                <td>
+                                                    <!-- New credit card -->
+                                                    <div style="margin-left:15px; width:100%;">
+                                                        <apex:outputPanel id="panelHPM" layout="block" style="margin-left: 20px; height: 100%;" rendered="{!NOT(hasConfigError)}">
+<!--                                                             <span style="margin-left:15px; font-weight: bold">New Credit card</span><br /> -->
+                                                            <iframe id="z_hppm_iframe" name="z_hppm_iframe" style="margin-left: 8px;" width="99%" height="420" src="{!iframeSrc}" frameborder="0"></iframe>
+                                                        </apex:outputPanel>
+                                                        <apex:outputPanel layout="block" style="margin-left: 20px; height: 100%;" rendered="{!hasConfigError}">
+                                                            HPM Configuration error(s) !
+                                                        </apex:outputPanel>
+                                                    </div>                          
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        
+                                        <apex:outputPanel layout="block" style="padding: 15px; text-align: center;" rendered="{!isAddNew}">
+                                           
+                                            <apex:actionStatus id="proceedingToAddNewStatus">
+                                                <apex:facet name="start">
+                                                    <div style="width:100%; height: 100%;opacity:0.75; filter:alpha(opacity=75);"> 
+                                                        <img src="{!$Resource.IEC_progress}" border="0" width="43" height="15" />  
+                                                    </div>
+                                                </apex:facet>
+                                            </apex:actionStatus>
+                                           
+                                            
+                                            <apex:commandButton action="{!cancelButton}" styleClass="gdpButton" style="background: #c8c8c8;" value="Cancel" rerender="panelCreditCards, errorMessage, divDefaultPM" onclick="switchAddNewUI('false')"/>
+                                       	  	&nbsp; 
+                                       	   <apex:commandButton onclick="proceedToAddNew();" styleClass="gdpButton"  value="Submit" rerender="errorMessage" />
+                                       	   
+                                        </apex:outputPanel>
+                                    </apex:outputPanel>
+                
+                                    <!-- Add New Credit Card button -->
+                                    <br/>
+                                    <apex:outputPanel layout="block" rendered="{!NOT(isAddNew) && creditCardToEdit=='' && hasZuoraAccount}">
+                                        <!-- <img src="{!$Resource.IEC_add_icon}" width="15" height="15" /> -->
+                                        <apex:commandLink action="{!addButton}" styleClass="customButton" style="width:378px;"  value="Add New Credit Card" onclick="switchAddNewUI('true')" rerender="panelCreditCards, errorMessage, divDefaultPM" />&nbsp;
+                                    </apex:outputPanel>
+                                    
+                                </div>
+                            </div>
+                            
+                                
+            
+                            <apex:outputPanel id="panelnoCreditCards" style="padding: 10px; padding-left: 20px; color: #666;" rendered="{!not(hasCreditCards)}" layout="block">
+                                You do not have any registered credit cards.
+                            </apex:outputPanel>
+                            
+                            </apex:outputPanel>                     
+                        </apex:outputPanel>
+                   
+     </div>
+            </div>
+
+          </div>
+
+        </div>
+    </td>
+                    
+
+        </tr>
+    </table>               
+                   
+                   
+
+
+
+
+        <script type="text/javascript">
+            resizeIFrame();
+        </script>
+    </apex:form>
+     </div>
+      <div class="gadfooter">
+        <!-- Footer -->
+        <c:IECSiteFooter />
+       </div>
+    </div>
+
+    <style> 
+                .tabs {
+          height: 100vh !important;
+  			overflow: visible !important;
+        }
+
+		.gdpbody {
+ 		 padding-bottom: 100px !important;
+		}
+        
+	 	html, body {
+			height:100%;	
+			margin:0;
+			padding:0;
+		}				
+		.gdpwrapper {
+			min-height:100%;
+			position:relative;
+		}
+		.gdpbody{
+ 		 padding-bottom:141px; 
+		}
+        .gadfooter{
+            width:100%;
+            height:100px; 
+            position:absolute;
+            bottom:0;
+            left:0;        
+        }
+  </style>
+</apex:page>

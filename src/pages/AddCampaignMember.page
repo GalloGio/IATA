@@ -1,0 +1,13 @@
+<apex:page standardcontroller="ICCS_Product_Currency__c" extensions="AddCampaignMemberController">
+	<apex:form >
+	<apex:pageBlock >
+	<apex:pageMessages />
+		<apex:pageBlockSection >
+			<apex:selectList value="{!CampaignId}" size="1" label="Campaign">
+				<apex:selectOptions value="{!CampaignPicklistValues}"/>
+			</apex:selectList>
+			<apex:commandButton value="Add contacts" action="{!AddMembers}"/>
+		</apex:pageBlockSection>
+	</apex:pageBlock>
+	</apex:form>
+</apex:page>

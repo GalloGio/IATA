@@ -1,0 +1,143 @@
+<apex:component layout="none" controller="vcIECAppMenu">
+	<script>
+		function increaseUssage() {
+		     var ussageSpan = this.document.getElementById('unitsConsumed');
+		     
+		     if (ussageSpan != null) {
+		        var currentUssage = ussageSpan.innerHTML;
+		        ussageSpan.innerHTML  = parseInt(currentUssage) + 1;
+		    }
+		}		
+	</script>
+
+	<apex:attribute name="infoController"  description="Subscription Info Controller" type="vfIECSubscriptionInfo" required="true"/>
+	<apex:attribute name="applicationCode" description="Application code used to display different UI" type="string" />
+	
+	<apex:outputPanel layout="none" rendered="{!infoController.oSubscription <> null}">
+		<h3><apex:outputText value="{!if (applicationCode == 'GSS' || applicationCode == 'MDP', 'Service overview', 'Service details')}" /></h3>
+	
+		<div class="infoHolder">
+			<table>
+				<tbody>
+					<tr>
+						<td width="175px">
+							<p class="label">Subscription ID:</p>
+						</td>
+						<td>
+							<p style="display:inline-block;" class="data">{!infoController.sSubscriptionName}</p>&nbsp;&nbsp;
+							<p style="display:inline-block;" class="alert">
+								<apex:commandLink style="display:inline-block;" action="{!NavigateTo}" value="More..." rendered="{!applicationCode == 'GSS' || applicationCode == 'MDP'}">
+									<apex:param name="sPageName" value="IECFDDetail" assignTo="{!sPageName}"/>
+									<apex:param name="sSubscriptionNumber" value="{!infoController.sSubscriptionName}" assignTo="{!sSubscriptionNumber}"/>
+									<apex:param name="sProductCode" value="{!applicationCode}" assignTo="{!sProductCode}"/>
+								</apex:commandLink>
+							</p>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		
+		<div class="infoHolder">
+			<table>
+				<tbody>
+					<tr>
+						<td width="175px">
+							<p class="label">Service End Date:</p>
+						</td>
+						<td>
+							<p class="data">
+								<apex:outputText value="{0,date, dd MMMM yyyy}" rendered="{!infoController.isNotEvergreen}">
+									<apex:param value="{!infoController.dtAccessEndDate}" />
+								</apex:outputText>
+								<apex:outputText value="Evergreen" rendered="{!!infoController.isNotEvergreen}">
+								</apex:outputText>
+							</p>
+						</td>
+					</tr>
+					<tr>
+        				<apex:variable id="subscriptionDaysLeftRow" var="showRenewalDays" value="" rendered="{!infoController.isNotEvergreen}">
+						<td width="175px"></td>
+						<td>
+							<p class="alert">{!infoController.iDaysLeft}&nbsp;Days Left</p>
+						</td>
+                        </apex:variable>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		
+		<apex:outputPanel layout="none" rendered="{!applicationCode != 'GSS' && applicationCode != 'MDP'}">
+			<div class="infoHolder">
+				<table>
+					<tbody>
+						<tr>
+							<td width="175px">
+								<p class="label">Usage Tracking:</p>
+							</td>
+							<td>
+								<p class="data">
+									{!IF(infoController.iUsageLeft==-999, 'Unlimited Usage', infoController.dUnitsPurchased)}    
+									<apex:outputText value=" Units Purchased"  rendered="{!infoController.iUsageLeft<>-999}"/>
+								</p>
+							</td>
+						</tr>
+						<tr>
+							<td width="175px"></td>
+							<td>
+								<p class="alert">{!infoController.dUnitsConsumed}&nbsp;Units Used</p>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</apex:outputPanel>
+		
+        <apex:variable id="subscriptionRenewalRow" var="showRenewalOptions" value="" rendered="{!infoController.isNotEvergreen}">
+            <div class="infoHolder">
+                <table>
+                    <tbody>
+                        <tr>
+                            <td width="175px">
+                                <p class="label">Service Renewal:</p>
+                            </td>
+                            <td>
+                                <p class="data">
+                                    <apex:commandLink onclick="changeCursorProgress(this);" styleClass="commandLink" value="View Options" action="{!infoController.renewRatePlan}" rendered="{!infoController.bDisplayRenewBtn && infoController.dtRenewalAccessibleDate <= TODAY()}"  rerender="errorMessage"/>
+                                    <apex:outputText value="{0,date, dd MMMM yyyy}" rendered="{!infoController.bDisplayRenewBtn && infoController.dtRenewalAccessibleDate > TODAY()}">
+                                        <apex:param value="{!infoController.dtRenewalAccessibleDate}" />
+                                    </apex:outputText>
+                                    <apex:outputText value="No Available Options" rendered="{!infoController.bDisplayRenewBtn==false}" />
+                                </p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </apex:variable>
+        
+        <apex:outputText rendered="{!infoController.isNotEvergreen}">
+			<div class="infoHolder">
+				<table>
+					<tbody>
+						<tr>
+							<td width="175px">
+								<p class="label">Service Upgrade:</p>
+							</td>
+							<td>
+								<p class="data">
+									<apex:commandLink onclick="changeCursorProgress(this);"  styleClass="commandLink" value="View Options" action="{!infoController.upgrade}" rendered="{!infoController.bDisplayUpgradeBtn}" rerender="errorMessage"/>
+									<apex:outputText value="No Available Options" rendered="{!infoController.bDisplayUpgradeBtn==false}" />
+								</p>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</apex:outputText>
+	</apex:outputPanel>
+	
+	<apex:outputPanel layout="none" rendered="{!infoController.oSubscription == null}">
+		<h3>Please select a subscription to view service details</h3>
+	</apex:outputPanel>
+</apex:component>

@@ -1,0 +1,55 @@
+<apex:page standardController="Case" recordSetVar="cases" extensions="MassCloseCasesCtrl">
+    <apex:form >
+        
+        
+        <apex:pageBlock rendered="{!pagenumber=0}">
+            <apex:pageMessages />
+            <apex:pageBlockButtons >
+                <apex:commandButton value="Back" action="{!Cancel}"/>
+            </apex:pageBlockButtons>
+            
+            <apex:pageBlockSection columns="1">
+                <apex:outputText value="Your request cannot be taken in charge beacause massive closure of cases is only available for IATA Financial Review cases."/>
+            </apex:pageBlockSection> 
+        </apex:pageBlock>
+        
+        
+        
+        
+        <apex:pageBlock rendered="{!pagenumber=1}">
+            <apex:pageMessages />
+            
+            <apex:pageBlockButtons >
+                <apex:commandButton value="Cancel" action="{!Cancel}"/>
+                <apex:commandButton value="Confirm" action="{!CloseCases}"/>
+            </apex:pageBlockButtons>
+            <apex:pageBlockSection title="Do you confirm you want to close these cases?"/>
+            <apex:pageBlockTable value="{!casesel}" var="case">
+                <apex:column value="{!case.casenumber}"/>
+                <apex:column value="{!case.subject}"/>
+                <apex:column value="{!case.Contact.Name}"/>
+                <apex:column value="{!case.Account.Name}"/>
+                <apex:column value="{!case.Status}"/>
+                <apex:column value="{!case.priority}"/>
+                <apex:column value="{!case.CreatedDate}"/>
+                <apex:column value="{!case.LastModifiedDate}"/>
+                <apex:column value="{!case.Owner.Alias}"/>
+                <apex:column value="{!case.Account_Billing_Country__c}"/> 
+            </apex:pageBlockTable> 
+        </apex:pageBlock>
+        
+        
+        
+        
+         <apex:pageBlock rendered="{!pagenumber=2}">
+            <apex:pageMessages />
+            <apex:pageBlockButtons >
+                <apex:commandButton value="OK" action="{!Cancel}"/>
+            </apex:pageBlockButtons>
+            
+            <apex:pageBlockSection columns="1">
+                <apex:outputText value="Your request has been succesfully taken in charge. In a few minutes you will receive an email with the result of this operation."/>
+            </apex:pageBlockSection> 
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

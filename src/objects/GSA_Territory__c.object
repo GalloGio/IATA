@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>AIMS_Area_ID__c</fullName>
+        <externalId>false</externalId>
+        <label>AIMS Area ID</label>
+        <length>1</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AIMS_ID__c</fullName>
+        <description>Note that this field is not unique, and it does not have to be external id.</description>
+        <externalId>true</externalId>
+        <label>AIMS ID</label>
+        <length>40</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AIMS_Related_Account__c</fullName>
+        <externalId>false</externalId>
+        <label>AIMS Related Account</label>
+        <length>40</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AIMS_Territory_Unique_Reference__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <description>Unique reference to Territory Record in AIMS. This is used for data integration from AIMS.
+It uses concatenation of Territory Id + Airline Code + State + seq number.</description>
+        <externalId>true</externalId>
+        <inlineHelpText>Unique reference to Territory Record in AIMS. This is used for data integration from AIMS</inlineHelpText>
+        <label>AIMS Territory Unique Reference</label>
+        <length>40</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>Accreditation_ID__c</fullName>
+        <externalId>false</externalId>
+        <label>Accreditation ID</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Airline_Code__c</fullName>
+        <externalId>false</externalId>
+        <label>Airline Code</label>
+        <length>3</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Airline_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Airline Name</label>
+        <length>60</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Appointment_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Appointment Date</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Appointment_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Appointment Type</label>
+        <length>1</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Check_Digit__c</fullName>
+        <externalId>false</externalId>
+        <label>Check Digit</label>
+        <length>1</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>IATA_Code__c</fullName>
+        <externalId>false</externalId>
+        <label>IATA Code</label>
+        <length>7</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>IATA_Custom_ISO_Country_Code__c</fullName>
+        <description>Used as LCtryISO, MCtryISO, RCtryISO by the GDP/MDP table. 
+For UP (US Proctectorates), use the Territory_State_Abbreviation, otherwise, it is equals to IATA_ISO_Country</description>
+        <externalId>false</externalId>
+        <formula>IF( IATA_ISO_Country__c = &apos;UP&apos; 
+   , IF (LEN(Territory_State_Abbreviation__c)&gt;2
+        ,  RIGHT(Territory_State_Abbreviation__c, 2)
+        , Territory_State_Abbreviation__c
+        )
+   , IATA_ISO_Country__c 
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Used as LCtryISO, MCtryISO, RCtryISO by the GDP/MDP table, based on IATA_ISO_Country or Territory_State_Abbreviation</inlineHelpText>
+        <label>IATA Custom ISO Country Code</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>IATA_ISO_Country__c</fullName>
+        <externalId>false</externalId>
+        <label>IATA ISO Country</label>
+        <length>2</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>IATA_ISO_NCode__c</fullName>
+        <externalId>false</externalId>
+        <label>IATA ISO NCode</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Location_Country_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Location Country Name</label>
+        <length>30</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Related_Account__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Related Account</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>GSA Territories</relationshipLabel>
+        <relationshipName>GSA_Territories</relationshipName>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Related_Accreditation__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Accreditation</label>
+        <referenceTo>Accreditation__c</referenceTo>
+        <relationshipLabel>GSA Territories</relationshipLabel>
+        <relationshipName>GSA_Territories</relationshipName>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Related_GDP_Products_Account_View__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Related GDP Products Account</label>
+        <referenceTo>GDP_Products_Account_View__c</referenceTo>
+        <relationshipLabel>GSA Territories</relationshipLabel>
+        <relationshipName>GSA_Territories</relationshipName>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Territory_Country_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Territory Country Name</label>
+        <length>30</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Territory_Description__c</fullName>
+        <externalId>false</externalId>
+        <label>Territory Description</label>
+        <length>40</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Territory_IATA_Numeric_Country_Code__c</fullName>
+        <externalId>false</externalId>
+        <label>Territory IATA Numeric Country Code</label>
+        <length>2</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Territory_ISO_Country__c</fullName>
+        <externalId>false</externalId>
+        <label>Territory ISO Country</label>
+        <length>2</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Territory_State_Abbreviation__c</fullName>
+        <externalId>false</externalId>
+        <label>Territory State Abbreviation</label>
+        <length>6</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>GSA Territory</label>
+    <nameField>
+        <label>GSA Territory Name</label>
+        <trackHistory>true</trackHistory>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>GSA Territories</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+</CustomObject>

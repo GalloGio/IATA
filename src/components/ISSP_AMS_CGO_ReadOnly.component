@@ -1,0 +1,842 @@
+<apex:component controller="ISSP_AMS_Accreditation">
+    <apex:pageBlockSection columns="1" title="{!$Label.ISSP_AMS_First_Page_Summary_Header}" collapsible="false">
+    			<apex:panelGrid columns="2" width="100%" cellpadding="10%" columnClasses="col1, col2">
+                    	<apex:outputText value="{!$Label.ISSP_AMS_Step1_Operation_Type}"/>
+                        <apex:outputText value="{!$Label.ISSP_Cargo_Agent}"/>
+                    	<apex:outputText value="{!$Label.ISSP_AMS_Step1_Approval_Sought}" />
+                    	<apex:outputText value="{!newForm.Agent_Type__c + ' - ' + IF(newCase.Reason1__c=='New HO', $Label.ISSP_AMS_Reason_New_HO, $Label.ISSP_AMS_Reason_New_Branch)}"/>
+                    	<apex:outputText value="{!$Label.ISSP_CountryConcerned}"/> 
+                    	<apex:outputText value="{!amsAllLangCountryLabel}"/> 
+    			</apex:panelGrid>
+          </apex:pageBlockSection>
+    
+    <div style="page-break-after:always;margin-top:30px;">
+          <apex:pageBlockSection columns="1" collapsible="false">
+              <apex:facet name="header">
+                        <apex:outputpanel >
+                            {!CASE(amsOfficeType,'HO', $Label.ISSP_AMS_STEP_3_1_HO_Title, $Label.ISSP_AMS_STEP_3_1_Branch_Title)}
+                            <apex:commandButton styleclass="btn btn-default" action="{!goToStep3Section1}" value="{!$Label.ISSP_EditSection}" id="Edit-Section1" style="float:right"/>
+                        </apex:outputpanel>                       
+                    </apex:facet>
+    			<apex:panelGrid columns="2" width="100%" cellpadding="10%" columnClasses="col1, col2" rowClasses="cgo-readonly">
+                    
+                <apex:outputText value="* Legal Status "/>
+                <apex:outPutText value="{!newForm.ISSP_AMS_Legal_Status__c}"/>
+                <apex:outputText value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Date_legal_establishment__c.Label}"/>
+                <apex:outputText value="{0,date, MMMM d,  yyyy}">
+                    <apex:param value="{!newForm.ISSP_AMS_Date_legal_establishment__c}" />
+                </apex:outputText>           
+              	<apex:outputText value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Date_of_incorporation__c.Label}" rendered="{!newForm.ISSP_AMS_Legal_Status__c == 'Corporation'}"/>
+                <apex:outputText value="{0,date, MMMM d,  yyyy}" rendered="{!newForm.ISSP_AMS_Legal_Status__c == 'Corporation'}">
+                	<apex:param value="{!newForm.ISSP_AMS_Date_of_incorporation__c}" />    
+                </apex:outputText>
+                <apex:outputText value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Nominee_Trustee__c.Label}" rendered="{!newForm.ISSP_AMS_Legal_Status__c == 'Corporation'}"/>
+                <apex:outputText value="{!newForm.ISSP_AMS_Nominee_Trustee__c}" rendered="{!newForm.ISSP_AMS_Legal_Status__c == 'Corporation'}"/>
+                    
+                <apex:outputText value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Date_of_Association__c.Label}" rendered="{!newForm.ISSP_AMS_Legal_Status__c == 'Association'}"/>           
+                <apex:outputText value="{!newForm.ISSP_AMS_Date_of_Association__c}" rendered="{!newForm.ISSP_AMS_Legal_Status__c == 'Association'}"/>
+              	
+                <apex:outputText value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_For_whom_Nominee__c.Label}" rendered="{!AND(AND(newForm.ISSP_AMS_Nominee_Trustee__c != '', newForm.ISSP_AMS_Nominee_Trustee__c == 'Yes'),newForm.ISSP_AMS_Legal_Status__c == 'Corporation')}"/>           
+                <apex:outputText value="{!newForm.ISSP_AMS_For_whom_Nominee__c}" rendered="{!AND(AND(newForm.ISSP_AMS_Nominee_Trustee__c != '', newForm.ISSP_AMS_Nominee_Trustee__c == 'Yes'),newForm.ISSP_AMS_Legal_Status__c == 'Corporation')}"/>
+                
+                <apex:outputText value="* Give details of the parent business activities of your firm (customs house broker, ocean freight forwarder, travel agent, etc.)"/>
+                <apex:outputText value="{!newForm.ISSP_AMS_Business_Activities__c}" />
+                
+                <apex:outputText value="* Is the applicant a parent, subsidiary, affiliate, owner, officer, director,  employee, partner,  or stockholder of any other business concern(s)? "/>
+                <apex:outputText value="{!newForm.ISSP_AMS_Is_Applicant_Parent__c}" />
+                
+                 <apex:outputText value="* State the name(s) address(es) and nature of the business activities involved." rendered="{!newForm.ISSP_AMS_Is_Applicant_Parent__c == 'Yes'}"/>
+                 <apex:outputText value="{!newForm.ISSP_AMS_State_Names_Addresses__c}" rendered="{!newForm.ISSP_AMS_Is_Applicant_Parent__c == 'Yes'}"/>
+                    
+                 <apex:outputText value="* Number of years for which you have successfully traded?" />
+                 <apex:outputText value="{!newForm.ISSP_AMS_Number_of_Years_Traded__c}" />
+                    
+                 <apex:outputText value="Is your firm authorized to make customs declarations?"/>
+                 <apex:outputText value="{!newForm.ISSP_AMS_Is_Make_Declarations__c}" />
+                    
+                </apex:panelGrid>
+              </apex:pageBlockSection>
+    </div>
+    <apex:pageBlockSection columns="1" collapsible="false">
+        	<apex:facet name="header">
+                        <apex:outputpanel >
+                            {!$Label.ISSP_AMS_STEP_3_2_Title}
+                            <apex:commandButton styleclass="btn btn-default" action="{!goToStep3Section2}" value="{!$Label.ISSP_EditSection}" id="Edit-Section2" style="float:right"/>
+                        </apex:outputpanel>                       
+       		</apex:facet>
+    		<apex:panelGrid columns="2" width="100%" cellpadding="10%" columnClasses="col1, col2">
+            
+                <apex:outputText value="{!$ObjectType.Account.fields.Legal_name__c.Label}" />
+                <apex:outputfield value="{!hqAccount.Name}" />
+                <apex:outputText value="Full billing Address of the Office for which Application for Approval is made" />
+                <apex:outputtext value="{0}
+                            <br />{1}<br />{2}" escape="false">
+                            <apex:param value="{!hqAccount.BillingStreet}" />
+                            <apex:param value="{!hqAccount.BillingCity},&nbsp;{!hqAccount.BillingPostalCode}" />
+                            <apex:param value="{!IF(hqAccount.BillingState!='',hqAccount.BillingState + ',&nbsp;','')}{!hqAccount.BillingCountry}" />
+                </apex:outputtext>
+                 <apex:outputText value="Full shipping Address of the Office for which Application for Approval is made" />
+                <apex:outputtext value="{0}
+                            <br />{1}<br />{2}" escape="false">
+                            <apex:param value="{!hqAccount.ShippingStreet}" />
+                            <apex:param value="{!hqAccount.ShippingCity},&nbsp;{!hqAccount.ShippingPostalCode}" />
+                            <apex:param value="{!IF(hqAccount.ShippingState!='',hqAccount.ShippingState + ',&nbsp;','')}{!hqAccount.ShippingCountry}" />
+                 </apex:outputtext>
+                 <apex:outputText value="{!$ObjectType.Account.fields.Website.Label}" />
+                 <apex:outputfield value="{!hqAccount.Website}" />
+                <apex:outputText value="{!$ObjectType.Account.fields.Phone.Label}" />
+                 <apex:outputfield value="{!hqAccount.Phone}" />
+                <apex:outputText value="{!$ObjectType.Account.fields.Email__c.Label}" />
+                 <apex:outputfield value="{!hqAccount.Email__c}" />
+                <apex:outputText value="{!$ObjectType.Account.fields.Mobile__c.Label}" />
+                 <apex:outputfield value="{!hqAccount.Mobile__c}" />
+                <apex:outputText value="{!$ObjectType.Account.fields.Fax.Label}" />
+                 <apex:outputfield value="{!hqAccount.Fax}" />
+                
+                <apex:outputText value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Cargo_Office_Open_Date__c.Label}" />           
+                <apex:outputText value="{0,date, MMMM d,  yyyy}">
+                    <apex:param value="{!newForm.ISSP_AMS_Cargo_Office_Open_Date__c}"/>
+                </apex:outputText>
+                
+                <apex:outputText value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Date_license_granted__c.Label}" rendered="{!countryCheckList.License_required__c==true}"/>           
+                    <apex:outputText value="{0,date, MMMM d,  yyyy}" rendered="{!countryCheckList.License_required__c==true}">
+                    	<apex:param value="{!newForm.ISSP_AMS_Date_license_granted__c}"/>
+                    </apex:outputText>
+                
+                <apex:outputText value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Type_of_License__c.Label}" rendered="{!countryCheckList.License_required__c==true}"/>           
+                <apex:outputText value="{!newForm.ISSP_AMS_Type_of_License__c}" rendered="{!countryCheckList.License_required__c==true}" />
+                
+  			</apex:panelGrid>
+        </apex:pageBlockSection>
+    <div style="page-break-after:always;margin-top:30px;">
+    
+    <!-- ************************* section Local Details (China) ************************* -->
+    			<apex:pageBlockSection columns="1" collapsible="false" rendered="{!isocountry.ISO_Code__c=='CN'}">
+                    <apex:facet name="header">
+                        <apex:outputpanel >
+                            Agency Details in Local language
+                            <apex:commandButton styleclass="btn btn-default" action="{!goToStep3Section2}" value="{!$Label.ISSP_EditSection}" id="Edit-Section3" style="float:right"/>
+                        </apex:outputpanel>
+                    </apex:facet>
+                    <apex:outputText value="Please enter the Legal Name and Physical & Correspondence address of the Agency to be accredited in your local language."/>
+                    <apex:panelGrid columns="4" width="100%" cellpadding="10%" columnClasses="col1_regular, col2_regular">
+                        <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Legally_Registered_Name__c.Label}"/>
+                       	<apex:outputField value="{!newForm.Local_Legally_Registered_Name__c}" />
+                        <apex:outputtext ><!--empty: move following field to next row -->&nbsp;</apex:outputtext>
+                    	<apex:outputtext ><!--empty: move following field to next row -->&nbsp;</apex:outputtext>
+                        
+                        <apex:outputText value="Physical Address" style="font-weight:bold; font-size:110%"/>
+                        <apex:outputtext ><!--empty: move following field to next row -->&nbsp;</apex:outputtext>
+                    	<apex:outputText value="Correspondence Address" style="font-weight:bold; font-size:110%"/>
+                        <apex:outputtext ><!--empty: move following field to next row -->&nbsp;</apex:outputtext>
+                        
+                        <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Physical_Address_Street__c.Label}"/>
+                       	<apex:outputField value="{!newForm.Local_Physical_Address_Street__c}" />
+                        <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Postal_Address_Street__c.Label}"/>
+                       	<apex:outputField value="{!newForm.Local_Postal_Address_Street__c}" styleClass="PostalStreet"/>
+                      	
+                        <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Physical_Address_City__c.Label}"/>
+                       	<apex:outputField value="{!newForm.Local_Physical_Address_City__c}" />
+                        <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Postal_Address_City__c.Label}"/>
+                      	<apex:outputField value="{!newForm.Local_Postal_Address_City__c}"/>
+                        
+                        <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Physical_Address_Postal_Code__c.Label}"/>
+                       <apex:outputField value="{!newForm.Local_Physical_Address_Postal_Code__c}" />
+                        <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Postal_Address_Postal_Code__c.Label}"/>
+                        <apex:outputField value="{!newForm.Local_Postal_Address_Postal_Code__c}" styleClass="PostalPostalCode"/>
+                        
+                        <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Physical_Address_Province__c.Label}"/>
+                       	<apex:outputField value="{!newForm.Local_Physical_Address_Province__c}" />
+                        <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Postal_Address_Province__c.Label}"/>
+                        <apex:outputField value="{!newForm.Local_Postal_Address_Province__c}" styleClass="PostalProvince"/>
+                        
+                        <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Physical_Address_Area__c.Label}"/>
+                       	<apex:outputField value="{!newForm.Local_Physical_Address_Area__c}" />
+                        <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Postal_Address_Area__c.Label}"/>
+                        <apex:outputField value="{!newForm.Local_Postal_Address_Area__c}" styleClass="PostalArea"/>
+                        
+                        <apex:outputLabel value="Country"/>
+                       	<apex:outputText value="{!isocountry.IATA_Country_ZH__c}" label="Country"/>
+                        <apex:outputLabel value="Country"/>
+                       	<apex:outputText value="{!isocountry.IATA_Country_ZH__c}" label="Country"/>
+                    </apex:panelGrid>
+                </apex:pageBlockSection>
+    </div>
+    <div style="page-break-after:always;margin-top:30px;">
+    <apex:pageBlockSection columns="1" collapsible="false">
+    <apex:facet name="header">
+                        <apex:outputpanel >
+                            SECTION 3 - Agency Contacts
+                            <apex:commandButton styleclass="btn btn-default" action="{!goToStep3Section3}" value="{!$Label.ISSP_EditSection}" id="Edit-Section3" style="float:right"/>
+                        </apex:outputpanel>                       
+       		</apex:facet>
+    <apex:panelGrid columns="1" width="100%" cellpadding="10%">
+        <apex:dataTable value="{!List_AgencyContacts}" var="agencycon" width="100%" columnsWidth="15%,30%,25%,30%">
+            <apex:facet name="header">3.1 PEOPLE</apex:facet>
+            <apex:column style="vertical-align: text-top;" headerClass="pdfHeader">
+            	<apex:facet name="header">Name</apex:facet>
+            	<apex:outputText value="{!agencycon.First_name__c} {!agencycon.Last_name__c} {!IF(isocountry.ISO_Code__c=='CN','('+agencycon.Local_First_name__c + ' ' + agencycon.Local_Last_Name__c + ')','')}"/>
+        	</apex:column>
+            <apex:column style="vertical-align: text-top;" headerClass="pdfHeader">
+                <apex:facet name="header">Contact Details</apex:facet>
+            	{!$ObjectType.Contact.fields.Phone.Label}: {!agencycon.Phone__c}<br/>
+       			{!$ObjectType.Contact.fields.MobilePhone.Label}: {!agencycon.Mobile__c}<br/>
+  				{!$ObjectType.Contact.fields.Email.Label}: {!agencycon.Email__c}<br/>
+ 				{!$ObjectType.Contact.fields.FAX.Label}: {!agencycon.FAX__c}<br/>
+				{!$Label.ISSP_Address}: {!agencycon.AddressStreet__c}
+				<span style="display:{!IF(agencycon.AddressPostcode__c == '','none','')}">, </span>
+ 				{!agencycon.AddressPostcode__c}
+    			<span style="display:{!IF(agencycon.AddressCity__c == '','none','')}">, </span>
+  				{!agencycon.AddressCity__c}
+ 				<span style="display:{!IF(agencycon.AddressCountry__c == '','none','')}">, </span>
+				{!agencycon.AddressCountry__c}
+			</apex:column>
+        	<apex:column style="vertical-align: text-top;" headerClass="pdfHeader">
+  				<apex:facet name="header">{!$Label.ISSP_AMS_Additional_Data}</apex:facet>
+   				{!$ObjectType.AMS_Accreditation_Contact__c.fields.Financial_interest__c.Label}: {!TEXT(agencycon.Financial_interest__c)}<br/>
+				{!$ObjectType.AMS_Accreditation_Contact__c.fields.Time_devoted_to_Agency_business__c.Label}: {!TEXT(agencycon.Time_devoted_to_Agency_business__c)}<br/>
+            </apex:column>
+            <apex:column style="vertical-align: text-top;" headerClass="pdfHeader" width="20%" >
+                <apex:facet name="header">Roles &amp; Responsibilities</apex:facet>
+                <apex:outputText rendered="{!agencycon.Agency_owner__c}" value="{!CASE(ownerLabelType, 'shareholder', $Label.ISSP_AMS_Shareholder, 'partner', $Label.ISSP_AMS_Partner, $Label.ISSP_AMS_Owner)}:"/><apex:image value="/img/checkbox_checked.gif" rendered="{!agencycon.Agency_owner__c}"/><br/>
+                <apex:outputText rendered="{!agencycon.Agency_role__c}" value="{!CASE(roleLabelType, 'director', $Label.ISSP_AMS_Director, $Label.ISSP_AMS_Manager)}:"/><apex:image value="/img/checkbox_checked.gif" rendered="{!agencycon.Agency_role__c}"/><br/>
+                <apex:outputText rendered="{!agencycon.Authorised_signatory__c}" value="{!$Label.ISSP_AMS_Authorised_Sig}:" escape="false"/><apex:image value="/img/checkbox_checked.gif" rendered="{!agencycon.Authorised_signatory__c}"/><br/>
+                <apex:outputText rendered="{!agencycon.Financial_Assessment_Contact__c}" value="{!$Label.ISSP_AMS_Fin_Contact}:" escape="false"/><apex:image value="/img/checkbox_checked.gif" rendered="{!agencycon.Financial_Assessment_Contact__c}"/><br/>
+                <apex:outputText rendered="{!agencycon.id == newForm.ISSP_AMS_Portal_admin__c}" value="{!$Label.ISSP_AMS_Portal_Admin}:" escape="false"/><apex:image value="/img/checkbox_checked.gif" rendered="{!agencycon.id == newForm.ISSP_AMS_Portal_admin__c}"/>
+            </apex:column>                                                      
+        </apex:dataTable>
+        <br/>
+        <apex:dataTable value="{!List_AgencyCompanies}" var="agencycon" width="100%" columnsWidth="30%,30%,20%,20%" rendered="{!List_AgencyCompanies.size != 0}">
+            <apex:facet name="header">3.2 COMPANIES</apex:facet>
+            <apex:column style="vertical-align: text-top;" headerClass="pdfHeader">
+            	<apex:facet name="header">Name</apex:facet>
+            	<apex:outputText value="{!agencycon.Name}"/>
+        	</apex:column>
+            <apex:column style="vertical-align: text-top;" headerClass="pdfHeader">
+            	<apex:facet name="header">Registration Number</apex:facet>
+            	<apex:outputText value="{!agencycon.Registration_number__c}"/>
+        	</apex:column>
+            <apex:column style="vertical-align: text-top;" headerClass="pdfHeader">
+            	<apex:facet name="header">IATA Code</apex:facet>
+            	<apex:outputText value="{!agencycon.IATACode__c}"/>
+        	</apex:column>
+            <apex:column style="vertical-align: text-top;" headerClass="pdfHeader">
+            	<apex:facet name="header">% Financial Interest</apex:facet>
+            	<apex:outputText value="{!agencycon.Financial_interest__c}"/>
+        	</apex:column>
+         </apex:dataTable>
+        </apex:panelGrid>
+      </apex:pageBlockSection>
+    </div>
+    
+    <div style="page-break-after:always;">
+    <apex:pageBlockSection columns="1" collapsible="false">
+    <apex:facet name="header">
+                        <apex:outputpanel >
+                            SECTION 4 - Additional Agent Details
+                            <apex:commandButton styleclass="btn btn-default" action="{!goToStep3Section4}" value="{!$Label.ISSP_EditSection}" id="Edit-Section4" style="float:right"/>
+                        </apex:outputpanel>                       
+       		</apex:facet>
+    <apex:panelGrid columns="3" width="100%" headerClass="bg-primary" cellpadding="10%" columnClasses="col1, col2_4, col3">
+        <apex:outputText value="* Has your firm ever held a Cargo Agency Agreement executed by IATA?"/>
+        <apex:outputText value="{!newForm.Has_your_firm_ever_held_a_Cargo_Agency__c}"/>
+        <apex:outputText >
+            <apex:panelGrid columns="4" rendered="{!newForm.Has_your_firm_ever_held_a_Cargo_Agency__c=='Yes'}">
+            	<apex:outputText value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.IATA_Agents_Numeric_Code__c.Label}"/>
+                <apex:outputText value="{!newForm.IATA_Agents_Numeric_Code__c}"/>
+                <apex:outputText value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Date_issued__c.Label}" />
+                <apex:outputText value="{!newForm.Date_issued__c}"/>
+                <apex:outputText value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Name_under_which_it_was_issued__c.Label}" />
+                <apex:outputText value="{!newForm.Name_under_which_it_was_issued__c}"/>
+                <apex:outputText value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Reason_for_cancellation__c.Label}" />
+                <apex:outputText value="{!newForm.Reason_for_cancellation__c}"/>
+            </apex:panelGrid>
+        </apex:outputText>
+        
+        <apex:outputText value="* Has your firm ever held a CASS Associate Agreement executed by IATA?"/>
+        <apex:outputText value="{!newForm.Has_your_form_ever_held_CASS_Assoc_etc__c}"/>
+        <apex:outputText >
+            <apex:panelGrid columns="4" rendered="{!newForm.Has_your_form_ever_held_CASS_Assoc_etc__c=='Yes'}">
+            	<apex:outputText value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.CASS_Assoc_Code__c.Label}"/>
+                <apex:outputText value="{!newForm.CASS_Assoc_Code__c}"/>
+                <apex:outputText value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.CASS_Date_issued__c.Label}" />
+                <apex:outputText value="{!newForm.CASS_Date_issued__c}"/>
+                <apex:outputText value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.CASS_Name_under_which_it_was_issued__c.Label}" />
+                <apex:outputText value="{!newForm.CASS_Name_under_which_it_was_issued__c}"/>
+                <apex:outputText value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.CASS_Reason_for_cancellation__c.Label}" />
+                <apex:outputText value="{!newForm.CASS_Reason_for_cancellation__c}"/>
+            </apex:panelGrid>
+        </apex:outputText>
+        
+        <apex:outputText value="* Does your firm intend to request authorization to deliver consignments for transportation to air carrier(s) at airport(s) in any country(ies) adjacent to the country for which this application is being made?"/>
+        <apex:outputText value="{!newForm.Does_your_firm_intend_to_request__c}"/>
+         <apex:outputText >
+        <apex:outputText rendered="{!newForm.Does_your_firm_intend_to_request__c=='Yes'}">
+        	<apex:outputText value="* List the airport(s) to be authorized and to be reflected on your Cargo Agency Agreement. " />
+            <apex:outputField value="{!newForm.List_the_airport_s_to_be_authorized__c}"/>
+        </apex:outputText>
+        </apex:outputText>
+        
+        <apex:outputText value="* Is your firm an approved IATA Passenger Sales Agent?"/>
+        <apex:outputText value="{!newForm.Is_your_firm_an_approved_IATA_Passenger__c}" />
+        <apex:outputText >
+        <apex:outputText rendered="{!newForm.Is_your_firm_an_approved_IATA_Passenger__c=='Yes'}">
+        	<apex:outputText value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Agents_Numeric_Code_of_your_Head_Office__c.Label}"/>
+            <apex:outputfield value="{!newForm.Agents_Numeric_Code_of_your_Head_Office__c}"/>
+        </apex:outputText>
+        </apex:outputText>
+       
+        <apex:outputText value="Does the air transportation which your firm sells/handles include goods owned by your firm? "/>
+        <apex:outputText value="{!newForm.Does_the_air_transportation_which_your__c}"/>
+         <apex:outputText >
+        <apex:outputText rendered="{!newForm.Does_the_air_transportation_which_your__c=='Yes'}">
+        	<apex:outputText value="* State the percentage of your gross monetary volume of yearly air cargo transportation business represented by the transportation of such goods"/>
+            <apex:outputfield value="{!newForm.State_the_percentage_of_your_gross__c}" />
+        </apex:outputText>
+        </apex:outputText>
+        
+        <apex:outputText value="Does your firm sell air cargo transportation to the general public?"/>
+        <apex:outputText value="{!newForm.Does_your_firm_sell_air_cargo__c}" />
+        <apex:outputText >
+        <apex:outputText rendered="{!newForm.Does_your_firm_sell_air_cargo__c=='Yes'}">
+        	<apex:outputText value="* What percentage of your sales is to the general public?"/>
+          	<apex:outputfield value="{!newForm.What_percentage_of_your_sales__c}"/>	
+        </apex:outputText>
+        </apex:outputText>
+               
+        <apex:outputText value="Is your firm a General Sales and Service Agent (GSSA) for any air carrier(s)?"/>
+        <apex:outputText value="{!newForm.Is_your_firm_a_General_Sales_Agent_GSA__c}"/>
+        <apex:outputText >
+        <apex:outputText rendered="{!newForm.Is_your_firm_a_General_Sales_Agent_GSA__c=='Yes'}">
+        	<apex:outputText value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.List_carriers__c.Label}" />
+            <apex:outputfield value="{!newForm.List_carriers__c}" />
+        </apex:outputText>
+        </apex:outputText>
+        
+        <apex:outputText value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Does_your_firm_operate_a_cargo_cartage__c.Label}"/>
+        <apex:outputText value="{!newForm.Does_your_firm_operate_a_cargo_cartage__c}"/>
+        <apex:outputText >
+        <apex:outputText rendered="{!newForm.Does_your_firm_operate_a_cargo_cartage__c=='Yes'}">
+        	<apex:outputText value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Does_your_firm_use_its_own_vehicles__c.Label}"/>
+            <apex:outputText value="{!newForm.Does_your_firm_use_its_own_vehicles__c}" />
+        </apex:outputText>
+        </apex:outputText>
+        
+        <apex:outputText value="Is your firm a member of a national or international association of freight forwarders?"/>
+        <apex:outputText value="{!newForm.Is_your_firm_a_member_of_a_national__c}"/>
+        <apex:outputText >
+        <apex:outputText rendered="{!newForm.Is_your_firm_a_member_of_a_national__c=='Yes'}">
+        	<apex:outputText value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Give_the_name_of_the_association_s__c.Label}"/>
+            <apex:outputfield value="{!newForm.Give_the_name_of_the_association_s__c}"/>
+        </apex:outputText>
+        </apex:outputText>
+        
+        <apex:outputText value="Is there any relationship between the ownership, management or profits of your business and the ownership, management or profits of a General Sales and Service Agent (GSSA) of an air carrier?"/>
+        <apex:outputText value="{!newForm.Is_there_any_relationship__c}"/>
+        <apex:outputText >
+        <apex:outputText rendered="{!newForm.Is_there_any_relationship__c=='Yes'}">
+        	<apex:outputText value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Give_full_details__c.Label}"/>
+            <apex:outputfield value="{!newForm.Give_full_details__c}"/>
+        </apex:outputText>
+        </apex:outputText>
+        
+        <apex:outputText value="Is your firm acting as agent for a surface carrier?"/>
+        <apex:outputText value="{!newForm.Is_your_firm_acting_as_agent_for_surface__c}" />
+        <apex:outputText >
+        <apex:outputText rendered="{!newForm.Is_your_firm_acting_as_agent_for_surface__c=='Yes'}">
+            <apex:panelGrid columns="1">
+            	<apex:outputText value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Rail__c.Label}" />
+               	<apex:outputfield value="{!newForm.Rail__c}"/>
+                <apex:outputText value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Steamship__c.Label}" />
+                <apex:outputfield value="{!newForm.Steamship__c}"/>
+                <apex:outputText value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Trucking__c.Label}" />
+                <apex:outputfield value="{!newForm.Trucking__c}"/>            
+            </apex:panelGrid>
+        </apex:outputText>
+        </apex:outputText>
+        
+        <apex:outputText value="Is your firm affiliated directly or indirectly with any shipper or consignee of air shipments?"/>
+        <apex:outputText value="{!newForm.Is_your_firm_affiliated_directly__c}" />
+        <apex:outputText >
+        <apex:outputText rendered="{!newForm.Is_your_firm_affiliated_directly__c=='Yes'}">
+        	<apex:outputText value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.provide_details__c.Label}" />
+            <apex:outputField value="{!newForm.provide_details__c}"/>
+        </apex:outputText>
+        </apex:outputText>
+        
+        <apex:outputText value="* Does your firm now share or intend to share office or warehouse space or equipment with any other person or firm?"/>
+        <apex:outputText value="{!newForm.Does_your_firm_now_share_or_intend__c}"/>
+        <apex:outputText >
+      	<apex:outputText rendered="{!newForm.Does_your_firm_now_share_or_intend__c=='Yes'}">
+        	<apex:outputText value="* Explain fully, stating name and business of other person or firm"/>
+           	<apex:outputField value="{!newForm.Explain_fully_stating_name__c}"/>
+        </apex:outputText>
+        </apex:outputText>
+        
+        <apex:outputText value="* Is your firm insured to cover its liability in the event of loss or damage to shipper's cargo while in your possession?"/>
+        <apex:outputText value="{!newForm.Is_your_firm_insured_to_cover__c}" />
+      	<apex:outputtext ><!--empty: move following field to next row --></apex:outputtext>
+        
+        <apex:outputText rendered="{!newForm.ISSP_AMS_Legal_Status__c == 'Sole Proprietorship'}" value="Have you:" style="font-size:115%; padding-top:15px"/>
+        <apex:outputText rendered="{!And(And(newForm.ISSP_AMS_Legal_Status__c != 'Association',newForm.ISSP_AMS_Legal_Status__c != 'Sole Proprietorship'),newForm.ISSP_AMS_Legal_Status__c != 'Partnership')}" value="Has any officer, director or employee:" style="font-size:115%; padding-top:15px"/>
+        <apex:outputText rendered="{!newForm.ISSP_AMS_Legal_Status__c == 'Association'}" value="Has any individual having been authorized  to sign and act on behalf of the Association:" style="font-size:115%; padding-top:15px"/>
+        <apex:outputText rendered="{!newForm.ISSP_AMS_Legal_Status__c == 'Partnership'}" value="Has any partner or individual having been authorized  to sign and act on behalf of the partnership:" style="font-size:115%; padding-top:15px"/>
+        <apex:outputtext ><!--empty: move following field to next row --></apex:outputtext>
+        <apex:outputtext ><!--empty: move following field to next row --></apex:outputtext>
+        
+        <apex:outputText value="* Been found guilty of infringements of any shipping regulations?"/>
+        <apex:outputText value="{!newForm.Been_found_guilty_of_infringements__c}" />
+       	<apex:outputtext ><!--empty: move following field to next row --></apex:outputtext>
+        
+        <apex:outputText value="* Been involved in a bankruptcy proceedings, other than as a claimant?"/>
+        <apex:outputText value="{!newForm.Been_involved_in_a_bankruptcy__c}" />
+        <apex:outputText >
+        <apex:outputText rendered="{!newForm.Been_involved_in_a_bankruptcy__c=='Yes'}">
+        	<apex:outputText value="* Are you fully and legally discharged of your obligations by the court involved?"/>
+        	<apex:outputText value="{!newForm.If_yes_are_you_fully_and_legally__c}" />
+        </apex:outputText>
+        </apex:outputText>
+        
+        <apex:outputText value="* Been a sole proprietor, shareholder, partner, officer, director or manager of employee(s) of a cargo agency which has been declared in default under the IATA rules and regulations? "/>
+        <apex:outputText value="{!newForm.Been_a_sole_proprietor__c}" />
+        <apex:outputtext ><!--empty: move following field to next row --></apex:outputtext>
+        
+        <apex:outputText value="* Been director or had a financial interest or a position of management in an IATA Agent that was removed from the IATA Cargo Agency List, or which was under notice of default, and still has outstanding debts to IATA Members or in an IATA Agent whose debts to IATA Members were partially met by recourse to a financial bond or guarantee?"/>
+        <apex:outputText value="{!newForm.Been_director_or_had_a_financial__c}"/>
+        <apex:outputText >
+        <apex:outputText rendered="{!newForm.Been_director_or_had_a_financial__c=='Yes'}">
+        	<apex:outputText value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Were_all_IATA_Members_fully_repaid__c.Label}" />
+            <apex:outputText value="{!newForm.Were_all_IATA_Members_fully_repaid__c}" />
+        </apex:outputText>
+        </apex:outputText>
+        
+    </apex:panelGrid>
+   </apex:pageBlockSection>
+    </div>
+    
+    <apex:pageBlockSection columns="1" collapsible="false">
+    <apex:facet name="header">
+                        <apex:outputpanel >
+                            SECTION 5 - Facilities
+                            <apex:commandButton styleclass="btn btn-default" action="{!goToStep3Section5}" value="{!$Label.ISSP_EditSection}" id="Edit-Section5" style="float:right"/>
+                        </apex:outputpanel>                       
+    </apex:facet>
+    <apex:panelGrid columns="1" width="100%" headerClass="bg-primary" cellpadding="10%" >
+        <apex:dataTable value="{!facilityList}" var="facility" width="100%" columnsWidth="25%,35%,20%,20%" rendered="{!$CurrentPage.parameters.mode!='pdf'}">
+        	<apex:column headerValue="Facility Name" value="{!facility.Name}"/> 
+            <apex:column headerValue="Office Full Address" value="{!facility.Office_Full_Address__c}"/>
+          	<apex:column headerValue="Type of Premises" value="{!facility.Type_of_Premises__c}"/>
+            <apex:column headerValue="Facility Type" value="{!facility.recordType.Name}"/>
+        </apex:dataTable>
+        
+        <apex:repeat value="{!facilityList}" var="facilityInContext" rendered="{!$CurrentPage.parameters.mode=='pdf'}">
+            <div style="page-break-after:always;">
+        	<apex:panelGrid columns="2" columnClasses="col1, col2">
+                <apex:outputText value="FACILITY NAME"/>
+                <apex:outputText value="{!facilityInContext.Name}"/>
+				
+                <apex:outputText value="* Office Full Address" />
+				<apex:outputField value="{!facilityInContext.Office_Full_Address__c}"/>
+				
+                <apex:outputText value="* Type of Premises" />
+				<apex:outputField value="{!facilityInContext.Type_of_Premises__c}"/>
+								
+				<apex:outputText value="Size" style="font-size:115%" rendered="{!NOT(isocountry.EACP_Country__c)}"/> 
+                <apex:outputtext rendered="{!NOT(isocountry.EACP_Country__c)}"><!--empty: move following field to next row --></apex:outputtext>
+                
+				<apex:outputText value="a) Total Area" rendered="{!NOT(isocountry.EACP_Country__c)}"/>
+				<apex:outputField value="{!facilityInContext.Total_Area__c}" rendered="{!NOT(isocountry.EACP_Country__c)}"/> 
+                
+				<apex:outputText value="b) Area used for Air freight" rendered="{!NOT(isocountry.EACP_Country__c)}"/>
+				<apex:outputField value="{!facilityInContext.Area_used_for_Air_freight__c}" rendered="{!NOT(isocountry.EACP_Country__c)}"/>
+				
+				<apex:outputText value="c) Doc Areas" rendered="{!AND(facilityInContext.recordType.Name=='Warehouse',NOT(isocountry.EACP_Country__c))}"/>
+				<apex:outputField value="{!facilityInContext.Doc_Areas__c}" rendered="{!AND(facilityInContext.recordType.Name=='Warehouse',NOT(isocountry.EACP_Country__c))}"/>
+
+				<apex:outputText value="d) Ceiling height" rendered="{!AND(facilityInContext.recordType.Name=='Warehouse',NOT(isocountry.EACP_Country__c))}"/>
+				<apex:outputField value="{!facilityInContext.Ceiling_height__c}" rendered="{!AND(facilityInContext.recordType.Name=='Warehouse',NOT(isocountry.EACP_Country__c))}"/>
+                
+				<apex:outputText value="e) Type" rendered="{!AND(facilityInContext.recordType.Name == 'Warehouse',NOT(isocountry.EACP_Country__c))}"/>
+                <apex:outputField value="{!facilityInContext.Type__c}" rendered="{!AND(facilityInContext.recordType.Name == 'Warehouse',NOT(isocountry.EACP_Country__c))}"/>
+                
+                <apex:outputText value="f) Accessibility to vehicles" rendered="{!AND(facilityInContext.recordType.Name == 'Warehouse',NOT(isocountry.EACP_Country__c))}"/>
+				<apex:outputField value="{!facilityInContext.Accessibility_to_vehicles__c}" rendered="{!AND(facilityInContext.recordType.Name == 'Warehouse',NOT(isocountry.EACP_Country__c))}"/>
+				
+				<apex:outputText value="g) Number of overhead doors" rendered="{!AND(facilityInContext.recordType.Name == 'Warehouse',NOT(isocountry.EACP_Country__c))}"/>
+				<apex:outputField value="{!facilityInContext.Number_of_overhead_doors__c}" rendered="{!AND(facilityInContext.recordType.Name == 'Warehouse',NOT(isocountry.EACP_Country__c))}"/>
+							
+				<apex:outputText value="* Are consignments made ready for carriage at this service point?"/>
+				<apex:outputField id="areConsignments" value="{!facilityInContext.Are_Consignments_made_ready__c}"/>
+		
+				<apex:outputText value="* If any of the functions involved in the preparation of cargo ready for carriage are outsourced or leased by your company, please provide details" rendered="{!AND(facilityInContext.Are_Consignments_made_ready__c=='Yes',isocountry.EACP_Country__c)}"/>
+				<apex:outputField value="{!facilityInContext.Any_functions_involved_in_preperations__c}" rendered="{!AND(facilityInContext.Are_Consignments_made_ready__c=='Yes',isocountry.EACP_Country__c)}"/>
+					
+				<apex:outputText value="Distance from nearest Airport" rendered="{!facilityInContext.recordType.Name == 'Office'}"/>
+				<apex:outputField value="{!facilityInContext.Distance_from_nearest_Airport__c}" rendered="{!facilityInContext.recordType.Name == 'Office'}"/>
+				
+                
+                
+				<apex:outputText value="Distance from nearest Office" rendered="{!facilityInContext.recordType.Name == 'Warehouse'}"/>
+				<apex:outputField value="{!facilityInContext.Distance_from_nearest_Office__c}" rendered="{!facilityInContext.recordType.Name == 'Warehouse'}"/>
+									
+				<apex:outputText value="Date on which this location was opened for business" rendered="{!NOT(isocountry.EACP_Country__c)}"/>
+				<apex:outputField value="{!facilityInContext.Date_location_opened_for_business__c}" rendered="{!NOT(isocountry.EACP_Country__c)}"/>
+									
+				<apex:outputText value="List airports serviced by this facility" />
+				<apex:outputField value="{!facilityInContext.List_airports_serviced_by_this_facility__c}"/>
+									
+				<apex:outputText value="{!IF(facilityRecordTypeName = 'Warehouse',"Is the warehouse leased?","* Is the office leased?")}" rendered="{!NOT(isocountry.EACP_Country__c)}"/>
+				<apex:outputField value="{!facilityInContext.Is_the_office_warehouse_leased__c}" rendered="{!NOT(isocountry.EACP_Country__c)}"/>
+										
+				<apex:outputText value="* Name of lessor" rendered="{!facilityInContext.Is_the_office_warehouse_leased__c=='Yes'}"/>
+				<apex:outputField value="{!facilityInContext.Name_of_lessor__c}" rendered="{!facilityInContext.Is_the_office_warehouse_leased__c=='Yes'}"/>
+
+				<apex:outputText value="* Duration of lease" rendered="{!facilityInContext.Is_the_office_warehouse_leased__c=='Yes'}"/>
+			 	<apex:outputField value="{!facilityInContext.Duration_of_lease__c}" rendered="{!facilityInContext.Is_the_office_warehouse_leased__c=='Yes'}"/>
+														
+				<apex:outputText value="* Date lease expires" rendered="{!facilityInContext.Is_the_office_warehouse_leased__c=='Yes'}"/>
+				<apex:outputField value="{!facilityInContext.Date_lease_expires__c}"  rendered="{!facilityInContext.Is_the_office_warehouse_leased__c=='Yes'}"/>
+										
+				<apex:outputText value="* Other pertinent details" rendered="{!facilityInContext.Is_the_office_warehouse_leased__c=='Yes'}"/>
+				<apex:outputField value="{!facilityInContext.Other_pertinent_details__c}" rendered="{!facilityInContext.Is_the_office_warehouse_leased__c=='Yes'}"/>
+                
+                <apex:outputText value="Is the warehouse sub-contracted?" rendered="{!AND(facilityInContext.recordType.Name == 'Warehouse',NOT(isocountry.EACP_Country__c))}"/>
+				<apex:outputField value="{!facilityInContext.Is_the_warehouse_sub_contracted__c}" rendered="{!AND(facilityInContext.recordType.Name == 'Warehouse',NOT(isocountry.EACP_Country__c))}"/>
+										
+				<apex:outputText value="* Name of sub-contractor" rendered="{!AND(facilityInContext.Is_the_warehouse_sub_contracted__c=='Yes',NOT(isocountry.EACP_Country__c))}"/>
+				<apex:outputField value="{!facilityInContext.Name_of_sub_contractor__c}" rendered="{!AND(facilityInContext.Is_the_warehouse_sub_contracted__c=='Yes',NOT(isocountry.EACP_Country__c))}"/>
+
+				<apex:outputText value="* Duration of contract" rendered="{!facilityInContext.Is_the_warehouse_sub_contracted__c=='Yes'}"/>
+				<apex:outputField value="{!facilityInContext.Duration_of_contract__c}" rendered="{!facilityInContext.Is_the_warehouse_sub_contracted__c=='Yes'}"/>
+									
+				<apex:outputText value="* Date agreement expires" rendered="{!facilityInContext.Is_the_warehouse_sub_contracted__c=='Yes'}"/>
+                <apex:outputField value="{!facilityInContext.Date_agreement_expires__c}" rendered="{!facilityInContext.Is_the_warehouse_sub_contracted__c=='Yes'}"/>
+										
+				<apex:outputText value="Is the office open to the general public?" rendered="{!AND(facilityInContext.recordType.Name == 'Office',NOT(isocountry.EACP_Country__c))}"/>
+				<apex:outputField value="{!facilityInContext.Is_the_office_open_to_the_general_public__c}" rendered="{!facilityInContext.recordType.Name == 'Office'}"/>
+				
+                <apex:outputText value="What are the normal business hours and days of the week that this location is open to the public?" rendered="{!AND(facilityInContext.recordType.Name == 'Office',NOT(isocountry.EACP_Country__c), facilityInContext.Is_the_office_open_to_the_general_public__c=='Yes')}"/>
+				<apex:outputField value="{!facilityInContext.General_Public_Opening_Hours__c}" rendered="{!AND(facilityInContext.recordType.Name == 'Office', facilityInContext.Is_the_office_open_to_the_general_public__c=='Yes')}"/>
+                
+				<apex:outputText value="Is the warehouse open to the general public?" rendered="{!AND(facilityInContext.recordType.Name == 'Warehouse',NOT(isocountry.EACP_Country__c))}"/>
+				<apex:outputField value="{!facilityInContext.Is_warehouse_open_to_general_public__c}" rendered="{!facilityInContext.recordType.Name == 'Warehouse'}"/>
+									
+                <apex:outputText value="Which of the following are available?" rendered="{!facilityInContext.recordType.Name == 'Office'}"/>
+               	<apex:outputtext rendered="{!facilityInContext.recordType.Name == 'Office'}"><!--empty: move following field to next row --></apex:outputtext>
+								
+				<apex:outputText value="* Telephone" rendered="{!facilityInContext.recordType.Name == 'Office'}"/>
+                <apex:outputField value="{!facilityInContext.Telephone__c}" rendered="{!facilityInContext.recordType.Name == 'Office'}"/>
+									
+				<apex:outputText value="* Email" rendered="{!facilityInContext.recordType.Name == 'Office'}"/>
+				<apex:outputField value="{!facilityInContext.Email__c}" rendered="{!facilityInContext.recordType.Name == 'Office'}"/>
+									
+				<apex:outputText value="Website" rendered="{!facilityInContext.recordType.Name == 'Office'}"/>
+				<apex:outputField value="{!facilityInContext.Website__c}" rendered="{!facilityInContext.recordType.Name == 'Office'}"/>
+				
+				<apex:outputText value="Fax" rendered="{!facilityInContext.recordType.Name == 'Office'}"/>
+				<apex:outputField value="{!facilityInContext.Fax__c}" rendered="{!facilityInContext.recordType.Name == 'Office'}"/>
+									
+				<apex:outputText value="* Automated export accounting" rendered="{!facilityInContext.recordType.Name == 'Office'}"/>
+				<apex:outputField value="{!facilityInContext.Automated_export_accounting__c}" rendered="{!facilityInContext.recordType.Name == 'Office'}"/>
+									
+				<apex:outputText value="* Automated export documentation" rendered="{!facilityInContext.recordType.Name == 'Office'}"/>
+				<apex:outputField value="{!facilityInContext.Automated_export_documentation__c}" rendered="{!facilityInContext.recordType.Name == 'Office'}"/>
+									
+				<apex:outputText value="* Alarm system" rendered="{!facilityInContext.recordType.Name == 'Office'}"/>
+				<apex:outputField value="{!facilityInContext.Alarm_system__c}" rendered="{!facilityInContext.recordType.Name == 'Office'}"/>
+               
+                <apex:outputText value="List of warehouse equipment available for processing air cargo" rendered="{!facilityInContext.recordType.Name == 'Warehouse'}"/>
+                <apex:outputtext rendered="{!facilityInContext.recordType.Name == 'Warehouse'}"><!--empty: move following field to next row --></apex:outputtext>
+								
+				<apex:outputText value="Scales Number" rendered="{!facilityInContext.recordType.Name == 'Warehouse'}"/>
+				<apex:outputField value="{!facilityInContext.Scales_Number__c}" rendered="{!facilityInContext.recordType.Name == 'Warehouse'}"/>
+									
+				<apex:outputText value="Scales Type" rendered="{!facilityInContext.recordType.Name == 'Warehouse'}"/>
+				<apex:outputField value="{!facilityInContext.Scales_Type__c}" rendered="{!facilityInContext.recordType.Name == 'Warehouse'}"/>
+									
+				<apex:outputText value="Scales Max. Weight" rendered="{!facilityInContext.recordType.Name == 'Warehouse'}"/>
+				<apex:outputField value="{!facilityInContext.Scales_Max_Weight__c}" rendered="{!facilityInContext.recordType.Name == 'Warehouse'}"/>
+									
+				<apex:outputText value="Forklift Number" rendered="{!facilityInContext.recordType.Name == 'Warehouse'}"/>
+				<apex:outputField value="{!facilityInContext.Forklift_Number__c}" rendered="{!facilityInContext.recordType.Name == 'Warehouse'}"/>
+									
+				<apex:outputText value="Forklift Type" rendered="{!facilityInContext.recordType.Name == 'Warehouse'}"/>
+				<apex:outputField value="{!facilityInContext.Forklift_Type__c}" rendered="{!facilityInContext.recordType.Name == 'Warehouse'}"/>
+									
+				<apex:outputText value="Forklift Max. Weight" rendered="{!facilityInContext.recordType.Name == 'Warehouse'}"/>
+				<apex:outputField value="{!facilityInContext.Forklift_Max_Weight__c}" rendered="{!facilityInContext.recordType.Name == 'Warehouse'}"/>
+									
+				<apex:outputText value="Other Equipment Number" rendered="{!facilityInContext.recordType.Name == 'Warehouse'}"/>
+				<apex:outputField value="{!facilityInContext.Other_equipment_Number__c}" rendered="{!facilityInContext.recordType.Name == 'Warehouse'}"/>
+									
+				<apex:outputText value="Other Equipment Type" rendered="{!facilityInContext.recordType.Name == 'Warehouse'}"/>
+				<apex:outputField value="{!facilityInContext.Other_equipment_Type__c}" rendered="{!facilityInContext.recordType.Name == 'Warehouse'}"/>
+								
+				<apex:outputText value="Other Equipment Max Weight" rendered="{!facilityInContext.recordType.Name == 'Warehouse'}"/>
+				<apex:outputField value="{!facilityInContext.Other_equipment_Max_Weight__c}" rendered="{!facilityInContext.recordType.Name == 'Warehouse'}"/>
+									
+				<apex:outputText value="Is warehouse fitted with:" rendered="{!facilityInContext.recordType.Name == 'Warehouse'}"/>
+                <apex:outputtext rendered="{!facilityInContext.recordType.Name == 'Warehouse'}"><!--empty: move following field to next row --></apex:outputtext>
+								
+				<apex:outputText value="* An alarm system" rendered="{!facilityInContext.recordType.Name == 'Warehouse'}"/>
+				<apex:outputField value="{!facilityInContext.An_alarm_system__c}" rendered="{!facilityInContext.recordType.Name == 'Warehouse'}"/>
+                
+				<apex:outputText value="* A sprinkler system" rendered="{!facilityInContext.recordType.Name == 'Warehouse'}"/>
+				<apex:outputField value="{!facilityInContext.A_sprinkler_system__c}" rendered="{!facilityInContext.recordType.Name == 'Warehouse'}"/>
+                
+            </apex:panelGrid>
+            </div>
+        </apex:repeat>
+    </apex:panelGrid>
+      </apex:pageBlockSection>
+
+     <div style="page-break-after:always;">
+         <apex:pageBlockSection columns="1" collapsible="false">
+        <apex:facet name="header">
+                        <apex:outputpanel >
+                           SECTION 6 - Trained Staff
+                            <apex:commandButton styleclass="btn btn-default" action="{!goToStep3Section6}" value="{!$Label.ISSP_EditSection}" id="Edit-Section6" style="float:right"/>
+                        </apex:outputpanel>                       
+       		</apex:facet>
+        <apex:panelGrid columns="1" width="100%" headerClass="bg-primary" cellpadding="10%" >
+        <apex:dataTable value="{!trainedStaffList}" var="trainedStaff" width="100%" columnsWidth="25%,25%,25%,25%">
+        	<apex:column headerValue="Trained Staff Name" value="{!trainedStaff.Name}" headerClass="pdfHeader"/> 
+            <apex:column headerValue="Position" value="{!trainedStaff.Position_trained_staff__c}" headerClass="pdfHeader"/>
+            <apex:column headerValue="Completed dangerous goods training" value="{!trainedStaff.Training_dangerous_goods_completed__c}" headerClass="pdfHeader"/>
+            <apex:column headerValue="Expiry date" value="{!trainedStaff.Valid_until__c}" headerClass="pdfHeader"/>
+        </apex:dataTable>
+    </apex:panelGrid>
+   </apex:pageBlockSection>
+    </div>
+    
+    <div style="page-break-after:always;">
+    	<apex:pageBlockSection columns="1" collapsible="false">
+         <apex:facet name="header">
+                        <apex:outputpanel >
+                           SECTION 7 - Financial
+                            <apex:commandButton styleclass="btn btn-default" action="{!goToStep3Section7}" value="{!$Label.ISSP_EditSection}" id="Edit-Section7" style="float:right"/>
+                        </apex:outputpanel>                       
+       		</apex:facet>
+        	<apex:panelGrid columns="2" width="100%" cellpadding="10%" columnClasses="col1, col2">
+            	<apex:outputText value="{!$Label.ISSP_Currency}" />
+                <apex:outputText value="{!newForm.CurrencyIsoCode}" />
+                        
+                <apex:outputText value="* What is the amount of your firm's capital?" />
+                <apex:outputfield value="{!newForm.ISSP_AMS_Registered_Capital__c}" />
+                          
+                <apex:outputText value="* What is the amount of your firm's paid-up capital?" rendered="{!newForm.ISSP_AMS_Legal_Status__c=='Corporation'}"/>
+                <apex:outputfield value="{!newForm.ISSP_AMS_Paidup_capital__c}" rendered="{!newForm.ISSP_AMS_Legal_Status__c=='Corporation'}"/>
+                          
+              	<apex:outputText value="* What is the lowest capital required by the national or local laws of your country?" />
+               	<apex:outputText value="{!newForm.ISSP_AMS_Min_Paidup_capital__c}" />
+                            
+                <apex:outputText value="* In accordance with Cargo Industry Credit Scheme (CICS) rules, as detailed in the Handbook, a level of credit will be assessed to each EACP Intermediary. What amount of credit is requested with this application?" rendered="{!isocountry.EACP_Country__c}"/>
+                <apex:outputField value="{!newForm.ISSP_AMS_Amount_of_credit_requested__c}" rendered="{!isocountry.EACP_Country__c}"/>
+                    
+                <apex:outputText value="{!IF(isocountry.Tax_Number_label__c == null, "VAT number", isocountry.Tax_Number_label__c)}" rendered="{!NOT(isocountry.Hide_Tax_Number_VAT__c)}"/>
+                <apex:outputfield value="{!newForm.ISSP_AMS_VAT_number__c}" rendered="{!NOT(isocountry.Hide_Tax_Number_VAT__c)}"/>
+                            
+                <apex:outputText value="Please list 3 credit references, including the banks with whom the firm does business (Give bank address and account number)"/>
+                <apex:outputtext ><!--empty: move following field to next row --></apex:outputtext>
+                
+				<apex:outputText value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Bank_Address_1__c.Label}" />
+                <apex:outputfield value="{!newForm.ISSP_AMS_Bank_Address_1__c}" />
+                
+                <apex:outputText value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Bank_Account_Number_1__c.Label}" />
+                <apex:outputfield value="{!newForm.ISSP_AMS_Bank_Account_Number_1__c}" />
+                
+                <apex:outputText value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Bank_Address_2__c.Label}" />
+                <apex:outputfield value="{!newForm.ISSP_AMS_Bank_Address_2__c}" />
+                
+                <apex:outputText value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Bank_Account_Number_2__c.Label}" />
+                <apex:outputfield value="{!newForm.ISSP_AMS_Bank_Account_Number_2__c}" />
+                
+                <apex:outputText value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Bank_Address_3__c.Label}" />
+                <apex:outputfield value="{!newForm.ISSP_AMS_Bank_Address_3__c}" />
+                
+                <apex:outputText value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Bank_Account_Number_3__c.Label}" />
+                <apex:outputfield value="{!newForm.ISSP_AMS_Bank_Account_Number_3__c}" /> 
+			</apex:panelGrid>
+   		</apex:pageBlockSection>
+    </div>
+    
+    <div style="page-break-after:always;">
+    	<apex:pageBlockSection columns="1" collapsible="false">
+         <apex:facet name="header">
+                        <apex:outputpanel >
+                           SECTION 8 - Sales &amp; Promotion
+                            <apex:commandButton styleclass="btn btn-default" action="{!goToStep3Section8}" value="{!$Label.ISSP_EditSection}" id="Edit-Section8" style="float:right"/>
+                        </apex:outputpanel>                       
+       		</apex:facet>
+            <apex:panelGrid columns="2" width="100%" cellpadding="10%" columnClasses="col1, col2">
+                <apex:outputText >* Give actual figures for the last 12 months for international export air cargo processed by your firm</apex:outputText>
+                <apex:outputText ><!--empty: move following field to next row --></apex:outputText>
+                <apex:outputText value="* Total monetary value of freight charges" />
+                <apex:outputPanel >
+              		<apex:outputfield value="{!newForm.Total_Freight_Charges_monetary_value__c}" />
+                    <apex:outputText value=" {!newForm.CurrencyIsoCode}"/>
+               	</apex:outputPanel>
+                <apex:outputText value="* Total weight in Kilos" />
+                <apex:outputfield value="{!newForm.Total_Freight_weight_Kgs__c}" />
+               	<apex:outputText value="* Total number of consignments" />
+                <apex:outputfield value="{!newForm.No_Consignments_Last_Year__c}" />
+
+                <apex:outputText >* Give projected figures for the coming 12 months</apex:outputText>
+                <apex:outputText ><!--empty: move following field to next row --></apex:outputText>
+                <apex:outputText value="* Total monetary value of freight charges" />
+                <apex:outputPanel >
+               		<apex:outputfield value="{!newForm.Total_Projected_Value_Freight__c}" />
+                	<apex:outputText value=" {!newForm.CurrencyIsoCode}"/>
+           		</apex:outputPanel>
+                <apex:outputText value="* Total weight in Kilos" />
+                <apex:outputfield value="{!newForm.Total_Projected_Weight_Kilos__c}" />
+                   
+                <apex:outputText value="* Total number of consignments" />
+                <apex:outputfield value="{!newForm.Total_Projected_Number_Consignments__c}" />
+                            	
+             	<apex:outputText value="Does your firm specialize in any particular type of traffic?" />
+                <apex:outputfield value="{!newForm.Specialize_in_particular_traffic_type__c}"/>
+                    
+            </apex:panelGrid>
+            <apex:outputText value="Please enter the amounts for the last 12 months." rendered="{!newForm.Specialize_in_particular_traffic_type__c=='Yes'}" style="font-size:110%"/>
+            <apex:pageBlockTable value="{!specialTrafficList}" Title="Please enter the amounts for the last 12 months." var="traffic" columnsWidth="15%, 25%, 15%, 30%, 20%" rendered="{!newForm.Specialize_in_particular_traffic_type__c=='Yes'}">
+                            <apex:column footerValue="TOTAL" headerClass="pdfHeader" footerClass="pdfFooter">
+                            	{!traffic.cargotype}
+                        	</apex:column>
+                            <apex:column headerClass="pdfHeader" footerClass="pdfFooter"> 
+                            <apex:facet name="header">
+                               No. of Consignments
+                            </apex:facet>
+                            <apex:facet name="footer">
+                                <apex:outputText value="{!newForm.Total_Number_of_Consignments__c}"/>
+                            </apex:facet>
+                                <apex:outputText value="{!traffic.consignments}"/>
+                        	</apex:column>
+                            <apex:column headerClass="pdfHeader" footerClass="pdfFooter"> 
+                            <apex:facet name="header">
+                               Tons
+                            </apex:facet>
+                            <apex:facet name="footer">
+                                <apex:outputText value="{!newForm.Total_Tons_Special_Traffic__c}" />
+                            </apex:facet>
+                                <apex:outputText value="{!traffic.tons}" />
+                        	</apex:column>
+                             <apex:column headerClass="pdfHeader" footerClass="pdfFooter"> 
+                            <apex:facet name="header">
+                               <apex:outputText value="Air Freight Charges ({!newForm.CurrencyIsoCode})"/>
+                            </apex:facet>
+                            <apex:facet name="footer">
+                                <apex:outputText value="{!newForm.Total_Charges_Specialized_Traffic__c}" />
+                            </apex:facet>
+                                <apex:outputText value="{!traffic.airfreight}"/>
+                        	</apex:column>
+                            <apex:column headerClass="pdfHeader" footerClass="pdfFooter"> 
+                            <apex:facet name="header">
+                               Percent (%)
+                            </apex:facet>
+                            <apex:facet name="footer">
+                                <apex:outputText value="{!newForm.Total_Percentage_Specialized_Traffic__c}"/>
+                            </apex:facet>
+                                <apex:outputText value="{!traffic.percentage}"/>
+                        	</apex:column>
+                        </apex:pageBlockTable>
+            <br/>
+            <apex:outputText value="What volume of your traffic is destined for:" style="font-size:110%"/>
+            <apex:pageBlockTable value="{!cargoRegionList}" var="region" columnsWidth="15%, 25%, 15%, 30%, 20%">
+                        <apex:column footerValue="TOTAL" headerClass="pdfHeader" footerClass="pdfFooter"> 
+                            <apex:facet name="header">
+                               Region
+                            </apex:facet>
+                            {!region.region}
+                        </apex:column>
+                        <apex:column headerClass="pdfHeader" footerClass="pdfFooter"> 
+                            <apex:facet name="header">
+                               No. of Consignments
+                            </apex:facet>
+                            <apex:facet name="footer">
+                                <apex:outputText value="{!newForm.CGO_Region_Consignment_Total__c}" id="ConsignmentFooterTotal"/>
+                            </apex:facet>
+                            <apex:outputPanel >
+                                <apex:outputText value="{!region.consignments}" />
+                            </apex:outputPanel>
+                        </apex:column>
+                    	<apex:column headerClass="pdfHeader" footerClass="pdfFooter"> 
+                            <apex:facet name="header">
+                              Tons
+                            </apex:facet>
+                            <apex:facet name="footer">
+                                <apex:outputText value="{!newForm.CGO_Region_Tons_Total__c}" />
+                            </apex:facet>
+                            <apex:outputPanel >
+                                <apex:outputText value="{!region.tons}" />
+                            </apex:outputPanel>
+                        </apex:column>
+                    	<apex:column footerValue="{!newForm.CGO_Region_AirFreight_Total__c}" headerClass="pdfHeader" footerClass="pdfFooter"> 
+                            <apex:facet name="header">
+                              <apex:outputText value="Air Freight Charges ({!newForm.CurrencyIsoCode})"/>
+                            </apex:facet>
+                            <apex:facet name="footer">
+                                <apex:outputText value="{!newForm.CGO_Region_AirFreight_Total__c}" />
+                            </apex:facet>
+                            <apex:outputPanel >
+                                <apex:outputText value="{!region.airfreight}" />
+                            </apex:outputPanel>
+                        </apex:column>
+                    	<apex:column footerValue="{!newForm.CGO_Region_Percentage_Total__c}" headerClass="pdfHeader" footerClass="pdfFooter"> 
+                            <apex:facet name="header">
+                              Percent (%)
+                            </apex:facet>
+                            <apex:facet name="footer">
+                                <apex:outputText value="{!newForm.CGO_Region_Percentage_Total__c}" />
+                            </apex:facet>
+                            <apex:outputPanel >
+                                <apex:outputText value="{!region.percentage}" />
+                            </apex:outputPanel>
+                        </apex:column>
+                    </apex:pageBlockTable>
+            <br/>
+            <apex:outputfield value="{!newForm.International_Sales_in_last_Year__c}" rendered="{!countryCheckList.Statement_of_International_Sales__c}"/>
+            <apex:outputPanel id="InternationalSales" style="{!IF(OR(newForm.International_Sales_in_last_Year__c == '', newForm.International_Sales_in_last_Year__c == 'No'), 'display:none', 'border: 0px !important;')}">
+                    
+                            <apex:pageBlockSectionItem labelStyle="padding-right:3px;width:20%;" dataStyle="padding-right:100px">
+                                <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.Fields.Sales_Period_From__c.Label}:"/>
+                                <apex:outputText value="{0,date, MMMM d,  yyyy}">
+                    				<apex:param value="{!newForm.Sales_Period_From__c}" />
+                				</apex:outputText>
+                            </apex:pageBlockSectionItem>
+                <br/>
+                            <apex:pageBlockSectionItem labelStyle="padding-right:3px;width:20%;" dataStyle="width:100%">
+                                <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.Fields.Sales_Period_To__c.Label}:"/>
+                                <apex:outputText value="{0,date, MMMM d,  yyyy}">
+                    				<apex:param value="{!newForm.Sales_Period_To__c}" />
+                				</apex:outputText>
+                            </apex:pageBlockSectionItem>
+<br/><br/>                   
+                     <apex:pageBlockTable value="{!List_InternationalSales}" var="salescon" rendered="{!newForm.International_Sales_in_last_Year__c == 'Yes'}"  id="salesList" columnsWidth="30%, 30%, 30%, 10%">
+                         <apex:column headerValue="{!$ObjectType.ISSP_AMS_Statement_International_Sales__c.fields.IATA_Member_Airline__c.Label}" value="{!salescon.IATA_Member_Airline__r.Name}" headerClass="pdfHeader" footerClass="pdfFooter"/>
+                         <apex:column value="{!salescon.Prepaid_Collected__c}" headerClass="pdfHeader" footerClass="pdfFooter">
+                             <apex:facet name="footer">
+                                <apex:outputText value="{!newForm.CurrencyIsoCode} {!ROUND(newForm.Total_SOIS_Prepaid_Collected__c,2)} (USD {0, number, ###,##0.00})">
+                                    <apex:param value="{!InternationalPrepaid_Collected_Total }"/>
+                                </apex:outputText>
+                         </apex:facet>
+                         </apex:column>
+                         <apex:column value="{!salescon.Charges_Collected__c}" headerClass="pdfHeader" footerClass="pdfFooter">
+                             <apex:facet name="footer">
+                                <apex:outputText value="{!newForm.CurrencyIsoCode} {!ROUND(newForm.Total_SOIS_Charges_Collected__c,2)} (USD {0, number, ###,##0.00})">
+                                    <apex:param value="{!InternationalCharges_Collected_Total }"/>
+                                </apex:outputText>
+                         </apex:facet>
+                         </apex:column>
+                         <apex:column value="{!salescon.Weight_Kg__c}" headerClass="pdfHeader" footerClass="pdfFooter">
+                             <apex:facet name="footer">
+                                 <apex:outputText value="{!ROUND(newForm.Total_SOIS_Weight__c,1)}"/>
+                         	</apex:facet>
+                         </apex:column>
+                             
+                     </apex:pageBlockTable>
+                    </apex:outputPanel>
+
+       </apex:pageBlockSection>
+    </div>
+</apex:component>

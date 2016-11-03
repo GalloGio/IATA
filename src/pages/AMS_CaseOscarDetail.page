@@ -1,0 +1,64 @@
+<apex:page standardController="Case">
+
+<style>
+
+.overlay{
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    z-index: 100;
+    top: 0;
+    left: 0;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0, 0.85);
+    overflow-x: hidden;
+}
+
+.overlay-content {
+    position: relative;
+    top: 15%;
+    width: 100%;
+    text-align: center;
+    margin-top: 30px;
+}
+
+.overlay a:hover, .overlay a:focus {
+    color: #f1f1f1;
+}
+
+.overlay a:visited {
+    color: #666666;
+}
+
+.overlay p, ul, li {
+    padding: 8px;
+    text-decoration: none;
+    font-size: 22px;
+    color: #818181;
+    display: block; /* Display block instead of inline */
+    transition: 0.3s; /* Transition effects on hover (color) */
+}
+
+.overlay ul, li {
+    font-size: 14px;
+    color: #818181;
+    text-align: left;
+    display: block; /* Display block instead of inline */
+    line-height: 30%;
+}
+</style>
+
+	<apex:detail subject="{!Case.OSCAR__c}" relatedList="true" title="false" rendered="{!IF(Case.OSCAR__c != null, true, false)}" rerender="{!Case.OSCAR__c}"/>
+
+	<apex:pageBlock rendered="{!Case.OSCAR__c == null}">
+	    <div class="overlay">
+	    <div class="overlay-content">
+	        <p style="font-size: 36px;">UNAVAILABLE</p>
+	        <p>This Case is in draft mode and does not have an OSCAR Accreditation object created. Please create an OSCAR (trough the wizard) before you can proceed.
+	        </p>
+	      </div>
+	    </div>
+	</apex:pageBlock>
+
+
+</apex:page>

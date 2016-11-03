@@ -1,0 +1,114 @@
+<apex:component controller="OrderProcessNotificationContent_Ctrl" access="global" >
+    
+    <apex:attribute name="OrderId" assignTo="{!idOrder}" description="Order ID" type="Id"/>
+
+    <p>Dear {!sContactName},</p>
+    
+    <p>
+        Thank you for ordering from IATA. Your order {!sOrderNumber} has been received.
+    </p>
+    <p>
+        <apex:outputText value="{!paymentTypeMsg}"/> your order will be released for fulfillment.
+    </p>
+    <p>
+        You will then receive a separate email with your product key(s) and download link(s) for any digital products, or an email with your tracking details for any physical products.
+    </p>
+
+	<table style="font-size:12px;color:#333333;width:100%;border-width: 1px;border-color: #729ea5;border-collapse: collapse;">
+        <tr style="background-color:#0391d3;">
+            <th style="font-size:12px;background-color:#0391d3;border-width: 1px;padding: 8px;border-style: solid;border-color: #394a58;text-align:left;color:white">{!$Label.Product_Number}</th>
+            <th style="font-size:12px;background-color:#0391d3;border-width: 1px;padding: 8px;border-style: solid;border-color: #394a58;text-align:left;color:white">{!$Label.Product_Name}</th>
+            <th style="font-size:12px;background-color:#0391d3;border-width: 1px;padding: 8px;border-style: solid;border-color: #394a58;text-align:left;color:white">{!$Label.Quantity}</th>
+            <th style="font-size:12px;background-color:#0391d3;border-width: 1px;padding: 8px;border-style: solid;border-color: #394a58;text-align:left;color:white">{!$Label.Item_Price}</th>
+            <th style="font-size:12px;background-color:#0391d3;border-width: 1px;padding: 8px;border-style: solid;border-color: #394a58;text-align:left;color:white">{!$Label.Total_Price}</th>
+            <!-- <th style="font-size:12px;background-color:#0391d3;border-width: 1px;padding: 8px;border-style: solid;border-color: #394a58;text-align:left;color:white">Product Manager</th> -->
+        </tr>
+        <apex:repeat value="{!orderItems}" var="oi">
+            <tr>
+				<td style="font-size:12px;border-width: 1px;padding: 8px;border-style: solid;border-color:#394a58;">{!oi.SAP_Product_Number__c}</td>
+				<td style="font-size:12px;border-width: 1px;padding: 8px;border-style: solid;border-color:#394a58;">{!oi.Product_Name__c}</td>
+				<td style="font-size:12px;border-width: 1px;padding: 8px;border-style: solid;border-color:#394a58;"><apex:outputText value="{0, number}"><apex:param value="{!oi.Quantity}"/></apex:outputText></td>
+				<td style="font-size:12px;border-width: 1px;padding: 8px;border-style: solid;border-color:#394a58;">
+					<apex:outputText value="{0, Number, Currency}" >
+                        <apex:param value="{!oi.UnitPrice}" />
+                    </apex:outputText>
+				</td>
+				<td style="font-size:12px;border-width: 1px;padding: 8px;border-style: solid;border-color:#394a58;">
+					<apex:outputText value="{0, Number, Currency}" >
+                        <apex:param value="{!oi.quantity * oi.UnitPrice}" />
+                    </apex:outputText>
+				</td>
+				<!-- <td style="font-size:12px;border-width: 1px;padding: 8px;border-style: solid;border-color:#394a58;">{!oi.Product_Manager__c}</td> -->
+            </tr>
+	        <apex:outputPanel rendered="{!AND(oi.Discount__c != null,oi.Discount__c > 0)}" layout="none">
+				<tr class="promotion">
+					<td style="font-size:12px;border-width: 1px;padding: 8px;border-style: solid;border-color:#394a58;"></td>
+				    <td style="font-size:12px;border-width: 1px;padding: 8px;border-style: solid;border-color:#394a58;">{!$Label.Promotion}</td>
+				    <td style="font-size:12px;border-width: 1px;padding: 8px;border-style: solid;border-color:#394a58;"></td>
+				    <td style="font-size:12px;border-width: 1px;padding: 8px;border-style: solid;border-color:#394a58;"></td>
+				    <td style="font-size:12px;border-width: 1px;padding: 8px;border-style: solid;border-color:#394a58;">
+				        (<apex:outputText value="{0, Number, Currency}" >
+                            <apex:param value="{!oi.Discount__c}" />
+                        </apex:outputText>)
+				    </td>
+				</tr>
+			</apex:outputPanel>
+        </apex:repeat>        
+        <tr>
+		    <td colspan="4" style="font-size:12px;border-width: 1px;padding: 8px;border-style: solid;border-color:#394a58;"><strong>{!$Label.Subtotal}</strong></td>
+		    <td style="font-size:12px;border-width: 1px;padding: 8px;border-style: solid;border-color:#394a58;">
+		        <apex:outputText value="{0, Number, Currency}" >
+                    <apex:param value="{!ord.SubTotal_Amount__c - ord.Discount_Amount__c}" />
+                </apex:outputText>
+		    </td>
+		</tr>
+		<tr>
+		    <td colspan="4" style="font-size:12px;border-width: 1px;padding: 8px;border-style: solid;border-color:#394a58;"><strong>{!$Label.Taxes}</strong></td>
+		    <td style="font-size:12px;border-width: 1px;padding: 8px;border-style: solid;border-color:#394a58;">
+		        <apex:outputText value="{0, Number, Currency}" >
+                    <apex:param value="{!ord.Taxes__c}" />
+                </apex:outputText>
+		    </td>
+		</tr>
+
+		<tr>
+		    <td colspan="4" style="font-size:12px;border-width: 1px;padding: 8px;border-style: solid;border-color:#394a58;"><strong>{!$Label.Shipping}</strong></td>
+		    <td style="font-size:12px;border-width: 1px;padding: 8px;border-style: solid;border-color:#394a58;">
+		        <apex:outputText value="{0, Number, Currency}" >
+                    <apex:param value="{!ord.Total_Freight_Charge__c}" />
+                </apex:outputText>
+		    </td>
+		</tr>
+
+		<tr>
+		    <td colspan="4" style="font-size:12px;border-width: 1px;padding: 8px;border-style: solid;border-color:#394a58;"><strong>{!$Label.Handling}</strong></td>
+		    <td style="font-size:12px;border-width: 1px;padding: 8px;border-style: solid;border-color:#394a58;">
+		        <apex:outputText value="{0, Number, Currency}" >
+                    <apex:param value="{!ord.Total_handling_charges__c}" />
+                </apex:outputText>
+		    </td>
+		</tr>
+
+		<tr>
+		    <td colspan="4" style="font-size:12px;border-width: 1px;padding: 8px;border-style: solid;border-color:#394a58;"><strong>{!$Label.IDCard_Total}</strong></td>
+		    <td style="font-size:12px;border-width: 1px;padding: 8px;border-style: solid;border-color:#394a58;">
+		       <strong>
+		       		 <apex:outputText value="{0, Number, Currency}" >
+	                    <apex:param value="{!ord.Total_Amount__c}" />
+	                </apex:outputText>
+		       </strong>
+		    </td>
+		</tr>
+
+
+    </table>
+	
+    <apex:outputPanel rendered="{!ord.Payment_Type__c == 'Bank Transfer'}">
+    	<apex:outputText escape="false" value="{!$Label.Bank_Transfer_Payment_terms}" />
+    </apex:outputPanel>
+
+    <p>Best regards,<br />
+    IATA Online Store Support Team
+    </p>
+
+</apex:component>

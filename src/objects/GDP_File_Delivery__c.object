@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>Will receive the Delivery Notice from the GSS Java Process in Amazon</description>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Delivery_Date_Text__c</fullName>
+        <externalId>false</externalId>
+        <label>Delivery Date Text</label>
+        <length>15</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Delivery_Date__c</fullName>
+        <defaultValue>TODAY()</defaultValue>
+        <externalId>false</externalId>
+        <label>Delivery Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Delivery_Frequency__c</fullName>
+        <description>Delivery Frequency of file group (merged in notification email) 
+Should be one of - Daily, Weekly, Semi-Monthly, Monthly</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Delivery Frequency of file group (merged in notification email) 
+Should be one of - Daily, Weekly, Semi-Monthly, Monthly</inlineHelpText>
+        <label>Delivery Frequency</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>File_Name__c</fullName>
+        <description>File Name as sent to IINET</description>
+        <externalId>false</externalId>
+        <inlineHelpText>File Name as sent to IINET</inlineHelpText>
+        <label>File Name</label>
+        <length>100</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>File_Size_KB__c</fullName>
+        <description>File size in kilobytes</description>
+        <externalId>false</externalId>
+        <formula>IF(ISBLANK(File_Size__c)
+   , null
+   , CEILING(File_Size__c / 1024)
+)</formula>
+        <inlineHelpText>File size in kilobytes</inlineHelpText>
+        <label>File Size (KB)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>File_Size__c</fullName>
+        <description>The original size of the original file in bytes as reported from AWS.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The original file size in bytes as reported from AWS.</inlineHelpText>
+        <label>File Size (bytes)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>File_Specification__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>File Specification</label>
+        <referenceTo>GDP_File_Description__c</referenceTo>
+        <relationshipLabel>GDP File Deliveries</relationshipLabel>
+        <relationshipName>GDP_File_Deliveries</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>First_Name__c</fullName>
+        <externalId>false</externalId>
+        <formula>Subscription__r.Zuora__CustomerAccount__r.Contact__r.FirstName</formula>
+        <label>First Name</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>GSS_Subscription_Detail__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>GSS Subscription Detail</label>
+        <referenceTo>GSS_Subscription_Detail__c</referenceTo>
+        <relationshipLabel>GDP File Deliveries</relationshipLabel>
+        <relationshipName>GDP_File_Deliveries</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>List_of_files_delivered__c</fullName>
+        <description>List of files delivered (merged in email nofification)</description>
+        <externalId>false</externalId>
+        <inlineHelpText>List of files delivered (merged in email nofification)</inlineHelpText>
+        <label>List of files delivered</label>
+        <length>3276</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Message__c</fullName>
+        <description>Message in case there is a failure to delivery the file from amazon to iinet fro example</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Message in case there is a failure to delivery</inlineHelpText>
+        <label>Message</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Notification__c</fullName>
+        <description>0 - Do not notify
+1 - Notify client by email
+2 - Notification to client sent</description>
+        <externalId>false</externalId>
+        <inlineHelpText>0 - Do not notify
+1 - Notify client by email
+2 - Notification to client sent</inlineHelpText>
+        <label>Notification</label>
+        <picklist>
+            <picklistValues>
+                <fullName>0</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>1</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>2</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Quantity_of_file_in_delivery__c</fullName>
+        <defaultValue>0</defaultValue>
+        <description>Quantity of file in delivery group</description>
+        <externalId>false</externalId>
+        <label>Quantity of file in delivery</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Status__c</fullName>
+        <externalId>false</externalId>
+        <label>Status</label>
+        <picklist>
+            <picklistValues>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Completed</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Subscription__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Subscription</label>
+        <referenceTo>Zuora__Subscription__c</referenceTo>
+        <relationshipLabel>GDP File Deliveries</relationshipLabel>
+        <relationshipName>GDP_File_Deliveries</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Technical_Contact_Email__c</fullName>
+        <description>For email nofitication</description>
+        <externalId>false</externalId>
+        <inlineHelpText>For email nofitication</inlineHelpText>
+        <label>Technical Contact Email</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Technical_Contact_Name__c</fullName>
+        <description>Merged in email notification</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Merged in email notification</inlineHelpText>
+        <label>Technical Contact Name</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>GDP File Delivery</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Delivery_Date__c</columns>
+        <columns>Subscription__c</columns>
+        <columns>GSS_Subscription_Detail__c</columns>
+        <columns>File_Specification__c</columns>
+        <columns>Status__c</columns>
+        <columns>Message__c</columns>
+        <columns>File_Size_KB__c</columns>
+        <columns>Notification__c</columns>
+        <columns>CREATEDBY_USER</columns>
+        <columns>Technical_Contact_Email__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Delivery_Date__c</field>
+            <operation>equals</operation>
+            <value>6/4/2016</value>
+        </filters>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
+    <nameField>
+        <displayFormat>FD-{000000000}</displayFormat>
+        <label>GDP File Delivery Name</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>GDP File Deliveries</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+</CustomObject>

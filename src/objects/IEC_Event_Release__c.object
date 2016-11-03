@@ -1,0 +1,525 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>IEC - Contain releases (versions of renewal) for event subscriptions</description>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>false</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>false</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>false</enableSharing>
+    <enableStreamingApi>false</enableStreamingApi>
+    <fields>
+        <fullName>Customer_Type__c</fullName>
+        <description>IEC - Type of customer to query subscribed customers for renewal</description>
+        <externalId>false</externalId>
+        <label>Customer Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Accredited Training Center (ATC)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Accredited Training Schools (ATS)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>IATA Employee (commercial purposes)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>IATA Employees (work related reason)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>IATA Training &amp; Development Institute</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Member Airline</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Non-member</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Sales Agents (Genric)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Sales Agents (Gold)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Sales Agents (Platinum)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Strategic Partners</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <visibleLines>5</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Last_Version__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>IEC - Latest version of product subscribed to auto-renew</description>
+        <externalId>false</externalId>
+        <label>Product Last Version</label>
+        <referenceTo>Product2</referenceTo>
+        <relationshipLabel>IEC Event Releases (Product Last Version)</relationshipLabel>
+        <relationshipName>IEC_Event_Releases2</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Material_Number__c</fullName>
+        <description>IEC - SAP material number of the product subscribed to auto-renew</description>
+        <externalId>false</externalId>
+        <formula>Left( Product__r.SAP_Material_Number__c,4 )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Material Number</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Nb_Customer__c</fullName>
+        <description>IEC - Number of customers eligible to auto-renew</description>
+        <externalId>false</externalId>
+        <label># Customers</label>
+        <precision>6</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Processing_Message__c</fullName>
+        <description>IEC - Message to inform user the processing step</description>
+        <externalId>false</externalId>
+        <formula>IF( Sales_Amout__c&gt;0,&apos;&apos;,&apos;BATCH JOB IN PROGRESS TO GENERATE ORDERS&apos;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Status</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Processing_Status__c</fullName>
+        <description>IEC - Message to inform user the processing step</description>
+        <externalId>false</externalId>
+        <label>Processing Status</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Product_Last_Version__c</fullName>
+        <description>IEC - SAP material number of the latest version of product subscribed to auto-renew</description>
+        <externalId>false</externalId>
+        <formula>Last_Version__r.SAP_Material_Number__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Product Last Version</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Product_Number__c</fullName>
+        <description>IEC - SAP material number of product to renew</description>
+        <externalId>false</externalId>
+        <formula>IF(ISBLANK( Swapped_Product__c ),  Last_Version__r.SAP_Material_Number__c ,  Swapped_Product__r.SAP_Material_Number__c )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Product Number</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Product__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>IEC - Subscribed product to auto-renew</description>
+        <externalId>false</externalId>
+        <label>Product</label>
+        <referenceTo>Product2</referenceTo>
+        <relationshipLabel>IEC Event Releases</relationshipLabel>
+        <relationshipName>IEC_Event_Releases</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Released__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>IEC - Indicate if event for auto-renew is released</description>
+        <externalId>false</externalId>
+        <label>Released</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Sales_Amout__c</fullName>
+        <description>IEC - Sales amount for the event</description>
+        <externalId>false</externalId>
+        <label>Sales Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Sales_Quantity__c</fullName>
+        <description>IEC - Total quantity needed for the event</description>
+        <externalId>false</externalId>
+        <label>Sales Quantity</label>
+        <precision>8</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Swapped_Product__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>IEC - Product that replaces the product subscribed to auto-renew</description>
+        <externalId>false</externalId>
+        <label>Swapped Product</label>
+        <referenceTo>Product2</referenceTo>
+        <relationshipLabel>IEC Event Releases (Swapped Product)</relationshipLabel>
+        <relationshipName>IEC_Event_Releases1</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <label>IEC Event Release</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Customer_Type__c</columns>
+        <columns>Product__c</columns>
+        <columns>Swapped_Product__c</columns>
+        <columns>Released__c</columns>
+        <columns>Nb_Customer__c</columns>
+        <columns>Sales_Amout__c</columns>
+        <columns>Sales_Quantity__c</columns>
+        <columns>Processing_Status__c</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>LAST_UPDATE</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
+    <nameField>
+        <label>Release Name</label>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>IEC Event Releases</pluralLabel>
+    <recordTypes>
+        <fullName>Default</fullName>
+        <active>false</active>
+        <label>Default</label>
+        <picklistValues>
+            <picklist>Customer_Type__c</picklist>
+            <values>
+                <fullName>Accredited Training Center %28ATC%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Accredited Training Schools %28ATS%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Employee %28commercial purposes%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Employees %28work related reason%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Training %26 Development Institute</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Member Airline</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Non-member</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sales Agents %28Genric%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sales Agents %28Gold%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sales Agents %28Platinum%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Strategic Partners</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Event_released</fullName>
+        <active>true</active>
+        <label>Event released</label>
+        <picklistValues>
+            <picklist>Customer_Type__c</picklist>
+            <values>
+                <fullName>Accredited Training Center %28ATC%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Accredited Training Schools %28ATS%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Employee %28commercial purposes%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Employees %28work related reason%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Training %26 Development Institute</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Member Airline</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Non-member</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sales Agents %28Genric%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sales Agents %28Gold%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sales Agents %28Platinum%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Strategic Partners</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <searchLayouts>
+        <customTabListAdditionalFields>Customer_Type__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Product__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Swapped_Product__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Released__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Nb_Customer__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Sales_Amout__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Sales_Quantity__c</customTabListAdditionalFields>
+        <excludedStandardButtons>Accept</excludedStandardButtons>
+        <excludedStandardButtons>ChangeOwner</excludedStandardButtons>
+        <excludedStandardButtons>Forward</excludedStandardButtons>
+    </searchLayouts>
+    <sharingModel>Read</sharingModel>
+    <validationRules>
+        <fullName>Forbid_Modification_After_Released</fullName>
+        <active>true</active>
+        <description>Forbid all UI modification after the event is released.</description>
+        <errorConditionFormula>AND(NOT(ISNEW())
+  , PRIORVALUE(Released__c) = true
+  , OR(ISCHANGED(Name), ISCHANGED(Customer_Type__c), ISCHANGED(Product__c), ISCHANGED(Swapped_Product__c), ISCHANGED(Released__c))
+)</errorConditionFormula>
+        <errorMessage>No modification is allowed after event released.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Forbid_Modification_On_Running</fullName>
+        <active>true</active>
+        <description>Forbid modification because a process is running.</description>
+        <errorConditionFormula>AND(NOT(ISNEW())
+  , NOT(ISBLANK(PRIORVALUE(Processing_Status__c)))
+  , OR(ISCHANGED(Name), ISCHANGED(Customer_Type__c), ISCHANGED(Product__c), ISCHANGED(Swapped_Product__c))
+)</errorConditionFormula>
+        <errorMessage>Please wait!  A process is running for release.</errorMessage>
+    </validationRules>
+    <webLinks>
+        <fullName>New</fullName>
+        <availability>online</availability>
+        <displayType>massActionButton</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <linkType>url</linkType>
+        <masterLabel>New</masterLabel>
+        <openType>replace</openType>
+        <protected>false</protected>
+        <requireRowSelection>true</requireRowSelection>
+        <url>/a5Y/e?ent=01Ig0000000Ebd1&amp;nooverride=1&amp;RecordType=012g0000000DhkwAAC</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Pipeline_Report</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Pipeline report</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>window.open(&apos;/00Ow0000004xKDd?pv0={!IEC_Event_Release__c.Id}&apos;, &apos;_blank&apos;);</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Regenerate_Release</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Update Release</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/31.0/connection.js&quot;)} 
+{!REQUIRESCRIPT(&quot;/soap/ajax/31.0/apex.js&quot;)} 
+
+if ({!IEC_Event_Release__c.Released__c}) { 
+	alert(&quot;Product has been already released.&quot;);
+} 
+else if ({!IEC_Event_Release__c.Processing_Status__c != null || IEC_Event_Release__c.Processing_Status__c != &apos;&apos;}) { 
+	alert(&quot;Please wait!  A process is running for release.&quot;);
+} 
+else 
+{ 
+	var retVal = confirm(&quot;Warning!! Are you sure you want to regenerate? &quot;); 
+	if(retVal == true){ 
+		var result = sforce.apex.execute(&quot;IEC_Evt_Renew_SOAP&quot;,&quot;eventRegenerateRelease&quot;,{ eventReleaseId:&quot;{!IEC_Event_Release__c.Id}&quot; }); 
+		alert(&apos;The release process has started.&apos;); 
+		document.location.reload(true);
+	} 
+}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Release</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Release</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/31.0/connection.js&quot;)}
+{!REQUIRESCRIPT(&quot;/soap/ajax/31.0/apex.js&quot;)}
+
+if ({!IEC_Event_Release__c.Released__c}) {
+	alert(&quot;Product has been already released.&quot;);
+}
+else if ({!IEC_Event_Release__c.Processing_Status__c != null || IEC_Event_Release__c.Processing_Status__c != &apos;&apos;}) { 
+	alert(&quot;Please wait!  A process is running for release.&quot;);
+} 
+else
+{
+	var retVal = confirm(&quot;Warning!! Are you sure you want to proceed? If you click &apos;Yes&apos; then Orders will generated and Customers will be charged!\n\nClick OK to proceed or Cancel to stop the process&quot;);
+	if(retVal == true){
+		var result = sforce.apex.execute(&quot;IEC_Evt_Renew_SOAP&quot;,&quot;Event_Release&quot;,{
+		    idEventRelease:&quot;{!IEC_Event_Release__c.Id}&quot;
+		});		
+		alert(&apos;The release process has started.&apos;);
+                document.location.reload(true);
+	}
+}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Reprocess_errors</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Reprocess errors</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/31.0/connection.js&quot;)}
+{!REQUIRESCRIPT(&quot;/soap/ajax/31.0/apex.js&quot;)}
+
+if ({!IEC_Event_Release__c.Released__c != true}) {
+    alert(&quot;This function is only for released event.&quot;);
+}
+else if ({!IEC_Event_Release__c.Processing_Status__c != null || IEC_Event_Release__c.Processing_Status__c != &apos;&apos;}) { 
+    alert(&quot;Please wait!  A process is running for release.&quot;);
+} 
+else
+{
+    var retVal = confirm(&quot;Warning!! Are you sure you want to reproceed? If you click &apos;Yes&apos; then Orders will generated and Customers will be charged!\n\nClick OK to proceed or Cancel to stop the process&quot;);
+    if(retVal == true){
+        var result = sforce.apex.execute(&quot;IEC_Evt_Renew_SOAP&quot;,&quot;reprocessError&quot;,{
+            idEventRelease:&quot;{!IEC_Event_Release__c.Id}&quot;
+        });
+        alert(&apos;The release Reprocess has started.&apos;);
+		document.location.reload(true);
+    }
+}</url>
+    </webLinks>
+</CustomObject>

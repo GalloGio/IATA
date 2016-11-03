@@ -1,0 +1,146 @@
+<apex:page controller="ISSP_MIR_Metrics" >
+
+	<apex:pageBlock id="pbMain" >
+		<apex:pageBlockButtons >
+			<apex:form >
+			<apex:commandButton value="Export" action="{!export2Excel}" rerender="pbMain" />
+			</apex:form>
+		</apex:pageBlockButtons>
+		<apex:pageBlockSection columns="2" >
+			<apex:pageBlockSectionItem >
+				<apex:outputLabel for="totalUsers" value="Total MIR Users" />
+				<apex:outputText id="totalUsers" value="{!totalContacts}" />
+			</apex:pageBlockSectionItem>
+			<apex:pageBlockSectionItem >
+				<apex:outputLabel for="totalReports" value="Total number of Reports" />
+				<apex:outputText id="totalReports" value="{!totalReports}" />
+			</apex:pageBlockSectionItem>
+			<!-- 
+			<apex:pageBlockSectionItem >
+				<apex:outputLabel for="totalMonths" value="Total months" />
+				<apex:outputText id="totalMonths" value="{!totalMonths}" />
+			</apex:pageBlockSectionItem>
+			 -->
+		</apex:pageBlockSection>
+		<apex:pageBlockSection columns="1" id="allReports" >
+			<font color="#ff0000">
+				<apex:facet name="header">
+       				<span style="color:black">All Reports - percentage of users that saw each one</span>
+   				</apex:facet>
+   			</font>
+			<script>twistSection(document.getElementById("{!$Component.allReports}").childNodes[0].childNodes[0]);</script>
+			<apex:repeat value="{!reportUserMapOrdered}" var="thisReport" >
+				<apex:pageBlockSectionItem >
+					<apex:outputLabel for="oneReport" value="Report date: {!thisReport}" />
+					<apex:outputText id="oneReport" value="{!reportUserSizeMap[thisReport]} ({!reportUserPercentMap[thisReport]}%)" />
+				</apex:pageBlockSectionItem>
+			</apex:repeat>
+		</apex:pageBlockSection>
+		<apex:pageBlockSection columns="1" id="monthlyMetric" >
+			<font color="#ff0000">
+				<apex:facet name="header">
+       				<span style="color:black">Monthly metrics - percentage of users that used MIR at least once these months</span>
+   				</apex:facet>
+   			</font>
+			<script>twistSection(document.getElementById("{!$Component.monthlyMetric}").childNodes[0].childNodes[0]);</script>
+			<apex:repeat value="{!monthlyUsersOrdered}" var="thisMonth" >
+				<apex:pageBlockSectionItem >
+					<apex:outputLabel for="oneMonth" value="{!thisMonth}" />
+					<apex:outputText id="oneMonth" value="{!monthlyUserSizeMap[thisMonth]} ({!monthlyUserPercentMap[thisMonth]}%)" />
+				</apex:pageBlockSectionItem>
+			</apex:repeat>
+		</apex:pageBlockSection>
+		<apex:pageBlockSection columns="1" title="" id="quarterMetric" >
+			<font color="#ff0000">
+				<apex:facet name="header">
+       				<span style="color:black">Quarterly metrics - percentage of users that used MIR at least once in these quarters</span>
+   				</apex:facet>
+   			</font>
+			<script>twistSection(document.getElementById("{!$Component.quarterMetric}").childNodes[0].childNodes[0]);</script>
+			<apex:repeat value="{!quarterUsersOrdered}" var="thisQuarter" >
+				<apex:pageBlockSectionItem >
+					<apex:outputLabel for="oneQuarter" value="{!thisQuarter}" />
+					<apex:outputText id="oneQuarter" value="{!quarterUserSizeMap[thisQuarter]} ({!quarterUserPercentMap[thisQuarter]}%)" />
+				</apex:pageBlockSectionItem>
+			</apex:repeat>
+		</apex:pageBlockSection>
+		<apex:pageBlockSection columns="1" id="userMetric" >
+			<font color="#ff0000">
+				<apex:facet name="header">
+       				<span style="color:black">General User metrics</span>
+   				</apex:facet>
+   			</font>
+			<script>twistSection(document.getElementById("{!$Component.userMetric}").childNodes[0].childNodes[0]);</script>
+			<apex:pageBlockSectionItem >
+				<apex:outputLabel for="totalUsersUsed" value="Users that never used MIR" />
+				<apex:outputText id="totalUsersUsed" value="{!totalContactsUsed} ({!totalContactsUsedPercent}%)" />
+			</apex:pageBlockSectionItem>
+			<!--
+			<apex:pageBlockSection columns="1" id="totalUsersUsedList" rendered="{!userListNeverUsed.size > 0}" >
+				<font color="#ff0000">
+					<apex:facet name="header">
+	       				<span style="color:black">List of Users</span>
+	   				</apex:facet>
+	   			</font>
+				<script>twistSection(document.getElementById("{!$Component.totalUsersUsedList}").childNodes[0].childNodes[0]);</script>
+				<apex:pageBlockTable value="{!userListNeverUsed}" var="item" >
+				-->
+					<!-- <apex:column value="{!item.Id}" /> -->
+					<!--
+					<apex:column value="{!item.Contact.Name}" />
+					<apex:column value="{!item.Email}" />
+					<apex:column value="{!item.Contact.IATA_Code__c}" />
+					<apex:column value="{!item.Contact.Account.Name}" />
+				</apex:pageBlockTable>
+			</apex:pageBlockSection>
+			-->
+			<apex:pageBlockSectionItem >
+				<apex:outputLabel for="totalUsersAll" value="Users checking MIR every week" />
+				<apex:outputText id="totalUsersAll" value="{!totalContactsSeenAll} ({!totalContactsSeenAllPercent}%)" />
+			</apex:pageBlockSectionItem>
+			<!--
+			<apex:pageBlockSection columns="1" id="totalUsersAllList" rendered="{!userListAlwaysUsed.size > 0}" >
+				<font color="#ff0000">
+					<apex:facet name="header">
+	       				<span style="color:black">List of Users</span>
+	   				</apex:facet>
+	   			</font>
+				<script>twistSection(document.getElementById("{!$Component.totalUsersAllList}").childNodes[0].childNodes[0]);</script>
+				<apex:pageBlockTable value="{!userListAlwaysUsed}" var="item" >
+				-->
+					<!-- <apex:column value="{!item.Id}" /> -->
+					<!--
+					<apex:column value="{!item.Contact.Name}" />
+					<apex:column value="{!item.Email}" />
+					<apex:column value="{!item.Contact.IATA_Code__c}" />
+					<apex:column value="{!item.Contact.Account.Name}" />
+				</apex:pageBlockTable>
+			</apex:pageBlockSection>
+			-->
+			<apex:pageBlockSectionItem >
+				<apex:outputLabel for="totalUsersOnce" value="Users that checked MIR at least once" />
+				<apex:outputText id="totalUsersOnce" value="{!totalContactsSeenOnce} ({!totalContactsSeenOncePercent}%)" />
+			</apex:pageBlockSectionItem>
+			<!--
+			<apex:pageBlockSection columns="1" id="totalUsersOnceList" rendered="{!userListUsedOnce.size > 0}" >
+				<font color="#ff0000">
+					<apex:facet name="header">
+	       				<span style="color:black">List of Users</span>
+	   				</apex:facet>
+	   			</font>
+				<script>twistSection(document.getElementById("{!$Component.totalUsersOnceList}").childNodes[0].childNodes[0]);</script>
+				<apex:pageBlockTable value="{!userListUsedOnce}" var="item" > 
+				-->
+					<!-- <apex:column value="{!item.Id}" /> -->
+					<!--
+					<apex:column value="{!item.Contact.Name}" />
+					<apex:column value="{!item.Email}" />
+					<apex:column value="{!item.Contact.IATA_Code__c}" />
+					<apex:column value="{!item.Contact.Account.Name}" />
+				</apex:pageBlockTable>
+			</apex:pageBlockSection>
+			-->
+		</apex:pageBlockSection>
+	</apex:pageBlock>
+	
+</apex:page>

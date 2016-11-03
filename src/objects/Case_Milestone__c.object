@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Business_Hours__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Business Hours</label>
+        <referenceTo>BusinessHours</referenceTo>
+        <relationshipName>Case_Milestones</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Case__c</fullName>
+        <externalId>false</externalId>
+        <label>Case</label>
+        <referenceTo>Case</referenceTo>
+        <relationshipLabel>Case Milestones</relationshipLabel>
+        <relationshipName>Case_Milestones</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Classification_Phase__c</fullName>
+        <externalId>false</externalId>
+        <label>Classification Phase</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Initial evaluation and approval</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Business clarification by DPC</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>PQ delivery and approval</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Development</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>UAT approval</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Deployment and Documentation</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Documentation Review</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Finalization</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>End_Date__c</fullName>
+        <description>Represents the time when the case status changed from this status to another.</description>
+        <externalId>false</externalId>
+        <label>End Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Is_Milestone__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Is Milestone</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Milestone_Date__c</fullName>
+        <defaultValue>NOW()</defaultValue>
+        <description>Represents the date &amp; time that the milestone is reached.</description>
+        <externalId>false</externalId>
+        <label>Milestone Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Milestone_Length__c</fullName>
+        <description>Difference in days between the moment when this Milestone was reached and the moment the following Milestone was reached.</description>
+        <externalId>false</externalId>
+        <formula>End_Date__c -   Milestone_Date__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Milestone Length</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>StatusName__c</fullName>
+        <externalId>false</externalId>
+        <label>StatusName</label>
+        <length>64</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Time_Escalated_Externally__c</fullName>
+        <defaultValue>0</defaultValue>
+        <externalId>false</externalId>
+        <label>Time Escalated Externally - number</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>3</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Time_Escalated_Externally_text__c</fullName>
+        <description>Display the time value in hours and minutes.</description>
+        <externalId>false</externalId>
+        <formula>TEXT( FLOOR( Time_Escalated_Externally__c ) ) + &apos; Hour(s) &apos; + 
+TEXT( FLOOR( ( Time_Escalated_Externally__c - FLOOR( Time_Escalated_Externally__c ) ) * 60 ) ) + &apos; Minute(s)&apos;</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Time Escalated Externally</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Time_Escalated_Internally__c</fullName>
+        <defaultValue>0</defaultValue>
+        <externalId>false</externalId>
+        <label>Time Escalated Internally - number</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>3</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Time_Escalated_Internally_text__c</fullName>
+        <description>Display the time value in hours and minutes.</description>
+        <externalId>false</externalId>
+        <formula>TEXT( FLOOR( Time_Escalated_Internally__c ) ) + &apos; Hour(s) &apos; + 
+TEXT( FLOOR( ( Time_Escalated_Internally__c - FLOOR( Time_Escalated_Internally__c ) ) * 60 ) ) + &apos; Minute(s)&apos;</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Time Escalated Internally</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Time_With_Support__c</fullName>
+        <defaultValue>0</defaultValue>
+        <externalId>false</externalId>
+        <label>Time With Support - number</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>3</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Time_With_Support_text__c</fullName>
+        <description>Display the time value in hours and minutes.</description>
+        <externalId>false</externalId>
+        <formula>TEXT( FLOOR( Time_With_Support__c ) ) + &apos; Hour(s) &apos; + 
+TEXT( FLOOR( ( Time_With_Support__c  - FLOOR( Time_With_Support__c ) ) * 60 ) ) + &apos; Minute(s)&apos;</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Time With Support</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Total_Time_Escalated_Externally__c</fullName>
+        <defaultValue>0</defaultValue>
+        <description>Field that tracks the total time spent by the case escalated externally until the current milestone, inclusively. Used to facilitate calculations of time spent on individual milestones.</description>
+        <externalId>false</externalId>
+        <label>Total Time Escalated Externally</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>3</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Total_Time_Escalated_Internally__c</fullName>
+        <defaultValue>0</defaultValue>
+        <description>Field that tracks the total time spent by the case escalated internally until the current milestone, inclusively. Used to facilitate calculations of time spent on individual milestones.</description>
+        <externalId>false</externalId>
+        <label>Total Time Escalated Internally</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>3</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Total_Time_With_Support__c</fullName>
+        <defaultValue>0</defaultValue>
+        <description>Field that tracks the total time spent by the case with support until the current milestone, inclusively. Used to facilitate calculations of time spent on individual milestones.</description>
+        <externalId>false</externalId>
+        <label>Total Time With Support</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>3</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>DPC Application Change Request</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <label>Case Milestone</label>
+    <nameField>
+        <displayFormat>CM-{00000}</displayFormat>
+        <label>Milestone Name</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Case Milestones</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ControlledByParent</sharingModel>
+    <validationRules>
+        <fullName>EndDateMustComeAfterMilestoneDate</fullName>
+        <active>true</active>
+        <description>Ensure that the End Date is bigger than the Milestone Date (for manual editing of the Case Milestones).</description>
+        <errorConditionFormula>End_Date__c &lt;  Milestone_Date__c</errorConditionFormula>
+        <errorMessage>The End Date must be greater than the Milestone Date.</errorMessage>
+    </validationRules>
+</CustomObject>

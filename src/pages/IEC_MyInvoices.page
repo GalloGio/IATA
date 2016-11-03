@@ -1,0 +1,156 @@
+<apex:page controller="IEC_MyInvoicesController" action="{!onLoadAction}" language="{!language}" 
+	docType="html-5.0"  applyBodyTag="false" applyHtmlTag="false" showHeader="false" sidebar="false" standardStylesheets="false" cache="true">
+	
+	<!--[if lte IE 8]>
+    <html lang="en" class="ie lte-ie8 no-svg">
+	<![endif]-->
+	<!--[if IE 9]>
+	    <html lang="en" class="ie ie9">
+	<![endif]-->
+	<!--[if !IE]><!-->
+	
+	<html lang="{!language}">
+	<!--<![endif]-->
+
+		<head>
+			<meta charset="UTF-8"/>
+			<meta name="viewport" content="width=device-width, initial-scale=1"/>
+			<apex:stylesheet value="{!URLFOR($Resource.EcommerceAssets, 'css/styles.min.css')}" />
+			<title>{!$Label.PageTitleMyInvoices} - {!$Label.SiteTitle}</title>
+		</head>
+
+		<body data-media-size="" class="page-dashboard">
+
+			<div id="js-breakpoint-finder">
+				<span class="device-xs screen-xsmall"/>
+				<span class="device-sm screen-small"/>
+				<span class="device-md screen-medium"/>
+				<span class="device-lg screen-large"/>
+				<span class="device-xl screen-xlarge"/>
+			</div>
+
+			<div id="js-app-container" class="app-container">
+				<!-- Page Header -->
+				<c:IEC_PageHeader is_dashboard="true" page_name="IEC_MyInvoices"/>
+
+				<div id="js-page-container" class="page-container">
+					<main class="main-content">
+					    <div class="inner-wrapper">
+					        <h1 class="page-title">{!$Label.PageTitleMyInvoices}</h1>
+					        <div class="table-container view-invoices">
+					            <div class="table-heading">
+					                <table class="data-table table-history">
+					                    <tr class="heading">
+			                                <th class="invoice-number">Invoice No.</th>
+			                                <th class="invoice-date">Invoice date</th>
+			                                <th class="invoice-amount">Invoice amount</th>
+			                                <th class="status">Status</th>
+			                                <th class="action"></th>
+			                            </tr>
+					                </table>
+					            </div>
+
+					            <div class="scroll-container history">
+					                <table class="data-table table-history table-togglable">
+					                    <tr class="heading">
+			                                <th class="invoice-number">Invoice No.</th>
+			                                <th class="invoice-date">Invoice date</th>
+			                                <th class="invoice-amount">Invoice amount</th>
+			                                <th class="status">Status</th>
+			                                <th class="action"></th>
+			                            </tr>
+			                            <apex:repeat value="{!invoices}" var="invoice" rendered="{!AND(invoices != null, invoices.size > 0)}">
+					                    	<tr class="listing-item">
+					                        	<td class="invoice-number" data-label="Invoice No.">{!invoice.Name}</td>
+					                        	<td class="invoice-date" data-label="Invoice date"><apex:outputText value="{0,date,yyyy'/'MM'/'dd}"><apex:param value="{!invoice.Zuora__InvoiceDate__c}" /></apex:outputText></td>
+						                        <td class="invoice-amount" data-label="Invoice amount"><apex:outputText value="${0, number,###,###,##0.00}"><apex:param value="{!invoice.Zuora__TotalAmount__c}"/></apex:outputText></td>
+						                        <td class="status" data-label="Status"><span class="status-label {!invoice.Zuora__Status__c}">{!invoice.Zuora__Status__c}</span></td>
+						                        <td class="action js-toggle-table">
+						                            <a class="js-toggle-switch" href="#">
+						                                <span class="show-details">See details<i class="fa fa-chevron-circle-down" aria-hidden="true"></i></span>
+						                                <span class="hide-details">Hide details<i class="fa fa-chevron-circle-up" aria-hidden="true"></i></span>
+						                            </a>
+						                        </td>
+						                        <td class="details js-toggle-details is-hidden">
+						                            <div class="order-details-container">
+						                                <div class="caption">Invoice {!invoice.Zuora__ZuoraId__c}</div>
+						                                <div class="row">
+						                                    <div class="columns small-6">
+						                                        <div class="group-container group-summary">
+						                                            <div class="group-title">Summary</div>
+						                                            <div class="box">
+						                                                <div class="label">Invoice amount:</div>
+						                                                <div class="value"><strong><apex:outputText value="${0, number,###,###,##0.00}"><apex:param value="{!invoice.Zuora__TotalAmount__c}"/></apex:outputText></strong></div>
+						                                            </div>
+						                                            <div class="box">
+						                                                <div class="label">Balance:</div>
+						                                                <div class="value"><strong><apex:outputText value="${0, number,###,###,##0.00}"><apex:param value="{!invoice.Zuora__Balance2__c}"/></apex:outputText></strong></div>
+						                                            </div>
+						                                            <div class="box">
+						                                                <div class="label">Invoice status:</div>
+						                                                <div class="value"><strong>{!invoice.Zuora__Status__c}</strong></div>
+						                                            </div>
+						                                        </div>
+						                                        <div class="group-container group-services-dates">
+						                                            <div class="group-title">Invoice dates</div>
+						                                            <div class="box">
+						                                                <div class="label">Invoice date:</div>
+						                                                <div class="value"><strong><apex:outputText value="{0,date,yyyy'/'MM'/'dd}"><apex:param value="{!invoice.Zuora__InvoiceDate__c}" /></apex:outputText></strong></div>
+						                                            </div>
+						                                            <div class="box">
+						                                                <div class="label">Due date:</div>
+						                                                <div class="value"><strong><apex:outputText value="{0,date,yyyy'/'MM'/'dd}"><apex:param value="{!invoice.Zuora__DueDate__c}" /></apex:outputText></strong></div>
+						                                            </div>
+						                                        </div>
+						                                    </div>
+						                                    <div class="columns small-6">
+						                                        <div class="group-container">
+						                                            <div class="group-title">Related payments</div>
+						                                            <apex:repeat value="{!invoice.Zuora__Payments__r}" var="payment">
+						                                            <div class="box">
+						                                                <div class="label">Payment number:</div>
+						                                                <div class="value"><strong>{!payment.Name}</strong></div>
+						                                            </div>
+						                                            </apex:repeat>
+						                                        </div>
+						                                    </div>
+						                                </div>
+						                                <div class="group-container invoice-total">
+						                                    <div class="label">Total</div>
+						                                    <div class="value"><strong><apex:outputText value="${0, number,###,###,##0.00}"><apex:param value="{!invoice.Zuora__TotalAmount__c}"/></apex:outputText></strong></div>
+						                                </div>
+
+						                                <div class="footer-action text-right">
+						                                    <apex:outputLink value="{!$Page.Zuora__viewInvoicePdf}" target="_blank" styleClass="button">
+	                                                            View PDF invoice
+	                                                            <apex:param name="id" value="{!invoice.Id}"/>
+	                                                        </apex:outputLink>
+						                                </div>
+						                            </div>
+					                        	</td>
+					                    	</tr>
+					                    </apex:repeat>
+					                </table>
+					            </div>
+					        </div>
+					    </div>
+					</main>
+
+					<!-- Page Footer  -->
+					<c:Footer is_dashboard="true" />
+				</div>
+			</div>
+
+			<script src="{!URLFOR($Resource.EcommerceAssets, 'js/vendor.min.js')}"></script>
+			<script src="{!URLFOR($Resource.EcommerceAssets, 'js/script.js')}"></script>
+
+			<script type="text/javascript">
+				$(document).ready(function(){
+					//Custom JS
+				});
+			</script>
+		</body>
+
+	</html>
+
+</apex:page>

@@ -1,0 +1,1257 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>Register of Phone Calls received in the HUB</description>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Abandoned_Calls__c</fullName>
+        <description>Number of abandoned calls</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Enter the number of abandoned calls</inlineHelpText>
+        <label>Abandoned Calls</label>
+        <precision>4</precision>
+        <required>true</required>
+        <scale>0</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Answered_Calls__c</fullName>
+        <description>Number of answered calls</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Enter the number of answered calls</inlineHelpText>
+        <label>Answered Calls</label>
+        <precision>4</precision>
+        <required>true</required>
+        <scale>0</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>BSPCountry__c</fullName>
+        <description>IATA Country Name to identify call origin</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Select the correspondent Country</inlineHelpText>
+        <label>IATA Country</label>
+        <picklist>
+            <controllingField>Region__c</controllingField>
+            <picklistValues>
+                <fullName>Afghanistan</fullName>
+                <default>false</default>
+                <controllingFieldValues>Asia &amp; Pacific</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Albania</fullName>
+                <default>false</default>
+                <controllingFieldValues>Europe</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Algeria</fullName>
+                <default>false</default>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>All region</fullName>
+                <default>false</default>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
+                <controllingFieldValues>Americas</controllingFieldValues>
+                <controllingFieldValues>Asia &amp; Pacific</controllingFieldValues>
+                <controllingFieldValues>China &amp; North Asia</controllingFieldValues>
+                <controllingFieldValues>Europe</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Angola</fullName>
+                <default>false</default>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Anguilla</fullName>
+                <default>false</default>
+                <controllingFieldValues>Americas</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Antigua and Barbuda</fullName>
+                <default>false</default>
+                <controllingFieldValues>Americas</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Argentina</fullName>
+                <default>false</default>
+                <controllingFieldValues>Americas</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Armenia</fullName>
+                <default>false</default>
+                <controllingFieldValues>Europe</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Aruba</fullName>
+                <default>false</default>
+                <controllingFieldValues>Americas</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Australia</fullName>
+                <default>false</default>
+                <controllingFieldValues>Asia &amp; Pacific</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Austria</fullName>
+                <default>false</default>
+                <controllingFieldValues>Europe</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Azerbaijan</fullName>
+                <default>false</default>
+                <controllingFieldValues>Europe</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Bahamas</fullName>
+                <default>false</default>
+                <controllingFieldValues>Americas</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Bahrain</fullName>
+                <default>false</default>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Bangladesh</fullName>
+                <default>false</default>
+                <controllingFieldValues>Asia &amp; Pacific</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Barbados</fullName>
+                <default>false</default>
+                <controllingFieldValues>Americas</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Belarus</fullName>
+                <default>false</default>
+                <controllingFieldValues>Europe</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Belgium &amp; Luxembourg</fullName>
+                <default>false</default>
+                <controllingFieldValues>Europe</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Belize</fullName>
+                <default>false</default>
+                <controllingFieldValues>Americas</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Benin</fullName>
+                <default>false</default>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Bermuda</fullName>
+                <default>false</default>
+                <controllingFieldValues>Americas</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Bhutan</fullName>
+                <default>false</default>
+                <controllingFieldValues>Asia &amp; Pacific</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Bolivia</fullName>
+                <default>false</default>
+                <controllingFieldValues>Americas</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Bonaire, Saba, St. Eustatius</fullName>
+                <default>false</default>
+                <controllingFieldValues>Americas</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Bosnia and Herzegovina</fullName>
+                <default>false</default>
+                <controllingFieldValues>Europe</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Botswana</fullName>
+                <default>false</default>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Brazil</fullName>
+                <default>false</default>
+                <controllingFieldValues>Americas</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>British Virgin Islands</fullName>
+                <default>false</default>
+                <controllingFieldValues>Americas</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Brunei Darussalam</fullName>
+                <default>false</default>
+                <controllingFieldValues>Asia &amp; Pacific</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Bulgaria</fullName>
+                <default>false</default>
+                <controllingFieldValues>Europe</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Burkina Faso</fullName>
+                <default>false</default>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Burundi</fullName>
+                <default>false</default>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Cambodia</fullName>
+                <default>false</default>
+                <controllingFieldValues>Asia &amp; Pacific</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Cameroon</fullName>
+                <default>false</default>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Canada</fullName>
+                <default>false</default>
+                <controllingFieldValues>Americas</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Cape Verde</fullName>
+                <default>false</default>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Cayman Islands</fullName>
+                <default>false</default>
+                <controllingFieldValues>Americas</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Central African Republic</fullName>
+                <default>false</default>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Chile</fullName>
+                <default>false</default>
+                <controllingFieldValues>Americas</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Chinese Taipei</fullName>
+                <default>false</default>
+                <controllingFieldValues>China &amp; North Asia</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Colombia</fullName>
+                <default>false</default>
+                <controllingFieldValues>Americas</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Comoros</fullName>
+                <default>false</default>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Congo, the Democratic Republic of the</fullName>
+                <default>false</default>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Congo (Brazzaville)</fullName>
+                <default>false</default>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Cook Islands</fullName>
+                <default>false</default>
+                <controllingFieldValues>Asia &amp; Pacific</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Costa Rica</fullName>
+                <default>false</default>
+                <controllingFieldValues>Americas</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Côte d&apos;Ivoire</fullName>
+                <default>false</default>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Croatia</fullName>
+                <default>false</default>
+                <controllingFieldValues>Europe</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Curacao</fullName>
+                <default>false</default>
+                <controllingFieldValues>Americas</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Curaçao</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Cyprus</fullName>
+                <default>false</default>
+                <controllingFieldValues>Europe</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Czech Republic &amp; Slovakia</fullName>
+                <default>false</default>
+                <controllingFieldValues>Europe</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Djibouti</fullName>
+                <default>false</default>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Dominica</fullName>
+                <default>false</default>
+                <controllingFieldValues>Americas</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Dominican Republic</fullName>
+                <default>false</default>
+                <controllingFieldValues>Americas</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Ecuador</fullName>
+                <default>false</default>
+                <controllingFieldValues>Americas</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Egypt</fullName>
+                <default>false</default>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>El Salvador</fullName>
+                <default>false</default>
+                <controllingFieldValues>Americas</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Equatorial Guinea</fullName>
+                <default>false</default>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Eritrea</fullName>
+                <default>false</default>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Ethiopia</fullName>
+                <default>false</default>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Falkland Islands</fullName>
+                <default>false</default>
+                <controllingFieldValues>Americas</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Fiji</fullName>
+                <default>false</default>
+                <controllingFieldValues>Asia &amp; Pacific</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Finland</fullName>
+                <default>false</default>
+                <controllingFieldValues>Europe</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>France</fullName>
+                <default>false</default>
+                <controllingFieldValues>Europe</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>French Polynesia</fullName>
+                <default>false</default>
+                <controllingFieldValues>Asia &amp; Pacific</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Gabon</fullName>
+                <default>false</default>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Gambia</fullName>
+                <default>false</default>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Georgia</fullName>
+                <default>false</default>
+                <controllingFieldValues>Europe</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Germany</fullName>
+                <default>false</default>
+                <controllingFieldValues>Europe</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Ghana</fullName>
+                <default>false</default>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Greece</fullName>
+                <default>false</default>
+                <controllingFieldValues>Europe</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Grenada</fullName>
+                <default>false</default>
+                <controllingFieldValues>Americas</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Guam</fullName>
+                <default>false</default>
+                <controllingFieldValues>Asia &amp; Pacific</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Guatemala</fullName>
+                <default>false</default>
+                <controllingFieldValues>Americas</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Guinea</fullName>
+                <default>false</default>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Guinea-Bissau</fullName>
+                <default>false</default>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Guyana</fullName>
+                <default>false</default>
+                <controllingFieldValues>Americas</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Haiti</fullName>
+                <default>false</default>
+                <controllingFieldValues>Americas</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Honduras</fullName>
+                <default>false</default>
+                <controllingFieldValues>Americas</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Hong Kong (SAR), China</fullName>
+                <default>false</default>
+                <controllingFieldValues>China &amp; North Asia</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Hungary</fullName>
+                <default>false</default>
+                <controllingFieldValues>Europe</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>India</fullName>
+                <default>false</default>
+                <controllingFieldValues>Asia &amp; Pacific</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Indonesia</fullName>
+                <default>false</default>
+                <controllingFieldValues>Asia &amp; Pacific</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Iran, Islamic Republic of</fullName>
+                <default>false</default>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Iraq</fullName>
+                <default>false</default>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Ireland</fullName>
+                <default>false</default>
+                <controllingFieldValues>Europe</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Israel</fullName>
+                <default>false</default>
+                <controllingFieldValues>Europe</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Italy</fullName>
+                <default>false</default>
+                <controllingFieldValues>Europe</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Jamaica</fullName>
+                <default>false</default>
+                <controllingFieldValues>Americas</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Japan</fullName>
+                <default>false</default>
+                <controllingFieldValues>Asia &amp; Pacific</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Jordan</fullName>
+                <default>false</default>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Kazakhstan</fullName>
+                <default>false</default>
+                <controllingFieldValues>Europe</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Kenya</fullName>
+                <default>false</default>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Kiribati</fullName>
+                <default>false</default>
+                <controllingFieldValues>Asia &amp; Pacific</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Korea, Republic of</fullName>
+                <default>false</default>
+                <controllingFieldValues>Asia &amp; Pacific</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Kosovo</fullName>
+                <default>false</default>
+                <controllingFieldValues>Europe</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Kuwait</fullName>
+                <default>false</default>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Kyrgyzstan</fullName>
+                <default>false</default>
+                <controllingFieldValues>Europe</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Lao People&apos;s Democratic Republic</fullName>
+                <default>false</default>
+                <controllingFieldValues>Asia &amp; Pacific</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Lebanon</fullName>
+                <default>false</default>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Lesotho</fullName>
+                <default>false</default>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Liberia</fullName>
+                <default>false</default>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Libya</fullName>
+                <default>false</default>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Macau (SAR), China</fullName>
+                <default>false</default>
+                <controllingFieldValues>China &amp; North Asia</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Macedonia, the former Yugoslav Republic of</fullName>
+                <default>false</default>
+                <controllingFieldValues>Europe</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Madagascar</fullName>
+                <default>false</default>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Malawi</fullName>
+                <default>false</default>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Malaysia</fullName>
+                <default>false</default>
+                <controllingFieldValues>Asia &amp; Pacific</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Maldives</fullName>
+                <default>false</default>
+                <controllingFieldValues>Asia &amp; Pacific</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Mali</fullName>
+                <default>false</default>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Malta</fullName>
+                <default>false</default>
+                <controllingFieldValues>Europe</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Marshall Islands</fullName>
+                <default>false</default>
+                <controllingFieldValues>Asia &amp; Pacific</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Mauritania</fullName>
+                <default>false</default>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Mauritius</fullName>
+                <default>false</default>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Mexico</fullName>
+                <default>false</default>
+                <controllingFieldValues>Americas</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Micronesia, Federal States of</fullName>
+                <default>false</default>
+                <controllingFieldValues>Asia &amp; Pacific</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Mongolia</fullName>
+                <default>false</default>
+                <controllingFieldValues>China &amp; North Asia</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Montenegro</fullName>
+                <default>false</default>
+                <controllingFieldValues>Europe</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Montserrat</fullName>
+                <default>false</default>
+                <controllingFieldValues>Americas</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Morocco</fullName>
+                <default>false</default>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Mozambique</fullName>
+                <default>false</default>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Myanmar</fullName>
+                <default>false</default>
+                <controllingFieldValues>Asia &amp; Pacific</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Namibia</fullName>
+                <default>false</default>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Nepal</fullName>
+                <default>false</default>
+                <controllingFieldValues>Asia &amp; Pacific</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Netherlands</fullName>
+                <default>false</default>
+                <controllingFieldValues>Europe</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>New Caledonia</fullName>
+                <default>false</default>
+                <controllingFieldValues>Asia &amp; Pacific</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>New Zealand</fullName>
+                <default>false</default>
+                <controllingFieldValues>Asia &amp; Pacific</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Nicaragua</fullName>
+                <default>false</default>
+                <controllingFieldValues>Americas</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Niger</fullName>
+                <default>false</default>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Nigeria</fullName>
+                <default>false</default>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Nordic &amp; Baltic</fullName>
+                <default>false</default>
+                <controllingFieldValues>Europe</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Oman</fullName>
+                <default>false</default>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Pakistan</fullName>
+                <default>false</default>
+                <controllingFieldValues>Asia &amp; Pacific</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Palau, Republic of</fullName>
+                <default>false</default>
+                <controllingFieldValues>Asia &amp; Pacific</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Palestinian Territories, Occupied</fullName>
+                <default>false</default>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Panama</fullName>
+                <default>false</default>
+                <controllingFieldValues>Americas</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Papua New Guinea</fullName>
+                <default>false</default>
+                <controllingFieldValues>Asia &amp; Pacific</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Paraguay</fullName>
+                <default>false</default>
+                <controllingFieldValues>Americas</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>People&apos;s Republic of China</fullName>
+                <default>false</default>
+                <controllingFieldValues>China &amp; North Asia</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Peru</fullName>
+                <default>false</default>
+                <controllingFieldValues>Americas</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Philippines</fullName>
+                <default>false</default>
+                <controllingFieldValues>Asia &amp; Pacific</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Poland</fullName>
+                <default>false</default>
+                <controllingFieldValues>Europe</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Portugal</fullName>
+                <default>false</default>
+                <controllingFieldValues>Europe</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Qatar</fullName>
+                <default>false</default>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Regional Office - Africa &amp; Middle East</fullName>
+                <default>false</default>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Regional Office - Americas</fullName>
+                <default>false</default>
+                <controllingFieldValues>Americas</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Regional Office - Asia &amp; Pacific</fullName>
+                <default>false</default>
+                <controllingFieldValues>Asia &amp; Pacific</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Regional Office - China &amp; North Asia</fullName>
+                <default>false</default>
+                <controllingFieldValues>China &amp; North Asia</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Regional Office - Europe</fullName>
+                <default>false</default>
+                <controllingFieldValues>Europe</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Reunion</fullName>
+                <default>false</default>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Romania &amp; Moldova</fullName>
+                <default>false</default>
+                <controllingFieldValues>Europe</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Russia &amp; CIS</fullName>
+                <default>false</default>
+                <controllingFieldValues>Europe</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Rwanda</fullName>
+                <default>false</default>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Saint Kitts and Nevis</fullName>
+                <default>false</default>
+                <controllingFieldValues>Americas</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Saint Lucia</fullName>
+                <default>false</default>
+                <controllingFieldValues>Americas</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Saint Maarten</fullName>
+                <default>false</default>
+                <controllingFieldValues>Americas</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Saint Vincent and the Grenadines</fullName>
+                <default>false</default>
+                <controllingFieldValues>Americas</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Samoa</fullName>
+                <default>false</default>
+                <controllingFieldValues>Asia &amp; Pacific</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Sao Tome</fullName>
+                <default>false</default>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Saudi Arabia</fullName>
+                <default>false</default>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SCE All Countries</fullName>
+                <default>false</default>
+                <controllingFieldValues>Europe</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Senegal</fullName>
+                <default>false</default>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Serbia</fullName>
+                <default>false</default>
+                <controllingFieldValues>Europe</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Seychelles</fullName>
+                <default>false</default>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Sierra Leone</fullName>
+                <default>false</default>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Singapore</fullName>
+                <default>false</default>
+                <controllingFieldValues>Asia &amp; Pacific</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Slovenia</fullName>
+                <default>false</default>
+                <controllingFieldValues>Europe</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Solomon Islands</fullName>
+                <default>false</default>
+                <controllingFieldValues>Asia &amp; Pacific</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Somalia</fullName>
+                <default>false</default>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>South Africa</fullName>
+                <default>false</default>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Spain &amp; Andorra</fullName>
+                <default>false</default>
+                <controllingFieldValues>Europe</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Sri Lanka</fullName>
+                <default>false</default>
+                <controllingFieldValues>Asia &amp; Pacific</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Sudan</fullName>
+                <default>false</default>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Suriname</fullName>
+                <default>false</default>
+                <controllingFieldValues>Americas</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Swaziland</fullName>
+                <default>false</default>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Switzerland &amp; Liechtenstein</fullName>
+                <default>false</default>
+                <controllingFieldValues>Europe</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Syria</fullName>
+                <default>false</default>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Tahiti</fullName>
+                <default>false</default>
+                <controllingFieldValues>Asia &amp; Pacific</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Tajikistan</fullName>
+                <default>false</default>
+                <controllingFieldValues>Europe</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Tanzania, United Republic of</fullName>
+                <default>false</default>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Tchad</fullName>
+                <default>false</default>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Thailand</fullName>
+                <default>false</default>
+                <controllingFieldValues>Asia &amp; Pacific</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Togo</fullName>
+                <default>false</default>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Tonga</fullName>
+                <default>false</default>
+                <controllingFieldValues>Asia &amp; Pacific</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Trinidad and Tobago</fullName>
+                <default>false</default>
+                <controllingFieldValues>Americas</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Tunisia</fullName>
+                <default>false</default>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Turkey</fullName>
+                <default>false</default>
+                <controllingFieldValues>Europe</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Turkmenistan</fullName>
+                <default>false</default>
+                <controllingFieldValues>Europe</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Turks and Caicos Islands</fullName>
+                <default>false</default>
+                <controllingFieldValues>Americas</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Uganda</fullName>
+                <default>false</default>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Ukraine</fullName>
+                <default>false</default>
+                <controllingFieldValues>Europe</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>United Arab Emirates</fullName>
+                <default>false</default>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>United Kingdom</fullName>
+                <default>false</default>
+                <controllingFieldValues>Europe</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>United States</fullName>
+                <default>false</default>
+                <controllingFieldValues>Americas</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Uruguay</fullName>
+                <default>false</default>
+                <controllingFieldValues>Americas</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Uzbekistan</fullName>
+                <default>false</default>
+                <controllingFieldValues>Europe</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Vanuatu</fullName>
+                <default>false</default>
+                <controllingFieldValues>Asia &amp; Pacific</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Venezuela</fullName>
+                <default>false</default>
+                <controllingFieldValues>Americas</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Vietnam</fullName>
+                <default>false</default>
+                <controllingFieldValues>Asia &amp; Pacific</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Virgin Islands, British</fullName>
+                <default>false</default>
+                <controllingFieldValues>Americas</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Wallis &amp; Futuna Islands</fullName>
+                <default>false</default>
+                <controllingFieldValues>Asia &amp; Pacific</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Western Balkans</fullName>
+                <default>false</default>
+                <controllingFieldValues>Europe</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Yemen</fullName>
+                <default>false</default>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Zambia</fullName>
+                <default>false</default>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Zimbabwe</fullName>
+                <default>false</default>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
+            </picklistValues>
+            <sorted>true</sorted>
+        </picklist>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Calls_Date__c</fullName>
+        <description>Date of calls received</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Inform the date of calls received</inlineHelpText>
+        <label>Calls Date</label>
+        <required>true</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>From__c</fullName>
+        <description>Call received from a number provided to</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Call received from a number provided to:</inlineHelpText>
+        <label>From:</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Agent</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Airline</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Other</fullName>
+                <default>true</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Region__c</fullName>
+        <description>Region name information</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Inform the region</inlineHelpText>
+        <label>Region</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Africa &amp; Middle East</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Americas</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Asia &amp; Pacific</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>China &amp; North Asia</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Europe</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>true</sorted>
+        </picklist>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Total_Calls__c</fullName>
+        <description>Total calls answered and abandoned</description>
+        <externalId>false</externalId>
+        <formula>Abandoned_Calls__c +  Answered_Calls__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Total calls answered and abandoned</inlineHelpText>
+        <label>Total Calls</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <label>Phone Call Information</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>Calls_Date__c</columns>
+        <columns>Region__c</columns>
+        <columns>BSPCountry__c</columns>
+        <columns>Total_Calls__c</columns>
+        <columns>Answered_Calls__c</columns>
+        <columns>Abandoned_Calls__c</columns>
+        <columns>NAME</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
+    <nameField>
+        <displayFormat>PC-{00000000}</displayFormat>
+        <label>Phone Calls</label>
+        <trackHistory>false</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Phone Calls</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+    <validationRules>
+        <fullName>Region_and_IATA_Country</fullName>
+        <active>true</active>
+        <errorConditionFormula>ISPICKVAL( BSPCountry__c , &quot;&quot;)</errorConditionFormula>
+        <errorDisplayField>Region__c</errorDisplayField>
+        <errorMessage>Inform Region and IATA Country</errorMessage>
+    </validationRules>
+</CustomObject>

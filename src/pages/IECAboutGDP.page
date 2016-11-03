@@ -1,0 +1,137 @@
+<apex:page cache="false" sidebar="false" language="en"  showHeader="false" standardStylesheets="false">
+ <Title>About Global Data</Title>
+  <c:IECSiteHeader />
+  
+ 
+  <div id="aboutus">
+  <!----------  Carousel Static Start -------- -->
+  <div class="carouselWrapper static">
+
+    <div class="gradient"></div>
+
+    <div class="carousel">
+      <ul class="carousel__list">
+
+        <li class="carousel__slide" style="background-image:url({!$Resource.IECBannerHome})">
+         <div class="autoAdjustMargin">
+            <div class="carousel__slide-wrapper">              
+              
+              <h2 class="carousel__slide-text -heading"><span>Global Data Products</span><br/>Distribution solutions for the travel industry</h2>
+              <br/>
+              <a class="carousel__slide-anchor customButton" href="mailto:globaldata@iata.org?subject=eCommerce">Contact us</a>
+              
+            </div>
+          </div>
+        </li>
+        
+      </ul>
+    </div>
+    </div>
+<!----------  Carousel Static END -------- -->
+
+
+
+
+
+
+ <div class="sepEmptyDiv"></div>
+
+  <div class="content-container tab">
+
+  <div class="content-container tab products basicPageTemplate">
+    <div class="tab-container">
+
+        <div class="tab-container__cell -selected">
+        <div class="tab-container__text-area full_width">
+            <h2 class="tab-container__text -heading">About Global Data</h2>
+            
+<p class="tab-container__text">
+Global Data Products are market-leading solutions helping to manage back-end business functions like reservations, reconciliations, accounting and revenue management, as well as sales and marketing activities essential to promoting your business on a global scale.</p>
+
+<p class="tab-container__text">
+The power and flexibility of Global Data products derive from the data itself, a contact database of over 120,000 IATA agencies, all identified by their unique IATA Numeric code.<br/>
+It is the most up-to-date, reliable and comprehensive resource to search for qualified business partners, enabling you to build, manage and maintain professional distribution channels worldwide.
+</p>
+
+
+<h4>IATA's Approach</h4>
+
+<p class="tab-container__text">
+For more than 60 years, through its global Agency Programs, IATA has been the custodian of a unique numbering system and contact database of qualified travel agency locations.<br/>
+IATA's wordlwide network of regional offices rigorously maintains Global Data Products, providing more than 5,000 updates every month.</p>
+
+
+<h4>Who needs Global Data?</h4>
+
+<p class="tab-container__text">
+Global Data provides a unique opportunity for airlines, hotels, car rental companies, cruise lines, tour operators and tourism authorities to cost-effectively :</p>
+
+          <ul>
+            <li>Manage and administer essential business activities</li>
+            <li>Perform business development activities to a preferred, qualified audience</li>
+            <li>Gain increased exposure and global reach</li>
+            <li>Simplify contact management with monthly automatic updates, and more</li>
+          </ul>
+
+<br/>
+<div class="callout-banner center">
+<span class="right">IATA's Global Data Products help travel and tourism suppliers run their businesses more efficiently.</span>
+    </div>
+
+
+        </div>
+       </div>
+
+
+    </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+ 
+  <!-- ************************************ -->
+  <!-- Companies using global data products -->
+  
+   <div class="bigBg gray4">
+    <div class="content-container">
+      <div class="callout-banner big">
+        <div class="rightDiv">       
+            
+            <img class="company_logo" src="{!URLFOR($Resource.IECStyles,'img/')}cust1.png" />
+            <img class="company_logo" src="{!URLFOR($Resource.IECStyles,'img/')}cust2.png" />
+            <img class="company_logo" src="{!URLFOR($Resource.IECStyles,'img/')}cust3.png" />
+
+        
+        </div>
+        <h2 class="callout-banner__header">Companies using <br/><span>Global Data <br/> Products</span></h2>
+      </div>
+    </div>
+  </div>
+  
+  
+    
+    <!-- ************************************ -->
+
+ 
+  <c:IECSiteFooter />
+</apex:page>

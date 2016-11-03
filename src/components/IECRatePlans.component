@@ -1,0 +1,306 @@
+<apex:component controller="VfIECRatePlansComponent" access="global"  allowDML="true" rendered="true">
+    <apex:attribute name="ProductCategoryCode" type="String" description="Product Category" assignTo="{!sProductCategoryCode}" />
+    <apex:attribute name="DisplayPrice" type="Boolean" description="False to hide the price of the rate plans" assignTo="{!bDisplayPrice}" />
+    <apex:componentBody >
+             
+    
+    <style>
+            
+             .product-details-pricing .product-details-pricing__heading{background: #373c41}        
+            .product-details-pricing__heading:nth-child(odd) {background: #4b5055}                      
+            
+             .product-details-pricing .product-details-pricing__section.button {background: #373c41} 
+            .product-details-pricing .product-details-pricing__section.button:nth-child(odd){background: #4b5055}
+             .product-details-pricing .product-details-pricing__section.button:nth-child(even){background: #373c41}
+            
+           .TheButtons{
+                    background: #373c41;
+                    text-align: center;
+                    color: #fff;
+                    font-family: 'Raleway', sans-serif;
+                    font-weight: 300;
+                    font-size: 20px;
+                    height: 50px;
+                    padding: 0;
+                    vertical-align: middle;
+                    border: none;
+            }
+             .TheButtons:nth-of-type(odd){background: #4b5055}
+             
+             .buttonOne{
+                     background: transparent;
+                    text-align: inherit;
+                    color: inherit;
+                    font-family: 'Raleway', sans-serif;
+                    font-weight: inherit;
+                    font-size: inherit;
+                    height: inherit;
+                    padding:inherit;
+                    vertical-align: inherit;
+                    border: inherit;
+             }
+             
+            
+            
+    /*
+         .product-details-pricing .product-details-pricing__section.button {background: #373c41} 
+            .product-details-pricing__section .button:nth-child(even){background: #5a5f64}
+            .product-details-pricing__section .button:nth-child(odd){background: #41464b} 
+    */      
+    
+    </style>
+    
+    
+    
+    <table class="product-details-pricing">
+                    
+    
+    
+    <!--  TOP bar on special price -->    
+      <thead>
+        <apex:repeat var="ratePlanInformation" value="{!lstRatePlansInformation}">
+           
+            <apex:variable value="{!$User}" var="u" rendered="{!ratePlanInformation.Is_Most_Popular__c}" >
+                <th  class="product-details-pricing__section -two-high special" style="width:{!iColWidth}%;background:#54bed2;" ></th>
+            </apex:variable>
+            
+            <apex:variable value="{!$User}" var="u" rendered="{!NOT(ratePlanInformation.Is_Most_Popular__c)}" >
+                <th style="width:{!iColWidth}%" />
+            </apex:variable>
+            
+        </apex:repeat>
+    </thead>
+                    
+   
+   <!--  prices names -->                    
+    <thead>
+        <apex:repeat var="ratePlanInformation" value="{!lstRatePlansInformation}">
+        
+        
+        <!-- Popular item -->
+         <apex:variable value="{!$User}" var="u" rendered="{!ratePlanInformation.Is_Most_Popular__c}" >
+        
+            <th class="product-details-pricing__heading" style="width:{!iColWidth}%;background:#54bed2; height:80px;">
+                
+                <!-- If monthly price displayed -->
+                <apex:outputPanel rendered="{!ratePlanInformation.Display_As_Monthly_Fee__c && bDisplayPrice}">
+                    <apex:outputText value="${0, number,###,###,##0.00}"  styleClass="price">
+                        <apex:param value="{!ratePlanInformation.Monthly_Price__c}"/>
+                    </apex:outputText>
+                </apex:outputPanel>
+                
+                            
+                <!-- If annual price display -->
+                <apex:outputPanel rendered="{!NOT(ratePlanInformation.Display_As_Monthly_Fee__c)}">
+                    <apex:variable var="chargeTotal" value="{!0.0}" />
+                    <!-- Get the rate plan charges -->
+                    <apex:repeat var="charge" value="{!mapRatePlanCharges[ratePlanInformation.Product_Rate_Plan__c]}">
+                        <apex:variable var="chargeTotal" value="{!chargeTotal + charge.zqu__ListPrice__c}" />
+                    </apex:repeat>
+                    <apex:outputText value="${0, number,###,###,##0.00}" rendered="{!NOT(chargeTotal==0.0) && bDisplayPrice}"  styleClass="price">
+                        <apex:param value="{!chargeTotal}"/>
+                    </apex:outputText>
+                    <apex:outputText value="Free"  styleClass="product-details-pricing_price" rendered="{!chargeTotal==0.0}" style="background: #69d2be;" />
+                </apex:outputPanel>
+                
+                <!-- Request from LUC in Preprod: change the related product rate plan name for product information name 
+                <span>{!ratePlanInformation.Product_Rate_Plan__r.Name}</span>
+                -->
+                <span>{!ratePlanInformation.Name}</span>
+                
+            </th>
+         </apex:variable>
+         
+         
+         <!------  not popular items ----->
+          <apex:variable value="{!$User}" var="u" rendered="{!NOT(ratePlanInformation.Is_Most_Popular__c || ratePlanInformation.Is_Triable__c ) }" >   
+            
+            
+            <th class="product-details-pricing__heading" style="width:{!iColWidth}%;height:80px;" > 
+                
+                <!-- If monthly price displayed -->
+                <apex:outputPanel rendered="{!ratePlanInformation.Display_As_Monthly_Fee__c && bDisplayPrice}">
+                   
+                    <apex:outputText value="${0, number,###,###,##0.00}"  styleClass="price">
+                        <apex:param value="{!ratePlanInformation.Monthly_Price__c}"/>
+                    </apex:outputText>
+                    
+                </apex:outputPanel>                
+                            
+                <!-- If annual price display -->
+                <apex:outputPanel rendered="{!NOT(ratePlanInformation.Display_As_Monthly_Fee__c)}">
+                    
+                    <apex:variable var="chargeTotal" value="{!0.0}" />
+                        <!-- Get the rate plan charges -->
+                        <apex:repeat var="charge" value="{!mapRatePlanCharges[ratePlanInformation.Product_Rate_Plan__c]}">
+                            <apex:variable var="chargeTotal" value="{!chargeTotal + charge.zqu__ListPrice__c}" />
+                        </apex:repeat>
+                    
+                    <apex:outputText value="${0, number,###,###,##0.00}" rendered="{!NOT(chargeTotal==0.0) && bDisplayPrice}"  styleClass="price" >
+                        <apex:param value="{!chargeTotal}"/>
+                    </apex:outputText>
+
+                </apex:outputPanel>
+
+                <span>{!ratePlanInformation.Name}</span>
+                
+            </th>
+            
+           </apex:variable>
+           
+           
+           <!-- -------FREEE  -->
+          <apex:variable value="{!$User}" var="u" rendered="{!ratePlanInformation.Is_Triable__c}" >   
+            
+            
+            <th class="product-details-pricing__heading" style="width:{!iColWidth}%;height:80px; background: #69d2be;" > <!--  4b5055  373c41  free 69d2be-->
+                
+                <!-- If monthly price displayed -->
+                <apex:outputPanel rendered="{!ratePlanInformation.Display_As_Monthly_Fee__c && bDisplayPrice}">
+                   
+                    <apex:outputText value="${0, number,###,###,##0.00}"  styleClass="price">
+                        <apex:param value="{!ratePlanInformation.Monthly_Price__c}"/>
+                    </apex:outputText>
+                    
+                </apex:outputPanel>                
+                            
+                <!-- If annual price display -->
+                <apex:outputPanel rendered="{!NOT(ratePlanInformation.Display_As_Monthly_Fee__c)}">
+                    
+                    <apex:variable var="chargeTotal" value="{!0.0}" />
+                        <!-- Get the rate plan charges -->
+                        <apex:repeat var="charge" value="{!mapRatePlanCharges[ratePlanInformation.Product_Rate_Plan__c]}">
+                            <apex:variable var="chargeTotal" value="{!chargeTotal + charge.zqu__ListPrice__c}" />
+                        </apex:repeat>
+                    
+                    <apex:outputText value="Free"  styleClass="product-details-pricing_price" rendered="{!chargeTotal==0.0}"  />
+                </apex:outputPanel>
+
+                <span>{!ratePlanInformation.Name}</span>
+                
+            </th>
+            
+           </apex:variable>            
+
+                       
+            
+        </apex:repeat>   
+        
+    </thead>
+    
+    
+    
+    <!-- items body -->
+    
+    <tbody> 
+            
+            <tr>
+                <apex:repeat var="ratePlanInformation" value="{!lstRatePlansInformation}">                
+                    <td class="product-details-pricing__section -two-high" style="{!IF(ratePlanInformation.Is_Most_Popular__c,'color:#6bc7d8','')}">                                                
+                         <h4>{!ratePlanInformation.Short_Description__c}</h4>
+                        <p><apex:outputText value="{!ratePlanInformation.Long_Description__c}" escape="false" /></p>
+                    </td>
+                </apex:repeat>   
+            </tr>
+            
+        
+        
+              <tr>
+                 <apex:repeat var="ratePlanInformation" value="{!lstRatePlansInformation}">
+                 
+                  
+                        <apex:outputPanel > <!-- rendered="{!(ratePlanInformation.Related_Product_Information__r.Related_Product_Category__r.Button_Type__c=='Buy Now' || ratePlanInformation.Related_Product_Information__r.Related_Product_Category__r.Button_Type__c=='Buy/Quote') && NOT(ratePlanInformation.Is_Triable__c)}" > -->                    
+                           <td class="TheButtons"> <!-- class="product-details-pricing__section button"  -->
+        
+                                    <!-- MOST POPULAT -->
+                                    <apex:variable value="{!$User}" var="u" rendered="{!ratePlanInformation.Is_Most_Popular__c}" >         
+                                            <apex:commandButton onclick="changeCursorProgress(this); disableControl(this);" styleClass="product-details-pricing__section button"  style="background:#54bed2; width: 100%; height:50px;  cursor: pointer;" id="btnAddToCart" value="Buy now" action="{!addToCart}" rerender="ratePlanMsgs" rendered="{!(ratePlanInformation.Related_Product_Information__r.Related_Product_Category__r.Button_Type__c=='Buy Now' || ratePlanInformation.Related_Product_Information__r.Related_Product_Category__r.Button_Type__c=='Buy/Quote') && NOT(ratePlanInformation.Is_Triable__c)}">
+                                                <apex:param name="selectedratePlanInformationId" value="{!ratePlanInformation.Id}" assignTo="{!selectedRatePlanInformationId}"/>
+                                            </apex:commandButton>
+                                            <apex:commandButton onclick="changeCursorProgress(this); disableControl(this);" styleClass="product-details-pricing__section button"  style="background:#54bed2; width: 100%; height:50px;  cursor: pointer;"   id="btnQuote" value="Get a quote" action="{!getQuote}" rerender="ratePlanMsgs" rendered="{!(ratePlanInformation.Related_Product_Information__r.Related_Product_Category__r.Button_Type__c=='Get a Quote' || ratePlanInformation.Related_Product_Information__r.Related_Product_Category__r.Button_Type__c=='Buy/Quote') && NOT(ratePlanInformation.Is_Triable__c)}">
+                                                <apex:param name="selectedratePlanInformationId" value="{!ratePlanInformation.Id}" assignTo="{!selectedRatePlanInformationId}"/>
+                                            </apex:commandButton> 
+                                            <apex:commandButton onclick="changeCursorProgress(this); disableControl(this);" styleClass="product-details-pricing__section button" id="btnTryMe"  style="width: 100%; height:50px;  background:#69d2be; cursor: pointer;"  value="Try now" action="{!tryMe}" rerender="ratePlanMsgs" rendered="{!ratePlanInformation.Is_Triable__c}">
+                                                <apex:param name="selectedratePlanInformationId" value="{!ratePlanInformation.Id}" assignTo="{!selectedRatePlanInformationId}"/>
+                                            </apex:commandButton>
+                                    </apex:variable>
+                                    
+                                    
+                                    <!-- Not popular -->
+                                     <apex:variable value="{!$User}" var="u"  rendered="{!NOT(ratePlanInformation.Is_Most_Popular__c) }" >          
+                                            <apex:commandButton onclick="changeCursorProgress(this); disableControl(this);" styleClass="buttonOne"  style="width: 100%; height:50px;  cursor: pointer;" id="btnAddToCart" value="Buy now" action="{!addToCart}" rerender="ratePlanMsgs" rendered="{!(ratePlanInformation.Related_Product_Information__r.Related_Product_Category__r.Button_Type__c=='Buy Now' || ratePlanInformation.Related_Product_Information__r.Related_Product_Category__r.Button_Type__c=='Buy/Quote') && NOT(ratePlanInformation.Is_Triable__c)}">
+                                                <apex:param name="selectedratePlanInformationId" value="{!ratePlanInformation.Id}" assignTo="{!selectedRatePlanInformationId}"/>
+                                            </apex:commandButton>
+                                            <!--  styleClass="product-details-pricing__section button" -->
+                                            <apex:commandButton onclick="changeCursorProgress(this); disableControl(this);" styleClass="buttonOne"  style="width: 100%; height:50px;  cursor: pointer;"   id="btnQuote" value="Get a quote" action="{!getQuote}" rerender="ratePlanMsgs" rendered="{!(ratePlanInformation.Related_Product_Information__r.Related_Product_Category__r.Button_Type__c=='Get a Quote' || ratePlanInformation.Related_Product_Information__r.Related_Product_Category__r.Button_Type__c=='Buy/Quote') && NOT(ratePlanInformation.Is_Triable__c)}">
+                                                <apex:param name="selectedratePlanInformationId" value="{!ratePlanInformation.Id}" assignTo="{!selectedRatePlanInformationId}"/>
+                                            </apex:commandButton> 
+                                            <apex:commandButton onclick="changeCursorProgress(this); disableControl(this);" styleClass="product-details-pricing__section button" id="btnTryMe"  style="width: 100%; height:50px;  background:#69d2be; cursor: pointer;"  value="Try now" action="{!tryMe}" rerender="ratePlanMsgs" rendered="{!ratePlanInformation.Is_Triable__c}">
+                                                <apex:param name="selectedratePlanInformationId" value="{!ratePlanInformation.Id}" assignTo="{!selectedRatePlanInformationId}"/>
+                                            </apex:commandButton>
+                                    </apex:variable>
+                                                                                                       
+                           </td>    
+                           </apex:outputPanel>
+                            <apex:outputPanel rendered="{!NOT((ratePlanInformation.Related_Product_Information__r.Related_Product_Category__r.Button_Type__c=='Buy Now' || ratePlanInformation.Related_Product_Information__r.Related_Product_Category__r.Button_Type__c=='Buy/Quote') && NOT(ratePlanInformation.Is_Triable__c))}" >
+                                                        
+                            </apex:outputPanel>      
+                           
+                                                
+                </apex:repeat>   
+            </tr>
+            
+            <!-- 
+            
+             <tr> 
+                 <apex:repeat var="ratePlanInformation" value="{!lstRatePlansInformation}">
+                        
+                        <apex:outputPanel rendered="{!(ratePlanInformation.Related_Product_Information__r.Related_Product_Category__r.Button_Type__c=='Get a Quote' || ratePlanInformation.Related_Product_Information__r.Related_Product_Category__r.Button_Type__c=='Buy/Quote') && NOT(ratePlanInformation.Is_Triable__c)}" >                       
+                           <td class="product-details-pricing__section button" style="height:50px;background:#41464b; cursor: pointer;">                                    
+                                    
+                                    <apex:commandButton onclick="changeCursorProgress(this); disableControl(this);" styleClass="product-details-pricing__section button"  style="background: inherit; cursor: pointer;"   id="btnQuote" value="Get a Quote" action="{!getQuote}" rerender="ratePlanMsgs" rendered="{!(ratePlanInformation.Related_Product_Information__r.Related_Product_Category__r.Button_Type__c=='Get a Quote' || ratePlanInformation.Related_Product_Information__r.Related_Product_Category__r.Button_Type__c=='Buy/Quote') && NOT(ratePlanInformation.Is_Triable__c)}">
+                                        <apex:param name="selectedratePlanInformationId" value="{!ratePlanInformation.Id}" assignTo="{!selectedRatePlanInformationId}"/>
+                                    </apex:commandButton>                  
+                           </td>                    
+                        </apex:outputPanel>
+                       
+                        <apex:outputPanel rendered="{!NOT((ratePlanInformation.Related_Product_Information__r.Related_Product_Category__r.Button_Type__c=='Get a Quote' || ratePlanInformation.Related_Product_Information__r.Related_Product_Category__r.Button_Type__c=='Buy/Quote') && NOT(ratePlanInformation.Is_Triable__c))}" >          
+                             <td class="product-details-pricing__section button" style="height:50px; background:#41464b;"/>     
+                          </apex:outputPanel>   
+                           
+                           
+                </apex:repeat>   
+            </tr>
+ 
+              <tr> 
+                 <apex:repeat var="ratePlanInformation" value="{!lstRatePlansInformation}"  >
+                        
+                        <apex:outputPanel rendered="{!ratePlanInformation.Is_Triable__c}" >                
+                           <td class="product-details-pricing__section button" style="height:50px;background:#69d7e6; cursor: pointer;">                                                                        
+                                    
+                                    <apex:commandButton onclick="changeCursorProgress(this); disableControl(this);" styleClass="product-details-pricing__section button" id="btnTryMe"  style="background: inherit; cursor: pointer;"  value="Try me !" action="{!tryMe}" rerender="ratePlanMsgs" rendered="{!ratePlanInformation.Is_Triable__c}">
+                                        <apex:param name="selectedratePlanInformationId" value="{!ratePlanInformation.Id}" assignTo="{!selectedRatePlanInformationId}"/>
+                                    </apex:commandButton>                                                     
+                           
+                           </td>    
+                         </apex:outputPanel>        
+                           
+                          <apex:outputPanel rendered="{!NOT(ratePlanInformation.Is_Triable__c)}" >         
+                             <td class="product-details-pricing__section button" style="height:50px;"/>     
+                          </apex:outputPanel>
+                                   
+                </apex:repeat>   
+            </tr>           
+            -->
+            
+            
+        
+    </tbody>
+    
+</table>
+
+        <apex:outputPanel id="panelMostPopular" rendered="{!iNbrRatePlans==0}">
+            No rate plans found for: {!sProductCategoryCode}<br />
+        </apex:outputPanel>
+    </apex:componentBody>
+</apex:component>

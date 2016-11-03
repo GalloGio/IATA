@@ -1,0 +1,1133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Account__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Account</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>IEC SAP Invoices</relationshipLabel>
+        <relationshipName>IEC_SAP_Invoices</relationshipName>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Bill_To__c</fullName>
+        <externalId>false</externalId>
+        <label>Bill To</label>
+        <length>40</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Billing_Account__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Billing Account</label>
+        <referenceTo>Zuora__CustomerAccount__c</referenceTo>
+        <relationshipLabel>IEC SAP Invoices</relationshipLabel>
+        <relationshipName>IEC_SAP_Invoices</relationshipName>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Billing_City__c</fullName>
+        <externalId>false</externalId>
+        <label>Billing City</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Billing_Country_ISO_Code__c</fullName>
+        <externalId>false</externalId>
+        <label>Billing Country ISO Code</label>
+        <length>2</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Billing_Country__c</fullName>
+        <externalId>false</externalId>
+        <label>Billing Country</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Billing_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Billing Name</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Billing_State__c</fullName>
+        <externalId>false</externalId>
+        <label>Billing State</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Billing_Street__c</fullName>
+        <externalId>false</externalId>
+        <label>Billing Street</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Billing_Zip__c</fullName>
+        <externalId>false</externalId>
+        <label>Billing Zip</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Contact_Person__c</fullName>
+        <externalId>false</externalId>
+        <label>Contact Person</label>
+        <length>60</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Contract_End__c</fullName>
+        <externalId>false</externalId>
+        <label>Contract End</label>
+        <summarizedField>IEC_SAP_Invoice_Item__c.Date_To__c</summarizedField>
+        <summaryForeignKey>IEC_SAP_Invoice_Item__c.IEC_SAP_Invoice__c</summaryForeignKey>
+        <summaryOperation>max</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Contract_Number__c</fullName>
+        <externalId>false</externalId>
+        <label>Contract Number</label>
+        <length>20</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Contract_Start__c</fullName>
+        <externalId>false</externalId>
+        <label>Contract Start</label>
+        <summarizedField>IEC_SAP_Invoice_Item__c.Date_From__c</summarizedField>
+        <summaryForeignKey>IEC_SAP_Invoice_Item__c.IEC_SAP_Invoice__c</summaryForeignKey>
+        <summaryOperation>min</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Credit_Card_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Credit Card Type</label>
+        <length>40</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Customer_PO__c</fullName>
+        <externalId>false</externalId>
+        <label>Customer PO</label>
+        <length>40</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Dist_Chan__c</fullName>
+        <defaultValue>$Setup.IEC_SAP_Settings__c.DistChan__c</defaultValue>
+        <externalId>false</externalId>
+        <label>Dist Chan</label>
+        <length>20</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Division__c</fullName>
+        <defaultValue>$Setup.IEC_SAP_Settings__c.Division__c</defaultValue>
+        <externalId>false</externalId>
+        <label>Division</label>
+        <length>20</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Doc_Currency__c</fullName>
+        <defaultValue>&quot;USD&quot;</defaultValue>
+        <externalId>false</externalId>
+        <label>Doc Currency</label>
+        <length>3</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Doc_Type__c</fullName>
+        <defaultValue>$Setup.IEC_SAP_Settings__c.DocType__c</defaultValue>
+        <externalId>false</externalId>
+        <label>Doc Type</label>
+        <length>20</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Employee_Responsible__c</fullName>
+        <defaultValue>$Setup.IEC_SAP_Settings__c.Employee_Responsible__c</defaultValue>
+        <externalId>false</externalId>
+        <label>Employee Responsible</label>
+        <length>40</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Error_Message__c</fullName>
+        <externalId>false</externalId>
+        <label>Error Message</label>
+        <length>32768</length>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Number_of_Error_SAP_Items__c</fullName>
+        <externalId>false</externalId>
+        <label>Number of Error SAP Items</label>
+        <summaryFilterItems>
+            <field>IEC_SAP_Invoice_Item__c.Status__c</field>
+            <operation>equals</operation>
+            <value>Validation Error, SAP Error</value>
+        </summaryFilterItems>
+        <summaryForeignKey>IEC_SAP_Invoice_Item__c.IEC_SAP_Invoice__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Number_of_SAP_Items__c</fullName>
+        <externalId>false</externalId>
+        <label>Number of SAP Items</label>
+        <summaryForeignKey>IEC_SAP_Invoice_Item__c.IEC_SAP_Invoice__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Number_of_Use_Contract__c</fullName>
+        <description>IEC - Number of products to create contract found in items</description>
+        <externalId>false</externalId>
+        <label>Number of Use Contract</label>
+        <summaryFilterItems>
+            <field>IEC_SAP_Invoice_Item__c.Use_Contract__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </summaryFilterItems>
+        <summaryForeignKey>IEC_SAP_Invoice_Item__c.IEC_SAP_Invoice__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Number_of_Zuora_Items__c</fullName>
+        <externalId>false</externalId>
+        <label>Number of Zuora Items</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Order_Reason__c</fullName>
+        <defaultValue>&quot;Z01&quot;</defaultValue>
+        <externalId>false</externalId>
+        <label>Order Reason</label>
+        <length>20</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>PO_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>PO Date</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Pay_Method__c</fullName>
+        <externalId>false</externalId>
+        <label>Pay Method</label>
+        <length>20</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Pay_Terms__c</fullName>
+        <defaultValue>&quot;0011&quot;</defaultValue>
+        <externalId>false</externalId>
+        <label>Pay Terms</label>
+        <length>20</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Payment_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Payment Date</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Payment_Method_Code__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(Pay_Method__c = &apos;Credit Card&apos;
+	, &apos;1&apos;
+	, IF(Pay_Method__c = &apos;ICH&apos;
+		, &apos;I&apos;
+		, IF(Pay_Method__c = &apos;Bank Transfer&apos;
+			, &apos;T&apos;  
+            ,IF(Pay_Method__c = &apos;BankTransfer&apos;
+				, &apos;T&apos;
+				, &apos;&apos;
+            )
+		)
+	)
+)</formula>
+        <label>Payment Method Code</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Payment_Reference_ID__c</fullName>
+        <externalId>false</externalId>
+        <label>Payment Reference ID</label>
+        <length>40</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Ready_for_SAP__c</fullName>
+        <description>IEC - Determine if invoice is ready to send to SAP</description>
+        <externalId>false</externalId>
+        <formula>AND(
+	Number_of_Zuora_Items__c &lt;&gt; 0
+	, Number_of_Error_SAP_Items__c = 0
+	, Number_of_SAP_Items__c = Number_of_Zuora_Items__c 
+	, ISPICKVAL(Status__c, &apos;New&apos;)
+	, ISBLANK(Subscription_Order_Id__c)
+	, Number_of_Use_Contract__c &gt; 0
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Ready for SAP?</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>SAP_Bill_To_Number__c</fullName>
+        <externalId>false</externalId>
+        <label>SAP Bill To Number</label>
+        <length>40</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SAP_Contract_Number__c</fullName>
+        <externalId>false</externalId>
+        <label>SAP Contract Number</label>
+        <length>40</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SAP_Invoice_Clearance_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>SAP Invoice Clearance Date</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>SAP_Invoice_Number__c</fullName>
+        <externalId>false</externalId>
+        <label>SAP Invoice Number</label>
+        <length>40</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Sales_Office__c</fullName>
+        <defaultValue>$Setup.IEC_SAP_Settings__c.SalesOffice__c</defaultValue>
+        <externalId>false</externalId>
+        <label>Sales Office</label>
+        <length>20</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Sales_Org__c</fullName>
+        <defaultValue>$Setup.IEC_SAP_Settings__c.SalesOrg__c</defaultValue>
+        <externalId>false</externalId>
+        <label>Sales Org</label>
+        <length>20</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Shipping_City__c</fullName>
+        <externalId>false</externalId>
+        <label>Shipping City</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Shipping_Contact__c</fullName>
+        <externalId>false</externalId>
+        <label>Shipping Contact</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Shipping_Country__c</fullName>
+        <externalId>false</externalId>
+        <label>Shipping Country</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Shipping_State__c</fullName>
+        <externalId>false</externalId>
+        <label>Shipping State</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Shipping_Street__c</fullName>
+        <externalId>false</externalId>
+        <label>Shipping Street</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Shipping_Zip__c</fullName>
+        <externalId>false</externalId>
+        <label>Shipping Zip</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Status_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Status Date</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Status__c</fullName>
+        <externalId>false</externalId>
+        <label>Status</label>
+        <picklist>
+            <picklistValues>
+                <fullName>New</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Sent to SAP</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SAP Payment Confirmation Received</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Zuora Ready</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Sent to Zuora</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Validation Error</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SAP Error</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Zuora Error</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Pre Go-Live</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Subscription_Order_Id__c</fullName>
+        <description>IEC - Order ID attached to this subscription</description>
+        <externalId>false</externalId>
+        <label>Subscription Order Id</label>
+        <length>18</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Subtotal__c</fullName>
+        <description>Total of charge amounts of related invoice item without tax</description>
+        <externalId>false</externalId>
+        <label>Subtotal</label>
+        <summarizedField>IEC_SAP_Invoice_Item__c.Charge_Amount__c</summarizedField>
+        <summaryForeignKey>IEC_SAP_Invoice_Item__c.IEC_SAP_Invoice__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Text_Print__c</fullName>
+        <externalId>false</externalId>
+        <label>Text Print</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Total_Amount__c</fullName>
+        <externalId>false</externalId>
+        <label>Total Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Total_Positive_Quantity__c</fullName>
+        <description>Sum of all quantity items in related invoice items that has a Charge Amount value &gt; 0.
+
+This is to avoid sending negative invoice items to SAP</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Sum of all quantity items in related invoice items that has a Charge Amount value &gt; 0.
+
+This is to avoid sending negative invoice items to SAP</inlineHelpText>
+        <label>Total Positive Quantity</label>
+        <summarizedField>IEC_SAP_Invoice_Item__c.Quantity__c</summarizedField>
+        <summaryFilterItems>
+            <field>IEC_SAP_Invoice_Item__c.Charge_Amount__c</field>
+            <operation>greaterOrEqual</operation>
+            <value>0</value>
+        </summaryFilterItems>
+        <summaryForeignKey>IEC_SAP_Invoice_Item__c.IEC_SAP_Invoice__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Total_Quantity__c</fullName>
+        <description>Sum of all related invoice item quantity</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Sum of all related invoice item quantity</inlineHelpText>
+        <label>Total Quantity</label>
+        <summarizedField>IEC_SAP_Invoice_Item__c.Quantity__c</summarizedField>
+        <summaryForeignKey>IEC_SAP_Invoice_Item__c.IEC_SAP_Invoice__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>VAT_Number__c</fullName>
+        <externalId>false</externalId>
+        <label>VAT Number</label>
+        <length>40</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Warning_Message__c</fullName>
+        <description>Field that stores warning messages received by SAP</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Field that stores warning messages received by SAP</inlineHelpText>
+        <label>Warning Message</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Zuora_Billing_Account_ID__c</fullName>
+        <externalId>false</externalId>
+        <label>Zuora Billing Account ID</label>
+        <length>40</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Zuora_Invoice_ID__c</fullName>
+        <externalId>false</externalId>
+        <label>Zuora Invoice ID</label>
+        <length>40</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Zuora_Invoice_Number__c</fullName>
+        <caseSensitive>true</caseSensitive>
+        <externalId>true</externalId>
+        <label>Zuora Invoice Number</label>
+        <length>40</length>
+        <required>true</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <label>IEC SAP Invoice</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Bill_To__c</columns>
+        <columns>SAP_Bill_To_Number__c</columns>
+        <columns>Account__c</columns>
+        <columns>Status__c</columns>
+        <columns>Total_Amount__c</columns>
+        <columns>SAP_Contract_Number__c</columns>
+        <columns>SAP_Invoice_Number__c</columns>
+        <columns>Payment_Date__c</columns>
+        <columns>SAP_Invoice_Clearance_Date__c</columns>
+        <columns>Pay_Method__c</columns>
+        <columns>Ready_for_SAP__c</columns>
+        <columns>Error_Message__c</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>Billing_Country_ISO_Code__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Pre_Go_Live_Excluded_Credit_Card_Only</fullName>
+        <columns>NAME</columns>
+        <columns>Account__c</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>Status__c</columns>
+        <columns>SAP_Contract_Number__c</columns>
+        <columns>Total_Amount__c</columns>
+        <columns>Pay_Method__c</columns>
+        <columns>Payment_Date__c</columns>
+        <columns>SAP_Invoice_Number__c</columns>
+        <columns>SAP_Invoice_Clearance_Date__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Status__c</field>
+            <operation>notEqual</operation>
+            <value>Pre Go-Live</value>
+        </filters>
+        <filters>
+            <field>Pay_Method__c</field>
+            <operation>equals</operation>
+            <value>BankTransfer</value>
+        </filters>
+        <label>Pre Go-Live Excluded - BankTransfer Only</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Pre_Go_Live_Excluded_ICH_Only</fullName>
+        <columns>NAME</columns>
+        <columns>Account__c</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>Status__c</columns>
+        <columns>SAP_Contract_Number__c</columns>
+        <columns>Total_Amount__c</columns>
+        <columns>Pay_Method__c</columns>
+        <columns>Payment_Date__c</columns>
+        <columns>SAP_Invoice_Number__c</columns>
+        <columns>SAP_Invoice_Clearance_Date__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Status__c</field>
+            <operation>notEqual</operation>
+            <value>Pre Go-Live</value>
+        </filters>
+        <filters>
+            <field>Pay_Method__c</field>
+            <operation>equals</operation>
+            <value>ICH</value>
+        </filters>
+        <label>Pre Go-Live Excluded - ICH Only</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Ready_to_be_sent_to_SAP</fullName>
+        <columns>NAME</columns>
+        <columns>Account__c</columns>
+        <columns>Contract_Number__c</columns>
+        <columns>Status__c</columns>
+        <columns>Total_Amount__c</columns>
+        <columns>Error_Message__c</columns>
+        <columns>Number_of_Error_SAP_Items__c</columns>
+        <columns>Number_of_SAP_Items__c</columns>
+        <columns>Number_of_Zuora_Items__c</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>LAST_UPDATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Ready_for_SAP__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>New</value>
+        </filters>
+        <label>Ready to be sent to SAP</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>SAP_Error</fullName>
+        <columns>NAME</columns>
+        <columns>Account__c</columns>
+        <columns>SAP_Bill_To_Number__c</columns>
+        <columns>Status__c</columns>
+        <columns>Status_Date__c</columns>
+        <columns>Error_Message__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>SAP Error</value>
+        </filters>
+        <label>SAP Error</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>SAP_Payment_Confirmation_Received</fullName>
+        <columns>NAME</columns>
+        <columns>Account__c</columns>
+        <columns>Pay_Method__c</columns>
+        <columns>SAP_Contract_Number__c</columns>
+        <columns>SAP_Invoice_Clearance_Date__c</columns>
+        <columns>Status__c</columns>
+        <columns>Error_Message__c</columns>
+        <columns>LAST_UPDATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>SAP Payment Confirmation Received</value>
+        </filters>
+        <label>SAP Payment Confirmation Received</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Sent_to_SAP</fullName>
+        <columns>NAME</columns>
+        <columns>Account__c</columns>
+        <columns>Status__c</columns>
+        <columns>Status_Date__c</columns>
+        <columns>SAP_Contract_Number__c</columns>
+        <columns>Error_Message__c</columns>
+        <columns>Pay_Method__c</columns>
+        <columns>Total_Amount__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>Sent to SAP</value>
+        </filters>
+        <label>Sent to SAP</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Sent_to_SAP_CC</fullName>
+        <columns>NAME</columns>
+        <columns>Account__c</columns>
+        <columns>Status__c</columns>
+        <columns>SAP_Contract_Number__c</columns>
+        <columns>Total_Amount__c</columns>
+        <columns>Pay_Method__c</columns>
+        <columns>Credit_Card_Type__c</columns>
+        <columns>Payment_Reference_ID__c</columns>
+        <columns>Payment_Date__c</columns>
+        <columns>SAP_Invoice_Number__c</columns>
+        <columns>SAP_Invoice_Clearance_Date__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Status__c</field>
+            <operation>notEqual</operation>
+            <value>Pre Go-Live</value>
+        </filters>
+        <filters>
+            <field>Payment_Method_Code__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <label>Pre Go-Live Excluded - Credit Card Only</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Sent_to_SAP_ICH</fullName>
+        <columns>NAME</columns>
+        <columns>Account__c</columns>
+        <columns>Status__c</columns>
+        <columns>Status_Date__c</columns>
+        <columns>SAP_Contract_Number__c</columns>
+        <columns>Error_Message__c</columns>
+        <columns>Pay_Method__c</columns>
+        <columns>Total_Amount__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>Sent to SAP</value>
+        </filters>
+        <filters>
+            <field>Payment_Method_Code__c</field>
+            <operation>equals</operation>
+            <value>I</value>
+        </filters>
+        <label>Sent to SAP - ICH</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Sent_to_Zuora</fullName>
+        <columns>NAME</columns>
+        <columns>Account__c</columns>
+        <columns>Contract_Number__c</columns>
+        <columns>Status__c</columns>
+        <columns>Error_Message__c</columns>
+        <columns>Pay_Method__c</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>LAST_UPDATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>Sent to Zuora</value>
+        </filters>
+        <label>Sent to Zuora</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Special</fullName>
+        <columns>NAME</columns>
+        <columns>Account__c</columns>
+        <columns>Billing_Name__c</columns>
+        <columns>Status__c</columns>
+        <columns>Status_Date__c</columns>
+        <columns>Pay_Method__c</columns>
+        <columns>Payment_Date__c</columns>
+        <columns>SAP_Contract_Number__c</columns>
+        <columns>Total_Amount__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>SAP_Invoice_Number__c</field>
+            <operation>notEqual</operation>
+        </filters>
+        <label>Special</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Stress_Test_data</fullName>
+        <columns>NAME</columns>
+        <columns>Status__c</columns>
+        <columns>Status_Date__c</columns>
+        <columns>Error_Message__c</columns>
+        <columns>SAP_Bill_To_Number__c</columns>
+        <columns>SAP_Contract_Number__c</columns>
+        <columns>SAP_Invoice_Clearance_Date__c</columns>
+        <columns>SAP_Invoice_Number__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>NAME</field>
+            <operation>startsWith</operation>
+            <value>STINV</value>
+        </filters>
+        <label>Stress Test data</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Validation_Error</fullName>
+        <columns>NAME</columns>
+        <columns>Account__c</columns>
+        <columns>Contract_Number__c</columns>
+        <columns>Status__c</columns>
+        <columns>Status_Date__c</columns>
+        <columns>Error_Message__c</columns>
+        <columns>Number_of_Error_SAP_Items__c</columns>
+        <columns>Number_of_SAP_Items__c</columns>
+        <columns>Number_of_Zuora_Items__c</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>LAST_UPDATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>Validation Error</value>
+        </filters>
+        <label>Validation Error</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Zuora_Error</fullName>
+        <columns>NAME</columns>
+        <columns>Account__c</columns>
+        <columns>Contract_Number__c</columns>
+        <columns>Status__c</columns>
+        <columns>Error_Message__c</columns>
+        <columns>Pay_Method__c</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>LAST_UPDATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>Zuora Error</value>
+        </filters>
+        <label>Zuora Error</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Zuora_Ready</fullName>
+        <columns>NAME</columns>
+        <columns>Account__c</columns>
+        <columns>Contract_Number__c</columns>
+        <columns>SAP_Contract_Number__c</columns>
+        <columns>Status__c</columns>
+        <columns>Error_Message__c</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>SAP_Invoice_Clearance_Date__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>Zuora Ready</value>
+        </filters>
+        <label>Zuora Ready</label>
+        <language>en_US</language>
+    </listViews>
+    <nameField>
+        <label>Zuora Invoice Number</label>
+        <trackHistory>true</trackHistory>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>IEC SAP Invoices</pluralLabel>
+    <searchLayouts>
+        <customTabListAdditionalFields>Billing_Name__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Status__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Status_Date__c</customTabListAdditionalFields>
+        <searchResultsAdditionalFields>Billing_Name__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Status__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Status_Date__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ReadWrite</sharingModel>
+    <startsWith>Vowel</startsWith>
+</CustomObject>

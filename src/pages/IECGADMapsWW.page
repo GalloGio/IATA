@@ -1,0 +1,145 @@
+<apex:page controller="vfIECGADMapDetails" sidebar="false" showheader="false" language="en" standardStylesheets="false" action="{!queryWWData}"  readonly="true" cache="true">
+
+    <head>
+        <title>Worldwide Stats by Country</title>
+        <apex:stylesheet value="{!URLFOR($Resource.GDPStats, 'css.css')}" />
+        <apex:stylesheet value="{!URLFOR($Resource.GDPStats, 'font-awesome.css')}" />        
+        <apex:stylesheet value="{!URLFOR($Resource.GDPStats, 'flags32.css')}" />
+        <apex:includeScript value="{!URLFOR($Resource.GDPStats, 'jquery.min.js')}" />
+        <apex:includeScript value="{!URLFOR($Resource.GDPStats, 'scripts.js')}" />        
+        <apex:includeScript value="{!URLFOR($Resource.GDPStats, 'highmaps.js')}" />  
+        <apex:includeScript value="{!URLFOR($Resource.GDPStats, 'world.js')}" />  
+        <apex:includeScript value="{!URLFOR($Resource.GDPStats, 'data.js')}" />
+        <apex:includeScript value="{!URLFOR($Resource.GDPStats, 'ca-all.js')}" />
+
+    </head>
+    
+    <body>
+<script type="text/javascript">
+
+
+		//************************************************************************
+		// Build the data array required by the map from the wwData query result
+		//************************************************************************ 
+
+		//IF(showAgencies, record.Locations__c, record.Emails__c)
+		//IF(showAgencies, 'IATA Locations in USA Brokendown by States', 'IATA Email in USA Brokendown by States')
+        var dataWW = [
+			<apex:repeat value="{!resultList}" var="record">
+				{
+					"code": "{!record.Code__c}",
+					value: {!IF(showAgencies, record.Locations__c, record.Emails__c)},
+					locations: {!record.Locations__c},
+					emails: {!record.Emails__c},
+					uemails: {!record.Unique_Emails__c}
+				},
+			</apex:repeat>
+				{
+					"code": "None",
+					value: 0,
+					locations: 0,
+					emails: 0,
+					uemails: 0
+				}
+		];
+
+		//************************************************************************
+		// JQery manipulation to customise the data display
+		//************************************************************************ 
+        jQuery.noConflict();
+
+        var example = 'tooltip', 
+        theme = 'default';
+
+
+        //World wide
+        (function($)
+        	{ // encapsulate jQuery
+	            $(function () 
+	            	{
+						        // Add lower case codes to the data set for inclusion in the tooltip.pointFormat
+							
+						        $.each(dataWW, function () {
+						            this.flag = this.code.replace('UK', 'GB').toLowerCase();
+						        });
+						
+						        // Initiate the chart
+						        $('#container').highcharts('Map', {
+						
+						            title: {
+						                text: "{!IF(showAgencies, 'IATA Locations Worldwide', 'IATA Emails Worldwide')}"
+						            },
+						
+						            legend: {
+						                title: {
+						                    text: '',
+						                    style: {
+						                        color: (Highcharts.theme && Highcharts.theme.textColor) || '#23828C'
+						                    }
+						                }
+						            },
+						
+						            mapNavigation: {
+						                enabled: false,
+						                buttonOptions: {
+						                    verticalAlign: 'bottom'
+						                }
+						            },
+						            credits: {
+						                enabled: false
+						            },
+						            
+						
+						            tooltip: {
+						                borderWidth: 1,
+						                shadow: false,
+						                useHTML: true,
+						                padding: 0,
+						                pointFormat: '{!htmlInfo}', 
+						            },
+						
+						            colorAxis: {
+						                min: 0
+						            },
+						
+						            series : [{
+						                data : dataWW,
+						                mapData: Highcharts.maps['custom/world'],
+						                joinBy: ['iso-a2', 'code'],
+						                name: "{!IF(showAgencies, 'IATA Locations', 'IATA Emails')}",
+						                states: {
+						                    hover: {
+						                        color: '#23828C'
+						                    }
+						                }
+						            	}]
+						        	}
+						        );
+					}
+				);     
+			}
+		)(jQuery);
+
+    </script>
+    
+        <!-- WorldWide -->
+
+        <div id="demo-content">
+            <div id="demo-content-container">
+                <div id="demo-chart">
+                    <div id="container" style="min-width: 310px; height: 500px; margin: 0 auto"></div>
+                    <div id="containerCanada" style="min-width: 310px; height: 500px; margin: 0 auto"></div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <div>
+            <!--
+			<apex:outputText value="Stats of {0,date, dd MMM yyyy}"  style="position: absolute;top: 500px;right: 10px;font-size: 11px;color: #77BAE9" rendered="{!NOT(hasAccess)}">
+        		<apex:param value="{!snapshotDate}" /> 
+			</apex:outputText>	
+			-->
+        </div>        
+
+    </body>
+</apex:page>

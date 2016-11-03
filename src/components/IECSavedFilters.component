@@ -1,0 +1,160 @@
+<apex:component allowDML="true" layout="none">
+
+    <script>
+        function deletePopup(value) {
+            var popupDiv = this.document.getElementById('deleteFilter');
+            popupDiv.style.display = value;
+        }
+    </script>
+    
+        <div id="deleteFilter" style="display: none;">
+            <div class="checkout-popupBackground" >
+                &nbsp;
+            </div>
+            <div class="checkout-popup"  style="text-align: center"> 
+                <span class="warningMessage">DELETE FILTER CONFIRMATION</span>
+                <br/>
+                <br/>
+                <br/>
+                Are you sure you want to delete the filter?
+                <br/><br/>
+                
+                <div style="width:100%; text-align: center">
+                    <apex:commandButton style="width: 100px;" id="f5ButtonYes" styleClass="validate-submit" value="Yes"  onclick="deletePopup('none');return false;"/>
+                    &nbsp;&nbsp;
+                    <apex:commandButton style="width: 100px;" id="f5ButtonNo" styleClass="validate-submit" value="No"  onclick="deletePopup('none');return false;"/>
+                </div>
+            </div>
+        </div>  
+        
+        <apex:actionFunction name="deleteFilter" action="{!filtersController.deleteFilter}" >
+        </apex:actionFunction>
+
+    <apex:attribute name="filtersController"  description="Saved Filters Contrller" type="vfIECSavedFilters" required="true"/>
+            <h3>Saved Filters</h3>
+            <span class="infoBoxText -label">{!filtersController.sErrorMessage}</span>
+                    <table width="100%">
+                    
+                        <tr>
+                            <td class="infoBoxTd -normal">
+                                <span class="infoBoxText -label">Filter #1: </span>
+                                <apex:outputText styleClass="infoBoxText -value" value="Unused" rendered="{!filtersController.Filter1 == null}" />
+                                <apex:commandLink styleClass="commandLink" value="{!LEFT(filtersController.Filter1.Filter_Name__c,20)}" title="{!filtersController.Filter1.Filter_Name__c}" rendered="{!NOT(filtersController.Filter1 == null)}" action="{!filtersController.runFilter}">
+                                    <apex:param name="iFilterIndex" value="0" assignTo="{!filtersController.iFilterIndex}"/>
+                                </apex:commandLink>
+                            </td>
+                            <td class="infoBoxTd -normal" style="text-align: right;"> 
+                                <apex:commandLink styleClass="edit" value="edit" rendered="{!NOT(filtersController.Filter1 == null)}" action="{!filtersController.editFilter}">
+                                   <!--   <apex:image value="{!URLFOR($Resource.IEC_Edit)}" style="width: 24px;cursor: pointer;vertical-align: middle;" title="Refine filter"/> -->
+                                    <apex:param name="iFilterIndex" value="0" assignTo="{!filtersController.iFilterIndex}"/>
+                                </apex:commandLink>     
+                                &nbsp;                           
+ 
+<!-- 
+                                    onclick="if(!window.confirm('Are you sure you want to delete filter \'{!filtersController.Filter1.Filter_Name__c}\' ?')) return false;">
+                                    onclick="deletePopup('');return false;">
+
+ -->
+                                <apex:commandLink styleClass="delete" value="delete" rendered="{!NOT(filtersController.Filter1 == null)}" action="{!filtersController.deleteFilter}"
+                                    onclick="if(!window.confirm('Are you sure you want to delete filter \'{!filtersController.Filter1.Filter_Name__c}\' ?')) return false;">
+                                    <!-- <apex:image value="{!URLFOR($Resource.IEC_Delete)}" style="width: 24px;cursor: pointer;vertical-align: middle;" title="Delete filter"/> -->
+                                    <apex:param name="iFilterIndex" value="0" assignTo="{!filtersController.iFilterIndex}"/>
+                                </apex:commandLink>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="infoBoxTd -normal">
+                                <span class="infoBoxText -label">Filter #2: </span>
+                                <apex:outputText styleClass="infoBoxText -value" value="Unused" rendered="{!filtersController.Filter2 == null}" />
+                                <apex:commandLink styleClass="commandLink" value="{!LEFT(filtersController.Filter2.Filter_Name__c,20)}" title="{!filtersController.Filter2.Filter_Name__c}" rendered="{!NOT(filtersController.Filter2 == null)}" action="{!filtersController.runFilter}">
+                                    <apex:param name="iFilterIndex" value="1" assignTo="{!filtersController.iFilterIndex}"/>
+                                </apex:commandLink>
+                            </td>
+                            <td class="infoBoxTd -normal" style="text-align: right;">
+                                <span class="infoBoxText -value">
+                                <apex:commandLink styleClass="edit" value="edit" rendered="{!NOT(filtersController.Filter2 == null)}" action="{!filtersController.editFilter}">
+                                    <!-- <apex:image value="{!URLFOR($Resource.IEC_Edit)}" style="width: 24px;cursor: pointer;vertical-align: middle;" title="Refine filter"/> -->
+                                    <apex:param name="iFilterIndex" value="1" assignTo="{!filtersController.iFilterIndex}"/>
+                                </apex:commandLink>     
+                                &nbsp;                           
+                                <apex:commandLink styleClass="delete" value="delete" rendered="{!NOT(filtersController.Filter2 == null)}" action="{!filtersController.deleteFilter}"
+                                    onclick="if(!window.confirm('Are you sure you want to delete filter \'{!filtersController.Filter2.Filter_Name__c}\' ?')) return false;">
+                                    <!-- <apex:image value="{!URLFOR($Resource.IEC_Delete)}" style="width: 24px;cursor: pointer;vertical-align: middle;" title="Delete filter"/> -->
+                                    <apex:param name="iFilterIndex" value="1" assignTo="{!filtersController.iFilterIndex}"/>
+                                </apex:commandLink>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="infoBoxTd -normal">
+                                <span class="infoBoxText -label">Filter #3: </span>
+                                <apex:outputText styleClass="infoBoxText -value" value="Unused" rendered="{!filtersController.Filter3 == null}" />
+                                <apex:commandLink styleClass="commandLink" value="{!LEFT(filtersController.Filter3.Filter_Name__c,20)}" title="{!filtersController.Filter3.Filter_Name__c}" rendered="{!NOT(filtersController.Filter3 == null)}" action="{!filtersController.runFilter}">
+                                    <apex:param name="iFilterIndex" value="2" assignTo="{!filtersController.iFilterIndex}"/>
+                                </apex:commandLink>
+                            </td>
+                            <td class="infoBoxTd -normal" style="text-align: right;">
+                                <span class="infoBoxText -value">
+                                <apex:commandLink styleClass="edit" value="edit" rendered="{!NOT(filtersController.Filter3 == null)}" action="{!filtersController.editFilter}">
+                                   <!-- <apex:image value="{!URLFOR($Resource.IEC_Edit)}" style="width: 24px;cursor: pointer;vertical-align: middle;" title="Refine filter"/> -->
+                                    <apex:param name="iFilterIndex" value="2" assignTo="{!filtersController.iFilterIndex}"/>
+                                </apex:commandLink>     
+                                &nbsp;                           
+                                <apex:commandLink styleClass="delete" value="delete" rendered="{!NOT(filtersController.Filter3 == null)}" action="{!filtersController.deleteFilter}"
+                                    onclick="if(!window.confirm('Are you sure you want to delete filter \'{!filtersController.Filter3.Filter_Name__c}\' ?')) return false;">
+                                    <!-- <apex:image value="{!URLFOR($Resource.IEC_Delete)}" style="width: 24px;cursor: pointer;vertical-align: middle;" title="Delete filter"/> -->
+                                    <apex:param name="iFilterIndex" value="2" assignTo="{!filtersController.iFilterIndex}"/>
+                                </apex:commandLink>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="infoBoxTd -normal">
+                                <span class="infoBoxText -label">Filter #4: </span>
+                                <apex:outputText styleClass="infoBoxText -value" value="Unused" rendered="{!filtersController.Filter4 == null}" />
+                                <apex:commandLink styleClass="commandLink" value="{!LEFT(filtersController.Filter4.Filter_Name__c,20)}" title="{!filtersController.Filter4.Filter_Name__c}" rendered="{!NOT(filtersController.Filter4 == null)}" action="{!filtersController.runFilter}">
+                                    <apex:param name="iFilterIndex" value="3" assignTo="{!filtersController.iFilterIndex}"/>
+                                </apex:commandLink>
+                            </td>
+                            <td class="infoBoxTd -normal" style="text-align: right;">
+                                <span class="infoBoxText -value">
+                                <apex:commandLink styleClass="edit" value="edit" rendered="{!NOT(filtersController.Filter4 == null)}" action="{!filtersController.editFilter}">
+                                    <!-- <apex:image value="{!URLFOR($Resource.IEC_Edit)}" style="width: 24px;cursor: pointer;vertical-align: middle;" title="Refine filter"/> -->
+                                    <apex:param name="iFilterIndex" value="3" assignTo="{!filtersController.iFilterIndex}"/>
+                                </apex:commandLink>     
+                                &nbsp;                           
+                                <apex:commandLink styleClass="delete" value="delete" rendered="{!NOT(filtersController.Filter4 == null)}" action="{!filtersController.deleteFilter}"
+                                    onclick="if(!window.confirm('Are you sure you want to delete filter \'{!filtersController.Filter4.Filter_Name__c}\' ?')) return false;">
+                                    <!--  <apex:image value="{!URLFOR($Resource.IEC_Delete)}" style="width: 24px;cursor: pointer;vertical-align: middle;" title="Delete filter"/> -->
+                                    <apex:param name="iFilterIndex" value="3" assignTo="{!filtersController.iFilterIndex}"/>
+                                </apex:commandLink>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="infoBoxTd -normal">
+                                <span class="infoBoxText -label">Filter #5: </span>
+                                <apex:outputText styleClass="infoBoxText -value" value="Unused" rendered="{!filtersController.Filter5 == null}" />
+                                <apex:commandLink styleClass="commandLink" value="{!LEFT(filtersController.Filter5.Filter_Name__c,20)}" title="{!filtersController.Filter5.Filter_Name__c}" rendered="{!NOT(filtersController.Filter5 == null)}" action="{!filtersController.runFilter}">
+                                    <apex:param name="iFilterIndex" value="4" assignTo="{!filtersController.iFilterIndex}"/>
+                                </apex:commandLink>
+                            </td>
+                            <td class="infoBoxTd -normal" style="text-align: right;">
+                                <span class="infoBoxText -value">
+                                <apex:commandLink styleClass="edit" value="edit" rendered="{!NOT(filtersController.Filter5 == null)}" action="{!filtersController.editFilter}">
+                                   <!-- <apex:image value="{!URLFOR($Resource.IEC_Edit)}" style="width: 24px;cursor: pointer;vertical-align: middle;" title="Refine filter"/> -->
+                                    <apex:param name="iFilterIndex" value="4" assignTo="{!filtersController.iFilterIndex}"/>
+                                </apex:commandLink>     
+                                &nbsp;                           
+                                <apex:commandLink styleClass="delete" value="delete" rendered="{!NOT(filtersController.Filter5 == null)}" action="{!filtersController.deleteFilter}"
+                                    onclick="if(!window.confirm('Are you sure you want to delete filter \'{!filtersController.Filter5.Filter_Name__c}\' ?')) return false;">
+                                   <!-- <apex:image value="{!URLFOR($Resource.IEC_Delete)}" style="width: 24px;cursor: pointer;vertical-align: middle;" title="Delete filter"/> -->
+                                    <apex:param name="iFilterIndex" value="4" assignTo="{!filtersController.iFilterIndex}"/>
+                                </apex:commandLink>
+                                </span>
+                            </td>
+                        </tr>
+                    </table>
+
+
+</apex:component>

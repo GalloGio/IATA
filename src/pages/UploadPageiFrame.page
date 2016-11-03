@@ -1,0 +1,80 @@
+<apex:page showHeader="false" sidebar="false"  standardController="Case" extensions="FinancialDocumentViewCon" >
+<apex:includeScript value="/soap/ajax/20.0/connection.js"/>
+<apex:includeScript value="/soap/ajax/20.0/apex.js"/>
+
+<script>  
+
+//returns the url parameters and saves them into QueryString[]
+
+ var QueryString = function () {
+  // This function is anonymous, is executed immediately and 
+  // the return value is assigned to QueryString!
+  var query_string = {};
+  var query = window.location.search.substring(1);
+  var vars = query.split("&");
+  for (var i=0;i<vars.length;i++) {
+    var pair = vars[i].split("=");
+        // If first entry with this name
+    if (typeof query_string[pair[0]] === "undefined") {
+      query_string[pair[0]] = pair[1];
+        // If second entry with this name
+    } else if (typeof query_string[pair[0]] === "string") {
+      var arr = [ query_string[pair[0]], pair[1] ];
+      query_string[pair[0]] = arr;
+        // If third or later entry with this name
+    } else {
+      query_string[pair[0]].push(pair[1]);
+    }
+  } 
+    return query_string;
+} ();
+
+
+//handles on close button which calls the parent page and refreshes it
+ function handleOnClose() 
+ {
+     window.opener.refreshParent();
+      self.close();
+      
+ }
+ 
+</script>
+
+
+
+<body onBeforeUnload="handleOnClose();">
+
+<apex:iframe id="theIframe" src="javascript:false;"   height="450" ></apex:iframe>
+<center>
+<INPUT TYPE="button" NAME="myButton" onclick="handleOnClose();" value="{!$Label.IFAP_close}"/>
+</center>
+
+
+<!--sets Iframe src important-->
+<script type="text/javascript">
+var lang = "{!Locale}".substring(0,2);
+document.getElementById('theIframe').src ="{!$Label.FTP_Attachment_Pro_URL}/sforce/ftp/Attach.aspx?FieldName=Case__c&FieldValue="+QueryString.fieldValue+"&lang="+lang+"&Folder="+QueryString.folder+"&ServerProfile=Default&OrgID="+QueryString.orgID+"&SFUrl={!$Label.API_URL}/{!$Organization.Id}&SFSessionID={!$API.Session_ID}&NoWarnings=true";
+</script>
+
+
+<br/><br/>
+&nbsp;&nbsp;&nbsp;<b><apex:outputLabel value="{!$Label.Financial_Documents}:"></apex:outputLabel></b>
+<br/>
+
+ <apex:pageBlock >
+<apex:form >
+<apex:actionPoller action="{!refreshDocs}" rerender="docsTable" interval="5" />
+   <apex:pageBlockTable id="docsTable" value="{!docs}" var="d" rendered="{!NOT(ISNULL(docs))}" Title="Financial Documents">
+        
+       <apex:column headerValue="{!$Label.IFAP_name}">
+               <apex:outputText value="{!d.Name}" escape="false"/>             
+       </apex:column>
+   
+   </apex:pageBlockTable>
+   
+
+ </apex:form>
+ </apex:pageBlock>
+
+</body>
+</apex:page>

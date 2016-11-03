@@ -1,0 +1,1782 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>ID Cards information
+two record types:
+1- AIMS (default) contains AIMS data (SFDC is the master data)
+2- WebStar contains WebStar data (WebStar is master data)</description>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableEnhancedLookup>true</enableEnhancedLookup>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Agency_IATA_Code__c</fullName>
+        <externalId>false</externalId>
+        <label>Agency IATA Code</label>
+        <length>8</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Agency_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Agency Name</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Approving_Manager_s_Email__c</fullName>
+        <externalId>false</externalId>
+        <label>Approving Manager&apos;s Email</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Approving_Manager_s_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Approving Manager&apos;s Name</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Blacklisted__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Blacklisted</label>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Cancellation_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Cancellation Date</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Card_Code__c</fullName>
+        <externalId>false</externalId>
+        <label>Card Code</label>
+        <picklist>
+            <picklistValues>
+                <fullName>TACB</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>TACT</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Card_Status__c</fullName>
+        <externalId>false</externalId>
+        <label>Card Status</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Preapproved</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Approved</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Printed/Delivered</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Cancelled</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Cancelled ID Card</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Expired ID Card</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Sent ID Card</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Valid ID Card</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Card_Variation_Code__c</fullName>
+        <defaultValue>&quot;2&quot;</defaultValue>
+        <externalId>false</externalId>
+        <label>Card Variation Code</label>
+        <length>2</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Card_Variation__c</fullName>
+        <externalId>false</externalId>
+        <label>Card Variation</label>
+        <length>20</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Concatenation2__c</fullName>
+        <description>Concatenation 2 to full fill 160 criterias</description>
+        <externalId>true</externalId>
+        <label>Concatenation2</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Concatenation__c</fullName>
+        <description>Create as part of the POC for eBroadcast project. It is the concatenation field for all search criteria during the creation of an audiance.</description>
+        <externalId>true</externalId>
+        <label>Concatenation</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Criteria_10__c</fullName>
+        <externalId>false</externalId>
+        <label>Criteria 10</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Criteria_11__c</fullName>
+        <externalId>false</externalId>
+        <label>Criteria 11</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Criteria_12__c</fullName>
+        <externalId>false</externalId>
+        <label>Criteria 12</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Criteria_13__c</fullName>
+        <externalId>false</externalId>
+        <label>Criteria 13</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Criteria_14__c</fullName>
+        <externalId>false</externalId>
+        <label>Criteria 14</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Criteria_15__c</fullName>
+        <externalId>false</externalId>
+        <label>Criteria 15</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Criteria_16__c</fullName>
+        <externalId>false</externalId>
+        <label>Criteria 16</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Criteria_17__c</fullName>
+        <externalId>false</externalId>
+        <label>Criteria 17</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Criteria_18__c</fullName>
+        <externalId>false</externalId>
+        <label>Criteria 18</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Criteria_19__c</fullName>
+        <externalId>false</externalId>
+        <label>Criteria 19</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Criteria_1__c</fullName>
+        <externalId>false</externalId>
+        <label>Criteria 1</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Criteria_20__c</fullName>
+        <externalId>false</externalId>
+        <label>Criteria 20</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Criteria_21__c</fullName>
+        <externalId>false</externalId>
+        <label>Criteria 21</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Criteria_22__c</fullName>
+        <externalId>false</externalId>
+        <label>Criteria 22</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Criteria_23__c</fullName>
+        <externalId>false</externalId>
+        <label>Criteria 23</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Criteria_24__c</fullName>
+        <externalId>false</externalId>
+        <label>Criteria 24</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Criteria_25__c</fullName>
+        <externalId>false</externalId>
+        <label>Criteria 25</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Criteria_26__c</fullName>
+        <externalId>false</externalId>
+        <label>Criteria 26</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Criteria_27__c</fullName>
+        <externalId>false</externalId>
+        <label>Criteria 27</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Criteria_28__c</fullName>
+        <externalId>false</externalId>
+        <label>Criteria 28</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Criteria_29__c</fullName>
+        <externalId>false</externalId>
+        <label>Criteria 29</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Criteria_2__c</fullName>
+        <externalId>false</externalId>
+        <label>Criteria 2</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Criteria_30__c</fullName>
+        <externalId>false</externalId>
+        <label>Criteria 30</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Criteria_3__c</fullName>
+        <externalId>false</externalId>
+        <label>Criteria 3</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Criteria_4__c</fullName>
+        <externalId>false</externalId>
+        <label>Criteria 4</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Criteria_5__c</fullName>
+        <externalId>false</externalId>
+        <label>Criteria 5</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Criteria_6__c</fullName>
+        <externalId>false</externalId>
+        <label>Criteria 6</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Criteria_7__c</fullName>
+        <externalId>false</externalId>
+        <label>Criteria 7</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Criteria_8__c</fullName>
+        <externalId>false</externalId>
+        <label>Criteria 8</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Criteria_9__c</fullName>
+        <externalId>false</externalId>
+        <label>Criteria 9</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Criteria_Text__c</fullName>
+        <externalId>false</externalId>
+        <label>Criteria-Text</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Criteria_match__c</fullName>
+        <externalId>false</externalId>
+        <label>Criteria-match</label>
+        <picklist>
+            <picklistValues>
+                <fullName>=</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>!=</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>&gt;</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>&lt;</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Date_of_Birth__c</fullName>
+        <externalId>false</externalId>
+        <label>Date of Birth</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Duties__c</fullName>
+        <externalId>false</externalId>
+        <label>Duties</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Duty_Code__c</fullName>
+        <externalId>false</externalId>
+        <formula>CASE(Duties__c, 
+&quot;*CNV DATA* NONE&quot;,&quot;-&quot;, 
+&quot;ADMINISTRATION&quot;,&quot;A&quot;, 
+&quot;Administration&quot;,&quot;A&quot;, 
+&quot;INSIDE SALES&quot;,&quot;I&quot;, 
+&quot;SALES&quot;,&quot;I&quot;, 
+&quot;Sales&quot;,&quot;I&quot;, 
+&quot;OUTSIDE SALES&quot;,&quot;X&quot;, 
+&quot;LECTURER&quot;,&quot;L&quot;, 
+&quot;MEMBERSHIP SUPPORT&quot;,&quot;M&quot;, 
+&quot;SALES/MARKETING&quot;,&quot;N&quot;, 
+&quot;MARKETING&quot;,&quot;N&quot;, 
+&quot;Marketing&quot;,&quot;N&quot;, 
+&quot;ACCOUNTING&quot;,&quot;O&quot;, 
+&quot;Accounting&quot;,&quot;O&quot;, 
+&quot;RESERVATIONS&quot;,&quot;R&quot;, 
+&quot;Reservations&quot;,&quot;R&quot;, 
+&quot;CUSTOMER SERVICE&quot;,&quot;S&quot;, 
+&quot;Customer Services&quot;,&quot;S&quot;, 
+&quot;TOUR GUIDE&quot;,&quot;T&quot;, 
+&quot;OTHER DUTIES&quot;,&quot;V&quot;, 
+&quot;Other Duties&quot;,&quot;V&quot;, 
+&quot;OPERATIONS&quot;,&quot;O&quot;, 
+&quot;Operations&quot;,&quot;O&quot;, 
+&quot;WRITER&quot;,&quot;W&quot;, 
+&quot; &quot;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Duty Code</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Email__c</fullName>
+        <externalId>false</externalId>
+        <label>Email</label>
+        <length>100</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Fee_Applicable__c</fullName>
+        <externalId>false</externalId>
+        <label>Fee Applicable</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>FirstName__c</fullName>
+        <externalId>false</externalId>
+        <label>FirstName</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>GDP_Products_Account_View__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>GDP Products - Account View</label>
+        <referenceTo>GDP_Products_Account_View__c</referenceTo>
+        <relationshipLabel>ID Cards</relationshipLabel>
+        <relationshipName>ID_Cards</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Gender__c</fullName>
+        <externalId>false</externalId>
+        <label>Gender</label>
+        <length>10</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>HourWorkedCode__c</fullName>
+        <externalId>false</externalId>
+        <formula>CASE( Hours_per_week__c , 
+&quot;35 H OR MORE&quot;,&quot;1&quot;,
+&quot;35 h or more&quot;,&quot;1&quot;,
+&quot;35 HOURS OR OVER&quot;,&quot;1&quot;,
+&quot;25 TO 34 HOURS&quot;,&quot;2&quot;,
+&quot;25-34 h&quot;,&quot;2&quot;,
+&quot;25-34 H&quot;,&quot;2&quot;,
+&quot;20 TO 24 HOURS&quot;,&quot;3&quot;,
+&quot;20-24 h&quot;,&quot;3&quot;,
+&quot;20-24 H&quot;,&quot;3&quot;,
+&quot;Less than 20 h&quot;,&quot;4&quot;,
+&quot;LESS THAN 20 H&quot;,&quot;4&quot;,
+&quot;LESS THAN 20 HOURS&quot;,&quot;4&quot;, 
+&quot;1&quot;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>HourWorkedCode</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Hours_per_week__c</fullName>
+        <externalId>false</externalId>
+        <label>Hours per week</label>
+        <length>20</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ID_Card_Application__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>ID Card Application</label>
+        <referenceTo>ID_Card_Application__c</referenceTo>
+        <relationshipLabel>ID Cards</relationshipLabel>
+        <relationshipName>ID_Cards</relationshipName>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Is_Active_Card__c</fullName>
+        <description>Check if the card is active</description>
+        <externalId>false</externalId>
+        <formula>IF
+(
+RecordType.DeveloperName = &apos;AIMS&apos; ,
+AND
+(
+Valid_From_Date__c &lt;= TODAY(),
+Valid_To_Date__c &gt; TODAY(),
+ISNULL(Cancellation_Date__c)
+)
+,
+IF
+(
+ISPICKVAL(Card_Status__c, &apos;Cancelled ID Card&apos;),
+FALSE,
+(
+IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
+)
+)
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Is Active Card</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Is_Expedite__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Is Expedite</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>JSON_WS_Complex__c</fullName>
+        <description>CAC Web Service Complex Response for IDCard</description>
+        <externalId>false</externalId>
+        <formula>&quot;\&quot;reason\&quot;:\&quot;&quot;
++ IF (Json_Is_Active__c, &quot;VALID&quot;, &quot;INVALID&quot;) + &quot;\&quot;,&quot;+
+&quot;\&quot;cardholder-name\&quot;:\&quot;&quot;
++  FirstName__c +&quot; &quot;+ LastName__c  + &quot;\&quot;,&quot;+
+&quot;\&quot;card-expiry-date\&quot;:\&quot;&quot;+ TEXT(Month(Valid_To_Date__c))+ &quot;-&quot; +TEXT(Day(Valid_To_Date__c))+ &quot;-&quot; +TEXT(Year(Valid_To_Date__c)) + &quot;\&quot;,&quot;+ &quot;\&quot;agency-code\&quot;:\&quot;&quot;+Agency_IATA_Code__c + &quot;\&quot;,&quot;+ &quot;\&quot;agency-name\&quot;:\&quot;&quot;+Agency_Name__c + &quot;\&quot;&quot;</formula>
+        <inlineHelpText>CAC Web Service Complex Response for IDCard</inlineHelpText>
+        <label>JSON WS Complex</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Json_Is_Active__c</fullName>
+        <description>Is Active according the new conditions Valid Date To and The Card Status not Cancelled</description>
+        <externalId>false</externalId>
+        <formula>IF (
+       AND(Valid_To_Date__c &gt; TODAY(),
+           NOT(OR (
+                   ISPICKVAL(Card_Status__c, &apos;Cancelled ID Card&apos;),
+                   ISPICKVAL(Card_Status__c, &apos;Cancelled&apos;)
+                  )
+              )
+         )
+, True, False)</formula>
+        <inlineHelpText>Is Active according the new conditions Valid Date To and The Card Status not Cancelled</inlineHelpText>
+        <label>Json Is Active</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Json_WS_Simple__c</fullName>
+        <description>CAC Web Service Simple Response for IDCard</description>
+        <externalId>false</externalId>
+        <formula>&quot;\&quot;reason\&quot;:\&quot;&quot;
++ IF (Json_Is_Active__c, &quot;VALID&quot;, &quot;INVALID&quot;) + &quot;\&quot;&quot;</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>CAC Web Service Simple Response for IDCard</inlineHelpText>
+        <label>Json WS Simple</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>LastName__c</fullName>
+        <externalId>false</externalId>
+        <label>LastName</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Middle_Initial__c</fullName>
+        <externalId>false</externalId>
+        <label>Middle Initial</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>MustSyncWithAIMS__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Boolean that indicates whether the information should be synchronized with AIMS.</description>
+        <externalId>false</externalId>
+        <label>Must synchronize with AIMS</label>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Name_on_ID_Card__c</fullName>
+        <externalId>false</externalId>
+        <label>Name on ID Card</label>
+        <length>22</length>
+        <required>true</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Nature_of_ID_Card__c</fullName>
+        <externalId>false</externalId>
+        <label>Nature of ID Card</label>
+        <picklist>
+            <picklistValues>
+                <fullName>New</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Renew</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Reissue</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Replacement</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Opt_in__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Opt in</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Paid__c</fullName>
+        <externalId>false</externalId>
+        <label>Paid</label>
+        <picklist>
+            <picklistValues>
+                <fullName>No</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Payment_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Payment Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Credit Card</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>FOC / Key Account</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Invoice</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>true</sorted>
+        </picklist>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Phone__c</fullName>
+        <externalId>false</externalId>
+        <label>Phone</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Phone</type>
+    </fields>
+    <fields>
+        <fullName>Photo_Flag__c</fullName>
+        <externalId>false</externalId>
+        <label>Photo Flag</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Digital</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Paper</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>No-photo</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Photo__c</fullName>
+        <description>Filename of the image</description>
+        <externalId>false</externalId>
+        <label>Photo</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Position_Code__c</fullName>
+        <externalId>false</externalId>
+        <formula>CASE(Position__c, 
+&quot;*CNV DATA* NOT DEFINED&quot;,&quot;-&quot;, 
+&quot;SHAREHOLDER&quot;,&quot;C&quot;, 
+&quot;Shareholder&quot;,&quot;C&quot;, 
+&quot;EMPLOYEE&quot;,&quot;E&quot;, 
+&quot;Employee&quot;,&quot;E&quot;, 
+&quot;INDEPENDENT CONSULTANT&quot;,&quot;I&quot;, 
+&quot;INDEPENDENT CONSULTANT/BROKER&quot;,&quot;I&quot;, 
+&quot;Independent Consultant/Broker&quot;,&quot;I&quot;, 
+&quot;BROKER&quot;,&quot;I&quot;, 
+&quot;MANAGER&quot;,&quot;M&quot;, 
+&quot;Manager&quot;,&quot;M&quot;, 
+&quot;NATIONAL DIRECTOR&quot;,&quot;N&quot;, 
+&quot;Director&quot;,&quot;N&quot;, 
+&quot;OUTSIDE SALES&quot;,&quot;O&quot;, 
+&quot;PARTNER&quot;,&quot;P&quot;, 
+&quot;Partner&quot;,&quot;P&quot;, 
+&quot;QUALIFIED TICKETING AGENT&quot;,&quot;Q&quot;, 
+&quot;REGIONAL DIRECTOR&quot;,&quot;R&quot;, 
+&quot;OWNER&quot;,&quot;S&quot;, 
+&quot;Sole Owner&quot;,&quot;S&quot;, 
+&quot;PRESIDENT&quot;,&quot;T&quot;, 
+&quot;SPOUSE&quot;,&quot;U&quot;, 
+&quot;RETIRED EMPLOYEE&quot;,&quot;V&quot;, 
+&quot;SPOUSE OF RETIRED EMPLOYEE&quot;,&quot;W&quot;, 
+&quot;OTHER&quot;,&quot;X&quot;, 
+&quot;SECRETARY GENERAL&quot;,&quot;Z&quot;, 
+&quot; &quot;)</formula>
+        <label>Position Code</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Position__c</fullName>
+        <externalId>false</externalId>
+        <label>Position</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Profit_Center__c</fullName>
+        <externalId>false</externalId>
+        <label>Profit Center</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Received_From_AIMS__c</fullName>
+        <description>Time stamp on when the id card was received from AIMS</description>
+        <externalId>false</externalId>
+        <label>Received From AIMS</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Related_Contact__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Related Contact</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>Contact.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Standard</value>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
+        <referenceTo>Contact</referenceTo>
+        <relationshipLabel>ID Cards</relationshipLabel>
+        <relationshipName>ID_Cards</relationshipName>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Renewal_From_Replace__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Renewal From Replace</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Sent_to_AIMS_on__c</fullName>
+        <description>Time stamp on when the id card was sent to AIMS</description>
+        <externalId>false</externalId>
+        <label>Sent to AIMS on</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Start_Date_Agency_Month__c</fullName>
+        <externalId>false</externalId>
+        <label>Start Date Agency Month</label>
+        <length>20</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Start_Date_Agency_Year__c</fullName>
+        <externalId>false</externalId>
+        <label>Start Date Agency Year</label>
+        <length>20</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Start_Date_Industry__c</fullName>
+        <externalId>false</externalId>
+        <label>Start Date Industry</label>
+        <length>20</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Title__c</fullName>
+        <externalId>false</externalId>
+        <label>Title</label>
+        <length>5</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Type_of_ID_Card__c</fullName>
+        <externalId>false</externalId>
+        <label>Type of ID Card</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Passenger</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>TIDS</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>VER_Number__c</fullName>
+        <externalId>false</externalId>
+        <label>VER Number</label>
+        <length>20</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Valid_From_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Valid From Date</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Valid_To_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Valid To Date</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>WebStar_ID__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <externalId>true</externalId>
+        <label>WebStar ID</label>
+        <length>30</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <label>ID Card</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>ID_Card_Application__c</columns>
+        <columns>Related_Contact__c</columns>
+        <columns>Start_Date_Agency_Month__c</columns>
+        <columns>Start_Date_Agency_Year__c</columns>
+        <columns>Start_Date_Industry__c</columns>
+        <columns>Agency_IATA_Code__c</columns>
+        <columns>Name_on_ID_Card__c</columns>
+        <columns>Nature_of_ID_Card__c</columns>
+        <columns>Card_Status__c</columns>
+        <columns>Photo__c</columns>
+        <columns>CREATEDBY_USER</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>Valid_To_Date__c</columns>
+        <columns>MustSyncWithAIMS__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Expired</fullName>
+        <columns>NAME</columns>
+        <columns>VER_Number__c</columns>
+        <columns>Valid_To_Date__c</columns>
+        <columns>ID_Card_Application__c</columns>
+        <columns>Related_Contact__c</columns>
+        <columns>Start_Date_Agency_Month__c</columns>
+        <columns>Start_Date_Agency_Year__c</columns>
+        <columns>Start_Date_Industry__c</columns>
+        <columns>Agency_IATA_Code__c</columns>
+        <columns>Name_on_ID_Card__c</columns>
+        <columns>Nature_of_ID_Card__c</columns>
+        <columns>Card_Status__c</columns>
+        <columns>CREATEDBY_USER</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>MustSyncWithAIMS__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Valid_From_Date__c</field>
+            <operation>lessThan</operation>
+            <value>TODAY</value>
+        </filters>
+        <label>Expired</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>LAST_WEEK</fullName>
+        <columns>NAME</columns>
+        <columns>Card_Status__c</columns>
+        <columns>ID_Card_Application__c</columns>
+        <columns>Type_of_ID_Card__c</columns>
+        <columns>Nature_of_ID_Card__c</columns>
+        <columns>CREATED_DATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>CREATED_DATE</field>
+            <operation>greaterThan</operation>
+            <value>10/15/2014 12:00 AM</value>
+        </filters>
+        <label>LAST WEEK</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>IDCardManager</group>
+        </sharedTo>
+    </listViews>
+    <nameField>
+        <displayFormat>IDC-{000000000}</displayFormat>
+        <label>ID Card Name</label>
+        <trackHistory>false</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>ID Cards</pluralLabel>
+    <recordTypeTrackHistory>false</recordTypeTrackHistory>
+    <recordTypes>
+        <fullName>AIMS</fullName>
+        <active>true</active>
+        <label>AIMS</label>
+        <picklistValues>
+            <picklist>Card_Code__c</picklist>
+            <values>
+                <fullName>TACB</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TACT</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Card_Status__c</picklist>
+            <values>
+                <fullName>Approved</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cancelled</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Preapproved</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Printed%2FDelivered</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Criteria_match__c</picklist>
+            <values>
+                <fullName>%21%3D</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>%3C</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>%3D</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>%3E</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Nature_of_ID_Card__c</picklist>
+            <values>
+                <fullName>New</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Reissue</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Renew</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Replacement</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Paid__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Payment_Type__c</picklist>
+            <values>
+                <fullName>Credit Card</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>FOC %2F Key Account</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Invoice</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Photo_Flag__c</picklist>
+            <values>
+                <fullName>Digital</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>No-photo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Paper</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type_of_ID_Card__c</picklist>
+            <values>
+                <fullName>Passenger</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TIDS</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>WebStar</fullName>
+        <active>true</active>
+        <label>WebStar</label>
+        <picklistValues>
+            <picklist>Card_Code__c</picklist>
+            <values>
+                <fullName>TACB</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TACT</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Card_Status__c</picklist>
+            <values>
+                <fullName>Approved</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cancelled</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cancelled ID Card</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Expired ID Card</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Preapproved</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Printed%2FDelivered</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sent ID Card</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Valid ID Card</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Criteria_match__c</picklist>
+            <values>
+                <fullName>%21%3D</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>%3C</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>%3D</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>%3E</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Nature_of_ID_Card__c</picklist>
+            <values>
+                <fullName>New</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Reissue</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Renew</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Replacement</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Paid__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Payment_Type__c</picklist>
+            <values>
+                <fullName>Credit Card</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>FOC %2F Key Account</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Invoice</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Photo_Flag__c</picklist>
+            <values>
+                <fullName>Digital</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>No-photo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Paper</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type_of_ID_Card__c</picklist>
+            <values>
+                <fullName>Passenger</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TIDS</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <searchLayouts>
+        <lookupDialogsAdditionalFields>Nature_of_ID_Card__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Card_Status__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Valid_To_Date__c</lookupDialogsAdditionalFields>
+        <searchResultsAdditionalFields>Name_on_ID_Card__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Nature_of_ID_Card__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>VER_Number__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>CREATED_DATE</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Valid_To_Date__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Cancellation_Date__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ReadWrite</sharingModel>
+    <startsWith>Vowel</startsWith>
+    <validationRules>
+        <fullName>IDCard_DontSaveIfSenttoAIMS</fullName>
+        <active>false</active>
+        <description>Dont allow the user to modify if the card is already sent to AIMS</description>
+        <errorConditionFormula>AND(PRIORVALUE(MustSyncWithAIMS__c) == true, NOT(CONTAINS($Profile.Name ,&apos;System Administrator&apos;) ) ,NOT(CONTAINS($Profile.Name , &apos;idcard portal profile&apos; )))</errorConditionFormula>
+        <errorMessage>Card has been already sent to AIMS. It can not be modified anymore.</errorMessage>
+    </validationRules>
+    <webLinks>
+        <fullName>Cancel_Card</fullName>
+        <availability>online</availability>
+        <description>Cancel ID CArd</description>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Cancel Card</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/24.0/connection.js&quot;)} 
+{!REQUIRESCRIPT(&quot;/soap/ajax/24.0/apex.js&quot;)} 
+
+try{ 
+
+
+var cardStatus = &apos;{!ID_Card__c.Card_Status__c}&apos;; 
+var sentToAIMSon = &apos;{!ID_Card__c.Sent_to_AIMS_on__c}&apos;;
+
+
+if (sentToAIMSon != null &amp;&amp; cardStatus == &apos;Printed/Delivered&apos;) 
+{ 
+     var cardToUpdate= [];
+     var card = new sforce.SObject(&quot;ID_Card__c&quot;); 
+     card.id =&quot;{!ID_Card__c.Id}&quot;;
+     card.Card_Status__c = &apos;Cancelled&apos;;
+     card.Cancellation_Date__c = new Date();
+     card.MustSyncWithAIMS__c = &apos;True&apos;;
+     cardToUpdate.push(card);
+     result = sforce.connection.update(cardToUpdate); 
+
+     alert(&apos;Card has been Cancelled Successfully&apos;);
+     window.location.reload();
+} 
+
+else if (sentToAIMSon == &apos;&apos; &amp;&amp; cardStatus == &apos;Approved&apos;) 
+{ 
+     var cardToUpdate= [];
+     var card = new sforce.SObject(&quot;ID_Card__c&quot;); 
+     card.id =&quot;{!ID_Card__c.Id}&quot;;
+     card.Card_Status__c = &apos;Cancelled&apos;;
+     card.Cancellation_Date__c = new Date();
+     card.MustSyncWithAIMS__c = &apos;False&apos;;
+     cardToUpdate.push(card);
+     result = sforce.connection.update(cardToUpdate); 
+
+     alert(&apos;Card has been Cancelled Successfully&apos;);
+     window.location.reload();
+} 
+else
+{
+   alert(&apos;The cancellation of the card cannot be done since we are waiting for AIMS reply related to IDCard printing&apos;);
+}
+
+} 
+catch(err) 
+{ 
+alert(err); 
+}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Reissue_IDCard</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Reissue IDCard</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/24.0/connection.js&quot;)} 
+{!REQUIRESCRIPT(&quot;/soap/ajax/24.0/apex.js&quot;)} 
+
+
+//check if related contact has open/pending cases
+
+	var myquery = &quot;SELECT Id,CaseNumber FROM Case WHERE RecordType.Name = &apos;ID Card Application&apos;  AND Contact.Id= &apos;{!ID_Card__c.Related_ContactId__c}&apos; AND Status != &apos;Closed&apos; limit 1&quot;;
+	result = sforce.connection.query(myquery);
+	records = result.getArray(&quot;records&quot;);
+	if(records[0])
+	{	
+		alert(&apos;There is already an open case for this Agent: &apos;+records[0].CaseNumber+&apos;. You can not create duplicates.&apos;);
+	}
+	
+	else{
+		if({!ID_Card__c.Is_Active_Card__c}==false){
+			alert(&apos;You can not reissue an expired card.&apos;);
+		}
+		else
+		{
+			try{ 
+
+			var cardType = &quot;Reissue&quot;; 
+			var idcardID = &quot;{!ID_Card__c.Id}&quot;; 
+
+			var st = sforce.apex.execute(&quot;IDCardUtil&quot;,&quot;CreateIDCardApplicationAndCase&quot;,{typeofApplication:cardType,IDCardID:idcardID}); 
+
+			var st = String(st);
+			if (st.indexOf(&apos;Error&apos;) != -1) 
+			{ 
+			alert(&apos; An Error occurred &apos;+st); 
+			} 
+			else 
+			{ 
+			var baseurl = window.location.protocol+&quot;//&quot;+window.location.host; 
+			window.location.href = baseurl+&quot;/&quot;+st; 
+			} 
+
+			} 
+			catch(err) 
+			{ 
+			alert(err); 
+			}
+		}
+	}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Renew_IDCard</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Renew IDCard</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/24.0/connection.js&quot;)} 
+{!REQUIRESCRIPT(&quot;/soap/ajax/24.0/apex.js&quot;)} 
+
+
+try{ 
+
+	//check if related contact has open/pending cases
+	var myquery = &quot;SELECT Id,CaseNumber FROM Case WHERE RecordType.Name = &apos;ID Card Application&apos;  AND Contact.Id= &apos;{!ID_Card__c.Related_ContactId__c}&apos; AND Status != &apos;Closed&apos; limit 1&quot;;
+	result = sforce.connection.query(myquery);
+	records = result.getArray(&quot;records&quot;);
+	if(records[0])
+	{	
+		alert(&apos;There is already an open case for this Agent: &apos;+records[0].CaseNumber+&apos;. You can not create duplicates.&apos;);
+	}
+
+	else{
+			var cardType = &quot;Renew&quot;;
+			var idcardID = &quot;{!ID_Card__c.Id}&quot;;
+
+			var st= sforce.apex.execute(&quot;IDCardUtil&quot;,&quot;CreateIDCardApplicationAndCase&quot;,{typeofApplication:cardType,IDCardID:idcardID});
+				
+				var st = String(st); 
+			if (st.indexOf(&apos;Error&apos;) != -1)
+			{
+				 alert(&apos; An Error occurred &apos;+st);
+			} 
+			else
+			{
+				var baseurl = window.location.protocol+&quot;//&quot;+window.location.host;
+				window.location.href  = baseurl+&quot;/&quot;+st;
+			}
+     }
+}
+catch(err) 
+{ 
+    alert(err); 
+}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Replace_IDCard</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Change of Agency</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/24.0/connection.js&quot;)} 
+{!REQUIRESCRIPT(&quot;/soap/ajax/24.0/apex.js&quot;)} 
+
+try{ 
+
+
+	//check if related contact has open/pending cases
+
+	var myquery = &quot;SELECT Id,CaseNumber FROM Case WHERE RecordType.Name = &apos;ID Card Application&apos;  AND Contact.Id= &apos;{!ID_Card__c.Related_ContactId__c}&apos; AND Status != &apos;Closed&apos; limit 1&quot;;
+	result = sforce.connection.query(myquery);
+	records = result.getArray(&quot;records&quot;);
+	if(records[0])
+	{
+	
+		alert(&apos;There is already an open case for this Agent: &apos;+records[0].CaseNumber+&apos;. You can not create duplicates.&apos;);
+	}
+
+	else{
+	
+			var cardType = &quot;Replace&quot;;
+			var idcardID = &quot;{!ID_Card__c.Id}&quot;;
+
+			var st= sforce.apex.execute(&quot;IDCardUtil&quot;,&quot;CreateIDCardApplicationAndCase&quot;,{typeofApplication:cardType,IDCardID:idcardID});
+			   
+				var st = String(st); 
+			if (st.indexOf(&apos;Error&apos;) != -1)
+			{
+				 alert(&apos; An Error occurred &apos;+st);
+			} 
+			else
+			{
+				var baseurl = window.location.protocol+&quot;//&quot;+window.location.host;
+				window.location.href  = baseurl+&quot;/&quot;+st;
+			}
+		}
+}
+catch(err) 
+{ 
+    alert(err); 
+}</url>
+    </webLinks>
+</CustomObject>

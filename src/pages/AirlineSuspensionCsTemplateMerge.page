@@ -1,0 +1,27 @@
+<apex:page standardController="Case" extensions="AirlineSuspensionCsTemplateMerge">
+	<apex:pageMessages />
+
+	<script>
+
+		function openCongaEnglish() {
+			url = "https://composer.congamerge.com/composer8/index.html?sessionId={!$API.Session_ID}&serverUrl={!$API.Partner_Server_URL_290}&id={!c.Id}&fp0=0&ds1=0&ds4=1&ds5=0&OFN={!strMergedFileName}&EmailRelatedToId={!c.Id}&TemplateId={!TemplateIdEn}";
+
+			window.open(url, "Conga Merge", "height=450px,width=700px,resizable=1,scrollbars=1,status=0,toolbar=0,menubar=0");
+		}
+
+		function openConga2ndLanguage() {
+			url = "https://composer.congamerge.com/composer8/index.html?sessionId={!$API.Session_ID}&serverUrl={!$API.Partner_Server_URL_290}&id={!c.Id}&fp0=0&ds1=0&ds4=1&ds5=0&OFN={!strMergedFileName}&EmailRelatedToId={!c.Id}&TemplateId={!TemplateId2ndLanguage}";
+
+			window.open(url, "Conga Merge", "height=450px,width=700px,resizable=1,scrollbars=1,status=0,toolbar=0,menubar=0");
+		}
+	</script>
+
+	<apex:form >
+		<apex:outputPanel style="margin-left: 30%;" rendered="{!isAirlineSuspensionChildCSCase}">
+
+            	<apex:commandButton onclick="openCongaEnglish();return false;" value="Merge English Template" />
+            	<apex:commandButton onclick="openConga2ndLanguage();return false;" value="Merge {!SecondLanguageName} Template" rendered="{!isSecondLanguageConfigured}" />
+
+            </apex:outputPanel>
+	</apex:form>
+</apex:page>

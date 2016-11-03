@@ -1,0 +1,27 @@
+<apex:page showHeader="false" title="{!$Label.site.in_maintenance}">
+
+  <div id="logo" style="text-align:center; margin: 5px; margin-top:10px">
+                    <h1><img src="http://www.iata.org/_layouts/iata/images/toplogo.png" alt="IATA logo" /></h1>
+                    
+                </div>
+                <div style="text-align:center">
+                    <h4></h4>
+                </div>
+                <br />
+                <center>
+    <apex:define name="icon">
+      <apex:image url="{!$Site.Prefix}{!$Label.site.img_path}/warning.gif"/>
+    </apex:define>
+    <apex:define name="error">
+      <apex:outputText escape="false" style="font-size: larger; font-weight: bold;" value="This site is down for maintenance.">
+        
+      </apex:outputText>
+      <br/>
+      <br/>
+      <apex:outputText value="Sorry for the inconvenience. Please try again later."/>     
+      
+   
+    If you have any questions please contact us at <a href="#" onclick="javascript:window.open('mailto:globaldata@iata.org', 500, 600);">globaldata@iata.org</a>
+   </apex:define>
+ </center>
+</apex:page>

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Comment__c</fullName>
+        <description>Comment</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Comment</inlineHelpText>
+        <label>Comment</label>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Field_Name__c</fullName>
+        <description>Name of the field where the issue was identified</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Name of the field where the issue was identified</inlineHelpText>
+        <label>Field Name</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>IFAP_Reassessment__c</fullName>
+        <externalId>false</externalId>
+        <label>Quality issue</label>
+        <referenceTo>IFAP_Quality_Issue__c</referenceTo>
+        <relationshipName>IFAP_Reassessment_Accounting_Issues</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Value_to_use__c</fullName>
+        <description>Value to be used by GFA</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Value to be used by GFA</inlineHelpText>
+        <label>Value to use</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Wrong_value__c</fullName>
+        <description>Wrong value used by GFA</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Wrong value used by GFA</inlineHelpText>
+        <label>Wrong value</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>Accounting Issue</label>
+    <nameField>
+        <displayFormat>AI-{0000}</displayFormat>
+        <label>IFAP Reassessment Accounting Issue Name</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Accounting Issues</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ControlledByParent</sharingModel>
+    <validationRules>
+        <fullName>Check_IFAP_case_status</fullName>
+        <active>true</active>
+        <errorConditionFormula>ISPICKVAL(IFAP_Reassessment__r.Related_Case__r.Status, &apos;Reassessment Request Approved&apos;) || ISPICKVAL(IFAP_Reassessment__r.Related_Case__r.Status, &apos;Reassessment Requested&apos;)</errorConditionFormula>
+        <errorMessage>A Reassessment Accounting Issue cannot be created/updated when the case status is Reassessment Request Approved or Reassessment Requested</errorMessage>
+    </validationRules>
+</CustomObject>

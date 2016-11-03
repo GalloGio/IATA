@@ -1,0 +1,225 @@
+<apex:page standardController="Account" extensions="AMS_DemoCaseList" showHeader="false" sidebar="false">
+<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"/>-->
+<apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"/>
+<apex:includeScript value="/support/console/34.0/integration.js"/>
+<apex:includeScript value="{!URLFOR($Resource.Tablesorter, 'jquery.tablesorter.min.js')}"/>
+<apex:stylesheet value="{!URLFOR($Resource.Tablesorter,'/themes/blue/style.css')}" />
+<script>
+$( document ).ready(function() {
+    //$( "th" ).remove( "th" );
+    twistSection(document.getElementById('{!$Component.block.sectionCS}').getElementsByTagName('img')[0]);
+    twistSection(document.getElementById('{!$Component.block.sectionA}').getElementsByTagName('img')[0]);
+    twistSection(document.getElementById('{!$Component.block.sectionAR}').getElementsByTagName('img')[0]);
+    twistSection(document.getElementById('{!$Component.block.sectionS}').getElementsByTagName('img')[0]);
+    twistSection(document.getElementById('{!$Component.block.sectionOther}').getElementsByTagName('img')[0]);
+
+    var name = '{!$UserRole.Name}';
+    if(name.indexOf("Customer") > -1){
+        twistSection(document.getElementById('{!$Component.block.sectionCS}').getElementsByTagName('img')[0]);
+    }
+     if(name.indexOf("Agency Management") > -1){
+        twistSection(document.getElementById('{!$Component.block.sectionAR}').getElementsByTagName('img')[0]);
+        twistSection(document.getElementById('{!$Component.block.sectionA}').getElementsByTagName('img')[0]);
+    } 
+});
+$j = jQuery.noConflict();    
+        $j(document).ready(function () {
+        $j("[id$=tableCustomerService]").tablesorter();
+        $j("[id$=tableAccreditation]").tablesorter();
+        $j("[id$=tableAgencyRiskManagement]").tablesorter();
+        $j("[id$=tableSidra]").tablesorter();
+        $j("[id$=tableOther]").tablesorter();
+        });
+
+ function updateCS(){
+    $j("[id$=tableCustomerService]").tablesorter();
+ }
+ function updateA(){
+    $j("[id$=tableAccreditation]").tablesorter();
+ }
+ function updateARM(){
+    $j("[id$=tableAgencyRiskManagement]").tablesorter();
+ }
+ function updateS(){
+    $j("[id$=tableSidra]").tablesorter();
+ }
+ function updateOth(){
+    $j("[id$=tableOther]").tablesorter();
+ }
+function openSubtab(subtabUrl, subTabTitle)
+    {
+       // Use the results primary tab id and open a new subtab
+       var openSubtab = function(result)
+       {            
+            sforce.console.openSubtab(result.id, subtabUrl, true, subTabTitle, null);    
+       };
+       sforce.console.getEnclosingPrimaryTabId(openSubtab);
+     }
+
+function openPrimaryTab(tabId,tabName) {
+            var changeTab = function(result){
+                if(result.success == false){
+                    sforce.console.focusPrimaryTabByName(tabId);
+                }
+            };
+            //Open a new agency primary tab
+            sforce.console.openPrimaryTab(null, tabId, true,tabName, changeTab, tabId);
+    }
+
+</script>
+<style>
+    body .bPageBlock .pbBody .red .pbSubheader{
+        background-color:#c00000;
+    }
+    body .bPageBlock .pbBody .green .pbSubheader{
+        background-color:#008000;
+    }
+    body .bPageBlock .pbBody .orange .pbSubheader{
+        background-color:#FFA500;
+    }
+    body .bPageBlock .pbBody .silver .pbSubheader{
+        background-color:#C0C0C0;
+    }
+    body .bPageBlock .pbBody .blue .pbSubheader{
+        background-color:#000080;
+    }
+    body .bPageBlock .pbBody .fuchsia .pbSubheader{
+        background-color:#8209BF;
+    }
+
+</style>
+
+<!--<apex:pageBlock id="block1">
+    <apex:pageBlockSection id="section1" columns="2" collapsible="true" title="Title">
+        Example Area
+    </apex:pageBlockSection>
+    <font color="#FF0000"><script>
+        twistSection(document.getElementById('{!$Component.block1.section1}').getElementsByTagName('img')[0])
+    </script></font>
+    !$UserRole.Name
+</apex:pageBlock>-->
+
+<apex:pageBlock id="block" rendered="{!IF(ag != NULL, true, false)}">
+    <apex:outputpanel >
+        <apex:actionstatus id="status">
+            <apex:facet name="start">
+                <div class="waitingSearchDiv" id="el_loading" style="background-color: #fbfbfb;
+                       height: 100%;opacity:0.65;width:100%;"> 
+                    <div class="waitingHolder" style="top: 74.2px; width: 91px;">
+                        <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+                        <span class="waitingDescription">Loading...</span>
+                    </div>
+                </div>
+            </apex:facet>
+        </apex:actionstatus>
+    </apex:outputpanel>
+<apex:outputPanel styleClass="green">
+<apex:pageBlockSection collapsible="true" title="Customer Service" columns="1" id="sectionCS">
+    <apex:form >
+        <apex:selectRadio value="{!filterCustomerService}">
+            <apex:selectOptions value="{!items}"/>
+            <apex:actionSupport event="onchange" action="{!radioSelectAction}" rerender="tableCustomerService" oncomplete="updateCS();" status="status"/>
+        </apex:selectRadio>
+        <apex:pageBlockTable value="{!CustomerServiceCases}" var="item" id="tableCustomerService" styleClass="tablesorter">
+            <apex:column headerValue="Number">
+                <apex:commandLink onclick="openPrimaryTab('/{!item.id}','{!item.CaseNumber}');return false;">{!item.CaseNumber}</apex:commandLink>
+            </apex:column>
+            <apex:column value="{!item.Reason1__c}" headerValue="Reason"/>
+            <apex:column value="{!item.Status}" style="width:55px" headerValue="Status"/>
+            <apex:column value="{!item.Case_Age_Days__c}" style="text-align:center;width:35px;" headerValue="Age"/>
+        </apex:pageBlockTable>
+    </apex:form>
+</apex:pageBlockSection>
+</apex:outputPanel>
+
+<apex:outputPanel styleClass="blue">
+<apex:pageBlockSection collapsible="true" title="Accreditation" columns="1" id="sectionA">
+    <apex:form >
+        <apex:selectRadio value="{!filterAccreditation}">
+            <apex:selectOptions value="{!items}"/>
+            <apex:actionSupport event="onchange" action="{!radioSelectAction}" rerender="tableAccreditation" oncomplete="updateA();" status="status"/>
+        </apex:selectRadio>
+        <apex:pageBlockTable value="{!AccreditationCases}" var="item" id="tableAccreditation" styleClass="tablesorter">
+            <apex:column headerValue="Number">
+                <apex:commandLink onclick="openPrimaryTab('/{!item.id}','{!item.CaseNumber}');return false;">{!item.CaseNumber}</apex:commandLink>
+            </apex:column>
+            <apex:column value="{!item.Reason1__c}" headerValue="Reason"/>
+            <apex:column value="{!item.Status}" style="width:55px" headerValue="Status"/>
+            <apex:column value="{!item.Case_Age_Days__c}" style="text-align:center;width:35px;" headerValue="Age"/>
+        </apex:pageBlockTable>
+    </apex:form>
+</apex:pageBlockSection>
+</apex:outputPanel>
+
+<apex:outputPanel styleClass="orange">
+<apex:pageBlockSection collapsible="true" title="Agency Risk Management" columns="1" id="sectionAR">
+    <apex:form >
+        <apex:selectRadio value="{!filterAgencyRiskManagement}">
+            <apex:selectOptions value="{!items}"/>
+            <apex:actionSupport event="onchange" action="{!radioSelectAction}" rerender="tableAgencyRiskManagement" oncomplete="updateARM();" status="status"/>
+        </apex:selectRadio>
+        <apex:pageBlockTable value="{!AgencyRiskManagementCases}" var="item" id="tableAgencyRiskManagement" styleClass="tablesorter">
+            <apex:column headerValue="Number">
+                <apex:commandLink onclick="openPrimaryTab('/{!item.id}','{!item.CaseNumber}');return false;">{!item.CaseNumber}</apex:commandLink>
+            </apex:column>
+            <apex:column value="{!item.Reason1__c}" headerValue="Reason"/>
+            <apex:column value="{!item.Status}" style="width:55px" headerValue="Status"/>
+            <apex:column value="{!item.Case_Age_Days__c}" style="text-align:center;width:35px;" headerValue="Age"/>
+        </apex:pageBlockTable>
+    </apex:form>
+</apex:pageBlockSection>
+</apex:outputPanel>
+
+<apex:outputPanel styleClass="silver">
+<apex:pageBlockSection collapsible="true" title="Remittance & Settlement (SIDRA)" columns="1" id="sectionS">
+    <apex:form >
+        <apex:selectRadio value="{!filterSidra}">
+            <apex:selectOptions value="{!items}"/>
+            <apex:actionSupport event="onchange" action="{!radioSelectAction}" rerender="tableSidra" oncomplete="updateS();" status="status"/>
+        </apex:selectRadio>
+        <apex:pageBlockTable value="{!SIDRACases}" var="item" id="tableSidra" styleClass="tablesorter">
+            <apex:column headerValue="Number">
+                <apex:commandLink onclick="openPrimaryTab('/{!item.id}','{!item.CaseNumber}');return false;">{!item.CaseNumber}</apex:commandLink>
+            </apex:column>
+            <apex:column value="{!item.Reason1__c}" headerValue="Reason"/>
+            <apex:column value="{!item.Status}" style="width:55px" headerValue="Status"/>
+            <apex:column value="{!item.Case_Age_Days__c}" style="text-align:center;width:35px;" headerValue="Age"/>
+        </apex:pageBlockTable>
+    </apex:form>
+</apex:pageBlockSection>
+</apex:outputPanel>
+
+<!-- Panel for other cases -->
+
+
+<apex:outputPanel styleClass="fuchsia">
+<apex:pageBlockSection collapsible="true" title="Other Cases" columns="1" id="sectionOther">
+    <apex:form >
+        <apex:selectRadio value="{!filterRemaining}">
+            <apex:selectOptions value="{!items}"/>
+            <apex:actionSupport event="onchange" action="{!radioSelectAction}" rerender="tableOther" oncomplete="updateOth();" status="status"/>
+        </apex:selectRadio>
+        <apex:pageBlockTable value="{!RemaningCases}" var="item" id="tableOther" styleClass="tablesorter">
+            <apex:column headerValue="Number">
+                <apex:commandLink onclick="openPrimaryTab('/{!item.id}','{!item.CaseNumber}');return false;">{!item.CaseNumber}</apex:commandLink>
+            </apex:column>
+            <apex:column value="{!item.Reason1__c}" headerValue="Reason"/>
+            <apex:column value="{!item.Status}" style="width:55px" headerValue="Status"/>
+            <apex:column value="{!item.Case_Age_Days__c}" style="text-align:center;width:35px;" headerValue="Age"/>
+        </apex:pageBlockTable>
+    </apex:form>
+</apex:pageBlockSection>
+</apex:outputPanel>
+
+
+
+</apex:pageBlock>
+<script type="text/javascript">
+     //   if({!$UserRole.Name} == ''){
+      //  twistSection(document.getElementById('{!$Component.block.section1}').getElementsByTagName('img')[0]);
+    //twistSection(document.getElementById('{!$Component.block.section2}').getElementsByTagName('img')[0]);
+   // twistSection(document.getElementById('{!$Component.block.section3}').getElementsByTagName('img')[0]);
+   // twistSection(document.getElementById('{!$Component.block.section4}').getElementsByTagName('img')[0]);
+     //   }        
+</script>   
+</apex:page>

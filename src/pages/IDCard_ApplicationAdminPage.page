@@ -1,0 +1,53 @@
+<apex:page controller="IDCard_ApplicationAdminController">
+      <apex:stylesheet value="{!URLFOR($Resource.jquerytools,'/jquery.dataTables.css')}"/>
+      <apex:includeScript value="{!URLFOR($Resource.jquerytools, '/jquery-1.10.2.min.js')}"/>
+      <apex:includeScript value="{!URLFOR($Resource.jquerytools, '/jquery.dataTables.js')}"/>
+      <apex:includeScript value="/soap/ajax/24.0/connection.js"/>
+      <apex:includeScript value="/soap/ajax/24.0/apex.js"/>
+      <c:Loading />
+    
+    
+        <apex:pagemessages />
+        <apex:pageBlock >
+            <apex:pageBlockSection columns="4"> 
+            <apex:form >
+                  <apex:inputFile value="{!csvFileBody}"  filename="{!csvAsString}"/>
+                  <apex:commandButton value="Import Contact" action="{!importCSVFile}"/>
+             </apex:form>
+             <apex:form >
+                  <apex:commandButton rendered="{!csvAsString !=null}" action="{!saveRecord}" rerender="pendingApplication"  status="Loading"  value="Save found records" id="save" />
+             </apex:form>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+        <apex:pageBlock id="pendingApplication" >    
+                     <table id="pendingApplicationTable" class="display" >
+                              <thead>
+                                  <tr>
+                                      <th>VerNum</th>
+                                      <th>Name</th>
+                                      <th>IATA Code</th>
+                                      <th>Account</th>
+                                  </tr>
+                              </thead> 
+                              <tbody>
+                                  <apex:repeat value="{!managedAgenciesPerVerNum}" var="verNumCode" >
+                                       <apex:repeat value="{!managedAgenciesPerVerNum[verNumCode]}" var="record">    
+                                            <tr>
+                                                <th>{!contactPerId[record.Contact__c].Ver_Number_2__c}</th>
+                                                <th>{!contactPerId[record.Contact__c].Name}</th>
+                                                <th>{!record.Account__c}</th>
+                                                <th>{!accountPerId[record.Account__c].Name}</th>
+                                            </tr>
+                                        </apex:repeat>
+                                  </apex:repeat>
+                              </tbody>
+                          </table> 
+               
+                 <script>
+                     $(document).ready(function() {
+                    $('#pendingApplicationTable').dataTable();
+                    });
+                 </script>
+     </apex:pageBlock>
+   
+</apex:page>

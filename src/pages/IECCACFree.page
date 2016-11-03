@@ -1,0 +1,395 @@
+<apex:page title="Check A Code" controller="vfIECCACFree" sidebar="false" showheader="false" language="en" action="{!pageLoad}" standardStylesheets="false">
+    <title>CheckACode Evaluation</title>
+ 
+ <c:IECAppHeader />
+ 
+      <div class="gdpwrapper">
+    
+    <div class="gdpbody">
+
+   
+
+    <style>
+        a,div,h1,h2,h3,h4,h5,h6,img,p,span,table,tbody,td,tr,u,ul{
+            vertical-align: middle;
+        }
+        .features {
+        border-bottom: 1px dashed #1ebec8;
+        }
+    </style>
+    
+
+    <script>
+        function isNumberKey(evt) {
+            var keycode;
+
+            if (window.event)
+                keycode = window.event.keyCode;
+            else if (evt)
+                keycode = (evt.which) ? evt.which : event.keyCode;
+            else
+                return true;
+
+            if (keycode == 13)
+                keyPressValidation();
+            else if (keycode > 31 && (keycode < 48 || keycode > 57))
+                return false;
+
+            return true;
+        }
+    </script>
+    
+
+    
+    <apex:form id="CACForm" forcessl="true">
+
+        <apex:outputPanel id="errorMessage">
+            <div class="errorPanel">
+                <apex:pageMessages escape="no" />
+            </div>
+        </apex:outputPanel>
+
+        <apex:actionFunction name="keyPressValidation" action="{!validateCode}" />
+
+        <!-- Content panel controlling the access to the application -->
+        <apex:outputpanel id="panelAccess" layout="block" rendered="{!hasPageAccess}">
+
+            <div class="content-container">
+
+                <div id="register">
+
+
+
+                    <!-- code format -->
+                    <div class="rightColumn">
+
+                        <div class="box register small dark txt24">
+                            <div class="header">
+                                <p>Code Validation Formats</p>
+                            </div>
+                            <div class="content" style="height:231px;">
+                                <h2>Accepted formats are:</h2>
+                                <h3 class="newDim">Passengers Agency</h3>
+                                <p>7 or 8 Digit Numeric Code</p>
+                                <h3 class="newDim">Cargo Agency</h3>
+                                <p>11 or 12 Digit Numeric Code</p>
+                                <h3 class="newDim">Travel Agent ID Card</h3>
+                                <p>10 Digit Verification Number</p>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!--  form entry box -->
+                    <div class="box register medium">
+                        <div class="header">
+                            <p>CheckACode Evaluation</p>
+                        </div>
+                        <div class="content" style="height:231px;">
+                            <h2>Validate IATA Agency Codes and Travel Agent ID Cards</h2>
+                            <h3 style="font-weight: 100; text-transform: initial;">Enter IATA Numeric Code or Verification Number</h3>
+
+                            <table style="margin-top:40px;">
+                                <tr>
+                                    <td>
+                                        <div class="customInputLabelIn lastElm" style="width:350px;">
+                                            <apex:inputtext onkeypress="return isNumberKey(event)" styleClass="inputText -required" rendered="{!NOT(baskCASSCode)}" id="txtValidationCode1" value="{!sValidationCode}" maxlength="12" />
+                                            <apex:inputtext onkeypress="return isNumberKey(event)" styleClass="inputText" rendered="{!baskCASSCode}" id="txtValidationCode2" value="{!sValidationCode}" maxlength="12" />
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <apex:inputtext onkeypress="return isNumberKey(event)" style="width:55px; height:46px; border: 1px solid #dcdcdc;" rendered="{!baskCASSCode}" styleClass="inputText -required" id="txtCASSCode" value="{!sCASSCode}" maxlength="4" />
+                                    </td>
+
+                                    <td>
+                                        <apex:commandButton styleClass="customButton lastElm" style="width:125px;" value="Validate" action="{!validateCode}" status="searchStatus" onclick="changeCursorProgress(this);" />
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td colspan="2" style="padding-top: 13px;">
+                                        <apex:panelGrid columns="1" id="reCAPTCHAGrid" rendered="{!bShowRECAPTCHA}">
+                                            <c:IECreCAPTCHA cttr="{!reCAPTCHA}" />
+                                        </apex:panelGrid>
+                                    </td>
+                                    <td colspan="1">&nbsp;</td>
+                                </tr>
+
+                            </table>
+                        </div>
+                    </div>
+
+
+
+
+
+                    <apex:outputpanel id="panelResult2Colums" layout="block" rendered="{! bShowNoAgencyResults || bShowNoAgentResults || bshowInvalidCode || bshowreCAPTCHAFail || baskCASSCode ||bShowAgency || bShowAgent}">
+
+                        <div class="box register large">
+                            <div class="content">
+
+                                <!--  Error messages -->
+                                <apex:outputpanel id="panelNoAgencyResult" rendered="{!bShowNoAgencyResults}">
+                                    <h2 class="validation error" style="font-family: arial;"><img src="{!URLFOR($Resource.IECStyles,'img/')}code-error.png" />{!sAgencyCode} is an Invalid IATA Numeric Code</h2>
+                                </apex:outputpanel>
+
+                                <apex:outputpanel id="panelNoAgentResult" rendered="{!bShowNoAgentResults}">
+                                    <h2 class="validation error" style="font-family: arial;"><img src="{!URLFOR($Resource.IECStyles,'img/')}code-error.png" />{!sAgentCode} is an Invalid IATA/IATAN ID Card</h2>
+                                </apex:outputpanel>
+
+                                <apex:outputText rendered="{!bshowInvalidCode}">
+                                    <h2 class="validation error"><img src="{!URLFOR($Resource.IECStyles,'img/')}code-error.png" />Invalid code format. Please try again</h2>
+                                </apex:outputText>
+
+                                <apex:outputText rendered="{!bshowreCAPTCHAFail}">
+                                    <h2 class="validation error"><img src="{!URLFOR($Resource.IECStyles,'img/')}code-error.png" />CAPTCHA validation failed. Please try again</h2>
+                                </apex:outputText>
+
+                                <apex:outputText rendered="{!baskCASSCode}">
+                                    <h2 class="validation error"><img src="{!URLFOR($Resource.IECStyles,'img/')}code-error.png" />Please enter the 3 or 4 digit CASS Number</h2>
+                                </apex:outputText>
+                                <!--  Error msg end -->
+
+
+
+
+                                <!-- Agency info block -->
+                                <apex:outputpanel id="panelAgencyResult2Columns" rendered="{!NOT(bShowNoAgencyResults || bShowNoAgentResults) && bShowAgency}" layout="block">
+
+                                    <apex:outputpanel rendered="{!bIsValid}">
+                                        <h2 class="validation success" style="font-family: arial;"><img src="{!URLFOR($Resource.IECStyles,'img/')}code-check.png" />{!sAgencyCode} is a Valid IATA Numeric Code</h2>
+                                    </apex:outputpanel>
+
+                                    <h3>Agency details</h3>
+
+                                    <table class="informationTable">
+
+                                        <tr>
+                                            <td>Trading Name</td>
+                                            <td>
+                                                <apex:outputText value="{!oAgency.Trading_Name__c}" rendered="{!NOT(ISNULL(oAgency.Trading_Name__c))}" />
+                                                <apex:outputText value="{!oAgency.Legal_Name__c}" rendered="{!ISNULL(oAgency.Trading_Name__c)}" />
+                                            </td>
+
+
+                                            <td>Country</td>
+                                            <td class="address">
+                                                <apex:outputPanel rendered="{!oAgency.Related_GDP_Address__r != null}">
+                                                    <apex:outputText styleClass="addressUppercase" value="{!oAgency.Related_GDP_Address__r.Address_Country_Name__c}" rendered="{!oAgency.Related_GDP_Address__r.Address_Country_Name__c != null && oAgency.Related_GDP_Address__r.Address_Country_Name__c != ''}" />
+                                                </apex:outputPanel>
+                                                <br/>
+
+                                                <apex:image style="margin-top: -87px; top: initial; right:60px; position: absolute;" value="{!URLFOR($Resource.IECFlags48, 'flags48/' + LOWER(oAgency.Related_GDP_Address__r.Address_ISO_Country_Code__c)  + '.png')}" rendered="{!oAgency.Related_GDP_Address__r.Address_ISO_Country_Code__c != null}" />
+                                               
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </apex:outputpanel>
+
+
+                                <!-- Agent info block -->
+                                <apex:outputpanel id="panelAgentResult2Columns" rendered="{!NOT(bShowNoAgencyResults || bShowNoAgentResults) && bShowAgent}" layout="block">
+
+                                    <apex:outputpanel rendered="{!bIsValid}">
+                                        <h2 class="validation success" style="font-family: arial;"><img src="{!URLFOR($Resource.IECStyles,'img/')}code-check.png" />{!sAgentCode} is a Valid IATA/IATAN ID Card issued to {!oAgent.Name_on_ID_Card__c}</h2>
+                                    </apex:outputpanel>
+<!-- 
+                                    <h3>ID Card Details</h3>
+
+                                    <table class="informationTable">
+
+                                        <tr>
+                                            <td>Cardholder Name</td>
+                                            <td>
+                                                <apex:outputText value="{!oAgent.Name_on_ID_Card__c}" rendered="{!oAgent.Name_on_ID_Card__c != null && oAgent.Name_on_ID_Card__c != ''}" />
+                                            </td>
+
+                                            <td class="td2ColumnsLabel">&nbsp;</td>
+                                            <td class="td2ColumnsValue">&nbsp;</td>
+                                        </tr>
+
+</table>
+ -->                                   
+
+                                </apex:outputpanel>
+
+                            </div>
+                        </div>
+                    </apex:outputpanel>
+
+
+                    <!--  Recommended products -->
+                    <div class="box register large dark txt24">
+                        <div class="header">
+                            <p>CheckACode Feature Comparison Table</p>
+                        </div>
+                        <div class="content recommendedProducts">
+                            <div class="holder" style="width:800px;">
+                                
+                                <br/><br/>
+                                  <style>
+                                      #compareTable   tr td {
+                                        border-right: 1px solid #FFF;
+                                        padding: 15px 5px;
+                                        color: #969696;
+                                        font-size: 16px;
+                                        vertical-align:middle;
+                                    }
+                                    
+                                    #compareTable  {
+                                        width: 100%;
+                                        font-family: arial;
+                                        font-weight: 100;
+                                        text-align: center;
+                                    }
+                                    
+                                    #compareTable  tr:nth-child(even) td {
+                                        background: #f0f0f0 ;
+                                        }
+                                    #compareTable  tr th {
+                                            border-right: 1px solid #FFF;
+                                            color: #FFF;
+                                            background: none repeat scroll 0% 0% #1EBEC8;
+                                            padding: 10px 50px;
+                                            font-family: "Raleway",sans-serif;
+                                            font-weight: 700;
+                                            font-size: 20px;
+                                        }
+                                        #compareTable tr td:first-child {
+                                        text-align: left;
+                                        padding-left: 50px;
+                                        }
+                                                                                
+                                        </style>
+                                        
+                                
+                                       <table id="compareTable">
+                                       <tr>                                    
+                                          <th width="40%" style="vertical-align: middle; background:none;"></th>
+                                          <th width="30%" style="vertical-align: middle;background:none;"></th>
+                                          <!--th width="30%" style="vertical-align: middle; background:#FF7D26;"><a href="https://{!$Site.Domain}{!$Page.IECProductViewer}?ProductCode={!sProdCACPro}"  style="color: white;" onclick="changeCursorProgress(this);">Buy Now</a></th-->                                                                             
+                                          <th width="30%" style="vertical-align: middle; background:#FF7D26;"><a href="{!$Site.BaseUrl}/IEC_ProductDetail?id=0000000000751935"  style="color: white;" onclick="changeCursorProgress(this);">Buy Now</a></th>                                                                             
+                                       </tr>
+                                       
+                                        <tr>
+                                          <th width="40%" style="vertical-align: middle;">Available<br/>User Features</th>
+                                          <th width="30%" style="vertical-align: middle;">Evaluation Edition</th>
+                                          <th width="30%" style="vertical-align: middle;">Professional Edition </th>
+                                        </tr>
+                            
+                                        <tr>
+                                          <td height="40px;" colspan="3" style="background-color:#69D2BE; text-align:center; font-size:18px; font-weight:700; margin:0px; padding:0px; vertical-align:middle; color:#666;">
+                                          Agency Validation Results              
+                                            </td>
+                                        </tr>
+                            
+                                        <tr>
+                                          <td>Agency Name</td>
+                                          <td><img width="30" height="30" src="{!URLFOR($Resource.IECStyles,'img/')}code-check.png"/></td>
+                                          <td><img width="30" height="30" src="{!URLFOR($Resource.IECStyles,'img/')}code-check.png"/></td>
+                                        </tr>
+                            
+                                        <tr>
+                                          <td>Country</td>
+                                          <td><img width="30" height="30" src="{!URLFOR($Resource.IECStyles,'img/')}code-check.png"/></td>
+                                          <td><img width="30" height="30" src="{!URLFOR($Resource.IECStyles,'img/')}code-check.png"/></td>
+                                        </tr>
+                            
+                                        <tr>
+                                          <td>Agency Class</td>
+                                          <td></td>
+                                          <td><img width="30" height="30" src="{!URLFOR($Resource.IECStyles,'img/')}code-check.png"/></td>
+                                        </tr>
+                                        <tr>
+                                          
+                                          <td>Site Type</td>
+                                          <td></td>
+                                          <td><img width="30" height="30" src="{!URLFOR($Resource.IECStyles,'img/')}code-check.png"/></td>
+                                        </tr>
+                            
+                                        <tr>
+                                          <td>Agency Address</td>
+                                          <td></td>
+                                          <td><img width="30" height="30" src="{!URLFOR($Resource.IECStyles,'img/')}code-check.png"/></td>
+                                        </tr>
+                            
+                                        <tr>
+                                          <td>Phone Number</td>
+                                          <td></td>
+                                          <td><img width="30" height="30" src="{!URLFOR($Resource.IECStyles,'img/')}code-check.png"/></td>
+                                        </tr>
+                                        <tr>
+                                          <td>Approval Date</td>
+                                          <td></td>
+                                          <td><img width="30" height="30" src="{!URLFOR($Resource.IECStyles,'img/')}code-check.png"/></td>
+                                        </tr>
+                            
+                                        <tr>
+                                          <td height="40px;" colspan="3" style="background-color:#69D2BE; text-align:center; font-size:18px; font-weight:700; margin:0px; padding:0px; vertical-align:middle; color:#666;">
+                                          ID Card Validation Results</td>
+                                        </tr>
+                            
+                                        <tr>
+                                          <td>Cardholder Name</td>
+                                          <td><img width="30" height="30" src="{!URLFOR($Resource.IECStyles,'img/')}code-check.png"/></td>
+                                          <td><img width="30" height="30" src="{!URLFOR($Resource.IECStyles,'img/')}code-check.png"/></td>
+                                        </tr>
+                            
+                                        <tr>
+                                          <td>ID Card Exp. Date</td>
+                                          <td></td>
+                                          <td><img width="30" height="30" src="{!URLFOR($Resource.IECStyles,'img/')}code-check.png"/></td>
+                                        </tr>
+                            
+                                        <tr>
+                                          <td>Agency Name</td>
+                                          <td></td>
+                                          <td><img width="30" height="30" src="{!URLFOR($Resource.IECStyles,'img/')}code-check.png"/></td>
+                                        </tr>
+                                                    <tr>
+                                          <td>Agency Code</td>
+                                          <td></td>
+                                          <td><img width="30" height="30" src="{!URLFOR($Resource.IECStyles,'img/')}code-check.png"/></td>
+                                        </tr>
+                            
+                                       </table>
+                               
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="clear"></div>
+
+                </div>
+
+            </div>
+
+            <div class="footter"></div>
+
+        </apex:outputpanel>
+
+
+
+        <!-- Content panel without access to the application -->
+        <apex:outputpanel id="panelNotAccess" layout="block" rendered="{!NOT(hasPageAccess)}">
+        </apex:outputpanel>
+
+
+
+    </apex:form>
+    
+    </div>
+    
+        <!-- GDP Footer -->
+        <c:IECGDPFooter />
+    </div>
+    
+</apex:page>

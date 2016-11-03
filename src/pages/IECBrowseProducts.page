@@ -1,0 +1,217 @@
+<apex:page title="Browse Product Catalog" controller="VfIECBrowseProducts"  cache="false"  sidebar="false" language="en" showHeader="false" standardStylesheets="false">
+<title>Products</title> 	
+	
+	<c:IECSiteHeader />
+ 	
+ 	<apex:form >
+  	
+	  
+<!----------  Carousel Static Start -------- -->
+  <div class="carouselWrapper static">
+
+    <div class="gradient"></div>
+
+    <div class="carousel">
+      <ul class="carousel__list">
+
+        <li class="carousel__slide" style="background-image:url({!$Resource.IEC_carrousel02})">
+         <div class="autoAdjustMargin">
+            <div class="carousel__slide-wrapper">              
+              <h2 class="carousel__slide-text -heading">See What <br/><span>Global Data Products</span><br/> can do for you</h2>
+            </div>
+          </div>
+        </li>
+        
+      </ul>
+    </div>
+    </div>
+<!----------  Carousel Static END -------- -->
+
+
+ <!--------  Available services Start ----------------->
+  
+ <script>
+  var iata_toggle_up = true;
+$(function() {
+	$(".available-services-a").click(function() {
+		var img;
+		if(iata_toggle_up) {
+			img = "https://{!$Site.Domain}{!URLFOR($Resource.IECStyles,'img/')}up_arrow_toggle.png" ;
+			iata_toggle_up = false;
+		} else {
+			img =  "https://{!$Site.Domain}{!URLFOR($Resource.IECStyles,'img/')}down_arrow_toggle.png" ;
+			iata_toggle_up = true;
+		}
+		$(".available-services-a img").attr("src", img);
+	});
+});
+
+</script>
+  
+  
+  
+  <apex:variable value="{!$User}" var="u" rendered="{!isUserLoggedIn && bHasAnyProdAccess}">
+  
+  <a class="available-services-toggle__anchor available-services-a" href="javascript:void();">
+    <div class="available-services-toggle">
+      <p>Click here to access your <span>available services</span></p>
+    </div>
+  </a>
+
+<!--  add access to services inside -->  
+  <div class="avilable-services-toggled-area -closed">
+    <div class="content-container">
+
+      		<div class="available-services">
+        		<ul class="available-services__list">
+	          		
+	          		<apex:outputpanel id="panelAccessCACPro" layout="none" rendered="{!bProdAccessCACPro}">
+	         			<li class="available-services__item">
+	         				<a href="{!$Page.IECCAC}"><img class="available-services__icon" src="https://{!$Site.Domain}{!URLFOR($Resource.IECStyles,'img/')}cac_mini.gif"/> <h3 style="color :white;" >CHECKACODE PROFESSIONAL</h3></a>
+	         			</li>
+	          		</apex:outputpanel>	          		
+	         		<apex:outputpanel id="panelAccessGAD" layout="none" rendered="{!bProdAccessGAD}">
+	          			<li class="available-services__item">
+	          				<a href="{!$Page.IECGAD}"><img class="available-services__icon" src="https://{!$Site.Domain}{!URLFOR($Resource.IECStyles,'img/')}gad_mini.gif"/><h3 style="color :white;">Global Agency Directory</h3></a>
+	          			</li>
+	          		</apex:outputpanel>
+	          		<apex:outputpanel id="panelAccessEBro" layout="none" rendered="{!bProdAccessEBro}">
+	          			<li class="available-services__item">
+	          				<a href="#"><img class="available-services__icon" src="https://{!$Site.Domain}{!URLFOR($Resource.IECStyles,'img/')}mdp_mini.gif"/><h3 style="color :white;">E-Broadcast</h3></a>
+	          			</li>
+	          		</apex:outputpanel>
+	          		<apex:outputpanel id="panelAccessGSS" layout="none" rendered="{!bProdAccessGSS}">
+	         			<li class="available-services__item">
+	         				<a href="#"><img class="available-services__icon" src="https://{!$Site.Domain}{!URLFOR($Resource.IECStyles,'img/')}gss_mini.gif"/><h3 style="color :white;">Global Systems Solutions</h3></a>
+	         			</li>
+	          		</apex:outputpanel>
+	         		<apex:outputpanel id="panelAccessMDP" layout="none" rendered="{!bProdAccessMDP}">
+						<li class="available-services__item">
+							<a href="#"><img class="available-services__icon" src="https://{!$Site.Domain}{!URLFOR($Resource.IECStyles,'img/')}mdp_mini.gif"/><h3 style="color :white;">Marketing Data Package</h3></a>
+						</li>
+	          		</apex:outputpanel>
+        		</ul>
+      		</div>
+   	
+    </div>  
+  </div>  
+  <a class="available-services-toggle__anchor available-services-a" href="javascript:void();">
+     <apex:image styleclass="arrow right-arrow" url="{!URLFOR($Resource.IECStyles,'img/')}down_arrow_toggle.png"  />
+  </a> 
+
+  <div class="sepEmptyDiv">  </div>
+
+</apex:variable>
+
+<!--------------  Available services END  ----------------->
+
+
+
+
+
+<!-- Error messages -->
+<apex:pageMessages escape="no" />
+
+
+
+    
+   
+	  	<!-- ************************************ -->
+	  	<!-- Generic view -->
+ <!-- 
+  		<div class="content-container -no-margin">
+	  		<apex:variable var="index" value="{!0}" />
+  			<apex:repeat id="productRepeater" var="productCategory" value="{!lstProductsToShow}">
+	  		    <div class="{!IF(index==0,'tab-container__cell -selected','tab-container__cell -flipped')}" id="{!productCategory.Name}">
+		    		<div class="tab-container__image-area">
+    		    		<img src="{!productCategory.Banner_Image_Small__c}" alt="check a code" width="300"/>
+        			</div>
+      				<div class="tab-container__text-area">
+	        			<h2 class="tab-container__text -heading">{!productCategory.Display_Name__c}</h2>
+	    	    		<apex:outputText escape="false" styleClass="tab-container__text" value="{!productCategory.Long_Description__c}" />
+    	    			<br/><br/>
+						<apex:commandLink value="Read More" styleClass="tab-container__anchor" action="{!browseToProductCategory}">
+							<apex:param name="productCategoryCode" value="{!productCategory.Name}" assignTo="{!selectedProductCategoryCode}" />
+						</apex:commandLink>
+	      			</div>
+    			</div>
+    			<apex:variable var="index" value="{!IF(index==0,0,0)}" />
+	 		</apex:repeat>
+  		</div>
+  		
+ -->
+  		
+  		
+  		 <div class="content-container tab products" style="margin-top:50px;">
+  			  <div class="tab-container">
+  		
+	  		<apex:variable var="index" value="{!0}" />
+  			<apex:repeat id="productRepeater" var="productCategory" value="{!lstProductsToShow}">
+  			<!--   "{!IF(index==0,'tab-container__cell -selected','tab-container__cell -selected borderTop')}"    -->
+	  		    <div class="tab-container__cell -selected borderTop" id="{!productCategory.Name}">
+		    		
+		    		<div class="tab-container__text-area">
+	        			<h2 class="tab-container__text -heading">{!productCategory.Display_Name__c}</h2>
+	    	    		<apex:outputText escape="false" styleClass="tab-container__text -area p" value="{!productCategory.Long_Description__c}" />
+    	    			<br/><br/>
+						<apex:commandLink value="Read more" styleClass="tab-container__anchor  customButton" action="{!browseToProductCategory}">
+							<apex:param name="productCategoryCode" value="{!productCategory.Name}" assignTo="{!selectedProductCategoryCode}" />
+						</apex:commandLink>
+	      			</div>
+	      			
+	      			<div class="tab-container__image-area">
+    		    		<img src="{!productCategory.Banner_Image_Small__c}" alt="{!productCategory.Display_Name__c}" />
+        			</div>
+	      			
+    			</div>
+    			
+    			<apex:variable var="index" value="1" />
+    			
+	 		</apex:repeat>
+	 		
+  		</div>
+  	  </div>
+  		
+  		
+  		
+  		
+	</apex:form>
+
+
+
+
+
+<!-- ************************************ -->
+  	<!-- IATA Serving your data products since 1999 -->
+
+ <div class="content-container gray3"  > <!-- style="height = 80px; padding: 10px 40px 0px;" -->
+    <div class="callout-banner center">
+      <p><span class="left">IATA</span> <span class="sep">|</span> <span class="right">Industry's reference for agency data</span></p>
+    </div>
+  </div>
+  
+
+<!-- ************************************ -->
+  <!-- Companies using global data products -->
+  
+   <div class="bigBg gray4">
+    <div class="content-container">
+      <div class="callout-banner big">
+        <div class="rightDiv">       
+          	
+           	<img class="company_logo" src="{!URLFOR($Resource.IECStyles,'img/')}cust1.png" />
+        	<img class="company_logo" src="{!URLFOR($Resource.IECStyles,'img/')}cust2.png" />
+        	<img class="company_logo" src="{!URLFOR($Resource.IECStyles,'img/')}cust3.png" />
+        	<!-- <img class="company_logo" src="{!URLFOR($Resource.IECStyles,'img/')}cust4.png" /> -->
+        
+        </div>
+        <h2 class="callout-banner__header">Companies using <br/><span>Global Data <br/> Products</span></h2>
+      </div>
+    </div>
+  </div>
+  
+	
+	<!-- ************************************ -->
+  	<!-- Footer -->
+	<c:IECSiteFooter />
+</apex:page>

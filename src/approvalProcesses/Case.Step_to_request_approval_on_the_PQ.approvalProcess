@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ApprovalProcess xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>true</active>
+    <allowRecall>false</allowRecall>
+    <allowedSubmitters>
+        <type>owner</type>
+    </allowedSubmitters>
+    <allowedSubmitters>
+        <submitter>DistributionOperationalMgmtHO</submitter>
+        <type>role</type>
+    </allowedSubmitters>
+    <approvalPageFields>
+        <field>CaseNumber</field>
+        <field>Owner</field>
+        <field>Estimated_Total_Development_Cost__c</field>
+        <field>Estimated_Total_Person_days__c</field>
+        <field>Type_of_Budget__c</field>
+    </approvalPageFields>
+    <approvalStep>
+        <allowDelegate>false</allowDelegate>
+        <approvalActions>
+            <action>
+                <name>Status_Approved</name>
+                <type>FieldUpdate</type>
+            </action>
+            <action>
+                <name>Used_to_inform_the_owner_that_the_CR_has_been_finally_approved2</name>
+                <type>Alert</type>
+            </action>
+        </approvalActions>
+        <assignedApprover>
+            <approver>
+                <type>adhoc</type>
+            </approver>
+        </assignedApprover>
+        <label>System Management Solution Approval</label>
+        <name>PQ_Approval</name>
+        <rejectionActions>
+            <action>
+                <name>Status_Rejected</name>
+                <type>FieldUpdate</type>
+            </action>
+        </rejectionActions>
+    </approvalStep>
+    <emailTemplate>Approval_notifications_DPC_Systems/Approval_of_PQ</emailTemplate>
+    <enableMobileDeviceAccess>false</enableMobileDeviceAccess>
+    <entryCriteria>
+        <booleanFilter>1 AND 2</booleanFilter>
+        <criteriaItems>
+            <field>Case.ClickToolFlag__c</field>
+            <operation>greaterThan</operation>
+            <value>3</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.RecordType</field>
+            <operation>equals</operation>
+            <value>Application Change Request (DPC System),Application Change Request (DPC Systems) - ACCA,Application Change Request (DPC Systems - locked)</value>
+        </criteriaItems>
+    </entryCriteria>
+    <finalApprovalActions>
+        <action>
+            <name>Escalated_Status_DPC_Quotation_approve</name>
+            <type>FieldUpdate</type>
+        </action>
+        <action>
+            <name>Update_Status_to_PQ_Approved_pending</name>
+            <type>FieldUpdate</type>
+        </action>
+    </finalApprovalActions>
+    <finalApprovalRecordLock>false</finalApprovalRecordLock>
+    <finalRejectionRecordLock>false</finalRejectionRecordLock>
+    <label>Step to request approval on the PQ</label>
+    <recordEditability>AdminOrCurrentApprover</recordEditability>
+    <showApprovalHistory>false</showApprovalHistory>
+</ApprovalProcess>

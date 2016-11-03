@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Business_Unit__c</fullName>
+        <externalId>false</externalId>
+        <label>Business Unit</label>
+        <referenceTo>Business_Unit__c</referenceTo>
+        <relationshipLabel>Licenses</relationshipLabel>
+        <relationshipName>Licenses</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>License_Name_Hidden__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <externalId>false</externalId>
+        <label>(Hidden) License Name</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>License_assigned_to__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <inlineHelpText>Shows the name of the user that the license is assigned to</inlineHelpText>
+        <label>License assigned to</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Licenses</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <label>Licenses</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>License_assigned_to__c</columns>
+        <columns>LAST_UPDATE</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
+    <nameField>
+        <label>Licenses Name</label>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Licenses</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ControlledByParent</sharingModel>
+    <validationRules>
+        <fullName>Business_Unit_in_name</fullName>
+        <active>true</active>
+        <errorConditionFormula>NOT(Contains(Name, 
+Case( Business_Unit__r.Name,
+        &quot;Central Billing&quot;,&quot;Central Billing&quot;,
+ 	&quot;Corporate Communication&quot;,&quot;Corporate Communication&quot;,
+ 	&quot;Corporate Services&quot;,&quot;Corporate Services&quot;,
+ 	&quot;IDFS ACCA&quot;,&quot;IDFS ACCA&quot;,
+ 	&quot;IDFS Africa&quot;,&quot;IDFS Africa&quot;,
+ 	&quot;IDFS Americas&quot;,&quot;IDFS Americas&quot;,
+ 	&quot;IDFS ASPAC&quot;,&quot;IDFS ASPAC&quot;,
+ 	&quot;IDFS Cargo&quot;,&quot;IDFS Cargo&quot;,
+ 	&quot;IDFS E&amp;F&quot;,&quot;IDFS E&amp;F&quot;,
+ 	&quot;IDFS Europe&quot;,&quot;IDFS Europe&quot;,
+ 	&quot;IDFS Invoice Works&quot;,&quot;IDFS Invoice Works&quot;,
+ 	&quot;IDFS MENA&quot;,&quot;IDFS MENA&quot;,
+ 	&quot;IDFS North Asia&quot;,&quot;IDFS North Asia&quot;,
+ 	&quot;IDFS Passanger Central&quot;,&quot;IDFS Passanger Central&quot;,
+ 	&quot;IDFS TASF&quot;,&quot;IDFS TASF&quot;,
+ 	&quot;MACS&quot;,&quot;MACS&quot;,&quot;&quot;))
+)</errorConditionFormula>
+        <errorMessage>You must start the name of the record with the Business Unit it&apos;s associated with, e.g. IDFS Africa, or Corporate Services.</errorMessage>
+    </validationRules>
+</CustomObject>

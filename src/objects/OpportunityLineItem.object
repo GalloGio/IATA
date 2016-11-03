@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>AddProduct</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>ChoosePricebook</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>EditAllProduct</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>Description</fullName>
+    </fields>
+    <fields>
+        <fullName>Discount</fullName>
+    </fields>
+    <fields>
+        <fullName>Discount__c</fullName>
+        <externalId>false</externalId>
+        <label>Discount</label>
+        <length>10</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>LineItemID__c</fullName>
+        <externalId>false</externalId>
+        <formula>Id</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>LineItemID</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ListPrice</fullName>
+    </fields>
+    <fields>
+        <fullName>OpportunityId</fullName>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Product2Id</fullName>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>ProductCode</fullName>
+    </fields>
+    <fields>
+        <fullName>Quantity</fullName>
+    </fields>
+    <fields>
+        <fullName>SP_Area_Summary1__c</fullName>
+        <externalId>false</externalId>
+        <label>SP-Area-Summary</label>
+        <length>32768</length>
+        <type>LongTextArea</type>
+        <visibleLines>25</visibleLines>
+    </fields>
+    <fields>
+        <fullName>ServiceDate</fullName>
+    </fields>
+    <fields>
+        <fullName>Subtotal</fullName>
+    </fields>
+    <fields>
+        <fullName>TotalPrice</fullName>
+    </fields>
+    <fields>
+        <fullName>UnitPrice</fullName>
+    </fields>
+    <validationRules>
+        <fullName>Item_Locked_for_Closed_or_Submitted_Opp</fullName>
+        <active>true</active>
+        <description>Lock the Opp Product  / Opp Line Item for everybody except the product manager, after the opportunity has been sent for validation or has been closed.</description>
+        <errorConditionFormula>AND (
+  Opportunity.RecordType.DeveloperName = &apos;RCRM_Opportunity&apos;,
+  OR (
+    TEXT(  Opportunity.RCRM_Validation_Status__c  ) = &apos;Sent to PM for validation&apos;,
+    Opportunity.IsClosed
+  ),
+  $Profile.Name &lt;&gt; &apos;MACS - Product&apos;
+)</errorConditionFormula>
+        <errorDisplayField>ServiceDate</errorDisplayField>
+        <errorMessage>You can no longer edit the Products on an Opportunity that has been sent for validation or closed.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Product_Family_set_by_RCRM_Opportunity</fullName>
+        <active>true</active>
+        <description>For RCRM Opportunities and RCRM Products, the product family of the added products needs to match the one selected on the Opportunity.</description>
+        <errorConditionFormula>AND (
+  Opportunity.RecordType.DeveloperName = &apos;RCRM_Opportunity&apos;,
+  Product2.RCRM_Product__c = true,
+  TEXT( Product2.Family ) &lt;&gt; TEXT( Opportunity.Product_Family__c )
+)</errorConditionFormula>
+        <errorMessage>The Products added to the Opportunity need to come from the Product Family selected on the Opportunity.</errorMessage>
+    </validationRules>
+</CustomObject>

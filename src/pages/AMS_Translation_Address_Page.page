@@ -1,0 +1,3 @@
+<apex:page showHeader="false" sidebar="false" standardStylesheets="true" standardController="AMS_Address__c" TabStyle="AMS_Address__c">
+    <c:AMS_Translated_Panel camsAddressId="{!AMS_Address__c.Id}"/>
+</apex:page>

@@ -1,0 +1,83 @@
+<apex:page standardController="Account" extensions="ProductAssignmentRelListCtrl">
+    <apex:pageMessages />
+    <apex:pageBlock title="ICCS Product Assignments">
+    <apex:form style="text-align: center;">
+        <apex:outputPanel rendered="{!passize>0}">
+        <apex:commandLink action="{!PDF}" styleClass="btn" value="Generate PDF" target="_parent" style="text-decoration:none"/><br/><br/>
+        </apex:outputPanel>
+        <apex:pageBlockTable value="{!pas}" var="pa" style="text-align: left;">
+            <!-- <apex:column title="Action" rendered="{!opp.Count_Equipment_Requests__c=0}">
+                <apex:facet name="header">Action</apex:facet>
+                <a href="/{!er.Id}/e">Edit</a> | 
+                <apex:commandlink value="Del" action="{!DeleteExpRev}" onclick="return confirmDelete();">
+                   <apex:param id="ExpRevId" name="ExpRevId" value="{!er.Id}" />
+                </apex:commandlink> 
+                
+            </apex:column>
+ 
+             -->
+             <apex:column title="ICCS Code">
+                <apex:facet name="header">{!$ObjectType.Product_Assignment__c.fields.Name.Label}</apex:facet>
+                <a href="/{!pa.Id}" target="_parent">{!pa.Name}</a>
+            </apex:column>
+            <apex:column title="Country">
+                 <apex:facet name="header">{!$ObjectType.ICCS_Product_Currency__c.fields.Product__c.Label}</apex:facet>
+                 <apex:outputField value="{!pa.ICCS_Product_Currency__r.Product__c}"/>
+            </apex:column>
+            <apex:column title="Country">
+                 <apex:facet name="header">{!$ObjectType.ICCS_Product_Currency__c.fields.Country__c.Label}</apex:facet>
+                 <apex:outputField value="{!pa.ICCS_Product_Currency__r.Country__c}"/>
+            </apex:column>
+            <apex:column title="Currency">
+                 <apex:facet name="header">{!$ObjectType.ICCS_Product_Currency__c.fields.Currency__c.Label}</apex:facet>
+                 <apex:outputField value="{!pa.ICCS_Product_Currency__r.Currency__c}"/>
+            </apex:column>
+            <apex:column title="Bank Account Code">
+                 <apex:facet name="header">{!$ObjectType.Product_Assignment__c.fields.Bank_Account_Code__c.Label}</apex:facet>
+                 <apex:outputField value="{!pa.Bank_Account_Code__c}"/>
+            </apex:column>
+            <apex:column title="Bank Account Currency">
+                 <apex:facet name="header">{!$ObjectType.Product_Assignment__c.fields.Bank_Account_Currency__c.Label}</apex:facet>
+                 <apex:outputField value="{!pa.Bank_Account_Currency__c}"/>
+            </apex:column>
+            <apex:column title="Notice of assignment">
+                 <apex:facet name="header">{!$ObjectType.Product_Assignment__c.fields.Notice_of_Assignment__c.Label}</apex:facet>
+                 <apex:outputField value="{!pa.Notice_of_Assignment__c}"/>
+            </apex:column>
+            <apex:column title="GSA Agreement">
+                 <apex:facet name="header">{!$ObjectType.Product_Assignment__c.fields.GSA_Agreement__c.Label}</apex:facet>
+                 <apex:outputField value="{!pa.GSA_Agreement__c}"/>
+            </apex:column>
+            <apex:column title="Third Party Payment">
+                 <apex:facet name="header">{!$ObjectType.Product_Assignment__c.fields.Third_Party_Payment__c.Label}</apex:facet>
+                 <apex:outputField value="{!pa.Third_Party_Payment__c}"/>
+            </apex:column>
+            <apex:column title="Accelerated Function">
+                 <apex:facet name="header">{!$ObjectType.Product_Assignment__c.fields.Accelerated_Function__c.Label}</apex:facet>
+                 <apex:outputField value="{!pa.Accelerated_Function__c}"/>
+            </apex:column>
+            <apex:column title="Status">
+                 <apex:facet name="header">{!$ObjectType.Product_Assignment__c.fields.Status__c.Label}</apex:facet>
+                 <apex:outputField value="{!pa.Status__c}"/>
+            </apex:column>
+            <apex:column title="(De)Activation date">
+                 <apex:facet name="header">{!$ObjectType.Product_Assignment__c.fields.De_Activation_Date__c.Label}</apex:facet>
+                 <apex:outputField value="{!pa.De_Activation_Date__c}"/>
+            </apex:column>
+            <apex:column title="Split Type">
+                 <apex:facet name="header">{!$ObjectType.Product_Assignment__c.fields.Split_Type__c.Label}</apex:facet>
+                 <apex:outputField value="{!pa.Split_Type__c}"/>
+            </apex:column>
+            <apex:column title="Percentage">
+                 <apex:facet name="header">{!$ObjectType.Product_Assignment__c.fields.Percentage__c.Label}</apex:facet>
+                 <apex:outputField value="{!pa.Percentage__c}"/>
+            </apex:column>
+              <apex:column title="Amount">
+                 <apex:facet name="header">{!$ObjectType.Product_Assignment__c.fields.Amount__c.Label}</apex:facet>
+                 <apex:outputField value="{!pa.Amount__c}"/>
+            </apex:column>
+        </apex:pageBlockTable> 
+        <apex:outputLink value="/apex/ProductAssignmentRelList?id={!acc.id}&isPage=true" target="_parent" rendered="{! AND(counter>printLimit, isRelatedList)}" >Go to list ({!(counter)})</apex:outputLink>
+    </apex:form>
+    </apex:pageBlock>
+</apex:page>

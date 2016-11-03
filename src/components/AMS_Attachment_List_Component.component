@@ -1,0 +1,56 @@
+<apex:component controller="ISSP_AmazonS3_Ctrl">
+    <apex:attribute name="caseId" type="string" assignTo="{!id}" description="a case Id to search related Archived Attachment" />
+    
+<script>
+	function getFileLink(fileName) {
+		// alert(''+fileName);
+		setTimeout(function(){
+		try{
+			ISSP_AmazonS3_Ctrl.getExpiringLinkIfap(fileName,function(result, event){
+				var result2= result.replace("&amp;","&"); 
+				var newWin = window.open(result2);
+				if(!newWin || newWin.closed || typeof newWin.closed=='undefined'){
+					alert('Please check the pop-up settings of your browser!');
+				}
+			},{escape:false});
+		}catch(err){alert( err.message);}
+		},500);
+	}
+	</script>
+	<apex:form >
+        <apex:pageblock id="fileList" mode="maindetail" title="{!$Label.ISSP_Attachments}" >
+        	<div id="loading" style="display:none">
+	            <div style="height:100%;width:100%;z-index:5; position:absolute;background:black;opacity:0.5;" >
+	            </div>
+	            <div style="border:1px solid black; background:white; text-align:center;
+					display: inline-block; padding: 1em; padding-left: 3em; padding-right: 3em;
+	                position: absolute; top:40%; left:45%; z-index:10;" >
+	               	<apex:image url="{!URLFOR($Resource.loadinggif)}"/><br/>Download in progress...
+	            </div>
+	        </div>
+            <apex:pageBlockTable id="tablefileones"  value="{!listfile}" var="fileone" Title="{!$Label.Financial_Documents}">
+                <apex:column headerValue="Action" width="{!if(canUploadAndDelete,'120','60')}"   >
+                  <a class="actionLink" title="view" escape="false" target="_blank" onclick="getFileLink('{!fileone.fullName}');" style="color:#015ba7; cursor: pointer;  text-decoration: underline;"  >View</a>                      
+                </apex:column>
+
+                <apex:column headerValue="{!$Label.IFAP_name}">
+                    <apex:outputText value="{!fileone.name}"/>
+                </apex:column>
+
+                <apex:column headerValue="Size">
+                   <apex:outputText value="{0,number,0.##} MB">
+                        <apex:param value="{!fileone.size}" />
+                    </apex:outputText>
+                </apex:column>
+
+                <apex:column headerValue="Last Modified">
+                    <apex:outputText value="{0,date,MM/dd/yyyy HH:mm}" rendered="{!fileone.lastModified}!='n/a'">
+                        <apex:param value="{!fileone.lastModified}" />
+                    </apex:outputText>
+                </apex:column>
+
+            </apex:pageBlockTable>
+        </apex:pageblock>
+
+    </apex:form>
+</apex:component>

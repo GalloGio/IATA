@@ -1,0 +1,109 @@
+<apex:component controller="AmsTranslatedPanelController" allowDML="true">
+    <apex:attribute name="cagencyId" type="String" assignTo="{!agencyId}" required="false" description="The Agency Id" />
+    <apex:attribute name="cownerId" type="String" assignTo="{!ownerId}" required="false" description="The Owner Id" />
+    <apex:attribute name="camsAddressId" type="String" assignTo="{!amsAddressId}" required="false" description="The Address id" />
+    <apex:attribute name="ciataIsoStateId" type="String" assignTo="{!iataIsoStateId}" required="false" description="The State Id" />
+    <apex:attribute name="camsPersonId" type="String" assignTo="{!amsPersonId}" required="false" description="The Person id" />
+    <apex:attribute name="caccountId" type="String" assignTo="{!accountId}" required="false" description="The Account Id" />
+    <apex:includeScript value="/soap/ajax/33.0/connection.js" />
+    <apex:includeScript value="/soap/ajax/33.0/apex.js" />
+    <style type="text/css">
+        .custPopup{
+            background-color: white;
+            border-width: 2px;
+            border-style: solid;
+            z-index: 9999;
+            left: 50%;
+            padding:10px;
+            position: absolute;
+            /* These are the 3 css properties you will need to change so the popup 
+            displays in the center of the screen. First set the width. Then set 
+            margin-left to negative half of what the width is. You can add 
+            the height property for a fixed size pop up if you want.*/
+            width: 500px;
+            margin-left: -250px;
+            top:10px;
+        }
+        .popupBackground{
+            background-color:black;
+            opacity: 0.20;
+            filter: alpha(opacity = 20);
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 9998;
+        }
+    </style>
+  
+    <apex:outputPanel id="theTable">
+        <apex:form >
+    <!--<table class="list" cellspacing="0" cellpadding="0" border="0">
+        <tbody>
+            <apex:repeat var="fName" value="{!fieldsMap}">
+                <tr>
+                    <td class="actionColumn">
+                       <b> {!fName}</b>:
+                    </td>
+                    <td class=" dataCell " scope="row">
+                       {!fieldsMap[fName].Translation__c}
+                    </td>
+                   
+                </tr>
+            </apex:repeat>
+            </tbody>
+      </table>-->
+            <table class="list" cellspacing="0" cellpading="0" border="0">
+                <tbody>
+                    <apex:repeat var="t" value="{!translations}">
+                        <tr>
+                            <td class="actionColumn">
+                                <b>{!t.Field}</b>
+                            </td>
+                            <td class="dataCell" scope="row">
+                                <apex:outputField value="{!t.Translation.Translation__c}" rendered="{!NOT(editableFields)}"/>
+                                <apex:inputField value="{!t.Translation.Translation__c}" rendered="{!editableFields}"/>
+                            </td>
+                        </tr>
+                    </apex:repeat>
+                </tbody>
+            </table>
+            <apex:commandButton value="Update" action="{!editFields}" rerender="theTable" rendered="{!NOT(editableFields)}"/>
+            <apex:commandButton value="Save" action="{!saveTranslations}" rerender="theTable" rendered="{!editableFields}"/>
+            <apex:commandButton value="Cancel" action="{!cancel}" rerender="theTable" rendered="{!editableFields}"/>
+        </apex:form>
+    </apex:outputPanel>
+
+     <!-- <apex:form >
+        <apex:outputPanel id="tstpopup">
+        <apex:outputPanel styleClass="popupBackground" layout="block" rendered="{!displayPopUp}"/>
+            <apex:outputPanel styleClass="custPopup" layout="block" rendered="{!displayPopUp}">
+                <table class="list" cellspacing="0" cellpading="0" border="0">
+                    <tbody>
+                        <th>Field</th>
+                        <th>Language</th>
+                        <th>Translation</th>
+                        <apex:repeat var="t" value="{!translations}">
+                            <tr>
+                                <td class="actionColumn">
+                                    <b>{!t.Field}</b>
+                                </td>
+                                <td class="dataCell" scope="row">
+                                    <apex:inputField value="{!t.Translation.Language__c}" required="true"/>
+                                </td>
+                                <td class="dataCell" scope="row">
+                                    <apex:inputField value="{!t.Translation.Translation__c}"/>
+                                </td>
+                            </tr>
+                        </apex:repeat>
+                    </tbody>
+                </table>
+                <br/><br/><br/>
+                <apex:commandButton value="Save" action="{!saveTranslations}" rerender="tstpopup,theTable"/>
+                <apex:commandButton value="Cancel" action="{!closePopup}" rerender="tstpopup"/>
+            </apex:outputPanel>
+        </apex:outputPanel>
+        
+    </apex:form>-->
+</apex:component>

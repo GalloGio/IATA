@@ -1,0 +1,612 @@
+<apex:page title="Quotes" controller="vfIECQuote" cache="false" sidebar="false" showHeader="false" standardStylesheets="false" action="{!pageLoad}" >
+ <Title>Quotes</Title>
+ 	
+ 	<apex:includeScript value="{!$Resource.postmessage_js}" />
+    <apex:includeScript value="{!$Resource.IECjQuery172}" />
+    
+	<c:IECSiteHeader id="componentHeader" />
+	
+	<!-- only used for confirmation divs -->
+    <apex:stylesheet value="{!URLFOR($Resource.IECStyles, 'register.css')}" />
+    
+    <apex:stylesheet value="{!URLFOR($Resource.IECStyles, 'cart.css')}" />
+    
+    
+
+    <apex:outputPanel id="panelHeader" layout="block">
+    	
+    </apex:outputPanel>
+   
+   
+    <style>
+#cart .checkout-wrapper .checkout-info tr td:first-child {
+padding-left: 15px;
+padding-right: 15px;
+}
+.paymentMethodRadio {
+	padding-top: 15px;
+}
+.checkout-wrapper .checkout-submit{
+	margin: 0px 0 0 auto;
+}
+</style>
+     
+   
+   
+   <script type="text/javascript"> 
+
+        function disablePaymentButtons() {
+           	var proceedButton = this.document.getElementById('{!$Component.formShoppingCart.buttonGenerateQuote}');
+           	var cancelButton =  this.document.getElementById('{!$Component.formShoppingCart.btnCancel}');
+           	var modifyButton =  this.document.getElementById('{!$Component.formShoppingCart.btnModifyContactInfo}');
+           	
+           	
+	        proceedButton.style.cursor = 'progress';
+	        proceedButton.disabled = true;
+	        cancelButton.disabled = true;
+	        modifyButton.disabled = true;
+        }
+
+        function enablePaymentButtons() {
+           	var proceedButton = this.document.getElementById('{!$Component.formShoppingCart.buttonGenerateQuote}');
+           	var cancelButton =  this.document.getElementById('{!$Component.formShoppingCart.btnCancel}');
+           	var modifyButton =  this.document.getElementById('{!$Component.formShoppingCart.btnModifyContactInfo}');
+
+	        proceedButton.style.cursor = 'default';
+	        proceedButton.disabled = false;
+	        cancelButton.disabled = false;
+	        modifyButton.disabled = false;
+        }
+	</script>   
+    
+    <apex:form id="formShoppingCart" forceSSL="true">
+
+    	<apex:actionFunction action="{!refreshShoppingCartTotal}" name="refreshShoppingCartTotal" rerender="panelTaxes, errorMessage" status="calculatingTaxesStatus" />
+    	<apex:actionFunction name="rerenderPurchasePanels" rerender="panelPurchaseSteps" />
+
+      
+      
+  <div id="cart">
+  
+  
+    <!----------  Carousel Static Start -------- -->
+  <div class="carouselWrapper static">
+
+    <div class="gradient"></div>
+
+    <div class="carousel">
+      <ul class="carousel__list">
+
+          <li class="carousel__slide" style="background-image:url({!$Resource.IECBannerHome}); width: 1263px;">
+         <div class="autoAdjustMargin">
+            <div class="carousel__slide-wrapper">
+              <!--<h1>About Us</h1>-->
+              <h2 class="carousel__slide-text -heading"><span>Your quote</span></h2>
+                      <br/>
+             		 <a class="carousel__slide-anchor customButton" href="mailto:globaldata@iata.org?subject=eCommerce - Quote">Contact us</a>
+            </div>
+          </div>
+        </li>
+        
+      </ul>
+    </div>
+  </div>
+  
+ <!----------  Carousel Static END -------- -->
+        
+      
+        <apex:outputPanel id="panelCartPage" layout="block" style="margin:15px">
+            
+            <apex:outputPanel id="errorMessage">
+                 <div  style="padding-left: 25%;" >                     
+             			<apex:pageMessages escape="no" />                                                       
+                </div>            
+            </apex:outputPanel>
+            
+            <!-- Quote panel (based on checkcart) -->
+            <apex:outputPanel id="panelCartAndCheckout" layout="block" rendered="{!NOT(bQuoteSubmitSucessful)}">
+
+				<!-- Panel showing the products on the shopping cart -->						
+  				<apex:outputPanel id="shoppingCart_contentPanel" >
+  					<div class="content-container">
+  	
+    					<div class="checkout-wrapper">
+      					
+      						<div class="checkout-total">
+          						<table class="checkout-table">
+            						<thead>
+		              					<th class="checkout-table__heading -item">  <div style="width:100%; text-align: left">Item</div></th>
+    		         					
+    		         					<apex:outputPanel layout="none" rendered="{!bShowPrice}">
+    		         					<th class="checkout-table__heading -price"><div style="width:100%; text-align: left">Price</div></th>
+    		         					</apex:outputPanel>
+        		      					
+        		      					<th class="checkout-table__heading -quantity">  <div style="width:100%; text-align: left">Quantity</div></th>
+        		      					
+            		  					<apex:outputPanel layout="none" rendered="{!bShowPrice}">
+            		  					<th class="checkout-table__heading -total"> <div style="width:100%; text-align: left">Total</div></th>
+            		  					</apex:outputPanel>
+           							</thead>
+            						<tbody>
+
+				            			<apex:outputPanel id="panelQuote" layout="block" rendered="{!oQuoteRatePlanInfo!=null}">
+					            			<tr class="checkout-table__row">
+		                						<td class="checkout-table__item">
+	    	            							<span>
+	        	        								<img class="checkout-table__icon" src="{!oQuoteRatePlanInfo.Related_Product_Information__r.Related_Product_Category__r.Product_Icon__c}"/>
+		        	                       				<apex:outputText styleClass="checkout-table__item-text" value="{!oQuoteRatePlanInfo.Related_Product_Information__r.Related_Product_Category__r.Display_Name__c}"/>
+		            	                   				<apex:outputText styleClass="checkout-table__item-text" value="{!oQuoteRatePlanInfo.Product_Rate_Plan__r.Name}"/>  
+		                            	  			</span>										           					
+                								</td>
+	
+				                    			<apex:variable var="chargeTotal" value="{!0.0}" />
+    	            							<apex:outputPanel layout="none" rendered="{!bShowPrice}">
+	    	            							<td class="checkout-table__price">
+						                        		<!-- Get the rate plan charges -->
+						                        		<apex:repeat var="charge" value="{!lstQuoteRatePlanCharges}">
+							                        		<apex:variable var="chargeTotal" value="{!chargeTotal + charge.zqu__ListPrice__c}" />
+					        	                		</apex:repeat>
+					            	            		<apex:outputText styleClass="checkout-table__price" value="${0, number,###,###,##0.00}">
+					                	        			<apex:param value="{!chargeTotal}"/>
+					                    	    		</apex:outputText>
+	                								</td>
+	                							</apex:outputPanel>
+                								<td class="checkout-table__quantity">
+				                    				<script language="javascript">
+					                        			// used for when we need to focus on the quantity input text when it is invalid
+											    		var idToFocusTo;
+													</script>
+					                        		<apex:inputText id="txtReadonlyQuantity" html-readonly="true" value="{!iQuantity}" styleClass="checkout-table__quantity-input -readonly" /> 
+					                        		<!-- <apex:inputText id="txtQuantity" value="{!iQuantity}" styleClass="checkout-table__quantity-input" rendered="{!oQuoteRatePlanInfo.Related_Product_Information__r.Related_Product_Category__r.Is_Quantifiable_Product__c && NOT(oQuoteRatePlanInfo.Is_Triable__c)}" onchange="refreshShoppingCartTotal()" /> -->
+                								</td>
+                								<apex:outputPanel layout="none" rendered="{!bShowPrice}">
+	                								<td class="checkout-table__total">
+		                								<apex:outputText value="${0, number,###,###,##0.00}" styleClass="checkout-table__total">
+	    	            									<apex:param value="{!chargeTotal*iQuantity}"/>
+	        	        								</apex:outputText>
+	            	    							</td>
+            	    							</apex:outputPanel>
+					            			</tr>			            	
+					        	    	</apex:outputPanel>
+					                   
+					            		<tr style="display:{!IF(cartIsEmpty,'','none')}">
+						            		<td colspan="4"><p class="checkout-info__subHeading">Nothing to quote</p></td>
+							            </tr>				                               			
+    	       						</tbody>
+        	  					</table>
+				            	
+			    	        	<apex:outputPanel id="panelTaxes" layout="block" styleClass="checkout-taxesPanel" rendered="{!NOT(cartIsEmpty)}">
+									<table class="checkout-table">	
+										<tbody>
+											<apex:outputPanel layout="none" rendered="{!bShowPrice}">
+								    	        <tr class="checkout-table__row">
+		    	            						<td colspan="2">
+	    	    	          							<h4 class="checkout-table__total-heading">Subtotal</h4>
+	        	    	    						</td>
+		                							<td class="checkout-table__total">
+					            						<apex:actionStatus id="calculatingTaxesStatus">
+					            							<apex:facet name="start">
+					            								<div style="width:100%; height: 100%;opacity:0.75; filter:alpha(opacity=75);"> 
+					    	                        				<img src="{!$Resource.IEC_progress}" border="0" width="43" height="15" />
+					        	                    			</div>
+					            	            			</apex:facet>
+					            						</apex:actionStatus>			        				              					
+	        	    	    						</td>
+	            	    							<td class="checkout-table__total">
+	                									<apex:outputText value="${0, number,###,###,##0.00}" styleClass="checkout-table__total">
+	                										<apex:param value="{!shoppingCartTotalBeforeTax}"/>
+	                									</apex:outputText>
+	                								</td>
+	             								</tr>
+			
+						            			<tr class="checkout-table__row">
+		        	        						<td colspan="3">
+	    	        	      							<h4 class="checkout-table__total-heading">Taxes</h4>
+		    	        								<apex:outputPanel layout="block" rendered="{!NOT(isCountryFilled)}">
+		        	    									<p class="checkout-table__total-para">
+										        				The taxes and total will be calculated after you enter the missing address information
+										        			</p>
+				        								</apex:outputPanel>    
+	                								</td>
+	                								<td class="checkout-table__total">
+	                									<apex:outputText value="${0, number,###,###,##0.00}" styleClass="checkout-table__total">
+		                									<apex:param value="{!shoppingCartTax}"/>
+	    	            								</apex:outputText>
+	        	        							</td>
+	            	 							</tr>
+		
+	    	          							<tr class="checkout-table__row">
+	        	        							<td colspan="3">
+		            	      							<h4 class="checkout-table__total-heading">Quote total</h4>
+	                								</td>
+	                								<td class="checkout-table__total">
+	                									<apex:outputText value="${0, number,###,###,##0.00}" styleClass="checkout-table__total">
+		                									<apex:param value="{!shoppingCartTotal}"/>
+	    	            								</apex:outputText>
+	        	        							</td>
+	            	  							</tr>
+	            	  						</apex:outputPanel>
+            	  							
+            	  							<tr class="checkout-table__row" style="display:{!IF(isUserLoggedIn, '', 'none')}">
+        	        							<td colspan="1" style="vertical-align:top">
+	            	      							<h4 class="checkout-table__total-heading">Comments</h4>
+                								</td>
+                								<td colspan="3" class="checkout-table__total" style="padding-right: 0px;">
+                									<apex:inputTextarea style="width: 400px; height: 100px;" value="{!sComments}" rows="3" html-placeholder="Enter your comment here" />
+        	        							</td>
+            	  							</tr>
+			        	   				</tbody>
+    	      						</table>
+    	      						<!-- <h4 class="checkout-table__total-heading">Comments:</h4> <apex:inputTextarea value="{!sComments}" rows="3" /> -->
+	    	      				</apex:outputPanel>
+	    	      				
+								<!-- Links after the cart items -->
+				    	    	<apex:outputPanel id="panelBottomLinks" layout="block" styleClass="checkout-submitPanel">
+				    	    	
+					        		<!-- apex:outputLink id="btnCancel" value="{!$Page.IECBrowseProducts}" styleClass="checkout-submit_2buttons -right">Cancel</apex:outputLink -->
+					        		<apex:commandButton id="btnCancel" action="{!cancelQuote}" styleClass="checkout-submit" style="width: 300px; height: 50px; cursor: pointer; margin-left: 0px; font-family: 'Raleway', sans-serif; font-weight: 300; font-size: 20px; background: #c8c8c8; margin-top: 40px; " value="Cancel" />  
+					        	</apex:outputPanel>
+          				
+		     				</div>
+    	 		     			
+    	 		     			
+		          			<!-- Login panel -->
+    		      			<apex:outputPanel id="panelLogin" layout="block" rendered="{!NOT(isUserLoggedIn)}" >
+        		  				<div class="checkout-info">
+       								<div class="checkout-info__section -short">
+										<apex:outputPanel >
+											<c:IECLogin ReturnURL="{!$Page.IECQuote}" RerenderComponentId="errorMessage" />
+										</apex:outputPanel>					
+    	   							</div>
+	       						</div>
+   							</apex:outputPanel>  
+     			
+     			
+     						<apex:outputPanel id="panelPurchaseSteps" layout="block" rendered="{!isUserLoggedIn && NOT(cartIsEmpty)}">
+     							<div class="checkout-info">
+     			
+		           					<!-- Billing address -->
+									<div class="checkout-info__section -short">  
+										<apex:commandlink rendered="{!NOT(bExpandedBilling)}" action="{!toggleBilling}" value="Billing Details" rerender="panelPurchaseSteps" styleClass="checkout-info__heading -link"/>
+																
+	        	   						<apex:outputPanel id="panelContactInfo" layout="block" rendered="{!bExpandedBilling}">
+											<h2 class="checkout-info__heading">Billing Details</h2>		
+										
+							        		<apex:outputPanel id="errorMessageContactInfo">
+						                		<apex:pageMessages escape="no" />
+					    	        		</apex:outputPanel>
+					    	        		
+					        	    		<apex:outputText rendered="{!needToFillContactInfo && isUserLoggedIn}">
+					            				<p class="checkout-info__subHeading">Please fill your contact information in order to continue</p>
+						            		</apex:outputText>
+						            		
+						            		<!-- Non etidable Contact and Billing Address Information -->
+	        	   							<apex:outputPanel id="panelReadOnlyContactInfo" layout="block" rendered="{!NOT(inEditContactInfo)}">
+												<table  style="width:100%; margin-left:20px;">
+                                                    <tr>
+                                                        <td colspan="2">
+                                                            &nbsp;
+                                                        </td>
+                                                    </tr>
+                                                    
+                                                    <tr>
+                                                        <td colspan="2" class="checkout-info__billingdetails-value" style="font-size: 17px; font-family: 'Raleway', sans-serif;font-weight: 700;color: #1ebec8;">{!oAccount.Name}</td>
+                                                    </tr>
+
+                                                    
+                                                     <tr>
+                                                        <td colspan="2" class="checkout-info__billingdetails-value">
+                                                            <span style="display:{!IF(NOT(oContact.Salutation == ''), '', 'none')}">{!oContact.Salutation}&nbsp;</span>
+                                                            {!oContact.FirstName}&nbsp;{!oContact.LastName}
+                                                        </td>
+                                                    </tr>
+                                                    
+                                                  
+													<!--
+                                                    <tr>
+                                                        <td class="checkout-info__billingdetails-label">Name</td>
+                                                        <td class="checkout-info__billingdetails-value">
+                                                        	<span style="display:{!IF(NOT(oContact.Salutation == ''), '', 'none')}">{!oContact.Salutation}&nbsp;</span>
+                                                        	{!oContact.FirstName}&nbsp;{!oContact.LastName}
+                                                        </td>
+                                                    </tr>
+                                                    -->
+													<!-- 
+													<tr>
+														<td class="checkout-info__billingdetails-label">Title</td>
+														<td class="checkout-info__billingdetails-value">{!oContact.Title}</td>
+													</tr>
+													<tr>
+														<td class="checkout-info__billingdetails-label">Phone</td>
+														<td class="checkout-info__billingdetails-value">{!oContact.Phone}</td>
+													</tr>
+													-->
+													<tr>
+														<td colspan="2">
+															<p class="checkout-info__subHeading">Billing Address</p>
+														</td>
+													</tr>
+													<tr>
+														<td colspan="2" class="checkout-info__billingdetails-value">{!oBillingAddress.Street__c}</td>
+													</tr>
+                                                    <tr>
+                                                        <td colspan="2" class="checkout-info__billingdetails-value">
+                                                        	{!oBillingAddress.City__c}
+                                                        	<span style="display:{!IF(NOT(oBillingAddress.City__c == ''), '', 'none')}">,&nbsp;</span>
+                                                        	{!oBillingAddress.State__c}
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="2" class="checkout-info__billingdetails-value">
+                                                            {!oBillingAddress.ZipCode__c}
+                                                            <span style="display:{!IF(NOT(oBillingAddress.ZipCode__c == ''), '', 'none')}">-&nbsp;</span>
+                                                            {!oBillingAddress.Country__c}
+                                                        </td>
+                                                    </tr>
+													<apex:outputPanel id="panelVATReadOnly" layout="none" rendered="{!vatConfig <> NULL}">
+														<tr>
+															<td colspan="2">
+																<p class="checkout-info__subHeading">Tax Information</p>
+															</td>
+														</tr>
+                                                        <apex:outputPanel id="panelTax1ReadOnly" layout="none" rendered="{!vatConfig.ShowTax1}">
+                                                            <tr>
+                                                                <td class="checkout-info__billingdetails-label">{!vatConfig.Tax1Label}</td>
+                                                                <td class="checkout-info__billingdetails-value">{!IF(vatConfig.VATValidationRequired, vatConfig.CountryCode, '')}{!oContact.Tax_1_ID__c}</td>
+                                                            </tr>
+                                                        </apex:outputPanel>
+                                                        <apex:outputPanel id="panelTax2ReadOnly" layout="none" rendered="{!vatConfig.ShowTax2}">
+                                                            <tr>
+                                                                <td class="checkout-info__billingdetails-label">{!vatConfig.Tax2Label}</td>
+                                                                <td class="checkout-info__billingdetails-value">{!oContact.Tax_2_ID__c}</td>
+                                                            </tr>
+                                                        </apex:outputPanel>
+													</apex:outputPanel>
+												</table>
+												<apex:commandButton styleClass="checkout-submit -fixed100" id="btnModifyContactInfo" value="Modify" action="{!modifyContactInfo}" rerender="panelContactInfo, panelSubmitButton" />
+											</apex:outputPanel>
+											
+											
+											<!-- Editable Contact and Billing Information -->
+											<apex:outputPanel id="panelEditContactInfo" layout="block" rendered="{!inEditContactInfo}">
+												<table style="width: 100%">
+													<tr>
+														<td colspan="2">
+															<p class="checkout-info__subHeading">Contact Details</p>
+														</td>
+													</tr>
+													<tr>
+													<!-- 
+														<td class="checkout-info__billingdetails-label">First Name<span class="required">*</span></td>
+													-->
+														<td><apex:inputText value="{!oContact.FirstName}" styleClass="login__input -required" html-placeholder="First Name" title="First Name" /></td>
+													</tr>
+													<tr>
+													<!-- 
+														<td class="checkout-info__billingdetails-label">Last Name<span class="required">*</span></td>
+													-->
+														<td><apex:inputText value="{!oContact.LastName}"  styleClass="login__input -required" html-placeholder="Last Name" title="Last Name" /></td>
+													</tr>
+													<tr>
+													<!-- 
+														<td class="checkout-info__billingdetails-label">Title<span class="required">*</span></td>
+													-->
+														<td><apex:inputText value="{!oContact.Title}"  styleClass="login__input -required" html-placeholder="Job Title" title="Job Title" /></td>
+													</tr>
+													<tr>
+													<!-- 
+														<td class="checkout-info__billingdetails-label">Phone<span class="required">*</span></td>
+													-->
+														<td><apex:inputText value="{!oContact.Phone}"  styleClass="login__input -required" html-placeholder="Phone" title="Phone" /></td>
+													</tr> 
+													<tr> 
+													<!-- 
+														<td class="checkout-info__billingdetails-label">Email<span class="required">*</span></td>
+													-->
+														<td><apex:inputText value="{!oContact.Email}"  styleClass="login__input -required" html-placeholder="Email"  title="Email"  disabled="{!IF(oContact.Email=='', 'false', 'true')}"/></td>
+													</tr>
+													<tr>
+														<td colspan="2">
+															<p class="checkout-info__subHeading">Billing Address</p>
+														</td>
+													</tr>  
+													<tr> 
+													<!-- 
+														<td class="checkout-info__billingdetails-label">Street<span class="required">*</span></td>
+													-->
+														<td><apex:inputText value="{!oBillingAddress.Street__c}"  styleClass="login__input -required" html-placeholder="Address" title="Address" /></td>
+													</tr>
+													<tr>
+													<!-- 
+														<td class="checkout-info__billingdetails-label">City<span class="required">*</span></td>
+													-->
+														<td><apex:inputText value="{!oBillingAddress.City__c}"  styleClass="login__input -required" html-placeholder="City" title="City" /></td>
+													</tr>
+													<tr>
+													<!-- 
+														<td class="checkout-info__billingdetails-label">Country<span class="required">*</span></td>
+													-->
+														<td>
+															<apex:selectList style="color: {!IF(oBillingAddress.Country__c != null, '#000', '#aaa')}"  value="{!oBillingAddress.Country__c}" size="1"  styleClass="login__input -required"  html-placeholder="Country">
+							            	                	<apex:selectOptions value="{!lstISOCountries}"/>
+							                	            	<apex:actionsupport event="onchange" action="{!onChangeBillingCountry}" rerender="panelEditContactInfo" />
+							                    	    	</apex:selectList>
+								                        </td>
+													</tr>
+													<tr>
+													<!-- 
+														<td class="checkout-info__billingdetails-label">State/Province<span class="required" style="display:{!IF(oBillingAddress.Country__c == 'Canada' || oBillingAddress.Country__c == 'United States', '', 'none')}">*</span></td>
+													-->
+														<td>
+															<apex:outputPanel id="panelBillingStatesProvince" layout="inline">
+																<apex:inputText value="{!oBillingAddress.State__c}"  styleClass="login__input" html-placeholder="State/Province" title="State/Province" rendered="{!oBillingAddress.Country__c != 'Canada' && oBillingAddress.Country__c != 'United States'}" />
+																<apex:selectList onchange="changeTextColor(this);"  value="{!oBillingAddress.State__c}" size="1" title="Province"  rendered="{!oBillingAddress.Country__c == 'Canada'}"  styleClass="login__input -required">
+							            	                		<apex:selectOptions value="{!lstCanadaProvinces}" />
+							                	        		</apex:selectList>  
+								                        		<apex:selectList onchange="changeTextColor(this);"  value="{!oBillingAddress.State__c}" size="1" title="State"  rendered="{!oBillingAddress.Country__c == 'United States'}"  styleClass="login__input -required">
+								                            		<apex:selectOptions value="{!lstUSAStates}" />
+								                        		</apex:selectList>
+						        	                		</apex:outputPanel>
+														</td>
+													</tr>
+													<tr>
+													<!-- 
+														<td class="checkout-info__billingdetails-label">Zip/Postal code<span class="required" style="display:{!IF(oBillingAddress.Country__c == 'Canada' || oBillingAddress.Country__c == 'United States', '', 'none')}">*</span></td>
+													-->
+														<td><apex:inputText value="{!oBillingAddress.ZipCode__c}" styleClass="login__input" html-placeholder="Zip/Postal code" title="Zip/Postal code"  /></td>
+													</tr>
+													<apex:outputPanel id="panelVATEdit" layout="none" rendered="{!vatConfig <> NULL}">
+														<tr>
+															<td colspan="2">
+																<p class="checkout-info__subHeading">Tax Information</p>
+															</td>
+														</tr>
+														<apex:outputPanel id="panelTax1Edit" layout="none" rendered="{!vatConfig.ShowTax1}">
+															<tr>
+													<!-- 
+																<td class="checkout-info__billingdetails-label">{!vatConfig.Tax1Label}<apex:outputPanel id="panelTax1Required" rendered="{!vatConfig.TaxIDMandatory}"><span class="required">*</span></apex:outputPanel></td>
+													-->
+																<td>
+																	<apex:outputPanel rendered="{!vatConfig.VATValidationRequired}">
+											                            <table style="width:100%">
+											                            	<tr>
+											                            		<td style="width:40px">
+														                            <apex:inputText styleClass="login__input" value="{!vatConfig.CountryCode}" disabled="true" />
+										        	                    		</td>
+										        	                    		<td style="width:5px">&nbsp;</td>
+										                	            		<td>
+													        	                    <apex:inputText styleClass="login__input -required" value="{!oContact.Tax_1_ID__c}" maxlength="20" title="{!vatConfig.Tax1Label}" />
+										                        	    		</td>
+										                            		</tr>
+										                            	</table>
+										                            </apex:outputPanel>
+																	<apex:inputText maxlength="20" value="{!oContact.Tax_1_ID__c}"  styleClass="login__input" html-placeholder="{!vatConfig.Tax1Label}" title="{!vatConfig.Tax1Label}" rendered="{!NOT(vatConfig.VATValidationRequired)}"/>
+																</td>
+															</tr>
+														</apex:outputPanel>
+														<apex:outputPanel id="panelTax2Edit" layout="none" rendered="{!vatConfig.ShowTax2}">
+															<tr>
+													<!-- 
+																<td class="checkout-info__billingdetails-label">{!vatConfig.Tax2Label}<apex:outputPanel id="panelTax2Required" rendered="{!vatConfig.TaxIDMandatory}"><span class="required">*</span></apex:outputPanel></td>
+													-->
+																<td><apex:inputText maxlength="20" value="{!oContact.Tax_2_ID__c}"  styleClass="login__input" html-placeholder="{!vatConfig.Tax2Label}" title="{!vatConfig.Tax2Label}" /></td>
+															</tr>
+														</apex:outputPanel>
+													</apex:outputPanel>
+												</table>
+												<apex:commandButton styleClass="checkout-submit -fixed100" value="Update" action="{!updateContactInfo}" rerender="errorMessageContactInfo, panelContactInfo, panelSubmitButton" status="calculatingTaxesStatus" oncomplete="refreshShoppingCartTotal();" />
+												<apex:commandButton styleClass="checkout-submit -fixed100" value="Cancel" action="{!cancelUpdateContactInfo}" rerender="errorMessageContactInfo, panelContactInfo, panelSubmitButton" rendered="{!NOT(needToFillContactInfo)}" />
+											</apex:outputPanel>
+				           				
+			    	       				</apex:outputPanel>	       
+	           						</div>			
+
+
+				       				<!-- Auto-renew -->
+				       				<!-- 
+    	   							<apex:outputPanel id="panelAutoRenew" layout="block" rendered="{!NOT(needToFillContactInfo)}">
+					        			<div class="checkout-info__section -short">
+											<apex:commandlink rendered="{!NOT(bExpandedAutoRenewal)}" action="{!toggleAutoRenew}" styleClass="checkout-info__heading -link" value="Auto Renewal" rerender="panelPurchaseSteps" />
+   	    									<apex:outputPanel rendered="{!bExpandedAutoRenewal}">
+					            				<h2 class="checkout-info__heading">Auto Renewal</h2>
+
+    	        								<p class="checkout-info__subHeading">Do you want your subscription(s) to auto-renew automatically at the end of the term ?</p>
+												<br/>
+				           						<table class="checkout-table">
+													<tr class="checkout-table__row">
+														<td>
+															<label class="checkout-info__checkbox-label" for="terms-checkbox">
+																<apex:outputText value="{!oQuoteRatePlanInfo.Related_Product_Information__r.Related_Product_Category__r.Display_Name__c}"/>
+																<br/>
+																<apex:outputText styleClass="ratePlanName" value="{!oQuoteRatePlanInfo.Product_Rate_Plan__r.Name}"/>
+					            							</label>
+														</td>
+														<td>
+															<apex:selectRadio value="{!autoRenewFlag}" html-name="radAutoRenew"  styleClass="checkout-info__checkbox-label">
+																<apex:selectOption itemValue="true" itemLabel="Yes" />
+																<apex:selectOption itemValue="false" itemLabel="No" />
+																<apex:actionsupport event="onchange" rerender="panelPurchaseSteps, errorMessage" /> 
+															</apex:selectRadio>
+														</td>
+													</tr>
+												</table>
+											</apex:outputPanel>
+						        		</div>
+	    							</apex:outputPanel>			        
+			    	    
+			        				<div class="checkout-info__mobile-divider"></div>
+			        				-->
+			        	
+			        				<!-- Submit Quote button -->
+									<apex:outputPanel id="panelSubmitButton" layout="block" style="text-align: center; margin-bottom: 50px;">
+										<apex:commandButton id="buttonGenerateQuote" value="Generate Quote"  rendered="{!(NOT(cartIsEmpty)) && (NOT(inEditContactInfo))}" action="{!generateQuote}" styleClass="checkout-submit" style="width:300px" rerender="errorMessage, panelCartPage" status="generateQuoteStatus" onclick="disablePaymentButtons()"/>
+					    				<br/>
+					    				<apex:actionStatus id="generateQuoteStatus">
+				        					<apex:facet name="start">
+			    	    						<div style="width:100%; height: 100%; opacity:0.75; filter:alpha(opacity=75);">
+			        	   							<img style="padding-left: 1px;" src="{!$Resource.IEC_progress}" border="0" width="43" height="11" />
+			            	    				</div>
+			            					</apex:facet>
+			        					</apex:actionStatus>
+									</apex:outputPanel>		
+
+								</div>
+							</apex:outputPanel>
+     		
+						</div>
+	  				</div>
+  				</apex:outputPanel>	    
+
+	    	</apex:outputPanel>
+	    	
+	   
+	   
+	   
+	    	<!-- Panel shown once the Quote has been successfully submitted -->
+	        <apex:outputPanel id="panelQuoteResults" layout="block" rendered="{!bQuoteSubmitSucessful}">
+	        
+			        <div id="register">
+			        <div class="content-container tab">
+								    <div class="box register large">
+								      <div class="header">
+								        <p>Success</p>
+					     				</div>
+					     				 <div class="content">
+					     				 
+										Your Quote has been successfully submitted.<br />
+										<br />
+										Reference number: {!oQuote.zqu__Number__c}<br />
+										<br />
+										<apex:outputPanel layout="none" rendered="{!bShowPrice}">To download the quote PDF, navigate to the <a href="https://{!$Site.Domain}{!$Page.IECHistQuotes}">My Quotes</a> page.</apex:outputPanel>
+										<apex:outputPanel layout="none" rendered="{!NOT(bShowPrice)}">Thank you for your business, someone from IATA will be in touch with you after reviewing the submitted quote.</apex:outputPanel>
+					      </div>
+				      </div>
+				       <div class="clear"></div>
+				   </div>  		      
+			      </div>
+	      
+	        </apex:outputPanel>
+	        
+	       
+	        
+	    	
+		</apex:outputPanel>
+
+    	<script type="text/javascript">
+     		//resizeIFrame();
+      		var t = '{!isUserLoggedIn}';
+      //alert(t);
+      if(t == 'true')
+       		refreshShoppingCartTotal();
+    	</script>	 
+    	
+    	
+    </div>	   
+	</apex:form>
+    <div class="sepEmptyDiv"></div>� 
+    <!-- ************************************ -->
+    <!-- Footer -->
+    <c:IECSiteFooter />
+    
+    
+</apex:page>

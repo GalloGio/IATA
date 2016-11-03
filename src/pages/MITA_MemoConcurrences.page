@@ -1,0 +1,65 @@
+<apex:page renderas="PDF" controller="MITA_MemorandumsCtrl" standardStylesheets="false" applyBodyTag="false" applyHtmlTag="false" showheader="false" sidebar="false" >
+	<html>
+		<head>
+			<style>
+				@page{page-size:A4}
+				body{text-align:left;}
+				.centered{ text-align:center; }
+				table.airlinesTable{ width: 100%; }
+				table.airlinesTable th{padding:0.5em; text-align: center;}
+				table.airlinesTable td{padding:0.5em 0.5em 0.5em 1.5em; vertical-align: text-top; }
+				.fullsize {
+					display: block;
+				  width: 100% !important;
+				  height: auto !important;
+				}
+			</style>
+		</head>
+
+		<body>
+			<img class="fullsize"  src="{!URLFOR($Resource.AP_PDF_Header)}" />
+
+			<h3 class="centered">CONCURRENCES - INTERLINE TRAFFIC AGREEMENTS - </h3>
+			<h3 class="centered">PASSENGER &amp; CARGO AND ONE-WAY</h3>
+			<h3 class="centered">M E M O R A N D U M</h3>
+			<p class="centered">ADMIN / INTERLINE / {!memorandumNumber}</p>
+			<p>Listed below are concurrences between parties to the IATA Multilateral Interline Traffic Agreements -</p>
+			<p>Passenger and Cargo and MITA One-Way received in this office from&nbsp;<apex:outputField value="{!fromDate.Agreement_processed_date__c}" />&nbsp;to&nbsp;<apex:outputField value="{!toDate.Agreement_processed_date__c}" /></p>
+			<p>They will become effective on the dates indicated.</p>
+			<p>Requests for concurrence from concurring parties are to be addressed to mita@iata.org copied to</p>
+			<p>respective carriers involved.&nbsp;
+				<apex:outputText value="(P&C = Passenger and Cargo, P = Passenger, C = Cargo and O = One-Way)." rendered="{!selectedAgreement=='MITA'}"/>
+				<apex:outputText value="(BIET = Bilateral, OWI = One-Way Passenger Issuing Airline, OWP = One-Way Passenger Participating and O = One-Way Intermodal)." rendered="{!selectedAgreement=='BIETA'}"/>
+			</p>
+
+			<br/>
+
+			<apex:pageBlock >
+				<table class="airlinesTable">
+					<tr>
+						<th>Concurring party</th>
+						<th>With</th>
+						<th>Agreement</th>
+						<th>Effective date</th>
+					</tr>
+					<apex:repeat value="{!ConcurrencesAgreements}" var="wrapper">
+					<tr>
+						<td><apex:outputField value="{!wrapper.agreement.Airline_1__r.Name_on_AOC__c}" /></td>
+						<td><apex:outputField value="{!wrapper.agreement.Airline_2__r.Name_on_AOC__c}" /></td>
+						<td><apex:outputText value="{!wrapper.TypeCode}" /></td>
+						<td><apex:outputField value="{!wrapper.agreement.Effective_date__c}" /></td>
+					</tr>
+					</apex:repeat>
+				</table>
+
+			</apex:pageBlock>
+
+			<div style="margin: 30px;" >
+				Best regards,<br/><br/>
+				IATA MITA<br/>
+				FDS Operations
+			</div>
+
+		</body>
+	</html>
+</apex:page>

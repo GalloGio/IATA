@@ -1,0 +1,145 @@
+<apex:page standardController="Case" extensions="AirlineSuspensionCaseController">
+    <apex:pageMessages />
+
+    <script>
+
+        function openConga() {
+            url = "https://composer.congamerge.com/composer8/index.html?sessionId={!$Api.Session_ID}&serverUrl={!$Api.Partner_Server_URL_290}&id={!asrecord.Id}&fp0=0&ds1=0&ds4=1&ds5=0&OFN=Pre-suspension+Checklist&EmailRelatedToId={!asrecord.Id}&TemplateId={!template.Id}";
+
+            window.open(url, "Conga Merge", "height=450px,width=700px,resizable=1,scrollbars=1,status=0,toolbar=0,menubar=0");
+        }
+
+        function CancelEdit() {
+            window.top.location = "/{!c.Id}";
+        }
+
+        function GoToAirlineSuspensionFolder() {
+            window.top.location = "/015?fcf={!AirlineSuspensionDocFolderId}";
+        }
+    </script>
+
+    <apex:form >
+        <apex:pageBlock id="mainBlock">
+
+            <apex:pageBlockButtons location="top">
+                <apex:commandButton action="{!EditSuspension}" value="Edit" rendered="{!IF(mode=='edit', false, true)}" />
+
+                <apex:commandButton onclick="CancelEdit();return false;" value="Cancel"  rendered="{!IF(mode=='edit', true, false)}" />
+                <apex:commandButton action="{!SaveSuspension}" value="Save"  rendered="{!IF(mode=='edit', true, false)}" />
+            </apex:pageBlockButtons>
+
+            <apex:pageBlockSection title="Chronology of Event" columns="2" collapsible="false" >
+
+                <apex:inputField value="{!asrecord.Occurence_of_Event__c}" rendered="{!IF(mode=='edit', true, false)}" />
+                <apex:outputField value="{!asrecord.Occurence_of_Event__c}" rendered="{!IF(mode=='edit', false, true)}" />
+
+                <apex:inputField value="{!asrecord.Confirmation_of_the_Event__c}" rendered="{!IF(mode=='edit', true, false)}" />
+                <apex:outputField value="{!asrecord.Confirmation_of_the_Event__c}" rendered="{!IF(mode=='edit', false, true)}" />
+
+            </apex:pageBlockSection>
+
+            <apex:pageBlockSection title="Airline Status" columns="2" collapsible="false" >
+
+                <apex:outputField value="{!asrecord.IATA_member__c}"/>
+
+                <apex:outputField value="{!asrecord.ICCS_membership_Status__c}"/>
+
+                <apex:inputField value="{!asrecord.ICH_participant__c}" required="true" rendered="{!IF(mode=='edit', true, false)}" />
+                <apex:outputField value="{!asrecord.ICH_participant__c}" rendered="{!IF(mode=='edit', false, true)}" />
+
+                <apex:inputField value="{!asrecord.Participates_in_IATA_Governance_Groups__c}" required="true" rendered="{!IF(mode=='edit', true, false)}" />
+                <apex:outputField value="{!asrecord.Participates_in_IATA_Governance_Groups__c}" rendered="{!IF(mode=='edit', false, true)}" />
+
+            </apex:pageBlockSection>
+
+            <apex:pageBlockSection columns="1">
+
+                <apex:outputField value="{!asrecord.BSP_Participations_locked__c}" />
+                <apex:outputField value="{!asrecord.CASS_Participations_locked__c}" />
+                <apex:outputField value="{!asrecord.Regions_Involved__c}" />
+            </apex:pageBlockSection>
+
+            <apex:pageBlockSection title="Sales Information" columns="2" collapsible="false" >
+
+                <apex:inputField value="{!asrecord.Reported_period_net_cash_sales__c}" required="false" rendered="{!IF(mode=='edit', true, false)}" />
+                <apex:outputField value="{!asrecord.Reported_period_net_cash_sales__c}" rendered="{!IF(mode=='edit', false, true)}" />
+
+                <!--
+                <apex:inputField value="{!asrecord.Number_of_months_on_reported_period__c}" required="true" rendered="{!IF(mode=='edit', true, false)}" />
+                <apex:outputField value="{!asrecord.Number_of_months_on_reported_period__c}" rendered="{!IF(mode=='edit', false, true)}" />
+
+                <apex:outputField value="{!asrecord.X2_weeks_average_net_cash_settlement__c}" rendered="{!IF(mode=='edit', false, true)}" />
+
+                <apex:outputField value="{!asrecord.X4_weeks_average_net_cash_settlement__c}" rendered="{!IF(mode=='edit', false, true)}" />
+
+                <apex:outputField value="{!asrecord.X6_weeks_average_net_cash_settlement__c}" rendered="{!IF(mode=='edit', false, true)}" />
+                 -->
+                <apex:inputField value="{!asrecord.Debt_with_central_billing__c}" required="false" rendered="{!IF(mode=='edit', true, false)}" />
+                <apex:outputField value="{!asrecord.Debt_with_central_billing__c}" rendered="{!IF(mode=='edit', false, true)}" />
+
+                <apex:inputField value="{!asrecord.Amount_of_Cash_Deposit__c}" required="false" rendered="{!IF(mode=='edit', true, false)}" />
+                <apex:outputField value="{!asrecord.Amount_of_Cash_Deposit__c}" rendered="{!IF(mode=='edit', false, true)}" />
+
+
+            </apex:pageBlockSection>
+
+            <apex:pageBlockSection title="Agreement from Regions" columns="2" collapsible="false" >
+
+                <apex:inputField value="{!asrecord.Airline_Headquarter_Region__c}" rendered="{!IF(mode=='edit', true, false)}" />
+                <apex:outputField value="{!asrecord.Airline_Headquarter_Region__c}" rendered="{!IF(mode=='edit', false, true)}" />
+
+                <apex:inputField value="{!asrecord.HQ_Reqion_SVP_Agree__c}" required="false" rendered="{!IF(mode=='edit', true, false)}" />
+                <apex:outputField value="{!asrecord.HQ_Reqion_SVP_Agree__c}" rendered="{!IF(mode=='edit', false, true)}" />
+
+                <apex:inputField value="{!asrecord.Approval_Comments__c}" rendered="{!IF(mode=='edit', true, false)}" />
+                <apex:outputField value="{!asrecord.Approval_Comments__c}" rendered="{!IF(mode=='edit', false, true)}" />
+
+                <apex:inputField value="{!asrecord.SVP_Agreement_Rejection_Date__c}" required="false" rendered="{!IF(mode=='edit', true, false)}" />
+                <apex:outputField value="{!asrecord.SVP_Agreement_Rejection_Date__c}" rendered="{!IF(mode=='edit', false, true)}" />
+
+            </apex:pageBlockSection>
+
+            <apex:pageBlockSection title="Recommendations" columns="1" collapsible="false" >
+
+                <apex:inputField value="{!asrecord.Reason_for_Suspension__c}" required="false" rendered="{!IF(mode=='edit', true, false)}" />
+                <apex:outputField value="{!asrecord.Reason_for_Suspension__c}" rendered="{!IF(mode=='edit', false, true)}" />
+
+                <apex:inputField value="{!asrecord.Recommendation_from_HAPM__c}" required="false" rendered="{!IF(mode=='edit', true, false)}" />
+                <apex:outputField value="{!asrecord.Recommendation_from_HAPM__c}" rendered="{!IF(mode=='edit', false, true)}" />
+
+                <apex:inputField value="{!asrecord.Settle_Directly_To__c}" required="false" rendered="{!IF(mode=='edit', true, false)}" />
+                <apex:outputField value="{!asrecord.Settle_Directly_To__c}" rendered="{!IF(mode=='edit', false, true)}" />
+
+            </apex:pageBlockSection>
+
+            <apex:pageBlockSection title="Approval" columns="1" collapsible="false" >
+
+                <apex:inputField value="{!asrecord.Sent_for_SVP_FDS_Approval__c}" rendered="{!IF(mode=='edit', true, false)}" />
+                <apex:outputField value="{!asrecord.Sent_for_SVP_FDS_Approval__c}" rendered="{!IF(mode=='edit', false, true)}" />
+
+                <apex:inputField value="{!asrecord.SVP_FDS_Approval__c}" rendered="{!IF(mode=='edit', true, false)}" />
+                <apex:outputField value="{!asrecord.SVP_FDS_Approval__c}" rendered="{!IF(mode=='edit', false, true)}" />
+
+            </apex:pageBlockSection>
+
+            <!--
+            <apex:pageBlockSection title="Metrics" columns="2" collapsible="false" >
+
+                <apex:inputField value="{!asrecord.SH_Alert_Received_24hrs_after_Event__c}" required="true" rendered="{!IF(mode=='edit', true, false)}" />
+                <apex:outputField value="{!asrecord.SH_Alert_Received_24hrs_after_Event__c}" rendered="{!IF(mode=='edit', false, true)}" />
+
+            </apex:pageBlockSection>
+             -->
+
+            <apex:outputPanel style="margin-left: 30%;">
+
+                <apex:commandButton onclick="openConga();return false;" value="Export Pre-Suspension Checklist" rendered="{!IF(mode=='edit', false, true)}" />
+
+                <apex:commandButton onclick="GoToAirlineSuspensionFolder();return false;" value="Templates Folder" rendered="{!IF(mode=='edit', false, true)}" />
+
+            </apex:outputPanel>
+
+        </apex:pageBlock>
+    </apex:form>
+
+</apex:page>

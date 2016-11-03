@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <content>NewLocalGroupMeeting</content>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Visualforce</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <content>NewLocalGroupMeeting</content>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Visualforce</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>Used for IDFS ISS to manage their APJC Meetings (linked with the APJC object)</description>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Comments__c</fullName>
+        <externalId>false</externalId>
+        <label>Comments</label>
+        <length>32000</length>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Criteria_Reviewed__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Criteria Reviewed</label>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Date_Legal_REJECTED_the_agenda__c</fullName>
+        <description>Enhancement to allow legal rejecting the agenda. Notification will be automatically sent to the meeting Responsible</description>
+        <externalId>false</externalId>
+        <label>Date Legal REJECTED the agenda</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Date_Legal_REJECTED_the_minutes__c</fullName>
+        <description>Enhancement to allow legal rejecting the minutes. Notification will be automatically sent to the meeting Responsible</description>
+        <externalId>false</externalId>
+        <label>Date Legal REJECTED the minutes</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Date_Legal_Requested_to_Sign_Off_Minutes__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>When this field is filled a workflow informs Legal that your minutes are ready to be signed off.</inlineHelpText>
+        <label>Date Legal Requested to Sign Off Minutes</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Date_Legal_Requested_to_Sign_off_Agenda__c</fullName>
+        <externalId>false</externalId>
+        <label>Date Legal Requested to Sign off Agenda</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Date_Legal_Signed_Off_the_Minutes__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>This field can only be filled by Legal and reflects the date when the minutes were signed.</inlineHelpText>
+        <label>Date Legal Signed Off the Minutes</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Date_Legal_Signed_off_Agenda__c</fullName>
+        <externalId>false</externalId>
+        <label>Date Legal Signed off Agenda</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Date_of_Meeting__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Enter the date the meeting will be held!</inlineHelpText>
+        <label>Date of Meeting</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Local_Governance__c</fullName>
+        <externalId>false</externalId>
+        <label>Local Governance</label>
+        <referenceTo>LocalGovernance__c</referenceTo>
+        <relationshipName>Local_Governance_Meetings</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>true</reparentableMasterDetail>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Meeting_Responsible__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>User responsible for this Local Governance Meeting</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Select the user responsible for this meeting</inlineHelpText>
+        <label>Meeting Responsible</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Local_Governance_Meetings</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Remittance_Frequency_Reviewed__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Only applicable if not weekly remittance is implemented.</inlineHelpText>
+        <label>Remittance Frequency Reviewed</label>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>VMFR__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Pls check this box if VMFR is implemented in your market!</inlineHelpText>
+        <label>VMFR</label>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <label>Local Group Meeting</label>
+    <nameField>
+        <label>Local Group Meeting Name</label>
+        <trackHistory>true</trackHistory>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Local Group Meetings</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ControlledByParent</sharingModel>
+    <validationRules>
+        <fullName>Cannot_change_if_inactive_group</fullName>
+        <active>true</active>
+        <description>It&apos; s not possible to insert a new meeting or change the existing one if the participant is related to an inactive local group.</description>
+        <errorConditionFormula>AND(
+Local_Governance__r.Active__c=false,
+OR(
+ISNEW(),
+ISCHANGED(Comments__c),
+ISCHANGED(Criteria_Reviewed__c),
+ISCHANGED(Date_Legal_REJECTED_the_minutes__c),
+ISCHANGED(Date_Legal_Requested_to_Sign_off_Agenda__c),
+ISCHANGED(Date_Legal_Requested_to_Sign_Off_Minutes__c),
+ISCHANGED(Date_Legal_Signed_off_Agenda__c),
+ISCHANGED(Date_Legal_Signed_Off_the_Minutes__c),
+ISCHANGED(Date_of_Meeting__c),
+ISCHANGED(Meeting_Responsible__c),
+ISCHANGED(Remittance_Frequency_Reviewed__c),
+ISCHANGED(VMFR__c)
+)
+)</errorConditionFormula>
+        <errorMessage>It&apos; s not possible to insert a new meeting or change the existing one if the participant is related to an inactive local group.</errorMessage>
+    </validationRules>
+</CustomObject>

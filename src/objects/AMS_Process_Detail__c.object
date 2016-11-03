@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>false</enableReports>
+    <enableSearch>false</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>AMS_IATAcode__c</fullName>
+        <externalId>false</externalId>
+        <formula>Account__r.IATACode__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>IATA code</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Account__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Account</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipName>AMS_Process_Detail</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>OSCAR__c</fullName>
+        <externalId>false</externalId>
+        <label>OSCAR</label>
+        <referenceTo>AMS_OSCAR__c</referenceTo>
+        <relationshipName>AMS_Process_Detail</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <label>Hierarchy Account Selection</label>
+    <nameField>
+        <displayFormat>PD-{00000}</displayFormat>
+        <label>Hierarchy Account Selection</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Hierarchy Account Selections</pluralLabel>
+    <recordTypes>
+        <fullName>Agency_Involved</fullName>
+        <active>true</active>
+        <label>Agency Involved</label>
+    </recordTypes>
+    <searchLayouts/>
+    <sharingModel>ControlledByParent</sharingModel>
+    <validationRules>
+        <fullName>AMS_BlockInsertOscarAccount</fullName>
+        <active>true</active>
+        <description>Does not allow the Account related to the OSCAR to be added</description>
+        <errorConditionFormula>Account__r.Id = OSCAR__r.Account__r.Id</errorConditionFormula>
+        <errorMessage>The account related to the OSCAR cannot be inserted on this list</errorMessage>
+    </validationRules>
+    <webLinks>
+        <fullName>Add_all_hierarchy</fullName>
+        <availability>online</availability>
+        <displayType>massActionButton</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Add all hierarchy</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <requireRowSelection>false</requireRowSelection>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/14.0/connection.js&quot;)} 
+{!REQUIRESCRIPT(&quot;/soap/ajax/14.0/apex.js&quot;)} 
+
+
+
+var accountId =&apos;{! AMS_OSCAR__c.AccountId__c }&apos;
+var oscarId=&apos;{! AMS_OSCAR__c.Id}&apos;
+
+var result = sforce.apex.execute(&quot;AMS_HierarchyHelper&quot;, 
+   &quot;createProcessDetailForFullHierarchy&quot;,
+   {theOscarId: oscarId, theMainAccountId : accountId});
+
+//refresh the page
+if (sforce.console.isInConsole()) {
+ sforce.console.getEnclosingTabId(function(enclosingResult){
+  sforce.console.getEnclosingPrimaryTabId(function(primaryResult){
+	sforce.console.refreshPrimaryTabById(primaryResult.id,false,null);
+  });
+ });
+} else {
+ // for inline Vf
+ window.top.location.href = &apos;/&apos;+redirectUrl
+ // for normal vf
+ // window.location.href = &apos;/&apos;+redirectUrl
+}</url>
+    </webLinks>
+</CustomObject>

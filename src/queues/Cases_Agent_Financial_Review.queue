@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Queue xmlns="http://soap.sforce.com/2006/04/metadata">
+    <doesSendEmailToMembers>false</doesSendEmailToMembers>
+    <email>noreply@iata.org</email>
+    <name>Cases - Agent Financial Review</name>
+    <queueSobject>
+        <sobjectType>BatchNumber__c</sobjectType>
+    </queueSobject>
+    <queueSobject>
+        <sobjectType>Case</sobjectType>
+    </queueSobject>
+    <queueSobject>
+        <sobjectType>ENZ__FTPAttachment__c</sobjectType>
+    </queueSobject>
+    <queueSobject>
+        <sobjectType>EmailTemplate__c</sobjectType>
+    </queueSobject>
+    <queueSobject>
+        <sobjectType>Financial_Assessment_Result__c</sobjectType>
+    </queueSobject>
+</Queue>

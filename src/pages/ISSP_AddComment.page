@@ -1,0 +1,241 @@
+<apex:page controller="ISSP_AddComment" showHeader="false" sidebar="false" standardStylesheets="false"  applyBodyTag="false" applyHtmlTag="false">
+<html>
+ <c:ISSP_Header ></c:ISSP_Header>    
+ <body>
+
+ <style>
+ .close {
+  float: right;
+  font-size: 21px;
+  font-weight: bold;
+  line-height: 1;
+  color: #000000;
+  text-shadow: 0 1px 0 #ffffff;
+  opacity: 0.2;
+  filter: alpha(opacity=20);
+}
+
+.close:hover,
+.close:focus {
+  color: #000000;
+  text-decoration: none;
+  cursor: pointer;
+  opacity: 0.5;
+  filter: alpha(opacity=50);
+}
+
+ button.close {
+  padding: 0;
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+  -webkit-appearance: none;
+}
+
+ .modal-open {
+  overflow: hidden;
+}
+
+body.modal-open,
+.modal-open .navbar-fixed-top,
+.modal-open .navbar-fixed-bottom {
+  margin-right: 15px;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1040;
+  display: none;
+  overflow: auto;
+  overflow-y: scroll;
+}
+
+.modal.fade .modal-dialog {
+  -webkit-transform: translate(0, -25%);
+      -ms-transform: translate(0, -25%);
+          transform: translate(0, -25%);
+  -webkit-transition: -webkit-transform 0.3s ease-out;
+     -moz-transition: -moz-transform 0.3s ease-out;
+       -o-transition: -o-transform 0.3s ease-out;
+          transition: transform 0.3s ease-out;
+}
+
+.modal.in .modal-dialog {
+  -webkit-transform: translate(0, 0);
+      -ms-transform: translate(0, 0);
+          transform: translate(0, 0);
+}
+
+.modal-dialog {
+margin-top:50px;
+  z-index: 1050;
+  width: auto;
+  padding: 10px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.modal-content {
+  position: relative;
+  background-color: #ffffff;
+  border: 1px solid #999999;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+  outline: none;
+  -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
+          box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
+  background-clip: padding-box;
+}
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1030;
+  background-color: #000000;
+}
+
+.modal-backdrop.fade {
+  opacity: 0;
+  filter: alpha(opacity=0);
+}
+
+.modal-backdrop.in {
+  opacity: 0.5;
+  filter: alpha(opacity=50);
+}
+
+.modal-header {
+  min-height: 16.428571429px;
+  padding: 15px;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.modal-header .close {
+  margin-top: -2px;
+}
+
+.modal-title {
+  margin: 0;
+  line-height: 1.428571429;
+}
+
+.modal-body {
+  position: relative;
+  padding: 20px;
+}
+
+.modal-footer {
+  padding: 19px 20px 20px;
+  margin-top: 15px;
+  text-align: right;
+  border-top: 1px solid #e5e5e5;
+}
+
+.modal-footer:before,
+.modal-footer:after {
+  display: table;
+  content: " ";
+}
+
+.modal-footer:after {
+  clear: both;
+}
+
+.modal-footer:before,
+.modal-footer:after {
+  display: table;
+  content: " ";
+}
+
+.modal-footer:after {
+  clear: both;
+}
+
+.modal-footer .btn_iata + .btn_iata {
+  margin-bottom: 0;
+  margin-left: 5px;
+}
+
+.modal-footer .btn-group .btn_iata + .btn_iata {
+  margin-left: -1px;
+}
+
+.modal-footer .btn-block + .btn-block {
+  margin-left: 0;
+}
+
+@media screen and (min-width: 768px) {
+  .modal-dialog {
+    right: auto;
+    left: 50%;
+    width: 600px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+  }
+  .modal-content {
+    -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+  }
+}
+ </style>
+
+ <div class="container">
+  <c:ISSP_CustomNavigation />
+    <div class="panel panel-primary">
+      <div class="panel-heading head_panel_green">
+            <h3 class="panel-title">{!$Label.ISSP_CaseNumber} - {!tmpCase.CaseNumber}</h3>
+      </div>
+<div class="panel-body">
+  <apex:form enctype="multipart/form-data">
+    <apex:pageMessages />
+  <div class="row"><!-- row 1 -->
+      <!--<apex:pageBlockSection showHeader="false" columns="2" id="block1">-->
+       <div class="col-md-12">
+       <h5 class="blueback">{!$Label.IDCard_CaseDetails}</h5>
+       
+           <p>
+              <apex:outputText value="{!$Label.ISSP_Subject}: " /> 
+              <apex:outputField value="{!tmpCase.subject}"  id="Subject"/>
+        
+    </p>
+         <p >
+              <apex:outputText value="{!$Label.IDCard_Description}: " rendered="{!showDescription}" />
+              <apex:outputField value="{!tmpCase.Description}" id="Description" rendered="{!showDescription}"/>
+           </p>
+       
+        </div>
+     <div class="col-md-12">
+           
+               <h5 class="blueback">{!$Label.ISSP_Email_Comment}</h5>
+           <apex:inputTextarea rows="7" StyleClass="form-control" value="{!inputComment}" id="Comment"/>
+  </div>
+      </div><!-- end row -->
+       <div class="row">
+       <hr />
+          <div class="col-md-3">
+            <apex:commandButton action="{!upload}" value="{!$Label.IFAP_Save}" StyleClass="btn_iata btn-sm btn-block btn-success"/>
+            </div>
+          <div class="col-md-3">
+          
+              <apex:commandButton action="/apex/ISSP_Case?caseid={!tmpCase.Id}" value="{!$Label.ISSP_Cancel}" StyleClass="btn_iata btn-sm btn-block btn-danger"/> 
+          </div>
+    </div>  
+    
+     
+
+  </apex:form>
+</div><!-- end panel body -->
+
+            </div><!-- end  div class="panel panel-primary"-->
+       <c:ISSP_CustomFooter />
+    </div><!-- end container-->  
+    </body>
+    </html>
+</apex:page>

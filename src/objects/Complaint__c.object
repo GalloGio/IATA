@@ -1,0 +1,1245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>Complaint module used to deal with the complaint procedure in the Service Centre Europe</description>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableEnhancedLookup>true</enableEnhancedLookup>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>ComplaintRegion__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( ISNULL(Related_Case_Number__c ),  case (Related_process_number__r.Region__c, &quot;Europe&quot;,&quot;Europe&quot;,&quot;Africa &amp; middle East&quot;,&quot;Africa &amp; middle East&quot;,&quot;Americas&quot;,&quot;Americas&quot;,&quot;Asia &amp; Pacific&quot;,&quot;Asia &amp; Pacific&quot;,&quot;China &amp; North Asia&quot;,&quot;China &amp; North Asia&quot;, &quot;&quot;) ,  case (Related_Case_Number__r.Region__c, &quot;Europe&quot;,&quot;Europe&quot;,&quot;Africa &amp; middle East&quot;,&quot;Africa &amp; middle East&quot;,&quot;Americas&quot;,&quot;Americas&quot;,&quot;Asia &amp; Pacific&quot;,&quot;Asia &amp; Pacific&quot;,&quot;China &amp; North Asia&quot;,&quot;China &amp; North Asia&quot;,&quot;&quot;) )</formula>
+        <inlineHelpText>China &amp; North Asia</inlineHelpText>
+        <label>Region</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Complaint_Action1__c</fullName>
+        <externalId>false</externalId>
+        <label>Action1</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Complaint_Action1date__c</fullName>
+        <externalId>false</externalId>
+        <label>Action1 date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Complaint_Action2__c</fullName>
+        <externalId>false</externalId>
+        <label>Action2</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Complaint_Action2date__c</fullName>
+        <externalId>false</externalId>
+        <label>Action2 date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Complaint_Action3__c</fullName>
+        <externalId>false</externalId>
+        <label>Action3</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Complaint_Action3date__c</fullName>
+        <externalId>false</externalId>
+        <label>Action3 date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Complaint_Action4__c</fullName>
+        <externalId>false</externalId>
+        <label>Action4</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Complaint_Action4date__c</fullName>
+        <externalId>false</externalId>
+        <label>Action4 date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Complaint_Actions__c</fullName>
+        <externalId>false</externalId>
+        <label>Complaint Actions</label>
+        <length>32000</length>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>5</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Complaint_Age_Status__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(( Complaint_Age__c &lt;1),IMAGE(&quot;https://emea.salesforce.com/servlet/servlet.FileDownload?file=015200000006rUU&quot;,&quot;ok&quot;,30,30),IF(( Complaint_Age__c &lt;5),IMAGE(&quot;https://emea.salesforce.com/servlet/servlet.FileDownload?file=015200000006rUZ&quot;,&quot;caution&quot;, 30, 30),IMAGE(&quot;https://emea.salesforce.com/servlet/servlet.FileDownload?file=015200000006rUe&quot;,&quot;ko&quot;, 30, 30)))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Complaint Age Status</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Complaint_Age__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF ( ISPICKVAL( Complaint_Status__c , &quot;Closed&quot;),  (Complaint_Closed_Date__c - Complaint_Opened_Date__c), ( DATEVALUE(NOW())  - Complaint_Opened_Date__c ))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Complaint Age (days)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Complaint_Category__c</fullName>
+        <externalId>false</externalId>
+        <label>Category</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Agency Management</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Agency Risk Management</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Airline Management</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Customer Services</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Invoicing</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Operational Systems</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Remittance &amp; Settlement</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Reporting &amp; Billing</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>true</sorted>
+        </picklist>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Complaint_Closed_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Closed Date</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Complaint_Closed_less_than_24_hours__c</fullName>
+        <externalId>false</externalId>
+        <formula>if( Complaint_Age__c &lt; 2, 1, 0)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Complaint Closed less than 24 hours</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Complaint_Closure__c</fullName>
+        <externalId>false</externalId>
+        <label>Closure</label>
+        <length>32000</length>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>5</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Complaint_Description__c</fullName>
+        <externalId>false</externalId>
+        <label>Description</label>
+        <length>32000</length>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>5</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Complaint_Entity_Originator__c</fullName>
+        <externalId>false</externalId>
+        <label>Entity Originator</label>
+        <picklist>
+            <picklistValues>
+                <fullName>ACC</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Clearing Bank</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>CS</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>DPC</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>GDS</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Local Office</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Other IATA division</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>QPI&amp;T</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>R&amp;S</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SOS</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Systems</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>true</sorted>
+        </picklist>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Complaint_Opened_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Opened Date</label>
+        <required>true</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Complaint_Priority__c</fullName>
+        <externalId>false</externalId>
+        <label>Priority</label>
+        <picklist>
+            <picklistValues>
+                <fullName>High</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Medium</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Low</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Complaint_Reason__c</fullName>
+        <externalId>false</externalId>
+        <label>Reason</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Service partially or not delivered</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Delay</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Customer Care</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Incomplete/Incorrect information</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Disagreement on Procedure</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Reply not handled</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>BSPlink Issues</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>CASSlink Issues</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>MyIATA issues</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Complaint_Recommendations__c</fullName>
+        <externalId>false</externalId>
+        <label>Recommendations</label>
+        <length>32000</length>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Complaint_Recurring_issue__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Recurring issue</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Complaint_Status__c</fullName>
+        <externalId>false</externalId>
+        <label>Status</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Open</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>In-Progress</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Closed</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Closed pending follow up</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Complaint_Subcategory__c</fullName>
+        <externalId>false</externalId>
+        <label>Subcategory</label>
+        <picklist>
+            <controllingField>Complaint_Category__c</controllingField>
+            <picklistValues>
+                <fullName>Accreditation Fees</fullName>
+                <default>false</default>
+                <controllingFieldValues>Agency Management</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Adjustments/Clawbacks</fullName>
+                <default>false</default>
+                <controllingFieldValues>Remittance &amp; Settlement</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Airline Changes</fullName>
+                <default>false</default>
+                <controllingFieldValues>Airline Management</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Airline Joining</fullName>
+                <default>false</default>
+                <controllingFieldValues>Airline Management</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Airline Leaving</fullName>
+                <default>false</default>
+                <controllingFieldValues>Airline Management</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>AIRS/CAIRS Bulletin</fullName>
+                <default>false</default>
+                <controllingFieldValues>Agency Management</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Charges/Invoices Management</fullName>
+                <default>false</default>
+                <controllingFieldValues>Invoicing</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Disagreement on Procedure</fullName>
+                <default>false</default>
+                <controllingFieldValues>Customer Services</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Documentation Management</fullName>
+                <default>false</default>
+                <controllingFieldValues>Agency Management</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Documents Reporting</fullName>
+                <default>false</default>
+                <controllingFieldValues>Reporting &amp; Billing</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Financial Review</fullName>
+                <default>false</default>
+                <controllingFieldValues>Agency Risk Management</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Financial Security</fullName>
+                <default>false</default>
+                <controllingFieldValues>Agency Risk Management</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Irregularity/Default/Reinstatement</fullName>
+                <default>false</default>
+                <controllingFieldValues>Agency Management</controllingFieldValues>
+                <controllingFieldValues>Remittance &amp; Settlement</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Negative Sales Refund</fullName>
+                <default>false</default>
+                <controllingFieldValues>Remittance &amp; Settlement</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>New Applications/Changes</fullName>
+                <default>false</default>
+                <controllingFieldValues>Agency Management</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Price List Management</fullName>
+                <default>false</default>
+                <controllingFieldValues>Invoicing</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Products issues</fullName>
+                <default>false</default>
+                <controllingFieldValues>Agency Management</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Query Management</fullName>
+                <default>false</default>
+                <controllingFieldValues>Customer Services</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>R&amp;S  Procedures</fullName>
+                <default>false</default>
+                <controllingFieldValues>Remittance &amp; Settlement</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Request/Set up not done</fullName>
+                <default>false</default>
+                <controllingFieldValues>Customer Services</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Settlement</fullName>
+                <default>false</default>
+                <controllingFieldValues>Remittance &amp; Settlement</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>System Discrepancies</fullName>
+                <default>false</default>
+                <controllingFieldValues>Reporting &amp; Billing</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>System Maintenance</fullName>
+                <default>false</default>
+                <controllingFieldValues>Agency Management</controllingFieldValues>
+                <controllingFieldValues>Operational Systems</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Validations Management</fullName>
+                <default>false</default>
+                <controllingFieldValues>Reporting &amp; Billing</controllingFieldValues>
+            </picklistValues>
+            <sorted>true</sorted>
+        </picklist>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Correct_resolution__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>to evaluate if the process was correctly followed and the response was correct</description>
+        <externalId>false</externalId>
+        <inlineHelpText>to evaluate if the process was correctly followed and the response was correct</inlineHelpText>
+        <label>Correct resolution</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Image__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(ISPICKVAL( Object_type__c, &quot;Complaint&quot;) , IMAGE(&quot;/servlet/servlet.FileDownload?file=01520000000zGvU&quot;,&quot;Complaint&quot;,30,30),
+IF(ISPICKVAL( Object_type__c, &quot;Customer Recovery&quot;), IMAGE(&quot;/servlet/servlet.FileDownload?file=01520000000zGvZ&quot;,&quot;Customer recovery&quot;,30,30),&quot;error&quot;))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Image</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Non_related_to_IATA__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>To be checked if the complaint is not related to IATA</description>
+        <externalId>false</externalId>
+        <label>Non-related to IATA</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Object_type__c</fullName>
+        <externalId>false</externalId>
+        <label>Object type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Complaint</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Customer recovery</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Owner__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Complaint Owner</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Complaint</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Related_Case_Number__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Related Case Number</label>
+        <referenceTo>Case</referenceTo>
+        <relationshipLabel>Complaints</relationshipLabel>
+        <relationshipName>Complaint</relationshipName>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Related_process_number__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Related process number</label>
+        <referenceTo>Case</referenceTo>
+        <relationshipLabel>Complaints (Related process number)</relationshipLabel>
+        <relationshipName>Complaints</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <label>Complaint</label>
+    <listViews>
+        <fullName>AllClosedComplaints</fullName>
+        <columns>NAME</columns>
+        <columns>Complaint_Age_Status__c</columns>
+        <columns>Complaint_Age__c</columns>
+        <columns>Complaint_Opened_Date__c</columns>
+        <columns>Complaint_Closed_Date__c</columns>
+        <columns>Complaint_Priority__c</columns>
+        <columns>Related_Case_Number__c</columns>
+        <columns>Owner__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Complaint_Status__c</field>
+            <operation>equals</operation>
+            <value>Closed</value>
+        </filters>
+        <label>All Closed Complaints</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>AllOpenComplaints</fullName>
+        <columns>Image__c</columns>
+        <columns>NAME</columns>
+        <columns>Complaint_Opened_Date__c</columns>
+        <columns>OWNER.LAST_NAME</columns>
+        <columns>OWNER.FIRST_NAME</columns>
+        <columns>Complaint_Priority__c</columns>
+        <columns>Complaint_Status__c</columns>
+        <columns>Related_Case_Number__c</columns>
+        <columns>Complaint_Age_Status__c</columns>
+        <columns>ComplaintRegion__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Complaint_Status__c</field>
+            <operation>notEqual</operation>
+            <value>Closed</value>
+        </filters>
+        <label>All Open Complaints</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>All_open_complaints_OCIT_view</fullName>
+        <columns>Image__c</columns>
+        <columns>NAME</columns>
+        <columns>Complaint_Age__c</columns>
+        <columns>Complaint_Category__c</columns>
+        <columns>Complaint_Opened_Date__c</columns>
+        <columns>OWNER.FIRST_NAME</columns>
+        <columns>Complaint_Status__c</columns>
+        <columns>LAST_UPDATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Complaint_Status__c</field>
+            <operation>notEqual</operation>
+            <value>Closed</value>
+        </filters>
+        <filters>
+            <field>CREATED_DATE</field>
+            <operation>greaterThan</operation>
+            <value>4/1/2010 12:00 AM</value>
+        </filters>
+        <label>All open complaints - OCIT view</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>HUBMadrid</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Americas_ALL</fullName>
+        <columns>NAME</columns>
+        <columns>OBJECT_ID</columns>
+        <columns>Related_Case_Number__c</columns>
+        <columns>Related_process_number__c</columns>
+        <columns>OWNER.ALIAS</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>Complaint_Status__c</columns>
+        <columns>Complaint_Opened_Date__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>ComplaintRegion__c</field>
+            <operation>equals</operation>
+            <value>Americas</value>
+        </filters>
+        <label>Americas - ALL</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>IDFSAmericasCustomerService</group>
+            <group>IDFSAmericasRegionalOffice</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CasesOCITComplaints</fullName>
+        <columns>Image__c</columns>
+        <columns>Complaint_Age__c</columns>
+        <columns>NAME</columns>
+        <columns>Complaint_Opened_Date__c</columns>
+        <columns>Related_Case_Number__c</columns>
+        <columns>Complaint_Status__c</columns>
+        <columns>CREATEDBY_USER</columns>
+        <filterScope>Queue</filterScope>
+        <label>Cases - OCIT Europe</label>
+        <language>en_US</language>
+        <queue>CasesOCITComplaints</queue>
+        <sharedTo>
+            <group>HUBMadrid</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Complaint_objects_closed_in_queue</fullName>
+        <columns>Image__c</columns>
+        <columns>NAME</columns>
+        <columns>Complaint_Closed_Date__c</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <filterScope>Queue</filterScope>
+        <filters>
+            <field>Complaint_Status__c</field>
+            <operation>equals</operation>
+            <value>Closed</value>
+        </filters>
+        <label>Complaint objects closed in queue</label>
+        <language>en_US</language>
+        <queue>CasesOCITComplaints</queue>
+        <sharedTo>
+            <group>HUBMadrid</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Complaints_created_last_7_days</fullName>
+        <columns>NAME</columns>
+        <columns>Complaint_Description__c</columns>
+        <columns>Image__c</columns>
+        <columns>Object_type__c</columns>
+        <columns>Complaint_Opened_Date__c</columns>
+        <columns>Complaint_Reason__c</columns>
+        <columns>Related_Case_Number__c</columns>
+        <columns>Related_process_number__c</columns>
+        <columns>Complaint_Status__c</columns>
+        <columns>CREATEDBY_USER</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>ComplaintRegion__c</field>
+            <operation>equals</operation>
+            <value>Europe</value>
+        </filters>
+        <filters>
+            <field>CREATED_DATE</field>
+            <operation>equals</operation>
+            <value>10/29/2012 12:00 AM</value>
+        </filters>
+        <label>Complaints created last 7 days</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>HUBMadrid</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>ComplaintsoutofOCIT</fullName>
+        <columns>Image__c</columns>
+        <columns>NAME</columns>
+        <columns>Complaint_Age__c</columns>
+        <columns>Complaint_Opened_Date__c</columns>
+        <columns>Owner__c</columns>
+        <columns>Related_Case_Number__c</columns>
+        <columns>OWNER.FIRST_NAME</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Complaint_Status__c</field>
+            <operation>notContain</operation>
+            <value>Closed</value>
+        </filters>
+        <filters>
+            <field>CREATED_DATE</field>
+            <operation>greaterOrEqual</operation>
+            <value>10/1/2010 12:00 AM</value>
+        </filters>
+        <filters>
+            <field>OWNER.FIRST_NAME</field>
+            <operation>notEqual</operation>
+            <value>Paulo,Roland,Nelso,Karoliina,constance</value>
+        </filters>
+        <filters>
+            <field>OWNER.ALIAS</field>
+            <operation>notContain</operation>
+            <value>OCIT Complaints</value>
+        </filters>
+        <label>Complaints out of OCIT</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>HUBMadrid</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>MyComplaints</fullName>
+        <columns>NAME</columns>
+        <columns>Complaint_Status__c</columns>
+        <columns>Complaint_Age__c</columns>
+        <columns>Complaint_Opened_Date__c</columns>
+        <columns>Related_Case_Number__c</columns>
+        <columns>Complaint_Priority__c</columns>
+        <filterScope>Mine</filterScope>
+        <filters>
+            <field>Complaint_Status__c</field>
+            <operation>notEqual</operation>
+            <value>Closed</value>
+        </filters>
+        <label>My Complaints</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>My_complaints_pending_follow_up</fullName>
+        <columns>Image__c</columns>
+        <columns>NAME</columns>
+        <columns>Complaint_Subcategory__c</columns>
+        <columns>Complaint_Reason__c</columns>
+        <columns>Complaint_Closure__c</columns>
+        <columns>Complaint_Closed_Date__c</columns>
+        <filterScope>Mine</filterScope>
+        <filters>
+            <field>Complaint_Status__c</field>
+            <operation>equals</operation>
+            <value>Closed pending follow up</value>
+        </filters>
+        <label>My complaints pending follow-up</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>HUBMadrid</group>
+            <group>IDFSEuropeallusers</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Myopencomplaints2</fullName>
+        <columns>Complaint_Age_Status__c</columns>
+        <columns>Image__c</columns>
+        <columns>NAME</columns>
+        <columns>Complaint_Priority__c</columns>
+        <columns>Complaint_Status__c</columns>
+        <columns>Complaint_Opened_Date__c</columns>
+        <columns>Complaint_Age__c</columns>
+        <filterScope>Mine</filterScope>
+        <filters>
+            <field>Complaint_Status__c</field>
+            <operation>notEqual</operation>
+            <value>Closed</value>
+        </filters>
+        <label>My open complaints and recoveries</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>HUBMadrid</group>
+            <group>IDFSAustria</group>
+            <group>IDFSBelgiumLuxembourg</group>
+            <group>IDFSCyprus</group>
+            <group>IDFSCzechRepublicSlovakia</group>
+            <group>IDFSEuropeCountryManagers</group>
+            <group>IDFSEuropeRegionalOffice</group>
+            <group>IDFSFinland</group>
+            <group>IDFSFrance</group>
+            <group>IDFSGreece</group>
+            <group>IDFSIreland</group>
+            <group>IDFSItaly</group>
+            <group>IDFSMalta</group>
+            <group>IDFSNetherlands</group>
+            <group>IDFSNordicBaltic</group>
+            <group>IDFSPortugal</group>
+            <group>IDFSSpainAndorra</group>
+            <group>IDFSSwitzerlandLiechtenstein</group>
+            <group>IDFSUnitedKingdom</group>
+        </sharedTo>
+    </listViews>
+    <nameField>
+        <displayFormat>C-{00000}</displayFormat>
+        <label>Complaint Name</label>
+        <trackHistory>true</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Complaints</pluralLabel>
+    <searchLayouts>
+        <customTabListAdditionalFields>Complaint_Opened_Date__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Complaint_Priority__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Complaint_Status__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Related_Case_Number__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Owner__c</customTabListAdditionalFields>
+        <lookupDialogsAdditionalFields>Complaint_Priority__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Related_Case_Number__c</lookupDialogsAdditionalFields>
+        <searchFilterFields>NAME</searchFilterFields>
+        <searchFilterFields>Related_Case_Number__c</searchFilterFields>
+        <searchResultsAdditionalFields>Complaint_Priority__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Related_Case_Number__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ReadWrite</sharingModel>
+    <validationRules>
+        <fullName>Cannot_close_complaint_in_queue</fullName>
+        <active>true</active>
+        <description>Prevents from closing the complaint object in the OCIT queue</description>
+        <errorConditionFormula>AND( OwnerId = &quot;00G20000000mIiJ&quot;, ISCHANGED( Complaint_Status__c ),  ISPICKVAL(Complaint_Status__c, &quot;Closed&quot;) )</errorConditionFormula>
+        <errorMessage>Complaint cannot be closed in the queue, please take ownership of the object before closing it.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Complaint_Closed_Date_Mandatory</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND( ISPICKVAL(Complaint_Status__c , &quot;Closed&quot;),  ISNULL( Complaint_Closed_Date__c ))</errorConditionFormula>
+        <errorDisplayField>Complaint_Closed_Date__c</errorDisplayField>
+        <errorMessage>Please fill the date of closure of the complaint</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Complaint_Description_Mandatory</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND( ISPICKVAL(Complaint_Status__c , &quot;Closed&quot;),  LEN(  Complaint_Description__c  ) = 0)</errorConditionFormula>
+        <errorDisplayField>Complaint_Description__c</errorDisplayField>
+        <errorMessage>Please fill the description of the complaint</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Complaint_Originator_Mandatory</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND( ISPICKVAL(Complaint_Status__c , &quot;Closed&quot;), ISPICKVAL(     Complaint_Entity_Originator__c   ,&quot;&quot;  ))</errorConditionFormula>
+        <errorDisplayField>Complaint_Entity_Originator__c</errorDisplayField>
+        <errorMessage>Please fill the originator of the complaint</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Complaint_Priority_Mandatory</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND( ISPICKVAL(Complaint_Status__c , &quot;Closed&quot;),  ISPICKVAL(  Complaint_Priority__c,&quot;&quot;  ))</errorConditionFormula>
+        <errorDisplayField>Complaint_Priority__c</errorDisplayField>
+        <errorMessage>Please fill the priority of the complaint</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Complaint_Reason_Mandatory</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND( ISPICKVAL(Complaint_Status__c , &quot;Closed&quot;),  ISPICKVAL(    Complaint_Reason__c  ,&quot;&quot;  ))</errorConditionFormula>
+        <errorDisplayField>Complaint_Reason__c</errorDisplayField>
+        <errorMessage>Please fill the reason of the complaint</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Complaint_Status_Closed_Mandatory</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND( NOT(OR(ISPICKVAL(Complaint_Status__c , &quot;Closed&quot;),ISPICKVAL(Complaint_Status__c , &quot;Closed pending follow up&quot;))),  NOT(ISNULL( Complaint_Closed_Date__c )))</errorConditionFormula>
+        <errorDisplayField>Complaint_Status__c</errorDisplayField>
+        <errorMessage>Please change the status of the complaint to a Closed status</errorMessage>
+    </validationRules>
+    <webLinks>
+        <fullName>Email_Opening_ENG</fullName>
+        <availability>online</availability>
+        <displayType>link</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>Email Opening ENG</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>/email/author/emailauthor.jsp?retURL=%2F{!Case.Id}&amp;p3_lkid={!Case.Id}&amp;p2_lkid={!Case.ContactId}&amp;rtype=003&amp;template_id=00X20000000liPd</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Email_Opening_ES</fullName>
+        <availability>online</availability>
+        <displayType>link</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>Email Opening ES</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>/email/author/emailauthor.jsp?retURL=%2F{!Case.Id}&amp;p3_lkid={!Case.Id}&amp;p2_lkid={!Case.ContactId}&amp;rtype=003&amp;template_id=00X20000000ljey</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Email_Opening_FI</fullName>
+        <availability>online</availability>
+        <displayType>link</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>Email Opening FI</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>/email/author/emailauthor.jsp?retURL=%2F{!Case.Id}&amp;p3_lkid={!Case.Id}&amp;p2_lkid={!Case.ContactId}&amp;rtype=003&amp;template_id=00X20000000ljf3</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Email_Opening_FR</fullName>
+        <availability>online</availability>
+        <displayType>link</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>Email Opening FR</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>/email/author/emailauthor.jsp?retURL=%2F{!Case.Id}&amp;p3_lkid={!Case.Id}&amp;p2_lkid={!Case.ContactId}&amp;rtype=003&amp;template_id=00X20000000ljfD</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Email_Opening_IT</fullName>
+        <availability>online</availability>
+        <displayType>link</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>Email Opening IT</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>/email/author/emailauthor.jsp?retURL=%2F{!Case.Id}&amp;p3_lkid={!Case.Id}&amp;p2_lkid={!Case.ContactId}&amp;rtype=003&amp;template_id=00X20000000ljfX</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Email_Opening_PT</fullName>
+        <availability>online</availability>
+        <displayType>link</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>Email Opening PT</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>/email/author/emailauthor.jsp?retURL=%2F{!Case.Id}&amp;p3_lkid={!Case.Id}&amp;p2_lkid={!Case.ContactId}&amp;rtype=003&amp;template_id=00X20000000ljej</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Email_Survey_ENG</fullName>
+        <availability>online</availability>
+        <displayType>link</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>Email Survey ENG</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>/email/author/emailauthor.jsp?retURL=%2F{!Case.Id}&amp;p3_lkid={!Case.Id}&amp;p2_lkid={!Case.ContactId}&amp;rtype=003&amp;template_id=00X20000000liQM</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Email_Survey_ES</fullName>
+        <availability>online</availability>
+        <displayType>link</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>Email Survey ES</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>/email/author/emailauthor.jsp?retURL=%2F{!Case.Id}&amp;p3_lkid={!Case.Id}&amp;p2_lkid={!Case.ContactId}&amp;rtype=003&amp;template_id=00X20000000ljet</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Email_Survey_FI</fullName>
+        <availability>online</availability>
+        <displayType>link</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>Email Survey FI</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>/email/author/emailauthor.jsp?retURL=%2F{!Case.Id}&amp;p3_lkid={!Case.Id}&amp;p2_lkid={!Case.ContactId}&amp;rtype=003&amp;template_id=00X20000000ljf8</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Email_Survey_FR</fullName>
+        <availability>online</availability>
+        <displayType>link</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>Email Survey FR</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>/email/author/emailauthor.jsp?retURL=%2F{!Case.Id}&amp;p3_lkid={!Case.Id}&amp;p2_lkid={!Case.ContactId}&amp;rtype=003&amp;template_id=00X20000000ljfE</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Email_Survey_IT</fullName>
+        <availability>online</availability>
+        <displayType>link</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>Email Survey IT</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>/email/author/emailauthor.jsp?retURL=%2F{!Case.Id}&amp;p3_lkid={!Case.Id}&amp;p2_lkid={!Case.ContactId}&amp;rtype=003&amp;template_id=00X20000000ljef</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Email_Survey_PT</fullName>
+        <availability>online</availability>
+        <displayType>link</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>Email Survey PT</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>/email/author/emailauthor.jsp?retURL=%2F{!Case.Id}&amp;p3_lkid={!Case.Id}&amp;p2_lkid={!Case.ContactId}&amp;rtype=003&amp;template_id=00X20000000ljeo</url>
+    </webLinks>
+</CustomObject>

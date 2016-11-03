@@ -1,0 +1,93 @@
+<apex:page docType="html-4.01-strict" title="IATA Financial Assessment Portal login" language="{!Language}" sidebar="false" showHeader="false" controller="IFAP_SiteLoginController">
+    <html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>IFAP <apex:outputText value="{!$Label.site.login}" escape="false"/></title>
+        <style type="text/css">
+        .links {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 10pt;
+        }
+        .labels {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 10pt;
+        }
+        </style>
+        <script>
+        function setCookie(c_name,value,exdays)
+        {
+            var exdate=new Date();
+            //exdate.setDate(exdate.getTime() + (3*1000)); 
+            exdate.setDate(exdate.getDate() + exdays); 
+            var c_value=escape(value) + ((exdays==null) ? "" : "; expires="+exdate.toUTCString());
+            document.cookie=c_name + "=" + c_value;
+        }
+         
+        function getCookie(c_name)
+        {
+            var i,x,y,ARRcookies=document.cookie.split(";");
+            for (i=0;i<ARRcookies.length;i++)
+              {
+              x=ARRcookies[i].substr(0,ARRcookies[i].indexOf("="));
+              y=ARRcookies[i].substr(ARRcookies[i].indexOf("=")+1);
+              x=x.replace(/^\s+|\s+$/g,"");
+              if (x==c_name)
+                {
+                return unescape(y);
+                }
+              }
+        }
+        
+        function refreshLanguage() {
+            setCookie('apex__ifap_portal_lang', document.getElementById('{!$Component.loginForm.langSelect}').value, 365);
+            window.location.reload();
+        }
+        </script>
+    </head>
+    
+    <body>
+        <div id="page_wrapper" style="width:600px; margin:0 auto;">
+            <apex:form forceSSL="true" id="loginForm">
+                <div id="logo" style="text-align:center; margin: 5px; margin-top:10px">
+                    <h1><img src="{!URLFOR($Resource.IATAlogo)}" alt="IATA logo" /></h1>
+                    <div style="position:absolute;display:block;float:right;width:100%">
+                        <apex:actionRegion >
+                            <apex:outputText value="{!$Label.IFAP_Language}" escape="false"/>: <apex:selectList id="langSelect" value="{!SelectedLanguage}" size="1" required="true">
+                                <apex:selectOptions value="{!LangItems}"/>
+                                <apex:actionSupport event="onchange" onsubmit="refreshLanguage()" reRender=""></apex:actionSupport>
+                            </apex:selectList>
+                        </apex:actionRegion>
+                    </div>
+                    <br />
+                </div>
+                <div style="text-align:center">
+                    <h1><apex:outputText value="{!$Label.IFAP_Title}" escape="false"/></h1>
+                </div>
+                <br />
+                <!-- apex:pageMessages id="error"/-->
+                <apex:pageMessage summary="{!$Label.IFAP_Login_Error}" rendered="{!HasLoggingError}" severity="error" strength="2" escape="false"/>
+                <br />
+                <div style="width:400px; margin:0 auto;">
+                    <apex:pageBlock title="{!$Label.site.login}">
+                        <apex:pageBlockSection columns="1" >
+                            <apex:panelGrid columns="2" style="margin-top:1em; width:300px">
+                                <apex:outputLabel value="{!$Label.site.username}:" for="username" styleClass="labels" />
+                                <apex:inputText id="txtUsername" value="{!username}" size="21" />
+                                <apex:outputLabel value="{!$Label.site.password}:" for="password" styleClass="labels" />
+                                <apex:inputSecret id="txtPassword" value="{!password}" size="21" />
+                                <apex:outputText value=""/>
+                                <apex:commandButton action="{!login}" value="{!$Label.site.login}" id="btnLogin" />
+                            </apex:panelGrid>
+                        </apex:pageBlockSection>
+                    </apex:pageBlock>
+                    <!--apex:outputLink value="http://{!$Site.Domain}/ifapregistration" id="RegisterLink" styleClass="links">{!$Label.IFAP_Login_NotRegisteredYet}</apex:outputLink>-->
+                    <apex:outputLink value="{!$Page.IFAP_Self_Registration}" id="RegisterLink" styleClass="links"><apex:outputText value="{!$Label.IFAP_Login_NotRegisteredYet}" escape="false"/></apex:outputLink>
+                    <br />
+                    <!--apex:outputLink value="https://{!$Site.Domain}/ifapforgotpassword" id="PasswordLink" styleClass="links">{!$Label.site.forgot_your_password_q}</apex:outputLink>-->
+                    <apex:outputLink value="{!$Page.IFAP_forgot_password}" id="PasswordLink" styleClass="links"><apex:outputText value="{!$Label.site.forgot_your_password_q}" escape="false"/></apex:outputLink>
+                </div>
+            </apex:form>
+        </div>
+    </body>
+    </html>
+</apex:page>

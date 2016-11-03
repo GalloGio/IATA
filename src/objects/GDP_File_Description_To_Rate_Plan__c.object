@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>Junction object between GDP_File_Description and zqu_Product_Rate_Plan</description>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Authorized_Usage__c</fullName>
+        <description>Authorized Usage per Web Service</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Authorized Usage per Web Service</inlineHelpText>
+        <label>Authorized Usage</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>GDP_File_Description__c</fullName>
+        <description>File description used for this rate plan</description>
+        <externalId>false</externalId>
+        <label>GDP File Description</label>
+        <referenceTo>GDP_File_Description__c</referenceTo>
+        <relationshipLabel>GDP File Description To Rate Plans (GDP File Description)</relationshipLabel>
+        <relationshipName>GDP_File_Description_To_Rate_Plans1</relationshipName>
+        <relationshipOrder>1</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Product_Rate_Plan__c</fullName>
+        <description>Product Rate Plan related to the File Description.</description>
+        <externalId>false</externalId>
+        <label>Product Rate Plan</label>
+        <referenceTo>zqu__ProductRatePlan__c</referenceTo>
+        <relationshipLabel>GDP File Description To Rate Plans</relationshipLabel>
+        <relationshipName>GDP_File_Description_To_Rate_Plans</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Share_Authorized_Usage__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>To enable Share Authorized Usage among the same subscription</description>
+        <externalId>false</externalId>
+        <inlineHelpText>To enable Share Authorized Usage among the same subscription</inlineHelpText>
+        <label>Share Authorized Usage</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Unique_Key__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <description>This value is used to ensure the pair (zqu_Product_Rate_Plan and GDP_File_Description) is unique.
+It will be populated automatically by workflow as  zqu_Product_Rate_Plan.Id + &apos;-&apos; + GDP_File_Description&gt;id</description>
+        <externalId>false</externalId>
+        <inlineHelpText>This value is used to ensure the pair (zqu_Product_Rate_Plan and GDP_File_Description) is unique.</inlineHelpText>
+        <label>Unique Key</label>
+        <length>40</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <label>GDP File Description To Rate Plan</label>
+    <nameField>
+        <displayFormat>FDP-{00000000}</displayFormat>
+        <label>Name</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>GDP File Description To Rate Plans</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ControlledByParent</sharingModel>
+</CustomObject>

@@ -1,0 +1,51 @@
+<apex:page standardController="AMS_OSCAR__c" extensions="AMS_OSCAR_SupportPanelController">
+    
+    <apex:stylesheet value="{!URLFOR($Resource.jquerytools,'/jquery.dataTables.css')}"/>
+    <apex:includeScript value="{!$Resource.jQuery_min_1_11_0}"/>
+    <apex:includeScript value="{!URLFOR($Resource.jquerytools, '/jquery.dataTables.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.jquerytools, '/jquery-ui.1.11.4.js')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.jquerytools,'/jquery-ui.1.11.4.css')}"/>
+    
+    <script>
+    j$ = jQuery.noConflict();
+        j$(function() {
+            j$( ".accordion" ).accordion({
+                collapsible: true,
+                heightStyle: "content"
+            });
+        });
+    </script>
+    
+    <apex:outputPanel layout="block" styleClass="accordion">
+        <!--<h3>Comments</h3>
+        <apex:outputPanel layout="block">
+            <c:AMS_OSCAR_RightPanel_Comments />
+        </apex:outputPanel>-->
+        <!--<h3>Attachments <apex:outputText value=" ({!attachmentInt.value})"/></h3>
+        <apex:outputPanel layout="block">
+            <c:AMS_OSCAR_RightPanel_Attachments coscarid="{!AMS_OSCAR__c.Id}" theValue="{!attachmentInt}"/>
+        </apex:outputPanel>-->
+        <h3>Calls</h3>
+        <apex:outputPanel layout="block">
+            <c:AMS_OSCAR_RightPanel_Calls />
+        </apex:outputPanel>
+        <!--
+        <h3>Complaints <apex:outputText value=" ({!complaintsInt.value})"/></h3>
+        <apex:outputPanel layout="block">
+            <c:AMS_OSCAR_RightPanel_Complaints coscarid="{!AMS_OSCAR__c.Id}" theValue="{!complaintsInt}"/>
+        </apex:outputPanel>
+        -->
+        <h3>History <apex:outputText value=" ({!historyInt.value})"/></h3>
+        <apex:outputPanel layout="block">
+            <c:AMS_OSCAR_RightPanel_History coscarid="{!AMS_OSCAR__c.Id}" theValue="{!historyInt}"/>
+        </apex:outputPanel>
+        <!--<h3>Related Cases <apex:outputText value=" ({!relatedCasesInt.value})"/></h3>
+        <apex:outputPanel layout="block">
+            <c:AMS_OSCAR_RightPanel_RelatedCases coscarid="{!AMS_OSCAR__c.Id}" theValue="{!relatedCasesInt}"/>
+        </apex:outputPanel>-->
+        <h3>Documentation</h3>
+        <apex:outputPanel layout="block">
+            <c:AMS_OSCAR_RightPanel_Documentation />
+        </apex:outputPanel>
+    </apex:outputPanel>
+</apex:page>

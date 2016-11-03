@@ -1,0 +1,45 @@
+<apex:component controller="AMS_OSCAR_RelatedCasesController" allowDML="true">
+	<apex:attribute name="coscarid" type="String" assignTo="{!oscarId}" required="false" description="The OSCAR Id" />
+	<apex:attribute type="AMS_IntegerCarrier" name="theValue" description="The siz of the list" required="false" assignTo="{!intVal}"/>
+	<!--<apex:stylesheet value="{!URLFOR($Resource.jquerytools,'/jquery.dataTables.css')}"/>
+	<apex:includeScript value="{!URLFOR($Resource.jquerytools, '/jquery-1.10.2.min.js')}"/>
+	<apex:includeScript value="{!URLFOR($Resource.jquerytools, '/jquery.dataTables.js')}"/>-->
+	<apex:includeScript value="/support/console/34.0/integration.js"/>
+	<script>
+	function openSubtab(subtabUrl, subTabTitle)
+	    {
+	       // Use the results primary tab id and open a new subtab
+	       var openSubtab = function(result)
+	       {            
+	            sforce.console.openSubtab(result.id, subtabUrl, true, subTabTitle, null);    
+	       };
+	       sforce.console.getEnclosingPrimaryTabId(openSubtab);
+	     }
+	</script>
+	    <apex:form >
+	      <apex:commandbutton value="New Case" onClick="openSubtab('/500/e?retURL=%2F500%2Fo','New Case');return false;" />
+	      <table id="tableCases" class="display">
+	        <thead>
+	          <tr>
+	            <th>Case Number</th>
+	            <th>Type</th>
+	            <th>Created Date</th>
+	          </tr>
+	        </thead>
+	        <tbody>
+	          <apex:repeat value="{!cases}" var="item">    
+	            <tr>
+	              <td><apex:commandLink onclick="openSubtab('/{!item.id}','{!item.CaseNumber}');return false;">{!item.CaseNumber}</apex:commandLink></td>
+	              <td>{!item.Type}</td>
+	              <td>{!item.CreatedDate}</td>
+	            </tr>
+	          </apex:repeat>
+	        </tbody>
+	      </table>
+	      </apex:form>
+	<script>
+	j$(document).ready(function() {
+	  j$('#tableCases').dataTable();
+	});
+	</script>
+</apex:component>

@@ -1,0 +1,402 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>Airline Input for sMAP case</description>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Agent_Name__c</fullName>
+        <externalId>false</externalId>
+        <formula>Parent_Case__r.Account.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Agent Name</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Airline_Input_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Airline Input Date</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Airline_Input__c</fullName>
+        <externalId>false</externalId>
+        <label>Airline Input</label>
+        <length>4000</length>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Airline_Input_by__c</fullName>
+        <externalId>false</externalId>
+        <label>Airline Input by</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Airline__c</fullName>
+        <deleteConstraint>Restrict</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Airline</label>
+        <lookupFilter>
+            <active>true</active>
+            <errorMessage>Please select a valid airline account</errorMessage>
+            <filterItems>
+                <field>Account.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Airline Headquarters, Airline Branch</value>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Airline Inputs</relationshipLabel>
+        <relationshipName>sMAP_Airline_Inputs</relationshipName>
+        <required>true</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Country_Manager_Backup_2__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Country Manager Backup 2</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Airline_Inputs1</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Country_Manager_Backup__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Country Manager Backup 1</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Airline_Inputs</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Country_Manager_del__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Country Manager</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Airline_Inputs_del</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Country__c</fullName>
+        <externalId>false</externalId>
+        <formula>Airline__r.IATA_ISO_Country__r.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Country</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Deadline_for_input__c</fullName>
+        <defaultValue>NOW()+2</defaultValue>
+        <externalId>false</externalId>
+        <label>Deadline for input</label>
+        <required>true</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>IATA_Code__c</fullName>
+        <externalId>false</externalId>
+        <formula>Parent_Case__r.IATA_Code__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>IATA Code</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Input_Requested_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Input Requested Date</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Parent_Case__c</fullName>
+        <externalId>false</externalId>
+        <label>Parent Case</label>
+        <referenceTo>Case</referenceTo>
+        <relationshipLabel>Airline Inputs</relationshipLabel>
+        <relationshipName>sMAP_Airline_Inputs</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>true</reparentableMasterDetail>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Share_of_total_cash_sales__c</fullName>
+        <externalId>false</externalId>
+        <label>Share of Total Cash Sales</label>
+        <precision>5</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <label>Airline Input</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>Country__c</columns>
+        <columns>Airline__c</columns>
+        <columns>IATA_Code__c</columns>
+        <columns>Share_of_total_cash_sales__c</columns>
+        <columns>Parent_Case__c</columns>
+        <columns>Deadline_for_input__c</columns>
+        <columns>Input_Requested_Date__c</columns>
+        <columns>Airline_Input__c</columns>
+        <columns>Airline_Input_by__c</columns>
+        <columns>Airline_Input_Date__c</columns>
+        <columns>Country_Manager_del__c</columns>
+        <columns>Country_Manager_Backup__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>All1</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <listViews>
+        <fullName>IR</fullName>
+        <columns>Country__c</columns>
+        <columns>Airline__c</columns>
+        <columns>IATA_Code__c</columns>
+        <columns>Share_of_total_cash_sales__c</columns>
+        <columns>Parent_Case__c</columns>
+        <columns>Deadline_for_input__c</columns>
+        <columns>Input_Requested_Date__c</columns>
+        <columns>Airline_Input__c</columns>
+        <columns>Airline_Input_by__c</columns>
+        <columns>Airline_Input_Date__c</columns>
+        <columns>Country_Manager_del__c</columns>
+        <columns>Country_Manager_Backup__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Airline_Input_Date__c</field>
+            <operation>notEqual</operation>
+        </filters>
+        <label>Input Received</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>adltd</fullName>
+        <columns>Country__c</columns>
+        <columns>Airline__c</columns>
+        <columns>IATA_Code__c</columns>
+        <columns>Share_of_total_cash_sales__c</columns>
+        <columns>Parent_Case__c</columns>
+        <columns>Deadline_for_input__c</columns>
+        <columns>Input_Requested_Date__c</columns>
+        <columns>Airline_Input__c</columns>
+        <columns>Airline_Input_by__c</columns>
+        <columns>Airline_Input_Date__c</columns>
+        <columns>Country_Manager_del__c</columns>
+        <columns>Country_Manager_Backup__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Deadline_for_input__c</field>
+            <operation>equals</operation>
+            <value>LAST_N_DAYS:10</value>
+        </filters>
+        <label>All - deadline last 10 days</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>irpi</fullName>
+        <columns>Country__c</columns>
+        <columns>Airline__c</columns>
+        <columns>IATA_Code__c</columns>
+        <columns>Share_of_total_cash_sales__c</columns>
+        <columns>Parent_Case__c</columns>
+        <columns>Deadline_for_input__c</columns>
+        <columns>Input_Requested_Date__c</columns>
+        <columns>Airline_Input__c</columns>
+        <columns>Airline_Input_by__c</columns>
+        <columns>Airline_Input_Date__c</columns>
+        <columns>Country_Manager_del__c</columns>
+        <columns>Country_Manager_Backup__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Input_Requested_Date__c</field>
+            <operation>notEqual</operation>
+        </filters>
+        <filters>
+            <field>Airline_Input_Date__c</field>
+            <operation>equals</operation>
+        </filters>
+        <label>Input requested - Pending input</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>pir</fullName>
+        <columns>Country__c</columns>
+        <columns>Airline__c</columns>
+        <columns>IATA_Code__c</columns>
+        <columns>Share_of_total_cash_sales__c</columns>
+        <columns>Parent_Case__c</columns>
+        <columns>Deadline_for_input__c</columns>
+        <columns>Input_Requested_Date__c</columns>
+        <columns>Airline_Input__c</columns>
+        <columns>Airline_Input_by__c</columns>
+        <columns>Airline_Input_Date__c</columns>
+        <columns>Country_Manager_del__c</columns>
+        <columns>Country_Manager_Backup__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Input_Requested_Date__c</field>
+            <operation>equals</operation>
+        </filters>
+        <label>Pending input request</label>
+        <language>en_US</language>
+    </listViews>
+    <nameField>
+        <displayFormat>sMAP-{YYYY}{MM}-{0000}</displayFormat>
+        <label>sMAP-Airline Input Number</label>
+        <trackHistory>false</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Airline Inputs</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ControlledByParent</sharingModel>
+    <webLinks>
+        <fullName>New_Airline_Input</fullName>
+        <availability>online</availability>
+        <displayType>massActionButton</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>New Airline Input</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <requireRowSelection>false</requireRowSelection>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/20.0/connection.js&quot;)}
+{!REQUIRESCRIPT(&quot;/soap/ajax/20.0/apex.js&quot;)}
+{!REQUIRESCRIPT(&apos;/resource/&apos; &amp;  LEFT(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(TEXT(NOW()),&apos;:&apos;,&apos;&apos;),&apos;-&apos;,&apos;&apos;),&apos; &apos;,&apos;&apos;),10) &amp; &apos;000/jQuery_min_1_11_0&apos;)}
+
+var j$ = jQuery.noConflict();
+
+// get the object prefix
+sforce.connection.sessionId = &apos;{!$Api.Session_ID}&apos;;
+var result = sforce.connection.describeSObjects([&quot;Airline_Input__c&quot;]);
+var objectPrefix = result[0].keyPrefix;
+ 
+// get label for the searched field that is used in the layout
+var labelField = sforce.apex.execute(&quot;CustomButtonsHelper&quot;, &quot;getFieldLabels&quot;, {objectName: &quot;Airline_Input__c&quot;, fields:[&quot;Country_Manager_del__c&quot;, &quot;Country_Manager_Backup__c&quot;, &quot;Country_Manager_Backup_2__c&quot;, &quot;Parent_Case__c&quot;]});
+ 
+// load content of the new record page
+j$.get(&quot;/&quot; + objectPrefix + &quot;/e&quot;, function( data ) {
+ 
+  // extract ID of the fields from the source code
+  var id_CM = j$(data).find(&quot;label:contains(&quot;+labelField[0]+&quot;)&quot;).attr(&apos;for&apos;).replace(&apos;_top&apos;,&apos;&apos;); // Country Manager
+  var id_CMB = j$(data).find(&quot;label:contains(&quot;+labelField[1]+&quot;)&quot;).attr(&apos;for&apos;).replace(&apos;_top&apos;,&apos;&apos;); // Country Manager Back-up
+  var id_CMB2 = j$(data).find(&quot;label:contains(&quot;+labelField[2]+&quot;)&quot;).attr(&apos;for&apos;).replace(&apos;_top&apos;,&apos;&apos;); // Country Manager Back-up 2
+  var id_PC = j$(data).find(&quot;label:contains(&quot;+labelField[3]+&quot;)&quot;).attr(&apos;for&apos;).replace(&apos;_top&apos;,&apos;&apos;); // ParentCase
+  
+  // redirect user to the new record page with populated field
+  window.open(&quot;/&quot; + objectPrefix + &quot;/e?&quot; + id_CM + &quot;={!Case.Country_Manager__c}&amp;&quot; + id_CM + &quot;_lkid={!Case.Country_ManagerId__c}&amp;&quot; + id_CMB + &quot;={!Case.Country_Manager_Backup__c}&amp;&quot; + id_CMB + &quot;_lkid={!Case.Country_Manager_BackupId__c}&amp;&quot; + id_CMB2 + &quot;={!Case.Country_Manager_Backup_2__c}&amp;&quot; + id_CMB2 + &quot;_lkid={!Case.Country_Manager_Backup_2Id__c}&amp;&quot; + id_PC + &quot;={!Case.CaseNumber}&amp;&quot; + id_PC + &quot;_lkid={!Case.Id}&amp;retURL=%2F{!Case.Id}&quot;, &quot;_self&quot;);
+  
+});</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Send_email_to_the_Airline</fullName>
+        <availability>online</availability>
+        <displayType>link</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <linkType>url</linkType>
+        <masterLabel>Send email to the Airline</masterLabel>
+        <openType>replace</openType>
+        <protected>false</protected>
+        <url>/_ui/core/email/author/EmailAuthor?retURL=%2F{!Airline_Input__c.Id}&amp;p3_lkid={!Airline_Input__c.Id }&amp;template_id=00Xw0000001yTGQ</url>
+    </webLinks>
+</CustomObject>

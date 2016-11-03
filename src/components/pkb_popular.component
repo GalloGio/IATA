@@ -1,0 +1,75 @@
+<apex:component allowDML="true">
+<apex:attribute name="pkbCon" type="pkb_Controller" required="true" description="handle to the pkb controller" />
+
+<apex:variable var="category" value="{!pkbCon.selectedCategory}" />
+
+<!--
+POPULAR PAGE SIZE: {!pkbCon.popularArticles}<br/>
+RESULTS PAGE SIZE: {!pkbCon.articlesPerPage}<br/>
+CURRENT PAGE: {!pkbCon.currPage}<br/>
+LANG: {!pkbCon.selectedLanguage}<br/>
+CATEGORY USED: {!category}<br/>
+-->
+    <div id="popular">
+      
+      <apex:form >
+        <h4 class="section">{!$Label.PKB2_Popular_Articles} </h4>
+        <apex:outputText rendered="{!NOT(ISBLANK(category))}">
+                  <div class="custom-label" onclick="clearCategory();">
+                  <apex:inputCheckbox value="{!pkbCon.selectedCategory}" id="selectedTopic" style="position: absolute; left: -9999px;" />
+                  <span class="custom-check checked"></span>{!pkbCon.selectedCategoryTranslated}
+                  </div>
+        </apex:outputText>
+         
+      </apex:form>
+     <apex:form >
+     <apex:outputPanel layout="block" id="results">
+    <div id="results">
+      <knowledge:articleList articleVar="a"
+        language="{!pkbCon.selectedLanguage}"
+        sortBy="mostViewed" 
+        pageSize="{!pkbCon.popularArticles}"
+        categories="{!category}"
+        hasMoreVar="more"
+        pageNumber="{!pkbCon.currPage}">
+        <c:pkb_article pkbCon="{!pkbCon}" 
+          aid="{!a.id}"
+          title="{!a.title}"
+          summary="{!a.summary}"
+          urlName="{!a.urlName}"
+          articleTypeName="{!a.articleTypeName}"
+          articleTypeLabel="{!a.articleTypeLabel}"
+          lastModifiedDate="{!a.lastModifiedDate}"
+          firstPublishedDate="{!a.firstPublishedDate}"
+          lastPublishedDate="{!a.lastPublishedDate}"
+        />
+          <script type="text/javascript">moreResults = {!more};</script>
+      </knowledge:articleList>
+      
+      <apex:outputPanel layout="block" style="height: 20px; margin-top: 10px;" styleClass="resultsPaginationLinks" rendered="{!NOT(pkbCon.displayContactUs)}">
+          <div style="float: left; margin-bottom: 10px;">
+              <apex:commandLink action="{!pkbCon.prevPage}" rerender="results" rendered="{!(pkbCon.currPage > 1)}" status="prevStatus">&lt; {!$Label.PKB2_Previous_Link}</apex:commandLink>
+              &nbsp; 
+              <apex:actionStatus id="prevStatus">
+                <apex:facet name="start"><apex:image value="{!$Resource.pkb_loadingdots}" /></apex:facet>
+                <apex:facet name="stop"></apex:facet>
+              </apex:actionStatus>
+          </div>
+    
+          <div style="float: right; margin-bottom: 10px;">
+            <span id="nextLink">
+              <apex:actionStatus id="nextStatus">
+                <apex:facet name="start"><apex:image value="{!$Resource.pkb_loadingdots}" /></apex:facet>
+                <apex:facet name="stop"></apex:facet>
+              </apex:actionStatus>
+                &nbsp;
+                <apex:commandLink action="{!pkbCon.nextPage}" rerender="results" status="nextStatus">{!$Label.PKB2_Next_Link} &gt;</apex:commandLink>
+            </span>
+          </div>
+      </apex:outputPanel>
+       <script type="text/javascript">hideNext();</script>
+	</div>
+  </apex:outputPanel>
+       </apex:form>
+    </div>
+</apex:component>

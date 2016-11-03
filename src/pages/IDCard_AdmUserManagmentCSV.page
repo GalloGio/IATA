@@ -1,0 +1,7 @@
+<apex:page controller="IDCard_AdmUserExportCSVController" contentType="text/csv#IDCards.csv" ><!--
+Attention: every space or new line is reported into the CSV!!
+-->"Salutation","FirstName","LastName","Date_of_Birth__c","IATAcode__c","VER_Number_2__c","Function__c","Phone","Email","Position__c","Duties__c","Start_Date_Agency_Month__c","Start_Date_Agency_Year__c","Start_Date_Industry__c","Geographie et planification","Geographie par destination","Serving the travel","Introduction a BSP link","Le service au client voyageur","La vente de produits ferroviaires internationaux","Application Type","Previous IATA Code","Valid_To_Date__c"
+<apex:repeat value="{!listedContact}" var="vernum" >
+"{!listedContact[vernum].salutation}","{!listedContact[vernum].firstName}","{!listedContact[vernum].lastName}","{!listedContact[vernum].birthDate}","{!listedContact[vernum].IATAcode}","{!listedContact[vernum].VER}","{!listedContact[vernum].function}","{!listedContact[vernum].phone}","{!listedContact[vernum].email}","{!listedContact[vernum].position}","{!listedContact[vernum].duties}","{!listedContact[vernum].startdateagencymonth}","{!listedContact[vernum].startdateagencyyear}","{!listedContact[vernum].startdateindustry}",{!listedContact[vernum].packages}"{!listedContact[vernum].apptype}","{!listedContact[vernum].previousiatacode}","{!listedContact[vernum].printableValidityDate}"
+</apex:repeat>
+</apex:page>

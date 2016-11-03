@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>This is a junction object between GDP_FileDescription and FileSpecification.From_Clause__c Object type. 
+(usually but not restricted to GDP_Products_Account_View__c)
+Records in this objects holds the date of the last modification related to the FileSpecification
+Records in this object holds the nature of the modification ( A=Added, C=Changed or D=Deleted)</description>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Change_Code__c</fullName>
+        <description>A=Added, C=Changed or D=Deleted</description>
+        <externalId>false</externalId>
+        <inlineHelpText>A=Added, C=Changed or D=Deleted</inlineHelpText>
+        <label>Change Code</label>
+        <length>1</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>DeltaLastModifiedDate__c</fullName>
+        <defaultValue>now()</defaultValue>
+        <description>Date time when one of the fields refered in the File definition was modified
+(note that this can be a date prior to the RecordId system lastmodifiedDate if the modification is on a field not related to the File definition)</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Date time when one of the fields refered in the File definition was modified</inlineHelpText>
+        <label>DeltaLastModifiedDate</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>GDP_File_Description__c</fullName>
+        <description>File Description (Reference only)</description>
+        <externalId>false</externalId>
+        <inlineHelpText>File Description (Reference only)</inlineHelpText>
+        <label>GDP File Description</label>
+        <referenceTo>GDP_File_Description__c</referenceTo>
+        <relationshipLabel>GDP_Delta</relationshipLabel>
+        <relationshipName>GDP_Delta</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Related_GDP_Product_Account_View__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>GDP Product Account View</label>
+        <referenceTo>GDP_Products_Account_View__c</referenceTo>
+        <relationshipLabel>GDP_Delta</relationshipLabel>
+        <relationshipName>GDP_Delta</relationshipName>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <label>GDP_Delta</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>GDP_File_Description__c</columns>
+        <columns>Related_GDP_Product_Account_View__c</columns>
+        <columns>DeltaLastModifiedDate__c</columns>
+        <columns>Change_Code__c</columns>
+        <columns>CREATEDBY_USER</columns>
+        <columns>LAST_UPDATE</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>All_TODAY_1</fullName>
+        <columns>NAME</columns>
+        <columns>GDP_File_Description__c</columns>
+        <columns>Related_GDP_Product_Account_View__c</columns>
+        <columns>DeltaLastModifiedDate__c</columns>
+        <columns>Change_Code__c</columns>
+        <columns>CREATEDBY_USER</columns>
+        <columns>LAST_UPDATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>DeltaLastModifiedDate__c</field>
+            <operation>equals</operation>
+            <value>TODAY</value>
+        </filters>
+        <label>All - TODAY</label>
+        <language>en_US</language>
+    </listViews>
+    <nameField>
+        <displayFormat>GDP-Delta-{0000000}</displayFormat>
+        <label>GD Name</label>
+        <trackHistory>false</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>GDP_Delta</pluralLabel>
+    <searchLayouts>
+        <customTabListAdditionalFields>Change_Code__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>DeltaLastModifiedDate__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>GDP_File_Description__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Related_GDP_Product_Account_View__c</customTabListAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ControlledByParent</sharingModel>
+</CustomObject>

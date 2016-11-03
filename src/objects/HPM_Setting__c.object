@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>List</customSettingsType>
+    <enableEnhancedLookup>false</enableEnhancedLookup>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>HPM_App_Url__c</fullName>
+        <defaultValue>&quot;https://zforsf.zuora.com/apps&quot;</defaultValue>
+        <externalId>false</externalId>
+        <label>App Url</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>HPM_Page_Id__c</fullName>
+        <defaultValue>&quot;2c92a0f94a37f8e0014a4040e8fc2ce7&quot;</defaultValue>
+        <description>This field store the host payment page id in zuora</description>
+        <externalId>false</externalId>
+        <label>Page Id</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>HPM_Security_Token__c</fullName>
+        <defaultValue>&quot;vaZrWuRC2nbNNX1HrPL3-2ot-tWRA3YIsNJiISN3QG8=&quot;</defaultValue>
+        <description>This field is for storing Zuora HPM API Security Key</description>
+        <externalId>false</externalId>
+        <label>API Security Key</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>HPM_Tenant_Id__c</fullName>
+        <defaultValue>&quot;1089&quot;</defaultValue>
+        <description>This field store the Zuora tenant Id</description>
+        <externalId>false</externalId>
+        <label>Tenant ID</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>HPM Setting</label>
+    <visibility>Protected</visibility>
+</CustomObject>
