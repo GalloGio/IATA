@@ -7,7 +7,7 @@
         </apex:outputPanel>
             <div id="voucherContent" style="width: 99%; height: 95mm; border: 1mm solid none; display: block;">
                 <div id="voucherAddress" style="width: 50%; display: block; float:left;">                    
-                    <div id="street" style="margin-left: 32.79mm;margin-top: 39.29mm;">
+                    <div id="street" class="{!IF(MOD(rowNum, 3) == 0,'street1', IF(MOD(rowNum, 3) == 1,'street2', 'street3'))}">
                         <apex:outputText value="{0}-{1} {2}">
                         	<apex:param value="{!LEFT(voucher.Voucher_Information__r.Account__r.IATACode__c, 2)}"/>
                         	<apex:param value="{!RIGHT(LEFT(voucher.Voucher_Information__r.Account__r.IATACode__c, 3), 2)}"/>
@@ -28,13 +28,13 @@
                     </div>
                 </div>
                 <div id="voucherInfo">
-                    <div id="voucherYear" style="margin-top: 33.58mm; margin-left:159.04mm; position: absolute;">
+                    <div class="{!IF(MOD(rowNum, 3) == 0,'voucherYear1', IF(MOD(rowNum, 3) == 1,'voucherYear2', 'voucherYear3'))}">
                         <apex:outputText value="{!voucher.Voucher_Information__r.Year__c}"/>
                     </div>
-                    <div id="voucherName" style="margin-top: 47.13mm; margin-left:151.21mm; position: absolute;">
+                    <div class="{!IF(MOD(rowNum, 3) == 0,'voucherName1', IF(MOD(rowNum, 3) == 1,'voucherName2', 'voucherName3'))}">
                         <apex:outputText value="{!voucher.Name}"/>
                     </div>
-                    <div id="voucherNumber" style="margin-top: 61.45mm; margin-left:151.21mm; position: absolute;">
+                    <div class="{!IF(MOD(rowNum, 3) == 0,'voucherNumber1', IF(MOD(rowNum, 3) == 1,'voucherNumber2', 'voucherNumber3'))}">
                     	<apex:outputText style="white-space:nowrap;" value="{!voucher.SequenceNumber__c}"/>
                     </div>
                 </div>
