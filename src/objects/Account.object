@@ -7251,7 +7251,7 @@ V - Co-operative</inlineHelpText>
         <externalId>false</externalId>
         <inlineHelpText>Temporary duplicate bill-to (4xxxx) SAP number</inlineHelpText>
         <label>E&amp;F Additional SAP Nr.</label>
-        <length>20</length>
+        <length>250</length>
         <required>false</required>
         <trackFeedHistory>true</trackFeedHistory>
         <trackHistory>false</trackHistory>
