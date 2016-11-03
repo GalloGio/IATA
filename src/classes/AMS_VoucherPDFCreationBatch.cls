@@ -200,25 +200,14 @@ global class AMS_VoucherPDFCreationBatch implements Database.Batchable<sObject>,
 	public Integer fetchProperRun(AMS_Voucher_Region__c regionInput){
 
 		try{
+
 			Datetime nowDate = Datetime.now();
+
 			String formattedDate = '%'+nowDate.format('yyyy')+'%';
 
-			List<Attachment> attcs = [SELECT Id, Name from attachment where ParentId = :regionInput.Id and name like :formattedDate order by name desc limit 1];
+			Integer countPfdsForYear = [SELECT count() from attachment where ParentId = :regionInput.Id and name like :formattedDate];
 
-			System.debug('Attachment list is :' + attcs);
-
-			if(attcs.isEmpty())
-				return 0;
-
-			String filenameLast = attcs.get(0).Name;
-
-			System.debug('filenameLast is :' + filenameLast);
-
-			String oldRun = filenameLast.split('_').get(2);
-
-			System.debug('oldRun is :' + oldRun);
-
-			return Integer.valueOf(oldRun);
+			return countPfdsForYear+1;
 
 		}catch(Exception e){
 			System.debug('Did not find anything ?:' + e);
