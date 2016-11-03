@@ -77022,6 +77022,7 @@ ID_Card_Key_Account_Discount__c &gt; 1))</errorConditionFormula>
         NOT($User.Profile_Name__c =&apos;System Administrator&apos;),
         NOT($User.Profile_Name__c =&apos;MER Membership&apos;),
         NOT($User.Profile_Name__c =&apos;System administrator - Stakeholders&apos;),
+        NOT($User.Profile_Name__c =&apos;System Administrator - automated processes&apos;),
         NOT($User.Profile_Name__c =&apos;Developer&apos;)),       
         TRUE ,FALSE)</errorConditionFormula>
         <errorMessage>The airline is a member and the name or the billing address cannot be edited. Only MER is allowed.</errorMessage>
