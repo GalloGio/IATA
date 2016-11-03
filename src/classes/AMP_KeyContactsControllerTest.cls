@@ -64,7 +64,7 @@ private class AMP_KeyContactsControllerTest
 			AMP_KeyContactsController keyContactsController  = new AMP_KeyContactsController(stdController);
 
 			System.assertEquals((String)a.Id, keyContactsController.getRecordId(), 'The account Id should match');
-			System.assertEquals(3, keyContactsController.getKeyContacs().size(), 'There should be 3 Key Contact');
+			System.assertEquals(3, keyContactsController.getKeyContacs().size(), 'There should be 3 Key Contacts');
 		}
 	}
 }
