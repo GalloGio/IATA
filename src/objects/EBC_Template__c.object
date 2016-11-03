@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>Hold the customer templates used in EBroadcast product</description>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Audience__c</fullName>
+        <description>Audience will impact the merged field used in the template</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Audience will impact the merged field used in the template</inlineHelpText>
+        <label>Audience</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Agency</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Agent</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Neutral</fullName>
+                <default>false</default>
+            </picklistValues>
+            <restrictedPicklist>true</restrictedPicklist>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Billing_Account__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Billing Account owning the Templates</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Billing Account owning the Templates</inlineHelpText>
+        <label>Billing Account</label>
+        <referenceTo>Zuora__CustomerAccount__c</referenceTo>
+        <relationshipLabel>EBC Templates</relationshipLabel>
+        <relationshipName>EBC_Templates</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>External_Id__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <description>The Exact Target is of this template</description>
+        <externalId>true</externalId>
+        <inlineHelpText>The Exact Target is of this template</inlineHelpText>
+        <label>External Id</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>Is_Reusable__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>This checkbox is checked if the template if only for a particular campaign and is not reusable</description>
+        <externalId>false</externalId>
+        <label>Is Reusable</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Is_Tested__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Is the template has been Send a Test Email since the last save</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Is the template has been Send a Test Email since the last save</inlineHelpText>
+        <label>Is Tested</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Parent_Template__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>The Global Template that was used to create this child</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The Global Template that was used to create this child</inlineHelpText>
+        <label>Parent Template</label>
+        <referenceTo>EBC_Template__c</referenceTo>
+        <relationshipLabel>Designs</relationshipLabel>
+        <relationshipName>Designs</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>TriggSend_Id__c</fullName>
+        <description>The Exact Target Triggered Sent Id</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The Exact Target Triggered Sent Id</inlineHelpText>
+        <label>Triggered Send Id</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>EBC Template</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>Is_Reusable__c</columns>
+        <columns>NAME</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>RECORDTYPE</columns>
+        <columns>CREATEDBY_USER.ALIAS</columns>
+        <columns>CREATEDBY_USER</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
+    <nameField>
+        <label>EBC Template Name</label>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>EBC Templates</pluralLabel>
+    <recordTypes>
+        <fullName>Global</fullName>
+        <active>true</active>
+        <description>These are global templates</description>
+        <label>Global</label>
+        <picklistValues>
+            <picklist>Audience__c</picklist>
+            <values>
+                <fullName>Agency</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Neutral</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>User_Templates</fullName>
+        <active>true</active>
+        <description>Use this for user created templates</description>
+        <label>User Templates</label>
+        <picklistValues>
+            <picklist>Audience__c</picklist>
+            <values>
+                <fullName>Agency</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Neutral</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <searchLayouts>
+        <customTabListAdditionalFields>Audience__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Billing_Account__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Parent_Template__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>RECORDTYPE</customTabListAdditionalFields>
+        <lookupDialogsAdditionalFields>Audience__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Billing_Account__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Parent_Template__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>RECORDTYPE</lookupDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Audience__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Billing_Account__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Parent_Template__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>RECORDTYPE</lookupPhoneDialogsAdditionalFields>
+        <searchResultsAdditionalFields>Audience__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Billing_Account__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Is_Reusable__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Parent_Template__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>RECORDTYPE</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ReadWrite</sharingModel>
+</CustomObject>
