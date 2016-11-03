@@ -112,9 +112,9 @@ public with sharing class EF_TestDataFactory
                 recordTypeId = Schema.SObjectType.EF_Related_Records__c.getRecordTypeInfosByName().get('Location').getRecordTypeId() 
                 );
             locationList.add(location);
-
-        insert locationList;
-
+		}
+        insert locationList; 
+		
         // create iso country 
         IATA_ISO_Country__c iso_country = new IATA_ISO_Country__c (
             name='United States',
@@ -171,7 +171,7 @@ public with sharing class EF_TestDataFactory
             EF_Status__c='Active'
             );
         insert contract2;
-        }
+        
 
     }
 
