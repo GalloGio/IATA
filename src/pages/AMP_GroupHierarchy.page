@@ -27,6 +27,7 @@
 
 		<style>
 			.amp-is-current { font-weight: bold;}
+			a.nocursor { cursor: default;}
 		</style>
 
 </apex:page>
