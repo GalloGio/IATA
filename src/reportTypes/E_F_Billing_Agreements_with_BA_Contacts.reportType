@@ -245,6 +245,11 @@
             <field>Sold_to__c</field>
             <table>EF_Billing_Agreement__c</table>
         </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>EF_Airline_Id__c</field>
+            <table>EF_Billing_Agreement__c</table>
+        </columns>
         <masterLabel>E&amp;F Airline Billing Agreements</masterLabel>
     </sections>
     <sections>

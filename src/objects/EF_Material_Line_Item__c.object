@@ -56,6 +56,18 @@
     <enableSearch>true</enableSearch>
     <enableSharing>false</enableSharing>
     <enableStreamingApi>false</enableStreamingApi>
+	<fields>
+        <fullName>Allow_Billing_Agreements__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(EF_Relationship__r.Contract__r.EF_Allow_Billing_Agreements__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Allow Billing Agreements</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
     <fields>
         <fullName>Base_URL__c</fullName>
         <externalId>false</externalId>
