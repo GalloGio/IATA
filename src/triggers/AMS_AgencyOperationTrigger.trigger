@@ -6,7 +6,8 @@ trigger AMS_AgencyOperationTrigger on AMS_Agency__c (after insert, after update)
   /*  Id rtpax = Schema.SObjectType.AMS_Agency__c.getRecordTypeInfosByName().get('PASSENGER').getRecordTypeId();
     Id rtcargo  =  Schema.SObjectType.AMS_Agency__c.getRecordTypeInfosByName().get('CARGO').getRecordTypeId();
   if(Trigger.isUpdate){
-        AMS_AgencyUpdateHelper.agencyUpdate(Trigger.new);
+        //FM - 22-09-2016 - stop creating "agency update" Records
+        //AMS_AgencyUpdateHelper.agencyUpdate(Trigger.new);
 
         Set<String> accountIds = new Set<String>();
         for(AMS_Agency__c ag: Trigger.new){

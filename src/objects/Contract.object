@@ -253,6 +253,7 @@ E&amp;F CRM Project</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -323,6 +324,7 @@ E&amp;F CRM Project</description>
         <externalId>false</externalId>
         <globalPicklist>EF_Allow_Billing_Agreements</globalPicklist>
         <label>E&amp;F Allow Billing Agreements</label>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -383,6 +385,7 @@ E&amp;F CRM Project</description>
             <restrictedPicklist>true</restrictedPicklist>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
@@ -392,6 +395,7 @@ E&amp;F CRM Project</description>
         <externalId>false</externalId>
         <globalPicklist>EF_Currency</globalPicklist>
         <label>E&amp;F Billing Currency</label>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
@@ -401,6 +405,7 @@ E&amp;F CRM Project</description>
         <externalId>false</externalId>
         <globalPicklist>EF_Frequency</globalPicklist>
         <label>E&amp;F Billing Frequency</label>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -430,6 +435,7 @@ E&amp;F CRM Project</description>
         <externalId>false</externalId>
         <globalPicklist>EF_Currency</globalPicklist>
         <label>E&amp;F 	Data Currency</label>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
@@ -479,6 +485,7 @@ E&amp;F CRM Project</description>
             <restrictedPicklist>true</restrictedPicklist>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
@@ -511,6 +518,7 @@ E&amp;F CRM Project</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -519,6 +527,7 @@ E&amp;F CRM Project</description>
         <externalId>false</externalId>
         <globalPicklist>EF_Currency</globalPicklist>
         <label>E&amp;F Payment Currency</label>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
@@ -557,6 +566,7 @@ E&amp;F CRM Project</description>
         <externalId>false</externalId>
         <globalPicklist>EF_Payment_Terms</globalPicklist>
         <label>E&amp;F Payment Terms</label>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -565,6 +575,7 @@ E&amp;F CRM Project</description>
         <externalId>false</externalId>
         <globalPicklist>EF_Frequency</globalPicklist>
         <label>E&amp;F Reporting Frequency</label>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -584,6 +595,7 @@ E&amp;F CRM Project</description>
             <restrictedPicklist>true</restrictedPicklist>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
@@ -631,6 +643,7 @@ E&amp;F CRM Project</description>
         <externalId>false</externalId>
         <globalPicklist>EF_Status</globalPicklist>
         <label>E&amp;F Status</label>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -761,6 +774,7 @@ IF(ISPICKVAL(Third_Party__c, &quot;Berlitz&quot;), 0.10,
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -877,6 +891,7 @@ IF(ISPICKVAL(Third_Party__c, &quot;Berlitz&quot;), 0.10,
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -1012,6 +1027,7 @@ IF(ISPICKVAL(Third_Party__c, &quot;Berlitz&quot;), 0.10,
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -1030,6 +1046,7 @@ IF(ISPICKVAL(Third_Party__c, &quot;Berlitz&quot;), 0.10,
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>

@@ -246,8 +246,25 @@ public class AMS_AccountHierarchySelectionController {
 
 	public List<HierarchyItem> hierarchy{
 		get{
-			if(hierarchy == null){
-				hierarchy = fetchHierarchy();
+			if(hierarchy == null) {
+				hierarchy = new List<HierarchyItem>();
+
+				Set<Id> accountIds = new Set<Id>();
+				Map<Id, List<AMS_Agencies_relationhip__c>> relationshipMap = AMS_HierarchyHelper.getAccountsHierarchies(new Set<Id>{oscar.Account__c});
+				for(AMS_Agencies_relationhip__c r : relationshipMap.get(oscar.Account__c)){
+					accountIds.add(r.Child_Account__c);
+					accountIds.add(r.Parent_Account__c);
+				}
+
+				//to prevent nullpointer on agencies with no hierarchy
+				accountIds.add(oscar.Account__c);
+
+				for(Account a : Database.query('SELECT Id, '+String.join(accountFieldList, ',')+' FROM Account WHERE Id IN :accountIds AND Status__c != \''+AMS_Utils.ACC_S0_TERMINATED+'\'')){
+					Boolean main = (a.Id == oscar.Account__c);
+					hierarchy.add(new HierarchyItem(a, main, processDetails.containsKey(a.Id)));
+					hierarchyAccounts.add(a.Id);
+				}
+				selectMain();
 			}
 			return hierarchy;
 		}
@@ -273,25 +290,6 @@ public class AMS_AccountHierarchySelectionController {
 		for(HierarchyItem hi : hierarchy){
 			if(!hi.main) hi.selected = selectAll;
 		}
-	}
-
-	private List<HierarchyItem> fetchHierarchy(){
-		Set<Id> accountIds = new Set<Id>();
-		Map<Id, List<AMS_Agencies_relationhip__c>> relationshipMap = AMS_HierarchyHelper.getAccountsHierarchies(new Set<Id>{oscar.Account__c});
-		for(AMS_Agencies_relationhip__c r : relationshipMap.get(oscar.Account__c)){
-			accountIds.add(r.Child_Account__c);
-			accountIds.add(r.Parent_Account__c);
-		}
-
-		//to prevent nullpointer on agencies with no hierarchy
-		accountIds.add(oscar.Account__c);
-
-		String terminatedStatus = AMS_Utils.ACC_S0_TERMINATED;
-		List<HierarchyItem> result = new List<HierarchyItem>();
-		for(Account a : Database.query('SELECT Id, '+String.join(accountFieldList, ',')+' FROM Account WHERE Id IN :accountIds AND Status__c != :terminatedStatus')){
-			result.add(new HierarchyItem(this, a));
-		}
-		return result;
 	}
 
 	private Boolean performValidations(){
@@ -383,7 +381,7 @@ public class AMS_AccountHierarchySelectionController {
 
 			if(!processDetails.isEmpty()) delete processDetails.values();
 			if(!newProcessHierarchy.isEmpty()) insert newProcessHierarchy;
-			Id cId = [SELECT Id FROM Case WHERE Oscar__c = :oscarId AND RecordType.Name = 'OSCAR Communication' AND ParentId = null].Id;
+			Id cId = [SELECT Id FROM Case WHERE Oscar__c = :oscarId AND RecordType.Name = 'OSCAR Communication' AND ( ParentId = null or Parent.RecordType.Name != 'OSCAR Communication' ) ].Id;
 			update new Case(Id = cId, AccountId = oscar.Account__c);
 		}catch(Exception e){
 			ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, 'Couldn\'t save changes '+ e.getMessage()));
@@ -397,6 +395,19 @@ public class AMS_AccountHierarchySelectionController {
 	// ***********************************
 	// ********* action methods **********
 	// ***********************************
+
+	public void selectMain() {
+		for(HierarchyItem hi : hierarchy){
+			if(hi.main){
+				mainAccount = hi.acc;
+				oscar.Account__c = hi.acc.Id;
+			}
+			System.debug(loggingLevel.Debug, '____ [cls AMS_AccountHierarchySelectionController - selectMain] hi.acc.Name - ' + hi.acc.Name);
+			System.debug(loggingLevel.Debug, '____ [cls AMS_AccountHierarchySelectionController - selectMain] hi.main - ' + hi.main);
+			System.debug(loggingLevel.Debug, '____ [cls AMS_AccountHierarchySelectionController - selectMain] hi.selected - ' + hi.selected);
+		}
+		System.debug(loggingLevel.Debug, '____ [cls AMS_AccountHierarchySelectionController - selectMain] mainAccount.Name - ' + mainAccount.Name);
+	}
 
 	public void save(){
 		if(performValidations()){
@@ -418,49 +429,15 @@ public class AMS_AccountHierarchySelectionController {
 	// *********** wrappers **************
 	// ***********************************
 	public class HierarchyItem{
-		private AMS_AccountHierarchySelectionController controller;
 
 		public Account acc { get; set; }
+		public Boolean main { get; set; }
 		public Boolean selected { get; set; }
 
-		public Boolean main { get; set; }
-
-		public void selectMain(){
-			System.debug(loggingLevel.Debug, '____ [cls AMS_AccountHierarchySelectionController - selectMain] this.acc.Name - ' + this.acc.Name);
-			System.debug(loggingLevel.Debug, '____ [cls AMS_AccountHierarchySelectionController - selectMain] this.main - ' + this.main);
-			if(this.main){
-				for(HierarchyItem hi : controller.hierarchy){
-					System.debug(loggingLevel.Debug, '____ [cls AMS_AccountHierarchySelectionController - selectMain] (this == hi) - ' + (this == hi));
-					if(hi != this && hi.main){
-						hi.main = false;
-						hi.selected = true;
-					}
-				}
-				this.selected = false;
-				this.controller.mainAccount = this.acc;
-				this.controller.oscar.Account__c = this.acc.Id;
-			}else{
-				this.main = true;
-				ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.WARNING, 'Main account must always be selected'));
-			}
-		}
-
-		public HierarchyItem(AMS_AccountHierarchySelectionController c, Account a){
-			c.hierarchyAccounts.add(a.Id);
-
-			this.controller = c;
+		public HierarchyItem(Account a, Boolean main, Boolean selected){
 			this.acc = a;
-
-			this.main = false;
-			this.selected = false;
-
-			if(a.Id == c.oscar.Account__c){
-				this.main = true;
-				c.mainAccount = this.acc;
-			}
-			else if (c.processDetails.containsKey(a.Id)) {
-				this.selected = true;
-			}
+			this.main = main;
+			this.selected = selected;
 		}
 	}
 }

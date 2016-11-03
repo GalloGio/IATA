@@ -118,6 +118,7 @@
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -297,6 +298,7 @@ TEXT( FLOOR( ( Time_With_Support__c  - FLOOR( Time_With_Support__c ) ) * 60 ) ) 
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>

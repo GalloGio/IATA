@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>To be used to notify MACS staff about when a renewal stars</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>IATADynamicSkyLetterhead</letterhead>
+    <name>Marketing Alert on Started renewal</name>
+    <style>freeForm</style>
+    <subject>Salesforce: contract renewal for {!Contract.Current_Opportunity__c} has started</subject>
+    <textOnly>Dear Colleagues,
+
+
+
+The contract renewal for the opportunity  {!Contract.Current_Opportunity__c} has been started by {!User.Name}.
+
+
+
+You are receiving this notification because you are either the sales manger or the product manager related to this opportunity. As the renewal can be started independently of your role and renewal responsibility, please check you don&apos;t have any concerns with this renewal.</textOnly>
+    <type>html</type>
+</EmailTemplate>

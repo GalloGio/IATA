@@ -35,7 +35,7 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>pacificoa@iata.org</recipient>
+            <recipient>kalajil@iata.org</recipient>
             <type>user</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
@@ -67,9 +67,13 @@
             <recipient>pacificoa@iata.org</recipient>
             <type>user</type>
         </recipients>
+        <recipients>
+            <recipient>szajkod@iata.org</recipient>
+            <type>user</type>
+        </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>unfiled$public/Airline_Coding_Application_Approved</template>
+        <template>Airline_Coding/AUTO_Expiry_of_AOC_approaching</template>
     </alerts>
     <alerts>
         <fullName>Irregularity_Thresold_Met</fullName>
@@ -466,7 +470,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
     </rules>
     <rules>
         <fullName>FDS Coding AOC Expiry date alert 10 Days before</fullName>
-        <active>false</active>
+        <active>true</active>
         <criteriaItems>
             <field>Account.ACLI_Status__c</field>
             <operation>equals</operation>
@@ -500,7 +504,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
     </rules>
     <rules>
         <fullName>FDS Coding AOC Expiry date alert 3 months before</fullName>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Account.ACLI_Status__c</field>
             <operation>equals</operation>

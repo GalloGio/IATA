@@ -12,6 +12,7 @@ public with sharing class AMS_XML_Generator {
     public Map<String,String> mXMLFieldValues;
 
     public Map<Id, AMS_Agency_Updates__c> mAg_VS_AgUpdate;
+    public Map<Id, String> mAg_VS_ChangeCode;
     public Map<Id, Agency_Applied_Change_code__c> mAg_VS_AgChangeCode;
     public Map<Id, Agency_Applied_Change_code__c> mAg_VS_AgChangeCodeFIN;
     public Map<Id, String> mAg_VS_AgArea;
@@ -286,6 +287,7 @@ public with sharing class AMS_XML_Generator {
         msObject = new Map<Id, sObject>();
 
         mAg_VS_AgUpdate = new Map<Id, AMS_Agency_Updates__c>();
+        mAg_VS_ChangeCode = new Map<Id, String>(); 
         mAg_VS_AgChangeCode = new Map<Id, Agency_Applied_Change_code__c>();
         mAg_VS_AgChangeCodeFIN = new Map<Id, Agency_Applied_Change_code__c>();
         mAg_VS_AgArea = new Map<Id, String>();
@@ -355,25 +357,36 @@ public with sharing class AMS_XML_Generator {
         //lAgencyUpdates = [SELECT Agency__c,Id,Name,RelationShip__c,Update_Type__c 
         //                    FROM AMS_Agency_Updates__c
         //                    where Agency__c in :setAgencyKeys];
-        lAgencyUpdates = [SELECT Account__c,Id,Name,RelationShip__c,Update_Type__c 
-                            FROM AMS_Agency_Updates__c
-                            where Account__c in :setAgencyKeys];
+        //lAgencyUpdates = [SELECT Account__c,Id,Name,RelationShip__c,Update_Type__c 
+        //                    FROM AMS_Agency_Updates__c
+        //                    where Account__c in :setAgencyKeys
+        //                    order by CreatedDate DESC];
+
+        lAgencyUpdates = [SELECT Account__c,CreatedDate,LastModifiedDate,Id,Update_Type__c, Change_Code__c 
+                            FROM AMS_Agency_Updates__c 
+                            WHERE Account__c IN :setAgencyKeys 
+                            ORDER BY Account__c,LastModifiedDate desc];                       
         //END - #AMSFTS                                        
 
+        AMS_Agency_Updates__c auxAU = new AMS_Agency_Updates__c();
         for (AMS_Agency_Updates__c agUpd : lAgencyUpdates) {
             //mAg_VS_AgUpdate.put(agUpd.Agency__c,agUpd); #AMSFTS
-            mAg_VS_AgUpdate.put(agUpd.Account__c,agUpd);
+
+            //Stores only the 1st record from the agency update query, this one have the latest change code to be used
+            if(auxAU == null || agUpd.Account__c != auxAU.Account__c){
+                auxAU = agUpd;
+                mAg_VS_AgUpdate.put(agUpd.Account__c,agUpd);   
+                mAg_VS_ChangeCode.put(agUpd.Account__c,agUpd.Change_Code__c);   
+            }            
         }
         
 
-        //
         lAgencyChangeCode = [SELECT Account__c,Active__c,Change_Code__c, CreatedDate 
                                 FROM Agency_Applied_Change_code__c 
                                 WHERE Change_Code__c != null 
                                 AND Active__c = true 
                                 AND Account__c in :setAgencyKeys];
-
-    
+        
         for (Agency_Applied_Change_code__c agChgCode : lAgencyChangeCode) {
             mAg_VS_AgChangeCode.put(agChgCode.Account__c,agChgCode);
         }                            
@@ -1271,6 +1284,7 @@ public with sharing class AMS_XML_Generator {
                     Dom.Xmlnode inspectionNode = agencyNode.addChildElement('endorsements', null, null);
 
                     Agency_Applied_Change_code__c auxAgAppChangeCode = mAg_VS_AgChangeCode.get(ag.Id);
+
                     
                     //Inspection data not to send anymore! Decision done on R3.1, in exchange we gather information from the “account” data and “Applied Change Code”
                     //if(lInspection.size() > 0){
@@ -1337,7 +1351,7 @@ public with sharing class AMS_XML_Generator {
                     //}else{
                     //    agRelationshipsNode.addTextNode('Missing');
                     }
-                
+				
                     if(!bHier || bHierChild){
                         //AMS_Agency__c parentAg = (AMS_Agency__c)msObject.get(mAg_VS_ParentAg.get(ag.Id)); - #AMSFTS    
                         Account parentAg = (Account)msObject.get(mAg_VS_ParentAg.get(ag.Id));
@@ -1352,7 +1366,8 @@ public with sharing class AMS_XML_Generator {
                    
                     if( (!bHier && !bHierChild) || (bHier && !bHierChild)){
                         //For HO agencies - put the HO own data on the relationship 
-                        if(ag.Location_Type__c.equalsIgnoreCase('HO')){
+                        //if(ag.Location_Type__c.equalsIgnoreCase('HO')){
+                        if(AMS_Utils.LocationTypeAllHOTypes.contains(ag.Location_Type__c)){
                             Dom.Xmlnode agRelationshipNode = agRelationshipsNode.addChildElement('agencies_relationship', null, null);
                             Dom.Xmlnode auxAgencyNode = agRelationshipNode.addChildElement('parent_agency', null, null);
                             getAgencyNode(auxAgencyNode, ag,False, True);
@@ -1568,11 +1583,15 @@ public with sharing class AMS_XML_Generator {
         //Indicates if record is A=Added, C=Changed or D=Deleted.  Changes files only, blank for Masters.
         AMS_Agency_Updates__c agUpd = mAg_VS_AgUpdate.get(agency.Id);
         Agency_Applied_Change_code__c agChangeCode = mAg_VS_AgChangeCode.get(agency.Id);
+        String auxChangeCode = mAg_VS_ChangeCode.get(agency.Id);
 
         
-        if(agChangeCode != Null){
-            sRec_id = AMS_Utils.getRecIdFromChangeCode(agChangeCode.Change_Code__c);
-            sChangeCode = agChangeCode.Change_Code__c;
+        //if(agChangeCode != Null){
+        //    sRec_id = AMS_Utils.getRecIdFromChangeCode(agChangeCode.Change_Code__c);
+        //    sChangeCode = agChangeCode.Change_Code__c;
+        if(auxChangeCode != Null){
+            sRec_id = AMS_Utils.getRecIdFromChangeCode(auxChangeCode);
+            sChangeCode = auxChangeCode;   
         }else{
             //in case of no change code!!
             sRec_id = 'C';
@@ -1624,7 +1643,9 @@ public with sharing class AMS_XML_Generator {
             system.debug('mAg_VS_HO: ' + mAg_VS_HO);
             Account auxAgHO = (Account) msObject.get(auxAgHOid);
             system.debug('auxAgHO: ' + auxAgHO);
-            getElementNode(agencyNode, 'ho_id', auxAgHO != Null ? auxAgHO.IATACode__c : Null); 
+            //getElementNode(agencyNode, 'ho_id', auxAgHO != Null ? auxAgHO.IATACode__c : Null); 
+
+            getElementNode(agencyNode, 'ho_id', agency.Top_Parent__r.IATACode__c != null ? agency.Top_Parent__r.IATACode__c : auxAgHO != Null ? auxAgHO.IATACode__c : Null); 
         
 
             //Sprint 7: Inserting "LCtryCode" in the Agencies since now we are using the "C_Code" as country code

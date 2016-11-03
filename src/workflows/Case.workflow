@@ -4818,7 +4818,7 @@
     <fieldUpdates>
         <fullName>DPCtoJOliver</fullName>
         <field>Product_Manager_ACR__c</field>
-        <lookupValue>oliverj@iata.org</lookupValue>
+        <lookupValue>kalasha@iata.org</lookupValue>
         <lookupValueType>User</lookupValueType>
         <name>DPCtoJOliver</name>
         <notifyAssignee>false</notifyAssignee>
@@ -11256,7 +11256,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <value>Complete DSR</value>
         </criteriaItems>
         <description>DPC DSR: this is the time when the case is completed by DPC (it is automaticaly populated on the case status COMPLETED)</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
         <fullName>DPC%3A Date %2F Time Scheduled</fullName>
@@ -11268,6 +11268,10 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.Planned_Start_CR__c</field>
             <operation>notEqual</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.DPC_Date_Time_Scheduled__c</field>
+            <operation>equals</operation>
         </criteriaItems>
         <description>DPC DSR: This is a time when DPC user fill the field Planned start CSR</description>
         <triggerType>onAllChanges</triggerType>
@@ -12702,7 +12706,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
-            <value>SIDRA</value>
+            <value>SIDRA,SIDRA Lite</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Region__c</field>
@@ -12722,7 +12726,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
-            <value>12/19/2013 6:00 PM</value>
+            <value>12/20/2013</value>
         </criteriaItems>
         <description>SIDRA</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
@@ -13477,7 +13481,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         </actions>
         <active>true</active>
         <description>SIDRA</description>
-        <formula>AND( NOT(SIDRA_workflow_flag__c), RecordType.Name = &quot;SIDRA&quot;, OR(AND(ISPICKVAL(Total_Irregularities__c,&quot;4&quot;), Acc_IRR_leading_to_DEF__c = 4), AND(ISPICKVAL(Total_Irregularities__c,&quot;6&quot;), Acc_IRR_leading_to_DEF__c = 6), AND(ISPICKVAL(Total_Irregularities__c,&quot;8&quot;), Acc_IRR_leading_to_DEF__c = 8), AND(ISPICKVAL(Total_Irregularities__c,&quot;10&quot;), Acc_IRR_leading_to_DEF__c = 10), AND( REI_Previous_12_Months_CASS_only__c , ispickval( Region__c ,&quot;europe&quot;))))</formula>
+        <formula>AND( NOT(SIDRA_workflow_flag__c), RecordType.Name = &quot;SIDRA&quot;, OR(AND(ISPICKVAL(Total_Irregularities__c,&quot;4&quot;), Acc_IRR_leading_to_DEF__c = 4),  AND(ISPICKVAL(Total_Irregularities__c,&quot;6&quot;), Acc_IRR_leading_to_DEF__c = 6),  AND(ISPICKVAL(Total_Irregularities__c,&quot;8&quot;), Acc_IRR_leading_to_DEF__c = 8),  AND(ISPICKVAL(Total_Irregularities__c,&quot;10&quot;), Acc_IRR_leading_to_DEF__c = 10),  AND( REI_Previous_12_Months_CASS_only__c , ispickval( Region__c ,&quot;europe&quot;))))</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>

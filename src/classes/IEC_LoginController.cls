@@ -24,7 +24,8 @@ public without sharing class IEC_LoginController extends IEC_PageController {
                 //Read username & password from post data
                 username = ApexPages.currentPage().getParameters().get('username');
                 password = ApexPages.currentPage().getParameters().get('password'); 
-
+                hasError = true;
+                hasConfirm = false;
                 String retUrl = (System.currentPageReference().getParameters().containsKey('retUrl'))
                     ? System.currentPageReference().getParameters().get('retUrl')
                     : 'IEC_Home';
@@ -74,13 +75,27 @@ public without sharing class IEC_LoginController extends IEC_PageController {
 
                 Pagereference pr  = IECUserManager.login(username, password, retURL + tt + DateTime.now().getTime());
                 
-                if(ApexPages.hasMessages(ApexPages.Severity.ERROR))
+                 if(ApexPages.hasMessages(ApexPages.Severity.ERROR)) {
+                    List<Apexpages.Message> msgs = ApexPages.getMessages();
+                    for(Apexpages.Message msg:msgs){                 
+                        system.debug('@@@msg detail: ' +msg.getDetail());
+                        system.debug('@@@Label.ISSP_Frozen_User_Alert_Message: ' +Label.ISSP_Frozen_User_Alert_Message);
+                        if (msg.getDetail().contains(Label.ISSP_Frozen_User_Alert_Message)) {
+                            hasError = true;
+                            //show90days = true;
+                            //ApexPages.getMessages().clear();
+                            return null;
+                        }
+                    }
+
                     hasError = true;
+                }
 
                 return pr ;
             }
                 
             return null;
+        
         }
         catch (Exception ex) {
             //addErrorMessage(ex.getMessage());

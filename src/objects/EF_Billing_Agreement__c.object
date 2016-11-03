@@ -103,6 +103,7 @@
         <externalId>false</externalId>
         <globalPicklist>EF_Currency</globalPicklist>
         <label>Billing Currency</label>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -146,6 +147,7 @@
         <externalId>false</externalId>
         <globalPicklist>EF_Currency</globalPicklist>
         <label>Data Currency</label>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -183,6 +185,7 @@
         <externalId>false</externalId>
         <globalPicklist>EF_Status</globalPicklist>
         <label>E&amp;F Status</label>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -223,6 +226,7 @@
         <externalId>false</externalId>
         <globalPicklist>EF_Invoice_Distribution</globalPicklist>
         <label>Invoice Distribution Method</label>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -275,6 +279,7 @@
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -283,6 +288,7 @@
         <externalId>false</externalId>
         <globalPicklist>EF_Currency</globalPicklist>
         <label>Payment Currency</label>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -320,6 +326,7 @@
         <externalId>false</externalId>
         <globalPicklist>EF_Payment_Method</globalPicklist>
         <label>Payment Method</label>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -357,6 +364,7 @@
         <externalId>false</externalId>
         <globalPicklist>EF_Payment_Terms</globalPicklist>
         <label>Payment Terms</label>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -393,6 +401,7 @@
         <externalId>false</externalId>
         <globalPicklist>EF_Status</globalPicklist>
         <label>Status</label>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>

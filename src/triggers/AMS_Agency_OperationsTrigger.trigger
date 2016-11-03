@@ -44,7 +44,8 @@ trigger AMS_Agency_OperationsTrigger on AMS_Agency_Operations__c (before insert,
         }
 
         
-        AMS_AgencyUpdateHelper.agencyUpdate(lAMS_Agency_OperationsUpdate);
+        //FM - 22-09-2016 - stop creating "agency update" Records
+        //AMS_AgencyUpdateHelper.agencyUpdate(lAMS_Agency_OperationsUpdate);
  
     }
 
