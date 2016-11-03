@@ -2163,6 +2163,7 @@ Enabled: Sufficient for Agents to simply upload scanned copy to online applicati
         <columns>Case_BSP_Country__c</columns>
         <columns>AIMS_Area_ID__c</columns>
         <columns>SLA_Type__c</columns>
+        <columns>Sanctioned_Country__c</columns>
         <columns>UPDATEDBY_USER</columns>
         <columns>LAST_UPDATE</columns>
         <filterScope>Everything</filterScope>
