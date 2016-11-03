@@ -27,7 +27,28 @@ private class AMP_KeyContactsControllerTest
 			ceoContact.Email = 'CEO@testAccount.com';
 			ceoContact.AccountId = a.Id;
 			ceoContact.CEO_CFO__c = 'CEO';
+			ceoContact.Membership_Function__c = 'General Management';
 			insert ceoContact;
+
+			Contact mainContact = new Contact();
+			mainContact.FirstName = 'testFirst';
+			mainContact.LastName = 'testLast';
+			mainContact.Title = 'main';
+			mainContact.Email = 'main@testAccount.com';
+			mainContact.AccountId = a.Id;
+			mainContact.Membership_Main_Contact__c = true;
+			mainContact.Membership_Function__c = 'General Management';
+			insert mainContact;
+
+			Contact primaryContact = new Contact();
+			primaryContact.FirstName = 'testFirst';
+			primaryContact.LastName = 'testLast';
+			primaryContact.Title = 'primary';
+			primaryContact.Email = 'primary@testAccount.com';
+			primaryContact.AccountId = a.Id;
+			primaryContact.Membership_Function__c = 'Cargo';
+			primaryContact.Function__c = 'Cargo';
+			insert primaryContact;
 
 			Contact notCEO = new Contact();
 			notCEO.FirstName = 'testFirst';
