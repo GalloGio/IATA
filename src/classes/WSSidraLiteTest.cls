@@ -1,6 +1,9 @@
 @isTest
 public class WSSidraLiteTest {
 
+    @testSetup static void loadData() {
+        insert new SidraLiteAllowedCountries__c(Name = 'Canada');
+    }
 
     private static Case createSIDRALite(Case parent) {
         Case cse = new Case(
