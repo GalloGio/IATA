@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>Object to hold filters for Geo-Selection and Refinement.
+Dedicated to the eBroadcast application.</description>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Audience__c</fullName>
+        <description>This field will separate filters between agency and agents.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>This field will separate filters between agency and agents.</inlineHelpText>
+        <label>Audience</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Agency</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Agent</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Custom</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Data_Source_Label_Field__c</fullName>
+        <description>The field contains the value that is displayed on UI for picklists.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The field contains the value that is displayed on UI for picklists.</inlineHelpText>
+        <label>Data Source Label Field</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Data_Source_Object__c</fullName>
+        <description>The source of data for available Picklist Values of a Picklist Application Filters</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The source of data for available Picklist Values of a Picklist Application Filters</inlineHelpText>
+        <label>Data Source Object</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Data_Source_Value_Field__c</fullName>
+        <description>The label that will be displayed to the client on the picklist options values</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The label that will be displayed to the client on the picklist options values</inlineHelpText>
+        <label>Data Source Value Field</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Data_Source_Where_Clause__c</fullName>
+        <externalId>false</externalId>
+        <label>Data Source Where Clause</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Data_Type__c</fullName>
+        <description>This field is used to select the type of UI (Checkbox, Date, Picklist, Text) to enter values for filters.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>This field is used to select the type of UI (Checkbox, Date, Picklist, Text) to enter values for filters.</inlineHelpText>
+        <label>Data Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Picklist</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Checkbox</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Date</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Text</fullName>
+                <default>false</default>
+            </picklistValues>
+            <restrictedPicklist>true</restrictedPicklist>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Filter_Description__c</fullName>
+        <description>This field will store the actual filter name that allows the end-user to search the data.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>This field will store the actual filter name that allows the end-user to search the data.</inlineHelpText>
+        <label>Filter Description</label>
+        <length>50</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Filter_Field__c</fullName>
+        <description>This field will specify the field to search in relation to the filter.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>This field will specify the field to search in relation to the filter.</inlineHelpText>
+        <label>Filter Field</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Filter_RelatedList_Field__c</fullName>
+        <description>This field will specify the related list relation field name to search in relation to the filter.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>This field will specify the related list relation field name to search in relation to the filter.</inlineHelpText>
+        <label>Filter Related List Field</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Filter_RelatedList__c</fullName>
+        <description>This field will specify the related list name to search in relation to the filter.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>This field will specify the related list name to search in relation to the filter.</inlineHelpText>
+        <label>Filter Related List</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Search_Level__c</fullName>
+        <description>This field will separate filters by Geo-Selection and Refinement.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>This field will separate filters by Geo-Selection and Refinement.</inlineHelpText>
+        <label>Search Level</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Geo-Selection</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Refinement</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <label>EBC Application Filter</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Audience__c</columns>
+        <columns>Search_Level__c</columns>
+        <columns>Filter_Description__c</columns>
+        <columns>Data_Type__c</columns>
+        <columns>Data_Source_Object__c</columns>
+        <columns>Data_Source_Where_Clause__c</columns>
+        <columns>Data_Source_Label_Field__c</columns>
+        <columns>Data_Source_Value_Field__c</columns>
+        <columns>Filter_RelatedList__c</columns>
+        <columns>Filter_RelatedList_Field__c</columns>
+        <columns>Filter_Field__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
+    <nameField>
+        <displayFormat>FT-{0000}</displayFormat>
+        <label>EBC Application Filter Name</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>EBC Application Filters</pluralLabel>
+    <searchLayouts>
+        <customTabListAdditionalFields>Audience__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Search_Level__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Filter_Description__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Data_Type__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Data_Source_Object__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Filter_Field__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>LAST_UPDATE</customTabListAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ReadWrite</sharingModel>
+</CustomObject>
