@@ -774,11 +774,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Status__c</field>
-            <table>Contract.EF_Relationships__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>Contract_Payment_Terms__c</field>
             <table>Contract.EF_Relationships__r</table>
         </columns>
