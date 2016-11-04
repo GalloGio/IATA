@@ -2781,6 +2781,12 @@ IF(ISPICKVAL(Third_Party__c, &quot;Berlitz&quot;), 0.10,
     </searchLayouts>
     <sharingModel>Private</sharingModel>
     <validationRules>
+        <fullName>EF_Contract_Creation_Validation</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(ISNEW(),  NOT(OR(ISPICKVAL($User.EF_User_Role__c, &apos;Head, Client Services&apos;), ISPICKVAL($User.EF_User_Role__c, &apos;Manager, Business Development&apos;))), RecordType.DeveloperName=&apos;EF_Client_Agreement&apos;)</errorConditionFormula>
+        <errorMessage>You are not allowed to create E&amp;F Contracts</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>EF_Contract_For_CS_Role_only</fullName>
         <active>true</active>
         <description>Only roles Manager, Business Development, Head, Client Services and Client Services Specialists can modify E&amp;F Contracts.</description>
