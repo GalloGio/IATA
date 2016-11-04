@@ -87,8 +87,20 @@
                 <field>Portal_Service_Report__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>Company_Type__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Is_your_firm_handling_Dangerous_Goods__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Link_agent_name__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Link_agent_code__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -588,9 +600,23 @@
         <fields>NAME</fields>
         <fields>Accreditation_Endorsement_organisation__c</fields>
         <fields>Accreditation_Endorsement_Status_code__c</fields>
+        <fields>Airline__c</fields>
+        <fields>Airline_Code__c</fields>
         <fields>OSCAR__c</fields>
         <fields>CREATEDBY_USER</fields>
         <relatedList>AMS_Inspection__c.Account__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>First_Name__c</fields>
+        <fields>Last_Name__c</fields>
+        <fields>Type_Of_Certificate__c</fields>
+        <fields>Issued_on__c</fields>
+        <fields>Validity__c</fields>
+        <fields>Expiry_Date__c</fields>
+        <relatedList>AMS_Agency_Regulation__c.Account__c</relatedList>
+        <sortField>Expiry_Date__c</sortField>
+        <sortOrder>Asc</sortOrder>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>

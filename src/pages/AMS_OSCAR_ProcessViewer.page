@@ -348,7 +348,7 @@ function buildFunctionCall(func, argList){
 </apex:pageBlock>
 
 
-<apex:pageBlock rendered="{!IF(oscar != null && NOT(oscar.AMS_Online_Accreditation__r.Ready_for_Accreditation__c),true,false)}">
+<apex:pageBlock rendered="{!IF(oscar != null && NOT(oscar.AMS_Online_Accreditation__r.Ready_for_Accreditation__c) && oscar.Process__c != 'CERTIFICATION.1.0',true,false)}">
     <div class="overlay">
     <div class="overlay-content">
         <p style="font-size: 36px;">LOCKED</p>
@@ -406,7 +406,7 @@ function buildFunctionCall(func, argList){
                                 <apex:image value="{!URLFOR($Resource.AMS_Icons, statusIcons[step.name])}" styleClass="hasTooltip"/>
                                 <div class="hidden">
                                     <p><b>{!statusLabel[step.name]}</b><br/>
-                                       <i>Other info: TO BE DEFINED</i>!</p> 
+                                       <!--<i>Other info: TO BE DEFINED</i>!--></p> 
                                 </div>
                         </apex:outputPanel>
                         </apex:pageBlockSectionItem>

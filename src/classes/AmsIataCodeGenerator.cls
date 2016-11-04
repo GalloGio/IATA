@@ -122,6 +122,10 @@ global class AmsIataCodeGenerator{
                 theAccount.RecordTypeId = AMS_Utils.getId('Account', 'IATA_Agency');
                 if(allowedProgramCodes.contains(theAccreditation.Location_Class__c))
                 {
+                    //hammer: new requirement has same location class mapping to different account categories...
+                    if(theAccreditation.SAAM_Case__r.OSCAR__r.Process__c == AMS_Utils.new_GSSA && theAccount.Location_Class__c == 'G')
+                        theAccount.Category__c = 'GSSA Cargo';
+                    else
                     theAccount.Category__c = programCategoryMap.get(theAccount.Location_Class__c);
                 }
                 else
@@ -366,6 +370,9 @@ global class AmsIataCodeGenerator{
                                     theAccount.RecordTypeId = AMS_Utils.getId('Account', 'IATA_Agency');
                                     if(allowedProgramCodes.contains(theAccreditation.Location_Class__c))
                                     {
+                                if(theAccreditation.SAAM_Case__r.OSCAR__r.Process__c == AMS_Utils.new_GSSA && theAccount.Location_Class__c == 'G')
+                                    theAccount.Category__c = 'GSSA Cargo';
+                                else
                                         theAccount.Category__c = programCategoryMap.get(theAccount.Location_Class__c);
                                     }
                                     else

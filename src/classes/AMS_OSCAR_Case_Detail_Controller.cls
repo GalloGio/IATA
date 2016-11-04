@@ -6,6 +6,8 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
 
     public Boolean hasCase { get; set; }
     public Boolean saveAction { get; set; }
+    public Boolean isCargoAgency{get;set;}
+    public Boolean isCertificationOSCAR{get;set;}
 
     public Id objectId { get; set; }
 
@@ -123,7 +125,8 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
         this.oscarObj = fetchOscarFields(objectId, isObjectCase(objectId));
 
         if(this.oscarObj != null && this.oscarObj.AMS_Online_Accreditation__c != null){
-
+            this.isCargoAgency = oscarObj.Account__r.Sector__c == AMS_Utils.SECTOR_CARGO;
+            this.isCertificationOSCAR = oscarObj.Process__c == AMS_Utils.CERTIFICATION ? true : false;
             this.accreditationObj = fetchAccreditationFields(this.oscarObj.AMS_Online_Accreditation__c);
         }else{
             System.debug('Could not fetch any Oscar or does not have an accreditation object');
@@ -183,7 +186,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
                         Local_Inspection_received__c,Local_Inspection_compliant__c,PSAA_EACP_Agreement_received__c,Criteria_remarks__c,Bank_Guarantee_time__c,
                         Out_of_deadline_SAAM__c,OSCAR_Deadline__c,Dossier_Reception_Date__c,OwnerId,
                         Owner.Phone,Owner.Email,Owner.Name,CreatedBy.Name,Owner.UserRole.Name,LastModifiedBy.Name,Contact_Name__c,Contact_Phone__c,Contact_Email__c,
-                        createdDate,Date_Time_Closed__c,RecordTypeId,Account__r.IATA_ISO_Country__r.Region__c,
+                        createdDate,Date_Time_Closed__c,RecordTypeId,Account__r.IATA_ISO_Country__r.Region__c, Account__r.Sector__c,
                         Account__r.IATA_ISO_Country__r.Name,AMS_Online_Accreditation__c,Account__c,Account__r.Name,Process__c, Type_of_change__c from AMS_OSCAR__c where id = :idToSearch LIMIT 1];
 
         if(oSCARs.size() > 0){
