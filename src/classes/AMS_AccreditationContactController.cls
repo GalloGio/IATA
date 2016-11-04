@@ -30,8 +30,6 @@ public with sharing class AMS_AccreditationContactController {
             AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Company') => 'Company',
             AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Current_Company_Owner') => 'Company',
 
-            AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Current_Company_Owner') => 'Company',
-
             AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Trained_Staff') => 'Trained Staff'
 
 
@@ -53,10 +51,10 @@ public with sharing class AMS_AccreditationContactController {
             //String acCompanyRtId = AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Company');
             
             List<AMS_Pax_Accreditation_Form__c> aoaList = [select id, Name, Account_Name__c, IATACode__c, Type_of_Operation__c, Shipping_Street__c, Shipping_Postal_Code__c, 
-                            Shipping_City__c, Shipping_State__c, Shipping_Country__c, SAAM_Case__r.AccountId, SAAM_Case__r.OSCAR__r.Account__c, SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c,
-                            SAAM_Case__r.OSCAR__r.Process__c, SAAM_Case__r.OSCAR__r.Type_of_change__c, SAAM_Case__r.OSCAR__r.Account__r.Sector__c
-                            from AMS_Pax_Accreditation_Form__c
-                            where Id =: stdController.getRecord().id];
+                            Shipping_City__c, Shipping_State__c, Shipping_Country__c, SAAM_Case__r.AccountId, SAAM_Case__r.OSCAR__r.Account__c,
+                            SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c, SAAM_Case__r.OSCAR__r.Process__c, SAAM_Case__r.OSCAR__r.Type_of_change__c,
+                            SAAM_Case__r.OSCAR__r.Account__r.Sector__c
+                            from AMS_Pax_Accreditation_Form__c where Id =: stdController.getRecord().id];
             this.aoa = aoaList.get(0);
             String commaSeparatedFields = AMS_AccreditationContactHelper.loadFieldsDynamically('AMS_Accreditation_Contact__c');
             String query = 'select ' + commaSeparatedFields + ', Company__r.Legal_Name__c, AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__c, AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c, AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Process__c, AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Type_of_change__c from AMS_Accreditation_Contact__c where  RecordType.DeveloperName IN (\'Company\',\'Current_Company_Owner\',\'Current_Owner\',\'Person\', \'Trained_Staff\') and AMS_Pax_Accreditation_Form__c = \'' + this.aoa.Id + '\'';
@@ -65,30 +63,20 @@ public with sharing class AMS_AccreditationContactController {
             {
                 
                 // Need to go over the list to get to know if any Companies belong to the ownership to get a map of Ac.Id and Account
-                Set<Id> accountsToLoadSetId = new Set<Id>();
-                Set<String> accountsToLoadSetNumber = new Set<String>();
-                Set<String> accountsToLoadSetIATACode = new Set<String>();
-
-                for(AMS_Accreditation_Contact__c acTemp : acList){
-
-                    if(accreditationContactRT.get(acTemp.RecordTypeId) == 'Company'){
-                        if(acTemp.Company__c != null) accountsToLoadSetId.add(acTemp.Company__c);
-                        if(acTemp.Registration_number__c != null) accountsToLoadSetNumber.add(acTemp.Registration_number__c);
-                        if(acTemp.IATACode__c != null) accountsToLoadSetIATACode.add(acTemp.IATACode__c);
+                Set<Id> accountsToLoadSet = new Set<Id>();
+                for(AMS_Accreditation_Contact__c acTemp : acList)
+                {
+                    if(accreditationContactRT.get(acTemp.RecordTypeId) == 'Company')
+                    {
+                        accountsToLoadSet.add(acTemp.Company__c);
                     }
                 }
                 
-                Map<Id, Account> accListId = new Map<Id, Account>();
-                Map<String, Account> accListNumber = new Map<String, Account>();
-                Map<String, Account> accListIATACode = new Map<String, Account>();
-                if(accountsToLoadSetNumber.size() > 0){
-                    for(Account acc : [select Id, Email__c, Name, Legal_Name__c, IATACode__c, Phone_Number__c, Registration_Number__c from Account where Id in :accountsToLoadSetId OR Registration_number__c in :accountsToLoadSetNumber OR IATACode__c IN :accountsToLoadSetIATACode]){
-                        accListId.put(acc.Id, acc);
-                        if(acc.Registration_Number__c != null) accListNumber.put(acc.Registration_Number__c, acc);
-                        if(acc.IATACode__c != null) accListIATACode.put(acc.IATACode__c, acc);
-                    }
+                Map<Id, Account> accList = new Map<Id, Account>();
+                if(accountsToLoadSet.size() > 0)
+                {
+                    accList = new Map<Id, Account>([select Id, Email__c, Name, Legal_Name__c, IATACode__c, Phone_Number__c from Account where Id in :accountsToLoadSet]);
                 }
-
                 
                 AccreditationContactWrapper wrapper;
                 AccountWrapper accWrapper;
@@ -103,20 +91,10 @@ public with sharing class AMS_AccreditationContactController {
                         acWrapper.add(wrapper); 
                     } else
                     {
-                        if(accListId.get(ac.Company__c) != null)
+                        if(accList.get(ac.Company__c) != null)
                         {
-                            System.debug('********************* company found with Id: '+accListId.get(ac.Company__c));
-                            accWrapper = new AccountWrapper(ac, accListId.get(ac.Company__c), accListId.get(ac.Company__c).Id, false);
-                        }
-                        else if(accListIATACode.get(ac.IATACode__c) != null)
-                        {
-                            System.debug('********************* company found with IATA Code: '+accListIATACode.get(ac.IATACode__c));
-                            accWrapper = new AccountWrapper(ac, accListIATACode.get(ac.IATACode__c), accListIATACode.get(ac.IATACode__c).Id, false);
-                        }
-                        else if(accListNumber.get(ac.Registration_number__c) != null)
-                        {
-                            System.debug('********************* company found with Registration Number: '+accListId.get(ac.Registration_number__c));
-                            accWrapper = new AccountWrapper(ac, accListNumber.get(ac.Registration_number__c), accListId.get(ac.Registration_number__c).Id, false);
+                            System.debug('********************* company found: '+accList.get(ac.Company__c));
+                            accWrapper = new AccountWrapper(ac, accList.get(ac.Company__c), accList.get(ac.Company__c).Id, false);
                         }
                         else
                         {
@@ -148,7 +126,6 @@ public with sharing class AMS_AccreditationContactController {
 
         isCorrection = aoa.SAAM_Case__r.OSCAR__r.Process__c == AMS_Utils.COR;
         isCargoAgency = aoa.SAAM_Case__r.OSCAR__r.Account__r.Sector__c == AMS_Utils.SECTOR_CARGO;
-
         isCertificationOSCAR = aoa.SAAM_Case__r.OSCAR__r.Process__c == AMS_Utils.CERTIFICATION ? true : false;
     }
     
@@ -158,6 +135,13 @@ public with sharing class AMS_AccreditationContactController {
 
         AccreditationContactWrapper acWrapper = new AccreditationContactWrapper(new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = this.aoa.Id, RecordTypeId =  rt, Company__c = this.aoa.SAAM_Case__r.OSCAR__r.Account__c));
         this.acWrapper.add(acWrapper);
+    }
+    
+    public void addEmptyTrainedStaffRow()
+    {
+        Id rt = AMS_Utils.AccreditationContactTrainedStaffRT;
+        
+        this.trainedStaffWrapper.add(new TrainedStaffWrapper(new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = this.aoa.Id, RecordTypeId = rt, Last_Name__c = '-', Phone__c = '-')));
     }
     
     public void cloneLastRow()
@@ -188,13 +172,6 @@ public with sharing class AMS_AccreditationContactController {
         
         this.accountWrapper.add(new AccountWrapper(new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = this.aoa.Id, RecordTypeId = rt, Last_Name__c = '-', Phone__c = '-'), new Account(), '', true));
     }
-
-    public void addEmptyTrainedStaffRow()
-    {
-        Id rt = AMS_Utils.AccreditationContactTrainedStaffRT;
-        
-        this.trainedStaffWrapper.add(new TrainedStaffWrapper(new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = this.aoa.Id, RecordTypeId = rt, Last_Name__c = '-', Phone__c = '-')));
-    }
     
     public PageReference removeFromAcList()
     {
@@ -224,7 +201,7 @@ public with sharing class AMS_AccreditationContactController {
     
     public PageReference onSave()
     {
-        if(!calculateTotalOwnership() && !isCertificationOSCAR)
+        if(!calculateTotalOwnership())
         {
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, 'Total ownershiprate for all inserted contacts is ' + ownership + '%. Please set it to 100% before saving.'));
             return null;
@@ -321,21 +298,36 @@ public with sharing class AMS_AccreditationContactController {
             if(accountWrapper.size() > 0)
             {
                 Id standardAccountRtId = AMS_Utils.getId('Account', 'Standard_Account');
+                List<Account> accountInsertList = new List<Account>();
                 List<AMS_Accreditation_Contact__c> acUpsertList = new List<AMS_Accreditation_Contact__c>();
                 for(AccountWrapper aw : accountWrapper)
                 {
                     aw.accountAc.Financial_interest__c = aw.financialInterest;
                     aw.accountAc.Registration_number__c = aw.registrationNumber;
-
+                    
+                    if(aw.account.Id == null)
+                    {
+                        aw.account.Name = aw.account.Legal_Name__c;
+                        aw.account.RecordTypeId = standardAccountRtId;
+                        accountInsertList.add(aw.account);
+                    }
                     aw.accountAc.Agency_owner__c = true;
-
+                }
+                
+                if(accountInsertList.size() > 0)
+                {
+                    insert accountInsertList;
+                }
+                
+                for(AccountWrapper aw : accountWrapper)
+                {
                     aw.accountAc.Company__c = aw.account.Id;
                     aw.accountAc.Name = aw.account.Legal_Name__c;
                     acUpsertList.add(aw.accountAc);
                 }
                 upsert acUpsertList;
             }
-
+            
             //save trained staff
             if(trainedStaffWrapper.size() > 0)
             {
@@ -824,7 +816,7 @@ public with sharing class AMS_AccreditationContactController {
             this.isNewRecord=isNewRecord;
         }
     }
-
+    
     private static Boolean validateDateFormat(String field){
 
         if(!field.contains('-'))
