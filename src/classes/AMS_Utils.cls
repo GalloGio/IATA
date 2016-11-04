@@ -921,8 +921,6 @@ public without sharing class AMS_Utils {
 
         List<Map<String, String>> configs = AMS_AgencyChangesConfigHelper.getAgencyChangesConfigData();
 
-        List<Ams_ChangeCodesHelper.ObjectChangesStruct> changes = new List<Ams_ChangeCodesHelper.ObjectChangesStruct>();
-
         for (AMS_OSCAR__c oscar : oscars) {
 
             Account acc = accounts.get(oscar.Account__c);
