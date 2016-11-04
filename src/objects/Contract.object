@@ -2783,7 +2783,7 @@ IF(ISPICKVAL(Third_Party__c, &quot;Berlitz&quot;), 0.10,
     <validationRules>
         <fullName>EF_Contract_Creation_Validation</fullName>
         <active>true</active>
-        <errorConditionFormula>AND(ISNEW(),  NOT(OR(ISPICKVAL($User.EF_User_Role__c, &apos;Head, Client Services&apos;), ISPICKVAL($User.EF_User_Role__c, &apos;Manager, Business Development&apos;))), RecordType.DeveloperName=&apos;EF_Client_Agreement&apos;)</errorConditionFormula>
+        <errorConditionFormula>AND(ISNEW(),  NOT(OR(ISPICKVAL($User.EF_User_Role__c, &apos;Head, Client Services&apos;), ISPICKVAL($User.EF_User_Role__c, &apos;Manager, Business Development&apos;))), RecordType.DeveloperName=&apos;EF_Client_Agreement&apos;, TEXT($User.EF_User_Role__c)&lt;&gt; null)</errorConditionFormula>
         <errorMessage>You are not allowed to create E&amp;F Contracts</errorMessage>
     </validationRules>
     <validationRules>
