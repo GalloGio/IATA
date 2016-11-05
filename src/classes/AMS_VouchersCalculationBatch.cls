@@ -43,6 +43,11 @@ global class AMS_VouchersCalculationBatch implements Database.Batchable<sObject>
 		
 		if(allVouchersInfo.isEmpty()){
 			System.debug('Did not find any vouchers info to process due to either lack of regists or eligibility.');
+			
+			process.Status__c = 'Ended';
+			
+			update process;
+
 			return;
 		}
 
