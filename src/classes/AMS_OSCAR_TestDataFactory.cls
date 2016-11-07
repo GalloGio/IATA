@@ -67,6 +67,14 @@ public with sharing class AMS_OSCAR_TestDataFactory
 		account.Type = 'Airport';
 		account.IATACode__c = '1234567';
 		insert account;
+
+		Id airlineRT = AMS_Utils.getId('Account', 'IATA_Airline');
+		Account airline = new Account();
+		airline.Name = 'TestAirline';
+		airline.Sector__c = 'Airline';
+		airline.IATA_ISO_Country__c = ctry.id;
+		airline.RecordTypeId = airlineRT;
+		insert airline;
 		
 		List<Account> accountList = new List<Account>();
 		
@@ -116,8 +124,8 @@ public with sharing class AMS_OSCAR_TestDataFactory
 
 		//Create Inspections connected to OSCAR
 		
-		AMS_Accreditation_Organization__c ao = new AMS_Accreditation_Organization__c(Air_Code__c = 'DOM');
-		insert ao;
+		//AMS_Accreditation_Organization__c ao = new AMS_Accreditation_Organization__c(Air_Code__c = 'DOM');
+		//insert ao;
 
 		AMS_OSCAR__c OSCAR_GSA = new AMS_OSCAR__c(STEP1__c = 'In Progress', Account__c = a1.id, Process__c =AMS_Utils.new_GSA);
 		
@@ -129,11 +137,11 @@ public with sharing class AMS_OSCAR_TestDataFactory
         insert oscarCase_GSA;
 
 		List<AMS_Inspection__c> agencyInspectionList = new List<AMS_Inspection__c>();
-		agencyInspectionList.add(new AMS_Inspection__c(Oscar__c=OSCAR_GSA.id,Accreditation_Endorsement_organisation__c=ao.id,Accreditation_Endorsement_Status_code__c = '0'));
-		agencyInspectionList.add(new AMS_Inspection__c(Oscar__c=OSCAR_GSA.id,Accreditation_Endorsement_organisation__c=ao.id,Accreditation_Endorsement_Status_code__c = '1'));
-		agencyInspectionList.add(new AMS_Inspection__c(Oscar__c=OSCAR_GSA.id,Accreditation_Endorsement_organisation__c=ao.id,Accreditation_Endorsement_Status_code__c = '2'));
-		agencyInspectionList.add(new AMS_Inspection__c(Oscar__c=OSCAR_GSA.id,Accreditation_Endorsement_organisation__c=ao.id,Accreditation_Endorsement_Status_code__c = '3'));
-		agencyInspectionList.add(new AMS_Inspection__c(Oscar__c=OSCAR_GSA.id,Accreditation_Endorsement_organisation__c=ao.id,Accreditation_Endorsement_Status_code__c = '8'));
+		agencyInspectionList.add(new AMS_Inspection__c(Oscar__c=OSCAR_GSA.id, Airline__c = airline.Id,/*Accreditation_Endorsement_organisation__c=ao.id,*/Accreditation_Endorsement_Status_code__c = '0'));
+		agencyInspectionList.add(new AMS_Inspection__c(Oscar__c=OSCAR_GSA.id, Airline__c = airline.Id,/*Accreditation_Endorsement_organisation__c=ao.id,*/Accreditation_Endorsement_Status_code__c = '1'));
+		agencyInspectionList.add(new AMS_Inspection__c(Oscar__c=OSCAR_GSA.id, Airline__c = airline.Id,/*Accreditation_Endorsement_organisation__c=ao.id,*/Accreditation_Endorsement_Status_code__c = '2'));
+		agencyInspectionList.add(new AMS_Inspection__c(Oscar__c=OSCAR_GSA.id, Airline__c = airline.Id,/*Accreditation_Endorsement_organisation__c=ao.id,*/Accreditation_Endorsement_Status_code__c = '3'));
+		agencyInspectionList.add(new AMS_Inspection__c(Oscar__c=OSCAR_GSA.id, Airline__c = airline.Id,/*Accreditation_Endorsement_organisation__c=ao.id,*/Accreditation_Endorsement_Status_code__c = '8'));
 		
 		insert	agencyInspectionList;
 
