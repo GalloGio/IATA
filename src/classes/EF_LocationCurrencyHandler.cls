@@ -71,7 +71,6 @@ public class EF_LocationCurrencyHandler {
     }
     
     public static void manageNewLocationCurrency (List<EF_Location_Currency__c> locationCurrencyList, String action) {
-                
         //First avoid adding the same location in two location currencies
         
         //get set for Contract
@@ -96,7 +95,8 @@ public class EF_LocationCurrencyHandler {
         List <EF_Location_Currency__c> newLocCurr = new List <EF_Location_Currency__c>  ();
                 
         //the contract contains already some location currencies added
-        if(!locationContractMap.isEmpty()) {            
+        if(!locationContractMap.isEmpty())
+        {
             //check if the location we try to add has already been set 
             for(EF_Location_Currency__c lc: locationCurrencyList) {
                 if(locationContractMap.containsKey(lc.Location_ID__c) ) {
@@ -107,15 +107,27 @@ public class EF_LocationCurrencyHandler {
                     newLocCurr.add(lc);
                     //System.debug(Logginglevel.ERROR, '#### lc.EF_Billing_Currency__c ' + lc.EF_Billing_Currency__c);
                     //System.debug(Logginglevel.ERROR, '#### mapContract.get(lc.Contract__c).EF_Billing_Currency__c ' + mapContract.get(lc.Contract__c).EF_Billing_Currency__c);                                 
-                    if(mapContract.get(lc.Contract__c).EF_Billing_Currency__c!= null && !mapContract.get(lc.Contract__c).EF_Billing_Currency__c.contains(lc.EF_Billing_Currency__c)){
+                    if(mapContract.get(lc.Contract__c).EF_Billing_Currency__c!= null && !mapContract.get(lc.Contract__c).EF_Billing_Currency__c.contains(lc.EF_Billing_Currency__c))
+                    {
                         mapContract.get(lc.Contract__c).EF_Billing_Currency__c = mapContract.get(lc.Contract__c).EF_Billing_Currency__c + ';' + lc.EF_Billing_Currency__c;
                     }               
                 }
             }
         } else {// the contract has no location currencies 
-           
-            for(EF_Location_Currency__c lc: locationCurrencyList) {
+            for(EF_Location_Currency__c lc: locationCurrencyList)
+            {
+                Contract c = mapContract.get(lc.Contract__c);
+                if(mapContract.get(lc.Contract__c) != null)
+                {
+                    if(mapContract.get(lc.Contract__c).EF_Billing_Currency__c == null)
+                    {
                 mapContract.get(lc.Contract__c).EF_Billing_Currency__c = lc.EF_Billing_Currency__c;
+                    } else
+                    {
+                        if(!mapContract.get(lc.Contract__c).EF_Billing_Currency__c.contains(lc.EF_Billing_Currency__c))
+                            mapContract.get(lc.Contract__c).EF_Billing_Currency__c = mapContract.get(lc.Contract__c).EF_Billing_Currency__c+';'+lc.EF_Billing_Currency__c;
+                    }
+                }
                  newLocCurr.add(lc);
             }           
         }
@@ -155,6 +167,7 @@ public class EF_LocationCurrencyHandler {
 
                 locs2Notify.add(lc);
                 // Only add new currencies.
+                if(mapContract.get(lc.Contract__c).EF_Billing_Currency__c!=null){
                 if(!mapContract.get(lc.Contract__c).EF_Billing_Currency__c.contains(lc.EF_Billing_Currency__c)) {
                     String aux = mapContract.get(lc.Contract__c).EF_Billing_Currency__c.remove(locationCurrencyMapOld.get(lc.id).EF_Billing_Currency__c);                    
                     mapContract.get(lc.Contract__c).EF_Billing_Currency__c = aux + ';' + lc.EF_Billing_Currency__c;
@@ -163,6 +176,10 @@ public class EF_LocationCurrencyHandler {
                     String aux = mapContract.get(lc.Contract__c).EF_Billing_Currency__c.remove(locationCurrencyMapOld.get(lc.id).EF_Billing_Currency__c);
                     mapContract.get(lc.Contract__c).EF_Billing_Currency__c = aux;
                 }
+                }else{
+                    mapContract.get(lc.Contract__c).EF_Billing_Currency__c = lc.EF_Billing_Currency__c;
+                }
+
             }
         }
         
@@ -347,6 +364,7 @@ public class EF_LocationCurrencyHandler {
                     if(contractWithCurrToBeRemoved.containsKey(c.Id) && billCurr != null) {
                         resultingBillCur = billCurr.remove(contractWithCurrToBeRemoved.get(c.Id));
                         c.EF_Billing_Currency__c = resultingBillCur;       
+                        c.EF_Comments__c ='System. Update of Billing Currency';
                    }
                 }
             }
