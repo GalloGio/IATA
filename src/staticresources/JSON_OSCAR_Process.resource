@@ -3188,11 +3188,7 @@
         "Steps": [{
           "Name": "STEP6",
           "Required": [],
-          "Actions": [{
-            "FunctionName": "createSIDRALite",
-            "ActionLabel": "AMS_OSCAR_Action7",
-            "args": ["oscarid"]
-          }],
+          "Actions": [],
           "Automations": [],
           "DisplayFields": [
           "STEP6__c"],
