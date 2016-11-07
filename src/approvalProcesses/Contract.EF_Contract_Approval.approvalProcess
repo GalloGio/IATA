@@ -3,7 +3,23 @@
     <active>true</active>
     <allowRecall>true</allowRecall>
     <allowedSubmitters>
+        <submitter>EF_Client_Users_Group</submitter>
+        <type>group</type>
+    </allowedSubmitters>
+    <allowedSubmitters>
+        <submitter>EF_Operator_Users_Group</submitter>
+        <type>group</type>
+    </allowedSubmitters>
+    <allowedSubmitters>
+        <submitter>EFServices</submitter>
+        <type>group</type>
+    </allowedSubmitters>
+    <allowedSubmitters>
         <type>owner</type>
+    </allowedSubmitters>
+    <allowedSubmitters>
+        <submitter>E_F</submitter>
+        <type>role</type>
     </allowedSubmitters>
     <approvalPageFields>
         <field>ContractNumber</field>

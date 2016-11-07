@@ -66,6 +66,10 @@
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
         <workflowTimeTriggers>
             <actions>
+                <name>EF_Doc_Expired_Notification</name>
+                <type>Alert</type>
+            </actions>
+            <actions>
                 <name>EF_SetDocExpired</name>
                 <type>FieldUpdate</type>
             </actions>

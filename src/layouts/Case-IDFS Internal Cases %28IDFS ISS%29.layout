@@ -212,6 +212,10 @@
                 <behavior>Edit</behavior>
                 <field>EF_Airline_Billing_Agreement__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>KPI_Prod__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
