@@ -1865,6 +1865,16 @@ Format: YYYY</inlineHelpText>
         <type>Date</type>
     </fields>
     <fields>
+        <fullName>Invoice_Requested__c</fullName>
+        <externalId>false</externalId>
+        <label>Invoice requested</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
         <fullName>Invoice_deadline__c</fullName>
         <externalId>false</externalId>
         <label>Payment deadline</label>
@@ -1885,16 +1895,6 @@ Format: YYYY</inlineHelpText>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>Invoice_Requested__c</fullName>
-        <externalId>false</externalId>
-        <label>Invoice requested</label>
-        <required>false</required>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Date</type>
     </fields>
     <fields>
         <fullName>Invoice_status__c</fullName>
