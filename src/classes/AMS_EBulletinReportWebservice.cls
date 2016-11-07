@@ -4,7 +4,8 @@ global class AMS_EBulletinReportWebservice {
 	private static String objectBaseQuery = 'Agency_Applied_Change_code__c';
 	private static String objectHistBaseQuery = 'AMS_Agency_A_Change_code_History__c';
 	private static String eBulletinCSVFormat = '","';
-	private static String typeEBulletin = 'W';
+	private static AMSEBulletinFilters filters;
+	//private static String typeEBulletin = 'W';
 
 	/** 
 		 Generate CSV main method to be called from an External Service
@@ -14,7 +15,7 @@ global class AMS_EBulletinReportWebservice {
 
 	webservice static Boolean generateEBulletinReport( AMS_eBulletin_Profile__c eBulletinProfile){
 
-
+		filters = new AMSEBulletinFilters(eBulletinProfile, date.today() - 365 , date.today() );
 
 		System.debug('Initializing...');
 
@@ -65,7 +66,7 @@ global class AMS_EBulletinReportWebservice {
 	private static String getHeader(){
 
 		System.debug('Get CSV Header...');
-		AMS_EBulletinReportHelper.getEBulletinFields(typeEBulletin,objectBaseQuery,eBulletinCSVFormat);
+		AMS_EBulletinReportHelper.getEBulletinFields(filters,objectBaseQuery,eBulletinCSVFormat);
 
 		return AMS_EBulletinReportHelper.headerCSV;
 	}
@@ -79,49 +80,62 @@ global class AMS_EBulletinReportWebservice {
 
 		AMS_EBulletinReportHelper EbulletinHelper = new AMS_EBulletinReportHelper();
 
-		return EbulletinHelper.processEBulletinRecords(typeEBulletin,objectBaseQuery,objectHistBaseQuery,eBulletinCSVFormat);
+		return EbulletinHelper.processEBulletinRecords(filters,objectBaseQuery,objectHistBaseQuery,eBulletinCSVFormat);
 
 	}
 
+
 	/** 
-	
-	*/	
+	 Wrapper Object with the filters from the Portal
 
+	*/
+	public class AMSEBulletinFilters {
+		
+		public String typeEBulletin;
+        public List <String> areaList = new List <String>();
+  		public List <String> programsList = new List <String>();
+  		public List <String> countriesList = new List <String>();
 
-	private static void getAMSEBulletinFilters(AMS_eBulletin_Profile__c eBulletinProfile, Datetime startDate, Datetime endDate){
-		//Daily or Weekly by record type
+        public AMSEBulletinFilters(AMS_eBulletin_Profile__c eBulletinProfile, Datetime startDate, Datetime endDate){
+        		//Daily or Weekly by record type
 		
-		typeEBulletin = eBulletinProfile.recordType.name.substring(0, 1).ToUpperCase();
-		
-		
-		// map with field Account__r.IATA_ISO_Country__r.IATA_Regional_Office__c
-		List <String> countriesList;
+			this.typeEBulletin = eBulletinProfile.recordType.name.substring(0, 1).ToUpperCase();
+			
+			
+			// map with field Account__r.IATA_ISO_Country__r.IATA_Regional_Office__c
+			List <String> areaList = new List<String>();
 
-		if(eBulletinProfile.Area_1__c ) countriesList.add('MIA');
-		if(eBulletinProfile.Area_2__c ) countriesList.addAll(new List <String>{'MAD','AMM'});
-		if(eBulletinProfile.Area_3__c ) countriesList.addAll(new List <String>{'SIN','BJS'});
+			if(eBulletinProfile.Area_1__c ) areaList.add('MIA');
+			if(eBulletinProfile.Area_2__c ) areaList.addAll(new List <String>{'MAD','AMM'});
+			if(eBulletinProfile.Area_3__c ) areaList.addAll(new List <String>{'SIN','BJS'});
 
+			this.areaList = areaList;
 
-		// Program = Location_Class__c. C = Cargo. P = Passenger. (R = CassAssociate. I = Import. Q = Courier). D = Domestic.
+			// Program = Location_Class__c. C = Cargo. P = Passenger. (R = CassAssociate. I = Import. Q = Courier). D = Domestic.
 
-		List <String> programsList;
-		
-		if(eBulletinProfile.Program_Cargo__c)			programsList.add('C');		
-		if(eBulletinProfile.Program_CASS_Associates__c)	programsList.addAll(new List <String>{'R','I','Q'});	
-		if(eBulletinProfile.Program_Passage__c)			programsList.add('P');
-		
-		//Add filter by Date
-		
-		
+			List <String> programsList = new List<String>();
+			
+			if(eBulletinProfile.Program_Cargo__c)			programsList.add('C');		
+			if(eBulletinProfile.Program_CASS_Associates__c)	programsList.addAll(new List <String>{'R','I','Q'});	
+			if(eBulletinProfile.Program_Passage__c)			programsList.add('P');
+			
+			
+			this.programsList = programsList;
+
+			//map countries List
+			
+			this.countriesList = eBulletinProfile.CountriesList__c.split(';');
+
+			//Add filter by Date
+			
+			
 		//Add Opt_out_Bulletin__c this field is to be used in the schedule batch		
+        
+        }
+
+
 	}
 
-
-	/** 
-	Exceptions handling for E Bulletin	
-	*/	
-
-	class AMS_EBulletinException extends Exception {}
 
 
 }

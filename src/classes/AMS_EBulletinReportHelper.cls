@@ -94,10 +94,12 @@ public class AMS_EBulletinReportHelper {
 		 Fields Query to recover the Records
 		 Change Codes to Process maped on the change set AMSEBulletinCCExtration__c
 	*/
-	public static void getEBulletinFields(String typeEBulletin, String objectBaseQuery,String csvFormat )
+	public static void getEBulletinFields(AMS_EBulletinReportWebservice.AMSEBulletinFilters filters, String objectBaseQuery,String csvFormat )
 	{
 		
-		String typeEBulletinField = TYPEEBULLETINMAP.get(typeEBulletin);
+		String typeEBulletinField = TYPEEBULLETINMAP.get(filters.typeEBulletin);
+
+		system.debug('filters.typeEBulletin: ' + filters.typeEBulletin);
 		getEBulletinSettings(typeEBulletinField);
 
 		/****** INI1 Alternative method to recover directly the field labels to use has columns headers ****
@@ -178,11 +180,19 @@ public class AMS_EBulletinReportHelper {
 	/** 
 		 process EBulletin Records 
 	*/
-	public String processEBulletinRecords(String typeEBulletin, String objectBaseQuery, String objectHistBaseQuery, String csvFormat)
+	public String processEBulletinRecords(AMS_EBulletinReportWebservice.AMSEBulletinFilters filters, String objectBaseQuery, String objectHistBaseQuery, String csvFormat)
 	{
-		// Get CC to be extracted for this EBulletin Type
-		getEBulletinCCExtraction(TYPEEBULLETINMAP.get(typeEBulletin));
+		// Recover EBulletin Type
+		getEBulletinCCExtraction(TYPEEBULLETINMAP.get(filters.typeEBulletin));
 		
+		//Recover EBulletin Countries
+		List<String> countriesFilter = filters.countriesList;
+		
+		//Recover EBulletin Location Classes
+		
+		List<String> locClsList = filters.programsList;
+
+
 		//system.debug('Records query: ' + AMS_QueryUtils.getFieldsQuery(objectBaseQuery,fieldsQuery, ' Change_Code__c in ( ' + convertToCSV(new List<String>(AMS_CustomSettingsUtils.ccNameSectionMap.keyset()), '\',\'') + ') '));
 
 		
@@ -199,17 +209,19 @@ public class AMS_EBulletinReportHelper {
 		system.debug('ccFieldToReturn:' + ccFieldToReturn);
 		
 
-		//***************************************************************************************
-		//*************** BASE QUERY for the Extraction: Changes codes to Query *****************
-		//***************************************************************************************
+		//*********************************************************************************************************************
+		//****************************** BASE QUERY for the Extraction: Changes codes to Query ********************************
+		//*********************************************************************************************************************
 		
 		Set <String> ccNamesToRecover = AMS_CustomSettingsUtils.ccNameSectionMap.keyset();
 		
+		String filterCC  = ' Change_Code__c IN :ccNamesToRecover and Published_on_EBulletin__c = TRUE and Account__r.IATA_ISO_Country__r.ISO_Code__c IN :countriesFilter and Account__r.Location_Class__c IN :locClsList order by Account__r.IATA_ISO_Country__r.Name,createdDate';
+
 		List <Agency_Applied_Change_code__c> ccList = 
 				Database.query(
 					AMS_QueryUtils.getFieldsQuery(objectBaseQuery,
 												  fieldsQuery + ( ccFieldToReturn.isEmpty() ? '' : ',') + convertToCSV(ccFieldToReturn,','), 
-												  ' Change_Code__c IN :ccNamesToRecover and Published_on_EBulletin__c = TRUE order by Account__r.IATA_ISO_Country__r.Name,createdDate')
+												  filterCC)
 					);
 
 
