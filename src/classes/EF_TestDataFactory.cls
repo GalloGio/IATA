@@ -1,26 +1,26 @@
 public with sharing class EF_TestDataFactory
 {
-    
+
     public static void createBaseData()
     {
         createCustomSettings();
 
         List <EF_Related_Records__c> locationList = new List <EF_Related_Records__c> ();
         EF_Related_Records__c locationMain = new EF_Related_Records__c(name='Main',
-            recordTypeId = Schema.SObjectType.EF_Related_Records__c.getRecordTypeInfosByName().get('Location').getRecordTypeId() 
+            recordTypeId = Schema.SObjectType.EF_Related_Records__c.getRecordTypeInfosByName().get('Location').getRecordTypeId()
             );
         locationList.add(locationMain);
         for(Integer i=1; i<5; i++)
         {
             EF_Related_Records__c location = new EF_Related_Records__c (name=String.valueOf(i),
-                recordTypeId = Schema.SObjectType.EF_Related_Records__c.getRecordTypeInfosByName().get('Location').getRecordTypeId() 
+                recordTypeId = Schema.SObjectType.EF_Related_Records__c.getRecordTypeInfosByName().get('Location').getRecordTypeId()
                 );
             locationList.add(location);
         }
 
         insert locationList;
 
-        // create iso country 
+        // create iso country
         IATA_ISO_Country__c iso_country = new IATA_ISO_Country__c (
             name='United States',
             ISO_Code__c ='US',
@@ -28,7 +28,7 @@ public with sharing class EF_TestDataFactory
             currencyIsoCode = 'USD');
         insert iso_country;
 
-        //create account 
+        //create account
         Account client = new Account(
             Name='Test Account client',
             RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Others').getRecordTypeId(),
@@ -41,10 +41,10 @@ public with sharing class EF_TestDataFactory
             IATA_ISO_Country__c = iso_country.Id,
             Reason_for_creation__c = 'new client needed'
             );
-        
+
         insert client;
 
-        //create account 
+        //create account
         Account customer = new Account(
             Name='Test Account customer',
             RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Standard Account').getRecordTypeId(),
@@ -57,7 +57,7 @@ public with sharing class EF_TestDataFactory
             IATA_ISO_Country__c = iso_country.Id,
             Reason_for_creation__c = 'new customer needed'
             );
-        
+
         insert customer;
 
         //create contract
@@ -112,7 +112,7 @@ public with sharing class EF_TestDataFactory
 
 
     }
-    
+
     public static void createLocationCodes()
     {
         Id locCodeId = AMS_Utils.getId('EF_Related_Records__c', 'Location_Code');
@@ -128,20 +128,20 @@ public with sharing class EF_TestDataFactory
 
         List <EF_Related_Records__c> locationList = new List <EF_Related_Records__c> ();
         EF_Related_Records__c locationMain = new EF_Related_Records__c(name='Main',
-            recordTypeId = Schema.SObjectType.EF_Related_Records__c.getRecordTypeInfosByName().get('Location').getRecordTypeId() 
+            recordTypeId = Schema.SObjectType.EF_Related_Records__c.getRecordTypeInfosByName().get('Location').getRecordTypeId()
             );
         locationList.add(locationMain);
         for(Integer i=1; i<5; i++)
         {
             EF_Related_Records__c location = new EF_Related_Records__c (name=String.valueOf(i),
-                recordTypeId = Schema.SObjectType.EF_Related_Records__c.getRecordTypeInfosByName().get('Location').getRecordTypeId() 
+                recordTypeId = Schema.SObjectType.EF_Related_Records__c.getRecordTypeInfosByName().get('Location').getRecordTypeId()
                 );
             locationList.add(location);
         }
 
         insert locationList;
 
-        // create iso country 
+        // create iso country
         IATA_ISO_Country__c iso_country = new IATA_ISO_Country__c (
             name='United States',
             ISO_Code__c ='US',
@@ -149,7 +149,7 @@ public with sharing class EF_TestDataFactory
             currencyIsoCode = 'USD');
         insert iso_country;
 
-        //create account 
+        //create account
         Account client2 = new Account(
             Name='Test Account client2',
             RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Standard Account').getRecordTypeId(),
@@ -162,10 +162,10 @@ public with sharing class EF_TestDataFactory
             IATA_ISO_Country__c = iso_country.Id,
             Reason_for_creation__c = 'new client needed'
             );
-        
+
         insert client2;
 
-        //create account 
+        //create account
         Account customer2 = new Account(
             Name='Test Account customer2',
             RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Standard Account').getRecordTypeId(),
@@ -178,7 +178,7 @@ public with sharing class EF_TestDataFactory
             IATA_ISO_Country__c = iso_country.Id,
             Reason_for_creation__c = 'new customer needed'
             );
-        
+
         insert customer2;
 
         //create contract
@@ -197,6 +197,7 @@ public with sharing class EF_TestDataFactory
             EF_Status__c='Active'
             );
         insert contract2;
+
 
     }
 
@@ -226,14 +227,14 @@ public with sharing class EF_TestDataFactory
     {
         User myUser = [select id, EF_User_Role__c, ProfileId from User where Id = :UserInfo.getUserId()];
         List<Profile> efProfileIds = [select id from Profile where Name like 'E&F%' order by Name asc];
-        
+
         User u1 = new User(FirstName='Test1 User',Division='UnitTest',Manager=myUser,
                            EF_Billing_Agreement_Approver__c=myUser.Id,
-                           EF_Contract_Approver__c=myUser.Id, 
+                           EF_Contract_Approver__c=myUser.Id,
                            License_Cost_Center__c='AAA000AA00',
-                           Username='efUnit@test.ch'+roleNumber, LastName='Test1', 
+                           Username='efUnit@test.ch'+roleNumber, LastName='Test1',
                            Email='test1@iata.org', Alias='Test1', CommunityNickname='Test1'+roleNumber,
-                           TimeZoneSidKey='Europe/Brussels', LocaleSidKey='en_US', 
+                           TimeZoneSidKey='Europe/Brussels', LocaleSidKey='en_US',
                            EmailEncodingKey='UTF-8', LanguageLocaleKey='en_US');
         
         if(efProfileIds.size() == 2)
