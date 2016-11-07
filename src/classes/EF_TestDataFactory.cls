@@ -31,7 +31,7 @@ public with sharing class EF_TestDataFactory
         //create account 
         Account client = new Account(
             Name='Test Account client',
-            RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Standard Account').getRecordTypeId(),
+            RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Others').getRecordTypeId(),
             Sector__c = 'IATA Supplier',
             Category__c = 'ANSP',
             EF_type__c = 'E&F Client',
@@ -74,7 +74,8 @@ public with sharing class EF_TestDataFactory
             RecordTypeId = Schema.SObjectType.Contract.getRecordTypeInfosByName().get('E&F Client Agreement').getRecordTypeId(),
             StartDate= Date.today(),
             Type__c='Revenue',
-            EF_Status__c='Active'
+            EF_Status__c='Active',
+            EF_Admin_Fee__c=10
             );
         insert contract;
 
@@ -86,6 +87,30 @@ public with sharing class EF_TestDataFactory
             EF_Billing_Currency__c='QAR'
             );
         insert locCurrency;
+
+        EF_Billing_Agreement__c rel = new EF_Billing_Agreement__c();
+        rel.Client__c = client.Id;
+        rel.Airline__c = customer.Id;
+        rel.Contract__c = contract.Id;
+        rel.EF_Location_ID__c =  [select Id, Name from EF_Related_Records__c where Name='Main' limit 1].Id;
+        rel.EF_Status__c='Active';
+        rel.Data_Currency__c = 'USD';
+        rel.Billing_Currency__c = 'USD';
+        rel.Payment_Currency__c = 'USD';
+        insert rel;
+
+        EF_Billing_Agreement__c rel2 = new EF_Billing_Agreement__c();
+        rel2.Client__c = client.Id;
+        rel2.Airline__c = customer.Id;
+        rel2.Contract__c = contract.Id;
+        rel2.EF_Location_ID__c =  [select Id, Name from EF_Related_Records__c where Name='Main' limit 1].Id;
+        rel2.EF_Status__c='Active';
+        rel2.Data_Currency__c = 'USD';
+        rel2.Billing_Currency__c = 'QAR';
+        rel2.Payment_Currency__c = 'USD';
+        insert rel2;
+
+
     }
     
     public static void createLocationCodes()
@@ -185,6 +210,16 @@ public with sharing class EF_TestDataFactory
         appr2.Name = 'Contract';
         List<EF_Approve_Fields__c> approvals = new List<EF_Approve_Fields__c>{appr1, appr2};
         insert approvals;
+
+        EF_Critical_Field_Notification__c criticalFields = new EF_Critical_Field_Notification__c();
+        criticalFields.name = 'test';
+        criticalFields.Airline_Billing_Agreement_Fields__c = 'Bill_To__c,Ship_To__c,Payer__c,Sold_To__c';
+        criticalFields.Account_Airline_Fields__c = 'EF_Status__c,EF_Legacy_Code__c,EF_Airline_ID__c,EF_SIS_Code__c,EF_SIS_Designator__c,EF_SIS_Code_Verified__c';
+        criticalFields.Account_Client_Fields__c = 'Legal_name__c,EF_SIS_Code__c,EF_SIS_Designator__c,EF_SIS_Code_Verified__c,EF_Status__c';
+        criticalFields.Contract_Fields__c = 'Name,EF_Data_Currency__c,EF_Group_Code__c,EF_Admin_Fee__c,EF_Payment_Terms__c';
+        criticalFields.Contact_Fields__c = 'EF_Signatory__c,Email,FirstName,LastName,EF_Status__c';
+        insert criticalFields;
+
     }
 
     public static User getEfProfileAndRole(Integer profileNumber, Integer roleNumber)
@@ -197,9 +232,10 @@ public with sharing class EF_TestDataFactory
                            EF_Contract_Approver__c=myUser.Id, 
                            License_Cost_Center__c='AAA000AA00',
                            Username='efUnit@test.ch'+roleNumber, LastName='Test1', 
-                           Email='test1@iata.org', Alias='Test1', CommunityNickname='Test1', 
+                           Email='test1@iata.org', Alias='Test1', CommunityNickname='Test1'+roleNumber,
                            TimeZoneSidKey='Europe/Brussels', LocaleSidKey='en_US', 
                            EmailEncodingKey='UTF-8', LanguageLocaleKey='en_US');
+        
         if(efProfileIds.size() == 2)
         {
             u1.ProfileId = efProfileIds.get(profileNumber).Id;
