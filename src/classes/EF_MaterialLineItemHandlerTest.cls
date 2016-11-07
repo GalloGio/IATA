@@ -3,8 +3,8 @@ private class EF_MaterialLineItemHandlerTest {
 	
     @isTest static void testAddingContractMaterial_expectApprovalToStart()
 	{
-		System.runAs(EF_TestDataFactory.getEfProfileAndRole(0, 4)) {
 			EF_TestDataFactory.createBaseData();
+		System.runAs(EF_TestDataFactory.getEfProfileAndRole(0, 4)) {
 			Contract contract = [select Id, AccountId, Account.Name, EF_Allow_Billing_Agreements__c from Contract where Account.Name = 'Test Account Client'];
 			Product2 prod = new Product2(Name='Test', Family='EF');
 			insert prod;
