@@ -212,14 +212,14 @@ public with sharing class EF_TestDataFactory
         List<EF_Approve_Fields__c> approvals = new List<EF_Approve_Fields__c>{appr1, appr2};
         insert approvals;
 
-        EF_Critical_Field_Notification__c criticalFields = new EF_Critical_Field_Notification__c();
-        criticalFields.name = 'test';
-        criticalFields.Airline_Billing_Agreement_Fields__c = 'Bill_To__c,Ship_To__c,Payer__c,Sold_To__c';
-        criticalFields.Account_Airline_Fields__c = 'EF_Status__c,EF_Legacy_Code__c,EF_Airline_ID__c,EF_SIS_Code__c,EF_SIS_Designator__c,EF_SIS_Code_Verified__c';
-        criticalFields.Account_Client_Fields__c = 'Legal_name__c,EF_SIS_Code__c,EF_SIS_Designator__c,EF_SIS_Code_Verified__c,EF_Status__c';
-        criticalFields.Contract_Fields__c = 'Name,EF_Data_Currency__c,EF_Group_Code__c,EF_Admin_Fee__c,EF_Payment_Terms__c';
-        criticalFields.Contact_Fields__c = 'EF_Signatory__c,Email,FirstName,LastName,EF_Status__c';
-        insert criticalFields;
+        EF_Critical_Field_Notification__c cfn = new EF_Critical_Field_Notification__c ();
+        cfn.Name='criticalFieldChangesTracking';
+        cfn.Account_Airline_Fields__c = 'EF_Status__c,EF_Legacy_Code__c,EF_Airline_ID__c,EF_SIS_Code__c,EF_SIS_Designator__c,EF_SIS_Code_Verified__c';
+        cfn.Account_Client_Fields__c='Legal_name__c,EF_SIS_Code__c,EF_SIS_Designator__c,EF_SIS_Code_Verified__c,EF_Status__c';
+        cfn.Airline_Billing_Agreement_Fields__c='Bill_To__c,Ship_To__c,Payer__c,Sold_To__c';
+        cfn.Contact_Fields__c='EF_Signatory__c,Email,FirstName,LastName,EF_Status__c';
+        cfn.Contract_Fields__c='EF_Group_Code__c,EF_Admin_Fee__c,EF_Payment_Terms__c';
+        insert cfn;
 
     }
 
