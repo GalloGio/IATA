@@ -4,6 +4,8 @@
     <customButtons>Approve_Default</customButtons>
     <customButtons>EasyUpload</customButtons>
     <customButtons>Reset_New_interactions</customButtons>
+    <customButtons>Escalate_within_IATA</customButtons>
+    <customButtons>Create_SAAM_Case</customButtons>
     <emailDefault>false</emailDefault>
     <excludeButtons>Clone</excludeButtons>
     <excludeButtons>Delete</excludeButtons>
