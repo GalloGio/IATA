@@ -609,7 +609,7 @@ global class IECConstants {
     
     public static String GDPReplication_ProfileIDswithAccess {
         get {
-            return Test.isRunningTest() ? '00ew0000001R6uT,00e20000000kvcd,00e20000001QMpc,00e20000000h0gF,00520000002P7Kb,00ew0000001QUyp' : IEC_GDP_Replication__c.getOrgDefaults().Profile_IDs_with_Access__c;
+            return Test.isRunningTest() ? IECFIX.getSystemIntegrationProfileId() : IEC_GDP_Replication__c.getOrgDefaults().Profile_IDs_with_Access__c;
         }
     }
 }
