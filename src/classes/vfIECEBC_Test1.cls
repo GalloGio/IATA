@@ -11,6 +11,9 @@ public class vfIECEBC_Test1 {
         vfIECEBC_TestSuite1.testCampaignTemplate();
     }
     
+	public static testMethod void testCampaignTracking() {
+        vfIECEBC_TestSuite1.testCampaignTracking();
+    }
     public static testMethod void fooBar() {
         vfIECEBC_TestSuite1.fooBar();
     }
