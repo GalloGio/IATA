@@ -6286,7 +6286,7 @@ La preghiamo di indicarci il paese per il quale richiede assistenza</label>
         <name>ISSP_Email_Access_YourAccessTo</name>
     </customLabels>
     <customLabels>
-        <label>L&apos;assistenza è stata concessa. Accesso a</label>
+        <label>L&apos;assistenza è stato autorizzato. Per accedere clicchi</label>
         <name>ISSP_Email_Access_YourAccessTo2Granted</name>
     </customLabels>
     <customLabels>
