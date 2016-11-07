@@ -197,8 +197,11 @@ public class AMS_EBulletinReportHelper {
 		}
 		
 		system.debug('ccFieldToReturn:' + ccFieldToReturn);
-		//Changes codes to Query
-		//
+		
+
+		//***************************************************************************************
+		//*************** BASE QUERY for the Extraction: Changes codes to Query *****************
+		//***************************************************************************************
 		
 		Set <String> ccNamesToRecover = AMS_CustomSettingsUtils.ccNameSectionMap.keyset();
 		
@@ -206,10 +209,12 @@ public class AMS_EBulletinReportHelper {
 				Database.query(
 					AMS_QueryUtils.getFieldsQuery(objectBaseQuery,
 												  fieldsQuery + ( ccFieldToReturn.isEmpty() ? '' : ',') + convertToCSV(ccFieldToReturn,','), 
-												  ' Change_Code__c IN :ccNamesToRecover order by Account__r.IATA_ISO_Country__r.Name,createdDate')
+												  ' Change_Code__c IN :ccNamesToRecover and Published_on_EBulletin__c = TRUE order by Account__r.IATA_ISO_Country__r.Name,createdDate')
 					);
 
 
+		if(ccList.isEmpty())
+			throw new AMS_EBulletinException('There is no Change Codes Information to extract for the specified period!');
 		//system.debug('Records history query: ' +AMS_QueryUtils.getAllFieldQuery(objectHistBaseQuery,objectBaseQuery.replace('__c', '__r.Id') + ' IN :ccList', false));
 		
 		//Recover current active Owners Info from the Accounts linked to the Change Codes
@@ -814,5 +819,13 @@ public class AMS_EBulletinReportHelper {
         }
 
 	}
+
+		/** 
+	Exceptions handling for E Bulletin	
+	*/	
+
+	class AMS_EBulletinException extends Exception {}
+
+
 
 }
