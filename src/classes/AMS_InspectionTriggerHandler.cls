@@ -56,10 +56,11 @@ public with sharing class AMS_InspectionTriggerHandler {
 		Map<Id, Integer> appointmentsPerAccount = new Map<Id, Integer>();
 
 		for(AMS_Inspection__c app: (List<AMS_Inspection__c>)Trigger.New){
-			appointmentAgencies.add(app.Account__c);
+			if(app.Account__c != null)
+				appointmentAgencies.add(app.Account__c);
 		}
 
-		List<AMS_Inspection__c> allAppointments = new List<AMS_Inspection__c>([SELECT Id, Account__c FROM AMS_Inspection__c WHERE Account__r.Category__c = 'MSO Member Sales Office']);
+		List<AMS_Inspection__c> allAppointments = new List<AMS_Inspection__c>([SELECT Id, Account__c FROM AMS_Inspection__c WHERE Account__c IN :appointmentAgencies AND Account__r.Category__c = 'MSO Member Sales Office']);
 
 		for(AMS_Inspection__c app: allAppointments){
 			if(app.Account__c!=null){
