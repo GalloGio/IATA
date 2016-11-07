@@ -116,7 +116,7 @@ public class ISSP_Ctrl_Bannertestpage {
 	 unFilteredBanner_List = new List<ISSP_Banner__c>();
 	 //Run the soql Query
 	 system.debug('SFII  soql '+soql); 
-     unFilteredBanner_List  = Database.query(soql + ' order by Publication_start_date__c Desc Limit 6' );
+     unFilteredBanner_List  = Database.query(soql + ' order by Publication_start_date__c Desc Limit 8' );
 
 	system.debug('SFII  unFilteredBanner_List '+unFilteredBanner_List); 
 	system.debug('SFII  unFilteredBanner_List size '+unFilteredBanner_List.size()); 
