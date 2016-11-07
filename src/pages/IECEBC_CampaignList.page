@@ -1,0 +1,59 @@
+<apex:page controller="vfIECEBC_CampaignList" applyHtmlTag="false" applyBodyTag="false" sidebar="false" showheader="false" standardStylesheets="false" language="en" docType="html-5.0">
+	<apex:composition template="IECEBC_Layout">
+        <apex:define name="pageHeadAdditions">
+            <!-- Start of Page <head> -->
+            <title>eBroadcast Dashboard</title>
+            <!-- End of Page </head> -->
+            <style type="text/css">
+            	.action-box.create-campaign {
+                	right: 25px;
+                }
+            </style>
+        </apex:define>
+        <apex:define name="pageScriptAdditions">
+            <!-- If any page specific .js, add them here -->
+        </apex:define>
+        <apex:define name="pageContent">
+            <!-- Start of Page Content -->
+            <main class="main-content content-dashboard">
+                <div class="inner-wrapper">
+                    <h1 class="page-title">All Campaigns</h1>
+                    <apex:form >
+                        <table Width="100%" >
+                            
+                            <tr >
+                             <td width="50%">
+                                 <div class="sort-by">
+                                     <apex:outputpanel id="Sortselection">
+                                         <div class="custom-user-input select">
+                                             <i class="icon angle-down"></i>
+                                             <apex:selectList value="{!sortBy}" styleClass="user-input select" size="1">
+                                                 <apex:selectOptions value="{!sortByOptions}"  />
+                                                 <apex:actionSupport event="onchange" action="{!doNothing}" reRender="campaignList,Sortselection" />
+                                             </apex:selectList> 
+                                         </div>
+                                     </apex:outputpanel>
+                                 </div>
+                                 
+                                 
+                                 
+                                 
+                             </td>
+                             <td width="50%" >
+                                 <div class="action-box text-right ">
+                                    <apex:outputLink value="{!URLFOR($Page.IECEBC_Campaign)}" styleClass="button">Create campaign</apex:outputLink>
+                                </div>
+                             </td>
+                            </tr>
+                        </table>                       
+                        
+                    </apex:form>
+                    <apex:outputPanel id="campaignList" style="padding: 10px 0;" layout="block">
+                        <c:IECEBC_CampaignList limited="false" sort="{!sortBy}" />
+                    </apex:outputPanel>
+                </div>
+            </main>
+            <!-- End of Page Content -->
+        </apex:define>
+    </apex:composition>
+</apex:page>
