@@ -74,7 +74,7 @@ global class AmsIataCodeGenerator{
         {
             //AMS_Agency__c theAgency = [select Id, RecordTypeId, IATACode__c,Country__c,CASS_Number__c,  Iso_State__c,N_Code__c,A_Code__c,C_Code__c, Account__r.IATACode__c, Account__c from AMS_Agency__c where Id =:agencyId FOR UPDATE];#AMSFTS
             Account theAccount = [select Id, Sector__c, Location_Class__c, Check_Digit__c, IATA_ISO_Country__c, RecordTypeId, IATACode__c, CASS_Number__c,  Iso_State__c from Account where Id = :accountId FOR UPDATE];
-            AMS_Pax_Accreditation_Form__c theAccreditation = [select Id, Chk_Dgt__c, SAAM_Case__r.Account.Top_Parent__c, SAAM_Case__r.OSCAR__r.Account__r.Top_Parent__r.IATACode__c, Branch_Office_Country__c, SAAM_Case__r.Account.Top_Parent__r.Check_Digit__c, SAAM_Case__r.Account.Top_Parent__r.N_Code__c, SAAM_Case__r.Account.Top_Parent__r.C_Code__c, SAAM_Case__r.Account.Top_Parent__r.A_Code__c, SAAM_Case__r.Account.Top_Parent__r.IATACode__c, IATA_ISO_State__c, ISO_country__c, CASS_Number__c, Location_Class__c, IATACode__c, N_Code__c, A_Code__c, C_Code__c from AMS_Pax_Accreditation_Form__c where Id = :onlineAccreditationId FOR UPDATE];
+            AMS_Pax_Accreditation_Form__c theAccreditation = [select Id, Chk_Dgt__c, SAAM_Case__r.Account.Top_Parent__c, SAAM_Case__r.OSCAR__r.Account__r.Top_Parent__r.IATACode__c, Branch_Office_Country__c, SAAM_Case__r.Account.Top_Parent__r.Check_Digit__c, SAAM_Case__r.Account.Top_Parent__r.N_Code__c, SAAM_Case__r.Account.Top_Parent__r.C_Code__c, SAAM_Case__r.Account.Top_Parent__r.A_Code__c, SAAM_Case__r.Account.Top_Parent__r.IATACode__c, IATA_ISO_State__c, ISO_country__c, CASS_Number__c, Location_Class__c, IATACode__c, N_Code__c, A_Code__c, C_Code__c, SAAM_Case__r.OSCAR__r.Process__c from AMS_Pax_Accreditation_Form__c where Id = :onlineAccreditationId FOR UPDATE];
             if(longCodePrograms.contains(theAccreditation.Location_Class__c + '-' + theAccount.Sector__c) && theAccreditation.CASS_Number__c == null)
             {
                 returnedValues[0] = '2';
@@ -122,6 +122,10 @@ global class AmsIataCodeGenerator{
                 theAccount.RecordTypeId = AMS_Utils.getId('Account', 'IATA_Agency');
                 if(allowedProgramCodes.contains(theAccreditation.Location_Class__c))
                 {
+                    //hammer: new requirement has same location class mapping to different account categories...
+                    if(theAccreditation.SAAM_Case__r.OSCAR__r.Process__c == AMS_Utils.new_GSSA && theAccount.Location_Class__c == 'G')
+                        theAccount.Category__c = 'GSSA Cargo';
+                    else
                     theAccount.Category__c = programCategoryMap.get(theAccount.Location_Class__c);
                 }
                 else
@@ -366,6 +370,9 @@ global class AmsIataCodeGenerator{
                                     theAccount.RecordTypeId = AMS_Utils.getId('Account', 'IATA_Agency');
                                     if(allowedProgramCodes.contains(theAccreditation.Location_Class__c))
                                     {
+                                if(theAccreditation.SAAM_Case__r.OSCAR__r.Process__c == AMS_Utils.new_GSSA && theAccount.Location_Class__c == 'G')
+                                    theAccount.Category__c = 'GSSA Cargo';
+                                else
                                         theAccount.Category__c = programCategoryMap.get(theAccount.Location_Class__c);
                                     }
                                     else
