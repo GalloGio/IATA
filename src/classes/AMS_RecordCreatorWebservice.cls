@@ -473,7 +473,7 @@ global without sharing class AMS_RecordCreatorWebservice {
         return toReturn;
     }
 
-    public static AMS_OSCAR_JSON.ChangeCode generateChangeCodeTN(List<AMS_RecordCreatorWebservice.AccountChanges> accountChanges,Boolean isToChangeStatus){
+    public static AMS_OSCAR_JSON.ChangeCode generateChangeCodeTN(List<AMS_RecordCreatorWebservice.AccountChanges> accountChanges,/*MME - maybe this parameter can be deleted*/Boolean isToChangeStatus){
 
         AMS_OSCAR_JSON.ChangeCode toReturn = new AMS_OSCAR_JSON.ChangeCode();
 
@@ -481,10 +481,8 @@ global without sharing class AMS_RecordCreatorWebservice {
         toReturn.reasonCode = 'Change data';
         toReturn.memoText = 'Change of trade name';//createMemoText(accountChanges);
         toReturn.reasonDesc  = 'Accredited-Meets Criteria.';
-        
-        if(isToChangeStatus)
-            toReturn.status  = '8'; // Accredited
-
+		toReturn.status = null;
+		
         return toReturn;
     }
 

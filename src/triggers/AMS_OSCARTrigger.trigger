@@ -276,6 +276,20 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
                         Account acct = new Account(Id = updatedOscar.Account__c);
                         AMS_Utils.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {updatedOscar}, new List<Account> {acct}, true);
                     }
+                    // If the picklist is set create a CTA change code.
+                    if(updatedOscar.AMS_Correction_change_code__c == 'CTA') {
+                        system.debug(LoggingLevel.ERROR,'applyChangeCodesWithDependencies() -> generate the change code');
+                        AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
+
+                        changeCode.name = 'CTA';
+                        changeCode.reasonCode = 'Change data';
+                        changeCode.memoText = 'Change of trade name';
+                        changeCode.reasonDesc  = 'Accredited-Meets Criteria.';
+                        changeCode.status  = null;
+
+                        Account acct = new Account(Id = updatedOscar.Account__c);
+                        AMS_Utils.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {updatedOscar}, new List<Account> {acct}, true);
+                    }
 
                 } catch (Exception ex) {
                     System.debug('Exception: ' + ex);
