@@ -3,8 +3,11 @@ private class EF_MaterialLineItemHandlerTest {
 		
     @isTest static void testAddingContractMaterial_expectApprovalToStart()
 	{
-			EF_TestDataFactory.createBaseData();
 		System.runAs(EF_TestDataFactory.getEfProfileAndRole(0, 4)) {
+			EF_TestDataFactory.createCustomSettings();
+			EF_TestDataFactory.skipContractCreationValidationRule();
+			EF_TestDataFactory.createBaseDataWithAllowedWithApproval();
+
 			Contract contract = [select Id, AccountId, Account.Name, EF_Allow_Billing_Agreements__c from Contract where Account.Name = 'Test Account Client'];
 			Product2 prod = new Product2(Name='Test', Family='EF');
 			insert prod;
@@ -12,17 +15,17 @@ private class EF_MaterialLineItemHandlerTest {
 			Id contractMaterialRtId = AMS_Utils.getId('EF_Material_Line_Item__c', 'Contract_Line_Item');
 
 			List<ProcessInstanceWorkItem> pwiList = [SELECT Id, ActorId, ProcessInstance.TargetObjectId	FROM ProcessInstanceWorkitem];
-			System.assertEquals(0, pwiList.size());
+			System.assertEquals(1, pwiList.size());
 
 			EF_Material_Line_Item__c mat = new EF_Material_Line_Item__c(RecordTypeId=contractMaterialRtId, EF_Material__c=prod.Id, Contract__c=contract.Id, EF_Status__c='Active');
 			insert mat;
 
 			pwiList = [SELECT Id, ActorId, ProcessInstance.TargetObjectId FROM ProcessInstanceWorkitem];
-			System.assertEquals(1, pwiList.size());
-			System.assertEquals(mat.Id, pwiList.get(0).ProcessInstance.TargetObjectId);
+			System.assertEquals(2, pwiList.size());
+			System.assertEquals(mat.Id, pwiList.get(1).ProcessInstance.TargetObjectId);
 		}
 	}
-
+	
 	@isTest static void testAddingContractAndBaMaterial_noApprovals()
 	{
 		System.runAs(EF_TestDataFactory.getEfProfileAndRole(0, 2)) {
