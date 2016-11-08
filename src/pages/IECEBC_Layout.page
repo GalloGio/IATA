@@ -75,7 +75,7 @@
                                                         <tr>
                                                             <th>Cost per email:</th>
                                                             <td>
-                                                                <apex:outputText value="${0, number, ###,###,##0.00}"><apex:param value="{!productRatePlan.EBC_Currency_Cost_Per_Email__c}"/></apex:outputText><br />
+                                                                <apex:outputText value="${0, number, ###,###,##0.000}"><apex:param value="{!productRatePlan.EBC_Currency_Cost_Per_Email__c}"/></apex:outputText><br />
                                                                 <apex:outputLink value="{!URLFOR($Page.IECEBC_AccountRatePlan)}" rendered="{!productRatePlan.Name != 'Premium Edition'}">Lower your cost per email</apex:outputLink>
                                                             </td>
                                                         </tr>
