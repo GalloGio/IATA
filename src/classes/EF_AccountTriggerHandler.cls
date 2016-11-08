@@ -104,7 +104,7 @@ public class EF_AccountTriggerHandler {
 					inactiveMaterialLineItems(matMap);
 				}
 			}catch(Exception e){System.debug('## Error inactivating EF Contracts ' +e); 
-			throw new AccountException('Error Inactivating Contracts ' +e);
+			throw new AccountException('Error Inactivating EF Contracts ' +e);
 		}
 		}else{
 			if(!inactiveAccsSet.isEmpty() && run){ 
@@ -195,20 +195,7 @@ public class EF_AccountTriggerHandler {
 
 	}
 
-	// public static void inactiveEF_Contract_Contacts(List <EF_Contact_EF_Contract__c> ccList){
-	//
-	// 	for(EF_Contact_EF_Contract__c cc: ccList){
-	// 		cc.EF_Status__c = 'Inactive';
-	// 	}
-	//
-	// 	try{
-	//         update ccList;
-	//         if(childAccsList.size()>0 && run){
-	//             inactiveChildAccounts(childAccsList);
-	//         }
-	// 	}catch(Exception e){System.debug('## [EF_AccountTriggerHandler.inactiveEF_BAContacts ] Error ' +e ); throw new AccountException('Error Inactivating Contacts from Contracts '+e);}
-	//
-	// }
+	
 
 	public static void inactiveChildAccounts (List <Account> accs){
 

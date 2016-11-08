@@ -260,7 +260,8 @@ public with sharing class EF_TestDataFactory
                            Username='efUnit@test.ch'+roleNumber, LastName='Test1',
                            Email='test1@iata.org', Alias='Test1', CommunityNickname='Test1'+roleNumber,
                            TimeZoneSidKey='Europe/Brussels', LocaleSidKey='en_US',
-                           EmailEncodingKey='UTF-8', LanguageLocaleKey='en_US');
+                           EmailEncodingKey='UTF-8', LanguageLocaleKey='en_US',
+                           EF_Client_Reactivation__c=true, EF_Customer_Reactivation__c=true);
         
         if(efProfileIds.size() == 2)
         {
@@ -375,6 +376,18 @@ public with sharing class EF_TestDataFactory
             EF_Billing_Currency__c='QAR'
             );
         insert locCurrency;
+    }
+    
+    public static Product2 createEFProduct(){
+        Product2 prod = new Product2 (
+            name='EF Product Test',
+            Product_Segment__c ='PAX',
+            Product_Marketing_Manager__c ='Other / Does not Apply',
+            Family ='E&F Services',
+            Line_of_Business__c ='T & T');
+        
+        insert prod;
+        return prod;
     }
 
 }
