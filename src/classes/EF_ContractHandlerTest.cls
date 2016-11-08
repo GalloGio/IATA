@@ -2,17 +2,17 @@
 private class EF_ContractHandlerTest
 {
 	@testSetup
-    static void setup()
-    {
+	static void setup()
+	{
 
 		User u = EF_TestDataFactory.getEfProfileAndRole(0, 2);
 		User u2 = EF_TestDataFactory.getEfProfileAndRole(0, 4);
 		// EF_TestDataFactory.createCustomSettings();
-        System.runAs(u){
+		System.runAs(u){
 			EF_TestDataFactory.createBaseData();
-        }
+		}
 
-    }
+	}
 
 	@isTest
 	static void testUpdateContractAsSpecialist()
@@ -21,11 +21,11 @@ private class EF_ContractHandlerTest
 		User u = [SELECT Id FROM User WHERE Username='efUnit@test.ch4' LIMIT 1];
 		Account parent = [SELECT Id FROM Account WHERE Name = 'Test Account Client' LIMIT 1];
 		AccountShare share = new AccountShare();
-        share.AccountId = parent.Id;
-        share.UserOrGroupId = u.Id;
-        share.AccountAccessLevel = 'Edit';
-        share.OpportunityAccessLevel = 'Edit';
-        insert share;
+		share.AccountId = parent.Id;
+		share.UserOrGroupId = u.Id;
+		share.AccountAccessLevel = 'Edit';
+		share.OpportunityAccessLevel = 'Edit';
+		insert share;
 
 		System.runAs(u) {
 
@@ -36,24 +36,24 @@ private class EF_ContractHandlerTest
 
 			List<EF_Billing_Agreement__c> lsBillingAgreements = [SELECT Id, Data_Currency__c FROM EF_Billing_Agreement__c WHERE Contract__c =:contract.Id];
 
-	        Test.startTest();
-				lsBillingAgreements[0].Data_Currency__c = 'QAR';
-				try {
-					update lsBillingAgreements;
-				} catch(Exception e) {
-					Boolean expectedExceptionThrown =  e.getMessage().contains('currency') ? true : false;
-					System.AssertEquals(expectedExceptionThrown, false);
+			Test.startTest();
+			lsBillingAgreements[0].Data_Currency__c = 'QAR';
+			try {
+				update lsBillingAgreements;
+			} catch(Exception e) {
+				Boolean expectedExceptionThrown =  e.getMessage().contains('currency') ? true : false;
+				System.AssertEquals(expectedExceptionThrown, false);
 
-				}
-				contract.EF_Data_Currency__c = 'EUR';
-				try {
-					update contract;
+			}
+			contract.EF_Data_Currency__c = 'EUR';
+			try {
+				update contract;
 
-				} catch(Exception e) {
-					Boolean expectedExceptionThrown =  e.getMessage().contains('currency') ? true : false;
-					System.AssertEquals(expectedExceptionThrown, false);
-				}
-	        Test.stopTest();
+			} catch(Exception e) {
+				Boolean expectedExceptionThrown =  e.getMessage().contains('currency') ? true : false;
+				System.AssertEquals(expectedExceptionThrown, false);
+			}
+			Test.stopTest();
 		}
 
 	}
@@ -70,26 +70,26 @@ private class EF_ContractHandlerTest
 
 			List<EF_Billing_Agreement__c> lsBillingAgreements = [SELECT Id, Data_Currency__c FROM EF_Billing_Agreement__c WHERE Contract__c =:contract.Id];
 
-	        Test.startTest();
-				lsBillingAgreements[0].Data_Currency__c = 'QAR';
-				try {
-					update lsBillingAgreements;
-				} catch(Exception e) {
-					Boolean expectedExceptionThrown =  e.getMessage().contains('currency') ? true : false;
-					System.AssertEquals(expectedExceptionThrown, false);
+			Test.startTest();
+			lsBillingAgreements[0].Data_Currency__c = 'QAR';
+			try {
+				update lsBillingAgreements;
+			} catch(Exception e) {
+				Boolean expectedExceptionThrown =  e.getMessage().contains('currency') ? true : false;
+				System.AssertEquals(expectedExceptionThrown, false);
 
-				}
-				contract.EF_Admin_Fee__c = 15;
-				try {
-					update contract;
+			}
+			contract.EF_Admin_Fee__c = 15;
+			try {
+				update contract;
 
-				} catch(Exception e) {
-					Boolean expectedExceptionThrown =  e.getMessage().contains('currency') ? true : false;
-					System.AssertEquals(expectedExceptionThrown, false);
-				}
-	        Test.stopTest();
+			} catch(Exception e) {
+				Boolean expectedExceptionThrown =  e.getMessage().contains('currency') ? true : false;
+				System.AssertEquals(expectedExceptionThrown, false);
+			}
+			Test.stopTest();
 		}
 
 	}
-	
+
 }
