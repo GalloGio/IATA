@@ -109,7 +109,7 @@ public class AMS_InspectionHelper {
                 {
                     changedRecords.put(current.Account__c, current);
                 }
-            } else if(current.Account__c != null && current.Accreditation_Endorsement_Status_code__c.equals('0'))
+            } else if(current.Account__c != null && current.Accreditation_Endorsement_Status_code__c != null && current.Accreditation_Endorsement_Status_code__c.equals('0'))
             {
                 // inserting with status code 0, so let's consider this an updatable record
                 changedRecords.put(current.Account__c, current);
