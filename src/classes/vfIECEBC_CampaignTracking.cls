@@ -352,6 +352,7 @@ public class vfIECEBC_CampaignTracking extends vfIECEBC_Controller{
     }
     
     //Generation a map <Hour,null> based on hours for retrieve opens/clicks use 
+    /*
     public static Map<Integer, String> generateMapString(Integer numberOfHours){    
         Map<Integer, String> initMap = new Map<Integer, String>();
         for (integer i=0; i<numberOfHours; i++){
@@ -359,6 +360,7 @@ public class vfIECEBC_CampaignTracking extends vfIECEBC_Controller{
         }       
         return initMap;
     }
+    */
     
     //X-axis for 7-days chart
     public String getXAxis7d(){

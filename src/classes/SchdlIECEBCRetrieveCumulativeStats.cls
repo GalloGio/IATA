@@ -14,17 +14,19 @@ global class SchdlIECEBCRetrieveCumulativeStats implements Database.Batchable<sO
     }
     
     global void execute(Database.BatchableContext BC, List<sObject> scope) {
-        IECEBC_ETCampaignTrackingAsync.createCumulativeCampaignTracking((List<EBC_Campaign__c>)scope);
+        	IECEBC_ETCampaignTrackingAsync.createCumulativeCampaignTracking((List<EBC_Campaign__c>)scope);
     }
     
     global void finish(Database.BatchableContext BC) {
         
     }
     
-    // Schedulable
+    // Schedulable 
     global void execute(SchedulableContext SC)  {
-        SchdlIECEBCRetrieveCumulativeStats n = new SchdlIECEBCRetrieveCumulativeStats();
-        Database.executeBatch(n,SchdlIECEBCRetrieveCumulativeStats.BATCH_SIZE);
+        if (!Test.isRunningTest()) {
+            SchdlIECEBCRetrieveCumulativeStats n = new SchdlIECEBCRetrieveCumulativeStats();
+            Database.executeBatch(n,SchdlIECEBCRetrieveCumulativeStats.BATCH_SIZE);
+        }
     }
     global static void cancel() {
         cancel('SchdlIECEBCRetrieveCumulativeStats');

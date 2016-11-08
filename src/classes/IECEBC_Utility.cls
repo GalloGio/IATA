@@ -216,8 +216,7 @@ public class IECEBC_Utility {
 	
 	public class Resource_Invalid_Attachment_Exception extends Exception{}
 	public class Attachment_Size_Exceeds_Capacity_Exception extends Exception{}
-	public class Resource_Name_Already_Exists_Exception extends Exception{}
-	
+
 	public static void createResourceForAttachment(Attachment a, Zuora__CustomerAccount__c billingAccount) {
 		if (String.isBlank(a.name) || a.body == null)  throw new Resource_Invalid_Attachment_Exception('The file name exceeds the maximum characters allowed (max. 80 characters)');
 		if (a.name.length()>80) throw new Resource_Invalid_Attachment_Exception('Attachment name must have be less 80 characters long.');
@@ -249,9 +248,6 @@ public class IECEBC_Utility {
 					   			Where name=:a.name
 					   			and Billing_Account__c=:billingAccount.Id
 					   Limit 1];
-	   // if (resourcelist.Size()>0) {
-		//	throw new Resource_Name_Already_Exists_Exception('A resource with the same name already exists');
-		//}
 		
 		// Create EBC Resource
 		
@@ -278,14 +274,14 @@ public class IECEBC_Utility {
 								, Member_Prepaid_Product_Rate_Plan_02__c
 								, Member_Prepaid_Product_Rate_Plan_03__c
 								, Member_Prepaid_Product_Rate_Plan_04__c
-								
+                                                   
 								, Non_Member_Email_Block_Product__c
 								, Non_Member_Pay_As_You_Go_Plan__c
 								, Non_Member_Prepaid_Product_Rate_Plan_01__c
 								, Non_Member_Prepaid_Product_Rate_Plan_02__c
 								, Non_Member_Prepaid_Product_Rate_Plan_03__c
 								, Non_Member_Prepaid_Product_Rate_Plan_04__c
-								
+                                                   
 								, Enhanced_Reporting_Product_Rate_Plan__c
 								, Storage_Product_Rate_Plan__c
 								
