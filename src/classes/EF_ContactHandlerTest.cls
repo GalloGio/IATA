@@ -60,5 +60,6 @@ private class EF_ContactHandlerTest {
         System.assertEquals('Inactive', ccAfter.EF_Status__c);
 
     }
+    }
 
 }
