@@ -88,10 +88,6 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Process_Start_Date__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>Sanity_check_deadline__c</field>
             </layoutItems>
             <layoutItems>

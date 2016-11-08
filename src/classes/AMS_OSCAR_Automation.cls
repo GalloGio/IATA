@@ -19,9 +19,10 @@ public with sharing class AMS_OSCAR_Automation
 
                 if(oscar != null){
                     oscar.Sanity_check_received__c = Date.today();
-                    oscar.Process_Start_Date__c = Date.today();
+                    oscar.Sanity_check_deadline__c = oscar.Sanity_check_received__c + 15;
                     oscar.Sanity_check_results__c = AMS_Utils.PASSED;
                     res = True;
+                    
                 }
             }catch(Exception e){
                 res = False;
@@ -43,16 +44,8 @@ public with sharing class AMS_OSCAR_Automation
 
                 if(oscar != null){
                     oscar.Sanity_check_received__c = Date.today();
-                    
-					List<Account> oscarAccount = new List<Account>([select Location_Class__c from Account where id =: oscar.Account__c]);
-                    if(oscar.Process__c == AMS_Utils.new_HO && (oscarAccount.get(0).Location_Class__c == 'C' || oscarAccount.get(0).Location_Class__c == 'I' || oscarAccount.get(0).Location_Class__c == 'P' || oscarAccount.get(0).Location_Class__c == 'Q')){                    
-                    	oscar.OSCAR_Deadline__c = Date.today() + 15;
-                    }
-                    else if(oscar.Process__c == AMS_Utils.new_BR || oscar.Process__c == AMS_Utils.new_BR_ABROAD || oscarAccount.get(0).Location_Class__c == 'R'){
-                    	oscar.OSCAR_Deadline__c = Date.today() + 7;
-					}
-                    
-                    oscar.Sanity_check_results__c = AMS_Utils.FAILED;
+                    oscar.Sanity_check_deadline__c = oscar.Sanity_check_received__c + 15;
+                    oscar.Sanity_check_results__c = 'Failed';
                     res = True;
                 }
             }catch(Exception e){
@@ -603,7 +596,7 @@ public with sharing class AMS_OSCAR_Automation
             try{
                 if(oscar != null){
                     oscar.AIMS_updated__c = DateTime.now();
-                    oscar.Invoice_Requested__c = Date.today();
+                    oscar.Process_Start_Date__c = Date.today();
                     res = True;
                 }
             }catch(Exception e){
