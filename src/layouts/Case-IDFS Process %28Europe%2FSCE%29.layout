@@ -260,7 +260,11 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Third_FA_non_Compliance_Date__c</field>
+                <field>secondFSnonComplianceDate__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>FS_third_non_compliance_date__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -279,6 +283,14 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>FS_Second_Deadline_Date__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>FS_Third_Deadline_Date__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Third_FA_non_Compliance_Date__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
