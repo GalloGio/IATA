@@ -249,7 +249,7 @@
         <name>ANY</name>
     </customLabels>
     <customLabels>
-        <label>https://iata.my.salesforce.com/services/Soap/c/9.0</label>
+        <label><!-- API URL --></label>
         <name>API_URL</name>
     </customLabels>
     <customLabels>
@@ -285,15 +285,15 @@
         <name>Add_campaign_member_error</name>
     </customLabels>
     <customLabels>
-        <label>报错：账单国家/省市信息空缺，请按照下面的步骤进行填写：1- 编辑账单城市一栏   2-选择一个系统提供的地址</label>
+        <label><!-- AddressDoctorNoState --></label>
         <name>AddressDoctorNoState</name>
     </customLabels>
     <customLabels>
-        <label>请通过点击&lt;img height=&quot;16&quot; width=&quot;16&quot; src=&quot;https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w000000438d2&amp;oid=00D2000000008TF&amp;lastMod=1468481666000&quot; title=&quot;Click To Verify&quot;&gt;按钮来确认您的账单地址及邮寄地址</label>
+        <label><!-- AddressDoctorValidate --></label>
         <name>AddressDoctorValidate</name>
     </customLabels>
     <customLabels>
-        <label>请通过勾选右侧方框确认您的账单地址及邮寄地址</label>
+        <label><!-- AddressDoctorValidate2 --></label>
         <name>AddressDoctorValidate2</name>
     </customLabels>
     <customLabels>
@@ -377,7 +377,7 @@
         <name>BCC</name>
     </customLabels>
     <customLabels>
-        <label>此项服务能促进参与 IATA 开账与结算计划 (BSP) 的旅行代理商与航空公司之间的信息交互及交流。</label>
+        <label><!-- BSPLink_Description --></label>
         <name>BSPLink_Description</name>
     </customLabels>
     <customLabels>
@@ -513,7 +513,7 @@
         <name>Button_View_all</name>
     </customLabels>
     <customLabels>
-        <label>此项服务能促进参与 IATA 货运结算系统 (CASS) 的货物中介/代理与航空公司之间的信息交互及交流。</label>
+        <label><!-- CASSLink_Description --></label>
         <name>CASSLink_Description</name>
     </customLabels>
     <customLabels>
@@ -653,7 +653,7 @@
         <name>Contact_Information</name>
     </customLabels>
     <customLabels>
-        <label>联系人姓名</label>
+        <label><!-- Contact Name --></label>
         <name>Contact_Name</name>
     </customLabels>
     <customLabels>
@@ -737,11 +737,11 @@
         <name>Cybersource_SecurityKey_USD</name>
     </customLabels>
     <customLabels>
-        <label>3,92E+21</label>
+        <label><!-- Cybersource Order page CAD --></label>
         <name>Cybersource_SerialNumber</name>
     </customLabels>
     <customLabels>
-        <label>3,92E+21</label>
+        <label><!-- Cybersource_SerialNumber_USD --></label>
         <name>Cybersource_SerialNumber_USD</name>
     </customLabels>
     <customLabels>
@@ -821,7 +821,7 @@
         <name>Effective_Date</name>
     </customLabels>
     <customLabels>
-        <label>电子邮件</label>
+        <label><!-- Email --></label>
         <name>Email</name>
     </customLabels>
     <customLabels>
@@ -881,11 +881,11 @@
         <name>Error_SendEmail_Subject_Required</name>
     </customLabels>
     <customLabels>
-        <label>已升级</label>
+        <label><!-- Escalated --></label>
         <name>Escalated</name>
     </customLabels>
     <customLabels>
-        <label>https://sf-sftp.iata.org</label>
+        <label><!-- FTP Attachment Pro URL --></label>
         <name>FTP_Attachment_Pro_URL</name>
     </customLabels>
     <customLabels>
@@ -901,11 +901,11 @@
         <name>File_Name</name>
     </customLabels>
     <customLabels>
-        <label>&lt;国家代码&gt;-&lt;代理人类型&gt;-&lt;7位代理人编号&gt;-&lt;n&gt;.pdf</label>
+        <label><!-- File_Naming_Convention --></label>
         <name>File_Nameing_Convention</name>
     </customLabels>
     <customLabels>
-        <label>&lt;国家代码&gt;-&lt;代理人编号&gt;-NA&lt;档案编号后5位&gt;-&lt;n&gt;.pdf</label>
+        <label><!-- File Naming Convention_NewApps --></label>
         <name>File_Naming_Convention</name>
     </customLabels>
     <customLabels>
@@ -925,7 +925,7 @@
         <name>File_name_too_long</name>
     </customLabels>
     <customLabels>
-        <label>财务文件</label>
+        <label><!-- Financial_Documents --></label>
         <name>Financial_Documents</name>
     </customLabels>
     <customLabels>
@@ -941,7 +941,7 @@
         <name>FooterLeadMessage</name>
     </customLabels>
     <customLabels>
-        <label>国家/地区</label>
+        <label><!-- GeneralPublicLocation --></label>
         <name>GeneralPublicLocation</name>
     </customLabels>
     <customLabels>
@@ -1117,7 +1117,7 @@
         <name>IDCard_Back</name>
     </customLabels>
     <customLabels>
-        <label>取消</label>
+        <label><!-- IDCard Cancel Replacement --></label>
         <name>IDCard_Cancel_Replacement</name>
     </customLabels>
     <customLabels>
@@ -1133,7 +1133,7 @@
         <name>IDCard_CardDuration</name>
     </customLabels>
     <customLabels>
-        <label>案例详情</label>
+        <label><!-- IDCard_CaseDetails --></label>
         <name>IDCard_CaseDetails</name>
     </customLabels>
     <customLabels>
@@ -1165,10 +1165,7 @@
         <name>IDCard_CheckList_PageTitle</name>
     </customLabels>
     <customLabels>
-        <label>&quot;Credit cards accepted are:&lt;br&gt; 
-- Visa&lt;br&gt; 
-- Mastercard&lt;br&gt; 
-- American Express.&lt;br&gt;</label>
+        <label><!-- IDCard_CheckList_PaymentInformation --></label>
         <name>IDCard_CheckList_PaymentInformation</name>
     </customLabels>
     <customLabels>
@@ -1272,7 +1269,7 @@
         <name>IDCard_CommercialEmailAgreement</name>
     </customLabels>
     <customLabels>
-        <label>公司</label>
+        <label><!-- IDCard_Company --></label>
         <name>IDCard_Company</name>
     </customLabels>
     <customLabels>
@@ -1296,11 +1293,11 @@
         <name>IDCard_ConfirmAndProcessReplace</name>
     </customLabels>
     <customLabels>
-        <label>&quot;Agency Director, Manager, Independent Consultant/Broker and Employee cannot apply for an IDCard if their revenue is less than 10000$. Please tick the checkbox &quot;&quot;I confirm I earn more than 10000$&quot;&quot; if you earn more than 10000$ per year.&quot;</label>
+        <label><!-- IDCard_ConfirmRev --></label>
         <name>IDCard_ConfirmRev</name>
     </customLabels>
     <customLabels>
-        <label>&quot;Agency Sole Owner, Partner and Shareholder cannot apply for an IDCard if their revenue is less than 10000$ or own less than 20% of the Agency share. Please tick the checkbox &quot;&quot;I confirm I earn more than 10000$ or/and own more than 20% of the Agency share&quot;&quot; if you earn more than 10000$ per year or own more than 20% of the Agency share.&quot;</label>
+        <label><!-- ID Card Confirm Share Agency --></label>
         <name>IDCard_ConfirmShareAgency</name>
     </customLabels>
     <customLabels>
@@ -1308,8 +1305,7 @@
         <name>IDCard_Confirm_Replacement</name>
     </customLabels>
     <customLabels>
-        <label>&quot;&lt;h2&gt;We didn&apos;t find any existing ID Card based on the personal informations you provided in Login Page.&lt;/h2&gt;&lt;/br&gt;&lt;/br&gt;
-Please, if it&apos;s the first time you are applying for an ID Card, confirm that the Agency details below are corrects and click &quot;&quot;Applying for a first ID Card&quot;&quot;; or &quot;&quot;Go back to the Login Page&quot;&quot; and enter a correct Personal Information.&lt;br/&gt;&lt;br/&gt;&lt;br/&gt;&quot;</label>
+        <label><!-- IDCard_ContactNotFound --></label>
         <name>IDCard_ContactNotFound</name>
     </customLabels>
     <customLabels>
@@ -1317,7 +1313,7 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
         <name>IDCard_Continue_Button</name>
     </customLabels>
     <customLabels>
-        <label>&quot;Since you have stated that you are an &quot;&quot;Independent Consultant/Broker&quot;&quot; IATA needs a proof of contract&quot;</label>
+        <label><!-- IDCard_ContractorVerification --></label>
         <name>IDCard_ContractorVerification</name>
     </customLabels>
     <customLabels>
@@ -1377,7 +1373,7 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
         <name>IDCard_DeliveryOption</name>
     </customLabels>
     <customLabels>
-        <label>描述</label>
+        <label><!-- IDCard_Description --></label>
         <name>IDCard_Description</name>
     </customLabels>
     <customLabels>
@@ -1445,7 +1441,7 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
         <name>IDCard_FeeApplicable_Label</name>
     </customLabels>
     <customLabels>
-        <label>费用</label>
+        <label><!-- IDCard_Fees --></label>
         <name>IDCard_Fees</name>
     </customLabels>
     <customLabels>
@@ -1489,7 +1485,7 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
         <name>IDCard_IATACodeRequired</name>
     </customLabels>
     <customLabels>
-        <label>IATA 代码</label>
+        <label><!-- IDCard IATA Code Of Location --></label>
         <name>IDCard_IATA_Code_Of_Location</name>
     </customLabels>
     <customLabels>
@@ -1681,11 +1677,11 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
         <name>IDCard_MinAgeReq1</name>
     </customLabels>
     <customLabels>
-        <label>&quot;Invalid &quot;&quot;Birth date&quot;&quot; / &quot;&quot;Employed with the below agency&quot;&quot; combination. Minimum age is {0} years old.&quot;</label>
+        <label><!-- IDCard_MinAgeReq2 --></label>
         <name>IDCard_MinAgeReq2</name>
     </customLabels>
     <customLabels>
-        <label>&quot;Invalid &quot;&quot;Birth date&quot;&quot; / &quot;&quot;Start Date in the industry&quot;&quot; combination. Minimum age is {0} years old.&quot;</label>
+        <label><!-- IDCard_MinAgeReq3 --></label>
         <name>IDCard_MinAgeReq3</name>
     </customLabels>
     <customLabels>
@@ -1693,7 +1689,7 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
         <name>IDCard_MissingPhoto</name>
     </customLabels>
     <customLabels>
-        <label>联系资料</label>
+        <label><!-- IDCard Multiple Contact Info Header --></label>
         <name>IDCard_Multiple_Contact_Info_Header</name>
     </customLabels>
     <customLabels>
@@ -1753,7 +1749,7 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
         <name>IDCard_OpenedDate</name>
     </customLabels>
     <customLabels>
-        <label>&quot;Order Number missing; cannot continue process.&quot;</label>
+        <label><!-- IDCard_OrderNumberMissing --></label>
         <name>IDCard_OrderNumberMissing</name>
     </customLabels>
     <customLabels>
@@ -1761,8 +1757,7 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
         <name>IDCard_PaymentByChequeP1</name>
     </customLabels>
     <customLabels>
-        <label>&quot;We will verify the proof of payment in your application and proceed with issuance of the ID Card upon the approval of application and payment. 
-Should you have any question about payment by bank transfer, please visit &lt;a href=&quot;&quot;http://www.iata.org/services/accreditation-travel/idcard/Pages/apply.aspx&quot;&quot; target=&quot;&quot;_blank&quot;&quot;&gt;How to Apply&lt;/a&gt; or contact our &lt;a href=&quot;&quot;http://www.iata.org/customer-portal/Pages/ContactUs.aspx&quot;&quot; target=&quot;&quot;_blank&quot;&quot;&gt;customer service&lt;/a&gt; team.&quot;</label>
+        <label><!-- IDCard_PaymentByChequeP2 --></label>
         <name>IDCard_PaymentByChequeP2</name>
     </customLabels>
     <customLabels>
@@ -1938,12 +1933,11 @@ Should you have any question about payment by bank transfer, please visit &lt;a 
         <name>IDCard_ReplacementOption</name>
     </customLabels>
     <customLabels>
-        <label>&quot;&lt;a href=&quot;&quot; http://www.iata.org/customer-portal/Pages/contactus.aspx &quot;&quot; style=&quot;&quot;color: blue;&quot;&quot;&gt;Report Agency incorrect information &lt;/a&gt;&quot;</label>
+        <label><!-- IDCard_ReportAgencyIncorrectInfo --></label>
         <name>IDCard_ReportAgencyIncorrectInfo</name>
     </customLabels>
     <customLabels>
-        <label>&quot;If the above address is incorrect, please report agency incorrect information (&lt;a href=&quot;&quot;http://www.iata.org/customer-portal/Pages/index.aspx&quot;&quot; style=&quot;&quot;color: blue;&quot;&quot;&gt;Report Agency incorrect information&lt;/a&gt;) and should not continue until the agency address has been correctly modified. &lt;br/&gt; 
-Kindly note that home-based agents are required to coordinate with their colleagues at the address above to receive the ID Card. Applicants will be held responsible at all costs for incorrect agency address. To continue, please click the button below.&quot;</label>
+        <label><!-- IDCard ReportAgencyIncorrectInfo2 --></label>
         <name>IDCard_ReportAgencyIncorrectInfo2</name>
     </customLabels>
     <customLabels>
@@ -2195,7 +2189,7 @@ Kindly note that home-based agents are required to coordinate with their colleag
         <name>IDCard_photoReq3</name>
     </customLabels>
     <customLabels>
-        <label>&quot;If you wish to upload a different picture, click &quot;&quot;Change photo&quot;&quot;&quot;</label>
+        <label><!-- IDCard_photoReq4 --></label>
         <name>IDCard_photoReq4</name>
     </customLabels>
     <customLabels>
@@ -2307,7 +2301,7 @@ Kindly note that home-based agents are required to coordinate with their colleag
         <name>ID_Card_Fees</name>
     </customLabels>
     <customLabels>
-        <label>&quot;The field &quot;&quot;{0}&quot;&quot; is required&quot;</label>
+        <label><!-- ID Card Field Required --></label>
         <name>ID_Card_Field_Required</name>
     </customLabels>
     <customLabels>
@@ -2423,17 +2417,11 @@ Kindly note that home-based agents are required to coordinate with their colleag
         <name>ID_Card_Specifics</name>
     </customLabels>
     <customLabels>
-        <label>&quot;I have read and accept the 
-&lt;a href=&quot;&quot;JavaScript:newPopup(&apos;http://www.iata.org/Pages/privacy.aspx&apos;); &quot;&quot;&gt;Privacy Policy, Conditions of Use &lt;/a&gt; 
-and 
-&lt;a href=&quot;&quot;JavaScript:newPopup(&apos;http://www.iata.org/services/accreditation-travel/idcard/Documents/tc-idc-application-en-non-canada.pdf&apos;);&quot;&quot;&gt;Terms &amp; Conditions. &lt;/a&gt;&quot;</label>
+        <label><!-- ID Card Terms Condition --></label>
         <name>ID_Card_Terms_Condition</name>
     </customLabels>
     <customLabels>
-        <label>&quot;I have read and accept the 
-&lt;a href=&quot;&quot;JavaScript:newPopup(&apos;http://www.iata.org/Pages/privacy.aspx&apos;); &quot;&quot;&gt;Privacy Policy, Conditions of Use &lt;/a&gt; 
-and 
-&lt;a href=&quot;&quot;JavaScript:newPopup(&apos;http://www.iata.org/services/accreditation-travel/idcard/Documents/tc-idc-application-en-canada.pdf&apos;);&quot;&quot;&gt;Terms &amp; Conditions. &lt;/a&gt;&quot;</label>
+        <label><!-- ID Card Terms ConditionCA --></label>
         <name>ID_Card_Terms_ConditionCA</name>
     </customLabels>
     <customLabels>
@@ -2721,7 +2709,7 @@ and
         <name>IEC_Recaptcha_SiteKey</name>
     </customLabels>
     <customLabels>
-        <label>此邮箱已被注册，如果您需要重置密码，请返回登录页面点击“忘记密码”功能。</label>
+        <label><!-- IEC Registration UserExist --></label>
         <name>IEC_Registration_UserExist</name>
     </customLabels>
     <customLabels>
@@ -2749,23 +2737,23 @@ and
         <name>IEC_Warning_Must_Login</name>
     </customLabels>
     <customLabels>
-        <label>请确认是否已经上传所有文件，确认请按OK</label>
+        <label><!-- IFAPAllFilesCheck --></label>
         <name>IFAPAllFilesCheck</name>
     </customLabels>
     <customLabels>
-        <label>文件过大，文件大小不可超过10M</label>
+        <label><!-- IFAPFiletooLarge --></label>
         <name>IFAPFiletooLarge</name>
     </customLabels>
     <customLabels>
-        <label>1.请选择文件</label>
+        <label><!-- IFAP_1.Select the File --></label>
         <name>IFAP_1_Select_the_File</name>
     </customLabels>
     <customLabels>
-        <label>2.点击“上传财务文件”按钮</label>
+        <label><!-- IFAP_2.Click the &quot;Upload Financial Documents&quot; button. --></label>
         <name>IFAP_2_Click_the_Upload_Financial_Documents_button</name>
     </customLabels>
     <customLabels>
-        <label>3. 에 문서가 발송되였습니다.</label>
+        <label><!-- IFAP_ 3.When you finished uploading please click on the Confirm submission of do --></label>
         <name>IFAP_3_When_you_finished_uploading_please_click_on_the_Confirm_submission_of_do</name>
     </customLabels>
     <customLabels>
@@ -2773,7 +2761,7 @@ and
         <name>IFAP_Accounting_Issue_required</name>
     </customLabels>
     <customLabels>
-        <label>操作</label>
+        <label><!-- IFAP_Action --></label>
         <name>IFAP_Action</name>
     </customLabels>
     <customLabels>
@@ -2781,15 +2769,15 @@ and
         <name>IFAP_Assessment_Owner</name>
     </customLabels>
     <customLabels>
-        <label>无法为用户 {0} 重置密码</label>
+        <label><!-- IFAP Cannot Reset Password --></label>
         <name>IFAP_Cannot_Reset_Password_1</name>
     </customLabels>
     <customLabels>
-        <label>更换语言</label>
+        <label><!-- IFAP Change Language --></label>
         <name>IFAP_Change_Language</name>
     </customLabels>
     <customLabels>
-        <label>上传已经国际航协确认。如文件格式不正确、信息不完整和/或信息不正确，用户须重新上传。</label>
+        <label><!-- Display a confirmation message in the user language. --></label>
         <name>IFAP_ConfMessage</name>
     </customLabels>
     <customLabels>
@@ -2797,15 +2785,15 @@ and
         <name>IFAP_Confirm_Submission</name>
     </customLabels>
     <customLabels>
-        <label>您是否确认已上传全部财务文件？</label>
+        <label><!-- IFAP Confirm Upload --></label>
         <name>IFAP_Confirm_Upload</name>
     </customLabels>
     <customLabels>
-        <label>文件提交确认</label>
+        <label><!-- IFAP_Confirm submission of documents to IATA --></label>
         <name>IFAP_Confirm_submission_of_documents_to_IATA</name>
     </customLabels>
     <customLabels>
-        <label>根据{0}邮箱查找到的联系人并未记录为“财务审计联系人”</label>
+        <label><!-- IFAP Contact Not Flagged IFAP 1 --></label>
         <name>IFAP_Contact_Not_Flagged_IFAP_1</name>
     </customLabels>
     <customLabels>
@@ -2813,7 +2801,7 @@ and
         <name>IFAP_Delete_Link_Message</name>
     </customLabels>
     <customLabels>
-        <label>此项服务能满足您的全部财务评估要求，包括上传所需的财务报表文档。</label>
+        <label><!-- IFAP Description --></label>
         <name>IFAP_Description</name>
     </customLabels>
     <customLabels>
@@ -2829,47 +2817,47 @@ and
         <name>IFAP_FTP_Cannot_Delete_Result</name>
     </customLabels>
     <customLabels>
-        <label>当档案状态为“%s”时，您无法上传财务文件。</label>
+        <label><!-- IFAP FTP Cannot Upload --></label>
         <name>IFAP_FTP_Cannot_Upload</name>
     </customLabels>
     <customLabels>
-        <label>文件已发送处理</label>
+        <label><!-- IFAP Files Already Sent --></label>
         <name>IFAP_Files_Already_Sent</name>
     </customLabels>
     <customLabels>
-        <label>欢迎访问国际航协财务审计平台</label>
+        <label><!-- IFAP Home Page Title 1 --></label>
         <name>IFAP_Home_Page_Title_1</name>
     </customLabels>
     <customLabels>
-        <label>请点击上方“档案”按钮然后点击档案号码</label>
+        <label><!-- IFAP Home Page Title 2 --></label>
         <name>IFAP_Home_Page_Title_2</name>
     </customLabels>
     <customLabels>
-        <label>如您有任何疑问请通过我们的客服平台与我们联系。</label>
+        <label><!-- IFAP Home Page Title 3 --></label>
         <name>IFAP_Home_Page_Title_3</name>
     </customLabels>
     <customLabels>
-        <label>客户服务门户网站</label>
+        <label><!-- IFAP Home Page Title 4 --></label>
         <name>IFAP_Home_Page_Title_4</name>
     </customLabels>
     <customLabels>
-        <label>您的文件成功上传后，点击“财务文件可以开始处理”(Financial documents ready to process) 提交您的文件。您将收到一封含有相关帮助请求编号的确认电子邮件。</label>
+        <label><!-- IFAP Instructions --></label>
         <name>IFAP_Instructions</name>
     </customLabels>
     <customLabels>
-        <label>语言</label>
+        <label><!-- IFAP Language --></label>
         <name>IFAP_Language</name>
     </customLabels>
     <customLabels>
-        <label>登录尝试失败。请核对您的电子邮件地址及密码是否正确。</label>
+        <label><!-- IFAP Login Error --></label>
         <name>IFAP_Login_Error</name>
     </customLabels>
     <customLabels>
-        <label>还未注册？</label>
+        <label><!-- IFAP Login NotRegisteredYet --></label>
         <name>IFAP_Login_NotRegisteredYet</name>
     </customLabels>
     <customLabels>
-        <label>用户名</label>
+        <label><!-- IFAP Login Username --></label>
         <name>IFAP_Login_Username</name>
     </customLabels>
     <customLabels>
@@ -2885,23 +2873,23 @@ and
         <name>IFAP_Message_Confirm_Submission</name>
     </customLabels>
     <customLabels>
-        <label>未上传任何文件，您必须至少上传1个文件。</label>
+        <label><!-- IFAP No File To Process --></label>
         <name>IFAP_No_File_To_Process</name>
     </customLabels>
     <customLabels>
-        <label>仅限PDF文件，并且 文件大小不超过20MB</label>
+        <label><!-- IFAP Overall Maximum size: 20MB --></label>
         <name>IFAP_Overall_Max_size_20mb</name>
     </customLabels>
     <customLabels>
-        <label>&quot;&lt;a href=&quot;&quot;http://www.iata.org/cs&quot;&quot;&gt;请联系国际航协客户支持。&lt;/a&gt;&quot;</label>
+        <label><!-- IFAP Please Contact CS --></label>
         <name>IFAP_Please_Contact_CS</name>
     </customLabels>
     <customLabels>
-        <label>http://portal.iata.org</label>
+        <label><!-- IFAP Portal URL default value --></label>
         <name>IFAP_Portal_URL_default_value</name>
     </customLabels>
     <customLabels>
-        <label>已为{0}邮箱建立平台用户</label>
+        <label><!-- IFAP Portal User Already Exists --></label>
         <name>IFAP_Portal_User_Already_Exists</name>
     </customLabels>
     <customLabels>
@@ -2913,23 +2901,23 @@ and
         <name>IFAP_RESULT_ARCHIVE</name>
     </customLabels>
     <customLabels>
-        <label>无法找到与{0}邮箱相关联的联系人</label>
+        <label><!-- IFAP Registration Email Not Found --></label>
         <name>IFAP_Registration_Email_Not_Found</name>
     </customLabels>
     <customLabels>
-        <label>已为{0}联系人建立平台用户，但使用不同邮箱{1}</label>
+        <label><!-- IFAP Registration Email mismatch 1 --></label>
         <name>IFAP_Registration_Email_mismatch_1</name>
     </customLabels>
     <customLabels>
-        <label>无法为{0}邮箱注册用户</label>
+        <label><!-- IFAP Registration Failed --></label>
         <name>IFAP_Registration_Failed</name>
     </customLabels>
     <customLabels>
-        <label>注册IFAP平台用户成功。已向您的注册邮箱{0}发送了一封含有登陆信息的邮件。</label>
+        <label><!-- IFAP Registration Successful 1 --></label>
         <name>IFAP_Registration_Successful_1</name>
     </customLabels>
     <customLabels>
-        <label>保存</label>
+        <label><!-- IFAP Save --></label>
         <name>IFAP_Save</name>
     </customLabels>
     <customLabels>
@@ -2937,11 +2925,11 @@ and
         <name>IFAP_Submit_for_approval_message</name>
     </customLabels>
     <customLabels>
-        <label>国际航协财务审计平台</label>
+        <label><!-- IFAP Title --></label>
         <name>IFAP_Title</name>
     </customLabels>
     <customLabels>
-        <label>您的财务文件已提交给国际航协。</label>
+        <label><!-- IFAP Upload Successful --></label>
         <name>IFAP_Upload_Successful</name>
     </customLabels>
     <customLabels>
@@ -2949,11 +2937,11 @@ and
         <name>IFAP_View_Link_Message</name>
     </customLabels>
     <customLabels>
-        <label>关闭</label>
+        <label><!-- IFAP close --></label>
         <name>IFAP_close</name>
     </customLabels>
     <customLabels>
-        <label>文件名</label>
+        <label><!-- IFAP name --></label>
         <name>IFAP_name</name>
     </customLabels>
     <customLabels>
@@ -2961,11 +2949,11 @@ and
         <name>ISSP</name>
     </customLabels>
     <customLabels>
-        <label>航空公司两字码</label>
+        <label><!-- ISSP_2-letter Airline Designator Code --></label>
         <name>ISSP_2_letter_Airline_Designator_Code</name>
     </customLabels>
     <customLabels>
-        <label>出于安全原因，请更改密码，您的密码已使用超过90天</label>
+        <label><!-- ISSP_60Day_Password_Reset --></label>
         <name>ISSP_60Day_Password_Reset</name>
     </customLabels>
     <customLabels>
@@ -3469,7 +3457,7 @@ and
         <name>ISSP_AMS_Case_Change_Description</name>
     </customLabels>
     <customLabels>
-        <label>烦请您点击以下链接，下载PDF申请表。填写完成后，请点击“提交&amp;添加附件”按钮上传附件至IATA。(注：您可随时通过IATA资格认证页面回到此界面完成上传)</label>
+        <label><!-- ISSP AMS Case PDF Download --></label>
         <name>ISSP_AMS_Case_PDF_Download</name>
     </customLabels>
     <customLabels>
@@ -3481,7 +3469,7 @@ and
         <name>ISSP_AMS_Click_Here_NoC</name>
     </customLabels>
     <customLabels>
-        <label>单击此处，继续代理资质认证流程。</label>
+        <label><!-- ISSP AMS Click here --></label>
         <name>ISSP_AMS_Click_here</name>
     </customLabels>
     <customLabels>
@@ -3525,11 +3513,11 @@ and
         <name>ISSP_AMS_Download_PDF_NOC</name>
     </customLabels>
     <customLabels>
-        <label>代理机构认证海外分公司草拟申请</label>
+        <label><!-- ISSP AMS Email Branch Abroad Subject --></label>
         <name>ISSP_AMS_Email_Branch_Abroad_Subject</name>
     </customLabels>
     <customLabels>
-        <label>代理机构认证分公司草拟申请</label>
+        <label><!-- ISSP AMS Email Branch Subject --></label>
         <name>ISSP_AMS_Email_Branch_Subject</name>
     </customLabels>
     <customLabels>
@@ -3537,7 +3525,7 @@ and
         <name>ISSP_AMS_Email_Change_Subject</name>
     </customLabels>
     <customLabels>
-        <label>代理机构认证总部草拟申请</label>
+        <label><!-- ISSP AMS Email HO Subject --></label>
         <name>ISSP_AMS_Email_HO_Subject</name>
     </customLabels>
     <customLabels>
@@ -3821,7 +3809,7 @@ and
         <name>ISSP_AMS_How_Many_PrevAgencies</name>
     </customLabels>
     <customLabels>
-        <label>国际航协客运代理人</label>
+        <label><!-- ISSP_AMS_IATA_Passenger_Sales_Agent --></label>
         <name>ISSP_AMS_IATA_Passenger_Sales_Agent</name>
     </customLabels>
     <customLabels>
@@ -3829,19 +3817,19 @@ and
         <name>ISSP_AMS_INFO_Currency</name>
     </customLabels>
     <customLabels>
-        <label>请注明您所在国家规定的最少实收资本。</label>
+        <label><!-- ISSP AMS INFO Min Paidup Capital --></label>
         <name>ISSP_AMS_INFO_Min_Paidup_Capital</name>
     </customLabels>
     <customLabels>
-        <label>实收资本是由股东认缴的股本金。因为可采用分期缴纳的方式，因此实收资本可能小于认购股本（“催缴股本”）。</label>
+        <label><!-- ISSP AMS INFO Paidup Capital --></label>
         <name>ISSP_AMS_INFO_Paidup_Capital</name>
     </customLabels>
     <customLabels>
-        <label>“注册资本”是有限公司获许可（授权）发行的股本金。它代表实际发行的股本金的上限。法定股本 = 已发行股本 + 未发行股本。</label>
+        <label><!-- ISSP AMS INFO Reg Capital --></label>
         <name>ISSP_AMS_INFO_Reg_Capital</name>
     </customLabels>
     <customLabels>
-        <label>请按照所在国家的格式插入增值税编号。</label>
+        <label><!-- ISSP AMS INFO VAT Number --></label>
         <name>ISSP_AMS_INFO_VAT_Number</name>
     </customLabels>
     <customLabels>
@@ -4181,7 +4169,7 @@ and
         <name>ISSP_AMS_NOC_Instructions</name>
     </customLabels>
     <customLabels>
-        <label>D：提交至 IATA</label>
+        <label><!-- ISSP AMS NOC StepD ProgressBar --></label>
         <name>ISSP_AMS_NOC_StepD_ProgressBar</name>
     </customLabels>
     <customLabels>
@@ -4249,7 +4237,7 @@ and
         <name>ISSP_AMS_NoC_Branch_Office</name>
     </customLabels>
     <customLabels>
-        <label>银行账户明细变更</label>
+        <label><!-- ISSP_AMS_NoC_Change_Bank_Details --></label>
         <name>ISSP_AMS_NoC_Change_Bank_Details</name>
     </customLabels>
     <customLabels>
@@ -4313,7 +4301,7 @@ and
         <name>ISSP_AMS_NoC_Current_Ownership_or_Shareholding</name>
     </customLabels>
     <customLabels>
-        <label>账户变更</label>
+        <label><!-- ISSP_AMS_NoC_Direct_Debit_Change --></label>
         <name>ISSP_AMS_NoC_Direct_Debit_Change</name>
     </customLabels>
     <customLabels>
@@ -4369,11 +4357,11 @@ and
         <name>ISSP_AMS_NoC_Location_Before_Change</name>
     </customLabels>
     <customLabels>
-        <label>只有IATA认可的代理人才可申请变更</label>
+        <label><!-- ISSP_AMS_NoC_Message_Accredited_Agent --></label>
         <name>ISSP_AMS_NoC_Message_Accredited_Agent</name>
     </customLabels>
     <customLabels>
-        <label>新分公司申请</label>
+        <label><!-- ISSP_AMS_NoC_Multiple_Changes --></label>
         <name>ISSP_AMS_NoC_Multiple_Changes</name>
     </customLabels>
     <customLabels>
@@ -4561,7 +4549,7 @@ and
         <name>ISSP_AMS_NoC_type_or_print</name>
     </customLabels>
     <customLabels>
-        <label>您目前没有在办理的申请</label>
+        <label><!-- ISSP AMS No Pending --></label>
         <name>ISSP_AMS_No_Pending</name>
     </customLabels>
     <customLabels>
@@ -4737,15 +4725,15 @@ and
         <name>ISSP_AMS_Previous_Default_Validation</name>
     </customLabels>
     <customLabels>
-        <label>新在线分公司/海外分公司申请</label>
+        <label><!-- ISSP AMS Reason Branch Abroad --></label>
         <name>ISSP_AMS_Reason_Branch_Abroad</name>
     </customLabels>
     <customLabels>
-        <label>分公司新申请</label>
+        <label><!-- ISSP AMS Reason New Branch --></label>
         <name>ISSP_AMS_Reason_New_Branch</name>
     </customLabels>
     <customLabels>
-        <label>新总公司</label>
+        <label><!-- ISSP AMS Reason New HO --></label>
         <name>ISSP_AMS_Reason_New_HO</name>
     </customLabels>
     <customLabels>
@@ -4809,15 +4797,15 @@ and
         <name>ISSP_AMS_State_Names_Addresses_Field_Label</name>
     </customLabels>
     <customLabels>
-        <label>申请代理人资质</label>
+        <label><!-- ISSP AMS Step0 Agency Accreditation --></label>
         <name>ISSP_AMS_Step0_Agency_Accreditation</name>
     </customLabels>
     <customLabels>
-        <label>不确认您要申请的公司类型？</label>
+        <label><!-- ISSP AMS Step0 Agency Article --></label>
         <name>ISSP_AMS_Step0_Agency_Article</name>
     </customLabels>
     <customLabels>
-        <label>银行账户明细变更</label>
+        <label><!-- ISSP AMS Step0 Change Bank Details --></label>
         <name>ISSP_AMS_Step0_Change_Bank_Details</name>
     </customLabels>
     <customLabels>
@@ -4825,23 +4813,23 @@ and
         <name>ISSP_AMS_Step0_Change_Not_Allowed</name>
     </customLabels>
     <customLabels>
-        <label>变更</label>
+        <label><!-- ISSP AMS Step0 Changes --></label>
         <name>ISSP_AMS_Step0_Changes</name>
     </customLabels>
     <customLabels>
-        <label>您还可申请：</label>
+        <label><!-- ISSP AMS Step0 In Addition --></label>
         <name>ISSP_AMS_Step0_In_Addition</name>
     </customLabels>
     <customLabels>
-        <label>欢迎您使用《国际航空运输协会认可代理人资格申请》在线功能。</label>
+        <label><!-- ISSP AMS Step0 Intro --></label>
         <name>ISSP_AMS_Step0_Intro</name>
     </customLabels>
     <customLabels>
-        <label>请知悉，所有在线申请需由公司法人/或其代理人完成并提交</label>
+        <label><!-- ISSP AMS Step0 Intro Accred --></label>
         <name>ISSP_AMS_Step0_Intro_Accred</name>
     </customLabels>
     <customLabels>
-        <label>如您无权代表代理机构签署法律文件，请要求代理机构的指定法定代表在本网站注册并提交申请。</label>
+        <label><!-- ISSP AMS Step0 Intro Accred Msg --></label>
         <name>ISSP_AMS_Step0_Intro_Accred_Msg</name>
     </customLabels>
     <customLabels>
@@ -4849,23 +4837,23 @@ and
         <name>ISSP_AMS_Step0_Minor_Changes</name>
     </customLabels>
     <customLabels>
-        <label>新申请</label>
+        <label><!-- ISSP AMS Step0 New Application --></label>
         <name>ISSP_AMS_Step0_New_Application</name>
     </customLabels>
     <customLabels>
-        <label>正在进行的申请/变更草稿箱</label>
+        <label><!-- ISSP AMS Step0 Ongoing Drafts --></label>
         <name>ISSP_AMS_Step0_Ongoing_Drafts</name>
     </customLabels>
     <customLabels>
-        <label>其他变更</label>
+        <label><!-- ISSP_AMS_Step0_Other_Changes --></label>
         <name>ISSP_AMS_Step0_Other_Changes</name>
     </customLabels>
     <customLabels>
-        <label>适用于您的地址、法定名称、法律地位或 &lt;br/&gt;所有权/股权的变更。</label>
+        <label><!-- ISSP AMS Step0 Other Changes Msg --></label>
         <name>ISSP_AMS_Step0_Other_Changes_Msg</name>
     </customLabels>
     <customLabels>
-        <label>其他申请表</label>
+        <label><!-- ISSP AMS Step0 Other Forms --></label>
         <name>ISSP_AMS_Step0_Other_Forms</name>
     </customLabels>
     <customLabels>
@@ -4873,23 +4861,23 @@ and
         <name>ISSP_AMS_Step0_Proceed_VMFR</name>
     </customLabels>
     <customLabels>
-        <label>申请自愿退出</label>
+        <label><!-- ISSP_AMS_Step0_Request_Voluntary_Reliquishment --></label>
         <name>ISSP_AMS_Step0_Request_Voluntary_Reliquishment</name>
     </customLabels>
     <customLabels>
-        <label>国际航协在线代理人新申请／变更申请</label>
+        <label><!-- ISSP AMS Step0 SAA --></label>
         <name>ISSP_AMS_Step0_SAA</name>
     </customLabels>
     <customLabels>
-        <label>特殊销售代理人（SA）</label>
+        <label><!-- ISSP_AMS_Step0_Specific_Sales_Activity --></label>
         <name>ISSP_AMS_Step0_Specific_Sales_Activity</name>
     </customLabels>
     <customLabels>
-        <label>自愿申请缩短结算期</label>
+        <label><!-- ISSP_AMS_Step0_VMFR --></label>
         <name>ISSP_AMS_Step0_VMFR</name>
     </customLabels>
     <customLabels>
-        <label>* 申请的认证</label>
+        <label><!-- ISSP AMS Step1 Approval Sought --></label>
         <name>ISSP_AMS_Step1_Approval_Sought</name>
     </customLabels>
     <customLabels>
@@ -4897,11 +4885,11 @@ and
         <name>ISSP_AMS_Step1_Branch_Abroad_Not_Allowed</name>
     </customLabels>
     <customLabels>
-        <label>IATA 新货运代理资质在线申请在某些国家尚无法进行。所以，您将转至可以继续货运代理资质认证流程的 IATA 网站。您希望立即前往该网站吗？</label>
+        <label><!-- ISSP AMS Step1 GoTo Cargo --></label>
         <name>ISSP_AMS_Step1_GoTo_Cargo</name>
     </customLabels>
     <customLabels>
-        <label>IATA 新客运代理资质在线申请在某些国家尚无法进行。所以，您将转至可以继续客运代理资质认证流程的 IATA 网站。您希望立即前往该网站吗？</label>
+        <label><!-- ISSP AMS Step1 GoTo Pax --></label>
         <name>ISSP_AMS_Step1_GoTo_Pax</name>
     </customLabels>
     <customLabels>
@@ -4909,35 +4897,35 @@ and
         <name>ISSP_AMS_Step1_IS_GSA_Warning</name>
     </customLabels>
     <customLabels>
-        <label>* 代理是否为任何 IATA 或非 IATA 航空公司的销售总代理？</label>
+        <label><!-- ISSP AMS Step1 Is GSA --></label>
         <name>ISSP_AMS_Step1_Is_GSA</name>
     </customLabels>
     <customLabels>
-        <label>* 使用以下语言显示申请表</label>
+        <label><!-- ISSP AMS Step1 Lang Display --></label>
         <name>ISSP_AMS_Step1_Lang_Display</name>
     </customLabels>
     <customLabels>
-        <label>选择您希望申请表显示使用的语言。</label>
+        <label><!-- ISSP AMS Step1  Lang Display Help --></label>
         <name>ISSP_AMS_Step1_Lang_Display_Help</name>
     </customLabels>
     <customLabels>
-        <label>* 运营类型</label>
+        <label><!-- ISSP AMS Step1 Operation Type --></label>
         <name>ISSP_AMS_Step1_Operation_Type</name>
     </customLabels>
     <customLabels>
-        <label>A：选择代理类型和地点</label>
+        <label><!-- ISSP AMS Step1 ProgressBar --></label>
         <name>ISSP_AMS_Step1_ProgressBar</name>
     </customLabels>
     <customLabels>
-        <label>注：需为申请资质认证的每个代理点单独进行在线申请。</label>
+        <label><!-- ISSP AMS Step1 Separate Application --></label>
         <name>ISSP_AMS_Step1_Separate_Application</name>
     </customLabels>
     <customLabels>
-        <label>申请认证为 IATA 客运/货运销售代理</label>
+        <label><!-- ISSP AMS Step1 Title --></label>
         <name>ISSP_AMS_Step1_Title</name>
     </customLabels>
     <customLabels>
-        <label>草拟的申请必须于两周内提交，否则您需重新开始资质认证流程。</label>
+        <label><!-- ISSP AMS Step1 Two Weeks Expiry --></label>
         <name>ISSP_AMS_Step1_Two_Weeks_Expiry</name>
     </customLabels>
     <customLabels>
@@ -4949,7 +4937,7 @@ and
         <name>ISSP_AMS_Step2_Instructions</name>
     </customLabels>
     <customLabels>
-        <label>B：核实代理所在国家的要求</label>
+        <label><!-- ISSP AMS Step2 ProgressBar --></label>
         <name>ISSP_AMS_Step2_ProgressBar</name>
     </customLabels>
     <customLabels>
@@ -5317,7 +5305,7 @@ and
         <name>ISSP_AMS_Step3_PersonModal_CheckBoxes</name>
     </customLabels>
     <customLabels>
-        <label>C：完成申请表填写</label>
+        <label><!-- ISSP AMS Step3 ProgressBar --></label>
         <name>ISSP_AMS_Step3_ProgressBar</name>
     </customLabels>
     <customLabels>
@@ -5329,7 +5317,7 @@ and
         <name>ISSP_AMS_Step4_File_Upload</name>
     </customLabels>
     <customLabels>
-        <label>D：上传文件</label>
+        <label><!-- ISSP AMS Step4 ProgressBar --></label>
         <name>ISSP_AMS_Step4_ProgressBar</name>
     </customLabels>
     <customLabels>
@@ -5341,7 +5329,7 @@ and
         <name>ISSP_AMS_Step5_Files_Missing</name>
     </customLabels>
     <customLabels>
-        <label>E：提交至 IATA</label>
+        <label><!-- ISSP AMS Step5 ProgressBar --></label>
         <name>ISSP_AMS_Step5_ProgressBar</name>
     </customLabels>
     <customLabels>
@@ -5389,7 +5377,7 @@ and
         <name>ISSP_AMS_StepFinal_Your_CaseNumber</name>
     </customLabels>
     <customLabels>
-        <label>申请认证为 IATA</label>
+        <label><!-- ISSP AMS StepsALL Approval As --></label>
         <name>ISSP_AMS_StepsALL_Approval_As</name>
     </customLabels>
     <customLabels>
@@ -5481,11 +5469,11 @@ and
         <name>ISSP_AMS_Updating_Files</name>
     </customLabels>
     <customLabels>
-        <label>上传申请表（需有法人签名）</label>
+        <label><!-- ISSP_AMS_Upload_Form --></label>
         <name>ISSP_AMS_Upload_Form</name>
     </customLabels>
     <customLabels>
-        <label>请上传法人签署后的申请表格以完成您的申请</label>
+        <label><!-- ISSP_AMS_Upload_Form_message --></label>
         <name>ISSP_AMS_Upload_Form_message</name>
     </customLabels>
     <customLabels>
@@ -5541,19 +5529,19 @@ and
         <name>ISSP_AP_Bank_Details_Change_Description</name>
     </customLabels>
     <customLabels>
-        <label>航空公司加入</label>
+        <label><!-- ISSP_AP_Cases --></label>
         <name>ISSP_AP_Cases</name>
     </customLabels>
     <customLabels>
-        <label>航空公司加入申请表</label>
+        <label><!-- ISSP_AP_Form --></label>
         <name>ISSP_AP_Form</name>
     </customLabels>
     <customLabels>
-        <label>用户被授予航空公司加入业务的服务权限</label>
+        <label><!-- ISSP_APrequest_AdminEmail1 --></label>
         <name>ISSP_APrequest_AdminEmail1</name>
     </customLabels>
     <customLabels>
-        <label>您已知晓并同意此用户获得以贵公司的名义进行ISS加入BSP/CASS操作的权限，该用户有权提供ISS加入业务的适用、必要的信息</label>
+        <label><!-- ISSP_APrequest_AdminEmail2 --></label>
         <name>ISSP_APrequest_AdminEmail2</name>
     </customLabels>
     <customLabels>
@@ -5573,19 +5561,19 @@ and
         <name>ISSP_Accept_Terms_Warning</name>
     </customLabels>
     <customLabels>
-        <label>已受理（今后日期）</label>
+        <label><!-- ISSP_Accepted_Future Date --></label>
         <name>ISSP_Accepted_Future_Date</name>
     </customLabels>
     <customLabels>
-        <label>拒绝访问</label>
+        <label><!-- ISSP_Access_Denied --></label>
         <name>ISSP_Access_Denied</name>
     </customLabels>
     <customLabels>
-        <label>批准访问</label>
+        <label><!-- ISSP_Access_Granted --></label>
         <name>ISSP_Access_Granted</name>
     </customLabels>
     <customLabels>
-        <label>申请访问</label>
+        <label><!-- ISSP Access Requested --></label>
         <name>ISSP_Access_Requested</name>
     </customLabels>
     <customLabels>
@@ -5593,11 +5581,11 @@ and
         <name>ISSP_Access_Service</name>
     </customLabels>
     <customLabels>
-        <label>进入服务</label>
+        <label><!-- ISSP_Access to services --></label>
         <name>ISSP_Access_to_services</name>
     </customLabels>
     <customLabels>
-        <label>公司信息</label>
+        <label><!-- ISSP_Account_Information --></label>
         <name>ISSP_Account_Information</name>
     </customLabels>
     <customLabels>
@@ -5621,7 +5609,7 @@ and
         <name>ISSP_Activate</name>
     </customLabels>
     <customLabels>
-        <label>在此服务中添加用户</label>
+        <label><!-- ISSP_Add User to this service --></label>
         <name>ISSP_Add_User_to_this_service</name>
     </customLabels>
     <customLabels>
@@ -5629,15 +5617,15 @@ and
         <name>ISSP_AdditionalInfo</name>
     </customLabels>
     <customLabels>
-        <label>地址</label>
+        <label><!-- ISSP_Address --></label>
         <name>ISSP_Address</name>
     </customLabels>
     <customLabels>
-        <label>公司帐号管理</label>
+        <label><!-- ISSP_Administrative tasks --></label>
         <name>ISSP_Administrative_tasks</name>
     </customLabels>
     <customLabels>
-        <label>管理员</label>
+        <label><!-- ISSP Administrator --></label>
         <name>ISSP_Administrator</name>
     </customLabels>
     <customLabels>
@@ -5649,31 +5637,31 @@ and
         <name>ISSP_Agency_name</name>
     </customLabels>
     <customLabels>
-        <label>已认证代理</label>
+        <label><!-- ISSP Agent Accredited --></label>
         <name>ISSP_Agent_Accredited</name>
     </customLabels>
     <customLabels>
-        <label>航空公司</label>
+        <label><!-- ISSP_Airline --></label>
         <name>ISSP_Airline</name>
     </customLabels>
     <customLabels>
-        <label>联系人类型</label>
+        <label><!-- ISSP Airline Contact Type --></label>
         <name>ISSP_Airline_Contact_Type</name>
     </customLabels>
     <customLabels>
-        <label>航空公司每年承载30亿出差或旅游的客人</label>
+        <label><!-- ISSP Airlines fly 3 billion --></label>
         <name>ISSP_Airlines_fly_3_billion</name>
     </customLabels>
     <customLabels>
-        <label>全部</label>
+        <label><!-- ISSP_All --></label>
         <name>ISSP_All</name>
     </customLabels>
     <customLabels>
-        <label>所有已结清的账单项</label>
+        <label><!-- ISSP_AllClosedCases --></label>
         <name>ISSP_AllClosedCases</name>
     </customLabels>
     <customLabels>
-        <label>所有已附加服务功能的用户</label>
+        <label><!-- ISSP_All_Users_With_Service --></label>
         <name>ISSP_All_Users_With_Service</name>
     </customLabels>
     <customLabels>
@@ -5685,31 +5673,31 @@ and
         <name>ISSP_Aplication_list_view</name>
     </customLabels>
     <customLabels>
-        <label>筛选</label>
+        <label><!-- ISSP_Apply_Filter --></label>
         <name>ISSP_Apply_Filter</name>
     </customLabels>
     <customLabels>
-        <label>您确认想删除该通知吗？</label>
+        <label><!-- ISSP_HomePage --></label>
         <name>ISSP_Are_you_sure</name>
     </customLabels>
     <customLabels>
-        <label>请参阅右侧链接文档</label>
+        <label><!-- ISSP Article --></label>
         <name>ISSP_Article</name>
     </customLabels>
     <customLabels>
-        <label>文章</label>
+        <label><!-- ISSP_Articles --></label>
         <name>ISSP_Articles</name>
     </customLabels>
     <customLabels>
-        <label>指定财务评估联系人</label>
+        <label><!-- ISSP_Assign_IFAP --></label>
         <name>ISSP_Assign_IFAP</name>
     </customLabels>
     <customLabels>
-        <label>附加文件</label>
+        <label><!-- ISSP_Attach_File --></label>
         <name>ISSP_Attach_File</name>
     </customLabels>
     <customLabels>
-        <label>附件</label>
+        <label><!-- ISSP_Attachments --></label>
         <name>ISSP_Attachments</name>
     </customLabels>
     <customLabels>
@@ -5717,11 +5705,11 @@ and
         <name>ISSP_AvailableServices_My_Company_Services</name>
     </customLabels>
     <customLabels>
-        <label>服务</label>
+        <label><!-- ISSP_AvailableServices_Service --></label>
         <name>ISSP_AvailableServices_Service</name>
     </customLabels>
     <customLabels>
-        <label>可用服务</label>
+        <label><!-- ISSP_Available_services --></label>
         <name>ISSP_Available_services</name>
     </customLabels>
     <customLabels>
@@ -5733,11 +5721,11 @@ and
         <name>ISSP_BSP_CASS_Change</name>
     </customLabels>
     <customLabels>
-        <label>后退</label>
+        <label><!-- ISSP_Registration --></label>
         <name>ISSP_Back</name>
     </customLabels>
     <customLabels>
-        <label>返回列表：账单项</label>
+        <label><!-- ISSP_BackLinkCaseList --></label>
         <name>ISSP_BackLinkCaseList</name>
     </customLabels>
     <customLabels>
@@ -5753,15 +5741,15 @@ and
         <name>ISSP_Banner_link</name>
     </customLabels>
     <customLabels>
-        <label>IATA Accreditation &amp; Changes</label>
+        <label><!-- ISSP_Become_Accredited_Agent --></label>
         <name>ISSP_Become_Accredited_Agent</name>
     </customLabels>
     <customLabels>
-        <label>分支</label>
+        <label><!-- ISSP_Registration --></label>
         <name>ISSP_Branches</name>
     </customLabels>
     <customLabels>
-        <label>确认邮寄地址</label>
+        <label><!-- ISSP_BuyCertificateText --></label>
         <name>ISSP_BuyCertificateText</name>
     </customLabels>
     <customLabels>
@@ -5789,15 +5777,15 @@ and
         <name>ISSP_CampaignNotification_Title</name>
     </customLabels>
     <customLabels>
-        <label>取消</label>
+        <label><!-- ISSP_Cancel --></label>
         <name>ISSP_Cancel</name>
     </customLabels>
     <customLabels>
-        <label>货运</label>
+        <label><!-- ISSP Cargo --></label>
         <name>ISSP_Cargo</name>
     </customLabels>
     <customLabels>
-        <label>货运代理</label>
+        <label><!-- ISSP Cargo Agent --></label>
         <name>ISSP_Cargo_Agent</name>
     </customLabels>
     <customLabels>
@@ -5805,25 +5793,23 @@ and
         <name>ISSP_CaseCommentEmail</name>
     </customLabels>
     <customLabels>
-        <label>感谢您将积极的体验与我们分享，IATA一直致力于提供最优质的服务，您所在意的也是值得我们去关注的。
-&lt;br/&gt;
-请告知，您之前点赞的问题是关于哪个国家的业务</label>
+        <label><!-- ISSP_CaseComplimentMessage --></label>
         <name>ISSP_CaseComplimentMessage</name>
     </customLabels>
     <customLabels>
-        <label>请告知您对我们本次服务的体验，若可以，请告知经办人的名字，我们将确保他们能收到此消息。</label>
+        <label><!-- ISSP_CaseComplimentMessage2 --></label>
         <name>ISSP_CaseComplimentMessage2</name>
     </customLabels>
     <customLabels>
-        <label>问询信息</label>
+        <label><!-- ISSP_CaseInformation --></label>
         <name>ISSP_CaseInformation</name>
     </customLabels>
     <customLabels>
-        <label>案例代码</label>
+        <label><!-- ISSP_CaseNumber --></label>
         <name>ISSP_CaseNumber</name>
     </customLabels>
     <customLabels>
-        <label>个案</label>
+        <label><!-- ISSP_Cases --></label>
         <name>ISSP_Cases</name>
     </customLabels>
     <customLabels>
@@ -5851,7 +5837,7 @@ and
         <name>ISSP_Casslink_Plus</name>
     </customLabels>
     <customLabels>
-        <label>您关于IATA证书的申请编号已经创建成功</label>
+        <label><!-- ISSP_CertificateEmail1 --></label>
         <name>ISSP_CertificateEmail1</name>
     </customLabels>
     <customLabels>
@@ -5859,27 +5845,27 @@ and
         <name>ISSP_CertificateEmail2</name>
     </customLabels>
     <customLabels>
-        <label>查看您申请的处理进程或联系我们，可登录你的客户入口通过“我当前的问询”来查找上述信息或通过“搜索”来查找。</label>
+        <label><!-- ISSP_CertificateEmail3 --></label>
         <name>ISSP_CertificateEmail3</name>
     </customLabels>
     <customLabels>
-        <label>所有关于IATA证书的申请</label>
+        <label><!-- ISSP Certificate All --></label>
         <name>ISSP_Certificate_All</name>
     </customLabels>
     <customLabels>
-        <label>您已选择购买IATA证书。请知悉，若您当前订购每年接收贵司的IATA证书，这份申请将被认定为一份额外的副本，同时会按照价目表进行收费。点击“确认”从而接受此项产品收费及进行下一步。</label>
+        <label><!-- ISSP_Certificate_Confirm --></label>
         <name>ISSP_Certificate_Confirm</name>
     </customLabels>
     <customLabels>
-        <label>已发送的IATA证书申请</label>
+        <label><!-- ISSP Certificate Delivered --></label>
         <name>ISSP_Certificate_Delivered</name>
     </customLabels>
     <customLabels>
-        <label>当前未完成的IATA证书申请</label>
+        <label><!-- ISSP Certificate Opened --></label>
         <name>ISSP_Certificate_Opened</name>
     </customLabels>
     <customLabels>
-        <label>您无法购买IATA证书，因为您尚未被贵公司的管理员或IATA客服人员授权</label>
+        <label><!-- ISSP_Certificate_Profile_Restriction --></label>
         <name>ISSP_Certificate_Profile_Restriction</name>
     </customLabels>
     <customLabels>
@@ -5887,15 +5873,15 @@ and
         <name>ISSP_ChangeDDS</name>
     </customLabels>
     <customLabels>
-        <label>更改密码</label>
+        <label><!-- ISSP_ChangePassword --></label>
         <name>ISSP_ChangePassword</name>
     </customLabels>
     <customLabels>
-        <label>更改用户门户网站状态</label>
+        <label><!-- ISSP_ContactList --></label>
         <name>ISSP_ChangeUserPortalStatus</name>
     </customLabels>
     <customLabels>
-        <label>已确定的变更</label>
+        <label><!-- ISSP Change Finalized --></label>
         <name>ISSP_Change_Finalized</name>
     </customLabels>
     <customLabels>
@@ -5911,51 +5897,51 @@ and
         <name>ISSP_ClickHereLogIn</name>
     </customLabels>
     <customLabels>
-        <label>点击这里来继续完成BSP/CASS申请</label>
+        <label><!-- ISSP_Click_Here --></label>
         <name>ISSP_Click_Here</name>
     </customLabels>
     <customLabels>
-        <label>已结束</label>
+        <label><!-- ISSP_ClosedIFAPCasesStatus --></label>
         <name>ISSP_ClosedIFAPCasesStatus</name>
     </customLabels>
     <customLabels>
-        <label>地址信息</label>
+        <label><!-- ISSP_CompanyAddressInformation --></label>
         <name>ISSP_CompanyAddressInformation</name>
     </customLabels>
     <customLabels>
-        <label>公司信息</label>
+        <label><!-- ISSP_CompanyInformation --></label>
         <name>ISSP_CompanyInformation</name>
     </customLabels>
     <customLabels>
-        <label>公司所在地</label>
+        <label><!-- ISSP_CompanyLocation --></label>
         <name>ISSP_CompanyLocation</name>
     </customLabels>
     <customLabels>
-        <label>公司名</label>
+        <label><!-- ISSP_CompanyName --></label>
         <name>ISSP_CompanyName</name>
     </customLabels>
     <customLabels>
-        <label>公司业务管理</label>
+        <label><!-- ISSP_Company Administration --></label>
         <name>ISSP_Company_Administration</name>
     </customLabels>
     <customLabels>
-        <label>公司的问询</label>
+        <label><!-- ISSP_Company Cases --></label>
         <name>ISSP_Company_Cases</name>
     </customLabels>
     <customLabels>
-        <label>至少三位</label>
+        <label><!-- ISSP_Company_Name__Search_Format --></label>
         <name>ISSP_Company_Name_Search_Format</name>
     </customLabels>
     <customLabels>
-        <label>投诉</label>
+        <label><!-- ISSP_Complaints --></label>
         <name>ISSP_Complaints</name>
     </customLabels>
     <customLabels>
-        <label>点赞</label>
+        <label><!-- ISSP Compliments --></label>
         <name>ISSP_Compliments</name>
     </customLabels>
     <customLabels>
-        <label>确认</label>
+        <label><!-- ISSP_Confirm --></label>
         <name>ISSP_Confirm</name>
     </customLabels>
     <customLabels>
@@ -5971,11 +5957,11 @@ and
         <name>ISSP_ConfirmInactivate</name>
     </customLabels>
     <customLabels>
-        <label>确认新密码</label>
+        <label><!-- ISSP_ChangePassword --></label>
         <name>ISSP_ConfirmPassword</name>
     </customLabels>
     <customLabels>
-        <label>确认新密码为必填栏。</label>
+        <label><!-- ISSP_ChangePassword --></label>
         <name>ISSP_ConfirmPasswordMandatory</name>
     </customLabels>
     <customLabels>
@@ -5987,7 +5973,7 @@ and
         <name>ISSP_Confirm_File_Delete</name>
     </customLabels>
     <customLabels>
-        <label>请在继续下一步之前确认您的个人信息</label>
+        <label><!-- ISSP_Confirm_Personal_Information --></label>
         <name>ISSP_Confirm_Personal_Information</name>
     </customLabels>
     <customLabels>
@@ -5995,15 +5981,15 @@ and
         <name>ISSP_Consolidated</name>
     </customLabels>
     <customLabels>
-        <label>联系人</label>
+        <label><!-- ISSP_Contact --></label>
         <name>ISSP_Contact</name>
     </customLabels>
     <customLabels>
-        <label>联系人姓名</label>
+        <label><!-- ISSP_ContactName --></label>
         <name>ISSP_ContactName</name>
     </customLabels>
     <customLabels>
-        <label>联系资料</label>
+        <label><!-- ISSP_Contact Information --></label>
         <name>ISSP_Contact_Information</name>
     </customLabels>
     <customLabels>
@@ -6011,107 +5997,107 @@ and
         <name>ISSP_Contact_Name</name>
     </customLabels>
     <customLabels>
-        <label>创建活跃的门户网站用户</label>
+        <label><!-- ISSP_Contact_OneStepCreate --></label>
         <name>ISSP_Contact_OneStepCreate</name>
     </customLabels>
     <customLabels>
-        <label>保存活跃的联系人</label>
+        <label><!-- ISSP_Contact_SaveActive --></label>
         <name>ISSP_Contact_SaveActive</name>
     </customLabels>
     <customLabels>
-        <label>联系方式</label>
+        <label><!-- ISSP_ContactList --></label>
         <name>ISSP_Contacts</name>
     </customLabels>
     <customLabels>
-        <label>ID卡用户</label>
+        <label><!-- ISSP_Contacts_IDCard --></label>
         <name>ISSP_Contacts_IDCard</name>
     </customLabels>
     <customLabels>
-        <label>我公司有效的联系人</label>
+        <label><!-- ISSP Contacts MyCompanyActiveContacts --></label>
         <name>ISSP_Contacts_MyCompanyActiveContacts</name>
     </customLabels>
     <customLabels>
-        <label>我的公司联系人</label>
+        <label><!-- ISSP_ContactList --></label>
         <name>ISSP_Contacts_MyCompanyContacts</name>
     </customLabels>
     <customLabels>
-        <label>我的非活跃公司联系人</label>
+        <label><!-- ISSP_ContactList --></label>
         <name>ISSP_Contacts_MyCompanyInactiveContacts</name>
     </customLabels>
     <customLabels>
-        <label>待处理的审批</label>
+        <label><!-- ISSP_ContactList --></label>
         <name>ISSP_Contacts_PendingApproval</name>
     </customLabels>
     <customLabels>
-        <label>门户网站管理员</label>
+        <label><!-- ISSP_ContactList --></label>
         <name>ISSP_Contacts_PortalAdmins</name>
     </customLabels>
     <customLabels>
-        <label>门户网站用户</label>
+        <label><!-- ISSP_ContactList --></label>
         <name>ISSP_Contacts_PortalUsers</name>
     </customLabels>
     <customLabels>
-        <label>相关文件</label>
+        <label><!-- ISSP Content Related List --></label>
         <name>ISSP_ContentRelatedList</name>
     </customLabels>
     <customLabels>
-        <label>详细信息</label>
+        <label><!-- ISSP_Content_Details --></label>
         <name>ISSP_Content_Details</name>
     </customLabels>
     <customLabels>
-        <label>将账单地址的信息复制到收件地址栏</label>
+        <label><!-- ISSP_CopyBillingAddress --></label>
         <name>ISSP_CopyBillingAddress</name>
     </customLabels>
     <customLabels>
-        <label>国家</label>
+        <label><!-- ISSP_Registration --></label>
         <name>ISSP_Country</name>
     </customLabels>
     <customLabels>
-        <label>所属国家</label>
+        <label><!-- ISSP_CountryConcerned --></label>
         <name>ISSP_CountryConcerned</name>
     </customLabels>
     <customLabels>
-        <label>国家或地区的规定</label>
+        <label><!-- ISSP_Country_Requirements --></label>
         <name>ISSP_Country_Requirements</name>
     </customLabels>
     <customLabels>
-        <label>对应的国家</label>
+        <label><!-- ISSP_Country_of_Publication --></label>
         <name>ISSP_Country_of_Publication</name>
     </customLabels>
     <customLabels>
-        <label>创建新的代理人</label>
+        <label><!-- ISSP_Create_New_Agency --></label>
         <name>ISSP_Create_New_Agency</name>
     </customLabels>
     <customLabels>
-        <label>创建新的航空公司</label>
+        <label><!-- ISSP_Create_New_Airline --></label>
         <name>ISSP_Create_New_Airline</name>
     </customLabels>
     <customLabels>
-        <label>创建新的航空公司分公司</label>
+        <label><!-- ISSP_Create_New_Airline_Branch --></label>
         <name>ISSP_Create_New_Airline_Branch</name>
     </customLabels>
     <customLabels>
-        <label>创建新帐户</label>
+        <label><!-- ISSP_Create_New_Other_Account --></label>
         <name>ISSP_Create_New_Other_Account</name>
     </customLabels>
     <customLabels>
-        <label>创建问询</label>
+        <label><!-- ISSP_Create query --></label>
         <name>ISSP_Create_query</name>
     </customLabels>
     <customLabels>
-        <label>您可以向IATA提交案例，问询及投诉两种类型均可</label>
+        <label><!-- ISSP_Create query Description --></label>
         <name>ISSP_Create_query_Description</name>
     </customLabels>
     <customLabels>
-        <label>sb创建的</label>
+        <label><!-- ISSP_Created_By --></label>
         <name>ISSP_Created_By</name>
     </customLabels>
     <customLabels>
-        <label>创建日期</label>
+        <label><!-- ISSP_Created_Date --></label>
         <name>ISSP_Created_Date</name>
     </customLabels>
     <customLabels>
-        <label>货币</label>
+        <label><!-- ISSP Currency --></label>
         <name>ISSP_Currency</name>
     </customLabels>
     <customLabels>
@@ -6119,11 +6105,11 @@ and
         <name>ISSP_Currency_Filter</name>
     </customLabels>
     <customLabels>
-        <label>当前密码</label>
+        <label><!-- ISSP_ChangePassword --></label>
         <name>ISSP_CurrentPassword</name>
     </customLabels>
     <customLabels>
-        <label>当前密码为必填栏。</label>
+        <label><!-- ISSP_ChangePassword --></label>
         <name>ISSP_CurrentPasswordMandatory</name>
     </customLabels>
     <customLabels>
@@ -6151,7 +6137,7 @@ and
         <name>ISSP_Date</name>
     </customLabels>
     <customLabels>
-        <label>拒绝</label>
+        <label><!-- ISSP_Deny Access --></label>
         <name>ISSP_Deny_Access</name>
     </customLabels>
     <customLabels>
@@ -6159,11 +6145,11 @@ and
         <name>ISSP_Description</name>
     </customLabels>
     <customLabels>
-        <label>航空公司两字码</label>
+        <label><!-- ISSP_Designator_Code --></label>
         <name>ISSP_Designator_Code</name>
     </customLabels>
     <customLabels>
-        <label>航空公司两字码</label>
+        <label><!-- ISSP_Designator_Code_Question --></label>
         <name>ISSP_Designator_Code_Question</name>
     </customLabels>
     <customLabels>
@@ -6175,19 +6161,19 @@ and
         <name>ISSP_Document_Category</name>
     </customLabels>
     <customLabels>
-        <label>文件</label>
+        <label><!-- ISSP_Documents --></label>
         <name>ISSP_Documents</name>
     </customLabels>
     <customLabels>
-        <label>下载</label>
+        <label><!-- ISSP_Download --></label>
         <name>ISSP_Download</name>
     </customLabels>
     <customLabels>
-        <label>即刻下载！</label>
+        <label><!-- ISSP_Download Now --></label>
         <name>ISSP_Download_Now</name>
     </customLabels>
     <customLabels>
-        <label>草稿</label>
+        <label><!-- ISSP_Draft --></label>
         <name>ISSP_Draft</name>
     </customLabels>
     <customLabels>
@@ -6203,7 +6189,7 @@ and
         <name>ISSP_EBulletin_Description</name>
     </customLabels>
     <customLabels>
-        <label>修改</label>
+        <label><!-- ISSP Edit --></label>
         <name>ISSP_Edit</name>
     </customLabels>
     <customLabels>
@@ -6219,59 +6205,59 @@ and
         <name>ISSP_EmailChangedText1</name>
     </customLabels>
     <customLabels>
-        <label>请更正您的邮件地址</label>
+        <label><!-- ISSP_Registration --></label>
         <name>ISSP_EmailError</name>
     </customLabels>
     <customLabels>
-        <label>您访问</label>
+        <label><!-- ISSP_Email_AccessGranted1 --></label>
         <name>ISSP_Email_AccessGranted1</name>
     </customLabels>
     <customLabels>
-        <label>抱歉，您访问</label>
+        <label><!-- ISSP_Email_AccessRejected1 --></label>
         <name>ISSP_Email_AccessRejected1</name>
     </customLabels>
     <customLabels>
-        <label>服务的申请已被您的公司管理员拒绝，</label>
+        <label><!-- ISSP_Email_AccessRejected2 --></label>
         <name>ISSP_Email_AccessRejected2</name>
     </customLabels>
     <customLabels>
-        <label>如有任何与此相关的疑问，请联系管理员。</label>
+        <label><!-- ISSP_Email_AccessRejected3 --></label>
         <name>ISSP_Email_AccessRejected3</name>
     </customLabels>
     <customLabels>
-        <label>服务的申请被 IATA 客户服务拒绝。</label>
+        <label><!-- ISSP_Email_AccessRejected4 --></label>
         <name>ISSP_Email_AccessRejected4</name>
     </customLabels>
     <customLabels>
-        <label>访问</label>
+        <label><!-- ISSP_Email_AccessRejected_subject1 --></label>
         <name>ISSP_Email_AccessRejected_subject1</name>
     </customLabels>
     <customLabels>
-        <label>已拒绝</label>
+        <label><!-- ISSP_Email_AccessRejected_subject2 --></label>
         <name>ISSP_Email_AccessRejected_subject2</name>
     </customLabels>
     <customLabels>
-        <label>您访问</label>
+        <label><!-- ISSP_Email_AccessRequest1 --></label>
         <name>ISSP_Email_AccessRequest1</name>
     </customLabels>
     <customLabels>
-        <label>服务的申请已转交至您的管理员。</label>
+        <label><!-- ISSP_Email_AccessRequest2 --></label>
         <name>ISSP_Email_AccessRequest2</name>
     </customLabels>
     <customLabels>
-        <label>申请一经处理，您将立刻收到通知。</label>
+        <label><!-- ISSP_Email_AccessRequest3 --></label>
         <name>ISSP_Email_AccessRequest3</name>
     </customLabels>
     <customLabels>
-        <label>访问</label>
+        <label><!-- ISSP_Email_AccessRequest_subject1 --></label>
         <name>ISSP_Email_AccessRequest_subject1</name>
     </customLabels>
     <customLabels>
-        <label>服务的申请已提交</label>
+        <label><!-- ISSP_Email_AccessRequest_subject2 --></label>
         <name>ISSP_Email_AccessRequest_subject2</name>
     </customLabels>
     <customLabels>
-        <label>访问</label>
+        <label><!-- ISSP_Email_AccessTo --></label>
         <name>ISSP_Email_AccessTo</name>
     </customLabels>
     <customLabels>
@@ -6279,67 +6265,67 @@ and
         <name>ISSP_Email_Access_YourAccessTo</name>
     </customLabels>
     <customLabels>
-        <label>服务申请已被批准。您可以点击进行访问。</label>
+        <label><!-- ISSP_Email_Access_YourAccessTo2Granted --></label>
         <name>ISSP_Email_Access_YourAccessTo2Granted</name>
     </customLabels>
     <customLabels>
-        <label>#NOM?</label>
+        <label><!-- ISSP_Email_AccressGranted_Subject --></label>
         <name>ISSP_Email_AccressGranted_Subject</name>
     </customLabels>
     <customLabels>
-        <label>访问</label>
+        <label><!-- ISSP_Email_AccressGranted_Subject1 --></label>
         <name>ISSP_Email_AccressGranted_Subject1</name>
     </customLabels>
     <customLabels>
-        <label>的申请被批准</label>
+        <label><!-- ISSP_Email_AccressGranted_Subject2 --></label>
         <name>ISSP_Email_AccressGranted_Subject2</name>
     </customLabels>
     <customLabels>
-        <label>请点击访问批准申请</label>
+        <label><!-- ISSP_Email_AppReq_AccessRequest --></label>
         <name>ISSP_Email_AppReq_AccessRequest</name>
     </customLabels>
     <customLabels>
-        <label>请进入您的需求申请</label>
+        <label><!-- ISSP_Email_AppReq_AccessRequest2 --></label>
         <name>ISSP_Email_AppReq_AccessRequest2</name>
     </customLabels>
     <customLabels>
-        <label>敬请知悉，我们已收到访问</label>
+        <label><!-- ISSP_Email_AppReq_BeInformed --></label>
         <name>ISSP_Email_AppReq_BeInformed</name>
     </customLabels>
     <customLabels>
-        <label>服务的申请，申请人为</label>
+        <label><!-- ISSP_Email_AppReq_From --></label>
         <name>ISSP_Email_AppReq_From</name>
     </customLabels>
     <customLabels>
-        <label>下面的同事已经被注册成为贵公司的Red付款联系人</label>
+        <label><!-- ISSP_Email_BSP/CASS Payment contact1 --></label>
         <name>ISSP_Email_BSP_CASS_Payment_contact1</name>
     </customLabels>
     <customLabels>
-        <label>我们会将该联系人做为贵公司关于Red的迟付款/违规违约通知接收人</label>
+        <label><!-- ISSP_Email_BSP_CASS_Payment_contact2 --></label>
         <name>ISSP_Email_BSP_CASS_Payment_contact2</name>
     </customLabels>
     <customLabels>
-        <label>若上面的联系人&lt;b&gt;不具备接收这类通知&lt;/b&gt;的资格，请立即通过我们的客户入口来申请更改。</label>
+        <label><!-- ISSP_Email_BSP_CASS_Payment_contact3 --></label>
         <name>ISSP_Email_BSP_CASS_Payment_contact3</name>
     </customLabels>
     <customLabels>
-        <label>新Red付款联系人</label>
+        <label><!-- ISSP_Email_BSP_CASS_Payment_contact_Subject --></label>
         <name>ISSP_Email_BSP_CASS_Payment_contact_Subject</name>
     </customLabels>
     <customLabels>
-        <label>添加新的评论信息到案例中</label>
+        <label><!-- ISSP_Email_CaseComment_Subject --></label>
         <name>ISSP_Email_CaseComment_Subject</name>
     </customLabels>
     <customLabels>
-        <label>评论</label>
+        <label><!-- ISSP_Email_Comment --></label>
         <name>ISSP_Email_Comment</name>
     </customLabels>
     <customLabels>
-        <label>恭喜</label>
+        <label><!-- ISSP_Email_Congratulations --></label>
         <name>ISSP_Email_Congratulations</name>
     </customLabels>
     <customLabels>
-        <label>尊敬的门户网站管理员，</label>
+        <label><!-- ISSP_Email_DearAdmin --></label>
         <name>ISSP_Email_DearAdmin</name>
     </customLabels>
     <customLabels>
@@ -6347,7 +6333,7 @@ and
         <name>ISSP_Email_Dear_Post</name>
     </customLabels>
     <customLabels>
-        <label>尊敬的</label>
+        <label><!-- ISSP_Email_Dear_Pre --></label>
         <name>ISSP_Email_Dear_Pre</name>
     </customLabels>
     <customLabels>
@@ -6359,11 +6345,11 @@ and
         <name>ISSP_Email_Draft_Change_Process</name>
     </customLabels>
     <customLabels>
-        <label>感谢您为 IATA 客运销售代理认证创建的申请草表。</label>
+        <label><!-- ISSP Email Draft Process1 --></label>
         <name>ISSP_Email_Draft_Process1</name>
     </customLabels>
     <customLabels>
-        <label>您可单击下方链接，用您的电子邮件地址登录网站，访问任何正在进行中的资质认证和变更申请：</label>
+        <label><!-- ISSP Email Draft Process2 --></label>
         <name>ISSP_Email_Draft_Process2</name>
     </customLabels>
     <customLabels>
@@ -6371,67 +6357,67 @@ and
         <name>ISSP_Email_Granted_Reason</name>
     </customLabels>
     <customLabels>
-        <label>这里</label>
+        <label><!-- ISSP_Email_Here --></label>
         <name>ISSP_Email_Here</name>
     </customLabels>
     <customLabels>
-        <label>IATA 客户服务团队</label>
+        <label><!-- ISSP_Email_IATACustServ --></label>
         <name>ISSP_Email_IATACustServ</name>
     </customLabels>
     <customLabels>
-        <label>IATA 客户门户网站</label>
+        <label><!-- ISSP_Email_IataPortal --></label>
         <name>ISSP_Email_IataPortal</name>
     </customLabels>
     <customLabels>
-        <label>IATA 客户服务团队</label>
+        <label><!-- ISSP_Email_ IataService --></label>
         <name>ISSP_Email_IataService</name>
     </customLabels>
     <customLabels>
-        <label>本邮件谨提醒您，</label>
+        <label><!-- ISSP_Email_Inform --></label>
         <name>ISSP_Email_Inform</name>
     </customLabels>
     <customLabels>
-        <label>请点击下面的链接以完成您的注册程序：</label>
+        <label><!-- ISSP_Email_Link_Describe --></label>
         <name>ISSP_Email_Link_Describe</name>
     </customLabels>
     <customLabels>
-        <label>如需更多信息，请向 IATA 客户服务团队提交帮助申请</label>
+        <label><!-- ISSP_Email_Log_Case --></label>
         <name>ISSP_Email_Log_Case</name>
     </customLabels>
     <customLabels>
-        <label>并使用您的用户信息登录：</label>
+        <label><!-- ISSP_Email_LoginInformation --></label>
         <name>ISSP_Email_LoginInformation</name>
     </customLabels>
     <customLabels>
-        <label>请知悉我们已收到</label>
+        <label><!-- ISSP_Email_NewUser_BeInformed --></label>
         <name>ISSP_Email_NewUser_BeInformed</name>
     </customLabels>
     <customLabels>
-        <label>成为客户门户网站验证用户的申请。</label>
+        <label><!-- ISSP_Email_NewUser_BeInformed2 --></label>
         <name>ISSP_Email_NewUser_BeInformed2</name>
     </customLabels>
     <customLabels>
-        <label>请确认</label>
+        <label><!-- ISSP_Email_NewUser_PleaseConfirm --></label>
         <name>ISSP_Email_NewUser_PleaseConfirm</name>
     </customLabels>
     <customLabels>
-        <label>是否在贵单位工作，谢谢。</label>
+        <label><!-- ISSP_Email_NewUser_PleaseConfirm2 --></label>
         <name>ISSP_Email_NewUser_PleaseConfirm2</name>
     </customLabels>
     <customLabels>
-        <label>访问门户网站的申请已提交</label>
+        <label><!-- ISSP_Email_NewUser_Subject --></label>
         <name>ISSP_Email_NewUser_Subject</name>
     </customLabels>
     <customLabels>
-        <label>请使用您的电子邮件地址登录</label>
+        <label><!-- ISSP_Email_PleaseLogin --></label>
         <name>ISSP_Email_PleaseLogin</name>
     </customLabels>
     <customLabels>
-        <label>请执行操作，非常感谢。</label>
+        <label><!-- ISSP_Email_PleaseProcess --></label>
         <name>ISSP_Email_PleaseProcess</name>
     </customLabels>
     <customLabels>
-        <label>IATA 客户门户网站用户状态更改通知</label>
+        <label><!-- ISSP Email PortalStatusChange Subject --></label>
         <name>ISSP_Email_PortalStatusChange_Subject</name>
     </customLabels>
     <customLabels>
@@ -6439,7 +6425,7 @@ and
         <name>ISSP_Email_PortalUrl</name>
     </customLabels>
     <customLabels>
-        <label>已将您的 IATA 客户门户网站状态更改为</label>
+        <label><!-- ISSP_Email_PortalUser_StatusChange --></label>
         <name>ISSP_Email_PortalUser_StatusChange</name>
     </customLabels>
     <customLabels>
@@ -6447,39 +6433,39 @@ and
         <name>ISSP_Email_Rejected_Reason</name>
     </customLabels>
     <customLabels>
-        <label>服务的申请已提交</label>
+        <label><!-- ISSP_Email_ServiceRequested --></label>
         <name>ISSP_Email_ServiceRequested</name>
     </customLabels>
     <customLabels>
-        <label>谢谢。</label>
+        <label><!-- ISSP_Email_ThankYou --></label>
         <name>ISSP_Email_ThankYou</name>
     </customLabels>
     <customLabels>
-        <label>感谢您联系 IATA。</label>
+        <label><!-- ISSP_Email_ThankYouContacting --></label>
         <name>ISSP_Email_ThankYouContacting</name>
     </customLabels>
     <customLabels>
-        <label>非常感谢，</label>
+        <label><!-- ISSP_Email_ThankYouInAdvance --></label>
         <name>ISSP_Email_ThankYouInAdvance</name>
     </customLabels>
     <customLabels>
-        <label>感谢您注册，</label>
+        <label><!-- ISSP_Email_Thankyousign --></label>
         <name>ISSP_Email_Thankyousign</name>
     </customLabels>
     <customLabels>
-        <label>欢迎访问 IATA 客户门户网站</label>
+        <label><!-- ISSP_Email_Welcome_Subject --></label>
         <name>ISSP_Email_Welcome</name>
     </customLabels>
     <customLabels>
-        <label>欢迎访问</label>
+        <label><!-- ISSP_Email_WelcomeTo --></label>
         <name>ISSP_Email_WelcomeTo</name>
     </customLabels>
     <customLabels>
-        <label>您可以在此访问</label>
+        <label><!-- ISSP_Email_YouCanAccess --></label>
         <name>ISSP_Email_YouCanAccess</name>
     </customLabels>
     <customLabels>
-        <label>您的公司管理员</label>
+        <label><!-- ISSP_Email_YourCompanyAdmin --></label>
         <name>ISSP_Email_YourCompanyAdmin</name>
     </customLabels>
     <customLabels>
@@ -6487,11 +6473,11 @@ and
         <name>ISSP_Email_YourEmail</name>
     </customLabels>
     <customLabels>
-        <label>新的评论信息已经被添加到您的案例中</label>
+        <label><!-- ISSP_Email_aNewComment --></label>
         <name>ISSP_Email_aNewComment</name>
     </customLabels>
     <customLabels>
-        <label>请知悉，此邮件为系统信息，不要在此基础上进行回复</label>
+        <label><!-- ISSP_Email_do_not_reply --></label>
         <name>ISSP_Email_do_not_reply</name>
     </customLabels>
     <customLabels>
@@ -6503,11 +6489,11 @@ and
         <name>ISSP_EnterValidString</name>
     </customLabels>
     <customLabels>
-        <label>键入</label>
+        <label><!-- ISSP_Enter_Value --></label>
         <name>ISSP_Enter_Value</name>
     </customLabels>
     <customLabels>
-        <label>错误：</label>
+        <label><!-- ISSP --></label>
         <name>ISSP_Error</name>
     </customLabels>
     <customLabels>
@@ -6515,55 +6501,55 @@ and
         <name>ISSP_Excess</name>
     </customLabels>
     <customLabels>
-        <label>外部链接</label>
+        <label><!-- ISSP External Links --></label>
         <name>ISSP_External_Links</name>
     </customLabels>
     <customLabels>
-        <label>取消</label>
+        <label><!-- ISSP_F2CCancel --></label>
         <name>ISSP_F2CCancel</name>
     </customLabels>
     <customLabels>
-        <label>创建帮助申请</label>
+        <label><!-- ISSP_F2CCreate --></label>
         <name>ISSP_F2CCreate</name>
     </customLabels>
     <customLabels>
-        <label>这些关于常见问题的文章可能对您有帮助</label>
+        <label><!-- ISSP_F2CFAQTitlePanel --></label>
         <name>ISSP_F2CFAQTitlePanel</name>
     </customLabels>
     <customLabels>
-        <label>我需要哪方面的帮助</label>
+        <label><!-- ISSP_F2CSubTopic --></label>
         <name>ISSP_F2CSubTopic</name>
     </customLabels>
     <customLabels>
-        <label>您需要何种帮助？</label>
+        <label><!-- ISSP_F2CTitle --></label>
         <name>ISSP_F2CTitle</name>
     </customLabels>
     <customLabels>
-        <label>请选择一个主题及您所需要帮助的内容</label>
+        <label><!-- ISSP_F2CTitlePanel --></label>
         <name>ISSP_F2CTitlePanel</name>
     </customLabels>
     <customLabels>
-        <label>主题</label>
+        <label><!-- ISSP_F2CTopic --></label>
         <name>ISSP_F2CTopic</name>
     </customLabels>
     <customLabels>
-        <label>我已找到答案</label>
+        <label><!-- This has answered my question button --></label>
         <name>ISSP_F2C_AnsweredMyQuestion</name>
     </customLabels>
     <customLabels>
-        <label>未能找到答案，创建问询</label>
+        <label><!-- Not satisfied Create a Case button --></label>
         <name>ISSP_F2C_NotSatisfied</name>
     </customLabels>
     <customLabels>
-        <label>返回到常见问题</label>
+        <label><!-- Return to FAQ button --></label>
         <name>ISSP_F2C_Return2FAQ</name>
     </customLabels>
     <customLabels>
-        <label>常见问题解答或许可以对您有所帮助</label>
+        <label><!-- ISSP_The FAQs might help you --></label>
         <name>ISSP_F2CfaqTitle</name>
     </customLabels>
     <customLabels>
-        <label>常见问题</label>
+        <label><!-- ISSP_FAQ --></label>
         <name>ISSP_FAQ</name>
     </customLabels>
     <customLabels>
@@ -6571,7 +6557,7 @@ and
         <name>ISSP_Fax</name>
     </customLabels>
     <customLabels>
-        <label>文件</label>
+        <label><!-- ISSP_File --></label>
         <name>ISSP_File</name>
     </customLabels>
     <customLabels>
@@ -6583,7 +6569,7 @@ and
         <name>ISSP_FileType</name>
     </customLabels>
     <customLabels>
-        <label>所选文件已上传。</label>
+        <label><!-- ISSP File Exists --></label>
         <name>ISSP_File_Exists</name>
     </customLabels>
     <customLabels>
@@ -6591,7 +6577,7 @@ and
         <name>ISSP_File_Extension</name>
     </customLabels>
     <customLabels>
-        <label>文件大小</label>
+        <label><!-- ISSP_File_Size --></label>
         <name>ISSP_File_Size</name>
     </customLabels>
     <customLabels>
@@ -6599,31 +6585,31 @@ and
         <name>ISSP_File_Type</name>
     </customLabels>
     <customLabels>
-        <label>请核对下面的信息已确保您在我处联系信息为最新。</label>
+        <label><!-- ISSP Fill Profile Fields --></label>
         <name>ISSP_Fill_Profile_Fields</name>
     </customLabels>
     <customLabels>
-        <label>按国家筛选</label>
+        <label><!-- ISSP_Filter_by_Country --></label>
         <name>ISSP_Filter_by_Country</name>
     </customLabels>
     <customLabels>
-        <label>按种类筛选</label>
+        <label><!-- ISSP_Filter_by_Type --></label>
         <name>ISSP_Filter_by_Type</name>
     </customLabels>
     <customLabels>
-        <label>按照加入类别筛选</label>
+        <label><!-- ISSP_Filter_by_Type_Of_Participation --></label>
         <name>ISSP_Filter_by_Type_Of_Participation</name>
     </customLabels>
     <customLabels>
-        <label>很高兴收到您的赞扬</label>
+        <label><!-- ISSP Fishing Compliments --></label>
         <name>ISSP_Fishing_Compliments</name>
     </customLabels>
     <customLabels>
-        <label>航空运输</label>
+        <label><!-- ISSP Flying connects --></label>
         <name>ISSP_Flying_connects</name>
     </customLabels>
     <customLabels>
-        <label>用来审批</label>
+        <label><!-- ISSP_For Review and Acceptance --></label>
         <name>ISSP_For_Review_and_Acceptance</name>
     </customLabels>
     <customLabels>
@@ -6635,11 +6621,11 @@ and
         <name>ISSP_ForgotYourPassword</name>
     </customLabels>
     <customLabels>
-        <label>请点击下一步来继续申请</label>
+        <label><!-- ISSP_FoundGeneralPublic --></label>
         <name>ISSP_FoundGeneralPublic</name>
     </customLabels>
     <customLabels>
-        <label>由于您在过去连续的90天内未登录，一封包含新密码的邮件已经发送给您</label>
+        <label><!-- ISSP_Frozen_User_Alert_Message --></label>
         <name>ISSP_Frozen_User_Alert_Message</name>
     </customLabels>
     <customLabels>
@@ -6659,7 +6645,7 @@ and
         <name>ISSP_GSA_Only</name>
     </customLabels>
     <customLabels>
-        <label>GSSA（销售服务总代理）</label>
+        <label><!-- ISSP_GSSA --></label>
         <name>ISSP_GSSA</name>
     </customLabels>
     <customLabels>
@@ -6667,11 +6653,11 @@ and
         <name>ISSP_GeneralPublicNotFound</name>
     </customLabels>
     <customLabels>
-        <label>公众</label>
+        <label><!-- ISSP_General_Public --></label>
         <name>ISSP_General_Public</name>
     </customLabels>
     <customLabels>
-        <label>提交问询</label>
+        <label><!-- ISSP General enquiries --></label>
         <name>ISSP_General_enquiries</name>
     </customLabels>
     <customLabels>
@@ -6679,43 +6665,43 @@ and
         <name>ISSP_GoTo_Homepage</name>
     </customLabels>
     <customLabels>
-        <label>跳转到链接</label>
+        <label><!-- ISSP_Go_to_link --></label>
         <name>ISSP_Go_to_link</name>
     </customLabels>
     <customLabels>
-        <label>登录 IATA 客户门户网站</label>
+        <label><!-- ISSP_GotoLoginPage --></label>
         <name>ISSP_GotoLoginPage</name>
     </customLabels>
     <customLabels>
-        <label>无效用户&lt;br/&gt;您无法给无效用户任何服务授权</label>
+        <label><!-- ISSP_GrantAccess_InactiveUser --></label>
         <name>ISSP_GrantAccess_InactiveUser</name>
     </customLabels>
     <customLabels>
-        <label>该联系人仍非有效用户&lt;br/&gt;若您为之添加一个服务授权，它将自动转变成有效的普通用户&lt;br/&gt;继续？</label>
+        <label><!-- ISSP_GrantAccess_NoUser --></label>
         <name>ISSP_GrantAccess_NoUser</name>
     </customLabels>
     <customLabels>
-        <label>这些联系人仍非客户入口的用户，通过授权服务，他们将会自动转变为普通用户</label>
+        <label><!-- ISSP_GrantAccess_NoUserList --></label>
         <name>ISSP_GrantAccess_NoUserList</name>
     </customLabels>
     <customLabels>
-        <label>此用户状态为待批准&lt;br/&gt;若您为之添加一个服务授权，它将自动转变成有效的普通用户&lt;br/&gt;继续？</label>
+        <label><!-- ISSP_GrantAccess_PendingApproval --></label>
         <name>ISSP_GrantAccess_PendingApproval</name>
     </customLabels>
     <customLabels>
-        <label>这些用户为待批准状态，通过授权服务，他们将会自动转变为普通用户</label>
+        <label><!-- ISSP_GrantAccess_PendingApprovalList --></label>
         <name>ISSP_GrantAccess_PendingApprovalList</name>
     </customLabels>
     <customLabels>
-        <label>请确认您要为这些用户开通授权</label>
+        <label><!-- ISSP_GrantAccess_UserList --></label>
         <name>ISSP_GrantAccess_UserList</name>
     </customLabels>
     <customLabels>
-        <label>授权</label>
+        <label><!-- ISSP_Grant_Access --></label>
         <name>ISSP_Grant_Access</name>
     </customLabels>
     <customLabels>
-        <label>总部</label>
+        <label><!-- ISSP_Registration --></label>
         <name>ISSP_Headquarter</name>
     </customLabels>
     <customLabels>
@@ -6739,7 +6725,7 @@ and
         <name>ISSP_Help_Accreditation_Travel_Agent_General_Information</name>
     </customLabels>
     <customLabels>
-        <label>授予或取消用户对该服务的权限</label>
+        <label><!-- ISSP Help Edit services page --></label>
         <name>ISSP_Help_Edit_services_page</name>
     </customLabels>
     <customLabels>
@@ -6759,119 +6745,119 @@ and
         <name>ISSP_Help_TIESS_Banking</name>
     </customLabels>
     <customLabels>
-        <label>主页</label>
+        <label><!-- ISSP_Home --></label>
         <name>ISSP_Home</name>
     </customLabels>
     <customLabels>
-        <label>公司所有未解决的案例</label>
+        <label><!-- ISSP_Homepage_All_Company_Open_cases --></label>
         <name>ISSP_Homepage_All_Company_Open_cases</name>
     </customLabels>
     <customLabels>
-        <label>申请用户：</label>
+        <label><!-- ISSP_Homepage --></label>
         <name>ISSP_Homepage_Applications_access</name>
     </customLabels>
     <customLabels>
-        <label>问询记录：</label>
+        <label><!-- ISSP_Homepage --></label>
         <name>ISSP_Homepage_Cases</name>
     </customLabels>
     <customLabels>
-        <label>资料库信息</label>
+        <label><!-- ISSP_Homepage --></label>
         <name>ISSP_Homepage_Information_from_knowledge_base</name>
     </customLabels>
     <customLabels>
-        <label>违规累计</label>
+        <label><!-- ISSP_Homepage_Irregularities --></label>
         <name>ISSP_Homepage_Irregularities</name>
     </customLabels>
     <customLabels>
-        <label>我公司待处理问询</label>
+        <label><!-- ISSP_Homepage --></label>
         <name>ISSP_Homepage_My_Company_open_cases</name>
     </customLabels>
     <customLabels>
-        <label>我的总览</label>
+        <label><!-- ISSP_Homepage --></label>
         <name>ISSP_Homepage_My_Dashboard</name>
     </customLabels>
     <customLabels>
-        <label>我的目录</label>
+        <label><!-- ISSP_Homepage --></label>
         <name>ISSP_Homepage_My_News</name>
     </customLabels>
     <customLabels>
-        <label>我的通知</label>
+        <label><!-- ISSP_Homepage --></label>
         <name>ISSP_Homepage_My_Notifications</name>
     </customLabels>
     <customLabels>
-        <label>我的服务</label>
+        <label><!-- ISSP_Homepage --></label>
         <name>ISSP_Homepage_My_Services</name>
     </customLabels>
     <customLabels>
-        <label>我的待处理问询</label>
+        <label><!-- ISSP_Homepage --></label>
         <name>ISSP_Homepage_My_open_cases</name>
     </customLabels>
     <customLabels>
-        <label>等待我回复的案例</label>
+        <label><!-- ISSP_Homepage_My_pending_cases --></label>
         <name>ISSP_Homepage_My_pending_cases</name>
     </customLabels>
     <customLabels>
-        <label>我的状态</label>
+        <label><!-- ISSP_Homepage --></label>
         <name>ISSP_Homepage_My_status</name>
     </customLabels>
     <customLabels>
-        <label>新的服务申请</label>
+        <label><!-- ISSP_Homepage --></label>
         <name>ISSP_Homepage_New_Service_Request</name>
     </customLabels>
     <customLabels>
-        <label>等待批准</label>
+        <label><!-- ISSP_Homepage --></label>
         <name>ISSP_Homepage_Pending_approval</name>
     </customLabels>
     <customLabels>
-        <label>待处理的审批</label>
+        <label><!-- ISSP_Homepage --></label>
         <name>ISSP_Homepage_Pending_approvals</name>
     </customLabels>
     <customLabels>
-        <label>管理员</label>
+        <label><!-- ISSP_Homepage --></label>
         <name>ISSP_Homepage_Portal_Delegates_Administrators</name>
     </customLabels>
     <customLabels>
-        <label>基本用户</label>
+        <label><!-- ISSP_Homepage --></label>
         <name>ISSP_Homepage_Portal_Users</name>
     </customLabels>
     <customLabels>
-        <label>用户</label>
+        <label><!-- ISSP_Homepage --></label>
         <name>ISSP_Homepage_Users</name>
     </customLabels>
     <customLabels>
-        <label>客户门户网站</label>
+        <label><!-- ISSP_Homepage --></label>
         <name>ISSP_Homepage_Welcome_to_IATA_Portal</name>
     </customLabels>
     <customLabels>
-        <label>客运代理的航协号长度为8位，货运代理航协号长度为13位</label>
+        <label><!-- ISSP_Registration --></label>
         <name>ISSP_IATA_Agency_length_Error</name>
     </customLabels>
     <customLabels>
-        <label>航协号须为3位</label>
+        <label><!-- ISSP_Registration --></label>
         <name>ISSP_IATA_AirlineGSA_length_Error</name>
     </customLabels>
     <customLabels>
-        <label>代码格式错误，客运代理人结算代码应为8位数字，货运代理人为11位数字</label>
+        <label><!-- ISSP_IATA_Code_Agency --></label>
         <name>ISSP_IATA_Code_Agency</name>
     </customLabels>
     <customLabels>
-        <label>航协代码格式错误&lt;br/&gt;对于货运代理人，正确的航协代码为11位</label>
+        <label><!-- ISSP_IATA_Code_Agency_Cargo --></label>
         <name>ISSP_IATA_Code_Agency_Cargo</name>
     </customLabels>
     <customLabels>
-        <label>航协代码格式错误&lt;br&gt;对于客运代理人，正确的航协代码为8位</label>
+        <label><!-- ISSP_IATA_Code_Agency_Travel --></label>
         <name>ISSP_IATA_Code_Agency_Travel</name>
     </customLabels>
     <customLabels>
-        <label>代码格式错误，航空公司结算代码应为3位数字</label>
+        <label><!-- ISSP_IATA_Code_Airline --></label>
         <name>ISSP_IATA_Code_Airline</name>
     </customLabels>
     <customLabels>
-        <label>代码格式错误，GSA的代码应为3个字母</label>
+        <label><!-- ISSP_IATA_Code_GSA --></label>
         <name>ISSP_IATA_Code_GSA</name>
     </customLabels>
     <customLabels>
-        <label>是否已有航协代码</label>
+        <label><!-- ISSP_IATA_Code_Question --></label>
         <name>ISSP_IATA_Code_Question</name>
     </customLabels>
     <customLabels>
@@ -6879,15 +6865,15 @@ and
         <name>ISSP_IATA_Code_Search_Format</name>
     </customLabels>
     <customLabels>
-        <label>该航协号不存在，请填写正确的航协号。如果您没有航协号，请选择‘其他’‘客户类别’</label>
+        <label><!-- ISSP_Registration --></label>
         <name>ISSP_IATA_NOT_Found</name>
     </customLabels>
     <customLabels>
-        <label>{!Country}不存在该航协号。请选择正确的国家。如果相同错误再次出现，请联系航协客户窗口寻求帮助。请通过以下链接填写表格：http://www.iata.org/customer-portal/Pages/contactus.aspx</label>
+        <label><!-- ISSP_Registration --></label>
         <name>ISSP_IATA_NOT_Found_for_Country</name>
     </customLabels>
     <customLabels>
-        <label>IATA 证书</label>
+        <label><!-- ISSP_IATAcertificate --></label>
         <name>ISSP_IATAcertificate</name>
     </customLabels>
     <customLabels>
@@ -6903,11 +6889,11 @@ and
         <name>ISSP_IFAP</name>
     </customLabels>
     <customLabels>
-        <label>&lt;user name&gt;是当前&lt;account name&gt;的财务审计联系人</label>
+        <label><!-- ISSP_IFAPCurrentContact --></label>
         <name>ISSP_IFAPCurrentContact</name>
     </customLabels>
     <customLabels>
-        <label>&lt;account name&gt;当前无财务审计联系人</label>
+        <label><!-- ISSP_IFAPNoContact --></label>
         <name>ISSP_IFAPNoContact</name>
     </customLabels>
     <customLabels>
@@ -6915,15 +6901,15 @@ and
         <name>ISSP_IFAPNotHQ</name>
     </customLabels>
     <customLabels>
-        <label>代理人信息</label>
+        <label><!-- ISSP_IFAP_Agent --></label>
         <name>ISSP_IFAP_Agent</name>
     </customLabels>
     <customLabels>
-        <label>财务文件</label>
+        <label><!-- ISSP_IFAP_Documents --></label>
         <name>ISSP_IFAP_Documents</name>
     </customLabels>
     <customLabels>
-        <label>IFAP 联系人电邮</label>
+        <label><!-- ISSP_MyProfile --></label>
         <name>ISSP_IFAP_Email</name>
     </customLabels>
     <customLabels>
@@ -6987,15 +6973,15 @@ and
         <name>ISSP_IFAP_FS_Uploaded</name>
     </customLabels>
     <customLabels>
-        <label>航协财务审核</label>
+        <label><!-- ISSP_IFAP_IATAFinancialAssessment --></label>
         <name>ISSP_IFAP_IATAFinancialAssessment</name>
     </customLabels>
     <customLabels>
-        <label>IFAP 联系人姓名</label>
+        <label><!-- ISSP_MyProfile --></label>
         <name>ISSP_IFAP_Name</name>
     </customLabels>
     <customLabels>
-        <label>财务审计信息</label>
+        <label><!-- ISSP_IFAP_Review --></label>
         <name>ISSP_IFAP_Review</name>
     </customLabels>
     <customLabels>
@@ -7003,31 +6989,31 @@ and
         <name>ISSP_IFAP_To_Notify_Agent</name>
     </customLabels>
     <customLabels>
-        <label>上传财务文件指南</label>
+        <label><!-- ISSP_IFAP_Uploading --></label>
         <name>ISSP_IFAP_Uploading</name>
     </customLabels>
     <customLabels>
-        <label>没有找到贵公司的财务审核记录</label>
+        <label><!-- ISSP_IFAP_YouDontHaveIFAPCases --></label>
         <name>ISSP_IFAP_YouDontHaveIFAPCases</name>
     </customLabels>
     <customLabels>
-        <label>我要提出的投诉是关于</label>
+        <label><!-- ISSP_I_wish_to_complain_about --></label>
         <name>ISSP_I_wish_to_complain_about</name>
     </customLabels>
     <customLabels>
-        <label>请知悉，关于您名字的修改不会影响到ID 卡的信息。若要更改ID中的信息，请登录ID卡平台进行申请。</label>
+        <label><!-- ISSP_IdCard_Name_Warning --></label>
         <name>ISSP_IdCard_Name_Warning</name>
     </customLabels>
     <customLabels>
-        <label>进行中</label>
+        <label><!-- ISSP_In Progress --></label>
         <name>ISSP_In_Progress</name>
     </customLabels>
     <customLabels>
-        <label>您当前所用的IE版本过低或不兼容此页面，请升级IE浏览器或取消兼容设置</label>
+        <label><!-- ISSP In compatibility mode --></label>
         <name>ISSP_In_compatibility_mode</name>
     </customLabels>
     <customLabels>
-        <label>非活跃</label>
+        <label><!-- ISSP_ContactList --></label>
         <name>ISSP_Inactivate</name>
     </customLabels>
     <customLabels>
@@ -7035,27 +7021,27 @@ and
         <name>ISSP_InactiveUser_IdCard</name>
     </customLabels>
     <customLabels>
-        <label>这些员工为ID卡持有者。若冻结这些用户将会同时取消他们的ID卡，请确认是否继续此操作。</label>
+        <label><!-- ISSP_InactiveUser_IdCard_Portal --></label>
         <name>ISSP_InactiveUser_IdCard_Portal</name>
     </customLabels>
     <customLabels>
-        <label>重要的通知</label>
+        <label><!-- ISSP_InactiveUser_Important --></label>
         <name>ISSP_InactiveUser_Important</name>
     </customLabels>
     <customLabels>
-        <label>该用户享有一项有效的用户服务特权，因此系统无法冻结该用户。</label>
+        <label><!-- ISSP_InactiveUser_Subscription --></label>
         <name>ISSP_InactiveUser_Subscription</name>
     </customLabels>
     <customLabels>
-        <label>重要提醒-这些用户拥有额外的服务申请授权，所以他们的帐号无法冻结，若这些用户已经离职，请联系IATA协助进行操作。</label>
+        <label><!-- ISSP_InactiveUser_Subscription_Portal --></label>
         <name>ISSP_InactiveUser_Subscription_Portal</name>
     </customLabels>
     <customLabels>
-        <label>密码无效。</label>
+        <label><!-- ISSP_ChangePassword --></label>
         <name>ISSP_InvalidPassword</name>
     </customLabels>
     <customLabels>
-        <label>投诉</label>
+        <label><!-- ISSP_IwishToComplain --></label>
         <name>ISSP_IwishToComplain</name>
     </customLabels>
     <customLabels>
@@ -7063,7 +7049,7 @@ and
         <name>ISSP_Join_BSP_CASS</name>
     </customLabels>
     <customLabels>
-        <label>此服务使你能够享有在线申请加入BSP和CASS的权利</label>
+        <label><!-- ISSP_Join_BSP_CASS_Description --></label>
         <name>ISSP_Join_BSP_CASS_Description</name>
     </customLabels>
     <customLabels>
@@ -7083,7 +7069,7 @@ and
         <name>ISSP_KAVI_Terms_Conditions_Part3</name>
     </customLabels>
     <customLabels>
-        <label>zh_CN</label>
+        <label><!-- ISSP_LanguageDependentLink --></label>
         <name>ISSP_LanguageDependentLink</name>
     </customLabels>
     <customLabels>
@@ -7107,7 +7093,7 @@ and
         <name>ISSP_Loading_Travel_Agency_Details</name>
     </customLabels>
     <customLabels>
-        <label>区域</label>
+        <label><!-- ISSP_Location --></label>
         <name>ISSP_Location</name>
     </customLabels>
     <customLabels>
@@ -7115,19 +7101,19 @@ and
         <name>ISSP_Location_Filter</name>
     </customLabels>
     <customLabels>
-        <label>提交问询</label>
+        <label><!-- ISSP_HomePage --></label>
         <name>ISSP_Log_a_Case</name>
     </customLabels>
     <customLabels>
-        <label>这项服务使您可以通过提交问询来联系我们的客服人员</label>
+        <label><!-- ISSP Log a case Help text --></label>
         <name>ISSP_Log_a_case_Help_text</name>
     </customLabels>
     <customLabels>
-        <label>以&lt;First Name Last Name&gt;身份登录</label>
+        <label><!-- ISSP Logged in --></label>
         <name>ISSP_Logged_in</name>
     </customLabels>
     <customLabels>
-        <label>该网页只是提醒您，自2015年6月起，您所使用的（IE7&amp;IE8）浏览器将不再被支持浏览我们的客服入口，为了使您有更安全舒适的体验，请尽快更新浏览器版本</label>
+        <label><!-- ISSP_Login_IE_Warning --></label>
         <name>ISSP_Login_IE_Warning</name>
     </customLabels>
     <customLabels>
@@ -7135,7 +7121,7 @@ and
         <name>ISSP_MIR</name>
     </customLabels>
     <customLabels>
-        <label>此服务使你能够享有在线查阅及下载管理信息报告的权利</label>
+        <label><!-- ISSP_MIR_Description --></label>
         <name>ISSP_MIR_Description</name>
     </customLabels>
     <customLabels>
@@ -7159,7 +7145,7 @@ and
         <name>ISSP_Make_Public</name>
     </customLabels>
     <customLabels>
-        <label>服务管理</label>
+        <label><!-- ISSP_Manage_Services --></label>
         <name>ISSP_Manage_Services</name>
     </customLabels>
     <customLabels>
@@ -7167,7 +7153,7 @@ and
         <name>ISSP_Mandatory</name>
     </customLabels>
     <customLabels>
-        <label>我的已处理问询</label>
+        <label><!-- ISSP_MyClosedCases --></label>
         <name>ISSP_MyClosedCases</name>
     </customLabels>
     <customLabels>
@@ -7179,79 +7165,79 @@ and
         <name>ISSP_MyOpenCases_DPC</name>
     </customLabels>
     <customLabels>
-        <label>我尚未支付的案例</label>
+        <label><!-- ISSP_MyOutstandingPaymentsCases --></label>
         <name>ISSP_MyOutstandingPaymentsCases</name>
     </customLabels>
     <customLabels>
-        <label>我的档案</label>
+        <label><!-- ISSP_Registration --></label>
         <name>ISSP_MyProfile</name>
     </customLabels>
     <customLabels>
-        <label>代理机构</label>
+        <label><!-- ISSP --></label>
         <name>ISSP_MyProfile_AGENT</name>
     </customLabels>
     <customLabels>
-        <label>公司</label>
+        <label><!-- ISSP --></label>
         <name>ISSP_MyProfile_AIRLINE_GSA</name>
     </customLabels>
     <customLabels>
-        <label>商业名称</label>
+        <label><!-- ISSP --></label>
         <name>ISSP_MyProfile_AccountName</name>
     </customLabels>
     <customLabels>
-        <label>级别</label>
+        <label><!-- ISSP --></label>
         <name>ISSP_MyProfile_CATEGORY</name>
     </customLabels>
     <customLabels>
-        <label>城市</label>
+        <label><!-- ISSP --></label>
         <name>ISSP_MyProfile_CITY</name>
     </customLabels>
     <customLabels>
-        <label>国公司</label>
+        <label><!-- ISSP --></label>
         <name>ISSP_MyProfile_COUNTRY</name>
     </customLabels>
     <customLabels>
-        <label>电子邮件</label>
+        <label><!-- ISSP --></label>
         <name>ISSP_MyProfile_EMAIL</name>
     </customLabels>
     <customLabels>
-        <label>名</label>
+        <label><!-- ISSP --></label>
         <name>ISSP_MyProfile_FIRSTNAME</name>
     </customLabels>
     <customLabels>
-        <label>功能</label>
+        <label><!-- ISSP --></label>
         <name>ISSP_MyProfile_FUNCTION</name>
     </customLabels>
     <customLabels>
-        <label>IATA 代码</label>
+        <label><!-- ISSP --></label>
         <name>ISSP_MyProfile_IATACODE</name>
     </customLabels>
     <customLabels>
-        <label>姓</label>
+        <label><!-- ISSP --></label>
         <name>ISSP_MyProfile_LASTNAME</name>
     </customLabels>
     <customLabels>
-        <label>称谓</label>
+        <label><!-- ISSP --></label>
         <name>ISSP_MyProfile_SALUTATION</name>
     </customLabels>
     <customLabels>
-        <label>部门</label>
+        <label><!-- ISSP --></label>
         <name>ISSP_MyProfile_SECTOR</name>
     </customLabels>
     <customLabels>
-        <label>街道</label>
+        <label><!-- ISSP --></label>
         <name>ISSP_MyProfile_STREET</name>
     </customLabels>
     <customLabels>
-        <label>职位名称</label>
+        <label><!-- ISSP --></label>
         <name>ISSP_MyProfile_TITLE</name>
     </customLabels>
     <customLabels>
-        <label>公司名</label>
+        <label><!-- ISSP_MyProfile_TradeName --></label>
         <name>ISSP_MyProfile_TradeName</name>
     </customLabels>
     <customLabels>
-        <label>我近期的案例</label>
+        <label><!-- ISSP MyRecentCases --></label>
         <name>ISSP_MyRecentCases</name>
     </customLabels>
     <customLabels>
@@ -7259,31 +7245,31 @@ and
         <name>ISSP_MySISCases</name>
     </customLabels>
     <customLabels>
-        <label>我的问询</label>
+        <label><!-- ISSP My Cases --></label>
         <name>ISSP_My_Cases</name>
     </customLabels>
     <customLabels>
-        <label>我公司的问询</label>
+        <label><!-- ISSP_My_Company_Cases --></label>
         <name>ISSP_My_Company_Cases</name>
     </customLabels>
     <customLabels>
-        <label>操作</label>
+        <label><!-- ISSP My Contact Action --></label>
         <name>ISSP_My_Contact_Action</name>
     </customLabels>
     <customLabels>
-        <label>新个案</label>
+        <label><!-- ISSP_NewCase --></label>
         <name>ISSP_NewCase</name>
     </customLabels>
     <customLabels>
-        <label>新联系人</label>
+        <label><!-- ISSP_ContactList --></label>
         <name>ISSP_NewContact</name>
     </customLabels>
     <customLabels>
-        <label>新密码</label>
+        <label><!-- ISSP_ChangePassword --></label>
         <name>ISSP_NewPassword</name>
     </customLabels>
     <customLabels>
-        <label>新密码为必填栏。</label>
+        <label><!-- ISSP_ChangePassword --></label>
         <name>ISSP_NewPasswordMandatory</name>
     </customLabels>
     <customLabels>
@@ -7291,59 +7277,51 @@ and
         <name>ISSP_NewUser</name>
     </customLabels>
     <customLabels>
-        <label>新的服务申请</label>
+        <label><!-- ISSP_HomePage --></label>
         <name>ISSP_New_Service_Request</name>
     </customLabels>
     <customLabels>
-        <label>资讯</label>
+        <label><!-- ISSP_News --></label>
         <name>ISSP_News</name>
     </customLabels>
     <customLabels>
-        <label>下一页</label>
+        <label><!-- ISSP_Next --></label>
         <name>ISSP_Next</name>
     </customLabels>
     <customLabels>
-        <label>不是</label>
+        <label><!-- ISSP No --></label>
         <name>ISSP_No</name>
     </customLabels>
     <customLabels>
-        <label>未找到符合您搜索条件的公司。请确保您已输入正确的 IATA 代码并且格式正确。</label>
+        <label><!-- ISSP_NoRecordsFound --></label>
         <name>ISSP_NoRecordsFound</name>
     </customLabels>
     <customLabels>
-        <label>按照您的搜索信息，只有航空公司总公司与之相符
-&lt;br/&gt;
-如果您希望在当前城市创建一个新的分公司，请点击创建新帐户，IATA将会对您所提供的信息进行验证。</label>
+        <label><!-- ISSP_NoRecordsFoundBranch --></label>
         <name>ISSP_NoRecordsFoundBranch</name>
     </customLabels>
     <customLabels>
-        <label>通过您的搜素信息，无法找到与之匹配的单位。请修正搜素信息再次尝试或点击‘创建新帐户’来创建新的公司信息
-&lt;br/&gt;&lt;br/&gt;
-若您要继续客服入口的注册，请参阅我们的&lt;a href=http://theiatahub.force.com/iatapkb/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US target=_blank&gt;故障排除指南&lt;/a&gt;</label>
+        <label><!-- ISSP_NoRecordsFoundCreateAgency --></label>
         <name>ISSP_NoRecordsFoundCreateAgency</name>
     </customLabels>
     <customLabels>
-        <label>通过您的搜素信息，无法找到与之匹配的单位。请修正搜素信息再次尝试或点击‘创建新帐户’来创建新的公司信息</label>
+        <label><!-- ISSP_NoRecordsFoundCreateStandardAirline --></label>
         <name>ISSP_NoRecordsFoundCreateStandardAirline</name>
     </customLabels>
     <customLabels>
-        <label>没有符合您搜索条件的记录。请点击“上一步“（Back）继续公众的注册，或更改搜索条件再试一次。
-&lt;br/&gt;&lt;br/&gt;
-如您在注册 IATA 客户门户网站时仍然存在问题，请查阅我们的 &lt;a href=http://theiatahub.force.com/iatapkb/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US target=_blank&gt;故障排除指南&lt;/a&gt;</label>
+        <label><!-- ISSP_NoRecordsFoundGP --></label>
         <name>ISSP_NoRecordsFoundGP</name>
     </customLabels>
     <customLabels>
-        <label>通过您提供的国家以及GSA代码，无法查找到相对应的公司。 请确保您所输入的信息的准确性
-&lt;br/&gt;&lt;br/&gt; 
-若您要继续客服入口的注册，请参阅我们的&lt;a href=http://theiatahub.force.com/iatapkb/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US target=_blank&gt;故障排除指南&lt;/a&gt;</label>
+        <label><!-- ISSP_NoRecordsFoundGSA --></label>
         <name>ISSP_NoRecordsFoundGSA</name>
     </customLabels>
     <customLabels>
-        <label>未找到符合这些搜索条件的机构。请修改搜索条件再试一次。</label>
+        <label><!-- ISSP_NoRecordsFoundNext --></label>
         <name>ISSP_NoRecordsFoundNext</name>
     </customLabels>
     <customLabels>
-        <label>无申请记录</label>
+        <label><!-- ISSP_Homepage --></label>
         <name>ISSP_No_application_available</name>
     </customLabels>
     <customLabels>
@@ -7355,7 +7333,7 @@ and
         <name>ISSP_Not_Authorized</name>
     </customLabels>
     <customLabels>
-        <label>如无法找到您的账户，请点击“上一步“（BACK）继续公众的注册，或更改搜索条件再试一次。</label>
+        <label><!-- ISSP_NoteWhenAccountFound --></label>
         <name>ISSP_NoteWhenAccountFound</name>
     </customLabels>
     <customLabels>
@@ -7363,31 +7341,31 @@ and
         <name>ISSP_Nothing_found</name>
     </customLabels>
     <customLabels>
-        <label>一条新通知已发布至您的 IATA 门户网站账户。</label>
+        <label><!-- ISSP Notification --></label>
         <name>ISSP_Notification_Text1</name>
     </customLabels>
     <customLabels>
-        <label>您可通过 IATA 客户门户网站进行查看</label>
+        <label><!-- ISSP Notification --></label>
         <name>ISSP_Notification_Text2</name>
     </customLabels>
     <customLabels>
-        <label>IATA 门户网站新通知</label>
+        <label><!-- ISSP Notification subject --></label>
         <name>ISSP_Notification_subject</name>
     </customLabels>
     <customLabels>
-        <label>办公邮箱</label>
+        <label><!-- ISSP_Office_Email --></label>
         <name>ISSP_Office_Email</name>
     </customLabels>
     <customLabels>
-        <label>传真</label>
+        <label><!-- ISSP_Office_Fax --></label>
         <name>ISSP_Office_Fax</name>
     </customLabels>
     <customLabels>
-        <label>移动电话</label>
+        <label><!-- ISSP_Office_Mobile --></label>
         <name>ISSP_Office_Mobile</name>
     </customLabels>
     <customLabels>
-        <label>固定电话</label>
+        <label><!-- ISSP_Office_Phone --></label>
         <name>ISSP_Office_Phone</name>
     </customLabels>
     <customLabels>
@@ -7395,7 +7373,7 @@ and
         <name>ISSP_OldEmail</name>
     </customLabels>
     <customLabels>
-        <label>近四次使用的密码不可重复使用</label>
+        <label><!-- ISSP_Old_Passwords --></label>
         <name>ISSP_Old_Passwords</name>
     </customLabels>
     <customLabels>
@@ -7407,11 +7385,11 @@ and
         <name>ISSP_Optional</name>
     </customLabels>
     <customLabels>
-        <label>其他</label>
+        <label><!-- ISSP_Other --></label>
         <name>ISSP_Other</name>
     </customLabels>
     <customLabels>
-        <label>其他公司</label>
+        <label><!-- ISSP_Other_Company --></label>
         <name>ISSP_Other_Company</name>
     </customLabels>
     <customLabels>
@@ -7427,23 +7405,23 @@ and
         <name>ISSP_PAX_Validating_VAT_Number_error</name>
     </customLabels>
     <customLabels>
-        <label>退出</label>
+        <label><!-- ISSP_PCI_Logout --></label>
         <name>ISSP_PCI_Logout</name>
     </customLabels>
     <customLabels>
-        <label>您已15分钟无任何操作，请重新登录或退出</label>
+        <label><!-- ISSP_PCI_Message --></label>
         <name>ISSP_PCI_Message</name>
     </customLabels>
     <customLabels>
-        <label>继续</label>
+        <label><!-- ISSP_PCI_Stay --></label>
         <name>ISSP_PCI_Stay</name>
     </customLabels>
     <customLabels>
-        <label>持续时间</label>
+        <label><!-- ISSP_PCI_Time --></label>
         <name>ISSP_PCI_Time</name>
     </customLabels>
     <customLabels>
-        <label>登出警告</label>
+        <label><!-- ISSP_PCI_Title --></label>
         <name>ISSP_PCI_Title</name>
     </customLabels>
     <customLabels>
@@ -7451,59 +7429,59 @@ and
         <name>ISSP_PKB_URL</name>
     </customLabels>
     <customLabels>
-        <label>购买</label>
+        <label><!-- ISSP_PURCHASE --></label>
         <name>ISSP_PURCHASE</name>
     </customLabels>
     <customLabels>
-        <label>页码</label>
+        <label><!-- ISSP_Page --></label>
         <name>ISSP_Page</name>
     </customLabels>
     <customLabels>
-        <label>查询航空公司参与各BSP及CASS的规定</label>
+        <label><!-- ISSP_PageDescription_Country_Requirements --></label>
         <name>ISSP_PageDescription_Country_Requirements</name>
     </customLabels>
     <customLabels>
-        <label>管理您及您公司其他用户的服务申请</label>
+        <label><!-- ISSP_PageDescription_ISSP_AccessToService --></label>
         <name>ISSP_PageDescription_ISSP_AccessToService</name>
     </customLabels>
     <customLabels>
-        <label>查询贵公司已开通的服务，申请新的服务及查看您服务申请的审批状态</label>
+        <label><!-- ISSP_PageDescription_ISSP_AvailableServices --></label>
         <name>ISSP_PageDescription_ISSP_AvailableServices</name>
     </customLabels>
     <customLabels>
-        <label>将您所有未处理完毕的或已经处理完毕的以及待您回复的案例统一呈现</label>
+        <label><!-- ISSP_PageDescription_ISSP_CaseList --></label>
         <name>ISSP_PageDescription_ISSP_CaseList</name>
     </customLabels>
     <customLabels>
-        <label>将所有您公司的未处理完毕的或已经处理完毕的以及待回复的案例统一呈现</label>
+        <label><!-- ISSP_PageDescription_ISSP_CaseList_adminview --></label>
         <name>ISSP_PageDescription_ISSP_CaseList_adminview</name>
     </customLabels>
     <customLabels>
-        <label>连续12个月内的累计违规次数</label>
+        <label><!-- ISSP_PageDescription_ISSP_CompanyInformation --></label>
         <name>ISSP_PageDescription_ISSP_CompanyInformation</name>
     </customLabels>
     <customLabels>
-        <label>通过批准/拒绝等操作来管理贵公司联系人在客户入口的权限，或者创建新用户</label>
+        <label><!-- ISSP_PageDescription_ISSP_ContactList --></label>
         <name>ISSP_PageDescription_ISSP_ContactList</name>
     </customLabels>
     <customLabels>
-        <label>提交问询，查阅相关常见问题解答以及向IATA客服部门提交投诉。</label>
+        <label><!-- ISSP_PageDescription_ISSP_FAQ2Case --></label>
         <name>ISSP_PageDescription_ISSP_FAQ2Case</name>
     </customLabels>
     <customLabels>
-        <label>在IATA的业务资料中搜索相关文章</label>
+        <label><!-- ISSP_PageDescription_ISSP_faq_template --></label>
         <name>ISSP_PageDescription_ISSP_faq_template</name>
     </customLabels>
     <customLabels>
-        <label>查找及下载IATA要求填写的文件</label>
+        <label><!-- ISSP_Pagedescription_ISSP_ContentPage --></label>
         <name>ISSP_Pagedescription_ISSP_ContentPage</name>
     </customLabels>
     <customLabels>
-        <label>密码</label>
+        <label><!-- ISSP_Password --></label>
         <name>ISSP_Password</name>
     </customLabels>
     <customLabels>
-        <label>密码必须一致。</label>
+        <label><!-- ISSP_ChangePassword --></label>
         <name>ISSP_PasswordMatch</name>
     </customLabels>
     <customLabels>
@@ -7511,9 +7489,7 @@ and
         <name>ISSP_Past_Periods</name>
     </customLabels>
     <customLabels>
-        <label>Payment Link 可以用信用卡支付IATA账单&lt;br/&gt;
-&lt;b&gt;注意！&lt;/b&gt;&lt;br/&gt;
-请知悉，所有IATA认可代理人的缴费清单均通过BSP/CASS开具账单来收取。所以请在通过使用信用卡支付前，先行确认您的缴费清单是否已经完成结算。</label>
+        <label><!-- ISSP_Payment_Link_Description --></label>
         <name>ISSP_Payment_Link_Description</name>
     </customLabels>
     <customLabels>
@@ -7521,11 +7497,11 @@ and
         <name>ISSP_Pending</name>
     </customLabels>
     <customLabels>
-        <label>&quot;待处理的审批（点击 &quot;&quot;Edit&quot;&quot; [编辑]进行管理）&quot;</label>
+        <label><!-- ISSP_PendingApprovalClickEditToManage --></label>
         <name>ISSP_PendingApprovalClickEditToManage</name>
     </customLabels>
     <customLabels>
-        <label>等待批准</label>
+        <label><!-- ISSP_HomePage --></label>
         <name>ISSP_Pending_Approval</name>
     </customLabels>
     <customLabels>
@@ -7533,23 +7509,23 @@ and
         <name>ISSP_Pending_Documents</name>
     </customLabels>
     <customLabels>
-        <label>申请变更公司</label>
+        <label><!-- ChangeCompany --></label>
         <name>ISSP_PerInfoPageChangeCompany</name>
     </customLabels>
     <customLabels>
-        <label>请等待…</label>
+        <label><!-- ISSP_PleaseWait --></label>
         <name>ISSP_PleaseWait</name>
     </customLabels>
     <customLabels>
-        <label>常见问询</label>
+        <label><!-- ISSP_Popular_FAQs --></label>
         <name>ISSP_Popular_FAQs</name>
     </customLabels>
     <customLabels>
-        <label>请提供这个新用户的联系信息</label>
+        <label><!-- ISSP_PortalUserCreation_Description --></label>
         <name>ISSP_PortalUserCreation_Description</name>
     </customLabels>
     <customLabels>
-        <label>请通过 info.cn@iata.org联系航协客服管理员</label>
+        <label><!-- ISSP_PortalUserStatusChange --></label>
         <name>ISSP_PortalUserStatusChangeError</name>
     </customLabels>
     <customLabels>
@@ -7561,7 +7537,7 @@ and
         <name>ISSP_PortalUserStatusChange_ActiveTOActiveError</name>
     </customLabels>
     <customLabels>
-        <label>关闭窗口将导致保存错误</label>
+        <label><!-- ISSP_PortalUserStatusChange --></label>
         <name>ISSP_PortalUserStatusChange_Close_window_error</name>
     </customLabels>
     <customLabels>
@@ -7569,23 +7545,23 @@ and
         <name>ISSP_Portal_Application_Rights</name>
     </customLabels>
     <customLabels>
-        <label>下一页</label>
+        <label><!-- ISSP_Portal_Next --></label>
         <name>ISSP_Portal_Next</name>
     </customLabels>
     <customLabels>
-        <label>门户网站服务</label>
+        <label><!-- ISSP_Portal_Service --></label>
         <name>ISSP_Portal_Service</name>
     </customLabels>
     <customLabels>
-        <label>详细介绍</label>
+        <label><!-- ISSP_Portal Service Details --></label>
         <name>ISSP_Portal_Service_Details</name>
     </customLabels>
     <customLabels>
-        <label>服务种类</label>
+        <label><!-- ISSP_Portal Service Information --></label>
         <name>ISSP_Portal_Service_Information</name>
     </customLabels>
     <customLabels>
-        <label>门户网站服务</label>
+        <label><!-- ISSP_Portal Services --></label>
         <name>ISSP_Portal_Services</name>
     </customLabels>
     <customLabels>
@@ -7593,27 +7569,27 @@ and
         <name>ISSP_Portal_further_clarification</name>
     </customLabels>
     <customLabels>
-        <label>首选语言</label>
+        <label><!-- ISSP_Preferred_Language --></label>
         <name>ISSP_Preferred_Language</name>
     </customLabels>
     <customLabels>
-        <label>上一页</label>
+        <label><!-- ISSP_Previous --></label>
         <name>ISSP_Previous</name>
     </customLabels>
     <customLabels>
-        <label>&lt;a href=&quot;/ISSP_ContentDisplay?id=069w0000002iDLk&quot; target=&quot;_blank&quot;&gt;价目表&lt;/a&gt;</label>
+        <label><!-- ISSP_PriceList --></label>
         <name>ISSP_PriceList</name>
     </customLabels>
     <customLabels>
-        <label>保密政策</label>
+        <label><!-- ISSP Privacy Policy --></label>
         <name>ISSP_Privacy_Policy</name>
     </customLabels>
     <customLabels>
-        <label>产品种类</label>
+        <label><!-- ISSP_ProductCategory --></label>
         <name>ISSP_ProductCategory</name>
     </customLabels>
     <customLabels>
-        <label>产品详细种类</label>
+        <label><!-- ISSP_ProductSubcategory --></label>
         <name>ISSP_ProductSubcategory</name>
     </customLabels>
     <customLabels>
@@ -7621,15 +7597,15 @@ and
         <name>ISSP_Public</name>
     </customLabels>
     <customLabels>
-        <label>数量</label>
+        <label><!-- ISSP_Quantity --></label>
         <name>ISSP_Quantity</name>
     </customLabels>
     <customLabels>
-        <label>冻结原因</label>
+        <label><!-- ISSP_ReasonInactivation --></label>
         <name>ISSP_ReasonInactivation</name>
     </customLabels>
     <customLabels>
-        <label>拒绝原因</label>
+        <label><!-- ISSP_ReasonRejection --></label>
         <name>ISSP_ReasonRejection</name>
     </customLabels>
     <customLabels>
@@ -7637,39 +7613,39 @@ and
         <name>ISSP_Regional_Administrator</name>
     </customLabels>
     <customLabels>
-        <label>您的注册过程出现了错误</label>
+        <label><!-- ISSP_Registation_LogCase1 --></label>
         <name>ISSP_Registation_LogCase1</name>
     </customLabels>
     <customLabels>
-        <label>请填写并提交此表单</label>
+        <label><!-- ISSP_Registation_LogCase2 --></label>
         <name>ISSP_Registation_LogCase2</name>
     </customLabels>
     <customLabels>
-        <label>办公电话</label>
+        <label><!-- ISSP_Registration --></label>
         <name>ISSP_Registration_BusinessPhone</name>
     </customLabels>
     <customLabels>
-        <label>变更公司</label>
+        <label><!-- ISSP_Registration --></label>
         <name>ISSP_Registration_ChangeMyCompany</name>
     </customLabels>
     <customLabels>
-        <label>评论</label>
+        <label><!-- ISSP_Registration_Comments --></label>
         <name>ISSP_Registration_Comments</name>
     </customLabels>
     <customLabels>
-        <label>-无-</label>
+        <label><!-- ISSP_Registration --></label>
         <name>ISSP_Registration_CountryNone</name>
     </customLabels>
     <customLabels>
-        <label>请选择您的办公地点所在国家</label>
+        <label><!-- ISSP_Registration --></label>
         <name>ISSP_Registration_Country_Bubble</name>
     </customLabels>
     <customLabels>
-        <label>两字代码，用以辨识航空公司</label>
+        <label><!-- ISSP_Registration_Designator_Bubble --></label>
         <name>ISSP_Registration_Designator_Bubble</name>
     </customLabels>
     <customLabels>
-        <label>请输入您的办公电话</label>
+        <label><!-- ISSP_Registration_Error_BusinessPhone --></label>
         <name>ISSP_Registration_Error_BusinessPhone</name>
     </customLabels>
     <customLabels>
@@ -7677,39 +7653,39 @@ and
         <name>ISSP_Registration_Error_Comment</name>
     </customLabels>
     <customLabels>
-        <label>请输入您的电子邮件地址</label>
+        <label><!-- ISSP_Registration_Error_Email --></label>
         <name>ISSP_Registration_Error_Email</name>
     </customLabels>
     <customLabels>
-        <label>请输入您的名字</label>
+        <label><!-- ISSP_Registration_Error_FirstName --></label>
         <name>ISSP_Registration_Error_FirstName</name>
     </customLabels>
     <customLabels>
-        <label>请选择您的工作职能</label>
+        <label><!-- ISSP_Registration_Error_JobFunction --></label>
         <name>ISSP_Registration_Error_JobFunction</name>
     </customLabels>
     <customLabels>
-        <label>请输入您的职位</label>
+        <label><!-- ISSP_Registration_Error_JobTitle --></label>
         <name>ISSP_Registration_Error_JobTitle</name>
     </customLabels>
     <customLabels>
-        <label>请输入您的姓氏</label>
+        <label><!-- ISSP_Registration_Error_LastName --></label>
         <name>ISSP_Registration_Error_LastName</name>
     </customLabels>
     <customLabels>
-        <label>请选择您所在的国家</label>
+        <label><!-- ISSP_Registration_Error_Location --></label>
         <name>ISSP_Registration_Error_Location</name>
     </customLabels>
     <customLabels>
-        <label>登录尝试失败。请核对您的电子邮件地址及密码是否正确。</label>
+        <label><!-- ISSP_Registration_Error_Login --></label>
         <name>ISSP_Registration_Error_Login</name>
     </customLabels>
     <customLabels>
-        <label>密码不能为空，请输入有效密码。</label>
+        <label><!-- ISSP_Registration_Error_Password --></label>
         <name>ISSP_Registration_Error_Password</name>
     </customLabels>
     <customLabels>
-        <label>请选择您的称谓</label>
+        <label><!-- ISSP_Registration_Error_Salutation --></label>
         <name>ISSP_Registration_Error_Salutation</name>
     </customLabels>
     <customLabels>
@@ -7717,75 +7693,75 @@ and
         <name>ISSP_Registration_Error_Subject</name>
     </customLabels>
     <customLabels>
-        <label>请选择客户类型</label>
+        <label><!-- ISSP_Registration_Error_TypeofCustomer --></label>
         <name>ISSP_Registration_Error_TypeofCustomer</name>
     </customLabels>
     <customLabels>
-        <label>请填写贵公司航协号：航空公司3位\客运代理人8位\货运代理人11位\GSA3位\如果您没有航协号请选择‘其他’‘客户类别’</label>
+        <label><!-- ISSP_Registration --></label>
         <name>ISSP_Registration_IATACode_Bubble</name>
     </customLabels>
     <customLabels>
-        <label>职位名称</label>
+        <label><!-- ISSP_Registration --></label>
         <name>ISSP_Registration_JobTitle</name>
     </customLabels>
     <customLabels>
-        <label>法务</label>
+        <label><!-- ISSP_Registration --></label>
         <name>ISSP_Registration_Legal</name>
     </customLabels>
     <customLabels>
-        <label>先生</label>
+        <label><!-- ISSP_Registration --></label>
         <name>ISSP_Registration_MR</name>
     </customLabels>
     <customLabels>
-        <label>夫人</label>
+        <label><!-- ISSP_Registration --></label>
         <name>ISSP_Registration_MRS</name>
     </customLabels>
     <customLabels>
-        <label>女士</label>
+        <label><!-- ISSP_Registration --></label>
         <name>ISSP_Registration_MS</name>
     </customLabels>
     <customLabels>
-        <label>手机</label>
+        <label><!-- ISSP_Registration --></label>
         <name>ISSP_Registration_MobilePhone</name>
     </customLabels>
     <customLabels>
-        <label>商业信息</label>
+        <label><!-- ISSP_Registration --></label>
         <name>ISSP_Registration_MyCompany</name>
     </customLabels>
     <customLabels>
-        <label>个人信息</label>
+        <label><!-- ISSP_Registration --></label>
         <name>ISSP_Registration_MyInformation</name>
     </customLabels>
     <customLabels>
-        <label>新公司航协号</label>
+        <label><!-- ISSP_Registration --></label>
         <name>ISSP_Registration_NewCompanyIATAcode</name>
     </customLabels>
     <customLabels>
-        <label>-无-</label>
+        <label><!-- ISSP_Registration_None --></label>
         <name>ISSP_Registration_None</name>
     </customLabels>
     <customLabels>
-        <label>其他</label>
+        <label><!-- ISSP_Registration --></label>
         <name>ISSP_Registration_Others</name>
     </customLabels>
     <customLabels>
-        <label>我的档案</label>
+        <label><!-- PersonalInformation --></label>
         <name>ISSP_Registration_PersonalInformation</name>
     </customLabels>
     <customLabels>
-        <label>请检查您的信箱，完成注册</label>
+        <label><!-- ISSP_Registration --></label>
         <name>ISSP_Registration_PleaseCheckYourMail</name>
     </customLabels>
     <customLabels>
-        <label>隐私</label>
+        <label><!-- ISSP_Registration --></label>
         <name>ISSP_Registration_Privacy</name>
     </customLabels>
     <customLabels>
-        <label>5秒后跳转至初始界面</label>
+        <label><!-- ISSP_Registration_Redirection --></label>
         <name>ISSP_Registration_Redirection</name>
     </customLabels>
     <customLabels>
-        <label>注册程序</label>
+        <label><!-- ISSP_Registration --></label>
         <name>ISSP_Registration_RegistrationProcess</name>
     </customLabels>
     <customLabels>
@@ -7797,65 +7773,63 @@ and
         <name>ISSP_Registration_Subject_Default</name>
     </customLabels>
     <customLabels>
-        <label>感谢您的注册</label>
+        <label><!-- ISSP_Registration --></label>
         <name>ISSP_Registration_Thank_you</name>
     </customLabels>
     <customLabels>
-        <label>请输入您在单位内的职务</label>
+        <label><!-- ISSP_Registration --></label>
         <name>ISSP_Registration_Title_Bubble</name>
     </customLabels>
     <customLabels>
-        <label>该邮箱已在客户门户网站被注册。 
-如您是一名电子商务用户，请使用电子商务凭证。 
-如您要重置密码，请返回登录界面，使用忘记密码功能。</label>
+        <label><!-- ISSP_Registration_UserExist --></label>
         <name>ISSP_Registration_UserExist</name>
     </customLabels>
     <customLabels>
-        <label>接受一般条款</label>
+        <label><!-- ISSP_Registration --></label>
         <name>ISSP_Registration_acceptGeneralConditions</name>
     </customLabels>
     <customLabels>
-        <label>请联系航协客户入口寻求帮助，通过以下网址提交问询。http://www.iata.org/customer-portal/Pages/contactus.aspx</label>
+        <label><!-- ISSP_Registration --></label>
         <name>ISSP_Registration_generalError</name>
     </customLabels>
     <customLabels>
-        <label>使用该电邮地址的门户网站用户已存在，但在此前已被停用。</label>
+        <label><!-- ISSP_Registration_inactiveUserExist --></label>
         <name>ISSP_Registration_inactiveUserExist</name>
     </customLabels>
     <customLabels>
-        <label>拒绝</label>
+        <label><!-- ISSP_ContactList --></label>
         <name>ISSP_Reject</name>
     </customLabels>
     <customLabels>
-        <label>拒授访问客户入口</label>
+        <label><!-- ISSP_RejectReason_Denied --></label>
         <name>ISSP_RejectReason_Denied</name>
     </customLabels>
     <customLabels>
-        <label>离职</label>
+        <label><!-- ISSP_RejectReason_Left --></label>
         <name>ISSP_RejectReason_Left</name>
     </customLabels>
     <customLabels>
-        <label>退休</label>
+        <label><!-- ISSP_RejectReason_Retired --></label>
         <name>ISSP_RejectReason_Retired</name>
     </customLabels>
     <customLabels>
-        <label>未知联系人</label>
+        <label><!-- ISSP_RejectReason_Unknown --></label>
         <name>ISSP_RejectReason_Unknown</name>
     </customLabels>
     <customLabels>
-        <label>相关联系人</label>
+        <label><!-- ISSP_Related contacts --></label>
         <name>ISSP_Related_contacts</name>
     </customLabels>
     <customLabels>
-        <label>重新开放</label>
+        <label><!-- ISSP_Reopen --></label>
         <name>ISSP_Reopen</name>
     </customLabels>
     <customLabels>
-        <label>未完成申请</label>
+        <label><!-- ISSP Request Incomplete --></label>
         <name>ISSP_Request_Incomplete</name>
     </customLabels>
     <customLabels>
-        <label>进行中的申请</label>
+        <label><!-- ISSP Request Ongoing --></label>
         <name>ISSP_Request_Ongoing</name>
     </customLabels>
     <customLabels>
@@ -7863,11 +7837,11 @@ and
         <name>ISSP_Request_Submitted</name>
     </customLabels>
     <customLabels>
-        <label>已撤销申请</label>
+        <label><!-- ISSP Request Withdrawn --></label>
         <name>ISSP_Request_Withdrawn</name>
     </customLabels>
     <customLabels>
-        <label>您的申请待批复</label>
+        <label><!-- ISSP Request pending approval --></label>
         <name>ISSP_Request_pending_approval</name>
     </customLabels>
     <customLabels>
@@ -7875,27 +7849,27 @@ and
         <name>ISSP_Requirements</name>
     </customLabels>
     <customLabels>
-        <label>重置密码</label>
+        <label><!-- ISSP Reset Password --></label>
         <name>ISSP_Reset_Password</name>
     </customLabels>
     <customLabels>
-        <label>资源中心</label>
+        <label><!-- ISSP_Resource_Center --></label>
         <name>ISSP_Resource_Center</name>
     </customLabels>
     <customLabels>
-        <label>使用手册，结算日历，标准申请表格，教程及其他相关信息</label>
+        <label><!-- ISSP_Resource_Center_Description --></label>
         <name>ISSP_Resource_Center_Description</name>
     </customLabels>
     <customLabels>
-        <label>资料库</label>
+        <label><!-- ISSP_Resources --></label>
         <name>ISSP_Resources</name>
     </customLabels>
     <customLabels>
-        <label>结果</label>
+        <label><!-- ISSP_Results --></label>
         <name>ISSP_Results</name>
     </customLabels>
     <customLabels>
-        <label>回到案例</label>
+        <label><!-- ISSP Return to Case --></label>
         <name>ISSP_Return_to_Case</name>
     </customLabels>
     <customLabels>
@@ -7931,15 +7905,15 @@ and
         <name>ISSP_SIDRA_Withdraw_Approval_Date</name>
     </customLabels>
     <customLabels>
-        <label>国际航空运输协会的简化联运结算服务，此服务能够使航空运输业享有电子开账与结算的权利</label>
+        <label><!-- ISSP_SIS_1_Description --></label>
         <name>ISSP_SIS_1_Description</name>
     </customLabels>
     <customLabels>
-        <label>此服务使你能够享有在线向SIS后台提交问询的权利</label>
+        <label><!-- ISSP_SIS_2_Description --></label>
         <name>ISSP_SIS_2_Description</name>
     </customLabels>
     <customLabels>
-        <label>进入您的SIS账户</label>
+        <label><!-- ISSP_SIS_3_Description --></label>
         <name>ISSP_SIS_3_Description</name>
     </customLabels>
     <customLabels>
@@ -7947,11 +7921,11 @@ and
         <name>ISSP_SIS_Help_Desk</name>
     </customLabels>
     <customLabels>
-        <label>称谓</label>
+        <label><!-- ISSP_Salutation --></label>
         <name>ISSP_Salutation</name>
     </customLabels>
     <customLabels>
-        <label>通过您电脑IP地址识别出您正尝试从一个美国制裁的国家登录客服入口。 &lt;br/&gt;客服入口的系统所属公司遵从此政策，因此，您在当前的IP地址无法访问。&lt;br/&gt;点击&lt;a href=&quot;http://www.iata.org/customer-portal/Pages/contactus-v2.aspx&quot; &gt;这里&lt;/a&gt;联系IATA区域办事处</label>
+        <label><!-- ISSP_Sanctions_Message --></label>
         <name>ISSP_Sanctions_Message</name>
     </customLabels>
     <customLabels>
@@ -7959,7 +7933,7 @@ and
         <name>ISSP_Satisfactory</name>
     </customLabels>
     <customLabels>
-        <label>保存并新建</label>
+        <label><!-- ISSP_SaveNew --></label>
         <name>ISSP_SaveNew</name>
     </customLabels>
     <customLabels>
@@ -7967,15 +7941,15 @@ and
         <name>ISSP_Save_Draft</name>
     </customLabels>
     <customLabels>
-        <label>搜索</label>
+        <label><!-- ISSP_Search --></label>
         <name>ISSP_Search</name>
     </customLabels>
     <customLabels>
-        <label>搜索公司</label>
+        <label><!-- ISSP_SearchAccount --></label>
         <name>ISSP_SearchAccount</name>
     </customLabels>
     <customLabels>
-        <label>搜索结果</label>
+        <label><!-- ISSP Search Result --></label>
         <name>ISSP_Search_Result</name>
     </customLabels>
     <customLabels>
@@ -7983,7 +7957,7 @@ and
         <name>ISSP_Search_by_Tags</name>
     </customLabels>
     <customLabels>
-        <label>查看更多</label>
+        <label><!-- ISSP See more --></label>
         <name>ISSP_See_more</name>
     </customLabels>
     <customLabels>
@@ -7991,23 +7965,23 @@ and
         <name>ISSP_Select</name>
     </customLabels>
     <customLabels>
-        <label>请选择一个联系人</label>
+        <label><!-- ISSP_ContactList --></label>
         <name>ISSP_SelectOneContact</name>
     </customLabels>
     <customLabels>
-        <label>请仅选择一个联系人</label>
+        <label><!-- ISSP_ContactList --></label>
         <name>ISSP_SelectOnlyOneContact</name>
     </customLabels>
     <customLabels>
-        <label>选择代理人类型</label>
+        <label><!-- ISSP_Select_Agency_Type --></label>
         <name>ISSP_Select_Agency_Type</name>
     </customLabels>
     <customLabels>
-        <label>如非仅限于GSA，您必须选择一家航空公司</label>
+        <label><!-- ISSP_Case --></label>
         <name>ISSP_Select_Airline</name>
     </customLabels>
     <customLabels>
-        <label>选择您公司的类型</label>
+        <label><!-- ISSP_Select_Type_of_Company --></label>
         <name>ISSP_Select_Type_of_Company</name>
     </customLabels>
     <customLabels>
@@ -8015,23 +7989,23 @@ and
         <name>ISSP_Sender_Email</name>
     </customLabels>
     <customLabels>
-        <label>服务</label>
+        <label><!-- ISSP_Service --></label>
         <name>ISSP_Service</name>
     </customLabels>
     <customLabels>
-        <label>请确认是否申请</label>
+        <label><!-- ISSP_ServiceRequestConfirm --></label>
         <name>ISSP_ServiceRequestConfirm</name>
     </customLabels>
     <customLabels>
-        <label>您是否将本次处理的原因同时回复给该用户？</label>
+        <label><!-- ISSP_Service_Approval_Rejection_Reason --></label>
         <name>ISSP_Service_Approval_Rejection_Reason</name>
     </customLabels>
     <customLabels>
-        <label>服务</label>
+        <label><!-- ISSP_Services --></label>
         <name>ISSP_Services</name>
     </customLabels>
     <customLabels>
-        <label>客户入口服务申请权限</label>
+        <label><!-- ISSP_Services_List --></label>
         <name>ISSP_Services_List</name>
     </customLabels>
     <customLabels>
@@ -8039,7 +8013,7 @@ and
         <name>ISSP_SharePoint_Thanks</name>
     </customLabels>
     <customLabels>
-        <label>必填项</label>
+        <label><!-- ISSP Should be mandatory --></label>
         <name>ISSP_Should_be_mandatory</name>
     </customLabels>
     <customLabels>
@@ -8051,7 +8025,7 @@ and
         <name>ISSP_Simplified_Interline_Settlement</name>
     </customLabels>
     <customLabels>
-        <label>状态</label>
+        <label><!-- ISSP_Status --></label>
         <name>ISSP_Status</name>
     </customLabels>
     <customLabels>
@@ -8063,23 +8037,23 @@ and
         <name>ISSP_Sub_Type</name>
     </customLabels>
     <customLabels>
-        <label>主题</label>
+        <label><!-- ISSP Subject --></label>
         <name>ISSP_Subject</name>
     </customLabels>
     <customLabels>
-        <label>提交</label>
+        <label><!-- ISSP_Submit --></label>
         <name>ISSP_Submit</name>
     </customLabels>
     <customLabels>
-        <label>提交并添加附件</label>
+        <label><!-- ISSP_SubmitAttach --></label>
         <name>ISSP_SubmitAttach</name>
     </customLabels>
     <customLabels>
-        <label>您是否要继续</label>
+        <label><!-- ISSP_SureToContinue --></label>
         <name>ISSP_SureToContinue</name>
     </customLabels>
     <customLabels>
-        <label>调查问卷</label>
+        <label><!-- ISSP Survey --></label>
         <name>ISSP_Survey</name>
     </customLabels>
     <customLabels>
@@ -8087,7 +8061,7 @@ and
         <name>ISSP_SurveyClosedCase</name>
     </customLabels>
     <customLabels>
-        <label>请在继续之前阅读并接受我们的使用条款。</label>
+        <label><!-- ISSP_TC_Accept --></label>
         <name>ISSP_TC_Accept</name>
     </customLabels>
     <customLabels>
@@ -8115,9 +8089,7 @@ and
         <name>ISSP_TD_5</name>
     </customLabels>
     <customLabels>
-        <label>IATA 财务仪表板
-
-IATA 财务仪表板是动态的，在网页上的一个反应信息的工具，协助和支持航空公司的流动资金计划及预测现金流。仪表板让各航空公司财务团队获得各自公司经过IATA主要的结算系统（BSP、CASS、ICCS及ICH）的现金流入的可见性，更多信息请访问：www.iata.org/treasurydashboard</label>
+        <label><!-- ISSP_TD_Description --></label>
         <name>ISSP_TD_Description</name>
     </customLabels>
     <customLabels>
@@ -8173,15 +8145,15 @@ IATA 财务仪表板是动态的，在网页上的一个反应信息的工具，
         <name>ISSP_TOUWarning</name>
     </customLabels>
     <customLabels>
-        <label>标签</label>
+        <label><!-- ISSP_Tags --></label>
         <name>ISSP_Tags</name>
     </customLabels>
     <customLabels>
-        <label>临时密码</label>
+        <label><!-- ISSP_ChangePassword --></label>
         <name>ISSP_TemporaryPassword</name>
     </customLabels>
     <customLabels>
-        <label>使用条款</label>
+        <label><!-- ISSP Terms of Use --></label>
         <name>ISSP_Terms_of_Use</name>
     </customLabels>
     <customLabels>
@@ -8189,16 +8161,15 @@ IATA 财务仪表板是动态的，在网页上的一个反应信息的工具，
         <name>ISSP_TestApp</name>
     </customLabels>
     <customLabels>
-        <label>感谢您的申请
-您刚刚收到一封邮件确认\顺颂商祺！\国际航协客服</label>
+        <label><!-- ISSP_HomePage --></label>
         <name>ISSP_Thanks_for_request</name>
     </customLabels>
     <customLabels>
-        <label>标题</label>
+        <label><!-- ISSP_Title --></label>
         <name>ISSP_Title</name>
     </customLabels>
     <customLabels>
-        <label>您需要何种帮助？</label>
+        <label><!-- ISSP_TopicsAndArticlesTitle --></label>
         <name>ISSP_TopicsAndArticlesTitle</name>
     </customLabels>
     <customLabels>
@@ -8206,19 +8177,19 @@ IATA 财务仪表板是动态的，在网页上的一个反应信息的工具，
         <name>ISSP_Tracking_ID</name>
     </customLabels>
     <customLabels>
-        <label>公司名称</label>
+        <label><!-- ISSP_Trade name of Company --></label>
         <name>ISSP_Trade_name_of_Company</name>
     </customLabels>
     <customLabels>
-        <label>客运</label>
+        <label><!-- ISSP Travel --></label>
         <name>ISSP_Travel</name>
     </customLabels>
     <customLabels>
-        <label>客运代理</label>
+        <label><!-- ISSP Travel Agent --></label>
         <name>ISSP_Travel_Agent</name>
     </customLabels>
     <customLabels>
-        <label>故障排除</label>
+        <label><!-- ISSP_Troubleshooting --></label>
         <name>ISSP_Troubleshooting</name>
     </customLabels>
     <customLabels>
@@ -8226,15 +8197,15 @@ IATA 财务仪表板是动态的，在网页上的一个反应信息的工具，
         <name>ISSP_Troubleshooting_post</name>
     </customLabels>
     <customLabels>
-        <label>如您在随后的10分钟内未收到忘记密码的电邮，请查阅我们的</label>
+        <label><!-- ISSP_Troubleshooting_pre --></label>
         <name>ISSP_Troubleshooting_pre</name>
     </customLabels>
     <customLabels>
-        <label>客户类型</label>
+        <label><!-- ISSP_Registration --></label>
         <name>ISSP_Type_of_Customer</name>
     </customLabels>
     <customLabels>
-        <label>问询类型</label>
+        <label><!-- Type of query --></label>
         <name>ISSP_Type_of_query</name>
     </customLabels>
     <customLabels>
@@ -8246,27 +8217,27 @@ IATA 财务仪表板是动态的，在网页上的一个反应信息的工具，
         <name>ISSP_Unsatisfactory</name>
     </customLabels>
     <customLabels>
-        <label>无法冻结此用户，由于他现有以下几种服务的授权：</label>
+        <label><!-- ISSP_UserInactivation_ServiceMsg_1 --></label>
         <name>ISSP_UserInactivation_ServiceMsg_1</name>
     </customLabels>
     <customLabels>
-        <label>&lt;br/&gt;在冻结前，请确保该用户所有的授权服务已经移除</label>
+        <label><!-- ISSP_UserInactivation_ServiceMsg_2 --></label>
         <name>ISSP_UserInactivation_ServiceMsg_2</name>
     </customLabels>
     <customLabels>
-        <label>&lt;br/&gt;若您需要帮助，按要求完成这里的表格&lt;a href=&quot;/ISSP_FAQ2Case&quot; target=&quot;_blank&quot;&gt;这里&lt;/a&gt;</label>
+        <label><!-- ISSP_UserInactivation_ServiceMsg_3 --></label>
         <name>ISSP_UserInactivation_ServiceMsg_3</name>
     </customLabels>
     <customLabels>
-        <label>无法冻结这些用户，由于他们现有以下几种服务的授权：</label>
+        <label><!-- ISSP_UserInactivation_ServiceMsg_4 --></label>
         <name>ISSP_UserInactivation_ServiceMsg_4</name>
     </customLabels>
     <customLabels>
-        <label>版本</label>
+        <label><!-- ISSP_Version --></label>
         <name>ISSP_Version</name>
     </customLabels>
     <customLabels>
-        <label>查看</label>
+        <label><!-- ISSP_Document --></label>
         <name>ISSP_View</name>
     </customLabels>
     <customLabels>
@@ -8278,11 +8249,11 @@ IATA 财务仪表板是动态的，在网页上的一个反应信息的工具，
         <name>ISSP_WaitChangeMessage</name>
     </customLabels>
     <customLabels>
-        <label>我们很抱歉没有令您满意.</label>
+        <label><!-- ISSP_We_sorry_you_are_unsatisfied --></label>
         <name>ISSP_We_sorry_you_are_unsatisfied</name>
     </customLabels>
     <customLabels>
-        <label>是</label>
+        <label><!-- ISSP Yes --></label>
         <name>ISSP_Yes</name>
     </customLabels>
     <customLabels>
@@ -8294,19 +8265,19 @@ IATA 财务仪表板是动态的，在网页上的一个反应信息的工具，
         <name>ISSP_YouMustEnter</name>
     </customLabels>
     <customLabels>
-        <label>需要您输入</label>
+        <label><!-- ISSP_Your input needed --></label>
         <name>ISSP_Your_input_needed</name>
     </customLabels>
     <customLabels>
-        <label>请接受基本条款</label>
+        <label><!-- ISSP_Registration accept_General_Conditions --></label>
         <name>ISSP_accept_General_Conditions</name>
     </customLabels>
     <customLabels>
-        <label>添加评论</label>
+        <label><!-- ISSP_btn_AddComment --></label>
         <name>ISSP_btn_AddComment</name>
     </customLabels>
     <customLabels>
-        <label>是否在提交问询之前先行翻阅常见问题解答？</label>
+        <label><!-- ISSP_HomePage --></label>
         <name>ISSP_consult_FAQ</name>
     </customLabels>
     <customLabels>
@@ -8314,7 +8285,7 @@ IATA 财务仪表板是动态的，在网页上的一个反应信息的工具，
         <name>ISSP_edit_lowercase</name>
     </customLabels>
     <customLabels>
-        <label>请按正确格式输入必填信息</label>
+        <label><!-- ISSP_Registration --></label>
         <name>ISSP_fill_required_fields</name>
     </customLabels>
     <customLabels>
@@ -8322,19 +8293,19 @@ IATA 财务仪表板是动态的，在网页上的一个反应信息的工具，
         <name>ISSP_filtered_from_total_records</name>
     </customLabels>
     <customLabels>
-        <label>您的注册申请无法完成，请联系航协客户入口寻求帮助，请通过以下网址提交问询。http://www.iata.org/customer-portal/Pages/contactus.aspx</label>
+        <label><!-- ISSP_Registration --></label>
         <name>ISSP_generalError</name>
     </customLabels>
     <customLabels>
-        <label>检索账单类型{!invoiceType}时出现错误，请联系客户服务人员。</label>
+        <label><!-- ISSP_Portal_Application_Right_Trigger --></label>
         <name>ISSP_invoiceType_error</name>
     </customLabels>
     <customLabels>
-        <label>贵司账单类型{!invoiceType}不存在，请联系客户服务人员。</label>
+        <label><!-- ISSP_Portal_Application_Right_Trigger --></label>
         <name>ISSP_invoiceType_is_not_available</name>
     </customLabels>
     <customLabels>
-        <label>/</label>
+        <label><!-- ISSP_of --></label>
         <name>ISSP_of</name>
     </customLabels>
     <customLabels>
@@ -8342,7 +8313,7 @@ IATA 财务仪表板是动态的，在网页上的一个反应信息的工具，
         <name>ISSP_outstanding_invoices</name>
     </customLabels>
     <customLabels>
-        <label>reCAPTCHA验证失败</label>
+        <label><!-- ISSP_Registration reCAPTCHA verification Failed --></label>
         <name>ISSP_reCAPTCHA_verification_Failed</name>
     </customLabels>
     <customLabels>
@@ -8350,11 +8321,11 @@ IATA 财务仪表板是动态的，在网页上的一个反应信息的工具，
         <name>Iata_service_request</name>
     </customLabels>
     <customLabels>
-        <label>是否确定删除已选文件？</label>
+        <label><!-- IfapDelete --></label>
         <name>IfapDelete</name>
     </customLabels>
     <customLabels>
-        <label>文件大小不可超过20M。您所提交的文件已经达</label>
+        <label><!-- IfapMaxSizeYouAre --></label>
         <name>IfapMaxSizeYouAre</name>
     </customLabels>
     <customLabels>
@@ -8362,11 +8333,11 @@ IATA 财务仪表板是动态的，在网页上的一个反应信息的工具，
         <name>IfapNotPdf</name>
     </customLabels>
     <customLabels>
-        <label>文件提交由于文件内部的密码保护不能完成，请在移除密码保护后重新提交文件</label>
+        <label><!-- IfapPassordFile --></label>
         <name>IfapPassordFile</name>
     </customLabels>
     <customLabels>
-        <label>您已成功完成文件提交</label>
+        <label><!-- IfapSubmissionOfDocsOK --></label>
         <name>IfapSubmissionOfDocsOK</name>
     </customLabels>
     <customLabels>
@@ -8438,7 +8409,7 @@ IATA 财务仪表板是动态的，在网页上的一个反应信息的工具，
         <name>L2_Support_Priority_escalation_check</name>
     </customLabels>
     <customLabels>
-        <label>如有任何额外信息请提供:</label>
+        <label>请提供补充信息</label>
         <name>LAQ_AdditionalInfo</name>
     </customLabels>
     <customLabels>
@@ -8454,7 +8425,7 @@ IATA 财务仪表板是动态的，在网页上的一个反应信息的工具，
         <name>LAQ_Airline_Bubble</name>
     </customLabels>
     <customLabels>
-        <label>添加另一个文件</label>
+        <label>增加另一个附件</label>
         <name>LAQ_AttachAgain</name>
     </customLabels>
     <customLabels>
@@ -8462,31 +8433,31 @@ IATA 财务仪表板是动态的，在网页上的一个反应信息的工具，
         <name>LAQ_AttachFiles</name>
     </customLabels>
     <customLabels>
-        <label>附件（仅接受 gif、jpg、pdf、doc、rtf、txt、xls、zip 格式的文件）</label>
+        <label>附件（接受格式：gif, jpg, pdf, doc, rtf, txt, xls, zip）</label>
         <name>LAQ_AttachInfo1</name>
     </customLabels>
     <customLabels>
-        <label>附件大小不得超过：10MB</label>
+        <label>附件上限：10M</label>
         <name>LAQ_AttachInfo2</name>
     </customLabels>
     <customLabels>
-        <label>附件</label>
+        <label>添加的附件</label>
         <name>LAQ_AttachedFiles</name>
     </customLabels>
     <customLabels>
-        <label>上一页</label>
+        <label>返回</label>
         <name>LAQ_Back</name>
     </customLabels>
     <customLabels>
-        <label>办公传真</label>
+        <label>工作传真</label>
         <name>LAQ_BusinessFax</name>
     </customLabels>
     <customLabels>
-        <label>公司电话</label>
+        <label>工作电话</label>
         <name>LAQ_BusinessPhone</name>
     </customLabels>
     <customLabels>
-        <label>问询区域</label>
+        <label>案例领域</label>
         <name>LAQ_CaseArea</name>
     </customLabels>
     <customLabels>
@@ -8494,7 +8465,7 @@ IATA 财务仪表板是动态的，在网页上的一个反应信息的工具，
         <name>LAQ_Close</name>
     </customLabels>
     <customLabels>
-        <label>办公电子邮件</label>
+        <label>公司公共邮箱</label>
         <name>LAQ_CompanyEmail</name>
     </customLabels>
     <customLabels>
@@ -8502,11 +8473,11 @@ IATA 财务仪表板是动态的，在网页上的一个反应信息的工具，
         <name>LAQ_CompanyInformation</name>
     </customLabels>
     <customLabels>
-        <label><!-- LAQ_CompanyLocation --></label>
+        <label>单位地址</label>
         <name>LAQ_CompanyLocation</name>
     </customLabels>
     <customLabels>
-        <label><!-- LAQ_CompanyName --></label>
+        <label>公司名称</label>
         <name>LAQ_CompanyName</name>
     </customLabels>
     <customLabels>
@@ -8514,15 +8485,15 @@ IATA 财务仪表板是动态的，在网页上的一个反应信息的工具，
         <name>LAQ_CompanyWebsite</name>
     </customLabels>
     <customLabels>
-        <label>联系与支持</label>
+        <label><!-- LAQ_ContactUs --></label>
         <name>LAQ_ContactUs</name>
     </customLabels>
     <customLabels>
-        <label>将账单地址复制到递送地址字段</label>
+        <label>将账单地址复制到邮寄地址</label>
         <name>LAQ_CopyAddress</name>
     </customLabels>
     <customLabels>
-        <label>您的问询所涉及国家</label>
+        <label>涉及国家</label>
         <name>LAQ_Country</name>
     </customLabels>
     <customLabels>
@@ -8530,27 +8501,27 @@ IATA 财务仪表板是动态的，在网页上的一个反应信息的工具，
         <name>LAQ_Country2</name>
     </customLabels>
     <customLabels>
-        <label>删除-</label>
+        <label>删除</label>
         <name>LAQ_Delete</name>
     </customLabels>
     <customLabels>
-        <label>您确定要删除此文件吗？</label>
+        <label>您确认要删除这个文件吗？</label>
         <name>LAQ_DeleteAreYouSure</name>
     </customLabels>
     <customLabels>
-        <label>请点击以下链接完成个人档案：</label>
+        <label>请点击以下链接完善资料</label>
         <name>LAQ_EmailBody1</name>
     </customLabels>
     <customLabels>
-        <label>您的电子邮件地址已存在于我们的数据库中。您现在可以提交问询请求了。</label>
+        <label>您的邮件地址已被识别。请输入您的问题。</label>
         <name>LAQ_EmailFound</name>
     </customLabels>
     <customLabels>
-        <label>您的电子邮件地址不存在于我们的数据库中。请点击“确定”(OK) 进入注册页面，或点击“取消”(Cancel) 修改您的电子邮件地址。</label>
+        <label>您的邮件地址未被识别。请按‘确定’进行登记，或按‘取消’修改邮件地址。</label>
         <name>LAQ_EmailNotFound</name>
     </customLabels>
     <customLabels>
-        <label>感谢您在 IATA 注册！</label>
+        <label>感谢您注册IATA</label>
         <name>LAQ_EmailSubject</name>
     </customLabels>
     <customLabels>
@@ -8558,15 +8529,15 @@ IATA 财务仪表板是动态的，在网页上的一个反应信息的工具，
         <name>LAQ_EmailValidation</name>
     </customLabels>
     <customLabels>
-        <label>您将很快在此电子邮箱中收到一份电子邮件：</label>
+        <label>您将收到来自以下地址的邮件：[嵌入电邮地址]。请点击邮件中的链接到注册页面。请查收邮件完成注册</label>
         <name>LAQ_EmailVer1</name>
     </customLabels>
     <customLabels>
-        <label>链接至注册页面。请检查您的电子邮件收件箱以便继续操作注册流程。</label>
+        <label>。</label>
         <name>LAQ_EmailVer2</name>
     </customLabels>
     <customLabels>
-        <label>已成功添加附件</label>
+        <label>添加附件成功</label>
         <name>LAQ_FilesAttachedSuccessfully</name>
     </customLabels>
     <customLabels>
@@ -8574,16 +8545,15 @@ IATA 财务仪表板是动态的，在网页上的一个反应信息的工具，
         <name>LAQ_General_Sales_Agent_Bubble</name>
     </customLabels>
     <customLabels>
-        <label>请输入3位的数字 IATA 代码。</label>
+        <label>请输入3位数字航协代码</label>
         <name>LAQ_IATACodeLimitation1</name>
     </customLabels>
     <customLabels>
-        <label>&quot;Please enter 8 or 11 numeric digits for the IATA Code. If you do not belong to 
-an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and select another &quot;&quot;Type of Customer&quot;&quot;&quot;</label>
+        <label>请输入8到11位数字航协代码</label>
         <name>LAQ_IATACodeLimitation2</name>
     </customLabels>
     <customLabels>
-        <label>&quot;Please enter 7 numeric digits following and collated to &quot;&quot;TIESS_&quot;&quot;&quot;</label>
+        <label>请输入&quot;TIESS_&quot;后加入7位数字。</label>
         <name>LAQ_IATACodeLimitation3</name>
     </customLabels>
     <customLabels>
@@ -8603,23 +8573,23 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>LAQ_JobTitle</name>
     </customLabels>
     <customLabels>
-        <label>请填写必填项。</label>
+        <label>请完成必填项</label>
         <name>LAQ_MandatoryFields</name>
     </customLabels>
     <customLabels>
-        <label>下一页</label>
+        <label>下一项</label>
         <name>LAQ_Next</name>
     </customLabels>
     <customLabels>
-        <label>没有符合您搜索条件的记录。请点击“下一步”(Next) 继续注册，或更改搜索条件再试一次。</label>
+        <label>未找到符合搜索条件的记录。请点击“下一项”进行注册或修正您的搜索条件重试</label>
         <name>LAQ_NoRecordsFound</name>
     </customLabels>
     <customLabels>
-        <label>出错。您输入的代码未找到。如果您不是 TIESS 认证代理机构的代表，请点击“后退”(Back) 按钮并选择另一种“客户类型”(Type of Customer)。</label>
+        <label><!-- NoTiess --></label>
         <name>LAQ_NoTiess</name>
     </customLabels>
     <customLabels>
-        <label>我所在的办公室不在列表中。</label>
+        <label>我的办公室不在列表中</label>
         <name>LAQ_OfficeNotListed</name>
     </customLabels>
     <customLabels>
@@ -8627,11 +8597,11 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>LAQ_Others_Bubble</name>
     </customLabels>
     <customLabels>
-        <label>注册表格</label>
+        <label>注册表</label>
         <name>LAQ_RegistrationForm</name>
     </customLabels>
     <customLabels>
-        <label>您已完成注册。请点击 {0}这里{1} 提交问询请求。</label>
+        <label>您的注册已完成。请点击{0}这里{1}提问。</label>
         <name>LAQ_RegistrationSuccess</name>
     </customLabels>
     <customLabels>
@@ -8655,7 +8625,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>LAQ_Thankyou</name>
     </customLabels>
     <customLabels>
-        <label><!-- LAQ_Type --></label>
+        <label>类型</label>
         <name>LAQ_Type</name>
     </customLabels>
     <customLabels>
@@ -8671,23 +8641,23 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>LAQ_Validate</name>
     </customLabels>
     <customLabels>
-        <label>欢迎访问 IATA。</label>
+        <label>欢迎您来到IATA。</label>
         <name>LAQ_WelcometoIATA</name>
     </customLabels>
     <customLabels>
-        <label>您的电子邮件地址是：</label>
+        <label>您的邮件地址是:</label>
         <name>LAQ_YourEmail</name>
     </customLabels>
     <customLabels>
-        <label>抱歉，未找到任何代理机构。出错。您输入的代码未找到。如果您不是 IATA 认证代理机构的代表，请点击“后退”(Back) 按钮并选择另一种“客户类型”(Type of Customer)。</label>
+        <label><!-- noAgenciesFound --></label>
         <name>LAQ_noAgenciesFound</name>
     </customLabels>
     <customLabels>
-        <label>出错。您输入的代码未找到。如果您不是 IATA 一般销售代理机构的代表，请点击“后退”(Back) 按钮并选择另一种“客户类型”(Type of Customer)。</label>
+        <label><!-- noGSA --></label>
         <name>LAQ_noGSA</name>
     </customLabels>
     <customLabels>
-        <label>出错。您输入的代码未找到。如果您不是 IATA 合作伙伴，请点击“后退”(Back) 按钮并选择另一种“客户类型”(Type of Customer)。</label>
+        <label><!-- noPartenr --></label>
         <name>LAQ_noPartenr</name>
     </customLabels>
     <customLabels>
@@ -8787,7 +8757,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>Login_information</name>
     </customLabels>
     <customLabels>
-        <label>退出</label>
+        <label><!-- Logout --></label>
         <name>Logout</name>
     </customLabels>
     <customLabels>
@@ -8867,7 +8837,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>Only_one_subscription_can_be_purchased</name>
     </customLabels>
     <customLabels>
-        <label>未结清</label>
+        <label><!-- Open --></label>
         <name>Open</name>
     </customLabels>
     <customLabels>
@@ -9035,11 +9005,11 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>PKB2_Ask_Button</name>
     </customLabels>
     <customLabels>
-        <label>返回到查询页面</label>
+        <label><!-- PKB2: Back To Results --></label>
         <name>PKB2_Back_To_Results</name>
     </customLabels>
     <customLabels>
-        <label>常见问题首页</label>
+        <label><!-- PKB2: Back To Search Page --></label>
         <name>PKB2_Back_To_Search_Page</name>
     </customLabels>
     <customLabels>
@@ -9063,7 +9033,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>PKB2_Case_Submit_Error</name>
     </customLabels>
     <customLabels>
-        <label>常见问题解答</label>
+        <label><!-- PKB2: Category Group Label 1 --></label>
         <name>PKB2_Category_Group_Label_1</name>
     </customLabels>
     <customLabels>
@@ -9107,7 +9077,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>PKB2_Close</name>
     </customLabels>
     <customLabels>
-        <label>关闭此窗口</label>
+        <label><!-- PKB2 Close Window --></label>
         <name>PKB2_Close_Window</name>
     </customLabels>
     <customLabels>
@@ -9115,11 +9085,11 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>PKB2_Complete_Request</name>
     </customLabels>
     <customLabels>
-        <label>联系我们</label>
+        <label><!-- PKB2: Contact Us --></label>
         <name>PKB2_Contact_Us</name>
     </customLabels>
     <customLabels>
-        <label>未找到相关内容</label>
+        <label><!-- PKB2: Contact Us Link Prompt --></label>
         <name>PKB2_Contact_Us_Link_Prompt</name>
     </customLabels>
     <customLabels>
@@ -9151,7 +9121,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>PKB2_Error_Admin_Notification_Email</name>
     </customLabels>
     <customLabels>
-        <label>此类专题----</label>
+        <label><!-- PKB2: Featured Articles --></label>
         <name>PKB2_Featured_Articles</name>
     </customLabels>
     <customLabels>
@@ -9163,11 +9133,11 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>PKB2_Feedback_Appreciated</name>
     </customLabels>
     <customLabels>
-        <label>剩余的字符----</label>
+        <label><!-- PKB2: Feedback Characters Remaining --></label>
         <name>PKB2_Feedback_Characters_Remaining</name>
     </customLabels>
     <customLabels>
-        <label>筛选选项</label>
+        <label><!-- PKB2: Filter Options --></label>
         <name>PKB2_Filter_Options</name>
     </customLabels>
     <customLabels>
@@ -9195,7 +9165,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>PKB2_Last_Name</name>
     </customLabels>
     <customLabels>
-        <label>欢迎您针对如何提高内容的实用性提出建议？</label>
+        <label><!-- PKB2: More Useful --></label>
         <name>PKB2_More_Useful</name>
     </customLabels>
     <customLabels>
@@ -9203,23 +9173,23 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>PKB2_Name</name>
     </customLabels>
     <customLabels>
-        <label>按标题查找</label>
+        <label><!-- PKB2: Narrow Search --></label>
         <name>PKB2_Narrow_Search</name>
     </customLabels>
     <customLabels>
-        <label>点击箭头展开主题</label>
+        <label><!-- PKB2 Narrow Search Help --></label>
         <name>PKB2_Narrow_Search_Help</name>
     </customLabels>
     <customLabels>
-        <label>按照下面输入的信息查询</label>
+        <label><!-- PKB2 Narrow Search Tooltip --></label>
         <name>PKB2_Narrow_Search_Tooltip</name>
     </customLabels>
     <customLabels>
-        <label>下一页</label>
+        <label><!-- PKB2: Next Link --></label>
         <name>PKB2_Next_Link</name>
     </customLabels>
     <customLabels>
-        <label>不是</label>
+        <label><!-- PKB2: No --></label>
         <name>PKB2_No</name>
     </customLabels>
     <customLabels>
@@ -9243,7 +9213,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>PKB2_None</name>
     </customLabels>
     <customLabels>
-        <label>被查询次数较多的内容</label>
+        <label><!-- PKB2: Popular Articles --></label>
         <name>PKB2_Popular_Articles</name>
     </customLabels>
     <customLabels>
@@ -9255,11 +9225,11 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>PKB2_Printable_View</name>
     </customLabels>
     <customLabels>
-        <label>被推荐的</label>
+        <label><!-- PKB2: Recommended --></label>
         <name>PKB2_Recommended</name>
     </customLabels>
     <customLabels>
-        <label>相关内容</label>
+        <label><!-- PKB2: Related Articles --></label>
         <name>PKB2_Related_Articles</name>
     </customLabels>
     <customLabels>
@@ -9271,11 +9241,11 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>PKB2_Request_Type</name>
     </customLabels>
     <customLabels>
-        <label>重新查找</label>
+        <label><!-- PKB2: Reset Search --></label>
         <name>PKB2_Reset_Search</name>
     </customLabels>
     <customLabels>
-        <label>搜索</label>
+        <label><!-- PKB2: Search Button --></label>
         <name>PKB2_Search_Button</name>
     </customLabels>
     <customLabels>
@@ -9283,11 +9253,11 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>PKB2_Search_Invalid_Characters</name>
     </customLabels>
     <customLabels>
-        <label>请问您需要哪些信息</label>
+        <label><!-- PKB2: Search Prompt --></label>
         <name>PKB2_Search_Prompt</name>
     </customLabels>
     <customLabels>
-        <label>查询结果</label>
+        <label><!-- PKB2: Search Results --></label>
         <name>PKB2_Search_Results</name>
     </customLabels>
     <customLabels>
@@ -9315,7 +9285,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>PKB2_Subscribe_Feed_Results</name>
     </customLabels>
     <customLabels>
-        <label>感谢您的反馈</label>
+        <label><!-- PKB2: Thanks For Feedback --></label>
         <name>PKB2_Thanks_For_Feedback</name>
     </customLabels>
     <customLabels>
@@ -9331,7 +9301,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>PKB2_Value_Must_Match_Name</name>
     </customLabels>
     <customLabels>
-        <label>此内容对您是否有帮助？</label>
+        <label><!-- PKB2: Was Helpful --></label>
         <name>PKB2_Was_Helpful</name>
     </customLabels>
     <customLabels>
@@ -9347,7 +9317,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>PKB2_Yes_Submit_Question</name>
     </customLabels>
     <customLabels>
-        <label>您所搜索的是</label>
+        <label><!-- PKB2: You Searched For --></label>
         <name>PKB2_You_Searched_For</name>
     </customLabels>
     <customLabels>
@@ -9611,7 +9581,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>Personal_information</name>
     </customLabels>
     <customLabels>
-        <label>电话</label>
+        <label><!-- Phone --></label>
         <name>Phone</name>
     </customLabels>
     <customLabels>
@@ -9819,7 +9789,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>Response_message</name>
     </customLabels>
     <customLabels>
-        <label>https://iata.my.salesforce.com</label>
+        <label><!-- SF Base URL --></label>
         <name>SF_Base_URL</name>
     </customLabels>
     <customLabels>
@@ -10071,7 +10041,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>Upload_File</name>
     </customLabels>
     <customLabels>
-        <label>上传财务文件</label>
+        <label><!-- Upload_Financial_Documents --></label>
         <name>Upload_Financial_Documents</name>
     </customLabels>
     <customLabels>
@@ -10411,64 +10381,6 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>wire_transfer_payment_msg</name>
     </customLabels>
     <globalPicklists>
-        <name>EF_Payment_Terms</name>
-        <picklistValues>
-            <masterLabel>07 days after invoice date</masterLabel>
-            <translation><!-- 07 days after invoice date --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>10 days after invoice date</masterLabel>
-            <translation><!-- 10 days after invoice date --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>15 days after invoice date</masterLabel>
-            <translation><!-- 15 days after invoice date --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>20 days after invoice date</masterLabel>
-            <translation><!-- 20 days after invoice date --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>30 days after invoice date</masterLabel>
-            <translation><!-- 30 days after invoice date --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Payable immediately due net</masterLabel>
-            <translation><!-- Payable immediately due net --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
-        <name>EF_User_Role</name>
-        <picklistValues>
-            <masterLabel>Airline Services Specialists</masterLabel>
-            <translation><!-- Airline Services Specialists --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Client Services Specialists</masterLabel>
-            <translation><!-- Client Services Specialists --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>E&amp;F General Access</masterLabel>
-            <translation><!-- E&amp;F General Access --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Head, Client Services</masterLabel>
-            <translation><!-- Head, Client Services --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Manager, Airline Services &amp; Head, Business Delivery</masterLabel>
-            <translation><!-- Manager, Airline Services &amp; Head, Business Delivery --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Manager, Business Development</masterLabel>
-            <translation><!-- Manager, Business Development --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Manager, Invoicing &amp; Accounting &amp; Data Transformation</masterLabel>
-            <translation><!-- Manager, Invoicing &amp; Accounting &amp; Data Transformation --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
         <name>EF_Invoice_Distribution</name>
         <picklistValues>
             <masterLabel>Electronic Via Email</masterLabel>
@@ -10515,85 +10427,301 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
-        <name>EF_Status</name>
+        <name>Category</name>
         <picklistValues>
-            <masterLabel>Active</masterLabel>
-            <translation><!-- Active --></translation>
+            <masterLabel>ANSP</masterLabel>
+            <translation><!-- ANSP --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Inactive</masterLabel>
-            <translation><!-- Inactive --></translation>
+            <masterLabel>Academic/Research Body</masterLabel>
+            <translation><!-- Academic/Research Body --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Agency Holding Company</masterLabel>
+            <translation><!-- Agency Holding Company --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Aircraft Manufacturer</masterLabel>
+            <translation><!-- Aircraft Manufacturer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Airline Global Card Acquirer</masterLabel>
+            <translation><!-- Airline Global Card Acquirer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Airline Holding Company</masterLabel>
+            <translation><!-- Airline Holding Company --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Airline Point of Sale</masterLabel>
+            <translation><!-- Airline Point of Sale --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Airport Authority</masterLabel>
+            <translation><!-- Airport Authority --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Airport Concessionaire</masterLabel>
+            <translation><!-- Airport Concessionaire --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Apartment &amp; Villa Rental</masterLabel>
+            <translation><!-- Apartment &amp; Villa Rental --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Banking Service</masterLabel>
+            <translation><!-- Banking Service --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Bus Line</masterLabel>
+            <translation><!-- Bus Line --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CASS Associate</masterLabel>
+            <translation><!-- CASS Associate --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Car Rental</masterLabel>
+            <translation><!-- Car Rental --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Card Brand</masterLabel>
+            <translation><!-- Card Brand --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cargo Agency Association</masterLabel>
+            <translation><!-- Cargo Agency Association --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cargo only</masterLabel>
+            <translation><!-- Cargo only --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Casino</masterLabel>
+            <translation><!-- Casino --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Caterer</masterLabel>
+            <translation><!-- Caterer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Consultancy Firm</masterLabel>
+            <translation><!-- Consultancy Firm --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Courier</masterLabel>
+            <translation><!-- Courier --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cruise Line</masterLabel>
+            <translation><!-- Cruise Line --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Domestic Agent</masterLabel>
+            <translation><!-- Domestic Agent --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ERSP Agent</masterLabel>
+            <translation><!-- ERSP Agent --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Engine Manufacturer</masterLabel>
+            <translation><!-- Engine Manufacturer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Fuel Supplier</masterLabel>
+            <translation><!-- Fuel Supplier --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>GSA General Sales Agent</masterLabel>
+            <translation><!-- GSA General Sales Agent --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>GSSA Cargo</masterLabel>
+            <translation><!-- GSSA Cargo --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Global Distribution System</masterLabel>
+            <translation><!-- Global Distribution System --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ground Handler</masterLabel>
+            <translation><!-- Ground Handler --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Handling Agent</masterLabel>
+            <translation><!-- Handling Agent --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Hotel</masterLabel>
+            <translation><!-- Hotel --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IATA Cargo Agent</masterLabel>
+            <translation><!-- IATA Cargo Agent --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IATA Head Office</masterLabel>
+            <translation><!-- IATA Head Office --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IATA Local office</masterLabel>
+            <translation><!-- IATA Local office --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IATA Passenger Sales Agent</masterLabel>
+            <translation><!-- IATA Passenger Sales Agent --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IATA Regional Office</masterLabel>
+            <translation><!-- IATA Regional Office --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IBCS consolidator</masterLabel>
+            <translation><!-- IBCS consolidator --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Import Agent</masterLabel>
+            <translation><!-- Import Agent --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Individual Government</masterLabel>
+            <translation><!-- Individual Government --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inter-Governmental Body</masterLabel>
+            <translation><!-- Inter-Governmental Body --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Landmark</masterLabel>
+            <translation><!-- Landmark --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Large Component OEM</masterLabel>
+            <translation><!-- Large Component OEM --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Lessor</masterLabel>
+            <translation><!-- Lessor --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MSO Member Sales Office</masterLabel>
+            <translation><!-- MSO Member Sales Office --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Maintenance, Repair, Overhaul</masterLabel>
+            <translation><!-- Maintenance, Repair, Overhaul --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Museum</masterLabel>
+            <translation><!-- Museum --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Non Governmental Organization</masterLabel>
+            <translation><!-- Non Governmental Organization --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Non-IATA Cargo Agent</masterLabel>
+            <translation><!-- Non-IATA Cargo Agent --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Non-IATA Passenger Agent</masterLabel>
+            <translation><!-- Non-IATA Passenger Agent --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Non-IATA Travel Agent</masterLabel>
+            <translation><!-- Non-IATA Travel Agent --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Other</masterLabel>
+            <translation><!-- Other --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Other Equipment Manufacturer</masterLabel>
+            <translation><!-- Other Equipment Manufacturer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Other Private Sector Association</masterLabel>
+            <translation><!-- Other Private Sector Association --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Park</masterLabel>
+            <translation><!-- Park --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Passenger and Cargo</masterLabel>
+            <translation><!-- Passenger and Cargo --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Passenger only</masterLabel>
+            <translation><!-- Passenger only --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Processor</masterLabel>
+            <translation><!-- Processor --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Publishing</masterLabel>
+            <translation><!-- Publishing --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Railway Line</masterLabel>
+            <translation><!-- Railway Line --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Resort</masterLabel>
+            <translation><!-- Resort --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Security</masterLabel>
+            <translation><!-- Security --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>System Solutions Provider</masterLabel>
+            <translation><!-- System Solutions Provider --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TIDS Agent</masterLabel>
+            <translation><!-- TIDS Agent --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Tour Operator</masterLabel>
+            <translation><!-- Tour Operator --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Training Centre</masterLabel>
+            <translation><!-- Training Centre --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Travel Agency Association</masterLabel>
+            <translation><!-- Travel Agency Association --></translation>
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
-        <name>Sector</name>
+        <name>EF_Payment_Terms</name>
         <picklistValues>
-            <masterLabel>Accommodation</masterLabel>
-            <translation><!-- Accommodation --></translation>
+            <masterLabel>07 days after invoice date</masterLabel>
+            <translation><!-- 07 days after invoice date --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Airline</masterLabel>
-            <translation><!-- Airline --></translation>
+            <masterLabel>10 days after invoice date</masterLabel>
+            <translation><!-- 10 days after invoice date --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Airline Supplier</masterLabel>
-            <translation><!-- Airline Supplier --></translation>
+            <masterLabel>15 days after invoice date</masterLabel>
+            <translation><!-- 15 days after invoice date --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Association</masterLabel>
-            <translation><!-- Association --></translation>
+            <masterLabel>20 days after invoice date</masterLabel>
+            <translation><!-- 20 days after invoice date --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Cargo Agent</masterLabel>
-            <translation><!-- Cargo Agent --></translation>
+            <masterLabel>30 days after invoice date</masterLabel>
+            <translation><!-- 30 days after invoice date --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Education</masterLabel>
-            <translation><!-- Education --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Equipment Manufacturer</masterLabel>
-            <translation><!-- Equipment Manufacturer --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Financial Institution</masterLabel>
-            <translation><!-- Financial Institution --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>General Sales Agent</masterLabel>
-            <translation><!-- General Sales Agent --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Governmental Institution</masterLabel>
-            <translation><!-- Governmental Institution --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Holding Company</masterLabel>
-            <translation><!-- Holding Company --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>IATA</masterLabel>
-            <translation><!-- IATA --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Infrastructure Partner</masterLabel>
-            <translation><!-- Infrastructure Partner --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Media</masterLabel>
-            <translation><!-- Media --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Non-Airline Transportation</masterLabel>
-            <translation><!-- Non-Airline Transportation --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Recreational</masterLabel>
-            <translation><!-- Recreational --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Travel Agent</masterLabel>
-            <translation><!-- Travel Agent --></translation>
+            <masterLabel>Payable immediately due net</masterLabel>
+            <translation><!-- Payable immediately due net --></translation>
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
@@ -10613,21 +10741,6 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <picklistValues>
             <masterLabel>Weekly</masterLabel>
             <translation><!-- Weekly --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
-        <name>EF_Allow_Billing_Agreements</name>
-        <picklistValues>
-            <masterLabel>Allowed</masterLabel>
-            <translation><!-- Allowed --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Allowed with Approval</masterLabel>
-            <translation><!-- Allowed with Approval --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Not Allowed</masterLabel>
-            <translation><!-- Not Allowed --></translation>
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
@@ -11405,274 +11518,131 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
-        <name>Category</name>
+        <name>EF_Allow_Billing_Agreements</name>
         <picklistValues>
-            <masterLabel>ANSP</masterLabel>
-            <translation><!-- ANSP --></translation>
+            <masterLabel>Allowed</masterLabel>
+            <translation><!-- Allowed --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Academic/Research Body</masterLabel>
-            <translation><!-- Academic/Research Body --></translation>
+            <masterLabel>Allowed with Approval</masterLabel>
+            <translation><!-- Allowed with Approval --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Agency Holding Company</masterLabel>
-            <translation><!-- Agency Holding Company --></translation>
+            <masterLabel>Not Allowed</masterLabel>
+            <translation><!-- Not Allowed --></translation>
         </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
+        <name>Sector</name>
         <picklistValues>
-            <masterLabel>Aircraft Manufacturer</masterLabel>
-            <translation><!-- Aircraft Manufacturer --></translation>
+            <masterLabel>Accommodation</masterLabel>
+            <translation><!-- Accommodation --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Airline Global Card Acquirer</masterLabel>
-            <translation><!-- Airline Global Card Acquirer --></translation>
+            <masterLabel>Airline</masterLabel>
+            <translation><!-- Airline --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Airline Holding Company</masterLabel>
-            <translation><!-- Airline Holding Company --></translation>
+            <masterLabel>Airline Supplier</masterLabel>
+            <translation><!-- Airline Supplier --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Airline Point of Sale</masterLabel>
-            <translation><!-- Airline Point of Sale --></translation>
+            <masterLabel>Association</masterLabel>
+            <translation><!-- Association --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Airport Authority</masterLabel>
-            <translation><!-- Airport Authority --></translation>
+            <masterLabel>Cargo Agent</masterLabel>
+            <translation><!-- Cargo Agent --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Airport Concessionaire</masterLabel>
-            <translation><!-- Airport Concessionaire --></translation>
+            <masterLabel>Education</masterLabel>
+            <translation><!-- Education --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Apartment &amp; Villa Rental</masterLabel>
-            <translation><!-- Apartment &amp; Villa Rental --></translation>
+            <masterLabel>Equipment Manufacturer</masterLabel>
+            <translation><!-- Equipment Manufacturer --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Banking Service</masterLabel>
-            <translation><!-- Banking Service --></translation>
+            <masterLabel>Financial Institution</masterLabel>
+            <translation><!-- Financial Institution --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Bus Line</masterLabel>
-            <translation><!-- Bus Line --></translation>
+            <masterLabel>General Sales Agent</masterLabel>
+            <translation><!-- General Sales Agent --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>CASS Associate</masterLabel>
-            <translation><!-- CASS Associate --></translation>
+            <masterLabel>Governmental Institution</masterLabel>
+            <translation><!-- Governmental Institution --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Car Rental</masterLabel>
-            <translation><!-- Car Rental --></translation>
+            <masterLabel>Holding Company</masterLabel>
+            <translation><!-- Holding Company --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Card Brand</masterLabel>
-            <translation><!-- Card Brand --></translation>
+            <masterLabel>IATA</masterLabel>
+            <translation><!-- IATA --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Cargo Agency Association</masterLabel>
-            <translation><!-- Cargo Agency Association --></translation>
+            <masterLabel>Infrastructure Partner</masterLabel>
+            <translation><!-- Infrastructure Partner --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Cargo only</masterLabel>
-            <translation><!-- Cargo only --></translation>
+            <masterLabel>Media</masterLabel>
+            <translation><!-- Media --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Casino</masterLabel>
-            <translation><!-- Casino --></translation>
+            <masterLabel>Non-Airline Transportation</masterLabel>
+            <translation><!-- Non-Airline Transportation --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Caterer</masterLabel>
-            <translation><!-- Caterer --></translation>
+            <masterLabel>Recreational</masterLabel>
+            <translation><!-- Recreational --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Consultancy Firm</masterLabel>
-            <translation><!-- Consultancy Firm --></translation>
+            <masterLabel>Travel Agent</masterLabel>
+            <translation><!-- Travel Agent --></translation>
         </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
+        <name>EF_Status</name>
         <picklistValues>
-            <masterLabel>Courier</masterLabel>
-            <translation><!-- Courier --></translation>
+            <masterLabel>Active</masterLabel>
+            <translation><!-- Active --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Cruise Line</masterLabel>
-            <translation><!-- Cruise Line --></translation>
+            <masterLabel>Inactive</masterLabel>
+            <translation><!-- Inactive --></translation>
         </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
+        <name>EF_User_Role</name>
         <picklistValues>
-            <masterLabel>Domestic Agent</masterLabel>
-            <translation><!-- Domestic Agent --></translation>
+            <masterLabel>Airline Services Specialists</masterLabel>
+            <translation><!-- Airline Services Specialists --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>ERSP Agent</masterLabel>
-            <translation><!-- ERSP Agent --></translation>
+            <masterLabel>Client Services Specialists</masterLabel>
+            <translation><!-- Client Services Specialists --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Engine Manufacturer</masterLabel>
-            <translation><!-- Engine Manufacturer --></translation>
+            <masterLabel>E&amp;F General Access</masterLabel>
+            <translation><!-- E&amp;F General Access --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Fuel Supplier</masterLabel>
-            <translation><!-- Fuel Supplier --></translation>
+            <masterLabel>Head, Client Services</masterLabel>
+            <translation><!-- Head, Client Services --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>GSA General Sales Agent</masterLabel>
-            <translation><!-- GSA General Sales Agent --></translation>
+            <masterLabel>Manager, Airline Services &amp; Head, Business Delivery</masterLabel>
+            <translation><!-- Manager, Airline Services &amp; Head, Business Delivery --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>GSSA Cargo</masterLabel>
-            <translation><!-- GSSA Cargo --></translation>
+            <masterLabel>Manager, Business Development</masterLabel>
+            <translation><!-- Manager, Business Development --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Global Distribution System</masterLabel>
-            <translation><!-- Global Distribution System --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Ground Handler</masterLabel>
-            <translation><!-- Ground Handler --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Handling Agent</masterLabel>
-            <translation><!-- Handling Agent --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Hotel</masterLabel>
-            <translation><!-- Hotel --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>IATA Cargo Agent</masterLabel>
-            <translation><!-- IATA Cargo Agent --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>IATA Head Office</masterLabel>
-            <translation><!-- IATA Head Office --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>IATA Local office</masterLabel>
-            <translation><!-- IATA Local office --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>IATA Passenger Sales Agent</masterLabel>
-            <translation><!-- IATA Passenger Sales Agent --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>IATA Regional Office</masterLabel>
-            <translation><!-- IATA Regional Office --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>IBCS consolidator</masterLabel>
-            <translation><!-- IBCS consolidator --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Import Agent</masterLabel>
-            <translation><!-- Import Agent --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Individual Government</masterLabel>
-            <translation><!-- Individual Government --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Inter-Governmental Body</masterLabel>
-            <translation><!-- Inter-Governmental Body --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Landmark</masterLabel>
-            <translation><!-- Landmark --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Large Component OEM</masterLabel>
-            <translation><!-- Large Component OEM --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Lessor</masterLabel>
-            <translation><!-- Lessor --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>MSO Member Sales Office</masterLabel>
-            <translation><!-- MSO Member Sales Office --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Maintenance, Repair, Overhaul</masterLabel>
-            <translation><!-- Maintenance, Repair, Overhaul --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Museum</masterLabel>
-            <translation><!-- Museum --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Non Governmental Organization</masterLabel>
-            <translation><!-- Non Governmental Organization --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Non-IATA Cargo Agent</masterLabel>
-            <translation><!-- Non-IATA Cargo Agent --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Non-IATA Passenger Agent</masterLabel>
-            <translation><!-- Non-IATA Passenger Agent --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Non-IATA Travel Agent</masterLabel>
-            <translation><!-- Non-IATA Travel Agent --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Other</masterLabel>
-            <translation><!-- Other --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Other Equipment Manufacturer</masterLabel>
-            <translation><!-- Other Equipment Manufacturer --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Other Private Sector Association</masterLabel>
-            <translation><!-- Other Private Sector Association --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Park</masterLabel>
-            <translation><!-- Park --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Passenger and Cargo</masterLabel>
-            <translation><!-- Passenger and Cargo --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Passenger only</masterLabel>
-            <translation><!-- Passenger only --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Processor</masterLabel>
-            <translation><!-- Processor --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Publishing</masterLabel>
-            <translation><!-- Publishing --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Railway Line</masterLabel>
-            <translation><!-- Railway Line --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Resort</masterLabel>
-            <translation><!-- Resort --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Security</masterLabel>
-            <translation><!-- Security --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>System Solutions Provider</masterLabel>
-            <translation><!-- System Solutions Provider --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>TIDS Agent</masterLabel>
-            <translation><!-- TIDS Agent --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Tour Operator</masterLabel>
-            <translation><!-- Tour Operator --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Training Centre</masterLabel>
-            <translation><!-- Training Centre --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Travel Agency Association</masterLabel>
-            <translation><!-- Travel Agency Association --></translation>
+            <masterLabel>Manager, Invoicing &amp; Accounting &amp; Data Transformation</masterLabel>
+            <translation><!-- Manager, Invoicing &amp; Accounting &amp; Data Transformation --></translation>
         </picklistValues>
     </globalPicklists>
 </Translations>

@@ -2,10 +2,7 @@
  * IECApplicationsManager 
  * Change log:
  *  20160324-sl: change getListProductAccessByContactByProductCategory/getListProductAccessByContactBySubscriptionNumber to use getSubscriptionEvergreenNameListByBillingContactId
- *  20160531-sl: createProductAccessOnNewSubscription() will not create IEC_Product_Access record for ProductCategory_SF_EBROADCAST; add isEbcAccessGrantedForContact
- *  20160617-sl: createProductAccessOnNewSubscription() will always create IEC_Product_Access record regardless ProductCategory
- *  20160803-sl: merge the version from ebroadcast development to new repository (20160728).
- *
+ * 
  */
 public without sharing class IECApplicationsManager {
     public static List<Id> cachedAgencyIds;
@@ -224,23 +221,27 @@ public without sharing class IECApplicationsManager {
         String sQueryFields;
         
         if(bReturnAllFields)
+        	 //sQueryFields = 'SELECT Agency_Code__c, Agency_Status__c, IATA_Code__c, Name, Agency_Status_Code__c, Airline_Code__c, BSP_CASS_Code__c, CASS_Number__c, Email_Address__c'
+          //                      + ', Incorporation_Type__c, Legal_Name__c, Location_Type__r.Name, Parent_GDP_Account_View__c, Trading_Name__c, City__c, Zip_Postal_Code__c, Related_Accreditation_Class__r.Class__r.Name'
+          //                      + ', Sub_Continent__c, Country_Name__c, Related_Accreditation_Class__r.Class__r.Definition__c, Related_Accreditation_Class__r.Class__r.Code__c, State_Province__c, Related_Accreditation_Class__c' 
+          //                      + ' FROM GDP_Products_Account_View__c';
              sQueryFields = 'SELECT Account_View__c, Account_View__r.Id, Account_View__r.Agency_Code__c, Account_View__r.Agency_Status__c, Account_View__r.IATA_Code__c, Account_View__r.Name, Account_View__r.Agency_Status_Code__c, Account_View__r.Airline_Code__c, Account_View__r.BSP_CASS_Code__c, Account_View__r.CASS_Number__c, Account_View__r.Email_Address__c'
                                 + ', Account_View__r.Incorporation_Type__c, Account_View__r.Legal_Name__c, Account_View__r.Location_Type__r.Name, Account_View__r.Parent_GDP_Account_View__c, Account_View__r.Trading_Name__c, Account_View__r.City__c, Account_View__r.Zip_Postal_Code__c, Account_View__r.Related_Accreditation_Class__r.Class__r.Name'
                                 + ', Account_View__r.Sub_Continent__c, Account_View__r.Country_Name__c, Account_View__r.Related_Accreditation_Class__r.Class__r.Definition__c, Account_View__r.Related_Accreditation_Class__r.Class__r.Code__c, Account_View__r.State_Province__c, Account_View__r.Related_Accreditation_Class__c' 
                                 + ' FROM GDP_Products_Account_Snapshot__c';
         else
              sQueryFields = 'SELECT Account_View__r.Id FROM GDP_Products_Account_Snapshot__c';
-    
-    
+                                
+                                
         String sQueryWhere = '';
         List<String> sQueryWhereClauses = new List<String>();
         if (cachedAgencyIds == null) {
-            // if GAD, filter out the Cargo agencies
-            if (sProductCategoryCode == IECConstants.ProductCategory_SF_CACFREE
-                || sProductCategoryCode == IECConstants.ProductCategory_SF_CACPRO
-                || sProductCategoryCode == IECConstants.ProductCategory_SF_CACWEB)
+        // if GAD, filter out the Cargo agencies
+        if (sProductCategoryCode == IECConstants.ProductCategory_SF_CACFREE
+            || sProductCategoryCode == IECConstants.ProductCategory_SF_CACPRO
+            || sProductCategoryCode == IECConstants.ProductCategory_SF_CACWEB)
                 sQueryWhereClauses.add('Related_Accreditation_Class_Code__c NOT IN (\'A\', \'I\', \'L\', \'Q\', \'R\', \'U\', \'Y\', \'Z\')');
-            else if (sProductCategoryCode == IECConstants.ProductCategory_SF_GAD)
+        else if (sProductCategoryCode == IECConstants.ProductCategory_SF_GAD)
                 sQueryWhereClauses.add('Related_Accreditation_Class_Code__c NOT IN (\'A\', \'I\', \'L\', \'Q\', \'R\', \'U\', \'Y\', \'Z\', \'C\', \'X\')');
             else if (sProductCategoryCode == IECConstants.ProductCategory_SF_PAL)
                 sQueryWhereClauses.add('Related_Accreditation_Class_Code__c IN (\'P\', \'D\', \'V\')');
@@ -249,121 +250,121 @@ public without sharing class IECApplicationsManager {
             else if (sProductCategoryCode == IECConstants.ProductCategory_SF_ASL)
                 sQueryWhereClauses.add('Related_Accreditation_Class_Code__c IN (\'M\', \'G\', \'X\', \'K\')');
         
-            // if a test is running, only return GDP_Products_Account_View__c created in a test class with the test flag in the AIMS ID field
-            if (Test.isRunningTest())
+        // if a test is running, only return GDP_Products_Account_View__c created in a test class with the test flag in the AIMS ID field
+        if (Test.isRunningTest())
                 sQueryWhereClauses.add('AIMS_ID__c LIKE \'' + IECTestUtil.TEST_CLASS_AIMSID + '%\'');
-            
-            /////////////////////
-            // Agency location
-            
-            // sub-continent
-            if (String.isNotblank(oAdvancedFilters.Sub_Continent__c) && oAdvancedFilters.Sub_Continent__c != 'All') {
+        
+        /////////////////////
+        // Agency location
+        
+        // sub-continent
+        if (String.isNotblank(oAdvancedFilters.Sub_Continent__c) && oAdvancedFilters.Sub_Continent__c != 'All') {
                 sQueryWhereClauses.add('Sub_Continent__c = \'' + oAdvancedFilters.Sub_Continent__c + '\'');
-            }
-            
-            // country
-            if (String.isNotblank(oAdvancedFilters.Country__c) && oAdvancedFilters.Country__c != '(All)' && oAdvancedFilters.Country__c != 'All') {
+        }
+        
+        // country
+        if (String.isNotblank(oAdvancedFilters.Country__c) && oAdvancedFilters.Country__c != '(All)' && oAdvancedFilters.Country__c != 'All') {
                 sQueryWhereClauses.add('Country_ISO_Code__c IN ' + addSingleQuotesToListedValues(oAdvancedFilters.Country__c));
-            }
-            
-            // state/province
-            if (String.isNotblank(oAdvancedFilters.State__c) && !oAdvancedFilters.State__c.startsWith('--') && oAdvancedFilters.State__c != '(All)' && oAdvancedFilters.State__c != 'All' && oAdvancedFilters.State__c != 'None' && oAdvancedFilters.State__c != 'null') {
+        }
+        
+        // state/province
+        if (String.isNotblank(oAdvancedFilters.State__c) && !oAdvancedFilters.State__c.startsWith('--') && oAdvancedFilters.State__c != '(All)' && oAdvancedFilters.State__c != 'All' && oAdvancedFilters.State__c != 'None' && oAdvancedFilters.State__c != 'null') {
                 sQueryWhereClauses.add('State_Province_Code__c IN ' + addSingleQuotesToListedValues(oAdvancedFilters.State__c));
-            }
-            
-            // City
-            if (String.isNotblank(oAdvancedFilters.City__c)) {
-                if (IECConstants.parseGADSearchTypeToEnum(oAdvancedFilters.City_Search_Type__c) == IECConstants.GADSearchType.ExactMatch)
+        }
+        
+        // City
+        if (String.isNotblank(oAdvancedFilters.City__c)) {
+            if (IECConstants.parseGADSearchTypeToEnum(oAdvancedFilters.City_Search_Type__c) == IECConstants.GADSearchType.ExactMatch)
                     sQueryWhereClauses.add('City__c = \'' + oAdvancedFilters.City__c + '\'');
-                else if (IECConstants.parseGADSearchTypeToEnum(oAdvancedFilters.City_Search_Type__c) == IECConstants.GADSearchType.StartsWith)
+            else if (IECConstants.parseGADSearchTypeToEnum(oAdvancedFilters.City_Search_Type__c) == IECConstants.GADSearchType.StartsWith)
                     sQueryWhereClauses.add('City__c LIKE \'' + oAdvancedFilters.City__c + '%\'');
-                else
+            else
                     sQueryWhereClauses.add('City__c LIKE \'%' + oAdvancedFilters.City__c + '%\'');
-            }
-            
-            // Zip/postal code
-            if (String.isNotblank(oAdvancedFilters.Zip_Code__c)) {
-                if (IECConstants.parseGADSearchTypeToEnum(oAdvancedFilters.Zip_Code_Search_Type__c) == IECConstants.GADSearchType.ExactMatch)
+        }
+        
+        // Zip/postal code
+        if (String.isNotblank(oAdvancedFilters.Zip_Code__c)) {
+            if (IECConstants.parseGADSearchTypeToEnum(oAdvancedFilters.Zip_Code_Search_Type__c) == IECConstants.GADSearchType.ExactMatch)
                     sQueryWhereClauses.add('Zip_Postal_Code__c = \'' + oAdvancedFilters.Zip_Code__c + '\'');
-                else if (IECConstants.parseGADSearchTypeToEnum(oAdvancedFilters.Zip_Code_Search_Type__c) == IECConstants.GADSearchType.StartsWith)
+            else if (IECConstants.parseGADSearchTypeToEnum(oAdvancedFilters.Zip_Code_Search_Type__c) == IECConstants.GADSearchType.StartsWith)
                     sQueryWhereClauses.add('Zip_Postal_Code__c LIKE \'' + oAdvancedFilters.Zip_Code__c + '%\'');
-                else
+            else
                     sQueryWhereClauses.add('Zip_Postal_Code__c LIKE \'%' + oAdvancedFilters.Zip_Code__c + '%\'');
-            }
-            
-            /////////////////
-            // IATA Code
-            
-            if (String.isNotBlank(oAdvancedFilters.IATA_Code__c)) {
+        }
+        
+        /////////////////
+        // IATA Code
+        
+        if (String.isNotBlank(oAdvancedFilters.IATA_Code__c)) {
                 if (sProductCategoryCode == IECConstants.ProductCategory_SF_CAL) {
                 	sQueryWhereClauses.add('Agency_Code__c LIKE \'' + oAdvancedFilters.IATA_Code__c + '%\'');
                 } else {
                     if (oAdvancedFilters.IATA_Code__c.length() == 7) {
                         sQueryWhereClauses.add('IATA_Code__c = \'' + oAdvancedFilters.IATA_Code__c + '\'');
                     } else if (oAdvancedFilters.IATA_Code__c.length() == 8) {
-                        String sIATACode = oAdvancedFilters.IATA_Code__c.substring(0,7);
-                        String sCheckCode = oAdvancedFilters.IATA_Code__c.substring(7,8);
+                String sIATACode = oAdvancedFilters.IATA_Code__c.substring(0,7);
+                String sCheckCode = oAdvancedFilters.IATA_Code__c.substring(7,8);
                         sQueryWhereClauses.add('IATA_Code__c = \'' + sIATACode + '\' AND Check_Digit__c = \'' + sCheckCode + '\'');
-                    }
-                    // simulate Starts With
+            }
+            // simulate Starts With
                     else {
                     	sQueryWhereClauses.add('IATA_Code__c LIKE \'' + oAdvancedFilters.IATA_Code__c + '%\'');
                     }
                 }
-            }
-            
-            //////////////////
-            // Agency name
-            
-            if (String.isNotblank(oAdvancedFilters.Agency_Name__c)) {
-                                                       
-                // define operator
-                String sAgencyNameOperatorAndValue;
-                if (IECConstants.parseGADSearchTypeToEnum(oAdvancedFilters.Agency_Name_Search_Type__c) == IECConstants.GADSearchType.ExactMatch)
-                    sAgencyNameOperatorAndValue = ' = \'' + String.escapeSingleQuotes(oAdvancedFilters.Agency_Name__c) + '\'';
-                else if (IECConstants.parseGADSearchTypeToEnum(oAdvancedFilters.Agency_Name_Search_Type__c) == IECConstants.GADSearchType.StartsWith)
-                    sAgencyNameOperatorAndValue = ' LIKE \'' + String.escapeSingleQuotes(oAdvancedFilters.Agency_Name__c) + '%\'';
-                else
-                    sAgencyNameOperatorAndValue = ' LIKE \'%' + String.escapeSingleQuotes(oAdvancedFilters.Agency_Name__c) + '%\'';
-                    
-                // define
-                if (IECConstants.parseGADAgencyNameSearchByToEnum(oAdvancedFilters.Agency_Name_Search_Condition__c) == IECConstants.GADAgencyNameSearchBy.TradingName)
-                    sQueryWhereClauses.add('Trading_Name__c' + sAgencyNameOperatorAndValue);
-                else if (IECConstants.parseGADAgencyNameSearchByToEnum(oAdvancedFilters.Agency_Name_Search_Condition__c) == IECConstants.GADAgencyNameSearchBy.LegalName)
-                    sQueryWhereClauses.add('Legal_Name__c' + sAgencyNameOperatorAndValue);
-                else
-                    sQueryWhereClauses.add('(Trading_Name__c' + sAgencyNameOperatorAndValue + ' OR Legal_Name__c' + sAgencyNameOperatorAndValue + ')');
-            }
-            
-            
-            ////////////////
-            // Agency Type
-            
-            // Hierarchy
-            if (String.isNotblank(oAdvancedFilters.Hierarchy__c) && oAdvancedFilters.Hierarchy__c != 'All') {
-                sQueryWhereClauses.add('Location_Type_Name__c IN ' + addSingleQuotesToListedValues('(' + oAdvancedFilters.Hierarchy__c.replaceAll(';', ', ') + ')'));
-            }
-
-            // Agency Program
-            if (String.isNotblank(oAdvancedFilters.Agency_Program__c)) {
+        }
+        
+        //////////////////
+        // Agency name
+        
+        if (String.isNotblank(oAdvancedFilters.Agency_Name__c)) {
+                                                   
+            // define operator
+            String sAgencyNameOperatorAndValue;
+            if (IECConstants.parseGADSearchTypeToEnum(oAdvancedFilters.Agency_Name_Search_Type__c) == IECConstants.GADSearchType.ExactMatch)
+                sAgencyNameOperatorAndValue = ' = \'' + String.escapeSingleQuotes(oAdvancedFilters.Agency_Name__c) + '\'';
+            else if (IECConstants.parseGADSearchTypeToEnum(oAdvancedFilters.Agency_Name_Search_Type__c) == IECConstants.GADSearchType.StartsWith)
+                sAgencyNameOperatorAndValue = ' LIKE \'' + String.escapeSingleQuotes(oAdvancedFilters.Agency_Name__c) + '%\'';
+            else
+                sAgencyNameOperatorAndValue = ' LIKE \'%' + String.escapeSingleQuotes(oAdvancedFilters.Agency_Name__c) + '%\'';
                 
-                // if Agency program is All, look at the Area of Activity
-                if ((oAdvancedFilters.Agency_Program__c == '(All)' || oAdvancedFilters.Agency_Program__c == 'All') && oAdvancedFilters.Area_of_Activity__c != 'All') {
-                    List<String> lstAgencyProgramCodes = getAgencyProgramCodesByAreaOfActivity(oAdvancedFilters.Area_of_Activity__c);
+            // define
+            if (IECConstants.parseGADAgencyNameSearchByToEnum(oAdvancedFilters.Agency_Name_Search_Condition__c) == IECConstants.GADAgencyNameSearchBy.TradingName)
+                    sQueryWhereClauses.add('Trading_Name__c' + sAgencyNameOperatorAndValue);
+            else if (IECConstants.parseGADAgencyNameSearchByToEnum(oAdvancedFilters.Agency_Name_Search_Condition__c) == IECConstants.GADAgencyNameSearchBy.LegalName)
+                    sQueryWhereClauses.add('Legal_Name__c' + sAgencyNameOperatorAndValue);
+            else
+                    sQueryWhereClauses.add('(Trading_Name__c' + sAgencyNameOperatorAndValue + ' OR Legal_Name__c' + sAgencyNameOperatorAndValue + ')');
+        }
+        
+        
+        ////////////////
+        // Agency Type
+        
+        // Hierarchy
+        if (String.isNotblank(oAdvancedFilters.Hierarchy__c) && oAdvancedFilters.Hierarchy__c != 'All') {
+                sQueryWhereClauses.add('Location_Type_Name__c IN ' + addSingleQuotesToListedValues('(' + oAdvancedFilters.Hierarchy__c.replaceAll(';', ', ') + ')'));
+        }
+
+        // Agency Program
+        if (String.isNotblank(oAdvancedFilters.Agency_Program__c)) {
+            
+            // if Agency program is All, look at the Area of Activity
+            if ((oAdvancedFilters.Agency_Program__c == '(All)' || oAdvancedFilters.Agency_Program__c == 'All') && oAdvancedFilters.Area_of_Activity__c != 'All') {
+                List<String> lstAgencyProgramCodes = getAgencyProgramCodesByAreaOfActivity(oAdvancedFilters.Area_of_Activity__c);
                     sQueryWhereClauses.add('Related_Accreditation_Class_Code__c IN ' + addSingleQuotesToListedValues('(' + String.join(lstAgencyProgramCodes, ', ') + ')') + ' AND Related_Accreditation_Class_Table__c = \'ORGCLASS\'');
-                }
-                else if (oAdvancedFilters.Agency_Program__c != '(All)' && oAdvancedFilters.Agency_Program__c != 'All')
+            }
+            else if (oAdvancedFilters.Agency_Program__c != '(All)' && oAdvancedFilters.Agency_Program__c != 'All')
                     sQueryWhereClauses.add('Related_Accreditation_Class_Code__c IN ' + addSingleQuotesToListedValues(oAdvancedFilters.Agency_Program__c) + ' AND Related_Accreditation_Class_Table__c = \'ORGCLASS\'');
             }
 
             if (sQueryWhereClauses.size() > 0) {
                 sQueryWhere = ' WHERE ' + String.join(sQueryWhereClauses, ' AND ');
-            }
-            
-            //////////////////
-            // Agency Profile
-            
-            // (future development)
+        }
+        
+        //////////////////
+        // Agency Profile
+        
+        // (future development)
         } else { // Added by Mathieu Beausoleil
             sQueryWhere = ' WHERE Account_View__c in :cachedAgencyIds';
         }
@@ -375,10 +376,10 @@ public without sharing class IECApplicationsManager {
         // define
 
         if(bReturnAllFields) {
-            if (IECConstants.parseGADAgencyNameSearchByToEnum(oAdvancedFilters.Agency_Name_Search_Condition__c) == IECConstants.GADAgencyNameSearchBy.LegalName)
-                sQueryWhere += ' ORDER BY Legal_Name__c ASC';
-            else
-                sQueryWhere += ' ORDER BY Trading_Name__c ASC';
+        if (IECConstants.parseGADAgencyNameSearchByToEnum(oAdvancedFilters.Agency_Name_Search_Condition__c) == IECConstants.GADAgencyNameSearchBy.LegalName)
+            sQueryWhere += ' ORDER BY Legal_Name__c ASC';
+        else
+            sQueryWhere += ' ORDER BY Trading_Name__c ASC';
         }
         
         sQueryWhere += ' LIMIT ' + String.valueOf(vfIECGAD.MAX_RESULTS + 1);
@@ -465,27 +466,27 @@ public without sharing class IECApplicationsManager {
             
             // find the oldest Product Access object that still has usage left (if not unlimited). Will be used to consume usage from.
             if(!lstAccess.isEmpty() || lstAccess != null){
-                for (IEC_Product_Access__c prodAccess : lstAccess) {
-                    if (prodAccess.Usage_Unlimited__c
-                        || prodAccess.Usage_Qty_consumed__c == null
-                        || prodAccess.Usage_Qty_consumed__c < prodAccess.Usage_Qty_Start__c) {
-                        oProductAccess = prodAccess;
-                        break;
-                    }
+            for (IEC_Product_Access__c prodAccess : lstAccess) {
+                if (prodAccess.Usage_Unlimited__c
+                    || prodAccess.Usage_Qty_consumed__c == null
+                    || prodAccess.Usage_Qty_consumed__c < prodAccess.Usage_Qty_Start__c) {
+                    oProductAccess = prodAccess;
+                    break;
                 }
+            }
             }
     
             // find the latest subscription history
             if(oProductAccess != null){
-                IEC_Subscription_History__c oSubHist = IECSubscriptionManager.getSubscriptionHistoryByName(oProductAccess.Subscription_Number__c);
-                
-                Contact relatedContact = IECUserManager.getContactById(iCustomerId);
-                // track global usage
-                trackLiveUsage(sProductCategoryCode, sStatusOfSearch, sSearchTarget, relatedContact, oSubHist);
-                
-                // consume subscription usage of customer
-                incrementUsageCounterByProductAccess(oProductAccess, 1);
-            }
+            IEC_Subscription_History__c oSubHist = IECSubscriptionManager.getSubscriptionHistoryByName(oProductAccess.Subscription_Number__c);
+            
+            Contact relatedContact = IECUserManager.getContactById(iCustomerId);
+            // track global usage
+            trackLiveUsage(sProductCategoryCode, sStatusOfSearch, sSearchTarget, relatedContact, oSubHist);
+            
+            // consume subscription usage of customer
+            incrementUsageCounterByProductAccess(oProductAccess, 1);
+        }
         }
         catch (Exception ex) {
             system.debug('Cannot track and consume usage for customer contact id ' + iCustomerId + ' Product Category: ' + sProductCategoryCode + ' Exception: ' + ex.getMessage());
@@ -660,7 +661,7 @@ public without sharing class IECApplicationsManager {
             // query all needed fields on Product Rate Plan Info
             List<Product_Rate_Plan_Information__c> lstRatePlanInfos = IECProductManager.getProductRatePlansInformationById(oSubscription.Product_Rate_Plan_Information__c);
             if (lstRatePlanInfos.isEmpty()) throw new IECApplicationException('Cannot find Product Rate Plan Info');
-            
+                
             IEC_Product_Access__c oProductAccess = new IEC_Product_Access__c();
             oProductAccess.Related_Contact__c = sContactId;
             oProductAccess.Related_Rate_Plan_Info__c = lstRatePlanInfos.get(0).Id;
@@ -673,10 +674,9 @@ public without sharing class IECApplicationsManager {
                 oProductAccess.Usage_Qty_Start__c = lstRatePlanInfos.get(0).Subscription_Usage_Qty__c;
                 oProductAccess.Usage_Qty_Left__c = oProductAccess.Usage_Qty_Start__c;
             }
-            else {
+            else
                 oProductAccess.Usage_Unlimited__c = true;
-            }
-            
+                
             oProductAccess.Active__c = bOrderIsPaid;
             oProductAccess.Effective_Start_Date__c = oSubscription.Zuora__SubscriptionStartDate__c;
             oProductAccess.Effective_End_Date__c = oSubscription.Zuora__SubscriptionEndDate__c;
@@ -686,7 +686,7 @@ public without sharing class IECApplicationsManager {
         catch(Exception ex) {
             throw new IECApplicationException('Could not insert Product Access: ' + ex.getMessage());
         }
-    } 
+    }
     
     /**
      * Adjusts existing IEC_Product_Access__c according to the new changes in the subscription
@@ -700,23 +700,7 @@ public without sharing class IECApplicationsManager {
             if (String.isBlank(sContactId)) throw new IECApplicationException('Contact is null');
             if (oSubscription == null) throw new IECApplicationException('Subscription is null');
             if (String.isBlank(oSubscription.Product_Rate_Plan_Information__c)) throw new IECApplicationException('Rate Plan Info is null');
-            
-            // eBroadcast subscription does not need to have ProductAccess 
-            if (oProductAccess == null)
-            { // verify if this is expected
-                // query all needed fields on Product Rate Plan Info
-                List<Product_Rate_Plan_Information__c> lstRatePlanInfos = IECProductManager.getProductRatePlansInformationById(oSubscription.Product_Rate_Plan_Information__c);
-                if (lstRatePlanInfos.isEmpty()) throw new IECApplicationException('Cannot find Product Rate Plan Info');
-                
-                Product_Rate_Plan_Information__c oProductRatePlan = lstRatePlanInfos.get(0);
-                if (oProductRatePlan.Related_Product_Information__r.Related_Product_Category__r.Name != IECConstants.ProductCategory_SF_EBROADCAST) 
-                {
-                	throw new IECApplicationException( 'Product Access is null for non EBROADCAST SubscriptionId:' + oSubscription.Id);
-                }
-                // Subscription Product Category is EBROADCAST, do nothing and return.  
-                return;
-            }
-            
+
             // Update product access information
             oProductAccess.Related_Contact__c = sContactId;
             oProductAccess.Zuora_Subscription_Id__c = oSubscription.Zuora__Zuora_Id__c;
@@ -1331,9 +1315,9 @@ public without sharing class IECApplicationsManager {
             throw new IECApplicationException('Application filter not found for id ' + sApplicationFilterID);
         }
 
-
+            
         List<GDP_Products_Account_View__c> lstAccounts = getAgencyByAdvancedFilters(oAppFilter, sProductCategoryCode,false);
-
+        
         if (lstAccounts == null || lstAccounts.size() == 0) {
             trackAndConsumeUsage(oCustomer, sProductCategoryCode, IECConstants.IECUsageTrackerSearchTarget_Agency, IECConstants.IECUsageTrackerSearchStatus_Fail);
         } else if (lstAccounts.size() > vfIECGAD.MAX_RESULTS) {
@@ -1345,7 +1329,7 @@ public without sharing class IECApplicationsManager {
         lstAccountsMap.putAll(lstAccounts);
         Set<Id> lstAccountsIds = lstAccountsMap.keySet();
         cachedAgencyIds = new List<Id>(lstAccountsIds);
-
+        
         return (lstAccounts == null ? 0 : lstAccounts.size());
     }
     
@@ -1384,39 +1368,4 @@ public without sharing class IECApplicationsManager {
                 && (String.isBlank(oAppFilter.Agency_Program__c) || oAppFilter.Agency_Program__c == '(All)')
                 && (String.isBlank(oAppFilter.Area_of_Activity__c) || oAppFilter.Area_of_Activity__c == 'All'));
     }
-    
-    
-    /**
-     * isEbcAccessGrantedForContact returns true if the idContact (community user) has access to eBroadcast
-     * oBillingAccount is used only to cache the last Zuora__CustomerAccount__c for isEbcAccessGrantedForContact 
-     */
-	private static Zuora__CustomerAccount__c oBillingAccount;
-	// isEbcAccessGrantedForContact with option to refresh the previously cached resetBillingAccount
-	public static Boolean isEbcAccessGrantedForContact(Id idContact, Boolean resetBillingAccount)
-	{
-		if (resetBillingAccount) {
-			oBillingAccount = null;
-		}
-		return isEbcAccessGrantedForContact(idContact);
-	} // isBillingAccountEbcChecked
-	
-	public static Boolean isEbcAccessGrantedForContact(Id idContact)
-	{
-		if (oBillingAccount == null || oBillingAccount.Contact__c != idContact)
-		{ // initialize oBillingAccount if necessary
-			List<Zuora__CustomerAccount__c> oZBillingAcctList = [select Id
-					, eBroadcast_Product_Access__c
-					// , eBroadcast_Add_On_Access__c
-				from Zuora__CustomerAccount__c
-				where Contact__c = : idContact
-					and  Zuora__Status__c = 'Active'
-				order by CreatedDate desc limit 1];
-			oBillingAccount = ( oZBillingAcctList.size()==0) ? null : oZBillingAcctList[0]; 
-		}
-		Boolean result = (oBillingAccount != null) && (oBillingAccount.eBroadcast_Product_Access__c);
-		return result;
-	} // isBillingAccountEbcChecked
-	
-
-
 }

@@ -1,14 +1,3 @@
-/*  
-  * Controller for the IECGDPFooter, IECSiteFooter, IECSiteHeader components. 
-  * 
-  * Description:
-  *   
-  * History: 
-  *  - 20160727: bamboo deployment to prod.
-  *  - 20160804-sl: merge from eBroadcast branch updates GDP-75,717,723 by Mathieu Beausoleil.
-  *   
-  */
-
 public without sharing class VfIECSiteHeaderComponent {
 
 	public Integer iNbrCartItems { get; private set;}
@@ -18,14 +7,14 @@ public without sharing class VfIECSiteHeaderComponent {
 	public String sProdMDP		{get; set;}
 	public String sProdGSS 		{get; set;}
 	//public String sProdCACWeb 	{get; set;}
-	public String sProdEBro 	{get; set;}
+	//public String sProdEBro 	{get; set;}
 	
 	public Boolean bAvailCACPro 	{get; set;}
 	public Boolean bAvailGAD		{get; set;}
 	public Boolean bAvailMDP		{get; set;}
 	public Boolean bAvailGSS 		{get; set;}
 	//public Boolean bAvailCACWeb 	{get; set;}
-	public Boolean bAvailEBro 		{get; set;}
+	//public Boolean bAvailEBro 		{get; set;}
 
 	public Decimal shoppingCartTotalBeforeTax {get; private set;}
 	public Decimal shoppingCartTax {get; private set;}
@@ -43,13 +32,15 @@ public without sharing class VfIECSiteHeaderComponent {
 	/**
 	 * Constructor
 	 */
-	public VfIECSiteHeaderComponent(IECPageController controller) {
-		init();
-	}
-	
 	public VfIECSiteHeaderComponent() {
 		try {
-			init();
+			//IEC_Settings__c.getOrgDefaults().Account_Owner_Id__c;
+			sProdCACPro = IECUtil.DecodeDecryptParameter(IEC_Settings__c.getOrgDefaults().Prod_CACPro__c);
+			sProdGAD 	= IECUtil.DecodeDecryptParameter(IEC_Settings__c.getOrgDefaults().Prod_GAD__c);
+			sProdMDP 	= IECUtil.DecodeDecryptParameter(IEC_Settings__c.getOrgDefaults().Prod_MDP__c);
+			sProdGSS 	= IECUtil.DecodeDecryptParameter(IEC_Settings__c.getOrgDefaults().Prod_GSS__c);
+			//sProdCACWeb = IEC_Settings__c.getOrgDefaults().Prod_CACWeb__c;
+			//sProdEBro 	= IEC_Settings__c.getOrgDefaults().Prod_EBro__c;
 			
 			Map<String, Boolean> mapProductCategoryAvailable = IECProductManager.isProductCategoryAvailable(new Set<String>
 				{
@@ -58,7 +49,7 @@ public without sharing class VfIECSiteHeaderComponent {
 					, IECConstants.ProductCategory_SF_MDP
 					, IECConstants.ProductCategory_SF_GSS
 					//, IECConstants.ProductCategory_SF_CACWEB
-					, IECConstants.ProductCategory_SF_EBROADCAST
+					//, IECConstants.ProductCategory_SF_EBROADCAST
 				});
 
 			bAvailCACPro = mapProductCategoryAvailable.get(IECConstants.ProductCategory_SF_CACPRO);
@@ -66,7 +57,7 @@ public without sharing class VfIECSiteHeaderComponent {
 			bAvailMDP = mapProductCategoryAvailable.get(IECConstants.ProductCategory_SF_MDP);
 			bAvailGSS = mapProductCategoryAvailable.get(IECConstants.ProductCategory_SF_GSS);
 			//bAvailCACWeb = mapProductCategoryAvailable.get(IECConstants.ProductCategory_SF_CACWEB);
-			bAvailEBro = mapProductCategoryAvailable.get(IECConstants.ProductCategory_SF_EBROADCAST);
+			//bAvailEBro = mapProductCategoryAvailable.get(IECConstants.ProductCategory_SF_EBROADCAST);
 
 			shoppingCartTotalBeforeTax = 0.0;
 
@@ -85,16 +76,6 @@ public without sharing class VfIECSiteHeaderComponent {
 		catch (Exception ex) {
 			ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, ex.getMessage()));
 		}
-	}
-	
-	private void init() {
-		//IEC_Settings__c.getOrgDefaults().Account_Owner_Id__c;
-		sProdCACPro = IECUtil.DecodeDecryptParameter(IEC_Settings__c.getOrgDefaults().Prod_CACPro__c);
-		sProdGAD 	= IECUtil.DecodeDecryptParameter(IEC_Settings__c.getOrgDefaults().Prod_GAD__c);
-		sProdMDP 	= IECUtil.DecodeDecryptParameter(IEC_Settings__c.getOrgDefaults().Prod_MDP__c);
-		sProdGSS 	= IECUtil.DecodeDecryptParameter(IEC_Settings__c.getOrgDefaults().Prod_GSS__c);
-		//sProdCACWeb = IEC_Settings__c.getOrgDefaults().Prod_CACWeb__c;
-		sProdEBro 	= IECUtil.DecodeDecryptParameter(IEC_Settings__c.getOrgDefaults().Prod_EBro__c);
 	}
 	
 	public Pagereference refresh() {

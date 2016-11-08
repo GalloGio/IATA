@@ -298,7 +298,7 @@ public with sharing class AMS_MigrationToolHelper {
 		accreditationObj.IATACode__c = accreditationObj.IATACode__c == null ? directAccount.IATACode__c : accreditationObj.IATACode__c;
 		accreditationObj.IATA_ISO_State__c = accreditationObj.IATA_ISO_State__c == null ? acct.Iso_State__c : accreditationObj.IATA_ISO_State__c;
 		accreditationObj.ISSP_AMS_GDS_with_signed_contract__c = accreditationObj.ISSP_AMS_GDS_with_signed_contract__c == null ? AMS_AgencyHelper.transformGDS(directAccount.GDS__c) : accreditationObj.ISSP_AMS_GDS_with_signed_contract__c;
-		accreditationObj.ISSP_AMS_Legal_Status__c = accreditationObj.ISSP_AMS_Legal_Status__c == null ? decode(acct.Company_Type__c) : accreditationObj.ISSP_AMS_Legal_Status__c;
+		accreditationObj.ISSP_AMS_Legal_Status__c = accreditationObj.ISSP_AMS_Legal_Status__c == null ? acct.Company_Type__c : accreditationObj.ISSP_AMS_Legal_Status__c;
 		accreditationObj.ISSP_AMS_License_No__c = accreditationObj.ISSP_AMS_License_No__c == null ? directAccount.License_Number__c : accreditationObj.ISSP_AMS_License_No__c;
 		accreditationObj.ISSP_AMS_Premises_located_at_airport__c = accreditationObj.ISSP_AMS_Premises_located_at_airport__c == null ? ( directAccount.In_a_Airport__c == true ? 'Yes' : 'No' ) : accreditationObj.ISSP_AMS_Premises_located_at_airport__c;
 		accreditationObj.ISSP_AMS_VAT_number__c = accreditationObj.ISSP_AMS_VAT_number__c == null ? acct.VAT_Number__c : accreditationObj.ISSP_AMS_VAT_number__c;
@@ -328,41 +328,6 @@ public with sharing class AMS_MigrationToolHelper {
 		accreditationObj.Website__c = accreditationObj.Website__c == null ? acct.Website : accreditationObj.Website__c;
 
 		return accreditationObj;
-	}
-
-	/**
-    Method to help decode the transformation between Specify Legal Status (AMS Online Accreditation) and Company Type (Acccount) in migrations
-    */
-
-	public static String decode(String companyType) {
-
-		if (companyType == null)
-        return null;
-
-    	if (companyType.equalsIgnoreCase('A'))
-        return 'Association';
-    	if (companyType.equalsIgnoreCase('C'))
-        return 'Corporation';
-    	if (companyType.equalsIgnoreCase('E'))
-        return 'State Owned Enterprise';
-    	if (companyType.equalsIgnoreCase('J'))
-        return 'Joint Venture';
-    	if (companyType.equalsIgnoreCase('L'))
-        return 'Limited Company';
-    	if (companyType.equalsIgnoreCase('O'))
-        return 'Other';
-    	if (companyType.equalsIgnoreCase('P'))
-        return 'Partnership';
-    	if (companyType.equalsIgnoreCase('R'))
-        return 'Limited Partnership';
-    	if (companyType.equalsIgnoreCase('S'))
-        return 'Sole Proprietorship';
-    	if (companyType.equalsIgnoreCase('T'))
-        return 'Trust Company';
-    	if (companyType.equalsIgnoreCase('V'))
-        return 'Co-operative';
-
-    return null;
 	}
 
 	private static AMS_Pax_Accreditation_Form__c createAccreditation(String caseId, String accountId, String processType){
