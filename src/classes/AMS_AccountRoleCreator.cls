@@ -473,9 +473,14 @@ public with sharing class AMS_AccountRoleCreator
 
 
             List<AMS_Account_Role__c> amsRolesToInsert = bucket1.rolesToInsert;
+            System.debug(' #### bucket1.rolesToInsert ' + bucket1.rolesToInsert);
             amsRolesToInsert.addAll(bucket2.rolesToInsert);
+            System.debug(' #### bucket2.rolesToInsert ' + bucket2.rolesToInsert);
             amsRolesToInsert.addAll(bucket3.rolesToInsert);
+            System.debug(' #### bucket3.rolesToInsert ' + bucket3.rolesToInsert);
             amsRolesToInsert.addAll(rolestoDeactivate);
+            System.debug(' #### rolestoDeactivate ' + rolestoDeactivate);
+            System.debug(' #### amsRolesToInsert ' + amsRolesToInsert);
 
             upsert amsRolesToInsert;
         
