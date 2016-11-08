@@ -6234,7 +6234,7 @@ La preghiamo di indicarci il paese per il quale richiede assistenza</label>
         <name>ISSP_Email_AccessGranted1</name>
     </customLabels>
     <customLabels>
-        <label>Siamo spiacenti di informarla che la sua richiesta di accedere</label>
+        <label>Siamo spiacenti di comunicarle che la sua richiesta di accedere</label>
         <name>ISSP_Email_AccessRejected1</name>
     </customLabels>
     <customLabels>
@@ -6402,7 +6402,7 @@ La preghiamo di indicarci il paese per il quale richiede assistenza</label>
         <name>ISSP_Email_Link_Describe</name>
     </customLabels>
     <customLabels>
-        <label>Per ulteriori informazioni, inoltri una query all&apos;Assistenza clienti IATA</label>
+        <label>Per ulteriori informazioni, la preghiamo di contattare l&apos;Assistenza Clienti IATA</label>
         <name>ISSP_Email_Log_Case</name>
     </customLabels>
     <customLabels>
