@@ -39,7 +39,10 @@ public with sharing class EF_TestDataFactory
             EF_SubStatus__c='None',
             EF_Effective_Date__c = Date.today(),
             IATA_ISO_Country__c = iso_country.Id,
-            Reason_for_creation__c = 'new client needed'
+            Reason_for_creation__c = 'new client needed',
+            EF_SIS_Code_Verified__c = true,
+            EF_SIS_Code__c = 'test',
+            EF_SIS_Designator__c = 'te'
             );
 
         insert client;
