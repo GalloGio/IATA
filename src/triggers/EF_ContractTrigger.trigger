@@ -34,7 +34,7 @@ trigger EF_ContractTrigger on Contract (
 
             if(Trigger.isInsert)
             {
-                EF_ContractHandler.handleWithApprovalAccountInserts(efContractList);
+                // EF_ContractHandler.handleWithApprovalAccountInserts(efContractList);
             } else
             {
             	for(Contract c : Trigger.new)
