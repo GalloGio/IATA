@@ -23,6 +23,7 @@ public with sharing class AMS_PurgeIATACodeController {
                         notesFullPurge.add('This section is a searchable area. Please search for Terminated agencies to purge.');
                         notesFullPurge.add('Full purge will search for all agencies with status “Terminated“ (field: Account.Status__c) and with the termination date (field: Expiry_Date__c) less than 1st of January of the current year-10 (e.g.: In 2017, all terminated agencies before 1st of January 2007 will be searched). Approval date has to be filled in. Also it will not search for Agencies with no IATA Code.');
                         notesFullPurge.add('After searching for the Agencies, a CSV with Agency Information will be available.');
+                        notesFullPurge.add('To use this information, please add two aditional columns at the end of the sheet: To NOT Purge SFDC(ToNOTPurgeSFDC) and To NOT Purge External (ToNOTPurgeExternal).');
                         notesFullPurge.add('A maximum of 10.000 records will be extracted.');
 
                 return notesFullPurge;
@@ -44,6 +45,7 @@ public with sharing class AMS_PurgeIATACodeController {
 						notesLitePurge.add('This section is a searchable area. Please search for Terminated agencies to purge.');
                         notesLitePurge.add('Lite purge will search for all agencies with status “Not accreditated” (field: Account.Status__c) and with a change code “DIS” created before today minus 6 months.Also it will not search for Agencies with no IATA Code.');
                         notesLitePurge.add('After searching for the Agencies, a CSV with Agency Information will be available.');
+                        notesFullPurge.add('To use this information, please add two aditional columns at the end of the sheet: To NOT Purge SFDC(ToNOTPurgeSFDC) and To NOT Purge External (ToNOTPurgeExternal).');
                         notesLitePurge.add('A maximum of 10.000 records will be extracted.');
 
                 return notesLitePurge;
@@ -66,6 +68,7 @@ public with sharing class AMS_PurgeIATACodeController {
                         notesUpload = new Set<String>();
 						notesUpload.add('This section is used to perform the IATA Code Purge.');
                         notesUpload.add('Please upload the csv file as per instructed. The contents must be the same as the ones extracted with 2 more columns : Not to Purge SFDC and Not to Purge External System');
+                        notesFullPurge.add('To use this information, please add two aditional columns at the end of the sheet: To NOT Purge SFDC(ToNOTPurgeSFDC) and To NOT Purge External (ToNOTPurgeExternal).');                        
                         notesUpload.add('All the agencies and GDP Productus matching Id of the Agencies will be updated, exeption made for the ones marked as X in the last 2 columns.');
 
                 return notesUpload;
@@ -106,6 +109,8 @@ public with sharing class AMS_PurgeIATACodeController {
         purgeStatus = 'Processing...';
 
 		fetchSOQLObjects();
+
+        purgeFileContentList = new List<AMS_PurgeIATACodeController.PurgeFileContent>();
 
 	}
 
@@ -167,6 +172,9 @@ public with sharing class AMS_PurgeIATACodeController {
                     String[] inputvalues = new String[]{};
                     inputvalues = filelines[i].split(',');
                     
+                    System.debug('String is ' + filelines[i]);
+                    System.debug('Size of file is ' + inputvalues.size());
+
                     AMS_PurgeIATACodeController.PurgeFileContent pfc = new AMS_PurgeIATACodeController.PurgeFileContent();
 
                     pfc.Identifier = inputvalues[0];

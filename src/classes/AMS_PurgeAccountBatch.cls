@@ -3,16 +3,24 @@ global class AMS_PurgeAccountBatch implements Database.Batchable<sObject>,  Data
 	global Map<Id, String> errorMap {get; set;}
     global Map<Id, SObject> IdToSObjectMap {get; set;}
 
+    global List<Account> accountsUpdated{get;set;}
+
 	String query;
 	
 	public Set<Id> accountsToPurge;
+
+	public Map<Id,String> oldIataCodes;
 
 	global AMS_PurgeAccountBatch(Set<Id> accountsToPurge) {
 	
 		errorMap = new Map<Id, String>();
         IdToSObjectMap = new Map<Id, SObject>();
 
+        accountsUpdated = new List<Account>();
+
 		this.accountsToPurge = accountsToPurge;	
+
+		oldIataCodes = new Map<Id,String>();
 
 		this.query = 'SELECT Id , IATACode__c , Purge_Flag__c from Account where Id in :accountsToPurge and IATACode__c != null and Purge_Flag__c = false';
 	
@@ -28,20 +36,49 @@ global class AMS_PurgeAccountBatch implements Database.Batchable<sObject>,  Data
 
 		for(Account act: scope){
 
+			oldIataCodes.put(act.Id,act.IATACode__c);
+
 			act.IATACode__c = transformIATACodeintoPurged(act.IATACode__c);
 			act.Purge_Flag__c = false;
 			//act.Name = act.Name + 'Ltd';
 
-			//accountsToUpdate.add(act);
+			accountsToUpdate.add(act);
 		}
 
-		if(!accountsToUpdate.isEmpty())
+		if(!accountsToUpdate.isEmpty()){
 			updateAccounts(accountsToUpdate);
+			
+		}
 	}
 	
 	global void finish(Database.BatchableContext BC) {
 		
-		 //Send an email to the User after your batch completes 
+		handleErrors(BC);
+
+		updateGDPProducts();
+
+
+	}
+
+	public void updateGDPProducts(){
+
+		Set<String> iataCodesToPurge = new Set<String>();
+
+		for(Account act: accountsUpdated)
+			iataCodesToPurge.add(oldIataCodes.get(act.Id));
+
+		AMS_PurgeGDPIATACodeBatch gDPBatch = new AMS_PurgeGDPIATACodeBatch(iataCodesToPurge);
+		
+		System.debug('Executing the batch with this scope:'+iataCodesToPurge);
+
+		Database.executeBatch(gDPBatch,200);
+
+	}
+
+
+	public void handleErrors(Database.BatchableContext BC){
+
+				 //Send an email to the User after your batch completes 
        if(!errorMap.isEmpty()){
             AsyncApexJob a = [SELECT id, ApexClassId,
                        JobItemsProcessed, TotalJobItems,
@@ -50,10 +87,10 @@ global class AMS_PurgeAccountBatch implements Database.Batchable<sObject>,  Data
                        WHERE id = :BC.getJobId()];
             String body = 'Your batch job '
              + 'Purge IATA Codes '
-             + 'has finished. \n' 
+             + 'has finished for Accounts. \n' 
              + 'There were '
              + errorMap.size()
-             + ' errors. Please find the error list attached to the Email.';
+             + ' errors. Please find the error list attached to the Email. You should expect the GDP purge email process shortly after if any error occurr.';
  
             // Creating the CSV file
             String finalstr = 'Id, Name, Error \n';
@@ -80,17 +117,19 @@ global class AMS_PurgeAccountBatch implements Database.Batchable<sObject>,  Data
             email.setPlainTextBody( body );
             email.setFileAttachments(new Messaging.EmailFileAttachment[] {efa});
  
-            // Sends the email
-            Messaging.SendEmailResult [] r = 
-                Messaging.sendEmail(new Messaging.SingleEmailMessage[] {email});   
-            }
+ 			if(!Test.isRunningTest()) {
 
+ 				Messaging.SendEmailResult [] r = 
+                Messaging.sendEmail(new Messaging.SingleEmailMessage[] {email});   
+			}
+
+            }
 
 	}
 
 	public static String transformIATACodeintoPurged(String iataCode){
 
-		return iataCode;
+		return 'X' + iataCode;
 	}
 
 	public void updateAccounts(List<Account> accounts){
@@ -104,6 +143,8 @@ global class AMS_PurgeAccountBatch implements Database.Batchable<sObject>,  Data
 		        String errMsg = dsr.getErrors()[0].getMessage();
 		        errorMap.put(accounts[index].Id, errMsg);
 		        IdToSObjectMap.put(accounts[index].Id, accounts[index]);
+		    }else{
+		    	accountsUpdated.add(accounts[index]);
 		    }
 
 		index++;
