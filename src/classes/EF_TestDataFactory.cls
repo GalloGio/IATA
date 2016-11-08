@@ -42,10 +42,7 @@ public with sharing class EF_TestDataFactory
             EF_SIS_Code_Verified__c = true,
             EF_Effective_Date__c = Date.today(),
             IATA_ISO_Country__c = iso_country.Id,
-            Reason_for_creation__c = 'new client needed',
-            EF_SIS_Code_Verified__c = true,
-            EF_SIS_Code__c = 'test',
-            EF_SIS_Designator__c = 'te'
+            Reason_for_creation__c = 'new client needed'
             );
 
         insert client;
