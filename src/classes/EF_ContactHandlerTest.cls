@@ -4,12 +4,12 @@ private class EF_ContactHandlerTest {
     @testSetup
     static void setup()
     {
-        User u = EF_TestDataFactory.getEfProfileAndRole(0, 4);
+        User u = EF_TestDataFactory.getEfProfileAndRole(0, 2);
         // EF_TestDataFactory.createCustomSettings();
 
-        //System.runAs(u){
+        System.runAs(u){
             EF_TestDataFactory.createBaseData();
-        //}
+        }
     }
 
     @isTest static void testInactiveEFContact()

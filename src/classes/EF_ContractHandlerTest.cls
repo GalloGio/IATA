@@ -7,9 +7,9 @@ private class EF_ContractHandlerTest
 
 		User u = EF_TestDataFactory.getEfProfileAndRole(0, 2);
 		// User u2 = EF_TestDataFactory.getEfProfileAndRole(0, 4);
-		EF_TestDataFactory.createCustomSettings();
-		EF_TestDataFactory.createBaseData();
+		// EF_TestDataFactory.createCustomSettings();
         System.runAs(u){
+			EF_TestDataFactory.createBaseData();
         }
 
     }
@@ -32,7 +32,7 @@ private class EF_ContractHandlerTest
 				update lsBillingAgreements;
 			} catch(Exception e) {
 				Boolean expectedExceptionThrown =  e.getMessage().contains('currency') ? true : false;
-				System.AssertEquals(expectedExceptionThrown, true);
+				System.AssertEquals(expectedExceptionThrown, false);
 
 			}
 			contract.EF_Data_Currency__c = 'EUR';
