@@ -10440,6 +10440,7 @@ Select at least one Authorized Signatory, and choose the Financial Assessment Co
         <shortDescription>ISSP_Account_Information</shortDescription>
         <value>Account Information</value>
     </labels>
+    <labels>
         <fullName>ISSP_Account_Statement_Location</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
