@@ -4,7 +4,7 @@
     <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 
     <head>
-      <title>Key Account Plan</title>
+      <title>Account Plan</title>
       <apex:stylesheet value="{!URLFOR($Resource.AMP_helper, 'css/general.css')}"/>
 
     </head>
@@ -12,7 +12,7 @@
     <body>
         <apex:form >
         <apex:outputLink value="/{!accountId}" >back to Account</apex:outputLink>
-        <apex:pageBlock id="theBlock" title="Key Account Plan for {!AccountName}">
+        <apex:pageBlock id="theBlock" title="Account Plan for {!AccountName}">
         <apex:image value="{!$Resource.AMP_logo}" />
             <apex:commandButton value="History" action="{!showPrevious}" reRender="theBlock" />
             <apex:commandButton value="Current" action="{!showThis}" reRender="theBlock" />
