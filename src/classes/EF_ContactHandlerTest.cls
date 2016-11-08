@@ -14,6 +14,8 @@ private class EF_ContactHandlerTest {
 
     @isTest static void testInactiveEFContact()
     {
+        User u = [SELECT Id FROM User WHERE Username='efUnit@test.ch2' LIMIT 1];
+        System.runAs(u) {
         Contract contract = [select Id, AccountId, Account.Name, EF_Allow_Billing_Agreements__c from Contract where Account.Name = 'Test Account Client'];
         // Account customer = [select Id, Name  from Account where Name = 'Test Account customer'];
         Account client = [select Id, Name from Account where Name = 'Test Account client'];
@@ -24,6 +26,7 @@ private class EF_ContactHandlerTest {
         Contact cont = new Contact();
         cont.RecordTypeId = schema.SObjectType.Contact.getRecordTypeInfosByName().get('Standard').getRecordTypeId();
         cont.LastName='UnitTestContactSomething';
+            cont.Phone='555-fakephone';
         cont.AccountId = client.Id;
         cont.EF_Status__c='Active';
         insert cont;
@@ -56,6 +59,7 @@ private class EF_ContactHandlerTest {
         EF_Contact_EF_Contract__c ccAfter = [select Id, EF_Status__c, EF_Contact__c from EF_Contact_EF_Contract__c where Id=:cc.Id limit 1];
         System.assertEquals('Inactive', ccAfter.EF_Status__c);
 
+    }
     }
 
 }
