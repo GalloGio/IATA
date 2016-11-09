@@ -12,8 +12,8 @@
             sforce.connection.sessionId = "{!$Api.Session_ID}";
             var countryEmail = sforce.apex.execute("IDFS_Util","getRecordTypeEmail",{caseRecordType:"{!cse.RecordType.DeveloperName}", caseBSPCountry:"{!cse.BSPCountry__c}"});
             if (countryEmail == '') {
-            	countryEmail = sforce.apex.execute("IDFS_Util","getIATACountryEmail",{caseBSPCountry:"{!cse.BSPCountry__c}"});
-           	}
+                countryEmail = sforce.apex.execute("IDFS_Util","getIATACountryEmail",{caseBSPCountry:"{!cse.BSPCountry__c}"});
+            }
             return countryEmail;
         }
 
@@ -31,7 +31,7 @@
                     //window.top.location.reload();
                     //window.parent.location.reload();
                     // var temp = window.top.location;
-                     window.top.location = ("/" + caseId);
+                     window.top.location = ("{!$Label.SF_Base_URL}/" + caseId);
                 }
                 else
                 {
@@ -44,11 +44,11 @@
             var countryEmail = getCountryEmail();
             if(countryEmail != '')
             {
-                window.top.location=("/_ui/core/email/author/EmailAuthor?email_id=" + id + "&replyToAll=1&retURL=" + caseId + "&p26=" + countryEmail);
+                window.top.location=("{!$Label.SF_Base_URL}/_ui/core/email/author/EmailAuthor?email_id=" + id + "&replyToAll=1&retURL=" + caseId + "&p26=" + countryEmail);
             }
             else
             {
-                window.top.location=("/_ui/core/email/author/EmailAuthor?email_id=" + id + "&replyToAll=1&retURL=" + caseId);
+                window.top.location=("{!$Label.SF_Base_URL}/_ui/core/email/author/EmailAuthor?email_id=" + id + "&replyToAll=1&retURL=" + caseId);
             }
         }
 
@@ -56,11 +56,11 @@
             var countryEmail = getCountryEmail();
             if(countryEmail != '')
             {
-                window.top.location=("/_ui/core/email/author/EmailAuthor?email_id=" + id + "&replyToAll=0&retURL=" + caseId + "&p26=" + countryEmail);
+                window.top.location=("{!$Label.SF_Base_URL}/_ui/core/email/author/EmailAuthor?email_id=" + id + "&replyToAll=0&retURL=" + caseId + "&p26=" + countryEmail);
             }
             else
             {
-                window.top.location=("/_ui/core/email/author/EmailAuthor?email_id=" + id + "&replyToAll=0&retURL=" + caseId);
+                window.top.location=("{!$Label.SF_Base_URL}/_ui/core/email/author/EmailAuthor?email_id=" + id + "&replyToAll=0&retURL=" + caseId);
             }
         }
 
@@ -70,11 +70,11 @@
 
             if(countryEmail != '')
             {
-                window.top.location = ("/email/author/emailauthor.jsp?retURL=" + caseId + "&p2_lkid={!cse.ContactId}&p3_lkid=" + caseId + "&rtype=003&p26=" + countryEmail);
+                window.top.location = ("{!$Label.SF_Base_URL}/email/author/emailauthor.jsp?retURL=" + caseId + "&p2_lkid={!cse.ContactId}&p3_lkid=" + caseId + "&rtype=003&p26=" + countryEmail);
             }
             else
             {
-                window.top.location= ("/email/author/emailauthor.jsp?retURL=" + caseId + "&p2_lkid={!cse.ContactId}&p3_lkid=" + caseId + "&rtype=003");
+                window.top.location= ("{!$Label.SF_Base_URL}/email/author/emailauthor.jsp?retURL=" + caseId + "&p2_lkid={!cse.ContactId}&p3_lkid=" + caseId + "&rtype=003");
             }
         }
 
@@ -227,7 +227,7 @@
                             <td class=" dataCell "><apex:outputField value="{!originalEmail[message.EmailMessage__c].MessageDate}"/></td>
                         </tr>
                     </apex:repeat>
-<!-- 					TRACKED EMAIL -->
+<!--                    TRACKED EMAIL -->
                     <apex:repeat var="trackedEmail" value="{!trackedEmails}">
                         <tr class="dataRow even ">
                             <td class="actionColumn">
