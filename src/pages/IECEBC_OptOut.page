@@ -1,0 +1,107 @@
+<apex:page controller="vfIECEBC_OptOut" cache="false" docType="html-5.0" applyHtmlTag="false" applyBodyTag="false" sidebar="false" showheader="false" standardStylesheets="false">
+    
+    <apex:composition template="IECEBC_LayoutPublic">
+        <apex:define name="pageHeadAdditions">
+            <!-- Start of Page <head> -->
+            <title>Unsubscribe - IATA eBroadcast</title>
+            <!-- End of Page </head> -->
+        </apex:define>
+        <apex:define name="pageScriptAdditions">
+            <!-- If any page specific .js, add them here -->
+        </apex:define>
+        <apex:define name="pageContent">
+            <div class="message-container">
+                <div class="inner-wrapper">
+                    <p>
+                        Static Marketing text goes here to explain what eBroadcast is and try to retain subscribers. <br />
+                        Aliquam quis tristique lectus. Morbi nibh libero, facilisis nec luctus a, eleifend sit amet risus.
+                    </p>
+                    <p class="lead">
+                        With this in mind, do you really want to change email <br />
+                        preferences for <apex:outputText value="{!email}" />
+                    </p>
+                </div>
+            </div>
+            
+            <div class="inner-wrapper">
+                <apex:form >
+                    <apex:inputHidden value="{!sender}" id="sender" />
+                    <ul class="list list-radio-select js-radio-list">
+                        <li>
+                            <div class="radio-box">
+                                <div class="custom-user-input radio">
+                                    <input class="user-input radio" type="radio" name="resubscribe" id="resubscribe-no" />
+                                    <label class="custom-radio" for="resubscribe-no"><i class="icon"></i></label>
+                                </div>
+                                <label class="input-label" for="resubscribe-no">
+                                    No, now that I understand why I received this email, I want to remain a subscriber
+                                </label>
+                            </div>
+                            <div class="toggle-container show-hide-toggle space">
+                                <div class="group-title">Phew! that was close. You scare us.</div>
+                                <div class="row">
+                                    <div class="columns small-8">
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Totam iste officia accusamus, ad similique non consectetur aut beatae, voluptatem quo mollitia repudiandae illum nostrum neque error nulla quaerat quas eius?</p>
+                                    </div>
+                                    <div class="columns small-4">
+                                        <a class="text-link view-details" href="#"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i> View details</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="radio-box">
+                                <div class="custom-user-input radio">
+                                    <input class="user-input radio" type="radio" name="resubscribe" id="resubscribe-yes" />
+                                    <label class="custom-radio" for="resubscribe-yes"><i class="icon"></i></label>
+                                </div>
+                                <label class="input-label" for="resubscribe-yes">
+                                    Yes, please change my preferences. We aren’t made for each other.
+                                </label>
+                            </div>
+                            <div class="toggle-container show-hide-toggle">
+                                <div class="group-container stop-receiving small-8">
+                                    <div class="group-title">Stop receiving emails about</div>
+                                    <div class="field-group radio inline">
+                                        <div class="radio-box">
+                                            <div class="custom-user-input radio">
+                                                <input class="user-input radio" type="radio" name="stop-receiving" id="stop-receiving-1" value="{!billingAccountId}" onchange="document.getElementById('{!$Component.sender}').value = this.value;" checked="checked" />
+                                                <label class="custom-radio" for="stop-receiving-1"><i class="icon"></i></label>
+                                            </div>
+                                            <label class="input-label" for="stop-receiving-1"><apex:outputText value="{!billingAccountName}" /></label> 
+                                        </div>
+                                        <div class="radio-box">
+                                            <div class="custom-user-input radio">
+                                                <input class="user-input radio" type="radio" name="stop-receiving" id="stop-receiving-2" value="all" onchange="document.getElementById('{!$Component.sender}').value = this.value;" />
+                                                <label class="custom-radio" for="stop-receiving-2"><i class="icon"></i></label>
+                                            </div>
+                                            <label class="input-label" for="stop-receiving-2">Unsubscribe from all emails</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="group-container feedback small-8">
+                                    <div class="group-title">Help us improve our feedback</div>
+                                    <div class="field-group checkbox-light">
+                                        <apex:repeat var="r" value="{!reasons}">
+                                            <div class="checkbox-box">
+                                                <div class="custom-user-input checkbox">
+                                                    <apex:inputCheckbox value="{!reasons[r]}" id="checkbox" label="test" styleClass="user-input checkbox" />
+                                                    <label class="custom-checkbox" for="{!$Component.checkbox}"><i class="icon"></i></label>
+                                                </div>
+                                                <label class="input-label" for="{!$Component.checkbox}">{!r}</label>
+                                            </div>
+                                        </apex:repeat>
+                                    </div>
+                                </div>
+                                <div class="footer-actions">
+                                    <apex:commandButton action="{!unsubscribe}" value="Save preferences" styleClass="button" />
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </apex:form>
+            </div>
+            <!-- End of Page Content -->
+        </apex:define>
+    </apex:composition>
+</apex:page>
