@@ -76,6 +76,8 @@ public without sharing class AMS_Utils {
 
     public static final String PASSED = 'Passed';
     public static final String FAILED = 'Failed';
+    public static final String NOT_APPLICABLE = 'Not Applicable';
+
     public static final String AUTH_APPROVAL = 'Authorize Approval';
     public static final String AUTH_DISAPPROVAL ='Authorize Disapproval';
     public static final String LOCATION_TYPE = 'Location type';
@@ -113,6 +115,7 @@ public without sharing class AMS_Utils {
     //Processes of type CHANGES
     public static final String COR              = 'CORRECTION.1.0'  ;
     public static final String AGENCYCHANGES    = 'MAJOR.CHANGES'   ;
+    public static final String BANKACCCHANGES   = 'BANK.ACCOUNT.CHANGES';
 
     public static final Set<String> oscarAMSProcesses = new Set <String>{new_HO,new_BR,new_BR_ABROAD,new_TIDS,new_MSO,new_GSA,new_GSA_BSP,new_GSSA,new_AHA,new_AHA_BSP,new_SA, COR};
 
