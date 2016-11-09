@@ -15874,6 +15874,86 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <value>reCAPTCHA verification Failed</value>
     </labels>
     <labels>
+        <fullName>ISSP_Registration_MyCompany</fullName>
+        <categories>ISSP, myProfile</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Registration</shortDescription>
+        <value>Business Information</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Registration_BusinessPhone</fullName>
+        <categories>ISSP, myProfile</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Registration</shortDescription>
+        <value>Business Phone</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Registration_Error_BusinessPhone</fullName>
+        <categories>ISSP, login</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Registration_Error_BusinessPhone</shortDescription>
+        <value>Please enter your phone number</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Office_Email</fullName>
+        <categories>ISSP_Registration, s8</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Office_Email</shortDescription>
+        <value>Office Email</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Opt_In</fullName>
+        <categories>ISSP, DDS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Opt_In</shortDescription>
+        <value>Opt-in</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PageDescription_ISSP_CompanyInformation</fullName>
+        <categories>Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_PageDescription_ISSP_CompanyInformation</shortDescription>
+        <value>Total number of Irregularities accumulated in the past 12 months</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_outstanding_invoices</fullName>
+        <categories>Portal, S10</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_outstanding_invoices</shortDescription>
+        <value>Your company has outstanding IATA invoice(s), please check &lt;a href=&quot;/ISSP_CaseList?ListViewName=901_MyPaymentsCases&amp;mid=M4S3&amp;admin=true&quot;&gt;here&lt;/a&gt;</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_IFAP_Name</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_MyProfile</shortDescription>
+        <value>IFAP Contact Name</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_View_Branch_details</fullName>
+        <categories>ISSP, Portal, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS View Branch details</shortDescription>
+        <value>View / Update Branch Details</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Branch_Offices</fullName>
+        <categories>ISSP, Portal, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Branch Offices</shortDescription>
+        <value>Branch Office(s)</value>
+    </labels>    
+    <labels>
         <fullName>Iata_service_request</fullName>
         <language>en_US</language>
         <protected>false</protected>
