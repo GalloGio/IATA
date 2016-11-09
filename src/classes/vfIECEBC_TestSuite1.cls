@@ -258,6 +258,55 @@ public class vfIECEBC_TestSuite1 {
         }
     }
     
+    public static void testRecipientListEdit() {
+        User usr = initPreRunAs(true);
+        
+        
+        EBC_Application_Filter__c af = new EBC_Application_Filter__c(Audience__c = 'Agency', Filter_Description__c = 'Preferred Language', Data_Type__c = 'Text', Filter_Field__c = 'Preferred_Language__c');
+        insert af;
+        EBC_Master_Filter__c masterFilter = new EBC_Master_Filter__c(Audience__c = 'Agency', OwnerId = usr.Id);
+        insert masterFilter;
+        EBC_Customer_Filter__c cf = new EBC_Customer_Filter__c(EBC_Master_Filter__c = masterFilter.Id, EBC_Application_Filter__c = af.Id, Field_Operator__c = '=', Field_Value__c = 'X0');
+        insert cf;
+        
+
+        PageReference pageRef = Page.IECEBC_Recipient;
+        pageRef.getParameters().put('id', masterFilter.Id);
+        Test.setCurrentPage(pageRef);
+        
+        System.runAs(usr) {
+            initPostRunAs();
+            Test.startTest();
+            
+            // Layout PageLoad
+            vfIECEBC_Layout layoutController = new vfIECEBC_Layout();
+            System.assertEquals(null, layoutController.pageLoad());
+            
+            ApexPages.StandardController sc = new ApexPages.StandardController(masterFilter);
+            
+            vfIECEBC_RecipientEdit recipientEditCon = new vfIECEBC_RecipientEdit();
+            recipientEditCon.filterId = masterFilter.Id;
+            
+            System.assertNotEquals(null, recipientEditCon.getNewFilterEscapedJSON());
+            System.assertEquals(1, recipientEditCon.newListStepNumber);
+            System.assertNotEquals(null, recipientEditCon.limitToAudience);
+            System.assertNotEquals(null, recipientEditCon.newFilter.Audience__c);
+            
+            System.assertNotEquals(null, recipientEditCon.isIDCARDSelectionAllowed);
+            System.assertNotEquals(null, recipientEditCon.isCodeSelectionAllowed);
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            Test.stopTest();
+        }
+    }
+    
     public static void testCampaignRecipient() {
         
         PageReference pageRef = Page.IECEBC_CampaignRecipients;
@@ -433,7 +482,7 @@ insert gpavs;*/
             vfIECEBC_TemplateCreation templateListCon = new vfIECEBC_TemplateCreation();
             templateListCon.audience = 'Agency';
             System.debug(templateListCon.globalTemplates);
-            System.assert(templateListCon.globalTemplates.size() >= 3);
+            System.assertNotEquals(0, templateListCon.globalTemplates.size());
             System.assertEquals(2, templateListCon.userEditableTemplates.size());
             
             templateExtCon.selectedTemplate = templateExtCon.customHtmlTemplate.Id;
