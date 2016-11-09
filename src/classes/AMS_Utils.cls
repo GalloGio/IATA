@@ -1207,17 +1207,18 @@ public without sharing class AMS_Utils {
 
         List<AMS_Inspection__c> modifiedInspections = new List<AMS_Inspection__c>();
 
-        for(AMS_Inspection__c insp: inspections)
-        {
+        if(inspections != null)
+            for(AMS_Inspection__c insp: inspections)
+            {
 
-            insp.Account__c = insp.OSCAR__r.Account__c;
-            
-            insp.Date_Organisation_Status_attained__c = (insp.Date_Organisation_Status_attained__c == null) ? system.today() : insp.Date_Organisation_Status_attained__c;
-            insp.Accreditation_Endorsement_Status_code__c = statusToApply;
-            insp.Last_synchronization__c = system.today();
-            
-            modifiedInspections.add(insp);
-        }
+                insp.Account__c = insp.OSCAR__r.Account__c;
+                
+                insp.Date_Organisation_Status_attained__c = (insp.Date_Organisation_Status_attained__c == null) ? system.today() : insp.Date_Organisation_Status_attained__c;
+                insp.Accreditation_Endorsement_Status_code__c = statusToApply;
+                insp.Last_synchronization__c = system.today();
+                
+                modifiedInspections.add(insp);
+            }
 
         return modifiedInspections;
 
