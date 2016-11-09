@@ -1993,46 +1993,6 @@
         }]
       },
       {
-        "Name": "AMS_OSCAR_VALIDATION",
-        "Steps": [{
-        "Name": "STEP15",
-        "Required": [],
-        "Actions": [],
-        "Automations": [{
-          "Status": "Passed",
-          "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step15_succeeded"
-        },
-        {
-          "Status": "Failed",
-          "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step15_failed"
-        }],
-        "DisplayFields": [
-        "Comments_validate__c",
-        "Validation_Status__c"],
-        "IsDependent": false
-        }]
-      },
-      {
-        "Name": "AMS_OSCAR_APPROVAL",
-        "Steps": [{
-        "Name": "STEP2",
-        "Required": [],
-        "Actions": [],
-        "Automations": [{
-          "Status": "Passed",
-          "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step2_succeeded"
-        },
-        {
-          "Status": "Failed",
-          "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step2_failed"
-        }],
-        "DisplayFields": [
-        "RPM_Approval__c",
-        "Comments_approval__c"],
-        "IsDependent": false
-        }]
-      },
-      {
         "Name": "AMS_OSCAR_APP_FINALIZATION",
         "Steps": [
         {
@@ -2580,46 +2540,6 @@
         "DisplayFields": [
         "Send_agreement__c",
         "STEP14__c"],
-        "IsDependent": false
-        }]
-      },
-      {
-        "Name": "AMS_OSCAR_VALIDATION",
-        "Steps": [{
-        "Name": "STEP15",
-        "Required": [],
-        "Actions": [],
-        "Automations": [{
-          "Status": "Passed",
-          "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step15_succeeded"
-        },
-        {
-          "Status": "Failed",
-          "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step15_failed"
-        }],
-        "DisplayFields": [
-        "Comments_validate__c",
-        "Validation_Status__c"],
-        "IsDependent": false
-        }]
-      },
-      {
-        "Name": "AMS_OSCAR_APPROVAL",
-        "Steps": [{
-        "Name": "STEP2",
-        "Required": [],
-        "Actions": [],
-        "Automations": [{
-          "Status": "Passed",
-          "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step2_succeeded"
-        },
-        {
-          "Status": "Failed",
-          "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step2_failed"
-        }],
-        "DisplayFields": [
-        "RPM_Approval__c",
-        "Comments_approval__c"],
         "IsDependent": false
         }]
       },

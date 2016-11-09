@@ -716,7 +716,7 @@ public with sharing class AMS_OSCAR_Automation
         }
     }
 
-    public class AMS_OSCAR_Step25_notApplicable implements IClassFactory
+    /*public class AMS_OSCAR_Step25_notApplicable implements IClassFactory
     {
         public Boolean processWork(AMS_OSCAR_Event__c lce, AMS_OSCAR__c oscar)
         {
@@ -732,7 +732,7 @@ public with sharing class AMS_OSCAR_Automation
             }
             return res;
         }
-    }
+    }*/
 
     //OK
     public class AMS_OSCAR_Step2_succeeded implements IClassFactory
