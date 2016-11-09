@@ -84,6 +84,10 @@ public with sharing class IECEBC_TestUtility {
 	private static String TEST_IATA_CODE = '1234567';
 	public static final String EBC_RENEWAL_WINDOW = '60';
 	
+    private static String generateZuoraID() {
+        String newId = IECUtil.NewGuid();
+        return newId.substring(0, 32);
+    }
 			
 	// ========================================================================
 	// create one community user, along with its related records
@@ -206,7 +210,14 @@ public with sharing class IECEBC_TestUtility {
 					, Non_Member_Prepaid_Product_Rate_Plan_02__c = lEbcProductRatePlanNonMember[1].Id
 					, Non_Member_Prepaid_Product_Rate_Plan_03__c = lEbcProductRatePlanNonMember[2].Id
 					, Non_Member_Prepaid_Product_Rate_Plan_04__c = lEbcProductRatePlanNonMember[3].Id
-					
+					, E_Member_Prepaid_Product_Rate_Plan_01__c =lEbcProductRatePlanMember[0].Id
+                    , E_Member_Prepaid_Product_Rate_Plan_02__c =lEbcProductRatePlanMember[1].Id
+                    , E_Member_Prepaid_Product_Rate_Plan_03__c =lEbcProductRatePlanMember[2].Id
+                    , E_Member_Prepaid_Product_Rate_Plan_04__c =lEbcProductRatePlanMember[3].Id                                                   
+                    , E_N_Member_Prepaid_Product_Rate_Plan_01__c= lEbcProductRatePlanNonMember[0].Id
+                    , E_N_Member_Prepaid_Product_Rate_Plan_02__c= lEbcProductRatePlanNonMember[1].Id
+                    , E_N_Member_Prepaid_Product_Rate_Plan_03__c= lEbcProductRatePlanNonMember[2].Id
+                    , E_N_Member_Prepaid_Product_Rate_Plan_04__c= lEbcProductRatePlanNonMember[3].Id
 					, Pay_Exact_Amount_Member__c = oEbcProductRatePlanPaysExactAmount.Id
 					, Pay_Exact_Amount_Non_Member__c = oEbcProductRatePlanPaysExactAmount.Id
 					
@@ -448,5 +459,144 @@ public with sharing class IECEBC_TestUtility {
  */
 		return oSubscription;
 	} // end of createEbcSubscription
-	
+    public static Product_Rate_Plan_Information__c CreateSampleProductRatePlanInfo(String sName, Boolean triable, zqu__ProductRatePlan__c oProductRatePlan, Product_Information__c oProductInfo) {
+        Product_Rate_Plan_Information__c prpi = new Product_Rate_Plan_Information__c();
+            prpi.Name = sName;
+            prpi.Related_Product_Information__c = oProductInfo.Id;
+            prpi.Product_Rate_Plan__c = oProductRatePlan.Id;
+            prpi.Active__c = true;
+            prpi.Monthly_Price__c = 10.00;
+            prpi.Display_As_Monthly_Fee__c = !triable;
+            //prpi.User_Interface_Display__c = 'Yes';
+            prpi.Order__c = 1;
+            prpi.Short_Description__c = 'Sample Product Rate Plan Information';
+            prpi.Long_Description__c = 'long desc';
+            
+            return prpi;
+    }
+    public static Zuora__Subscription__c createSampleSubscription(id idAccount, String sName, Date sEndDate) {
+        return createSampleSubscription(idAccount, null, sName, sEndDate);
+    }
+
+    public static Zuora__Subscription__c createSampleSubscription(id idAccount, id idBillingAccount, String sName, Date sEndDate) {
+        Zuora__Subscription__c subscription = new Zuora__Subscription__c();
+        String zuoraId =  IECUtil.NewGuid();
+        subscription.Zuora__External_Id__c = 
+            subscription.Zuora__Zuora_Id__c = zuoraId.substring(0, 32);
+        subscription.Zuora__RenewalTerm__c = '12 Months';
+        subscription.Zuora__Version__c = 1;
+    
+        if (sName != null)
+            subscription.Name = sName;
+    
+        if (idAccount != null)
+            subscription.Zuora__Account__c = idAccount;
+        
+        if (idBillingAccount != null)
+            subscription.Zuora__CustomerAccount__c = idBillingAccount;
+
+        if (sEndDate != null) { 
+            subscription.Zuora__SubscriptionEndDate__c = sEndDate;
+            subscription.Zuora__SubscriptionStartDate__c = sEndDate.addYears(-1).addDays(1); // Calculates start date 1 year before endDate
+            subscription.Zuora__TermStartDate__c = subscription.Zuora__SubscriptionStartDate__c;
+            subscription.Zuora__TermEndDate__c = subscription.Zuora__SubscriptionEndDate__c;
+        }
+        
+        return subscription;
+    }
+    
+    public static Zuora__SubscriptionProductCharge__c createSampleSubscriptionCharge(Id subscriptionId, Date sEffectiveDate, zqu__ZProduct__c oProduct, zqu__ProductRatePlan__c oProductRatePlan) {
+        string sZID = IECUtil.NewGuid().substring(0, 32);
+        return new Zuora__SubscriptionProductCharge__c(
+            Zuora__External_Id__c = sZID
+            , Zuora__Zuora_Id__c = sZID
+            , Name = 'CHARGETEST'
+            , Zuora__Subscription__c = subscriptionId
+            , Zuora__BillingPeriod__c = 'Annual'
+            , Zuora__EffectiveStartDate__c = sEffectiveDate
+            , Zuora__TotalContractValue__c = 25
+            , Zuora__MonthlyRecurringRevenue__c = 2
+            , Zuora__Price__c = 25
+            , Zuora__Quantity__c = 1
+            , Zuora__ExtendedAmount__c = 25
+            , Zuora__BillingPeriodStartDay__c = '19th of the month'
+            , Zuora__Model__c = IECConstants.ChargeModel_Zuora_FlatFeePricing
+            , Zuora__Type__c = 'Recurring'
+            , Zuora__RatePlanName__c = oProductRatePlan.Name
+            , Zuora__RatePlanDescription__c = oProductRatePlan.zqu__Description__c
+            , Zuora__RatePlanEffectiveEndDate__c = oProductRatePlan.zqu__EffectiveEndDate__c
+            , Zuora__ProductName__c = oProduct.Name
+            , Zuora__ProductSKU__c = oProduct.zqu__SKU__c
+            , Zuora__ProductEffectiveEndDate__c = oProduct.zqu__EffectiveEndDate__c
+        );
+    }
+    
+    public static zqu__ProductRatePlanCharge__c CreateSampleProductRatePlanCharge(zqu__ProductRatePlan__c oRelatedRatePlan, String sName, double dPrice) {
+        zqu__ProductRatePlanCharge__c ratePlanCharge = new zqu__ProductRatePlanCharge__c();
+            ratePlanCharge.Name = sName;
+            ratePlanCharge.zqu__ProductRatePlan__c = oRelatedRatePlan.Id;
+            ratePlanCharge.zqu__Deleted__c = false;
+            ratePlanCharge.zqu__ZuoraId__c = generateZuoraID();
+            ratePlanCharge.zqu__ListPrice__c = dPrice;
+            ratePlanCharge.zqu__Model__c = 'Flat Fee Pricing';
+            
+            return ratePlanCharge;
+    }
+    
+	public static Zuora.zApi.SubscribeResult createComplexSubscriptionResult(Boolean success) {
+        Zuora.zApi.SubscribeResult res = new Zuora.zApi.SubscribeResult();
+        if (success) {
+            res.Success = true;
+            res.AccountNumber = 'A-0987654321';
+            res.SubscriptionNumber = 'S-0987654321';
+            res.InvoiceNumber = 'I-0987654321';
+            List<Zuora.zObject> lstInvoiceDatas = new List<Zuora.zObject>();
+            Zuora.zObject oInvoiceData = new Zuora.zObject('InvoiceData');
+            
+            Zuora.zObject oInvoice = new Zuora.zObject('Invoice');
+            oInvoice.setValue('AmountWithoutTax', 25.0);
+            oInvoice.setValue('TaxAmount', 0.2);
+            oInvoice.setValue('Amount', 25.2);
+            
+            oInvoiceData.setValue('Invoice', oInvoice);
+            lstInvoiceDatas.add(oInvoiceData);
+            res.InvoiceDatas = lstInvoiceDatas;
+        }
+        else {
+            res.Success = false;
+            Zuora.zObject error = new Zuora.zObject('Error');
+            error.setValue('Code', 'OMG');
+            error.setValue('Message', 'Error generated for unit testing');
+            res.errors = new List<Zuora.zObject> {error};
+        }
+        return res;
+    }
+    
+    public static Zuora.zApi.AmendResult CreateSampleAmendResult() {
+        Zuora.zApi.AmendResult result = new Zuora.zApi.AmendResult();
+        result.Success = true;
+        result.PaymentTransactionNumber = '1234567890';
+        List<Zuora.zObject> lstInvoiceDatas = new List<Zuora.zObject>();
+        Zuora.zObject oInvoiceData = new Zuora.zObject('InvoiceData');
+        
+        Zuora.zObject oInvoice = new Zuora.zObject('Invoice');
+        oInvoice.setValue('AmountWithoutTax', 25.0);
+        oInvoice.setValue('TaxAmount', 0.2);
+        oInvoice.setValue('Amount', 25.2);
+        
+        Zuora.zObject oInvoiceItem = new Zuora.zObject('InvoiceItem');
+        oInvoiceItem.setValue('ChargeDate', Datetime.now());
+        oInvoiceItem.setValue('ChargeName', 'Test subscription charge');
+        oInvoiceItem.setValue('ServiceStartDate', Datetime.now());
+        oInvoiceItem.setValue('ServiceEndDate', Datetime.now().addYears(1).addDays(-1));
+        oInvoiceItem.setValue('UnitPrice', 42.0);
+        oInvoiceItem.setValue('ChargeAmount', 42.0);
+        
+        oInvoiceData.setValue('Invoice', oInvoice);
+        oInvoiceData.setValue('InvoiceItem', new List<Zuora.zObject>{ oInvoiceItem });
+        lstInvoiceDatas.add(oInvoiceData);
+        result.InvoiceDatas = lstInvoiceDatas;
+        return result;
+    }
+    
 } // IECEBC_TestUtility class
