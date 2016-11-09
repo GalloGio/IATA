@@ -10,7 +10,7 @@ private class AMS_OSCAR_AutomationTest {
 	}
 	
 	static testMethod void test_AMS_OSCAR_Automation() {
-		AMS_Oscar__c oscar = [SELECT Id, Account__c FROM AMS_Oscar__c LIMIT 1];
+		AMS_Oscar__c oscar = [SELECT Id FROM AMS_Oscar__c LIMIT 1];
 		AMS_OSCAR_Event__c event = new AMS_OSCAR_Event__c();
 		AMS_OSCAR_AutomationManager manager = new AMS_OSCAR_AutomationManager();
 		AMS_OSCAR_Automation.IClassFactory factory;
