@@ -237,6 +237,9 @@
         <fields>Type_of_application__c</fields>
         <relatedList>ID_Card_Application__c.Mass_order_Application__c</relatedList>
     </relatedLists>
+    <relatedLists>
+        <relatedList>RelatedEntityHistoryList</relatedList>
+    </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>true</showHighlightsPanel>
     <showInteractionLogPanel>true</showInteractionLogPanel>
