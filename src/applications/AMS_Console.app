@@ -232,6 +232,8 @@
         </mapping>
         <mapping>
             <tab>SIDRA_Lite_Mass_Approval</tab>
+        </mapping>
+        <mapping>
             <tab>Voucher_Management</tab>
         </mapping>
         <mapping>

@@ -143,7 +143,8 @@ public class AMS_AgencyAChangeCodeHandler {
         if(!oscarsToCopyData.isEmpty()){
             AMS_Utils.copyDataToAccount(oscarsToCopyData);
         
-            for(AMS_OSCAR__C oscar : oscarsToCopyData)
+            //moved to oscar trigger, appointment status changes needs to occur in situations without change code generation
+            /*for(AMS_OSCAR__C oscar : oscarsToCopyData)
             {
                  if( AMS_Utils.oscarProcessesWithAppointments.contains(oscar.Process__c))
                      oscarsToUpdateAppointments.add(oscar);
@@ -151,7 +152,7 @@ public class AMS_AgencyAChangeCodeHandler {
             }       
 
             if(!oscarsToUpdateAppointments.isEmpty())
-                AMS_Utils.UpdateInspectionsFromOscar(oscarsToUpdateAppointments);
+                AMS_Utils.UpdateInspectionsFromOscar(oscarsToUpdateAppointments);*/
 
         }else{
             System.debug('Nothing to migrate here.');

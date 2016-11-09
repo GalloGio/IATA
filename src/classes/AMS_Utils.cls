@@ -113,11 +113,22 @@ public without sharing class AMS_Utils {
     //Processes of type CHANGES
     public static final String COR              = 'CORRECTION.1.0'  ;
     public static final String AGENCYCHANGES    = 'MAJOR.CHANGES'   ;
+    public static final String CERTIFICATION    = 'CERTIFICATION.1.0';
+
+    //Types of Certificate
+    public static final String CERT_DGR         = 'DGR';
+    public static final String CERT_DGA         = 'DGA';
+
+    //Record Types
+    public static final String RECTYPE_NEW      = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('NEW').getRecordTypeId();
+    public static final String RECTYPE_CHANGE   = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('CHANGE').getRecordTypeId();
+    public static final String RECTYPE_CERT     = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('CERTIFICATION').getRecordTypeId();
+    public static final String RECTYPE_OSCARCOMM= Schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
 
     public static final Set<String> oscarAMSProcesses = new Set <String>{new_HO,new_BR,new_BR_ABROAD,new_TIDS,new_MSO,new_GSA,new_GSA_BSP,new_GSSA,new_AHA,new_AHA_BSP,new_SA, COR};
 
 
-    public static final Set<String> oscarProcessesWithAppointments = new Set <String>{new_GSA,new_GSA_BSP,new_AHA,new_AHA_BSP,new_GSSA};
+    public static final Set<String> oscarProcessesWithAppointments = new Set <String>{new_GSA,new_GSA_BSP,new_AHA,new_AHA_BSP,new_GSSA,new_MSO};
 
     public static final String ACC_S0_TERMINATED = 'Terminated';
     public static final String ACC_S1_NOTACCREDITED = 'Not accreditated';
@@ -142,6 +153,7 @@ public without sharing class AMS_Utils {
     public static final String TYPECHANGE_LOCATIONWITHINSPECTION = 'Location with inspection'; 
     public static final Id AccreditationContactPersonRT = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Person').getRecordTypeId();
     public static final Id AccreditationContactCompanyRT = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Company').getRecordTypeId();
+    public static final Id AccreditationContactTrainedStaffRT = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Trained Staff').getRecordTypeId();
     public static final Id AccountRoleOwnershipRT = Schema.SObjectType.AMS_Account_Role__c.getRecordTypeInfosByName().get('Ownership').getRecordTypeId();
 
     public static final Set<String> LocationClassIFAPAllowed = new Set<String>{'P','C','R'};
@@ -877,7 +889,8 @@ public without sharing class AMS_Utils {
                                                                     ,'Is_your_firm_handling_Dangerous_Goods__c' => 'Is_your_firm_handling_Dangerous_Goods__c'
                                                                     ,'IATA_ISO_Billing_State__c' => 'IATA_ISO_State__c'
                                                                     ,'IATA_ISO_Shipping_Country__c' => 'Shipping_ISO_Country__c'
-                                                                    ,'IATA_ISO_Shipping_State__c' => 'Shipping_ISO_State__c'};
+                                                                    ,'IATA_ISO_Shipping_State__c' => 'Shipping_ISO_State__c'
+                                                                    ,'Link_agent_name__c' => 'Link_agent_name__c'};
 
         //Need to get Accounts and AMS Online Accreditation related to these oscars
         Set<Id> oscarAccountIds = new Set<Id>();
@@ -892,7 +905,8 @@ public without sharing class AMS_Utils {
                 BillingCountry, BillingStreet, BillingPostalCode, BillingState, BillingCity, IATA_ISO_Country__c, Iso_State__c, ShippingCountry,
                 ShippingStreet, ShippingPostalCode, ShippingState, ShippingCity, Email__c, Website, Phone, Fax, In_a_Airport__c, Abbreviated_name__c, Abbreviated_address__c,
                 Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Is_your_firm_handling_Dangerous_Goods__c
-                ,IATA_ISO_Billing_State__c, IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_Country__r.Name, IATA_ISO_Shipping_State__c, IATA_ISO_Shipping_State__r.Name, ISO_State__r.Name
+                ,IATA_ISO_Billing_State__c, IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_Country__r.Name, IATA_ISO_Shipping_State__c, IATA_ISO_Shipping_State__r.Name, ISO_State__r.Name,
+                Link_agent_name__c
                 FROM Account
                 WHERE Id IN :oscarAccountIds]);
 
@@ -901,14 +915,11 @@ public without sharing class AMS_Utils {
                 Billing_State__c, Branch_Office_City__c, ISO_Country__c, IATA_ISO_State__c, Shipping_Country__c, Shipping_Street__c, Shipping_Postal_Code__c,
                 Shipping_State__c, Shipping_City__c, Branch_Office_Email__c, Website__c, Branch_Office_Phone__c, Branch_Office_FAX__c, ISSP_AMS_Premises_located_at_airport__c,
                 Abbreviated_name__c, Abbreviated_address__c, Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Is_your_firm_handling_Dangerous_Goods__c
-                ,Shipping_ISO_Country__c,Shipping_ISO_State__c, Shipping_ISO_Country__r.Name, Shipping_ISO_State__r.Name, IATA_ISO_State__r.Name
+                ,Shipping_ISO_Country__c,Shipping_ISO_State__c, Shipping_ISO_Country__r.Name, Shipping_ISO_State__r.Name, IATA_ISO_State__r.Name, Link_agent_name__c
                 FROM AMS_Pax_Accreditation_Form__c
                 WHERE Id IN :oscarOnlineAccredIds]);
 
         List<Map<String, String>> configs = AMS_AgencyChangesConfigHelper.getAgencyChangesConfigData();
-
-
-
 
         for (AMS_OSCAR__c oscar : oscars) {
 
@@ -1030,7 +1041,8 @@ public without sharing class AMS_Utils {
                                                                     ,'Is_your_firm_handling_Dangerous_Goods__c' => 'Is_your_firm_handling_Dangerous_Goods__c'
                                                                     ,'IATA_ISO_Billing_State__c' => 'IATA_ISO_State__c'
                                                                     ,'IATA_ISO_Shipping_Country__c' => 'Shipping_ISO_Country__c'
-                                                                    ,'IATA_ISO_Shipping_State__c' => 'Shipping_ISO_State__c'};
+                                                                    ,'IATA_ISO_Shipping_State__c' => 'Shipping_ISO_State__c'
+                                                                    ,'Link_agent_name__c' => 'Link_agent_name__c'};
 
         if (fieldsToMigrate != null && oscarOnlineAccreditation != null) {
                 Map<String, Object> accountFieldNewValue = new Map<String,Object>();
@@ -1076,16 +1088,16 @@ public without sharing class AMS_Utils {
     return accountsToUpdate;
 
 }
-
+                        
 //Map data from staging area (AMS Online Accreditation) to account
     public static AMS_Pax_Accreditation_Form__c CopyDataFromAccountToStaging(String typesOfChange, Account account, AMS_Pax_Accreditation_Form__c onlineAccreditation) {
-
+                        
         System.debug('AGENCY CHANGES: Types of Change (' + typesOfChange + ') ');
 
         Set<String> fieldsToMigrate = AMS_AgencyChangesConfigHelper.getFieldsToMigrate(typesOfChange);
-
+                     
         System.debug('AGENCY CHANGES: fields to migrate (' + fieldsToMigrate + ') for accounts: ' + account);
-
+                           
         Map<String, String> fieldsMapping = new Map<String, String> {'Name' => 'Account_Name__c'
                                                                     ,'IATACode__c' => 'IATACode__c'
                                                                     ,'Short_Name__c' => 'Short_Name__c'
@@ -1118,18 +1130,18 @@ public without sharing class AMS_Utils {
                                                                     ,'IATA_ISO_Billing_State__c' => 'IATA_ISO_State__c'
                                                                     ,'IATA_ISO_Shipping_Country__c' => 'Shipping_ISO_Country__c'
                                                                     ,'IATA_ISO_Shipping_State__c' => 'Shipping_ISO_State__c'};
-
+                        
         if (fieldsToMigrate != null && onlineAccreditation != null) {
                 Map<String, Object> onlineAccreditationFieldNewValue = new Map<String,Object>();
-
+                            
                 for (String key : fieldsMapping.keySet()) {
                     String value = fieldsMapping.get(key);
                     if (fieldsToMigrate.contains(value)) {
-                    
+
                         onlineAccreditationFieldNewValue.put(value, account.get(key));
                         System.debug('copying stuff from target agency ' + value + ':' + account.get(key));
                     }
-                }
+                    }
 
                 //fields that require transformation
                 if (fieldsToMigrate.contains('ISSP_AMS_Premises_located_at_airport__c'))
@@ -1158,10 +1170,11 @@ public without sharing class AMS_Utils {
 
         return onlineAccreditation;
 
-    }
+}
 
+//Deprecated necessary rework because status no longer changes only after change code generation
 //get Inspections from oscar
-    public static void UpdateInspectionsFromOscar(List<AMS_OSCAR__c> oscars){
+    /*public static void UpdateInspectionsFromOscar(List<AMS_OSCAR__c> oscars){
 
         //query the the AMS Inspections to update the Account
         List<AMS_Inspection__c> lsInsToUpdate = new List<AMS_Inspection__c>();
@@ -1184,6 +1197,26 @@ public without sharing class AMS_Utils {
         } catch (DmlException e) {
             system.debug('Exception updating Inspection: ' + e.getMessage());
         }
+
+    }*/
+
+    public static List<AMS_Inspection__c> modifyInspectionStatus(List<AMS_Inspection__c> inspections, String statusToApply){
+
+        List<AMS_Inspection__c> modifiedInspections = new List<AMS_Inspection__c>();
+
+        for(AMS_Inspection__c insp: inspections)
+        {
+
+            insp.Account__c = insp.OSCAR__r.Account__c;
+            
+            insp.Date_Organisation_Status_attained__c = (insp.Date_Organisation_Status_attained__c == null) ? system.today() : insp.Date_Organisation_Status_attained__c;
+            insp.Accreditation_Endorsement_Status_code__c = statusToApply;
+            insp.Last_synchronization__c = system.today();
+            
+            modifiedInspections.add(insp);
+        }
+
+        return modifiedInspections;
 
     }
 
@@ -1277,12 +1310,18 @@ public static String transformGDS(String gds) {
 public static String errorMessageBeautifyer(Exception ex) {
     String errorString = ex.getMessage();
     String searchString = 'FIELD_CUSTOM_VALIDATION_EXCEPTION';
+    String searchString2 = '##';
     System.debug('EXCEPTION!! ' + ex.getMessage() + '\n ' + ex.getStackTraceString());
     if (ex.getMessage().containsIgnoreCase(searchString)) {
         System.debug(ex.getMessage().indexOfIgnoreCase(searchString));
         Integer startOfErrorMessage = ex.getMessage().indexOfIgnoreCase(searchString) + searchString.length() + 2;
         errorString = ex.getMessage().substring(startOfErrorMessage, ex.getMessage().length());
         errorString = errorString.substringBefore(': [');
+    }else if(ex.getMessage().containsIgnoreCase(searchString2)){
+        System.debug(ex.getMessage().indexOfIgnoreCase(searchString2));
+        Integer startOfErrorMessage = ex.getMessage().indexOfIgnoreCase(searchString2) + searchString2.length();
+        errorString = ex.getMessage().substring(startOfErrorMessage, ex.getMessage().length());
+        errorString = errorString.substringBefore('##');
     }
     return 'ERROR: ' + errorString;
 }

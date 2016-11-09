@@ -178,6 +178,30 @@ J-Joint Vent</description>
         <type>Picklist</type>
     </fields>
     <fields>
+        <fullName>Minimum_DGR_BR__c</fullName>
+        <description>Field used to save the minimum number of DGR certifications an BRCargo agency with location class &apos;R&apos; must have.</description>
+        <externalId>false</externalId>
+        <label>Minimum DGR BR</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Minimum_DGR_HO__c</fullName>
+        <description>Field used to save the minimum number of DGR certifications an HO Cargo agency with location class &apos;R&apos; must have.</description>
+        <externalId>false</externalId>
+        <label>Minimum DGR HO</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Months_Count__c</fullName>
         <defaultValue>12</defaultValue>
         <externalId>false</externalId>
@@ -208,6 +232,86 @@ J-Joint Vent</description>
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>AMS Country Specific Attributes</pluralLabel>
+    <recordTypes>
+        <fullName>DGR_Minimum_Requirements</fullName>
+        <active>true</active>
+        <label>DGR Minimum Requirements</label>
+        <picklistValues>
+            <picklist>Location_Class__c</picklist>
+            <values>
+                <fullName>A</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>C</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>D</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>E</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>G</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>I</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>J</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>K</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>M</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>O</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>P</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Q</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>R</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>S</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>T</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>V</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>X</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
     <recordTypes>
         <fullName>Irregularity_Threshold</fullName>
         <active>true</active>
