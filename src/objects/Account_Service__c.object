@@ -79,7 +79,7 @@
     </fields>
     <fields>
         <fullName>Junction_Name__c</fullName>
-        <caseSensitive>false</caseSensitive>
+        <caseSensitive>true</caseSensitive>
         <description>This field combines the account Id to the Service Id to make a unique external id for each junction. For example 001accountId_xxxserviceId</description>
         <externalId>true</externalId>
         <label>Junction Name</label>
