@@ -11252,8 +11252,8 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <active>true</active>
         <criteriaItems>
             <field>Case.Status</field>
-            <operation>equals</operation>
-            <value>Complete DSR</value>
+            <operation>contains</operation>
+            <value>Complete</value>
         </criteriaItems>
         <description>DPC DSR: this is the time when the case is completed by DPC (it is automaticaly populated on the case status COMPLETED)</description>
         <triggerType>onAllChanges</triggerType>
