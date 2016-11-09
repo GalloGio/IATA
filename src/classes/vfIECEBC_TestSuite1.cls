@@ -262,12 +262,20 @@ public class vfIECEBC_TestSuite1 {
         User usr = initPreRunAs(true);
         
         
-        EBC_Application_Filter__c af = new EBC_Application_Filter__c(Audience__c = 'Agency', Filter_Description__c = 'Preferred Language', Data_Type__c = 'Text', Filter_Field__c = 'Preferred_Language__c');
-        insert af;
+        List<EBC_Application_Filter__c> afs = new List<EBC_Application_Filter__c>{
+            new EBC_Application_Filter__c(Search_Level__c  = 'Geo-Selection', Audience__c = 'Agency', Filter_Description__c = 'Country', Data_Type__c = 'Text', Filter_Field__c = 'Country__c'),
+            new EBC_Application_Filter__c(Search_Level__c  = 'Refinement', Audience__c = 'Agency', Filter_Description__c = 'Preferred Language', Data_Type__c = 'Text', Filter_Field__c = 'Preferred_Language__c')
+        };
+        insert afs;
         EBC_Master_Filter__c masterFilter = new EBC_Master_Filter__c(Audience__c = 'Agency', OwnerId = usr.Id);
         insert masterFilter;
-        EBC_Customer_Filter__c cf = new EBC_Customer_Filter__c(EBC_Master_Filter__c = masterFilter.Id, EBC_Application_Filter__c = af.Id, Field_Operator__c = '=', Field_Value__c = 'X0');
-        insert cf;
+        /*
+        List<EBC_Customer_Filter__c> cfs = new List<EBC_Customer_Filter__c>{
+            new EBC_Customer_Filter__c(EBC_Master_Filter__c = masterFilter.Id, EBC_Application_Filter__c = afs[0].Id, Field_Operator__c = '=', Field_Value__c = 'X0'),
+            new EBC_Customer_Filter__c(EBC_Master_Filter__c = masterFilter.Id, EBC_Application_Filter__c = afs[1].Id, Field_Operator__c = '=', Field_Value__c = 'X0')
+        };
+        insert cfs;
+*/
         
 
         PageReference pageRef = Page.IECEBC_Recipient;
@@ -294,10 +302,43 @@ public class vfIECEBC_TestSuite1 {
             
             System.assertNotEquals(null, recipientEditCon.isIDCARDSelectionAllowed);
             System.assertNotEquals(null, recipientEditCon.isCodeSelectionAllowed);
+            System.assertNotEquals(null, recipientEditCon.allAvailableApplicationFilterValues);
             
+            // Refinement Filters
+            List<SelectOption> availableRefFilers = recipientEditCon.getAvailableRefinementApplicationFilterOptions();
+            recipientEditCon.addRefinementFilter();
             
+            recipientEditCon.refinementFilters[1].EBC_Application_Filter__c = afs[1].Id;
+            recipientEditCon.refinementFilters[1].Field_Operator__c = '=';
+            recipientEditCon.refinementFilters[1].Field_Value__c = 'x0';
             
+            recipientEditCon.getUniqueRefinementFiltersName();
             
+            recipientEditCon.resetFilterIndex = 0;
+            recipientEditCon.resetFilter();
+            
+            recipientEditCon.refinementFilterIndex = '0';
+            recipientEditCon.removeRefinementFilter();
+            
+                        
+            // Geo Filters
+            // 
+            recipientEditCon.getAvailableGeoApplicationFilterOptions();
+            recipientEditCon.addGeoFilter();
+            recipientEditCon.resetGeoFilter();
+            
+            recipientEditCon.geoFilters[0].EBC_Application_Filter__c = afs[0].Id;
+            recipientEditCon.geoFilters[0].Field_Operator__c = '=';
+            recipientEditCon.geoFilters[0].Field_Value__c = 'x0';
+            
+            recipientEditCon.resetFilterIndex = 0;
+            recipientEditCon.resetFilter();
+            
+            recipientEditCon.geoFilterIndex = '0';
+            recipientEditCon.removeGeoFilter();
+            
+                
+//            new EBC_Customer_Filter__c(EBC_Master_Filter__c = masterFilter.Id, EBC_Application_Filter__c = afs[0].Id, Field_Operator__c = '=', Field_Value__c = 'X0'),
             
             
             

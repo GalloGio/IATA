@@ -275,6 +275,11 @@ public class IECEBC_Utility {
 								, Member_Prepaid_Product_Rate_Plan_03__c
 								, Member_Prepaid_Product_Rate_Plan_04__c
                                                    
+                                , E_Member_Prepaid_Product_Rate_Plan_01__c
+								, E_Member_Prepaid_Product_Rate_Plan_02__c
+								, E_Member_Prepaid_Product_Rate_Plan_03__c
+								, E_Member_Prepaid_Product_Rate_Plan_04__c
+								
 								, Non_Member_Email_Block_Product__c
 								, Non_Member_Pay_As_You_Go_Plan__c
 								, Non_Member_Prepaid_Product_Rate_Plan_01__c
@@ -282,6 +287,11 @@ public class IECEBC_Utility {
 								, Non_Member_Prepaid_Product_Rate_Plan_03__c
 								, Non_Member_Prepaid_Product_Rate_Plan_04__c
                                                    
+                                , E_N_Member_Prepaid_Product_Rate_Plan_01__c
+								, E_N_Member_Prepaid_Product_Rate_Plan_02__c
+								, E_N_Member_Prepaid_Product_Rate_Plan_03__c
+								, E_N_Member_Prepaid_Product_Rate_Plan_04__c
+								
 								, Enhanced_Reporting_Product_Rate_Plan__c
 								, Storage_Product_Rate_Plan__c
 								
@@ -294,7 +304,7 @@ public class IECEBC_Utility {
 								, Product_Category__c
 								, Renewal_Window__c
 							from EBC_Setup__c
-							order by CreatedDate
+							order by CreatedDate Desc
 							limit 1];
 				ebcSetup = (ebcSetupList.size()==1) ? ebcSetupList[0] : new EBC_Setup__c (Name = 'Blank');
 			}
@@ -349,6 +359,29 @@ public class IECEBC_Utility {
 				ebcNonMemberProductRatePlanIdList = nonMemberRatePlanIdList;
 			}
 			return ebcNonMemberProductRatePlanIdList;
+		}
+		
+		private set;
+	} // end of ebcNonMemberProductRatePlanIdList getter/setter
+
+    // ECommerce Product Plan list all the available Prepaid Product Rate Plan for eBroadcast product for Member and non member from ecommerce platform
+	// the order is maintaned that the first is the one with highest value
+	public static List<Id> ebcECommerceProductRatePlanIdList{
+		get {
+			if (ebcECommerceProductRatePlanIdList == null) {
+				List<Id> ECommerceRatePlanIdList = new List<Id>();
+				if (ebcSetup.E_N_Member_Prepaid_Product_Rate_Plan_01__c != null)  ECommerceRatePlanIdList.add(ebcSetup.E_N_Member_Prepaid_Product_Rate_Plan_01__c);
+				if (ebcSetup.E_N_Member_Prepaid_Product_Rate_Plan_02__c != null)  ECommerceRatePlanIdList.add(ebcSetup.E_N_Member_Prepaid_Product_Rate_Plan_02__c);
+				if (ebcSetup.E_N_Member_Prepaid_Product_Rate_Plan_03__c != null)  ECommerceRatePlanIdList.add(ebcSetup.E_N_Member_Prepaid_Product_Rate_Plan_03__c);
+				if (ebcSetup.E_N_Member_Prepaid_Product_Rate_Plan_04__c != null)  ECommerceRatePlanIdList.add(ebcSetup.E_N_Member_Prepaid_Product_Rate_Plan_04__c);
+                
+                if (ebcSetup.E_Member_Prepaid_Product_Rate_Plan_01__c != null)  ECommerceRatePlanIdList.add(ebcSetup.E_Member_Prepaid_Product_Rate_Plan_01__c);
+				if (ebcSetup.E_Member_Prepaid_Product_Rate_Plan_02__c != null)  ECommerceRatePlanIdList.add(ebcSetup.E_Member_Prepaid_Product_Rate_Plan_02__c);
+				if (ebcSetup.E_Member_Prepaid_Product_Rate_Plan_03__c != null)  ECommerceRatePlanIdList.add(ebcSetup.E_Member_Prepaid_Product_Rate_Plan_03__c);
+				if (ebcSetup.E_Member_Prepaid_Product_Rate_Plan_04__c != null)  ECommerceRatePlanIdList.add(ebcSetup.E_Member_Prepaid_Product_Rate_Plan_04__c);
+				ebcECommerceProductRatePlanIdList = ECommerceRatePlanIdList;
+			}
+			return ebcECommerceProductRatePlanIdList;
 		}
 		
 		private set;
