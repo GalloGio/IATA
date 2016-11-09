@@ -20,7 +20,12 @@
               "zeroRecords": "{!$Label.ISSP_Nothing_found}",
               "info": "{!$Label.ISSP_Showing_page}",
               "infoEmpty": "{!$Label.ISSP_No_records_available}",
-              "infoFiltered": "{!$Label.ISSP_filtered_from_total_records}"
+              "infoFiltered": "{!$Label.ISSP_filtered_from_total_records}",
+              "search": "{!$Label.ISSP_Search}",
+              "paginate": {
+                "next": "{!$Label.ISSP_Next}",
+                "previous": "{!$Label.ISSP_Previous}"
+              }
           }
     });
 
@@ -131,7 +136,7 @@
                 <th></th>
                 <th>{!$ObjectType.Account_Statement__c.fields.Period__c.label}</th>
                 <th>{!$ObjectType.Account_Statement__c.fields.Remittance_Date__c.label}</th>
-                <th class="text-width">{!$Label.Location}</th>
+                <th class="text-width">{!$Label.ISSP_Account_Statement_Location}</th>
                 <th class="hidden-xs hidden-sm currency-width">{!$ObjectType.Account_Statement__c.fields.Billing_Amount__c.label}</th>
                 <th class="hidden-xs hidden-sm currency-width">{!$ObjectType.Account_Statement__c.fields.Billing_Adjustment__c.label}</th>
                 <th class="currency-width">{!$ObjectType.Account_Statement__c.fields.Amount_to_be_Paid__c.label}</th>
@@ -190,7 +195,7 @@
                 <td class="hidden-xs">
                   <apex:image value="{!URLFOR($Resource.ISSP_AccountStatements,'img/clock.png')}" title="{!$Label.ISSP_Last_updated_statement}" width="16" height="16" rendered="{!wrapper.lastUpdatedMark}"/>
                 </td>
-                <td class="{!IF(wrapper.ParentStatus=='Fullpayment','success','')}{!IF(wrapper.ParentStatus=='Excess','warning','')}{!IF(wrapper.ParentStatus=='Pending','danger','')}">
+                <td class="{!IF(wrapper.ParentStatus==$Label.ISSP_Fullpayment,'success','')}{!IF(wrapper.ParentStatus==$Label.ISSP_Excess,'warning','')}{!IF(wrapper.ParentStatus==$Label.ISSP_Pending,'danger','')}">
                   <apex:outputText value="{!wrapper.ParentStatus}"/>
                 </td>
               </tr>
