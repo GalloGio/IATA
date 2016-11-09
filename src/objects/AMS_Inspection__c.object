@@ -345,28 +345,4 @@
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
     <startsWith>Vowel</startsWith>
-    <validationRules>
-        <fullName>AMS_Accreditation_Organization_mandatory</fullName>
-        <active>true</active>
-        <errorConditionFormula>AND( 
-NOT(REGEX(TEXT(OSCAR__r.Process__c),  &quot;NEW.GSA.1.0|NEW.MSO.1.0|NEW.GSA.1.0.BSP|NEW.GSSA.1.0|NEW.AHA.1.0.BSP|NEW.AHA.1.0|NEW.TIDS.1.0&quot;)), 
-OR( 
-NOT(ISBLANK( Airline__c )), 
-ISBLANK( Accreditation_Endorsement_organisation__c ) 
-) 
-)</errorConditionFormula>
-        <errorMessage>On this Appointment the loopkup for Accreditation Endorsement organisation must be filled and the lookup for Airline must be empty</errorMessage>
-    </validationRules>
-    <validationRules>
-        <fullName>AMS_Airline_required_for_MSOs_and_GSAs</fullName>
-        <active>true</active>
-        <errorConditionFormula>AND(
-REGEX(TEXT(OSCAR__r.Process__c), &quot;NEW.GSA.1.0|NEW.MSO.1.0|NEW.GSA.1.0.BSP|NEW.GSSA.1.0|NEW.AHA.1.0.BSP|NEW.AHA.1.0|NEW.TIDS.1.0&quot;),
-OR(
-ISBLANK( Airline__c ),
-NOT(ISBLANK( Accreditation_Endorsement_organisation__c ))
-) 
-)</errorConditionFormula>
-        <errorMessage>On Appointments for MSO, GSA, GSSA, AHA and TIDS the lookup for Airline is mandatory and the lookup for Accreditation Endorsement organisation must be empty</errorMessage>
-    </validationRules>
 </CustomObject>
