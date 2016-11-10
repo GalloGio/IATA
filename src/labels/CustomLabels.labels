@@ -5488,6 +5488,14 @@ In order to upload your financial documents, please, login to Customer Portal on
         <value>Branch Office address details:</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Branch_Offices</fullName>
+        <categories>ISSP, Portal, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Branch Offices</shortDescription>
+        <value>Branch Office(s)</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Business_Activities_Field_Label</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -10288,6 +10296,14 @@ Select at least one Authorized Signatory, and choose the Financial Assessment Co
         <protected>false</protected>
         <shortDescription>ISSP AMS Validation Portal Admin</shortDescription>
         <value>Please select who should be the Portal Administrator for your Agency.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_View_Branch_details</fullName>
+        <categories>ISSP, Portal, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS View Branch details</shortDescription>
+        <value>View / Update Branch Details</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_download_a_PDF_version</fullName>
@@ -15881,22 +15897,6 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <shortDescription>ISSP_Registration reCAPTCHA verification Failed</shortDescription>
         <value>reCAPTCHA verification Failed</value>
     </labels>
-    <labels>
-        <fullName>ISSP_AMS_View_Branch_details</fullName>
-        <categories>ISSP, Portal, AMS</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP AMS View Branch details</shortDescription>
-        <value>View / Update Branch Details</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_AMS_Branch_Offices</fullName>
-        <categories>ISSP, Portal, AMS</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP AMS Branch Offices</shortDescription>
-        <value>Branch Office(s)</value>
-    </labels>    
     <labels>
         <fullName>Iata_service_request</fullName>
         <language>en_US</language>
