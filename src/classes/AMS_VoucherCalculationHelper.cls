@@ -16,8 +16,11 @@ public without sharing class AMS_VoucherCalculationHelper {
 
 		//	MAX(country max vouchers, (2 * Total sales % MIN(Country average, Country benchmark)))
 
-		//return Integer.Valueof(Math.Min(maxAmountVouchersCountry,(  2 * (totalAgencySales / Math.min(countryAverage, countryBenchmark) ).round(System.RoundingMode.FLOOR))));
-		return Integer.Valueof(Math.Min(maxAmountVouchersCountry,(  2 * (totalAgencySales / Math.min(countryAverage, countryBenchmark) ))));
+		countryAverage = countryAverage.round(System.RoundingMode.HALF_EVEN);
+
+		return Integer.Valueof(Math.Min(maxAmountVouchersCountry,(  2 * (totalAgencySales / Math.min(countryAverage, countryBenchmark) ).round(System.RoundingMode.FLOOR))));
+		
+		//return Integer.Valueof(Math.Min(maxAmountVouchersCountry,(  2 * (totalAgencySales / Math.min(countryAverage, countryBenchmark) ))));
 
 	}
 

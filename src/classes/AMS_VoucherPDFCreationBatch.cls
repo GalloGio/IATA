@@ -25,6 +25,8 @@ global class AMS_VoucherPDFCreationBatch implements Database.Batchable<sObject>,
 		this.attachments = new List<Attachment>();
 
 		run = fetchProperRun(regionInput);
+        
+        System.debug('AMS_VoucherPDFCreationBatch - Size of list to print is:' + vouchersToPrintSet.size());
 	}
 	
 	global Database.QueryLocator start(Database.BatchableContext BC) {
@@ -35,6 +37,8 @@ global class AMS_VoucherPDFCreationBatch implements Database.Batchable<sObject>,
 
    	global void execute(Database.BatchableContext BC, List<AMS_Voucher__c> scope) {
 		
+        System.debug('List to execute vouchers printing:' + scope.size());
+        
 		run ++;
 
 		String filename = savePDF(scope,run);
