@@ -3544,7 +3544,7 @@ Should you have any question about payment by bank transfer, please visit &lt;a 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCard ReportAgencyIncorrectInfo2</shortDescription>
-        <value>If the above address is incorrect, please report agency incorrect information (&lt;a href=&quot;http://www.iata.org/customer-portal/Pages/contactus.aspx&quot; style=&quot;color: blue;&quot;&gt;Report Agency incorrect information&lt;/a&gt;) and should not continue until the agency address has been correctly modified. &lt;br/&gt; 
+        <value>If the above address is incorrect, please report agency incorrect information (&lt;a href=&quot;http://www.iata.org/customer-portal/Pages/index.aspx&quot; style=&quot;color: blue;&quot;&gt;Report Agency incorrect information&lt;/a&gt;) and should not continue until the agency address has been correctly modified. &lt;br/&gt; 
 Kindly note that home-based agents are required to coordinate with their colleagues at the address above to receive the ID Card. Applicants will be held responsible at all costs for incorrect agency address. To continue, please click the button below.</value>
     </labels>
     <labels>
@@ -10439,6 +10439,14 @@ Select at least one Authorized Signatory, and choose the Financial Assessment Co
         <protected>false</protected>
         <shortDescription>ISSP_Account_Information</shortDescription>
         <value>Account Information</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Account_Statement_Location</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Account Statement Location</shortDescription>
+        <value>Location</value>
     </labels>
     <labels>
         <fullName>ISSP_Account_Statements</fullName>

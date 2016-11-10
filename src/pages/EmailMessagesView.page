@@ -2,90 +2,90 @@
 
     <apex:includeScript value="/soap/ajax/26.0/connection.js"/>
     <apex:includeScript value="/soap/ajax/26.0/apex.js"/>
- 
+
 
     <script>
 
        var caseId = ("{!cse.Id}").substring(0,15);
-       
+
        function getCountryEmail() {
-            sforce.connection.sessionId = "{!$Api.Session_ID}"; 
+            sforce.connection.sessionId = "{!$Api.Session_ID}";
             var countryEmail = sforce.apex.execute("IDFS_Util","getRecordTypeEmail",{caseRecordType:"{!cse.RecordType.DeveloperName}", caseBSPCountry:"{!cse.BSPCountry__c}"});
             if (countryEmail == '') {
             	countryEmail = sforce.apex.execute("IDFS_Util","getIATACountryEmail",{caseBSPCountry:"{!cse.BSPCountry__c}"});
            	}
             return countryEmail;
-        }    
+        }
 
         function DeleteMethod(id){
-        
+
             if(confirm("Are you sure you want to delete this email?")){
-            
-                sforce.connection.sessionId = "{!$Api.Session_ID}"; 
-            
-                var isEmailDeleted = sforce.apex.execute("IDFS_Util","DeleteEmail",{EmailID:id}); 
-                
-                if(isEmailDeleted == 'true') 
-                { 
+
+                sforce.connection.sessionId = "{!$Api.Session_ID}";
+
+                var isEmailDeleted = sforce.apex.execute("IDFS_Util","DeleteEmail",{EmailID:id});
+
+                if(isEmailDeleted == 'true')
+                {
                     // TODO: reload page
                     //window.top.location.reload();
                     //window.parent.location.reload();
                     // var temp = window.top.location;
-                     window.top.location = ("{!$Label.SF_Base_URL}/" + caseId);              
-                } 
-                else 
-                { 
+                     window.top.location = ("/" + caseId);
+                }
+                else
+                {
                     alert('Email cannot be deleted at the moment');
                 }
             }
         }
-        
+
         function ToAllMethod(id){
-            var countryEmail = getCountryEmail(); 
+            var countryEmail = getCountryEmail();
             if(countryEmail != '')
             {
-                window.top.location=("{!$Label.SF_Base_URL}/_ui/core/email/author/EmailAuthor?email_id=" + id + "&replyToAll=1&retURL=" + caseId + "&p26=" + countryEmail); 
+                window.top.location=("/_ui/core/email/author/EmailAuthor?email_id=" + id + "&replyToAll=1&retURL=" + caseId + "&p26=" + countryEmail);
             }
             else
-            { 
-                window.top.location=("{!$Label.SF_Base_URL}/_ui/core/email/author/EmailAuthor?email_id=" + id + "&replyToAll=1&retURL=" + caseId); 
+            {
+                window.top.location=("/_ui/core/email/author/EmailAuthor?email_id=" + id + "&replyToAll=1&retURL=" + caseId);
             }
-        }   
-        
+        }
+
         function ReplyMethod(id){
-            var countryEmail = getCountryEmail(); 
+            var countryEmail = getCountryEmail();
             if(countryEmail != '')
             {
-                window.top.location=("{!$Label.SF_Base_URL}/_ui/core/email/author/EmailAuthor?email_id=" + id + "&replyToAll=0&retURL=" + caseId + "&p26=" + countryEmail);  
+                window.top.location=("/_ui/core/email/author/EmailAuthor?email_id=" + id + "&replyToAll=0&retURL=" + caseId + "&p26=" + countryEmail);
             }
             else
             {
-                window.top.location=("{!$Label.SF_Base_URL}/_ui/core/email/author/EmailAuthor?email_id=" + id + "&replyToAll=0&retURL=" + caseId);  
-            }               
-        }   
-        
-        function SendEmail(){
-        
-            var countryEmail = getCountryEmail(); 
-            
-            if(countryEmail != '') 
-            { 
-                window.top.location = ("{!$Label.SF_Base_URL}/email/author/emailauthor.jsp?retURL=" + caseId + "&p2_lkid={!cse.ContactId}&p3_lkid=" + caseId + "&rtype=003&p26=" + countryEmail); 
-            } 
-            else 
-            { 
-                window.top.location= ("{!$Label.SF_Base_URL}/email/author/emailauthor.jsp?retURL=" + caseId + "&p2_lkid={!cse.ContactId}&p3_lkid=" + caseId + "&rtype=003"); 
+                window.top.location=("/_ui/core/email/author/EmailAuthor?email_id=" + id + "&replyToAll=0&retURL=" + caseId);
             }
         }
-        
-         function sendTrackedEmail(){
-            window.top.location= ("{!$Label.SF_Base_URL}/apex/sendSingleTrackedEmail?retURL={!cse.Id}&case={!cse.Id}"); 
+
+        function SendEmail(){
+
+            var countryEmail = getCountryEmail();
+
+            if(countryEmail != '')
+            {
+                window.top.location = ("/email/author/emailauthor.jsp?retURL=" + caseId + "&p2_lkid={!cse.ContactId}&p3_lkid=" + caseId + "&rtype=003&p26=" + countryEmail);
+            }
+            else
+            {
+                window.top.location= ("/email/author/emailauthor.jsp?retURL=" + caseId + "&p2_lkid={!cse.ContactId}&p3_lkid=" + caseId + "&rtype=003");
+            }
         }
-        
+
+         function sendTrackedEmail(){
+            window.top.location= ("/apex/sendSingleTrackedEmail?retURL={!cse.Id}&case={!cse.Id}");
+        }
+
     </script>
 
     <apex:pageMessages />
- 
+
     <style type="text/css">
     A:link {text-decoration: none; color: #015ba7;}
     A:visited {text-decoration: none}
@@ -93,8 +93,8 @@
     A:hover {text-decoration: underline; color: #015ba7;}
     </style>
     <apex:form >
-    
-        <apex:pageblock id="CustomList"  Title="Emails" helpTitle="Emails Help" helpUrl="https://help.salesforce.com/htviewhelpdoc?id=cases_email.htm&siteLang=en_US">                      
+
+        <apex:pageblock id="CustomList"  Title="Emails" helpTitle="Emails Help" helpUrl="https://help.salesforce.com/htviewhelpdoc?id=cases_email.htm&siteLang=en_US">
         <apex:facet name="header">
            <div class="pbHeader">
                 <table border="0" cellpadding="0" cellspacing="0">
@@ -106,10 +106,11 @@
                             </td>
                             <td class="pbButton">
                                 <input value="Send an Email" class="btn" name="newEmail" onclick="SendEmail();return false;" title="Send an Email" type="button"/>
-                                <input value="Send a Tracked Email" class="btn" name="newEmail" onclick="sendTrackedEmail();return false;" title="Send a Tracked Email" type="button" style="display: {!IF(ShowSendTrackedEmailButton,'','none')}"  />
+                                <input value="Send a Tracked Email" class="btn" name="newEmail" onclick="sendTrackedEmail();return false;" title="Send a Tracked Email" type="button"
+                                  style="display: {!IF($Permission.Can_send_a_tracked_email && ShowSendTrackedEmailButton,'','none')}"  />
                             </td>
                             <td class="pbHelp">
-                                <span class="help" title="Emails Help (New Window)">                                
+                                <span class="help" title="Emails Help (New Window)">
                                     <a href="#" onClick="window.open('https://help.salesforce.com/htviewhelpdoc?id=cases_email.htm&siteLang=en_US');" class="linkCol">
                                         <span class="linkSpan">Emails Help</span>
                                         <img src="/s.gif" alt="Emails Help (New Window)" class="helpIcon" title="Emails Help (New Window)"/>
@@ -121,8 +122,8 @@
                 </table>
             </div>
         </apex:facet>
-        <apex:pageBlockButtons location="top" title="Emails">   
-                <apex:commandButton onclick="SendEmail();return false;" value="Send an email" id="theButton" />                 
+        <apex:pageBlockButtons location="top" title="Emails">
+                <apex:commandButton onclick="SendEmail();return false;" value="Send an email" id="theButton" />
         </apex:pageBlockButtons>
             <div style="height: 200px; overflow-y:auto; display:{!IF(EmailsAvailable==false,'none','block')}">
             <!-- VERSION JFO -->
@@ -145,16 +146,16 @@
                                       <span value="|" class="view"> |</span>
                                        <a href ="" onclick="ToAllMethod('{!message.Id}');return false;" style="color:#015ba7; cursor: pointer;" title="To All">
                                          <apex:outputText value="To All" />
-                                       </a> 
+                                       </a>
                                        <span value="|" class="view"> |</span>
                                       <a href ="" onclick="DeleteMethod('{!message.Id}');return false;" style="color:#015ba7; cursor: pointer;" title="Delete">
                                         <apex:outputText value="Del" />
-                                      </a> 
+                                      </a>
                             </td>
                             <td class=" dataCell " scope="row">
                                    <apex:outputText value="{!message.Status}" id="numberStatus" />
-                                   <script>           
-                                       var state =document.getElementById("{!$Component.numberStatus}").innerHTML ; 
+                                   <script>
+                                       var state =document.getElementById("{!$Component.numberStatus}").innerHTML ;
                                        var CleanState;
                                         if(state == '0')
                                          CleanState = 'New';
@@ -165,7 +166,7 @@
                                         if(state =='3')
                                          CleanState = 'Sent';
                                         if(state =='4')
-                                         CleanState = 'Forwarded';  
+                                         CleanState = 'Forwarded';
                                        document.getElementById("{!$Component.numberStatus}").innerHTML =  CleanState;
                                    </script>
                             </td>
@@ -176,8 +177,8 @@
                                 </div>
                             </td>
                             <td class=" dataCell ">
-                                <a style="font-weight: bold;"  href="/{!message.Id}" target="_parent">    
-                                   {!if((message.Subject==null || message.Subject==''),'No Subject',message.Subject)}</a> <br/> 
+                                <a style="font-weight: bold;"  href="/{!message.Id}" target="_parent">
+                                   {!if((message.Subject==null || message.Subject==''),'No Subject',message.Subject)}</a> <br/>
                                     <font style="font-style: italic; font-decoration: none; font-size: 11px;">{!LEFT(message.TextBody,77)}...</font></td>
                             <td class=" dataCell ">
                                 {!If((message.Incoming==true),message.FromAddress,message.ToAddress)}
@@ -189,13 +190,13 @@
                         <tr class="dataRow even ">
                             <td class="actionColumn">
                                 <a class="actionLink actionLink" title="Reply"  target="_parent" href="/_ui/core/email/author/EmailAuthor?email_id={!message.EmailMessage__c}&replyToAll=0&retURL=%2F{!aCaseId}">Reply</a>
-                                | 
+                                |
                                 <a class="actionLink actionLink" title="To All" target="_parent" href="/_ui/core/email/author/EmailAuthor?email_id={!message.EmailMessage__c}&replyToAll=1&retURL=%2F{!aCaseId}">To All</a>
                             </td>
                             <td class=" dataCell " scope="row">
                                  <apex:outputText value="{!originalEmail[message.EmailMessage__c].Status}" id="numberStatus" />
-                                   <script>           
-                                       var state = document.getElementById("{!$Component.numberStatus}").innerHTML ; 
+                                   <script>
+                                       var state = document.getElementById("{!$Component.numberStatus}").innerHTML ;
                                        var CleanState;
                                         if(state == '0')
                                          CleanState = 'New';
@@ -206,7 +207,7 @@
                                         if(state =='3')
                                          CleanState = 'Sent';
                                         if(state =='4')
-                                         CleanState = 'Forwarded';  
+                                         CleanState = 'Forwarded';
                                         document.getElementById("{!$Component.numberStatus}").innerHTML =  CleanState + ' [Archived]';
                                    </script>
                             </td>
@@ -217,8 +218,8 @@
                                 </div>
                             </td>
                             <td class=" dataCell ">
-                                <a style="font-weight: bold;"  href="/{!message.Id}" target="_parent">     
-                                    {!if(ISBLANK(originalEmail[message.EmailMessage__c].Subject),'No Subject',originalEmail[message.EmailMessage__c].Subject)}</a> <br/> 
+                                <a style="font-weight: bold;"  href="/{!message.Id}" target="_parent">
+                                    {!if(ISBLANK(originalEmail[message.EmailMessage__c].Subject),'No Subject',originalEmail[message.EmailMessage__c].Subject)}</a> <br/>
                                     <font style="font-style: italic; font-decoration: none; font-size: 11px;">{!LEFT(originalEmail[message.EmailMessage__c].TextBody,77)}...</font></td>
                             <td class=" dataCell ">
                                 {!If((originalEmail[message.EmailMessage__c].Incoming==true),originalEmail[message.EmailMessage__c].FromAddress,originalEmail[message.EmailMessage__c].ToAddress)}
@@ -242,8 +243,8 @@
                                 </div>
                             </td>
                             <td class=" dataCell ">
-                                <a style="font-weight: bold;"  href="/{!trackedEmail.Id}" target="_parent">     
-                                    {!if(ISBLANK(trackedEmail.Subject__c),'No Subject',trackedEmail.Subject__c)}</a> <br/> 
+                                <a style="font-weight: bold;"  href="/{!trackedEmail.Id}" target="_parent">
+                                    {!if(ISBLANK(trackedEmail.Subject__c),'No Subject',trackedEmail.Subject__c)}</a> <br/>
                                     <font style="font-style: italic; font-decoration: none; font-size: 11px;">{!LEFT(trackedEmail.Html_Body__c,77)}...</font></td>
                             <td class=" dataCell ">
                                 <apex:outputField value="{!trackedEmail.ToContact__c}" />
@@ -254,8 +255,8 @@
                 </tbody>
             </table>
             </div>
-                
-        <apex:outputLabel value="No Emails available" rendered="{!EmailsAvailable==false}" styleClass="noRowsHeader"></apex:outputLabel>   
+
+        <apex:outputLabel value="No Emails available" rendered="{!EmailsAvailable==false}" styleClass="noRowsHeader"></apex:outputLabel>
     </apex:pageblock>
     </apex:form>
 </apex:page>

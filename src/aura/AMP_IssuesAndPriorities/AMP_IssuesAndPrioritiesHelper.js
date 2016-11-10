@@ -25,9 +25,8 @@
 						 filteredIssues.push(issues[i]);
 					 }
 				 }
-
 				component.set("v.issuesBackup",backup);
-				 component.set("v.issues", filteredIssues);
+				component.set("v.issues", filteredIssues);
 
 				 }
 				 else if (state === "ERROR") {}

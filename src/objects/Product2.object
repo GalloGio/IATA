@@ -728,6 +728,10 @@
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>GAP</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>GDP</fullName>
                 <default>false</default>
             </picklistValues>
@@ -1041,6 +1045,10 @@
             </picklistValues>
             <picklistValues>
                 <fullName>DGR Training Books</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>eAWBLink</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -2687,6 +2695,10 @@ The product will only appear on the Online Store when the date entered in this f
             </picklistValues>
             <picklistValues>
                 <fullName>Raphaëlle Caron</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>BERTOLUS Julie</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -7168,6 +7180,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>World Air Transport Statistics</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>eAWBLink</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

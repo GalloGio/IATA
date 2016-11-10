@@ -1,3 +1,16 @@
+/*
+*  REST API Service returning the content of Subscription table
+*  - Based on GSS_REST_FilePayload
+*  - External class will call getFilePayloadSubscription (@HttpGet) method
+*  - URI Parameter:  FileSpecificationId, LastRetrievedRecordId, RequestSizeFactor
+*  - Original writer: Abdellah Bellahssan 
+*  
+*  Change log:
+*   20160407-sl: Add RequestSizeFactor parameter to allow reducing limit defined by Maximum_API_Request
+*   
+*/
+
+
 @RestResource(urlMapping='/GSS/v0/FileDataSubscription/*')
 global with sharing class GDP_REST_FilePayloadSubscription {
     static final Integer BATCH_SIZE = 100;
@@ -21,6 +34,12 @@ global with sharing class GDP_REST_FilePayloadSubscription {
             //lastRetrievedRecordId will be used to recall the function to get more records than the BATCH_SIZE
             //the usage of value of lastRetrieveRecordId will also depend of related GDP_File_Description__c.Product_Type__c
             String lastRetrievedRecordIdParameter = RestContext.request.params.get('LastRetrievedRecordId');
+            
+            // Get Optional RequestSizeFactor parameter, and use it to set DividerFactor
+            String RequestSizeFactorStr = RestContext.request.params.get('RequestSizeFactor');
+            Integer RequestSizeFactor = (RequestSizeFactorStr == null) ? 0 : Integer.valueOf(RequestSizeFactorStr); 
+            RequestSizeFactor = (RequestSizeFactor == null) ? 0 : RequestSizeFactor; 
+            Integer DividerFactor = Integer.valueOf(Math.pow(2, RequestSizeFactor));
             
             //TODO: Load the SQL information from File Specification
             List<GDP_File_Description__c> filespecificationlist = new List<GDP_File_Description__c>();
@@ -54,8 +73,10 @@ global with sharing class GDP_REST_FilePayloadSubscription {
             {
                 
             }
+            // NEW_BATCH_SIZE is used to limit the number of rows requested
             Integer NEW_BATCH_SIZE=BATCH_SIZE;
             if (filespecificationlist[0].Reference__r.Maximum_API_Request__c!=null) NEW_BATCH_SIZE=Integer.ValueOf(filespecificationlist[0].Reference__r.Maximum_API_Request__c);
+            NEW_BATCH_SIZE =  Integer.valueOf(Math.floor(NEW_BATCH_SIZE / dividerFactor)) + 1;
             
             //TODO retrieve LastModifiedDate From
             List<GDP_File_Production__c> fileproductionlist = new List<GDP_File_Production__c>();

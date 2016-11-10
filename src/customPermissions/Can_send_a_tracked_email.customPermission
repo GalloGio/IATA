@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomPermission xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>A user with this permission can see the send tracked email button through Signaturit Service</description>
+    <label>Can send a tracked email</label>
+</CustomPermission>

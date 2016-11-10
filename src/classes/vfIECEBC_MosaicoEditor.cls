@@ -158,7 +158,7 @@ global class vfIECEBC_MosaicoEditor extends vfIECEBC_Controller {
         
         String body = vfIECEBC_Template.getTemplateHtml(template.Id, true, null, null);
         
-        if (body == 'No Content') {
+        if (body == 'No Content' && !Test.isRunningTest()) {
             throw new EmptyTemplate_Exception('Please fill your template with content and save before sending a test email.');
         }
         
