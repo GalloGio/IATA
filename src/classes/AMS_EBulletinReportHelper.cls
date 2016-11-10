@@ -7,7 +7,7 @@ EBulletin is a CSV dispatch 3 main informatory activities about IATA agencies:
 3.	Non-compliance like default, irregularity
 	*/
 
-public class AMS_EBulletinReportHelper {
+public without sharing class AMS_EBulletinReportHelper {
 
 
 	private static final Map <String,String>  TYPEEBULLETINMAP = 
@@ -182,8 +182,17 @@ public class AMS_EBulletinReportHelper {
 	*/
 	public String processEBulletinRecords(AMS_EBulletinReportWebservice.AMSEBulletinFilters filters, String objectBaseQuery, String objectHistBaseQuery, String csvFormat)
 	{
+		//Recover Ebulletin Sections
+		getEBulletinCCSections();
+
+		//Get Sections to be extracted depending on Agency Information from the Portal
+		Map<String,Boolean> agencyInfoSectionMap = new Map<String,Boolean>();
+
+		agencyInfoSectionMap = getAgencyInfoPerSection(eBulletinCCSectionsList,filters.eBulletinProfile);
+
+		system.debug('agencyInfoSectionMap:  ' + agencyInfoSectionMap);
 		// Recover EBulletin Type
-		getEBulletinCCExtraction(TYPEEBULLETINMAP.get(filters.typeEBulletin));
+		getEBulletinCCExtraction(TYPEEBULLETINMAP.get(filters.typeEBulletin),agencyInfoSectionMap);
 		
 		//Recover EBulletin Countries
 		List<String> countriesFilter = filters.countriesList;
@@ -191,6 +200,9 @@ public class AMS_EBulletinReportHelper {
 		//Recover EBulletin Location Classes
 		
 		List<String> locClsList = filters.programsList;
+
+		Datetime fromDate = filters.fromCCDate;
+		Datetime toDate   = filters.toCCDate; 
 
 
 		//system.debug('Records query: ' + AMS_QueryUtils.getFieldsQuery(objectBaseQuery,fieldsQuery, ' Change_Code__c in ( ' + convertToCSV(new List<String>(AMS_CustomSettingsUtils.ccNameSectionMap.keyset()), '\',\'') + ') '));
@@ -207,15 +219,32 @@ public class AMS_EBulletinReportHelper {
 		}
 		
 		system.debug('ccFieldToReturn:' + ccFieldToReturn);
-		
+						
 
 		//*********************************************************************************************************************
 		//****************************** BASE QUERY for the Extraction: Changes codes to Query ********************************
 		//*********************************************************************************************************************
 		
+		//TODO Map contains CC name => Section
+				
 		Set <String> ccNamesToRecover = AMS_CustomSettingsUtils.ccNameSectionMap.keyset();
 		
-		String filterCC  = ' Change_Code__c IN :ccNamesToRecover and Published_on_EBulletin__c = TRUE and Account__r.IATA_ISO_Country__r.ISO_Code__c IN :countriesFilter and Account__r.Location_Class__c IN :locClsList order by Account__r.IATA_ISO_Country__r.Name,createdDate';
+		String filter1 = ' Change_Code__c IN :ccNamesToRecover';
+		String filter2 = ' and Published_on_EBulletin__c = TRUE'; 
+		String filter3 = ' and Account__r.IATA_ISO_Country__r.ISO_Code__c IN :countriesFilter';		
+		String filter4 = ' and Account__r.Location_Class__c IN :locClsList';
+		String filter5 = ' and CreatedDate >= :fromDate  and CreatedDate < :toDate';		
+		String orderByFilter = ' order by Account__r.IATA_ISO_Country__r.Name,createdDate';		
+
+		String filterCC  = filter1 + 
+						   filter2 + 
+						   filter3 + 
+						   filter4 + 
+						   filter5 + 
+						   orderByFilter;
+
+		system.debug('filterCC: ' + filterCC);
+
 
 		List <Agency_Applied_Change_code__c> ccList = 
 				Database.query(
@@ -291,8 +320,6 @@ public class AMS_EBulletinReportHelper {
 		//system.debug('ccHistList: ' + ccHistList);
 		
 
-		getEBulletinCCSections();
-
 		Map<String,Boolean> trackChangePerSectionMap = getCCSectionsWithHistory(eBulletinCCSectionsList);
 
 		//Map change Codes (Values) by Section (Key)
@@ -357,12 +384,15 @@ public class AMS_EBulletinReportHelper {
 	/** 
 		 Get EBulletin Change Codes To process depending on the EBulletin Type 
 	*/
-	private static void  getEBulletinCCExtraction(String typeEBulletin)
+	public static void  getEBulletinCCExtraction(String typeEBulletin, Map<String,Boolean> agencyInfoSectionMap)
 	{
+
 		for(AMSEBulletinCCExtration__c setting : AMSEBulletinCCExtration__c.getAll().values()){
 
-			if( (Boolean) setting.get(typeEBulletin)) new AMS_CustomSettingsUtils.AMS_EBulletinCCExtraction(setting);
+			if( (Boolean) setting.get(typeEBulletin) && agencyInfoSectionMap.containsKey(setting.Section__c) && agencyInfoSectionMap.get(setting.Section__c)) 
+				new AMS_CustomSettingsUtils.AMS_EBulletinCCExtraction(setting);
 		}
+
 	}
 
 	/** 
@@ -393,6 +423,21 @@ public class AMS_EBulletinReportHelper {
 
 		return trackChangePerSectionMap;
 	}
+
+
+	/** 
+		 recover the field Track_CC_History__c from the List of EBulletin Sections (list recovered from the Custom Setting AMSEBulletinCCSections) 
+	*/
+	private static Map<String,Boolean> getAgencyInfoPerSection(List<AMS_CustomSettingsUtils.AMS_EBulletinCCSection> sectionsList, AMS_eBulletin_Profile__c eBulletinProfile)
+	{
+		Map<String,Boolean> trackAgencyInfoPerSectionMap = new Map<String,Boolean>();
+
+		for (AMS_CustomSettingsUtils.AMS_EBulletinCCSection sectionObj : sectionsList)
+			trackAgencyInfoPerSectionMap.put(sectionObj.eBulletinCCSection.name,(Boolean) eBulletinProfile.get(sectionObj.eBulletinCCSection.Agency_Information__c));
+
+		return trackAgencyInfoPerSectionMap;
+	}
+
 	/** 
 		 Get Account IDs from Change Codes recovered 
 	*/
@@ -511,8 +556,8 @@ public class AMS_EBulletinReportHelper {
 		if(ccHistChangesList != null && !ccHistChangesList.isEmpty())
 			ccHistChangesPerAPIValMap = getChangesPerAPIValue(ccHistChangesList); 
 
-		system.debug('cc: ' + cc.change_code__c+ ' ccHistChangesPerAPIValMap: ' + ccHistChangesPerAPIValMap);
-		system.debug('customFields.headersCustomMap: ' +  customFields.headersCustomMap);
+		//system.debug('cc: ' + cc.change_code__c+ ' ccHistChangesPerAPIValMap: ' + ccHistChangesPerAPIValMap);
+		//system.debug('customFields.headersCustomMap: ' +  customFields.headersCustomMap);
 		//for(AMS_ChangeCodesHelper.ObjectChangeccHistChangesList)
 		List<String> recordsList = new List <String>();
 
@@ -541,7 +586,9 @@ public class AMS_EBulletinReportHelper {
 				recordsList.add('');
 			}
 			else {
-				recordsList.add(AMS_Utils.processParentDependecies(fieldsList.get(position - customFieldsCounter),cc));
+				String strVal = AMS_Utils.processParentDependecies(fieldsList.get(position - customFieldsCounter),cc);
+
+				recordsList.add(strVal);
 			}
 			
 		}
@@ -555,8 +602,11 @@ public class AMS_EBulletinReportHelper {
 	private String getRecordFromHeaderAPIValue( Agency_Applied_Change_code__c cc, AMSEBulletinSettings__c headerVal, Map<String,AMS_ChangeCodesHelper.ObjectChange> ccHistChangesPerAPIValMap)
 	{
 		String recordValue;	
-		String apiNameUpper = (headerVal.API_Name__c).split(',').get(0).touppercase().replace('__R.NAME','__C');
-		system.debug(cc.change_code__c + ': ' + apiNameUpper +  ' ccHistChangesPerAPIValMap.containsKey(apiNameUpper) : ' + ccHistChangesPerAPIValMap.containsKey(apiNameUpper.split(',').get(0)));
+		String apiNameUpper = (headerVal.API_Name__c).split(',').get(0).touppercase();
+		
+		if(headerVal.Name.equals(STATE) || headerVal.Name.equals(NEWSTATE)) apiNameUpper.replace('__R.NAME','__C');
+
+		//system.debug(cc.change_code__c + ': ' + apiNameUpper +  ' ccHistChangesPerAPIValMap.containsKey(apiNameUpper) : ' + ccHistChangesPerAPIValMap.containsKey(apiNameUpper.split(',').get(0)));
 
 
 		if(ccHistChangesPerAPIValMap.containsKey(apiNameUpper))	
@@ -609,7 +659,7 @@ public class AMS_EBulletinReportHelper {
 		//Country ISO Code 
 		// if Country is not changed we have to recover the country from the Change Code Account
 		if(objValCountry != null)
-			countryIsoCode = headerVal.is_field_new__c ? countryIsoCodeMap.get(objValCountry.newValueLookupID) : countryIsoCodeMap.get(objValCountry.oldValueLookupID) ;
+			countryIsoCode = headerVal.is_Field_New__c ? countryIsoCodeMap.get(objValCountry.newValueLookupID) : countryIsoCodeMap.get(objValCountry.oldValueLookupID) ;
 		else
 			countryIsoCode = AMS_Utils.processParentDependecies(countryStateList.get(0).split(',').get(1),cc);
 

@@ -1,4 +1,4 @@
-global class AMS_EBulletinReportWebservice {
+global without sharing class AMS_EBulletinReportWebservice {
 
 
 	private static String objectBaseQuery = 'Agency_Applied_Change_code__c';
@@ -13,9 +13,15 @@ global class AMS_EBulletinReportWebservice {
 		 Filter: Type (Daily(D), Weekly(W))
 	*/
 
-	webservice static Boolean generateEBulletinReport( AMS_eBulletin_Profile__c eBulletinProfile){
 
-		filters = new AMSEBulletinFilters(eBulletinProfile, date.today() - 365 , date.today() );
+	webservice static ID generateEBulletinReport( AMS_eBulletin_Profile__c eBulletinProfile,Datetime startDate, Datetime endDate, String period){
+
+
+		if(period.equalsIgnoreCase('Last') && eBulletinProfile.Last_Run__c != null && eBulletinProfile.Last_Run__c > startDate)
+			startDate = eBulletinProfile.Last_Run__c;
+
+
+		filters = new AMSEBulletinFilters(eBulletinProfile, startDate, endDate);
 
 		System.debug('Initializing...');
 
@@ -40,6 +46,9 @@ global class AMS_EBulletinReportWebservice {
 		*/
 
 
+		//Set the last run time
+	 	eBulletinProfile.Last_Run__c = system.now();
+
 		Attachment attachment = new Attachment();
 		attachment.Body = Blob.valueOf( csv );
 		attachment.Name = String.valueOf(eBulletinProfile.name + '_testChangeCodes_'+date.today()+'.csv');
@@ -50,7 +59,9 @@ global class AMS_EBulletinReportWebservice {
 	 	
 	 	insert attachment;
 
-		return true;
+	 	update eBulletinProfile;
+
+		return attachment.id;
 	//}
 	//catch(Exception e){	
 	//	return false;
@@ -95,11 +106,14 @@ global class AMS_EBulletinReportWebservice {
         public List <String> areaList = new List <String>();
   		public List <String> programsList = new List <String>();
   		public List <String> countriesList = new List <String>();
+  		public Datetime fromCCDate;
+        public Datetime toCCDate;
+       	public AMS_eBulletin_Profile__c eBulletinProfile;
 
-        public AMSEBulletinFilters(AMS_eBulletin_Profile__c eBulletinProfile, Datetime startDate, Datetime endDate){
+        public AMSEBulletinFilters(AMS_eBulletin_Profile__c eBulletinProfile, Datetime fromCCDate, Datetime toCCDate){
         		//Daily or Weekly by record type
-		
-			this.typeEBulletin = eBulletinProfile.recordType.name.substring(0, 1).ToUpperCase();
+			
+			this.typeEBulletin = Schema.SObjectType.AMS_eBulletin_Profile__c.RecordTypeInfosById.get(eBulletinProfile.RecordTypeId).Name.substring(0, 1).ToUpperCase();
 			
 			
 			// map with field Account__r.IATA_ISO_Country__r.IATA_Regional_Office__c
@@ -126,11 +140,21 @@ global class AMS_EBulletinReportWebservice {
 			
 			this.countriesList = eBulletinProfile.CountriesList__c.split(';');
 
-			//Add filter by Date
+			// filter by Date
+
+			this.fromCCDate = fromCCDate;
+			this.toCCDate   = toCCDate;
+
+			// Agency Information Mapping --- for this case the profile must be passed (mapped in the Custom Setting AMSEBulletinCCSections)
 			
-			
-		//Add Opt_out_Bulletin__c this field is to be used in the schedule batch		
-        
+			this.eBulletinProfile = eBulletinProfile;
+		/*eBulletinProfile.Agency_Info_Defaults__c;
+			eBulletinProfile.Agency_Info_Reviews__c;
+			eBulletinProfile.Agency_Info_New_Aplication_Processes__c;
+			eBulletinProfile.Agency_Info_Agency_Changes__c;
+			eBulletinProfile.Agency_Info_Irregularities__c;
+			eBulletinProfile.Agency_Info_Termination_Closures__c;
+			*/
         }
 
 

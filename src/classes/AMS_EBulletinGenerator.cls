@@ -2,7 +2,13 @@ global class AMS_EBulletinGenerator implements Schedulable {
 
 	@ReadOnly
 	global void execute(SchedulableContext sc) {
-		AMS_EBulletinBatch b = new AMS_EBulletinBatch();
+		String typeEBulletin = 'Daily';
+
+		AMS_EBulletinReportHelper.getEBulletinCCExtraction(typeEBulletin + '__c');
+		
+		Set <String> ccNamesToRecover = AMS_CustomSettingsUtils.ccNameSectionMap.keyset();
+		
+		AMS_EBulletinBatch b = new AMS_EBulletinBatch(typeEBulletin,ccNamesToRecover);
 		database.executebatch(b);
 	}
 

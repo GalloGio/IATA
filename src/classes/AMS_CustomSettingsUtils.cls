@@ -116,9 +116,9 @@ This Custom Setting recovers the Collumns used In the EBulletin Reports
 		
 
 		public AMS_EBulletinCCExtraction(AMSEBulletinCCExtration__c eBulletinCCExtration){
+
 			this.eBulletinCCExtration = eBulletinCCExtration;
 			setNamePerSection(eBulletinCCExtration.Name,eBulletinCCExtration.Section__c);
-
 				
 		}
 
