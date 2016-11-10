@@ -2998,21 +2998,6 @@ If(LEN( SAAM_Case__r.Account.ShippingCountry) &gt;0, SAAM_Case__r.Account.Shippi
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
         <label>Link agent name</label>
-        <lookupFilter>
-            <active>true</active>
-            <errorMessage>The selected Account must be an Agency having location class &quot;P&quot;</errorMessage>
-            <filterItems>
-                <field>Account.RecordTypeId</field>
-                <operation>equals</operation>
-                <value>Agency</value>
-            </filterItems>
-            <filterItems>
-                <field>Account.Location_Class__c</field>
-                <operation>equals</operation>
-                <value>P</value>
-            </filterItems>
-            <isOptional>false</isOptional>
-        </lookupFilter>
         <referenceTo>Account</referenceTo>
         <relationshipLabel>AMS Online Accreditations (Link agent name)</relationshipLabel>
         <relationshipName>AMS_Online_Accreditations1</relationshipName>

@@ -1,14 +1,6 @@
 public with sharing class AMS_InspectionTriggerHandler {
 
 
-	public static void handleBeforeInsert(List<AMS_Inspection__c> inspections) {
-		
-	}
-
-	public static void handleBeforeUpdate(List<AMS_Inspection__c> oldValues,List<AMS_Inspection__c> newValues) {
-		
-	}
-
 	public static void handleAfterInsert(List<AMS_Inspection__c> oldValues,List<AMS_Inspection__c> newValues) {
 
 		processAgency(cleanListWithoutAgencyId(oldValues),cleanListWithoutAgencyId(newValues));
