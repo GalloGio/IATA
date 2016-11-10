@@ -47,6 +47,33 @@
         <template>AMS/AMS_Notify_OSCAR_Owner_on_Manager_Rejection</template>
     </alerts>
     <rules>
+        <fullName>AMS - Notify Owner of Late NOC Termination</fullName>
+        <active>true</active>
+        <criteriaItems>
+            <field>AMS_OSCAR__c.NOC_Received__c</field>
+            <operation>equals</operation>
+            <value>False</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>AMS_OSCAR__c.NOC_Requested__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>AMS_OSCAR__c.Termination_Date__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <workflowTimeTriggers>
+            <actions>
+                <name>AMS_Notify_Owner_of_Late_NOC_Termination</name>
+                <type>Alert</type>
+            </actions>
+            <offsetFromField>AMS_OSCAR__c.Termination_Date__c</offsetFromField>
+            <timeLength>1</timeLength>
+            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+    </rules>
+    <rules>
         <fullName>AMS Notify Case Team Members on OSCAR Pending Approval</fullName>
         <actions>
             <name>AMS_Notify_Managers_of_Pending_Approval</name>
