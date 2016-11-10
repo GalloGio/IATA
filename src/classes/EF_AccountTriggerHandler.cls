@@ -270,7 +270,8 @@ public class EF_AccountTriggerHandler {
 
 		Map<String, Schema.SobjectField> fields = newAccs.getSObjectType().getDescribe().fields.getMap();
         String baseUrl = System.URL.getSalesforceBaseUrl().toExternalForm();
-         
+        List<Messaging.SingleEmailMessage> mails = new List<Messaging.SingleEmailMessage>();
+
         for(Account a: newAccs.values()){
         	String emailBody = 'Dear team member, <br/><br/>the following Accounts values been UPDATED:<br/><br/>';
         	emailBody = emailBody + '<table width="600px" border="1"><tr border="1"><th border="1">Account</th><th border="1">Field:</th><th border="1">New Value:</th><th border="1">Old Value:</th></tr>';
@@ -283,15 +284,46 @@ public class EF_AccountTriggerHandler {
            }
            emailBody = emailBody + '</table>';
            if(a.RecordTypeId==Schema.SObjectType.Account.getRecordTypeInfosByName().get('Others').getRecordTypeId()){
-           		if(a.EF_Client_Services_Specialist__c!=null){	           		
-           		Utility.sendEmail(new List <String> {'efs@iata.org', a.EF_Client_Services_Specialist_Email__c}, 'E&F Account Critical Changes Notification ', emailBody, true, null);
-           }else{
-           		Utility.sendEmail(new List <String> {'efs@iata.org'}, 'E&F Account Critical Changes Notification ', emailBody, true, null);
+           		if(a.EF_Client_Services_Specialist__c!=null){
+           			 Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+			        mail.setSaveAsActivity(false);
+			        mail.setToAddresses(new List <String> {'efs@iata.org', a.EF_Client_Services_Specialist_Email__c}); 
+			        mail.setSubject('E&F Account Critical Changes Notification');
+			        mail.setBccSender(false);
+			        mail.setUseSignature(false);       
+		            mail.setHtmlBody(emailBody);
+		            mails.add(mail);
+           		//Utility.sendEmail(new List <String> {'efs@iata.org', a.EF_Client_Services_Specialist_Email__c}, 'E&F Account Critical Changes Notification ', emailBody, true, null);
+         	     }else{
+         	     	Messaging.SingleEmailMessage mailNoCS = new Messaging.SingleEmailMessage();  
+			        mailNoCS.setSaveAsActivity(false);
+			        mailNoCS.setToAddresses(new List <String> {'efs@iata.org'});    
+			        mailNoCS.setSubject('E&F Account Critical Changes Notification');
+			        mailNoCS.setBccSender(false);
+			        mailNoCS.setUseSignature(false);       
+		            mailNoCS.setHtmlBody(emailBody);
+		            mails.add(mailNoCS);
+           		
+           		//Utility.sendEmail(new List <String> {'efs@iata.org'}, 'E&F Account Critical Changes Notification ', emailBody, true, null);
            }
            }else{
-           		Utility.sendEmail(new List <String> {'efs@iata.org'}, 'E&F Account Critical Changes Notification ', emailBody, true, null);
+
+           		Messaging.SingleEmailMessage mailNoClient = new Messaging.SingleEmailMessage();  
+		        mailNoClient.setSaveAsActivity(false);
+		        mailNoClient.setToAddresses(new List <String> {'efs@iata.org'});    
+		        mailNoClient.setSubject('E&F Account Critical Changes Notification');
+		        mailNoClient.setBccSender(false);
+		        mailNoClient.setUseSignature(false);       
+	            mailNoClient.setHtmlBody(emailBody);
+	            mails.add(mailNoClient);
+           		
+           		//Utility.sendEmail(new List <String> {'efs@iata.org'}, 'E&F Account Critical Changes Notification ', emailBody, true, null);
            }
           
+        }
+
+        if(!mails.isEmpty()){
+        	Messaging.sendEmail(mails);
         }            
               
     }
