@@ -51,7 +51,7 @@
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
-    <enableHistory>false</enableHistory>
+    <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
     <enableSearch>false</enableSearch>
     <enableSharing>true</enableSharing>
@@ -64,6 +64,7 @@
         <referenceTo>Account</referenceTo>
         <relationshipName>EF_Relationships_Airline</relationshipName>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -73,6 +74,7 @@
         <formula>IF(ISPICKVAL(Contract__r.EF_Allow_Billing_Agreements__c, &apos;Allowed&apos;),&apos;Allowed&apos;, &apos;Other&apos;)</formula>
         <label>Allow Billing Agreements</label>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -84,6 +86,7 @@
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Base URL</label>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -94,6 +97,7 @@
         <label>Billing Agreement Name</label>
         <length>255</length>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -104,6 +108,7 @@
         <globalPicklist>EF_Currency</globalPicklist>
         <label>Billing Currency</label>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -115,6 +120,7 @@
         <referenceTo>Account</referenceTo>
         <relationshipName>EF_Relationships_Client</relationshipName>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -126,6 +132,7 @@
         <relationshipName>EF_Relationships</relationshipName>
         <relationshipOrder>0</relationshipOrder>
         <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MasterDetail</type>
         <writeRequiresMasterRead>false</writeRequiresMasterRead>
@@ -138,6 +145,7 @@
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Currency</label>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -148,6 +156,7 @@
         <globalPicklist>EF_Currency</globalPicklist>
         <label>Data Currency</label>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -156,6 +165,7 @@
         <externalId>false</externalId>
         <label>E&amp;F Approver Email</label>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Email</type>
         <unique>false</unique>
@@ -177,6 +187,7 @@
         <referenceTo>EF_Related_Records__c</referenceTo>
         <relationshipName>EF_LocationRelationships</relationshipName>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -186,6 +197,7 @@
         <globalPicklist>EF_Status</globalPicklist>
         <label>E&amp;F Status</label>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -194,6 +206,7 @@
         <externalId>false</externalId>
         <label>E&amp;F Submitter Email</label>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Email</type>
         <unique>false</unique>
@@ -217,6 +230,7 @@
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Invoice Distribution Method Code</label>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -227,6 +241,7 @@
         <globalPicklist>EF_Invoice_Distribution</globalPicklist>
         <label>Invoice Distribution Method</label>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -236,6 +251,7 @@
         <label>Location Code Details</label>
         <length>255</length>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -247,6 +263,7 @@
         <label>Location Code</label>
         <length>255</length>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -280,6 +297,7 @@
             <sorted>false</sorted>
         </picklist>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -289,6 +307,7 @@
         <globalPicklist>EF_Currency</globalPicklist>
         <label>Payment Currency</label>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -317,6 +336,7 @@
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Payment Method Code</label>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -327,6 +347,7 @@
         <globalPicklist>EF_Payment_Method</globalPicklist>
         <label>Payment Method</label>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -355,6 +376,7 @@
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Payment Terms Code</label>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -365,6 +387,7 @@
         <globalPicklist>EF_Payment_Terms</globalPicklist>
         <label>Payment Terms</label>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -373,6 +396,7 @@
         <externalId>false</externalId>
         <label>Requested Changes</label>
         <length>10000</length>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Html</type>
         <visibleLines>10</visibleLines>
@@ -383,6 +407,7 @@
         <description>Helper field that gets set to TRUE if one of the Billing Agreements &quot;require approval&quot; fields gets changed.</description>
         <externalId>false</externalId>
         <label>Require Approval</label>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -392,6 +417,7 @@
         <description>Helper field for &quot;require approval&quot; functionality.</description>
         <externalId>false</externalId>
         <label>Send to SAP</label>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -402,6 +428,7 @@
         <globalPicklist>EF_Status</globalPicklist>
         <label>Status</label>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -414,6 +441,7 @@
     <nameField>
         <displayFormat>E&amp;F ABA-{0000}{MM}{YY}</displayFormat>
         <label>E&amp;F Airline Billing Agreement Number</label>
+        <trackHistory>false</trackHistory>
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>E&amp;F Airline Billing Agreements</pluralLabel>

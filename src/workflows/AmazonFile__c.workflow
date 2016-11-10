@@ -42,36 +42,4 @@
         <description>AmazonFile RejectedClosed</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
-    <rules>
-        <fullName>EF_DocExpirationNotification</fullName>
-        <actions>
-            <name>EF_Doc_Expired_Notification</name>
-            <type>Alert</type>
-        </actions>
-        <active>true</active>
-        <criteriaItems>
-            <field>AmazonFile__c.EF_Expired__c</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>EF_SetDocExpired</fullName>
-        <active>true</active>
-        <criteriaItems>
-            <field>AmazonFile__c.EF_Expiry_Date__c</field>
-            <operation>notEqual</operation>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>EF_SetDocExpired</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <offsetFromField>AmazonFile__c.EF_Expiry_Date__c</offsetFromField>
-            <timeLength>0</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-    </rules>
 </Workflow>
