@@ -134,7 +134,7 @@ private class AMS_VoucherProcessTest {
 
         List<String> idsToPrint = new List<String>();
 
-        controller.fetchVouchersInfo(idsToPrint);
+        //controller.fetchVouchersInfo(idsToPrint);
 
         Test.stopTest();
 
