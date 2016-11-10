@@ -24,6 +24,8 @@ global class AMS_VouchersCreationBatch implements Database.Batchable<sObject>, D
 
 	global AMS_VouchersCreationBatch(Map<IATA_ISO_Country__c,Decimal> averageMetrics, AMS_Voucher_Process_Run__c process) {
 		
+		vouchersToPrint = new Set<Id>();
+
 		this.process = process;
 
 		this.regionsMap = new Map<String,AMS_Voucher_Region__c>();
@@ -92,8 +94,6 @@ global class AMS_VouchersCreationBatch implements Database.Batchable<sObject>, D
 
 		}
 
-		vouchersToPrint = new Set<Id>();
-
 		for(AMS_Voucher__c voucher: vouchers){
 
 			vouchersToPrint.add(voucher.Id);
@@ -104,7 +104,7 @@ global class AMS_VouchersCreationBatch implements Database.Batchable<sObject>, D
 
 	global void finish(Database.BatchableContext BC) {
 		
-		System.debug('Finishing AMS_VoucherPDFCreationBatch.');
+		System.debug('Finishing AMS_VoucherPDFCreationBatch and sending ' + vouchersToPrint.size() + ' vouchers to print.');
 
 		AMS_VoucherPDFCreationBatch pdfCreationBatch = new AMS_VoucherPDFCreationBatch(vouchersToPrint,region,process);
 
