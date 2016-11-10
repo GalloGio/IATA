@@ -212,51 +212,57 @@ public class EF_AccountTriggerHandler {
 
 		List  <String> criticalClientFieldList = new List <String> ();
 		List  <String> criticalAirlineFieldList = new List <String> ();
-
-		for(EF_Critical_Field_Notification__c cfn: fieldList){
-			
-			criticalClientFieldList= cfn.Account_Client_Fields__c.split(',');
-			criticalAirlineFieldList = cfn.Account_Airline_Fields__c.split(',');					
-		}
 		
-		Map <Id,Account> accsAirlineNoti = new Map <Id,Account>();
-		Map <Id,Account> accsClientNoti = new Map <Id,Account>();
-
-		Map<String, Schema.SobjectField> fields = accs.getSObjectType().getDescribe().fields.getMap();
-
-		//loop over accounts to check if any of them need to trigger a notification.
-		for(Account a: accs){			
-			//check fields for Clients
-			if(a.RecordTypeId==Schema.SObjectType.Account.getRecordTypeInfosByName().get('Others').getRecordTypeId() ){
-				
-				for(String s: criticalClientFieldList){
+		if(fieldList!=null){
+			for(EF_Critical_Field_Notification__c cfn: fieldList){
+                if(cfn.Account_Client_Fields__c!=null){
+                    criticalClientFieldList= cfn.Account_Client_Fields__c.split(',');
+                }
+                if(cfn.Account_Airline_Fields__c!=null){
+                   criticalAirlineFieldList = cfn.Account_Airline_Fields__c.split(',');	 
+                }
 								
-	           	
-					if(a.get(s)!=oldMap.get(a.Id).get(s)){
-						accsClientNoti.put(a.Id, a);
+			}
+			
+			Map <Id,Account> accsAirlineNoti = new Map <Id,Account>();
+			Map <Id,Account> accsClientNoti = new Map <Id,Account>();
+
+			Map<String, Schema.SobjectField> fields = accs.getSObjectType().getDescribe().fields.getMap();
+
+			//loop over accounts to check if any of them need to trigger a notification.
+			for(Account a: accs){			
+				//check fields for Clients
+				if(a.RecordTypeId==Schema.SObjectType.Account.getRecordTypeInfosByName().get('Others').getRecordTypeId() ){
+					
+					for(String s: criticalClientFieldList){
+									
+		           	
+						if(a.get(s)!=oldMap.get(a.Id).get(s)){
+							accsClientNoti.put(a.Id, a);
+						}
 					}
 				}
-			}
 
-			//check fields for Customers
-			if(a.RecordTypeId==Schema.SObjectType.Account.getRecordTypeInfosByName().get('Operator').getRecordTypeId() ||
-				a.RecordTypeId==Schema.SObjectType.Account.getRecordTypeInfosByName().get('Airline Branch').getRecordTypeId() ||
-				a.RecordTypeId==Schema.SObjectType.Account.getRecordTypeInfosByName().get('Airline Headquarters').getRecordTypeId()){
-				for(String s: criticalAirlineFieldList){
-								
-	           	
-					if(a.get(s)!=oldMap.get(a.Id).get(s)){
-						accsAirlineNoti.put(a.Id, a);
+				//check fields for Customers
+				if(a.RecordTypeId==Schema.SObjectType.Account.getRecordTypeInfosByName().get('Operator').getRecordTypeId() ||
+					a.RecordTypeId==Schema.SObjectType.Account.getRecordTypeInfosByName().get('Airline Branch').getRecordTypeId() ||
+					a.RecordTypeId==Schema.SObjectType.Account.getRecordTypeInfosByName().get('Airline Headquarters').getRecordTypeId()){
+					for(String s: criticalAirlineFieldList){
+									
+		           	
+						if(a.get(s)!=oldMap.get(a.Id).get(s)){
+							accsAirlineNoti.put(a.Id, a);
+						}
 					}
 				}
-			}
-		}
+			}		
 
-		if(!accsAirlineNoti.isEmpty()){
-			notifyOnCriticalFields(accsAirlineNoti, oldMap, criticalAirlineFieldList);
-		}
-		if(!accsClientNoti.isEmpty()){
-			notifyOnCriticalFields(accsClientNoti, oldMap, criticalClientFieldList);
+			if(!accsAirlineNoti.isEmpty()){
+				notifyOnCriticalFields(accsAirlineNoti, oldMap, criticalAirlineFieldList);
+			}
+			if(!accsClientNoti.isEmpty()){
+				notifyOnCriticalFields(accsClientNoti, oldMap, criticalClientFieldList);
+			}
 		}
 	}
 
@@ -277,7 +283,7 @@ public class EF_AccountTriggerHandler {
            }
            emailBody = emailBody + '</table>';
            if(a.RecordTypeId==Schema.SObjectType.Account.getRecordTypeInfosByName().get('Others').getRecordTypeId()){
-           		if(a.EF_Client_Services_Specialist__c!=null){
+           		if(a.EF_Client_Services_Specialist__c!=null){	           		
            		Utility.sendEmail(new List <String> {'efs@iata.org', a.EF_Client_Services_Specialist_Email__c}, 'E&F Account Critical Changes Notification ', emailBody, true, null);
            }else{
            		Utility.sendEmail(new List <String> {'efs@iata.org'}, 'E&F Account Critical Changes Notification ', emailBody, true, null);
