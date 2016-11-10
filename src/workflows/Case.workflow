@@ -12860,7 +12860,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         </actions>
         <active>true</active>
         <description>SCE</description>
-        <formula>AND(RecordTypeId = &quot;012200000000DD9&quot;, ISCHANGED(DEF_Approval_Rejection__c))</formula>
+        <formula>AND(OR(RecordType.DeveloperName=&apos;SIDRA_Lite&apos;,RecordType.DeveloperName=&apos;SIDRA&apos;),ISCHANGED(DEF_Approval_Rejection__c))</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
@@ -13045,7 +13045,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
-            <value>SIDRA</value>
+            <value>SIDRA,SIDRA Lite</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Deactivate_Agent_in_Systems__c</field>
@@ -13054,7 +13054,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.BSP_CASS__c</field>
             <operation>equals</operation>
-            <value>BSP</value>
+            <value>BSP,CASS</value>
         </criteriaItems>
         <description>SIDRA</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
