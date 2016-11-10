@@ -1,4 +1,4 @@
-<apex:page showHeader="false" sidebar="false" renderAs="pdf" controller="AMS_VoucherPDFGeneratorController" applyBodyTag="false" >
+<apex:page showHeader="false" sidebar="false" renderAs="pdf" controller="AMS_VoucherPDFGeneratorController" applyBodyTag="false" readOnly="true">
     <apex:stylesheet value="{!$Resource.voucherpdfgeneratorpage}"/>
     <apex:variable value="{!0}" var="rowNum"/>
     <apex:repeat value="{!vouchersToPrintList}" var="voucher">
