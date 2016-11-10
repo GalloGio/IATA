@@ -10441,6 +10441,14 @@ Select at least one Authorized Signatory, and choose the Financial Assessment Co
         <value>Account Information</value>
     </labels>
     <labels>
+        <fullName>ISSP_Account_Statement_Location</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Account Statement Location</shortDescription>
+        <value>Location</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Account_Statements</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
@@ -15873,6 +15881,22 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <shortDescription>ISSP_Registration reCAPTCHA verification Failed</shortDescription>
         <value>reCAPTCHA verification Failed</value>
     </labels>
+    <labels>
+        <fullName>ISSP_AMS_View_Branch_details</fullName>
+        <categories>ISSP, Portal, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS View Branch details</shortDescription>
+        <value>View / Update Branch Details</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Branch_Offices</fullName>
+        <categories>ISSP, Portal, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Branch Offices</shortDescription>
+        <value>Branch Office(s)</value>
+    </labels>    
     <labels>
         <fullName>Iata_service_request</fullName>
         <language>en_US</language>
