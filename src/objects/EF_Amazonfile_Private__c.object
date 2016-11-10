@@ -13,6 +13,7 @@
     </fields>
     <fields>
         <fullName>SObject_3_first_chars__c</fullName>
+        <description>First 3chr of the object id, i.e. 001 for Account</description>
         <externalId>false</externalId>
         <label>SObject 3 first chars</label>
         <length>3</length>

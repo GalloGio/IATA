@@ -5,6 +5,7 @@
     <enableFeeds>false</enableFeeds>
     <fields>
         <fullName>Account_Airline_Fields__c</fullName>
+        <description>E&amp;F - Fields to be tracked on Account clients.</description>
         <externalId>false</externalId>
         <label>Account Airline Fields</label>
         <length>255</length>
@@ -15,6 +16,7 @@
     </fields>
     <fields>
         <fullName>Account_Client_Fields__c</fullName>
+        <description>E&amp;F - Fields to be tracked on Account clients.</description>
         <externalId>false</externalId>
         <label>Account Client Fields</label>
         <length>255</length>
@@ -25,6 +27,7 @@
     </fields>
     <fields>
         <fullName>Airline_Billing_Agreement_Fields__c</fullName>
+        <description>E&amp;F - Fields to be tracked on Airline Billing Agreements.</description>
         <externalId>false</externalId>
         <label>Airline Billing Agreement Fields</label>
         <length>255</length>
@@ -35,6 +38,7 @@
     </fields>
     <fields>
         <fullName>Contact_Fields__c</fullName>
+        <description>E&amp;F - Fields to be tracked on Contacts.</description>
         <externalId>false</externalId>
         <label>Contact Fields</label>
         <length>255</length>
@@ -45,6 +49,7 @@
     </fields>
     <fields>
         <fullName>Contract_Fields__c</fullName>
+        <description>E&amp;F - Fields to be tracked on Contracts.</description>
         <externalId>false</externalId>
         <label>Contract Fields</label>
         <length>255</length>
