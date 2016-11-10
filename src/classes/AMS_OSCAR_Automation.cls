@@ -1238,4 +1238,20 @@ public with sharing class AMS_OSCAR_Automation
         }
     }
 
+    public class AMS_OSCAR_Step29_succeeded implements IClassFactory
+    {
+        public Boolean processWork(AMS_OSCAR_Event__c lce, AMS_OSCAR__c oscar)
+        {
+            try{
+                if(oscar != null && !oscar.Apply_Penalty_Fee__c){
+                    //oscar.Apply_Penalty_Fee__c = true;
+                    return true; 
+                }
+            }catch(Exception e){
+                system.debug('ERROR: '+e);
+            }
+            return false;
+        }
+    }
+    
 }
