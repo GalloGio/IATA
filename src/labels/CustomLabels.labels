@@ -15882,6 +15882,22 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <value>reCAPTCHA verification Failed</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_View_Branch_details</fullName>
+        <categories>ISSP, Portal, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS View Branch details</shortDescription>
+        <value>View / Update Branch Details</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Branch_Offices</fullName>
+        <categories>ISSP, Portal, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Branch Offices</shortDescription>
+        <value>Branch Office(s)</value>
+    </labels>    
+    <labels>
         <fullName>Iata_service_request</fullName>
         <language>en_US</language>
         <protected>false</protected>
