@@ -63,7 +63,7 @@
         <referenceTo>Account</referenceTo>
         <relationshipName>Inspections_AMS</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -160,7 +160,7 @@
         <referenceTo>AMS_Agency__c</referenceTo>
         <relationshipName>Inspections</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -195,7 +195,7 @@
         <relationshipLabel>Appointments (AMS) (Airline)</relationshipLabel>
         <relationshipName>Appointments_AMS</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -204,7 +204,7 @@
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>BSPLink or CASSLink activation</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -213,7 +213,7 @@
         <externalId>false</externalId>
         <label>Comments</label>
         <length>32768</length>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
         <visibleLines>3</visibleLines>
@@ -244,7 +244,7 @@
         <externalId>false</externalId>
         <label>Last synchronization</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>DateTime</type>
     </fields>
@@ -254,7 +254,7 @@
         <label>Legacy External ID</label>
         <length>80</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -283,7 +283,7 @@
             <sorted>false</sorted>
         </picklist>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -295,7 +295,7 @@
         <referenceTo>AMS_OSCAR__c</referenceTo>
         <relationshipName>Appointments</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -308,7 +308,7 @@
         <relationshipLabel>Appointments (AMS)</relationshipLabel>
         <relationshipName>Appointments_AMS</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -330,7 +330,7 @@
         <relationshipLabel>Appointments (AMS)</relationshipLabel>
         <relationshipName>Appointments_AMS1</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -338,7 +338,7 @@
     <nameField>
         <displayFormat>INS-{0000000}</displayFormat>
         <label>Appointment Name</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Appointments (AMS)</pluralLabel>
