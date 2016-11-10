@@ -1,0 +1,287 @@
+<apex:page controller="vfIECEBC_RecipientList" applyHtmlTag="false" applyBodyTag="false" sidebar="false" showheader="false" standardStylesheets="false" language="en" docType="html-5.0">
+	<apex:composition template="IECEBC_Layout">
+        <apex:define name="pageHeadAdditions">
+            <!-- Start of Page <head> -->
+            <title>eBroadcast Manage List</title>
+            <!-- End of Page </head> -->
+        </apex:define>
+        <apex:define name="pageScriptAdditions">
+            <script type="text/javascript">
+            jQuery.noConflict();
+            
+            function closeModal() {
+                $ = jQuery;
+                $('#js-modal').addClass('is-hidden');
+                $('body').attr('data-is-modal-open', 'false');
+                $('.js-champaign-actions').val('default');
+                jQuery('body').css('cursor', 'auto');
+            }
+            
+            
+            jQuery( document ).ready(function( $ ) {
+                
+                $(document).on('change', 'select[name="item-action"]', function(e){
+                    jQuery('body').css('cursor', 'wait');
+                    var item = filters[$(this).attr('data-target-item-id')];
+                    switch ($(this).val()) {
+                        case 'delete':
+                            deleteItem(item.Id);
+                            break;
+                        case 'rename':
+                            renameItem(item.Id);
+                            break;
+                        case 'duplicate':
+                            duplicateItem(item.Id);
+                            break;
+                        default:
+                            alert('The action ' + $(this).val() + ' has not been defined yet.');
+                            e.preventDefault();
+                    }
+                });
+            });
+            function actionFunctionCompleted(){
+                jQuery('#js-modal').removeClass('is-hidden');
+                jQuery('body').css('cursor', 'auto');
+            }
+            
+            </script>
+            
+            <div class="modal-container is-hidden" id="js-modal">
+                <div class="overlay"></div>
+                <div class="modal-dialog" id="js-modal-dialog">
+                    <apex:form >
+                        <apex:actionFunction name="deleteItem" rerender="js-modal-delete-item-wrapper" onbeforedomupdate="jQuery('#js-modal .modal-content:not(.is-hidden)').addClass('is-hidden');" oncomplete="actionFunctionCompleted();">
+                            <apex:param name="firstParam" assignTo="{!selectedItemId}" value="" />
+                        </apex:actionFunction>
+                        <apex:actionFunction name="renameItem" rerender="js-modal-rename-item-wrapper" onbeforedomupdate="jQuery('#js-modal .modal-content:not(.is-hidden)').addClass('is-hidden');" oncomplete="actionFunctionCompleted();">
+                            <apex:param name="firstParam" assignTo="{!selectedItemId}" value="" />
+                        </apex:actionFunction>
+                        <apex:actionFunction name="duplicateItem" rerender="js-modal-duplicate-item-wrapper" onbeforedomupdate="jQuery('#js-modal .modal-content:not(.is-hidden)').addClass('is-hidden');" oncomplete="actionFunctionCompleted();">
+                            <apex:param name="firstParam" assignTo="{!selectedItemId}" value="" />
+                        </apex:actionFunction>
+                    </apex:form>
+                    
+                    <apex:form id="js-modal-delete-item-wrapper">
+                        <section id="js-modal-delete-item" class="modal-content">
+                            <header class="modal-header">
+                                <h2 class="modal-title">Are you sure?</h2>
+                                <a href="#" class="icon-close js-close-modal"><i class="fa fa-times"></i></a>
+                            </header>
+                            <div class="modal-body">
+                                <p>You are about to delete a list called <strong class="placeholder-name">{!selectedFilter.Name}</strong>.</p>
+                            </div>
+                            <footer class="modal-footer">
+                                <ul class="list actions">
+                                    <li>
+                                        <button class="text-link js-close-modal">Discard</button>
+                                    </li>
+                                    <li>
+                                        <apex:commandLink onclick="jQuery('body').css('cursor', 'wait');" action="{!deleteItem}" styleClass="button" value="I confirm" reRender="itemList" oncomplete="closeModal();" />
+                                    </li>
+                                </ul>
+                            </footer>
+                        </section>
+                    </apex:form>
+                    <apex:form id="js-modal-rename-item-wrapper">
+                        <section id="js-modal-rename-item" class="modal-content">
+                            <header class="modal-header">
+                                <h2 class="modal-title">Rename List</h2>
+                                <a href="#" class="icon-close js-close-modal"><i class="fa fa-times"></i></a>
+                            </header>
+                            <div class="modal-body">
+                                <div class="field-group text">
+                                    <label>
+                                        <span class="input-label">Rename your list</span> <apex:inputField styleClass="user-input text" value="{!selectedFilter.Name}" />
+                                    </label>
+                                    <p class="input-description">Internal use only. This name will not appear on your compaign.</p>
+                                </div>
+                            </div>
+                            <footer class="modal-footer">
+                                <ul class="list actions">
+                                    <li>
+                                        <button class="text-link js-close-modal">Discard</button>
+                                    </li>
+                                    <li>
+                                        <apex:commandLink onclick="jQuery('body').css('cursor', 'wait');" action="{!save}" styleClass="button" value="I confirm" reRender="itemList" oncomplete="closeModal();" />
+                                    </li>
+                                </ul>
+                            </footer>
+                        </section>
+                    </apex:form>
+                    <apex:form id="js-modal-duplicate-item-wrapper">
+                        <section id="js-modal-duplicate-item" class="modal-content">
+                            <header class="modal-header">
+                                <h2 class="modal-title">Duplicate List</h2>
+                                <a href="#" class="icon-close js-close-modal"><i class="fa fa-times"></i></a>
+                            </header>
+                            <div class="modal-body">
+                                <div class="field-group text">
+                                    <label>
+                                        <span class="input-label">Name of the copy </span> <apex:inputField styleClass="user-input text" value="{!selectedFilter.Name}" />
+                                    </label>
+                                    <!--
+                                    <p class="input-description">Internal use only. This name will not appear on your compaign.</p>
+									-->
+                                </div>
+                            </div>
+                            <footer class="modal-footer">
+                                <ul class="list actions">
+                                    <li>
+                                        <button class="text-link js-close-modal">Discard</button>
+                                    </li>
+                                    <li>
+                                        <apex:commandLink onclick="jQuery('body').css('cursor', 'wait');" action="{!duplicate}" styleClass="button" value="I confirm" reRender="itemList" oncomplete="closeModal();" />
+                                    </li>
+                                </ul>
+                            </footer>
+                        </section>
+                    </apex:form> 
+                    <apex:form id="js-modal-edit-item-wrapper">
+                        <section id="js-modal-edit-item" class="modal-content">
+                            <header class="modal-header">
+                                <h2 class="modal-title">Edit List</h2>
+                                <a href="#" class="icon-close js-close-modal"><i class="fa fa-times"></i></a>
+                            </header>
+                            <div class="modal-body">
+                                <div class="field-group text">
+                                    <label>
+                                        <span class="input-label">Rename your list</span> <apex:inputField styleClass="user-input text" value="{!selectedFilter.Name}" />
+                                    </label>
+                                    <p class="input-description">Internal use only. This name will not appear on your compaign.</p>
+                                </div>
+                            </div>
+                            <footer class="modal-footer">
+                                <ul class="list actions">
+                                    <li>
+                                        <button class="text-link js-close-modal">Discard</button>
+                                    </li>
+                                    <li>
+                                        <apex:commandLink onclick="jQuery('body').css('cursor', 'wait');" action="{!save}" styleClass="button" value="I confirm" reRender="itemList" oncomplete="closeModal();" />
+                                    </li>
+                                </ul>
+                            </footer>
+                        </section>
+                    </apex:form> 
+                </div>
+            </div>
+            
+        </apex:define>
+        <apex:define name="pageContent">
+            <!-- Start of Page Content -->
+            <main class="main-content">
+                <div class="inner-wrapper">
+                    <h1 class="page-title">Manage your lists</h1>
+                    <div class="sort-by">
+                        <apex:form >
+                            <div class="custom-user-input select">
+                                <i class="icon angle-down"></i>
+                                <apex:selectList value="{!sortBy}" styleClass="user-input select" size="1">
+                                    <apex:selectOptions value="{!sortByOptions}"/>
+                                    <apex:actionSupport event="onchange" action="{!doNothing}" reRender="itemList" />
+                                </apex:selectList> 
+                            </div>
+                        </apex:form>
+                    </div>
+                    <apex:outputPanel id="itemList" style="padding: 10px 0;" layout="block">
+                        <script>
+                        var filters = {};
+                        <apex:repeat value="{!filters}" var="c">
+                            filters['{!c.Id}'] = {
+                            Id: '{!c.Id}',
+                            Name: '{!JSENCODE(c.Name)}'
+                        }
+                        </apex:repeat>
+                        </script>
+                        <table class="data-table manage-lists">
+                            <tbody>
+                                <tr>
+                                    <th class="name">List Name</th>
+                                    <th class="type">Audience</th>
+                                    <th class="date created-on">Creation Date</th>
+                                    <th class="date last-edited">Last Edited</th>
+                                    <th class="actions"><a class="button" href="{!URLFOR($Page.IECEBC_Recipient)}">Create new list</a></th>
+                                </tr>
+                                
+                                <apex:repeat value="{!filters}" var="i">
+                                    <apex:variable var="isEditable" value="{!true == true}" />
+                                	<apex:repeat value="{!i.eBroadcast_Campaigns__r}" var="c">
+                                        <apex:variable var="isEditable" value="{!isEditable && NOT(c.Status__c == 'PENDING_APPROVAL' || c.Status__c == 'APPROVED')}" />
+                                    </apex:repeat>
+                                    <tr>
+                                        <td class="name">
+                                            <apex:outputText rendered="{!isEditable}">
+                                                <a href="{!URLFOR($Page.IECEBC_Recipient)}?id={!i.Id}">{!i.Name}</a>
+                                            </apex:outputText>
+                                            <apex:outputText rendered="{!NOT(isEditable)}">
+                                                {!i.Name}
+                                            </apex:outputText>
+                                            
+                                            <apex:outputText rendered="{!NOT(isEditable)}">
+	                                            <a href="#" class="tooltip-icon js-tooltip"><i class="fa fa-exclamation-triangle"></i></a>
+                                            </apex:outputText>
+                                            <apex:outputPanel layout="block" rendered="{!NOT(isEditable)}" styleClass="tooltip-container">
+                                                <div class="tooltip-description">
+                                                    <p>You cannot edit / delete this list as it is used in an active campaign.</p>
+                                                </div>
+                                            </apex:outputPanel>
+                                        </td>
+                                        <td class="type">{!IF(i.Audience__c != 'Custom', i.Audience__c, 'Agency')}</td>
+                                        <td class="date created-on">
+                                            <apex:outputText value="{0,date,EEE MMM dd yyyy hh:mm:ss}">
+                                                <apex:param value="{!i.CreatedDate}" /> 
+                                            </apex:outputText>
+                                        </td>
+                                        <td class="date last-edited">
+                                            <apex:outputText value="{0,date,EEE MMM dd yyyy hh:mm:ss}">
+                                                <apex:param value="{!i.LastModifiedDate}" /> 
+                                            </apex:outputText>
+                                        </td>
+                                        <td class="actions">
+                                            
+                                            <div class="custom-user-input select">
+                                                <i class="icon angle-down"></i>
+                                                <select data-target-item-id="{!i.Id}" class="user-input select js-champaign-actions" name="item-action">
+                                                    <option value="default">Select action</option>
+                                                    <option value="duplicate">Duplicate</option>
+                                                    <option value="rename">Rename</option>
+                                                    <apex:outputText rendered="{!isEditable}">
+                                                        <option value="delete">Delete</option>
+                                                    </apex:outputText>
+                                                </select>
+                                            </div>
+                                            
+                                        </td>
+                                    </tr>
+                                </apex:repeat>
+                            </tbody>
+                        </table>
+                        <apex:outputText rendered="{!filters.Size==0}">
+                         <ul class="nav tabs">
+                             
+                           <li></li>
+                         </ul>
+                        </apex:outputText>
+                    </apex:outputPanel>
+                </div>
+            </main>
+            
+            
+            <apex:form >
+                <Center>
+                <apex:outputPanel styleClass="paginator" rendered="{!maxPage > 1}">
+                    Page
+                    <div class="custom-user-input select">
+                        <i class="icon angle-down"></i>
+                        <apex:selectList value="{!page}" styleClass="user-input select" size="1">
+                            <apex:selectOptions value="{!pageOptions}"/>
+                            <apex:actionSupport event="onchange" action="{!doNothing}" reRender="itemList" />
+                        </apex:selectList> 
+                    </div>
+                    of {!maxPage}
+                </apex:outputPanel>
+                </Center>
+            </apex:form>
+            <!-- End of Page Content -->
+        </apex:define>
+    </apex:composition>
+</apex:page>
