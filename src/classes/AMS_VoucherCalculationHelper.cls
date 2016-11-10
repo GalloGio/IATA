@@ -80,7 +80,9 @@ public without sharing class AMS_VoucherCalculationHelper {
 
 	}
 
-	public static List<AMS_Voucher__c> createVouchersForAgencies(Map<Id,Integer> vouchersInfoVouchers, Id processId){
+	public static List<AMS_Voucher__c> createVouchersForAgencies(Map<Id,Integer> vouchersInfoVouchers, Id processId, Integer vouchersAlreadyCreated, Integer voucherPerPdf){
+
+		
 
 		List<AMS_Voucher__c> toReturn = new List<AMS_Voucher__c>();
 
@@ -90,7 +92,9 @@ public without sharing class AMS_VoucherCalculationHelper {
 
 			for( Integer i = 0 ; i < numberOfVouchersToCreate; i++){
 
-				AMS_Voucher__c v = new AMS_Voucher__c(Voucher_Information__c = vouchersInfo, AMS_Voucher_Process_Run__c = processId, SequenceNumber__c = String.valueOf(i+1) + ' of ' + numberOfVouchersToCreate );
+				Integer runExec = Integer.valueOf((Decimal.valueOf(vouchersAlreadyCreated + i + 1) / Decimal.valueOf(voucherPerPdf)).round(System.RoundingMode.FLOOR));
+
+				AMS_Voucher__c v = new AMS_Voucher__c(Voucher_Information__c = vouchersInfo, AMS_Voucher_Process_Run__c = processId, SequenceNumber__c = String.valueOf(i+1) + ' of ' + numberOfVouchersToCreate, runExecution__c = runExec);
 
 				toReturn.add(v);
 			}

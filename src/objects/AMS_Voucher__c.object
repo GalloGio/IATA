@@ -128,6 +128,18 @@
         <trackTrending>false</trackTrending>
         <type>TextArea</type>
     </fields>
+    <fields>
+        <fullName>runExecution__c</fullName>
+        <externalId>false</externalId>
+        <label>Run Execution</label>
+        <precision>4</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
     <label>Voucher</label>
     <nameField>
         <displayFormat>A{000000000}</displayFormat>
