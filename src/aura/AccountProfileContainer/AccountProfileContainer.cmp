@@ -2,72 +2,74 @@
     <!-- VARIABLES INITIATION -->
     <!-- Account ID parameter - to be received from app -->
     <aura:attribute name="accountId" type="String"/>
-    
+    <aura:attribute name="activeTab" type="String"/>
+    <aura:attribute name="oldTab" type="String"/>
+
     <!-- Account parameter - to be queried at INIT from the database -->
     <aura:attribute name="account" type="Account" default="{ 'sobjectType': 'Account'}"/>
-    
+
     <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
     <!-- / VARIABLES INITIATION -->
-    
-    
-    
+
+
+
     <!-- PAGE LAYOUT -->
     <!-- Include the SLDS static resource -->
     <ltng:require styles="{!$Resource.SLDS102 + '/assets/styles/salesforce-lightning-design-system-ltng.css'}"/>
-    <ltng:require scripts="{!$Resource.jQuery224min}" afterScriptsLoaded="{!c.jQueryStart}"/>
-    
-    
+    <!-- <ltng:require scripts="{!$Resource.jQuery224min}" afterScriptsLoaded="{!c.jQueryStart}"/> -->
+
+
     <!-- SLDS SCOPING DIV -->
     <div class="slds">
-        
-        
+
+
         <c:AccountHeader account="{!v.account}"/>
-        
-        
+
+
         <!-- PRIMARY CONTENT WRAPPER -->
         <div class="myapp">
-            
+
             <!-- TABS BUTTONS -->
             <div class="slds-tabs--default">
                 <ul class="slds-tabs--default__nav" role="tablist">
-                    <li class="slds-tabs--default__item slds-text-heading--label slds-active" title="Identification" role="presentation">
-                        <a class="slds-tabs--default__link" href="#" role="tab" tabindex="0" aria-selected="true" aria-controls="tab-default-1" id="tab-default-1__item" >Identification</a>
+                    <li class="slds-tabs--default__item slds-text-heading--label slds-active" title="Identification" role="presentation" aura:id="Identification">
+                        <ui:outputText value="Indentification"  click="{!c.changeTab}" class="slds-tabs--default__link" />
                     </li>
-                    <li class="slds-tabs--default__item slds-text-heading--label" title="Key Contacts" role="presentation">
-                        <a class="slds-tabs--default__link" href="#" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-default-2" id="tab-default-2__item" >Key Contacts</a>
+                    <li class="slds-tabs--default__item slds-text-heading--label" title="Key Contacts" role="presentation" aura:id="Key Contacts">
+                        <ui:outputText value="Key Contacts"  click="{!c.changeTab}" class="slds-tabs--default__link"/>
                     </li>
-                    <li class="slds-tabs--default__item slds-text-heading--label" title="Issues and Priorities" role="presentation">
-                        <a class="slds-tabs--default__link" href="#" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-default-3" id="tab-default-3__item" >Issues and Priorities</a>
+                    <li class="slds-tabs--default__item slds-text-heading--label" title="Issues and Priorities" role="presentation" aura:id="Issues and Priorities">
+                        <ui:outputText value="Issues and Priorities"  click="{!c.changeTab}" class="slds-tabs--default__link"/>
                     </li>
-                    <li class="slds-tabs--default__item slds-text-heading--label" title="Core Relationship" role="presentation">
-                        <a class="slds-tabs--default__link" href="#" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-default-4" id="tab-default-4__item" >Core Relationship</a>
+                    <li class="slds-tabs--default__item slds-text-heading--label" title="Core Relationship" role="presentation" aura:id="Core Relationship">
+                        <ui:outputText value="Core Relationship"  click="{!c.changeTab}" class="slds-tabs--default__link"/>
                     </li>
-                    <li class="slds-tabs--default__item slds-text-heading--label" title="Products" role="presentation">
-                        <a class="slds-tabs--default__link" href="#" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-default-5" id="tab-default-5__item" >Products</a>
+                    <li class="slds-tabs--default__item slds-text-heading--label" title="Products" role="presentation" aura:id="Products">
+                        <ui:outputText value="Products"  click="{!c.changeTab}" class="slds-tabs--default__link"/>
                     </li>
-                    <li class="slds-tabs--default__item slds-text-heading--label" title="Services" role="presentation">
-                        <a class="slds-tabs--default__link" href="#" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-default-6" id="tab-default-6__item" >Services</a>
+                    <li class="slds-tabs--default__item slds-text-heading--label" title="Services" role="presentation" aura:id="Services">
+                        <ui:outputText value="Services"  click="{!c.changeTab}" class="slds-tabs--default__link"/>
                     </li>
-                    <li class="slds-tabs--default__item slds-text-heading--label" title="Groups" role="presentation">
-                        <a class="slds-tabs--default__link" href="#" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-default-7" id="tab-default-7__item" >Groups</a>
+                    <li class="slds-tabs--default__item slds-text-heading--label" title="Groups" role="presentation" aura:id="Groups">
+                        <ui:outputText value="Groups"  click="{!c.changeTab}" class="slds-tabs--default__link"/>
                     </li>
-                    <li class="slds-tabs--default__item slds-text-heading--label" title="Board Monitored Activities" role="presentation">
-                        <a class="slds-tabs--default__link" href="#" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-default-8" id="tab-default-8__item" >Monitored Activities</a>
+                    <li class="slds-tabs--default__item slds-text-heading--label" title="Board Monitored Activities" role="presentation" aura:id="Monitored Activities">
+                        <ui:outputText value="Monitored Activities"  click="{!c.changeTab}" class="slds-tabs--default__link"/>
                     </li>
-                    <li class="slds-tabs--default__item slds-text-heading--label" title="Key Account Plan" role="presentation">
-                        <a class="slds-tabs--default__link" href="#" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-default-9" id="tab-default-9__item" >Key Account Plan</a>
+                    <li class="slds-tabs--default__item slds-text-heading--label" title="Key Account Plan" role="presentation" aura:id="Key Account Plan">
+                        <ui:outputText value="Key Account Plan"  click="{!c.changeTab}" class="slds-tabs--default__link"/>
                     </li>
-                    <li class="slds-tabs--default__item slds-text-heading--label" title="Chatter" role="presentation">
-                        <a class="slds-tabs--default__link" href="#" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-default-10" id="tab-default-10__item" >Chatter</a>
+                    <li class="slds-tabs--default__item slds-text-heading--label" title="Chatter" role="presentation" aura:id="Chatter">
+                        <ui:outputText value="Chatter"  click="{!c.changeTab}" class="slds-tabs--default__link"/>
                     </li>
-                    <li class="slds-tabs--default__item slds-text-heading--label" title="News" role="presentation">
-                        <a class="slds-tabs--default__link" href="#" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-default-11" id="tab-default-11__item" >News</a>
+                    <li class="slds-tabs--default__item slds-text-heading--label" title="News" role="presentation" aura:id="News">
+                        <ui:outputText value="News"  click="{!c.changeTab}" class="slds-tabs--default__link"/>
                     </li>
                 </ul>
-                
+
                 <!-- TABS CONTENT -->
-                <div id="tab-default-1" class="slds-tabs--default__content slds-show" role="tabpanel" aria-labelledby="tab-default-1__item">
-                    
+                <aura:if isTrue="{!v.activeTab=='Identification'}">
+
                     <div class="slds-grid slds-p-around--medium">
                         <div class="slds-col slds-col-rule--right slds-p-right--large slds-size--9-of-12">
                             <c:AMP_AccountData account="{!v.account}" />
@@ -85,120 +87,106 @@
                             <c:AMP_AccountOwnership accountId="{!v.accountId}" displayType="Subsidiaries" />
                         </div>
                     </div>
-                    
-                    
-                </div>
-                
-                <div id="tab-default-2" class="slds-tabs--default__content slds-hide" role="tabpanel" aria-labelledby="tab-default-2__item">
-                    
+
+                </aura:if>
+
+                <aura:if isTrue="{!v.activeTab=='Key Contacts'}">
                     <div class="slds-grid slds-wrap slds-p-around--medium">
                         <div class="slds-size--1-of-1">
                             <c:AMP_KeyContacts accountId="{!v.accountId}" />
                         </div>
                     </div>
-                    
-                </div>
-                
-                <div id="tab-default-3" class="slds-tabs--default__content slds-hide" role="tabpanel" aria-labelledby="tab-default-3__item">
-                    
+                </aura:if>
+
+                <aura:if isTrue="{!v.activeTab=='Issues and Priorities'}">
                     <div class="slds-grid slds-wrap slds-p-around--medium">
                         <div class="slds-size--1-of-1">
                             <c:AMP_IssuesAndPriorities accountId="{!v.accountId}" />
                         </div>
                     </div>
-                    
-                </div>
-                
-                <div id="tab-default-4" class="slds-tabs--default__content slds-hide" role="tabpanel" aria-labelledby="tab-default-34__item">
-                    
+                </aura:if>
+
+
+                <aura:if isTrue="{!v.activeTab=='Core Relationship'}">
                     <div class="slds-grid slds-wrap slds-p-around--medium">
                         <div class="slds-size--1-of-1">
                             <c:AMP_CoreRelationships account="{!v.account}" accountId="{!v.accountId}" />
                         </div>
                     </div>
-                    
-                </div>
-                
-                <div id="tab-default-5" class="slds-tabs--default__content slds-hide" role="tabpanel" aria-labelledby="tab-default-5__item">
+
+                </aura:if>
+
+                <aura:if isTrue="{!v.activeTab=='Products'}">
                     <div class="slds-grid slds-wrap slds-p-around--medium">
                         <div class="slds-size--1-of-1">
                             Products
                         </div>
                     </div>
-                </div>
-                
-                <div id="tab-default-6" class="slds-tabs--default__content slds-hide" role="tabpanel" aria-labelledby="tab-default-6__item">
+                </aura:if>
+
+                <aura:if isTrue="{!v.activeTab=='Services'}">
                     <div class="slds-grid slds-wrap slds-p-around--medium">
                         <div class="slds-size--1-of-1">
                             Services
                         </div>
                     </div>
-                </div>
-                
-                <div id="tab-default-7" class="slds-tabs--default__content slds-hide" role="tabpanel" aria-labelledby="tab-default-7__item">
-                    
+                </aura:if>
+
+                <aura:if isTrue="{!v.activeTab=='Groups'}">
                     <div class="slds-grid slds-wrap slds-p-around--medium">
                         <div class="slds-size--1-of-1">
                             <c:AMP_GroupsParticipation accountId="{!v.accountId}" />
                         </div>
                     </div>
-                    
-                </div>
-                
-                <div id="tab-default-8" class="slds-tabs--default__content slds-hide" role="tabpanel" aria-labelledby="tab-default-8__item">
+                </aura:if>
+
+                <aura:if isTrue="{!v.activeTab=='Monitored Activities'}">
                     <!-- Board Monitored Activities -->
-                    
+
                     <div class="slds-grid slds-wrap slds-p-around--medium">
                         <div class="slds-size--1-of-1 slds-p-bottom--x-large">
                             <c:AMP_BoardMonitoredActivities accountId="{!v.accountId}" displayType="Division" title="BMA/RSA/OSA" />
-                        </div>                            
+                        </div>
                         <div class="slds-size--1-of-1">
                             <c:AMP_BoardMonitoredActivities accountId="{!v.accountId}" displayType="Account" title="Account Level Objectives" />
                         </div>
                     </div>
-                    
-                </div>
-                
-                <div id="tab-default-9" class="slds-tabs--default__content slds-hide" role="tabpanel" aria-labelledby="tab-default-9__item">
-                    
+
+                </aura:if>
+
+                <aura:if isTrue="{!v.activeTab=='Key Account Plan'}">
                     <div class="slds-grid slds-wrap slds-p-around--medium">
                         <div class="slds-size--1-of-1">
                             <c:AMP_KeyAccountPlan accountId="{!v.accountId}" />
                         </div>
                     </div>
-                    
-                </div>
-                
-                <div id="tab-default-10" class="slds-tabs--default__content slds-hide" role="tabpanel" aria-labelledby="tab-default-10__item">
-                    
+                </aura:if>
+
+                <aura:if isTrue="{!v.activeTab=='Chatter'}">
                     <div class="slds-grid slds-wrap slds-p-around--medium">
                         <div class="slds-size--1-of-1">
                             <c:AMP_Chatter accountId="{!v.accountId}" />
                         </div>
                     </div>
-                    
-                    
-                </div>
-                
-                <div id="tab-default-11" class="slds-tabs--default__content slds-hide" role="tabpanel" aria-labelledby="tab-default-11__item">
-                    
+                </aura:if>
+
+                <aura:if isTrue="{!v.activeTab=='News'}">
                     <div class="slds-grid slds-wrap slds-p-around--medium">
                         <div class="slds-size--1-of-1">
                             <c:AMP_AccountNewsFeed accountId="{!v.accountId}" />
                         </div>
                     </div>
-                    
-                </div>
-                
+                </aura:if>
+
             </div>
             <!-- /TABS BUTTONS -->
-            
+
         </div>
         <!-- / PRIMARY CONTENT WRAPPER -->
-        
-        
+
+
     </div>
     <!-- / SLDS SCOPING DIV -->
     <!-- PAGE LAYOUT -->
-    
+
 </aura:component>

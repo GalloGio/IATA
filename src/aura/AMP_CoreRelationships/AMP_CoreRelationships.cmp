@@ -2,7 +2,7 @@
   <aura:attribute name="account" type="Account" />
   <aura:attribute name="accountId" type="String" />
   <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
-  <aura:attribute name="GroupNames" type="String[]" access="private"/>
+  <aura:attribute name="Groups" type="LocalGovernance__c[]" access="private"/>
   <aura:attribute name="Participants" type="Participant__c[]" access="private"/>
   <aura:attribute name="ParticipantWrappers" type="Object[]" access="private"/>
 

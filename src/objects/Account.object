@@ -3054,7 +3054,7 @@
         <externalId>false</externalId>
         <label>Anti-Money Laundering Compliance</label>
         <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>true</trackHistory>
+        <trackHistory>false</trackHistory>
         <type>Checkbox</type>
     </fields>
     <fields>
@@ -5065,7 +5065,7 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
         <label>Membership Termination Remarks</label>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>true</trackHistory>
+        <trackHistory>false</trackHistory>
         <type>TextArea</type>
     </fields>
     <fields>
@@ -7167,7 +7167,7 @@ V - Co-operative</inlineHelpText>
         <label>Date of most recent name change</label>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>true</trackHistory>
+        <trackHistory>false</trackHistory>
         <type>Date</type>
     </fields>
     <fields>
@@ -7207,7 +7207,7 @@ V - Co-operative</inlineHelpText>
         <label>Authorized Signatories</label>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>true</trackHistory>
+        <trackHistory>false</trackHistory>
         <type>Date</type>
     </fields>
     <fields>
@@ -7584,7 +7584,7 @@ An account should have a field to indicate if it&apos;s an E&amp;F client or Ope
     <fields>
         <fullName>Fax</fullName>
         <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
     </fields>
     <fields>
         <fullName>Field_Head_Office__c</fullName>
@@ -8033,6 +8033,19 @@ WSPN-Worldspan</inlineHelpText>
         <externalId>false</externalId>
         <label>Has cases from last 2 years</label>
         <precision>6</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Higher_Level_Customer__c</fullName>
+        <description>Top parent SAP customer number for this account. Manually populated by the AMP team.</description>
+        <externalId>false</externalId>
+        <label>Higher Level Customer (SAP)</label>
+        <precision>4</precision>
         <required>false</required>
         <scale>0</scale>
         <trackFeedHistory>false</trackFeedHistory>
@@ -10500,6 +10513,28 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
         <type>Picklist</type>
     </fields>
     <fields>
+        <fullName>SAP_BW_report_with_sales_figures__c</fullName>
+        <externalId>false</externalId>
+        <formula>HYPERLINK(&quot;https://sap.iata.org/irj/servlet/prt/portal/prtroot/pcd!3aportal_content!2fcom.sap.pct!2fplatform_add_ons!2fcom.sap.ip.bi!2fiViews!2fcom.sap.ip.bi.bex?QUERY=ZVSD_M07_Q010&amp;VARIABLE_SCREENX&amp;DUMMY=1&amp;BI_COMMAND_1-BI_COMMAND_TYPE=SET_VARIABLES_STATE&amp;BI_COMMAND_1-VARIABLE_VALUES-VARIABLE_VALUE_1-VARIABLE_TYPE=VARIABLE_INPUT_STRING&amp;BI_COMMAND_1-VARIABLE_VALUES-VARIABLE_VALUE_1-VARIABLE=UMI_CUSTOMER_001&amp;BI_COMMAND_1-VARIABLE_VALUES-VARIABLE_VALUE_1-VARIABLE_TYPE-VARIABLE_INPUT_STRING=&quot; &amp; TEXT( Higher_Level_Customer__c ) , &quot; SAP/BW report with sales figures &quot;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Main Products Purchased</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SAP_BW_report_without_sales_figures__c</fullName>
+        <externalId>false</externalId>
+        <formula>HYPERLINK(&quot;https://sap.iata.org/irj/servlet/prt/portal/prtroot/pcd!3aportal_content!2fcom.sap.pct!2fplatform_add_ons!2fcom.sap.ip.bi!2fiViews!2fcom.sap.ip.bi.bex?QUERY=ZVSD_M07_Q011&amp;VARIABLE_SCREENX&amp;DUMMY=1&amp;BI_COMMAND_1-BI_COMMAND_TYPE=SET_VARIABLES_STATE&amp;BI_COMMAND_1-VARIABLE_VALUES-VARIABLE_VALUE_1-VARIABLE_TYPE=VARIABLE_INPUT_STRING&amp;BI_COMMAND_1-VARIABLE_VALUES-VARIABLE_VALUE_1-VARIABLE=UMI_CUSTOMER_001&amp;BI_COMMAND_1-VARIABLE_VALUES-VARIABLE_VALUE_1-VARIABLE_TYPE-VARIABLE_INPUT_STRING=&quot; &amp; TEXT( Higher_Level_Customer__c ) , &quot; SAP/BW report without sales figures &quot;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Main Products Purchased</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>SAP_Number__c</fullName>
         <description>E&amp;F CRM Project. Field needed because ACLI SAP can&apos;t be used.</description>
         <externalId>false</externalId>
@@ -12424,7 +12459,7 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
     <fields>
         <fullName>Sic</fullName>
         <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>true</trackHistory>
+        <trackHistory>false</trackHistory>
     </fields>
     <fields>
         <fullName>SicDesc</fullName>
@@ -12971,7 +13006,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <length>100</length>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>Text</type>
         <unique>false</unique>
     </fields>
