@@ -2,6 +2,8 @@ global class AMS_VouchersCreationBatch implements Database.Batchable<sObject>, D
 	
 	public final Integer GOVERNORLIMIT = 10000;
 
+	public final Integer VOUCHERSPERPDF = 1000;
+
 	String query;
 
 	public List<AMS_Voucher_Information__c> allVouchersInfo;
@@ -22,8 +24,16 @@ global class AMS_VouchersCreationBatch implements Database.Batchable<sObject>, D
 
 	public AMS_Voucher_Process_Run__c process;
 
+	public List<Attachment> attachments;
+
+	public Integer totalVouchersCreated;
+
 	global AMS_VouchersCreationBatch(Map<IATA_ISO_Country__c,Decimal> averageMetrics, AMS_Voucher_Process_Run__c process) {
-		
+
+		totalVouchersCreated = 0;
+
+		attachments = new List<Attachment>();
+
 		vouchersToPrint = new Set<Id>();
 
 		this.process = process;
@@ -83,7 +93,9 @@ global class AMS_VouchersCreationBatch implements Database.Batchable<sObject>, D
 			
 		}
 
-		vouchers = AMS_VoucherCalculationHelper.createVouchersForAgencies(vouchersToCreate,process.Id);
+		vouchers = AMS_VoucherCalculationHelper.createVouchersForAgencies(vouchersToCreate,process.Id,totalVouchersCreated,VOUCHERSPERPDF);
+
+		totalVouchersCreated += vouchers.size();
 
 		if(!vouchers.isEmpty()){
 	
@@ -129,5 +141,6 @@ global class AMS_VouchersCreationBatch implements Database.Batchable<sObject>, D
 
 		insert vouchers;
 	}
+
 	
 }

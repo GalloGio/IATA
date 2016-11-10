@@ -2,36 +2,38 @@ public with sharing class AMS_VoucherPDFGeneratorController {
 
     public List<AMS_Voucher__c> vouchersToPrintList{get;set;}
 
+    public Integer runExec {get;set;}
+
+    public String runId {get;set;}
+
     public AMS_VoucherPDFGeneratorController() {
         
-        List<String> idsToPrint = getParametersFromBatch();
+        getParametersFromBatch();
 
         vouchersToPrintList = new List<AMS_Voucher__c>();
         
-        fetchVouchersInfo(idsToPrint);
+        fetchVouchersInfo();
     }
 
-    public List<String> getParametersFromBatch(){
+    public void getParametersFromBatch(){
 
-
-        Integer listSize = (Integer)JSON.deserialize(ApexPages.currentPage().getParameters().get('sizeList'), Integer.class);
+        runId  = (String)JSON.deserialize(ApexPages.currentPage().getParameters().get('runId'), String.class);
         
-        System.debug('List size is:'+listSize);
-        String ids = '';
+        runExec = (Integer)JSON.deserialize(ApexPages.currentPage().getParameters().get('runExec'), Integer.class);
 
-        for(Integer i=0 ; i < listSize; i++){
-
-            ids += (String)JSON.deserialize(ApexPages.currentPage().getParameters().get('list' + i), String.class);
-        }
-
-        System.debug('List of ids is:' + ids);
-        return ids.split(';');
+        System.debug('AMS_VoucherPDFGeneratorController Fetching process vars: runId is '+runId + ' and runExec is ' + runExec);
 
     }
 
-    public void fetchVouchersInfo(List<String> idsToPrint){
-		if(idsToPrint != null)
-	        this.vouchersToPrintList =  [SELECT id, Name, Voucher_Information__r.Year__c, SequenceNumber__c,Voucher_Information__r.Account__r.IATACode__c, Voucher_Information__r.Account__r.Name ,Voucher_Information__r.Account__r.BillingStreet, Voucher_Information__r.Account__r.BillingCity, Voucher_Information__r.Account__r.BillingPostalCode, Voucher_Information__r.Account__r.BillingState, Voucher_Information__r.Account__r.BillingCountry  FROM AMS_Voucher__c WHERE Id in :idsToPrint];
+    public void fetchVouchersInfo(){
+        
+            System.debug('AMS_VoucherPDFGeneratorController CPU time is ' + Limits.getCpuTime() + '(1)');
+        
+            this.vouchersToPrintList =  [SELECT id, Name, Voucher_Information__r.Year__c, SequenceNumber__c,Voucher_Information__r.Account__r.IATACode__c, Voucher_Information__r.Account__r.Name ,Voucher_Information__r.Account__r.BillingStreet, Voucher_Information__r.Account__r.BillingCity, Voucher_Information__r.Account__r.BillingPostalCode, Voucher_Information__r.Account__r.BillingState, Voucher_Information__r.Account__r.BillingCountry  FROM AMS_Voucher__c WHERE AMS_Voucher_Process_Run__c = :runId and runExecution__c = :runExec];
+            
+            System.debug('AMS_VoucherPDFGeneratorController CPU time is ' + Limits.getCpuTime() + '(2)');
+        
+            System.debug('AMS_VoucherPDFGeneratorController The size to print is ' + vouchersToPrintList);
     }
 
 
