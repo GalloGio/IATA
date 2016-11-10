@@ -482,6 +482,8 @@ public with sharing class AMS_AccountRoleCreator
             amsRolesToInsert.addAll(bucket2.rolesToInsert);
             amsRolesToInsert.addAll(bucket3.rolesToInsert);
             amsRolesToInsert.addAll(rolestoDeactivate);
+            System.debug(' #### rolestoDeactivate ' + rolestoDeactivate);
+            System.debug(' #### amsRolesToInsert ' + amsRolesToInsert);
 
             upsert amsRolesToInsert;
         
