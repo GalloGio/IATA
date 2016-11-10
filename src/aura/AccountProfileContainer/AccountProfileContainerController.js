@@ -1,8 +1,23 @@
 ({
 	doInit: function(component, event, helper) {
-      //Fetch the expense list from the Apex controller   
+      //Fetch the expense list from the Apex controller
       helper.getAccount(component);
+	  component.set("v.activeTab", "Identification");
+	  component.set("v.oldTab", "Identification");
    	},
+	changeTab : function (component, event, helper) {
+		var target = event.getSource();
+		var oldTabName = component.get("v.oldTab");
+        var oldTab = component.find(oldTabName);
+        var newTabName = target.get("v.value");
+        var newTab = component.find(newTabName);
+		// console.log(l);
+		component.set("v.activeTab", newTabName);
+		$A.util.addClass(newTab, 'slds-active');
+		$A.util.removeClass(oldTab, 'slds-active');
+		component.set("v.oldTab", newTabName);
+
+	},
     jQueryStart: function(component, event, helper) {
         /*
          *  Handle the tab swiching
