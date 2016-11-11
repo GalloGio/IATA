@@ -63,15 +63,15 @@ public class AMS_AccountHierarchySelectionController {
 
 			if(oscar.Type_of_Change__c != null){
 				
-				if(tocList.contains(AMS_Utils.LEGAL_STATUS) || tocList.contains(AMS_Utils.NAME) || tocList.contains(AMS_Utils.VFMR)) notes.add('Change of name/ legal status / vmfr will be applied to all the agencies selected');
+				if(tocList.contains(AMS_Utils.LEGAL_STATUS) || tocList.contains(AMS_Utils.NAME)) notes.add('Change of name/ legal status / vmfr will be applied to all the agencies selected');
 				if(tocList.contains(AMS_Utils.LOCATION) || tocList.contains(AMS_Utils.LOCATION_INSPECTION)) notes.add('The change of location will be applied only to the main agency. If the change is for an SA, the OSCAR opened for HO or BR, will also change the address for SAs associated to it, please make sure to select the SA Account also.');
 				//if(tocList.contains(AMS_Utils.LOCATION) || tocList.contains(AMS_Utils.LOCATION_INSPECTION)) notes.add('The change of location will be applied only to the main agency. If the change is for an SA, it is possible to select the HO or a BR as target agency. In this case the SA will be moved in the hierarchy to be placed under the selected agency');
 				if(tocList.contains(AMS_Utils.LOCATION_TYPE)) notes.add('Change of location type support only the selection of the main agency. It will be swapped with its parent or moved to the same level as the parent, according to the behavior selected');
 				if(tocList.contains(AMS_Utils.OWNERSHIP_IATA)) notes.add('Change of ownership to IATA will move all the agencies selected under the target agency');
 				if(tocList.contains(AMS_Utils.OWNERSHIP_NON_IATA)) notes.add('Change of ownership to non IATA will transform the main agency into the new HO. All the other agencies will keep their location type and will be put under the new HO');
 				if(tocList.contains(AMS_Utils.MAJ_SHAREHOLDING) || tocList.contains(AMS_Utils.MIN_SHAREHOLDING)) notes.add('Change of shareholding must be applied to all the hierarchy');
+				if(tocList.contains(AMS_Utils.VFMR)) notes.add('Change of remittance frequency must be applied to all the hierarchy');
 			}
-
 			return notes;
 		}
 		set;
@@ -107,6 +107,11 @@ public class AMS_AccountHierarchySelectionController {
 				errorMessages.put(
 					AMS_Utils.MIN_SHAREHOLDING,
 					'For change of shareholding, all the hierarchy must be selected'
+				);
+
+				errorMessages.put(
+					AMS_Utils.VFMR,
+					'For change of remittance frequency, all the hierarchy must be selected'
 				);
 
 				errorMessages.put(
@@ -329,6 +334,10 @@ public class AMS_AccountHierarchySelectionController {
 
 			if(tocList.contains(AMS_Utils.MIN_SHAREHOLDING) && !hi.selected && !hi.main){
 				errorChecks.put(AMS_Utils.MIN_SHAREHOLDING, true);
+			}
+
+			if(tocList.contains(AMS_Utils.VFMR) && !hi.selected && !hi.main){
+				errorChecks.put(AMS_Utils.VFMR, true);
 			}
 
 			if(tocList.contains(AMS_Utils.OWNERSHIP_NON_IATA) || tocList.contains(AMS_Utils.OWNERSHIP_IATA)){
