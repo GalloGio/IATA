@@ -93,7 +93,7 @@ global class AMS_VouchersCreationBatch implements Database.Batchable<sObject>, D
 			
 		}
 
-		vouchers = AMS_VoucherCalculationHelper.createVouchersForAgencies(vouchersToCreate,process.Id,totalVouchersCreated,VOUCHERSPERPDF);
+		vouchers = AMS_VoucherCalculationHelper.createVouchersForAgencies(vouchersToCreate,process.Id,totalVouchersCreated,VOUCHERSPERPDF,region.Name);
 
 		totalVouchersCreated += vouchers.size();
 

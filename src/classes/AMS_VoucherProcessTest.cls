@@ -124,7 +124,8 @@ private class AMS_VoucherProcessTest {
 
         Test.setCurrentPageReference(pageRef);
 
-        ApexPages.currentPage().getParameters().put('sizeList', '0');
+        ApexPages.currentPage().getParameters().put('runId', '0');
+		ApexPages.currentPage().getParameters().put('runExec', '0');
 
         AMS_VoucherPDFGeneratorController controller = new AMS_VoucherPDFGeneratorController();
 
@@ -134,7 +135,7 @@ private class AMS_VoucherProcessTest {
 
         List<String> idsToPrint = new List<String>();
 
-        //controller.fetchVouchersInfo(idsToPrint);
+        controller.fetchVouchersInfo();
 
         Test.stopTest();
 
