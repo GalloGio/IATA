@@ -115,8 +115,6 @@
         <detailHeading>false</detailHeading>
         <editHeading>false</editHeading>
         <layoutColumns/>
-        <layoutColumns/>
-        <layoutColumns/>
         <style>CustomLinks</style>
     </layoutSections>
     <quickActionList>
@@ -161,11 +159,18 @@
                 <field>WhoId</field>
             </layoutItem>
         </relatedContentItems>
+        <relatedContentItems>
+            <layoutItem>
+                <behavior>Readonly</behavior>
+                <field>WhatId</field>
+            </layoutItem>
+        </relatedContentItems>
     </relatedContent>
     <relatedLists>
         <relatedList>RelatedActivityAttachmentList</relatedList>
     </relatedLists>
     <relatedObjects>WhoId</relatedObjects>
+    <relatedObjects>WhatId</relatedObjects>
     <runAssignmentRulesDefault>false</runAssignmentRulesDefault>
     <showEmailCheckbox>true</showEmailCheckbox>
     <showRunAssignmentRulesCheckbox>true</showRunAssignmentRulesCheckbox>

@@ -96,10 +96,6 @@
                 <behavior>Edit</behavior>
                 <field>Membership_Main_Contact__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Kavi_User__c</field>
-            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -492,14 +488,6 @@
         <relatedList>zqu__Quote__c.zqu__BillToContact__c</relatedList>
         <sortField>CREATED_DATE</sortField>
         <sortOrder>Desc</sortOrder>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <fields>Product__c</fields>
-        <fields>Product_Number__c</fields>
-        <fields>Quantity__c</fields>
-        <fields>Active__c</fields>
-        <relatedList>IEC_Event_Subscription__c.Subscriber__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>

@@ -39,7 +39,7 @@ Global class BtchAirlinesStatistics implements database.batchable<Sobject>,Datab
          if (s.Country_Name__c!=null)   country=s.Country_Name__c.ToUpperCase();
          if (s.State_Province__c!=null) state=s.State_Province__c.ToUpperCase();
          if (s.Location_Type__r.Code__c!=null) code=s.Location_Type__r.Code__c;
-         if (kclass=='P' || kclass=='D' || kclass=='V') nclass='PAL';
+         if (kclass=='P' || kclass=='D') nclass='PAL';
          if (kclass=='C') nclass='CAL';
          if (kclass=='M' || kclass=='G' || kclass=='X' || kclass=='K') nclass='ASL';
          key = nclass + country + state;

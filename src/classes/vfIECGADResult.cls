@@ -162,7 +162,6 @@ public without sharing class vfIECGADResult extends IECPageController {
         } else if (sProductCode == 'PAL') {
             mapAreaOfActivityByCode.put('P', 'Passenger');
             mapAreaOfActivityByCode.put('D', 'Domestic');
-            mapAreaOfActivityByCode.put('V', 'Travel Sales Intermediary');
         } else {
             mapAreaOfActivityByCode.put('D', 'Travel Agency');
             mapAreaOfActivityByCode.put('E', 'Travel Agency');

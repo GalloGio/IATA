@@ -31,11 +31,11 @@ public class AMS_AccountTriggerHandler {
         disallowedSources.add('WebStar');
         disallowedSources.add('DataLoader');
         for(Account ag : accs){
-	if(!disallowedSources.contains(ag.Source_System__c))
-       	{
-		if(ag.Sector__c == AMS_Utils.SECTOR_PASSENGER || ag.Sector__c == AMS_Utils.SECTOR_CARGO){
+    if(!disallowedSources.contains(ag.Source_System__c))
+        {
+        if(ag.Sector__c == AMS_Utils.SECTOR_PASSENGER || ag.Sector__c == AMS_Utils.SECTOR_CARGO){
 
-			setCassNumberOnHO(ag);
+            setCassNumberOnHO(ag);
 
                     if(ag.Cass_Number__c!=null && ag.Cass_number__c.isNumeric()){
                         ag.Cass_Number__c = AMS_AgencyHelper.resizeNumericString(ag.Cass_Number__c,3);
@@ -394,7 +394,7 @@ public class AMS_AccountTriggerHandler {
     }
     
     
-	
+    
     /** This method is called to verify if the Account field changes should create a new record into AMS Agency Updates table. The scenarios are:
      *  1) Status__c changes => Create a new record
      *  2) Status__c DOES NOT change && another field value changes => Create a new record

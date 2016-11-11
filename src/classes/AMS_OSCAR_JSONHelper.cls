@@ -19,7 +19,8 @@ public class AMS_OSCAR_JSONHelper {
         }
 
         try{
-            StaticResource jsonFile = [select Id , Name , Body from StaticResource where Name = :staticResource];
+            StaticResource jsonFile = [select Id , Name , Body from 
+            StaticResource where Name = :staticResource];
 
             String jSONContent = convertToString(jsonFile.Body);
 
