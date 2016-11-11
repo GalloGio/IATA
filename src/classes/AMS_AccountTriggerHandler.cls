@@ -30,12 +30,21 @@ public class AMS_AccountTriggerHandler {
         disallowedSources.add('AIMS3');
         disallowedSources.add('WebStar');
         disallowedSources.add('DataLoader');
-        for(Account ag : accs){
-	if(!disallowedSources.contains(ag.Source_System__c))
-       	{
-		if(ag.Sector__c == AMS_Utils.SECTOR_PASSENGER || ag.Sector__c == AMS_Utils.SECTOR_CARGO){
 
-			setCassNumberOnHO(ag);
+        Set<Id> countries = new Set<Id>();
+        for(Account ag : accs)
+            countries.add(ag.IATA_ISO_Country__c);
+
+        Map<Id, boolean> countryToIsCNS = new Map<Id, boolean>();
+        for(IATA_ISO_Country__c iic : [SELECT Id, CNS_Country__c FROM IATA_ISO_Country__c WHERE Id IN :countries]){
+            countryToIsCNS.put(iic.Id, iic.CNS_Country__c);
+        }
+
+
+        for(Account ag : accs){
+            if(!disallowedSources.contains(ag.Source_System__c)){
+                if(ag.Sector__c == AMS_Utils.SECTOR_PASSENGER || ag.Sector__c == AMS_Utils.SECTOR_CARGO){
+                    setCassNumberOnHO(ag, (ag.IATA_ISO_Country__c ==null ? null :  countryToIsCNS.get(ag.IATA_ISO_Country__c)));
 
                     if(ag.Cass_Number__c!=null && ag.Cass_number__c.isNumeric()){
                         ag.Cass_Number__c = AMS_AgencyHelper.resizeNumericString(ag.Cass_Number__c,3);
@@ -275,9 +284,13 @@ public class AMS_AccountTriggerHandler {
 
     }
 
-    public static void setCassNumberOnHO(Account ag){
+    public static void setCassNumberOnHO(Account ag, boolean isCNS){
         if(ag.Sector__c == 'Cargo Agent'  && ag.Location_Type__c=='HO' && ag.CASS_Number__c==null){
-            ag.CASS_Number__c ='000';
+            // Salvatore don't hate me for this if==true, but it may be null!
+            if(isCNS == true)
+                ag.CASS_Number__c ='001';
+            else
+                ag.CASS_Number__c ='000';
         }
     }
 
@@ -394,7 +407,7 @@ public class AMS_AccountTriggerHandler {
     }
     
     
-	
+    
     /** This method is called to verify if the Account field changes should create a new record into AMS Agency Updates table. The scenarios are:
      *  1) Status__c changes => Create a new record
      *  2) Status__c DOES NOT change && another field value changes => Create a new record
