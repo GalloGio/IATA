@@ -693,6 +693,90 @@
         Test.stopTest();
     }
 
-    
-    
+    @isTest static void testSTEP7() {
+
+        AMS_OSCAR__c oscar = [SELECT id, STEP1__c, STEP10__c, STEP11__c, STEP12__c, STEP13__c, STEP14__c, STEP15__c, STEP16__c, STEP17__c, STEP18__c, STEP19__c, STEP2__c,STEP20__c,
+            STEP3__c, STEP4__c, STEP5__c, STEP6__c, STEP7__c, STEP8__c, STEP9__c, Status__c,OwnerId from AMS_OSCAR__c where Process__c = :AMS_Utils.new_HO limit 1];
+        
+        Test.startTest();
+
+        oscar.Process__c = AMS_Utils.BANKACCCHANGES;
+        oscar.STEP7__c = AMS_Utils.PASSED;
+
+        update oscar;
+
+        oscar = [SELECT id, IRIS_update_result__c FROM AMS_OSCAR__c where Process__c = :AMS_Utils.BANKACCCHANGES limit 1];
+
+        system.debug('oscar.IRIS_update_result__c' + oscar.IRIS_update_result__c);
+
+        system.assertEquals(oscar.IRIS_update_result__c, AMS_Utils.PASSED);
+
+        oscar.STEP7__c = AMS_Utils.FAILED;
+
+        update oscar;
+
+        oscar = [SELECT id, IRIS_update_result__c FROM AMS_OSCAR__c where Process__c = :AMS_Utils.BANKACCCHANGES limit 1];
+
+        system.assertEquals(oscar.IRIS_update_result__c, AMS_Utils.FAILED);
+
+        Test.stopTest();
+    }
+
+    @isTest static void testSTEP25() {
+
+        AMS_OSCAR__c oscar = [SELECT id, STEP1__c, STEP10__c, STEP11__c, STEP12__c, STEP13__c, STEP14__c, STEP15__c, STEP16__c, STEP17__c, STEP18__c, STEP19__c, STEP2__c,STEP20__c,
+            STEP3__c, STEP4__c, STEP5__c, STEP6__c, STEP7__c, STEP8__c, STEP9__c, Status__c,OwnerId from AMS_OSCAR__c where Process__c = :AMS_Utils.new_HO limit 1];
+        
+        Test.startTest();
+
+        oscar.Process__c = AMS_Utils.AGENCYCHANGES;
+        oscar.STEP25__c = AMS_Utils.PASSED;
+
+        update oscar;
+
+        oscar = [SELECT id, Dossier_Validation__c, Validation_result__c, Status__c FROM AMS_OSCAR__c where Process__c = :AMS_Utils.AGENCYCHANGES limit 1];
+
+        system.assertEquals(oscar.Dossier_Validation__c, Date.today());
+        system.assertEquals(oscar.Validation_result__c, AMS_Utils.PASSED);
+        system.assertEquals(oscar.Status__c, 'Pending Approval');
+
+        oscar.STEP25__c = AMS_Utils.FAILED;
+
+        update oscar;
+
+        oscar = [SELECT id, Dossier_Validation__c, Validation_result__c, Status__c FROM AMS_OSCAR__c where Process__c = :AMS_Utils.AGENCYCHANGES limit 1];
+
+        system.assertEquals(oscar.Dossier_Validation__c, Date.today());
+        system.assertEquals(oscar.Validation_result__c, AMS_Utils.FAILED);
+        system.assertEquals(oscar.Status__c, 'On Hold_Internal');
+
+        Test.stopTest();
+    }
+
+    @isTest static void testSTEP16() {
+
+        AMS_OSCAR__c oscar = [SELECT id, STEP1__c, STEP10__c, STEP11__c, STEP12__c, STEP13__c, STEP14__c, STEP15__c, STEP16__c, STEP17__c, STEP18__c, STEP19__c, STEP2__c,STEP20__c,
+            STEP3__c, STEP4__c, STEP5__c, STEP6__c, STEP7__c, STEP8__c, STEP9__c, Status__c,OwnerId from AMS_OSCAR__c where Process__c = :AMS_Utils.new_HO limit 1];
+        
+        Test.startTest();
+
+        oscar.Process__c = AMS_Utils.BANKACCCHANGES;
+        oscar.STEP16__c = AMS_Utils.PASSED;
+
+        update oscar;
+
+        oscar = [SELECT id, Finalization_result__c FROM AMS_OSCAR__c where Process__c = :AMS_Utils.BANKACCCHANGES limit 1];
+
+        system.assertEquals(oscar.Finalization_result__c, AMS_Utils.PASSED);
+
+        oscar.STEP16__c = AMS_Utils.FAILED;
+
+        update oscar;
+
+        oscar = [SELECT id, Finalization_result__c FROM AMS_OSCAR__c where Process__c = :AMS_Utils.BANKACCCHANGES limit 1];
+
+        system.assertEquals(oscar.Finalization_result__c, AMS_Utils.FAILED);
+
+        Test.stopTest();
+    }
 }

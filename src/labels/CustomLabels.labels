@@ -134,6 +134,20 @@
         <value>Edit the accounts involved</value>
     </labels>
     <labels>
+        <fullName>AMS_OSCAR_Action7</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_Action7</shortDescription>
+        <value>Create SIDRA Lite</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_Action8</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_Action8</shortDescription>
+        <value>Create Commissioner Case</value>
+    </labels>
+    <labels>
         <fullName>AMS_OSCAR_CHANGE_DISAPPROVAL</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -188,6 +202,13 @@
         <protected>false</protected>
         <shortDescription>AMS OSCAR MASTERDATA</shortDescription>
         <value>Master Data</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_PENALTY</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS OSCAR PENALTY</shortDescription>
+        <value>Penalty</value>
     </labels>
     <labels>
         <fullName>AMS_OSCAR_Process_A1</fullName>
@@ -365,11 +386,39 @@
         <value>Validate Qualification Criteria (KC03)</value>
     </labels>
     <labels>
+        <fullName>AMS_OSCAR_STEP26</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS OSCAR STEP26</shortDescription>
+        <value>Late/Absence NOC - Suspend/Terminate</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_STEP27</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS OSCAR STEP27</shortDescription>
+        <value>Late/Absence NOC - Reactivate</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_STEP28</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS OSCAR STEP28</shortDescription>
+        <value>Late/Absence NOC - Withdrawal</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_STEP29</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS OSCAR STEP29</shortDescription>
+        <value>Late/Absence NOC - Penalty Fee</value>
+    </labels>
+    <labels>
         <fullName>AMS_OSCAR_STEP3</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS OSCAR STEP3</shortDescription>
-        <value>Application Disapproval</value>
+        <value>Disapproval Finalization</value>
     </labels>
     <labels>
         <fullName>AMS_OSCAR_STEP4</fullName>
@@ -5488,6 +5537,14 @@ In order to upload your financial documents, please, login to Customer Portal on
         <value>Branch Office address details:</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Branch_Offices</fullName>
+        <categories>ISSP, Portal, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Branch Offices</shortDescription>
+        <value>Branch Office(s)</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Business_Activities_Field_Label</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -10290,6 +10347,14 @@ Select at least one Authorized Signatory, and choose the Financial Assessment Co
         <value>Please select who should be the Portal Administrator for your Agency.</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_View_Branch_details</fullName>
+        <categories>ISSP, Portal, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS View Branch details</shortDescription>
+        <value>View / Update Branch Details</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_download_a_PDF_version</fullName>
         <categories>ISSP AMS</categories>
         <language>en_US</language>
@@ -10439,6 +10504,14 @@ Select at least one Authorized Signatory, and choose the Financial Assessment Co
         <protected>false</protected>
         <shortDescription>ISSP_Account_Information</shortDescription>
         <value>Account Information</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Account_Statement_Location</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Account Statement Location</shortDescription>
+        <value>Location</value>
     </labels>
     <labels>
         <fullName>ISSP_Account_Statements</fullName>
