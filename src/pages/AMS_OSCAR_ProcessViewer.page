@@ -355,14 +355,14 @@ function buildFunctionCall(func, argList){
         <p>In order to proceed please fill the following fields in the Account Information section: 
             <ul>
                 <li>Account Name</li>
-                <li>* Specify Legal Status</li>
+                <li>* Specify Legal Status (except for MSO process)</li>
                 <li>Location Class</li>
                 <li>Country</li>
                 <li>Street name and number</li>
                 <li>Location Type</li>
                 <li>City</li>
-                <li>Email</li>
-                <li>Phone</li>
+                <li>Email (except for MSO process)</li>
+                <li>Phone (except for MSO process)</li>
             </ul>
         </p>
       </div>
