@@ -116,6 +116,7 @@ public without sharing class OrderItem_Svc {
 	    		Mail_DTO mail = new Mail_DTO();
 	    		mail.targetObjectId = oi.Order.BillToContactId;
 	    		mail.whatId = oi.Id;
+	    		mail.orgWideEmailAddressId = Utility.getTextSetting('Ecom OrgWideEmailAddressId for notif');
 	    		mail.templateId = Utility.getTextSetting('Product shipped template Id');
 	    		mail.recipients = new List<String>();
 	    		//mail.recipients.add(oi.Order.ShipToContact_Email__c);
