@@ -187,7 +187,7 @@
             <filterItems>
                 <field>Account.RecordTypeId</field>
                 <operation>equals</operation>
-                <value>Airline Headquarters</value>
+                <value>Airline Headquarters, Airline Branch</value>
             </filterItems>
             <isOptional>false</isOptional>
         </lookupFilter>
