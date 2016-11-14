@@ -631,11 +631,11 @@
             <field>Total_handling_charges__c</field>
             <table>Order</table>
         </columns>
-        <columns>
+        <!--<columns>
             <checkedByDefault>false</checkedByDefault>
             <field>IEC_Migration_Key__c</field>
             <table>Order</table>
-        </columns>
+        </columns> -->
         <masterLabel>Orders</masterLabel>
     </sections>
 </ReportType>

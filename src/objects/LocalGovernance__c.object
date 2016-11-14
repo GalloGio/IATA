@@ -1962,8 +1962,11 @@ Record Type + Group Type + ISO_Country_Name</description>
         <active>true</active>
         <description>Name of the group cannot be modified after being approved</description>
         <errorConditionFormula>AND(
+  NOT( $User.Profile_Name__c =&quot;System Administrator&quot;), 
+  AND(
   RecordType.DeveloperName = &quot;Reg_Div_Groups&quot;,
   ISCHANGED(Name)
+)
 )</errorConditionFormula>
         <errorMessage>Name of the group cannot be modified after being approved</errorMessage>
     </validationRules>

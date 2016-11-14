@@ -112,6 +112,16 @@ E&amp;F CRM Project</description>
         <type>Date</type>
     </fields>
     <fields>
+        <fullName>Alternate_RCRM_Product_Manager_Email__c</fullName>
+        <description>Email for the Alternate RCRM Product Manager</description>
+        <externalId>false</externalId>
+        <label>Alternate RCRM Product Manager Email</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Base_URL__c</fullName>
         <externalId>false</externalId>
         <formula>LEFT($Api.Enterprise_Server_URL_300, FIND(&apos;/services&apos;,$Api.Enterprise_Server_URL_300))</formula>
@@ -195,16 +205,6 @@ E&amp;F CRM Project</description>
         <label>Contract AutoNumber</label>
         <trackHistory>false</trackHistory>
         <type>AutoNumber</type>
-    </fields>
-    <fields>
-        <fullName>Contract_Name__c</fullName>
-        <externalId>false</externalId>
-        <label>Contract Name</label>
-        <length>255</length>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <type>Text</type>
-        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Contract_Notes__c</fullName>
@@ -300,13 +300,41 @@ E&amp;F CRM Project</description>
         <trackHistory>true</trackHistory>
     </fields>
     <fields>
+        <fullName>Dunning_Procedure__c</fullName>
+        <externalId>false</externalId>
+        <label>Dunning Procedure</label>
+        <picklist>
+            <picklistValues>
+                <fullName>EF01</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>EF02</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>EF03</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>005</fullName>
+                <default>false</default>
+            </picklistValues>
+            <restrictedPicklist>true</restrictedPicklist>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+    </fields>
+    <fields>
         <fullName>EF_Admin_Fee__c</fullName>
         <externalId>false</externalId>
         <label>E&amp;F Admin Fee</label>
         <precision>5</precision>
         <required>false</required>
         <scale>2</scale>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>Percent</type>
     </fields>
     <fields>
@@ -315,7 +343,7 @@ E&amp;F CRM Project</description>
         <globalPicklist>EF_Allow_Billing_Agreements</globalPicklist>
         <label>E&amp;F Allow Billing Agreements</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>Picklist</type>
     </fields>
     <fields>
@@ -376,7 +404,7 @@ E&amp;F CRM Project</description>
             <sorted>false</sorted>
         </picklist>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
     </fields>
@@ -386,7 +414,7 @@ E&amp;F CRM Project</description>
         <globalPicklist>EF_Currency</globalPicklist>
         <label>E&amp;F Billing Currency</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
     </fields>
@@ -396,7 +424,7 @@ E&amp;F CRM Project</description>
         <globalPicklist>EF_Frequency</globalPicklist>
         <label>E&amp;F Billing Frequency</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>Picklist</type>
     </fields>
     <fields>
@@ -410,6 +438,28 @@ E&amp;F CRM Project</description>
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>EF_Comments__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Use this field to store general comments regarding the record update you are performing.</inlineHelpText>
+        <label>Comments</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>EF_DT_Specialist_Email__c</fullName>
+        <externalId>false</externalId>
+        <formula>EF_DT_Specialist__r.Email</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>E&amp;F DT Specialist Email</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>EF_DT_Specialist__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
@@ -417,16 +467,16 @@ E&amp;F CRM Project</description>
         <referenceTo>User</referenceTo>
         <relationshipName>Contracts_DT</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>Lookup</type>
     </fields>
     <fields>
         <fullName>EF_Data_Currency__c</fullName>
         <externalId>false</externalId>
         <globalPicklist>EF_Currency</globalPicklist>
-        <label>E&amp;F 	Data Currency</label>
+        <label>E&amp;F Data Currency</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
     </fields>
@@ -435,6 +485,27 @@ E&amp;F CRM Project</description>
         <externalId>false</externalId>
         <label>E&amp;F Group Code</label>
         <length>255</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>EF_History__c</fullName>
+        <description>Concatenates E&amp;F related Case or Contact linking and Comments into a read-only field.</description>
+        <externalId>false</externalId>
+        <label>History</label>
+        <length>32768</length>
+        <trackHistory>false</trackHistory>
+        <type>LongTextArea</type>
+        <visibleLines>6</visibleLines>
+    </fields>
+    <fields>
+        <fullName>EF_IA_Specialist_Email__c</fullName>
+        <externalId>false</externalId>
+        <formula>EF_IA_Specialist__r.Email</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>E&amp;F IA Specialist Email</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Text</type>
@@ -448,7 +519,7 @@ E&amp;F CRM Project</description>
         <referenceTo>User</referenceTo>
         <relationshipName>Contracts_IA</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>Lookup</type>
     </fields>
     <fields>
@@ -476,41 +547,9 @@ E&amp;F CRM Project</description>
             <sorted>false</sorted>
         </picklist>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
-    </fields>
-    <fields>
-        <fullName>EF_Manager_Approval__c</fullName>
-        <description>Helper field for &quot;require approval&quot; functionality.</description>
-        <externalId>false</externalId>
-        <label>E&amp;F Manager Approval</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Not Started</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>In Progress</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Approved</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Rejected</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Recalled</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <type>Picklist</type>
     </fields>
     <fields>
         <fullName>EF_Payment_Currency__c</fullName>
@@ -518,7 +557,7 @@ E&amp;F CRM Project</description>
         <globalPicklist>EF_Currency</globalPicklist>
         <label>E&amp;F Payment Currency</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
     </fields>
@@ -557,7 +596,7 @@ E&amp;F CRM Project</description>
         <globalPicklist>EF_Payment_Terms</globalPicklist>
         <label>E&amp;F Payment Terms</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>Picklist</type>
     </fields>
     <fields>
@@ -566,7 +605,7 @@ E&amp;F CRM Project</description>
         <globalPicklist>EF_Frequency</globalPicklist>
         <label>E&amp;F Reporting Frequency</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>Picklist</type>
     </fields>
     <fields>
@@ -586,18 +625,9 @@ E&amp;F CRM Project</description>
             <sorted>false</sorted>
         </picklist>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
-    </fields>
-    <fields>
-        <fullName>EF_Requested_Changes__c</fullName>
-        <externalId>false</externalId>
-        <label>E&amp;F Requested Changes</label>
-        <length>10000</length>
-        <trackHistory>false</trackHistory>
-        <type>Html</type>
-        <visibleLines>10</visibleLines>
     </fields>
     <fields>
         <fullName>EF_Require_Approval__c</fullName>
@@ -614,7 +644,7 @@ E&amp;F CRM Project</description>
         <label>E&amp;F SIS Aggregator</label>
         <length>255</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>Text</type>
         <unique>false</unique>
     </fields>
@@ -624,7 +654,7 @@ E&amp;F CRM Project</description>
         <description>Helper field for &quot;require approval&quot; functionality.</description>
         <externalId>false</externalId>
         <label>Send to SAP</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>Checkbox</type>
     </fields>
     <fields>
@@ -634,7 +664,7 @@ E&amp;F CRM Project</description>
         <globalPicklist>EF_Status</globalPicklist>
         <label>E&amp;F Status</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>Picklist</type>
     </fields>
     <fields>
@@ -652,7 +682,7 @@ E&amp;F CRM Project</description>
         <label>E&amp;F Trading Partner</label>
         <length>6</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>Text</type>
         <unique>false</unique>
     </fields>
@@ -703,6 +733,37 @@ IF(ISPICKVAL(Third_Party__c, &quot;Berlitz&quot;), 0.10,
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Manager_Approval__c</fullName>
+        <description>Helper field for &quot;require approval&quot; functionality.</description>
+        <externalId>false</externalId>
+        <label>E&amp;F Manager Approval</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Not Started</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Approved</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Rejected</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Recalled</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+    </fields>
+    <fields>
         <fullName>Name</fullName>
         <trackHistory>true</trackHistory>
     </fields>
@@ -716,6 +777,16 @@ IF(ISPICKVAL(Third_Party__c, &quot;Berlitz&quot;), 0.10,
         <scale>0</scale>
         <trackHistory>false</trackHistory>
         <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Opportunity_OwnerEmail__c</fullName>
+        <description>Get the email from the current opportunity owner.</description>
+        <externalId>false</externalId>
+        <label>Opportunity OwnerEmail</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Email</type>
         <unique>false</unique>
     </fields>
     <fields>
@@ -797,6 +868,27 @@ IF(ISPICKVAL(Third_Party__c, &quot;Berlitz&quot;), 0.10,
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>RCRM_Product_Manager_Email_Formula__c</fullName>
+        <externalId>false</externalId>
+        <formula>Current_Opportunity__r.RCRM_Product_Manager__r.Email</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>RCRM Product Manager Email_Formula</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>RCRM_Product_Manager_Email__c</fullName>
+        <description>Email for the RCRM Product Manager</description>
+        <externalId>false</externalId>
+        <label>RCRM Product Manager Email</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>RCRM_Product_Manager__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <description>Used for the RCRM project. Represents the product manager for the RCRM products being sold through the contract. Used to set the visibility on the contract control buttons (renewal, cancellation).</description>
@@ -875,6 +967,15 @@ IF(ISPICKVAL(Third_Party__c, &quot;Berlitz&quot;), 0.10,
         <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Requested_Changes__c</fullName>
+        <externalId>false</externalId>
+        <label>E&amp;F Requested Changes</label>
+        <length>10000</length>
+        <trackHistory>false</trackHistory>
+        <type>Html</type>
+        <visibleLines>10</visibleLines>
     </fields>
     <fields>
         <fullName>SAP_Contract_Number__c</fullName>
@@ -1304,6 +1405,25 @@ IF(ISPICKVAL(Third_Party__c, &quot;Berlitz&quot;), 0.10,
             </values>
             <values>
                 <fullName>None</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Dunning_Procedure__c</picklist>
+            <values>
+                <fullName>005</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EF01</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EF02</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EF03</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -2119,29 +2239,6 @@ IF(ISPICKVAL(Third_Party__c, &quot;Berlitz&quot;), 0.10,
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>EF_Manager_Approval__c</picklist>
-            <values>
-                <fullName>Approved</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>In Progress</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Not Started</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Recalled</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Rejected</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>EF_Payment_Method</picklist>
             <values>
                 <fullName>Bank transfer</fullName>
@@ -2214,6 +2311,29 @@ IF(ISPICKVAL(Third_Party__c, &quot;Berlitz&quot;), 0.10,
             </values>
             <values>
                 <fullName>Inactive</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Manager_Approval__c</picklist>
+            <values>
+                <fullName>Approved</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Started</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Recalled</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rejected</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -2661,6 +2781,12 @@ IF(ISPICKVAL(Third_Party__c, &quot;Berlitz&quot;), 0.10,
     </searchLayouts>
     <sharingModel>Private</sharingModel>
     <validationRules>
+        <fullName>EF_Contract_Creation_Validation</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(ISNEW(),  NOT(OR(ISPICKVAL($User.EF_User_Role__c, &apos;Head, Client Services&apos;), ISPICKVAL($User.EF_User_Role__c, &apos;Manager, Business Development&apos;))), RecordType.DeveloperName=&apos;EF_Client_Agreement&apos;)</errorConditionFormula>
+        <errorMessage>You are not allowed to create E&amp;F Contracts</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>EF_Contract_For_CS_Role_only</fullName>
         <active>true</active>
         <description>Only roles Manager, Business Development, Head, Client Services and Client Services Specialists can modify E&amp;F Contracts.</description>
@@ -2673,6 +2799,14 @@ IF(ISPICKVAL(Third_Party__c, &quot;Berlitz&quot;), 0.10,
 	  NOT(BEGINS($User.Profile_Name__c, &apos;System&apos;))
 )</errorConditionFormula>
         <errorMessage>Only Client Services Specialists, Client Services Head and Business Development Managers can modify E&amp;F Contracts.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>EF_Contract_Only_On_Active_Account</fullName>
+        <active>true</active>
+        <description>EF Contracts can be created just if the account is active.</description>
+        <errorConditionFormula>AND( ISNEW(),   RecordType.DeveloperName=&apos;EF_Client_Agreement&apos;,
+ISPICKVAL(Account.EF_Status__c, &apos;Inactive&apos;))</errorConditionFormula>
+        <errorMessage>E&amp;F Contracts can&apos;t be created if the Account is Inactive for E&amp;F</errorMessage>
     </validationRules>
     <webLinks>
         <fullName>APXTConga4__Conga_Composer_OAuth</fullName>
@@ -2753,6 +2887,24 @@ COPY THE URL FROM THIS BUTTON and paste it into your own custom button or link. 
         <width>625</width>
     </webLinks>
     <webLinks>
+        <fullName>EF_Mass_Update_Material_Line_Items_in_BA</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>page</linkType>
+        <masterLabel>Mass Update Material Line Items in BA</masterLabel>
+        <openType>newWindow</openType>
+        <page>EF_MassUpdateMatLI</page>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+    </webLinks>
+    <webLinks>
         <fullName>ENZ__AttachFTP</fullName>
         <availability>online</availability>
         <displayType>link</displayType>
@@ -2782,7 +2934,7 @@ COPY THE URL FROM THIS BUTTON and paste it into your own custom button or link. 
         <openType>sidebar</openType>
         <page>EF_MassUpdateContract</page>
         <protected>false</protected>
-        <requireRowSelection>true</requireRowSelection>
+        <requireRowSelection>false</requireRowSelection>
     </webLinks>
     <webLinks>
         <fullName>SIS_SAP_Client_Request</fullName>
@@ -2806,8 +2958,8 @@ COPY THE URL FROM THIS BUTTON and paste it into your own custom button or link. 
 ?sessionId={!API.Session_ID}
 &amp;serverUrl={!API.Partner_Server_URL_290}
 &amp;id={!Contract.Id}
-&amp;reportId=00O8E000000KPON?pv0={!Contract.Id}
-&amp;templateId=a7v8E00000004nb
+&amp;reportId=00Ow0000006fM39?pv0={!Contract.Id}
+&amp;templateId=a87w00000009Nkb
 &amp;AC0=0
 &amp;DS7=3</url>
     </webLinks>
