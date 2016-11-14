@@ -1,5 +1,17 @@
 @isTest (seeAllData=true)
 public class vfIECEBC_Test1 {
+	public static testMethod void testRecipientList() {
+        vfIECEBC_TestSuite1.testRecipientList();
+    } 
+	public static testMethod void testReadMosaicoUploads() {
+        vfIECEBC_TestSuite1.testReadMosaicoUploads();
+    } 
+	public static testMethod void testWriteMosaicoUploads() {
+        vfIECEBC_TestSuite1.testWriteMosaicoUploads();
+    } 
+	public static testMethod void testAccountRatePlan() {
+        vfIECEBC_TestSuite1.testAccountRatePlan();
+    } 
 	public static testMethod void testAccountExtras() {
         vfIECEBC_TestSuite1.testAccountExtras();
     } 
@@ -42,10 +54,6 @@ public class vfIECEBC_Test1 {
     }
     
     
-	public static testMethod void fooBar4() {
-        vfIECEBC_TestSuite1.fooBar4();
-    }
-	public static testMethod void fooBar5() {
-        vfIECEBC_TestSuite1.fooBar5();
-    }
+    
+    
 }

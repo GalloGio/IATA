@@ -1,5 +1,9 @@
 @isTest (seeAllData=true)
 public class vfIECEBC_Test {
+    
+	public static testMethod void testCampaignConfirm() {
+        vfIECEBC_TestSuite.testCampaignConfirm();
+    }
 	public static testMethod void testPageLoadDashboard() {
         vfIECEBC_TestSuite.testPageLoadDashboard();
     }
