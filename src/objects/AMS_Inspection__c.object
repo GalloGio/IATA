@@ -209,16 +209,6 @@
         <type>Checkbox</type>
     </fields>
     <fields>
-        <fullName>Comments__c</fullName>
-        <externalId>false</externalId>
-        <label>Comments</label>
-        <length>32768</length>
-        <trackHistory>true</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>LongTextArea</type>
-        <visibleLines>3</visibleLines>
-    </fields>
-    <fields>
         <fullName>Date_Organisation_Status_attained__c</fullName>
         <externalId>false</externalId>
         <label>Date Organisation Status attained</label>
@@ -294,41 +284,6 @@
         <label>OSCAR</label>
         <referenceTo>AMS_OSCAR__c</referenceTo>
         <relationshipName>Appointments</relationshipName>
-        <required>false</required>
-        <trackHistory>true</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Lookup</type>
-    </fields>
-    <fields>
-        <fullName>Territory_country__c</fullName>
-        <deleteConstraint>SetNull</deleteConstraint>
-        <externalId>false</externalId>
-        <label>Territory country</label>
-        <referenceTo>IATA_ISO_Country__c</referenceTo>
-        <relationshipLabel>Appointments (AMS)</relationshipLabel>
-        <relationshipName>Appointments_AMS</relationshipName>
-        <required>false</required>
-        <trackHistory>true</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Lookup</type>
-    </fields>
-    <fields>
-        <fullName>Territory_state__c</fullName>
-        <deleteConstraint>SetNull</deleteConstraint>
-        <externalId>false</externalId>
-        <label>Territory state</label>
-        <lookupFilter>
-            <active>true</active>
-            <filterItems>
-                <field>IATA_ISO_State__c.IATA_ISO_Country__r.Id</field>
-                <operation>equals</operation>
-                <valueField>$Source.Territory_country__c</valueField>
-            </filterItems>
-            <isOptional>false</isOptional>
-        </lookupFilter>
-        <referenceTo>IATA_ISO_State__c</referenceTo>
-        <relationshipLabel>Appointments (AMS)</relationshipLabel>
-        <relationshipName>Appointments_AMS1</relationshipName>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
