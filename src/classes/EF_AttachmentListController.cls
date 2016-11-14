@@ -1,6 +1,5 @@
 global with sharing class EF_AttachmentListController {
 
-	//public static Boolean runningForEF{get;set;}
 	public static Boolean runningForEF{
         get{
             if(runningForEF == null) runningForEF = false;
