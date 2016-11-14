@@ -117,15 +117,46 @@ public class vfIECEBC_TestSuite1 {
         
         User usr = initPreRunAs(true);
         
+        EBC_Resource__c er = new EBC_Resource__c();
+        er.Billing_Account__c = oBillingAccount.Id;
+        er.Name = 'test.png';
+        er.Image_Type__c = 'png';
+        er.Image_Size__c = 12;
+        insert er;
+        
+        Attachment a = new Attachment();
+        a.Name = er.Name;
+        a.Body = Blob.valueOf('helloworld');
+        a.ParentId = er.Id;
+        insert a;
+        
+        String url = 'https://hostname/iec/services/apexrest/Resources/' + er.Id + '/' + er.Name + '?client=exacttarget';
+        
         Test.setMock(HttpCalloutMock.class, new AttachmentUpload_Mock());
+        
+        RestRequest req = new RestRequest();
+        req.requestURI = url;
+        
+        req.params.put('client', 'exacttarget');
+        RestContext.request = req;
+        
+        RestResponse res = new RestResponse();
+        RestContext.response = res;
+        
+        restIEC_Attachment.doGet();
         
         System.runAs(usr) {
             initPostRunAs();
+            
+            
             Test.startTest();
             
             IECEBC_ETPortfolioCreate.CreatePortfolioObject(new Map<String, String>{
-                'a7d8E000000CcIKQA0.png' => 'https://3b-customer-portal-iata.cs87.force.com/iec/services/apexrest/Resources/a7d8E000000CcIKQA0?client=exacttarget'
+                er.Id + '.png' => url
             });
+            
+            Test.stopTest();
+            
         }
     }
     
