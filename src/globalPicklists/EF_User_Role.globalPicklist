@@ -28,6 +28,41 @@
         <fullName>Manager, Invoicing &amp; Accounting &amp; Data Transformation</fullName>
         <default>false</default>
     </globalPicklistValues>
+    <globalPicklistValues>
+        <fullName>Manager Business Development</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+    </globalPicklistValues>
+    <globalPicklistValues>
+        <fullName>Head, CS</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+    </globalPicklistValues>
+    <globalPicklistValues>
+        <fullName>Manager AS, Head Ops</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+    </globalPicklistValues>
+    <globalPicklistValues>
+        <fullName>CS Specialist</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+    </globalPicklistValues>
+    <globalPicklistValues>
+        <fullName>AS Specialist</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+    </globalPicklistValues>
+    <globalPicklistValues>
+        <fullName>Director, Quality, Specialists DT, Specialists, IA,Standards, Process, NPD, Assistant</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+    </globalPicklistValues>
+    <globalPicklistValues>
+        <fullName>Manager IA, Manager DT</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+    </globalPicklistValues>
     <masterLabel>E&amp;F User Role</masterLabel>
     <sorted>false</sorted>
 </GlobalPicklist>

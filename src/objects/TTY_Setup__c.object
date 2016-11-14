@@ -174,11 +174,11 @@
         <label>Would you like to keep your subscription</label>
         <picklist>
             <picklistValues>
-                <fullName>I would like to keep my subscription to AIRS/CAIRS bulletin</fullName>
+                <fullName>Yes</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Please cancel my subscription to AIRS/CAIRS bulletin</fullName>
+                <fullName>No</fullName>
                 <default>false</default>
             </picklistValues>
             <restrictedPicklist>true</restrictedPicklist>

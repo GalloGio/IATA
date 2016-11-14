@@ -85,10 +85,6 @@
                 <behavior>Edit</behavior>
                 <field>RCRM_Product__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>RecordTypeId</field>
-            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -132,9 +128,6 @@
         <fields>CREATED_DATE</fields>
         <fields>OWNER.ALIAS</fields>
         <relatedList>ICCS_Product_Country__c.Product__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <relatedList>RelatedEntityHistoryList</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>true</showHighlightsPanel>

@@ -134,6 +134,20 @@
         <value>Edit the accounts involved</value>
     </labels>
     <labels>
+        <fullName>AMS_OSCAR_Action7</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_Action7</shortDescription>
+        <value>Create SIDRA Lite</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_Action8</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_Action8</shortDescription>
+        <value>Create Commissioner Case</value>
+    </labels>
+    <labels>
         <fullName>AMS_OSCAR_CHANGE_DISAPPROVAL</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -188,6 +202,13 @@
         <protected>false</protected>
         <shortDescription>AMS OSCAR MASTERDATA</shortDescription>
         <value>Master Data</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_PENALTY</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS OSCAR PENALTY</shortDescription>
+        <value>Penalty</value>
     </labels>
     <labels>
         <fullName>AMS_OSCAR_Process_A1</fullName>
@@ -365,6 +386,34 @@
         <value>Validate Qualification Criteria (KC03)</value>
     </labels>
     <labels>
+        <fullName>AMS_OSCAR_STEP26</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS OSCAR STEP26</shortDescription>
+        <value>Late/Absence NOC - Suspend/Terminate</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_STEP27</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS OSCAR STEP27</shortDescription>
+        <value>Late/Absence NOC - Reactivate</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_STEP28</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS OSCAR STEP28</shortDescription>
+        <value>Late/Absence NOC - Withdrawal</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_STEP29</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS OSCAR STEP29</shortDescription>
+        <value>Late/Absence NOC - Penalty Fee</value>
+    </labels>
+    <labels>
         <fullName>AMS_OSCAR_STEP3</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -426,6 +475,13 @@
         <protected>false</protected>
         <shortDescription>AMS_OSCAR_Warning_1</shortDescription>
         <value>There are still no Appointments created for this OSCAR Process</value>
+    </labels>
+    <labels>
+        <fullName>AMS_PERFORM_CORRECTION</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_PERFORM_CORRECTION</shortDescription>
+        <value>Perform Correction</value>
     </labels>
     <labels>
         <fullName>ANY</fullName>
@@ -13871,6 +13927,15 @@ If you want to create a new branch for this company in your country, click Creat
         <value>No Organization was found for these search criteria. Please modify your search and try again or click Create New to create a new company record.
 &lt;br/&gt;&lt;br/&gt; 
 If you continue to experience issues registering for the IATA Customer Portal then please consult our &lt;a href=http://theiatahub.force.com/iatapkb/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US target=_blank&gt;troubleshooting guide&lt;/a&gt;</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_NoRecordsFoundCreateAgency2</fullName>
+        <categories>ISSP_Registration, s8</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_NoRecordsFoundCreateAgency2</shortDescription>
+        <value>No Organization was found for these search criteria. Please modify your search and try again or click Create New Agency to create a new company record. 
+&lt;br/&gt;&lt;br/&gt;</value>
     </labels>
     <labels>
         <fullName>ISSP_NoRecordsFoundCreateStandardAirline</fullName>

@@ -71,10 +71,6 @@
                 <behavior>Edit</behavior>
                 <field>Language__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>DDS_Update_Request__c</field>
-            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
