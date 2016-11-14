@@ -88,7 +88,15 @@ public with sharing class EF_TestDataFactory
         insert locCurrency;
     }
     
-    
+    public static void createLocationCodes()
+    {
+        Id locCodeId = AMS_Utils.getId('EF_Related_Records__c', 'Location_Code');
+        EF_Related_Records__c rr1 = new EF_Related_Records__c(Name='ABC1', Location_Code_Details__c = 'Details 1', RecordTypeId=locCodeId);
+        EF_Related_Records__c rr2 = new EF_Related_Records__c(Name='ABC2', Location_Code_Details__c = 'Details 2', RecordTypeId=locCodeId);
+        EF_Related_Records__c rr3 = new EF_Related_Records__c(Name='ABC3', Location_Code_Details__c = 'Details 3', RecordTypeId=locCodeId);
+        insert new List<EF_Related_Records__c>{rr1, rr2, rr3};
+    }
+
      public static void createBaseDataWithoutLocCurr()
     {
         createCustomSettings();
@@ -104,10 +112,9 @@ public with sharing class EF_TestDataFactory
                 recordTypeId = Schema.SObjectType.EF_Related_Records__c.getRecordTypeInfosByName().get('Location').getRecordTypeId() 
                 );
             locationList.add(location);
-        }
-
-        insert locationList;
-
+		}
+        insert locationList; 
+		
         // create iso country 
         IATA_ISO_Country__c iso_country = new IATA_ISO_Country__c (
             name='United States',
@@ -164,19 +171,30 @@ public with sharing class EF_TestDataFactory
             EF_Status__c='Active'
             );
         insert contract2;
+        
 
     }
 
     public static void createCustomSettings()
     {
         EF_Approve_Fields__c appr1 = new EF_Approve_Fields__c();
-        appr1.Billing_Agreement_Fields__c = 'Airline__c,Billing_Currency__c,EF_Location_ID__c,Payment_Currency__c,Payment_Method__c,Location_Code__c,Status__c';
+        appr1.Billing_Agreement_Fields__c = 'Airline__c,Billing_Currency__c,EF_Location_ID__c,Payment_Currency__c,Payment_Method__c,Location_Code__c,EF_Status__c';
         appr1.Name = 'BillingAgreement';
         EF_Approve_Fields__c appr2 = new EF_Approve_Fields__c();
         appr2.Contract_Fields__c = 'EF_Payment_Terms__c,EF_Billing_Frequency__c,EF_Admin_Fee__c,CCF_Number__c,EF_Group_Code__c';
         appr2.Name = 'Contract';
         List<EF_Approve_Fields__c> approvals = new List<EF_Approve_Fields__c>{appr1, appr2};
         insert approvals;
+
+        EF_Critical_Field_Notification__c cfn = new EF_Critical_Field_Notification__c ();
+        cfn.Name='criticalFieldChangesTracking';
+        cfn.Account_Airline_Fields__c = 'EF_Status__c,EF_Legacy_Code__c,EF_Airline_ID__c,EF_SIS_Code__c,EF_SIS_Designator__c,EF_SIS_Code_Verified__c';
+        cfn.Account_Client_Fields__c='Legal_name__c,EF_SIS_Code__c,EF_SIS_Designator__c,EF_SIS_Code_Verified__c,EF_Status__c';
+        cfn.Airline_Billing_Agreement_Fields__c='Bill_To__c,Ship_To__c,Payer__c,Sold_To__c';
+        cfn.Contact_Fields__c='EF_Signatory__c,Email,FirstName,LastName,EF_Status__c';
+        cfn.Contract_Fields__c='EF_Group_Code__c,EF_Admin_Fee__c,EF_Payment_Terms__c';
+        insert cfn;
+
     }
 
     public static User getEfProfileAndRole(Integer profileNumber, Integer roleNumber)
