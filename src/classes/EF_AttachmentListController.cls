@@ -1,6 +1,12 @@
 global with sharing class EF_AttachmentListController {
 
-	public static Boolean runningForEF{get;set;}
+	//public static Boolean runningForEF{get;set;}
+	public static Boolean runningForEF{
+        get{
+            if(runningForEF == null) runningForEF = false;
+            return runningForEF;
+        }
+        set;
 	public Boolean viewPrivateFiles{get;set;}
 
     public String uploader {get;set;}
