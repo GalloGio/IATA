@@ -90,11 +90,6 @@
             <isRequired>false</isRequired>
         </displayedFields>
         <displayedFields>
-            <field>Website__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
             <field>Abbreviated_name__c</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
@@ -150,37 +145,12 @@
             <isRequired>false</isRequired>
         </displayedFields>
         <displayedFields>
+            <field>Shipping_State__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
             <field>Shipping_City__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Shipping_ISO_Country__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Shipping_ISO_State__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Branch_Office_Email__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Website__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Branch_Office_Phone__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Branch_Office_FAX__c</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
@@ -240,37 +210,12 @@
             <isRequired>false</isRequired>
         </displayedFields>
         <displayedFields>
-            <field>Shipping_ISO_State__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Shipping_ISO_Country__c</field>
+            <field>Shipping_State__c</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
         <displayedFields>
             <field>Shipping_City__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Branch_Office_Email__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Website__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Branch_Office_Phone__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Branch_Office_FAX__c</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
@@ -285,11 +230,6 @@
         <fullName>AMS_majorshareholding</fullName>
         <description>fields to be migrated when we have a change of major shareholding</description>
         <displayedFields>
-            <field>Website__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
             <field>ISSP_AMS_Total_Ownership__c</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
@@ -299,11 +239,6 @@
     <fieldSets>
         <fullName>AMS_minorshareholding</fullName>
         <description>fields to be migrated when we have a change of minor shareholding</description>
-        <displayedFields>
-            <field>Website__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
         <displayedFields>
             <field>ISSP_AMS_Total_Ownership__c</field>
             <isFieldManaged>false</isFieldManaged>
@@ -330,52 +265,7 @@
             <isRequired>false</isRequired>
         </displayedFields>
         <displayedFields>
-            <field>Website__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Abbreviated_name__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <label>Name</label>
-    </fieldSets>
-    <fieldSets>
-        <fullName>AMS_ownershiptoiataagent</fullName>
-        <description>fields to be migrated when we have a change of ownership process</description>
-        <displayedFields>
-            <field>Account_Name__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>ISSP_AMS_Legal_Status__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Short_Name__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Trade_Name__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>ISSP_AMS_License_No__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
             <field>ISSP_AMS_VAT_number__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Website__c</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
@@ -389,6 +279,11 @@
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
+        <label>Name</label>
+    </fieldSets>
+    <fieldSets>
+        <fullName>AMS_ownershiptoiataagent</fullName>
+        <description>fields to be migrated when we have a change of ownership process</description>
         <displayedFields>
             <field>ISSP_AMS_Total_Ownership__c</field>
             <isFieldManaged>false</isFieldManaged>
@@ -399,51 +294,6 @@
     <fieldSets>
         <fullName>AMS_ownershiptononiataagent</fullName>
         <description>fields to be migrated when we have a change of ownership process</description>
-        <displayedFields>
-            <field>Account_Name__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>ISSP_AMS_Legal_Status__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Short_Name__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Trade_Name__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>ISSP_AMS_License_No__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>ISSP_AMS_VAT_number__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Website__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Abbreviated_name__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>VAT_Number_2__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
         <displayedFields>
             <field>ISSP_AMS_Total_Ownership__c</field>
             <isFieldManaged>false</isFieldManaged>
@@ -575,17 +425,12 @@
             <isRequired>false</isRequired>
         </displayedFields>
         <displayedFields>
+            <field>Shipping_State__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
             <field>Shipping_City__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Shipping_ISO_Country__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Shipping_ISO_State__c</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
@@ -928,7 +773,7 @@
         <fullName>Account_Name__c</fullName>
         <externalId>false</externalId>
         <label>Account New Name</label>
-        <length>255</length>
+        <length>80</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -1187,7 +1032,7 @@
         <fullName>Branch_Office_Street_name_number__c</fullName>
         <externalId>false</externalId>
         <label>* Street Name &amp; Number</label>
-        <length>255</length>
+        <length>100</length>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
@@ -1659,7 +1504,7 @@
     <fields>
         <fullName>Give_details_for_authorization_to_act__c</fullName>
         <externalId>false</externalId>
-        <label>If Yes please provide details</label>
+        <label>* Please give details</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -1668,7 +1513,7 @@
     <fields>
         <fullName>Give_details_for_the_change_of_ownership__c</fullName>
         <externalId>false</externalId>
-        <label>If Yes please provide details</label>
+        <label>* Please give details</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -3436,17 +3281,6 @@ $Label.ISSP_AMS_LS_Sole_Owner)</formula>
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>New_Head_Office_IATA_Code__c</fullName>
-        <externalId>false</externalId>
-        <label>New Head Office IATA Code</label>
-        <length>13</length>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
         <fullName>No_Consignments_Last_Year__c</fullName>
         <externalId>false</externalId>
         <label>* Total No. of Consignments (last year)</label>
@@ -3587,7 +3421,7 @@ $Label.ISSP_AMS_LS_Sole_Owner)</formula>
         <fullName>Please_provide_details_for_the_change__c</fullName>
         <description>Please provide details</description>
         <externalId>false</externalId>
-        <label>If Yes please provide details</label>
+        <label>* Please provide details</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -3752,7 +3586,7 @@ $Label.ISSP_AMS_LS_Sole_Owner)</formula>
     <fields>
         <fullName>Provide_details_for_change_affect_staff__c</fullName>
         <externalId>false</externalId>
-        <label>If Yes please provide details</label>
+        <label>* Please give details</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -4541,7 +4375,7 @@ $Label.ISSP_AMS_LS_Sole_Owner)</formula>
     </fields>
     <fields>
         <fullName>Will_such_change_affect_the_premises__c</fullName>
-        <description>Will such change affect the premises that were investigated in the course of approving the Agent&apos;s application for registration?</description>
+        <description>Will such change affect the premises that were investigated in the course of approving the Agentâ€™s application for registration?</description>
         <externalId>false</externalId>
         <label>Will such change affect the premises</label>
         <picklist>

@@ -188,7 +188,7 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
                 changeCode.status  = '9';
 
                 Account acct = new Account(Id = updatedOscar.Account__c);
-                AMS_Utils.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {updatedOscar}, new List<Account> {acct}, true);
+                AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {updatedOscar}, new List<Account> {acct}, true);
 
             } else if (oldOSCAR.STEP2__c != 'Failed' && updatedOscar.STEP2__c == 'Failed' && updatedOscar.RPM_Approval__c=='Authorize Disapproval') {
 
@@ -201,7 +201,7 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
                 changeCode.status  = '0';
 
                 Account acct = new Account(Id = updatedOscar.Account__c);
-                AMS_Utils.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {updatedOscar}, new List<Account> {acct}, true);
+                AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {updatedOscar}, new List<Account> {acct}, true);
             }
         // Management of CORRECTION OSCARs
         }else if (updatedOscar.recordTypeID == corrRT){
@@ -210,6 +210,20 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
                 Savepoint sp = Database.setSavepoint();
 
                 try {
+                    // If the checkbox is set create a COR change code.
+                    if(updatedOscar.AMS_Generate_COR_change_code__c==true) {
+                        system.debug(LoggingLevel.ERROR,'applyChangeCodesWithDependencies() -> generate the change code');
+                        AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
+
+                        changeCode.name = 'COR';
+                        changeCode.reasonCode = '91';
+                        changeCode.memoText = 'Correction';
+                        changeCode.reasonDesc  = 'ACCREDITED–MEETS–STANDARDS';
+                        changeCode.status  = '9';
+
+                        Account acct = new Account(Id = updatedOscar.Account__c);
+                        AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {updatedOscar}, new List<Account> {acct}, true);
+                    }
 
                     // Regardless the changecode is generated or not, move data to Master Data
                     // First move the account
@@ -246,35 +260,6 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
                     //verify ownership alignment
                     if(allHierarchyAccountIds.size()>0 && !AMS_HierarchyHelper.checkHierarchyIntegrity(new Map<Id, Set<Id>>{updatedOscar.Id => allHierarchyAccountIds}))
                         throw new AMS_ApplicationException('This operation cannot be performed because the ownership in this hierarchy is not aligned. It is advised to perform a change of ownership to align the owners in this hierarchy.');
-
-                    // If the picklist is set create a COR change code.
-                    if(updatedOscar.AMS_Correction_change_code__c == 'COR') {
-                        system.debug(LoggingLevel.ERROR,'applyChangeCodesWithDependencies() -> generate the change code');
-                        AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
-
-                        changeCode.name = 'COR';
-                        changeCode.reasonCode = '91';
-                        changeCode.memoText = 'Correction';
-                        changeCode.reasonDesc  = 'ACCREDITED–MEETS–STANDARDS';
-                        changeCode.status  = '9';
-
-                        Account acct = new Account(Id = updatedOscar.Account__c);
-                        AMS_Utils.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {updatedOscar}, new List<Account> {acct}, true);
-                    }
-                    // If the picklist is set create a CAD change code.
-                    if(updatedOscar.AMS_Correction_change_code__c == 'CAD') {
-                        system.debug(LoggingLevel.ERROR,'applyChangeCodesWithDependencies() -> generate the change code');
-                        AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
-
-                        changeCode.name = 'CAD';
-                        changeCode.reasonCode = 'Change data';
-                        changeCode.memoText = 'Minor Changes';
-                        changeCode.reasonDesc  = 'Accredited-Meets Criteria.';
-                        changeCode.status  = null;
-
-                        Account acct = new Account(Id = updatedOscar.Account__c);
-                        AMS_Utils.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {updatedOscar}, new List<Account> {acct}, true);
-                    }
 
                 } catch (Exception ex) {
                     System.debug('Exception: ' + ex);
@@ -337,7 +322,9 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
             'Confirm_DGR_DGA__c'                        => 'DGR_DGA_confirmed__c',
             'Issue_rejection_notification_pack__c'      => 'Rejection_notification_sent__c',
             'Roll_back_account_data__c'                 => 'Account_data_rolled_back__c',
-            'Issue_billing_document__c'                 => 'Process_Start_Date__c'
+            'Issue_billing_document__c'                 => 'Process_Start_Date__c',
+            'Notify_Agent_Suspension__c'                => 'NOC_Requested__c',
+            'NOC_Received__c'                           => 'NOC_Received_Date__c'
             };
            //Map to update Date related checkbox values
         for (String oscarDateFieldKey: oscarDateFieldsMap.keyset())
@@ -418,6 +405,47 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
                 updatedOscar.STEP15__c = updatedOscar.Validation_Status__c;
         }
 
+        if (oldOSCAR.Apply_Penalty_Fee__c == false && updatedOscar.Apply_Penalty_Fee__c == true) {
+
+            //late/absence of NOC - penalty fees can only be applied for some ToC (could add validation for dates)
+            Set<String> tocList = new Set<String>();
+            if(updatedOscar.Type_of_Change__c != null) tocList.addAll(updatedOscar.Type_of_change__c.split(';'));
+
+            System.debug(loggingLevel.Debug, '____ [trg AMS_OSCARTrigger - validateStep29] tocList - ' + tocList);
+
+            if(
+                !tocList.contains(AMS_Utils.OWNERSHIP_IATA)
+                && !tocList.contains(AMS_Utils.OWNERSHIP_NON_IATA)
+                && !tocList.contains(AMS_Utils.MAJ_SHAREHOLDING)
+                && !tocList.contains(AMS_Utils.NAME)
+                && !tocList.contains(AMS_Utils.LEGAL_STATUS)
+                && !tocList.contains(AMS_Utils.LOCATION)
+            ){
+                updatedOSCAR.addError('Penalty fees can only be applied for \n-'+AMS_Utils.OWNERSHIP_IATA+'\n-'+AMS_Utils.OWNERSHIP_NON_IATA+'\n-'+AMS_Utils.MAJ_SHAREHOLDING+'\n-'+AMS_Utils.NAME+'\n-'+AMS_Utils.LEGAL_STATUS+'\n-'+AMS_Utils.LOCATION);
+            }
+        }
+
+        if (oldOSCAR.Apply_Penalty_Fee__c == true && updatedOscar.Apply_Penalty_Fee__c == false) {
+            updatedOSCAR.addError('It\'s not possible to cancel the penalty fees that were applied');
+        }
+
+        if (oldOSCAR.Notify_Agent_Suspension__c == false && updatedOscar.Notify_Agent_Suspension__c == true) {
+            updatedOSCAR.NOC_Deadline__c = AMS_Utils.AddBusinessDays(System.today(), 5, 'Late NOC - '+updatedOSCAR.Region__c);
+        }
+
+        if (oldOSCAR.Notify_Agent_Termination__c == false && updatedOscar.Notify_Agent_Termination__c == true) {
+            updatedOSCAR.Termination_Date__c = AMS_Utils.lastDayOfMonth(System.today().addMonths(1));
+            System.debug(loggingLevel.Debug, '____ [trg AMS_OSCARTrigger - beforUpdate] updatedOSCAR.Termination_Date__c - ' + updatedOSCAR.Termination_Date__c);
+
+            if (AMS_Utils.IsWeekendDay(updatedOSCAR.Termination_Date__c, 'Late NOC - '+updatedOSCAR.Region__c)) {
+                updatedOSCAR.Termination_Date__c = AMS_Utils.AddBusinessDays(updatedOSCAR.Termination_Date__c, 1, 'Late NOC - '+updatedOSCAR.Region__c);
+            }
+        }
+
+        if (oldOSCAR.NOC_Received__c == false && updatedOscar.NOC_Received__c == true) {
+            updatedOSCAR.Termination_Date__c = null;
+        }
+
     }
 
     private void processFieldsTracking(AMS_OSCAR__c oldOscar, AMS_OSCAR__c updatedOSCAR) {
@@ -462,6 +490,5 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
             insert eventsToInsert;
 
     }
-
 
 }

@@ -12049,7 +12049,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
     </recordTypes>
     <recordTypes>
         <fullName>IATAStandardContact</fullName>
-        <active>false</active>
+        <active>true</active>
         <description>Used for all standard Contacts</description>
         <label>IATA Standard Contact</label>
         <picklistValues>
@@ -27929,7 +27929,7 @@ myuser={!User.Id}</url>
 ?sessionId={!API.Session_ID}
 &amp;serverUrl={!API.Partner_Server_URL_290}
 &amp;id={!Contact.Id}
-&amp;templateId=a87w00000009Nkg
+&amp;templateId=a7v8E00000004ng
 &amp;AC0=0
 &amp;DS7=3</url>
     </webLinks>
@@ -27955,7 +27955,7 @@ myuser={!User.Id}</url>
 ?sessionId={!API.Session_ID}
 &amp;serverUrl={!API.Partner_Server_URL_290}
 &amp;id={!Contact.Id}
-&amp;templateId=a87w00000009Nkl
+&amp;templateId=a7v8E00000004nl
 &amp;AC0=0
 &amp;DS7=3</url>
     </webLinks>

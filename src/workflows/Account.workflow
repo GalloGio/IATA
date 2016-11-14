@@ -43,39 +43,6 @@
         <template>Airline_Coding/AUTO_Expiry_of_AOC_approaching2</template>
     </alerts>
     <alerts>
-        <fullName>FDS_Coding_AOC_Expiry_date_alert_10_Days_before2</fullName>
-        <ccEmails>airlinecoding@iata.org</ccEmails>
-        <description>FDS Coding AOC Expiry date alert 10 Days before</description>
-        <protected>false</protected>
-        <recipients>
-            <recipient>alvarengam@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>farrella@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>jeffrey@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>kalajil@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>pacificoa@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>szajkod@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
-        <template>Airline_Coding/AUTO_Expiry_of_AOC_approaching</template>
-    </alerts>
-    <alerts>
         <fullName>Irregularity_Thresold_Met</fullName>
         <description>Irregularity Thresold Met</description>
         <protected>false</protected>
@@ -343,7 +310,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <criteriaItems>
             <field>Account.RecordTypeId</field>
             <operation>equals</operation>
-            <value>Standard Account</value>
+            <value>IATA Standard Account,Standard Account</value>
         </criteriaItems>
         <description>AIMS Accounts record type Assignment rule</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
@@ -469,42 +436,8 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
-        <fullName>FDS Coding AOC Expiry date alert 10 Days before</fullName>
-        <active>true</active>
-        <criteriaItems>
-            <field>Account.ACLI_Status__c</field>
-            <operation>equals</operation>
-            <value>Active Company</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.AOC_Expiry_Date__c</field>
-            <operation>greaterThan</operation>
-            <value>TODAY</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>Airline Headquarters</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.ACLI_SAP_Id__c</field>
-            <operation>notEqual</operation>
-        </criteriaItems>
-        <description>An update to start receiving notification and case 10 days before AOC expiry as a reminder.</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>FDS_Coding_AOC_Expiry_date_alert_10_Days_before2</name>
-                <type>Alert</type>
-            </actions>
-            <offsetFromField>Account.AOC_Expiry_Date__c</offsetFromField>
-            <timeLength>-10</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-    </rules>
-    <rules>
         <fullName>FDS Coding AOC Expiry date alert 3 months before</fullName>
-        <active>false</active>
+        <active>true</active>
         <criteriaItems>
             <field>Account.ACLI_Status__c</field>
             <operation>equals</operation>

@@ -80,6 +80,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Registration_Number__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>TradeName__c</field>
             </layoutItems>
             <layoutItems>
@@ -89,6 +93,14 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Company_Type__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Top_Parent__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Last_Integration_Date__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -504,6 +516,7 @@
     </relatedLists>
     <relatedLists>
         <fields>Active__c</fields>
+        <fields>For_Integration__c</fields>
         <fields>Change_Code__c</fields>
         <fields>Bulletin_Information__c</fields>
         <fields>OSCAR__c</fields>
@@ -526,7 +539,7 @@
         <fields>Remarks__c</fields>
         <relatedList>Financial_Security__c.Account__c</relatedList>
         <sortField>NAME</sortField>
-        <sortOrder>Desc</sortOrder>
+        <sortOrder>Asc</sortOrder>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>

@@ -1819,20 +1819,20 @@
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
         <workflowTimeTriggers>
             <actions>
-                <name>Action_email_4_7</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <offsetFromField>Quality__c.Action4_Due_Date__c</offsetFromField>
-            <timeLength>-7</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-        <workflowTimeTriggers>
-            <actions>
                 <name>Action_email_4_14</name>
                 <type>FieldUpdate</type>
             </actions>
             <offsetFromField>Quality__c.Action4_Due_Date__c</offsetFromField>
             <timeLength>-14</timeLength>
+            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+        <workflowTimeTriggers>
+            <actions>
+                <name>Action_email_4_7</name>
+                <type>FieldUpdate</type>
+            </actions>
+            <offsetFromField>Quality__c.Action4_Due_Date__c</offsetFromField>
+            <timeLength>-7</timeLength>
             <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
         </workflowTimeTriggers>
     </rules>
@@ -2055,20 +2055,20 @@
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
         <workflowTimeTriggers>
             <actions>
-                <name>Action_email_6_7</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <offsetFromField>Quality__c.Action6_Due_Date__c</offsetFromField>
-            <timeLength>-7</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-        <workflowTimeTriggers>
-            <actions>
                 <name>Action_email_6_14</name>
                 <type>FieldUpdate</type>
             </actions>
             <offsetFromField>Quality__c.Action6_Due_Date__c</offsetFromField>
             <timeLength>-14</timeLength>
+            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+        <workflowTimeTriggers>
+            <actions>
+                <name>Action_email_6_7</name>
+                <type>FieldUpdate</type>
+            </actions>
+            <offsetFromField>Quality__c.Action6_Due_Date__c</offsetFromField>
+            <timeLength>-7</timeLength>
             <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
         </workflowTimeTriggers>
     </rules>
@@ -3187,6 +3187,15 @@
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
         <workflowTimeTriggers>
             <actions>
+                <name>Quality_AutoUpdateFalse</name>
+                <type>FieldUpdate</type>
+            </actions>
+            <offsetFromField>Quality__c.Deadline_for_Alignment__c</offsetFromField>
+            <timeLength>-14</timeLength>
+            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+        <workflowTimeTriggers>
+            <actions>
                 <name>Quality_AutoUpdate</name>
                 <type>FieldUpdate</type>
             </actions>
@@ -3201,15 +3210,6 @@
             </actions>
             <offsetFromField>Quality__c.Deadline_for_Alignment__c</offsetFromField>
             <timeLength>1</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-        <workflowTimeTriggers>
-            <actions>
-                <name>Quality_AutoUpdateFalse</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <offsetFromField>Quality__c.Deadline_for_Alignment__c</offsetFromField>
-            <timeLength>-14</timeLength>
             <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
         </workflowTimeTriggers>
         <workflowTimeTriggers>

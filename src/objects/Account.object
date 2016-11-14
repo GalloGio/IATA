@@ -24829,7 +24829,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
     </recordTypes>
     <recordTypes>
         <fullName>IATA</fullName>
-        <active>false</active>
+        <active>true</active>
         <description>Used for all standard Accounts (airlines, agents, partners etc)</description>
         <label>IATA Standard Account</label>
         <picklistValues>
@@ -70167,6 +70167,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Partcipation information missing</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>EF_Allow_Billing_Agreements</picklist>
+            <values>
+                <fullName>Allowed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Allowed with Approval</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Allowed</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

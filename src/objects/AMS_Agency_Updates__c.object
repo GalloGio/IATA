@@ -237,24 +237,21 @@
         <language>en_US</language>
     </listViews>
     <listViews>
-        <fullName>AMS_Debug</fullName>
+        <fullName>AMS_1_day</fullName>
         <columns>NAME</columns>
         <columns>Account__c</columns>
         <columns>Change_Code__c</columns>
-        <columns>Country_ISO_Code__c</columns>
-        <columns>IATACode__c</columns>
-        <columns>Sector__c</columns>
-        <columns>Status__c</columns>
         <columns>Update_Type__c</columns>
         <columns>CREATEDBY_USER</columns>
-        <columns>UPDATEDBY_USER</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>IATACode__c</columns>
+        <columns>Country_ISO_Code__c</columns>
+        <columns>Location_Type_Ordered__c</columns>
+        <columns>IATA_Regional_Office__c</columns>
+        <columns>Sector__c</columns>
+        <columns>Status__c</columns>
         <filterScope>Everything</filterScope>
-        <filters>
-            <field>Update_Type__c</field>
-            <operation>equals</operation>
-            <value>Invalid</value>
-        </filters>
-        <label>AMS - Debug</label>
+        <label>AMS - 1 day</label>
         <language>en_US</language>
     </listViews>
     <nameField>
