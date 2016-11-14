@@ -1,0 +1,177 @@
+<apex:page controller="vfIECEBC_AccountExtras" applyHtmlTag="false" applyBodyTag="false" sidebar="false" showheader="false" standardStylesheets="false" language="en" docType="html-5.0">
+	<script>
+    function ShowWaitingStatus(section){
+    	jQuery(section).html('<img src="/img/loading.gif" width="25px" height="25px"/>');
+                
+     }
+    </script>
+	<apex:composition template="IECEBC_Layout">
+		<apex:define name="pageHeadAdditions">
+			<!-- Start of Page <head> -->
+			<title>eBroadcast Extras</title>
+			<!-- End of Page </head> -->
+		</apex:define>
+		<apex:define name="pageScriptAdditions">
+			<!-- If any page specific .js, add them here -->
+		</apex:define>
+		<apex:define name="pageContent">
+			<!-- Start of Page Content -->
+			<main class="main-content manage-account">
+				<div class="inner-wrapper">
+					<h1 class="page-title">Account Details</h1>
+					 
+					<div class="tab-container">
+						<ul class="nav tabs">
+							<li><a href="{!URLFOR($Page.IECEBC_AccountManage)}">Overview</a></li>
+							<li><a href="{!URLFOR($Page.IECEBC_AccountRatePlan)}">Rate plan</a></li>
+							<li class="active"><a href="{!URLFOR($Page.IECEBC_AccountExtras)}">Extras</a></li>
+                            <apex:outputPanel rendered="{!isEbcPrepaid}">
+    	                        <li><a href="{!URLFOR($Page.IECEBC_AccountEmailBlocks)}">Email Blocks</a></li>
+	                        </apex:outputPanel>
+							<li><a href="{!URLFOR($Page.IECEBC_AccountSettings)}">Settings</a></li>
+							<li><a href="{!URLFOR($Page.IECEBC_AccountUserGuide)}">User Guide</a>
+							</li>
+						</ul>
+						
+						<div class="tab-content">
+						
+							<div class="tab-pane is-open" id="pane-3">
+								<div class="row row-payment">
+									<div class="columns main-container campaign-cost">
+										<apex:form id="addOnPurchasedForm">
+											<h2 class="heading-2 strong">Current add ons</h2>
+											<ul class="list addon-list">
+												<apex:repeat id="addOnPurchasedOptionRepeat" value="{!productRatePlanWrapperAddonCurrentList}" var="prpPurchased">
+													<li class="list-item">
+														<div class="checkbox-box disabled">
+															
+															<div class="custom-user-input checkbox">
+																<input class="user-input checkbox" type="checkbox" id="current-addon{!prpPurchased.index}" checked="1" disabled="true" />
+																<label class="custom-checkbox" for="current-addon{!prpPurchased.index}"><i class="icon"></i></label>
+															</div>
+															<label class="input-label small" for="current-addon{!prpPurchased.index}">Purchased until
+																<apex:outputText value="{0, date, d MMMM yyyy}"><apex:param value="{!prpPurchased.subscriptionEndDate}" /></apex:outputText>
+															</label>
+														</div>
+														<div class="addon-name">
+															{!prpPurchased.name} 
+														</div>
+														<p class="addon-description light small">
+															{!prpPurchased.description}
+														</p>
+													</li>
+												</apex:repeat>
+											</ul>
+										</apex:form>
+											
+										<apex:form id="addOnSelectionForm" rendered="{!showAddOnSelection}">
+											<apex:actionFunction action="{!selectRatePlanAddon}" name="updateAddonSelection" rerender="paymentConfirmationForm,paymentConfirmationOutputPanel">
+												<apex:param name="recIndex" assignTo="{!selectedRatePlanIndex}" value=""/>
+											</apex:actionFunction>
+											
+											<h2 class="heading-2 strong">Get add ons</h2>
+											<p class="description light">Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
+											<ul class="list addon-list js-checkbox-list">
+												<apex:repeat id="addOnSelectionOptionRepeat" value="{!productRatePlanWrapperAddonOptionList}" var="prpOption">
+													<li class="list-item">
+														<div class="checkbox-box">
+															<div class="custom-user-input checkbox">
+																<apex:inputCheckbox id="chckActType" value="{!prpOption.selected}" styleClass="user-input checkbox" 
+																	onclick="updateAddonSelection({!prpOption.index})"
+																/>
+																<label class="custom-checkbox" for="{!$Component.chckActType}"><i class="icon"></i></label>
+															</div>
+															<label class="input-label" for="{!$Component.chckActType}">
+																<span class="input-state unselected">Select</span>
+																<span class="input-state selected">Selected</span>
+															</label>
+														</div>
+														<div class="addon-name">
+															{!prpOption.name} 
+														</div>
+														<p class="addon-description light small">
+															{!prpOption.description}
+														</p>
+														<div class="addon-price">
+															<apex:outputText value="${0,number,###,###,##0}"><apex:param value="{!prpOption.productRatePlanCharge.zqu__ListPrice__c}" /></apex:outputText>
+															({!prpOption.billingPeriod})
+                                                        </div>
+													</li>
+												</apex:repeat>
+											</ul>
+										</apex:form>
+									
+									</div>
+									
+									<!-- payment confirmation section on the right side-->
+									<div class="columns sub-container payment-confirmation" id="paymentconfirmation">
+										<div class="is-sticky-confirmation">
+											<div class="wrapper">
+												<apex:form id="paymentConfirmationForm" rendered="{!showAddOnSelection}">
+													<h2 class="section-title">Payment Confirmation</h2>
+													<apex:outputPanel id="paymentConfirmationOutputPanel">
+														<div class="table-container">
+															<table class="data-table table-payment table-confirmation">
+																<tbody>
+																	<apex:outputPanel id="purchaseSelectionMessagePanel" rendered="{!showPurchasedSelectionMessage}"> 
+																		<tr class="item">
+																			<th>
+																				<strong>Please select the add on plan!</strong>
+																			</th>
+																			<td class="price">
+																				<strong>
+																				</strong>
+																			</td>
+																		</tr>
+																	</apex:outputPanel>
+																	<apex:repeat id="purchaseItemRepeat" value="{!productRatePlanWrapperAddonNewPurchaseList}" var="purchaseItem">
+																		<tr class="item no-space">
+																			<th>
+																				<strong> {!purchaseItem.name}</strong>
+																				<!--
+																				{!purchaseItem.description}
+																				-->
+																			</th>
+																			<td class="price">
+																				<strong>
+																					<apex:outputText value="${0, number,###,###,##0.00}"><apex:param value="{!purchaseItem.amount}" /></apex:outputText>
+																				</strong>
+																			</td>
+																		</tr>
+																	</apex:repeat>
+																	<tr class="total">
+																		<th>
+																			Total in USD
+																		</th>
+																		<td class="price">
+																			<apex:outputText value="${0, number,###,###,##0.00}"><apex:param value="{!totalNewPurchaseAmount}" /></apex:outputText>
+																		</td>
+																	</tr>
+																</tbody>
+															</table>
+														</div>
+														
+														<div class="footer-actions">
+															<ul class="list actions sectionActions">
+                                                                <li><apex:commandLink onclick="ShowWaitingStatus('.sectionActions');window.location='{!URLFOR($Page.IECEBC_AccountExtras)}';" styleClass="text-link"  value="Cancel" /></li>
+																<li><apex:commandLink onclick="ShowWaitingStatus('.sectionActions');" action="{!goToPaymentPage}" styleClass="button" value="Submit payment" rendered="{!selectedProductRatePlan!=null}"/></li>
+															</ul>
+														</div>
+    												</apex:outputPanel>
+												</apex:form>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							
+						</div>
+
+					</div>
+				</div>
+				
+			</main>
+			<!-- End of Page Content -->
+		</apex:define>
+	</apex:composition>
+</apex:page>

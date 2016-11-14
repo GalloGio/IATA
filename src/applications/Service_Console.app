@@ -15,6 +15,8 @@
     <enablePinTabs>true</enablePinTabs>
     <enableTabHover>false</enableTabHover>
     <enableTabLimits>false</enableTabLimits>
+    <footerColor>#099AD6</footerColor>
+    <headerColor>#FFFFFF</headerColor>
     <isServiceCloudConsole>true</isServiceCloudConsole>
     <keyboardShortcuts>
         <defaultShortcut>
@@ -175,6 +177,8 @@
         <width>25</width>
     </listPlacement>
     <listRefreshMethod>refreshListRows</listRefreshMethod>
+    <logo>Customer_Portal_Files/IATA_Logo_Cust_Portal.gif</logo>
+    <primaryTabColor>#3B3D3D</primaryTabColor>
     <pushNotifications>
         <pushNotification>
             <fieldNames>Category__c</fieldNames>

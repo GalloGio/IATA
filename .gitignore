@@ -2,6 +2,7 @@
 #src/codePackage.xml
 #src/objectPackage.xml
 .project
+integration/mosaico
 src/layouts/Case-Case Layout.layout
 src/layouts/Case-Demo\ only\ for\ dev.layout
 src/layouts/Case-Demo only for dev.layout

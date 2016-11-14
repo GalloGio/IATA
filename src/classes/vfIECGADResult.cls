@@ -440,4 +440,27 @@ public without sharing class vfIECGADResult extends IECPageController {
                	}        
         }
     }
+    
+    public Boolean getHasEBCAccess() {
+    	return ctrSubsInfo.loggedCustomer.RelatedBillingAccount.eBroadcast_Product_Access__c;
+    }
+    
+    public PageReference createEBCMailing() {
+    	EBC_Master_Filter__c mf = new EBC_Master_Filter__c();
+    	mf.Name = 'Audience from GAD Search ' + Datetime.now();
+    	mf.Audience__c = 'Custom';
+    	mf.Billing_Account__c = ctrSubsInfo.loggedCustomer.RelatedBillingAccount.Id;
+    	
+    	List<String> codes = new List<String>();
+    	for(GDP_Products_Account_View__c gpav : lstAgencies) {
+    		codes.add(gpav.IATA_Code__c);
+    	}
+    	mf.IATA_Codes__c = String.join(codes, ';');
+    	insert mf;
+    	
+    	PageReference pr = new PageReference('/iec/IECEBC_Campaign');
+    	pr.setRedirect(true);
+    	
+    	return pr;
+    }
 }

@@ -79,8 +79,8 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
     private Boolean isEditable(String fieldName){
 
         //verifu "hardcoded" logic
-        if(!isAgencyChanges) return true;
         if(fieldName == 'IATACode__c') return false;
+        if(!isAgencyChanges) return true;        
 
         //check per field
         return editableFields.contains(fieldName);
