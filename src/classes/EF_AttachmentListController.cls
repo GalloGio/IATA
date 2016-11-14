@@ -7,6 +7,7 @@ global with sharing class EF_AttachmentListController {
             return runningForEF;
         }
         set;
+    }   
 	public Boolean viewPrivateFiles{get;set;}
 
     public String uploader {get;set;}
