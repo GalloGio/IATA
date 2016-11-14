@@ -136,7 +136,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>ISO_Country__c</field>
+                <field>Branch_Office_Country__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -229,7 +229,8 @@
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
-                <emptySpace>true</emptySpace>
+                <behavior>Edit</behavior>
+                <field>New_Head_Office_IATA_Code__c</field>
             </layoutItems>
             <layoutItems>
                 <emptySpace>true</emptySpace>

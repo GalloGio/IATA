@@ -81,6 +81,7 @@ public with sharing class SidraLiteHelperForInvoicing {
                   childCase.SIDRA_Lite_Default_Date__c = Date.today();
                   childCase.Reason_for_Default__c = 'Annual Fees';
                   childCase.Termination_date_manual_entry__c = SidraLiteUtil.lastMonthDay(Date.today().addMonths(1));
+                  childCase.Status = 'Re-opened';
                   parentCase.Termination_date_manual_entry__c = SidraLiteUtil.lastMonthDay(Date.today().addMonths(1));
               }
               // 3th non compliance
@@ -112,6 +113,7 @@ public with sharing class SidraLiteHelperForInvoicing {
               }
               childCase.Propose_Default__c = Date.today();
               childCase.Termination_Reason__c = 'Non payment of Annual Fee';
+              childCase.Status = 'Re-opened';
           }
 
           list<Case> listUpdate = new list<Case>();

@@ -11217,11 +11217,11 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <active>true</active>
         <criteriaItems>
             <field>Case.Status</field>
-            <operation>equals</operation>
-            <value>Complete DSR</value>
+            <operation>contains</operation>
+            <value>Complete</value>
         </criteriaItems>
         <description>DPC DSR: this is the time when the case is completed by DPC (it is automaticaly populated on the case status COMPLETED)</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
         <fullName>DPC%3A Date %2F Time Scheduled</fullName>
@@ -11233,6 +11233,10 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.Planned_Start_CR__c</field>
             <operation>notEqual</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.DPC_Date_Time_Scheduled__c</field>
+            <operation>equals</operation>
         </criteriaItems>
         <description>DPC DSR: This is a time when DPC user fill the field Planned start CSR</description>
         <triggerType>onAllChanges</triggerType>
@@ -12667,7 +12671,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
-            <value>SIDRA</value>
+            <value>SIDRA,SIDRA Lite</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Region__c</field>
@@ -13111,7 +13115,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         </actions>
         <active>true</active>
         <description>SCE</description>
-        <formula>aND($RecordType.Name = &quot;SIDRA&quot;, ischanged(  DEF_Withdrawal_Approval_Rejection__c ))</formula>
+        <formula>aND(OR($RecordType.Name = &quot;SIDRA&quot;,$RecordType.Name = &quot;SIDRA Lite&quot;), ischanged( DEF_Withdrawal_Approval_Rejection__c ))</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
@@ -13197,7 +13201,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
-            <value>SIDRA</value>
+            <value>SIDRA,SIDRA Lite</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.DEF_Withdrawal_Approval_Rejection__c</field>
@@ -14633,7 +14637,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <criteriaItems>
             <field>Case.Reason1__c</field>
             <operation>notEqual</operation>
-            <value>New EAA - Application process for European Accredited Agent,New HO,New SA / CHV – New Code,Reconsideration,VMFR Setup/Update,PAX/CARGO Certificate,Bank Detail Update,Major Change</value>
+            <value>New EAA - Application process for European Accredited Agent,New HO,New SA / CHV – New Code,Reconsideration,VMFR Setup/Update,PAX/CARGO Certificate,Bank Detail Update,Major Change,Agency Changes</value>
         </criteriaItems>
         <description>If the case should be invisible on the portal uncheck the field &quot;Visible on ISS Portal&quot;</description>
         <triggerType>onAllChanges</triggerType>

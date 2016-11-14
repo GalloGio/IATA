@@ -1,0 +1,100 @@
+<apex:page standardController="EBC_Campaign__c" extensions="vfIECEBC_Campaign" applyHtmlTag="false" applyBodyTag="false" sidebar="false" showheader="false" standardStylesheets="false" language="en" docType="html-5.0" action="{!pageLoad}">
+	<apex:composition template="IECEBC_Layout">
+        <apex:define name="pageHeadAdditions">
+            <!-- Start of Page <head> -->
+            <title>eBroadcast Campaign</title>
+            <!-- End of Page </head> -->
+        </apex:define>
+        <apex:define name="pageScriptAdditions">
+            <!-- If any page specific .js, add them here -->
+        </apex:define>
+        <apex:define name="pageContent">
+            <!-- Start of Page Content -->
+            <main class="main-content">
+                <div class="inner-wrapper">
+                    <c:IECEBC_ProgressComponent currentStepNumber="{!currentStepNumber}" campaign="{!EBC_Campaign__c}" />
+            
+                    <h1 class="page-title">Campaign Info</h1>
+                    
+                    
+                    <apex:form >
+                        <apex:pageMessages />
+                        <apex:outputPanel layout="block" rendered="{!campaign.Status__c == 'DRAFT' || campaign.Id == null}" styleClass="alert">
+                            <h2 class="alert-title">Account balance</h2>
+                            <div class="alert-message icon check-circle">
+                                <p>Your current account balance is <strong><apex:outputText value="{0, number, ###,###,##0}"><apex:param value="{!billingAccount.eBroadcast_Email_Balance__c}"/></apex:outputText> emails</strong></p>
+                            </div>
+                        </apex:outputPanel>
+                        <div class="row">
+                            <div class="columns medium-6">
+                                <div class="field-group text">
+                                    <label>
+                                        <span class="input-label">Name your campaign</span>
+                                        <apex:inputField rendered="{!campaign.Id == null || campaign.Is_Step1_Writable__c}" value="{!EBC_Campaign__c.Name}" styleClass="user-input text" required="true"/>
+                                        <apex:outputText rendered="{!NOT(campaign.Id == null || campaign.Is_Step1_Writable__c)}" value="{!EBC_Campaign__c.Name}" styleClass="text disabled-user-input" />
+                                    </label>
+                                    <p class="input-description">Internal use only. Ex: "Newsletter Test#4"</p>
+                                </div>
+                
+                                <div class="field-group text">
+                                    <label>
+                                        <span class="input-label">Email subject</span>
+                                        <apex:inputField rendered="{!campaign.Id == null || campaign.Is_Step1_Writable__c}" type="text" styleClass="user-input js-remaining-characters text" value="{!EBC_Campaign__c.Subject__c}" html-data-target-element=".js-remaining-count" html-data-target-id="email-subject" html-data-max-length="{!$ObjectType.EBC_Campaign__c.fields.Subject__c.length}" />
+                                        <apex:outputText rendered="{!NOT(campaign.Id == null || campaign.Is_Step1_Writable__c)}" value="{!EBC_Campaign__c.Subject__c}" styleClass="disabled-user-input text" />
+                                    </label>
+                                    <apex:outputPanel rendered="{!campaign.Id == null || campaign.Is_Step1_Writable__c}" styleClass="input-remaining">
+                                        <span class="js-remaining-count" data-id="email-subject">{!$ObjectType.EBC_Campaign__c.fields.Subject__c.length}</span>
+                                    </apex:outputPanel>
+                                    <p class="input-description">This is the email subject that your recipients will see</p>
+                                </div>
+                
+                                <div class="field-group text">
+                                    <label>
+                                        <span class="input-label">From name</span> 
+                                        <apex:inputField rendered="{!campaign.Id == null || campaign.Is_Step1_Writable__c}" type="text" styleClass="user-input js-remaining-characters text" value="{!EBC_Campaign__c.From_Name__c}" html-data-target-element=".js-remaining-count" html-data-target-id="from-name" html-data-max-length="{!$ObjectType.EBC_Campaign__c.fields.From_Name__c.length}" />
+                                        <apex:outputText rendered="{!NOT(campaign.Id == null || campaign.Is_Step1_Writable__c)}" value="{!EBC_Campaign__c.From_Name__c}" styleClass="disabled-user-input text" />
+                                    </label>
+                                    <apex:outputPanel rendered="{!campaign.Id == null || campaign.Is_Step1_Writable__c}" styleClass="input-remaining">
+                                        <span class="js-remaining-count" data-id="from-name">{!$ObjectType.EBC_Campaign__c.fields.From_Name__c.length}</span>
+                                    </apex:outputPanel>
+                                    <p class="input-description">Use something recipients will instantly recognize, like your company name</p>
+                                </div>
+                            </div>
+                            <div class="columns medium-6">
+                                <div class="field-group checkbox google-analytics">
+				                    <div class="checkbox-box">
+				                        <div class="{!IF(campaign.Id == null || campaign.Is_Step1_Writable__c, 'custom-user-input', 'disabled-user-input')} checkbox">
+				                            <apex:inputField rendered="{!campaign.Id == null || campaign.Is_Step1_Writable__c}" id="Is_Google_Analytics_Tracker_Active" value="{!EBC_Campaign__c.Is_Google_Analytics_Tracker_Active__c}" styleClass="user-input checkbox" />
+				                            <apex:outputLabel styleClass="custom-checkbox" for="Is_Google_Analytics_Tracker_Active"><i class="icon"></i></apex:outputLabel>
+				                        </div>
+				                        <label class="input-label" for="google-analytics">Google Analytics <sup>TM</sup> tracker</label>
+				                        <apex:inputField rendered="{!campaign.Id == null || campaign.Is_Step1_Writable__c}" type="text" styleClass="user-input text" value="{!EBC_Campaign__c.Google_Analytics_Tracking_Code__c}" />
+				                        <apex:outputText rendered="{!NOT(campaign.Id == null || campaign.Is_Step1_Writable__c)}" value="{!EBC_Campaign__c.Google_Analytics_Tracking_Code__c}" styleClass="disabled-user-input text" />
+				                        
+				                        <p class="input-description">Track clicks from your campaigns all the way to your website.</p>
+				                    </div>
+                                </div>
+                            </div>
+                        </div>
+                
+                        <div class="footer-actions text-right">
+                            <ul class="list actions">
+                                <apex:outputText rendered="{!campaign.Id == null || campaign.Is_Step1_Writable__c}">
+									<li><apex:commandLink action="{!saveAndExit}" styleClass="button secondary" value="Save and Return to Dashboard" /></li>
+                                </apex:outputText>
+                                <apex:outputText rendered="{!campaign.Id == null || campaign.Is_Step1_Writable__c}">
+									<li><apex:commandLink action="{!saveAndContinue}" styleClass="button" value="Continue" /></li>
+                                </apex:outputText>
+                                <apex:outputText rendered="{!NOT(campaign.Id == null || campaign.Is_Step1_Writable__c)}">
+									<li><apex:commandLink action="{!next}" value="Next" styleClass="button" /></li>
+                                </apex:outputText>
+                            </ul>
+                        </div>
+                
+                    </apex:form>
+                </div>
+            </main>
+            <!-- End of Page Content -->
+        </apex:define>
+    </apex:composition>
+</apex:page>
