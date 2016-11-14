@@ -21,12 +21,82 @@ public class vfIECEBC_TestSuite {
     public static IECCustomer currentCustomer;
 
     public static User initPreRunAs(Boolean grantEBCAccess) {
-        User usr = IECTestUtil.createSampleGuestUserAndLogin();
+//        User usr = IECTestUtil.createSampleGuestUserAndLogin();
+//        
+
+        Account a = new Account();
+        a.RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Standard Account').getRecordTypeId();
+        a.BillingStreet = '123 main street';
+        a.BillingPostalCode = 'H0H 0H0';
+        a.BillingCountry = 'Canada';
+        a.BillingCity = 'Montreal';
+        a.Customer_Type__c = 'Third Party';
+        a.Name = 'Company';
+        a.OwnerId = '00520000002MSDBAA4';
+        insert a;
+        
+        Contact c = new Contact();
+        c.RecordTypeId = Schema.SObjectType.Contact.getRecordTypeInfosByName().get('Standard').getRecordTypeId();
+        c.AccountId = a.Id;
+        c.OwnerId = a.OwnerId;
+        c.FirstName = 'Test';
+        c.LastName = 'User';
+        c.Title = 'TestTitle';
+        c.Email = 'testIECGuest@test.iata.org';
+        c.Phone = '514123345';
+        c.User_IECPortal_Status__c = 'Privilege - Approved';
+        insert c;
+        
+        Zuora__CustomerAccount__c ba = new Zuora__CustomerAccount__c(
+            Zuora__Account__c = a.Id
+            , Contact__c = c.Id
+            , Name = a.Name
+            , CRMContactID__c = String.valueOf(c.Id)
+            , Zuora__DefaultPaymentMethod__c = 'CreditCard'
+            , Zuora__BillToCity__c = 'Toronto'
+            , Zuora__BillToCountry__c = 'Canada'
+            , Zuora__BillToState__c = 'Ontario'
+            , Zuora__BillToAddress1__c = '123 Test St'
+            , Zuora__BillToPostalCode__c = 'A9A9A9'
+        );
 
         if (grantEBCAccess) {
-            oBillingAccount.eBroadcast_Product_Access__c = true;
-            update oBillingAccount;
+            ba.eBroadcast_Product_Access__c = true;
         }
+        insert ba;
+        
+        
+        
+        User usr = new User(
+            Username = 'testIECGuest.test.iata.org@partner.iata.org'
+            , Email = 'testIECGuest@test.iata.org'
+            , emailencodingkey = 'UTF-8'
+            , Alias = 'testu'
+            , FirstName = c.FirstName
+            , LastName = c.LastName
+            , LocaleSidKey = 'en_US'
+            , CommunityNickname = 'testIECGuest@iata.org'
+            , ProfileId = [Select Id From Profile p where p.Name = 'ISS Portal (Partner)'].Id
+            , LanguageLocaleKey = 'en_US'
+            , timezonesidkey = 'America/New_York'
+            , ContactId = c.Id
+            , IsActive = true
+            , ReceivesAdminInfoEmails = false
+            , ReceivesInfoEmails = false
+        );
+        insert usr;
+        
+        
+        IECTestUtil.trgPortalUserAfterInserUpdate = true;
+        String userId = Site.createPortalUser(usr, a.Id, 'testpassword');
+        IECUserManager.login(usr.Username, 'testpassword', null);
+           
+		IECTestUtil_Account = a;
+        IECTestUtil_Contact = c;
+        IECTestUtil_BillingAccount = ba;
+        IECTestUtil_User = usr;
+        IECTestUtil_UserId = userId;
+        
         
         return usr;
     }
