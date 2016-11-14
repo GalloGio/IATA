@@ -3,6 +3,7 @@
 	<aura:attribute name="relatedAccount" type="AMS_Account_Role__c" default="{ 'sobjectType': 'AMS_Account_Role__c', Account__c : '', Owner_Account__c: ''}" />
     <aura:attribute name="displayType" type="String" default="Owners"/><!-- Variable that controlls what is displayed: Owners or Subsidiaries -->
     <aura:attribute name="isEditMode" type="Boolean" default="false"/>
+	<aura:attribute name="canEdit" type="Boolean" default="false" />
     <aura:attribute name="isError" type="Boolean" default="false"/>
     <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
     <aura:attribute name="errorMessage" type="String"/>
