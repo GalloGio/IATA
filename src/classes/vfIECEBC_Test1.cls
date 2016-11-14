@@ -1,5 +1,14 @@
 @isTest (seeAllData=true)
 public class vfIECEBC_Test1 {
+	public static testMethod void testAccountExtras() {
+        vfIECEBC_TestSuite1.testAccountExtras();
+    } 
+	public static testMethod void testAccountEmailBlocks() {
+        vfIECEBC_TestSuite1.testAccountEmailBlocks();
+    } 
+	public static testMethod void testAccountManage() {
+        vfIECEBC_TestSuite1.testAccountManage();
+    } 
 	public static testMethod void testPageLoadDashboard() {
         vfIECEBC_TestSuite1.testPageLoadDashboard();
     } 

@@ -26,6 +26,128 @@ public class vfIECEBC_TestSuite1 {
         return vfIECEBC_TestSuite.createGDPProductsAccountViews();
     }
     /////////////////
+    public static void testAccountExtras() {
+        PageReference pageRef = Page.IECEBC_AccountExtras;
+        Test.setCurrentPage(pageRef);
+        
+        IECEBC_TestUtility.createTestUser(false);
+//        User usr = initPreRunAs(true);
+        
+        System.runAs(IECEBC_TestUtility.oUser) {
+//        System.runAs(usr) {
+//            initPostRunAs();
+			vfIECEBC_TestPaymentSuite.initPostRunAs(5);
+            Test.startTest();
+            
+            vfIECEBC_Layout layoutController = new vfIECEBC_Layout();
+            System.assertEquals(null, layoutController.pageLoad());
+            
+            vfIECEBC_AccountExtras accExtras = new vfIECEBC_AccountExtras();
+            
+            System.assertNotEquals(null, accExtras.isEbcPrepaid);
+            System.assertNotEquals(null, accExtras.productRatePlanWrapperAddonCurrentList);
+            System.assertNotEquals(null, accExtras.showAddOnSelection);
+            
+            accExtras.productRatePlanWrapperAddonOptionList[0].selected = true;
+            accExtras.selectedRatePlanIndex = accExtras.productRatePlanWrapperAddonOptionList[0].index;
+            accExtras.selectRatePlanAddon();
+            
+            System.assertNotEquals(null, accExtras.showAddOnSelection);
+            System.assertNotEquals(null, accExtras.showPurchasedSelectionMessage);
+            System.assertNotEquals(null, accExtras.productRatePlanWrapperAddonNewPurchaseList);
+            System.assertNotEquals(null, accExtras.goToPaymentPage());
+            System.assertNotEquals(null, accExtras.selectedProductRatePlan);
+        }
+        
+    }
+    public static void testAccountEmailBlocks() {
+        PageReference pageRef = Page.IECEBC_AccountEmailBlocks;
+        Test.setCurrentPage(pageRef);
+        
+        IECEBC_TestUtility.createTestUser(false);
+//        User usr = initPreRunAs(true);
+        
+        System.runAs(IECEBC_TestUtility.oUser) {
+//        System.runAs(usr) {
+//            initPostRunAs();
+			vfIECEBC_TestPaymentSuite.initPostRunAs(5);
+            Test.startTest();
+            
+            vfIECEBC_Layout layoutController = new vfIECEBC_Layout();
+            System.assertEquals(null, layoutController.pageLoad());
+            
+            vfIECEBC_AccountEmailBlocks accEmailBlocks = new vfIECEBC_AccountEmailBlocks();
+            
+            System.assertEquals(true, accEmailBlocks.isEbcPrepaid);
+            System.assertNotEquals(null, accEmailBlocks.productRatePlanWrapperOptionList);
+            System.assertNotEquals(null, accEmailBlocks.showPurchasedSelectionMessage);
+            
+            
+            accEmailBlocks.selectedRatePlanIndex = accEmailBlocks.productRatePlanWrapperOptionList[0].index;
+            accEmailBlocks.productRatePlanWrapperOptionList[0].selected = true;
+            accEmailBlocks.selectRatePlanEmaiLBlock();
+            
+            System.assertNotEquals(null, accEmailBlocks.selectedProductRatePlanWrapper.name);
+            System.assertNotEquals(null, accEmailBlocks.selectedProductRatePlanWrapper.amount);
+            System.assertNotEquals(null, accEmailBlocks.totalNewPurchaseAmount);
+            System.assertNotEquals(null, accEmailBlocks.selectedProductRatePlan);
+            System.assertNotEquals(null, accEmailBlocks.goToPaymentPage());
+            
+            
+            
+        }
+    }
+    public static void testAccountManage() {
+        PageReference pageRef = Page.IECEBC_AccountManage;
+        Test.setCurrentPage(pageRef);
+        
+        IECEBC_TestUtility.createTestUser(false);
+//        User usr = initPreRunAs(true);
+        
+        System.runAs(IECEBC_TestUtility.oUser) {
+//        System.runAs(usr) {
+//            initPostRunAs();
+			vfIECEBC_TestPaymentSuite.initPostRunAs(10);
+            Test.startTest();
+            
+            vfIECEBC_Layout layoutController = new vfIECEBC_Layout();
+            System.assertEquals(null, layoutController.pageLoad());
+            
+            vfIECEBC_AccountManage accMan = new vfIECEBC_AccountManage();
+            
+            System.assertNotEquals(null, accMan.monthYtdList);
+            System.assertNotEquals(null, accMan.adjustmentYtdData);
+            System.assertNotEquals(null, accMan.creditYtdData);
+            System.assertNotEquals(null, accMan.sendYtdData);
+            
+            System.assertNotEquals(null, accMan.monthYayList);
+            System.assertNotEquals(null, accMan.adjustmentYayData);
+            System.assertNotEquals(null, accMan.creditYayData);
+            System.assertNotEquals(null, accMan.sendYayData);      
+            
+            System.assertNotEquals(null, accMan.isEbcPrepaid);    
+            System.assertNotEquals(null, accMan.productRatePlan.Name);    
+            System.assertNotEquals(null, accMan.showSubscriptionEnd);    
+            System.assertNotEquals(null, accMan.subscription.Zuora__SubscriptionEndDate__c); 
+            
+            System.assertNotEquals(null, accMan.renewalPageUrl);       
+            System.assertNotEquals(null, accMan.showRenewNow);       
+            System.assertNotEquals(null, accMan.showSuggestionMessage);   
+            System.assertNotEquals(null, accMan.billingAccount.eBroadcast_Email_Balance__c);   
+            
+            System.assertNotEquals(null, accMan.totalCampaigns);
+            System.assertNotEquals(null, accMan.totalSends);
+            System.assertNotEquals(null, accMan.totalAdjustments);
+            accMan.refreshTable();
+            System.assertNotEquals(null, accMan.activityTypeWrapperList);
+            System.assertNotEquals(null, accMan.activityList);
+            System.assertNotEquals(null, accMan.page);
+            System.assertNotEquals(null, accMan.getPageOptions());
+            System.assertNotEquals(null, accMan.maxPage);
+            accMan.doNothing();
+        }
+    }
+    
     public static void testResourceListError() {
         PageReference pageRef = Page.IECEBC_ResourceList;
         Test.setCurrentPage(pageRef);
