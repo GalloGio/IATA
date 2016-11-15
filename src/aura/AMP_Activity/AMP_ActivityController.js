@@ -34,14 +34,8 @@
         activity.Status__c = status;
         
         var deadlineField = component.find("deadline");
-        var benefitsField = component.find("benefits");
-        var accountIssueLookupField = component.find("accountIssueLookup");
-        
-        if(benefitsField.get("v.value") === '' && accountIssueLookupField.get("v.value") === undefined) {
-            component.set("v.isEditMode", true);
-            component.set("v.isError", true);
-            component.set("v.errorMessage", 'Please enter either Account Issue or Benefits');
-        } else if(deadlineField.get("v.value") === '') {
+        console.log(deadlineField.get("v.value"));
+        if(deadlineField.get("v.value") === '') {
             deadlineField.set("v.errors", [{message:"Please enter a date" }]);
             
         } else {

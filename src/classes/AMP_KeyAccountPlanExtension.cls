@@ -165,10 +165,7 @@ public with sharing class AMP_KeyAccountPlanExtension {
 			isTaskEditMode = false;
 			lsMilestones = getTasks(objectiveId);
 
-		} catch(Exception e) {
-			ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, e.getMessage()));
-
-		}
+		} catch(Exception e) {}
 	}
 
 	public void deleteTask() {

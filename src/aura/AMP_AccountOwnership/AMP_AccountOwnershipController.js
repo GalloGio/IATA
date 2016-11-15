@@ -1,7 +1,6 @@
 ({
     doInit: function(component, event, helper) {
         helper.getRelatedAccountList(component);
-        helper.getCanEdit(component);
     },
     addAccountRole : function(component, event, helper ){
         var relatedAccounts = component.get("v.relatedAccounts");

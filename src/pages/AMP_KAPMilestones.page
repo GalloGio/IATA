@@ -14,14 +14,9 @@
 						<apex:commandLink value="Del" action="{!deleteTask}" styleClass="actionLink" onclick="if(!confirm('Are you sure you want to delete this line?')){return false};" rendered="{!IF(AND(isTaskEditMode, idTaskConcerned==task.Id), false, true)}" >
 								<apex:param name="idTaskConcerned" value="{!task.Id}" assignTo="{!idTaskConcerned}"/>
 						</apex:commandLink>
-					<apex:commandLink value="Save" action="{!saveTask}" styleClass="actionLink" reRender="theBlock" oncomplete="enableShowMoreOrLess();"   rendered="{!IF(AND(isTaskEditMode, idTaskConcerned==task.Id), true, false)}" status="actStatusId">
+						<apex:commandLink value="Save" action="{!saveTask}" styleClass="actionLink" reRender="theBlock" oncomplete="enableShowMoreOrLess();"   rendered="{!IF(AND(isTaskEditMode, idTaskConcerned==task.Id), true, false)}">
 								<apex:param name="idTaskConcerned" value="{!task.Id}" assignTo="{!idTaskConcerned}"/>
 						</apex:commandLink>
-                    <apex:actionStatus id="actStatusId" >
-                        <apex:facet name="start" >
-                          <img src="/img/loading.gif" style="float: right;"/>
-                        </apex:facet>
-                    </apex:actionStatus>
 						&nbsp;|&nbsp;
 						<apex:commandLink value="Edit" action="{!editTask}" styleClass="actionLink" reRender="theBlock" oncomplete="enableShowMoreOrLess();"   rendered="{!IF(AND(isTaskEditMode, idTaskConcerned==task.Id), false, true)}" >
 								<apex:param name="idTaskConcerned" value="{!task.Id}" assignTo="{!idTaskConcerned}"/>
@@ -37,12 +32,7 @@
 
 					<apex:column headerValue="Milestone">
 							<apex:outputLink value="/{!task.Id}" rendered="{!!AND(isTaskEditMode,idTaskConcerned==task.Id)}">{!task.Subject}</apex:outputLink>
-                    <apex:define name="requiredInputDiv">
-                        <div class="requiredInput">
-                           <apex:define name="requiredInputDiv"><div class="requiredBlock"/></apex:define>
-                           <apex:inputText value="{!task.Subject}" rendered="{!AND(isTaskEditMode,idTaskConcerned==task.Id)}" required="true"/>
-                       </div>
-                    </apex:define>
+							<apex:inputText value="{!task.Subject}" rendered="{!AND(isTaskEditMode,idTaskConcerned==task.Id)}"/>
 					</apex:column>
 
 					<apex:column headerValue="Responsible" >
