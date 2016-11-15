@@ -56,8 +56,9 @@ private class EF_LocationCurrencyTriggerTest {
         Test.stopTest();
         
         Contract ctAfter = [select Id, AccountId, Account.Name, EF_Billing_Currency__c from Contract where Account.Name = 'Test Account Client2'];               
-                
-        //System.assertEquals('USD;EUR', ctAfter.EF_Billing_Currency__c);
+
+        System.assert(ctAfter.EF_Billing_Currency__c.contains('USD'));
+        System.assert(ctAfter.EF_Billing_Currency__c.contains('EUR'));
        
     }
     
@@ -95,7 +96,7 @@ private class EF_LocationCurrencyTriggerTest {
         
         Contract ctAfter = [select Id, AccountId, Account.Name, EF_Billing_Currency__c from Contract where Account.Name = 'Test Account Client2'];               
                 
-        System.assertEquals('EUR', ctAfter.EF_Billing_Currency__c);
+        System.assertEquals('EUR;USD', ctAfter.EF_Billing_Currency__c);
          
      
      }
@@ -195,6 +196,7 @@ private class EF_LocationCurrencyTriggerTest {
        
      }
     
+    
      @isTest static void updateLocationCurrencyWhenThereIsOne() {
          
         Contract contract = [select Id, AccountId, Account.Name, EF_Allow_Billing_Agreements__c from Contract where Account.Name = 'Test Account Client2'];
@@ -208,7 +210,7 @@ private class EF_LocationCurrencyTriggerTest {
                 Location_ID__c = [select Id, Name from EF_Related_Records__c where Name = 'Main' limit 1].Id
             );
         lcList.add(efl);
-         
+        
         // Add one billing currency to the contract.
         EF_Location_Currency__c efl2 = new EF_Location_Currency__c(
                 EF_Billing_Currency__c = 'USD',
@@ -217,7 +219,7 @@ private class EF_LocationCurrencyTriggerTest {
             );
         lcList.add(efl2);
        
-         insert lcList;
+        insert lcList;
         
         Test.startTest();
             efl2.EF_Billing_Currency__c='GBP';
@@ -231,5 +233,6 @@ private class EF_LocationCurrencyTriggerTest {
          
      
      }
+
     
 }

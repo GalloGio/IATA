@@ -7251,7 +7251,7 @@ V - Co-operative</inlineHelpText>
         <externalId>false</externalId>
         <inlineHelpText>Temporary duplicate bill-to (4xxxx) SAP number</inlineHelpText>
         <label>E&amp;F Additional SAP Nr.</label>
-        <length>20</length>
+        <length>250</length>
         <required>false</required>
         <trackFeedHistory>true</trackFeedHistory>
         <trackHistory>false</trackHistory>
@@ -7294,6 +7294,17 @@ V - Co-operative</inlineHelpText>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>EF_Client_Services_Specialist_Email__c</fullName>
+        <externalId>false</externalId>
+        <formula>EF_Client_Services_Specialist__r.Email</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>E&amp;F Client Services Specialist Email</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>EF_Client_Services_Specialist__c</fullName>
@@ -24854,7 +24865,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
     </recordTypes>
     <recordTypes>
         <fullName>IATA</fullName>
-        <active>false</active>
+        <active>true</active>
         <description>Used for all standard Accounts (airlines, agents, partners etc)</description>
         <label>IATA Standard Account</label>
         <picklistValues>
