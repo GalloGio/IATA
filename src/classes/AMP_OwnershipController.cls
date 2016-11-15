@@ -21,10 +21,11 @@ public with sharing class AMP_OwnershipController {
 
         lstOwners = getOwners();
         lstSubsidiaries = getSubsidiaries();
-        canEdit = setCanEdit();
+        canEdit = getCanEdit();
     }
 
-    public Boolean setCanEdit() {
+    @AuraEnabled
+    public static Boolean getCanEdit() {
         Boolean canEdit = true;
         if(!Schema.SObjectType.AMS_Account_Role__c.fields.Account__c.isUpdateable()) canEdit = false;
         if(!Schema.SObjectType.AMS_Account_Role__c.fields.Owner_Account__c.isUpdateable()) canEdit = false;
