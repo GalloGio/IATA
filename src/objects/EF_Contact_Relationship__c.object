@@ -106,6 +106,16 @@
         <visibleLines>4</visibleLines>
     </fields>
     <fields>
+        <fullName>Role__c</fullName>
+        <externalId>false</externalId>
+        <globalPicklist>EF_Role</globalPicklist>
+        <label>Role</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
         <fullName>Status__c</fullName>
         <externalId>false</externalId>
         <label>Status</label>

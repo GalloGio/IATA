@@ -107,10 +107,6 @@
             <name>Notify_Approver_of_Recall</name>
             <type>Alert</type>
         </action>
-        <action>
-            <name>Notify_Approver_of_Recall</name>
-            <type>Alert</type>
-        </action>
     </recallActions>
     <recordEditability>AdminOnly</recordEditability>
     <showApprovalHistory>true</showApprovalHistory>

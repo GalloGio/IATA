@@ -101,7 +101,7 @@
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
-	<fields>
+    <fields>
         <fullName>Data_Currency__c</fullName>
         <externalId>false</externalId>
         <globalPicklist>EF_Currency</globalPicklist>
@@ -139,6 +139,7 @@
         <externalId>false</externalId>
         <globalPicklist>EF_Currency</globalPicklist>
         <label>Billing Currency</label>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -172,6 +173,18 @@
         <referenceTo>EF_Location_Currency__c</referenceTo>
         <relationshipLabel>E&amp;F Approval Storages (E&amp;F Location Currency)</relationshipLabel>
         <relationshipName>EF_Approvals</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>EF_Location_ID__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>E&amp;F Location ID</label>
+        <referenceTo>EF_Related_Records__c</referenceTo>
+        <relationshipName>EF_Approval_Temp_Storages</relationshipName>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -220,7 +233,9 @@
         <externalId>false</externalId>
         <globalPicklist>EF_Payment_Terms</globalPicklist>
         <label>Payment Terms</label>
+        <required>false</required>
         <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
     <fields>
@@ -228,6 +243,7 @@
         <externalId>false</externalId>
         <globalPicklist>EF_Status</globalPicklist>
         <label>Status</label>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -298,6 +314,16 @@
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Status__c</fullName>
+        <externalId>false</externalId>
+        <globalPicklist>EF_Status</globalPicklist>
+        <label>Status</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
     </fields>
     <label>E&amp;F Approval Storage</label>
     <listViews>
