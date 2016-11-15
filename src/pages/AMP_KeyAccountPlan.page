@@ -31,9 +31,15 @@
                       <apex:param name="IdConcerned" value="{!objective.Id}" assignTo="{!IdConcerned}"/>
                   </apex:commandLink>
 
-                  <apex:commandLink value="Save" action="{!SaveLine}" reRender="thisPanel"  oncomplete="enableShowMoreOrLess();" rendered="{!IF(AND(isEditMode, IdConcerned==objective.Id), true, false)}">
+                  <apex:commandLink value="Save" action="{!SaveLine}" reRender="thisPanel"  oncomplete="enableShowMoreOrLess();" rendered="{!IF(AND(isEditMode, IdConcerned==objective.Id), true, false)}" status="actStatusId">
                       <apex:param name="IdConcerned" value="{!objective.Id}" assignTo="{!IdConcerned}"/>
                   </apex:commandLink>
+
+                  <apex:actionStatus id="actStatusId" >
+                      <apex:facet name="start" >
+                        <img src="/img/loading.gif" style="float: right;"/>
+                      </apex:facet>
+                  </apex:actionStatus>
 
                   &nbsp;|&nbsp;
                   <apex:commandLink value="Edit" action="{!EditLine}" reRender="thisPanel" oncomplete="enableShowMoreOrLess();" rendered="{!IF(AND(isEditMode, IdConcerned==objective.Id), false, true)}" >

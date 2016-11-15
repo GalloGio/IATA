@@ -8,16 +8,16 @@
     <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
     <aura:handler name="editMenuClick" event="c:AMP_EditMenuItemClick" action="{!c.switchToEditMode}"/>
     <aura:handler name="deleteMenuClick" event="c:AMP_DeleteMenuItemClick" action="{!c.deleteItem}"/>
-    
+
     <aura:handler name="updateLookupIdEvent" event="c:UpdateLookupId" action="{!c.handleAccountIssueIdUpdate}"/>
     <aura:handler name="clearLookupIdEvent" event="c:ClearLookupId" action="{!c.handleAccountIssueIdClear}"/>
-    
+
     <aura:registerEvent name="updateActivity" type="c:AMP_UpdateIssueOrPriority"/>
     <aura:registerEvent name="deleteActivity" type="c:AMP_UpdateIssueOrPriority"/>
     <aura:registerEvent name="showMilestones" type="c:AMP_UpdateIssueOrPriority"/>
-    
+
     <aura:handler event="c:AMP_KAPActivityError" action="{!c.HandleActivityError}"/>
-    
+
     <!-- <tr> -->
     <aura:if isTrue="{!v.isEditMode}">
         <td class="allignTop">
@@ -25,18 +25,18 @@
                 <c:svg xlinkHref="{!$Resource.SLDS102 + '/assets/icons/utility-sprite/svg/symbols.svg#close'}" class="slds-button__icon" />
                 <span class="slds-assistive-text">Cancel</span>
             </button>
-            
+
             <button class="slds-button slds-button--icon-border slds-button--icon-small" onclick="{!c.clickSaveActivity}">
                 <c:svg xlinkHref="{!$Resource.SLDS102 + '/assets/icons/utility-sprite/svg/symbols.svg#check'}" class="slds-button__icon" />
                 <span class="slds-assistive-text">Save</span>
             </button>
-            
-            
+
+
             <aura:if isTrue="{!v.isError}">
                 <div>
                     <a href="javascript:void(0);" class="slds-button" >
                         <c:svg xlinkHref="{!$Resource.SLDS102 + '/assets/icons/utility-sprite/svg/symbols.svg#warning'}" class="slds-icon slds-icon-text-error slds-icon--small" />
-                        
+
                         <span class="slds-assistive-text">Review the Following Errors</span>
                     </a>
                     <div class="slds-popover slds-nubbin--top-left slds-theme--error" role="alert" aria-live="polite" >
@@ -71,15 +71,15 @@
                              listIconSVGPath="/resource/SLDS102/assets/icons/standard-sprite/svg/symbols.svg#connected_apps"
                              listIconClass="slds-icon-standard-connected-apps" />
         </td>
-        <td class="allignTop"><ui:inputTextArea value="{!v.activity.Benefits_to_Account__c}" class="slds-textarea" rows="5"/></td>
-        
+        <td class="allignTop"><ui:inputTextArea value="{!v.activity.Benefits_to_Account__c}" aura:id="benefits" class="slds-textarea" rows="5"/></td>
+
         <aura:set attribute="else">
             <td>
                 <div>
                     <div style="display: inline-block;">
                         <c:AMP_EditSaveMenu />
                     </div>
-                    
+
                     <button class="slds-button slds-button--icon-border-filled slds-button--icon-small slds-m-around--xx-small" onclick="{!c.showMilestones}" >
                         <c:svg xlinkHref="{!$Resource.SLDS102 + '/assets/icons/utility-sprite/svg/symbols.svg#list'}" class="slds-button__icon slds-button__icon--medium" />
                     </button>
