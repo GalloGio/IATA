@@ -1636,7 +1636,7 @@
 <fieldPermissions><editable>false</editable><field>Agency_Applied_Change_code__c.Irregularities_Expired__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Agency_Applied_Change_code__c.Irregularities_Points__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Agency_Applied_Change_code__c.Irregularity_Type__c</field><readable>false</readable></fieldPermissions>
-<fieldPermissions><editable>false</editable><field>Agency_Applied_Change_code__c.OSCAR__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>true</editable><field>Agency_Applied_Change_code__c.OSCAR__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Agency_Applied_Change_code__c.Operation__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Agency_Applied_Change_code__c.Reason_Code__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Agency_Applied_Change_code__c.Reason_Description__c</field><readable>false</readable></fieldPermissions>
