@@ -28,7 +28,7 @@
       <for list="${objectFolders}" param="param" delimiter=",">
         <sequential>
           <move todir="${basedir}/Code/permissionsets">
-            <fileset dir="${basedir}/src/permissionsets">
+            <fileset dir="${basedir}/src/permissionsetsObjects">
             </fileset>
           </move>
        </sequential>
@@ -38,7 +38,7 @@
    <for list="${objectFolders}" param="param" delimiter=",">
         <sequential>
           <move todir="${basedir}/Code/profiles">
-            <fileset dir="${basedir}/src/profiles">
+            <fileset dir="${basedir}/src/profilesObjects">
             </fileset>
           </move>
        </sequential>
@@ -67,7 +67,7 @@
    <for list="${apexFolders}" param="param" delimiter=",">
         <sequential>
           <move todir="${basedir}/Code/permissionsets">
-            <fileset dir="${basedir}/src/permissionsets">
+            <fileset dir="${basedir}/src/permissionsetsApex">
             </fileset>
           </move>
        </sequential>
@@ -77,7 +77,7 @@
    <for list="${apexFolders}" param="param" delimiter=",">
         <sequential>
           <move todir="${basedir}/Code/profiles">
-            <fileset dir="${basedir}/src/profiles">
+            <fileset dir="${basedir}/src/profilesApex">
             </fileset>
           </move>
        </sequential>
