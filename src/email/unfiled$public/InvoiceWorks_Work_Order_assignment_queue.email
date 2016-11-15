@@ -1,3 +1,0 @@
-A new Work Order has been assigned to the queue {!Work_Order__c.OwnerFullName}.
- 
-{!Work_Order__c.Link}

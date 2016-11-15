@@ -1597,6 +1597,10 @@ SIS Charge Code Type.</description>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>GAP</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>GDP</fullName>
                 <default>false</default>
             </picklistValues>
@@ -3560,6 +3564,10 @@ The product will only appear on the Online Store when the date entered in this f
             </picklistValues>
             <picklistValues>
                 <fullName>Raphaëlle Caron</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>BERTOLUS Julie</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>

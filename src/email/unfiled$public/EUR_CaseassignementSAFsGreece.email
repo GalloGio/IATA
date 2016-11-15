@@ -1,7 +1,0 @@
-Dear George,
-Case {!Case.CaseNumber}, created on {!Case.CreatedDate}, involves both an order of SAFs and STDs. Please handle the SAF part of the order and update your actions in the case.
-
-Click here to access the case {!Case.Link}.
-
-Kind regards,
-Your internal Salesforce.com administrator

@@ -44,8 +44,8 @@ global class WSSidraLite {
     webservice static Case createCase(Id caseId){
         Case cse = [
             Select Id, RecordtypeId, Decision__c, Suspension_Date__c, Region__c, BSPCountry__c, AccountId, Bank_Guarantee_deadline__c, Reason1__c, ContactId,
-                Account.Id, Account.Type, Account.Accumulated_Irregularities__c, Account.Status__c,
-                OSCAR__r.Id, OSCAR__r.RPM_Approval__c,
+                Account.Id, Account.Type, Account.Accumulated_Irregularities__c, Account.Status__c, Account_Billing_Country__c,
+                OSCAR__r.Id, OSCAR__r.RPM_Approval__c, OSCAR__r.Step11__c, OSCAR__r.Step12__c, OSCAR__r.Step13__c, OSCAR__r.Step14__c,
                 (Select Id, CaseNumber from Cases where RecordtypeId = :SidraLiteManager.RECORDTYPE_SIDRA_LITE )
             from Case
             where id = :caseId];
@@ -270,9 +270,10 @@ global class WSSidraLite {
         this method throws an error if the country is not in the list
     **/
     public static void testSidraLiteCountries(Case cse) {
-        set<string> validCountries = new set<String>{'South Africa','Canada','Brazil','Hong Kong (SAR), China','Spain & Andorra', 'Spain', 'Andorra','Pakistan','Bangladesh'};
-        if (!validCountries.contains(cse.BSPCountry__c)) {
-            throw new SidraLiteException('This country is not part of the Sidra Lite Pilot: ' + cse.BSPCountry__c);
+        set<string> validCountries = SidraLiteAllowedCountries__c.getAll().keyset();
+        if (!validCountries.contains(cse.BSPCountry__c) && !validCountries.contains(cse.Account_Billing_Country__c)) {
+            String country = cse.BSPCountry__c!=null? cse.BSPCountry__c: cse.Account_Billing_Country__c;
+            throw new SidraLiteException('This country is not part of the Sidra Lite Pilot: ' + country);
         }
     }
 }

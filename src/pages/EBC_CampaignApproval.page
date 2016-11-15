@@ -1,0 +1,69 @@
+<apex:page standardController="EBC_Campaign__c" extensions="vfEBC_CampaignApproval">
+    <apex:form >
+        <script type="text/javascript">
+        function resetInlineEdit() {
+            return false;
+        }
+        </script>
+        <apex:pageBlock title="eBroadcast Campaign" mode="inlineEdit">
+            <apex:pageBlockButtons >
+                <apex:commandButton action="{!edit}" id="editButton" value="Edit"/>
+                <apex:commandButton action="{!save}" id="saveButton" value="Save" style="display:none" />
+                <apex:commandButton onclick="return resetInlineEdit();" id="cancelButton" value="Cancel" style="display:none"/>
+                <apex:commandButton id="approveButton" value="Approve" action="{!approve}" rendered="{!piWorkItem != null}" />
+                <apex:commandButton id="rejectButton" value="Reject" action="{!reject}" rendered="{!piWorkItem != null}" />
+            </apex:pageBlockButtons>
+            <apex:pageBlockSection title="Requester" columns="2">
+                <apex:outputField value="{!EBC_Campaign__c.Owner.Name}" />
+                <apex:inlineEditSupport showOnEdit="saveButton, cancelButton"
+                            hideOnEdit="editButton" event="ondblclick"
+                            changedStyleClass="myBoldClass" resetFunction="resetInlineEdit" />
+            </apex:pageBlockSection>
+            <apex:pageBlockSection title="Audience" columns="2">
+                <apex:outputField value="{!EBC_Campaign__c.EBC_Master_Filter__c}" />
+                <apex:pageBlockSectionItem />
+                <apex:outputField value="{!EBC_Campaign__c.EBC_Master_Filter__r.Audience__c}" />
+                <apex:outputField value="{!EBC_Campaign__c.EBC_Master_Filter__r.Number_of_Recipients__c}" />
+                
+                
+                <apex:inlineEditSupport showOnEdit="saveButton, cancelButton"
+                            hideOnEdit="editButton" event="ondblclick"
+                            changedStyleClass="myBoldClass" resetFunction="resetInlineEdit" />
+            </apex:pageBlockSection>
+            <apex:pageBlockSection title="Campaign Properties" columns="2">
+                <apex:outputField value="{!EBC_Campaign__c.Name}"/>
+                <apex:outputField value="{!EBC_Campaign__c.Status__c}"/>
+                <apex:outputField value="{!EBC_Campaign__c.Google_Analytics_Tracking_Code__c}" rendered="{!EBC_Campaign__c.Is_Google_Analytics_Tracker_Active__c}"/>
+                <apex:pageBlockSectionItem rendered="{!NOT(EBC_Campaign__c.Is_Google_Analytics_Tracker_Active__c)}" />
+                <apex:pageBlockSectionItem />
+                <apex:outputField value="{!EBC_Campaign__c.From_Name__c}"/>
+                <apex:outputField value="{!EBC_Campaign__c.Scheduled_Date__c}"/>
+                
+                <apex:outputField value="{!EBC_Campaign__c.Subject__c}"/>
+                <apex:inlineEditSupport showOnEdit="saveButton, cancelButton"
+                            hideOnEdit="editButton" event="ondblclick"
+                            changedStyleClass="myBoldClass" resetFunction="resetInlineEdit" />
+            </apex:pageBlockSection>
+            <apex:pageBlockSection title="Campaign Design" columns="1">
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="File"/>
+                    <apex:outputText >
+                        {!templateAttachment.Name} ({!templateAttachment.ContentType} of <apex:outputText value="{0, number, ###,##0.00}"><apex:param value="{!templateAttachment.BodyLength / 1000}" /></apex:outputText> KB)
+                    </apex:outputText>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel />
+                    <apex:outputText >
+                        <!--<a href="{!URLFOR($Action.Attachment.Download, templateAttachment.id)}">Download</a>-->
+                        <!--<a href="#" onclick="window.open('/apex/IECEBC_CampaignPreview?id={!EBC_Campaign__c.EBC_Design__c}'); return false;">Open in new window</a>-->
+                        <a href="#">Edit @TODO</a> 
+                    </apex:outputText>
+                </apex:pageBlockSectionItem>
+                <apex:inlineEditSupport showOnEdit="saveButton, cancelButton"
+                            hideOnEdit="editButton" event="ondblclick"
+                            changedStyleClass="myBoldClass" resetFunction="resetInlineEdit" />
+            </apex:pageBlockSection> 
+        </apex:pageBlock>
+
+    </apex:form>
+</apex:page>
