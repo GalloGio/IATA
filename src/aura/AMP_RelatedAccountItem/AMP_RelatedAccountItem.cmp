@@ -69,7 +69,11 @@
 
         <aura:set attribute="else">
             <!-- <tr> -->
-                <td><c:AMP_EditSaveMenu /></td>
+                <td>
+					<aura:if isTrue="{!v.canEdit}">
+						<c:AMP_EditSaveMenu />
+					</aura:if>
+				</td>
                 <td><span class="slds-truncate">{!v.displayType == 'Owners' ? v.relatedAccount.Owner_Account__r.Name : v.relatedAccount.Account__r.Name}</span></td>
                 <td><span class="slds-truncate">{!v.displayType == 'Owners' ? v.relatedAccount.Owner_Account__r.Membership_status__c : v.relatedAccount.Account__r.Membership_status__c}</span></td>
                 <td><span class="slds-truncate">{!v.relatedAccount.Percentage__c}</span></td>
