@@ -5388,7 +5388,13 @@
 <fieldPermissions><editable>true</editable><field>MITA_Agreement__c.Agreement_type__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>MITA_Agreement__c.Airline1_designator_code__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>MITA_Agreement__c.Airline2_designator_code__c</field><readable>true</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>MITA_Agreement__c.Airline_1_AOC_Name__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>MITA_Agreement__c.Airline_1_IATA_code__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>MITA_Agreement__c.Airline_1_Prefix_code__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>MITA_Agreement__c.Airline_1__c</field><readable>true</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>MITA_Agreement__c.Airline_2_AOC_name__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>MITA_Agreement__c.Airline_2_IATA_code__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>MITA_Agreement__c.Airline_2_Prefix_code__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>MITA_Agreement__c.Airline_2__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>MITA_Agreement__c.Cancellation_Reason__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>MITA_Agreement__c.Cancellation_date__c</field><readable>true</readable></fieldPermissions>
