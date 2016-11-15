@@ -122,21 +122,21 @@
                     <apex:commandLink onclick="testOpenPrimaryTab('/{!parentAccount.Id}','');return false;" rendered="{!currentAccount.id != parentAccount.id}">{!parentAccount.Name}</apex:commandLink>
                     <apex:outputText style="font-weight:bold;margin: 0;border: 0" rendered="{!not(currentAccount.id != parentAccount.id)}" value="{!parentAccount.Name}"/>
                     <br></br>
-                    {!parentAccount.IATACode__c}<br></br>{!parentAccount.Primary_Address__r.Country__r.Name} - {!parentAccount.Primary_Address__r.City__c}<br></br>{!parentAccount.Status__c}
+                    {!parentAccount.IATACode__c}<br></br>{!parentAccount.BillingCountry} - {!parentAccount.BillingCity}<br></br>{!parentAccount.Status__c}
                     <ul>
                     <apex:repeat value="{!HierchyChilds}" var="c">
                         <li>
                          <apex:outputPanel styleClass="{!IF(currentAccount.id != c.id,'','highlighted')}"><i class="icon-folder-open icon-minus-sign"></i>{!c.Location_Type__c} ({!c.Location_Class__c})</apex:outputPanel>
                          <br></br><apex:commandLink onclick="testOpenPrimaryTab('/{!c.Id}','');return false;" rendered="{!currentAccount.id != c.id}">{!c.Name}</apex:commandLink>
                         <apex:outputText style="font-weight:bold;margin: 0;border: 0" rendered="{!not(currentAccount.id != c.id)}" value="{!c.Name}"/>
-                         <br></br>{!c.IATACode__c}<br></br>{!c.Primary_Address__r.Country__r.Name} - {!c.Primary_Address__r.City__c}<br></br>{!c.Status__c}
+                         <br></br>{!c.IATACode__c}<br></br>{!c.BillingCountry} - {!c.BillingCity}<br></br>{!c.Status__c}
                         <ul>
                             <apex:repeat value="{!HierchyChilds[c]}" var="ca">
                                 <li>
                                     <apex:outputPanel styleClass="{!IF(currentAccount.id != ca.id,'','highlighted')}"><i class="icon-folder-open icon-minus-sign"></i>{!ca.Location_Type__c} ({!ca.Location_Class__c})</apex:outputPanel>
                                     <br></br><apex:commandLink onclick="testOpenPrimaryTab('/{!ca.Id}','');return false;" rendered="{!currentAccount.id != ca.id}">{!ca.Name}</apex:commandLink>
                                     <apex:outputText style="font-weight:bold;margin: 0;border: 0" rendered="{!not(currentAccount.id != ca.id)}" value="{!ca.Name}"/>
-                                    <br></br>{!ca.IATACode__c}<br></br>{!ca.Primary_Address__r.Country__r.Name} - {!ca.Primary_Address__r.City__c}<br></br>{!ca.Status__c}
+                                    <br></br>{!ca.IATACode__c}<br></br>{!ca.BillingCountry} - {!ca.BillingCity}<br></br>{!ca.Status__c}
                                 </li>
                             </apex:repeat>
                          </ul>

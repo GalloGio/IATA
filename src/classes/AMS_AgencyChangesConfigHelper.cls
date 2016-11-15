@@ -90,11 +90,7 @@ public class AMS_AgencyChangesConfigHelper{
 			}
 		}
 		if (!foundValidCombination)
-		{
 			oscar.addError('Type of Change contains an invalid combination of values.');
-			System.debug('Type of Change contains an invalid combination of values.');
-			
-		}
 
 		return new AMS_Utils.AgChangesConfig(oscar.Type_of_change__c, typeOfChangeConfig);
 	}

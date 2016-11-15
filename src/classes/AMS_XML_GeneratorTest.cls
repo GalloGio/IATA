@@ -39,10 +39,10 @@ private class AMS_XML_GeneratorTest {
         Map<string, Id>  agenciesRT = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'AMS_Agency__c'}).get('AMS_Agency__c');
 
         List<Account> accountList = new List<Account>();
-        Account ag1 = new Account(Name='Test1 Account', IATA_ISO_Country__c = ctry.id, Sector__c = 'Travel Agent', IATACode__c = '12345678', Phone = '+351 000 000 000');
-        Account ag2 = new Account(Name='Test2 Account', IATA_ISO_Country__c = ctry.id, Sector__c = 'Travel Agent', IATACode__c = '12345678', Phone = '+351 000 000 000 000');
-        Account ag3 = new Account(Name='Test3 Account', IATA_ISO_Country__c = ctry.id, Sector__c = 'Travel Agent', IATACode__c = '12345678', Phone = '+351 000 000 000 000 000 000 000');
-        Account ag4 = new Account(Name='Test4 Account', IATA_ISO_Country__c = ctry.id, Sector__c = 'Travel Agent', IATACode__c = '12345678');
+        Account ag1 = new Account(Name='Test1 Account', IATA_ISO_Country__c = ctry.id, Sector__c = 'Travel Agent', IATACode__c = '12345678', Phone = '+351 000 000 000',Reason_for_creation__c='New agent');
+        Account ag2 = new Account(Name='Test2 Account', IATA_ISO_Country__c = ctry.id, Sector__c = 'Travel Agent', IATACode__c = '12345678', Phone = '+351 000 000 000 000',Reason_for_creation__c='New agent');
+        Account ag3 = new Account(Name='Test3 Account', IATA_ISO_Country__c = ctry.id, Sector__c = 'Travel Agent', IATACode__c = '12345678', Phone = '+351 000 000 000 000 000 000 000',Reason_for_creation__c='New agent');
+        Account ag4 = new Account(Name='Test4 Account', IATA_ISO_Country__c = ctry.id, Sector__c = 'Travel Agent', IATACode__c = '12345678',Reason_for_creation__c='New agent');
         accountList.add(ag1);
         accountList.add(ag2);
         accountList.add(ag3);
@@ -166,10 +166,10 @@ private class AMS_XML_GeneratorTest {
 
         
         List<Contact> contactList = new List<Contact>();
-        Contact c1 = new Contact(FirstName='Test1 Contact',LastName='Test1');
-        Contact c2 = new Contact(FirstName='Test2 Contact',LastName='Test2');
-        Contact c3 = new Contact(FirstName='Test3 Contact',LastName='Test3');
-        Contact c4 = new Contact(FirstName='Test4 Contact',LastName='Test4');
+        Contact c1 = new Contact(FirstName='Test1 Contact',LastName='Test1',Phone = '+351 000 000 000');
+        Contact c2 = new Contact(FirstName='Test2 Contact',LastName='Test2',Phone = '+351 000 000 000');
+        Contact c3 = new Contact(FirstName='Test3 Contact',LastName='Test3',Phone = '+351 000 000 000');
+        Contact c4 = new Contact(FirstName='Test4 Contact',LastName='Test4',Phone = '+351 000 000 000');
         contactList.add(c1);
         contactList.add(c2);
         contactList.add(c3);
@@ -342,7 +342,8 @@ private class AMS_XML_GeneratorTest {
                     TradeName__c,Unique_ID__c,Verification_Date__c,IATA_ISO_Country__c, IATA_ISO_Country__r.Name, 
                     Short_Name__c,Sector__c,AIMS_ID__c,BSP_CASS_Code__c,
                     Email__c,TTY__c,Website,
-                    Abbreviated_name__c, Abbreviated_address__c, status__c
+                    Abbreviated_name__c, Abbreviated_address__c, status__c,
+                    Top_Parent__c, Top_Parent__r.IATACode__c
                     FROM Account where id =  :ag1.Id];
 
         AMS_XML_Generator xmlGen = new AMS_XML_Generator();
@@ -384,7 +385,8 @@ private class AMS_XML_GeneratorTest {
                     TradeName__c,Unique_ID__c,Verification_Date__c,IATA_ISO_Country__c, IATA_ISO_Country__r.Name,
                     Short_Name__c,Sector__c,AIMS_ID__c,BSP_CASS_Code__c,
                     Email__c,TTY__c,Website,
-                    Abbreviated_name__c, Abbreviated_address__c, status__c
+                    Abbreviated_name__c, Abbreviated_address__c, status__c,
+                    Top_Parent__c, Top_Parent__r.IATACode__c
                     FROM Account where id in :sAgIDs];
         
         

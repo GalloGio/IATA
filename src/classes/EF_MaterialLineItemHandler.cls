@@ -230,7 +230,7 @@ public class EF_MaterialLineItemHandler
         }
     }
 
-
+    /* Commented out due to approval processing doing this and additional actions for now....
     public static void emailIfMaterialChanges(List<EF_Material_Line_Item__c> materialLineItemList, Map<Id,EF_Material_Line_Item__c> materialLineItemOldMap)
     {
         List<EF_Material_Line_Item__c> toApproveList = new List<EF_Material_Line_Item__c>();
@@ -407,7 +407,7 @@ public class EF_MaterialLineItemHandler
             htmlRow = '<tr><td border="1"><a href="'+baseUrl+'/'+line.Id+'">'+line.Name+'</a></td><td border="1">--</td><td border="1">'+newValue.Name+'</td></tr>';
         return htmlRow;
     }
-
+    */
 
     //
     // Check is the material Item that is in the BillingAgreement exists in the contract.
