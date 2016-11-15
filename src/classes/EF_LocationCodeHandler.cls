@@ -44,10 +44,16 @@ public with sharing class EF_LocationCodeHandler
 	    	{
 	    		EF_Billing_Agreement__c relatedBa = baIdMap.get(lc.EF_Airline_Billing_Agreement__c);
 	    		Set<String> locationCodeIdsUnderContract = contractIdLocationCodeNameMap.get(relatedBa.Contract__c);
-	    		if(!locationCodeIdsUnderContract.contains(lc.Location_Code__c))
-	    		{
-	    			lc.addError('Selected Location Code is not present on the Contract related to the Billing Agreement.');
-	    		}
+	    		if(locationCodeIdsUnderContract != null)
+				{
+		    		if(!locationCodeIdsUnderContract.contains(lc.Location_Code__c))
+		    		{
+		    			lc.addError('Selected Location Code is not present on the Contract related to the Billing Agreement.');
+		    		}
+		    	} else
+		    	{
+		    		lc.addError('There are no Location Codes on Contract. Please add at least one before attempting adding any to the Billing Agreement.');
+		    	}
 	    	}
 	    }
     }

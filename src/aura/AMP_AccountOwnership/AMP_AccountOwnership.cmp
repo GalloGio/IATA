@@ -1,6 +1,5 @@
 <aura:component controller="AMP_OwnershipController">
 	<aura:attribute name="accountId" type="String" />
-	<aura:attribute name="canEdit" type="Boolean" default="false" />
     <aura:attribute name="relatedAccounts" type="AMS_Account_Role__c[]"/><!-- List of Owners / Subsidiaries -->
     <aura:attribute name="displayType" type="String" default="Owners"/><!-- Variable that controlls what is displayed: "Owners" or "Subsidiaries" -->
 
@@ -30,9 +29,7 @@
             </div>
             
             <div class="slds-no-flex">
-				<aura:if isTrue="{!v.canEdit}">
                 <button class="slds-button slds-button--neutral slds-col--bump-left" onclick="{!c.addAccountRole}">New</button>
-				</aura:if>
                 <!--<ui:button label="New" press="{!c.addAccountRole}"/>-->
             </div>
             
@@ -52,7 +49,7 @@
                 <tbody>
                     <aura:iteration items="{!v.relatedAccounts}" var="acct" indexVar="index" >
 											<tr>
-                        	<c:AMP_RelatedAccountItem relatedAccount="{!acct}" accountId="{!v.accountId}" displayType="{!v.displayType}" index="{!index}" canEdit="{!v.canEdit}"/>
+                        <c:AMP_RelatedAccountItem relatedAccount="{!acct}" accountId="{!v.accountId}" displayType="{!v.displayType}" index="{!index}"/>
 											</tr>
                     </aura:iteration>
                 </tbody>

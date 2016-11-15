@@ -22,57 +22,65 @@
 @isTest
 private class trgIDCard_Case_BeforeUpdateTest
 {
-	private static IDCardTestData testData;
+    private static IDCardTestData testData;
     private static List<Contact> relatedContact;
     private static List<Case> relatedCase;
     
     TestMethod static void testTrgIDCard_Case_BeforeUpdate()
     {
-    	TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
-		Profile p = [SELECT Id FROM Profile WHERE Name='Standard User']; 
-		User u = new User(Alias = 'sasa', Email='abciuhgrtydfmmnd@iata.org', 
-		EmailEncodingKey='UTF-8', LastName='Saso', LanguageLocaleKey='en_US', 
-		LocaleSidKey='en_US', ProfileId = p.Id, License_Cost_Center__c='ITO005CH01',
-		TimeZoneSidKey='America/Los_Angeles', UserName='abciuhgrtydfmmnd@iata.org');
-		insert u;
-		
+        
+        
+        
+        TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
+        Profile p = [SELECT Id FROM Profile WHERE Name='Standard User']; 
+        User u = new User(Alias = 'sasa', Email='abciuhgrtydfmmnd@iata.org', 
+        EmailEncodingKey='UTF-8', LastName='Saso', LanguageLocaleKey='en_US', 
+        LocaleSidKey='en_US', ProfileId = p.Id, License_Cost_Center__c='ITO005CH01',
+        TimeZoneSidKey='America/Los_Angeles', UserName='abciuhgrtydfmmnd@iata.org');
+        insert u;
+        
         testData = new IDCardTestData();
-    
-        List<ID_Card_Application__c> idCardAppToInsert = new List<ID_Card_Application__c>();
         
-        idCardAppToInsert.add(testData.IDCards_IDCardApplications[3]);        
-        
-        insert idCardAppToInsert;
-        
-        Id contactId1 = IDCardUtil.CreateContactWhenNewCardIsApproved(idCardAppToInsert[0]);   
-        
-        
-        IDCardUtil.CreateIDCardApplicationCase(idCardAppToInsert[0], testData.IDCard_Accounts[0]);
-        System.debug('*-*-*-*-*-*-*-*-*- IdCardApplication ' + idCardAppToInsert[0].Id);
-        System.debug('*-*-*-*-*-*-*-*-*- Account ' + testData.IDCard_Accounts[0]);
-        relatedCase = [SELECT ID_Card_Status__c FROM Case];
-        
-        relatedCase[0].ID_Card_Status__c = IDCardUtil.CASECARDSTATUS_PENDING_MNG_APPROVAL;
-        update relatedCase[0];
-        relatedCase[0].ID_Card_Status__c = IDCardUtil.CASECARDSTATUS_APPROVED;
-        update relatedCase[0];
-        
-        relatedContact = [SELECT Id, LastName, FirstName, VER_Number__c, IATA_Code__c, Account.RecordType.Name, Account.Status__c, Date_of_Birth__c FROM Contact WHERE Id =:contactId1];  
-        
-        List<ID_Card__c> idCardToInsert = new List<ID_Card__c>();          
-        idCardToInsert.add(IDCardUtil.CreateIDCardObjectFromApplication(idCardAppToInsert[0], relatedContact[0]));            
-        insert idCardToInsert;
-        
-        idCardAppToInsert[0].Type_of_application__c = IDCardUtil.APPLICATIONTYPE_REISSUE;
-        update idCardAppToInsert;
-        relatedCase[0].OwnerId = u.Id;
-        update relatedCase;
+            List<ID_Card_Application__c> idCardAppToInsert = new List<ID_Card_Application__c>();
             
-        System.runAs(u)
-        {
-        	relatedCase = [SELECT ID_Card_Status__c FROM Case];
-        	relatedCase[0].ID_Card_Status__c = IDCardUtil.CASECARDSTATUS_REJECTED;
-        	update relatedCase;
-        }    
+            idCardAppToInsert.add(testData.IDCards_IDCardApplications[3]);        
+            
+            insert idCardAppToInsert;
+            
+            Id contactId1 = IDCardUtil.CreateContactWhenNewCardIsApproved(idCardAppToInsert[0]);   
+            
+            
+            IDCardUtil.CreateIDCardApplicationCase(idCardAppToInsert[0], testData.IDCard_Accounts[0]);
+            System.debug('*-*-*-*-*-*-*-*-*- IdCardApplication ' + idCardAppToInsert[0].Id);
+            System.debug('*-*-*-*-*-*-*-*-*- Account ' + testData.IDCard_Accounts[0]);
+            relatedCase = [SELECT ID_Card_Status__c FROM Case];
+            System.debug('*-*-*-*-*-*-*-*-*- ' + relatedCase);
+            
+            relatedCase[0].ID_Card_Status__c = IDCardUtil.CASECARDSTATUS_PENDING_MNG_APPROVAL;
+            update relatedCase[0];
+            relatedCase[0].ID_Card_Status__c = IDCardUtil.CASECARDSTATUS_APPROVED;
+            update relatedCase[0];
+            
+            relatedContact = [SELECT Id, LastName, FirstName, VER_Number__c, IATA_Code__c, Account.RecordType.Name, Account.Status__c, Date_of_Birth__c FROM Contact WHERE Id =:contactId1];  
+            
+            List<ID_Card__c> idCardToInsert = new List<ID_Card__c>();          
+            idCardToInsert.add(IDCardUtil.CreateIDCardObjectFromApplication(idCardAppToInsert[0], relatedContact[0]));            
+            insert idCardToInsert;
+            
+            idCardAppToInsert[0].Type_of_application__c = IDCardUtil.APPLICATIONTYPE_REISSUE;
+            update idCardAppToInsert;
+            relatedCase[0].OwnerId = u.Id;
+            update relatedCase;
+            
+        Test.startTest();
+            System.runAs(u)
+            {
+                relatedCase = [SELECT ID_Card_Status__c FROM Case];
+                
+                relatedCase[0].ID_Card_Status__c = IDCardUtil.CASECARDSTATUS_REJECTED;
+                update relatedCase;
+            }
+            
+        Test.stopTest();
     }
 }

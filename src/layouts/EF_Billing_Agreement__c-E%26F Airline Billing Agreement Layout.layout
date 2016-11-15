@@ -211,7 +211,7 @@
         <customButtons>Edit_All</customButtons>
         <fields>NAME</fields>
         <fields>EF_Material__c</fields>
-		<fields>EF_Status__c</fields>
+        <fields>EF_Status__c</fields>
         <relatedList>EF_Material_Line_Item__c.EF_Relationship__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -282,7 +282,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h8E000000JTxJ</masterLabel>
+        <masterLabel>00hw000000hfUh2</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>
