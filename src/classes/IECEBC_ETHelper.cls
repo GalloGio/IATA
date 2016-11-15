@@ -49,7 +49,6 @@ public class IECEBC_ETHelper {
     public static String createXMLBody(String bodyContent){
         return CreateXMLHeader() + bodyContent + CreateXMLFooter();
     }
-    
     // create xml for Image retrieve request    
     public static String retrieveRequestImage(String fileName){
         return             
@@ -81,7 +80,7 @@ public class IECEBC_ETHelper {
             + '</RetrieveRequest>'
             + '</RetrieveRequestMsg>';
     }
-
+    
     // create xml for TS Summary retrieve request
     public static String retrieveRequestTriggeredSendSummary(String triggeredSendExternalKey){
         return '<RetrieveRequestMsg xmlns="http://exacttarget.com/wsdl/partnerAPI">'
@@ -224,7 +223,6 @@ public class IECEBC_ETHelper {
             
       return null;  //should never reach here 
     }
-
     // parse xml response to get map<nodename, value> of TS Summary
     public static void parseMapTriggeredSendSummary(HttpResponse res, Map<String, String> tssMap) {
         // map for errors log
@@ -245,8 +243,8 @@ public class IECEBC_ETHelper {
                 errorsMap.put(nodeName, e.getMessage());                
             }
         }       
-    }
-
+    } 
+    
     // walk through the xml file and get the value of a node
     public static String walkThrough(DOM.XMLNode node, String nodeName) {
         String result = '';     

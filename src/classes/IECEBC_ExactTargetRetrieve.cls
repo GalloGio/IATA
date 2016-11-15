@@ -62,7 +62,7 @@ public class IECEBC_ExactTargetRetrieve {
         );                
         req.setTimeout(IECEBC_ETInit.TimeOut);                
         // get response
-        HTTPResponse response = http.send(req);        
+        HTTPResponse response = http.send(req); 
         if (response.getStatusCode() == 200) {           
             IECEBC_ETHelper.parseMaptriggeredSendSummary(response, triggeredSendSummaryMetrics);            
         }
