@@ -50,7 +50,7 @@ private class TransferCaseAttachmentsControllerTest {
                                  HasOptedOutOfEmail = false
                                  );
         insert con;
-                                
+        test.startTest();
         // Create cases
         Date dead = date.today().addDays(40);
         Date twoweeksAgo = date.today().addDays(- 14);
@@ -172,7 +172,7 @@ private class TransferCaseAttachmentsControllerTest {
         list<Attachment> lstAttachmentToInsert = new list<Attachment>{att1, att2};
         insert lstAttachmentToInsert;
         
-        test.startTest();
+        
             
             // check there are 2 available attachments
             list<Attachment> lstAllAttachments = [SELECT Id FROM Attachment];
