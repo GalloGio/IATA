@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionOverrides>
         <actionName>Accept</actionName>
         <type>Default</type>
@@ -18,6 +18,10 @@
     </actionOverrides>
     <actionOverrides>
         <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
@@ -114,16 +118,10 @@
     </nameField>
     <pluralLabel>E&amp;F Contacts in E&amp;F Contracts</pluralLabel>
     <searchLayouts>
-        <lookupDialogsAdditionalFields xsi:nil="true"/>
         <lookupDialogsAdditionalFields>Role__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>EF_Status__c</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields xsi:nil="true"/>
-        <lookupPhoneDialogsAdditionalFields xsi:nil="true"/>
-        <lookupPhoneDialogsAdditionalFields xsi:nil="true"/>
         <lookupPhoneDialogsAdditionalFields>Role__c</lookupPhoneDialogsAdditionalFields>
         <lookupPhoneDialogsAdditionalFields>EF_Status__c</lookupPhoneDialogsAdditionalFields>
-        <searchFilterFields xsi:nil="true"/>
-        <searchFilterFields xsi:nil="true"/>
         <searchFilterFields>Role__c</searchFilterFields>
         <searchFilterFields>EF_Status__c</searchFilterFields>
         <searchFilterFields>NAME</searchFilterFields>
