@@ -15,11 +15,20 @@ private class EF_AttachmentListControllerTest {
         //     );
         //     insert att;
         //Create public group
-        Group efPrivateGroup = new Group();
-        efPrivateGroup.Name='EF Private Document Access';
-        efPrivateGroup.DeveloperName='EF_Private_Document_Access';
-        insert efPrivateGroup;
-
+        
+        Group efPrivateGroup = null;
+        List<Group> efPrivateGroups = [select Name, DeveloperName from Group where DeveloperName = 'EF_Private_Document_Access' limit 1];
+        if(efPrivateGroups.size() == 0)
+        {
+            efPrivateGroup = new Group();
+            efPrivateGroup.Name='EF Private Document Access';
+            efPrivateGroup.DeveloperName='EF_Private_Document_Access';
+            insert efPrivateGroup;
+        } else
+        {
+           efPrivateGroup = efPrivateGroups.get(0);
+        }
+        
         GroupMember efGM = new GroupMember();
         efGM.UserOrGroupId = UserInfo.getUserId();
         efGM.GroupId= efPrivateGroup.Id;
