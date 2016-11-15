@@ -19,17 +19,15 @@
    <antcallback target="deldir" />
    <mkdir dir="${basedir}/Code"/>
   
-      <for list="${permissionsetsFolders}" param="param" >
-        <sequential>
-             <mkdir dir="${basedir}/Code/@{param}"/>
-       </sequential>
-     </for>
+    
+             <mkdir dir="${basedir}/Code/permissionsets"/>
+ 
 
      <echo level="info">moving files</echo>
       
       <for list="${permissionsetsFolders}" param="param" delimiter=",">
         <sequential>
-          <move todir="${basedir}/Code/@{param}">
+          <move todir="${basedir}/Code/permissionsets">
             <fileset dir="${basedir}/src/@{param}">
             </fileset>
           </move>
@@ -50,17 +48,15 @@
    <antcallback target="deldir" />
    <mkdir dir="${basedir}/Code"/>
   
-      <for list="${profilesFolders}" param="param" >
-        <sequential>
-             <mkdir dir="${basedir}/Code/@{param}"/>
-       </sequential>
-     </for>
+ 
+             <mkdir dir="${basedir}/Code/profiles"/>
+
 
      <echo level="info">moving files</echo>
       
       <for list="${profilesFolders}" param="param" delimiter=",">
         <sequential>
-          <move todir="${basedir}/Code/@{param}">
+          <move todir="${basedir}/Code/profiles">
             <fileset dir="${basedir}/src/@{param}">
             </fileset>
           </move>
