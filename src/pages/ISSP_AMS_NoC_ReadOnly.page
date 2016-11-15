@@ -391,30 +391,33 @@
                             </apex:facet>
                         <apex:panelGrid width="100%" cellpadding="10%" columnClasses="col1, col2" columns="2">
                         	<apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Is_this_Head_Office_becoming_a_Branch__c.Label}" />
-                            <apex:outputText value="{!newForm.Is_this_Head_Office_becoming_a_Branch__c}"/>                               
+                            <apex:outputText value="{!newForm.Is_this_Head_Office_becoming_a_Branch__c}"/>
+                            
+                            <apex:outputLabel value="{!$Label.ISSP_AMS_NoC_New_HO_Code}" rendered="{!newForm.Is_this_Head_Office_becoming_a_Branch__c=='Yes'}" />
+                            <apex:outputText value="{!newForm.New_Head_Office_IATA_Code__c}" rendered="{!newForm.Is_this_Head_Office_becoming_a_Branch__c=='Yes'}" />  
                         	
                             <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Is_this_Branch_becoming_a_Head_Office__c.Label}" />
                             <apex:outputText value="{!newForm.Is_this_Branch_becoming_a_Head_Office__c}"/>                                   
                             
                             <apex:outputLabel value="{!$Label.ISSP_AMS_NoC_Q1}" />
                             <apex:outputText value="{!newForm.Will_such_change_affect_the_premises__c}"/>
-                            <apex:outputlabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Please_provide_details_for_the_change__c.Label}" rendered="{!newForm.Will_such_change_affect_the_premises__c=='Yes'}"/>
-                            <apex:outputfield value="{!newForm.Please_provide_details_for_the_change__c}" rendered="{!newForm.Will_such_change_affect_the_premises__c=='Yes'}"/>
+                            <apex:outputlabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Please_provide_details_for_the_change__c.Label}" />
+                            <apex:outputfield value="{!newForm.Please_provide_details_for_the_change__c}" />
                         	
                             <apex:outputLabel value="{!$Label.ISSP_AMS_NoC_Q3}" />
                             <apex:outputText value="{!newForm.Will_such_change_affect_the_managers__c}"/>
-                            <apex:outputlabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Provide_details_for_change_affect_staff__c.Label}" style="font-weight:bold; font-size:110%" rendered="{!newForm.Will_such_change_affect_the_managers__c=='Yes'}"/>
-                          	<apex:outputfield value="{!newForm.Provide_details_for_change_affect_staff__c}" rendered="{!newForm.Will_such_change_affect_the_managers__c=='Yes'}" style="padding-bottom:12px"/>
+                            <apex:outputlabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Provide_details_for_change_affect_staff__c.Label}" style="font-weight:bold; font-size:110%" />
+                          	<apex:outputfield value="{!newForm.Provide_details_for_change_affect_staff__c}" style="padding-bottom:12px"/>
                             
                             <apex:outputLabel value="{!$Label.ISSP_AMS_NoC_Q4}" />
                             <apex:outputText value="{!newForm.Have_any_having_authorization_to_act__c}" />                
-                            <apex:outputlabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Give_details_for_authorization_to_act__c.Label}" rendered="{!newForm.Have_any_having_authorization_to_act__c=='Yes'}"/>
-                      		<apex:outputfield value="{!newForm.Give_details_for_authorization_to_act__c}" rendered="{!newForm.Have_any_having_authorization_to_act__c=='Yes'}"/>
+                            <apex:outputlabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Give_details_for_authorization_to_act__c.Label}" />
+                      		<apex:outputfield value="{!newForm.Give_details_for_authorization_to_act__c}" />
                             
                             <apex:outputLabel value="{!$Label.ISSP_AMS_NoC_Q5}"/>
                             <apex:outputText value="{!newForm.Will_the_change_of_ownership_cause__c}"/>
-                            <apex:outputlabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Give_details_for_the_change_of_ownership__c.Label}" rendered="{!newForm.Will_the_change_of_ownership_cause__c=='Yes'}"/>
-                           	<apex:outputfield value="{!newForm.Give_details_for_the_change_of_ownership__c}" rendered="{!newForm.Will_the_change_of_ownership_cause__c=='Yes'}"/>
+                            <apex:outputlabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Give_details_for_the_change_of_ownership__c.Label}" />
+                           	<apex:outputfield value="{!newForm.Give_details_for_the_change_of_ownership__c}" />
                             
                             <apex:outputlabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Effective_Date_Of_Change__c.Label}"/>
                          	<apex:outputfield value="{!newForm.Effective_Date_Of_Change__c}" />

@@ -16,6 +16,10 @@
                 <behavior>Readonly</behavior>
                 <field>ICCS_Product_Country_Name__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>CurrencyIsoCode</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

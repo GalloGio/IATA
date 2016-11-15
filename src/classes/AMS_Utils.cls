@@ -43,6 +43,29 @@ public without sharing class AMS_Utils {
         set;
     }
 
+    public static List<AMS_ChangeCodes__c> CUSTOM_CHANGECODES {
+        get { 
+            if(CUSTOM_CHANGECODES == null){
+                CUSTOM_CHANGECODES = [SELECT Change_Code__c,Integration_RecId__c,Account_status_change__c,Billable__c,Bulletin_Memo_Text__c,
+                                                                Reason_Code__c, Reason_Code_Description__c
+                                                        FROM AMS_ChangeCodes__c];
+            }
+            return CUSTOM_CHANGECODES;
+        }
+        private set;
+    }
+    
+    public static List<AMS_ChangeCodes_Integration__c> CUSTOM_CHANGECODES_INTEGRATION {
+        get {
+            if(CUSTOM_CHANGECODES_INTEGRATION == null){
+                CUSTOM_CHANGECODES_INTEGRATION = [SELECT RecId_A__c,RecId_B__c,RecId_Res__c FROM AMS_ChangeCodes_Integration__c];
+                
+            }
+            return CUSTOM_CHANGECODES_INTEGRATION;
+        }
+        private set;
+    }
+
     private static Map<String, RecordType> currentCache = null;
 
     public static String userSessionId = UserInfo.getSessionId();
@@ -124,6 +147,7 @@ public without sharing class AMS_Utils {
     public static final Set<String> LocationClassIFAPAllowed = new Set<String>{'P','C','R'};
     public static final Set<String> LocationClassCARGO = new Set<String>{'C','I','Q','R'};
     public static final Set<String> LocationClassPASSENGER = new Set<String>{'P','T','M','X'};
+    public static final Set<String> LocationTypeAllHOTypes = new Set<String>{'EP','AO','SP','AA','HO'};
 
 
     static {
@@ -326,10 +350,24 @@ public without sharing class AMS_Utils {
     */
     public static String getRecIdFromChangeCode(String sChangeCode) {
 
-        String sRes = '';
-
         //Validates the Changes codes for "A=Added" and "D=Deleted", all other Change Codes not mentioned return "C=Changed"
 
+        String sRes = '';
+
+        for (AMS_ChangeCodes__c cc : CUSTOM_CHANGECODES ){
+
+            if(cc.Change_Code__c.equalsIgnoreCase(sChangeCode)){
+                sRes = cc.Integration_RecId__c;
+                break;
+            }
+
+        }
+
+        //Just in case we don't get a result, we set the value for the most common RecId - "C"
+        if( sRes == ''){
+            sRes = 'C';
+        }
+/*
         // «A» Section
         if (sChangeCode.equalsIgnoreCase('NEW')) {
             sRes = 'A';
@@ -364,6 +402,34 @@ public without sharing class AMS_Utils {
         else {
             sRes = 'C';
         }
+*/
+        return sRes;
+    }
+/**
+    //Based on the Change code passed we get the Rec ID
+    Indicates if record is A=Added, C=Changed or D=Deleted.
+    */
+    public static String getRecIdFromIntegrationMatriz(String sRecIdA, String sRecIdB) {
+
+        //Validates the Changes codes for "A=Added" and "D=Deleted", all other Change Codes not mentioned return "C=Changed"
+
+        String sRes = '';
+
+        for (AMS_ChangeCodes_Integration__c cc : CUSTOM_CHANGECODES_INTEGRATION ){
+
+            if(cc.RecId_A__c.equalsIgnoreCase(sRecIdA)){
+                if(cc.RecId_B__c.equalsIgnoreCase(sRecIdB)){
+                    sRes = cc.RecId_Res__c;
+                    break;
+                }
+            }
+
+        }
+
+        //Just in case we don't get a result, we set the value for the most common RecId - "C"
+        if( sRes == ''){
+            sRes = 'C';
+        }
 
         return sRes;
     }
@@ -382,10 +448,12 @@ public without sharing class AMS_Utils {
         if(addressType.equalsIgnoreCase('Billing')){
             //R3.1 - removed the state validation
             //return ((acc.BillingStreet == null && acc.BillingCity == null && acc.BillingPostalCode == null) || acc.IATA_ISO_Country__c == null || acc.Iso_State__c == null);
-            return ((acc.BillingStreet == null && acc.BillingCity == null && acc.BillingPostalCode == null) || acc.IATA_ISO_Country__c == null );
+            //return ((acc.BillingStreet == null && acc.BillingCity == null && acc.BillingPostalCode == null) || acc.IATA_ISO_Country__c == null );
+            return ((acc.BillingStreet == null && acc.BillingCity == null ) || acc.IATA_ISO_Country__c == null );
         }
         if(addressType.equalsIgnoreCase('Shipping')){
-            return ((acc.ShippingStreet == null && acc.ShippingCity == null && acc.ShippingPostalCode == null) );
+            //return ((acc.ShippingStreet == null && acc.ShippingCity == null && acc.ShippingPostalCode == null) );
+            return ((acc.ShippingStreet == null && acc.ShippingCity == null) );
         }
         
         return false;   
@@ -585,9 +653,18 @@ public without sharing class AMS_Utils {
 
         System.debug('Creating a new Agency Applied Change Code for Account ' + oscarAgency.Id + ' with flag active set to ' + isActive);
 
-        Agency_Applied_Change_code__c aacNEW = new Agency_Applied_Change_code__c(Active__c = isActive, Account__c = oscarAgency.Id, Change_Code__c = changeCode.name,
-                OSCAR__c = oscarId, Bulletin_Information__c = changeCode.memoText,
-                Reason_Code__c = changeCode.reasonCode, Reason_Description__c = changeCode.reasonDesc);
+        String source = UserInfo.getUserType() == 'PowerPartner' ? 'Portal' : 'Internal';
+
+        Agency_Applied_Change_code__c aacNEW = new Agency_Applied_Change_code__c(
+            Active__c = isActive
+            , Account__c = oscarAgency.Id
+            , Change_Code__c = changeCode.name
+            , OSCAR__c = oscarId
+            , Bulletin_Information__c = changeCode.memoText
+            , Reason_Code__c = changeCode.reasonCode
+            , Reason_Description__c = changeCode.reasonDesc
+            , Source__c = source
+        );
 
         //insert aacNEW;
 
@@ -999,6 +1076,89 @@ public without sharing class AMS_Utils {
     return accountsToUpdate;
 
 }
+
+//Map data from staging area (AMS Online Accreditation) to account
+    public static AMS_Pax_Accreditation_Form__c CopyDataFromAccountToStaging(String typesOfChange, Account account, AMS_Pax_Accreditation_Form__c onlineAccreditation) {
+
+        System.debug('AGENCY CHANGES: Types of Change (' + typesOfChange + ') ');
+
+        Set<String> fieldsToMigrate = AMS_AgencyChangesConfigHelper.getFieldsToMigrate(typesOfChange);
+
+        System.debug('AGENCY CHANGES: fields to migrate (' + fieldsToMigrate + ') for accounts: ' + account);
+
+        Map<String, String> fieldsMapping = new Map<String, String> {'Name' => 'Account_Name__c'
+                                                                    ,'IATACode__c' => 'IATACode__c'
+                                                                    ,'Short_Name__c' => 'Short_Name__c'
+                                                                    ,'TradeName__c' => 'Trade_Name__c'
+                                                                    ,'License_Number__c' => 'ISSP_AMS_License_No__c'
+                                                                    ,'VAT_Number__c' => 'ISSP_AMS_VAT_number__c'
+                                                                    ,'BillingStreet' => 'Branch_Office_Street_name_number__c'
+                                                                    ,'Website' => 'Website__c'
+                                                                    ,'BillingPostalCode' => 'Branch_Office_Postal_code__c'
+                                                                    ,'BillingCity' => 'Branch_Office_City__c'
+                                                                    ,'IATA_ISO_Country__c' => 'Branch_Office_Country__c'
+                                                                    ,'Iso_State__c' => 'IATA_ISO_State__c'
+                                                                    ,'ShippingStreet' => 'Shipping_Street__c'
+                                                                    ,'ShippingPostalCode' => 'Shipping_Postal_Code__c'
+                                                                    ,'Email__c' => 'Branch_Office_Email__c'
+                                                                    ,'Phone' => 'Branch_Office_Phone__c'
+                                                                    ,'Fax' => 'Branch_Office_FAX__c'
+                                                                    ,'ShippingCity' => 'Shipping_City__c'
+                                                                    ,'Operation__c' => 'Operation__c'
+                                                                    ,'Abbreviated_name__c' => 'Abbreviated_name__c'
+                                                                    ,'Abbreviated_address__c' => 'Abbreviated_Address__c'
+                                                                    ,'Remittance_frequency__c' => 'Remittance_frequency__c'
+                                                                    ,'Solicitation_Flag__c' => 'Solicitation_Flag__c'
+                                                                    ,'VAT_Number_2__c' => 'VAT_Number_2__c'
+                                                                    ,'CASS_Number__c' => 'CASS_Number__c'
+                                                                    ,'Location_Class__c' => 'Location_Class__c'
+                                                                    ,'Location_Type__c' => 'Location_Type__c'
+                                                                    ,'Mobile__c' => 'Mobile__c'
+                                                                    ,'Is_your_firm_handling_Dangerous_Goods__c' => 'Is_your_firm_handling_Dangerous_Goods__c'
+                                                                    ,'IATA_ISO_Billing_State__c' => 'IATA_ISO_State__c'
+                                                                    ,'IATA_ISO_Shipping_Country__c' => 'Shipping_ISO_Country__c'
+                                                                    ,'IATA_ISO_Shipping_State__c' => 'Shipping_ISO_State__c'};
+
+        if (fieldsToMigrate != null && onlineAccreditation != null) {
+                Map<String, Object> onlineAccreditationFieldNewValue = new Map<String,Object>();
+
+                for (String key : fieldsMapping.keySet()) {
+                    String value = fieldsMapping.get(key);
+                    if (fieldsToMigrate.contains(value)) {
+                    
+                        onlineAccreditationFieldNewValue.put(value, account.get(key));
+                        System.debug('copying stuff from target agency ' + value + ':' + account.get(key));
+                    }
+                }
+
+                //fields that require transformation
+                if (fieldsToMigrate.contains('ISSP_AMS_Premises_located_at_airport__c'))
+                    onlineAccreditationFieldNewValue.put('ISSP_AMS_Premises_located_at_airport__c', (account.In_a_Airport__c == true) ? 'Yes' : 'No');
+                if (fieldsToMigrate.contains('ISSP_AMS_Legal_Status__c'))
+                    onlineAccreditationFieldNewValue.put('ISSP_AMS_Legal_Status__c', account.Company_Type__c);
+                if (fieldsToMigrate.contains('ISSP_AMS_GDS_with_signed_contract__c'))
+                    onlineAccreditationFieldNewValue.put('ISSP_AMS_GDS_with_signed_contract__c', account.GDS__c);
+
+
+                for(String accredFieldApiName: onlineAccreditationFieldNewValue.keySet())
+                {
+                    
+                    Schema.SObjectField field = Schema.SObjectType.AMS_Pax_Accreditation_Form__c.fields.getMap().get(accredFieldApiName);
+                    Schema.DisplayType fldType = field.getDescribe().getType();
+                        
+                    system.debug('Field value to migrate to online accreditation: ' + accredFieldApiName);
+                    system.debug('Field Type to migrate to online accreditation: ' + fldType);
+
+                    onlineAccreditation.put(accredFieldApiName, onlineAccreditationFieldNewValue.get(accredFieldApiName));
+                }
+
+        }
+
+        system.debug('Online Accreditation fields populated: ' + onlineAccreditation);
+
+        return onlineAccreditation;
+
+    }
 
 //get Inspections from oscar
     public static void UpdateInspectionsFromOscar(List<AMS_OSCAR__c> oscars){

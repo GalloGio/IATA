@@ -80,6 +80,59 @@
         <type>Lookup</type>
     </fields>
     <fields>
+        <fullName>Change_Code__c</fullName>
+        <externalId>false</externalId>
+        <label>Change Code</label>
+        <length>10</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Country_ISO_Code__c</fullName>
+        <externalId>false</externalId>
+        <formula>Account__r.IATA_ISO_Country__r.ISO_Code__c</formula>
+        <label>Country ISO Code</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>IATACode__c</fullName>
+        <externalId>false</externalId>
+        <formula>Account__r.IATACode__c</formula>
+        <label>IATA Code</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>IATA_Regional_Office__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(Account__r.IATA_ISO_Country__r.IATA_Regional_Office__c)</formula>
+        <label>IATA Regional Office</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Location_Type_Ordered__c</fullName>
+        <externalId>false</externalId>
+        <formula>Account__r.Location_Type_Ordered__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Location Type Ordered</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>RelationShip__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
@@ -90,6 +143,26 @@
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Sector__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(Account__r.Sector__c)</formula>
+        <label>Sector</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Status__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT( Account__r.Status__c)</formula>
+        <label>Status</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Update_Type__c</fullName>
@@ -122,6 +195,7 @@
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -134,6 +208,13 @@
         <columns>Update_Type__c</columns>
         <columns>CREATEDBY_USER</columns>
         <columns>CREATED_DATE</columns>
+        <columns>Change_Code__c</columns>
+        <columns>Country_ISO_Code__c</columns>
+        <columns>IATACode__c</columns>
+        <columns>IATA_Regional_Office__c</columns>
+        <columns>Location_Type_Ordered__c</columns>
+        <columns>Sector__c</columns>
+        <columns>Status__c</columns>
         <filterScope>Everything</filterScope>
         <label>AMS</label>
         <language>en_US</language>
@@ -153,6 +234,48 @@
             <value>WUHAN XIANGSHENG AIR SERVICE CO.,LTD</value>
         </filters>
         <label>AMS 1 agency</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>AMS_Debug</fullName>
+        <columns>NAME</columns>
+        <columns>Account__c</columns>
+        <columns>Change_Code__c</columns>
+        <columns>Country_ISO_Code__c</columns>
+        <columns>IATACode__c</columns>
+        <columns>Sector__c</columns>
+        <columns>Status__c</columns>
+        <columns>Update_Type__c</columns>
+        <columns>CREATEDBY_USER</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Update_Type__c</field>
+            <operation>equals</operation>
+            <value>Invalid</value>
+        </filters>
+        <label>AMS - Debug</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>AMS_Debug_1_rec</fullName>
+        <columns>NAME</columns>
+        <columns>Account__c</columns>
+        <columns>Change_Code__c</columns>
+        <columns>Country_ISO_Code__c</columns>
+        <columns>IATACode__c</columns>
+        <columns>Sector__c</columns>
+        <columns>Status__c</columns>
+        <columns>Update_Type__c</columns>
+        <columns>CREATEDBY_USER</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Account__c</field>
+            <operation>equals</operation>
+            <value>ACC test agency</value>
+        </filters>
+        <label>AMS - Debug 1 rec</label>
         <language>en_US</language>
     </listViews>
     <nameField>

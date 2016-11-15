@@ -16,6 +16,15 @@
             /**
              * Sets the maxlength of an input field
              */
+
+
+     String.prototype.capitalize = function(){
+        return this.toLowerCase().replace( /\b\w/g, function (m) {
+            return m.toUpperCase();
+        });
+    };
+
+
     function setMaxLength(id, maxValue) {
         document.getElementById(id).setAttribute('maxlength',maxValue);
     }
@@ -49,7 +58,7 @@
         if (this.document.getElementById('{!$Component.idcardForm.pb1.section1.itemLastName.txtLastName}'))
         {
             
-            var lastName = (removeDiacritics (this.document.getElementById('{!$Component.idcardForm.pb1.section1.itemLastName.txtLastName}').value)).trim();
+            var lastName = (removeDiacritics (this.document.getElementById('{!$Component.idcardForm.pb1.section1.itemLastName.txtLastName}').value));
             var middleInitial = (removeDiacritics (this.document.getElementById('{!$Component.idcardForm.pb1.section1.itemMiddleInitial.txtMiddleInitial}').value)).trim().toUpperCase();
             var firstName = (removeDiacritics (this.document.getElementById('{!$Component.idcardForm.pb1.section1.itemFirstName.txtFirstName}').value) );            
             var displayName = "";
@@ -146,7 +155,38 @@
         } 
         
     }
+
+    function workingFirstName() {
+
+        var firstName = (removeDiacritics(this.document.getElementById('{!$Component.idcardForm.pb1.section1.itemFirstName.txtFirstName}').value));
+        document.getElementById('{!$Component.idcardForm.pb1.section1.itemFirstName.txtFirstName}').value = firstName.capitalize();
+
+        //removing apostrophe 
+        var name = (removeDiacritics(this.document.getElementById('{!$Component.idcardForm.pb1.section1.itemFirstName.txtFirstName}').value));
+        name = name.replace(/'/,' ');
+        document.getElementById('{!$Component.idcardForm.pb1.section1.itemFirstName.txtFirstName}').value = name;
+
+        //removing dash
+        var name = (removeDiacritics(this.document.getElementById('{!$Component.idcardForm.pb1.section1.itemFirstName.txtFirstName}').value));
+        name = name.replace(/-/,' ');
+        document.getElementById('{!$Component.idcardForm.pb1.section1.itemFirstName.txtFirstName}').value = name;
+    }
     
+    function workingLastName() {
+
+        var lastName = (removeDiacritics(this.document.getElementById('{!$Component.idcardForm.pb1.section1.itemLastName.txtLastName}').value));
+        document.getElementById('{!$Component.idcardForm.pb1.section1.itemLastName.txtLastName}').value = lastName.capitalize();
+
+        //removing apostrophe 
+        var name = (removeDiacritics(this.document.getElementById('{!$Component.idcardForm.pb1.section1.itemLastName.txtLastName}').value));
+        name = name.replace(/'/,' ');
+        document.getElementById('{!$Component.idcardForm.pb1.section1.itemLastName.txtLastName}').value = name;
+
+        //removing dash
+        var name = (removeDiacritics(this.document.getElementById('{!$Component.idcardForm.pb1.section1.itemLastName.txtLastName}').value));
+        name = name.replace(/-/,' ');
+        document.getElementById('{!$Component.idcardForm.pb1.section1.itemLastName.txtLastName}').value = name;
+    }
     
     //You need to wrap everything in document.ready because the select tag we are taregting needs to
     //be loaded in the DOM befire we can access it.
@@ -320,7 +360,7 @@
                         
                         <p>
                             <h1>
-                                <apex:outputText >{!PageTitle}</apex:outputText>
+                               <apex:outputText >{!PageTitle}</apex:outputText>
                         </h1>
                     </p>
                     <apex:pageBlockSection columns="1" rendered="{!NOT(keyAccount&&personalPurchase)}" >
@@ -389,7 +429,7 @@ reRender="panelContactInfo, ErrorMsgs" />
                                                 <apex:outputPanel styleClass="requiredBlock" layout="block" />
                                                     <apex:inputField styleClass="outputText2" id="txtLastName"
                                                     value="{!IDCardApplicationNR.Last_Name__c}"
-                                                    onkeyup="calculateDisplayedName();" />
+                                                    onkeyup="calculateDisplayedName();workingLastName();" />
                                                         </apex:outputPanel>
                                                     </apex:pageBlockSectionItem>
                                                     <apex:outputText value="" />
@@ -399,7 +439,7 @@ reRender="panelContactInfo, ErrorMsgs" />
                                                                     <apex:outputPanel styleClass="requiredBlock" layout="block" />
                                                                         <apex:inputField styleClass="outputText2" id="txtFirstName" 
                                                                         value="{!IDCardApplicationNR.First_Name__c}"
-                                                                        onkeyup="calculateDisplayedName();" />
+                                                                        onkeyup="calculateDisplayedName();workingFirstName();" />
                                                                             </apex:outputPanel>
                                                                         </apex:pageBlockSectionItem>
                                                                         <script> 
@@ -603,6 +643,7 @@ status="saveStatus" />-->
                             <p>
                                 <h1>
                                     <apex:outputText >{!PageTitle}</apex:outputText>
+                                    
                             </h1>
                         </p>
                         

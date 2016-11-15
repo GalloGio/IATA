@@ -9,13 +9,14 @@ var dyn_functions = {
                 var result2;
                 var result3;
                 var bUpdate = false;
+                var createNewChangeCode = true;
                 var sResult = '';
                 if (r == true) {
                     
 					var argList = args.split(", ");
 
                     // Query the database to check if the flags for :IATACODE, Copy Data to Account and send Data to SAP ECC 
-                    var resultOscarData = sforce.connection.query("SELECT Flag_Data_to_Account__c,Flag_Data_to_SAPECC__c,ID, STEP10__c,STEP8__c,Process_Start_Date__c,recordTypeID FROM AMS_OSCAR__C WHERE Id ='" + argList[2] + "'");
+                    var resultOscarData = sforce.connection.query("SELECT Flag_Data_to_Account__c,Flag_Data_to_SAPECC__c,ID, STEP10__c,STEP8__c,Invoice_Requested__c,recordTypeID FROM AMS_OSCAR__C WHERE Id ='" + argList[2] + "'");
                     var records = resultOscarData.getArray("records");
 
                     var resultOscarDataFlag = sforce.connection.query("SELECT Flag_IATACode_Formula__c FROM AMS_OSCAR__C WHERE Id ='" + argList[2] + "'");
@@ -57,21 +58,24 @@ var dyn_functions = {
                         sResult = '- IATA code already generated \n\r';
                     }
 
-                    if (recordsFlag[0].Flag_IATACode_Formula__c == 'true' && recordsCC.length == 0)
-                        sforce.apex.execute("AMS_OSCAR_Webservice", "createChangeCodeNEW", {oscarId: argList[2]});
 
                     if (records.length>0 && recordsFlag[0].Flag_IATACode_Formula__c == 'true' && records[0].Flag_Data_to_Account__c == 'false') {
                         result2 = sforce.apex.execute("AMS_OSCAR_Webservice", "copyDataToAccount", {oscarId: argList[2]});
                         if(result2 != 'OK'){
                             sResult = sResult + '- Move Data To Account - Failed to copy data to Account. Please contact your Administrator.\n(Error: ' + result2 +')\n\r';
+                            createNewChangeCode = false;
                         }else{
                             records[0].Flag_Data_to_Account__c = 'true';
                             bUpdate = true;
                             sResult = sResult + '- Move Data To Account - Success!\n\r';
                         }
+
                     }else{
                         sResult = sResult + '- Move Data To Account - ByPassed! \n\r';
                     }
+
+                    if (createNewChangeCode && recordsFlag[0].Flag_IATACode_Formula__c == 'true' && recordsCC.length == 0)
+                        sforce.apex.execute("AMS_OSCAR_Webservice", "createChangeCodeNEW", {oscarId: argList[2]});
                
                     if (records.length>0 && recordsFlag[0].Flag_IATACode_Formula__c == 'true' && records[0].Flag_Data_to_Account__c == 'true' 
                             && records[0].Flag_Data_to_SAPECC__c == 'false') {
@@ -95,10 +99,10 @@ var dyn_functions = {
            issueInvoice:function (args) { 
                 var argList = args.split(", ");
                 // Query the database to check if invoice has already been sent
-                var result = sforce.connection.query("SELECT Process_Start_Date__c FROM AMS_OSCAR__C WHERE Id ='" + argList[1] + "'");
+                var result = sforce.connection.query("SELECT Invoice_Requested__c FROM AMS_OSCAR__C WHERE Id ='" + argList[1] + "'");
                 var record = result.getArray("records");
 
-                if (record.length>0 && record[0].Process_Start_Date__c != null) {
+                if (record.length>0 && record[0].Invoice_Requested__c != null) {
                     alert('Billing Document has already been issued');
                 }
 

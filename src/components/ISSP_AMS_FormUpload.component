@@ -26,14 +26,14 @@
                                 </div>
                                 <div class="col-md-4">
                                     <apex:variable var="reviewStatuses" value="{!''}{!reviewStatusMap}" />
-                                    <apex:variable var="FileIdInReviewStatusus" value="{!reqIdentifier}=true"/>
+                                    <apex:variable var="FileIdInReviewStatuses" value="{!reqIdentifier}=true"/>
                                     
                                     <apex:outputText rendered="{!reqRequired!=null}">
-                                        <apex:outputText rendered="{!OR(caseStatus=='Draft',caseStatus == 'Open - EDMC', !CONTAINS(reviewStatuses, FileIdInReviewStatusus))}">
-                                            <input type="file" class="input-{!reqCnt}" name="file" style="color:black;" onchange="this.style.color = 'transparent';"/>
+                                        <apex:outputText rendered="{!OR(caseStatus=='Draft',caseStatus == 'Open - EDMC', !CONTAINS(reviewStatuses, FileIdInReviewStatuses))}">
+                                            <input type="file" id="input-{!reqCnt}" class="input-{!reqCnt}" name="file" style="color:black;" onchange="this.style.color = 'transparent'"/>
                                         </apex:outputText>
-                                        <apex:outputText rendered="{!AND(caseStatus!='Draft',caseStatus != 'Open - EDMC', CONTAINS(reviewStatuses, FileIdInReviewStatusus))}">
-                                            <input type="file" class="input-{!reqCnt}" name="file" style="color:black;" onchange="this.style.color = 'transparent';" disabled="true"/>
+                                        <apex:outputText rendered="{!AND(caseStatus!='Draft',caseStatus != 'Open - EDMC', CONTAINS(reviewStatuses, FileIdInReviewStatuses))}">
+                                            <input type="file" class="input-{!reqCnt}" name="file" style="color:transparent;" disabled="true"/>
                                         </apex:outputText>
                                     </apex:outputText>
                                 </div>
@@ -71,7 +71,7 @@
                                         $(".input-"+id).css({"color": "transparent"});
                                                                                
                                     }
-                                if(!{!fileMap[reqIdentifier]==null})
+                                if(!{!amazonFileMap[reqIdentifier]==null})
                                     removeTextFromFile();
                                 </script>
                                 <apex:dataTable id="tablefileones" styleClass="table table-striped" value="{!amazonFileMap[identifierName]}" var="theFile"> 
@@ -157,7 +157,8 @@
                             $(".FileInput-{!reqCnt}").val($(".FileInput-{!reqCnt}").val() + fn);
                             
                         // and then Submit
-                             data.submit();
+                            data.submit();
+                            $("#input-{!reqCnt}").attr('disabled', 'disabled');
                         } else {
                             
         				if((data.originalFiles[0]['type'].length && !acceptFileTypes.test(data.originalFiles[0]['type'])) || (data.originalFiles[0]['type']=='')) {
@@ -182,6 +183,7 @@
                             
         				if(uploadErrors.length > 0) {
             				alert(uploadErrors.join("\n"));
+                            $("#input-{!reqCnt}").removeAttr('disabled');
                             if(isIE()) {
                         		$("#loading-{!reqCnt}").hide();
                        		}
@@ -189,6 +191,7 @@
                             $(".FileInput-{!reqCnt}").val($(".FileInput-{!reqCnt}").val() + fn);
                         // and then Submit
                         	data.submit();
+                            $("#input-{!reqCnt}").attr('disabled', 'disabled');
                         }
                       }
                    	},
@@ -213,6 +216,8 @@
                         $(".FileInput-{!reqCnt}").val(folderInit); //Set folder back to init value in case rerendering fails in next line
                         createAmazonFileObject{!reqCnt}_JS(fn, data.originalFiles[0].size);
                         vReqNo = {!reqCnt};
+                        
+                        $("#input-{!reqCnt}").removeAttr('disabled');
                         
                         if(isIE()) {
                         	$("#loading-{!reqCnt}").hide();

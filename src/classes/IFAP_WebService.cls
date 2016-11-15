@@ -22,12 +22,11 @@ global class IFAP_WebService {
 
         String returnValue = '';
 
-        try {
+       try {
             List<Case> Cases = [SELECT ID, Financial_Security_Amount__c,
-                                Financial_Security_Currency__c
+                                Financial_Security_Currency__c,caseNumber
                                 FROM Case
                                 WHERE caseNumber = : caseNumbeR];
-
             if (cases <> null && cases.size() > 0) {
                 cases[0].Financial_Security_Amount__c = amount;
                 cases[0].Financial_Security_Currency__c = currencyCode;
@@ -36,10 +35,10 @@ global class IFAP_WebService {
             update cases;
             return returnValue;
 
-        } catch (Exception e) {
+       } catch (Exception e) {
 
             System.debug('Error in the update of the FinancialSecurityInfo: ' + e.getmessage());
-            return e.getmessage();
+            return e.getmessage() + e.getStackTraceString();
         }
 
 

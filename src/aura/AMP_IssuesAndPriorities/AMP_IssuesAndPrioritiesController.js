@@ -5,27 +5,34 @@
     refreshIssues : function(component, event, helper) {
         helper.refreshIssues(component);
     },
+    sortList: function(component, event, helper) {
+        var target = event.getSource();
+        var fieldname = target.get("v.title");
+        var currentSortOrder = component.get('v.sortOrder');
+        // console.log(fieldname);
+
+        if(currentSortOrder === undefined) {
+            currentSortOrder = fieldname;
+        }
+
+        var reverse = 1;
+        if(fieldname === currentSortOrder) {
+            currentSortOrder = fieldname+'desc';
+            reverse *= -1;
+        } else {
+            currentSortOrder = fieldname;
+        }
+
+        component.set("v.sortOrder",currentSortOrder);
+        helper.sortIssues(component,fieldname,reverse);
+    },
     jsLoaded: function(component, event, helper) {
         $('.slds-th__action').click(function() {
             $(this).parents('th').addClass('slds-is-sorted--asc');
             var fieldname = $(this).data('fieldname');
             var currentSortOrder = component.get('v.sortOrder');
-            if(currentSortOrder === undefined) {
-                currentSortOrder = fieldname;
-            }
-            
-            var reverse = 1;
-            if(fieldname === currentSortOrder) {
-                currentSortOrder = fieldname+'desc';
-                reverse *= -1;
-            } else {
-                currentSortOrder = fieldname;
-            }
-
-            component.set("v.sortOrder",currentSortOrder);
-            helper.sortIssues(component,fieldname,reverse);
         });
-        
+
     },
     addIssue : function(component, event, helper ){
         var issues = component.get("v.issues");

@@ -41,6 +41,17 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Integration_RecId__c</fullName>
+        <description>Value for RecId on the Integration process with SAP PI, 3 possible values: A (Addition), C (Change) and D (Termination)</description>
+        <externalId>false</externalId>
+        <label>Integration RecId</label>
+        <length>1</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Reason_Code_Description__c</fullName>
         <externalId>false</externalId>
         <label>Reason Code Description</label>

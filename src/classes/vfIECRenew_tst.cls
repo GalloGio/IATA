@@ -333,6 +333,9 @@ private class vfIECRenew_tst {
 	        pgCont.oContact.Tax_2_ID__c = 'Tax2ID';
 	        pgCont.updateContactInfo();
 	        
+
+			IFAP_BusinessRulesTest.createIsoCountry();
+
 	        // Misc Coverage
 	        pgCont.oBillingAddress.ISO_Country__c = ([SELECT Id FROM IATA_ISO_Country__c WHERE ISO_Code__c IN ('EG')])[0].Id;
 	        pgCont.onChangeBillingCountry();

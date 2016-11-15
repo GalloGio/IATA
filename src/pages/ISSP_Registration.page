@@ -11,7 +11,11 @@
   <apex:outputPanel rendered="{!show90Days}" >
     <script>
     alert('{!$Label.ISSP_Frozen_User_Alert_Message}');
-    window.location.replace('/ISSP_Login');
+    if ("{!sRefererCommunity}"=="iss")  window.location.replace('/ISSP_Login');
+    else if ("{!sRefererCommunity}"=="iec") {
+      if (document.URL.indexOf("/iec")!=-1) window.location.replace('/iec/IEC_Home');
+      else window.location.replace('/IEC_Home');
+    }
     </script>
   </apex:outputPanel>
 

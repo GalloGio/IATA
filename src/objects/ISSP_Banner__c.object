@@ -116,6 +116,7 @@
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -871,6 +872,7 @@
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
         <visibleLines>10</visibleLines>
@@ -1103,6 +1105,7 @@
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
@@ -1123,6 +1126,7 @@
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -1170,6 +1174,7 @@
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
@@ -1374,6 +1379,7 @@
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -1513,6 +1519,7 @@
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -1541,6 +1548,7 @@ _blank = new window</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -1575,6 +1583,7 @@ _blank = new window</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -1721,6 +1730,7 @@ _blank = new window</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -1863,6 +1873,7 @@ _blank = new window</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -1889,6 +1900,7 @@ _blank = new window</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -1923,6 +1935,7 @@ _blank = new window</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -2077,6 +2090,7 @@ _blank = new window</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -2219,6 +2233,7 @@ _blank = new window</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -2245,6 +2260,7 @@ _blank = new window</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -2283,6 +2299,7 @@ _blank = new window</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -2302,15 +2319,51 @@ _blank = new window</description>
         <language>en_US</language>
     </listViews>
     <listViews>
+        <fullName>TD</fullName>
+        <columns>NAME</columns>
+        <columns>Sector__c</columns>
+        <columns>Publication_start_date__c</columns>
+        <columns>Publication_end_date__c</columns>
+        <columns>Background_image_url_link__c</columns>
+        <columns>DE_Zone_text_1__c</columns>
+        <columns>User_portal_Status__c</columns>
+        <columns>Status__c</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <columns>Background_image__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>User_portal_Status__c</field>
+            <operation>equals</operation>
+            <value>Approved User;Approved Admin;Pending Approval</value>
+        </filters>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>Active</value>
+        </filters>
+        <filters>
+            <field>Sector__c</field>
+            <operation>includes</operation>
+            <value>Airline,Travel Agent</value>
+        </filters>
+        <filters>
+            <field>Publication_end_date__c</field>
+            <operation>greaterOrEqual</operation>
+            <value>TODAY</value>
+        </filters>
+        <label>TD</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
         <fullName>active</fullName>
         <columns>CREATED_DATE</columns>
         <columns>OBJECT_ID</columns>
         <columns>NAME</columns>
         <columns>Status__c</columns>
-        <columns>Publication_start_date__c</columns>
         <columns>Publication_end_date__c</columns>
         <columns>Country__c</columns>
         <columns>Sector__c</columns>
+        <columns>Publication_start_date__c</columns>
         <columns>Zone_1_text_hyperlink__c</columns>
         <filterScope>Everything</filterScope>
         <filters>

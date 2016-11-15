@@ -7,6 +7,7 @@
     <customButtons>Reset_New_interactions</customButtons>
     <customButtons>Create_IFAP_case</customButtons>
     <customButtons>EasyUpload</customButtons>
+    <customButtons>SIDRA_Lite_Action</customButtons>
     <emailDefault>false</emailDefault>
     <excludeButtons>Delete</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
@@ -259,7 +260,11 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Third_FA_non_Compliance_Date__c</field>
+                <field>secondFSnonComplianceDate__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>FS_third_non_compliance_date__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -278,6 +283,14 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>FS_Second_Deadline_Date__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>FS_Third_Deadline_Date__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Third_FA_non_Compliance_Date__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -633,6 +646,7 @@
     <relatedLists>
         <fields>CASES.CASE_NUMBER</fields>
         <fields>Case_Type__c</fields>
+        <fields>CASES.RECORDTYPE</fields>
         <fields>CASES.SUBJECT</fields>
         <fields>CASES.PRIORITY</fields>
         <fields>CASES.CREATED_DATE</fields>

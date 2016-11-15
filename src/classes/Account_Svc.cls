@@ -17,8 +17,17 @@ public with sharing class Account_Svc {
 		List<String> lstAccFieldsToSAP = Utility.getSeqTextSetting('Account fields to sync to SAP', ',').split(',');
 		
 		Set<Id> setAccIdsToSync = new Set<Id>();
+
+		//Select only accounts that respond to certain criteria
+		list<Account> accsToPass = new list<Account>();
+		for (Account runAccs : lstAccount)
+		{
+			if(runAccs.ACLI_SAP_Id__c == null && runAccs.ACLI_Status__c != 'Active company') {
+				accsToPass.add(runAccs);
+			}
+		}
 		
-	    for (Account acc : lstAccount)
+	    for (Account acc : accsToPass)
 	    {
 	    	/* Commented till figure out whether we are going to filter using recordtypes or not
     		// Make sure that the account has the required RecType

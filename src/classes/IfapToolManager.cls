@@ -123,10 +123,15 @@ global class IfapToolManager {
             System.debug(LoggingLevel.ERROR, '################# (WS) PWC REJECTION RESTITUISCE '+result);
             System.debug(LoggingLevel.ERROR, '################# (WS) DOPO IL PARSER '+r);
                 
-            
+             transformationHelper.sendEmailSupport('salvo 1 submitCaseQualityIssuesToMFT IFAPtoolManager',r + '    ' + result);
+           
             return r;   
             
         }catch ( Exception e ) {
+
+
+            transformationHelper.sendEmailSupport('salvo  2 submitCaseQualityIssuesToMFT IFAPtoolManager',e.getStackTraceString() + e.getMessage() );
+
             System.debug('**** ERROR ' + e.getMessage());
             return new PWCResponses(e);
         }

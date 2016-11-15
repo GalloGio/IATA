@@ -13,7 +13,9 @@ public with sharing class AMS_MigrationToolHelper {
 			'CHL - Change of Location' => 'MAJOR.CHANGES',
             'CHO / CHS – Change of Ownership / Legal Status' => 'MAJOR.CHANGES',
             'CHN - Change of Name' => 'MAJOR.CHANGES',
-            'CHC – Change of Shareholding' => 'MAJOR.CHANGES'
+            'CHC – Change of Shareholding' => 'MAJOR.CHANGES',
+            'New SA / CHV – New Code' => 'NEW.SA.1.0',
+            'VMFR Setup/Update' => 'MAJOR.CHANGES'
             };
         }
         set;
@@ -29,13 +31,14 @@ public with sharing class AMS_MigrationToolHelper {
 			sp = Database.setSavepoint();
 
 			if(cont.fromPortal)
-				cont = processFromPortal(cont); //call portal method
-			else
-				cont = processNotFromPortal(cont);
+					cont = processFromPortal(cont); //call portal method
+			else{
+					cont = processNotFromPortalNew(cont);
+			}
 
 		} catch(Exception e) {
 			System.debug(e.getMessage());
-			cont.errorMessage = e.getMessage(); //or other stuff
+			cont.errorMessage = e.getMessage() + e.getStackTraceString(); //or other stuf
 			cont.migrated = true;
 			cont.processing = false;
 
@@ -49,13 +52,493 @@ public with sharing class AMS_MigrationToolHelper {
 		return cont;
 	}
 
+	private static void alignOwners(AMS_Pax_Accreditation_Form__c accreditationObj, Case commCase){
+
+		//List<Contact> contactsFromAccountToMatch= [Select Id, Email from Contact where AccountId = :commCase.AccountId];
+
+		Set<Id> contactsUpdated = new Set<Id>();
+
+		Map<String, Id> contactsFromAccountToMatch = new Map<String, Id>();
+
+		For(Contact c: [Select Id, Email from Contact where AccountId = :commCase.AccountId]){
+
+			contactsFromAccountToMatch.put(c.email,c.Id);
+		}
+
+		List<AMS_Accreditation_Contact__c> contactsToUpdate = new List<AMS_Accreditation_Contact__c>();
+
+		List<AMS_Accreditation_Contact__c> contacts = [SELECT Id, Email__c, Legacy_External_ID__c, AMS_Ownership_Role__c, Contact__c, Person_AMS__c,   Company__c, Name from AMS_Accreditation_Contact__c where AMS_Pax_Accreditation_Form__c = :accreditationObj.Id and AMS_Ownership_Role__c = null and Agency_owner__c = true];
+
+		List<AMS_Account_Role__c> roles = [SELECT Id, Contact__c, Person__c, Legacy_External_ID__c, Owner_Account__c,Owner_Name__c,Person__r.Contact__c from AMS_Account_Role__c where Active__c = true and Account__c = :commCase.AccountId];
+
+		for(AMS_Accreditation_Contact__c contact: contacts){
+
+			for(AMS_Account_Role__c role: roles){
+
+				if(contact.Contact__c != null && contact.Contact__c == role.Contact__c){
+					contact.AMS_Ownership_Role__c = role.Id;
+					contactsToUpdate.add(contact);
+					contactsUpdated.add(contact.Id);
+					break;
+				}
+
+				if(contact.Contact__c != null && role.Person__c != null && role.Person__r.Contact__c != null && contact.Contact__c == role.Person__r.Contact__c){
+					contact.AMS_Ownership_Role__c = role.Id;
+					contactsToUpdate.add(contact);
+					contactsUpdated.add(contact.Id);
+					break;
+				}
+
+				if(contact.Person_AMS__c != null && contact.Person_AMS__c == role.Person__c){
+					contact.AMS_Ownership_Role__c = role.Id;
+					contactsToUpdate.add(contact);
+					contactsUpdated.add(contact.Id);
+					break;
+				}
+
+				if(contact.Company__c != null && contact.Company__c == role.Owner_Account__c){
+					contact.AMS_Ownership_Role__c = role.Id;
+
+					if(contact.Contact__c == null && contact.Person_AMS__c == null && contact.Email__c != null && contactsFromAccountToMatch.get(contact.Email__c) != null){ // try to match the Accreditation Contact with an existing contact from the Account.				
+						contact.Contact__c = contactsFromAccountToMatch.get(contact.Email__c);
+					}
+
+					contactsToUpdate.add(contact);
+					contactsUpdated.add(contact.Id);
+					break;
+				}
+
+				if(contact.Legacy_External_Id__c != null && contact.Legacy_External_Id__c == role.Legacy_External_ID__c){
+					contact.AMS_Ownership_Role__c = role.Id;
+
+					if(contact.Contact__c == null && contact.Person_AMS__c == null && contact.Email__c != null && contactsFromAccountToMatch.get(contact.Email__c) != null){ // try to match the Accreditation Contact with an existing contact from the Account.				
+						contact.Contact__c = contactsFromAccountToMatch.get(contact.Email__c);
+					}
+
+					contactsToUpdate.add(contact);
+					contactsUpdated.add(contact.Id);
+					break;
+				}
+
+				if(contact.Contact__c == null && contact.Person_AMS__c == null && contact.Company__c == null && contact.Legacy_External_Id__c == null && Role.Owner_Name__c != null){
+					if(contact.Name == role.Owner_Name__c){
+						contact.AMS_Ownership_Role__c = role.Id;
+
+						if(contact.Contact__c == null && contact.Person_AMS__c == null && contact.Email__c != null && contactsFromAccountToMatch.get(contact.Email__c) != null){ // try to match the Accreditation Contact with an existing contact from the Account.				
+							contact.Contact__c = contactsFromAccountToMatch.get(contact.Email__c);
+						}
+
+						contactsToUpdate.add(contact);
+						contactsUpdated.add(contact.Id);
+						break;
+					}
+				}
+			}
+
+			// if a contact does not have a match in the AMS Account Role, we still might have to attach it to a Contact (that's why we are using that contactsUpdated set ....)
+			if(!contactsUpdated.contains(Contact.Id) && contact.Contact__c == null && contact.Person_AMS__c == null && contact.Email__c != null && contactsFromAccountToMatch.get(contact.Email__c) != null){ // try to match the Accreditation Contact with an existing contact from the Account.				
+				contact.Contact__c = contactsFromAccountToMatch.get(contact.Email__c);
+				contactsToUpdate.add(contact);
+				contactsUpdated.add(contact.Id);
+			}
+
+		}
+
+		// now for the regular non owners contacts, if they are missing a contact and they have an email, let's try to match them so we can avoid contact duplication
+
+		for(AMS_Accreditation_Contact__c nonOwnerC : [SELECT Id, Email__c, Legacy_External_ID__c, AMS_Ownership_Role__c, Contact__c, Person_AMS__c,   Company__c, Name from AMS_Accreditation_Contact__c where AMS_Pax_Accreditation_Form__c = :accreditationObj.Id and AMS_Ownership_Role__c = null and Agency_owner__c = false and Email__c != null and Contact__c = null and Person_AMS__c = null and Financial_interest__c = null]){
+				
+				if(contactsFromAccountToMatch.get(nonOwnerC.Email__c) != null){
+					nonOwnerC.Contact__c = contactsFromAccountToMatch.get(nonOwnerC.Email__c);
+					contactsToUpdate.add(nonOwnerC);
+				}
+
+		}
+
+		if(!contactsToUpdate.isEmpty())
+			update contactsToUpdate;
+	}
+
+	private static AMS_Pax_Accreditation_Form__c fillMissingFieldsOnAccreditation(AMS_Pax_Accreditation_Form__c accreditationObj, Id accountId , String processType, String caseId){
+
+		//	1.	The billing address was not displayed on the case while I see it on the portal online form.
+		//	2.	The account name was not populate either
+		//	3.	Location class and type are not populated either
+		//	4.	Country is not populated
+		//	5.	Email, Website and Phone are not populated
+		//	6.	Short name not populated
+		//	7.	Abbreviated name not populated
+		//	8.	Abbreviated address not populated
+
+		Account acct = null;
+
+		List<Account> directAccountLst = [SELECT Id, ParentId , Abbreviated_address__c,Abbreviated_name__c,Name,BillingState,BillingCity,IATA_ISO_Country__c,Email__c,Fax,Phone,BillingPostalCode,BillingStreet,CASS_Number__c,IATACode__c,Iso_State__c,GDS__c,Company_Type__c,License_Number__c,In_a_Airport__c,VAT_Number__c,Is_your_firm_handling_Dangerous_Goods__c,Location_Class__c,Location_Type__c,Mobile__c,Operation__c,Remittance_frequency__c,ShippingCity,ShippingCountry,IATA_ISO_Shipping_Country__c,IATA_ISO_Shipping_State__c,ShippingPostalCode,ShippingState,ShippingStreet,Short_Name__c,Solicitation_Flag__c,TradeName__c,VAT_Number_2__c,Website from Account where Id = :accountId];
+
+		if(directAccountLst.isEmpty())
+			return null;
+
+		Account directAccount = directAccountLst.get(0);
+
+		if(directAccount.Location_Type__c == 'BR' || directAccount.Location_Type__c == 'SA'){
+
+			List<Account> parentAccountLst = [SELECT Id, ParentId , Abbreviated_address__c,Abbreviated_name__c,Name,BillingState,BillingCity,IATA_ISO_Country__c,Email__c,Fax,Phone,BillingPostalCode,BillingStreet,CASS_Number__c,IATACode__c,Iso_State__c,GDS__c,Company_Type__c,License_Number__c,In_a_Airport__c,VAT_Number__c,Is_your_firm_handling_Dangerous_Goods__c,Location_Class__c,Location_Type__c,Mobile__c,Operation__c,Remittance_frequency__c,ShippingCity,ShippingCountry,IATA_ISO_Shipping_Country__c,IATA_ISO_Shipping_State__c,ShippingPostalCode,ShippingState,ShippingStreet,Short_Name__c,Solicitation_Flag__c,TradeName__c,VAT_Number_2__c,Website from Account where Id = :directAccount.ParentId ];
+
+			if(parentAccountLst.isEmpty())
+				return null;
+
+			acct = parentAccountLst.get(0);
+
+		}
+		else
+			acct = directAccount;
+		
+		accreditationObj = fillAccreditation(accreditationObj, acct, directAccount, processType, caseId);
+
+		return accreditationObj;
+
+	}
+
 	private static CaseContainer processFromPortal(CaseContainer cont){
 
 		Case caseToProcess = cont.c;
 
+		String processType = processTypeMap.get(caseToProcess.Reason1__c);
+
+		if(processType == null){
+
+			cont.migrated = true;
+			cont.processing = false;
+			cont.errorMessage = 'Could not match case  reason from case ('+caseToProcess.Reason1__c+') with type of process to be run.';
+			
+			return cont;
+		}
+
 		caseToProcess.RecordTypeId = rtCommCase;
 
+		String caseStatus = caseToProcess.Status;
+
+        update caseToProcess;
+        
 		AMS_Pax_Accreditation_Form__c accreditationObj = fetchAccreditation(caseToProcess.Id);
+
+		accreditationObj = fillMissingFieldsOnAccreditation(accreditationObj,caseToProcess.AccountId, processType, caseToProcess.Id);
+
+		alignOwners(accreditationObj,caseToProcess);
+
+		String oscarId = AMS_RecordCreatorWebservice.createAccreditation(caseToProcess.AccountId, accreditationObj.Id, processType, caseToProcess.Id);
+
+		postOscarUpdate(oscarId,caseToProcess.CaseNumber, caseToProcess.AccountId, true, caseStatus,caseToProcess);
+
+		cont.oscarId = oscarId;
+		cont.oscarCreated = new AMS_OSCAR__c(Id = oscarId, Name = caseToProcess.CaseNumber);
+
+		cont.oscarCaseId = caseToProcess.Id;
+		cont.caseCreated = caseToProcess;
+		cont.processing = false;
+		cont.migrated = true;
+
+		if(accreditationObj.IATACode__c == null && caseToProcess.Account.IATACode__c != null){
+			
+			accreditationObj.IATACode__c = caseToProcess.Account.IATACode__c;
+		}
+
+		update accreditationObj;
+
+
+		return cont;
+
+	}
+
+	private static Id fetchAccreditationRT(String locationClass, String processType){
+
+		String devName = 'General Online Accreditation';
+
+		if(locationClass == 'P'){
+			if(processType == 'NEW.HO.1.0')
+				devName = 'Travel Agent - HO';
+			if(processType == 'NEW.BR')
+				devName = 'Travel Agent - Branch';
+			if(processType == 'NEW.BR.ABROAD')
+				devName = 'Travel Agent - Branch Abroad';
+		}
+
+		if(locationClass == 'C'){
+			if(processType == 'NEW.HO.1.0')
+				devName = 'Cargo Agent - HO';
+			if(processType == 'NEW.BR')
+				devName = 'Cargo Agent - Branch';
+			if(processType == 'NEW.BR.ABROAD')
+				devName = 'Cargo Agent - Branch';
+		}
+
+		if(processType == 'MAJOR.CHANGES')
+			devName = 'Other Changes';
+
+		return Schema.SObjectType.AMS_Pax_Accreditation_Form__c.getRecordTypeInfosByName().get(devName).getRecordTypeId();
+
+	}
+
+	private static AMS_Pax_Accreditation_Form__c fillAccreditation(AMS_Pax_Accreditation_Form__c accreditationObj, Account acct, Account directAccount, String processType, String caseId){
+
+		accreditationObj.Abbreviated_Address__c = accreditationObj.Abbreviated_Address__c == null ? acct.Abbreviated_address__c : accreditationObj.Abbreviated_Address__c;
+		accreditationObj.Abbreviated_name__c = accreditationObj.Abbreviated_name__c == null ? directAccount.Abbreviated_name__c : accreditationObj.Abbreviated_name__c;
+		accreditationObj.Accept_terms_and_conditions__c = accreditationObj.Accept_terms_and_conditions__c == null ? true : accreditationObj.Accept_terms_and_conditions__c;
+		accreditationObj.Account_Name__c = accreditationObj.Account_Name__c == null ? acct.Name : accreditationObj.Account_Name__c;
+		accreditationObj.Billing_State__c = accreditationObj.Billing_State__c == null ? directAccount.BillingState : accreditationObj.Billing_State__c;
+		accreditationObj.Branch_Office_City__c = accreditationObj.Branch_Office_City__c == null ? acct.BillingCity : accreditationObj.Branch_Office_City__c;
+
+		accreditationObj.Branch_Office_Country__c = accreditationObj.Branch_Office_Country__c == null ? (processType == 'NEW.BR.ABROAD' ?  directAccount.IATA_ISO_Country__c : acct.IATA_ISO_Country__c) : accreditationObj.Branch_Office_Country__c;
+		
+		accreditationObj.Branch_Office_Email__c = accreditationObj.Branch_Office_Email__c == null ? directAccount.Email__c : accreditationObj.Branch_Office_Email__c;
+		accreditationObj.Branch_Office_FAX__c = accreditationObj.Branch_Office_FAX__c == null ? directAccount.Fax : accreditationObj.Branch_Office_FAX__c;
+		accreditationObj.Branch_Office_Phone__c = accreditationObj.Branch_Office_Phone__c == null ? directAccount.Phone : accreditationObj.Branch_Office_Phone__c;
+		accreditationObj.Branch_Office_Postal_code__c = accreditationObj.Branch_Office_Postal_code__c == null ? acct.BillingPostalCode : accreditationObj.Branch_Office_Postal_code__c;
+		accreditationObj.Branch_Office_Street_name_number__c = accreditationObj.Branch_Office_Street_name_number__c == null ? acct.BillingStreet : accreditationObj.Branch_Office_Street_name_number__c;
+		accreditationObj.CASS_Number__c = accreditationObj.CASS_Number__c == null ? directAccount.CASS_Number__c : accreditationObj.CASS_Number__c;
+		accreditationObj.IATACode__c = accreditationObj.IATACode__c == null ? directAccount.IATACode__c : accreditationObj.IATACode__c;
+		accreditationObj.IATA_ISO_State__c = accreditationObj.IATA_ISO_State__c == null ? acct.Iso_State__c : accreditationObj.IATA_ISO_State__c;
+		accreditationObj.ISSP_AMS_GDS_with_signed_contract__c = accreditationObj.ISSP_AMS_GDS_with_signed_contract__c == null ? AMS_AgencyHelper.transformGDS(directAccount.GDS__c) : accreditationObj.ISSP_AMS_GDS_with_signed_contract__c;
+		accreditationObj.ISSP_AMS_Legal_Status__c = accreditationObj.ISSP_AMS_Legal_Status__c == null ? decode(acct.Company_Type__c) : accreditationObj.ISSP_AMS_Legal_Status__c;
+		accreditationObj.ISSP_AMS_License_No__c = accreditationObj.ISSP_AMS_License_No__c == null ? directAccount.License_Number__c : accreditationObj.ISSP_AMS_License_No__c;
+		accreditationObj.ISSP_AMS_Premises_located_at_airport__c = accreditationObj.ISSP_AMS_Premises_located_at_airport__c == null ? ( directAccount.In_a_Airport__c == true ? 'Yes' : 'No' ) : accreditationObj.ISSP_AMS_Premises_located_at_airport__c;
+		accreditationObj.ISSP_AMS_VAT_number__c = accreditationObj.ISSP_AMS_VAT_number__c == null ? acct.VAT_Number__c : accreditationObj.ISSP_AMS_VAT_number__c;
+		accreditationObj.Is_your_firm_handling_Dangerous_Goods__c = accreditationObj.Is_your_firm_handling_Dangerous_Goods__c == null ? directAccount.Is_your_firm_handling_Dangerous_Goods__c : accreditationObj.Is_your_firm_handling_Dangerous_Goods__c;
+		accreditationObj.Location_Class__c = accreditationObj.Location_Class__c == null ? acct.Location_Class__c : accreditationObj.Location_Class__c;
+		accreditationObj.Location_Type__c = accreditationObj.Location_Type__c == null ? directAccount.Location_Type__c : accreditationObj.Location_Type__c;
+		accreditationObj.Mobile__c = accreditationObj.Mobile__c == null ? directAccount.Mobile__c : accreditationObj.Mobile__c;
+		accreditationObj.Operation__c = accreditationObj.Operation__c == null ? directAccount.Operation__c : accreditationObj.Operation__c;
+		accreditationObj.RecordTypeId = accreditationObj.RecordTypeId == null ? fetchAccreditationRT(acct.Location_Class__c,processType) : accreditationObj.RecordTypeId;
+		accreditationObj.Remittance_frequency__c = accreditationObj.Remittance_frequency__c == null ? directAccount.Remittance_frequency__c : accreditationObj.Remittance_frequency__c;
+		
+		if(accreditationObj.SAAM_Case__c == null)
+			accreditationObj.SAAM_Case__c = caseId;
+		
+		accreditationObj.Shipping_City__c = accreditationObj.Shipping_City__c == null ? directAccount.ShippingCity : accreditationObj.Shipping_City__c;
+		accreditationObj.Shipping_Country__c = accreditationObj.Shipping_Country__c == null ? directAccount.ShippingCountry : accreditationObj.Shipping_Country__c;
+		accreditationObj.Shipping_ISO_Country__c = accreditationObj.Shipping_ISO_Country__c == null ? acct.IATA_ISO_Shipping_Country__c : accreditationObj.Shipping_ISO_Country__c;
+		accreditationObj.Shipping_ISO_State__c = accreditationObj.Shipping_ISO_State__c == null ? acct.IATA_ISO_Shipping_State__c : accreditationObj.Shipping_ISO_State__c;
+		accreditationObj.Shipping_Postal_Code__c = accreditationObj.Shipping_Postal_Code__c == null ? acct.ShippingPostalCode : accreditationObj.Shipping_Postal_Code__c;
+		accreditationObj.Shipping_State__c = accreditationObj.Shipping_State__c == null ? directAccount.ShippingState : accreditationObj.Shipping_State__c;
+		accreditationObj.Shipping_Street__c = accreditationObj.Shipping_Street__c == null ? acct.ShippingStreet : accreditationObj.Shipping_Street__c;
+		accreditationObj.Short_Name__c = accreditationObj.Short_Name__c == null ? directAccount.Short_Name__c : accreditationObj.Short_Name__c;
+		accreditationObj.Solicitation_Flag__c = accreditationObj.Solicitation_Flag__c == null ? directAccount.Solicitation_Flag__c : accreditationObj.Solicitation_Flag__c;
+		accreditationObj.Submitted_to_IATA__c = accreditationObj.Submitted_to_IATA__c == null ? true : accreditationObj.Submitted_to_IATA__c;
+		accreditationObj.Trade_Name__c = accreditationObj.Trade_Name__c == null ? directAccount.TradeName__c : accreditationObj.Trade_Name__c;
+		accreditationObj.VAT_Number_2__c = accreditationObj.VAT_Number_2__c == null ? acct.VAT_Number_2__c : accreditationObj.VAT_Number_2__c;
+		accreditationObj.Website__c = accreditationObj.Website__c == null ? acct.Website : accreditationObj.Website__c;
+
+		return accreditationObj;
+	}
+
+	/**
+    Method to help decode the transformation between Specify Legal Status (AMS Online Accreditation) and Company Type (Acccount) in migrations
+    */
+
+	public static String decode(String companyType) {
+
+		if (companyType == null)
+        return null;
+
+    	if (companyType.equalsIgnoreCase('A'))
+        return 'Association';
+    	if (companyType.equalsIgnoreCase('C'))
+        return 'Corporation';
+    	if (companyType.equalsIgnoreCase('E'))
+        return 'State Owned Enterprise';
+    	if (companyType.equalsIgnoreCase('J'))
+        return 'Joint Venture';
+    	if (companyType.equalsIgnoreCase('L'))
+        return 'Limited Company';
+    	if (companyType.equalsIgnoreCase('O'))
+        return 'Other';
+    	if (companyType.equalsIgnoreCase('P'))
+        return 'Partnership';
+    	if (companyType.equalsIgnoreCase('R'))
+        return 'Limited Partnership';
+    	if (companyType.equalsIgnoreCase('S'))
+        return 'Sole Proprietorship';
+    	if (companyType.equalsIgnoreCase('T'))
+        return 'Trust Company';
+    	if (companyType.equalsIgnoreCase('V'))
+        return 'Co-operative';
+
+    return null;
+	}
+
+	private static AMS_Pax_Accreditation_Form__c createAccreditation(String caseId, String accountId, String processType){
+
+		Account acct = null;
+
+		List<Account> directAccountLst = [SELECT Id, ParentId , Abbreviated_address__c,Abbreviated_name__c,Name,BillingState,BillingCity,IATA_ISO_Country__c,Email__c,Fax,Phone,BillingPostalCode,BillingStreet,CASS_Number__c,IATACode__c,Iso_State__c,GDS__c,Company_Type__c,License_Number__c,In_a_Airport__c,VAT_Number__c,Is_your_firm_handling_Dangerous_Goods__c,Location_Class__c,Location_Type__c,Mobile__c,Operation__c,Remittance_frequency__c,ShippingCity,ShippingCountry,IATA_ISO_Shipping_Country__c,IATA_ISO_Shipping_State__c,ShippingPostalCode,ShippingState,ShippingStreet,Short_Name__c,Solicitation_Flag__c,TradeName__c,VAT_Number_2__c,Website from Account where Id = :accountId];
+
+		if(directAccountLst.isEmpty())
+			return null;
+
+		Account directAccount = directAccountLst.get(0);
+
+		if(directAccount.Location_Type__c == 'BR' || directAccount.Location_Type__c == 'SA'){
+
+			List<Account> parentAccountLst = [SELECT Id, ParentId , Abbreviated_address__c,Abbreviated_name__c,Name,BillingState,BillingCity,IATA_ISO_Country__c,Email__c,Fax,Phone,BillingPostalCode,BillingStreet,CASS_Number__c,IATACode__c,Iso_State__c,GDS__c,Company_Type__c,License_Number__c,In_a_Airport__c,VAT_Number__c,Is_your_firm_handling_Dangerous_Goods__c,Location_Class__c,Location_Type__c,Mobile__c,Operation__c,Remittance_frequency__c,ShippingCity,ShippingCountry,IATA_ISO_Shipping_Country__c,IATA_ISO_Shipping_State__c,ShippingPostalCode,ShippingState,ShippingStreet,Short_Name__c,Solicitation_Flag__c,TradeName__c,VAT_Number_2__c,Website from Account where Id = :directAccount.ParentId ];
+
+			if(parentAccountLst.isEmpty())
+				return null;
+
+			acct = parentAccountLst.get(0);
+
+		}
+		else
+			acct = directAccount;
+		
+		AMS_Pax_Accreditation_Form__c accreditationObj = new AMS_Pax_Accreditation_Form__c();
+
+		accreditationObj = fillAccreditation(accreditationObj, acct, directAccount, processType, caseId);
+
+		insert accreditationObj;
+
+		return accreditationObj;
+	}
+
+	private static AMS_Accreditation_Contact__c createAccreditationContact(AMS_Pax_Accreditation_Form__c accreditationObj, AMS_Account_Role__c role, String processType){
+
+		AMS_Accreditation_Contact__c contact = new AMS_Accreditation_Contact__c();
+
+		if(processType == 'NEW.HO.1.0' || processType == 'MAJOR.CHANGES')
+			contact.AMS_Ownership_Role__c = role.Id;
+
+		contact.AMS_Pax_Accreditation_Form__c = accreditationObj.Id;
+		contact.Agency_owner__c = true;
+		contact.Company__c = role.Owner_Account__c;
+		contact.Contact__c = role.Contact__c;
+		contact.Email__c = role.Contact_Email__c;
+		contact.Financial_interest__c = role.Percentage__c;
+		contact.First_name__c = role.Contact__c != null ? role.Contact__r.FirstName : ( role.Person__c != null ? role.Person__r.First_name__c : ''); 
+		contact.Last_name__c = (role.Contact__c == null && role.Person__c == null && role.Owner_Account__c == null) ? role.Owner_Name__c : ( role.Contact__c != null ? role.Contact__r.LastName : ( role.Person__c != null ? role.Person__r.Lastname__c : '_')); 
+		contact.Legacy_External_Id__c = role.Legacy_External_ID__c;
+		contact.Name = role.Owner_Name__c != null ? role.Owner_Name__c : (contact.First_name__c + contact.Last_name__c);
+		contact.Person_AMS__c = role.Person__c;
+		contact.Phone__c = role.Contact_Phone__c;
+
+		ID ownerRT = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Current Owner').getRecordTypeId();
+		ID companyOwnerRt = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Current Company Owner').getRecordTypeId();
+
+		contact.RecordTypeId = role.Owner_Account__c != null ? companyOwnerRt : ownerRT;
+
+		return contact;
+
+	}
+
+	private static List<AMS_Accreditation_Contact__c> createAccreditationContacts(AMS_Pax_Accreditation_Form__c accreditationObj, Id accountId, String typeOfProcess){
+
+		// get all the owners and create accreditation contacts
+
+		List<AMS_Accreditation_Contact__c> contactsToReturn = new List<AMS_Accreditation_Contact__c>();
+
+		List<AMS_Account_Role__c> allAccountRoles = new List<AMS_Account_Role__c>();
+		
+		allAccountRoles = [SELECT Id, RecordTypeId, Contact_Phone__c, Contact_Email__c, Termination_Date__c, Duty__c, Hours__c, IsManager__c, Percentage__c, Position__c, Account__c, Owner_Account__c, Contact__c, Contact__r.FirstName , Contact__r.LastName, Person__c, Person__r.First_Name__c , Person__r.Lastname__c , Person__r.Contact__c,Person__r.Contact__r.FirstName, Person__r.Contact__r.LastName, Legacy_External_ID__c, Legacy_System__c, Owner_Name__c from AMS_Account_role__c where Account__c = :accountId and Active__c = true];
+
+		for(AMS_Account_Role__c role: allAccountRoles){
+
+			contactsToReturn.add(createAccreditationContact(accreditationObj,role,typeOfProcess));
+		}
+
+		insert contactsToReturn;
+
+		return contactsToReturn;
+
+	}
+
+	private static AMS_OSCAR__c updateDatesFromSAAM(AMS_OSCAR__c oscar, String caseId){
+		
+		List<Case> cases = [SELECT id, Documentation_Complete__c, Financial_Assessment_received__c,Bank_Guarantee_amount__c,Bank_Guarantee_deadline__c,Bank_Guarantee_received__c,Bank_Guarantee_requested__c,Change_effective_as_of__c,Criteria_remarks__c,Documentation_remarks__c,Dossier_reception_date__c,Fees_refund_requested__c,Finalization_checklist__c,Financial_Assessment_deadline__c,Financial_Assessment_requested__c,Financial_Review_Result__c,Invoice_number__c,Local_Inspection_compliant__c,Local_Inspection_deadline__c,Local_Inspection_received__c,Local_Inspection_requested__c,Process_Start_Date__c,Proof_of_payment_received__c,PSAA_EACP_Agreement_received__c,PSAA_signed_copy_sent__c,SAAM_Deadline_Date__c,AIMS_updated__c,Finalized_in_AIMS__c from Case where Id = :caseId];
+
+		if(cases.isEmpty())
+			return null;
+
+		Case saamCase = cases.get(0);
+
+		try{
+			if(saamCase.Bank_Guarantee_amount__c != null)
+				oscar.Bank_Guarantee_amount__c = Integer.valueof(saamCase.Bank_Guarantee_amount__c);
+		
+		}catch(Exception e){
+			// shhhhhhhhhhhhhhh ...
+		}
+
+		oscar.Assessment_Performed_Date__c = saamCase.Financial_Assessment_received__c;
+		oscar.Bank_Guarantee_deadline__c = saamCase.Bank_Guarantee_deadline__c;
+		oscar.Bank_Guarantee_received__c = saamCase.Bank_Guarantee_received__c;
+		oscar.Bank_Guarantee_requested__c = saamCase.Bank_Guarantee_requested__c;
+		oscar.Change_effective_as_of__c = saamCase.Change_effective_as_of__c;
+		oscar.Criteria_remarks__c = saamCase.Criteria_remarks__c;
+		oscar.Documentation_remarks__c = saamCase.Documentation_remarks__c;
+		oscar.Dossier_Reception_Date__c = saamCase.Dossier_reception_date__c;
+		oscar.Fees_refund_requested__c = saamCase.Fees_refund_requested__c;
+		oscar.Finalization_checklist__c = saamCase.Finalization_checklist__c;
+		oscar.Financial_Assessment_deadline__c = saamCase.Financial_Assessment_deadline__c;
+		oscar.Financial_Assessment_requested__c = saamCase.Financial_Assessment_requested__c;
+		oscar.Financial_Review_Result__c = saamCase.Financial_Review_Result__c;
+		oscar.Billing_Document_Number__c = saamCase.Invoice_number__c;
+		oscar.Local_Inspection_compliant__c = saamCase.Local_Inspection_compliant__c == 'Yes' ? 'Passed' :  (saamCase.Local_Inspection_compliant__c == 'No' ? 'Failed' : 'N/A' );
+		oscar.Local_Inspection_deadline__c = saamCase.Local_Inspection_deadline__c;
+		oscar.Local_Inspection_received__c = saamCase.Local_Inspection_received__c;
+		oscar.Local_Inspection_requested__c = saamCase.Local_Inspection_requested__c;
+		oscar.Process_Start_Date__c = saamCase.Process_Start_Date__c;
+		oscar.Proof_of_payment_received__c = saamCase.Proof_of_payment_received__c;
+		oscar.PSAA_EACP_Agreement_received__c = saamCase.PSAA_EACP_Agreement_received__c;
+		oscar.Welcome_Pack_Sent__c = saamCase.PSAA_signed_copy_sent__c;
+		oscar.Sanity_check_deadline__c = saamCase.SAAM_Deadline_Date__c;
+		oscar.Sanity_check_received__c = saamCase.Documentation_Complete__c;
+		oscar.Update_AIMS_Rejection_Date__c = saamCase.AIMS_updated__c != null ? saamCase.AIMS_updated__c.date() : null;
+		oscar.Update_AIMS_Rejection__c = saamCase.AIMS_updated__c != null ? true : false;
+		oscar.Update_AIMS_Approval_Date__c = saamCase.Finalized_in_AIMS__c != null ? saamCase.Finalized_in_AIMS__c.date() : null;
+		oscar.Update_AIMS_Approval__c = saamCase.Finalized_in_AIMS__c != null ? true : false;
+
+		System.debug('End date fields migration...');
+
+		return oscar;
+	}
+
+	private static AMS_OSCAR__c postOscarUpdate(String oscarId, String oscarName, Id accountId, boolean isComingFromPortal, String caseStatus, Case oscarCase){
+
+		List<AMS_OSCAR__c> oscars = [SELECT Id,Status__c, Name, Bank_Guarantee_amount__c, First_Step_Completed__c, Assessment_Performed_Date__c,Bank_Guarantee_deadline__c,Bank_Guarantee_received__c,Bank_Guarantee_requested__c,Change_effective_as_of__c,Criteria_remarks__c,Documentation_remarks__c,Dossier_Reception_Date__c,Fees_refund_requested__c,Finalization_checklist__c,Financial_Assessment_deadline__c,Financial_Assessment_requested__c,Financial_Review_Result__c,Billing_Document_Number__c,Local_Inspection_compliant__c,Local_Inspection_deadline__c,Local_Inspection_received__c,Local_Inspection_requested__c,Process_Start_Date__c,Proof_of_payment_received__c,PSAA_EACP_Agreement_received__c,Welcome_Pack_Sent__c,Sanity_check_deadline__c,Update_AIMS_Rejection_Date__c,Update_AIMS_Rejection__c,Update_AIMS_Approval_Date__c,Update_AIMS_Approval__c from AMS_OSCAR__c where Id = :oscarId];
+
+		if(!oscars.isEmpty()){
+
+			AMS_OSCAR__c oscar = oscars.get(0);
+
+			oscar.Status__c = caseStatus;
+
+			if(!isComingFromPortal){
+
+				oscar.Name = oscarName;
+			}
+
+			List<Agency_Applied_Change_code__c> changeCodes = [SELECT Id from Agency_Applied_Change_code__c where Account__c = :accountId and Change_Code__c = 'NEW'];
+
+			if(!changeCodes.isEmpty()){
+				oscar.First_Step_Completed__c = true;
+			}
+
+			oscar = updateDatesFromSAAM(oscar,oscarCase.Id);
+
+			if(oscar == null)
+				return null;
+
+			update oscar;
+
+			System.debug('Oscar updated.');
+			return oscar;
+		}
+
+		return null;
+
+	}
+
+
+	private static CaseContainer processNotFromPortalNew(CaseContainer cont){
+
+		Case caseToProcess = cont.c;
 
 		String processType = processTypeMap.get(caseToProcess.Reason1__c);
 
@@ -68,26 +551,55 @@ public with sharing class AMS_MigrationToolHelper {
 			return cont;
 		}
 
+		String caseStatus = caseToProcess.Status;
+
+		caseToProcess.RecordTypeId = rtCommCase;
+
+        update caseToProcess;
+
+        AMS_Pax_Accreditation_Form__c accreditationObj = createAccreditation(caseToProcess.Id,caseToProcess.AccountId,processType);
+
+        if(accreditationObj == null){
+
+			cont.migrated = true;
+			cont.processing = false;
+			cont.errorMessage = 'Could not create the accreditation object - please check the logs for more information.';
+			
+			return cont;
+		}
+
+		List<AMS_Accreditation_Contact__c> contacts = createAccreditationContacts(accreditationObj,caseToProcess.AccountId,processType);
+
 		String oscarId = AMS_RecordCreatorWebservice.createAccreditation(caseToProcess.AccountId, accreditationObj.Id, processType, caseToProcess.Id);
 
+		AMS_OSCAR__c oscarUpdated = postOscarUpdate(oscarId,caseToProcess.CaseNumber, caseToProcess.AccountId, false,caseStatus,caseToProcess);
+
+        if(oscarUpdated == null){
+
+			cont.migrated = true;
+			cont.processing = false;
+			cont.errorMessage = 'Could not update Oscar - please check the logs for more information.';
+			
+			return cont;
+		}
+
 		cont.oscarId = oscarId;
+		cont.oscarCreated = oscarUpdated;
+
 		cont.oscarCaseId = caseToProcess.Id;
+		cont.caseCreated = caseToProcess;
 		cont.processing = false;
 		cont.migrated = true;
 
-		if(accreditationObj.IATACode__c == null && caseToProcess.Account.IATACode__c != null){
-			
-			accreditationObj.IATACode__c = caseToProcess.Account.IATACode__c;
-			
-			update accreditationObj;
-		}
+		System.debug('Process finished.');
 
 		return cont;
+
 
 	}
 
 	private static CaseContainer processNotFromPortal(CaseContainer cont){
-		
+
 		Case caseToProcess = cont.c;
 
 		AMS_Pax_Accreditation_Form__c accreditationObj = fetchAccreditation(caseToProcess.Id);
@@ -114,7 +626,7 @@ public with sharing class AMS_MigrationToolHelper {
       	
 
       	System.debug('Starting with flow ...');
-		
+
 		Flow.Interview.OSCAR_Wizard_SIMPLEX_Automatic_v2_0 wizardFlow = new Flow.Interview.OSCAR_Wizard_SIMPLEX_Automatic_v2_0(flowVarMap);
 		wizardFlow.start();
 
@@ -156,8 +668,8 @@ public with sharing class AMS_MigrationToolHelper {
 		System.debug('Process finished.');
 
 		return cont;
-		
-		return null;
+
+
 	}
 
 	private static String performValidations(Case c, String processType){
@@ -197,7 +709,7 @@ public with sharing class AMS_MigrationToolHelper {
 
 	private static AMS_Pax_Accreditation_Form__c fetchAccreditation(Id caseId){
 
-		List<AMS_Pax_Accreditation_Form__c> toReturn = new List<AMS_Pax_Accreditation_Form__c>([SELECT Id , IATACode__c from AMS_Pax_Accreditation_Form__c where SAAM_Case__c = :caseId]);
+		List<AMS_Pax_Accreditation_Form__c> toReturn = new List<AMS_Pax_Accreditation_Form__c>([SELECT Id , Abbreviated_Address__c,Abbreviated_name__c,Accept_terms_and_conditions__c,Account_Name__c,Billing_State__c,Branch_Office_City__c,Branch_Office_Country__c,Branch_Office_Email__c,Branch_Office_FAX__c,Branch_Office_Phone__c,Branch_Office_Postal_code__c,Branch_Office_Street_name_number__c,CASS_Number__c,IATACode__c,IATA_ISO_State__c,ISSP_AMS_GDS_with_signed_contract__c,ISSP_AMS_Legal_Status__c,ISSP_AMS_License_No__c,ISSP_AMS_Premises_located_at_airport__c,ISSP_AMS_VAT_number__c,Is_your_firm_handling_Dangerous_Goods__c,Location_Class__c,Location_Type__c,Mobile__c,Operation__c,RecordTypeId,Remittance_frequency__c,SAAM_Case__c,Shipping_City__c,Shipping_Country__c,Shipping_ISO_Country__c,Shipping_ISO_State__c,Shipping_Postal_Code__c,Shipping_State__c,Shipping_Street__c,Short_Name__c,Solicitation_Flag__c,Submitted_to_IATA__c,Trade_Name__c,VAT_Number_2__c,Website__c from AMS_Pax_Accreditation_Form__c where SAAM_Case__c = :caseId]);
 	
 		if(!toReturn.isEmpty())
 			return toReturn.get(0);

@@ -16192,6 +16192,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Contract.Dunning_Procedure__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Contract.EF_Admin_Fee__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -16857,7 +16862,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>EF_Billing_Agreement__c.Payment_Terms__c</field>
+        <field>EF_Billing_Agreement__c.Contract_Payment_Terms__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -16872,7 +16877,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>EF_Contact_Relationship__c.Role__c</field>
+        <field>EF_Contact_Relationship__c.EF_Role__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
