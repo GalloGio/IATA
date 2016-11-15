@@ -52,7 +52,7 @@
         if(issue.Id === undefined) isNewLine = true;
         if (issue.Account__c === 'accountId') { issue.Account__c = component.get("v.accountId");}
         console.log('save: ' + JSON.stringify(issue));
-
+        
         var action = component.get("c.upsertIssue");
         action.setParams({
             "issue": issue
@@ -65,29 +65,29 @@
                 var issues = component.get("v.issues");
                 issues[index] = issue; // replace the line with the one returned from the database
                 component.set("v.issues", issues);
-
+                
                 if(isNewLine) {
-
-                    var backup = component.get("v.issuesBackup");
+                    
+                    var backup = component.get("v.backup");
                     backup.push(issue);
                     component.set("v.backup", backup);
                 }
-
+                
                 helper.fetchIssues(component);
             }
             else if (state === "ERROR") {
                 var errors = response.getError();
                 console.log('errors: ' + JSON.stringify(errors));
-
+                
                 console.log("firing error event for index [" + index + "] and account role id [" + issue.Id + "] w message " + errors[0].pageErrors[0].message);
-
+                
                 var errorEvent = $A.get("e.c:AMP_IssueOrPriorityError");
                 errorEvent.setParams({ "errorMessage": errors[0].pageErrors[0].message, "index":index, "issueId": issue.Id });
                 errorEvent.fire();
             }
-
+            
         });
-
+        
         $A.enqueueAction(action);
     },
     // TODO: fix the handling of hidden items
@@ -95,16 +95,16 @@
         console.log("handleDeleteIssue");
         var issue = event.getParam("issue");
         var issues = component.get("v.issues");
-
+        
         if(issue.Id === undefined) {
-
+            
             issues.pop(); // the last item of the list is the unsaved, so we can pop()
             console.log(JSON.stringify(issues));
             component.set("v.issues", issues);
-
+            
         }
         else {
-
+            
             var action = component.get("c.deleteIssue");
             action.setParams({
                 "issue": issue
@@ -120,8 +120,8 @@
                         }
                     }
                     component.set("v.issues", items);
-
-
+                    
+                    
                     helper.fetchIssues(component);
                 }
             });

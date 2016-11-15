@@ -2654,8 +2654,9 @@ Currently (26/10/15) used to identify which user haven&apos;t complete the suppo
             <value>1</value>
         </filters>
         <filters>
-            <field>CORE.USERS.LAST_LOGIN</field>
-            <operation>notEqual</operation>
+            <field>CORE.PROFILE.NAME</field>
+            <operation>contains</operation>
+            <value>Portal</value>
         </filters>
         <label>TD</label>
         <language>en_US</language>

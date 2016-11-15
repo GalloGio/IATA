@@ -4,7 +4,7 @@
     <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 
     <head>
-      <title>Account Plan</title>
+      <title>Key Account Plan</title>
       <!-- <apex:stylesheet value="{!URLFOR($Resource.AMP_helper, 'css/general.css')}"/> -->
       <style>
         @page { size: A4 landscape; /* A4 landscape (297mm×210mm) */
@@ -21,7 +21,7 @@
     <body  onload="window.print()">
         <apex:form >
         <!-- <apex:outputLink value="/{!accountId}" >back to Account</apex:outputLink> -->
-        <apex:pageBlock id="theBlock" title="Account Plan for: {!AccountName}">
+        <apex:pageBlock id="theBlock" title="Key Account Plan for: {!AccountName}">
 
 
             <!-- <apex:commandButton action="{!newObjective}" value="New Planned Activity" rendered="{!visibleTab != 'previous'}" reRender="thisPanel"/> -->

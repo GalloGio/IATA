@@ -207,6 +207,16 @@ E&amp;F CRM Project</description>
         <type>AutoNumber</type>
     </fields>
     <fields>
+        <fullName>Contract_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Contract Name</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Contract_Notes__c</fullName>
         <description>This field is a text area where the contract owner can add contract-related information.</description>
         <externalId>false</externalId>
@@ -552,6 +562,38 @@ E&amp;F CRM Project</description>
         <visibleLines>4</visibleLines>
     </fields>
     <fields>
+        <fullName>EF_Manager_Approval__c</fullName>
+        <description>Helper field for &quot;require approval&quot; functionality.</description>
+        <externalId>false</externalId>
+        <label>E&amp;F Manager Approval</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Not Started</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Approved</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Rejected</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Recalled</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+    </fields>
+    <fields>
         <fullName>EF_Payment_Currency__c</fullName>
         <externalId>false</externalId>
         <globalPicklist>EF_Currency</globalPicklist>
@@ -628,6 +670,15 @@ E&amp;F CRM Project</description>
         <trackHistory>true</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
+        <fullName>EF_Requested_Changes__c</fullName>
+        <externalId>false</externalId>
+        <label>E&amp;F Requested Changes</label>
+        <length>10000</length>
+        <trackHistory>false</trackHistory>
+        <type>Html</type>
+        <visibleLines>10</visibleLines>
     </fields>
     <fields>
         <fullName>EF_Require_Approval__c</fullName>
@@ -760,6 +811,7 @@ IF(ISPICKVAL(Third_Party__c, &quot;Berlitz&quot;), 0.10,
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -2239,6 +2291,29 @@ IF(ISPICKVAL(Third_Party__c, &quot;Berlitz&quot;), 0.10,
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>EF_Manager_Approval__c</picklist>
+            <values>
+                <fullName>Approved</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Started</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Recalled</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rejected</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>EF_Payment_Method</picklist>
             <values>
                 <fullName>Bank transfer</fullName>
@@ -2783,7 +2858,8 @@ IF(ISPICKVAL(Third_Party__c, &quot;Berlitz&quot;), 0.10,
     <validationRules>
         <fullName>EF_Contract_Creation_Validation</fullName>
         <active>true</active>
-        <errorConditionFormula>AND(ISNEW(),  NOT(OR(ISPICKVAL($User.EF_User_Role__c, &apos;Head, Client Services&apos;), ISPICKVAL($User.EF_User_Role__c, &apos;Manager, Business Development&apos;))), RecordType.DeveloperName=&apos;EF_Client_Agreement&apos;)</errorConditionFormula>
+        <errorConditionFormula>AND(NOT($Setup.EF_Skip_Validations__c.Skip_Validation__c),
+AND(ISNEW(),  NOT(OR(ISPICKVAL($User.EF_User_Role__c, &apos;Head, Client Services&apos;), ISPICKVAL($User.EF_User_Role__c, &apos;Manager, Business Development&apos;))), RecordType.DeveloperName=&apos;EF_Client_Agreement&apos;))</errorConditionFormula>
         <errorMessage>You are not allowed to create E&amp;F Contracts</errorMessage>
     </validationRules>
     <validationRules>
