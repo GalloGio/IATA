@@ -42,16 +42,6 @@
         
         Test.startTest();
         Account a = [SELECT id from Account where Name = 'Test1 Agency' LIMIT 1];
-
-        /*List<AMS_Change_Code__c> accs = new List<AMS_Change_Code__c>();MACREVIEW
-        
-        AMS_Change_Code__c acc1 = new AMS_Change_Code__c(Name = 'FIN', Description__c = 'test FIN');MACREVIEW
-        AMS_Change_Code__c acc2 = new AMS_Change_Code__c(Name = 'DIS', Description__c = 'test DIS');MACREVIEW
-        
-        accs.add(acc1);MACREVIEW
-        accs.add(acc2);MACREVIEW
-        
-        insert accs;MACREVIEW *//**/
                 
         AMS_Oscar__c oscar = [SELECT id, STEP1__c, STEP10__c, STEP11__c, STEP12__c, STEP13__c, STEP14__c, STEP15__c, STEP16__c, STEP17__c, STEP18__c, STEP19__c, STEP2__c,STEP20__c,
             STEP3__c, STEP4__c, STEP5__c, STEP6__c, STEP7__c, STEP8__c, STEP9__c, Status__c,OwnerId from AMS_OSCAR__c where Process__c = :AMS_Utils.new_HO limit 1];
@@ -776,6 +766,30 @@
         oscar = [SELECT id, Finalization_result__c FROM AMS_OSCAR__c where Process__c = :AMS_Utils.BANKACCCHANGES limit 1];
 
         system.assertEquals(oscar.Finalization_result__c, AMS_Utils.FAILED);
+
+        Test.stopTest();
+    }
+
+    @isTest static void testAppointmentsUpdate() {
+
+        AMS_OSCAR__c oscar = [SELECT Id, STEP10__c from AMS_OSCAR__c where Process__c = :AMS_Utils.new_GSA limit 1];
+
+        oscar.STEP10__c = AMS_Utils.FAILED;
+
+        update oscar;
+        
+        Test.startTest();
+
+        oscar.STEP10__c = AMS_Utils.PASSED;
+
+        update oscar;
+
+        List<AMS_Inspection__c> inspections = new List<AMS_Inspection__c>();
+
+        inspections = [SELECT id, Accreditation_Endorsement_Status_code__c FROM AMS_Inspection__c where OSCAR__c = :oscar.Id];
+
+        for(AMS_Inspection__c insp: inspections)
+            system.assertEquals(insp.Accreditation_Endorsement_Status_code__c, '9');
 
         Test.stopTest();
     }

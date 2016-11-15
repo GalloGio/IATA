@@ -24,16 +24,16 @@ private class TransferAttachmentToCaseControllerTest {
 
 
 
-	@isTest static void test_method_one() {
+  @isTest static void test_method_one() {
 
 
-		loadCredentials();
+    loadCredentials();
 
 
 
 
-
-		    ID hqrt = Schema.SObjectType.Account.RecordTypeInfosByName.get('Airline Headquarters').RecordTypeId ;
+        EF_AttachmentListController.runningForEF = false;
+        ID hqrt = Schema.SObjectType.Account.RecordTypeInfosByName.get('Airline Headquarters').RecordTypeId ;
        // ID IFAPcaseRecordTypeID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('IATA_Financial_Review');
         ID europeRTId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('CasesEurope');
         ID chinaRTID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('Cases_China_North_Asia');

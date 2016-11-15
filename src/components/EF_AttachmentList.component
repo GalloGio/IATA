@@ -1,6 +1,6 @@
 <apex:component controller="EF_AttachmentListController" allowDML="true" >
     <apex:attribute name="sobjectId" description="id" type="Id" required="true" assignTo="{!id}" />
-        
+
     <apex:includeScript value="/soap/ajax/33.0/connection.js"/>
     <apex:includeScript value="/soap/ajax/33.0/apex.js"/>
     <apex:includeScript value="{!$Resource.jquery2_1_4}"/>
@@ -62,7 +62,7 @@
                 console.error(err);
                 return false;
             }
-            
+
             console.info("bound events:");
             console.info(data);
 
@@ -110,12 +110,12 @@
         });
 
         function uploadFiles(files) {
-            
+
             try{
                 $( '#dialog' ).dialog('destroy');
             }catch(err){}
-            
-            fileCounter.reset(files.length); 
+
+            fileCounter.reset(files.length);
             $.each(files, function(i, file) {
                 uploadFile(file);
             });
@@ -170,7 +170,7 @@
             //var progressBar;
 
             var xhr = new XMLHttpRequest();
-            
+
             // salesforce overrides original XMLHttpRequest in IE
             if (!xhr.upload && window.Sarissa && window.Sarissa.originalXMLHttpRequest) {
                 xhr = new Sarissa.originalXMLHttpRequest();
@@ -180,23 +180,23 @@
                 if (this.readyState == 4) {
                     fileCounter.refreshIfEmpty();
                     var status = this.status;
-                    if (status == 200) { 
+                    if (status == 200) {
                         ////progressUpload(100, this.progressBar);
                         //uploadFile(file);
                     } else {
                         if (this.responseText) {
-                            getResponseFromXML(this.responseText); 
+                            getResponseFromXML(this.responseText);
                             //uploadFile(file);
                         } else {
                             var message = '';
                             if (this.statusText) {
-                                message = 'Status: '+this.status+'. Error: '+this.statusText; 
+                                message = 'Status: '+this.status+'. Error: '+this.statusText;
                             }
                             else if (this.responseText) {
                                 message = 'Status: '+this.status+'. Error: '+this.responseText;
                             }
                             else {
-                                message = 'Status:'+this.status+'. Error: Unknown error.'; 
+                                message = 'Status:'+this.status+'. Error: Unknown error.';
                             }
                         }
                     }
@@ -227,13 +227,15 @@
          function callToCreateAmazonFileObject(file, path) {
 
             startLoading();
-         
-            var efCategory = $("[id$='dataToSubmit_EF_Category__c']").val();
-            var efSubCategory = $("[id$='dataToSubmit_EF_Subcategory__c']").val();
-            var efExpiryDate = $("[id$='dataToSubmit_EF_Expiry_Date__c']").val();
-            var efExpired = $("[id$='dataToSubmit_EF_Expired__c']").prop("checked");
-            var efSapNumber = $("[id$='dataToSubmit_EF_SAP_Number__c']").val();
-             
+
+            var efCategory = $("[id$='dataToSubmit_Category__c']").val();
+            var efSubCategory = $("[id$='dataToSubmit_Subcategory__c']").val();
+            var efExpiryDate = $("[id$='dataToSubmit_Expiry_Date__c']").val();
+            var efExpired = $("[id$='dataToSubmit_Expired__c']").prop("checked");
+            var efSapNumber = $("[id$='dataToSubmit_SAP_Number__c']").val();
+            var additionalInformation = $("[id$='dataToSubmit_Additional_Information__c']").val();
+            var efPrivate = $("[id$='dataToSubmit_EF_Private__c']").prop("checked");
+
             console.warn('efSubCategory: '+efSubCategory);
 
              EF_AttachmentListController.createAmazonFileObject(
@@ -242,10 +244,12 @@
                  "{!sobjectId}",
                  "EF_File",
                  efCategory,
-                 ($("[id$='dataToSubmit_EF_Subcategory__c']").prop("disabled") ? '' : efSubCategory),
+                 ($("[id$='dataToSubmit_Subcategory__c']").prop("disabled") ? '' : efSubCategory),
                  efExpiryDate,
                  efExpired,
                  efSapNumber,
+                 additionalInformation,
+                 efPrivate,
                  function(result, event){}
                );
 
@@ -255,10 +259,10 @@
         function uploadEfFile() {
 
             if(validateInputs("dataToSubmit")) {
-                
+
                 browseFiles();
             }else{
-                    
+
                 alert('Please fill all the information.');
             }
         }
@@ -267,44 +271,49 @@
         function validateUpdate() {
 
             if(validateInputs("editFile")) {
-                
+
                 updateAttach();
             }else{
-                    
+
                 alert('Please fill all the information.');
             }
 
             return false;
         }
-            
+
         function validateInputs(identifier) {
-            
-            var $efCategory = $("[id$='"+identifier+"_EF_Category__c']");
-            var $efSubCategory = $("[id$='"+identifier+"_EF_Subcategory__c']");
-            var $efSapNumber = $("[id$='"+identifier+"_EF_SAP_Number__c']");
-            var $efExpiryDate = $("[id$='"+identifier+"_EF_Expiry_Date__c']");
-            var $efExpired = $("[id$='"+identifier+"_EF_Expired__c']");
+
+            var $efCategory = $("[id$='"+identifier+"_Category__c']");
+            var $efSubCategory = $("[id$='"+identifier+"_Subcategory__c']");
+            var $efAdditionalInformation = $("[id$='"+identifier+"_Additional_Information__c']");
+            var $efSapNumber = $("[id$='"+identifier+"_SAP_Number__c']");
+            var $efExpiryDate = $("[id$='"+identifier+"_Expiry_Date__c']");
+            var $efExpired = $("[id$='"+identifier+"_Expired__c']");
 
             if ($efCategory.val() == '' || $efSubCategory.val() == '') return false;
-
+            if(($efCategory.val() == 'Ad-Hoc Report' || $efCategory.val() == 'Miscellaneous' )) {
+                if ( $efAdditionalInformation.val() == '') return false;
+            } else {
+                if ( $efSubCategory.val() == '') return false;
+            }
             if($efSapNumber.prop("required") && $efSapNumber.val() == '') return false;
             if($efExpiryDate.prop("required") && $efExpiryDate.val() == '') return false;
             if($efExpired.prop("required") && !$efExpired.prop("checked")) return false;
 
             return true;
         }
-        
+
         function openDialog() {
 
             $( '#dialog' ).dialog({width: '650px', modal: true, close: function( event, ui ) {$( '#dialog' ).dialog('destroy');}});
         }
 
         function bindRequirements(identifier) {
-            var $efCategory = $("[id$='"+identifier+"_EF_Category__c']");
-            var $efSubCategory = $("[id$='"+identifier+"_EF_Subcategory__c']");
-            var $efSapNumber = $("[id$='"+identifier+"_EF_SAP_Number__c']");
-            var $efExpiryDate = $("[id$='"+identifier+"_EF_Expiry_Date__c']");
-            var $efExpired = $("[id$='"+identifier+"_EF_Expired__c']");
+            var $efCategory = $("[id$='"+identifier+"_Category__c']");
+            var $efSubCategory = $("[id$='"+identifier+"_Subcategory__c']");
+            var $efSapNumber = $("[id$='"+identifier+"_SAP_Number__c']");
+            var $efExpiryDate = $("[id$='"+identifier+"_Expiry_Date__c']");
+            var $efExpired = $("[id$='"+identifier+"_Expired__c']");
 
             var catSelection = $efCategory.val() + '.' + $efSubCategory.val()
 
@@ -315,7 +324,7 @@
             var expiredRequired = jQuery.parseJSON('{!expiredRequiredJSON}');
 
             // toggleRequired($efSubCategory, !$efSubCategory.prop("disabled"));
-            
+
             toggleRequired($efSapNumber, jQuery.inArray(catSelection, sapNumberRequired) > -1);
             toggleRequired($efExpiryDate, jQuery.inArray(catSelection, expiryDateRequired) > -1);
             toggleRequired($efExpired, jQuery.inArray(catSelection, expiredRequired) > -1);
@@ -339,14 +348,14 @@
     <c:Loading />
 
     <apex:form id="mainform" >
-        
+
         <apex:actionFunction name="refreshListServer" action="{!refreshList}" rerender="mainform" oncomplete="stopLoading();"/>
         <apex:pageMessages />
 
         <apex:pageblock id="fileList" title="{!$Label.Attachments}" >
 
 <!--            BUTTONS -->
-            <apex:pageblockButtons location="top" >                
+            <apex:pageblockButtons location="top" >
                 <apex:outputPanel layout="none">
                     <apex:commandButton value="{!$Label.Select_File}" title="Select File" onclick="openDialog(); return false;" immediate="true" />
                 </apex:outputPanel>
@@ -391,35 +400,40 @@
                 </apex:column>
 
                 <apex:column headerValue="{!$Label.File_Name}">
-                    <apex:outputText value="{!attach.name}"/>
+                    <apex:outputLink value="../{!attach.Id}" target="_blank">{!attach.Name}</apex:outputLink>
+                    <!-- <apex:outputText value="{!attach.name}"/> -->
                 </apex:column>
 
-                <apex:column headerValue="{!$ObjectType.AmazonFile__c.fields.EF_Document_Date__c.Label}" >
+                <apex:column headerValue="{!$ObjectType.AmazonFile__c.fields.Document_Date__c.Label}" >
                     <apex:outputText value=" {0,date,d MMM yyyy HH:mm a}">
                         <apex:param value="{!attach.efDocumentDate}" />
                     </apex:outputText>
                 </apex:column>
 
-                <apex:column headerValue="{!$ObjectType.AmazonFile__c.fields.EF_Category__c.Label}" >
+                <apex:column headerValue="{!$ObjectType.AmazonFile__c.fields.Category__c.Label}" >
                     <apex:outputText value="{!attach.efCategory}"/>
                 </apex:column>
 
-                <apex:column headerValue="{!$ObjectType.AmazonFile__c.fields.EF_Subcategory__c.Label}" >
+                <apex:column headerValue="{!$ObjectType.AmazonFile__c.fields.Subcategory__c.Label}" >
                     <apex:outputText value="{!attach.efSubCategory}"/>
                 </apex:column>
 
-                <apex:column headerValue="{!$ObjectType.AmazonFile__c.fields.EF_Expiry_Date__c.Label}" >
+                <apex:column headerValue="{!$ObjectType.AmazonFile__c.fields.Expiry_Date__c.Label}" >
                     <apex:outputText value=" {0,date,d MMM yyyy HH:mm a}">
                         <apex:param value="{!attach.efExpiryDate}" />
                     </apex:outputText>
                 </apex:column>
 
-                <apex:column headerValue="{!$ObjectType.AmazonFile__c.fields.EF_Expired__c.Label}" >
+                <apex:column headerValue="{!$ObjectType.AmazonFile__c.fields.Expired__c.Label}" >
                     <apex:inputCheckbox value="{!attach.efExpired}" disabled="true" />
                 </apex:column>
 
-                <apex:column headerValue="{!$ObjectType.AmazonFile__c.fields.EF_SAP_Number__c.Label}" >
+                <apex:column headerValue="{!$ObjectType.AmazonFile__c.fields.SAP_Number__c.Label}" >
                     <apex:outputText value="{!attach.efSAPNumber}"/>
+                </apex:column>
+
+                <apex:column headerValue="{!$ObjectType.AmazonFile__c.fields.EF_Private__c.Label}" >
+                    <apex:inputCheckbox value="{!attach.efPrivate}" disabled="true"/>
                 </apex:column>
 
             </apex:pageBlockTable>
@@ -438,42 +452,58 @@
                 <apex:pageBlockSection columns="1">
 
                     <apex:pageBlockSectionItem >
-                        <apex:outputLabel value="{!$ObjectType.AmazonFile__c.fields.EF_Category__c.Label}"/>
+                        <apex:outputLabel value="{!$ObjectType.AmazonFile__c.fields.Category__c.Label}"/>
                         <apex:outputPanel layout="block" styleClass="requiredInput">
                             <apex:outputPanel layout="block" styleClass="requiredBlock" />
-                            <apex:inputField id="dataToSubmit_EF_Category__c" value="{!amazonFileToUpload.EF_Category__c}" onchange="bindRequirements('dataToSubmit');"/>
+                            <apex:inputField id="dataToSubmit_Category__c" value="{!amazonFileToUpload.Category__c}" onchange="bindRequirements('dataToSubmit');"/>
                         </apex:outputPanel>
                     </apex:pageBlockSectionItem>
 
                     <apex:pageBlockSectionItem >
-                        <apex:outputLabel value="{!$ObjectType.AmazonFile__c.fields.EF_Subcategory__c.Label}"/>
+                        <apex:outputLabel value="{!$ObjectType.AmazonFile__c.fields.Subcategory__c.Label}"/>
                         <apex:outputPanel layout="block" styleClass="requiredInput">
                             <apex:outputPanel layout="block" styleClass="requiredBlock warn" />
-                            <apex:inputField id="dataToSubmit_EF_Subcategory__c" value="{!amazonFileToUpload.EF_Subcategory__c}" onchange="bindRequirements('dataToSubmit');" />
+                            <apex:inputField id="dataToSubmit_Subcategory__c" value="{!amazonFileToUpload.Subcategory__c}" onchange="bindRequirements('dataToSubmit');" />
                         </apex:outputPanel>
                     </apex:pageBlockSectionItem>
 
                     <apex:pageBlockSectionItem >
-                        <apex:outputLabel value="{!$ObjectType.AmazonFile__c.fields.EF_Expiry_Date__c.Label}"/>
+                        <apex:outputLabel value="{!$ObjectType.AmazonFile__c.fields.Additional_Information__c.Label}"/>
                         <apex:outputPanel layout="block" styleClass="requiredInput">
-                            <apex:outputPanel layout="block" styleClass="requiredBlock hidden" />
-                            <apex:inputField id="dataToSubmit_EF_Expiry_Date__c" value="{!amazonFileToUpload.EF_Expiry_Date__c}" />
+                            <apex:outputPanel layout="block" styleClass="requiredBlock warn" />
+                            <apex:inputField id="dataToSubmit_Additional_Information__c" value="{!amazonFileToUpload.Additional_Information__c}" onchange="bindRequirements('dataToSubmit');" />
                         </apex:outputPanel>
                     </apex:pageBlockSectionItem>
 
                     <apex:pageBlockSectionItem >
-                        <apex:outputLabel value="{!$ObjectType.AmazonFile__c.fields.EF_Expired__c.Label}"/>
+                        <apex:outputLabel value="{!$ObjectType.AmazonFile__c.fields.Expiry_Date__c.Label}"/>
                         <apex:outputPanel layout="block" styleClass="requiredInput">
                             <apex:outputPanel layout="block" styleClass="requiredBlock hidden" />
-                            <apex:inputField id="dataToSubmit_EF_Expired__c" value="{!amazonFileToUpload.EF_Expired__c}" />
+                            <apex:inputField id="dataToSubmit_Expiry_Date__c" value="{!amazonFileToUpload.Expiry_Date__c}" />
                         </apex:outputPanel>
                     </apex:pageBlockSectionItem>
 
                     <apex:pageBlockSectionItem >
-                        <apex:outputLabel value="{!$ObjectType.AmazonFile__c.fields.EF_SAP_Number__c.Label}"/>
+                        <apex:outputLabel value="{!$ObjectType.AmazonFile__c.fields.Expired__c.Label}"/>
                         <apex:outputPanel layout="block" styleClass="requiredInput">
                             <apex:outputPanel layout="block" styleClass="requiredBlock hidden" />
-                            <apex:inputField id="dataToSubmit_EF_SAP_Number__c" value="{!amazonFileToUpload.EF_SAP_Number__c}"/>
+                            <apex:inputField id="dataToSubmit_Expired__c" value="{!amazonFileToUpload.Expired__c}" />
+                        </apex:outputPanel>
+                    </apex:pageBlockSectionItem>
+
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="{!$ObjectType.AmazonFile__c.fields.SAP_Number__c.Label}"/>
+                        <apex:outputPanel layout="block" styleClass="requiredInput">
+                            <apex:outputPanel layout="block" styleClass="requiredBlock hidden" />
+                            <apex:inputField id="dataToSubmit_SAP_Number__c" value="{!amazonFileToUpload.SAP_Number__c}"/>
+                        </apex:outputPanel>
+                    </apex:pageBlockSectionItem>
+
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="{!$ObjectType.AmazonFile__c.fields.EF_Private__c.Label}"/>
+                        <apex:outputPanel layout="block" styleClass="requiredInput">
+                            <apex:outputPanel layout="block" styleClass="requiredBlock hidden" />
+                            <apex:inputCheckbox id="dataToSubmit_EF_Private__c" value="{!amazonFileToUpload.EF_Private__c}"/>
                         </apex:outputPanel>
                     </apex:pageBlockSectionItem>
 
@@ -505,7 +535,7 @@
                     <script>bindRequirements('editFile');</script>
 
                     <apex:actionFunction name="updateAttach" action="{!updateAttach}" oncomplete="refreshList();"/>
-                
+
                     <apex:pageBlockButtons location="top" >
                         <input type="button" class="btn" value="{!$Label.Save}" onclick="return validateUpdate();" />
                         <apex:commandButton action="{!cancelPopupAttach}" value="{!$Label.Cancel}" oncomplete="refreshList();" />
@@ -518,47 +548,63 @@
                         </apex:pageBlockSectionItem>
 
                         <apex:pageBlockSectionItem >
-                            <apex:outputLabel value="{!$ObjectType.AmazonFile__c.fields.EF_Document_Date__c.Label}"/>
-                            <apex:inputField value="{!editAttachment.fileAmazon.amazonFile.EF_Document_Date__c}" />
+                            <apex:outputLabel value="{!$ObjectType.AmazonFile__c.fields.Document_Date__c.Label}"/>
+                            <apex:inputField value="{!editAttachment.fileAmazon.amazonFile.Document_Date__c}" />
                         </apex:pageBlockSectionItem>
 
                        <apex:pageBlockSectionItem >
-                           <apex:outputLabel value="{!$ObjectType.AmazonFile__c.fields.EF_Category__c.Label}"/>
+                           <apex:outputLabel value="{!$ObjectType.AmazonFile__c.fields.Category__c.Label}"/>
                            <apex:outputPanel layout="block" styleClass="requiredInput">
                                <apex:outputPanel layout="block" styleClass="requiredBlock" />
-                               <apex:inputField id="editFile_EF_Category__c" value="{!editAttachment.fileAmazon.amazonFile.EF_Category__c}" onchange="bindRequirements('editFile');" />
+                               <apex:inputField id="editFile_Category__c" value="{!editAttachment.fileAmazon.amazonFile.Category__c}" onchange="bindRequirements('editFile');" />
                            </apex:outputPanel>
                        </apex:pageBlockSectionItem>
 
                        <apex:pageBlockSectionItem >
-                           <apex:outputLabel value="{!$ObjectType.AmazonFile__c.fields.EF_Subcategory__c.Label}"/>
+                           <apex:outputLabel value="{!$ObjectType.AmazonFile__c.fields.Subcategory__c.Label}"/>
                            <apex:outputPanel layout="block" styleClass="requiredInput">
                                <apex:outputPanel layout="block" styleClass="requiredBlock warn" />
-                               <apex:inputField id="editFile_EF_Subcategory__c" value="{!editAttachment.fileAmazon.amazonFile.EF_Subcategory__c}" onchange="bindRequirements('editFile');" />
+                               <apex:inputField id="editFile_Subcategory__c" value="{!editAttachment.fileAmazon.amazonFile.Subcategory__c}" onchange="bindRequirements('editFile');" />
                            </apex:outputPanel>
                        </apex:pageBlockSectionItem>
 
                        <apex:pageBlockSectionItem >
-                           <apex:outputLabel value="{!$ObjectType.AmazonFile__c.fields.EF_Expiry_Date__c.Label}"/>
+                           <apex:outputLabel value="{!$ObjectType.AmazonFile__c.fields.Additional_Information__c.Label}"/>
                            <apex:outputPanel layout="block" styleClass="requiredInput">
-                               <apex:outputPanel layout="block" styleClass="requiredBlock hidden" />
-                               <apex:inputField id="editFile_EF_Expiry_Date__c" value="{!editAttachment.fileAmazon.amazonFile.EF_Expiry_Date__c}" />
+                               <apex:outputPanel layout="block" styleClass="requiredBlock warn" />
+                               <apex:inputField id="editFile_Additional_Information__c" value="{!editAttachment.fileAmazon.amazonFile.Additional_Information__c}" onchange="bindRequirements('editFile');" />
                            </apex:outputPanel>
                        </apex:pageBlockSectionItem>
 
                        <apex:pageBlockSectionItem >
-                           <apex:outputLabel value="{!$ObjectType.AmazonFile__c.fields.EF_Expired__c.Label}"/>
+                           <apex:outputLabel value="{!$ObjectType.AmazonFile__c.fields.Expiry_Date__c.Label}"/>
                            <apex:outputPanel layout="block" styleClass="requiredInput">
                                <apex:outputPanel layout="block" styleClass="requiredBlock hidden" />
-                               <apex:inputField id="editFile_EF_Expired__c" value="{!editAttachment.fileAmazon.amazonFile.EF_Expired__c}" />
+                               <apex:inputField id="editFile_Expiry_Date__c" value="{!editAttachment.fileAmazon.amazonFile.Expiry_Date__c}" />
                            </apex:outputPanel>
                        </apex:pageBlockSectionItem>
 
                        <apex:pageBlockSectionItem >
-                           <apex:outputLabel value="{!$ObjectType.AmazonFile__c.fields.EF_SAP_Number__c.Label}"/>
+                           <apex:outputLabel value="{!$ObjectType.AmazonFile__c.fields.Expired__c.Label}"/>
                            <apex:outputPanel layout="block" styleClass="requiredInput">
                                <apex:outputPanel layout="block" styleClass="requiredBlock hidden" />
-                               <apex:inputField id="editFile_EF_SAP_Number__c" value="{!editAttachment.fileAmazon.amazonFile.EF_SAP_Number__c}"/>
+                               <apex:inputField id="editFile_Expired__c" value="{!editAttachment.fileAmazon.amazonFile.Expired__c}" />
+                           </apex:outputPanel>
+                       </apex:pageBlockSectionItem>
+
+                       <apex:pageBlockSectionItem >
+                           <apex:outputLabel value="{!$ObjectType.AmazonFile__c.fields.SAP_Number__c.Label}"/>
+                           <apex:outputPanel layout="block" styleClass="requiredInput">
+                               <apex:outputPanel layout="block" styleClass="requiredBlock hidden" />
+                               <apex:inputField id="editFile_SAP_Number__c" value="{!editAttachment.fileAmazon.amazonFile.SAP_Number__c}"/>
+                           </apex:outputPanel>
+                       </apex:pageBlockSectionItem>
+
+                       <apex:pageBlockSectionItem >
+                           <apex:outputLabel value="{!$ObjectType.AmazonFile__c.fields.EF_Private__c.Label}"/>
+                           <apex:outputPanel layout="block" styleClass="requiredInput">
+                               <apex:outputPanel layout="block" styleClass="requiredBlock hidden" />
+                               <apex:inputField id="editFile_EF_Private__c" value="{!editAttachment.fileAmazon.amazonFile.EF_Private__c}"/>
                            </apex:outputPanel>
                        </apex:pageBlockSectionItem>
 
