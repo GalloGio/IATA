@@ -6,6 +6,7 @@ public class AMS_AccountHierarchySelectionController {
 
 	private final Id ANALYST_PROFILE_ID = [SELECT Id, Name FROM Profile WHERE Name = 'FDS Hub Analyst ARM'].Id;
 
+	@TestVisible
 	private Account mainAccount{
 		get{
 			if(mainAccount == null) System.debug(loggingLevel.Info, '____ [cls AMS_AccountHierarchySelectionController - getMainAccount] hierarchy ready? - ' + (hierarchy.size() > 0));
@@ -32,6 +33,7 @@ public class AMS_AccountHierarchySelectionController {
 					, 'AMS_Target_Agency__c'
 					, 'Change_of_location_type_behavior__c'
 					, 'STEP6__c'
+					, 'Process__c'
 				};
 			}
 			return oscarFields;
@@ -61,7 +63,9 @@ public class AMS_AccountHierarchySelectionController {
 		get{
 			notes = new Set<String>();
 
-			if(oscar.Type_of_Change__c != null){
+			if(oscar.Process__c == AMS_Utils.VOLRELINQUISH) notes.add('Voluntary relinquishment: select from the below list all the agencies listed in the pdf form received as attachment of the OSCAR. All the selected Agencies will be processed in the same way, there is no distinction between Main Agency and the other ones.');
+
+			else if(oscar.Type_of_Change__c != null){
 				
 				if(tocList.contains(AMS_Utils.LEGAL_STATUS) || tocList.contains(AMS_Utils.NAME) || tocList.contains(AMS_Utils.VFMR)) notes.add('Change of name/ legal status / vmfr will be applied to all the agencies selected');
 				if(tocList.contains(AMS_Utils.LOCATION) || tocList.contains(AMS_Utils.LOCATION_INSPECTION)) notes.add('The change of location will be applied only to the main agency. If the change is for an SA, the OSCAR opened for HO or BR, will also change the address for SAs associated to it, please make sure to select the SA Account also.');
@@ -113,6 +117,11 @@ public class AMS_AccountHierarchySelectionController {
 					'Partial Migration With HO',
 					'For change of ownership (to IATA and non IATA), the analyst cannot select HO and only part of the active agencies'
 				);
+
+				errorMessages.put(
+					'Partial VR selection',
+					'For Voluntary Relinquishment, the analyst cannot select a parent account without its children'
+				);
 			}
 			return errorMessages;
 		}
@@ -149,14 +158,6 @@ public class AMS_AccountHierarchySelectionController {
 			if(oscar.Type_of_Change__c != null) tocList.addAll(oscar.Type_of_change__c.split(';'));
 
 			return tocList;
-		}
-		set;
-	}
-
-	private Set<Id> hierarchyAccounts{
-		get{
-			if(hierarchyAccounts == null) hierarchyAccounts = new Set<Id>();
-			return hierarchyAccounts;
 		}
 		set;
 	}
@@ -200,8 +201,8 @@ public class AMS_AccountHierarchySelectionController {
 		get{
 			if(oscar.Type_of_Change__c != null){
 
-				if(tocList.contains(AMS_Utils.OWNERSHIP_IATA)) return true;
 				if((tocList.contains(AMS_Utils.LOCATION) || tocList.contains(AMS_Utils.LOCATION_INSPECTION)) && mainAccount.Location_Type__c == AMS_Utils.SA) return true;
+				if(tocList.contains(AMS_Utils.OWNERSHIP_IATA)) return true;
 			}
 			
 			oscar.AMS_Target_Agency__c = null;
@@ -221,6 +222,13 @@ public class AMS_AccountHierarchySelectionController {
 			return false;
 		}
 		set;
+	}
+
+	public Boolean showTopPanel{
+		get{
+			return !(oscar.Process__c == AMS_Utils.VOLRELINQUISH);
+		}
+		private set;
 	}
 
 	//its public so it can be tested
@@ -245,31 +253,43 @@ public class AMS_AccountHierarchySelectionController {
 		set;
 	}
 
-	public List<HierarchyItem> hierarchy{
+	public Map<Id, HierarchyItem> hierarchy{
 		get{
 			if(hierarchy == null) {
-				hierarchy = new List<HierarchyItem>();
+				hierarchy = new Map<Id, HierarchyItem>();
 
 				Set<Id> accountIds = new Set<Id>();
 				Map<Id, List<AMS_Agencies_relationhip__c>> relationshipMap = AMS_HierarchyHelper.getAccountsHierarchies(new Set<Id>{oscar.Account__c});
-				for(AMS_Agencies_relationhip__c r : relationshipMap.get(oscar.Account__c)){
-					accountIds.add(r.Child_Account__c);
-					accountIds.add(r.Parent_Account__c);
-				}
+				Map<Id, Set<Id>> childAccounts = new Map<Id, Set<Id>>();
 
 				//to prevent nullpointer on agencies with no hierarchy
 				accountIds.add(oscar.Account__c);
+				
+				for(AMS_Agencies_relationhip__c r : relationshipMap.get(oscar.Account__c)){
+					accountIds.add(r.Child_Account__c);
+					accountIds.add(r.Parent_Account__c);
+
+					if(!childAccounts.containsKey(r.Parent_Account__c)) childAccounts.put(r.Parent_Account__c, new Set<Id>());
+					if(!childAccounts.containsKey(r.Child_Account__c)) childAccounts.put(r.Child_Account__c, new Set<Id>());
+
+					childAccounts.get(r.Parent_Account__c).add(r.Child_Account__c);
+				}
 
 				for(Account a : Database.query('SELECT Id, '+String.join(accountFieldList, ',')+' FROM Account WHERE Id IN :accountIds AND Status__c != \''+AMS_Utils.ACC_S0_TERMINATED+'\'')){
 					Boolean main = (a.Id == oscar.Account__c);
-					hierarchy.add(new HierarchyItem(a, main, processDetails.containsKey(a.Id)));
-					hierarchyAccounts.add(a.Id);
+					hierarchy.put(a.Id, new HierarchyItem(a, main, processDetails.containsKey(a.Id), childAccounts.get(a.Id)));
 				}
 				selectMain();
 			}
 			return hierarchy;
 		}
 		set;
+	}
+
+	public List<HierarchyItem> hierarchyValues{
+		get{
+			return hierarchy.values();
+		}
 	}
 
 	// ***********************************
@@ -288,7 +308,7 @@ public class AMS_AccountHierarchySelectionController {
 	// ***********************************
 
 	public void doSelectAll(){
-		for(HierarchyItem hi : hierarchy){
+		for(HierarchyItem hi : hierarchyValues){
 			if(!hi.main) hi.selected = selectAll;
 		}
 	}
@@ -310,7 +330,7 @@ public class AMS_AccountHierarchySelectionController {
 
 		if(oscar.AMS_Target_Agency__c != null && (tocList.contains(AMS_Utils.LOCATION) || tocList.contains(AMS_Utils.LOCATION_INSPECTION))) errorChecks.put(AMS_Utils.LOCATION, true);
 
-		for(HierarchyItem hi : hierarchy){
+		for(HierarchyItem hi : hierarchyValues){
 			
 			if(tocList.contains(AMS_Utils.LOCATION_TYPE) && hi.selected){
 				errorChecks.put(AMS_Utils.LOCATION_TYPE, true);
@@ -335,6 +355,8 @@ public class AMS_AccountHierarchySelectionController {
 				if((hi.main || hi.selected) && hi.acc.Location_Type__c == AMS_Utils.HO) ownershipMainHO = true;
 				if(!hi.selected && !hi.main) ownershipAgenciesNotSelected = true;
 			}
+
+			if(oscar.Process__c == AMS_Utils.VOLRELINQUISH && isPartialHierarchy(hi)) errorChecks.put('Partial VR selection', true);
 			
 		}
 
@@ -372,7 +394,7 @@ public class AMS_AccountHierarchySelectionController {
 	private Boolean updateRelatedRecords() {
 
 		List<AMS_Process_Detail__c> newProcessHierarchy = new List<AMS_Process_Detail__c>();
-		for(HierarchyItem hi : hierarchy){
+		for(HierarchyItem hi : hierarchyValues){
 			if(hi.selected && !hi.main){
 				newProcessHierarchy.add(new AMS_Process_Detail__c(Oscar__c = oscarId, Account__c = hi.acc.Id));
 			}
@@ -392,22 +414,28 @@ public class AMS_AccountHierarchySelectionController {
 		return true;
 	}
 
+	@TestVisible
+	private Boolean isPartialHierarchy(HierarchyItem hi){
+		if(hi.selected || hi.main){
+			for(Id child : hi.childAccounts){
+				if(!hierarchy.get(child).selected && !hierarchy.get(child).main) return true;
+			}
+		}
+		return false;
+	}
+
 
 	// ***********************************
 	// ********* action methods **********
 	// ***********************************
 
 	public void selectMain() {
-		for(HierarchyItem hi : hierarchy){
+		for(HierarchyItem hi : hierarchyValues){
 			if(hi.main){
 				mainAccount = hi.acc;
 				oscar.Account__c = hi.acc.Id;
 			}
-			System.debug(loggingLevel.Debug, '____ [cls AMS_AccountHierarchySelectionController - selectMain] hi.acc.Name - ' + hi.acc.Name);
-			System.debug(loggingLevel.Debug, '____ [cls AMS_AccountHierarchySelectionController - selectMain] hi.main - ' + hi.main);
-			System.debug(loggingLevel.Debug, '____ [cls AMS_AccountHierarchySelectionController - selectMain] hi.selected - ' + hi.selected);
 		}
-		System.debug(loggingLevel.Debug, '____ [cls AMS_AccountHierarchySelectionController - selectMain] mainAccount.Name - ' + mainAccount.Name);
 	}
 
 	public void save(){
@@ -435,10 +463,13 @@ public class AMS_AccountHierarchySelectionController {
 		public Boolean main { get; set; }
 		public Boolean selected { get; set; }
 
-		public HierarchyItem(Account a, Boolean main, Boolean selected){
+		private Set<Id> childAccounts;
+
+		public HierarchyItem(Account a, Boolean main, Boolean selected, Set<Id> childAccounts){
 			this.acc = a;
 			this.main = main;
 			this.selected = selected;
+			this.childAccounts = childAccounts;
 		}
 	}
 }

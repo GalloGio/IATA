@@ -3177,12 +3177,162 @@
       
 
           }]
-    }
-
-    ]
+    },
+    {
+      "Name": "VR.1.0",
+      "Flows": [
+      {
+        "Name": "AMS_OSCAR_APPLICATIONRECEIPT",
+        "Steps": [{
+          "Name": "STEP6",
+          "Required": [],
+          "Actions": [{
+                "FunctionName": "checkAccountHierarchy",
+                "ActionLabel": "AMS_OSCAR_Action6",
+                "args": ["oscarid"]
+              }],
+          "Automations": [{
+            "Status": "Passed",
+            "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step6_succeeded"
+          },{
+            "Status": "Failed",
+            "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step6_failed"
+          }],
+          "DisplayFields": [
+          "Dossier_Reception_Date__c",
+          "Form_Effective_Date__c",
+          "Financial_Security_expiry_date__c",
+          "STEP6__c"],
+          "IsDependent": false
+        }]
+      },{
+        "Name": "AMS_OSCAR_PROCESSSUSPENSION",
+        "Steps": [{
+          "Name": "STEP30",
+          "Required": [],
+          "Actions": [{
+                "FunctionName": "deactivateBSPLink",
+                "ActionLabel": "AMS_OSCAR_Action9",
+                "args": ["oscarid"]
+              }],
+          "Automations": [{
+            "Status": "Passed",
+            "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step30_succeeded"
+          },{
+            "Status": "Failed",
+            "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step30_failed"
+          }],
+          "DisplayFields": [
+          "Suspend_in_BSPLink_CASSLink__c",
+          "STEP30__c"],
+          "IsDependent": false
+        }]
+      },{
+        "Name": "AMS_OSCAR_PROCESSTERMINATION",
+        "Steps": [{
+          "Name": "STEP31",
+          "Required": [],
+          "Actions": [{
+                "FunctionName": "createFSReleaseCase",
+                "ActionLabel": "AMS_OSCAR_Action10",
+                "args": ["oscarid"]
+              }],
+          "Automations": [{
+            "Status": "Passed",
+            "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step31_succeeded"
+          },{
+            "Status": "Failed",
+            "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step31_failed"
+          }],
+          "DisplayFields": [
+          "Release_FS_if_applicable__c",
+          "STEP31__c"],
+          "IsDependent": false
+        }]
+      },{
+        "Name": "AMS_OSCAR_PROCESSWITHDRAWAL",
+        "Steps": [{
+          "Name": "STEP32",
+          "Required": [],
+          "Actions": [{
+                "FunctionName": "reactivateBSPLink",
+                "ActionLabel": "AMS_OSCAR_Action11",
+                "args": ["oscarid"]
+              }],
+          "Automations": [{
+            "Status": "Passed",
+            "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step32_succeeded"
+          },{
+            "Status": "Failed",
+            "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step32_failed"
+          },{
+            "Status": "Not Applicable",
+            "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step32_notApplicable"
+          }],
+          "DisplayFields": [
+          "Reactivate_Agent_in_BSPlink_CASSlink__c",
+          "STEP32__c"],
+          "IsDependent": false
+        }]
+      }]
+    },{
+      "Name": "VR.1.0.CA",
+      "Flows": [
+      {
+        "Name": "AMS_OSCAR_APPLICATIONRECEIPT",
+        "Steps": [{
+          "Name": "STEP6",
+          "Required": [],
+          "Actions": [],
+          "Automations": [{
+            "Status": "Passed",
+            "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step6_succeeded"
+          },{
+            "Status": "Failed",
+            "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step6_failed"
+          }],
+          "DisplayFields": [
+          "Dossier_Reception_Date__c",
+          "Change_effective_as_of__c",
+          "STEP6__c"],
+          "IsDependent": false
+        }]
+      },{
+        "Name": "AMS_OSCAR_PROCESSTERMINATION",
+        "Steps": [{
+          "Name": "STEP31",
+          "Required": [],
+          "Actions": [],
+          "Automations": [{
+            "Status": "Passed",
+            "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step31_succeeded"
+          },{
+            "Status": "Failed",
+            "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step31_failed"
+          }],
+          "DisplayFields": ["STEP31__c"],
+          "IsDependent": false
+        }]
+      },{
+        "Name": "AMS_OSCAR_PROCESSWITHDRAWAL",
+        "Steps": [{
+          "Name": "STEP32",
+          "Required": [],
+          "Actions": [],
+          "Automations": [{
+            "Status": "Passed",
+            "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step32_succeeded"
+          },{
+            "Status": "Failed",
+            "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step32_failed"
+          },{
+            "Status": "Not Applicable",
+            "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step32_notApplicable"
+          }],
+          "DisplayFields": ["STEP32__c"],
+          "IsDependent": false
+        }]
+      }]
+    }]
   }
-
-
-
-
 }
