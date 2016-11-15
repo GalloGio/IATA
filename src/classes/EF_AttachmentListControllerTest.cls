@@ -14,7 +14,17 @@ private class EF_AttachmentListControllerTest {
         //         ParentId = cse.id;
         //     );
         //     insert att;
+        //Create public group
+        Group efPrivateGroup = new Group();
+        efPrivateGroup.Name='EF Private Document Access';
+        efPrivateGroup.DeveloperName='EF_Private_Document_Access';
+        insert efPrivateGroup;
 
+        GroupMember efGM = new GroupMember();
+        efGM.UserOrGroupId = UserInfo.getUserId();
+        efGM.GroupId= efPrivateGroup.Id;
+        //insert efGM;
+        
         List<Amazon_Cred__c> listAmazonCred =  new List<Amazon_Cred__c>{
             new Amazon_Cred__c(
                 name = 'GenericAttach',
