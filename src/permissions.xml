@@ -5,6 +5,9 @@
         <members>*</members>
         <name>Profile</name>
     </types>
-
+    <types>
+        <members>*</members>
+        <name>PermissionSet</name>
+    </types>
     <version>37.0</version>
 </Package>
