@@ -1,7 +1,7 @@
 @isTest
 private class EF_AttachmentListControllerTest {
 
-    @testSetup
+    /*@testSetup
     public static void setupTest() {
 
         //     Case cse = new Case();
@@ -148,8 +148,8 @@ private class EF_AttachmentListControllerTest {
         EF_AttachmentListController.UploadFile u = EF_AttachmentListController.createUploadFile('0018E00000Gfake', 'filenameupload',  'contentType', 1000000, '001', credentialName);
 
         boolean c = EF_AttachmentListController.createAmazonFileObject('String amazonKey', 10000000, 'String parentId', 'String recordType',
-        												'String efCategory', 'String efSubCategory', 'String efExpiryDate', false, 'String efSapNumber',
-    													'String additionalInformation', false);
+                                                        'String efCategory', 'String efSubCategory', 'String efExpiryDate', false, 'String efSapNumber',
+                                                        'String additionalInformation', false);
     }
 
     static testMethod void testRemoteActions() {
@@ -187,6 +187,11 @@ private class EF_AttachmentListControllerTest {
         EF_AttachmentListController.deleteAttachment(String.valueOf(att.Id), null);
         EF_AttachmentListController.deleteAttachment(String.valueOf(arch.Id), null);
         EF_AttachmentListController.deleteAttachment(String.valueOf(aFile.Id), 'asd');
+    }*/
+    
+    static testMethod void removeThis() {
+
+        EF_AttachmentListController.removeThis();
     }
     
 }
