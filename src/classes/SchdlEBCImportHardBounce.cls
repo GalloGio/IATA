@@ -8,7 +8,7 @@ global class SchdlEBCImportHardBounce implements Database.AllowsCallouts, Schedu
         IECEBC_ETSubscriberBouncedRetrieve.RetrieveHardBounceFuture(lastEventDate);
     }
     global static void cancel() {
-        cancel('SchdlEBCImportHardBounce');
+        cancel('SchdlEBCImportHardBounce' + (Test.isRunningTest() ? 'Test' : ''));
     }
     global static void cancel(String name) {
         CronTrigger ct = [SELECT Id, CronJobDetail.Id, CronJobDetail.Name, CronJobDetail.JobType FROM CronTrigger Where CronJobDetail.Name = :name LIMIT 1];
@@ -17,6 +17,6 @@ global class SchdlEBCImportHardBounce implements Database.AllowsCallouts, Schedu
     
     global static void Schedule() {
         SchdlEBCImportHardBounce a = new SchdlEBCImportHardBounce();
-        System.schedule('SchdlEBCImportHardBounce', '0 15 * * * ?', a);
+        System.schedule('SchdlEBCImportHardBounce' + (Test.isRunningTest() ? 'Test' : ''), '0 15 * * * ?', a);
     }
 }
