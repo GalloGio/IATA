@@ -877,4 +877,62 @@
         deployroot="${basedir}/removecodepkg" />
     </target> 
 
+
+
+
+
+<target name="getProfilesObjects">
+      <echo level="info">Retrieving the server's version of OBJECTs </echo>
+      <mkdir dir="${basedir}/${sfdc.retrieveTarget}"/>
+      <sf:retrieve
+        retrieveTarget="${basedir}/${sfdc.retrieveTarget}"
+        username="${sfdc.username}"
+        password="${sfdc.password}"
+        serverurl="${sfdc.serverurl}"
+        unpackaged="src/objectPackageRetrieve.xml" />
+
+      <move file="${basedir}/${sfdc.retrieveTarget}/package.xml" tofile="src/objectPackageRetrieve.xml" />  
+      <move file="${basedir}/${sfdc.retrieveTarget}/profiles/" tofile="src/profilesObjects/" />  
+      <move file="${basedir}/${sfdc.retrieveTarget}/permissionsets/" tofile="src/permissionsetsObjects/" />  
+
+        <antcallback target="compressProfiles" >
+         <param name="folder" value="profilesObjects"/>
+      </antcallback>
+
+        <antcallback target="compressPermissionSets" >
+         <param name="folderPermissionSet" value="permissionsetsObjects"/>
+      </antcallback>
+
+    </target>
+
+
+
+    <target name="getProfilesApex">
+      <echo level="info">Retrieving the server's version of APEX VISUALFORCE</echo>
+      <mkdir dir="${basedir}/${sfdc.retrieveTarget}"/>
+      <sf:retrieve
+        retrieveTarget="${basedir}/${sfdc.retrieveTarget}"
+        username="${sfdc.username}"
+        password="${sfdc.password}"
+        serverurl="${sfdc.serverurl}"
+        unpackaged="src/codePackageRetrieve.xml"/>
+      <move file="${basedir}/${sfdc.retrieveTarget}/package.xml" tofile="src/codePackageRetrieve.xml"/>
+    
+      <move file="${basedir}/${sfdc.retrieveTarget}/profiles/" tofile="src/profilesApex/"/>
+      <move file="${basedir}/${sfdc.retrieveTarget}/permissionsets/" tofile="src/permissionsetsApex"/>
+
+        <antcallback target="compressProfiles" >
+         <param name="folder" value="profilesApex"/>
+      </antcallback>
+
+        <antcallback target="compressPermissionSets" >
+         <param name="folderPermissionSet" value="permissionsetsApex"/>
+      </antcallback>
+
+
+    </target>
+
+
+
+
 </project>
