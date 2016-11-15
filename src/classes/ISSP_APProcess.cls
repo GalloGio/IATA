@@ -852,28 +852,6 @@ public without sharing class ISSP_APProcess {
         
         return options;
     }
-
-    public List<SelectOption> financialCountryNameList {
-        get {
-            List<SelectOption> options = new List<SelectOption>();
-            
-            list<IATA_ISO_Country__c> isoList;
-        
-            isoList = [SELECT Name,Id, IATA_Contry_KR__c, IATA_COUNTRY_EN__c,ISO_Code__c, AMS_Pilot_Country__c,
-                        IATA_Country_FR__c, IATA_Country_IT__c, IATA_Country_JP__c,
-                        IATA_Country_PT__c, IATA_Country_SP__c, IATA_Country_ZH__c
-                        FROM IATA_ISO_Country__c
-                        ORDER BY Name];
-            
-          options.add(new SelectOption('', Label.ISSP_SELECT_COUNTRY));
-          for(IATA_ISO_Country__c iso : isoList){
-            options.add(new SelectOption(iso.Name,iso.Name));
-          }
-            
-          return options;
-        }
-        set;
-    }
     
     public List<SelectOption> countryNameList {
         get {

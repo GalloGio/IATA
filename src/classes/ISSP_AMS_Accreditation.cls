@@ -2800,10 +2800,10 @@ public without sharing class ISSP_AMS_Accreditation {
         String emailTemplateName;
         String fromaddress;
 
-        if (isNoticeOfChange && con.id == newCase.ContactId) {
+        if (isNoticeOfChange) {
             SYSTEM.DEBUG('Sending NoC Confirmation 1');
             emailTemplateName = 'ISSP AMS Process Notification';
-            fromaddress = 'IATA Service Centre (noreply@iata.org)';       
+            fromaddress = 'IATA Service Centre (noreply@iata.org)';
         } else if (newCase.BSPCountry__c.contains('Spain')) {
             emailTemplateName = 'EUR_Case confirmation - online HTML (Spanish)';
             fromaddress = 'IATA Service Centre - Europe (noreply@iata.org)';

@@ -88,31 +88,35 @@ public class AmazonFile {
 	}
 
 	public String getEFCategory() {
-		return amazonFile==null? '': this.amazonFile.EF_Category__c;
+		return amazonFile==null? '': this.amazonFile.Category__c;
 	}
 
 	public String getEFSubcategory() {
-		return amazonFile==null? '': this.amazonFile.EF_Subcategory__c;
+		return amazonFile==null? '': this.amazonFile.Subcategory__c;
 	}
 
 	public String getEFSAPNumber() {
-		return amazonFile==null? '': this.amazonFile.EF_SAP_Number__c;
+		return amazonFile==null? '': this.amazonFile.SAP_Number__c;
 	}
 
 	public Date getEFDocumentDate() {
-		return amazonFile==null? null: this.amazonFile.EF_Document_Date__c;
+		return amazonFile==null? null: this.amazonFile.Document_Date__c;
 	}
 
 	public Date getEFExpiryDate() {
-		return amazonFile==null? null: this.amazonFile.EF_Expiry_Date__c;
+		return amazonFile==null? null: this.amazonFile.Expiry_Date__c;
 	}
 
 	public Boolean getEFExpired() {
-		return amazonFile==null? null: this.amazonFile.EF_Expired__c;
+		return amazonFile==null? null: this.amazonFile.Expired__c;
+	}
+
+	public Boolean getEFPrivate() {
+		return amazonFile==null? null: this.amazonFile.EF_Private__c;
 	}
 
 	public Boolean getEFSkipValidation() {
-		return amazonFile==null? null: this.amazonFile.EF_Skip_Validation__c;
+		return amazonFile==null? null: this.amazonFile.Skip_Validation__c;
 	}
     
 	// for compatibility with AmazonFinancial.page
@@ -200,7 +204,8 @@ public class AmazonFile {
 			list<AmazonFile__c> aFiles = [
 				Select Id, Name, Full_Name_Unique__c, CreatedDate, CreatedById, CreatedBy.Name, Case__c, isPublic__c, Description__c, File_Identifier__c,
                 File_Identifier_picklist__c, Review_Status__c, Source__c, RecordTypeId, RecordType.DeveloperName, Internal_Comments__c, 
-                EF_Document_Date__c, EF_Category__c, EF_Subcategory__c, EF_Expiry_Date__c, EF_Expired__c, EF_SAP_Number__c, EF_Skip_Validation__c
+                Document_Date__c, Category__c, Subcategory__c, Expiry_Date__c, Expired__c,SAP_Number__c, Skip_Validation__c,
+				Additional_Information__c, EF_Private__c
 				From AmazonFile__c 
 				Where id = :sobjectId
 			];
@@ -241,7 +246,7 @@ public class AmazonFile {
 			listFiles = [
 				Select Id, Name, Full_Name_Unique__c, CreatedDate, CreatedById, CreatedBy.Name, Case__c, isPublic__c, Description__c, File_Identifier__c,
                 File_Identifier_picklist__c, Review_Status__c, Source__c, RecordTypeId, RecordType.DeveloperName, Internal_Comments__c,
-                EF_Document_Date__c, EF_Category__c, EF_Subcategory__c, EF_Expiry_Date__c, EF_Expired__c, EF_SAP_Number__c, EF_Skip_Validation__c
+                Document_Date__c, Category__c, Subcategory__c, Expiry_Date__c, Expired__c, SAP_Number__c, Skip_Validation__c
 				From AmazonFile__c
 				Where Case__c = :sobjectId
 			];
@@ -251,7 +256,8 @@ public class AmazonFile {
 			listFiles = [
 				Select Id, Name, Full_Name_Unique__c, CreatedDate, CreatedById, CreatedBy.Name, Case__c, isPublic__c, Description__c, File_Identifier__c,
                 File_Identifier_picklist__c, Review_Status__c, Source__c, RecordTypeId, RecordType.DeveloperName, Internal_Comments__c, 
-                EF_Document_Date__c, EF_Category__c, EF_Subcategory__c, EF_Expiry_Date__c, EF_Expired__c, EF_SAP_Number__c, EF_Skip_Validation__c
+                Document_Date__c, Category__c, Subcategory__c, Expiry_Date__c, Expired__c, SAP_Number__c, Skip_Validation__c,
+				Additional_Information__c, EF_Private__c
 				From AmazonFile__c
 				Where sObject_Id__c = :sobjectId
 			];
