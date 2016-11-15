@@ -701,22 +701,31 @@
     
 
 
-    <target name="getCodePointAndClick">
-      <echo level="info">Retrieving the server's version of OBJECTS </echo>
+   <target name="getCodePointAndClick">
+      <echo level="info">Retrieving the server's version of OBJECTs </echo>
       <mkdir dir="${basedir}/${sfdc.retrieveTarget}"/>
       <sf:retrieve
         retrieveTarget="${basedir}/${sfdc.retrieveTarget}"
         username="${sfdc.username}"
         password="${sfdc.password}"
         serverurl="${sfdc.serverurl}"
-        unpackaged="src/objectPackage.xml" />
+        unpackaged="src/objectPackageRetrieve.xml" />
 
-      <move file="${basedir}/${sfdc.retrieveTarget}/package.xml" tofile="src/objectPackage.xml" />  
-
-
+      <move file="${basedir}/${sfdc.retrieveTarget}/package.xml" tofile="src/objectPackageRetrieve.xml" />  
+      <move file="${basedir}/${sfdc.retrieveTarget}/profiles/" tofile="src/profilesObjects/" />  
+      <move file="${basedir}/${sfdc.retrieveTarget}/permissionsets/" tofile="src/permissionsetsObjects/" />  
 
       <move file="${basedir}/${sfdc.retrieveTarget}" tofile="src"/>
-        <antcallback target="getLabelPointAndClick" />
+   
+        <antcallback target="compressProfiles" >
+         <param name="folder" value="profilesObjects"/>
+      </antcallback>
+
+        <antcallback target="compressPermissionSets" >
+         <param name="folderPermissionSet" value="permissionsetsObjects"/>
+      </antcallback>
+
+     <antcallback target="getLabelPointAndClick" /> 
     </target>
 
 
@@ -899,8 +908,7 @@
          <param name="folder" value="profilesObjects"/>
       </antcallback>
 
-        <antcallback target="compressPermissionSets" >
-         <param name="folderPermissionSet" value="permissionsetsObjects"/>
+        <antcallback target="getProfilesApex" >
       </antcallback>
 
     </target>
