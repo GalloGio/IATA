@@ -345,6 +345,16 @@
         <type>Date</type>
     </fields>
     <fields>
+        <fullName>BSPLink_participation__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>BSPLink participation</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Bank_Guarantee_Currency__c</fullName>
         <externalId>false</externalId>
         <label>Bank Guarantee Currency</label>
