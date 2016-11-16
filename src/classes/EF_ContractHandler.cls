@@ -228,23 +228,23 @@ public class EF_ContractHandler
         }
     }
 
-    // If user is a CS Specialist, make the Contract inactive and require approval
-    public static void handleWithApprovalAccountInserts(List<Contract> contractList)
-    {
-        if(isUserCsSpecialist())
-        {
-            // Get the list of fields that require Approval from Custom Settings and place them in a List
-            List<EF_Approve_Fields__c> fieldList = [select id, name, Contract_Fields__c from EF_Approve_Fields__c where Name = 'Contract'];
-            List<String> fields = fieldList.get(0).Contract_Fields__c.split(',');
-
-            for(Contract c : contractList)
-            {
-                c.EF_Require_Approval__c = true;
-                c.EF_Status__c = 'Inactive';
-                EF_BaContractApprovalHelper.identifyRecordChanges(c, null, fields, true);
-            }
-        }
-    }
+    // // If user is a CS Specialist, make the Contract inactive and require approval
+    // public static void handleWithApprovalAccountInserts(List<Contract> contractList)
+    // {
+    //     if(isUserCsSpecialist())
+    //     {
+    //         // Get the list of fields that require Approval from Custom Settings and place them in a List
+    //         List<EF_Approve_Fields__c> fieldList = [select id, name, Contract_Fields__c from EF_Approve_Fields__c where Name = 'Contract'];
+    //         List<String> fields = fieldList.get(0).Contract_Fields__c.split(',');
+    //
+    //         for(Contract c : contractList)
+    //         {
+    //             c.EF_Require_Approval__c = true;
+    //             c.EF_Status__c = 'Inactive';
+    //             EF_BaContractApprovalHelper.identifyRecordChanges(c, null, fields, true);
+    //         }
+    //     }
+    // }
 
     // Used to identify is the running user belongs to Client Services Specialists role inside E&F
     public static boolean isUserCsSpecialist()
