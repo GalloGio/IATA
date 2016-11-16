@@ -1,4 +1,4 @@
-Dear recipient,<br/><br/>
+Dear {!User.FirstName},<br/><br/>
 
 your changes for an Airline Billing Agreement have been approved.<br/><br/>
 
