@@ -1,47 +1,48 @@
 <aura:component controller="AMP_IssuesAndPrioritiesExtension">
-    
+
     <aura:attribute name="issue" type="Objective__c" />
+    <aura:attribute name="canEdit" type="Boolean" default="false" />
     <aura:attribute name="relatedContact" type="Contact" default="{ 'sobjectType': 'Contact'}" />
     <aura:attribute name="index" type="Integer" />
-    
+
     <aura:registerEvent name="updateIssue" type="c:AMP_UpdateIssueOrPriority"/>
     <aura:registerEvent name="deleteIssue" type="c:AMP_DeleteIssueOrPriority"/>
-    
+
     <aura:handler name="updateLookupIdEvent" event="c:UpdateLookupId" action="{!c.handleSourceIdUpdate}"/>
     <aura:handler name="clearLookupIdEvent" event="c:ClearLookupId" action="{!c.handleSourceIdClear}"/>
-    
+
     <aura:handler name="editMenuClick" event="c:AMP_EditMenuItemClick" action="{!c.switchToEditMode}"/>
     <aura:handler name="deleteMenuClick" event="c:AMP_DeleteMenuItemClick" action="{!c.deleteItem}"/>
     <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
     <aura:attribute name="isEditMode" type="Boolean" default="false"/>
     <aura:attribute name="isError" type="Boolean" default="false"/>
     <aura:attribute name="errorMessage" type="String"/>
-    
+
     <aura:handler event="c:AMP_IssueOrPriorityError" action="{!c.HandleIssueOrPriorityError}"/>
-    
+
     <ltng:require styles="/resource/SLDS102/assets/styles/salesforce-lightning-design-system-ltng.css" />
-    
+
     <!-- <tr> -->
     <td  >
-        
+
         <aura:renderIf isTrue="{!v.isEditMode}">
-            
+
             <button class="slds-button slds-button--icon-border slds-button--icon-small" onclick="{!c.cancelEditMode}">
                 <c:svg xlinkHref="{!$Resource.SLDS102 + '/assets/icons/utility-sprite/svg/symbols.svg#close'}" class="slds-button__icon" />
                 <span class="slds-assistive-text">Cancel</span>
             </button>
-            
+
             <button class="slds-button slds-button--icon-border slds-button--icon-small" onclick="{!c.clickSaveIssue}">
                 <c:svg xlinkHref="{!$Resource.SLDS102 + '/assets/icons/utility-sprite/svg/symbols.svg#check'}" class="slds-button__icon" />
                 <span class="slds-assistive-text">Save</span>
             </button>
-            
-            
+
+
             <aura:if isTrue="{!v.isError}">
-                
+
                 <a href="javascript:void(0);" class="slds-button" >
                     <c:svg xlinkHref="{!$Resource.SLDS102 + '/assets/icons/utility-sprite/svg/symbols.svg#warning'}" class="slds-icon slds-icon-text-error slds-icon--small" />
-                    
+
                     <span class="slds-assistive-text">Review the Following Errors</span>
                 </a>
                 <div class="slds-popover slds-nubbin--top-left slds-theme--error" role="alert" aria-live="polite">
@@ -49,14 +50,15 @@
                         {!v.errorMessage}
                     </div>
                 </div>
-                
+
             </aura:if>
         </aura:renderIf>
-        
+
         <aura:renderIf isTrue="{!!v.isEditMode}">
-            
-            <c:AMP_EditSaveMenu />            
-            
+            <aura:if isTrue="{!v.canEdit}">
+                <c:AMP_EditSaveMenu />
+            </aura:if>
+
         </aura:renderIf>
     </td>
     <aura:renderIf isTrue="{!v.isEditMode }">
@@ -76,7 +78,7 @@
                 <ui:inputSelectOption label="Low" text="Low" value="{!v.issue.AM_Level_of_importance__c == 'Low'}" />
             </ui:inputSelect>
         </td>
-        
+
         <!-- <td><ui:inputCheckbox value="{!v.issue.AM_Can_IATA_support_the_airline__c}" /></td> -->
         <td>
             <ui:inputSelect aura:id="status" class="slds-select">
@@ -85,9 +87,9 @@
                 <ui:inputSelectOption label="Closed without Intervention" text="Closed without Intervention" value="{!v.issue.Status__c == 'Closed without Intervention'}" />
                 <ui:inputSelectOption label="Out of Scope" text="Out of Scope" value="{!v.issue.Status__c == 'Out of Scope'}" />
             </ui:inputSelect>
-            
+
         </td>
-        
+
         <td>
             <div class="slds-form-element">
                 <div class="slds-form-element__control">
@@ -144,7 +146,7 @@
             </div>
         </td>
     </aura:renderIf>
-    
+
     <aura:renderIf isTrue="{!!v.isEditMode}">
         <td><ui:outputText value="{!v.issue.Name}"/></td>
         <td><ui:outputText value="{!v.issue.AM_Source_Text__c}"/></td>
