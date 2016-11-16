@@ -212,6 +212,10 @@
                 <behavior>Edit</behavior>
                 <field>EF_Airline_Billing_Agreement__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>KPI_Prod__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -342,6 +346,7 @@
     <relatedLists>
         <fields>CASES.CASE_NUMBER</fields>
         <fields>Case_Type__c</fields>
+        <fields>CASES.RECORDTYPE</fields>
         <fields>CASES.SUBJECT</fields>
         <fields>CASES.PRIORITY</fields>
         <fields>CASES.CREATED_DATE</fields>

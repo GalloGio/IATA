@@ -6,6 +6,7 @@
     <customButtons>Cancel_Assessment</customButtons>
     <customButtons>Close_Case_c</customButtons>
     <customButtons>Log_Phone_Case</customButtons>
+    <customButtons>SIDRA_Lite_Action</customButtons>
     <excludeButtons>Clone</excludeButtons>
     <excludeButtons>CloseCase</excludeButtons>
     <excludeButtons>Delete</excludeButtons>
@@ -580,6 +581,7 @@
     <relatedLists>
         <fields>CASES.CASE_NUMBER</fields>
         <fields>Case_Type__c</fields>
+        <fields>CASES.RECORDTYPE</fields>
         <fields>CASES.SUBJECT</fields>
         <fields>CASES.PRIORITY</fields>
         <fields>CASES.CREATED_DATE</fields>

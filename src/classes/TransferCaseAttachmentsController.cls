@@ -123,7 +123,8 @@ public with sharing class TransferCaseAttachmentsController {
 	    		}
 
 	    		isTransferDone = true;
-	    		ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.INFO,'The attachments transfer operation completed with ' + success + ' success(es) and ' + errors + ' error(s).\n\n<a href="/' + sourceCase.Id + '">Click here</a> to return to the case.'));
+	    		//ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.INFO,'The attachments transfer operation completed with ' + success + ' success(es) and ' + errors + ' error(s).\n\n<a href="/' + sourceCase.Id + '">Click here</a> to return to the case.'));
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.INFO,'The attachments transfer operation completed with ' + success + ' success(es) and ' + errors + ' error(s).\n\n<a href="/' + sourceCase.Id + '" onClick="testCloseTab()">Click here</a> to return to the case.'));
 	    	}
 		}
     }

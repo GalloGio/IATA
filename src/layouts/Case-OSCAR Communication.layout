@@ -3,6 +3,7 @@
     <customButtons>E2CP__New_Comment</customButtons>
     <customButtons>Conga_Merge_JS</customButtons>
     <customButtons>Reset_New_interactions</customButtons>
+    <customButtons>Create_SIDRA_lite</customButtons>
     <customConsoleComponents>
         <primaryTabComponents>
             <containers>
@@ -290,6 +291,7 @@
     <relatedLists>
         <fields>CASES.CASE_NUMBER</fields>
         <fields>Case_Type__c</fields>
+        <fields>CASES.RECORDTYPE</fields>
         <fields>CASES.SUBJECT</fields>
         <fields>CASES.PRIORITY</fields>
         <fields>CASES.CREATED_DATE</fields>

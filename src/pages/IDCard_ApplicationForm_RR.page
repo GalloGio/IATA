@@ -16,7 +16,13 @@
             <apex:includeScript value="/soap/ajax/10.0/apex.js" />
             <script type="text/javascript">
             
-            
+           
+            String.prototype.capitalize = function(){
+                return this.toLowerCase().replace( /\b\w/g, function (m) {
+                return m.toUpperCase();
+                });
+            };
+
             //////delete the attachment for ID Card applications
             function deleteMethod(id){
                 
@@ -29,10 +35,11 @@
                 
             }
             
-            
-            /**
-                 * Sets the maxlength of an input field
-                 */
+         
+    
+    /**
+     * Sets the maxlength of an input field
+     */
     function setMaxLength(id, maxValue) {
         document.getElementById(id).setAttribute('maxlength',maxValue);
     }   
@@ -57,21 +64,20 @@
     /**
                 **** Function responsible to calculate the displayed card name
                 */
-    function calculateDisplayedName () {             
+    function calculateDisplayedName() {             
         
         if (this.document.getElementById('{!$Component.idcardForm.pb1.txtLastName}'))
         {      
             
-            var lastName = (removeDiacritics (this.document.getElementById('{!$Component.idcardForm.pb1.txtLastName}').value)).trim();   
+            var lastName = (removeDiacritics (this.document.getElementById('{!$Component.idcardForm.pb1.txtLastName}').value));   
             var middleInitial = "";
             /*if (this.document.getElementById('{!$Component.idcardForm.pb1.txtMiddleInitial}') != null)
                         middleInitial = (removeDiacritics (this.document.getElementById('{!$Component.idcardForm.pb1.txtMiddleInitial}').innerHTML)).trim().replace(".","").toUpperCase();*/
                     if (this.document.getElementById('{!$Component.idcardForm.pb1.txtMiddleInitial}') != null)
                         middleInitial = (removeDiacritics (this.document.getElementById('{!$Component.idcardForm.pb1.txtMiddleInitial}').value)).trim().replace(".","").toUpperCase();
                     
-                    /*var firstName = (removeDiacritics (this.document.getElementById('{!$Component.idcardForm.pb1.txtFirstName}').innerHTML) ).trim();*/
                     var firstName = (removeDiacritics (this.document.getElementById('{!$Component.idcardForm.pb1.txtFirstName}').value)).trim();
-                    
+                
                     var displayName = "";
                     if((firstName.length + lastName.length) != 0) {
                         if(lastName.length > 22)
@@ -118,9 +124,42 @@
                 if (i in this && this[i]===find)
                     return i;
             return -1;
-        };
+        }; 
     }            
     
+    function workingFirstName() {
+        
+        var firstName = (removeDiacritics(this.document.getElementById('{!$Component.idcardForm.pb1.txtFirstName}').value));
+        document.getElementById('{!$Component.idcardForm.pb1.txtFirstName}').value = firstName.capitalize();
+
+        //removing apostrophe 
+        var name = (removeDiacritics(this.document.getElementById('{!$Component.idcardForm.pb1.txtFirstName}').value));
+        name = name.replace(/'/,' ');
+        document.getElementById('{!$Component.idcardForm.pb1.txtFirstName}').value = name;
+
+        //removing dash
+        var name = (removeDiacritics(this.document.getElementById('{!$Component.idcardForm.pb1.txtFirstName}').value));
+        name = name.replace(/-/,' ');
+        document.getElementById('{!$Component.idcardForm.pb1.txtFirstName}').value = name;
+    }
+    
+    function workingLastName() {
+        
+        var lastName = (removeDiacritics(this.document.getElementById('{!$Component.idcardForm.pb1.txtLastName}').value));
+        
+        document.getElementById('{!$Component.idcardForm.pb1.txtLastName}').value = lastName.capitalize();
+
+
+        //removing apostrophe 
+        var name = (removeDiacritics(this.document.getElementById('{!$Component.idcardForm.pb1.txtLastName}').value));
+        name = name.replace(/'/,' ');
+        document.getElementById('{!$Component.idcardForm.pb1.txtLastName}').value = name;
+
+        //removing dash
+        var name = (removeDiacritics(this.document.getElementById('{!$Component.idcardForm.pb1.txtLastName}').value));
+        name = name.replace(/-/,' ');
+        document.getElementById('{!$Component.idcardForm.pb1.txtLastName}').value = name;
+    }
     
     function isConfirmRevenuePosition(selectedPositionPicklist) {               
         var positionList =["Director","Manager","Employee","Independent Consultant/Broker","Sole Owner","Partner","Shareholder"];
@@ -287,8 +326,7 @@
                         <br/> 
                         
                         
-                        <div><h1>{!PageTitle}</h1></div>
-                        
+                       <div><h1>{!PageTitle}</h1></div>
                         
                         <apex:actionRegion >
                             <apex:pageMessages id="ErrorMsgs" escape="false" />
@@ -345,6 +383,8 @@ value="{!IDCardApplicationRR.Last_Name__c}"
 onkeyup="calculateDisplayedName();" styleclass="outputText2"/>
 </apex:outputPanel>
 </td>
+
+
 </tr>-->
                                         <tr>
                                             <td colspan="4" style="text-align: right">   
@@ -365,7 +405,7 @@ onkeyup="calculateDisplayedName();" styleclass="outputText2"/>
                                                 <apex:outputPanel styleClass="requiredInput" layout="block">
                                                     <apex:outputPanel styleClass="requiredBlock" layout="block"  style="height:23px; margin-left: 3px;" />
                                                     <apex:inputField id="txtLastName" value="{!IDCardApplicationRR.Last_Name__c}"
-                                                                     onkeyup="calculateDisplayedName();" styleclass="outputText2"/>
+                                                                     onkeyup="calculateDisplayedName();workingLastName();" styleclass="outputText2" />
                                                 </apex:outputPanel>   
                                             </td>
                                         </tr>
@@ -376,8 +416,12 @@ onkeyup="calculateDisplayedName();" styleclass="outputText2"/>
                                             <td>
                                                 <apex:outputPanel styleClass="requiredInput" layout="block">
                                                     <apex:outputPanel styleClass="requiredBlock" layout="block"  style="height:23px; margin-left: 3px;" />
-                                                    <apex:inputField id="txtFirstName"  value="{!IDCardApplicationRR.First_Name__c}" onkeyup="calculateDisplayedName();" styleclass="outputText2"/>
+                                                    <apex:inputField id="txtFirstName"  value="{!IDCardApplicationRR.First_Name__c}" onkeyup="calculateDisplayedName();workingFirstName();" styleclass="outputText2"/>
                                                 </apex:outputPanel>
+                                                <script> 
+                                                    if({!IsNewApplication}==false)
+                                                    document.getElementById('{!$Component.idcardForm.pb1.txtFirstName}').setAttribute('readonly', 'readonly');
+                                                </script>
                                                 
                                             </td>
                                         </tr>
@@ -784,8 +828,7 @@ accept="application/pdf" />
                         <br/> 
                         
                         
-                        <div><h1>{!PageTitle}</h1></div>
-                        
+                        <div><h1>{!PageTitle}</h1></div>    
                         
                         <apex:actionRegion >
                             <apex:pageMessages id="ErrorMsgs" escape="false" />

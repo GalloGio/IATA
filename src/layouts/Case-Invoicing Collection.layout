@@ -4,6 +4,7 @@
     <customButtons>Accept_Case</customButtons>
     <customButtons>Move_to_Recycle_Bin</customButtons>
     <customButtons>Escalate_within_IATA</customButtons>
+    <customButtons>SIDRA_Lite_Action</customButtons>
     <emailDefault>false</emailDefault>
     <excludeButtons>Delete</excludeButtons>
     <excludeButtons>Share</excludeButtons>
@@ -74,6 +75,14 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Priority</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>SAAM_Deadline_Date__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Termination_date__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -339,6 +348,7 @@
     <relatedLists>
         <fields>CASES.CASE_NUMBER</fields>
         <fields>Case_Type__c</fields>
+        <fields>CASES.RECORDTYPE</fields>
         <fields>CASES.SUBJECT</fields>
         <fields>CASES.PRIORITY</fields>
         <fields>CASES.CREATED_DATE</fields>

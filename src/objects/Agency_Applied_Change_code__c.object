@@ -68,6 +68,20 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>AIMS_Updated_by__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>The user who created this change code in AIMS</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The user who created this change code in AIMS</inlineHelpText>
+        <label>AIMS Updated by</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Agencies_Applied_Change_codes</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>Account__c</fullName>
         <externalId>false</externalId>
         <label>Account</label>
@@ -301,6 +315,7 @@
             </picklistValues>
             <sorted>true</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -351,6 +366,39 @@
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>For_Integration__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( ISNULL(Account__r.Last_Integration_Date__c), 
+    true, 
+    IF( CreatedDate &gt; Account__r.Last_Integration_Date__c,
+        true,
+        false
+    )
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>For Integration</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>IRR_Expiration_Date__c</fullName>
+        <externalId>false</externalId>
+        <formula>DATETIMEVALUE(
+  TEXT(YEAR(NULLVALUE(Effective_Date__c, DATEVALUE(CreatedDate)) )+1)+ &quot;-&quot; + 
+  IF(
+    AND(MONTH(NULLVALUE(Effective_Date__c, DATEVALUE(CreatedDate))) = 2,DAY( NULLVALUE(Effective_Date__c, DATEVALUE(CreatedDate))) = 29)
+    ,&quot;3-1&quot;
+    ,TEXT(MONTH(NULLVALUE(Effective_Date__c, DATEVALUE(CreatedDate)))) + &quot;-&quot; + TEXT(DAY(NULLVALUE(Effective_Date__c, DATEVALUE(CreatedDate))))
+  ) + &quot; 01:01:00&quot;
+)</formula>
+        <label>IRR Expiration Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
     </fields>
     <fields>
         <fullName>Irregularities_Expired__c</fullName>
@@ -647,6 +695,7 @@
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -750,6 +799,17 @@
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Updated_AIMS__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Flag for Analyst to check if the Minor Change has been carried out to AIMS</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Flag for Analyst to check if the Minor Change has been carried out to AIMS</inlineHelpText>
+        <label>Updated AIMS</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
     </fields>
     <label>Agency Applied Change code</label>
     <nameField>

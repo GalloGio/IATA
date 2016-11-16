@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionOverrides>
         <actionName>Accept</actionName>
         <type>Default</type>
@@ -78,6 +78,7 @@
             <restrictedPicklist>true</restrictedPicklist>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -156,10 +157,12 @@
     <label>EBC Template</label>
     <listViews>
         <fullName>All</fullName>
-        <columns>Is_Reusable__c</columns>
         <columns>NAME</columns>
-        <columns>LAST_UPDATE</columns>
+        <columns>OBJECT_ID</columns>
         <columns>RECORDTYPE</columns>
+        <columns>Audience__c</columns>
+        <columns>Is_Reusable__c</columns>
+        <columns>LAST_UPDATE</columns>
         <columns>CREATEDBY_USER.ALIAS</columns>
         <columns>CREATEDBY_USER</columns>
         <filterScope>Everything</filterScope>

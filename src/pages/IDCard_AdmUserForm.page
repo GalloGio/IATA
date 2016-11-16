@@ -1,4 +1,4 @@
-<apex:page setup="false" docType="html"  language="{!Language}"  title="IATA/IATAN ID Card Online Platform" sidebar="false" showHeader="false" controller="IDCard_AdmUserForm" action="{!rediredctoToLogin}" cache="false" deferLastCommandUntilReady="true">
+<apex:page setup="false" docType="html-4.01-strict"  language="{!Language}"  title="IATA/IATAN ID Card Online Platform" sidebar="false" showHeader="false" controller="IDCard_AdmUserForm" action="{!rediredctoToLogin}" cache="false" deferLastCommandUntilReady="true">
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>IATA/IATAN ID Card Online Platform</title>
@@ -50,7 +50,99 @@
         a:hover{color:black}
     </style>
 </head>
+
 <body>
+<c:IDCardToolsComponent />
+  <apex:includeScript value="/soap/ajax/10.0/apex.js" />
+  <apex:includeScript value="/soap/ajax/24.0/connection.js" />
+    <script type="text/javascript">
+     
+     String.prototype.capitalize = function(){
+        return this.toLowerCase().replace( /\b\w/g, function (m) {
+        return m.toUpperCase();
+        });
+    };
+
+    /**
+     **** Function responsible to calculate the displayed card name
+    */
+    function calculateDisplayedName () {
+        if (this.document.getElementById('{!$Component.idcardForm.pb1.sc1.last}'))
+        {   
+            var lastName = (removeDiacritics (this.document.getElementById('{!$Component.idcardForm.pb1.sc1.last}').value));   
+            var middleInitial = "";
+            if (this.document.getElementById('{!$Component.idcardForm.pb1.sc1.midle}') != null)
+              middleInitial = (removeDiacritics (this.document.getElementById('{!$Component.idcardForm.pb1.sc1.midle}').value)).trim().replace(".","").toUpperCase();
+                    
+              //alert('ola3'); 
+              var firstName = (removeDiacritics (this.document.getElementById('{!$Component.idcardForm.pb1.sc1.first}').value));
+              
+              var displayName = "";
+              if((firstName.length + lastName.length) != 0) {
+                  if(lastName.length > 22)
+                      displayName =  lastName.substring(0, 22);
+                  else {  
+                      // + 2 => (' ') for spaces
+                      if ((lastName.length + 2 + firstName.length + middleInitial.length) <= 22) {
+                          if (lastName.length != 0)
+                              displayName =  firstName + " " + middleInitial + " " + lastName;
+                          else
+                              displayName =  firstName+ " " + middleInitial;    
+                      }                   
+                      else {     
+                          if ((lastName.length + 3) <= 22)
+                              displayName =  firstName.substring(0,1) + "." + " " + lastName;
+                          else
+                              displayName = lastName;
+                      }
+                  }
+              }
+
+              document.getElementById('{!$Component.idcardForm.pb1.sc1.itemDisplayedName.txtDisplayedName}').value = displayName;
+              document.getElementById('{!$Component.idcardForm.pb1.sc1.last}').value = lastName;                
+              document.getElementById('{!$Component.idcardForm.pb1.sc1.first}').value = firstName;  
+                    
+              if((lastName + " " + firstName).length > 22)
+                  document.getElementById('{!$Component.idcardForm.pb1.sc1.itemDisplayedName.textDisplayedName_CharacterRemaining}').innerHTML = " " + ('{!$Label.IDCard_DisplayedName_RemainingCharacter}');
+              else
+                  document.getElementById('{!$Component.idcardForm.pb1.sc1.itemDisplayedName.textDisplayedName_CharacterRemaining}').innerHTML = "";   
+                    
+          }         
+    }      
+    
+    function workingFirstName() {
+        
+        var firstName = (removeDiacritics(this.document.getElementById('{!$Component.idcardForm.pb1.sc1.first}').value));
+        document.getElementById('{!$Component.idcardForm.pb1.sc1.first}').value = firstName.capitalize();
+        
+        //removing apostrophe 
+        var name = (removeDiacritics(this.document.getElementById('{!$Component.idcardForm.pb1.sc1.first}').value));
+        name = name.replace(/'/,' ');
+        document.getElementById('{!$Component.idcardForm.pb1.sc1.first}').value = name;
+
+        //removing dash
+        var name = (removeDiacritics(this.document.getElementById('{!$Component.idcardForm.pb1.sc1.first}').value));
+        name = name.replace(/-/,' ');
+        document.getElementById('{!$Component.idcardForm.pb1.sc1.first}').value = name;
+    }
+    
+    function workingLastName() {
+
+        var lastName = (removeDiacritics(this.document.getElementById('{!$Component.idcardForm.pb1.sc1.last}').value));
+        document.getElementById('{!$Component.idcardForm.pb1.sc1.last}').value = lastName.capitalize();
+
+        //removing apostrophe 
+        var name = (removeDiacritics(this.document.getElementById('{!$Component.idcardForm.pb1.sc1.last}').value));
+        name = name.replace(/'/,' ');
+        document.getElementById('{!$Component.idcardForm.pb1.sc1.last}').value = name;
+
+        //removing dash
+        var name = (removeDiacritics(this.document.getElementById('{!$Component.idcardForm.pb1.sc1.last}').value));
+        name = name.replace(/-/,' ');
+        document.getElementById('{!$Component.idcardForm.pb1.sc1.last}').value = name;
+    }
+
+</script>
      <c:Loading />
       
     <c:IDCard_HeaderComponent />
@@ -120,25 +212,43 @@
                 </script>
                 <div id="newEditPanel">
                     <h2>{!IF(isNew,"New","Edit")} Applicant</h2>
-                   <apex:pageBlock mode="edit"><apex:pageBlockSection collapsible="false" >
+                   <apex:pageBlock mode="edit" id="pb1"><apex:pageBlockSection collapsible="false" id="sc1">
           
                        <apex:inputField value="{!app.Title__c}" styleclass="drawRedBar"/>
-					   <apex:inputField value="{!app.Email_admin__c}" styleclass="drawRedBar"/>
+                       <apex:inputField value="{!app.Email_admin__c}" styleclass="drawRedBar"/>
                        
-                       <apex:inputField value="{!app.First_Name__c}" styleclass="drawRedBar" rendered="{!isnew}"/>
-                       <apex:outputField value="{!app.First_Name__c}" rendered="{!NOT(isnew)}"/>
+                       <!--<apex:inputField value="{!app.First_Name__c}" styleclass="outputText2" rendered="{!isnew}" id="first" onkeyup="workingFirstName();calculateDisplayedName();"/>
+                       <apex:outputField value="{!app.First_Name__c}" rendered="{!NOT(isnew)}"/>-->
+                       <apex:inputField value="{!app.First_Name__c}" styleclass="drawRedBar" id="first" onkeyup="workingFirstName();calculateDisplayedName();"/>
+                       <script>
+                        if({!isnew}==false)
+                          document.getElementById('{!$Component.idcardForm.pb1.sc1.first}').setAttribute('readonly', 'readonly');
+                       </script>
+                       
+                       <apex:inputField value="{!app.Last_Name__c}" styleclass="drawRedBar" id="last" onkeyup="workingLastName();calculateDisplayedName();"/>
                        <apex:inputField value="{!app.Date_of_Birth__c}" styleclass="drawRedBar" rendered="{!isnew}"/>
                        <apex:outputField value="{!app.Date_of_Birth__c}"  rendered="{!NOT(isnew)}"/>
-                       
-                       <apex:inputField value="{!app.Last_Name__c}" styleclass="drawRedBar" />
+                    
+                      <apex:pageBlockSectionItem id="itemDisplayedName">
+                          <apex:outputLabel value="{!$Label.ID_Card_Displayed_Name_Label}" />
+                          <apex:outputPanel styleClass="requiredInput" layout="block">
+                              <apex:outputPanel styleClass="requiredBlock" layout="block" />
+                              <apex:inputText styleClass="outputText2" id="txtDisplayedName" value="{!app.Displayed_Name__c}" style="width:150px;" onfocus="setMaxLength('{!$Component.txtDisplayedName}', 22);" />
+                              <apex:outputPanel id="textDisplayedName_Panel" rendered="true">
+                                  <apex:outputLabel id="textDisplayedName_CharacterRemaining" value="" />
+                              </apex:outputPanel>
+                              <script> document.getElementById('{!$Component.txtDisplayedName}').setAttribute('readonly', 'readonly');</script>
+                              </apex:outputPanel>
+                        </apex:pageBlockSectionItem>                      
+
                        <apex:selectList value="{!app.IATA_Code__c}" label="{!$Label.IDCard_AgencyIATAcode}" size="1" styleclass="drawRedBar" rendered="{!NOT(moreThan1000Iatacodes)}">
                             <apex:selectOptions value="{!accountCodes}"/>
                             <apex:actionSupport event="onchange" action="{!changeAgency}" rerender="newContact, messages" 
-                            					onsubmit="if({!NOT(OR(isNew,isEditNew))})startLoading()" disabled="{!OR(isNew,isEditNew)}" />
+                                                onsubmit="if({!NOT(OR(isNew,isEditNew))})startLoading()" disabled="{!OR(isNew,isEditNew)}" />
                         </apex:selectList>             
                        <apex:inputText label="{!$Label.IDCard_AgencyIATAcode}" value="{!app.IATA_Code__c}" required="true" rendered="{!moreThan1000Iatacodes}" styleclass="drawRedBar">
-                       		<apex:actionSupport event="onchange" action="{!changeAgency}" rerender="newContact, messages"  
-                       							disabled="{!OR(isNew,isEditNew)}" onsubmit="if({!NOT(OR(isNew,isEditNew))})startLoading()"/>
+                            <apex:actionSupport event="onchange" action="{!changeAgency}" rerender="newContact, messages"  
+                                                disabled="{!OR(isNew,isEditNew)}" onsubmit="if({!NOT(OR(isNew,isEditNew))})startLoading()"/>
                        </apex:inputText>
 
 
@@ -184,12 +294,12 @@
                        <br/><br/>
                        
                         <script>
-							$.each($(".drawRedBar"),function(){
-								$(this).parent().prepend('<div class="requiredInput"><div class="requiredBlock"></div></div>');
-								$(this).appendTo($(this).parent().find(".requiredInput"));
-							});	
-							stopLoading();
-						</script>
+                            $.each($(".drawRedBar"),function(){
+                                $(this).parent().prepend('<div class="requiredInput"><div class="requiredBlock"></div></div>');
+                                $(this).appendTo($(this).parent().find(".requiredInput"));
+                            }); 
+                            stopLoading();
+                        </script>
                 </apex:pageBlockSection>
 
                     <apex:outputPanel id="lowerPanel">

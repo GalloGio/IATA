@@ -155,7 +155,7 @@ private class ContractButtonsControllerTest {
                 ContractButtonsController controller = new ContractButtonsController(std);
                 
                 // Check the visibility on the buttons
-                system.assertEquals(false, controller.showSMRenewButtons);
+                system.assertEquals(true, controller.showSMRenewButtons);
                 system.assertEquals(true, controller.showPMRenewButtons);
                 system.assertEquals(true, controller.showPMCancelButton);
                 system.assertEquals(false, controller.showRenewalOpportunityLink);
@@ -336,7 +336,7 @@ private class ContractButtonsControllerTest {
                 ContractButtonsController controller = new ContractButtonsController(std);
                 
                 // only the "contract canceled" button should show
-                system.assertEquals(false, controller.showSMRenewButtons);
+                system.assertEquals(true, controller.showSMRenewButtons);
                 system.assertEquals(false, controller.showPMRenewButtons);
                 system.assertEquals(true, controller.showPMCancelButton);
                 system.assertEquals(false, controller.showRenewalOpportunityLink);

@@ -132,6 +132,7 @@
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -161,6 +162,45 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Airline_1_AOC_Name__c</fullName>
+        <description>shows the name of AOC of the airline 1 (because for members the account name is the trade name)</description>
+        <externalId>false</externalId>
+        <formula>Airline_1__r.Name_on_AOC__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>shows the name of AOC of the airline 1 (because for members the account name is the trade name)</inlineHelpText>
+        <label>Airline 1 AOC Name</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Airline_1_IATA_code__c</fullName>
+        <description>shows the code of airline 1</description>
+        <externalId>false</externalId>
+        <formula>Airline_1__r.IATACode__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Airline 1 IATA code</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Airline_1_Prefix_code__c</fullName>
+        <externalId>false</externalId>
+        <formula>Airline_1__r.Airline_Prefix__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Airline 1 Prefix code</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Airline_1__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
@@ -181,6 +221,45 @@
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Airline_2_AOC_name__c</fullName>
+        <description>shows the name of AOC of the airline 2 (because for members the account name is the trade name)</description>
+        <externalId>false</externalId>
+        <formula>Airline_2__r.Name_on_AOC__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>shows the name of AOC of the airline 2 (because for members the account name is the trade name)</inlineHelpText>
+        <label>Airline 2 AOC name</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Airline_2_IATA_code__c</fullName>
+        <description>shows the code of airline 2</description>
+        <externalId>false</externalId>
+        <formula>Airline_2__r.IATACode__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Airline 2 IATA code</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Airline_2_Prefix_code__c</fullName>
+        <externalId>false</externalId>
+        <formula>Airline_2__r.Airline_Prefix__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Airline 2 Prefix code</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Airline_2__c</fullName>
@@ -228,6 +307,7 @@
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -292,6 +372,7 @@
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>

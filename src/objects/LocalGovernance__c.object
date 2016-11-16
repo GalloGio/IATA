@@ -131,6 +131,7 @@
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -195,6 +196,7 @@
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -218,6 +220,10 @@
         <inlineHelpText>Number of Meetings per year</inlineHelpText>
         <label>Frequency of Face to Face Meetings</label>
         <picklist>
+            <picklistValues>
+                <fullName>None</fullName>
+                <default>true</default>
+            </picklistValues>
             <picklistValues>
                 <fullName>At least 1</fullName>
                 <default>false</default>
@@ -269,6 +275,7 @@
             <restrictedPicklist>true</restrictedPicklist>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -282,6 +289,19 @@
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
         <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Group_Owner_Text__c</fullName>
+        <description>Group owner in free text for Reg/Div Groups</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Name of Group Owner</inlineHelpText>
+        <label>Group Owner</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Group_Owner__c</fullName>
@@ -448,6 +468,7 @@
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -455,7 +476,7 @@
     <fields>
         <fullName>Maximum_Number_of_Participiants__c</fullName>
         <externalId>false</externalId>
-        <label>Maximum Number of Participiants</label>
+        <label>Maximum Number of Participants</label>
         <precision>18</precision>
         <required>false</required>
         <scale>0</scale>
@@ -498,6 +519,7 @@
             <restrictedPicklist>true</restrictedPicklist>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
@@ -519,6 +541,7 @@
             <restrictedPicklist>true</restrictedPicklist>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -547,6 +570,7 @@
             <restrictedPicklist>true</restrictedPicklist>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -582,6 +606,7 @@
             </picklistValues>
             <sorted>true</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -702,6 +727,7 @@
             </picklistValues>
             <sorted>true</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -721,6 +747,7 @@
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -961,7 +988,7 @@ Record Type + Group Type + ISO_Country_Name</description>
     <listViews>
         <fullName>Reg_Div_Groups</fullName>
         <columns>NAME</columns>
-        <columns>Group_Owner__c</columns>
+        <columns>Group_Owner_Text__c</columns>
         <columns>Reporting_to__c</columns>
         <columns>AM_Under__c</columns>
         <filterScope>Everything</filterScope>
@@ -970,13 +997,18 @@ Record Type + Group Type + ISO_Country_Name</description>
             <operation>equals</operation>
             <value>LocalGovernance__c.Reg_Div_Groups</value>
         </filters>
+        <filters>
+            <field>NAME</field>
+            <operation>notEqual</operation>
+            <value>Annual General Meeting of IATA Members,Director General</value>
+        </filters>
         <label>Reg / Div Groups</label>
         <language>en_US</language>
     </listViews>
     <listViews>
         <fullName>Reg_Div_Groups_Pending_Approval</fullName>
         <columns>NAME</columns>
-        <columns>Group_Owner__c</columns>
+        <columns>Group_Owner_Text__c</columns>
         <columns>Reporting_to__c</columns>
         <columns>AM_Under__c</columns>
         <filterScope>Everything</filterScope>
@@ -1063,6 +1095,10 @@ Record Type + Group Type + ISO_Country_Name</description>
             <values>
                 <fullName>At least 6</fullName>
                 <default>false</default>
+            </values>
+            <values>
+                <fullName>None</fullName>
+                <default>true</default>
             </values>
         </picklistValues>
         <picklistValues>
@@ -1655,6 +1691,10 @@ Record Type + Group Type + ISO_Country_Name</description>
                 <fullName>At least 6</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>None</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Local_Governance_type__c</picklist>
@@ -1906,7 +1946,7 @@ Record Type + Group Type + ISO_Country_Name</description>
     </validationRules>
     <validationRules>
         <fullName>Either_a_Division_or_a_Region</fullName>
-        <active>true</active>
+        <active>false</active>
         <errorConditionFormula>AND(
   RecordType.DeveloperName = &quot;Reg_Div_Groups&quot;,
 

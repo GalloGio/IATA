@@ -159,12 +159,12 @@ public class IDCard_AdmUserForm extends IDCardAbstractController{
         // I check that all the required fields were filled with a proper value
         set<string> newFields = new set<string>{'Title__c','Email_admin__c','First_Name__c','Date_of_birth__c','Last_Name__c','IATA_Code__c',
                                                'Gender__c','Hours_worked__c','Position_in_Current_Agency__c','Duties_in_current_Agency__c',
-                                               'Start_date_agency_month__c','Start_date_agency_year__c','Start_date_industry__c'};
+                                               'Start_date_agency_month__c','Start_date_agency_year__c','Start_date_industry__c','Displayed_Name__c'};
         set<string> editFields = new set<string>{'Title__c','Email_admin__c','Last_Name__c','IATA_Code__c','Gender__c',
-                                               'Hours_worked__c','Position_in_Current_Agency__c','Duties_in_current_Agency__c'};
+                                               'Hours_worked__c','Position_in_Current_Agency__c','Duties_in_current_Agency__c','Displayed_Name__c'};
         set<string> replacementFields = new set<string>{'Title__c','Email_admin__c','Last_Name__c','IATA_Code__c',
                                                        'Gender__c','Hours_worked__c','Position_in_Current_Agency__c','Duties_in_current_Agency__c',
-                                                       'Start_date_agency_month__c','Start_date_agency_year__c'};
+                                                       'Start_date_agency_month__c','Start_date_agency_year__c','Displayed_Name__c'};
         
         set<String> requiredFields = isNew ? newFields : (isReplacement ? replacementFields : editFields);
         Map<String, Schema.SobjectField> allFields =ID_Card_Application__c.getSObjectType().getDescribe().fields.getMap();
@@ -239,11 +239,26 @@ public class IDCard_AdmUserForm extends IDCardAbstractController{
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,addIATACodeToLabel));
             success = false;
          }
+
+         // The name displayed on ID Card must not contain any special characters
+         if (!Test.isRunningTest()){
+            if (app.Displayed_Name__c != null && app.Displayed_Name__c != '') {
+              //pattern fullNamePattern = pattern.compile('[[\\x30-\\x39][\\x41-\\x5a][\\x61-\\x7a]- ]+');
+
+              //remove accents
+              app.Displayed_Name__c = IDCardUtil.deAccent(app.Displayed_Name__c);
+              
+              pattern fullNamePattern = pattern.compile('[^a-zA-Z - ,.]');
+              Matcher fullNameMatcher = fullNamePattern.matcher(app.Displayed_Name__c);
+              if (fullNameMatcher.find()) {
+                Apexpages.addMessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ID_Card_DisplayName_Business_Rule));
+                 success = false;
+              }
+            }
+        }
          
          if(success == false)
-            return null;  
-        
-        
+            return null; 
         
         
         // Set status and type on the application 

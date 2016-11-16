@@ -8,7 +8,9 @@
 	
     <apex:includeScript value="/soap/ajax/33.0/connection.js"/>
 	<apex:includeScript value="/soap/ajax/33.0/apex.js"/>
-	<apex:includeScript value="{!$Resource.jQuery_min_1_11_0}"/>
+
+	<!-- The jQuery must be called on the parent page to avoid conflicts -->
+	<!-- <apex:includeScript value="{!$Resource.jquery2_1_4}"/> -->
 
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css"/>
 	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>

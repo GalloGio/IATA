@@ -11,6 +11,17 @@
         <template>MarketingPAX/Opportunity90DaysToContractEnd</template>
     </alerts>
     <alerts>
+        <fullName>Closed_deal_AME</fullName>
+        <description>Closed deal AME</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>auragh@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>MACS_Admin/MMAlertonClosedDealsNrcrm</template>
+    </alerts>
+    <alerts>
         <fullName>MACS_alert_of_new_deals_over_10K_non_rcrm</fullName>
         <ccEmails>brazeaug@iata.org, walkers@iata.org</ccEmails>
         <description>MACS alert of new deals over 10K (non rcrm)</description>
@@ -420,7 +431,7 @@
         </actions>
         <active>true</active>
         <description>Notifications sent to sales and marketing about closed deals over US$ 10,000</description>
-        <formula>AND(Amount &gt;= 10000, ISPICKVAL(StageName,&apos;7. Closed Sales / Sold&apos;), RecordType.Name = &quot;RCRM Opportunity&quot;)</formula>
+        <formula>AND(Amount &gt;= 10000, ISPICKVAL(StageName,&apos;7. Closed Sales / Sold&apos;), RecordType.Name = &quot;RCRM Opportunity&quot;,  Block_alerts_on_updates__c = false)</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -437,9 +448,22 @@ As it concerns non RCRM opps, the NBB is not included in the message</descriptio
     </rules>
     <rules>
         <fullName>MENA Deal Alert</fullName>
-        <active>false</active>
+        <actions>
+            <name>Closed_deal_AME</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Opportunity.Customer_Region__c</field>
+            <operation>equals</operation>
+            <value>Africa &amp; Middle East</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Opportunity.StageName</field>
+            <operation>equals</operation>
+            <value>7. Closed Sales / Sold</value>
+        </criteriaItems>
         <description>Identifies an opportunity closing in IATA&apos;s MENA RCT</description>
-        <formula>AND (     ISPICKVAL(Geographic_Region__c, &apos;MENA&apos; ),     OwnerId = LastModifiedById, Amount   &gt;= 10000,      ISPICKVAL( StageName ,&apos;7. Closed Sales / Sold&apos;),      $User.Division = &apos;MACS&apos;            )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
