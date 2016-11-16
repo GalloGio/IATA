@@ -1,14 +1,13 @@
 global with sharing class EF_AttachmentListController {
 
-    public static Boolean runningForEF{
+	public static Boolean runningForEF{
         get{
             if(runningForEF == null) runningForEF = false;
             return runningForEF;
         }
         set;
-    }
-    
-    public Boolean viewPrivateFiles{get;set;}
+    }   
+	public Boolean viewPrivateFiles{get;set;}
 
     public String uploader {get;set;}
     public String source {get;set;}
@@ -92,8 +91,7 @@ global with sharing class EF_AttachmentListController {
         check all assignTo calls have been done and execute initial methods
     **/
     private void init() {
-        Group efViewPrivateFiles = [SELECT Id, Name FROM Group Where DeveloperName='EF_Private_Document_Access'];
-        List<GroupMember> lsGroupMembers = [SELECT Id FROM GroupMember WHERE GroupId =: efViewPrivateFiles.Id AND UserOrGroupId =:UserInfo.getUserId()];
+		List<GroupMember> lsGroupMembers = [SELECT Id FROM GroupMember WHERE Group.DeveloperName = 'EF_Private_Document_Access' AND UserOrGroupId =:UserInfo.getUserId()];
         this.viewPrivateFiles = false;
         if(!lsGroupMembers.isEmpty()) this.viewPrivateFiles = true;
         if (this.id == null ) return;
