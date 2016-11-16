@@ -2949,7 +2949,7 @@
             <type>caseTeam</type>
         </recipients>
         <senderType>CurrentUser</senderType>
-        <template>unfiled$public/IRIS_Client_Balance</template>
+        <template>unfiled$public/IRIS_Client_Balance2</template>
     </alerts>
     <alerts>
         <fullName>SIDRA_IRRDEF02_IrregularityDefaultapprovedby2hoursMailtoRSESPTCY</fullName>
