@@ -102,78 +102,30 @@
                                                     <div class="title">Manage Services</div>
                                                     <ul class="list">
                                                         <li>
-                                                            <a href="https://{!$Site.Domain}{!$Page.IECEBC_Dashboard}">View dashboard</a>
+                                                            <a href="{!URLFOR($Page.IECEBC_Dashboard)}">View dashboard</a>
                                                         </li>
                                                         <li>
-                                                            <a href="https://{!$Site.Domain}{!$Page.IECEBC_Campaign}">Create campaign</a>
+                                                            <a href="{!URLFOR($Page.IECEBC_Campaign)}">Create campaign</a>
                                                         </li>
                                                         <li>
-                                                            <a href="https://{!$Site.Domain}{!$Page.IECEBC_CampaignList}">View all campaigns</a>
+                                                            <a href="{!URLFOR($Page.IECEBC_CampaignList)}">View all campaigns</a>
                                                         </li>
                                                         <li>
-                                                            <a href="https://{!$Site.Domain}{!$Page.IECEBC_TemplateList}">Manage templates</a>
+                                                            <a href="{!URLFOR($Page.IECEBC_TemplateList)}">Manage templates</a>
                                                         </li>
                                                         <li>
-                                                            <a href="https://{!$Site.Domain}{!$Page.IECEBC_RecipientList}">Manage lists</a>
+                                                            <a href="{!URLFOR($Page.IECEBC_RecipientList)}">Manage lists</a>
                                                         </li>
                                                         <li>
                                                         	<apex:outputLink value="{!URLFOR($Page.IECEBC_AccountManage)}">Manage account</apex:outputLink>
                                                         </li>
                                                         <li>
-                                                            <a href="https://{!$Site.Domain}{!$Page.IECEBC_Reports}">View reports</a>
+                                                            <a href="{!URLFOR($Page.IECEBC_Reports)}">View reports</a>
                                                         </li>
                                                     </ul>
                                                 </div>
                                             </div>
                                         </div>
-                                        <!--
-                                        <div class="sub-nav tab-container js-tabs">
-                                            <ul class="nav tabs">
-                                                <li class="active" data-target="#sub-nav-pane-1">
-                                                    <a href="#">Manage Services</a>
-                                                </li>
-                                                <li data-target="#sub-nav-pane-2">
-                                                    <a href="#">Service Details</a>
-                                                </li>
-                                            </ul>
-                                            <div class="tab-content">
-                                                <div class="tab-pane is-open" id="sub-nav-pane-1">
-                                                    <div class="title">Manage services</div>
-                                                    <ul class="list">
-                                                        <li>
-                                                            <a href="https://{!$Site.Domain}{!$Page.IECEBC_Campaign}">Create campaign</a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="https://{!$Site.Domain}{!$Page.IECEBC_CampaignList}">View all campaigns</a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="https://{!$Site.Domain}{!$Page.IECEBC_TemplateList}">Manage templates</a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="https://{!$Site.Domain}{!$Page.IECEBC_RecipientList}">Manage lists</a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="https://{!$Site.Domain}{!$Page.IECEBC_Reports}">View reports</a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                                <div class="tab-pane" id="sub-nav-pane-2">
-                                                    <div class="title">Service Details</div>
-                                                    Subscription ID: {!subscription.Name}<br />
-                                                    Type: {!productRatePlan.EBC_SubscriptionType__c}<br />
-                                                    
-                                                    Account Balance: <apex:outputText value="{0, number, ###,###,##0}"><apex:param value="{!billingAccount.eBroadcast_Email_Balance__c}"/></apex:outputText><br />
-                                                    
-                                                    <apex:outputText rendered="{!productRatePlan.EBC_SubscriptionType__c == 'Pre-Paid' && subscription.Zuora__SubscriptionEndDate__c >= TODAY()}">
-                                                        Service End Date: <apex:outputText value="{0, date, d MMMM yyyy}"><apex:param value="{!subscription.Zuora__SubscriptionEndDate__c}" /></apex:outputText> ({!subscription.Zuora__SubscriptionEndDate__c - TODAY()} DAYS)<br />
-                                                        Service Renewal: <apex:outputText value="{0, date, d MMMM yyyy}"><apex:param value="{!subscription.Zuora__NextRenewalDate__c}" /></apex:outputText><br />
-                                                    </apex:outputText>
-                                                    
-                                                    Service Upgrade: Please contact support<br />
-                                                    
-                                                </div>
-                                            </div>
-                                        </div>-->
                                     </li>
                                 </ul>
                             </nav>
@@ -184,7 +136,7 @@
 				                <apex:variable rendered="{!isUserLoggedIn}" value="{!$User}" var="u">
 	                                <li><a class="icon user" href="#">{!$User.FirstName} {!$User.LastName}</a></li>
                                 </apex:variable>
-                                <li><a class="icon shopping-cart" href="https://{!$Site.Domain}{!$Page.IECHomepage}">Shopping area</a></li>
+                                <li><a class="icon shopping-cart" href="{!URLFOR($Page.IECHomepage)}">Shopping area</a></li>
                             </ul>
                         </div>
                         
@@ -197,19 +149,19 @@
                         <div class="group-container">
                             <strong class="group-title">Products:</strong>
                             <ul class="list">
-                                <li><a href="https://{!$Site.Domain}{!$Page.IECProductViewer}?ProductCode={!sProdGSS}">Global Systems Solution</a></li>
-                                <li><a href="https://{!$Site.Domain}{!$Page.IECProductViewer}?ProductCode={!sProdMDP}">Marketing Data Package</a></li>
-                                <li><a href="https://{!$Site.Domain}{!$Page.IECProductViewer}?ProductCode={!sProdGAD}">Global Agency Directory</a></li>
-                                <li><a href="https://{!$Site.Domain}{!$Page.IECProductViewer}?ProductCode={!sProdCACPro}">CheckACode</a></li>
+                                <li><a href="{!URLFOR($Page.IECProductViewer)}?ProductCode={!sProdGSS}">Global Systems Solution</a></li>
+                                <li><a href="{!URLFOR($Page.IECProductViewer)}?ProductCode={!sProdMDP}">Marketing Data Package</a></li>
+                                <li><a href="{!URLFOR($Page.IECProductViewer)}?ProductCode={!sProdGAD}">Global Agency Directory</a></li>
+                                <li><a href="{!URLFOR($Page.IECProductViewer)}?ProductCode={!sProdCACPro}">CheckACode</a></li>
                             </ul>
                         </div>
                         <div class="group-container">
                             <strong class="group-title">Info:</strong>
                             <ul class="list">
-                                <li><a href="https://{!$Site.Domain}{!$Page.IECAboutGDP}">About Global Data</a></li>
+                                <li><a href="{!URLFOR($Page.IECAboutGDP)}">About Global Data</a></li>
                                 <li><a href="mailto:{!sContactEmail}?subject={!sContactSubject}">Contact Us</a></li>
-                                <li><a href="https://{!$Site.Domain}{!$Page.IECCustomers}">Customers</a></li>
-                                <li><a href="https://{!$Site.Domain}{!$Page.IECTerms}">Terms of Use</a></li>
+                                <li><a href="{!URLFOR($Page.IECCustomers)}">Customers</a></li>
+                                <li><a href="{!URLFOR($Page.IECTerms)}">Terms of Use</a></li>
                             </ul>
                         </div>
                     </div>
