@@ -19,51 +19,73 @@
    <antcallback target="deldir" />
    <mkdir dir="${basedir}/Code"/>
   
-    
-             <mkdir dir="${basedir}/Code/permissionsets"/>
- 
+      <mkdir dir="${basedir}/Code/permissionsets"/>
+       <mkdir dir="${basedir}/Code/profiles"/>
+
 
      <echo level="info">moving files</echo>
       
-      <for list="${permissionsetsFolders}" param="param" delimiter=",">
+      <for list="${objectFolders}" param="param" delimiter=",">
         <sequential>
           <move todir="${basedir}/Code/permissionsets">
-            <fileset dir="${basedir}/src/@{param}">
+            <fileset dir="${basedir}/src/permissionsetsObjects">
             </fileset>
           </move>
        </sequential>
      </for>
 
- <move file="${basedir}/src/permissionsetsDeploy.xml" tofile="${basedir}/Code/package.xml"/>  
+
+   <for list="${objectFolders}" param="param" delimiter=",">
+        <sequential>
+          <move todir="${basedir}/Code/profiles">
+            <fileset dir="${basedir}/src/profilesObjects">
+            </fileset>
+          </move>
+       </sequential>
+     </for>
+
+
+ <move file="${basedir}/src/permissions.xml" tofile="${basedir}/Code/package.xml"/>  
       
       <antcallback target="deployCodeLocal" />
-          <antcallback target="deployProfiles" />
+          <antcallback target="deployProfilesApex" />
 
   </target> 
 
 
 
-<target name="deployProfiles"> 
+<target name="deployProfilesApex"> 
     <echo level="info">Deploying APEX and VISUALFORCE</echo>
    <antcallback target="deldir" />
    <mkdir dir="${basedir}/Code"/>
   
- 
-             <mkdir dir="${basedir}/Code/profiles"/>
-
+       <mkdir dir="${basedir}/Code/permissionsets"/>
+        <mkdir dir="${basedir}/Code/profiles"/>
 
      <echo level="info">moving files</echo>
-      
-      <for list="${profilesFolders}" param="param" delimiter=",">
+
+   <for list="${apexFolders}" param="param" delimiter=",">
         <sequential>
-          <move todir="${basedir}/Code/profiles">
-            <fileset dir="${basedir}/src/@{param}">
+          <move todir="${basedir}/Code/permissionsets">
+            <fileset dir="${basedir}/src/permissionsetsApex">
             </fileset>
           </move>
        </sequential>
      </for>
 
- <move file="${basedir}/src/profilesDeploy.xml" tofile="${basedir}/Code/package.xml"/>  
+
+   <for list="${apexFolders}" param="param" delimiter=",">
+        <sequential>
+          <move todir="${basedir}/Code/profiles">
+            <fileset dir="${basedir}/src/profilesApex">
+            </fileset>
+          </move>
+       </sequential>
+     </for>
+
+
+
+ <move file="${basedir}/src/permissions2.xml" tofile="${basedir}/Code/package.xml"/>  
       
       <antcallback target="deployCodeLocal" />
 

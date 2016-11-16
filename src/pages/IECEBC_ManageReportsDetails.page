@@ -9,7 +9,7 @@
     <apex:composition template="IECEBC_Layout">
         <apex:define name="pageHeadAdditions">
             <!-- Start of Page <head> -->
-            <title>eBroadcast Overview</title>
+            <title>eBroadcast Report Details</title>
             
             <!-- End of Page </head> -->
         </apex:define>

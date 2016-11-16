@@ -2758,6 +2758,7 @@
 <fieldPermissions><editable>false</editable><field>Case.Product_Category_ID__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Case.Product_Manager_ACR__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Case.Product_Manager__c</field><readable>true</readable></fieldPermissions>
+<fieldPermissions><editable>true</editable><field>Case.Promoter__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Case.Proof_of_payment_received__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Case.Proof_of_payment_requested__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Case.Propose_Default__c</field><readable>false</readable></fieldPermissions>
@@ -3688,6 +3689,14 @@
 <fieldPermissions><editable>false</editable><field>EBC_Resource__c.Width__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>EBC_Setup__c.Default_Cost_per_E_mail__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>EBC_Setup__c.Default_Storage_Capacity__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>EBC_Setup__c.E_Member_Prepaid_Product_Rate_Plan_01__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>EBC_Setup__c.E_Member_Prepaid_Product_Rate_Plan_02__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>EBC_Setup__c.E_Member_Prepaid_Product_Rate_Plan_03__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>EBC_Setup__c.E_Member_Prepaid_Product_Rate_Plan_04__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>EBC_Setup__c.E_N_Member_Prepaid_Product_Rate_Plan_01__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>EBC_Setup__c.E_N_Member_Prepaid_Product_Rate_Plan_02__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>EBC_Setup__c.E_N_Member_Prepaid_Product_Rate_Plan_03__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>EBC_Setup__c.E_N_Member_Prepaid_Product_Rate_Plan_04__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>EBC_Setup__c.Enhanced_Reporting_Product_Rate_Plan__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>EBC_Setup__c.Extra_Storage_Capacity__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>EBC_Setup__c.Maximum_File_Size_Upload__c</field><readable>false</readable></fieldPermissions>
