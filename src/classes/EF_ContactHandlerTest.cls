@@ -24,7 +24,7 @@ private class EF_ContactHandlerTest {
         update contract;
 
         Contact cont = new Contact();
-        cont.RecordTypeId = schema.SObjectType.Contact.getRecordTypeInfosByName().get('Standard').getRecordTypeId();
+        cont.RecordTypeId = AMS_Utils.getId('Contact', 'Standard_Contact');
         cont.LastName='UnitTestContactSomething';
             cont.Phone='555-fakephone';
         cont.AccountId = client.Id;

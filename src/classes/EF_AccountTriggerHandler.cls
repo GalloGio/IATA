@@ -232,7 +232,7 @@ public class EF_AccountTriggerHandler {
 			//loop over accounts to check if any of them need to trigger a notification.
 			for(Account a: accs){			
 				//check fields for Clients
-				if(a.RecordTypeId==Schema.SObjectType.Account.getRecordTypeInfosByName().get('Others').getRecordTypeId() ){
+				if(a.RecordTypeId==AMS_Utils.getId('Account', 'Others') ){
 					
 					for(String s: criticalClientFieldList){
 									
@@ -244,9 +244,9 @@ public class EF_AccountTriggerHandler {
 				}
 
 				//check fields for Customers
-				if(a.RecordTypeId==Schema.SObjectType.Account.getRecordTypeInfosByName().get('Operator').getRecordTypeId() ||
-					a.RecordTypeId==Schema.SObjectType.Account.getRecordTypeInfosByName().get('Airline Branch').getRecordTypeId() ||
-					a.RecordTypeId==Schema.SObjectType.Account.getRecordTypeInfosByName().get('Airline Headquarters').getRecordTypeId()){
+				if(a.RecordTypeId==AMS_Utils.getId('Account', 'Operator') ||
+					a.RecordTypeId==AMS_Utils.getId('Account', 'IATA_Airline_BR') ||
+					a.RecordTypeId==AMS_Utils.getId('Account', 'IATA_Airline')){
 					for(String s: criticalAirlineFieldList){
 									
 		           	
@@ -283,7 +283,7 @@ public class EF_AccountTriggerHandler {
              	}
            }
            emailBody = emailBody + '</table>';
-           if(a.RecordTypeId==Schema.SObjectType.Account.getRecordTypeInfosByName().get('Others').getRecordTypeId()){
+           if(a.RecordTypeId==AMS_Utils.getId('Account', 'Others')){
            		if(a.EF_Client_Services_Specialist__c!=null){
            			 Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
 			        mail.setSaveAsActivity(false);
