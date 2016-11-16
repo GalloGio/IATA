@@ -3177,12 +3177,30 @@
       
 
           }]
-    }
-
-    ]
+    },
+    {
+      "Name": "CER.1.0",
+      "Flows": [{
+        "Name": "AMS_OSCAR_CERTIFICATE",
+        "Steps": [{
+          "Name": "STEP33",
+          "Required": [],
+          "Actions": [{
+            "FunctionName": "generateCertificates",
+            "ActionLabel": "AMS_OSCAR_Action12",
+            "args": ["oscarid", "agencyid"]
+          }],
+          "Automations": [],
+          "DisplayFields": [
+            "Form_Effective_Date__c",
+            "Certificate_Quantity__c",
+            "Confirm_Payment_if_applicable__c",
+            "Send_Confirmation__c",
+            "STEP33__c"
+          ],
+          "IsDependent": false
+        }]
+      }]
+    }]
   }
-
-
-
-
 }

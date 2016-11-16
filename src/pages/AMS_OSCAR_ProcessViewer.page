@@ -348,7 +348,7 @@ function buildFunctionCall(func, argList){
 </apex:pageBlock>
 
 
-<apex:pageBlock rendered="{!IF(oscar != null && NOT(oscar.AMS_Online_Accreditation__r.Ready_for_Accreditation__c) && oscar.Process__c != 'CERTIFICATION.1.0',true,false)}">
+<apex:pageBlock rendered="{!showRequiredOverlay}">
     <div class="overlay">
     <div class="overlay-content">
         <p style="font-size: 36px;">LOCKED</p>

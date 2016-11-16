@@ -118,6 +118,9 @@ public without sharing class AMS_Utils {
     public static final String BANKACCCHANGES   = 'BANK.ACCOUNT.CHANGES';
     public static final String CERTIFICATION    = 'CERTIFICATION.1.0';
 
+    //other types of process
+    public static final String CERTIFICATE      = 'CER.1.0'         ;
+
     //Types of Certificate
     public static final String CERT_DGR         = 'DGR';
     public static final String CERT_DGA         = 'DGA';
@@ -696,6 +699,19 @@ public without sharing class AMS_Utils {
         if (newVal <> oscarAgency.Status__c && newVal != null) {
 
             oscarAgency.Status__c = newVal;
+            toReturn = oscarAgency;
+        }
+
+        if(oscar != null){
+            if(aacNEW.Change_Code__c == 'FIN' && new Set<String>{'C','P'}.contains(oscar.Location_Class__c)){
+                oscarAgency.Annual_Renewal_Certificates__c = true;
+                toReturn = oscarAgency;
+            }
+        }       
+
+        if(aacNew.Change_Code__c == 'CER'){
+            oscarAgency.Annual_Renewal_Certificates__c = true;
+            oscarAgency.Certificate_Generated_Current_Year__c = true;
             toReturn = oscarAgency;
         }
 

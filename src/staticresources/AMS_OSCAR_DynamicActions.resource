@@ -335,6 +335,16 @@ var dyn_functions = {
 
                 }
            
+           },
+           generateCertificates:function (args) {
+
+                var argList = args.split(", ");
+
+                var result;
+                result = sforce.apex.execute("AMS_OSCAR_Webservice", "generateCertificates", {oscarId: argList[0], agencyId: argList[1]});
+                
+                alert(result);
+           
            }
 
 };
