@@ -66,10 +66,7 @@
                 <behavior>Readonly</behavior>
                 <field>Quality__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Top_Parent__c</field>
-            </layoutItems>
+            
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>ParentId</field>
