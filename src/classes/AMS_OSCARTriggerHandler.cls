@@ -1501,7 +1501,7 @@ public class AMS_OSCARTriggerHandler {
 				theoscars.addAll(c.oscars);
 			}
 
-			AMS_ChangeCodesHelper.createAAChangeCodes(null, changeCodes, theoscars, accts, true);
+			AMS_Utils.createAAChangeCodes( changeCodes, theoscars, accts, true);
 		}
 		
 	}
