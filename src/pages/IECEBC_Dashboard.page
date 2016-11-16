@@ -1,0 +1,130 @@
+<apex:page controller="vfIECEBC_Dashboard" applyHtmlTag="false" applyBodyTag="false" sidebar="false" showheader="false" standardStylesheets="false" language="en" docType="html-5.0">
+	<apex:composition template="IECEBC_Layout">
+        <apex:define name="pageHeadAdditions">
+            <!-- Start of Page <head> -->
+            <title>eBroadcast Dashboard</title>
+            <!-- End of Page </head> -->
+        </apex:define>
+        <apex:define name="pageScriptAdditions">
+            <!-- If any page specific .js, add them here -->
+        </apex:define>
+        <apex:define name="pageContent">
+            <!-- Start of Page Content -->
+            <main class="main-content content-dashboard">
+                <div class="inner-wrapper">
+                    <h1 class="page-title">Dashboard</h1>
+                    <div class="row">
+                        <div class="main-container columns small-12 medium-8">
+                                <div class="group-container campaigns">
+                                    <h2 class="group-title">Most Recent Campaigns</h2>
+                                    <c:IECEBC_CampaignList limited="true" />
+                                </div>
+            
+                            <apex:outputText rendered="{!IF(campaignsCount == 0, true, false)}">
+                                <div class="action-box">
+                                    <apex:outputLink value="{!URLFOR($Page.IECEBC_Campaign)}" styleClass="button">Create campaign</apex:outputLink>
+                                </div>
+                            </apex:outputText>
+            
+						</div>
+                        
+                        <div class="sub-container columns small-12 medium-4">
+                            <div class="summary-box">
+                                <div class="box-body fit">
+                                    <table class="data-table zibra">
+                                        <caption>Account Summary</caption>
+                                        <tbody>
+                                            <tr>
+                                                <th>
+                                                    <div class="item-name">Current Rate Plan</div>
+                                                    <p class="item-description">{!productRatePlan.Name}</p>
+                                                </th>
+                                                <td>
+                                                    <div class="item-value">
+                                                        <strong><apex:outputText value="${0, number, ###,###,##0.000}"><apex:param value="{!productRatePlan.EBC_Currency_Cost_Per_Email__c}"/></apex:outputText></strong>
+                                                        <span class="per-unit">/email</span>
+                                                    </div>
+                                                    <apex:outputLink value="{!URLFOR($Page.IECEBC_AccountRatePlan)}" rendered="{!productRatePlan.Name != 'Premium Edition'}">Lower your cost per email</apex:outputLink>
+                                                </td>
+                                            </tr>
+                                            <apex:outputText rendered="{!productRatePlan.Name != 'Pay-As-You-Go'}">
+                                                <tr> 
+                                                    <th>
+                                                        <div class="item-name">Next Renewal Date</div>
+                                                    </th>
+                                                    <td>
+                                                        <div class="item-value">
+                                                            <strong><apex:outputText value="{0, date, MMMM d','  yyyy}"><apex:param value="{!subscription.Zuora__NextRenewalDate__c }" /></apex:outputText></strong>
+                                                        </div>
+                                                        <apex:outputLink value="{!renewalPageUrl}" rendered="{!showRenewNow}">
+                                                             Renew Subscription
+                                                        </apex:outputLink>
+                                                    </td>
+                                                </tr>
+                                            </apex:outputText>
+                                            <tr> 
+                                                <th>
+                                                    <div class="item-name">Current Account Balance</div>
+                                                </th>
+                                                <td>
+                                                    <div class="item-value">
+                                                        <strong><apex:outputText value="{0, number, ###,###,##0}"><apex:param value="{!billingAccount.eBroadcast_Email_Balance__c}"/></apex:outputText> email(s)</strong>
+                                                    </div>
+                                                    <apex:outputLink value="{!URLFOR($Page.IECEBC_AccountEmailBlocks)}" rendered="{!productRatePlan.Name != 'Pay-As-You-Go'}">Purchase credits</apex:outputLink>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>
+                                                    <div class="item-name">Activated Extras</div>
+                                                </th>
+                                                <td>
+                                                    <apex:repeat id="purchasedAddOnsRepeat" value="{!currentEbcAddOnProductRatePlanList}" var="prp">
+                                                        <div class="item-value">
+                                                            <strong>{!prp.Name}</strong>
+                                                        </div>
+                                                    </apex:repeat>
+                                                    <apex:outputText rendered="{!showLinkToProductAddOn}">
+                                                        <a href="{!URLFOR($Page.IECEBC_AccountExtras)}">View available extras</a>
+                                                    </apex:outputText>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div class="action-box text-right">
+                                        <apex:outputLink value="{!URLFOR($Page.IECEBC_AccountManage)}">Manage account</apex:outputLink>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            
+                    <div class="row row-mangage js-match-height">
+                        <div class="columns medium-4 group-container manage-templates">
+                            <h2 class="group-title">Manage templates and resources</h2>
+                            <p>Create and manage reusable templates, upload or delete images from your account and monitor your storage capacity.</p>
+                            <div class="action">
+                                <a href="{!URLFOR($Page.IECEBC_TemplateList)}">Manage templates &amp; resources</a>
+                            </div>
+                        </div>
+                        <div class="columns medium-4 group-container manage-list">
+                            <h2 class="group-title">Manage recipient lists</h2>
+                            <p>Create, edit and refine your recipient lists using combinations of criteria. Recipient lists can then be used for campaigns.</p>
+                            <div class="action">
+                                <apex:outputLink value="{!URLFOR($Page.IECEBC_RecipientList)}">Manage recipient lists</apex:outputLink>
+                            </div>
+                        </div>
+                        <div class="columns medium-4 group-container view-reports">
+                            <h2 class="group-title">View campaign performance</h2>
+                            <p>View and track campaign metrics captured during the seven days following each broadcast. Reports include raw data and graphs.</p>
+                            <div class="action">
+                                <a href="{!URLFOR($Page.IECEBC_Reports)}">Access campaign reports</a>
+                            </div>
+                        </div>
+                    </div>
+            
+                </div>
+            </main>
+            <!-- End of Page Content -->
+        </apex:define>
+    </apex:composition>
+</apex:page>

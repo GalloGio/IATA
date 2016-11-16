@@ -1,0 +1,118 @@
+<apex:component controller="vfIECEBC_CampaignSchedule">
+    <apex:attribute name="c"  description="The campaign" type="EBC_Campaign__c" required="true" assignTo="{!campaign}"/>
+    
+    <apex:form >
+        <section class="group-container schedule">
+            <h2 class="icon schedule group-title">Schedule</h2>
+            <div class="group-content">
+                <p class="lead"><strong>Please select the date you want your campaign to be sent.</strong></p>
+                <apex:outputText rendered="{!NOT(billingAccount.eBroadcast_Trusted_Sender__c) && c.Status__c != 'APPROVED'}">
+	                <p class="note"><strong>NOTE:</strong> 48 business hours are necessary for IATA to perform a review of your campaign.</p>
+                </apex:outputText>
+                <p class="label"><strong>The below date is the earliest your campaign can be sent:</strong></p>
+                <div class="field-group default field-datepicker">
+                    <div class="datepicker">
+                        <apex:inputText value="{!campaignDate}" styleClass="campaignDate" style="display: none;">
+                            <apex:actionSupport action="{!validate}" event="onchange" rerender="pageMessagesBlock"/> 
+                        </apex:inputText>
+                        <apex:input rendered="{!c.Is_Step5_Writable__c}" value="{!humanCampaignDate}" type="text" styleClass="humanCampaignDate user-input text" />
+                        <apex:outputText value="{!humanCampaignDate}" rendered="{!NOT(campaign.Is_Step5_Writable__c)}"  styleClass="disabled-user-input humanCampaignDate text" />
+                    </div>
+                    
+                    <div class="custom-user-input select">
+                        <apex:outputText rendered="{!c.Is_Step5_Writable__c}"><i class="icon angle-down"></i></apex:outputText>
+                        <apex:selectList rendered="{!c.Is_Step5_Writable__c}" styleClass="user-input select" value="{!campaignHours}" size="1">
+                            <apex:selectOption itemLabel="1" itemValue="1" />
+                            <apex:selectOption itemLabel="2" itemValue="2" />
+                            <apex:selectOption itemLabel="3" itemValue="3" />
+                            <apex:selectOption itemLabel="4" itemValue="4" />
+                            <apex:selectOption itemLabel="5" itemValue="5" />
+                            <apex:selectOption itemLabel="6" itemValue="6" />
+                            <apex:selectOption itemLabel="7" itemValue="7" />
+                            <apex:selectOption itemLabel="8" itemValue="8" />
+                            <apex:selectOption itemLabel="9" itemValue="9" />
+                            <apex:selectOption itemLabel="10" itemValue="10" />
+                            <apex:selectOption itemLabel="11" itemValue="11" />
+                            <apex:selectOption itemLabel="12" itemValue="12" />
+                            
+                            <apex:actionSupport action="{!validate}" event="onchange" rerender="pageMessagesBlock"/> 
+                        </apex:selectList>
+                        <apex:outputPanel layout="block" styleClass="field-group disabled" rendered="{!NOT(campaign.Is_Step5_Writable__c)}">
+	                        <div class="custom-user-input select">
+	                            <i class="icon angle-down"></i>
+	                            <span class="disabled-user-input select">{!campaignHours}</span>
+	                        </div>
+	                    </apex:outputPanel>
+                    </div>
+                    :
+                    <div class="custom-user-input select">
+                        <apex:outputText rendered="{!c.Is_Step5_Writable__c}"><i class="icon angle-down"></i></apex:outputText>
+                        <apex:selectList rendered="{!c.Is_Step5_Writable__c}" styleClass="user-input select" value="{!campaignMinutes}" size="1">
+                            <apex:selectOption itemLabel="00" itemValue="00" />
+                            <apex:selectOption itemLabel="15" itemValue="15" />
+                            <apex:selectOption itemLabel="30" itemValue="30" />
+                            <apex:selectOption itemLabel="45" itemValue="45" />
+                            
+                            <apex:actionSupport action="{!validate}" event="onchange" rerender="pageMessagesBlock"/> 
+                        </apex:selectList>
+                        <apex:outputPanel layout="block" styleClass="field-group disabled" rendered="{!NOT(campaign.Is_Step5_Writable__c)}">
+	                        <div class="custom-user-input select">
+	                            <i class="icon angle-down"></i>
+	                            <span class="disabled-user-input select">{!campaignMinutes}</span>
+	                        </div>
+	                    </apex:outputPanel>
+                    </div>
+                    <div class="custom-user-input select">
+                        <apex:outputText rendered="{!c.Is_Step5_Writable__c}"><i class="icon angle-down"></i></apex:outputText>
+                        <apex:selectList rendered="{!c.Is_Step5_Writable__c}" styleClass="user-input select" value="{!campaignMeridiem}" size="1">
+                            <apex:selectOption itemLabel="AM" itemValue="AM" />
+                            <apex:selectOption itemLabel="PM" itemValue="PM" />
+                            
+                            <apex:actionSupport action="{!validate}" event="onchange" rerender="pageMessagesBlock"/> 
+                        </apex:selectList>
+                        <apex:outputPanel layout="block" styleClass="field-group disabled" rendered="{!NOT(campaign.Is_Step5_Writable__c)}">
+	                        <div class="custom-user-input select">
+	                            <i class="icon angle-down"></i>
+	                            <span class="disabled-user-input select">{!campaignMeridiem}</span>
+	                        </div>
+	                    </apex:outputPanel>
+                    </div>
+                    <strong>{!userTimezoneDisplayName} (UTC{!userTimezoneOffset})</strong>
+                    <apex:outputPanel id="pageMessagesBlock">
+                        <apex:pageMessages rendered="{!c.Is_Step5_Writable__c}" />
+                        <apex:outputText rendered="{!NOT(ISBLANK(validationMessage))}">
+                            <p style="font-weight: bold; color: #c00;">{!validationMessage}</p>
+                        </apex:outputText>
+                    </apex:outputPanel>
+                </div>
+            </div>
+            
+            <div class="footer-actions text-right">
+	            <apex:componentBody />
+            </div>
+        </section>
+        
+                <script type="text/javascript">
+                jQuery(document).ready(function($) {
+                    $('input.humanCampaignDate').datepicker({
+                        <apex:outputText rendered="{!c.Status__c != 'APPROVED'}">
+                        minDate: new Date('<apex:outputText value="{0,date,MM'/'dd'/'yyyy}"><apex:param value="{!minDatetime}" /></apex:outputText>'),
+                        </apex:outputText>
+                        <apex:outputText rendered="{!c.Status__c == 'APPROVED'}">
+                        minDate: new Date(),
+                        </apex:outputText>
+                        maxDate: new Date('<apex:outputText value="{0,date,MM'/'dd'/'yyyy}"><apex:param value="{!maxDatetime}" /></apex:outputText>'),
+                        
+                        onSelect: function(a, b, c){
+                            $('.campaignDate').trigger('change');
+                        },
+                        
+                        dateFormat:"MM dd yy",
+                        altFormat: "mm/dd/yy",
+                        altField: '.campaignDate'
+                    });
+                });
+                </script>
+        
+    </apex:form>
+</apex:component>

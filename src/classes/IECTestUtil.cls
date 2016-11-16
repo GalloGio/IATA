@@ -2,10 +2,14 @@
   * Description: This class contains some utility functions to be used for test classes 
   * Author: Samy Saied
   * Version: 1.0
-  * History: 
+  * History:
+  *  - 20160227: issue fixing related to ecommerce 3a project
+  *  - 20160804-sl: merge change from eBroadcast branch (GDP81/campaign scheduling).
+  *
   */
 //*** (Thai) change to "without" to fix issue of "INSUFFICIENT_ACCESS_ON_CROSS_REFERENCE_ENTITY" when create state in "CreateSampleIECAddress"
-public without sharing class IECTestUtil {
+public without sharing class IECTestUtil { 
+    public static Id PortalUserAccountId;
     public static string InvoiceTestOrigin = '';
     public static string TEST_CLASS_AIMSID = 'Flag4Test';
     public static boolean trgPortalUserAfterInserUpdate = false;
@@ -241,9 +245,7 @@ public without sharing class IECTestUtil {
         insert u;
         trgPortalUserAfterInserUpdate = true;
         String userId = Site.createPortalUser(u, newAccount.Id, 'testpassword');
-     
-        Comm_User_Helper.permissionASSNotFuture(new list<Id>{u.id});
-
+        PortalUserAccountId = newAccount.Id;
       //  trgPortalUserAfterInserUpdate = false;
         /*
         // assign Permission Set to provide access to objects
@@ -262,12 +264,12 @@ public without sharing class IECTestUtil {
     }
     
     
-    
+
     public static User createSampleGuestUserAndLogin(String ClientType) {
         // insert account
         Account newAccount = createSampleAccount(ClientType);
         insert newAccount;
-
+ 
         // create Bill To contact info
         Contact newContact = new Contact();
         newContact.RecordTypeId = IECUserManager.getContactRecordTypeForIEC();
@@ -314,9 +316,8 @@ public without sharing class IECTestUtil {
             oPermissionSetAssignment.PermissionSetId = permissionSetId;
             insert oPermissionSetAssignment;
         }
-        */
-                Comm_User_Helper.permissionASSNotFuture(new list<Id>{u.id});
-
+*/
+         
         IECUserManager.login(u.Username, 'testpassword', null);
            
         return u;
