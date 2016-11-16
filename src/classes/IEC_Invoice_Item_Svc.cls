@@ -329,8 +329,8 @@ global without sharing class IEC_Invoice_Item_Svc {
 					    , Zuora_InvoiceNumber__c = ItemInfo.ZInvoiceNumber
 					    , Zuora_SubscriptionId__c = ItemInfo.ZSubscriptionId
 					    , Zuora_Subscription_Number__c = ItemInfo.ZSubscriptionNumber
-					    , IEC_Contract_Start_Date__c = ItemInfo.dtStart
-					    , IEC_Contract_End_Date__c = ItemInfo.dtEnd
+					    // , IEC_Contract_Start_Date__c = ItemInfo.dtStart
+					    // , IEC_Contract_End_Date__c = ItemInfo.dtEnd
 					    //, IEC_Is_Paid__c = oOrder.Is_Paid__c
 					);
 					lstOrderItem.add(oOrderItem);
