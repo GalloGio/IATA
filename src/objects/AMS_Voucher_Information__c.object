@@ -205,6 +205,18 @@
         <type>Picklist</type>
     </fields>
     <fields>
+        <fullName>Exchange_Rate__c</fullName>
+        <externalId>false</externalId>
+        <label>Exchange Rate</label>
+        <precision>18</precision>
+        <required>true</required>
+        <scale>5</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>IsAgencyEligibleForCountryAverage__c</fullName>
         <externalId>false</externalId>
         <formula>YEAR(Account__r.Accreditation_date__c ) &lt; YEAR(TODAY()) 

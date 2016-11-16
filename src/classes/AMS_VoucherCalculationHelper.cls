@@ -1,17 +1,5 @@
 public without sharing class AMS_VoucherCalculationHelper {
 
-	public static Map<String, Decimal> conversionRateMap = new Map<String, Decimal>();
-
-    static {
-       	
-       	for(CurrencyType ct : [SELECT IsoCode , ConversionRate FROM CurrencyType where IsActive = true]){
-
-			conversionRateMap.put(ct.IsoCode,ct.ConversionRate);
-
-		}
-    }
-
-
 	public static Integer calculateNumberOfVouchers(Decimal totalAgencySales, Decimal countryAverage, Integer maxAmountVouchersCountry, Decimal countryBenchmark){
 
 		//	MAX(country max vouchers, (2 * Total sales % MIN(Country average, Country benchmark)))
@@ -75,7 +63,7 @@ public without sharing class AMS_VoucherCalculationHelper {
 
 		for(AMS_Voucher_Information__c vInfo: vouchersInfo){
 
-			totalSum += vInfo.AmountLastYearSales__c * conversionRateMap.get(vInfo.Amount_Currency__c);
+			totalSum += vInfo.AmountLastYearSales__c * vInfo.Exchange_Rate__c;
 
 		}
 

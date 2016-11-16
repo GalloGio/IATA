@@ -482,7 +482,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS OSCAR STEP3</shortDescription>
-        <value>Disapproval Finalization</value>
+        <value>Application Disapproval</value>
     </labels>
     <labels>
         <fullName>AMS_OSCAR_STEP30</fullName>
