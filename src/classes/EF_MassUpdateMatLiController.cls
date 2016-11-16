@@ -26,7 +26,7 @@ public class EF_MassUpdateMatLiController {
     public List<EF_MaterialWrapper> getMaterials() {
     if(listMatWrapper == null) {
       listMatWrapper = new List<EF_MaterialWrapper>();
-      for(EF_Material_Line_Item__c m: [SELECT Id, Name, EF_Status__c, EF_Relationship__r.Contract__c, EF_Relationship__r.Billing_Agreement_Name__c, EF_Relationship__c, EF_Material__c from EF_Material_Line_Item__c where  EF_Relationship__r.Contract__c =: contract.Id]) {
+      for(EF_Material_Line_Item__c m: [SELECT Id, Name, EF_Status__c, EF_Relationship__r.Contract__c, EF_Relationship__r.BillingAgreement_Name__c, EF_Relationship__c, EF_Material__c from EF_Material_Line_Item__c where  EF_Relationship__r.Contract__c =: contract.Id]) {
 
                 listMatWrapper.add(new EF_MaterialWrapper(m));
       }

@@ -338,6 +338,7 @@
     <relatedLists>
         <customButtons>Edit_All</customButtons>
         <fields>NAME</fields>
+        <fields>BillingAgreement_Name__c</fields>
         <fields>Client__c</fields>
         <fields>Airline__c</fields>
         <fields>EF_Location_ID__c</fields>

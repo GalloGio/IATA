@@ -386,7 +386,7 @@ public class EF_BillingAgreementHandler
         
            for(String s: criticalFieldList){              
                 if(ba.get(s)!=oldBAMap.get(ba.Id).get(s)){
-                    emailBody = emailBody + '<tr><td border="1"><a href="'+baseUrl+'/'+ba.Id+'">'+ba.Billing_Agreement_Name__c+'</a></td><td border="1">'+s+'</td><td border="1">'+ba.get(s)+'</td><td border="1">'+oldBAMap.get(ba.Id).get(s)+'</td></tr>';
+                    emailBody = emailBody + '<tr><td border="1"><a href="'+baseUrl+'/'+ba.Id+'">'+ba.BillingAgreement_Name__c+'</a></td><td border="1">'+s+'</td><td border="1">'+ba.get(s)+'</td><td border="1">'+oldBAMap.get(ba.Id).get(s)+'</td></tr>';
                 }
            }
            emailBody = emailBody + '</table>';
