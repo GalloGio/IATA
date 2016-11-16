@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -81,6 +77,16 @@
         <writeRequiresMasterRead>false</writeRequiresMasterRead>
     </fields>
     <fields>
+        <fullName>Irregularity_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Irregularity Type</label>
+        <length>10</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Location_Class__c</fullName>
         <description>C-Cargo
 D-Domestic
@@ -98,84 +104,86 @@ X-Handling Agents and Shipping Lines
 J-Joint Vent</description>
         <externalId>false</externalId>
         <label>Location Class</label>
-        <picklist>
-            <picklistValues>
-                <fullName>A</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>C</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>D</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>E</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>G</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>I</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>K</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>M</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>N</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>O</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>P</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Q</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>R</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>S</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>T</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>V</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>X</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>J</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>A</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>C</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>D</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>E</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>G</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>I</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>K</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>M</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>N</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>O</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>P</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Q</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>R</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>S</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>T</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>V</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>X</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>J</fullName>
+                    <default>false</default>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Months_Count__c</fullName>
