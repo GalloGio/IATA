@@ -33,7 +33,7 @@
             <div class="slds-tabs--default">
                 <ul class="slds-tabs--default__nav" role="tablist">
                     <li class="slds-tabs--default__item slds-text-heading--label slds-active" title="Identification" role="presentation" aura:id="Identification">
-                        <ui:outputText value="Indentification"  click="{!c.changeTab}" class="slds-tabs--default__link" />
+                        <ui:outputText value="Identification"  click="{!c.changeTab}" class="slds-tabs--default__link" />
                     </li>
                     <li class="slds-tabs--default__item slds-text-heading--label" title="Key Contacts" role="presentation" aura:id="Key Contacts">
                         <ui:outputText value="Key Contacts"  click="{!c.changeTab}" class="slds-tabs--default__link"/>
@@ -127,7 +127,7 @@
                 <aura:if isTrue="{!v.activeTab=='Services'}">
                     <div class="slds-grid slds-wrap slds-p-around--medium">
                         <div class="slds-size--1-of-1">
-                            Services
+                            <c:AMP_Services/>
                         </div>
                     </div>
                 </aura:if>
