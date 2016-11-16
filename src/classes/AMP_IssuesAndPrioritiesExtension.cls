@@ -4,10 +4,13 @@ public with sharing class AMP_IssuesAndPrioritiesExtension {
     public Boolean showAllItems {get;set;}
     public Boolean isEditMode {get; set;}
     public Boolean isNewLine {get; set;}
+    public Boolean canEdit {get; set;}
     public Id IdConcerned {get; set;}
     public List<Objective__c> lsIssuesAndPriorities {get; set;}
     public String sortOrder {get;set;}
     private final Id objectiveRecordTypeId ;
+
+    private List<String> lsIssueFields;
 
     // The extension constructor initializes the private member
     // variable myAccount by using the getRecord method from the standard
@@ -18,6 +21,8 @@ public with sharing class AMP_IssuesAndPrioritiesExtension {
         showAllItems = false;
         isEditMode = false;
         isNewLine = false;
+        lsIssueFields = getIssueFields();
+        canEdit = getCanEdit();
         lsIssuesAndPriorities = new List<Objective__c>();
         lsIssuesAndPriorities = getIssuesAndPriorities();
         System.debug(this.objectiveRecordTypeId);
@@ -89,25 +94,28 @@ public with sharing class AMP_IssuesAndPrioritiesExtension {
         lsIssuesAndPriorities = getIssuesAndPriorities();
     }
 
+    public static List<String> getIssueFields() {
+        List<String> issueAccessFields = new String [] {
+            // 'Id',
+            'Name',
+            'Description__c',
+            'AM_Can_IATA_support_the_airline__c',
+            'AM_Global__c',
+            'AM_Regional__c',
+            'AM_Local__c',
+            'AM_Issue_with_IATA__c',
+            'AM_Public__c',
+            'AM_Level_of_importance__c',
+            'Status__c',
+            'Details__c',
+            'AM_Source_Text__c'
+        };
+        return issueAccessFields;
 
-    public  List<Objective__c> getIssuesAndPriorities() {
-        lsIssuesAndPriorities = new List<Objective__c>();
-        // lsIssuesAndPriorities =
-        //  [SELECT Id, Name, Global__c, Regional__c, Local__c, Issue_with_IATA__c,
-        //                  Public__c, Level_of_importance__c, Status__c
-        //  FROM Objective__c WHERE Account__c = :accountId];
-        String queryString = 'SELECT Id, Name, Description__c, AM_Can_IATA_support_the_airline__c, AM_Global__c, AM_Regional__c, AM_Local__c, AM_Issue_with_IATA__c, '+
-        'AM_Public__c, AM_Level_of_importance__c, Status__c, Details__c, AM_Source_Text__c '+
-        'FROM Objective__c WHERE Account__c =\'' + this.myAccount.Id + '\''+
-        ' AND RecordTypeId = \'' + this.objectiveRecordTypeId+ '\'';
-        if(!showAllItems) queryString += ' AND Status__c =  \'Open\'  ';
-        if(sortOrder != null) queryString += ' ORDER BY ' + sortOrder + ' NULLS LAST ';
-        System.debug(queryString);
-        List<SObject> lsSObjects = Database.query(queryString);
-        for(SObject s : lsSObjects) {
-            lsIssuesAndPriorities.add((Objective__c) s);
         }
 
+    public  List<Objective__c> getIssuesAndPriorities() {
+        List<Objective__c> lsIssuesAndPriorities = getIssuesAndPriorities(this.myAccount.Id);
         return lsIssuesAndPriorities;
     }
 
@@ -118,16 +126,34 @@ public with sharing class AMP_IssuesAndPrioritiesExtension {
   }
 
   @AuraEnabled
+  public static Boolean getCanEdit() {
+      Boolean canEdit = true;
+      // Obtain the field name/token map for the Objective__c object
+      Map<String,Schema.SObjectField> m = Schema.SObjectType.Objective__c.fields.getMap();
+
+      List<String> lsIssueFields = getIssueFields();
+      for (String fieldToCheck : lsIssueFields) {
+          // Check if the user has access to view field
+          if (!m.get(fieldToCheck).getDescribe().isUpdateable() ) {
+              canEdit = false;
+          }
+      }
+
+      return canEdit;
+  }
+
+
+  @AuraEnabled
   public static List<Objective__c> getIssuesAndPriorities(Id accountId) {
       Id objectiveRecordTypeId = [SELECT Id FROM RecordType WHERE SObjectType = 'Objective__c' AND DeveloperName ='Account_Issues_and_Priorities'].Id;
       List<Objective__c> lsIssuesAndPriorities = new List<Objective__c>();
-        // lsIssuesAndPriorities =
-        //  [SELECT Id, Name, Global__c, Regional__c, Local__c, Issue_with_IATA__c,
-        //                  Public__c, Level_of_importance__c, Status__c
-        //  FROM Objective__c WHERE Account__c =  accountId];
-        String queryString = 'SELECT Id, Name, Description__c, AM_Can_IATA_support_the_airline__c, AM_Global__c, AM_Regional__c, AM_Local__c, AM_Issue_with_IATA__c, '+
-        'AM_Public__c, AM_Level_of_importance__c, Status__c, Details__c, AM_Source_Text__c '+
-        'FROM Objective__c WHERE Account__c =\'' + accountId + '\'' +
+        List<String> lsIssueFields = getIssueFields();
+
+        String queryString = 'SELECT Id,';
+        for(String s : lsIssueFields) { queryString += s +',' ;}
+        //Remove the very last comma that was added to the end of the field selection part of the query string
+        queryString = queryString.substring(0,queryString.length() - 1);
+        queryString += ' FROM Objective__c WHERE Account__c =\'' + accountId + '\'' +
         ' AND RecordTypeId = \'' + objectiveRecordTypeId+ '\'';
         // if(!showAllItems) queryString += ' AND Status__c =  \'Active\'';
         // if(sortOrder != null) queryString += ' ORDER BY ' + sortOrder + ' ';
