@@ -21,7 +21,7 @@ global class SchdlIECEBCEmailExclusionRelClean implements Database.Batchable<sOb
         Database.executeBatch(n,SchdlIECEBCEmailExclusionRelClean.BATCH_SIZE);
     }
     global static void cancel() {
-        cancel('SchdlIECEBCEmailExclusionRelClean');
+        cancel('SchdlIECEBCEmailExclusionRelClean' + (Test.isRunningTest() ? 'Test' : ''));
     }
     global static void cancel(String name) {
         CronTrigger ct = [SELECT Id, CronJobDetail.Id, CronJobDetail.Name, CronJobDetail.JobType FROM CronTrigger Where CronJobDetail.Name = :name LIMIT 1];
@@ -36,6 +36,6 @@ global class SchdlIECEBCEmailExclusionRelClean implements Database.Batchable<sOb
         if (String.isBlank(sch)) {
             sch = '0 0 * * * ?';
         }
-        System.schedule('SchdlIECEBCEmailExclusionRelClean', sch, a);
+        System.schedule('SchdlIECEBCEmailExclusionRelClean' + (Test.isRunningTest() ? 'Test' : ''), sch, a);
     }
 }

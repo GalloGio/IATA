@@ -56,34 +56,37 @@ public class EF_ContactHandler {
 
         List  <String> criticalContactFieldList = new List <String> ();
 
-        for(EF_Critical_Field_Notification__c cfn: fieldList){
-            criticalContactFieldList= cfn.Contact_Fields__c.split(',');                     
-        }
+        if(!fieldList.isEmpty()){
         
-        Map <Id,Contact> contactsNoti = new Map <Id,Contact>();
-       
-        Map<String, Schema.SobjectField> fields = contacts.getSObjectType().getDescribe().fields.getMap();
-
-        //loop over accounts to check if any of them need to trigger a notification.
-        for(Contact c: contacts){           
-            //check fields for Clients
+            for(EF_Critical_Field_Notification__c cfn: fieldList){
+                criticalContactFieldList= cfn.Contact_Fields__c.split(',');                     
+            }
             
-                for(String s: criticalContactFieldList){
-                  
-                    // just notify when there are changes and the EF signatory is true, except ifis the signatory the one changing.
-                    if(c.get(s)!=oldMap.get(c.Id).get(s) && c.EF_Signatory__c){                       
-                        contactsNoti.put(c.Id, c);
-                    }
-                    //but notify if there has been a change on signatory
-                    if(c.EF_Signatory__c!=oldMap.get(c.Id).EF_Signatory__c){
-                        contactsNoti.put(c.Id, c);
-                    }
-                }          
-        }
+            Map <Id,Contact> contactsNoti = new Map <Id,Contact>();
+           
+            Map<String, Schema.SobjectField> fields = contacts.getSObjectType().getDescribe().fields.getMap();
 
-        if(!contactsNoti.isEmpty()){
-            notifyOnCriticalFields(contactsNoti, oldMap, criticalContactFieldList);
-        
+            //loop over accounts to check if any of them need to trigger a notification.
+            for(Contact c: contacts){           
+                //check fields for Clients
+                
+                    for(String s: criticalContactFieldList){
+                      
+                        // just notify when there are changes and the EF signatory is true, except ifis the signatory the one changing.
+                        if(c.get(s)!=oldMap.get(c.Id).get(s) && c.EF_Signatory__c){                       
+                            contactsNoti.put(c.Id, c);
+                        }
+                        //but notify if there has been a change on signatory
+                        if(c.EF_Signatory__c!=oldMap.get(c.Id).EF_Signatory__c){
+                            contactsNoti.put(c.Id, c);
+                        }
+                    }          
+            }
+
+            if(!contactsNoti.isEmpty()){
+                notifyOnCriticalFields(contactsNoti, oldMap, criticalContactFieldList);
+            
+            }
         }
     }
 
@@ -91,6 +94,8 @@ public class EF_ContactHandler {
 
         Map<String, Schema.SobjectField> fields = newContacts.getSObjectType().getDescribe().fields.getMap();
         String baseUrl = System.URL.getSalesforceBaseUrl().toExternalForm();
+
+        List<Messaging.SingleEmailMessage> mails = new List<Messaging.SingleEmailMessage>();
          
         for(Contact c: newContacts.values()){
             String emailBody = 'Dear team member, <br/><br/>the following Contact values been UPDATED:<br/><br/>';
@@ -103,11 +108,23 @@ public class EF_ContactHandler {
                 }
            }
            emailBody = emailBody + '</table>';
+
+            Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+            mail.setSaveAsActivity(false);
+            mail.setToAddresses(new List <String> {'efs@iata.org'}); 
+            mail.setSubject('E&F Contact Critical Changes Notification');
+            mail.setBccSender(false);
+            mail.setUseSignature(false);       
+            mail.setHtmlBody(emailBody);
+            mails.add(mail);
            
-            Utility.sendEmail(new List <String> {'efs@iata.org'}, 'E&F Contact Critical Changes Notification ', emailBody, true, null);
-          
+            //Utility.sendEmail(new List <String> {'efs@iata.org'}, 'E&F Contact Critical Changes Notification ', emailBody, true, null);          
            
-        }            
+        }
+
+        if(!mails.isEmpty()){
+                Messaging.sendEmail(mails);
+        }             
               
     }
 
