@@ -90,6 +90,14 @@
                 <behavior>Readonly</behavior>
                 <field>Company_Type__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Link_agent_name__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Link_agent_code__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -588,6 +596,8 @@
         <fields>NAME</fields>
         <fields>Accreditation_Endorsement_organisation__c</fields>
         <fields>Accreditation_Endorsement_Status_code__c</fields>
+        <fields>Airline__c</fields>
+        <fields>Airline_Code__c</fields>
         <fields>OSCAR__c</fields>
         <fields>CREATEDBY_USER</fields>
         <relatedList>AMS_Inspection__c.Account__c</relatedList>
