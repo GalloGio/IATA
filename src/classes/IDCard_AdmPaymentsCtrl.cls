@@ -59,7 +59,7 @@ public class IDCard_AdmPaymentsCtrl extends IDCardAbstractController {
                													 Case_Number__c, IATA_Code__c, First_Name__c, Displayed_Name__c, Title__c, Type_of_application__c, Id, 
                													 Single_Application_Processing_Step__c, Tax_1_Name__c, Tax_1_Value__c, Tax_2_Name__c, Tax_2_Value__c, 
                													 Payment_Type__c, Payment_Date__c, Mass_order_Application__c, Last_Name__c, ID_Card_Fee__c, IDCard_Expedite_Delivery__c,
-               													 Name, IATA_Code_for_previous_agency__c, Gender__c FROM ID_Card_Application__c where Mass_order_Application__c in:singleAppsPerMassApps.keySet()];
+               													 Name, IATA_Code_for_previous_agency__c, Gender__c FROM ID_Card_Application__c where Mass_order_Application__c in:singleAppsPerMassApps.keySet()  ORDER BY createdDate desc limit 80];
                	system.debug('[PAYMENTCTRL] single size '+allSingleList.size());
                	for(ID_Card_Application__c singleApp: allSingleList){
                		system.debug('[PAYMENTCTRL] add  '+singleApp.Id+' to '+singleApp.Mass_order_Application__c);

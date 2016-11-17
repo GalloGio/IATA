@@ -48,7 +48,8 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
                 , AMS_Pax_Accreditation_Form__c.Abbreviated_Address__c
                 , AMS_Pax_Accreditation_Form__c.Remittance_frequency__c
                 , AMS_Pax_Accreditation_Form__c.Solicitation_Flag__c
-                , AMS_Pax_Accreditation_Form__c.VAT_Number_2__c                
+                , AMS_Pax_Accreditation_Form__c.VAT_Number_2__c
+                , AMS_Pax_Accreditation_Form__c.Link_agent_name__c             
             };
         }
     }
@@ -79,8 +80,8 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
     private Boolean isEditable(String fieldName){
 
         //verifu "hardcoded" logic
-        if(!isAgencyChanges) return true;
         if(fieldName == 'IATACode__c') return false;
+        if(!isAgencyChanges) return true;        
 
         //check per field
         return editableFields.contains(fieldName);

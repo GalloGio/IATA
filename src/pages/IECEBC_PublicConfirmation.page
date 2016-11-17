@@ -1,0 +1,37 @@
+<apex:page controller="vfIECEBC_OptOut" cache="false" docType="html-5.0" applyHtmlTag="false" applyBodyTag="false" sidebar="false" showheader="false" standardStylesheets="false">
+    
+    <apex:composition template="IECEBC_LayoutPublic">
+        <apex:define name="pageHeadAdditions">
+            <!-- Start of Page <head> -->
+            <title>Confirmation - IATA eBroadcast</title>
+            <!-- End of Page </head> -->
+        </apex:define>
+        <apex:define name="pageScriptAdditions">
+            <!-- If any page specific .js, add them here -->
+        </apex:define>
+        <apex:define name="pageContent">
+            <!--
+            <div class="message-container">
+                <div class="inner-wrapper">
+                    <p>
+                        Static Marketing text goes here to explain what eBroadcast is and try to retain subscribers. <br />
+                        Aliquam quis tristique lectus. Morbi nibh libero, facilisis nec luctus a, eleifend sit amet risus.
+                    </p>
+                </div>
+            </div>
+-->
+            <div class="inner-wrapper">
+                <div class="group-container confirmation">
+                    <h1 class="page-title">Your preferences have been saved.</h1>
+                    <div class="confirmation-box">
+                        <p><strong>We'll miss you!</strong>
+                            <br />You will receive one final email to confirm that we unsubscribed you. You may still get marketing emails from us since they are on a different system. They all have unsubscribe links if you want to stop getting those too.
+                        </p>
+                        <strong>Changed your mind? </strong><a href="/iec/iecebc_resubscribe">Opt back in from here</a>
+                    </div>
+                </div>
+            </div>
+            <!-- End of Page Content -->
+        </apex:define>
+    </apex:composition>
+</apex:page>

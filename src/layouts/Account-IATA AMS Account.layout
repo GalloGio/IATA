@@ -51,9 +51,6 @@
             </containers>
         </subtabComponents>
     </customConsoleComponents>
-    <excludeButtons>DataDotComAccountInsights</excludeButtons>
-    <excludeButtons>DataDotComClean</excludeButtons>
-    <excludeButtons>DataDotComCompanyHierarchy</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
         <customLabel>true</customLabel>
@@ -68,6 +65,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Quality__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Top_Parent__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -88,6 +89,14 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Company_Type__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Link_agent_name__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Link_agent_code__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -216,11 +225,11 @@
                 <field>Is_Branch_Abroad__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>VAT_Number__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>VAT_Number_2__c</field>
             </layoutItems>
             <layoutItems>
@@ -395,7 +404,7 @@
                 <field>RecordTypeId</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>AIMS_ID__c</field>
             </layoutItems>
             <layoutItems>
@@ -508,11 +517,11 @@
         <fields>OSCAR__c</fields>
         <fields>Reason_Code__c</fields>
         <fields>Reason_Description__c</fields>
-        <fields>Created_Date_To_Show__c</fields>
         <fields>CREATEDBY_USER</fields>
+        <fields>Source__c</fields>
+        <fields>Updated_AIMS__c</fields>
+        <fields>AIMS_Updated_by__c</fields>
         <relatedList>Agency_Applied_Change_code__c.Account__c</relatedList>
-        <sortField>Created_Date_To_Show__c</sortField>
-        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
@@ -587,6 +596,8 @@
         <fields>NAME</fields>
         <fields>Accreditation_Endorsement_organisation__c</fields>
         <fields>Accreditation_Endorsement_Status_code__c</fields>
+        <fields>Airline__c</fields>
+        <fields>Airline_Code__c</fields>
         <fields>OSCAR__c</fields>
         <fields>CREATEDBY_USER</fields>
         <relatedList>AMS_Inspection__c.Account__c</relatedList>

@@ -1,3 +1,3 @@
-Dear {!User.FirstName},<br/><br/>
+Dear recipient,<br/><br/>
 
 your changes for a Contract record have been rejected. Please view the Approval History area for rejection comments <a href="{!Contract.Base_URL__c}{!Contract.Id}">here</a>.

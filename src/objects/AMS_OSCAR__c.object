@@ -345,6 +345,16 @@
         <type>Date</type>
     </fields>
     <fields>
+        <fullName>BSPLink_participation__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>BSPLink participation</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Bank_Guarantee_Currency__c</fullName>
         <externalId>false</externalId>
         <label>Bank Guarantee Currency</label>
@@ -1865,6 +1875,16 @@ Format: YYYY</inlineHelpText>
         <type>Date</type>
     </fields>
     <fields>
+        <fullName>Invoice_Requested__c</fullName>
+        <externalId>false</externalId>
+        <label>Invoice requested</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
         <fullName>Invoice_deadline__c</fullName>
         <externalId>false</externalId>
         <label>Payment deadline</label>
@@ -2161,7 +2181,7 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
         <fullName>Process_Start_Date__c</fullName>
         <description>To be used for Accreditation in &quot;Process&quot; Record Type</description>
         <externalId>false</externalId>
-        <label>Invoice requested</label>
+        <label>Process Start Date</label>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>

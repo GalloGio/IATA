@@ -1659,7 +1659,7 @@
     <fields>
         <fullName>Give_details_for_authorization_to_act__c</fullName>
         <externalId>false</externalId>
-        <label>* Please give details</label>
+        <label>If Yes please provide details</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -1668,7 +1668,7 @@
     <fields>
         <fullName>Give_details_for_the_change_of_ownership__c</fullName>
         <externalId>false</externalId>
-        <label>* Please give details</label>
+        <label>If Yes please provide details</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -2994,6 +2994,19 @@ If(LEN( SAAM_Case__r.Account.ShippingCountry) &gt;0, SAAM_Case__r.Account.Shippi
         <type>Currency</type>
     </fields>
     <fields>
+        <fullName>Link_agent_name__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Link agent name</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>AMS Online Accreditations (Link agent name)</relationshipLabel>
+        <relationshipName>AMS_Online_Accreditations1</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>List_carriers__c</fullName>
         <description>List carrier(s)</description>
         <externalId>false</externalId>
@@ -3436,6 +3449,17 @@ $Label.ISSP_AMS_LS_Sole_Owner)</formula>
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>New_Head_Office_IATA_Code__c</fullName>
+        <externalId>false</externalId>
+        <label>New Head Office IATA Code</label>
+        <length>13</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>No_Consignments_Last_Year__c</fullName>
         <externalId>false</externalId>
         <label>* Total No. of Consignments (last year)</label>
@@ -3576,7 +3600,7 @@ $Label.ISSP_AMS_LS_Sole_Owner)</formula>
         <fullName>Please_provide_details_for_the_change__c</fullName>
         <description>Please provide details</description>
         <externalId>false</externalId>
-        <label>* Please provide details</label>
+        <label>If Yes please provide details</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -3741,7 +3765,7 @@ $Label.ISSP_AMS_LS_Sole_Owner)</formula>
     <fields>
         <fullName>Provide_details_for_change_affect_staff__c</fullName>
         <externalId>false</externalId>
-        <label>* Please give details</label>
+        <label>If Yes please provide details</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -3771,7 +3795,8 @@ $Label.ISSP_AMS_LS_Sole_Owner)</formula>
     <fields>
         <fullName>Ready_for_Accreditation__c</fullName>
         <externalId>false</externalId>
-        <formula>Account_Name__c != null  &amp;&amp;  TEXT(ISSP_AMS_Legal_Status__c) != null &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp;  TEXT(Location_Type__c) != null  &amp;&amp; Branch_Office_Country__c != null &amp;&amp;  Branch_Office_Street_name_number__c != null &amp;&amp; Branch_Office_City__c != null &amp;&amp; Branch_Office_Email__c != null &amp;&amp;  Branch_Office_Phone__c != null</formula>
+        <formula>OR (Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp;  TEXT(Location_Type__c) != null  &amp;&amp; Branch_Office_Country__c != null &amp;&amp;  Branch_Office_Street_name_number__c != null &amp;&amp; Branch_Office_City__c != null  &amp;&amp;  TEXT(ISSP_AMS_Legal_Status__c) != null  &amp;&amp; Branch_Office_Email__c != null &amp;&amp;  Branch_Office_Phone__c != null &amp;&amp; !ISPICKVAL(SAAM_Case__r.OSCAR__r.Process__c,&quot;NEW.MSO.1.0&quot;),ISPICKVAL(SAAM_Case__r.OSCAR__r.Process__c,&quot;NEW.MSO.1.0&quot;) &amp;&amp; 
+Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp;  TEXT(Location_Type__c) != null  &amp;&amp; Branch_Office_Country__c != null &amp;&amp;  Branch_Office_Street_name_number__c != null &amp;&amp; Branch_Office_City__c != null  &amp;&amp;  ISPICKVAL(SAAM_Case__r.OSCAR__r.Process__c,&quot;NEW.MSO.1.0&quot;))</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Ready for Accreditation</label>
         <trackHistory>false</trackHistory>
@@ -4530,7 +4555,7 @@ $Label.ISSP_AMS_LS_Sole_Owner)</formula>
     </fields>
     <fields>
         <fullName>Will_such_change_affect_the_premises__c</fullName>
-        <description>Will such change affect the premises that were investigated in the course of approving the Agent’s application for registration?</description>
+        <description>Will such change affect the premises that were investigated in the course of approving the Agent&apos;s application for registration?</description>
         <externalId>false</externalId>
         <label>Will such change affect the premises</label>
         <picklist>

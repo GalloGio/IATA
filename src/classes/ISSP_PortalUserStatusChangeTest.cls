@@ -273,7 +273,7 @@ private class ISSP_PortalUserStatusChangeTest {
         portAppRight.Portal_Application__c = portalApp.Id;
         insert portAppRight;
 
-        Test.startTest();
+        
 
         ISSP_PortalUserStatusChange controller = new ISSP_PortalUserStatusChange(new Apexpages.Standardcontroller(con));
 
@@ -284,7 +284,7 @@ private class ISSP_PortalUserStatusChangeTest {
 
         controller.saveNewStatus();
         System.assert(checkPageMessages('Error: Please provide a reason to reject this user'));
-
+        Test.startTest();
         controller.rejectionReason = 'Retired';
         controller.saveNewStatus();
         System.assertEquals([SELECT Id, Portal_Inactivation_Reason__c FROM Contact where Id = :con.Id].Portal_Inactivation_Reason__c, Label.ISSP_RejectReason_Retired);

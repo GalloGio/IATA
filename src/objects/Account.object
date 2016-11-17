@@ -3054,7 +3054,7 @@
         <externalId>false</externalId>
         <label>Anti-Money Laundering Compliance</label>
         <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>true</trackHistory>
+        <trackHistory>false</trackHistory>
         <type>Checkbox</type>
     </fields>
     <fields>
@@ -5065,7 +5065,7 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
         <label>Membership Termination Remarks</label>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>true</trackHistory>
+        <trackHistory>false</trackHistory>
         <type>TextArea</type>
     </fields>
     <fields>
@@ -7167,7 +7167,7 @@ V - Co-operative</inlineHelpText>
         <label>Date of most recent name change</label>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>true</trackHistory>
+        <trackHistory>false</trackHistory>
         <type>Date</type>
     </fields>
     <fields>
@@ -7207,7 +7207,7 @@ V - Co-operative</inlineHelpText>
         <label>Authorized Signatories</label>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>true</trackHistory>
+        <trackHistory>false</trackHistory>
         <type>Date</type>
     </fields>
     <fields>
@@ -7251,7 +7251,7 @@ V - Co-operative</inlineHelpText>
         <externalId>false</externalId>
         <inlineHelpText>Temporary duplicate bill-to (4xxxx) SAP number</inlineHelpText>
         <label>E&amp;F Additional SAP Nr.</label>
-        <length>20</length>
+        <length>250</length>
         <required>false</required>
         <trackFeedHistory>true</trackFeedHistory>
         <trackHistory>false</trackHistory>
@@ -7294,6 +7294,17 @@ V - Co-operative</inlineHelpText>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>EF_Client_Services_Specialist_Email__c</fullName>
+        <externalId>false</externalId>
+        <formula>EF_Client_Services_Specialist__r.Email</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>E&amp;F Client Services Specialist Email</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>EF_Client_Services_Specialist__c</fullName>
@@ -7584,7 +7595,7 @@ An account should have a field to indicate if it&apos;s an E&amp;F client or Ope
     <fields>
         <fullName>Fax</fullName>
         <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
     </fields>
     <fields>
         <fullName>Field_Head_Office__c</fullName>
@@ -8033,6 +8044,19 @@ WSPN-Worldspan</inlineHelpText>
         <externalId>false</externalId>
         <label>Has cases from last 2 years</label>
         <precision>6</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Higher_Level_Customer__c</fullName>
+        <description>Top parent SAP customer number for this account. Manually populated by the AMP team.</description>
+        <externalId>false</externalId>
+        <label>Higher Level Customer (SAP)</label>
+        <precision>4</precision>
         <required>false</required>
         <scale>0</scale>
         <trackFeedHistory>false</trackFeedHistory>
@@ -8929,6 +8953,31 @@ Approval: Key Contact can see pending request approve it one by one</inlineHelpT
         <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Link_agent_code__c</fullName>
+        <externalId>false</externalId>
+        <formula>Link_agent_name__r.IATACode__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Link agent code</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Link_agent_name__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>field used for domestic agencies</description>
+        <externalId>false</externalId>
+        <label>Link agent name</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Accounts (Link agent name)</relationshipLabel>
+        <relationshipName>Accounts1</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
     </fields>
     <fields>
         <fullName>Location_Category__c</fullName>
@@ -10498,6 +10547,28 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>SAP_BW_report_with_sales_figures__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(ISBLANK(Higher_Level_Customer__c) || Higher_Level_Customer__c = 0,&quot;&quot;, HYPERLINK(&quot;https://sap.iata.org/irj/servlet/prt/portal/prtroot/pcd!3aportal_content!2fcom.sap.pct!2fplatform_add_ons!2fcom.sap.ip.bi!2fiViews!2fcom.sap.ip.bi.bex?QUERY=ZVSD_M07_Q010&amp;VARIABLE_SCREENX&amp;DUMMY=1&amp;BI_COMMAND_1-BI_COMMAND_TYPE=SET_VARIABLES_STATE&amp;BI_COMMAND_1-VARIABLE_VALUES-VARIABLE_VALUE_1-VARIABLE_TYPE=VARIABLE_INPUT_STRING&amp;BI_COMMAND_1-VARIABLE_VALUES-VARIABLE_VALUE_1-VARIABLE=UMI_CUSTOMER_001&amp;BI_COMMAND_1-VARIABLE_VALUES-VARIABLE_VALUE_1-VARIABLE_TYPE-VARIABLE_INPUT_STRING=&quot; &amp; TEXT( Higher_Level_Customer__c ) , &quot; SAP/BW report with sales figures &quot;))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Main Products Purchased</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SAP_BW_report_without_sales_figures__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(ISBLANK(Higher_Level_Customer__c) || Higher_Level_Customer__c = 0,&quot;&quot;, HYPERLINK(&quot;https://sap.iata.org/irj/servlet/prt/portal/prtroot/pcd!3aportal_content!2fcom.sap.pct!2fplatform_add_ons!2fcom.sap.ip.bi!2fiViews!2fcom.sap.ip.bi.bex?QUERY=ZVSD_M07_Q011&amp;VARIABLE_SCREENX&amp;DUMMY=1&amp;BI_COMMAND_1-BI_COMMAND_TYPE=SET_VARIABLES_STATE&amp;BI_COMMAND_1-VARIABLE_VALUES-VARIABLE_VALUE_1-VARIABLE_TYPE=VARIABLE_INPUT_STRING&amp;BI_COMMAND_1-VARIABLE_VALUES-VARIABLE_VALUE_1-VARIABLE=UMI_CUSTOMER_001&amp;BI_COMMAND_1-VARIABLE_VALUES-VARIABLE_VALUE_1-VARIABLE_TYPE-VARIABLE_INPUT_STRING=&quot; &amp; TEXT( Higher_Level_Customer__c ) , &quot; SAP/BW report without sales figures &quot;))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Main Products Purchased</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>SAP_Number__c</fullName>
@@ -12424,7 +12495,7 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
     <fields>
         <fullName>Sic</fullName>
         <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>true</trackHistory>
+        <trackHistory>false</trackHistory>
     </fields>
     <fields>
         <fullName>SicDesc</fullName>
@@ -12971,7 +13042,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <length>100</length>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>Text</type>
         <unique>false</unique>
     </fields>
@@ -24794,7 +24865,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
     </recordTypes>
     <recordTypes>
         <fullName>IATA</fullName>
-        <active>false</active>
+        <active>true</active>
         <description>Used for all standard Accounts (airlines, agents, partners etc)</description>
         <label>IATA Standard Account</label>
         <picklistValues>
@@ -76843,6 +76914,39 @@ NOT(CONTAINS($Profile.Name, &quot;Developer&quot;))
         <errorMessage>Airline head office accounts can be created only by an administrator</errorMessage>
     </validationRules>
     <validationRules>
+        <fullName>EF_AS_Specialist_Prevent_Client_Edit</fullName>
+        <active>true</active>
+        <description>If User is Airline Service Specialist prevent editing Client Accounts</description>
+        <errorConditionFormula>AND( 
+ISPICKVAL($User.EF_User_Role__c, &apos;Airline Services Specialists&apos;), 
+RecordType.Name=&apos;Others&apos; )</errorConditionFormula>
+        <errorMessage>You don&apos;t have the right level of access to edit Client Accounts</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>EF_Account_Client_Reactivation</fullName>
+        <active>true</active>
+        <description>E&amp;F Status on Client can be reactivated if the user has the correct setting on his user</description>
+        <errorConditionFormula>AND(
+NOT($User.EF_Client_Reactivation__c),
+OR(ISPICKVAL(EF_Status__c, &apos;Active&apos;), ISPICKVAL(EF_Status__c, &apos;&apos;) ),
+TEXT(PRIORVALUE(EF_Status__c))=&apos;Inactive&apos;,
+RecordType.Name=&apos;Others&apos;
+)</errorConditionFormula>
+        <errorMessage>You are not allowed to reactivate Client accounts for E&amp;F.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>EF_Account_Customer_Reactivation</fullName>
+        <active>true</active>
+        <description>E&amp;F Status on Customers can be reactivated if the user has the correct setting on his user</description>
+        <errorConditionFormula>AND(
+NOT($User.EF_Customer_Reactivation__c),  
+OR(ISPICKVAL(EF_Status__c, &apos;Active&apos;), ISPICKVAL(EF_Status__c, &apos;&apos;) ),
+TEXT(PRIORVALUE(EF_Status__c))=&apos;Inactive&apos;,
+OR(RecordType.Name=&apos;Operator&apos;, RecordType.Name=&apos;Airline Branch&apos;, RecordType.Name=&apos;Airline Headquarters&apos;) 
+)</errorConditionFormula>
+        <errorMessage>You are not allowed to reactivate Customer accounts for E&amp;F.</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>EF_BlockRemoveSISVerifiedOnOperator</fullName>
         <active>true</active>
         <description>Can&apos;t set to false SIS Verified if Record Type is Operator</description>
@@ -76864,6 +76968,19 @@ NOT(CONTAINS($Profile.Name, &quot;Developer&quot;))
 )</errorConditionFormula>
         <errorDisplayField>EF_SIS_Code_Verified__c</errorDisplayField>
         <errorMessage>SIS Verified can&apos;t be checked if SIS Accounting Code or SIS Designator are empty</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>EF_MandatoryFields</fullName>
+        <active>true</active>
+        <description>Sets the mandatory fields for E&amp;F Profiles. (E&amp;F Type, E&amp;F Status, E&amp;F Sub-status, E&amp;F Status DAte Change)</description>
+        <errorConditionFormula>AND( 
+ CONTAINS($User.Profile_Name__c, &apos;E&amp;F&apos;),   
+OR(RecordType.DeveloperName=&apos;Standard_Account&apos;, RecordType.DeveloperName=&apos;Others&apos;, RecordType.DeveloperName=&apos;Operator&apos;, 
+RecordType.DeveloperName=&apos;IATA_Airline_BR&apos;,
+RecordType.DeveloperName=&apos;IATA_Airline&apos;),
+OR(ISPICKVAL(EF_Type__c,&quot;&quot;), ISPICKVAL( EF_Status__c, &quot;&quot;), ISPICKVAL( EF_SubStatus__c ,&quot;&quot;), ISNULL(EF_Effective_Date__c) )
+)</errorConditionFormula>
+        <errorMessage>Please fill in E&amp;F Type, E&amp;F Status, E&amp;F Sub-Status, E&amp;F Status Date Change</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>EF_SIS_Location_ID_format_check</fullName>
@@ -76918,7 +77035,7 @@ PRIORVALUE( Total_Value_Won_Opportunities__c ) = Total_Value_Won_Opportunities__
         <fullName>General_Public_Admin_only</fullName>
         <active>true</active>
         <description>Only administrators can edit General Public accounts</description>
-        <errorConditionFormula>IF((CONTAINS(Name, &quot;General Public&quot;) || CONTAINS(Name, &quot;general public&quot;) || CONTAINS(Name, &quot;GENERAL PUBLIC&quot;) ||  CONTAINS(Name, &quot;General public&quot;) || TEXT(Sector__c) = &quot;General Public&quot;) &amp;&amp; NOT(CONTAINS($User.Profile_Name__c, &quot;System Administrator&quot;) || CONTAINS($User.Profile_Name__c, &quot;System administrator&quot;)), TRUE, FALSE)</errorConditionFormula>
+        <errorConditionFormula>IF((CONTAINS(Name, &quot;General Public&quot;) || CONTAINS(Name, &quot;general public&quot;) || CONTAINS(Name, &quot;GENERAL PUBLIC&quot;) || CONTAINS(Name, &quot;General public&quot;) || TEXT(Sector__c) = &quot;General Public&quot; || ISPICKVAL(PRIORVALUE(Sector__c),&quot;General Public&quot;)) &amp;&amp; NOT(CONTAINS($User.Profile_Name__c, &quot;System Administrator&quot;) || CONTAINS($User.Profile_Name__c, &quot;System administrator&quot;)), TRUE, FALSE)</errorConditionFormula>
         <errorMessage>Please contact an administrator if you wish to create or modify a general public account</errorMessage>
     </validationRules>
     <validationRules>
@@ -76965,6 +77082,7 @@ ID_Card_Key_Account_Discount__c &gt; 1))</errorConditionFormula>
         NOT($User.Profile_Name__c =&apos;System Administrator&apos;),
         NOT($User.Profile_Name__c =&apos;MER Membership&apos;),
         NOT($User.Profile_Name__c =&apos;System administrator - Stakeholders&apos;),
+        NOT($User.Profile_Name__c =&apos;System Administrator - automated processes&apos;),
         NOT($User.Profile_Name__c =&apos;Developer&apos;)),       
         TRUE ,FALSE)</errorConditionFormula>
         <errorMessage>The airline is a member and the name or the billing address cannot be edited. Only MER is allowed.</errorMessage>
@@ -77270,6 +77388,70 @@ myuser={!User.Id}</url>
 &amp;00N20000000mApw=Branch
 &amp;00N20000000pA4w={!Account.Membership_status__c}
 &amp;acc7={!Account.Industry}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Create_GSA_agency</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Create GSA agency</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/22.0/connection.js&quot;)} 
+{!REQUIRESCRIPT(&quot;/soap/ajax/22.0/apex.js&quot; )} 
+
+var connection = sforce.connection; 
+
+var recType = sforce.connection.query(&quot;SELECT Id, Name FROM RecordType WHERE developername = &apos;Standard_Account&apos; LIMIT 1&quot;); 
+
+var newgsaagency= new sforce.SObject(&quot;Account&quot;); 
+
+newgsaagency.RecordTypeId = recType.Id; 
+newgsaagency.Name = &apos;{!Account.Name}&apos;;
+newgsaagency.Sector__c = &quot;Travel Agent&quot;;
+newgsaagency.Category__c = &quot;GSA General Sales Agent&quot;;
+newgsaagency.Location_Class__c = &quot;G&quot;;
+newgsaagency.Location_Type__c = &quot;HO&quot;;
+newgsaagency.Reason_for_creation__c = &quot;New Agent&quot;;
+
+result = sforce.connection.create([newgsaagency]); 
+var accId = result[0].id;
+
+var airlineId = &apos;{!Account.Id}&apos;; 
+
+javascript:srcUp(&apos;/apex/AMS_AccountOSCARWizardPage?accountId=&apos;+accId+&apos;&amp;process=x&amp;Type_of_OSCAR_process_man=NEW.GSA.1.0&amp;airlineId=&apos;+airlineId);</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Create_MSO_agency</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Create MSO agency</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/22.0/connection.js&quot;)}
+{!REQUIRESCRIPT(&quot;/soap/ajax/22.0/apex.js&quot; )}
+
+var connection = sforce.connection;
+
+var recType = sforce.connection.query(&quot;SELECT Id, Name FROM RecordType WHERE developername = &apos;Standard_Account&apos; LIMIT 1&quot;);
+
+var newmsoagency= new sforce.SObject(&quot;Account&quot;);
+
+newmsoagency.RecordTypeId = recType.Id;
+newmsoagency.Name = &apos;{!Account.Name}&apos;;
+newmsoagency.Sector__c = &quot;Travel Agent&quot;;
+newmsoagency.Category__c = &quot;MSO Member Sales Office&quot;;
+newmsoagency.Location_Class__c = &quot;M&quot;;
+newmsoagency.Location_Type__c = &quot;HO&quot;;
+newmsoagency.Reason_for_creation__c = &quot;New Agent&quot;;
+
+result = sforce.connection.create([newmsoagency]);
+var accId = result[0].id;
+
+var airlineId = &apos;{!Account.Id}&apos;;
+
+javascript:srcUp(&apos;/apex/AMS_AccountOSCARWizardPage?accountId=&apos;+accId+&apos;&amp;process=x&amp;Type_of_OSCAR_process_man=NEW.MSO.1.0&amp;airlineId=&apos;+airlineId);</url>
     </webLinks>
     <webLinks>
         <fullName>DSE__DS_AccountHierarchyButton</fullName>

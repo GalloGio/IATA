@@ -1,0 +1,623 @@
+<apex:component controller="vfIECEBC_RecipientEdit" allowDML="true">
+    <apex:attribute name="recordId" assignTo="{!filterId}" description="The ID of the filter we are trying to edit, in case of edit" type="String" />
+    <apex:attribute name="c" assignTo="{!campaign}" description="The campaign object for wich we create that list, if any" type="EBC_Campaign__c" />
+    
+    <script type="text/javascript">
+    var newFilterJSON = '';
+    function displayConfirmationStep2() {
+        vfIECEBC_RecipientEdit.getNewFilterCnt(newFilterJSON,  function(results, event){
+            displayConfirmationStep3(results);
+        });
+    }
+    function saveGeoStateAndRefreshCount() {
+        jQuery('.newFilterCount').html('<img src="/img/loading.gif" />');
+        jQuery('.recipientCountContainer').show();
+        saveGeoStateAndRefreshCountAF();
+    }
+    function getNewFilterCount() {
+        vfIECEBC_RecipientEdit.getNewFilterCnt(newFilterJSON,  function(results, event){
+            jQuery('.newFilterCount').text(results);
+            jQuery('.recipientCountContainer').show();
+            updateRecipientCount(results);
+        });
+    }
+    
+    function saveRefinementStateAndRefreshCount() {
+        jQuery('.newFilterCount').html('<img src="/img/loading.gif" />');
+        jQuery('.recipientCountContainer').show();
+        saveRefinementStateAndRefreshCountAF();
+    }
+    </script>
+    <apex:outputPanel id="wizard">
+        <apex:form >
+            
+            <apex:actionFunction name="saveRefinementStateAndRefreshCountAF" reRender="newFilterJSON" action="{!doNothing}" oncomplete="getNewFilterCount();" />
+            <apex:actionFunction name="updateRecipientCount" action="{!doNothing}" reRender="">
+                <apex:param name="firstParam" assignTo="{!newFilter.Number_of_Recipients__c}" value="" />
+            </apex:actionFunction>
+            <apex:actionFunction name="saveGeoStateAndRefreshCountAF" reRender="newFilterJSON" action="{!doNothing}" oncomplete="getNewFilterCount();" />
+            
+            <apex:actionFunction action="{!doNothing}" name="updateGeoFilterPreset" rerender="wizard">
+                <apex:param assignTo="{!geoFilterPreset}" name="firstParam" value="" />
+            </apex:actionFunction>
+            <apex:actionFunction action="{!doNothing}" name="updateAudience" oncomplete="resetFilters();"> 
+                <apex:param assignTo="{!newFilter.Audience__c}" name="firstParam" value="" /> 
+            </apex:actionFunction>
+            <apex:actionFunction action="{!reset}" name="resetFilters" rerender="wizard" />
+            <apex:actionFunction name="displayConfirmation" reRender="newFilterJSON" action="{!doNothing}" oncomplete="displayConfirmationStep2();" />
+            <apex:actionFunction name="displayConfirmationCustomCodes" reRender="newFilterJSON" action="{!doNothing}" oncomplete="displayConfirmationStep2();" />
+            <apex:actionFunction name="displayConfirmationStep3" action="{!validateNewFilter}" rerender="wizard" oncomplete="jQuery('body').css('cursor', 'auto');">
+                <apex:param assignTo="{!newFilter.Number_of_Recipients__c}" name="firstParam" value="" />
+                <apex:param assignTo="{!newListStepNumber}" name="secondParam" value="4" />
+            </apex:actionFunction>
+            
+            <apex:outputPanel id="newFilterJSON">
+                <script type="text/javascript">
+                newFilterJSON = '{!newFilterEscapedJSON}';
+                </script>
+            </apex:outputPanel>
+            
+            <div class="process">
+                <ol class="list steps">
+                    <li class="step step-1 {!IF(newListStepNumber == 1, ' active', '')}">
+                        <apex:commandLink rendered="{!NOT(newListStepNumber <= 1)}" action="{!doNothing}" reRender="wizard" value="Audience">
+                            <apex:param assignTo="{!newListStepNumber}" name="firstParam" value="1" />
+                        </apex:commandLink>
+                        <apex:outputText rendered="{!newListStepNumber <= 1}">
+                            <a href="javascript:void(0);">Audience</a>
+                        </apex:outputText>
+                    </li>
+                    <apex:outputText rendered="{!newFilter.Audience__c != 'Custom'}">
+                        <li class="step step-2 {!IF(newListStepNumber == 2, ' active', '')} {!IF(newListStepNumber < 2, ' disabled', '')}">
+                            <apex:commandLink rendered="{!NOT(newListStepNumber <= 2)}" action="{!doNothing}" reRender="wizard" value="Geo Selection">
+                                <apex:param assignTo="{!newListStepNumber}" name="firstParam" value="2" />
+                            </apex:commandLink>
+                            <apex:outputText rendered="{!newListStepNumber <= 2}">
+                                <a href="javascript:void(0);">Geo Selection</a>
+                            </apex:outputText>
+                        </li>
+                    </apex:outputText>
+                    <apex:outputText rendered="{!newFilter.Audience__c != 'Custom'}">
+                        <li class="step step-3 {!IF(newListStepNumber == 3, ' active', '')} {!IF(newListStepNumber < 3, ' disabled', '')}">
+                            <apex:commandLink rendered="{!NOT(newListStepNumber <= 3)}" action="{!doNothing}" reRender="wizard" value="Refinement">
+                                <apex:param assignTo="{!newListStepNumber}" name="firstParam" value="3" />
+                            </apex:commandLink>
+                            <apex:outputText rendered="{!newListStepNumber <= 3}">
+                                <a href="javascript:void(0);">Refinement</a>
+                            </apex:outputText>
+                        </li>
+                    </apex:outputText>
+                    <li class="step step-{!IF(newFilter.Audience__c != 'Custom', '4', '2')} {!IF(newListStepNumber == 4, ' active', '')} {!IF(newListStepNumber < 4, ' disabled', '')}">
+                        <a href="javascript:void(0);">Confirmation</a>
+                    </li>
+                </ol>
+            </div>
+            
+            <apex:outputText rendered="{!newListStepNumber == 1}">
+                
+                <div class="{!IF(c != NULL, 'modal-body', '')}">
+                    <h3 class="step-title">Audience</h3>
+                    <p>Select the audience you want to reach. Note that the audience cannot be changed after the list is saved.</p>
+                    
+                    <ul class="list list-radio-select js-radio-list js-form-continue-validation" data-target-button="#js-continue-to-geo-selection" id="js-radio-list-audience">
+                        
+                        
+                        <apex:variable var="isOptionDisabled" value="{!NOT(ISBLANK(limitToAudience)) && limitToAudience != 'Agency'}" />
+                        <li class="{!IF(isOptionDisabled, ' disabled', '')} {!IF(newFilter.Audience__c == 'Agency', 'is-selected', '')}">
+                            <div class="radio-box">
+                                <div class="custom-user-input radio">
+                                    <apex:outputText rendered="{!NOT(isOptionDisabled)}">
+                                        <apex:outputText rendered="{!newFilter.Audience__c == 'Agency'}">
+                                            <input class="user-input radio" onchange="updateAudience(this.value);" type="radio" name="audience" id="new-list-1" value="Agency" checked="checked" />
+                                        </apex:outputText>
+                                        <apex:outputText rendered="{!newFilter.Audience__c != 'Agency'}">
+                                            <input class="user-input radio" onchange="updateAudience(this.value);" type="radio" name="audience" id="new-list-1" value="Agency" />
+                                        </apex:outputText>
+                                    </apex:outputText>
+                                    <apex:outputText rendered="{!isOptionDisabled}">
+                                        <input disabled="disabled" readonly="readonly" class="user-input radio" type="radio" name="audience" id="new-list-1" value="Agency" />
+                                    </apex:outputText>
+                                    <label class="custom-radio" for="new-list-1"><i class="icon"></i></label>
+                                </div>
+                                <label class="input-label" for="new-list-1">IATA Travel Agencies</label>
+                            </div>
+                        </li>
+                        
+                        <apex:outputText > 
+                            <apex:variable var="isOptionDisabled" value="{!NOT(ISBLANK(limitToAudience)) && limitToAudience != 'Agent'}" />
+                            <li class="{!IF(isOptionDisabled, ' disabled', '')} {!IF(newFilter.Audience__c == 'Agent', 'is-selected', '')}">
+                                <div class="radio-box">
+                                    <div class="custom-user-input radio">
+                                        <apex:outputText rendered="{!isIDCARDSelectionAllowed}">                                        
+                                            <apex:outputText rendered="{!newFilter.Audience__c == 'Agent'}">
+                                                <input class="user-input radio" onchange="updateAudience(this.value);" type="radio" name="audience" id="Agent" value="Agent" checked="checked" />
+                                            </apex:outputText>
+                                            <apex:outputText rendered="{!newFilter.Audience__c != 'Agent'}">
+                                                <input class="user-input radio" onchange="updateAudience(this.value);" type="radio" name="audience" id="Agent" value="Agent" />
+                                            </apex:outputText>
+                                        </apex:outputText>
+                                        <apex:outputText rendered="{!NOT(isIDCARDSelectionAllowed)}">
+                                            <apex:outputText rendered="{!newFilter.Audience__c == 'Agent'}">
+                                                <input disabled="disabled" readonly="readonly" class="disabled-user-input radio" style="min-width: 20px;" type="radio" name="audience" id="Agent" value="Agent" checked="checked" />
+                                            </apex:outputText>
+                                            <apex:outputText rendered="{!newFilter.Audience__c != 'Agent'}">
+                                                <input disabled="disabled" readonly="readonly" class="disabled-user-input radio" style="min-width: 20px;" type="radio" name="audience" id="Agent" value="Agent" />
+                                            </apex:outputText>                                            
+                                        </apex:outputText>                                        
+                                        <label class="{!IF(isIDCARDSelectionAllowed,'custom-radio','')}" for="Agent"><i class="icon"></i></label>
+                                    </div>
+                                    <label class="input-label" for="Agent">IATA/IATAN ID Cardholders</label>
+                                </div>
+                            </li>
+                        </apex:outputText>
+                        <apex:outputText > 
+                            <apex:variable var="isOptionDisabled" value="{!NOT(ISBLANK(limitToAudience)) && limitToAudience != 'Custom'}" />
+                            <li class="{!IF(isOptionDisabled, ' disabled', '')} {!IF(newFilter.Audience__c == 'Custom', 'is-selected', '')}">
+                                <div class="radio-box">
+                                    <div class="custom-user-input radio">
+                                        <apex:outputText rendered="{!isCodeSelectionAllowed}">
+                                            <apex:outputText rendered="{!newFilter.Audience__c == 'Custom'}">
+                                                <input class="user-input radio" onchange="updateAudience(this.value);" type="radio" name="audience" id="new-list-3" value="Custom" checked="checked" />
+                                            </apex:outputText>
+                                            <apex:outputText rendered="{!newFilter.Audience__c != 'Custom'}">
+                                                <input class="user-input radio" onchange="updateAudience(this.value);" type="radio" name="audience" id="new-list-3" value="Custom" />
+                                            </apex:outputText>
+                                        </apex:outputText>
+                                        <apex:outputText rendered="{!NOT(isCodeSelectionAllowed)}">
+                                            <apex:outputText rendered="{!newFilter.Audience__c == 'Custom'}">
+                                                <input disabled="disabled" readonly="readonly" class="disabled-user-input radio" style="min-width: 20px;" type="radio" name="audience" id="new-list-3" value="Custom" checked="checked" />
+                                            </apex:outputText>
+                                            <apex:outputText rendered="{!newFilter.Audience__c != 'Custom'}">
+                                                <input disabled="disabled" readonly="readonly" class="disabled-user-input radio" style="min-width: 20px;" type="radio" name="audience" id="new-list-3" value="Custom" />
+                                            </apex:outputText>                                            
+                                        </apex:outputText>
+                                        
+                                        <label class="{!IF(isCodeSelectionAllowed,'custom-radio','')}" for="new-list-3"><i class="icon"></i></label>
+                                    </div>
+                                    <label class="input-label" for="new-list-3">Provide a list of IATA Numeric Codes</label>
+                                </div>
+                                <apex:outputPanel rendered="{!newFilter.Audience__c == 'Custom'}" styleClass="show-hide-toggle">
+                                    <div class="field-group textarea">
+                                        <label>
+                                            <span class="input-label">Paste your list of IATA Numeric Codes in the box below</span>
+                                            <apex:inputField value="{!newFilter.IATA_Codes__c}" styleClass="user-input textarea" style="font-family: tahoma, open sans-serif;" />
+                                        </label>
+                                        <p class="input-description">Each IATA Numeric Code needs to be entered separated by a semicolon with a max of <strong>5,000 codes</strong>.</p>
+                                    </div>
+                                </apex:outputPanel>
+                            </li>
+                        </apex:outputText>
+                    </ul>
+                    <apex:outputText rendered="{!NOT(newFilterFieldsValidity['Audience__c'])}">
+                        <div class="errorMsg"><strong>Error:</strong> You must enter a value</div>
+                    </apex:outputText> 
+                    
+                </div>
+                
+                <footer class="modal-footer">
+                    <div class="footer-actions text-right">
+                        <ul class="list actions">
+                            <apex:outputText rendered="{!campaign == null}">
+                                <li>
+                                    <a href="https://{!$Site.Domain}{!URLFOR($Page.IECEBC_RecipientList)}" class="text-link">Discard</a>
+                                </li>
+                            </apex:outputText>
+                            <li>
+                                <apex:outputText rendered="{!ISBLANK(newFilter.Audience__c)}">
+                                    <a href="javascript:void(0);" class="button disabled" data-default-state="disabled">Continue</a> 
+                                </apex:outputText>
+                                <apex:commandLink rendered="{!NOT(ISBLANK(newFilter.Audience__c)) && newFilter.Audience__c != 'Custom'}" onclick="jQuery('body').css('cursor', 'wait');" action="{!validateNewFilter}" styleClass="button" value="Continue" rerender="wizard" oncomplete="jQuery('body').css('cursor', 'auto');">
+                                    <apex:param assignTo="{!newListStepNumber}" name="firstParam" value="2" />
+                                </apex:commandLink>
+                                <apex:outputText rendered="{!newFilter.Audience__c == 'Custom'}">
+                                    <a href="#" onclick="jQuery('body').css('cursor', 'wait'); displayConfirmationCustomCodes(); return false;" class="button">Continue</a>
+                                </apex:outputText>
+                            </li>
+                        </ul>
+                    </div>
+                </footer>
+            </apex:outputText>
+            <apex:outputText rendered="{!newListStepNumber == 2}">
+                
+                <div class="{!IF(c != NULL, 'modal-body', '')}">
+                    <h3 class="step-title">Geo-Selection</h3>
+                    <p>For your convenience, we have ready-made Geo-Selections. Select one of the following or create your own Geo-Selection.</p>
+                    
+                    <ul class="list list-radio-select js-radio-list js-form-continue-validation" id="js-radio-list-geo-selection" data-target-button="#js-continue-to-refinement">
+                        <apex:repeat value="{!geoFilterPresets}" var="globalGeoFilterId">
+                            <li class="{!IF(globalGeoFilterId == geoFilterPreset, 'is-selected', '')}">
+                                <div class="radio-box">
+                                    <div class="custom-user-input radio">
+                                        <apex:outputText rendered="{!globalGeoFilterId == geoFilterPreset}">
+                                            <input onchange="updateGeoFilterPreset(this.value);" checked="checked" value="{!globalGeoFilterId}" class="user-input radio" type="radio" name="geo-filtering" id="{!globalGeoFilterId}" />
+                                        </apex:outputText>
+                                        <apex:outputText rendered="{!globalGeoFilterId != geoFilterPreset}">
+                                            <input onchange="updateGeoFilterPreset(this.value);" value="{!globalGeoFilterId}" class="user-input radio" type="radio" name="geo-filtering" id="{!globalGeoFilterId}" />
+                                        </apex:outputText>
+                                        <label class="custom-radio" for="{!globalGeoFilterId}"><i class="icon"></i></label>
+                                    </div>
+                                    <label class="input-label" for="{!globalGeoFilterId}">
+                                        {!geoFilterPresets[globalGeoFilterId].Name}
+                                    </label>
+                                </div>
+                            </li>
+                        </apex:repeat>
+                        <li class="{!IF('custom-filter' == geoFilterPreset, 'is-selected', '')}">
+                            <div class="radio-box">
+                                <div class="custom-user-input radio">
+                                    <apex:outputText rendered="{!geoFilterPreset == 'custom-filter'}">
+                                        <input onchange="updateGeoFilterPreset(this.value);" checked="checked" class="user-input radio" type="radio" name="geo-filtering" value="custom-filter" id="custom-filter" />
+                                    </apex:outputText>
+                                    <apex:outputText rendered="{!geoFilterPreset != 'custom-filter'}">
+                                        <input onchange="updateGeoFilterPreset(this.value);" class="user-input radio" type="radio" name="geo-filtering" value="custom-filter" id="custom-filter" />
+                                    </apex:outputText>
+                                    <label class="custom-radio" for="custom-filter"><i class="icon"></i></label>
+                                </div>
+                                <label class="input-label" for="custom-filter">Custom Geo-Selection</label>
+                            </div>
+                            <div id="custom-filter-block" class="show-hide-toggle" style="{!IF(geoFilterPreset == 'custom-filter', '', 'display: none;')}">
+                                <div class="group-container custom-geo-selection">
+                                    <div class="field-group recipents-match select default">
+                                        Recipients matching 
+                                        <div class="custom-user-input select">
+                                            <i class="icon angle-down"></i>
+                                            <apex:inputField value="{!newFilter.Geo_Condition__c}" styleClass="user-input select" required="true" />
+                                        </div>
+                                        of the following conditions:
+                                    </div>
+                                    
+                                    <apex:outputPanel id="geoFilters">
+                                        <script type="text/javascript">
+                                        newFilterJSON = '{!newFilterEscapedJSON}';
+                                        </script>
+                                        <apex:actionFunction name="refreshGeoFilter" action="{!doNothing}" rerender="geoFilters" />
+                                        <apex:actionFunction name="refreshGeoFilterReset" action="{!resetGeoFilter}" rerender="geoFilters">
+                                            <apex:param assignTo="{!resetFilterIndex}" name="firstParam" value="" />
+                                        </apex:actionFunction>
+                                        <apex:variable value="-1" var="ind" />
+                                        <apex:repeat value="{!geoFilters}" var="f">
+                                            <apex:variable var="ind" value="{!TEXT(VALUE(ind) + 1)}" />
+                                            <apex:outputPanel layout="block" styleClass="field-group select default">
+                                                <div class="custom-user-input select">
+                                                    <i class="icon angle-down"></i>
+                                                    <apex:selectList onchange="refreshGeoFilterReset('{!ind}');" value="{!f.EBC_Application_Filter__c}" styleClass="user-input select" size="1">
+                                                        <apex:selectOption itemLabel="Please Select" itemValue="" />
+                                                        <apex:selectOptions value="{!availableGeoApplicationFilterOptions}" />
+                                                    </apex:selectList> 
+                                                </div>
+                                                <apex:outputText rendered="{!f.EBC_Application_Filter__c != null}">
+                                                    <apex:variable var="dataType" value="{!allAvailableApplicationFilters[f.EBC_Application_Filter__c].Data_Type__c}" />
+                                                    <div class="custom-user-input select">
+                                                        <i class="icon angle-down"></i>
+                                                        <apex:selectList rendered="{!dataType == 'Text'}" value="{!f.Field_Operator__c}" styleClass="user-input select" size="1">
+                                                            <apex:selectOption itemValue="=" itemLabel="Is" />
+                                                            <apex:selectOption itemValue="!=" itemLabel="Is Not" />
+                                                        </apex:selectList>
+                                                        <apex:selectList rendered="{!dataType == 'Picklist'}" value="{!f.Field_Operator__c}" styleClass="user-input select" size="1">
+                                                            <apex:selectOption itemValue="=" itemLabel="Is" />
+                                                            <apex:selectOption itemValue="!=" itemLabel="Is Not" />
+                                                        </apex:selectList>
+                                                    </div>
+                                                    <apex:inputText rendered="{!dataType == 'Text'}" value="{!f.Field_Value__c}" styleClass="user-input text" />
+                                                    
+                                                    <apex:outputPanel layout="block" styleClass="custom-user-input select" rendered="{!dataType == 'Picklist' && f.EBC_Application_Filter__c != null}">
+                                                        <i class="icon angle-down"></i>	
+                                                        <apex:selectList value="{!f.Field_Value__c}" styleClass="user-input select" size="1">
+                                                            <apex:selectOptions value="{!allAvailableApplicationFilterValues[f.EBC_Application_Filter__c]}" />
+                                                        </apex:selectList>
+                                                    </apex:outputPanel>
+                                                    
+                                                    <apex:commandLink styleClass="action-link" action="{!removeGeoFilter}" rerender="geoFilters">
+                                                        <i class="icon fa fa-minus-circle" aria-hidden="true"></i>Remove
+                                                        <apex:param name="firstParam" assignTo="{!geoFilterIndex}" value="{!ind}" />
+                                                    </apex:commandLink>
+                                                </apex:outputText>
+                                            </apex:outputPanel>
+                                        </apex:repeat>
+                                    </apex:outputPanel>
+                                    
+                                    <div class="action add-field">
+                                        <a class="js-add-field" href="#" onclick="addGeoFilter(); return false;">
+                                            <i class="icon fa fa-plus-circle" aria-hidden="true"></i>Add
+                                        </a> 
+                                    </div>
+                                    
+                                    <apex:actionFunction name="addGeoFilter" oncomplete="jQuery('body').css('cursor', 'auto');" action="{!addGeoFilter}" rerender="geoFilters" />
+                                    <div class="action refresh-count">
+                                        <span class="recipientCountContainer" style="display: none"><strong><span class="newFilterCount">n/a</span> recipients</strong> in this segment.</span>
+                                        <a href="javascript:void(0);" styleClass="button secondary" onclick="saveGeoStateAndRefreshCount();"><i class="icon fa fa-refresh" aria-hidden="true"></i> Refresh count</a>
+                                        <div class="recipientCountContainer" style="display: none"><strong>Note:</strong> The number of recipients is also based on any refinement filters you may have set.</div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <footer class="modal-footer">
+                    <div class="footer-actions text-right">
+                        <ul class="list actions">
+                            <apex:outputText rendered="{!campaign == null}">
+                                <li>
+                                    <a href="https://{!$Site.Domain}{!URLFOR($Page.IECEBC_RecipientList)}" class="text-link">Discard</a>
+                                </li>
+                            </apex:outputText>
+                            <li>
+                                <apex:outputText rendered="{!ISBLANK(geoFilterPreset)}">
+                                    <a href="javascript:void(0);" class="button disabled" data-default-state="disabled">Continue</a> 
+                                </apex:outputText>
+                                <apex:commandLink rendered="{!NOT(ISBLANK(geoFilterPreset))}" onclick="jQuery('body').css('cursor', 'wait');" action="{!validateNewFilter}" styleClass="button" value="Continue" rerender="wizard" oncomplete="jQuery('body').css('cursor', 'auto');">
+                                    <apex:param assignTo="{!newListStepNumber}" name="firstParam" value="3" />
+                                </apex:commandLink>
+                            </li>
+                        </ul>
+                    </div>
+                </footer>
+            </apex:outputText>
+            <apex:outputText rendered="{!newListStepNumber == 3}">
+                
+                <div class="{!IF(c != NULL, 'modal-body', '')}">
+                    <h3 class="step-title">Refinement</h3>
+                    
+                    <div class="group-container custom-geo-selection">
+                        <div class="field-group recipents-match select default">
+                            Recipients matching 
+                            <div class="custom-user-input select">
+                                <i class="icon angle-down"></i>
+                                <apex:inputField value="{!newFilter.Refinement_Condition__c}" styleClass="user-input select" required="true" />
+                            </div>
+                            of the following conditions:
+                        </div>
+                        
+                        <apex:outputPanel id="refinementFilters">
+                            <script type="text/javascript">
+                            newFilterJSON = '{!newFilterEscapedJSON}';
+                            </script>
+                            <apex:actionFunction name="refreshFilter" action="{!doNothing}" rerender="refinementFilters" />
+                            <apex:actionFunction name="refreshFilterReset" action="{!resetFilter}" rerender="refinementFilters">
+                                <apex:param assignTo="{!resetFilterIndex}" name="firstParam" value="" />
+                            </apex:actionFunction>
+                            <apex:variable value="-1" var="ind" />
+                            <apex:repeat value="{!refinementFilters}" var="f">
+                                <apex:variable var="ind" value="{!TEXT(VALUE(ind) + 1)}" />
+                                <apex:outputPanel layout="block" styleClass="field-group select default">
+                                    <div class="custom-user-input select">
+                                        <i class="icon angle-down"></i>
+                                        <apex:selectList onchange="refreshFilterReset({!ind});" value="{!f.EBC_Application_Filter__c}" styleClass="user-input select" size="1">
+                                            <apex:selectOption itemLabel="Please Select" itemValue="" />
+                                            <apex:selectOptions value="{!availableRefinementApplicationFilterOptions}" />
+                                        </apex:selectList> 
+                                    </div>
+                                    <apex:outputText rendered="{!f.EBC_Application_Filter__c != null}">
+                                        <apex:variable var="dataType" value="{!allAvailableApplicationFilters[f.EBC_Application_Filter__c].Data_Type__c}" />
+                                        <div class="custom-user-input select">
+                                            <i class="icon angle-down"></i>
+                                            <apex:selectList rendered="{!dataType == 'Text'}" value="{!f.Field_Operator__c}" styleClass="filter{!ind}dependant user-input select" size="1">
+                                                <apex:selectOption itemValue="=" itemLabel="Is" />
+                                                <apex:selectOption itemValue="!=" itemLabel="Is Not" />
+                                            </apex:selectList>
+                                            <apex:selectList rendered="{!dataType == 'Picklist'}" value="{!f.Field_Operator__c}" styleClass="filter{!ind}dependant user-input select" size="1">
+                                                <apex:selectOption itemValue="=" itemLabel="Is" />
+                                                <apex:selectOption itemValue="!=" itemLabel="Is Not" />
+                                            </apex:selectList>
+                                            <apex:selectList rendered="{!dataType == 'Date'}" value="{!f.Field_Operator__c}" styleClass="filter{!ind}dependant user-input select" size="1">
+                                                <apex:selectOption itemValue="=" itemLabel="Is" />
+                                                <apex:selectOption itemValue="!=" itemLabel="Is Not" />
+                                                <apex:selectOption itemValue="<" itemLabel="Before" />
+                                                <apex:selectOption itemValue="<=" itemLabel="Before or Equals" />
+                                                <apex:selectOption itemValue=">" itemLabel="After" />
+                                                <apex:selectOption itemValue=">=" itemLabel="Equals or After" />
+                                            </apex:selectList>
+                                            <apex:selectList rendered="{!dataType == 'Checkbox'}" value="{!f.Field_Operator__c}" styleClass="filter{!ind}dependant user-input select" size="1">
+                                                <apex:selectOption itemValue="= true" itemLabel="Is True" />
+                                                <apex:selectOption itemValue="= false" itemLabel="Is False" />
+                                            </apex:selectList>
+                                        </div>
+                                        <apex:inputText rendered="{!dataType == 'Text'}" value="{!f.Field_Value__c}" styleClass="filter{!ind}dependant user-input text" />
+                                        <apex:outputText rendered="{!dataType == 'Date'}">
+                                            <div class="datepicker">
+                                                <apex:inputField value="{!f.Field_Value__c}" styleClass="filter{!ind}dependant js-datepicker humanCampaignDate user-input text" />
+                                            </div>
+                                            <script type="text/javascript">
+                                            jQuery('.filter{!ind}dependant').datepicker({ 
+                                                dateFormat: 'yy-mm-dd'
+                                            });
+                                            </script>
+                                        </apex:outputText>
+                                        
+                                        <apex:outputPanel layout="block" styleClass="custom-user-input select" rendered="{!dataType == 'Picklist' && f.EBC_Application_Filter__c != null}">
+                                            <i class="icon angle-down"></i>	
+                                            <apex:selectList value="{!f.Field_Value__c}" styleClass="filter{!ind}dependant user-input select" size="1">
+                                                <apex:selectOptions value="{!allAvailableApplicationFilterValues[f.EBC_Application_Filter__c]}" />
+                                            </apex:selectList>
+                                        </apex:outputPanel>
+                                        
+                                        
+                                        <apex:commandLink styleClass="action-link" action="{!removeRefinementFilter}" rerender="refinementFilters">
+                                            <i class="icon fa fa-minus-circle" aria-hidden="true"></i>Remove
+                                            <apex:param name="firstParam" assignTo="{!refinementFilterIndex}" value="{!ind}" />
+                                        </apex:commandLink>
+                                    </apex:outputText>
+                                </apex:outputPanel>
+                            </apex:repeat>
+                        </apex:outputPanel>
+                        
+                        <div class="action add-field">
+                            <a class="js-add-field" href="#" onclick="addRefinementFilter(); return false;">
+                                <i class="icon fa fa-plus-circle" aria-hidden="true"></i>Add
+                            </a> 
+                        </div>
+                        
+                        <apex:actionFunction name="addRefinementFilter" oncomplete="jQuery('body').css('cursor', 'auto');" action="{!addRefinementFilter}" rerender="refinementFilters" />
+                        
+                        
+                        <div class="action refresh-count">
+                            <span class="recipientCountContainer" style="display: none">
+                                <strong><span class="newFilterCount"><img src="/img/loading.gif" style="display: none;" /> n/a</span> recipients</strong> in this segment.
+                            </span>
+                            <a href="javascript:void(0);" styleClass="button secondary" onclick="saveRefinementStateAndRefreshCount();"><i class="icon fa fa-refresh" aria-hidden="true"></i> Refresh count</a>
+                            <div style="display: none" class="recipientCountContainer"><strong>Note:</strong> The number of recipients is also based on any geo filters you may have set.</div>
+                        </div>
+                    </div>
+                </div>
+                <footer class="modal-footer">
+                    <div class="footer-actions text-right">
+                        <ul class="list actions">
+                            <apex:outputText rendered="{!campaign == null}">
+                                <li>
+                                    <a href="https://{!$Site.Domain}{!URLFOR($Page.IECEBC_RecipientList)}" class="text-link">Discard</a>
+                                </li>
+                            </apex:outputText>
+                            <li>
+                                <a href="#" onclick="jQuery('body').css('cursor', 'wait'); displayConfirmation(); return false;" class="button">Continue</a>
+                            </li>
+                        </ul>
+                    </div>
+                </footer>
+            </apex:outputText>
+            <apex:outputText rendered="{!newListStepNumber == 4}">
+                
+                <div class="{!IF(c != NULL, 'modal-body', '')}">
+                    <h3 class="step-title">Confirmation</h3>
+                    
+                    <div class="row">
+                        <div class="main-container columns small-12 large-5">
+                            
+                            <apex:outputPanel id="confirmationPageMessages">
+                                <apex:pageMessages />
+                            </apex:outputPanel>
+                            
+                            <table class="data-table new-campaign">
+                                <tr>
+                                    <th>Audience:</th>
+                                    <td>
+                                        {!IF(newFilter.Audience__c != 'Custom', newFilter.Audience__c, 'Agency')}
+                                    </td>
+                                </tr>
+                                <apex:outputText rendered="{!newFilter.Audience__c != 'Custom'}">
+                                    <tr>
+                                        <th>Geo Selection:</th>
+                                        <td>
+                                            <apex:outputText rendered="{!geoFilterPreset == 'custom-filter'}">
+                                                <span class="label">Custom</span>
+                                            </apex:outputText>
+                                            <apex:outputText rendered="{!geoFilterPreset != 'custom-filter'}">
+                                                <span class="label">{!geoFilterPresets[geoFilterPreset].Name}</span>
+                                            </apex:outputText>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Refinement:</th>
+                                        <td>
+                                            {!IF(uniqueRefinementFiltersName != null && !ISBLANK(uniqueRefinementFiltersName), uniqueRefinementFiltersName, 'None')}
+                                        </td>
+                                    </tr>
+                                </apex:outputText>
+                            </table>
+                            <apex:outputPanel id="newFilterNameField" layout="block" styleClass="field-group text list-name">
+                                <label>
+                                    <span class="input-label">Name your list</span>
+                                    <apex:inputField type="text" styleClass="user-input text js-remaining-characters" value="{!newFilter.Name}" html-data-target-element=".js-remaining-count" html-data-target-id="list-name" html-data-max-length="{!$ObjectType.EBC_Master_Filter__c.fields.Name.length}" />
+                                </label>
+                                <div class="input-remaining">
+                                    <span class="js-remaining-count" data-id="list-name">{!$ObjectType.EBC_Master_Filter__c.fields.Name.length}</span>
+                                </div>
+                                
+                                <apex:outputText rendered="{!isSaved}">
+                                    <script type="text/javascript">
+                                    <apex:outputText rendered="{!campaign != null}">
+                                        window.location.href = 'https://{!$Site.Domain}{!URLFOR($Page.IECEBC_CampaignTemplate)}?id={!campaign.id}';
+                                    </apex:outputText>
+                                    <apex:outputText rendered="{!campaign == null}">
+                                        window.location.href = 'https://{!$Site.Domain}{!URLFOR($Page.IECEBC_RecipientList)}';
+                                    </apex:outputText>
+                                    </script>
+                                </apex:outputText>
+                            </apex:outputPanel>
+                        </div>
+                        
+                        <div class="sub-container columns small-10 large-7">
+                            <div class="summary-box">
+                                <div class="box-body fit">
+                                    <table class="data-table zibra cost"> 
+                                        <caption>Hint: Here is what a campaign would cost using this list</caption>
+                                        <tr>
+                                            <th>
+                                                <div class="item-name">Recipients selected</div>
+                                            </th>
+                                            <td>
+                                                <div class="item-value">
+                                                    <strong><span class="newFilterCount"><apex:outputText value="{0, number, ###,###,##0}"><apex:param value="{!newFilter.Number_of_Recipients__c}"/></apex:outputText></span></strong>
+                                                    <span class="unit"> email(s)</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <apex:outputText rendered="{!campaign == null || campaign.Status__c == 'DRAFT'}">
+                                            <tr> 
+                                                <th>
+                                                    <div class="item-name">Available balance</div>
+                                                </th>
+                                                <td>
+                                                    <div class="item-value text-green">
+                                                        <strong><apex:outputText value="{0, number, ###,###,##0}"><apex:param value="{!billingAccount.eBroadcast_Email_Balance__c}"/></apex:outputText></strong>
+                                                        <span class="unit"> email(s)</span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </apex:outputText>
+                                        <tr>
+                                            <th>
+                                                <div class="item-name">Campaign cost</div>
+                                            </th>
+                                            <td>
+                                                <div class="item-value">
+                                                    <apex:variable var="cost" value="{!productRatePlan.EBC_Currency_Cost_Per_Email__c * IF((billingAccount.eBroadcast_Email_Balance__c - newFilter.Number_of_Recipients__c) < 0, ABS(billingAccount.eBroadcast_Email_Balance__c - newFilter.Number_of_Recipients__c), 0)}" />
+                                                    <strong class="text-orange">$<apex:outputText value="{0, number, ###,###,##0.00}"><apex:param value="{!cost}"/></apex:outputText></strong>
+                                                    <apex:outputText rendered="{!cost > 0}">
+                                                        <p>for <apex:outputText value="{0, number, ###,###,##0}"><apex:param value="{!IF((billingAccount.eBroadcast_Email_Balance__c - newFilter.Number_of_Recipients__c) < 0, ABS(billingAccount.eBroadcast_Email_Balance__c - newFilter.Number_of_Recipients__c), 0)}"/></apex:outputText> email(s) at $<apex:outputText value="{0, number, ###,###,##0.00}"><apex:param value="{!productRatePlan.EBC_Currency_Cost_Per_Email__c}"/></apex:outputText> /email</p>
+                                                    </apex:outputText>
+                                                </div>
+                                            </td> 
+                                        </tr>
+                                        <apex:outputText rendered="{!campaign != null && campaign.Status__c == 'DRAFT'}">
+                                            <tr>
+                                                <th>
+                                                    <div class="item-name">Your new account balance will be</div> 
+                                                </th>
+                                                <td>
+                                                    <div class="item-value">
+                                                        <apex:variable var="newBalance" value="{!billingAccount.eBroadcast_Email_Balance__c - newFilter.Number_of_Recipients__c}" />
+                                                        <strong><apex:outputText value="{0, number, ###,###,##0}"><apex:param value="{!IF(newBalance < 0, 0, newBalance)}"/></apex:outputText></strong>
+                                                        <span class="unit"> email(s)</span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </apex:outputText>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <footer class="modal-footer">
+                    <div class="footer-actions text-right">
+                        <ul class="list actions">
+                            <apex:outputText rendered="{!campaign == null}">
+                                <li>
+                                    <a href="https://{!$Site.Domain}{!URLFOR($Page.IECEBC_RecipientList)}" class="text-link">Discard</a>
+                                </li>
+                            </apex:outputText>
+                            <li>
+                                <apex:commandLink onclick="jQuery('body').css('cursor', 'wait');" action="{!save}" styleClass="button wide" value="Save" oncomplete="jQuery('body').css('cursor', 'auto');" rerender="newFilterNameField,confirmationPageMessages" />
+                            </li>
+                        </ul>
+                    </div>
+                </footer>
+            </apex:outputText>
+            
+            
+        </apex:form>
+    </apex:outputPanel>
+    
+    
+</apex:component>

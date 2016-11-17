@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>List</customSettingsType>
+    <description>set the default value of EF_Private__c per object</description>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>EF_Private__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>E&amp;F Private</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>SObject_3_first_chars__c</fullName>
+        <description>First 3chr of the object id, i.e. 001 for Account</description>
+        <externalId>false</externalId>
+        <label>SObject 3 first chars</label>
+        <length>3</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>E&amp;F Amazonfile Default Private</label>
+    <visibility>Public</visibility>
+</CustomObject>

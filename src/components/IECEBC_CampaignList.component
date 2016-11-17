@@ -1,0 +1,354 @@
+<apex:component controller="vfIECEBC_CampaignList" allowDML="true">
+    <apex:attribute name="limited" assignTo="{!isLimitedComponent}" description="Is this component in currently loaded by the dashboard" type="Boolean" required="true" />
+    <apex:attribute name="sort" assignTo="{!sortBy}" description="Sort by" type="String" required="false" />
+    
+    <apex:outputPanel id="campaignListContainer">
+    	<apex:outputText rendered="{!IF(CampaignsCount > 0, true, false)}">
+            <apex:outputText rendered="{!IF(isLimitedComponent, true, false)}">
+                <div class="action-box text-right create-campaign">
+                    <apex:outputLink value="{!URLFOR($Page.IECEBC_Campaign)}" styleClass="button">Create campaign</apex:outputLink>
+                </div>
+            </apex:outputText>
+            
+            <table class="data-table campaign">
+                <tbody>
+                    
+                   <apex:repeat value="{!campaigns}" var="c">
+                    <apex:variable var="iconClass" value="" rendered="{!IF(c.Status__c == 'Setup' || c.Status__c == '', true, false)}" />
+                    <apex:variable var="iconClass" value="clock" rendered="{!IF(c.Status__c == 'Scheduled', true, false)}" />
+                    <apex:variable var="iconClass" value="check-circle" rendered="{!IF(c.Status__c == 'Sent', true, false)}" />
+                    
+                   
+                    <tr id="{!c.Id}">
+                        <td class="icon">
+                            <apex:outputText rendered="{!c.Status__c == 'DRAFT'}"><i class="js-icon-status icon icon-status" data-icon-type="draft"></i></apex:outputText>
+                            <apex:outputText rendered="{!c.Status__c == 'PENDING_APPROVAL'}"><i class="js-icon-status icon icon-status" data-icon-type="pending"></i></apex:outputText>
+                            <apex:outputText rendered="{!c.Status__c == 'REJECTED'}"><i class="js-icon-status icon icon-status" data-icon-type="rejected"></i></apex:outputText>
+                            <apex:outputText rendered="{!c.Status__c == 'APPROVED'}"><i class="js-icon-status icon icon-status" data-icon-type="schedule"></i></apex:outputText>
+                            <apex:outputText rendered="{!c.Status__c == 'SENT'}"><i class="js-icon-status icon icon-status" data-icon-type="sent"></i></apex:outputText>
+                        </td>
+                        <td class="name">
+                            <ul class="list campaign">
+                                <li>
+                                    <apex:outputLink rendered="{!c.Status__c != 'REJECTED'}" value="https://{!$Site.Domain}{!URLFOR($Page.IECEBC_Campaign)}?id={!c.Id}" styleClass="js-campaign-name">{!c.Name}</apex:outputLink>
+                                    <apex:outputText rendered="{!c.Status__c == 'REJECTED'}" styleClass="js-campaign-name">{!c.Name}</apex:outputText>
+                                </li>
+                                <li>{!c.EBC_Master_Filter__r.Name}</li>
+                                <li><strong class="js-campaign-status"><apex:outputField value="{!c.Status__c}" /></strong></li>
+                                <li>
+                                    <apex:outputText rendered="{!IF(c.Status__c == 'DRAFT', true, false)}">
+                                        <apex:outputText value="{0,date,EEE MMM dd yyyy hh:mm:ss}">
+                                            <apex:param value="{!c.LastModifiedDate + timezoneOffset}" /> 
+                                        </apex:outputText>
+                                    </apex:outputText>
+                                    <apex:outputText rendered="{!IF(c.Status__c == 'PENDING_APPROVAL' || c.Status__c == 'APPROVED' || c.Status__c == 'SENT', true, false)}">
+                                         <apex:outputText value="{0,date,EEE MMM dd yyyy hh:mm:ss}">
+                                            <apex:param value="{!c.Scheduled_Date__c + timezoneOffset}" /> 
+                                        </apex:outputText>
+                                    </apex:outputText>
+                                </li>
+                            </ul>
+                        </td>
+                        <td class="recipients">
+                            <apex:outputText rendered="{!c.Status__c == 'SENT'}">
+                                <strong class="value">{!c.NumberSent__c}</strong> 
+                                <span class="label">Recipients</span>
+                            </apex:outputText>
+                        </td>
+                        <td class="opens">
+                            <apex:outputText rendered="{!c.Status__c == 'SENT'}">
+                                <strong class="value">{!IF(c.NumberSent__c > 0, TEXT(ROUND(c.Number_of_Unique_Opens__c * 100 / c.NumberSent__c, 1)) + '%', 'n/a')}</strong> 
+                                <span class="label">Opens</span>
+                            </apex:outputText>
+                        </td>
+                        <td class="clicks">
+                            <apex:outputText rendered="{!c.Status__c == 'SENT'}">
+                                <strong class="value">{!IF(c.NumberSent__c > 0, TEXT(ROUND(c.Number_of_Unique_Clicks__c * 100 / c.NumberSent__c, 1)) + '%', 'n/a')}</strong> 
+                                <span class="label">Clicks</span>
+                            </apex:outputText>
+                        </td>
+                        <td class="action">
+                            <div class="custom-user-input select">
+                                <i class="icon angle-down"></i>
+                                <select data-target-campaign-id="{!c.Id}" class="user-input select js-champaign-actions" name="campaign-action">
+                                    <option value="default">Select action</option>
+                                    <apex:outputText rendered="{!c.Status__c == 'DRAFT' || c.Status__c == 'PENDING_APPROVAL' || c.Status__c == 'APPROVED' || c.Status__c == 'SENT'}">
+                                        <option value="clone">Replicate</option>
+                                    </apex:outputText>
+                                    <apex:outputText rendered="{!c.Status__c == 'DRAFT' || c.Status__c == 'REJECTED'}">
+                                        <option value="delete">Delete</option>
+                                    </apex:outputText>
+                                    <apex:outputText rendered="{!c.Status__c == 'DRAFT' || c.Status__c == 'PENDING_APPROVAL' || c.Status__c == 'APPROVED' || c.Status__c == 'SENT'}">
+                                        <option value="rename">Rename</option>
+                                    </apex:outputText>
+                                    <apex:outputText rendered="{!c.Status__c == 'PENDING_APPROVAL' || c.Status__c == 'APPROVED'}">
+                                        <option value="cancel">Cancel</option>
+                                    </apex:outputText>
+                                    <apex:outputText rendered="{!c.Status__c == 'APPROVED'}">
+                                        <option value="schedule">Change schedule</option>
+                                    </apex:outputText>
+                                    <apex:outputText rendered="{!c.Status__c != 'REJECTED' && c.Is_Step4_Valid__c}">
+                                        <option value="preview">View Email</option>
+                                    </apex:outputText>
+                                    <apex:outputText rendered="{!c.Status__c == 'SENT'}">
+                                        <option value="report">View Report</option>
+                                    </apex:outputText>
+                                </select>
+                            </div>
+                        </td>
+                    </tr>
+                    </apex:repeat>
+                </tbody>
+            </table>
+            <apex:outputText rendered="{!LOWER($CurrentPage.Name) == LOWER('IECEBC_Dashboard')}">
+                <div class="action-box text-right">
+                    <apex:outputLink value="{!URLFOR($Page.IECEBC_CampaignList)}">View all campaigns</apex:outputLink>
+                </div>
+            </apex:outputText>
+            
+            
+            <apex:form rendered="{!NOT(isLimitedComponent)}">
+                <apex:outputPanel styleClass="paginator" rendered="{!maxPage > 1}">
+                    Page
+                    <div class="custom-user-input select">
+                        <i class="icon angle-down"></i>
+                        <apex:selectList value="{!page}" styleClass="user-input select" size="1">
+                            <apex:selectOptions value="{!pageOptions}"/>
+                            <apex:actionSupport event="onchange" action="{!doNothing}" reRender="campaignList" />
+                        </apex:selectList> 
+                    </div>
+                    of {!maxPage}
+                </apex:outputPanel>
+            </apex:form>
+        </apex:outputText>
+        <apex:outputText rendered="{!IF(CampaignsCount == 0, true, false)}">
+            <h3 class="lead">You have no saved campaigns</h3>
+            <p>Increase the exposure of your products &amp; services to the population of IATA travel Agencies</p>
+        </apex:outputText>
+        <script type="text/javascript">
+        
+            var campaigns = {};
+            <apex:repeat value="{!campaigns}" var="c">
+                campaigns['{!c.Id}'] = {
+                    Id: '{!c.Id}',
+                    Name: '{!JSENCODE(c.Name)}',
+                    EBC_Design__c: '{!c.EBC_Design__c}'
+                }
+            </apex:repeat>
+        </script>
+    </apex:outputPanel>
+    
+    
+    <apex:outputText rendered="{!IF(CampaignsCount == 0 && !isLimitedComponent, true, false)}">
+        <div class="action-box">
+            <apex:outputLink value="{!URLFOR($Page.IECEBC_Campaign)}" styleClass="button">Create campaign</apex:outputLink>
+        </div>
+    </apex:outputText>
+    
+	<div class="modal-container is-hidden" id="js-modal">
+		<div class="overlay"></div>
+		<div class="modal-dialog" id="js-modal-dialog">
+            <apex:form >
+                <apex:actionFunction name="deleteCampaign" rerender="js-modal-delete-campaign-wrapper" onbeforedomupdate="jQuery('#js-modal .modal-content:not(.is-hidden)').addClass('is-hidden');" oncomplete="actionFunctionCompleted();">
+                    <apex:param name="firstParam" assignTo="{!selectedCampaignId}" value="" />
+                </apex:actionFunction>
+                <apex:actionFunction name="renameCampaign" rerender="js-modal-rename-campaign-wrapper" onbeforedomupdate="jQuery('#js-modal .modal-content:not(.is-hidden)').addClass('is-hidden');" oncomplete="actionFunctionCompleted();">
+                    <apex:param name="firstParam" assignTo="{!selectedCampaignId}" value="" />
+                </apex:actionFunction>
+                <apex:actionFunction name="cloneCampaign" rerender="js-modal-clone-campaign-wrapper" onbeforedomupdate="jQuery('#js-modal .modal-content:not(.is-hidden)').addClass('is-hidden');" oncomplete="actionFunctionCompleted();">
+                    <apex:param name="firstParam" assignTo="{!selectedCampaignId}" value="" />
+                </apex:actionFunction>
+                <apex:actionFunction name="cancelCampaign" rerender="js-modal-cancel-campaign-wrapper" onbeforedomupdate="jQuery('#js-modal .modal-content:not(.is-hidden)').addClass('is-hidden');" oncomplete="actionFunctionCompleted();">
+                    <apex:param name="firstParam" assignTo="{!selectedCampaignId}" value="" />
+                </apex:actionFunction>
+                <apex:actionFunction name="scheduleCampaign" rerender="js-modal-schedule-campaign-wrapper" onbeforedomupdate="jQuery('#js-modal .modal-content:not(.is-hidden)').addClass('is-hidden');" oncomplete="actionFunctionCompleted();">
+                    <apex:param name="firstParam" assignTo="{!selectedCampaignId}" value="" />
+                </apex:actionFunction>
+            </apex:form>
+            
+            <apex:form id="js-modal-delete-campaign-wrapper">
+                <section id="js-modal-delete-campaign" class="modal-content">
+                    <header class="modal-header">
+                        <h2 class="modal-title">Are you sure?</h2>
+                        <a href="#" class="icon-close js-close-modal"><i class="fa fa-times"></i></a>
+                    </header>
+                    <div class="modal-body">
+                        <p>You are about to delete a campaign called <strong class="placeholder-name">{!selectedCampaign.Name}</strong>.</p>
+                    </div>
+                    <footer class="modal-footer">
+                        <ul class="list actions">
+                            <li>
+                                <button class="text-link js-close-modal">Discard</button>
+                            </li>
+                            <li>
+                                <apex:commandLink onclick="jQuery('body').css('cursor', 'wait');" action="{!deleteCampaign}" styleClass="button" value="I confirm" reRender="campaignListContainer" oncomplete="closeModal();" />
+                            </li>
+                        </ul>
+                    </footer>
+                </section>
+            </apex:form>
+            <apex:form id="js-modal-rename-campaign-wrapper">
+                <section id="js-modal-rename-campaign" class="modal-content">
+                    <header class="modal-header">
+                        <h2 class="modal-title">Rename Campaign</h2>
+                        <a href="#" class="icon-close js-close-modal"><i class="fa fa-times"></i></a>
+                    </header>
+                    <div class="modal-body">
+                        <div class="field-group text">
+                            <label>
+                                <span class="input-label">Rename your compaign</span> <apex:inputField styleClass="user-input text" value="{!selectedCampaign.Name}" />
+                            </label>
+                            <p class="input-description">Internal use only. This name will not appear on your compaign.</p>
+                        </div>
+                    </div>
+                    <footer class="modal-footer">
+                        <ul class="list actions">
+                            <li>
+                                <button class="text-link js-close-modal">Discard</button>
+                            </li>
+                            <li>
+                                <apex:commandLink onclick="jQuery('body').css('cursor', 'wait');" action="{!save}" styleClass="button" value="I confirm" reRender="campaignListContainer" oncomplete="closeModal();" />
+                            </li>
+                        </ul>
+                    </footer>
+                </section>
+            </apex:form>
+            <apex:form id="js-modal-clone-campaign-wrapper">
+                <section id="js-modal-clone-campaign" class="modal-content">
+                    <header class="modal-header">
+                        <h2 class="modal-title">Replicate Campaign</h2>
+                        <a href="#" class="icon-close js-close-modal"><i class="fa fa-times"></i></a>
+                    </header>
+                    <div class="modal-body">
+                        <div class="field-group text">
+                            <label>
+                                <span class="input-label">Campaign Name</span> <apex:inputField styleClass="user-input text" value="{!selectedCampaign.Name}" />
+                            </label>
+                        </div>
+                    </div>
+                    <footer class="modal-footer">
+                        <ul class="list actions">
+                            <li>
+                                <button class="text-link js-close-modal">Discard</button>
+                            </li>
+                            <li>
+                                <apex:commandLink onclick="jQuery('body').css('cursor', 'wait');" action="{!duplicate}" styleClass="button" value="I confirm" reRender="campaignListContainer" oncomplete="closeModal();" />
+                            </li>
+                        </ul>
+                    </footer>
+                </section>
+            </apex:form>
+            <apex:form id="js-modal-cancel-campaign-wrapper">
+                <section id="js-modal-cancel-campaign" class="modal-content">
+                    <header class="modal-header">
+                        <h2 class="modal-title">Are you sure you want to cancel the campaign?</h2>
+                        <a href="#" class="icon-close js-close-modal"><i
+                            class="fa fa-times"></i></a>
+                    </header>
+                    <div class="modal-body">
+                        <p>
+                            You are about to cancel the campaign called <strong>{!selectedCampaign.Name}</strong>.
+                        </p>
+                    </div>
+                    <footer class="modal-footer">
+                        <ul class="list actions">
+                            <li>
+                                <button class="text-link js-close-modal">Discard</button>
+                            </li>
+                            <li>
+                                <apex:commandLink onclick="jQuery('body').css('cursor', 'wait');" action="{!cancel}" styleClass="button" value="I confirm" reRender="campaignListContainer" oncomplete="closeModal();" />
+                            </li>
+                        </ul>
+                    </footer>
+                </section>
+            </apex:form> 
+            <apex:outputPanel id="js-modal-schedule-campaign-wrapper"> 
+                <section id="js-modal-schedule-campaign" class="modal-content wide">
+                    <header class="modal-header">
+                        <h2 class="modal-title">Change Schedule</h2>
+                        <a href="#" class="icon-close js-close-modal"><i class="fa fa-times"></i></a>
+                    </header>
+                    <div class="modal-body">
+                        
+                        <c:IECEBC_CampaignSchedule c="{!selectedCampaign}">
+                            <div class="footer-actions text-right">
+                                <ul class="list actions">
+                                    <li>
+                                        <button class="text-link js-close-modal">Discard</button>
+                                    </li>
+                                    <li>
+                                        <apex:commandLink onclick="jQuery('body').css('cursor', 'wait');" action="{!save}" styleClass="button" value="I confirm" reRender="campaignListContainer" oncomplete="closeModal();" />
+                                    </li>
+                                </ul>
+                            </div>
+                        </c:IECEBC_CampaignSchedule>
+                    </div>
+                </section>
+            </apex:outputPanel>
+		</div>
+	</div>
+    
+    <script type="text/javascript">
+    	jQuery.noConflict();
+    
+    	function actionFunctionCompleted(){
+            jQuery('#js-modal').removeClass('is-hidden');
+            jQuery('body').css('cursor', 'auto');
+        }
+    
+    	function closeModal() {
+            $ = jQuery;
+            $('#js-modal').addClass('is-hidden');
+            $('body').attr('data-is-modal-open', 'false');
+            $('.js-champaign-actions').val('default');
+            jQuery('body').css('cursor', 'auto');
+        }
+    
+    
+        jQuery( document ).ready(function( $ ) {
+            
+            
+            var openModal2 = function(tpl, params) {
+                tpl.trigger('load', params);
+                
+                $('.modal-content').addClass('is-hidden');
+                tpl.removeClass('is-hidden');
+                
+                $('#js-modal').removeClass('is-hidden');
+                $('body').attr('data-is-modal-open', 'true');
+            };
+            
+			$(document).on('change', 'select[name="campaign-action"]', function(e){
+                if ($(this).val() != 'preview') jQuery('body').css('cursor', 'wait');
+                var campaign = campaigns[$(this).attr('data-target-campaign-id')];
+                switch ($(this).val()) {
+                    case 'delete':
+                        deleteCampaign(campaign.Id);
+                        break;
+                    case 'rename':
+                        renameCampaign(campaign.Id);
+                        break;
+                    case 'clone':
+                        cloneCampaign(campaign.Id);
+                        break;
+                    case 'cancel':
+                        cancelCampaign(campaign.Id);
+                        break;
+                    case 'schedule':
+                        scheduleCampaign(campaign.Id);
+                        break;
+                    case 'preview':
+                        console.log(campaign);
+                        window.open('/iec/IECEBC_CampaignPreview?id=' + campaign.EBC_Design__c);
+                        break;
+                    case 'report':
+                        location.href = '/iec/IECEBC_ManageReportsDetails?id=' + campaign.Id; 
+                        break;
+                	default:
+                        alert('The action ' + $(this).val() + ' has not been defined yet.');
+                        e.preventDefault();
+                }
+            });
+        });
+    </script>
+</apex:component>
