@@ -247,7 +247,7 @@ global class AMS_OSCAR_Webservice {
             List<AMS_OSCAR__c> oscar = [select Name, Account__c, Account__r.Name, Account__r.IATA_ISO_Country__r.Region__c, Account__r.IATA_ISO_Country__r.Name from AMS_OSCAR__c where Id =: oscarId];
             if(oscar!=null && oscar.size()>0){
 
-                Case oscarCommCase = [SELECT Id, AccountId, Account.Type, ContactId, Region__c, Reason1__c, BSPCountry__c, Account.Accumulated_Irregularities__c from Case where OSCAR__c = :oscar[0].Id limit 1];
+                Case oscarCommCase = [SELECT Id, AccountId, Account.Type, ContactId, Region__c, Reason1__c, BSPCountry__c, Account.Accumulated_Irregularities__c from Case where OSCAR__c = :oscar[0].Id AND ( ParentId = null or Parent.RecordType.Name != 'OSCAR Communication' ) limit 1];
 
                 if(oscarCommCase == null){
                     result = 'Could not find a the Oscar Communication case related to this OSCAR.';
@@ -327,7 +327,7 @@ global class AMS_OSCAR_Webservice {
                 }
                 */
 
-                Case oscarCommCase = [select Id from Case where OSCAR__c =: oscar[0].Id limit 1];
+                Case oscarCommCase = [select Id from Case where OSCAR__c = :oscar[0].Id AND ( ParentId = null or Parent.RecordType.Name != 'OSCAR Communication' ) limit 1];
 
                 if(oscarCommCase == null){
                     result = 'Could not find a the Oscar Communication case related to this OSCAR.';
