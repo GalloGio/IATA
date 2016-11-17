@@ -1960,6 +1960,10 @@ case(CX_Quality_of_CSR__c,&quot;Very Satisfied&quot;,1,&quot;Somewhat Satisfied&
                 <default>false</default>
             </values>
             <values>
+                <fullName>Frequently Asked Questions</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Phone</fullName>
                 <default>false</default>
             </values>
@@ -2372,6 +2376,10 @@ case(CX_Quality_of_CSR__c,&quot;Very Satisfied&quot;,1,&quot;Somewhat Satisfied&
             <picklist>Chat_Channel__c</picklist>
             <values>
                 <fullName>Chat</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Frequently Asked Questions</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -3305,6 +3313,10 @@ case(CX_Quality_of_CSR__c,&quot;Very Satisfied&quot;,1,&quot;Somewhat Satisfied&
             <picklist>Chat_Channel__c</picklist>
             <values>
                 <fullName>Chat</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Frequently Asked Questions</fullName>
                 <default>false</default>
             </values>
             <values>
