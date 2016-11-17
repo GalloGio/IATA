@@ -1212,23 +1212,44 @@ Groups the Owners by account (in the accont the owners are in the object AMS_Acc
  Object to store the Shareholding information of an Owner (Owner Name, Percentage of Ownership)
  */
    
-    public class OwnerFieldsEntity {
+    public class OwnerFieldsEntity implements Comparable {
         
-        private String name;
-        private String financialInterest;
-      
+        public String name;
+        public String financialInterest;
+        
+        public OwnerFieldsEntity(){}
+
         public OwnerFieldsEntity( String name, String financialInterest){
             this.name = name;
             this.financialInterest = financialInterest;
         }
+
         public String convertToCSV (String csvFormat)
         {
             return name + csvFormat + financialInterest;
 
-
         }
 
-    }
+        public void decodeFromCSV (String row)
+        {
+            List<String> onwerValues = row.split(',');
 
+            this.name = onwerValues.get(0);
+            this.financialInterest = onwerValues.get(1);
+        
+        }
+        public Integer compareTo(Object compareTo) {
+       
+            OwnerFieldsEntity compareToOE = (OwnerFieldsEntity)compareTo;
+             
+            Double order = double.valueOf(financialInterest);
+            Double orderCompareTo =  double.valueOf(compareToOE.financialInterest);
+
+            if (order == orderCompareTo) return 0;
+            if (order > orderCompareTo) return -1;
+            return 1;        
+        }
+    
+    }
     
 }

@@ -22,6 +22,10 @@
     type="Integer" required="true" />
   <apex:attribute name="width" description="Width of listboxes."
     type="String" required="true" />
+  <apex:attribute name="btn_up_down" description="up/down buttons."
+    type="String" required="false" default="true" />
+  <apex:attribute name="readonly" description="Readonly, only show selected values"
+    type="String" required="false" default="false" />    
 
   <apex:attribute name="leftOptions"
     description="Options list for left listbox." type="SelectOption[]"
@@ -35,7 +39,7 @@
       <tbody>
         <tr>
           <td class="selectCell">
-            <apex:outputPanel layout="block" styleClass="selectTitle">
+            <apex:outputPanel layout="block" styleClass="selectTitle" rendered="{!if(readonly=='true',false,true)}">
               <!-- 
                 Visualforce prepends the correct prefix to the outputLabel's 
                 'for' attribute
@@ -45,15 +49,15 @@
             </apex:outputPanel>
             <select id="{!$Component.multiselectPanel}:leftList" 
               class="multilist" multiple="multiple" size="{!size}" 
-              style="width: {!width};">
+              style="width: {!width};display:{!IF(readonly=='true', 'none', '')}">
               <apex:repeat value="{!leftOptions}" var="option">
                 <option value="{!option.value}">{!option.label}</option>
               </apex:repeat>
             </select>
           </td>
           <td class="buttonCell">
-            <apex:outputPanel layout="block" styleClass="text">Add</apex:outputPanel>
-            <apex:outputPanel layout="block" styleClass="text">
+            <apex:outputPanel layout="block" styleClass="text" rendered="{!if(readonly=='true',false,true)}">Add</apex:outputPanel>
+            <apex:outputPanel layout="block" styleClass="text" rendered="{!if(readonly=='true',false,true)}">
               <apex:outputLink value="javascript:moveSelectedOptions('{!$Component.multiselectPanel}:leftList', 
                   '{!$Component.multiselectPanel}:rightList', '{!$Component.leftHidden}', 
                   '{!$Component.rightHidden}');"
@@ -62,7 +66,7 @@
                   title="Add" />
               </apex:outputLink>
             </apex:outputPanel>
-            <apex:outputPanel layout="block" styleClass="text">
+            <apex:outputPanel layout="block" styleClass="text" rendered="{!if(readonly=='true',false,true)}">
               <apex:outputLink value="javascript:moveSelectedOptions('{!$Component.multiselectPanel}:rightList', 
                   '{!$Component.multiselectPanel}:leftList', '{!$Component.rightHidden}', 
                   '{!$Component.leftHidden}');"
@@ -71,10 +75,10 @@
                   styleClass="leftArrowIcon" title="Remove" />
               </apex:outputLink>
             </apex:outputPanel>
-            <apex:outputPanel layout="block" styleClass="duelingText">Remove</apex:outputPanel>
+            <apex:outputPanel layout="block" styleClass="duelingText" rendered="{!if(readonly=='true',false,true)}">Remove</apex:outputPanel>
           </td>
           <td class="selectCell">
-            <apex:outputPanel layout="block" styleClass="selectTitle">
+            <apex:outputPanel layout="block" styleClass="selectTitle" >
               <apex:outputLabel value="{!rightLabel}" for="multiselectPanel:rightList" />
             </apex:outputPanel>
             <select id="{!$Component.multiselectPanel}:rightList" 
@@ -86,8 +90,8 @@
             </select>
           </td>
           <td class="buttonCell"><apex:outputPanel layout="block"
-              styleClass="text">Up</apex:outputPanel>
-            <apex:outputPanel layout="block" styleClass="text">
+              styleClass="text" rendered="{!IF(btn_up_down=='false',false,IF(readonly=='false',true,false))}">Up</apex:outputPanel>
+            <apex:outputPanel layout="block" styleClass="text" rendered="{!IF(btn_up_down=='false',false,IF(readonly=='false',true,false))}">
               <apex:outputLink value="javascript:slideSelectedOptionsUp('{!$Component.multiselectPanel}:rightList', 
                   '{!$Component.rightHidden}');"
                 id="upBtn">
@@ -95,7 +99,7 @@
                   title="Up" />
               </apex:outputLink>
             </apex:outputPanel>
-            <apex:outputPanel layout="block" styleClass="text">
+            <apex:outputPanel layout="block" styleClass="text" rendered="{!IF(btn_up_down=='false',false,IF(readonly=='false',true,false))}">
               <apex:outputLink value="javascript:slideSelectedOptionsDown('{!$Component.multiselectPanel}:rightList', 
                   '{!$Component.rightHidden}');"
                 id="downBtn">
@@ -103,7 +107,7 @@
                   title="Down" />
               </apex:outputLink>
             </apex:outputPanel>
-            <apex:outputPanel layout="block" styleClass="text">Down</apex:outputPanel>
+            <apex:outputPanel layout="block" styleClass="text" rendered="{!IF(btn_up_down=='false',false,IF(readonly=='false',true,false))}">Down</apex:outputPanel>
           </td>
         </tr>
       </tbody>

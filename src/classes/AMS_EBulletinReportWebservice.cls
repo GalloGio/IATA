@@ -50,6 +50,7 @@ global without sharing class AMS_EBulletinReportWebservice {
 	 	eBulletinProfile.Last_Run__c = system.now();
 
 		Attachment attachment = new Attachment();
+		//attachment.ContentType= 'text/csv;charset=ISO';
 		attachment.Body = Blob.valueOf( csv );
 		attachment.Name = String.valueOf(eBulletinProfile.name + '_testChangeCodes_'+date.today()+'.csv');
 
@@ -77,6 +78,7 @@ global without sharing class AMS_EBulletinReportWebservice {
 	private static String getHeader(){
 
 		System.debug('Get CSV Header...');
+		
 		AMS_EBulletinReportHelper.getEBulletinFields(filters,objectBaseQuery,eBulletinCSVFormat);
 
 		return AMS_EBulletinReportHelper.headerCSV;
@@ -87,6 +89,7 @@ global without sharing class AMS_EBulletinReportWebservice {
 	*/	
 
 	private static String getRecords(){
+		
 		System.debug('Get CSV Records...');
 
 		AMS_EBulletinReportHelper EbulletinHelper = new AMS_EBulletinReportHelper();
@@ -132,6 +135,7 @@ global without sharing class AMS_EBulletinReportWebservice {
 			if(eBulletinProfile.Program_Cargo__c)			programsList.add('C');		
 			if(eBulletinProfile.Program_CASS_Associates__c)	programsList.addAll(new List <String>{'R','I','Q'});	
 			if(eBulletinProfile.Program_Passage__c)			programsList.add('P');
+			if(eBulletinProfile.Program_Domestic__c)		programsList.add('D');
 			
 			
 			this.programsList = programsList;
