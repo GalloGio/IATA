@@ -8955,6 +8955,31 @@ Approval: Key Contact can see pending request approve it one by one</inlineHelpT
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Link_agent_code__c</fullName>
+        <externalId>false</externalId>
+        <formula>Link_agent_name__r.IATACode__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Link agent code</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Link_agent_name__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>field used for domestic agencies</description>
+        <externalId>false</externalId>
+        <label>Link agent name</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Accounts (Link agent name)</relationshipLabel>
+        <relationshipName>Accounts1</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>Location_Category__c</fullName>
         <description>AL=STP AT APPROVED LOCATION
 AR=TRUE (USA only)
@@ -77010,7 +77035,7 @@ PRIORVALUE( Total_Value_Won_Opportunities__c ) = Total_Value_Won_Opportunities__
         <fullName>General_Public_Admin_only</fullName>
         <active>true</active>
         <description>Only administrators can edit General Public accounts</description>
-        <errorConditionFormula>IF((CONTAINS(Name, &quot;General Public&quot;) || CONTAINS(Name, &quot;general public&quot;) || CONTAINS(Name, &quot;GENERAL PUBLIC&quot;) || CONTAINS(Name, &quot;General public&quot;) || TEXT(Sector__c) = &quot;General Public&quot;) || ISPICKVAL(PRIORVALUE(Sector__c),&quot;General Public&quot;) &amp;&amp; NOT(CONTAINS($User.Profile_Name__c, &quot;System Administrator&quot;) || CONTAINS($User.Profile_Name__c, &quot;System administrator&quot;)), TRUE, FALSE)</errorConditionFormula>
+        <errorConditionFormula>IF((CONTAINS(Name, &quot;General Public&quot;) || CONTAINS(Name, &quot;general public&quot;) || CONTAINS(Name, &quot;GENERAL PUBLIC&quot;) || CONTAINS(Name, &quot;General public&quot;) || TEXT(Sector__c) = &quot;General Public&quot; || ISPICKVAL(PRIORVALUE(Sector__c),&quot;General Public&quot;)) &amp;&amp; NOT(CONTAINS($User.Profile_Name__c, &quot;System Administrator&quot;) || CONTAINS($User.Profile_Name__c, &quot;System administrator&quot;)), TRUE, FALSE)</errorConditionFormula>
         <errorMessage>Please contact an administrator if you wish to create or modify a general public account</errorMessage>
     </validationRules>
     <validationRules>
@@ -77311,6 +77336,70 @@ myuser={!User.Id}</url>
 &amp;00N20000000mApw=Branch
 &amp;00N20000000pA4w={!Account.Membership_status__c}
 &amp;acc7={!Account.Industry}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Create_GSA_agency</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Create GSA agency</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/22.0/connection.js&quot;)} 
+{!REQUIRESCRIPT(&quot;/soap/ajax/22.0/apex.js&quot; )} 
+
+var connection = sforce.connection; 
+
+var recType = sforce.connection.query(&quot;SELECT Id, Name FROM RecordType WHERE developername = &apos;Standard_Account&apos; LIMIT 1&quot;); 
+
+var newgsaagency= new sforce.SObject(&quot;Account&quot;); 
+
+newgsaagency.RecordTypeId = recType.Id; 
+newgsaagency.Name = &apos;{!Account.Name}&apos;;
+newgsaagency.Sector__c = &quot;Travel Agent&quot;;
+newgsaagency.Category__c = &quot;GSA General Sales Agent&quot;;
+newgsaagency.Location_Class__c = &quot;G&quot;;
+newgsaagency.Location_Type__c = &quot;HO&quot;;
+newgsaagency.Reason_for_creation__c = &quot;New Agent&quot;;
+
+result = sforce.connection.create([newgsaagency]); 
+var accId = result[0].id;
+
+var airlineId = &apos;{!Account.Id}&apos;; 
+
+javascript:srcUp(&apos;/apex/AMS_AccountOSCARWizardPage?accountId=&apos;+accId+&apos;&amp;process=x&amp;Type_of_OSCAR_process_man=NEW.GSA.1.0&amp;airlineId=&apos;+airlineId);</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Create_MSO_agency</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Create MSO agency</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/22.0/connection.js&quot;)}
+{!REQUIRESCRIPT(&quot;/soap/ajax/22.0/apex.js&quot; )}
+
+var connection = sforce.connection;
+
+var recType = sforce.connection.query(&quot;SELECT Id, Name FROM RecordType WHERE developername = &apos;Standard_Account&apos; LIMIT 1&quot;);
+
+var newmsoagency= new sforce.SObject(&quot;Account&quot;);
+
+newmsoagency.RecordTypeId = recType.Id;
+newmsoagency.Name = &apos;{!Account.Name}&apos;;
+newmsoagency.Sector__c = &quot;Travel Agent&quot;;
+newmsoagency.Category__c = &quot;MSO Member Sales Office&quot;;
+newmsoagency.Location_Class__c = &quot;M&quot;;
+newmsoagency.Location_Type__c = &quot;HO&quot;;
+newmsoagency.Reason_for_creation__c = &quot;New Agent&quot;;
+
+result = sforce.connection.create([newmsoagency]);
+var accId = result[0].id;
+
+var airlineId = &apos;{!Account.Id}&apos;;
+
+javascript:srcUp(&apos;/apex/AMS_AccountOSCARWizardPage?accountId=&apos;+accId+&apos;&amp;process=x&amp;Type_of_OSCAR_process_man=NEW.MSO.1.0&amp;airlineId=&apos;+airlineId);</url>
     </webLinks>
     <webLinks>
         <fullName>DSE__DS_AccountHierarchyButton</fullName>
