@@ -3040,6 +3040,15 @@
         <trackHistory>true</trackHistory>
     </fields>
     <fields>
+        <fullName>Annual_Renewal_Certificates__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Annual Renewal of Certificates</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Anti_Money_Laundering_Compliance_Date__c</fullName>
         <externalId>false</externalId>
         <label>Anti-Money Laundering Compliance Date</label>
@@ -5035,6 +5044,15 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Certificate_Generated_Current_Year__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Certificate Generated for Current Year</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>Check_Digit__c</fullName>

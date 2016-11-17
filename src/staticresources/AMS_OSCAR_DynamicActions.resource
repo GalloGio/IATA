@@ -45,7 +45,7 @@ var dyn_functions = {
                             //var records = queryResult.getArray('records');
 
                             
-                        	if(result[0] == '1'){
+                            if(result[0] == '1'){
                                 records[0].STEP10__c = 'Passed';
                                 sResult = '- Generate IATACode - Success!\n\r';
 
@@ -59,14 +59,14 @@ var dyn_functions = {
                                 //}else{
                                 //    records[0].Flag_Data_to_Account__c = true;
                                 //}
-                        	} else{
-                        		records[0].STEP10__c = 'Failed';
+                            } else{
+                                records[0].STEP10__c = 'Failed';
                                 sResult = '- Generate IATACode - Error! '+ result[1] + ' (code: '+ result[0] +')\n\r';
-                        	}
-                        	//sforce.connection.update(records);
+                            }
+                            //sforce.connection.update(records);
                             bUpdate = true;
                         }else{
-    					
+                        
                             sResult = '- IATA code already generated \n\r';
                         }
 
@@ -421,6 +421,17 @@ var dyn_functions = {
                     }
                     alert("Result: \n\n" + sMessageError + "\n\n" + sMessageSuccess);
                 }
-            }
+            },
+            
+            generateCertificates:function (args) {
+
+                var argList = args.split(", ");
+
+                var result;
+                result = sforce.apex.execute("AMS_OSCAR_Webservice", "generateCertificates", {oscarId: argList[0], agencyId: argList[1]});
+                
+                alert(result);
+           
+           }
 
 };
