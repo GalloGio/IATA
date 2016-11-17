@@ -1,8 +1,8 @@
 public class vfIECEBC_TemplateList extends vfIECEBC_Abstract_List {
     public static Integer ITEMS_PER_PAGE = 2;
-    private boolean firsttimepageload=true;
-    public vfIECEBC_TemplateList() {
-        sortBy='CreatedDate Desc';
+    private boolean firsttimepageload=true; 
+    public vfIECEBC_TemplateList() { 
+        sortBy='CreatedDate Desc'; 
     }
       
     public override List<SelectOption> getSortByOptions() {

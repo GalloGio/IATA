@@ -1362,6 +1362,8 @@
 <classAccesses><apexClass>vfIECEBC_TemplateList</apexClass><enabled>false</enabled></classAccesses>
 <classAccesses><apexClass>vfIECEBC_Test</apexClass><enabled>false</enabled></classAccesses>
 <classAccesses><apexClass>vfIECEBC_Test1</apexClass><enabled>false</enabled></classAccesses>
+<classAccesses><apexClass>vfIECEBC_TestPayment</apexClass><enabled>false</enabled></classAccesses>
+<classAccesses><apexClass>vfIECEBC_TestPaymentSuite</apexClass><enabled>false</enabled></classAccesses>
 <classAccesses><apexClass>vfIECEBC_TestSuite</apexClass><enabled>false</enabled></classAccesses>
 <classAccesses><apexClass>vfIECEBC_TestSuite1</apexClass><enabled>false</enabled></classAccesses>
 <classAccesses><apexClass>vfIECEncryptUtility</apexClass><enabled>true</enabled></classAccesses>
