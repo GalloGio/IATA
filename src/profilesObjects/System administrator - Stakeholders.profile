@@ -529,8 +529,13 @@
 <fieldPermissions><editable>false</editable><field>AMS_Fields_Translation__c.User__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AMS_Inspection__c.Account__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AMS_Inspection__c.Accreditation_Endorsement_Status_code__c</field><readable>true</readable></fieldPermissions>
+<fieldPermissions><editable>true</editable><field>AMS_Inspection__c.Accreditation_Endorsement_organisation__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>AMS_Inspection__c.Agency__c</field><readable>true</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>AMS_Inspection__c.Airline_Code__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>AMS_Inspection__c.Airline__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>AMS_Inspection__c.BSPLink_or_CASSLink_activation__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AMS_Inspection__c.Date_Organisation_Status_attained__c</field><readable>true</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>AMS_Inspection__c.IATA_Non_IATA_Carrier__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AMS_Inspection__c.Last_synchronization__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AMS_Inspection__c.Legacy_External_ID__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AMS_Inspection__c.Legacy_System__c</field><readable>true</readable></fieldPermissions>
@@ -560,6 +565,7 @@
 <fieldPermissions><editable>false</editable><field>AMS_OSCAR__c.Approval_disapproval_date__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AMS_OSCAR__c.Approval_letter_sent__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AMS_OSCAR__c.Assessment_Performed_Date__c</field><readable>true</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>AMS_OSCAR__c.BSPLink_participation__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AMS_OSCAR__c.Bank_Guarantee_Currency__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AMS_OSCAR__c.Bank_Guarantee_amount__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AMS_OSCAR__c.Bank_Guarantee_deadline__c</field><readable>true</readable></fieldPermissions>
@@ -886,6 +892,7 @@
 <fieldPermissions><editable>false</editable><field>AMS_Pax_Accreditation_Form__c.Is_your_firm_insured_to_cover__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AMS_Pax_Accreditation_Form__c.Issued_share_capital_After_Change__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AMS_Pax_Accreditation_Form__c.Issued_share_capital__c</field><readable>true</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>AMS_Pax_Accreditation_Form__c.Link_agent_name__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AMS_Pax_Accreditation_Form__c.List_carriers__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AMS_Pax_Accreditation_Form__c.List_the_airport_s_to_be_authorized__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AMS_Pax_Accreditation_Form__c.Live_Animals_Air_Freight_Charges__c</field><readable>true</readable></fieldPermissions>
@@ -1039,6 +1046,10 @@
 <fieldPermissions><editable>false</editable><field>AMS_Settlement_System__c.Last_synchronization__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AMS_Settlement_System__c.Legacy_External_ID__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AMS_Settlement_System__c.Legacy_System__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>AMS_Territory__c.Comments__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>AMS_Territory__c.ISO_Country__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>AMS_Territory__c.ISO_State__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>AMS_Territory__c.Legacy_Id__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>AP_Country_Requierment__c.Bank_Account_Change_Comment__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>AP_Country_Requierment__c.Comments__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>AP_Country_Requierment__c.Currency_of_the_Settlement__c</field><readable>true</readable></fieldPermissions>
@@ -1448,6 +1459,8 @@
 <fieldPermissions><editable>true</editable><field>Account.Legal_name__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Account.Level_of_risk__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Account.License_Number__c</field><readable>true</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>Account.Link_agent_code__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>Account.Link_agent_name__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Account.Location_Category__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Account.Location_Class__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Account.Location_Type_Ordered__c</field><readable>false</readable></fieldPermissions>
@@ -6887,6 +6900,7 @@
 <objectPermissions><allowCreate>false</allowCreate><allowDelete>false</allowDelete><allowEdit>false</allowEdit><allowRead>true</allowRead><modifyAllRecords>false</modifyAllRecords><object>AMS_Segment_Country__c</object><viewAllRecords>true</viewAllRecords></objectPermissions>
 <objectPermissions><allowCreate>false</allowCreate><allowDelete>false</allowDelete><allowEdit>true</allowEdit><allowRead>true</allowRead><modifyAllRecords>false</modifyAllRecords><object>AMS_Segment__c</object><viewAllRecords>true</viewAllRecords></objectPermissions>
 <objectPermissions><allowCreate>false</allowCreate><allowDelete>false</allowDelete><allowEdit>false</allowEdit><allowRead>true</allowRead><modifyAllRecords>false</modifyAllRecords><object>AMS_Settlement_System__c</object><viewAllRecords>true</viewAllRecords></objectPermissions>
+<objectPermissions><allowCreate>false</allowCreate><allowDelete>false</allowDelete><allowEdit>false</allowEdit><allowRead>true</allowRead><modifyAllRecords>false</modifyAllRecords><object>AMS_Territory__c</object><viewAllRecords>true</viewAllRecords></objectPermissions>
 <objectPermissions><allowCreate>false</allowCreate><allowDelete>false</allowDelete><allowEdit>false</allowEdit><allowRead>true</allowRead><modifyAllRecords>false</modifyAllRecords><object>AMS_Trigger_Execution_Manager__c</object><viewAllRecords>true</viewAllRecords></objectPermissions>
 <objectPermissions><allowCreate>false</allowCreate><allowDelete>false</allowDelete><allowEdit>false</allowEdit><allowRead>true</allowRead><modifyAllRecords>false</modifyAllRecords><object>AMS_WAD_Settings__c</object><viewAllRecords>true</viewAllRecords></objectPermissions>
 <objectPermissions><allowCreate>false</allowCreate><allowDelete>false</allowDelete><allowEdit>false</allowEdit><allowRead>true</allowRead><modifyAllRecords>false</modifyAllRecords><object>AMS_XML_Fields__c</object><viewAllRecords>true</viewAllRecords></objectPermissions>
