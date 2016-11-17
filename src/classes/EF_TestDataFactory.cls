@@ -7,13 +7,13 @@ public with sharing class EF_TestDataFactory
 
         List <EF_Related_Records__c> locationList = new List <EF_Related_Records__c> ();
         EF_Related_Records__c locationMain = new EF_Related_Records__c(name='Main',
-            recordTypeId = Schema.SObjectType.EF_Related_Records__c.getRecordTypeInfosByName().get('Location').getRecordTypeId()
+            recordTypeId = AMS_Utils.getId('EF_Related_Records__c', 'Location')
             );
         locationList.add(locationMain);
         for(Integer i=1; i<5; i++)
         {
             EF_Related_Records__c location = new EF_Related_Records__c (name=String.valueOf(i),
-                recordTypeId = Schema.SObjectType.EF_Related_Records__c.getRecordTypeInfosByName().get('Location').getRecordTypeId()
+                recordTypeId = AMS_Utils.getId('EF_Related_Records__c', 'Location')
                 );
             locationList.add(location);
         }
@@ -31,7 +31,7 @@ public with sharing class EF_TestDataFactory
         //create account
         Account client = new Account(
             Name='Test Account client',
-            RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Others').getRecordTypeId(),
+            RecordTypeId = AMS_Utils.getId('Account', 'Others'),
             Sector__c = 'IATA Supplier',
             Category__c = 'ANSP',
             EF_type__c = 'E&F Client',
@@ -50,7 +50,7 @@ public with sharing class EF_TestDataFactory
         //create account
         Account customer = new Account(
             Name='Test Account customer',
-            RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Standard Account').getRecordTypeId(),
+            RecordTypeId = AMS_Utils.getId('Account', 'Standard_Account'),
             Sector__c = 'IATA Supplier',
             Category__c = 'ANSP',
             EF_type__c = 'E&F Operator',
@@ -77,7 +77,7 @@ public with sharing class EF_TestDataFactory
             EF_Billing_Currency__c = 'USD;QAR',
             EF_Payment_Currency__c = 'USD;QAR',
             EF_Data_Currency__c = 'USD;QAR',
-            RecordTypeId = Schema.SObjectType.Contract.getRecordTypeInfosByName().get('E&F Client Agreement').getRecordTypeId(),
+            RecordTypeId = AMS_Utils.getId('Contract', 'EF_Client_Agreement'),
             StartDate= Date.today(),
             Type__c='Revenue',
             EF_Status__c='Active',
@@ -134,13 +134,13 @@ public with sharing class EF_TestDataFactory
 
         List <EF_Related_Records__c> locationList = new List <EF_Related_Records__c> ();
         EF_Related_Records__c locationMain = new EF_Related_Records__c(name='Main',
-            recordTypeId = Schema.SObjectType.EF_Related_Records__c.getRecordTypeInfosByName().get('Location').getRecordTypeId()
+            recordTypeId = AMS_Utils.getId('EF_Related_Records__c', 'Location')
             );
         locationList.add(locationMain);
         for(Integer i=1; i<5; i++)
         {
             EF_Related_Records__c location = new EF_Related_Records__c (name=String.valueOf(i),
-                recordTypeId = Schema.SObjectType.EF_Related_Records__c.getRecordTypeInfosByName().get('Location').getRecordTypeId()
+                recordTypeId = AMS_Utils.getId('EF_Related_Records__c', 'Location')
                 );
             locationList.add(location);
         }
@@ -158,7 +158,7 @@ public with sharing class EF_TestDataFactory
         //create account
         Account client2 = new Account(
             Name='Test Account client2',
-            RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Standard Account').getRecordTypeId(),
+            RecordTypeId = AMS_Utils.getId('Account', 'Standard_Account'),
             Sector__c = 'IATA Supplier',
             Category__c = 'ANSP',
             EF_type__c = 'E&F Client',
@@ -177,7 +177,7 @@ public with sharing class EF_TestDataFactory
         //create account
         Account customer2 = new Account(
             Name='Test Account customer2',
-            RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Standard Account').getRecordTypeId(),
+            RecordTypeId = AMS_Utils.getId('Account', 'Standard_Account'),
             Sector__c = 'IATA Supplier',
             Category__c = 'ANSP',
             EF_type__c = 'E&F Operator',
@@ -203,7 +203,7 @@ public with sharing class EF_TestDataFactory
             EF_Allow_Billing_Agreements__c = 'Allowed',
             EF_Payment_Currency__c = 'USD;QAR',
             EF_Data_Currency__c = 'USD;QAR',
-            RecordTypeId = Schema.SObjectType.Contract.getRecordTypeInfosByName().get('E&F Client Agreement').getRecordTypeId(),
+            RecordTypeId = AMS_Utils.getId('Contract', 'EF_Client_Agreement'),
             StartDate= Date.today(),
             Type__c='Revenue',
             EF_Status__c='Active'
@@ -290,13 +290,13 @@ public with sharing class EF_TestDataFactory
     {
         List <EF_Related_Records__c> locationList = new List <EF_Related_Records__c> ();
         EF_Related_Records__c locationMain = new EF_Related_Records__c(name='Main',
-            recordTypeId = Schema.SObjectType.EF_Related_Records__c.getRecordTypeInfosByName().get('Location').getRecordTypeId()
+            recordTypeId = AMS_Utils.getId('EF_Related_Records__c', 'Location')
             );
         locationList.add(locationMain);
         for(Integer i=1; i<5; i++)
         {
             EF_Related_Records__c location = new EF_Related_Records__c (name=String.valueOf(i),
-                recordTypeId = Schema.SObjectType.EF_Related_Records__c.getRecordTypeInfosByName().get('Location').getRecordTypeId()
+                recordTypeId = AMS_Utils.getId('EF_Related_Records__c', 'Location')
                 );
             locationList.add(location);
         }
@@ -314,7 +314,7 @@ public with sharing class EF_TestDataFactory
         //create account
         Account client = new Account(
             Name='Test Account client',
-            RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Others').getRecordTypeId(),
+            RecordTypeId = AMS_Utils.getId('Account', 'Others'),
             Sector__c = 'IATA Supplier',
             Category__c = 'ANSP',
             EF_type__c = 'E&F Client',
@@ -333,7 +333,7 @@ public with sharing class EF_TestDataFactory
         //create account
         Account customer = new Account(
             Name='Test Account customer',
-            RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Standard Account').getRecordTypeId(),
+            RecordTypeId = AMS_Utils.getId('Account', 'Standard_Account'),
             Sector__c = 'IATA Supplier',
             Category__c = 'ANSP',
             EF_type__c = 'E&F Operator',
@@ -360,7 +360,7 @@ public with sharing class EF_TestDataFactory
             EF_Billing_Currency__c = 'USD;QAR',
             EF_Payment_Currency__c = 'USD;QAR',
             EF_Data_Currency__c = 'USD;QAR',
-            RecordTypeId = Schema.SObjectType.Contract.getRecordTypeInfosByName().get('E&F Client Agreement').getRecordTypeId(),
+            RecordTypeId = AMS_Utils.getId('Contract', 'EF_Client_Agreement'),
             StartDate= Date.today(),
             Type__c='Revenue',
             EF_Status__c='Active',
