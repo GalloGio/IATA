@@ -30,6 +30,7 @@
     </labels>
     <labels>
         <fullName>AMS_OSCAR_AGENCYFEES</fullName>
+        <categories>LeftSidePanel, Headers</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS OSCAR AGENCYFEES</shortDescription>
@@ -37,6 +38,7 @@
     </labels>
     <labels>
         <fullName>AMS_OSCAR_ANTIMONEYLAUNDERING</fullName>
+        <categories>LeftSidePanel, Headers</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS_OSCAR_ANTIMONEYLAUNDERING</shortDescription>
@@ -44,6 +46,7 @@
     </labels>
     <labels>
         <fullName>AMS_OSCAR_APPLICATIONPROCESSING</fullName>
+        <categories>LeftSidePanel, Headers</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS OSCAR APPLICATIONPROCESSING</shortDescription>
@@ -51,6 +54,7 @@
     </labels>
     <labels>
         <fullName>AMS_OSCAR_APPLICATIONRECEIPT</fullName>
+        <categories>LeftSidePanel, Headers</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS OSCAR APPLICATIONRECEIPT</shortDescription>
@@ -58,6 +62,7 @@
     </labels>
     <labels>
         <fullName>AMS_OSCAR_APPLICATION_FINALIZATION</fullName>
+        <categories>LeftSidePanel, Headers</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS OSCAR APPLICATION FINALIZATION</shortDescription>
@@ -65,6 +70,7 @@
     </labels>
     <labels>
         <fullName>AMS_OSCAR_APPROVAL</fullName>
+        <categories>LeftSidePanel, Headers</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS OSCAR APPROVAL</shortDescription>
@@ -72,6 +78,7 @@
     </labels>
     <labels>
         <fullName>AMS_OSCAR_APP_FINALIZATION</fullName>
+        <categories>LeftSidePanel, Headers</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS_OSCAR_APP_FINALIZATION</shortDescription>
@@ -79,6 +86,7 @@
     </labels>
     <labels>
         <fullName>AMS_OSCAR_APP_RECONSIDERATION</fullName>
+        <categories>LeftSidePanel, Headers</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS_OSCAR_APP_RECONSIDERATION</shortDescription>
@@ -86,6 +94,7 @@
     </labels>
     <labels>
         <fullName>AMS_OSCAR_APP_REJECTION_WITHDRAWAL</fullName>
+        <categories>LeftSidePanel, Headers</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS OSCAR APP WITHDRAWAL</shortDescription>
@@ -97,6 +106,20 @@
         <protected>false</protected>
         <shortDescription>AMS OSCAR Action1</shortDescription>
         <value>Generate IATA Code</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_Action10</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_Action10</shortDescription>
+        <value>Generate Case to release FS</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_Action11</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_Action11</shortDescription>
+        <value>Reactivate the agency in BSPLink</value>
     </labels>
     <labels>
         <fullName>AMS_OSCAR_Action2</fullName>
@@ -148,7 +171,15 @@
         <value>Create Commissioner Case</value>
     </labels>
     <labels>
+        <fullName>AMS_OSCAR_Action9</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_Action9</shortDescription>
+        <value>Suspend the agency in BSPLink</value>
+    </labels>
+    <labels>
         <fullName>AMS_OSCAR_CHANGE_DISAPPROVAL</fullName>
+        <categories>LeftSidePanel, Headers</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS_OSCAR_CHANGE_DISAPPROVAL</shortDescription>
@@ -156,6 +187,7 @@
     </labels>
     <labels>
         <fullName>AMS_OSCAR_CHANGE_FINALIZATION</fullName>
+        <categories>LeftSidePanel, Headers</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS_OSCAR_CHANGE_FINALIZATION</shortDescription>
@@ -163,6 +195,7 @@
     </labels>
     <labels>
         <fullName>AMS_OSCAR_CHANGE_PROCESSING</fullName>
+        <categories>LeftSidePanel, Headers</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS_OSCAR_CHANGE_PROCESSING</shortDescription>
@@ -170,6 +203,7 @@
     </labels>
     <labels>
         <fullName>AMS_OSCAR_CHANGE_RECONSIDERATION</fullName>
+        <categories>LeftSidePanel, Headers</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS_OSCAR_CHANGE_RECONSIDERATION</shortDescription>
@@ -177,6 +211,7 @@
     </labels>
     <labels>
         <fullName>AMS_OSCAR_CHANGE_WITHDRAWAL</fullName>
+        <categories>LeftSidePanel, Headers</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS_OSCAR_CHANGE_WITHDRAWAL</shortDescription>
@@ -184,6 +219,7 @@
     </labels>
     <labels>
         <fullName>AMS_OSCAR_CODEASSIGNMENT</fullName>
+        <categories>LeftSidePanel, Headers</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS_OSCAR_CODEASSIGNMENT</shortDescription>
@@ -191,6 +227,7 @@
     </labels>
     <labels>
         <fullName>AMS_OSCAR_DISAPPROVAL</fullName>
+        <categories>LeftSidePanel, Headers</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS OSCAR DISAPPROVAL</shortDescription>
@@ -198,6 +235,7 @@
     </labels>
     <labels>
         <fullName>AMS_OSCAR_MASTERDATA</fullName>
+        <categories>LeftSidePanel, Headers</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS OSCAR MASTERDATA</shortDescription>
@@ -205,10 +243,35 @@
     </labels>
     <labels>
         <fullName>AMS_OSCAR_PENALTY</fullName>
+        <categories>LeftSidePanel, Headers</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS OSCAR PENALTY</shortDescription>
         <value>Penalty</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_PROCESSSUSPENSION</fullName>
+        <categories>LeftSidePanel, Headers</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_PROCESSSUSPENSION</shortDescription>
+        <value>Process Suspension</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_PROCESSTERMINATION</fullName>
+        <categories>LeftSidePanel, Headers</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_PROCESSTERMINATION</shortDescription>
+        <value>Process Termination</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_PROCESSWITHDRAWAL</fullName>
+        <categories>LeftSidePanel, Headers</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_PROCESSWITHDRAWAL</shortDescription>
+        <value>Process Withdrawal</value>
     </labels>
     <labels>
         <fullName>AMS_OSCAR_Process_A1</fullName>
@@ -254,6 +317,7 @@
     </labels>
     <labels>
         <fullName>AMS_OSCAR_REJECTION_FINALIZATION</fullName>
+        <categories>LeftSidePanel, Headers</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS_OSCAR_REJECTION_FINALIZATION</shortDescription>
@@ -421,6 +485,27 @@
         <value>Application Disapproval</value>
     </labels>
     <labels>
+        <fullName>AMS_OSCAR_STEP30</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_STEP30</shortDescription>
+        <value>Process Suspension</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_STEP31</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_STEP31</shortDescription>
+        <value>Process Termination</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_STEP32</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_STEP32</shortDescription>
+        <value>Process Withdrawal</value>
+    </labels>
+    <labels>
         <fullName>AMS_OSCAR_STEP4</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -464,6 +549,7 @@
     </labels>
     <labels>
         <fullName>AMS_OSCAR_VALIDATION</fullName>
+        <categories>LeftSidePanel, Headers</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS OSCAR VALIDATION</shortDescription>

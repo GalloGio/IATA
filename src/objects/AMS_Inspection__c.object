@@ -240,7 +240,7 @@
     </fields>
     <fields>
         <fullName>Legacy_External_ID__c</fullName>
-        <externalId>false</externalId>
+        <externalId>true</externalId>
         <label>Legacy External ID</label>
         <length>80</length>
         <required>false</required>

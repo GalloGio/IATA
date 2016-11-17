@@ -268,32 +268,34 @@ public class EF_ContractHandler
         List<EF_Critical_Field_Notification__c> fieldList = EF_Utilities.getCriticalFields();
 
         List  <String> criticalContractFieldList = new List <String> ();
-
-        for(EF_Critical_Field_Notification__c cfn: fieldList){
+        if(!fieldList.isEmpty()){
+            for(EF_Critical_Field_Notification__c cfn: fieldList){
             criticalContractFieldList= cfn.Contract_Fields__c.split(',');                     
-        }
-        
-        Map <Id,Contract> contractsNoti = new Map <Id,Contract>();
-       
-        Map<String, Schema.SobjectField> fields = contracts.getSObjectType().getDescribe().fields.getMap();
+            }
+            
+            Map <Id,Contract> contractsNoti = new Map <Id,Contract>();
+           
+            Map<String, Schema.SobjectField> fields = contracts.getSObjectType().getDescribe().fields.getMap();
 
-        //loop over accounts to check if any of them need to trigger a notification.
-        for(Contract c: contracts){
-            //check fields for Clients
-            if(c.RecordTypeId==Schema.SObjectType.Contract.getRecordTypeInfosByName().get('E&F Client Agreement').getRecordTypeId() ){
-                
-                for(String s: criticalContractFieldList){
-                    SObjectField f = fields.get(s);                 
-                        if(c.get(s)!=oldMap.get(c.Id).get(s)){                       
-                            contractsNoti.put(c.Id, c);
-                        }
+            //loop over accounts to check if any of them need to trigger a notification.
+            for(Contract c: contracts){
+                //check fields for Clients
+                if(c.RecordTypeId==AMS_Utils.getId('Contract', 'EF_Client_Agreement')){
+                    
+                    for(String s: criticalContractFieldList){
+                        SObjectField f = fields.get(s);                 
+                            if(c.get(s)!=oldMap.get(c.Id).get(s)){                       
+                                contractsNoti.put(c.Id, c);
+                            }
+                    }
                 }
             }
-        }
 
-        if(!contractsNoti.isEmpty()){
-            notifyOnCriticalFields(contractsNoti, oldMap, criticalContractFieldList);
-        
+            if(!contractsNoti.isEmpty()){
+                notifyOnCriticalFields(contractsNoti, oldMap, criticalContractFieldList);
+            
+            }
+
         }
     }
 
@@ -301,7 +303,8 @@ public class EF_ContractHandler
 
         Map<String, Schema.SobjectField> fields = newContracts.getSObjectType().getDescribe().fields.getMap();
         String baseUrl = System.URL.getSalesforceBaseUrl().toExternalForm();
-         
+        List<Messaging.SingleEmailMessage> mails = new List<Messaging.SingleEmailMessage>();
+        
         for(Contract c: newContracts.values()){
             String emailBody = 'Dear team member, <br/><br/>the following Contract values been UPDATED:<br/><br/>';
             emailBody = emailBody + '<table width="600px" border="1"><tr border="1"><th border="1">Contract</th><th border="1">Field:</th><th border="1">New Value:</th><th border="1">Old Value:</th></tr>';
@@ -314,16 +317,52 @@ public class EF_ContractHandler
            }
            emailBody = emailBody + '</table>';
            if(c.EF_DT_Specialist__c!=null && c.EF_IA_Specialist__c!=null){
-                Utility.sendEmail(new List <String> {c.EF_DT_Specialist_Email__c, c.EF_IA_Specialist_Email__c, 'efs@iata.org'}, 'E&F Contract Critical Changes Notification ', emailBody, true, null);
+                Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+                mail.setSaveAsActivity(false);
+                mail.setToAddresses(new List <String> {c.EF_DT_Specialist_Email__c, c.EF_IA_Specialist_Email__c, 'efs@iata.org'}); 
+                mail.setSubject('E&F Contract Critical Changes Notification');
+                mail.setBccSender(false);
+                mail.setUseSignature(false);       
+                mail.setHtmlBody(emailBody);
+                mails.add(mail);
+                //Utility.sendEmail(new List <String> {c.EF_DT_Specialist_Email__c, c.EF_IA_Specialist_Email__c, 'efs@iata.org'}, 'E&F Contract Critical Changes Notification ', emailBody, true, null);
            }else if(c.EF_DT_Specialist__c==null && c.EF_IA_Specialist__c!=null){
-                Utility.sendEmail(new List <String> {c.EF_IA_Specialist_Email__c, 'efs@iata.org'}, 'E&F Contract Critical Changes Notification ', emailBody, true, null);
+                Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+                mail.setSaveAsActivity(false);
+                mail.setToAddresses(new List <String> {c.EF_IA_Specialist_Email__c, 'efs@iata.org'}); 
+                mail.setSubject('E&F Contract Critical Changes Notification');
+                mail.setBccSender(false);
+                mail.setUseSignature(false);       
+                mail.setHtmlBody(emailBody);
+                mails.add(mail);
+                //Utility.sendEmail(new List <String> {c.EF_IA_Specialist_Email__c, 'efs@iata.org'}, 'E&F Contract Critical Changes Notification ', emailBody, true, null);
            }else if(c.EF_DT_Specialist__c!=null && c.EF_IA_Specialist__c==null){
-                Utility.sendEmail(new List <String> {c.EF_DT_Specialist_Email__c, 'efs@iata.org'}, 'E&F Contract Critical Changes Notification ', emailBody, true, null);
+                Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+                mail.setSaveAsActivity(false);
+                mail.setToAddresses(new List <String> {c.EF_DT_Specialist_Email__c, 'efs@iata.org'}); 
+                mail.setSubject('E&F Contract Critical Changes Notification');
+                mail.setBccSender(false);
+                mail.setUseSignature(false);       
+                mail.setHtmlBody(emailBody);
+                mails.add(mail);
+                //Utility.sendEmail(new List <String> {c.EF_DT_Specialist_Email__c, 'efs@iata.org'}, 'E&F Contract Critical Changes Notification ', emailBody, true, null);
            }else{
-                Utility.sendEmail(new List <String> {'efs@iata.org'}, 'E&F Contract Critical Changes Notification ', emailBody, true, null);
+                Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+                mail.setSaveAsActivity(false);
+                mail.setToAddresses(new List <String> {'efs@iata.org'}); 
+                mail.setSubject('E&F Contract Critical Changes Notification');
+                mail.setBccSender(false);
+                mail.setUseSignature(false);       
+                mail.setHtmlBody(emailBody);
+                mails.add(mail);
+                //Utility.sendEmail(new List <String> {'efs@iata.org'}, 'E&F Contract Critical Changes Notification ', emailBody, true, null);
            }
            
-        }            
+        }
+        
+         if(!mails.isEmpty()){
+                Messaging.sendEmail(mails);
+        }  
               
     }
 
