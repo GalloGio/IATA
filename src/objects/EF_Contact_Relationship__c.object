@@ -139,7 +139,7 @@
     <label>E&amp;F Contact Billing Agreement</label>
     <nameField>
         <displayFormat>E&amp;F CR-{0000}{MM}{YY}</displayFormat>
-        <label>E&amp;F Contact Relationship Number</label>
+        <label>E&amp;F Contact Billing Agreement Number</label>
         <trackHistory>false</trackHistory>
         <type>AutoNumber</type>
     </nameField>
