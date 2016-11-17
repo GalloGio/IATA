@@ -99,28 +99,31 @@
                                                     <a href="mailto:globaldata@iata.org?subject=eBroadcast upgrade" class="button block dark">Contact Support</a>
                                                 </div>
                                                 <div class="tab-pane" id="sub-nav-pane-2">
-                                                    <div class="title">Manage Services</div>
-                                                    <ul class="list">
+                                                    <div class="title">View</div>
+                                                    <ul class="list angle-double-right">
                                                         <li>
-                                                            <a href="{!URLFOR($Page.IECEBC_Dashboard)}">View dashboard</a>
+                                                            <a href="{!URLFOR($Page.IECEBC_Dashboard)}">Dashboard</a>
                                                         </li>
+                                                        <li>
+                                                            <a href="{!URLFOR($Page.IECEBC_CampaignList)}">All campaigns</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="{!URLFOR($Page.IECEBC_Reports)}">Campaign reports</a>
+                                                        </li>
+                                                    </ul>
+                                                    <div class="title">Manage</div>
+                                                    <ul class="list angle-double-right">
                                                         <li>
                                                             <a href="{!URLFOR($Page.IECEBC_Campaign)}">Create campaign</a>
                                                         </li>
                                                         <li>
-                                                            <a href="{!URLFOR($Page.IECEBC_CampaignList)}">View all campaigns</a>
+                                                            <a href="{!URLFOR($Page.IECEBC_RecipientList)}">Manage recipient lists</a>
                                                         </li>
                                                         <li>
-                                                            <a href="{!URLFOR($Page.IECEBC_TemplateList)}">Manage templates</a>
+                                                            <a href="{!URLFOR($Page.IECEBC_TemplateList)}">Templates &amp; resources</a>
                                                         </li>
                                                         <li>
-                                                            <a href="{!URLFOR($Page.IECEBC_RecipientList)}">Manage lists</a>
-                                                        </li>
-                                                        <li>
-                                                        	<apex:outputLink value="{!URLFOR($Page.IECEBC_AccountManage)}">Manage account</apex:outputLink>
-                                                        </li>
-                                                        <li>
-                                                            <a href="{!URLFOR($Page.IECEBC_Reports)}">View reports</a>
+                                                            <a href="{!URLFOR($Page.IECEBC_AccountManage)}">My account</a>
                                                         </li>
                                                     </ul>
                                                 </div>
