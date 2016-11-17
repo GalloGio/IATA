@@ -1,19 +1,5 @@
 public with sharing class LiveAgentButtonFAQ2CaseController {
 
-    public Set<String>topicsToShowButton {
-        get{
-            if (topicsToShowButton == null){
-                List<ISSP_FAQ2CaseLiveAgentTopics__c> topics = [SELECT name, value__c FROM ISSP_FAQ2CaseLiveAgentTopics__c];
-                System.debug('topics: '+topics);
-                topicsToShowButton = new Set<String>();
-                for (ISSP_FAQ2CaseLiveAgentTopics__c topic :topics){
-                    topicsToShowButton.add(topic.value__c);
-                }
-            }
-            return topicsToShowButton;
-        }
-        set;
-    }
     public String selectedTopics {
         get{
             return ApexPages.currentPage().getParameters().get('selTopics');
@@ -32,6 +18,18 @@ public with sharing class LiveAgentButtonFAQ2CaseController {
         }
         set;
     }
+    public String csButton{
+        get{
+            return ApexPages.currentPage().getParameters().get('csButton');
+        }
+        set;
+    }
+    public String countryConcerned{
+        get{
+            return ApexPages.currentPage().getParameters().get('concernedCountry');
+        }
+        set;
+    }
     public LiveAgentButtonSettings__c liveAgentBtn {
         get{
             LiveAgentButtonSettings__c labs = new LiveAgentButtonSettings__c();
@@ -43,18 +41,14 @@ public with sharing class LiveAgentButtonFAQ2CaseController {
             return labs ;
         }
     }
-    public String csButton{
+    public String buttonLanguage{
         get{
-            return ApexPages.currentPage().getParameters().get('csButton');
-        }
-        set;
-    }
-    public Boolean showButton {
-        get{
-            if(topicsToShowButton.contains(selectedTopics)){
-                return true;
+            try{
+                buttonLanguage = liveAgentBtn.Language__c;
+            }catch(Exception e){
+                buttonlanguage = 'en';
             }
-            return false;
+        return buttonLanguage;
         }
         set;
     }
@@ -65,12 +59,6 @@ public with sharing class LiveAgentButtonFAQ2CaseController {
                 userContact = DAL_ISSP.getContact(user.contactId);
             }
             return userContact;
-        }
-        set;
-    }
-    public String countryConcerned{
-        get{
-            return ApexPages.currentPage().getParameters().get('concernedCountry');
         }
         set;
     }
@@ -90,8 +78,10 @@ public with sharing class LiveAgentButtonFAQ2CaseController {
     }
 
     public String getContactFirstName() {
-        if (userContact.FirstName != null){
-            return userContact.FirstName;
+        if (userContact != null){
+            if (userContact.FirstName != null && userContact.FirstName != ''){
+                return userContact.FirstName;
+            }
         }
         return 'Guest';
     }

@@ -15865,6 +15865,139 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <value>Last name</value>
     </labels>
     <labels>
+        <fullName>LiveAgentButtonLanguage</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LiveAgentButtonLanguage</shortDescription>
+        <value>Start a Chat</value>
+    </labels>
+    <labels>
+        <fullName>LiveAgentCustomSettingNotFound</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LiveAgentCustomSettingNotFound</shortDescription>
+        <value>Please review the custom setting LiveAgentButtonSettings - No Value Found:</value>
+    </labels>
+    <labels>
+        <fullName>LiveAgentFootNote</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LiveAgentFootNote</shortDescription>
+        <value>Please notice that you can save the transcript of this chat session via the “Save chat” button in the Top of the screen</value>
+    </labels>
+    <labels>
+        <fullName>LiveAgentOfflineButton</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LiveAgentOfflineButton</shortDescription>
+        <value>offline</value>
+    </labels>
+    <labels>
+        <fullName>LiveAgentPlaceHolder</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LiveAgentPlaceHolder</shortDescription>
+        <value>Type in your message here</value>
+    </labels>
+    <labels>
+        <fullName>LiveAgentPostChatChannelQuestion</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LiveAgentPostChatChannelQuestion</shortDescription>
+        <value>Based on your experience today, which channel of communication will you select in the future?</value>
+    </labels>
+    <labels>
+        <fullName>LiveAgentPostChatComments</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LiveAgentPostChatComments</shortDescription>
+        <value>Any additional comments:</value>
+    </labels>
+    <labels>
+        <fullName>LiveAgentPostChatExperienceAnswer</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LiveAgentPostChatExperienceAnswer</shortDescription>
+        <value>How would you rate your chat with</value>
+    </labels>
+    <labels>
+        <fullName>LiveAgentPostChatFieldsRequired</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LiveAgentPostChatFieldsRequired</shortDescription>
+        <value>These fields are required</value>
+    </labels>
+    <labels>
+        <fullName>LiveAgentPostChatPlaceHolder</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LiveAgentPostChatPlaceHolder</shortDescription>
+        <value>Type in your comment here</value>
+    </labels>
+    <labels>
+        <fullName>LiveAgentPostChatProfessionalismQuestion</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LiveAgentPostChatProfessionalismQuestion</shortDescription>
+        <value>How would you rate your chat with</value>
+    </labels>
+    <labels>
+        <fullName>LiveAgentPostChatResubmission</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LiveAgentPostChatResubmission</shortDescription>
+        <value>You already gave us your feedback, Thank you!</value>
+    </labels>
+    <labels>
+        <fullName>LiveAgentPostChatSubmitButton</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LiveAgentPostChatSubmitButton</shortDescription>
+        <value>Submit</value>
+    </labels>
+    <labels>
+        <fullName>LiveAgentPostChatThankContact</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LiveAgentPostChatThankContact</shortDescription>
+        <value>Thank you for your contact!</value>
+    </labels>
+    <labels>
+        <fullName>LiveAgentPostChatThankFeedback</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LiveAgentPostChatThankFeedback</shortDescription>
+        <value>Thank you for your feedback!</value>
+    </labels>
+    <labels>
+        <fullName>LiveAgentPostChatTitle</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LiveAgentPostChatTitle</shortDescription>
+        <value>Please give us your feedback on this chat</value>
+    </labels>
+    <labels>
+        <fullName>LiveAgentPostChatresolutionQuestion</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LiveAgentPostChatComments</shortDescription>
+        <value>Any additional comments:</value>
+    </labels>
+    <labels>
+        <fullName>LiveAgentWaitingMessageChat</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LiveAgentWaitingMessageChat</shortDescription>
+        <value>One of our agents will be with you shortly. You are number &lt;queuenumber&gt; in the queue. Your wait time will be approximately &lt;queueminutes&gt; minute(s). Thank you for your patience.</value>
+    </labels>
+    <labels>
+        <fullName>LiveAgentWaitingMessageReady</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LiveAgentWaitingMessageReady</shortDescription>
+        <value>The chat is ready to start.&lt;br/&gt;Wait for the agent.</value>
+    </labels>
+    <labels>
         <fullName>Location</fullName>
         <categories>Generic Attachments</categories>
         <language>en_US</language>

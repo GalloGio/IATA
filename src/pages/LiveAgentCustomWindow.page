@@ -51,6 +51,7 @@
             if($chatStarted > 0){
                 clearInterval(interval);
                 $j("div.waitingMessage").hide();
+                $j("div.footer").html('{!$Label.LiveAgentFootNote}');
             }
         }
 
@@ -183,6 +184,14 @@
             margin: 5px;
             width: 50px;
         }
+        .footer {
+            position: absolute;
+            bottom: 0px;
+            margin-bottom: 3px;
+            margin-left: 8px;
+            margin-right: 8px;
+            font-size: 9px;
+        }
 
     </style>
     <apex:image url="{!$Resource.IATAlogo}" width="65" height="40" styleClass="iataLogo"/>
@@ -199,5 +208,6 @@
         <liveAgent:clientChatFileTransfer />
         <liveAgent:clientChatQueuePosition />
     </liveAgent:clientChat>
+    <div class="footer"></div>
 
 </apex:page>

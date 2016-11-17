@@ -16,6 +16,7 @@ public without sharing class vfISSP_FAQ2Case
     public list<SelectOption> lst_selectsubTopics {get;set;}
     public String topic { get; set; }
     public String subtopic { get; set; }
+    public String concernedCountry { get; set; }
     public String selectedCountry { get; set; }
     public clsDataCategoryContainer DataCategoryContainer {get;set;}
     public list<ArticleViewLine> articleViewLines { get; set; }
@@ -215,6 +216,28 @@ public without sharing class vfISSP_FAQ2Case
             }
            return null;
         }
+    }
+    public Set<String>topicsToShowButton {
+        get{
+            if (topicsToShowButton == null){
+                List<ISSP_FAQ2CaseLiveAgentTopics__c> topics = [SELECT name, value__c FROM ISSP_FAQ2CaseLiveAgentTopics__c];
+                topicsToShowButton = new Set<String>();
+                for (ISSP_FAQ2CaseLiveAgentTopics__c topic :topics){
+                    topicsToShowButton.add(topic.value__c);
+                }
+            }
+            return topicsToShowButton;
+        }
+        set;
+    }
+    public Boolean showButton {
+        get{
+            if(topicsToShowButton.contains(topic+'.'+subtopic)){
+                return true;
+            }
+            return false;
+        }
+        set;
     }
     private List<IATA_ISO_Country__c> countries{
         get{
