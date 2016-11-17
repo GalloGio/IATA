@@ -1045,10 +1045,10 @@
 <fieldPermissions><editable>false</editable><field>AMS_Settlement_System__c.Last_synchronization__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AMS_Settlement_System__c.Legacy_External_ID__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AMS_Settlement_System__c.Legacy_System__c</field><readable>false</readable></fieldPermissions>
-<fieldPermissions><editable>false</editable><field>AMS_Territory__c.Comments__c</field><readable>false</readable></fieldPermissions>
-<fieldPermissions><editable>false</editable><field>AMS_Territory__c.ISO_Country__c</field><readable>false</readable></fieldPermissions>
-<fieldPermissions><editable>false</editable><field>AMS_Territory__c.ISO_State__c</field><readable>false</readable></fieldPermissions>
-<fieldPermissions><editable>false</editable><field>AMS_Territory__c.Legacy_Id__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>true</editable><field>AMS_Territory__c.Comments__c</field><readable>true</readable></fieldPermissions>
+<fieldPermissions><editable>true</editable><field>AMS_Territory__c.ISO_Country__c</field><readable>true</readable></fieldPermissions>
+<fieldPermissions><editable>true</editable><field>AMS_Territory__c.ISO_State__c</field><readable>true</readable></fieldPermissions>
+<fieldPermissions><editable>true</editable><field>AMS_Territory__c.Legacy_Id__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>AP_Country_Requierment__c.Bank_Account_Change_Comment__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AP_Country_Requierment__c.Comments__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AP_Country_Requierment__c.Currency_of_the_Settlement__c</field><readable>false</readable></fieldPermissions>
