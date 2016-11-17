@@ -566,7 +566,7 @@ public class EF_MaterialLineItemHandler
 		// Retrieve and update the billing agreements that need to be updated
 		List<EF_Billing_Agreement__c> billingAgreementsToUpdate = [SELECT Status__c FROM EF_Billing_Agreement__c WHERE Id IN :withoutItemBAs];
 		for(EF_Billing_Agreement__c ba : billingAgreementsToUpdate){
-			ba.Status__c = 'Inactive';
+			ba.EF_Status__c = 'Inactive';
 		}
 		update billingAgreementsToUpdate;
     }

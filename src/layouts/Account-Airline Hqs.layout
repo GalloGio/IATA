@@ -726,7 +726,7 @@
     <relatedLists>
         <customButtons>Edit_All_Airline_BA</customButtons>
         <fields>NAME</fields>
-        <fields>Billing_Agreement_Name__c</fields>
+        <fields>BillingAgreement_Name__c</fields>
         <fields>Client__c</fields>
         <fields>Contract__c</fields>
         <fields>EF_Status__c</fields>

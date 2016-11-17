@@ -9,7 +9,7 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Required</behavior>
-                <field>Billing_Agreement_Name__c</field>
+                <field>BillingAgreement_Name__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
