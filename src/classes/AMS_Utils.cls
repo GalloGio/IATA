@@ -73,6 +73,8 @@ public without sharing class AMS_Utils {
     public static final String SANITYCHECK = 'Perform Sanity Check';
     public static final String APPROVAL = 'Manager Approval';
     public static final String WITHDRAWAL = 'Application Withdrawal';
+    public static final String SUSPENSION = 'Process suspension';
+    public static final String TERMINATION = 'Process termination';
 
     public static final String PASSED = 'Passed';
     public static final String FAILED = 'Failed';
@@ -89,7 +91,7 @@ public without sharing class AMS_Utils {
     public static final String MIN_SHAREHOLDING = 'Minor Shareholding';
     public static final String NAME = 'Name';
     public static final String LEGAL_STATUS = 'Legal Status';
-    public static final String VFMR = 'VFMR';
+    public static final String VFMR = 'VMFR';
 
 
     public static final String OSCAR_CLOSED = 'Closed (Closed)';
@@ -115,8 +117,13 @@ public without sharing class AMS_Utils {
     //Processes of type CHANGES
     public static final String COR              = 'CORRECTION.1.0'  ;
     public static final String AGENCYCHANGES    = 'MAJOR.CHANGES'   ;
+    public static final String VOLRELINQUISH    = 'VR.1.0'          ;
+    public static final String VOLRELINQUISH_CA = 'VR.1.0.CA'       ;
     public static final String BANKACCCHANGES   = 'BANK.ACCOUNT.CHANGES';
     public static final String CERTIFICATION    = 'CERTIFICATION.1.0';
+
+    //other types of process
+    public static final String CERTIFICATE      = 'CER.1.0'         ;
 
     //Types of Certificate
     public static final String CERT_DGR         = 'DGR';
@@ -696,6 +703,19 @@ public without sharing class AMS_Utils {
         if (newVal <> oscarAgency.Status__c && newVal != null) {
 
             oscarAgency.Status__c = newVal;
+            toReturn = oscarAgency;
+        }
+
+        if(oscar != null){
+            if(aacNEW.Change_Code__c == 'FIN' && new Set<String>{'C','P'}.contains(oscar.Location_Class__c)){
+                oscarAgency.Annual_Renewal_Certificates__c = true;
+                toReturn = oscarAgency;
+            }
+        }       
+
+        if(aacNew.Change_Code__c == 'CER'){
+            oscarAgency.Annual_Renewal_Certificates__c = true;
+            oscarAgency.Certificate_Generated_Current_Year__c = true;
             toReturn = oscarAgency;
         }
 

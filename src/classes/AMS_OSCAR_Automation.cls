@@ -1253,5 +1253,117 @@ public with sharing class AMS_OSCAR_Automation
             return false;
         }
     }
+
+    public class AMS_OSCAR_Step30_failed implements IClassFactory
+    {
+        public Boolean processWork(AMS_OSCAR_Event__c lce, AMS_OSCAR__c oscar)
+        {
+            try{
+                if(oscar != null){
+                    oscar.Suspension_result__c = 'Failed';
+                    return true; 
+                }
+            }catch(Exception e){
+                system.debug('ERROR: '+e);
+            }
+            return false;
+        }
+    }
+
+    public class AMS_OSCAR_Step30_succeeded implements IClassFactory
+    {
+        public Boolean processWork(AMS_OSCAR_Event__c lce, AMS_OSCAR__c oscar)
+        {
+            try{
+                if(oscar != null){
+                    oscar.Suspension_result__c = 'Passed';
+                    return true; 
+                }
+            }catch(Exception e){
+                system.debug('ERROR: '+e);
+            }
+            return false;
+        }
+    }
+
+    public class AMS_OSCAR_Step31_failed implements IClassFactory
+    {
+        public Boolean processWork(AMS_OSCAR_Event__c lce, AMS_OSCAR__c oscar)
+        {
+            try{
+                if(oscar != null){
+                    oscar.Termination_result__c = 'Failed';
+                    return true; 
+                }
+            }catch(Exception e){
+                system.debug('ERROR: '+e);
+            }
+            return false;
+        }
+    }
+
+    public class AMS_OSCAR_Step31_succeeded implements IClassFactory
+    {
+        public Boolean processWork(AMS_OSCAR_Event__c lce, AMS_OSCAR__c oscar)
+        {
+            try{
+                if(oscar != null){
+                    oscar.Termination_result__c = 'Passed';
+                    return true; 
+                }
+            }catch(Exception e){
+                system.debug('ERROR: '+e);
+            }
+            return false;
+        }
+    }
+
+    public class AMS_OSCAR_Step32_failed implements IClassFactory
+    {
+        public Boolean processWork(AMS_OSCAR_Event__c lce, AMS_OSCAR__c oscar)
+        {
+            try{
+                if(oscar != null){
+                    oscar.Withdrawal_result__c = 'Failed';
+                    return true; 
+                }
+            }catch(Exception e){
+                system.debug('ERROR: '+e);
+            }
+            return false;
+        }
+    }
+
+    public class AMS_OSCAR_Step32_succeeded implements IClassFactory
+    {
+        public Boolean processWork(AMS_OSCAR_Event__c lce, AMS_OSCAR__c oscar)
+        {
+            try{
+                if(oscar != null){
+                    oscar.Withdrawal_result__c = 'Passed';
+                    return true; 
+                }
+            }catch(Exception e){
+                system.debug('ERROR: '+e);
+            }
+            return false;
+        }
+    }
+
+    public class AMS_OSCAR_Step32_notApplicable implements IClassFactory
+    {
+        public Boolean processWork(AMS_OSCAR_Event__c lce, AMS_OSCAR__c oscar)
+        {
+            try{
+                if(oscar != null){
+                    oscar.Withdrawal_result__c = 'N/A';
+                    return true; 
+                }
+            }catch(Exception e){
+                system.debug('ERROR: '+e);
+            }
+            return false;
+        }
+    }
     
 }

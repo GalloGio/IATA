@@ -129,7 +129,8 @@
 																			</div>
 																			
 																			<div class="package-credits">
-																				<apex:outputText value="{0,number,###,###,##0} emails"><apex:param value="{!prpOption.currentEmailCredits}" /></apex:outputText>
+                                                                                <div class="email"><apex:outputText value="{0,number,###,###,##0} emails"><apex:param value="{!prpOption.currentEmailCredits}" /></apex:outputText></div>
+                                                                                <span class="per-email">$<apex:outputText value="{0,number,###,###,##0.000}"><apex:param value="{!prpOption.amount / prpOption.currentEmailCredits}" /></apex:outputText>/email</span>
 																			</div>
 																			<div class="package-price">
 																				<apex:outputText value="${0,number,###,###,##0.00}"><apex:param value="{!prpOption.amount}" /></apex:outputText>
@@ -160,7 +161,8 @@
 																			</div>
 																			
 																			<div class="package-credits">
-																				<apex:outputText value="{0,number,###,###,##0} emails"><apex:param value="{!prpOption.currentEmailCredits}" /></apex:outputText>
+                                                                                <div class="email"><apex:outputText value="{0,number,###,###,##0} emails"><apex:param value="{!prpOption.currentEmailCredits}" /></apex:outputText></div>
+                                                                                <span class="per-email">$<apex:outputText value="{0,number,###,###,##0.000}"><apex:param value="{!prpOption.amount / prpOption.currentEmailCredits}" /></apex:outputText>/email</span>
 																			</div>
 																			<div class="package-price">
 																				<apex:outputText value="${0,number,###,###,##0.00}"><apex:param value="{!prpOption.amount}" /></apex:outputText>
@@ -198,8 +200,9 @@
 																				<span class="text-orange">
 																					<apex:outputText value="{0,number,###,###,##0}"><apex:param value="{!prpOption.currentEmailCredits}" /></apex:outputText>
 																				</span>
-																				<br/>
 																				emails
+																				<br/>
+                                                                                <span class="per-email">$<apex:outputText value="{0,number,###,###,##0.000}"><apex:param value="{!prpOption.amount / prpOption.currentEmailCredits}" /></apex:outputText>/email</span>
 																			</div>
 																			<div class="package-price">
 																				<apex:outputText value="${0,number,###,###,##0.00}"><apex:param value="{!prpOption.amount}" /></apex:outputText>

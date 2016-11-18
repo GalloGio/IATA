@@ -13,7 +13,7 @@ global class SchdlEBCImportClickEvent implements Database.AllowsCallouts, Schedu
         futureExecute();
     }
     global static void cancel() {
-        cancel('SchdlEBCImportClickEvent');
+        cancel('SchdlEBCImportClickEvent' + (Test.isRunningTest() ? 'Test' : ''));
     }
     global static void cancel(String name) {
         CronTrigger ct = [SELECT Id, CronJobDetail.Id, CronJobDetail.Name, CronJobDetail.JobType FROM CronTrigger Where CronJobDetail.Name = :name LIMIT 1];
@@ -22,6 +22,6 @@ global class SchdlEBCImportClickEvent implements Database.AllowsCallouts, Schedu
     
     global static void Schedule() {
         SchdlEBCImportClickEvent a = new SchdlEBCImportClickEvent();
-        System.schedule('SchdlEBCImportClickEvent', '0 58 * * * ?', a);
+        System.schedule('SchdlEBCImportClickEvent' + (Test.isRunningTest() ? 'Test' : ''), '0 58 * * * ?', a);
     }
 }
