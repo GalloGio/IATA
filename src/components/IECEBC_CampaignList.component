@@ -339,10 +339,10 @@
                         break;
                     case 'preview':
                         console.log(campaign);
-                        window.open('/iec/IECEBC_CampaignPreview?id=' + campaign.EBC_Design__c);
+                        window.open('{!URLFOR($Page.IECEBC_CampaignPreview)}?id=' + campaign.EBC_Design__c);
                         break;
                     case 'report':
-                        location.href = '/iec/IECEBC_ManageReportsDetails?id=' + campaign.Id; 
+                        location.href = '{!URLFOR($Page.IECEBC_ManageReportsDetails)}?id=' + campaign.Id; 
                         break;
                 	default:
                         alert('The action ' + $(this).val() + ' has not been defined yet.');
