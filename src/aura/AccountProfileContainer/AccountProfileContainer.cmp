@@ -119,7 +119,7 @@
                 <aura:if isTrue="{!v.activeTab=='Products'}">
                     <div class="slds-grid slds-wrap slds-p-around--medium">
                         <div class="slds-size--1-of-1">
-                            Products
+                            <c:AMP_Products accountId="{!v.accountId}" account="{!v.account}"/>
                         </div>
                     </div>
                 </aura:if>
@@ -127,7 +127,7 @@
                 <aura:if isTrue="{!v.activeTab=='Services'}">
                     <div class="slds-grid slds-wrap slds-p-around--medium">
                         <div class="slds-size--1-of-1">
-                            <c:AMP_Services/>
+                            <c:AMP_Services accountId="{!v.accountId}"/>
                         </div>
                     </div>
                 </aura:if>
