@@ -25,7 +25,7 @@
 				<h3 class="centered">M E M O R A N D U M</h3>
 				<p class="centered">ADMIN / INTERLINE / {!memorandumNumber}</p>
 				<p>Listed below are concurrences between parties to the IATA Multilateral Interline Traffic Agreements -</p>
-				<p>Passenger and Cargo and MITA One-Way received from&nbsp;<apex:outputField value="{!fromDate.Agreement_Processed_Date__c}" />&nbsp;to&nbsp;<apex:outputField value="{!toDate.Agreement_Processed_Date__c}" /></p>
+				<p>Passenger and Cargo and MITA One-Way received from&nbsp;<apex:outputField value="{!fromDate.Agreement_processed_date__c}" />&nbsp;to&nbsp;<apex:outputField value="{!toDate.Agreement_processed_date__c}" /></p>
 				<p>They will become effective on the dates indicated.</p>
 				<p>Requests for concurrences should be submitted via our Customer Portal at www.iata.org/cs and include the</p>
 				<p>respective carriers involved. (P&amp;C = Passenger and Cargo, P = Passenger, C = Cargo and O = One-Way).</p>
@@ -36,7 +36,7 @@
 				<h3 class="centered">Bilateral Interline Electronic Ticket Agreements (BIETA)</h3>
 				<h3 class="centered">M E M O R A N D U M</h3>
 				<p class="centered">ADMIN / INTERLINE / {!memorandumNumber}</p>
-				<p>Listed below are concurrences between parties to the BIETA Agreements received from&nbsp;<apex:outputField value="{!fromDate.Agreement_Processed_Date__c}" />&nbsp;to&nbsp;<apex:outputField value="{!toDate.Agreement_Processed_Date__c}" /></p>
+				<p>Listed below are concurrences between parties to the BIETA Agreements received from&nbsp;<apex:outputField value="{!fromDate.Agreement_processed_date__c}" />&nbsp;to&nbsp;<apex:outputField value="{!toDate.Agreement_processed_date__c}" /></p>
 				<p>They will become effective on the dates indicated.</p>
 				<p>Requests for concurrences should be submitted via our Customer Portal at www.iata.org/cs and include the</p>
 				<p>respective carriers involved. (BIET = Bilateral, OWI = One-Way Passenger Issuing Airline, OWP = One-Way Passenger Participating and O = One-Way Intermodal).</p>
