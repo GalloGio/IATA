@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <name>E&amp;F Location Currency Approved</name>
+    <style>none</style>
+    <subject>Location Currency changes approved</subject>
+    <textOnly>Dear recipient,
+
+your changes for a Location Currency record have been approved.</textOnly>
+    <type>custom</type>
+</EmailTemplate>

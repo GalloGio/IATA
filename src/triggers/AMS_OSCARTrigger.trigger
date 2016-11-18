@@ -92,6 +92,14 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
             //USED ON: HO,BR,TIDS,GSA,AHA,GSSA,MSO,SA
             oscar.Dossier_Reception_Date__c = Date.today();
 
+            if(oscar.Process__c == AMS_Utils.new_TIDS)
+                oscar.Sanity_check_deadline__c = Date.today()+3;
+            else if(oscar.Process__c == AMS_Utils.new_GSA_BSP || oscar.Process__c == AMS_Utils.new_AHA_BSP || oscar.Process__c == AMS_Utils.new_GSSA)
+                oscar.Sanity_check_deadline__c = Date.today();
+
+
+            if(oscar.Process__c == AMS_Utils.new_GSA_BSP || oscar.Process__c == AMS_Utils.new_AHA_BSP)
+                oscar.BSPLink_participation__c = true;
             //removed in issue AMS-1584
             //oscar.Sanity_check_deadline__c = Date.today() + 15;
 
@@ -420,6 +428,17 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
                 updatedOscar.STEP15__c = updatedOscar.Validation_Status__c;
         }
 
+       if (oldOSCAR.BSPLink_participation__c == false && updatedOscar.BSPLink_participation__c == true && oldOSCAR.Process__c == AMS_Utils.new_GSA)
+            updatedOSCAR.Process__c = AMS_Utils.new_GSA_BSP;
+
+        if (oldOSCAR.BSPLink_participation__c == true && updatedOscar.BSPLink_participation__c == false && oldOSCAR.Process__c == AMS_Utils.new_GSA_BSP)
+            updatedOSCAR.Process__c = AMS_Utils.new_GSA;
+
+        if (oldOSCAR.BSPLink_participation__c == false && updatedOscar.BSPLink_participation__c == true && oldOSCAR.Process__c == AMS_Utils.new_AHA)
+            updatedOSCAR.Process__c = AMS_Utils.new_AHA_BSP;
+
+        if (oldOSCAR.BSPLink_participation__c == true && updatedOscar.BSPLink_participation__c == false && oldOSCAR.Process__c == AMS_Utils.new_AHA_BSP)
+            updatedOSCAR.Process__c = AMS_Utils.new_AHA;
         if (oldOSCAR.Apply_Penalty_Fee__c == false && updatedOscar.Apply_Penalty_Fee__c == true) {
 
             //late/absence of NOC - penalty fees can only be applied for some ToC (could add validation for dates)

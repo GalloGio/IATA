@@ -33,6 +33,7 @@ public class AMS_OSCARTriggerHandler {
 		AMS_AccreditationContactHelper.mirrorAccrediationContactsFromAccountRole(oscars, (Map<Id,AMS_OSCAR__c>)Trigger.oldMap);
 		handleChangesProcess(oscars);
         copyDataFromTargetAgency();
+		updateOSCARAppointments();
 	}
 
 	public static void handleBeforeInsert() {
@@ -334,7 +335,7 @@ public class AMS_OSCARTriggerHandler {
 		Map<Id, Account> accounts = new Map<Id, Account>([SELECT Id, ParentId, Parent.Location_Type__c, Status__c, Name, IATACode__c, Company_Type__c, Short_Name__c, TradeName__c, License_Number__c, VAT_Number__c, GDS__c, Operation__c,
 		        BillingCountry, BillingStreet, BillingPostalCode, BillingState, BillingCity, IATA_ISO_Country__c, Iso_State__c, ShippingCountry,
 		        ShippingStreet, ShippingPostalCode, ShippingState, ShippingCity, Email__c, Website, Phone, Fax, In_a_Airport__c, Abbreviated_name__c, Abbreviated_address__c,
-		        Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Is_your_firm_handling_Dangerous_Goods__c FROM Account WHERE Id IN :accountIds]);
+		        Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Is_your_firm_handling_Dangerous_Goods__c, Link_agent_name__c FROM Account WHERE Id IN :accountIds]);
 
 
 		Map<Id, AMS_Pax_Accreditation_Form__c> onlineAccreditations = new Map<Id, AMS_Pax_Accreditation_Form__c>([SELECT Account_Name__c, IATACode__c, ISSP_AMS_Legal_Status__c, Short_Name__c, Trade_Name__c, ISSP_AMS_License_No__c, ISSP_AMS_VAT_number__c,
@@ -342,7 +343,7 @@ public class AMS_OSCARTriggerHandler {
 		        Billing_State__c, Branch_Office_City__c, ISO_Country__c, IATA_ISO_State__c, Shipping_Country__c, Shipping_Street__c, Shipping_Postal_Code__c,
 		        Shipping_State__c, Shipping_City__c, Branch_Office_Email__c, Website__c, Branch_Office_Phone__c, Branch_Office_FAX__c, ISSP_AMS_Premises_located_at_airport__c,
 		        Abbreviated_name__c, Abbreviated_address__c, Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Is_your_firm_handling_Dangerous_Goods__c,
-		        Shipping_ISO_Country__c, Shipping_ISO_State__c, Shipping_ISO_Country__r.Name, Shipping_ISO_State__r.Name, IATA_ISO_State__r.Name
+		        Shipping_ISO_Country__c, Shipping_ISO_State__c, Shipping_ISO_Country__r.Name, Shipping_ISO_State__r.Name, IATA_ISO_State__r.Name, Link_agent_name__c
 		        FROM AMS_Pax_Accreditation_Form__c
 		        WHERE Id IN :oscarOnlineAccredIds]);
 
@@ -1129,6 +1130,59 @@ public class AMS_OSCARTriggerHandler {
 		}
 
 		return mergedAccountsToUpdate;
+
+	}
+
+
+	private static void updateOSCARAppointments(){
+
+		List<AMS_OSCAR__c> oscarsToProcess = new List<AMS_OSCAR__c>();
+		Set<Id> oscarsToProcessIds = new Set<Id>();
+		Map<Id, AMS_OSCAR__c> oldMap = (Map<Id,AMS_OSCAR__c>) Trigger.oldMap;
+
+		for(AMS_OSCAR__c oscar : (List<AMS_OSCAR__c>)Trigger.New){
+			if( AMS_Utils.oscarProcessesWithAppointments.contains(oscar.Process__c) ){
+				oscarsToProcess.add(oscar);
+				oscarsToProcessIds.add(oscar.Id);
+			}
+		}
+
+		if(!oscarsToProcess.isEmpty()){
+
+			List<AMS_Inspection__c> allInspections = new List<AMS_Inspection__c>([SELECT Id, Account__c,OSCAR__c,OSCAR__r.Account__c, Date_Organisation_Status_attained__c,Last_synchronization__c,Accreditation_Endorsement_Status_code__c FROM AMS_Inspection__c WHERE OSCAR__c IN :oscarsToProcessIds]);
+
+			Map<Id, List<AMS_Inspection__c>> inspectionsPerOSCAR = new Map<Id, List<AMS_Inspection__c>>();
+
+			//get all inspections per oscar
+			for(AMS_Inspection__c insp: allInspections){
+				if(!inspectionsPerOSCAR.containsKey(insp.Oscar__c))
+					inspectionsPerOSCAR.put(insp.Oscar__c, new List<AMS_Inspection__c>());
+				
+				inspectionsPerOSCAR.get(insp.Oscar__c).add(insp);
+			}
+
+			List<AMS_Inspection__c> allInspectionsToUpdate = new List<AMS_Inspection__c>();
+
+			for(AMS_OSCAR__c oscar : oscarsToProcess){
+				AMS_OSCAR__c oldOSCAR = oldMap.get(oscar.Id);
+				if ((oldOSCAR.STEP1__c <> AMS_Utils.PASSED && oscar.STEP1__c == AMS_Utils.PASSED)||
+					(oldOSCAR.STEP10__c <> AMS_Utils.PASSED && oscar.STEP10__c == AMS_Utils.PASSED))
+				{
+					allInspectionsToUpdate.addAll(AMS_Utils.modifyInspectionStatus(inspectionsPerOSCAR.get(oscar.Id), '9'));
+				}
+				if ((oldOSCAR.STEP3__c <> AMS_Utils.PASSED && oscar.STEP3__c == AMS_Utils.PASSED) ||
+					(oldOSCAR.STEP18__c <> AMS_Utils.PASSED && oscar.STEP18__c == AMS_Utils.PASSED) ||
+					(oldOSCAR.STEP4__c <> AMS_Utils.PASSED && oscar.STEP4__c == AMS_Utils.PASSED))
+				{
+					allInspectionsToUpdate.addAll(AMS_Utils.modifyInspectionStatus(inspectionsPerOSCAR.get(oscar.Id), '0'));
+				}
+			}
+
+			//update all modified inspections
+			if(!allInspectionsToUpdate.isEmpty())
+				update allInspectionsToUpdate;
+
+		}
 
 	}
 
