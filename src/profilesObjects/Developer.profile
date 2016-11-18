@@ -30,7 +30,7 @@
 <applicationVisibilities><application>Service_Console</application><default>false</default><visible>true</visible></applicationVisibilities>
 <applicationVisibilities><application>StrategicAccountPlanning</application><default>false</default><visible>true</visible></applicationVisibilities>
 <applicationVisibilities><application>TTBS</application><default>false</default><visible>true</visible></applicationVisibilities>
-<applicationVisibilities><application>eBroadcast</application><default>false</default><visible>false</visible></applicationVisibilities>
+<applicationVisibilities><application>eBroadcast</application><default>false</default><visible>true</visible></applicationVisibilities>
 <applicationVisibilities><application>standard__AppLauncher</application><default>false</default><visible>true</visible></applicationVisibilities>
 <applicationVisibilities><application>standard__Chatter</application><default>false</default><visible>true</visible></applicationVisibilities>
 <applicationVisibilities><application>standard__Community</application><default>false</default><visible>true</visible></applicationVisibilities>
@@ -5199,6 +5199,7 @@
 <fieldPermissions><editable>false</editable><field>Lead.Company_Type__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Lead.Confirm_Email_A__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Lead.Confirm_Email_B__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>true</editable><field>Lead.Contact_Role__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Lead.Country__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Lead.Course_Name__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Lead.Crisis_Communications_Members__c</field><readable>true</readable></fieldPermissions>
