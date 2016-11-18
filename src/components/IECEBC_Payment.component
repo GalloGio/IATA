@@ -592,7 +592,7 @@
                                         <a href="#" class="icon-close js-close-modal js-clear-form"><i class="fa fa-times"></i></a>
                                     </header>
                                     <div class="modal-body">
-                                        <p>your transaction was successfully processed</p>
+                                        <p>Thank you. Your transaction was successfully processes.</p>
                                     </div>
                                     <footer class="modal-footer">
                                         <div class="footer-actions text-right">

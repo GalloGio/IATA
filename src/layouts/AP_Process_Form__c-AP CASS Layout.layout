@@ -121,6 +121,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Online_carrier_in_the_BSP_country__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Other_TAX_Identification__c</field>
             </layoutItems>
             <layoutItems>
