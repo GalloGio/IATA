@@ -149,7 +149,7 @@ public class AMS_OSCARTriggerHandler {
 
 		//do Not run minor changes on agency changes trigger????
 		AMS_AccountTriggerHandler.processMinorChangesValidationFlag = false;
-
+		AMS_AccountTriggerHandler.minorChangesComingFromOSCAR = true;
 		List<AMS_OSCAR__c> oscarsToValidate = getAgencyChangeOSCARS(oscars);
 
 		if (oscarsToValidate.size() > 0) {
