@@ -44,7 +44,7 @@
 				<tr>
 					<td>SUBJECT: </td>
 					<td style="font-weight:bold; text-decoration:underline">
-						<apex:OutputText value="NOTICE OF INDIVIDUAL WITHDRAWALS ACTIONED" rendered="{!selectedAgreement=='MITA'}"/>
+						<apex:OutputText value="NOTICE OF INDIVIDUAL MITA WITHDRAWALS ACTIONED" rendered="{!selectedAgreement=='MITA'}"/>
 						<apex:OutputText value="NOTICE OF BIETA (IET) WITHDRAWALS ACTIONED" rendered="{!selectedAgreement=='BIETA'}"/>
 						<br/>
 					</td>
