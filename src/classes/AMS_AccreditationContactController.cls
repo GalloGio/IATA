@@ -21,6 +21,7 @@ public with sharing class AMS_AccreditationContactController {
     private Id AcCurrentCompanyRt;
     private Id AcCurrentOwnerRt;
     public List<TrainedStaffWrapper> trainedStaffWrapper{get; set;}
+    public boolean isNewProcess {get; set;}
 
     public static Map<String, String> accreditationContactRT = new Map<String, String> {
 
@@ -126,7 +127,10 @@ public with sharing class AMS_AccreditationContactController {
 
         isCorrection = aoa.SAAM_Case__r.OSCAR__r.Process__c == AMS_Utils.COR;
         isCargoAgency = aoa.SAAM_Case__r.OSCAR__r.Account__r.Sector__c == AMS_Utils.SECTOR_CARGO;
+
         isCertificationOSCAR = aoa.SAAM_Case__r.OSCAR__r.Process__c == AMS_Utils.CERTIFICATION ? true : false;
+
+        isNewProcess = aoa.SAAM_Case__r.OSCAR__r.RecordTypeId == AMS_Utils.RECTYPE_NEW? true : false;
     }
     
     public void addEmptyRow()
