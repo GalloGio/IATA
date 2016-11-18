@@ -446,7 +446,7 @@ public class EF_BillingAgreementHandler
     }
     
 	public static void checkIfBillingAgreementDeactivationRequired(Map<Id,EF_Billing_Agreement__c> agreementMap){
-		List<Id> involvedBas = agreementMap.keySet();
+		Set<Id> involvedBas = agreementMap.keySet();
 		
 		// Retrieve the list of Billing Agreement for which there is at least one active Material Line Item
     	AggregateResult[] activableBAs = [Select EF_Relationship__c FROM EF_Material_Line_Item__c WHERE EF_Relationship__c IN :involvedBAs AND EF_Status__c = 'Active' GROUP BY EF_Relationship__c];
