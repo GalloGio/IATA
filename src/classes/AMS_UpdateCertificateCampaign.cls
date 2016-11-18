@@ -1,8 +1,8 @@
-public class UpdateCertificateCampaign implements Database.Batchable<sObject> {
+public class AMS_UpdateCertificateCampaign implements Database.Batchable<sObject> {
 	
 	Set<Id> accountIds;
 	
-	public UpdateCertificateCampaign(Set<Id> accountIds) {
+	public AMS_UpdateCertificateCampaign(Set<Id> accountIds) {
 		this.accountIds = accountIds;
 	}
 	

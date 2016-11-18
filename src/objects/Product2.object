@@ -4473,6 +4473,7 @@ The product will only appear on the Online Store when the date entered in this f
         <fullName>GDP_CAC_WEB_for_Non_Members</fullName>
         <columns>PRODUCT2.NAME</columns>
         <columns>IEC_Product_Information__c</columns>
+        <columns>Display_to_ECommerce__c</columns>
         <columns>IEC_Parent_Product__c</columns>
         <columns>IEC_Product_Rate_Plan_Information__c</columns>
         <columns>SAP_Material_Number__c</columns>

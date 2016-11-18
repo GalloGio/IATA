@@ -350,7 +350,7 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
             'NOC_Received__c'                           => 'NOC_Received_Date__c',
             'Suspend_in_BSPLINK_CASSLink__c'            => 'Suspended_in_BSPLINK_CASSLink__c',
             'Release_FS_if_applicable__c'               => 'Financial_Security_released__c',
-            'Reactivate_Agent_in_BSPlink_CASSlink__c'   => 'Reactivated_Agent_in_BSPlink_CASSlink__c'
+            'Reactivate_Agent_in_BSPlink_CASSlink__c'   => 'Reactivated_Agent_in_BSPlink_CASSlink__c',
             'Confirm_Payment_if_applicable__c'          => 'Proof_of_payment_received__c',
             'Send_Confirmation__c'                      => 'Confirmation_Sent__c'
             };

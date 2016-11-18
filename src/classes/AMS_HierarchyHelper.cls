@@ -570,6 +570,7 @@ global class AMS_HierarchyHelper {
 		Map<Id, Map<Id, Set<Id>>> childAccounts = new Map<Id, Map<Id, Set<Id>>>();
 		for(AMS_Oscar__c oscar : oscars){
 			childAccounts.put(oscar.Id, new Map<Id, Set<Id>>());
+			childAccounts.get(oscar.Id).put(oscar.Account__c, new Set<Id>());
 
 			for(AMS_Agencies_relationhip__c r : relationshipMap.get(oscar.Account__c)){
 

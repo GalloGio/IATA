@@ -421,7 +421,7 @@ global class AMS_OSCAR_Webservice {
             changeCode.reasonDesc  = 'ACCREDITED-MEETS STANDARD';
             changeCode.status  = '9';
 
-            AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {oscar}, new List<Account> {acct}, true);
+            AMS_Utils.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {oscar}, new List<Account> {acct}, true);
 
             oscar.Certificate_Generated__c = System.today();
             update oscar;
