@@ -73,6 +73,8 @@ public without sharing class AMS_Utils {
     public static final String SANITYCHECK = 'Perform Sanity Check';
     public static final String APPROVAL = 'Manager Approval';
     public static final String WITHDRAWAL = 'Application Withdrawal';
+    public static final String SUSPENSION = 'Process suspension';
+    public static final String TERMINATION = 'Process termination';
 
     public static final String PASSED = 'Passed';
     public static final String FAILED = 'Failed';
@@ -89,7 +91,7 @@ public without sharing class AMS_Utils {
     public static final String MIN_SHAREHOLDING = 'Minor Shareholding';
     public static final String NAME = 'Name';
     public static final String LEGAL_STATUS = 'Legal Status';
-    public static final String VFMR = 'VFMR';
+    public static final String VFMR = 'VMFR';
 
 
     public static final String OSCAR_CLOSED = 'Closed (Closed)';
@@ -115,7 +117,23 @@ public without sharing class AMS_Utils {
     //Processes of type CHANGES
     public static final String COR              = 'CORRECTION.1.0'  ;
     public static final String AGENCYCHANGES    = 'MAJOR.CHANGES'   ;
+    public static final String VOLRELINQUISH    = 'VR.1.0'          ;
+    public static final String VOLRELINQUISH_CA = 'VR.1.0.CA'       ;
     public static final String BANKACCCHANGES   = 'BANK.ACCOUNT.CHANGES';
+    public static final String CERTIFICATION    = 'CERTIFICATION.1.0';
+
+    //other types of process
+    public static final String CERTIFICATE      = 'CER.1.0'         ;
+
+    //Types of Certificate
+    public static final String CERT_DGR         = 'DGR';
+    public static final String CERT_DGA         = 'DGA';
+
+    //Record Types
+    public static final String RECTYPE_NEW      = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('NEW').getRecordTypeId();
+    public static final String RECTYPE_CHANGE   = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('CHANGE').getRecordTypeId();
+    public static final String RECTYPE_CERT     = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('CERTIFICATION').getRecordTypeId();
+    public static final String RECTYPE_OSCARCOMM= Schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
 
     public static final Set<String> oscarAMSProcesses = new Set <String>{new_HO,new_BR,new_BR_ABROAD,new_TIDS,new_MSO,new_GSA,new_GSA_BSP,new_GSSA,new_AHA,new_AHA_BSP,new_SA, COR};
 
@@ -145,6 +163,7 @@ public without sharing class AMS_Utils {
     public static final String TYPECHANGE_LOCATIONWITHINSPECTION = 'Location with inspection'; 
     public static final Id AccreditationContactPersonRT = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Person').getRecordTypeId();
     public static final Id AccreditationContactCompanyRT = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Company').getRecordTypeId();
+    public static final Id AccreditationContactTrainedStaffRT = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Trained Staff').getRecordTypeId();
     public static final Id AccountRoleOwnershipRT = Schema.SObjectType.AMS_Account_Role__c.getRecordTypeInfosByName().get('Ownership').getRecordTypeId();
 
     public static final Set<String> LocationClassIFAPAllowed = new Set<String>{'P','C','R'};
@@ -687,6 +706,19 @@ public without sharing class AMS_Utils {
             toReturn = oscarAgency;
         }
 
+        if(oscar != null){
+            if(aacNEW.Change_Code__c == 'FIN' && new Set<String>{'C','P'}.contains(oscar.Location_Class__c)){
+                oscarAgency.Annual_Renewal_Certificates__c = true;
+                toReturn = oscarAgency;
+            }
+        }       
+
+        if(aacNew.Change_Code__c == 'CER'){
+            oscarAgency.Annual_Renewal_Certificates__c = true;
+            oscarAgency.Certificate_Generated_Current_Year__c = true;
+            toReturn = oscarAgency;
+        }
+
         if( aacNEW.Change_Code__c == 'FIN' ){
             
             oscarAgency.Is_AIMS_Account__c = true;
@@ -1079,16 +1111,16 @@ public without sharing class AMS_Utils {
     return accountsToUpdate;
 
 }
-
+                        
 //Map data from staging area (AMS Online Accreditation) to account
     public static AMS_Pax_Accreditation_Form__c CopyDataFromAccountToStaging(String typesOfChange, Account account, AMS_Pax_Accreditation_Form__c onlineAccreditation) {
-
+                        
         System.debug('AGENCY CHANGES: Types of Change (' + typesOfChange + ') ');
 
         Set<String> fieldsToMigrate = AMS_AgencyChangesConfigHelper.getFieldsToMigrate(typesOfChange);
-
+                     
         System.debug('AGENCY CHANGES: fields to migrate (' + fieldsToMigrate + ') for accounts: ' + account);
-
+                           
         Map<String, String> fieldsMapping = new Map<String, String> {'Name' => 'Account_Name__c'
                                                                     ,'IATACode__c' => 'IATACode__c'
                                                                     ,'Short_Name__c' => 'Short_Name__c'
@@ -1121,18 +1153,18 @@ public without sharing class AMS_Utils {
                                                                     ,'IATA_ISO_Billing_State__c' => 'IATA_ISO_State__c'
                                                                     ,'IATA_ISO_Shipping_Country__c' => 'Shipping_ISO_Country__c'
                                                                     ,'IATA_ISO_Shipping_State__c' => 'Shipping_ISO_State__c'};
-
+                        
         if (fieldsToMigrate != null && onlineAccreditation != null) {
                 Map<String, Object> onlineAccreditationFieldNewValue = new Map<String,Object>();
-
+                            
                 for (String key : fieldsMapping.keySet()) {
                     String value = fieldsMapping.get(key);
                     if (fieldsToMigrate.contains(value)) {
-                    
+
                         onlineAccreditationFieldNewValue.put(value, account.get(key));
                         System.debug('copying stuff from target agency ' + value + ':' + account.get(key));
                     }
-                }
+                    }
 
                 //fields that require transformation
                 if (fieldsToMigrate.contains('ISSP_AMS_Premises_located_at_airport__c'))
@@ -1161,7 +1193,7 @@ public without sharing class AMS_Utils {
 
         return onlineAccreditation;
 
-    }
+}
 
 //Deprecated necessary rework because status no longer changes only after change code generation
 //get Inspections from oscar
@@ -1302,12 +1334,18 @@ public static String transformGDS(String gds) {
 public static String errorMessageBeautifyer(Exception ex) {
     String errorString = ex.getMessage();
     String searchString = 'FIELD_CUSTOM_VALIDATION_EXCEPTION';
+    String searchString2 = '##';
     System.debug('EXCEPTION!! ' + ex.getMessage() + '\n ' + ex.getStackTraceString());
     if (ex.getMessage().containsIgnoreCase(searchString)) {
         System.debug(ex.getMessage().indexOfIgnoreCase(searchString));
         Integer startOfErrorMessage = ex.getMessage().indexOfIgnoreCase(searchString) + searchString.length() + 2;
         errorString = ex.getMessage().substring(startOfErrorMessage, ex.getMessage().length());
         errorString = errorString.substringBefore(': [');
+    }else if(ex.getMessage().containsIgnoreCase(searchString2)){
+        System.debug(ex.getMessage().indexOfIgnoreCase(searchString2));
+        Integer startOfErrorMessage = ex.getMessage().indexOfIgnoreCase(searchString2) + searchString2.length();
+        errorString = ex.getMessage().substring(startOfErrorMessage, ex.getMessage().length());
+        errorString = errorString.substringBefore('##');
     }
     return 'ERROR: ' + errorString;
 }
@@ -1638,5 +1676,100 @@ public static String fetchTypeOfCustomer (String locationType , String category)
     return categoryCustomerMap.get(category);
 
 }
+
+    public static final Date knownSunday = date.newInstance(2012, 7, 1);
+    
+    private static Map<String, Set<Integer>> weekendDaysPerBusinessHours{
+        get{
+            if(weekendDaysPerBusinessHours == null) weekendDaysPerBusinessHours = new Map<String, Set<Integer>>();
+            return weekendDaysPerBusinessHours;
+        }
+        set;
+    }
+
+    private static Set<Integer> addBusinessHours(String businessHours){
+        String findBusinessHours = (businessHours == null ? 'Default' : businessHours);
+
+        if(!weekendDaysPerBusinessHours.containsKey(findBusinessHours)){
+            List<BusinessHours> hs = [SELECT Id, Name, isDefault, isActive, SundayStartTime, MondayStartTime, TuesdayStartTime, WednesdayStartTime, ThursdayStartTime, FridayStartTime, SaturdayStartTime FROM BusinessHours WHERE isActive = true AND (Name = :findBusinessHours OR isDefault = true)];
+
+            Set<Integer> weekendDays = new Set<Integer>();
+            if(hs.isEmpty()){
+                System.debug(loggingLevel.ERROR, '____ [cls AMS_Utils - addBusinessHours] ************ no businessHours found -- using Sunday and Saturday ');
+                weekendDays.add(0);
+                weekendDays.add(6);
+                weekendDaysPerBusinessHours.put(findBusinessHours, weekendDays);
+            }else{
+                for(BusinessHours h : hs){
+                    weekendDays = new Set<Integer>();
+                    if(h.SundayStartTime == null) weekendDays.add(0);
+                    if(h.MondayStartTime == null) weekendDays.add(1);
+                    if(h.TuesdayStartTime == null) weekendDays.add(2);
+                    if(h.WednesdayStartTime == null) weekendDays.add(3);
+                    if(h.ThursdayStartTime == null) weekendDays.add(4);
+                    if(h.FridayStartTime == null) weekendDays.add(5);
+                    if(h.SaturdayStartTime == null) weekendDays.add(6);
+                    
+                    if(h.Name == findBusinessHours) weekendDaysPerBusinessHours.put(h.Name, weekendDays);
+                    else if(h.isDefault) weekendDaysPerBusinessHours.put('Default', weekendDays);
+                }
+                //if we went through all business hours and didn't find the desired one, copy the default
+                if(!weekendDaysPerBusinessHours.containsKey(findBusinessHours)){
+                System.debug(loggingLevel.ERROR, '____ [cls AMS_Utils - addBusinessHours] ************ no businessHours found for region -- copying default one ');
+                    weekendDaysPerBusinessHours.put(findBusinessHours, weekendDaysPerBusinessHours.get('Default'));
+                }
+            }           
+        }
+
+        return weekendDaysPerBusinessHours.get(findBusinessHours);
+    }
+    
+
+    public static Boolean IsWeekendDay(Date dateParam, String businessHours){
+        return IsWeekendDay(DateTime.newInstance(dateParam, Time.newInstance(0, 0, 0, 0)), businessHours);
+    }
+
+    public static Boolean IsWeekendDay(Datetime dateParam, String businessHours){
+       //Integer dayOfWeek  = Integer.valueOf(dateParam.format('u'));
+       //Integer dayOfWeek = dateParam.date().toStartOfWeek().daysBetween(dateParam.date());
+       Integer dayOfWeek = Math.mod(knownSunday.daysBetween(dateParam.date()), 7);
+
+       System.debug(loggingLevel.Debug, '____ [cls AMS_Utils - AddBusinessDays] dateParam - ' + dateParam);
+       System.debug(loggingLevel.Debug, '____ [cls AMS_Utils - IsWeekendDay] dayOfWeek - ' + dayOfWeek);
+
+       Set<Integer> weekendDays = new Set<Integer>();
+       if(weekendDaysPerBusinessHours.containsKey(businessHours)) weekendDays = weekendDaysPerBusinessHours.get(businessHours);
+       else weekendDays = addBusinessHours(businessHours);
+
+       System.debug(loggingLevel.Debug, '____ [cls AMS_Utils - IsWeekendDay] weekendDays - ' + weekendDays);
+
+       return weekendDays.contains(dayOfWeek);
+    }
+
+    public static Date AddBusinessDays(Date d, Integer businessDaysToAdd, String businessHours){
+        return AddBusinessDays(Datetime.newInstance(d, Time.newInstance(0, 0, 0, 0)), businessDaysToAdd, businessHours).date();
+    }
+
+    public static Datetime AddBusinessDays(Datetime d, Integer businessDaysToAdd, String businessHours){
+        System.debug(loggingLevel.Debug, '____ [cls AMS_Utils - AddBusinessDays] d - ' + d);
+        System.debug(loggingLevel.Debug, '____ [cls AMS_Utils - AddBusinessDays] businessHours - ' + businessHours);
+
+        Datetime finalDate = d;
+
+        //Add or decrease in businessDaysToAdd days 
+        Integer direction = businessDaysToAdd < 0 ? -1 : 1;
+
+        while(businessDaysToAdd != 0){
+            finalDate = finalDate.AddDays(direction);
+            if (!isWeekendDay(finalDate, businessHours)) businessDaysToAdd -= direction;
+        }
+
+        System.debug(loggingLevel.Debug, '____ [cls AMS_Utils - AddBusinessDays] finalDate - ' + finalDate);
+        return finalDate;
+    } 
+
+    public static Date lastDayOfMonth(Date dateField) {
+        return dateField.addMonths(1).toStartOfMonth().addDays(-1);
+    }
 
 }

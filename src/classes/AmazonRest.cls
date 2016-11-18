@@ -92,6 +92,25 @@ public  class AmazonRest {
             return status.equals('OK');
         }
 
+        public static Boolean uploadFile(UploadMultipleFileToAmazonButtonCtrl.UploadFile uploadFile, Blob fileBody){
+            HttpRequest req = new HttpRequest();
+
+            req.setMethod('PUT');
+            req.setEndpoint(uploadFile.endpoint+uploadFile.bucketName+'/'+uploadFile.fullFileNameEncoded);
+
+            req.setHeader('Cache-Control', 'no-cache');
+            req.setHeader('Authorization',uploadFile.authorization);
+            req.setHeader('X-Amz-Date',uploadFile.timestamp);
+            req.setHeader('Content-Type', uploadFile.contenttype+';charset=UTF-8');
+
+            req.setBodyasBlob(fileBody);
+
+            Http http = new Http();
+            String status = !Test.isRunningTest() ? http.send(req).getStatus() : TESTSTRING ;
+
+            return status.equals('OK');
+          }
+
         public static string EncodePath(string pathToEncode){
             
             string  stringToSplit = '/'+pathToEncode;   

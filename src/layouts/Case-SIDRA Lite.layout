@@ -6,6 +6,8 @@
     <customButtons>Reset_New_interactions</customButtons>
     <customButtons>Escalate_within_IATA</customButtons>
     <customButtons>Create_SAAM_Case</customButtons>
+	<customButtons>Deactivate_BSPLink</customButtons>
+	<customButtons>Reactivate_BSPLink</customButtons>
     <emailDefault>false</emailDefault>
     <excludeButtons>Clone</excludeButtons>
     <excludeButtons>Delete</excludeButtons>

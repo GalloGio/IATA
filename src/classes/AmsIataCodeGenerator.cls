@@ -423,7 +423,7 @@ global class AmsIataCodeGenerator{
                             // If we end up here, it means that there weren't any holes in the range of Accounts' IATACodes
                             // but because this rule still is valid and applies: rangeAgencies.size()<= (range.Max_Range__c-range.Min_Range__c),
                             // the next number available (based on the amount of loops we have made) can be selected for usage.
-                        
+                            
                             theAccreditation.N_Code__c = resizeNumericString(String.valueOf(rangeAgencies.size()+range.Min_Range__c),4);
                             theAccreditation.A_Code__c = String.valueOf(range.Area_Code__c);
                             theAccreditation.C_Code__c = resizeNumericString(String.valueOf(range.Prefix__c),2);
@@ -441,8 +441,8 @@ global class AmsIataCodeGenerator{
                                 returnedValues[1] = 'The IATA code generated is not unique. Please check the CASS Number (if it is a branch) in the hierarchy or search for the IATA Code ' + theAccreditation.IATACode__c + ' in the search tool ';
                                 returnedValues[0] = '2';
                                 return returnedValues;
-                    }
-                    
+                            }
+
                             System.debug('**** [IATA CODE GENerator] No hole found. set new IATA Code based on max size '+ theAccreditation.IATACode__c);
                             
                             //theAccount.IATACode__c = theAccreditation.IATACode__c;
@@ -456,7 +456,7 @@ global class AmsIataCodeGenerator{
                             {
                                 // TODO Later... These are already mapped, but there's no task to activate these yet
                                 // When the moment comes, we should remove the above IF and this ELSE
-                                
+                        
                                 // theAccount.Category__c = programCategoryMap.get(theAccount.Location_Class__c);
                             }
                             
@@ -469,7 +469,7 @@ global class AmsIataCodeGenerator{
                             if(!sr.isSuccess())
                             { 
                                 returnedValues[1] = sr.getErrors()[0].getMessage();
-                            }
+                    }
                             else
                             {
                                 returnedValues[1] = 'Iata code generated successfully';

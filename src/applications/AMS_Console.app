@@ -215,9 +215,18 @@
     <tab>standard-Chatter</tab>
     <tab>APXTConga4__Conga_Template__c</tab>
     <tab>SIDRA_Lite_Mass_Approval</tab>
+    <tab>Voucher_Management</tab>
+    <tab>AMS_Voucher_Region__c</tab>
+    <tab>Annual_Certificate_Campaign</tab>
     <workspaceMappings>
         <mapping>
+            <tab>AMS_Voucher_Region__c</tab>
+        </mapping>
+        <mapping>
             <tab>APXTConga4__Conga_Template__c</tab>
+        </mapping>
+        <mapping>
+            <tab>Annual_Certificate_Campaign</tab>
         </mapping>
         <mapping>
             <tab>Code_Range__c</tab>
@@ -227,6 +236,9 @@
         </mapping>
         <mapping>
             <tab>SIDRA_Lite_Mass_Approval</tab>
+        </mapping>
+        <mapping>
+            <tab>Voucher_Management</tab>
         </mapping>
         <mapping>
             <tab>standard-Account</tab>
