@@ -1,5 +1,7 @@
 global with sharing class IDCardUtil {
-  
+	
+	//flag to determine if idcard contact trigger can run more than once per execution
+    public static Boolean isFirstTime = true;	  
     @RemoteAction
     public static final String PARAM_APPLICATIONTYPE = 'atype';
     @RemoteAction

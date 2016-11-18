@@ -21,12 +21,82 @@ public class vfIECEBC_TestSuite {
     public static IECCustomer currentCustomer;
 
     public static User initPreRunAs(Boolean grantEBCAccess) {
-        User usr = IECTestUtil.createSampleGuestUserAndLogin();
+//        User usr = IECTestUtil.createSampleGuestUserAndLogin();
+//        
 
+        Account a = new Account();
+        a.RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Standard Account').getRecordTypeId();
+        a.BillingStreet = '123 main street';
+        a.BillingPostalCode = 'H0H 0H0';
+        a.BillingCountry = 'Canada';
+        a.BillingCity = 'Montreal';
+        a.Customer_Type__c = 'Third Party';
+        a.Name = 'Company';
+        a.OwnerId = '00520000002MSDBAA4';
+        insert a;
+        
+        Contact c = new Contact();
+        c.RecordTypeId = Schema.SObjectType.Contact.getRecordTypeInfosByName().get('Standard').getRecordTypeId();
+        c.AccountId = a.Id;
+        c.OwnerId = a.OwnerId;
+        c.FirstName = 'Test';
+        c.LastName = 'User';
+        c.Title = 'TestTitle';
+        c.Email = 'testIECGuest@test.iata.org';
+        c.Phone = '514123345';
+        c.User_IECPortal_Status__c = 'Privilege - Approved';
+        insert c;
+        
+        Zuora__CustomerAccount__c ba = new Zuora__CustomerAccount__c(
+            Zuora__Account__c = a.Id
+            , Contact__c = c.Id
+            , Name = a.Name
+            , CRMContactID__c = String.valueOf(c.Id)
+            , Zuora__DefaultPaymentMethod__c = 'CreditCard'
+            , Zuora__BillToCity__c = 'Toronto'
+            , Zuora__BillToCountry__c = 'Canada'
+            , Zuora__BillToState__c = 'Ontario'
+            , Zuora__BillToAddress1__c = '123 Test St'
+            , Zuora__BillToPostalCode__c = 'A9A9A9'
+        );
+        
         if (grantEBCAccess) {
-            oBillingAccount.eBroadcast_Product_Access__c = true;
-            update oBillingAccount;
+            ba.eBroadcast_Product_Access__c = true;
         }
+        insert ba;
+        
+        
+        
+        User usr = new User(
+            Username = 'testIECGuest.test.iata.org@partner.iata.org'
+            , Email = 'testIECGuest@test.iata.org'
+            , emailencodingkey = 'UTF-8'
+            , Alias = 'testu'
+            , FirstName = c.FirstName
+            , LastName = c.LastName
+            , LocaleSidKey = 'en_US'
+            , CommunityNickname = 'testIECGuest@iata.org'
+            , ProfileId = [Select Id From Profile p where p.Name = 'ISS Portal (Partner)'].Id
+            , LanguageLocaleKey = 'en_US'
+            , timezonesidkey = 'America/New_York'
+            , ContactId = c.Id
+            , IsActive = true
+            , ReceivesAdminInfoEmails = false
+            , ReceivesInfoEmails = false
+        );
+        insert usr;
+        
+        
+        IECTestUtil.trgPortalUserAfterInserUpdate = true;
+        String userId = Site.createPortalUser(usr, a.Id, 'testpassword');
+        IECUserManager.login(usr.Username, 'testpassword', null);
+           
+		IECTestUtil_Account = a;
+        IECTestUtil_Contact = c;
+        IECTestUtil_BillingAccount = ba;
+        IECTestUtil_User = usr;
+        IECTestUtil_UserId = userId;
+        
         
         return usr;
     }
@@ -840,6 +910,93 @@ public class vfIECEBC_TestSuite {
 //            cancel
             
             
+        }
+    }
+    public static void testCampaignConfirm() {
+        
+        IECEBC_TestUtility.createTestUser(false);
+//        User usr = initPreRunAs(true);
+        
+        List<GDP_Products_Account_View__c> gpavs = createGDPProductsAccountViews();
+        
+        EBC_Activity__c act = new EBC_Activity__c(Related_Billing_Account__c = IECEBC_TestUtility.oBillingAccount.Id, New_Balance__c = 0, Total_Count__c = 0, Activity_Type__c = 'Credit', Activity_Date_Time__c = Datetime.now());
+        insert act;
+        EBC_Application_Filter__c af = new EBC_Application_Filter__c(Audience__c = 'Agency', Filter_Description__c = 'Preferred Language', Data_Type__c = 'Text', Filter_Field__c = 'Preferred_Language__c');
+        insert af;
+        
+//        System.runAs(usr) {
+        System.runAs(IECEBC_TestUtility.oUser) {
+            User usr = IECEBC_TestUtility.oUser;
+			vfIECEBC_TestPaymentSuite.initPostRunAs(5);
+            
+            
+            EBC_Master_Filter__c masterFilter = new EBC_Master_Filter__c(Audience__c = 'Agency', OwnerId = usr.Id);
+            insert masterFilter;
+            EBC_Customer_Filter__c cf = new EBC_Customer_Filter__c(EBC_Master_Filter__c = masterFilter.Id, EBC_Application_Filter__c = af.Id, Field_Operator__c = '=', Field_Value__c = 'X0');
+            insert cf;
+            EBC_Template__c tpl = new EBC_Template__c(Is_Tested__c = true, OwnerId = usr.Id);
+            insert tpl;
+            EBC_Campaign__c camp = new EBC_Campaign__c(Name = 'Foo Bar', Number_of_Recipients__c = 7, Subject__c = 'Foo Subject', From_Name__c = 'Foo From Name', Is_Google_Analytics_Tracker_Active__c = true, Google_Analytics_Tracking_Code__c = 'UA-XXXXXX', Billing_Account__c = IECEBC_TestUtility.oBillingAccount.Id, EBC_Master_Filter__c = masterFilter.Id, EBC_Design__c = tpl.Id, OwnerId = usr.Id, Scheduled_Date__c = Datetime.now().addDays(5), Scheduled_Date_Valid_Until__c = Datetime.now().addDays(5));
+            insert camp;
+            
+            PageReference pageRef = Page.IECEBC_CampaignConfirm;
+            pageRef.getParameters().put('id', camp.Id);
+            Test.setCurrentPage(pageRef);
+            
+            camp = [
+                SELECT
+                Id,
+                Name,
+                EBC_Master_Filter__c,
+                Audience__c,
+                EBC_Design__c,
+                From_Name__c,
+                Google_Analytics_Tracking_Code__c,
+                Is_Google_Analytics_Tracker_Active__c,
+                Is_Step1_Valid__c, Is_Step2_Valid__c, Is_Step3_Valid__c, Is_Step4_Valid__c , Is_Step5_Valid__c , Is_Step6_Valid__c,
+                Maximum_Allowed_Step__c,
+                Billing_Account__c,
+                Number_of_Recipients__c,
+                Scheduled_Date__c,
+                Scheduled_Date_Valid_Until__c,
+                Status__c,
+                Subject__c
+                FROM
+                EBC_Campaign__c
+                WHERE
+                Id = :camp.Id
+            ];
+            
+            
+            Test.startTest();
+            Test.setMock(HttpCalloutMock.class, new CampaignPayWithCredit_Mock());
+            
+            // Layout PageLoad
+            vfIECEBC_Layout layoutController = new vfIECEBC_Layout();
+            System.assertEquals(null, layoutController.pageLoad());
+            
+            ApexPages.StandardController sc = new ApexPages.StandardController(camp);
+            vfIECEBC_Campaign campaignExtCon = new vfIECEBC_Campaign(sc);
+            System.assertEquals(6, campaignExtCon.campaign.Maximum_Allowed_Step__c);
+            sc = new ApexPages.StandardController(camp);
+            campaignExtCon = new vfIECEBC_Campaign(sc);
+            vfIECEBC_Cart cartExtCon = new vfIECEBC_Cart(sc);
+            ApexPages.currentPage().getParameters().put('id', camp.Id);
+            vfIECEBC_CampaignConfirm confExtCon = new vfIECEBC_CampaignConfirm(sc);
+            
+            confExtCon.clickPayWithEmailPackage();
+            confExtCon.clickPayWithExactAmount();
+            confExtCon.clickPayWithRatePlan(); 
+            
+            System.assertNotEquals(null, confExtCon.newBalanceLabel);
+            System.assertNotEquals(null, confExtCon.showPaymentItemMessage);
+            System.assertNotEquals(null, confExtCon.showPaymentItemEmailCredit);
+            System.assertNotEquals(null, confExtCon.showPaymentItemRatePlan);
+            System.assertNotEquals(null, confExtCon.emailCreditPurchased);
+            System.assertNotEquals(null, confExtCon.emailUnitCost);
+            System.assertNotEquals(null, confExtCon.paymentItemDescription);
+            System.assertNotEquals(null, confExtCon.paymentItemAmount);
+            System.assertNotEquals(null, confExtCon.totalPurchaseAmount);
         }
     }
     

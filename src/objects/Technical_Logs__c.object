@@ -141,9 +141,27 @@
         <filters>
             <field>Record__c</field>
             <operation>contains</operation>
-            <value>76506286</value>
+            <value>13382106</value>
         </filters>
         <label>AMS - 1 record</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>AMS_Error</fullName>
+        <columns>NAME</columns>
+        <columns>Log__c</columns>
+        <columns>Operation__c</columns>
+        <columns>Record__c</columns>
+        <columns>Status__c</columns>
+        <columns>start_date__c</columns>
+        <columns>End_Date__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>error</value>
+        </filters>
+        <label>AMS - Error</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -162,6 +180,29 @@
             <value>Error</value>
         </filters>
         <label>AMS Errors</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>AMS_OK</fullName>
+        <columns>NAME</columns>
+        <columns>Log__c</columns>
+        <columns>Operation__c</columns>
+        <columns>Record__c</columns>
+        <columns>Status__c</columns>
+        <columns>start_date__c</columns>
+        <columns>End_Date__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Status__c</field>
+            <operation>notEqual</operation>
+            <value>error</value>
+        </filters>
+        <filters>
+            <field>Record__c</field>
+            <operation>contains</operation>
+            <value>96544766</value>
+        </filters>
+        <label>AMS - OK</label>
         <language>en_US</language>
     </listViews>
     <nameField>

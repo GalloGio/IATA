@@ -68,6 +68,20 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>AIMS_Updated_by__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>The user who created this change code in AIMS</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The user who created this change code in AIMS</inlineHelpText>
+        <label>AIMS Updated by</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Agencies_Applied_Change_codes</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>Account__c</fullName>
         <externalId>false</externalId>
         <label>Account</label>
@@ -115,6 +129,17 @@
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Applied_Configuration__c</fullName>
+        <externalId>false</externalId>
+        <label>Applied Configuration</label>
+        <length>18</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Bulletin_Information__c</fullName>
@@ -237,6 +262,10 @@
             </picklistValues>
             <picklistValues>
                 <fullName>IRR</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>IRS</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -445,6 +474,16 @@
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Published_on_EBulletin__c</fullName>
+        <externalId>false</externalId>
+        <formula>To_Publish_in_e_Bulletin__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Published on EBulletin</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>Reason_Code__c</fullName>
@@ -738,11 +777,17 @@
         <label>SIDRA Case</label>
         <lookupFilter>
             <active>true</active>
-            <errorMessage>You can only select SIDRA cases, make sure the selected case has the correct record type</errorMessage>
+            <booleanFilter>1 OR 2</booleanFilter>
+            <errorMessage>You can only select SIDRA or SIDRA Lite cases, make sure the selected case has the correct record type</errorMessage>
             <filterItems>
-                <field>Case.RecordType.Name</field>
+                <field>Case.RecordType.DeveloperName</field>
                 <operation>equals</operation>
                 <value>SIDRA</value>
+            </filterItems>
+            <filterItems>
+                <field>Case.RecordType.DeveloperName</field>
+                <operation>equals</operation>
+                <value>SIDRA_Lite</value>
             </filterItems>
             <isOptional>false</isOptional>
         </lookupFilter>
@@ -785,6 +830,27 @@
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>To_Publish_in_e_Bulletin__c</fullName>
+        <defaultValue>true</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Uncheck if the change code should not appear in the e-bulletin</inlineHelpText>
+        <label>To Publish in e-Bulletin</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Updated_AIMS__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Flag for Analyst to check if the Minor Change has been carried out to AIMS</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Flag for Analyst to check if the Minor Change has been carried out to AIMS</inlineHelpText>
+        <label>Updated AIMS</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
     </fields>
     <label>Agency Applied Change code</label>
     <nameField>
@@ -908,6 +974,10 @@
             </values>
             <values>
                 <fullName>IRR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IRS</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1316,6 +1386,10 @@
             </values>
             <values>
                 <fullName>IRR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IRS</fullName>
                 <default>false</default>
             </values>
             <values>

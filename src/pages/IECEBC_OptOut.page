@@ -13,12 +13,13 @@
             <div class="message-container">
                 <div class="inner-wrapper">
                     <p>
-                        Static Marketing text goes here to explain what eBroadcast is and try to retain subscribers. <br />
-                        Aliquam quis tristique lectus. Morbi nibh libero, facilisis nec luctus a, eleifend sit amet risus.
+                        You are receiving this email through eBroadcast, a service offered by IATA to Industry Service providers. 
+                        <br /><br />
+                        Via this service, travel suppliers like airlines, hotels, car rentals, tour operators and cruise lines circulate important messages to the IATA Travel Agency community about their products, promotions, sales and commissions rules.
                     </p>
                     <p class="lead">
-                        With this in mind, do you really want to change email <br />
-                        preferences for <apex:outputText value="{!email}" />
+                        You are about to modify the email preferences for<br />
+                        <apex:outputText value="{!email}" />
                     </p>
                 </div>
             </div>
