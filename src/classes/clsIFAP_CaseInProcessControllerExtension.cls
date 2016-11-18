@@ -20,8 +20,8 @@ public class clsIFAP_CaseInProcessControllerExtension {
 	public String MessageEs{
 		get{ return 'Recepción correcta de los documentos, sujeta a la verificación por parte de IATA.  Se requerirá un nuevo envío de estas cuentas si el formato de los ficheros es incorrecto, o si  la información es incompleta o incorrecta.'; }
 	}
-	
+	*/
 	public clsIFAP_CaseInProcessControllerExtension(ApexPages.StandardController stdController){
 		this.aCase = (Case)stdController.getRecord();
-	}*/
+	}
 }
