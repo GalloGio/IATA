@@ -49,7 +49,7 @@ trigger EF_BillingAgreementTrigger on EF_Billing_Agreement__c (
                 EF_BillingAgreementHandler.revertSkipApprovalIfNecessary(Trigger.new, Trigger.oldMap);
                 
                 // for updated billing agreements, E&F Status must be checked and prevented to be set to Active if no related Active material line item is found
-                EF_BillingAgreementHandler.checkIfBillingAgreementDeactivationRequired(Trigger.new);
+                EF_BillingAgreementHandler.checkIfBillingAgreementDeactivationRequired(Trigger.newMap);
                 
             }
         } else if (Trigger.isAfter && !Trigger.isDelete)
