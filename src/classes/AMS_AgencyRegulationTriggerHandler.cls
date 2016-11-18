@@ -1,9 +1,6 @@
 public class AMS_AgencyRegulationTriggerHandler {
 
     public static void handleBeforeInsert() {
-
-        //fill the contact lookup with the related account financial assessment Contact
-        //fillFinancialAssessmentContact((List<AMS_Agency_Regulation__c>)Trigger.New);
         
     }
 
@@ -12,24 +9,6 @@ public class AMS_AgencyRegulationTriggerHandler {
         processPostNotifSentActions((List<AMS_Agency_Regulation__c>)Trigger.New, (Map<Id,AMS_Agency_Regulation__c>)Trigger.oldMap);
         
     }
-
-    /*public static void fillFinancialAssessmentContact(List<AMS_Agency_Regulation__c> agRegs){
-
-        List<Id> accts = new List<Id>();
-        Map<Id, Id> finAssessmentContactPerAccount = new Map<Id, Id>();
-
-        for(AMS_Agency_Regulation__c agReg: agRegs)
-            accts.add(agReg.Account__c);
-
-        for(Contact c: [SELECT Id, AccountId FROM Contact WHERE AccountId IN: accts AND Financial_Assessment_Contact__c = TRUE])
-            finAssessmentContactPerAccount.put(c.AccountId, c.Id);
-
-        for(AMS_Agency_Regulation__c agReg: agRegs){
-            if(finAssessmentContactPerAccount.get(agReg.Account__c) != null)
-                agReg.Account_Admin__c = finAssessmentContactPerAccount.get(agReg.Account__c);
-        }
-
-    }*/
 
     //After a notification is sent by email we need to create a certification renewal Oscar
     public static void processPostNotifSentActions(List<AMS_Agency_Regulation__c> agencyRegulations, Map<Id,AMS_Agency_Regulation__c> oldAgRegulationValues){
@@ -317,7 +296,7 @@ public class AMS_AgencyRegulationTriggerHandler {
     private static Boolean isToCreateRenewalForDGR(Account accountData, Integer numberOfActiveDGR, Integer minimumHODgrRequirements, Integer minimumBRDgrRequirements){
 
         if(accountData.Is_your_firm_handling_Dangerous_Goods__c == 'Yes'){
-            if(accountData.IATA_ISO_Country__r.Name.equalsIgnoreCase('People\'s Republic of China') && accountData.Location_Class__c == 'C' && numberOfActiveDGR <= 3){
+            if(accountData.IATA_ISO_Country__r.ISO_Code__c == 'CN' && accountData.Location_Class__c == 'C' && numberOfActiveDGR <= 3){
                 return true;
             }
             else if(accountData.Location_Class__c == 'C'){
