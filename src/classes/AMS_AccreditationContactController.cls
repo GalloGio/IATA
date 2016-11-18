@@ -201,7 +201,7 @@ public with sharing class AMS_AccreditationContactController {
     
     public PageReference onSave()
     {
-        if(!calculateTotalOwnership())
+        if(!calculateTotalOwnership() && !isCertificationOSCAR)
         {
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, 'Total ownershiprate for all inserted contacts is ' + ownership + '%. Please set it to 100% before saving.'));
             return null;
