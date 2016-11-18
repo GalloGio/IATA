@@ -94,6 +94,15 @@
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
         <label>ISO State</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>IATA_ISO_State__c.IATA_ISO_Country__r.Id</field>
+                <operation>equals</operation>
+                <valueField>$Source.ISO_Country__c</valueField>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
         <referenceTo>IATA_ISO_State__c</referenceTo>
         <relationshipLabel>AMS Territories</relationshipLabel>
         <relationshipName>AMS_Territories</relationshipName>
