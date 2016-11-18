@@ -198,7 +198,7 @@
                 <apex:pageBlockSectionItem labelStyleClass="{!IF(isAgencyChanges, field.styleClass, '')}" dataStyleClass="{!IF(isAgencyChanges, field.styleClass, '')}">
                     <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields[field.name].Label}" />
                     <apex:outputField value="{!accreditationObj[field.name]}" >
-                        <apex:inlineEditSupport event="{!field.event}" showonEdit="saveButton,cancelButton" disabled="{!NOT(field.inlineEdit)}" />
+                        <apex:inlineEditSupport event="{!field.event}" showonEdit="saveButton,cancelButton" disabled="{!OR(NOT(field.inlineEdit),isCertificationOSCAR)}" />
                     </apex:outputField>
                 </apex:pageBlockSectionItem>
             </apex:repeat>

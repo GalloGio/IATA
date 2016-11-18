@@ -4,3 +4,6 @@
 .THIS .slds-tabs--default__link{
     padding: 0 0.7rem !important;
 }
+.THIS .tab-link {
+    cursor: pointer;
+}

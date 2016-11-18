@@ -30,6 +30,7 @@
     </labels>
     <labels>
         <fullName>AMS_OSCAR_AGENCYFEES</fullName>
+        <categories>LeftSidePanel, Headers</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS OSCAR AGENCYFEES</shortDescription>
@@ -37,6 +38,7 @@
     </labels>
     <labels>
         <fullName>AMS_OSCAR_ANTIMONEYLAUNDERING</fullName>
+        <categories>LeftSidePanel, Headers</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS_OSCAR_ANTIMONEYLAUNDERING</shortDescription>
@@ -44,6 +46,7 @@
     </labels>
     <labels>
         <fullName>AMS_OSCAR_APPLICATIONPROCESSING</fullName>
+        <categories>LeftSidePanel, Headers</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS OSCAR APPLICATIONPROCESSING</shortDescription>
@@ -51,6 +54,7 @@
     </labels>
     <labels>
         <fullName>AMS_OSCAR_APPLICATIONRECEIPT</fullName>
+        <categories>LeftSidePanel, Headers</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS OSCAR APPLICATIONRECEIPT</shortDescription>
@@ -58,6 +62,7 @@
     </labels>
     <labels>
         <fullName>AMS_OSCAR_APPLICATION_FINALIZATION</fullName>
+        <categories>LeftSidePanel, Headers</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS OSCAR APPLICATION FINALIZATION</shortDescription>
@@ -65,6 +70,7 @@
     </labels>
     <labels>
         <fullName>AMS_OSCAR_APPROVAL</fullName>
+        <categories>LeftSidePanel, Headers</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS OSCAR APPROVAL</shortDescription>
@@ -72,13 +78,15 @@
     </labels>
     <labels>
         <fullName>AMS_OSCAR_APP_FINALIZATION</fullName>
+        <categories>LeftSidePanel, Headers</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS_OSCAR_APP_FINALIZATION</shortDescription>
-        <value>Approval Finalization</value>
+        <value>Application Finalization</value>
     </labels>
     <labels>
         <fullName>AMS_OSCAR_APP_RECONSIDERATION</fullName>
+        <categories>LeftSidePanel, Headers</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS_OSCAR_APP_RECONSIDERATION</shortDescription>
@@ -86,6 +94,7 @@
     </labels>
     <labels>
         <fullName>AMS_OSCAR_APP_REJECTION_WITHDRAWAL</fullName>
+        <categories>LeftSidePanel, Headers</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS OSCAR APP WITHDRAWAL</shortDescription>
@@ -97,6 +106,20 @@
         <protected>false</protected>
         <shortDescription>AMS OSCAR Action1</shortDescription>
         <value>Generate IATA Code</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_Action10</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_Action10</shortDescription>
+        <value>Generate Case to release FS</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_Action11</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_Action11</shortDescription>
+        <value>Reactivate the agency in BSPLink</value>
     </labels>
     <labels>
         <fullName>AMS_OSCAR_Action2</fullName>
@@ -134,7 +157,29 @@
         <value>Edit the accounts involved</value>
     </labels>
     <labels>
+        <fullName>AMS_OSCAR_Action7</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_Action7</shortDescription>
+        <value>Create SIDRA Lite</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_Action8</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_Action8</shortDescription>
+        <value>Create Commissioner Case</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_Action9</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_Action9</shortDescription>
+        <value>Suspend the agency in BSPLink</value>
+    </labels>
+    <labels>
         <fullName>AMS_OSCAR_CHANGE_DISAPPROVAL</fullName>
+        <categories>LeftSidePanel, Headers</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS_OSCAR_CHANGE_DISAPPROVAL</shortDescription>
@@ -142,6 +187,7 @@
     </labels>
     <labels>
         <fullName>AMS_OSCAR_CHANGE_FINALIZATION</fullName>
+        <categories>LeftSidePanel, Headers</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS_OSCAR_CHANGE_FINALIZATION</shortDescription>
@@ -149,6 +195,7 @@
     </labels>
     <labels>
         <fullName>AMS_OSCAR_CHANGE_PROCESSING</fullName>
+        <categories>LeftSidePanel, Headers</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS_OSCAR_CHANGE_PROCESSING</shortDescription>
@@ -156,6 +203,7 @@
     </labels>
     <labels>
         <fullName>AMS_OSCAR_CHANGE_RECONSIDERATION</fullName>
+        <categories>LeftSidePanel, Headers</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS_OSCAR_CHANGE_RECONSIDERATION</shortDescription>
@@ -163,6 +211,7 @@
     </labels>
     <labels>
         <fullName>AMS_OSCAR_CHANGE_WITHDRAWAL</fullName>
+        <categories>LeftSidePanel, Headers</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS_OSCAR_CHANGE_WITHDRAWAL</shortDescription>
@@ -170,6 +219,7 @@
     </labels>
     <labels>
         <fullName>AMS_OSCAR_CODEASSIGNMENT</fullName>
+        <categories>LeftSidePanel, Headers</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS_OSCAR_CODEASSIGNMENT</shortDescription>
@@ -177,17 +227,51 @@
     </labels>
     <labels>
         <fullName>AMS_OSCAR_DISAPPROVAL</fullName>
+        <categories>LeftSidePanel, Headers</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS OSCAR DISAPPROVAL</shortDescription>
-        <value>Disapproval Finalization</value>
+        <value>Application Disapproval</value>
     </labels>
     <labels>
         <fullName>AMS_OSCAR_MASTERDATA</fullName>
+        <categories>LeftSidePanel, Headers</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS OSCAR MASTERDATA</shortDescription>
         <value>Master Data</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_PENALTY</fullName>
+        <categories>LeftSidePanel, Headers</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS OSCAR PENALTY</shortDescription>
+        <value>Penalty</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_PROCESSSUSPENSION</fullName>
+        <categories>LeftSidePanel, Headers</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_PROCESSSUSPENSION</shortDescription>
+        <value>Process Suspension</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_PROCESSTERMINATION</fullName>
+        <categories>LeftSidePanel, Headers</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_PROCESSTERMINATION</shortDescription>
+        <value>Process Termination</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_PROCESSWITHDRAWAL</fullName>
+        <categories>LeftSidePanel, Headers</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_PROCESSWITHDRAWAL</shortDescription>
+        <value>Process Withdrawal</value>
     </labels>
     <labels>
         <fullName>AMS_OSCAR_Process_A1</fullName>
@@ -233,17 +317,18 @@
     </labels>
     <labels>
         <fullName>AMS_OSCAR_REJECTION_FINALIZATION</fullName>
+        <categories>LeftSidePanel, Headers</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS_OSCAR_REJECTION_FINALIZATION</shortDescription>
-        <value>Rejection Finalization</value>
+        <value>Application Rejection</value>
     </labels>
     <labels>
         <fullName>AMS_OSCAR_STEP1</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS OSCAR STEP1</shortDescription>
-        <value>Approval Finalization</value>
+        <value>Application Finalization</value>
     </labels>
     <labels>
         <fullName>AMS_OSCAR_STEP10</fullName>
@@ -306,7 +391,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS OSCAR STEP18</shortDescription>
-        <value>Rejection finalization</value>
+        <value>Application Rejection</value>
     </labels>
     <labels>
         <fullName>AMS_OSCAR_STEP19</fullName>
@@ -365,11 +450,60 @@
         <value>Validate Qualification Criteria (KC03)</value>
     </labels>
     <labels>
+        <fullName>AMS_OSCAR_STEP26</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS OSCAR STEP26</shortDescription>
+        <value>Late/Absence NOC - Suspend/Terminate</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_STEP27</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS OSCAR STEP27</shortDescription>
+        <value>Late/Absence NOC - Reactivate</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_STEP28</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS OSCAR STEP28</shortDescription>
+        <value>Late/Absence NOC - Withdrawal</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_STEP29</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS OSCAR STEP29</shortDescription>
+        <value>Late/Absence NOC - Penalty Fee</value>
+    </labels>
+    <labels>
         <fullName>AMS_OSCAR_STEP3</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS OSCAR STEP3</shortDescription>
-        <value>Disapproval Finalization</value>
+        <value>Application Disapproval</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_STEP30</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_STEP30</shortDescription>
+        <value>Process Suspension</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_STEP31</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_STEP31</shortDescription>
+        <value>Process Termination</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_STEP32</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_STEP32</shortDescription>
+        <value>Process Withdrawal</value>
     </labels>
     <labels>
         <fullName>AMS_OSCAR_STEP4</fullName>
@@ -415,6 +549,7 @@
     </labels>
     <labels>
         <fullName>AMS_OSCAR_VALIDATION</fullName>
+        <categories>LeftSidePanel, Headers</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS OSCAR VALIDATION</shortDescription>
@@ -3544,7 +3679,7 @@ Should you have any question about payment by bank transfer, please visit &lt;a 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCard ReportAgencyIncorrectInfo2</shortDescription>
-        <value>If the above address is incorrect, please report agency incorrect information (&lt;a href=&quot;http://www.iata.org/customer-portal/Pages/contactus.aspx&quot; style=&quot;color: blue;&quot;&gt;Report Agency incorrect information&lt;/a&gt;) and should not continue until the agency address has been correctly modified. &lt;br/&gt; 
+        <value>If the above address is incorrect, please report agency incorrect information (&lt;a href=&quot;http://www.iata.org/customer-portal/Pages/index.aspx&quot; style=&quot;color: blue;&quot;&gt;Report Agency incorrect information&lt;/a&gt;) and should not continue until the agency address has been correctly modified. &lt;br/&gt; 
 Kindly note that home-based agents are required to coordinate with their colleagues at the address above to receive the ID Card. Applicants will be held responsible at all costs for incorrect agency address. To continue, please click the button below.</value>
     </labels>
     <labels>
@@ -5486,6 +5621,14 @@ In order to upload your financial documents, please, login to Customer Portal on
         <protected>false</protected>
         <shortDescription>ISSP AMS Branch Office address details</shortDescription>
         <value>Branch Office address details:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Branch_Offices</fullName>
+        <categories>ISSP, Portal, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Branch Offices</shortDescription>
+        <value>Branch Office(s)</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Business_Activities_Field_Label</fullName>
@@ -10290,6 +10433,14 @@ Select at least one Authorized Signatory, and choose the Financial Assessment Co
         <value>Please select who should be the Portal Administrator for your Agency.</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_View_Branch_details</fullName>
+        <categories>ISSP, Portal, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS View Branch details</shortDescription>
+        <value>View / Update Branch Details</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_download_a_PDF_version</fullName>
         <categories>ISSP AMS</categories>
         <language>en_US</language>
@@ -10439,6 +10590,14 @@ Select at least one Authorized Signatory, and choose the Financial Assessment Co
         <protected>false</protected>
         <shortDescription>ISSP_Account_Information</shortDescription>
         <value>Account Information</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Account_Statement_Location</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Account Statement Location</shortDescription>
+        <value>Location</value>
     </labels>
     <labels>
         <fullName>ISSP_Account_Statements</fullName>

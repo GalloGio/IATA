@@ -60,7 +60,7 @@ public with sharing class SidraLiteManager {
     public static list<Case> filterSidraLiteCases(list<Case> listCases) {
         list<Case> listSIDRALite = new list<Case>();
         for (Case cse: listCases) {
-            if (cse.RecordTypeId == RECORDTYPE_SIDRA_LITE && cse.Status != 'Closed') {
+            if (cse.RecordTypeId == RECORDTYPE_SIDRA_LITE) {
                 listSIDRALite.add(cse);
             }
         }
@@ -540,6 +540,8 @@ public with sharing class SidraLiteManager {
                 parentCase.FS_Second_Deadline_Date__c = parentCase.firstFSnonComplianceDate__c.addDays(31);
                 if (SidraLiteUtil.isAccountActive(account)) {
                     cse.Propose_Irregularity__c = Date.today();
+                    cse.SIDRA_Lite_Default_Date__c = Date.today();
+                    cse.Reason_for_Default__c = 'Suspension - FS Non Compliance';
                 }
             }
             if (SidraLiteUtil.isCargoCASS(account)) {

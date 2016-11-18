@@ -41,7 +41,7 @@ public class AMS_AccountRoleHelper {
 	private List<AMS_Account_Role__c> getAIMSOwners(List<AMS_Account_Role__c> ownersToCheck) {
 		List<AMS_Account_Role__c> aimsOwners = new List<AMS_Account_Role__c>();
 
-		Map<Id, AMS_Account_Role__c> fullOwners = new Map<Id, AMS_Account_Role__c>([SELECT Id, Account__c, Person__r.Legacy_System__c FROM AMS_Account_Role__c WHERE Id IN :ownersToCheck AND (Person__r.Legacy_System__c IN :aimsLegacySystems OR Legacy_System__c IN :aimsLegacySystems)]);
+		Map<Id, AMS_Account_Role__c> fullOwners = new Map<Id, AMS_Account_Role__c>([SELECT Id, Account__c, Person__r.Legacy_System__c FROM AMS_Account_Role__c WHERE Active__c = true AND Id IN :ownersToCheck AND (Person__r.Legacy_System__c IN :aimsLegacySystems OR Legacy_System__c IN :aimsLegacySystems)]);
 
 		System.debug(loggingLevel.Debug, '____ [cls AMS_AccountRoleHelper - getAIMSOwners] fullOwners - ' + fullOwners);
 

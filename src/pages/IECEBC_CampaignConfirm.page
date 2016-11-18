@@ -1,0 +1,466 @@
+<apex:page standardController="EBC_Campaign__c" extensions="vfIECEBC_Campaign,vfIECEBC_Cart,vfIECEBC_CampaignConfirm"
+           applyHtmlTag="false" applyBodyTag="false" sidebar="false" showheader="false" standardStylesheets="false" language="en" docType="html-5.0" action="{!pageLoad}">
+    <apex:composition template="IECEBC_Layout">
+        <apex:define name="pageHeadAdditions">
+            <!-- Start of Page <head> -->
+            <title>eBroadcast Campaign - Confirm</title>
+            <!-- End of Page </head> -->
+        </apex:define>
+        <apex:define name="pageScriptAdditions">
+            <!-- If any page specific .js, add them here -->
+        </apex:define>
+        <apex:define name="pageContent">
+            <!-- Start of Page Content -->
+            <main class="main-content">
+                <div class="inner-wrapper">
+                    <c:IECEBC_ProgressComponent currentStepNumber="{!currentStepNumber}" campaign="{!ebcCampaign}" />
+                    
+                    <h1 class="page-title">Confirm</h1>
+                    
+                    <apex:outputText rendered="{!EBC_Campaign__c.Status__c != 'DRAFT'}">
+                        This campaign has already been paid.
+                    </apex:outputText>
+                    <apex:outputText rendered="{!EBC_Campaign__c.Status__c == 'DRAFT'}">
+                        <div class="row row-payment">
+                            <section class="columns main-container campaign-cost">
+                                <apex:form id="campaignCostForm" >
+                                    <apex:actionFunction action="{!clickPayWithEmailPackage}" name="clickPayWithEmailPackage" rerender="paymentConfirmationForm,totalPurchaseOutputText">
+                                    </apex:actionFunction>
+                                    <apex:actionFunction action="{!clickPayWithExactAmount}" name="clickPayWithExactAmount" rerender="paymentConfirmationForm,totalPurchaseOutputText">
+                                    </apex:actionFunction>
+                                    <apex:actionFunction action="{!clickPayWithRatePlan}" name="clickPayWithRatePlan" rerender="paymentConfirmationForm,totalPurchaseOutputText">
+                                    </apex:actionFunction>
+                                    
+                                    <h2 class="section-title">Campaign Cost</h2>
+                                    <div class="table-container">
+                                        <table class="data-table table-payment table-campaign-cost">
+                                            <tbody><tr class="total-recipients">
+                                                <th>
+                                                    Total recipients for this campaign
+                                                </th>
+                                                <td style="text-align:right;">
+                                                    <div class="item-value">
+                                                        <strong>
+                                                            <apex:outputText value="{0,number,###,###,##0}"><apex:param value="{!numberOfRecipients}" /></apex:outputText>
+                                                        </strong>
+                                                        <span class="unit"> {!IF(numberOfRecipients>1,'emails',' email')}</span>
+                                                    </div>
+                                                </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>
+                                                        Available balance
+                                                    </th>
+                                                    <td style="text-align:right;">
+                                                        <div class="item-value text-green">
+                                                            <strong>
+                                                                <apex:outputText value="{0,number,###,###,##0}"><apex:param value="{!billingAccount.eBroadcast_Email_Balance__c}" /></apex:outputText>
+                                                            </strong>
+                                                            <span class="unit"> {!IF(billingAccount.eBroadcast_Email_Balance__c>1,'emails',' email')}</span>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr class="new-balance">
+                                                    <th>
+                                                        {!newBalanceLabel}
+                                                    </th>
+                                                    <td style="text-align:right;">
+                                                        <div class="item-value">
+                                                            <strong>
+                                                                <apex:outputText value="{0,number,###,###,##0}"><apex:param value="{!absoluteNewEmailBalance}" /></apex:outputText>
+                                                            </strong>
+                                                            <span class="unit"> {!IF(absoluteNewEmailBalance>1,'emails',' email')}</span>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    
+                                    <apex:outputText rendered="{!newEmailBalance < 0}">
+                                        <div class="group-container plan">
+                                            <h3 class="group-title"><span class="light">Current plan:</span> {!productRatePlan.Name}</h3>
+                                            <!-- ul class list js-radio-list showing the options begins -->
+                                            <ul class="list js-radio-list">
+                                                <li class="is-selected">
+                                                    <!--
+<div class="field-group radio">
+<div class="radio-box">
+<div class="custom-user-input radio">
+<input class="user-input radio" type="radio" name="radio1" id="radio1-option2" />
+<label class="custom-radio" for="radio1-option2"><i class="icon"></i></label>
+</div>
+<label class="input-label" for="radio1-option2">Pay exact amount</label>
+<p class="input-description">Nulla vitae elit libero, a pharetra augue. Nullam quis risus eget urna mollis ornare vel eu leo.</p>
+</div>
+</div>
+-->
+                                                    <div class="field-group radio">
+                                                        <div class="radio-box">
+                                                            <div class="custom-user-input radio">
+                                                                <input class="user-input radio" value="{!payWithExactAmount}" type="radio" name="radio1" id="radio1-option2" checked="1"
+                                                                       onClick="clickPayWithExactAmount();"
+                                                                       />
+                                                                <label class="custom-radio" for="radio1-option2"><i class="icon"></i></label>
+                                                            </div>
+                                                            <label class="input-label" for="radio1-option2">Pay exact amount</label>
+                                                            <p class="input-description">Pay as much as you need to add now.</p>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <!-- Email Blocks Selections -->
+                                                    <apex:outputPanel id="emailBlockOptionForm" rendered="{!isEbcPrepaid}">
+                                                        <apex:actionFunction action="{!acctEmailBlock.selectRatePlanEmailBlock}" name="updateEmailBlockSelection" rerender="emailBlockSelectionForm,paymentConfirmationForm">
+                                                            <apex:param name="recIndex" assignTo="{!acctEmailBlock.selectedRatePlanIndex}" value=""/>
+                                                        </apex:actionFunction>
+                                                        
+                                                        <div class="field-group radio">
+                                                            <div class="radio-box">
+                                                                <div class="custom-user-input radio">
+                                                                    <!--
+<input class="user-input radio" type="radio" name="radio1" id="radio1-option1" checked="" />
+<apex:inputCheckBox id="radio1-option1" styleClass="user-input radio" html-type="radio"/>
+<apex:inputCheckBox id="radio1-option1" value="{!payWithEmailPackage}" styleClass="user-input radio" html-type="radio" html-checked=""/>
+-->
+                                                                    <input class="user-input radio" value="{!payWithEmailPackage}" type="radio" name="radio1" id="radio1-option1" checked="" 
+                                                                           onClick="clickPayWithEmailPackage();"
+                                                                           />
+                                                                    <label class="custom-radio" for="radio1-option1"><i class="icon"></i></label>
+                                                                </div>
+                                                                <label class="input-label" for="radio1-option1">Get an email package</label>
+                                                                <p class="input-description">Select one of the email blocks offered, you'll keep the email credit left for future campaign.</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="toggle-container show-hide-toggle">
+                                                            <!-- ul class list package-list js-checkbox-list showing the options inner part begins -->
+                                                            <ul class="list package-list js-checkbox-list">
+                                                                
+                                                                <apex:repeat id="emailBlockRepeat" value="{!acctEmailBlock.productRatePlanWrapperOptionList}" var="prpOption" >
+                                                                    <li class="list-item {!prpOption.classStringDisabled} {!prpOption.classStringPromo}">
+                                                                        <apex:outputPanel id="disabledItemOutputPanel" rendered="{!prpOption.isDisabled}">
+                                                                            <div class="checkbox-box">
+                                                                                <div class="custom-user-input checkbox">
+                                                                                    <span class="disabled-user-input checkbox"></span>		  
+                                                                                    
+                                                                                    <apex:inputCheckbox id="chckActTypeDisabled" value="{!prpOption.selected}" styleClass="custom-user-input checkbox" 
+                                                                                                        onclick="updateEmailBlockSelection({!prpOption.index})"
+                                                                                                        rendered="{!!prpOption.isDisabled}"
+                                                                                                        />
+                                                                                    <label class="custom-checkbox"><i class="icon"></i></label>
+                                                                                </div>
+                                                                                <label class="input-label" for="{!$Component.chckActTypeDisabled}">
+                                                                                    <span class="input-state unselected">Select</span>
+                                                                                    <span class="input-state selected">Selected</span>
+                                                                                </label>
+                                                                                
+                                                                                <a href="#" class="tooltip-icon js-tooltip"><i class="fa fa-exclamation-triangle"></i></a>
+                                                                                <div class="tooltip-container">
+                                                                                    <div class="tooltip-description">
+                                                                                        <p>{!prpOption.tooltipDescription}</p>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            
+                                                                            <div class="package-credits">
+                                                                                <apex:outputText value="{0,number,###,###,##0} emails"><apex:param value="{!prpOption.currentEmailCredits}" /></apex:outputText>
+                                                                            </div>
+                                                                            <div class="package-price">
+                                                                                <apex:outputText value="${0,number,###,###,##0.00}"><apex:param value="{!prpOption.amount}" /></apex:outputText>
+                                                                            </div>
+                                                                        </apex:outputPanel>
+                                                                        
+                                                                        <apex:outputPanel id="normalItemOutputPanel" rendered="{!!prpOption.isDisabled && !prpOption.isPromo}" >
+                                                                            <div class="checkbox-box">
+                                                                                <div class="custom-user-input checkbox">
+                                                                                    <apex:inputCheckbox id="chckActType" value="{!prpOption.selected}" styleClass="user-input checkbox" 
+                                                                                                        onclick="updateEmailBlockSelection({!prpOption.index})"
+                                                                                                        />
+                                                                                    <label class="custom-checkbox" for="{!$Component.chckActType}"><i class="icon"></i></label>
+                                                                                </div>
+                                                                                <label class="input-label" for="{!$Component.chckActType}">
+                                                                                    <span class="input-state unselected">Select</span>
+                                                                                    <span class="input-state selected">Selected</span>
+                                                                                </label>
+                                                                                
+                                                                                <apex:outputPanel rendered="{!prpOption.isDisabled}"> 
+                                                                                    <a href="#" class="tooltip-icon js-tooltip"><i class="fa fa-exclamation-triangle"></i></a>
+                                                                                    <div class="tooltip-container">
+                                                                                        <div class="tooltip-description">
+                                                                                            <p>{!prpOption.tooltipDescription}</p>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </apex:outputPanel>
+                                                                            </div>
+                                                                            
+                                                                            <div class="package-credits">
+                                                                                <apex:outputText value="{0,number,###,###,##0} emails"><apex:param value="{!prpOption.currentEmailCredits}" /></apex:outputText>
+                                                                            </div>
+                                                                            <div class="package-price">
+                                                                                <apex:outputText value="${0,number,###,###,##0.00}"><apex:param value="{!prpOption.amount}" /></apex:outputText>
+                                                                            </div>
+                                                                        </apex:outputPanel>
+                                                                        
+                                                                        <apex:outputPanel id="promoItemOutputPanel" rendered="{!!prpOption.isDisabled && prpOption.isPromo}" >
+                                                                            <div class="promotion-label">
+                                                                                {!acctEmailBlock.promoLabel}
+                                                                            </div>
+                                                                            <div class="checkbox-box">
+                                                                                <div class="custom-user-input checkbox">
+                                                                                    <apex:inputCheckbox id="chckActTypePromo" value="{!prpOption.selected}" styleClass="user-input checkbox" 
+                                                                                                        onclick="updateEmailBlockSelection({!prpOption.index})"
+                                                                                                        />
+                                                                                    <label class="custom-checkbox" for="{!$Component.chckActTypePromo}"><i class="icon"></i></label>
+                                                                                </div>
+                                                                                <label class="input-label" for="{!$Component.chckActType}">
+                                                                                    <span class="input-state unselected">Select</span>
+                                                                                    <span class="input-state selected">Selected</span>
+                                                                                </label>
+                                                                                
+                                                                                <apex:outputPanel rendered="{!prpOption.isDisabled}"> 
+                                                                                    <a href="#" class="tooltip-icon js-tooltip"><i class="fa fa-exclamation-triangle"></i></a>
+                                                                                    <div class="tooltip-container">
+                                                                                        <div class="tooltip-description">
+                                                                                            <p>{!prpOption.tooltipDescription}</p>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </apex:outputPanel>
+                                                                            </div>
+                                                                            
+                                                                            <div class="package-credits">
+                                                                                <span class="line-stroke"><apex:outputText value="{0,number,###,###,##0}"><apex:param value="{!prpOption.standardEmailCredits}" /></apex:outputText></span>
+                                                                                <span class="text-orange">
+                                                                                    <apex:outputText value="{0,number,###,###,##0}"><apex:param value="{!prpOption.currentEmailCredits}" /></apex:outputText>
+                                                                                </span>
+                                                                                <br/>
+                                                                                emails
+                                                                            </div>
+                                                                            <div class="package-price">
+                                                                                <apex:outputText value="${0,number,###,###,##0.00}"><apex:param value="{!prpOption.amount}" /></apex:outputText>
+                                                                            </div>
+                                                                        </apex:outputPanel>
+                                                                    </li>
+                                                                    
+                                                                </apex:repeat>
+                                                                
+                                                            </ul>
+                                                        </div>
+                                                    </apex:outputPanel>	
+                                                </li>
+                                                
+                                                <!--  between email block or product rate plan offering -->
+                                                
+                                                <li>
+                                                    <!-- Rate Plan Selections -->
+                                                    <apex:outputPanel id="productRatePlanOptionForm" rendered="{!!isEbcPrepaid}">
+                                                        <apex:actionFunction action="{!acctRatePlan.selectRatePlan}" name="updateRatePlanSelection" 
+                                                                             rerender="paymentConfirmationForm,paymentItemDescriptionPanel1,paymentItemDescriptionPanel2,paymentItemDescriptionPanel3,paymentItemDescriptionPanel4">
+                                                            <apex:param name="recIndex" assignTo="{!acctRatePlan.selectedRatePlanIndex}" value=""/>
+                                                        </apex:actionFunction>
+                                                        
+                                                        <div class="field-group radio">
+                                                            <div class="radio-box">
+                                                                <div class="custom-user-input radio">
+                                                                    <!--
+<input class="user-input radio" type="radio" name="radio1" id="radio1-option1" checked="" />
+<apex:inputCheckBox id="radio1-option1" styleClass="user-input radio" html-type="radio"/>
+<apex:inputCheckBox id="radio1-option1" value="{!payWithEmailPackage}" styleClass="user-input radio" html-type="radio" html-checked=""/>
+-->
+                                                                    <input class="user-input radio" value="{!payWithRatePlan}" type="radio" name="radio1" id="radio1-option1" checked="" 
+                                                                           onClick="clickPayWithRatePlan();"
+                                                                           />
+                                                                    <label class="custom-radio" for="radio1-option1"><i class="icon"></i></label>
+                                                                </div>
+                                                                <label class="input-label" for="radio1-option1">Subscribe to one of the available rate plan</label>
+                                                                <p class="input-description">Select one of the subscription rate plan offered, you'll have better rates per email.</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="toggle-container show-hide-toggle">
+                                                            <!-- ul class list package-list js-checkbox-list showing the options inner part begins -->
+                                                            
+                                                            <ul class="list plan-list js-checkbox-list">
+                                                                <apex:repeat id="productRatePlanRepeat" value="{!acctRatePlan.productRatePlanWrapperUpgradeList}" var="prpw">
+                                                                    <li class="list-item" >
+                                                                        <apex:outputPanel id="upgradeSelectablePanel" rendered="{!acctRatePlan.allowSelectUpgrade}" > 
+                                                                            <div class="checkbox-box">
+                                                                                <div class="custom-user-input checkbox" >
+                                                                                    <apex:inputCheckbox id="upgradeCheck" value="{!prpw.selected}" styleClass="user-input checkbox" 
+                                                                                                        disabled="{!!acctRatePlan.allowSelectUpgrade}"
+                                                                                                        onclick="updateRatePlanSelection({!prpw.index})"
+                                                                                                        />
+                                                                                    <label class="custom-checkbox" for="{!$Component.upgradeCheck}"><i class="icon"></i></label>
+                                                                                </div>
+                                                                                
+                                                                                <label class="input-label" for="{!$Component.upgradeCheck}">Get this plan</label>
+                                                                            </div>
+                                                                        </apex:outputPanel>
+                                                                        
+                                                                        <apex:outputPanel id="callToUpgradePanel" rendered="{!!acctRatePlan.allowSelectUpgrade}">
+                                                                            <a class="small" href="mailto:globaldata@iata.org?subject=eBroadcast upgrade">Contact us to get this plan</a>																
+                                                                        </apex:outputPanel>
+                                                                        
+                                                                        <div class="plan-box">
+                                                                            <div class="box plan-name">
+                                                                                {!prpw.name}
+                                                                            </div>
+                                                                            <div class="box plan-price">
+                                                                                <div class="price">
+                                                                                    <apex:outputText value="${0,number,###,###,##0.00}"><apex:param value="{!prpw.amountRecurring}" /></apex:outputText>
+                                                                                </div>
+                                                                                <span class="currency-per-year">USD</span>
+                                                                                <span class="billed-annually">({!prpw.billingPeriod})</span>
+                                                                            </div>
+                                                                            <div class="box plan-description">
+                                                                                <ul class="list check-circle-list">
+                                                                                    <!--
+                                                                                    <li class="icon check-circle">{!prpc.productRatePlanCharge.zqu__Description__c}</li>
+                                                                                    <li class="icon check-circle">{!prpc.productRatePlanCharge.zqu__ProductRatePlan__r.zqu__Description__c}</li>
+                                                                                    -->
+                                                                                    <apex:repeat id="selectionDescriptionRepeat" value="{!prpw.descriptions}" var="descriptionLine">
+                                                                                        <li class="icon check-circle">{!descriptionLine}</li>
+                                                                                    </apex:repeat>
+                                                                                </ul>
+                                                                            </div>
+                                                                        </div>
+                                                                    </li>
+                                                                </apex:repeat>
+                                                            </ul>
+                                                            
+                                                        </div>
+                                                    </apex:outputPanel>
+                                                    
+                                                </li>
+                                            </ul>
+                                            <!-- ul class list js-radio-list showing the options ends -->
+                                        </div>
+                                    </apex:outputText>
+                                </apex:form>
+                                
+                            </section>
+                            
+                            <section class="columns sub-container payment-confirmation" id="paymentconfirmation">
+                                <div class="is-sticky-confirmation" style="">
+                                    <h2 class="section-title">Payment Confirmation</h2>
+                                    <div class="table-container">
+                                        <!-- payment confirmation section: the detail and total begin -->
+                                        <apex:form id="paymentConfirmationForm" >
+                                            <apex:outputText rendered="{!newEmailBalance >= 0}">
+                                                <table class="data-table table-payment table-confirmation">
+                                                    <tbody>
+                                                        <tr class="item">
+                                                            <th><p class="no-payment">No payment necessary</p>  </th>
+                                                            <td class="price"><strong></strong></td>
+                                                        </tr>
+                                                        <tr class="total">
+                                                            <th>Total in USD:</th>
+                                                            <td class="price">$0.00</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </apex:outputText>
+                                            <apex:outputText rendered="{!newEmailBalance < 0}">
+                                                <table class="data-table table-payment table-confirmation">
+                                                    <tbody>
+                                                        <tr class="item">
+                                                            <th>
+                                                                <!--
+                                                                <apex:outputText value="Please made the selection!" rendered="{!showPurchasedSelectionMessage}"/>
+                                                                <apex:outputText value="{!selectedProductRatePlanWrapper.name}" rendered="{!!showPurchasedSelectionMessage}"/>
+                                                                -->
+                                                                <apex:outputPanel id="paymentItemMessagePanel" rendered="{!showPaymentItemMessage}">
+                                                                    <strong>
+                                                                        <apex:outputText value="{!paymentItemDescription}" rendered="{!showPaymentItemMessage}"/>
+                                                                    </strong>
+                                                                </apex:outputPanel>
+                                                                
+                                                                <apex:outputPanel id="paymentItemRatePlanPanel" rendered="{!showPaymentItemRatePlan}">
+                                                                    <strong>
+                                                                        {!acctRatePlan.selectedProductRatePlanWrapper.name} 
+                                                                    </strong>
+                                                                    <div class="start-end-date">
+                                                                        <strong>Start date:</strong>
+                                                                        <apex:outputText value="{0, date, d MMMM yyyy}"><apex:param value="{!acctRatePlan.newSubscriptionProductCharge.Zuora__EffectiveStartDate__c}" /></apex:outputText>
+                                                                        <br/>
+                                                                        <strong>End date:</strong>
+                                                                        <apex:outputText value="{0, date, d MMMM yyyy}"><apex:param value="{!acctRatePlan.newSubscriptionProductCharge.Zuora__EffectiveEndDate__c}" /></apex:outputText>
+                                                                    </div>
+                                                                </apex:outputPanel>
+                                                                
+                                                                <apex:outputPanel id="paymentItemEmailBlockPanel" rendered="{!showPaymentItemEmailCredit}">
+                                                                    <strong>
+                                                                        <apex:outputText value="{0,number,###,###,##0}">
+                                                                            <apex:param value="{!emailCreditPurchased}"/>
+                                                                        </apex:outputText>
+                                                                    </strong>
+                                                                    email credits.
+                                                                    <br/>
+                                                                    <apex:outputText value="At a unit cost of ${0,number,###,###,##0.000}/email">
+                                                                        <apex:param value="{!emailUnitCost}"/>
+                                                                    </apex:outputText>
+                                                                </apex:outputPanel>
+                                                            </th>
+                                                            
+                                                            <td class="price">
+                                                                <strong>
+                                                                    <apex:outputText value="${0, number,###,###,##0.00}" rendered="{!showPaymentItemMessage}">
+                                                                        <apex:param value="{!paymentItemAmount}"/>
+                                                                    </apex:outputText>
+                                                                </strong>
+                                                            </td>
+                                                        </tr>
+                                                        <tr class="total">
+                                                            <th>
+                                                                Total in USD:
+                                                            </th>
+                                                            <td class="price">
+                                                                <apex:outputText id="totalPurchaseOutputText" value="${0, number,###,###,##0.00}"><apex:param value="{!totalPurchaseAmount}" /></apex:outputText>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </apex:outputText>
+                                        </apex:form>
+                                        <!-- payment confirmation section: the detail and total begin -->
+                                    </div>
+                                    <div class="footer-actions">
+                                        
+                                        <apex:form id="footerActionForm" >
+                                            
+                                            <ul class="list actions">
+                                                <li><apex:commandLink action="{!previous}" styleClass="button" value="Previous" /></li>
+                                                <!--
+                                                <li><apex:commandLink action="{!saveAndContinue}" styleClass="button" value="Send" /></li>
+                                                -->
+                                                <apex:outputText rendered="{!newEmailBalance < 0}">
+                                                    <li><apex:commandLink action="{!goToPaymentPage}" styleClass="button" value="Proceed to payment" /></li>
+                                                    <!-- 
+                                                    <li>
+                                                        <apex:commandButton value="Buy now" action="{!addToCart}">
+                                                            <apex:param name="selectedratePlanInformationId" value="a4S8E0000000gdj" assignTo="{!selectedRatePlanInformationId}"/>
+                                                        </apex:commandButton>
+                                                    </li>
+                                                     -->
+                                                </apex:outputText>
+                                                <apex:outputText rendered="{!newEmailBalance >= 0}">
+                                                    <li><apex:commandLink action="{!debitCredits}" styleClass="button" value="Confirm your payment" /></li>
+                                                </apex:outputText>
+                                                
+                                            </ul>
+                                            
+                                            <div class="footer-actions text-right">
+                                             
+                                            </div>
+                                        </apex:form>
+                                    </div>
+                                </div>
+                            </section>
+                            
+                        </div>
+                    </apex:outputText>
+                    
+                </div>
+            </main>
+            <!-- End of Page Content -->
+        </apex:define>
+    </apex:composition>
+</apex:page>

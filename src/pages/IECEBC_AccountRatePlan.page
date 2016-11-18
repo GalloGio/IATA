@@ -1,0 +1,224 @@
+<apex:page id="thePage" controller="vfIECEBC_AccountRatePlan" applyHtmlTag="false" applyBodyTag="false" sidebar="false" showheader="false" standardStylesheets="false" language="en" docType="html-5.0">
+	<apex:composition template="IECEBC_Layout">
+		<apex:define name="pageHeadAdditions">
+			<!-- Start of Page <head> -->
+			<title>eBroadcast Rate plan</title>
+			<!-- End of Page </head> -->
+		</apex:define>
+		<apex:define name="pageScriptAdditions">
+			<!-- If any page specific .js, add them here -->
+		</apex:define>
+		
+		
+		<apex:define name="pageContent">
+            <script type="text/javascript">
+			 function ShowWaitingStatus(section){
+                jQuery(section).html('<img src="/img/loading.gif" width="25px" height="25px"/>');
+                        
+             }
+			</script>
+			<!-- Start of Page Content -->
+			<main class="main-content manage-account">
+				<div class="inner-wrapper">
+					<h1 class="page-title">Account Details</h1>
+					
+					<div class="tab-container">
+						<ul class="nav tabs">
+							<li><a href="{!URLFOR($Page.IECEBC_AccountManage)}">Overview</a></li>
+							<li class="active"><a href="{!URLFOR($Page.IECEBC_AccountRatePlan)}">Rate plan</a></li>
+							<li><a href="{!URLFOR($Page.IECEBC_AccountExtras)}">Extras</a></li> 
+							<apex:outputPanel rendered="{!isEbcPrepaid}">
+								<li><a href="{!URLFOR($Page.IECEBC_AccountEmailBlocks)}">Email Blocks</a></li>
+							</apex:outputPanel>
+							<li><a href="{!URLFOR($Page.IECEBC_AccountSettings)}">Settings</a></li>
+							<li><a href="{!URLFOR($Page.IECEBC_AccountUserGuide)}">User Guide</a>
+							</li>
+						</ul>
+						
+						<div class="tab-content"> 
+							<div class="tab-pane is-open" id="pane-2">
+								<div class="row row-payment">
+									<div class="columns main-container campaign-cost">
+										<h2 class="heading-2">Current plan: <strong>{!productRatePlan.Name}</strong></h2>
+										<!--
+										<p class="description light small">
+											{!productRatePlan.zqu__Description__c}
+										</p>
+										-->
+										<apex:form id="currentSubscriptionPanel" rendered="{!showSubscriptionEnd}">
+											<h3 class="heading-3">Current cost per email: ${!productRatePlan.EBC_Currency_Cost_Per_Email__c}</h3>
+											<p>This cost per email is guaranteed until the end of your subscription 
+												<strong>
+													<apex:outputText value="{0, date, d MMMM yyyy}"><apex:param value="{!subscription.Zuora__SubscriptionEndDate__c}" /></apex:outputText>
+												</strong>
+											</p>
+											
+											<apex:outputPanel id="alertBestValuePlan" rendered="{!!showUpgradeOption}">
+												<div class="alert warning">
+													<p>You currently have the best value plan.</p>
+												</div>
+											</apex:outputPanel>
+											
+											<ul class="list plan-list">
+												<li class="list-item is-selected">
+													<div class="checkbox-box">
+														<div class="custom-user-input checkbox">
+															<input class="user-input checkbox" type="checkbox" id="current-plan" disabled="true" checked="true" />
+															<label class="custom-checkbox" for="current-plan"><i class="icon"></i></label>
+														</div>
+														<label class="input-label" for="get-this-plan-3">Current plan</label>
+													</div>
+													<div class="plan-box">
+														<div class="box plan-name">
+															{!currentProductRatePlanWrapper.name}
+														</div>
+														<div class="box plan-price">
+															<div class="price">
+																<apex:outputText value="${0,number,###,###,##0}"><apex:param value="{!currentProductRatePlanWrapper.amountRecurring}" /></apex:outputText>
+															</div>
+															<span class="currency-per-year">USD</span>
+															<span class="billed-annually">({!currentProductRatePlanWrapper.billingPeriod})</span>
+														</div>
+														<div class="box plan-description">
+															<ul class="list check-circle-list">
+																<!--
+																	<li class="icon check-circle">{!prpc.productRatePlanCharge.zqu__Description__c}</li>
+																	<li class="icon check-circle">{!prpc.productRatePlanCharge.zqu__ProductRatePlan__r.zqu__Description__c}</li>
+																-->
+															<apex:repeat id="selectionDescriptionRepeat" value="{!currentProductRatePlanWrapper.descriptions}" var="cDescriptionLine">
+																<li class="icon check-circle">{!cDescriptionLine}</li>
+															</apex:repeat>
+															</ul>
+														</div>
+													</div>
+												</li>
+											</ul>
+										</apex:form>
+										
+										<apex:outputPanel id="upgradeOptionMessage" rendered="{!IF((showUpgradeOption),true,false)}">
+											<h2 class="heading-2 strong">Change your plan</h2>
+                                            <p class="description light small">Choose one of the following pre-paid plans to secure a lower cost per email.<br />Each rate plan buys you a defined number of emails at the corresponding cost per unit.</p>
+										</apex:outputPanel>
+										
+										<apex:form id="productRatePlanForm" >   										
+											<apex:actionFunction action="{!selectRatePlan}" name="updateRatePlanSelection" rerender="paymentConfirmationPanel">
+												<apex:param name="recIndex" assignTo="{!selectedRatePlanIndex}" value=""/>
+											</apex:actionFunction>
+											
+											<ul class="list plan-list js-checkbox-list">
+												<apex:repeat id="productRatePlanRepeat" value="{!productRatePlanWrapperUpgradeList}" var="prpw">
+													<li class="list-item" >
+														<apex:outputPanel id="upgradeSelectablePanel" rendered="{!allowSelectUpgrade}" > 
+															<div class="checkbox-box">
+																<div class="custom-user-input checkbox" >
+																	<apex:inputCheckbox id="upgradeCheck" value="{!prpw.selected}" styleClass="user-input checkbox" 
+																						disabled="{!!allowSelectUpgrade}"
+																						onclick="updateRatePlanSelection({!prpw.index})"
+																						/>
+																	<label class="custom-checkbox" for="{!$Component.upgradeCheck}"><i class="icon"></i></label>
+																</div>
+																
+																<label class="input-label" for="{!$Component.upgradeCheck}">Get this plan</label>
+															</div>
+														</apex:outputPanel>
+														
+														<apex:outputPanel id="callToUpgradePanel" rendered="{!!allowSelectUpgrade}">
+															<a class="small" href="mailto:globaldata@iata.org?subject=eBroadcast upgrade">Contact us to get this plan</a>																
+ 														</apex:outputPanel>
+														<div class="plan-box">
+															<div class="box plan-name">
+																{!prpw.name}
+															</div>
+															<div class="box plan-price">
+																<div class="price">
+																	<apex:outputText value="${0,number,###,###,##0}"><apex:param value="{!prpw.amountRecurring}" /></apex:outputText>
+																</div>
+																<span class="currency-per-year">USD</span>
+																<span class="billed-annually">({!prpw.billingPeriod})</span>
+															</div>
+															<div class="box plan-description">
+																<ul class="list check-circle-list">
+																	<!--
+																	<li class="icon check-circle">{!prpc.productRatePlanCharge.zqu__Description__c}</li>
+																	<li class="icon check-circle">{!prpc.productRatePlanCharge.zqu__ProductRatePlan__r.zqu__Description__c}</li>
+																	-->
+																	<apex:repeat id="selectionDescriptionRepeat" value="{!prpw.descriptions}" var="descriptionLine">
+																		<li class="icon check-circle">{!descriptionLine}</li>
+																	</apex:repeat>
+																</ul>
+															</div>
+														</div>
+													</li>
+												</apex:repeat>
+											</ul>
+										</apex:form>
+										
+									</div>
+									
+									
+									<div class="columns sub-container payment-confirmation"  id="paymentconfirmation">
+										<div class="is-sticky-confirmation" style="">
+											<div class="wrapper">
+												<apex:form id="paymentConfirmationForm" rendered="{!allowSelectUpgrade}">
+													<apex:outputPanel id="paymentConfirmationPanel">
+														<h2 class="section-title">Payment Confirmation</h2>
+														<div class="table-container">
+															<table class="data-table table-payment table-confirmation">
+																<tbody>
+																	<!-- original version: only show one total charge of the selected product rate plan -->
+																	<tr class="item">
+																		<th>
+																		<apex:outputPanel id="paymentInfoShow" rendered="{!showPaymentConfirmation}">
+																			<strong>{!selectedProductRatePlan.Name}</strong> 
+																			<div class="start-end-date">
+																				<strong>Start date:</strong>
+																				<apex:outputText value="{0, date, d MMMM yyyy}"><apex:param value="{!newSubscriptionProductCharge.Zuora__EffectiveStartDate__c}" /></apex:outputText>
+																				<br/>
+																				<strong>End date:</strong>
+																				<apex:outputText value="{0, date, d MMMM yyyy}"><apex:param value="{!newSubscriptionProductCharge.Zuora__EffectiveEndDate__c}" /></apex:outputText>
+																			</div>
+																		</apex:outputPanel>
+																		<apex:outputPanel id="paymentInfoNoShow" rendered="{!!showPaymentConfirmation}">
+																			Please make a selection
+																		</apex:outputPanel>
+																		</th>
+																			
+																		<td class="price top">
+																			<strong>
+																				<apex:outputText value="${0,number,###,###,##0.00}"><apex:param value="{!newSubscriptionProductCharge.Zuora__Price__c}" /></apex:outputText>
+																			</strong>
+																		</td>
+																	</tr>
+																	
+																	<tr class="total">
+																		<th>Subtotal</th>
+																		<td class="price">
+																			<strong>
+																				<apex:outputText value="${0, number,###,###,##0.00}"><apex:param value="{!totalNewPurchaseAmount}" /></apex:outputText> USD
+																			</strong>
+																		</td>
+																	</tr>
+																</tbody>
+															</table>
+														</div>
+														<div class="footer-actions">
+															<ul class="list actions sectionActions">
+																<li><apex:commandLink onclick="ShowWaitingStatus('.sectionActions');window.location='{!URLFOR($Page.IECEBC_AccountRatePlan)}';" styleClass="text-link" value="Cancel"/></li>
+															    <li><apex:commandLink onclick="ShowWaitingStatus('.sectionActions');" action="{!goToPaymentPage}" styleClass="button" value="Proceed to payment" rendered="{!selectedProductRatePlan!=null}"/></li>
+															</ul>
+														</div>
+													</apex:outputPanel>
+												</apex:form>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</main>
+			<!-- End of Page Content -->
+		</apex:define>
+	</apex:composition>
+</apex:page>

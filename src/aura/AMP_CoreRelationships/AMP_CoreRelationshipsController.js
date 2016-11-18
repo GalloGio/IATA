@@ -1,6 +1,6 @@
 ({
 	doInit : function(component, event, helper) {
-		var act = component.get("c.getGroupNames");
+		var act = component.get("c.getGroups");
 		var action = component.get("c.getParticipants");
 		var accountId = component.get("v.accountId");
 
@@ -11,24 +11,25 @@ console.log(JSON.stringify(account));
 		 		"accountId": accountId
 	 	});
 	 	act.setCallback(this, function(a) {
-			var groupNames = a.getReturnValue();
+			var groups = a.getReturnValue();
 			var state = a.getState();
 
 			if (component.isValid() && state === "SUCCESS") {
-				component.set("v.GroupNames", groupNames);
+				component.set("v.Groups", groups);
 		 }
 		// 		 else if (state === "ERROR") {}
 		});
 
 	 	action.setCallback(this, function(a) {
         var participants = a.getReturnValue();
-				var groupNames = component.get("v.GroupNames");
+		// var groupNames = component.get("v.GroupNames");
+		var groups = component.get("v.Groups");
         // console.log(JSON.stringify(participants));
         var state = a.getState();
         var ParticipantWrappers = new Array();
         // var ParticipantWrappers = component.get("v.ParticipantWrappers");
         if (component.isValid() && state === "SUCCESS") {
-					for(var j = 0; j < groupNames.length; j++) {
+					for(var j = 0; j < groups.length; j++) {
 						var found = false;
 						for(var i = 0; i < participants.length; i++) {
 							 if(participants[i].Local_Governance__r.Name === groupNames[j]) {
@@ -48,8 +49,9 @@ console.log(JSON.stringify(account));
 						}
 						if(!found ) {
 							var pWrapper = {
-							 GroupName : groupNames[j],
-							 Role : 'Not at this time'
+								GroupId : groups[j].Id,
+								GroupName : groups[j].Name,
+								Role : 'Not at this time'
 							};
 							ParticipantWrappers.push(pWrapper);
 						}

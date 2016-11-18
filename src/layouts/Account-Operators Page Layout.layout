@@ -176,15 +176,15 @@
         <label>E&amp;F Information</label>
         <layoutColumns>
             <layoutItems>
-                <behavior>Required</behavior>
+                <behavior>Edit</behavior>
                 <field>EF_Type__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Required</behavior>
+                <behavior>Edit</behavior>
                 <field>EF_Status__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Required</behavior>
+                <behavior>Edit</behavior>
                 <field>EF_SubStatus__c</field>
             </layoutItems>
             <layoutItems>
@@ -214,7 +214,7 @@
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
-                <behavior>Required</behavior>
+                <behavior>Edit</behavior>
                 <field>EF_Effective_Date__c</field>
             </layoutItems>
             <layoutItems>
@@ -496,7 +496,7 @@
         <fields>NAME</fields>
         <fields>Client__c</fields>
         <fields>Contract__c</fields>
-        <fields>Status__c</fields>
+        <fields>EF_Status__c</fields>
         <fields>Payment_Method_Code__c</fields>
         <fields>Data_Currency__c</fields>
         <fields>Billing_Currency__c</fields>

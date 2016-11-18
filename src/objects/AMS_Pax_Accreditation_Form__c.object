@@ -2994,6 +2994,19 @@ If(LEN( SAAM_Case__r.Account.ShippingCountry) &gt;0, SAAM_Case__r.Account.Shippi
         <type>Currency</type>
     </fields>
     <fields>
+        <fullName>Link_agent_name__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Link agent name</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>AMS Online Accreditations (Link agent name)</relationshipLabel>
+        <relationshipName>AMS_Online_Accreditations1</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>List_carriers__c</fullName>
         <description>List carrier(s)</description>
         <externalId>false</externalId>
@@ -3782,7 +3795,8 @@ $Label.ISSP_AMS_LS_Sole_Owner)</formula>
     <fields>
         <fullName>Ready_for_Accreditation__c</fullName>
         <externalId>false</externalId>
-        <formula>Account_Name__c != null  &amp;&amp;  TEXT(ISSP_AMS_Legal_Status__c) != null &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp;  TEXT(Location_Type__c) != null  &amp;&amp; Branch_Office_Country__c != null &amp;&amp;  Branch_Office_Street_name_number__c != null &amp;&amp; Branch_Office_City__c != null &amp;&amp; Branch_Office_Email__c != null &amp;&amp;  Branch_Office_Phone__c != null</formula>
+        <formula>OR (Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp;  TEXT(Location_Type__c) != null  &amp;&amp; Branch_Office_Country__c != null &amp;&amp;  Branch_Office_Street_name_number__c != null &amp;&amp; Branch_Office_City__c != null  &amp;&amp;  TEXT(ISSP_AMS_Legal_Status__c) != null  &amp;&amp; Branch_Office_Email__c != null &amp;&amp;  Branch_Office_Phone__c != null &amp;&amp; !ISPICKVAL(SAAM_Case__r.OSCAR__r.Process__c,&quot;NEW.MSO.1.0&quot;),ISPICKVAL(SAAM_Case__r.OSCAR__r.Process__c,&quot;NEW.MSO.1.0&quot;) &amp;&amp; 
+Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp;  TEXT(Location_Type__c) != null  &amp;&amp; Branch_Office_Country__c != null &amp;&amp;  Branch_Office_Street_name_number__c != null &amp;&amp; Branch_Office_City__c != null  &amp;&amp;  ISPICKVAL(SAAM_Case__r.OSCAR__r.Process__c,&quot;NEW.MSO.1.0&quot;))</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Ready for Accreditation</label>
         <trackHistory>false</trackHistory>
@@ -7882,6 +7896,17 @@ $Label.ISSP_AMS_LS_Sole_Owner)</formula>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Is_your_firm_handling_Dangerous_Goods__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Is_your_firm_insured_to_cover__c</picklist>
             <values>
                 <fullName>No</fullName>
@@ -8581,6 +8606,17 @@ $Label.ISSP_AMS_LS_Sole_Owner)</formula>
         </picklistValues>
         <picklistValues>
             <picklist>Is_your_firm_an_approved_IATA_Passenger__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Is_your_firm_handling_Dangerous_Goods__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>

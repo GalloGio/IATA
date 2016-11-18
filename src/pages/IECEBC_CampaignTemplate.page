@@ -1,0 +1,80 @@
+<apex:page standardController="EBC_Campaign__c" extensions="vfIECEBC_Campaign,vfIECEBC_CampaignTemplate" applyHtmlTag="false" applyBodyTag="false" sidebar="false" showheader="false" standardStylesheets="false" language="en" docType="html-5.0" action="{!pageLoad}">
+	<apex:composition template="IECEBC_Layout">
+        <apex:define name="pageHeadAdditions">
+            <!-- Start of Page <head> -->
+            <title>eBroadcast Campaign - Select a template</title>
+            <!-- End of Page </head> -->
+        </apex:define>
+        <apex:define name="pageScriptAdditions">
+            <!-- If any page specific .js, add them here -->
+        </apex:define>
+        <apex:define name="pageContent">
+            <!-- Start of Page Content -->
+            <main class="main-content">
+                <div class="inner-wrapper">
+                    <c:IECEBC_ProgressComponent currentStepNumber="{!currentStepNumber}" campaign="{!EBC_Campaign__c}" />
+            
+                    <h1 class="page-title">Select Template</h1>
+                    
+                    <apex:form >
+                        <apex:inputHidden value="{!selectedTemplate}" id="selectedTemplate" />
+                        
+                        <script type="text/javascript">
+                        function resetTemplate(recordId) {
+                            document.getElementById('{!$Component.selectedTemplate}').value = recordId;
+                        }
+                        </script>
+                        
+                        <apex:pageMessages />
+                        
+                		<div class="tab-container js-tabs">
+                            <ul class="nav tabs">
+                                <li class="active" data-target="#pane-1"><a href="#" onclick="resetTemplate(jQuery('input:checked', jQuery(this).closest('li').attr('data-target')).val());">Basic Templates</a></li>
+                                <li data-target="#pane-2"><a href="#" onclick="resetTemplate(jQuery('input:checked', jQuery(this).closest('li').attr('data-target')).val());">Saved Templates</a></li>
+                                <li data-target="#pane-3"><a href="#" onclick="resetTemplate('{!customHtmlTemplate.Id}');">Use your HTML code</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane is-open" id="pane-1">
+                                    <c:IECEBC_TemplateList selectedTemplatedId="{!selectedTemplate}" global="true" limitToAudience="{!audience}" />
+                                </div>
+                                <div class="tab-pane" id="pane-2">
+                                    <c:IECEBC_TemplateList selectedTemplatedId="{!selectedTemplate}" global="false" limitToAudience="{!audience}" />
+                                </div>
+                                <div class="tab-pane" id="pane-3"> 
+                                    <c:IECEBC_TemplateCustomCode />
+                                </div>
+                            </div>
+                        </div>
+                        <apex:outputText rendered="{!NOT(campaign.Is_Step3_Writable__c)}">
+                            <script type="text/javascript">
+                            jQuery(document).ready(function(){
+                                jQuery('.tab-content input[type="checkbox"]').attr('disabled', 'disabled').attr('readonly', 'readonly');
+                            });
+                            </script>
+                        </apex:outputText>
+                        <div class="footer-actions text-right">
+                            <ul class="list actions">
+                                <apex:outputText rendered="{!campaign.Is_Step3_Writable__c}">
+	                                <li><apex:commandLink action="{!previous}" styleClass="button secondary" value="Previous" /></li>
+                                </apex:outputText>
+                                <apex:outputText rendered="{!campaign.Is_Step3_Writable__c}">
+	                                <li><apex:commandLink action="{!upsertDesignAndExit}" styleClass="button secondary" value="Save and Return to Dashboard" /></li>
+                                </apex:outputText>
+                                <apex:outputText rendered="{!campaign.Is_Step3_Writable__c}">
+	                                <li><apex:commandLink action="{!upsertDesignAndContinue}" styleClass="button" value="Continue" /></li>
+                                </apex:outputText>
+                                <apex:outputText rendered="{!NOT(campaign.Is_Step3_Writable__c)}">
+	                                <li><apex:commandLink action="{!previous}" value="Previous" styleClass="button secondary" /></li>
+                                </apex:outputText>
+                                <apex:outputText rendered="{!NOT(campaign.Is_Step3_Writable__c)}">
+	                                <li><apex:commandLink action="{!next}" value="Next" styleClass="button" /></li>
+                                </apex:outputText>
+                            </ul>
+                        </div>
+                    </apex:form>
+                </div>
+            </main>
+            <!-- End of Page Content -->
+        </apex:define>
+    </apex:composition>
+</apex:page>

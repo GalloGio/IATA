@@ -307,6 +307,29 @@ public class AMS_OscarCaseTriggerHelper {
         return irr;
     }
 
+	
+	private static id RTSidra = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('SIDRA');
+	private static id RTSidraLite = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('SIDRA_Lite');
+	
+	public static void CreateRiskChangeCode(){
+		if(AMS_OscarCase_RiskMgmt.runOnce()){
+			map<id, case> mapNewCase = new map<id, case>();
+			map<id, case> mapOldCase = new map<id, case>();
+			
+			for(Case c : (List<Case>)Trigger.new){
+	            Case cOld = (Trigger.isInsert ? null : (Case)Trigger.oldMap.get(c.Id));
+	            if(c.RecordTypeId == RTSidra || c.RecordTypeId == RTSidraLite){
+	            	mapNewCase.put(c.Id, c);
+	            	if(cOld!=null)
+	            		mapOldCase.put(cOld.id, cOld);
+	            }
+	        }
+	        system.debug('DTULLO Helper 334 --> ' + mapNewCase.size());
+	        if(!mapNewCase.isEmpty())
+	        	AMS_OscarCase_RiskMgmt.CreateRiskChangeCode(mapOldCase, mapNewCase);
+		}
+		
+	}
 
     /*AMS-1580 and AMS-1585*/
     public static void copyDataFromOscar() {

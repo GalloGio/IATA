@@ -1,0 +1,182 @@
+<apex:page controller="vfIECEBC_Layout" action="{!pageLoad}" language="en" docType="html-5.0" applyHtmlTag="false" applyBodyTag="false" sidebar="false" showheader="false" standardStylesheets="false">
+<!--[if lte IE 8]>
+    <html lang="en" class="ie lte-ie8 no-svg">
+<![endif]-->
+<!--[if IE 9]>
+    <html lang="en" class="ie ie9">
+<![endif]-->
+<!--[if !IE]><!-->
+    <html lang="en">
+<!--<![endif]-->
+        <head>
+            <meta charset="UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
+            <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Raleway:300,400,700,600" />
+            <link rel="stylesheet" href="{!URLFOR($Resource.eBroadcastAssets, '/assets/css/main.min.css')}" />
+            <script src="{!URLFOR($Resource.eBroadcastAssets, '/assets/js/script.js')}"></script>
+            <script type="text/javascript">
+                var resetForms = function(parentElement) {
+                    if (undefined == parentElement) parentElement = jQuery('body');
+                    jQuery('form', parentElement).each(function(){this.reset();})
+                }
+                jQuery(document).ready(function(){resetForms()});
+            </script>
+            <apex:insert name="pageHeadAdditions" />
+            <style type="text/css">
+                main { margin-bottom: 140px; }
+            </style>
+        </head>
+        <body data-is-modal-open="false" id="page-top">
+            <div class="app-container">
+                <header class="page-header">
+                    <div class="inner-wrapper">
+            
+                        <div class="column column-nav">
+                            <h1 class="site-logo">
+                                <a href="./">
+                                <!--[if lte IE 8]>
+                                    <img src="{!URLFOR($Resource.eBroadcastAssets, '/assets/img/common/logo-IATA-international-air-transport-association.png')}" alt="IATA: International Air Transport Association" width="70" />
+                                <![endif]-->
+                                <!--[if (gte IE 9)|!(IE)]><!-->
+                                    <img src="{!URLFOR($Resource.eBroadcastAssets, '/assets/img/common/logo-IATA-international-air-transport-association-white.svg')}" alt="IATA: International Air Transport Association" width="70" height="55" />
+                                <!--<![endif]-->
+                                </a>
+                            </h1>
+                
+                            <nav class="main-nav">
+                                <ul class="nav">
+                                    <li>
+                                        <a class="icon caret-down after" id="js-main-nav" href="#">eBroadcast</a>
+                                        
+                                        <!-- In Progress -->
+                                        <div class="sub-nav tab-container js-tabs">
+                                            <ul class="nav tabs">
+                                                <li class="active" data-target="#sub-nav-pane-1">
+                                                    <a href="#">Service Details</a>
+                                                </li>
+                                                <li data-target="#sub-nav-pane-2">
+                                                    <a href="#">Manage Services</a>
+                                                </li>
+                                            </ul>
+                                            <div class="tab-content">
+                                                <div class="tab-pane is-open" id="sub-nav-pane-1">
+                                                    <div class="title">Service Details</div>
+                                                    <table class="table-service-details">
+                                                        <apex:outputText rendered="{!IF(productRatePlan.EBC_SubscriptionType__c='Pay-as-You-Go',False,True)}">   
+                                                        <tr>
+                                                            <th>Subscription ID:</th>
+                                                            <td>{!subscription.Name}</td>
+                                                        </tr>
+                                                        </apex:outputText>
+                                                        <tr>
+                                                            <th>Rate Plan:</th>
+                                                            <td>{!productRatePlan.Name}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Cost per email:</th>
+                                                            <td>
+                                                                <apex:outputText value="${0, number, ###,###,##0.000}"><apex:param value="{!productRatePlan.EBC_Currency_Cost_Per_Email__c}"/></apex:outputText><br />
+                                                                <apex:outputLink value="{!URLFOR($Page.IECEBC_AccountRatePlan)}" rendered="{!productRatePlan.Name != 'Premium Edition'}">Lower your cost per email</apex:outputLink>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Account Balance:</th>
+                                                            <td><apex:outputText value="{0, number, ###,###,##0}"><apex:param value="{!billingAccount.eBroadcast_Email_Balance__c}"/></apex:outputText> email(s)</td>
+                                                        </tr>
+                                                        <apex:outputText rendered="{!productRatePlan.EBC_SubscriptionType__c == 'Pre-Paid' && subscription.Zuora__NextRenewalDate__c >= TODAY()}">
+                                                            <tr>
+                                                                <th>Next Renewal Date:</th>
+                                                                <td>
+                                                                    <apex:outputText value="{0, date, d MMMM yyyy}"><apex:param value="{!subscription.Zuora__SubscriptionEndDate__c}" /></apex:outputText><br />
+                                                                    <apex:outputLink value="{!renewalPageUrl}" rendered="{!showRenewNow}">
+                                                                        Renew Now
+                                                                    </apex:outputLink>
+                                                                </td>
+                                                            </tr>
+                                                        </apex:outputText>
+                                                        
+                                                    </table>
+                                                    <a href="mailto:globaldata@iata.org?subject=eBroadcast upgrade" class="button block dark">Contact Support</a>
+                                                </div>
+                                                <div class="tab-pane" id="sub-nav-pane-2">
+                                                    <div class="title">View</div>
+                                                    <ul class="list angle-double-right">
+                                                        <li>
+                                                            <a href="{!URLFOR($Page.IECEBC_Dashboard)}">Dashboard</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="{!URLFOR($Page.IECEBC_CampaignList)}">All campaigns</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="{!URLFOR($Page.IECEBC_Reports)}">Campaign reports</a>
+                                                        </li>
+                                                    </ul>
+                                                    <div class="title">Manage</div>
+                                                    <ul class="list angle-double-right">
+                                                        <li>
+                                                            <a href="{!URLFOR($Page.IECEBC_Campaign)}">Create campaign</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="{!URLFOR($Page.IECEBC_RecipientList)}">Manage recipient lists</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="{!URLFOR($Page.IECEBC_TemplateList)}">Templates &amp; resources</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="{!URLFOR($Page.IECEBC_AccountManage)}">My account</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                
+                        <div class="column column-account">
+                            <ul class="nav account-nav">
+				                <apex:variable rendered="{!isUserLoggedIn}" value="{!$User}" var="u">
+	                                <li><a class="icon user" href="#">{!$User.FirstName} {!$User.LastName}</a></li>
+                                </apex:variable>
+                                <li><a class="icon shopping-cart" href="{!URLFOR($Page.IECHomepage)}">Shopping area</a></li>
+                            </ul>
+                        </div>
+                        
+                    </div>
+                </header>
+                <apex:insert name="pageContent"/>
+        		
+                <footer class="page-footer" data-is-sticky="true">
+                    <div class="inner-wrapper">
+                        <div class="group-container">
+                            <strong class="group-title">Products:</strong>
+                            <ul class="list">
+                                <li><a href="{!URLFOR($Page.IECProductViewer)}?ProductCode={!sProdGSS}">Global Systems Solution</a></li>
+                                <li><a href="{!URLFOR($Page.IECProductViewer)}?ProductCode={!sProdMDP}">Marketing Data Package</a></li>
+                                <li><a href="{!URLFOR($Page.IECProductViewer)}?ProductCode={!sProdGAD}">Global Agency Directory</a></li>
+                                <li><a href="{!URLFOR($Page.IECProductViewer)}?ProductCode={!sProdCACPro}">CheckACode</a></li>
+                            </ul>
+                        </div>
+                        <div class="group-container">
+                            <strong class="group-title">Info:</strong>
+                            <ul class="list">
+                                <li><a href="{!URLFOR($Page.IECAboutGDP)}">About Global Data</a></li>
+                                <li><a href="mailto:{!sContactEmail}?subject={!sContactSubject}">Contact Us</a></li>
+                                <li><a href="{!URLFOR($Page.IECCustomers)}">Customers</a></li>
+                                <li><a href="{!URLFOR($Page.IECTerms)}">Terms of Use</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </footer>
+                <!--
+                <div class="modal-container is-hidden" id="js-modal">
+                    <div class="overlay"></div>
+                    <div class="modal-dialog" id="js-modal-dialog"></div>
+                </div>-->
+            </div>
+            
+            <apex:insert name="pageScriptAdditions" />
+        </body>
+    </html>
+</apex:page>

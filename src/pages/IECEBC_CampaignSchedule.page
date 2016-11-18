@@ -1,0 +1,62 @@
+<apex:page standardController="EBC_Campaign__c" extensions="vfIECEBC_Campaign,vfIECEBC_CampaignSchedule" applyHtmlTag="false" applyBodyTag="false" sidebar="false" showheader="false" standardStylesheets="false" language="en" docType="html-5.0" action="{!pageLoad}">
+	<apex:composition template="IECEBC_Layout">
+        <apex:define name="pageHeadAdditions">
+            <!-- Start of Page <head> -->
+            <title>eBroadcast Campaign - Schedule</title>
+            <!-- End of Page </head> -->
+        </apex:define>
+        <apex:define name="pageScriptAdditions" />
+        <apex:define name="pageContent">
+            <!-- Start of Page Content -->
+            <main class="main-content">
+                <div class="inner-wrapper">
+                    <c:IECEBC_ProgressComponent currentStepNumber="{!currentStepNumber}" campaign="{!EBC_Campaign__c}" />
+            
+                    <h1 class="page-title">Summary &amp; Schedule</h1>
+                    
+                    <p class="lead">Review these important details before scheduling you campaign.</p>
+            
+                    <apex:outputPanel layout="block" styleClass="alert subject-line" rendered="{!campaign.Status__c == 'DRAFT'}">
+                        <div class="alert-message icon check-circle">
+                            <h2 class="title">Subject Line <a class="text-link" href="{!URLFOR($Page.IECEBC_Campaign)}?id={!campaign.id}">(edit)</a></h2>
+                            <p>The Email Subject currently setup is <strong>{!campaign.Subject__c}</strong></p>
+                        </div>
+                    </apex:outputPanel>
+            
+                    <div class="alert">
+                        <div class="alert-message icon check-circle">
+                            <h2 class="title">Recipients</h2>
+                            <p>
+                                Your message will be delivered using the list <strong>{!campaign.EBC_Master_Filter__r.Name}</strong><br />
+                                Total of <strong><apex:outputText value="{0,number,###,###,##0}"><apex:param value="{!numberOfRecipients}" /></apex:outputText> recipients</strong>
+                            </p>
+                        </div>
+                    </div>
+            
+                    <c:IECEBC_CampaignSchedule c="{!campaign}">
+                        <div class="footer-actions text-right">
+                            <ul class="list actions">
+                                <apex:outputText rendered="{!campaign.Is_Step5_Writable__c}">
+	                                <li><apex:commandLink action="{!previous}" styleClass="button secondary" value="Previous" /></li>
+                                </apex:outputText>
+                                <apex:outputText rendered="{!campaign.Is_Step5_Writable__c}">
+	                                <li><apex:commandLink action="{!saveAndExit}" reRender="pageMessagesBlock" styleClass="button secondary" value="Save and Return to Dashboard" /></li>
+                                </apex:outputText>
+                                <apex:outputText rendered="{!campaign.Is_Step5_Writable__c}">
+	                                <li><apex:commandLink action="{!saveAndContinue}" reRender="pageMessagesBlock" styleClass="button" value="Continue" /></li>
+                                </apex:outputText>
+                                <apex:outputText rendered="{!NOT(campaign.Is_Step5_Writable__c)}">
+	                                <li><apex:commandLink action="{!previous}" value="Previous" styleClass="button secondary" /></li>
+                                </apex:outputText>
+                                <apex:outputText rendered="{!NOT(campaign.Is_Step5_Writable__c)}">
+	                                <li><apex:commandLink action="{!next}" value="Next" styleClass="button" /></li>
+                                </apex:outputText>
+                            </ul>
+                        </div>
+                    </c:IECEBC_CampaignSchedule>
+                </div>
+            </main>
+            <!-- End of Page Content -->
+        </apex:define>
+    </apex:composition>
+</apex:page>

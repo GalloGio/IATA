@@ -13,6 +13,87 @@
 
 
 
+
+<target name="deployPermissions"> 
+    <echo level="info">Deploying APEX and VISUALFORCE</echo>
+   <antcallback target="deldir" />
+   <mkdir dir="${basedir}/Code"/>
+  
+      <mkdir dir="${basedir}/Code/permissionsets"/>
+       <mkdir dir="${basedir}/Code/profiles"/>
+
+
+     <echo level="info">moving files</echo>
+      
+      <for list="${objectFolders}" param="param" delimiter=",">
+        <sequential>
+          <move todir="${basedir}/Code/permissionsets">
+            <fileset dir="${basedir}/src/permissionsetsObjects">
+            </fileset>
+          </move>
+       </sequential>
+     </for>
+
+
+   <for list="${objectFolders}" param="param" delimiter=",">
+        <sequential>
+          <move todir="${basedir}/Code/profiles">
+            <fileset dir="${basedir}/src/profilesObjects">
+            </fileset>
+          </move>
+       </sequential>
+     </for>
+
+
+ <move file="${basedir}/src/permissions.xml" tofile="${basedir}/Code/package.xml"/>  
+      
+      <antcallback target="deployCodeLocal" />
+          <antcallback target="deployProfilesApex" />
+
+  </target> 
+
+
+
+<target name="deployProfilesApex"> 
+    <echo level="info">Deploying APEX and VISUALFORCE</echo>
+   <antcallback target="deldir" />
+   <mkdir dir="${basedir}/Code"/>
+  
+       <mkdir dir="${basedir}/Code/permissionsets"/>
+        <mkdir dir="${basedir}/Code/profiles"/>
+
+     <echo level="info">moving files</echo>
+
+   <for list="${apexFolders}" param="param" delimiter=",">
+        <sequential>
+          <move todir="${basedir}/Code/permissionsets">
+            <fileset dir="${basedir}/src/permissionsetsApex">
+            </fileset>
+          </move>
+       </sequential>
+     </for>
+
+
+   <for list="${apexFolders}" param="param" delimiter=",">
+        <sequential>
+          <move todir="${basedir}/Code/profiles">
+            <fileset dir="${basedir}/src/profilesApex">
+            </fileset>
+          </move>
+       </sequential>
+     </for>
+
+
+
+ <move file="${basedir}/src/permissions2.xml" tofile="${basedir}/Code/package.xml"/>  
+      
+      <antcallback target="deployCodeLocal" />
+
+  </target> 
+
+
+
+
 <target name="checkCodeFolder">
   <condition property="deldir">
     <available file="${basedir}/Code" type="dir"/>
@@ -341,7 +422,7 @@
  <move file="${basedir}/src/layoutPackage.xml" tofile="${basedir}/Code/package.xml"/>  
       
       <antcallback target="deployCodeLocal" />
-       <!-- <antcallback target="deployApprovals" /> -->
+        <antcallback target="deployApprovals" /> 
 
   </target> 
 
@@ -374,7 +455,7 @@
  <move file="${basedir}/src/approvalPackage.xml" tofile="${basedir}/Code/package.xml"/>  
       
       <antcallback target="deployCodeLocal" />
-            <antcallback target="deployDontRetrieve" />
+         <!--   <antcallback target="deployDontRetrieve" /> -->
 
   </target> 
 
@@ -486,15 +567,113 @@
         username="${sfdc.username}"
         password="${sfdc.password}"
         serverurl="${sfdc.serverurl}"
-        unpackaged="src/objectPackage.xml" />
+        unpackaged="src/objectPackageRetrieve.xml" />
 
-      <move file="${basedir}/${sfdc.retrieveTarget}/package.xml" tofile="src/objectPackage.xml" />  
-
-
+      <move file="${basedir}/${sfdc.retrieveTarget}/package.xml" tofile="src/objectPackageRetrieve.xml" />  
+      <move file="${basedir}/${sfdc.retrieveTarget}/profiles/" tofile="src/profilesObjects/" />  
+      <move file="${basedir}/${sfdc.retrieveTarget}/permissionsets/" tofile="src/permissionsetsObjects/" />  
 
       <move file="${basedir}/${sfdc.retrieveTarget}" tofile="src"/>
-        <antcallback target="getLabel" />
+   
+        <antcallback target="compressProfiles" >
+         <param name="folder" value="profilesObjects"/>
+      </antcallback>
+
+        <antcallback target="compressPermissionSets" >
+         <param name="folderPermissionSet" value="permissionsetsObjects"/>
+      </antcallback>
+
+     <antcallback target="getLabel" /> 
     </target>
+
+
+
+    <target name="getApex">
+      <echo level="info">Retrieving the server's version of APEX VISUALFORCE</echo>
+      <mkdir dir="${basedir}/${sfdc.retrieveTarget}"/>
+      <sf:retrieve
+        retrieveTarget="${basedir}/${sfdc.retrieveTarget}"
+        username="${sfdc.username}"
+        password="${sfdc.password}"
+        serverurl="${sfdc.serverurl}"
+        unpackaged="src/codePackageRetrieve.xml"/>
+      <move file="${basedir}/${sfdc.retrieveTarget}/package.xml" tofile="src/codePackageRetrieve.xml"/>
+    
+      <move file="${basedir}/${sfdc.retrieveTarget}/profiles/" tofile="src/profilesApex/"/>
+      <move file="${basedir}/${sfdc.retrieveTarget}/permissionsets/" tofile="src/permissionsetsApex"/>
+
+      <move file="${basedir}/${sfdc.retrieveTarget}" tofile="src"/>
+
+
+
+        <antcallback target="compressProfiles" >
+         <param name="folder" value="profilesApex"/>
+      </antcallback>
+
+        <antcallback target="compressPermissionSets" >
+         <param name="folderPermissionSet" value="permissionsetsApex"/>
+      </antcallback>
+
+     <antcallback target="getStaticResource" /> 
+
+    </target>
+
+
+
+
+<target name="compressProfiles">
+
+<property name="folder" value="folder"/>
+
+ <for param="file">
+  <path>
+   <fileset dir="src/${folder}"  />
+  </path>
+  <sequential>
+   <var name="name" unset="true"/>
+   <basename file="@{file}" property="name" />
+   <echo message=" ${name}"/>
+           <exec executable = "perl">
+         <arg value = "-pi"/>
+            <arg value = "build/profileCompress.pl"/>
+            <arg value = "src/${folder}/${name}"/>
+        </exec>
+  </sequential>
+ </for>              
+
+
+  <delete>
+    <fileset dir="src/${folder}" includes="*.profile.bak"  />
+  </delete>
+
+ </target>
+
+
+
+<target name="compressPermissionSets">
+<property name="folderPermissionSet" value="folderPermissionSet"/>
+
+
+ <for param="file">
+  <path>
+   <fileset dir="src/${folderPermissionSet}"  />
+  </path>
+  <sequential>
+   <var name="name" unset="true"/>
+   <basename file="@{file}" property="name" />
+   <echo message=" ${name}"/>
+           <exec executable = "perl">
+           <arg value = "-pi"/>
+            <arg value = "build/profileCompress.pl"/>
+            <arg value = "src/${folderPermissionSet}/${name}"/>
+        </exec>
+  </sequential>
+ </for>              
+  <delete>
+    <fileset dir="src/${folderPermissionSet}" includes="*.permissionset.bak"  />
+  </delete>
+ </target>
+
 
 
 
@@ -548,21 +727,7 @@
        <antcallback target="getApex" />
     </target>
 
-    <target name="getApex">
-      <echo level="info">Retrieving the server's version of APEX VISUALFORCE</echo>
-      <mkdir dir="${basedir}/${sfdc.retrieveTarget}"/>
-      <sf:retrieve
-        retrieveTarget="${basedir}/${sfdc.retrieveTarget}"
-        username="${sfdc.username}"
-        password="${sfdc.password}"
-        serverurl="${sfdc.serverurl}"
-        unpackaged="src/codePackage.xml"/>
-      <move file="${basedir}/${sfdc.retrieveTarget}/package.xml" tofile="src/codePackage.xml"/>
-      <move file="${basedir}/${sfdc.retrieveTarget}" tofile="src"/>
 
-     <antcallback target="getStaticResource" /> 
-
-    </target>
 
  
     <target name="getStaticResource">
@@ -617,22 +782,31 @@
     
 
 
-    <target name="getCodePointAndClick">
-      <echo level="info">Retrieving the server's version of OBJECTS </echo>
+   <target name="getCodePointAndClick">
+      <echo level="info">Retrieving the server's version of OBJECTs </echo>
       <mkdir dir="${basedir}/${sfdc.retrieveTarget}"/>
       <sf:retrieve
         retrieveTarget="${basedir}/${sfdc.retrieveTarget}"
         username="${sfdc.username}"
         password="${sfdc.password}"
         serverurl="${sfdc.serverurl}"
-        unpackaged="src/objectPackage.xml" />
+        unpackaged="src/objectPackageRetrieve.xml" />
 
-      <move file="${basedir}/${sfdc.retrieveTarget}/package.xml" tofile="src/objectPackage.xml" />  
-
-
+      <move file="${basedir}/${sfdc.retrieveTarget}/package.xml" tofile="src/objectPackageRetrieve.xml" />  
+      <move file="${basedir}/${sfdc.retrieveTarget}/profiles/" tofile="src/profilesObjects/" />  
+      <move file="${basedir}/${sfdc.retrieveTarget}/permissionsets/" tofile="src/permissionsetsObjects/" />  
 
       <move file="${basedir}/${sfdc.retrieveTarget}" tofile="src"/>
-        <antcallback target="getLabelPointAndClick" />
+   
+        <antcallback target="compressProfiles" >
+         <param name="folder" value="profilesObjects"/>
+      </antcallback>
+
+        <antcallback target="compressPermissionSets" >
+         <param name="folderPermissionSet" value="permissionsetsObjects"/>
+      </antcallback>
+
+     <antcallback target="getLabelPointAndClick" /> 
     </target>
 
 
@@ -748,57 +922,6 @@
     
 
 
-
-<target name="compressProfiles">
- <for param="file">
-  <path>
-   <fileset dir="src/profiles"  />
-  </path>
-  <sequential>
-   <var name="name" unset="true"/>
-   <basename file="@{file}" property="name" />
-   <echo message=" ${name}"/>
-           <exec executable = "perl">
-         <arg value = "-pi"/>
-            <arg value = "build/profileCompress.pl"/>
-            <arg value = "src/profiles/${name}"/>
-        </exec>
-  </sequential>
- </for>              
-</target>
-
-<target name="compressPermissionSets">
- <for param="file">
-  <path>
-   <fileset dir="src/permissionsets"  />
-  </path>
-  <sequential>
-   <var name="name" unset="true"/>
-   <basename file="@{file}" property="name" />
-   <echo message=" ${name}"/>
-           <exec executable = "perl">
-           <arg value = "-pi"/>
-            <arg value = "build/profileCompress.pl"/>
-            <arg value = "src/permissionsets/${name}"/>
-        </exec>
-  </sequential>
- </for>              
-</target>
-
-
-
-<target name="deletebakprofiles">
-<delete >
-    <fileset dir="src/profiles" includes="*.profile.bak"  />
-  </delete>
- </target>
-
-<target name="deletebakpermissionsets">
-<delete >
-    <fileset dir="src/permissionsets" includes="*.permissionset.bak"  />
-  </delete>
- </target>
-
 <target name="deployCodeLocal">
       <echo level="info">Performing the deploy</echo>
       <sf:deploy
@@ -810,6 +933,9 @@
         maxPoll="${sfdc.maxPoll}"/>
     </target>
  
+
+
+
   
     <target name="deployLabelsFix">
       <echo level="info">Performing the deploy of the labels as they were in preprod</echo>
@@ -840,5 +966,62 @@
         purgeOnDelete="true"
         deployroot="${basedir}/removecodepkg" />
     </target> 
+
+
+
+
+
+<target name="getProfilesObjects">
+      <echo level="info">Retrieving the server's version of OBJECTs </echo>
+      <mkdir dir="${basedir}/${sfdc.retrieveTarget}"/>
+      <sf:retrieve
+        retrieveTarget="${basedir}/${sfdc.retrieveTarget}"
+        username="${sfdc.username}"
+        password="${sfdc.password}"
+        serverurl="${sfdc.serverurl}"
+        unpackaged="src/objectPackageRetrieve.xml" />
+
+      <move file="${basedir}/${sfdc.retrieveTarget}/package.xml" tofile="src/objectPackageRetrieve.xml" />  
+      <move file="${basedir}/${sfdc.retrieveTarget}/profiles/" tofile="src/profilesObjects/" />  
+      <move file="${basedir}/${sfdc.retrieveTarget}/permissionsets/" tofile="src/permissionsetsObjects/" />  
+
+        <antcallback target="compressProfiles" >
+         <param name="folder" value="profilesObjects"/>
+      </antcallback>
+
+        <antcallback target="getProfilesApex" >
+      </antcallback>
+
+    </target>
+
+
+
+    <target name="getProfilesApex">
+      <echo level="info">Retrieving the server's version of APEX VISUALFORCE</echo>
+      <mkdir dir="${basedir}/${sfdc.retrieveTarget}"/>
+      <sf:retrieve
+        retrieveTarget="${basedir}/${sfdc.retrieveTarget}"
+        username="${sfdc.username}"
+        password="${sfdc.password}"
+        serverurl="${sfdc.serverurl}"
+        unpackaged="src/codePackageRetrieve.xml"/>
+      <move file="${basedir}/${sfdc.retrieveTarget}/package.xml" tofile="src/codePackageRetrieve.xml"/>
+    
+      <move file="${basedir}/${sfdc.retrieveTarget}/profiles/" tofile="src/profilesApex/"/>
+      <move file="${basedir}/${sfdc.retrieveTarget}/permissionsets/" tofile="src/permissionsetsApex"/>
+
+        <antcallback target="compressProfiles" >
+         <param name="folder" value="profilesApex"/>
+      </antcallback>
+
+        <antcallback target="compressPermissionSets" >
+         <param name="folderPermissionSet" value="permissionsetsApex"/>
+      </antcallback>
+
+
+    </target>
+
+
+
 
 </project>
