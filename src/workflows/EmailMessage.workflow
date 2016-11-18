@@ -643,7 +643,7 @@
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
-            <value>,Internal Cases (IDFS ISS),SAAM,New Process (IDFS ISS),IDFS Airline Participation Process,IATA Financial Review,ID Card Application,SIDRA Lite</value>
+            <value>Internal Cases (IDFS ISS),SAAM,New Process (IDFS ISS),IDFS Airline Participation Process,IATA Financial Review,ID Card Application,SIDRA Lite,OSCAR Communication</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.IsClosed</field>
@@ -678,7 +678,7 @@
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
-            <value>Internal Cases (IDFS ISS),SAAM,New Process (IDFS ISS),IDFS Airline Participation Process,SEDA,IATA Financial Review,ID Card Application,SIDRA Lite</value>
+            <value>Internal Cases (IDFS ISS),SAAM,New Process (IDFS ISS),IDFS Airline Participation Process,SEDA,IATA Financial Review,ID Card Application,SIDRA Lite,OSCAR Communication</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.IsClosed</field>

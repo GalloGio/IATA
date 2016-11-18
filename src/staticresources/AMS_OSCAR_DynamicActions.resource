@@ -45,7 +45,7 @@ var dyn_functions = {
                             //var records = queryResult.getArray('records');
 
                             
-                        	if(result[0] == '1'){
+                            if(result[0] == '1'){
                                 records[0].STEP10__c = 'Passed';
                                 sResult = '- Generate IATACode - Success!\n\r';
 
@@ -59,14 +59,14 @@ var dyn_functions = {
                                 //}else{
                                 //    records[0].Flag_Data_to_Account__c = true;
                                 //}
-                        	} else{
-                        		records[0].STEP10__c = 'Failed';
+                            } else{
+                                records[0].STEP10__c = 'Failed';
                                 sResult = '- Generate IATACode - Error! '+ result[1] + ' (code: '+ result[0] +')\n\r';
-                        	}
-                        	//sforce.connection.update(records);
+                            }
+                            //sforce.connection.update(records);
                             bUpdate = true;
                         }else{
-    					
+                        
                             sResult = '- IATA code already generated \n\r';
                         }
 
@@ -289,6 +289,148 @@ var dyn_functions = {
                };
 
                sforce.console.getEnclosingPrimaryTabId(openSubtab);
+           
+           },
+           createSIDRALite:function (arg) {
+                var result;
+                result = sforce.apex.execute("AMS_OSCAR_Webservice", "createSIDRALite", {oscarId: arg});
+                
+                // error
+                if (result[0].substring(0, 6) == 'ERROR:') {
+                    alert(result);
+                } 
+                else {
+                    
+                    var caseId = result[0];
+
+                    var changeTab = function(result){
+                        if(result.success == true){
+                            //sforce.console.focusPrimaryTabById(caseId);
+                            alert('SIDRA Lite Case created successfully.');
+                        }
+                    };
+
+                    // Use the results primary tab id and open a new subtab
+                   var openSubtab = function(result)
+                   {            
+                        sforce.console.openSubtab(result.id, '/'+caseId, true, 'SIDRA Lite Case', null, changeTab);    
+                   };
+                   sforce.console.getEnclosingPrimaryTabId(openSubtab);
+
+                }
+           
+           },
+           createCommissionerCase:function (arg) {
+                var result;
+                result = sforce.apex.execute("AMS_OSCAR_Webservice", "createCommissionerCase", {oscarId: arg});
+                
+                // error
+                if (result[0].substring(0, 6) == 'ERROR:') {
+                    alert(result);
+                } 
+                else {
+                    
+                    var caseId = result[0];
+
+                    var changeTab = function(result){
+                        if(result.success == true){
+                            //sforce.console.focusPrimaryTabById(caseId);
+                            alert('Commissioner Case created successfully.');
+                        }
+                    };
+
+                    // Use the results primary tab id and open a new subtab
+                   var openSubtab = function(result)
+                   {            
+                        sforce.console.openSubtab(result.id, '/'+caseId, true, 'Commissioner Lite Case', null, changeTab);    
+                   };
+                   sforce.console.getEnclosingPrimaryTabId(openSubtab);
+
+                }
+            
+            },
+            createFSReleaseCase:function (arg) {
+                var result;
+                result = sforce.apex.execute("AMS_OSCAR_Webservice", "createFSReleaseCase", {oscarId: arg});
+                
+                // error
+                if (result[0].substring(0, 6) == 'ERROR:') {
+                    alert(result);
+                } 
+                else {
+                    
+                    var caseId = result[0];
+
+                    var changeTab = function(result){
+                        if(result.success == true){
+                            alert('Case created successfully.');
+                        }
+                    };
+
+                    // Use the results primary tab id and open a new subtab
+                    var openSubtab = function(result)
+                    {               
+                        sforce.console.openSubtab(result.id, '/'+caseId, true, 'Case for FS Release', null, changeTab);  
+                    };
+                    sforce.console.getEnclosingPrimaryTabId(openSubtab);
+
+                }
+            
+            },
+
+            deactivateBSPLink:function (arg) {
+
+                var oscarIdsToRemove = [];
+                var sMessageSuccess = "";
+                var sMessageError = "";
+
+                if(confirm('Do you want to proceed deactivating agencies?')){
+                    oscarIdsToRemove.push(arg);
+
+                    var response = sforce.apex.execute("AMS_BSPLinkIntegration","ProcessBSPLink",{sProcess:"Deactivation",objectIds:oscarIdsToRemove,sTypeOfRemoval:"AccountsInvolved"});
+
+                    for (var i = 0; i < response.length; i++) {
+                        if(response[i].result=='Ok'){
+                            sMessageSuccess = sMessageSuccess + "Success: " + response[i].IATACode + ": " + response[i].description + "\n";
+                        }
+                        if(response[i].result=='Error'){
+                            sMessageError = sMessageError + "Error: " + response[i].IATACode + ": " + response[i].description + "\n";
+                        }
+                    }
+                    alert("Result: \n\n" + sMessageError + "\n\n" + sMessageSuccess);
+                }
+            },
+
+            reactivateBSPLink:function (arg) {
+                var oscarIdsToRemove = [];
+                var sMessageSuccess = "";
+                var sMessageError = "";
+
+                if(confirm('Do you want to proceed reactivating agencies?')){
+                    oscarIdsToRemove.push(arg);
+
+                    var response = sforce.apex.execute("AMS_BSPLinkIntegration","ProcessBSPLink",{sProcess:"DeactivationUndoOrReactivation",objectIds:oscarIdsToRemove,sTypeOfRemoval:"AccountsInvolved"});
+
+                    for (var i = 0; i < response.length; i++) {
+                        if(response[i].result=='Ok'){
+                            sMessageSuccess = sMessageSuccess + "Success: " + response[i].IATACode + ": " + response[i].description + "\n";
+                        }
+                        if(response[i].result=='Error'){
+                            sMessageError = sMessageError + "Error: " + response[i].IATACode + ": " + response[i].description + "\n";
+                        }
+                    }
+                    alert("Result: \n\n" + sMessageError + "\n\n" + sMessageSuccess);
+                }
+            },
+            
+            generateCertificates:function (args) {
+
+                var argList = args.split(", ");
+
+                var result;
+                result = sforce.apex.execute("AMS_OSCAR_Webservice", "generateCertificates", {oscarId: argList[0], agencyId: argList[1]});
+                
+                alert(result);
            
            }
 

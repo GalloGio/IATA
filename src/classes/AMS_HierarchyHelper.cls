@@ -540,6 +540,57 @@ global class AMS_HierarchyHelper {
 
 	}
 
+	//verifies if every account involved has all its children selected
+	public static Boolean isAllChildrenSelected(AMS_Oscar__c oscar) {
+		List<AMS_Oscar__c> oscars = new List<AMS_Oscar__c>{oscar};
+
+		//fetch all relationships for each account
+		Map<Id, List<AMS_Agencies_relationhip__c>> relationshipMap = getAccountsHierarchies(new Set<Id>{oscar.Account__c});
+
+
+		//gets selected accounts for each oscar
+		Map<Id, Set<Id>> accountsInvolved = new Map<Id, Set<Id>>{ oscar.Id => new Set<Id>{oscar.Account__c} };
+		for(AMS_Process_Detail__c pd : [SELECT Id, Account__c, OSCAR__c FROM AMS_Process_Detail__c WHERE Oscar__c = :accountsInvolved.keyset()]){
+			accountsInvolved.get(pd.OSCAR__c).add(pd.Account__c);
+		}
+
+		return isAllChildrenSelected(oscars, relationshipMap, accountsInvolved).get(oscar.Id);
+	}
+
+	public static Map<Id, Boolean> isAllChildrenSelected(List<AMS_Oscar__c> oscars, Map<Id, List<AMS_Agencies_relationhip__c>> relationshipMap, Map<Id, Set<Id>> accountsInvolved) {
+
+		Map<Id, Boolean> results = new Map<Id, Boolean>();
+
+		//initialize map
+		for(AMS_Oscar__c oscar : oscars){
+			results.put(oscar.Id, true);
+		}
+
+		//create a map for the child accounts for every level on the hierarchy
+		Map<Id, Map<Id, Set<Id>>> childAccounts = new Map<Id, Map<Id, Set<Id>>>();
+		for(AMS_Oscar__c oscar : oscars){
+			childAccounts.put(oscar.Id, new Map<Id, Set<Id>>());
+
+			for(AMS_Agencies_relationhip__c r : relationshipMap.get(oscar.Account__c)){
+
+				if(!childAccounts.get(oscar.Id).containsKey(r.Parent_Account__c)) childAccounts.get(oscar.Id).put(r.Parent_Account__c, new Set<Id>());
+				if(!childAccounts.get(oscar.Id).containsKey(r.Child_Account__c)) childAccounts.get(oscar.Id).put(r.Child_Account__c, new Set<Id>());
+
+				childAccounts.get(oscar.Id).get(r.Parent_Account__c).add(r.Child_Account__c);
+			}
+		}
+
+		//check if all the selected account childrens are also selected
+		for(AMS_Oscar__c oscar : oscars){
+			for(Id accId : accountsInvolved.get(oscar.Id)){
+				for(Id childId : childAccounts.get(oscar.Id).get(accId)){
+					if(!accountsInvolved.get(oscar.Id).contains(childId)) results.put(oscar.Id, false);
+				}
+			}
+		}
+		return results;
+	}
+
 	//compares the owners between several accounts in the same hierarchy
 	public static boolean checkHierarchyIntegrity( Map<Id, Set<Id>> oscarAccounts ) {
 
