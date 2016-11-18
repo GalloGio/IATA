@@ -236,6 +236,48 @@
         <label>AMS 1 agency</label>
         <language>en_US</language>
     </listViews>
+    <listViews>
+        <fullName>AMS_Debug</fullName>
+        <columns>NAME</columns>
+        <columns>Account__c</columns>
+        <columns>Change_Code__c</columns>
+        <columns>Country_ISO_Code__c</columns>
+        <columns>IATACode__c</columns>
+        <columns>Sector__c</columns>
+        <columns>Status__c</columns>
+        <columns>Update_Type__c</columns>
+        <columns>CREATEDBY_USER</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Update_Type__c</field>
+            <operation>equals</operation>
+            <value>Invalid</value>
+        </filters>
+        <label>AMS - Debug</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>AMS_Debug_1_rec</fullName>
+        <columns>NAME</columns>
+        <columns>Account__c</columns>
+        <columns>Change_Code__c</columns>
+        <columns>Country_ISO_Code__c</columns>
+        <columns>IATACode__c</columns>
+        <columns>Sector__c</columns>
+        <columns>Status__c</columns>
+        <columns>Update_Type__c</columns>
+        <columns>CREATEDBY_USER</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>IATACode__c</field>
+            <operation>equals</operation>
+            <value>45214223</value>
+        </filters>
+        <label>AMS - Debug 1 rec</label>
+        <language>en_US</language>
+    </listViews>
     <nameField>
         <displayFormat>A-{00000000}</displayFormat>
         <label>Code</label>

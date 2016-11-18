@@ -1,0 +1,79 @@
+<apex:page controller="vfIECEBC_AccountUserGuide" applyHtmlTag="false" applyBodyTag="false" sidebar="false" 
+	showheader="false" standardStylesheets="false" language="en" docType="html-5.0">
+
+	<apex:composition template="IECEBC_Layout">
+		<apex:define name="pageHeadAdditions">
+			<!-- Start of Page <head> -->
+			<title>eBroadcast User Guide</title>
+			<!-- End of Page </head> -->
+		</apex:define>
+		<apex:define name="pageScriptAdditions">
+			<!-- If any page specific .js, add them here -->
+		</apex:define>
+		<apex:define name="pageContent">
+			<!-- Start of Page Content -->
+			<main class="main-content manage-account">
+				<div class="inner-wrapper">
+					<h1 class="page-title">User Guide</h1>
+					
+					<div class="tab-container">
+						<ul class="nav tabs">
+							<li><a href="{!URLFOR($Page.IECEBC_AccountManage)}">Overview</a>
+							</li>
+							<li><a href="{!URLFOR($Page.IECEBC_AccountRatePlan)}">Rate plan</a>
+							</li>
+							<li><a href="{!URLFOR($Page.IECEBC_AccountExtras)}">Extras</a>
+							</li>
+                            <apex:outputPanel rendered="{!isEbcPrepaid}">
+    	                        <li><a href="{!URLFOR($Page.IECEBC_AccountEmailBlocks)}">Email Blocks</a></li>
+	                        </apex:outputPanel>
+							<li><a href="{!URLFOR($Page.IECEBC_AccountSettings)}">Settings</a>
+							</li>
+							<li  class="active"><a href="{!URLFOR($Page.IECEBC_AccountUserGuide)}">User Guide</a>
+							</li>
+						</ul>
+						
+						<div class="tab-content">
+							<div class="tab-pane is-open" id="pane-5">
+								<div class="row row-payment">
+									<div class="columns main-container campaign-cost no-line">
+										<apex:form id="userGuideForm">
+                                            <p class="description light small">
+												Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illo, natus, vel laboriosam id excepturi repellat tempore sint quos, ut doloribus maxime ipsam temporibus hic molestias cumque obcaecati velit libero commodi.
+                                            </p>
+                                            <div class="accordion-container js-accordion">
+                                                <dl class="list">
+                                                    <dt class="accordion-title">User Guides</dt>
+                                                    <dd class="accordion-panel">
+                                                        <p class="description light small">
+															The following are the EBC User Guides ready to download.
+                                                        </p>
+                                                        <table class="data-table table-contact-info">
+                                                            <tbody>
+                                                                <apex:repeat id="userGuideItemRepeat" value="{!attachmentList}" var="docItem">
+                                                                    <tr>
+                                                                        <th>{!docItem.Description}</th>
+                                                                        <td>
+                                                                            <apex:outputLink style="width: 100%;" value="/servlet/servlet.FileDownload?file={!docItem.Id}" target="_blank">{!docItem.Name}</apex:outputLink>
+                                                                        </td>
+                                                                    </tr>
+                                                                </apex:repeat>
+                                                            </tbody>
+                                                        </table>
+                                                    </dd>
+                                                </dl>
+                                            </div>
+                                        </apex:form>
+									</div>
+									
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+			</main>
+			<!-- End of Page Content -->
+		</apex:define>
+	</apex:composition>
+</apex:page>

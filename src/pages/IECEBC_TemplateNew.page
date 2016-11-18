@@ -1,0 +1,240 @@
+<apex:page controller="vfIECEBC_TemplateList" applyHtmlTag="false" applyBodyTag="false" sidebar="false" showheader="false" standardStylesheets="false" language="en" docType="html-5.0">
+	<apex:composition template="IECEBC_Layout">
+        <apex:define name="pageHeadAdditions">
+            <!-- Start of Page <head> -->
+            <title>eBroadcast Manage New Templates</title>
+            <!-- End of Page </head> -->
+        </apex:define>
+        <apex:define name="pageScriptAdditions">
+            
+           
+           
+        </apex:define>
+        <apex:define name="pageContent">
+            <!-- Start of Page Content -->
+            <main class="main-content manage-resources">
+                <div class="inner-wrapper">
+           	     
+                  <div class="tab-container">
+                     
+                   
+                    <apex:form >
+                    
+                    <apex:outputPanel id="itemList" style="padding: 10px 0;" layout="block">
+                        <apex:inputHidden value="{!selectedTemplateId}" id="selectedTemplate" required="{!newTemplateStepNumber == 2}" />
+                        
+                        <apex:actionFunction action="{!doNothing}" name="setAudience" rerender="create-template"> 
+                            <apex:param assignTo="{!newTemplate.Audience__c}" name="firstParam" value="" /> 
+                        </apex:actionFunction>
+                        <apex:actionFunction action="{!doNothing}" name="rerenderFooterActions" rerender="footerActions">
+                        </apex:actionFunction>
+                        <script type="text/javascript">
+                        function resetTemplate(recordId) {
+                            document.getElementById('{!$Component.selectedTemplate}').value = recordId;
+                        }
+                        </script>
+                        <section >
+
+                            <apex:outputPanel id="create-template">
+                                <apex:outputText rendered="{!newTemplateStepNumber == 1}">
+                                    <div >
+                                        <h3 class="step-title">Audience</h3>
+                                        <p>Select the audience this template is destined for. This selection conditions the merge fields you will be able to use in your template design.</p>
+                                        <p><strong>Important:</strong> Once saved, the template audience can no longer be changed.</p>
+                                        
+                                        <ul class="list list-radio-select js-radio-list js-form-continue-validation" data-target-button="#js-continue-to-geo-selection" id="js-radio-list-audience">
+                                            <li class="{!IF(newTemplate.Audience__c == 'Agency', 'is-selected', '')}">
+                                                <div class="radio-box">
+                                                    <div class="custom-user-input radio">
+                                                        <apex:outputText rendered="{!newTemplate.Audience__c == 'Agency'}">
+	                                                        <input class="user-input radio" onchange="setAudience(this.value);" id="new-template-agency" type="radio" name="audience" checked="checked" value="Agency" />
+                                                        </apex:outputText>
+                                                        <apex:outputText rendered="{!newTemplate.Audience__c != 'Agency'}">
+	                                                        <input class="user-input radio" onchange="setAudience(this.value);" id="new-template-agency" type="radio" name="audience" value="Agency" />
+                                                        </apex:outputText>
+                                                        <label class="custom-radio" for="new-template-agency"><i class="icon"></i></label>
+                                                    </div>
+                                                    <label class="input-label" for="new-template-agency">IATA Travel Agencies<br />Can be used to target agencies only. All applicable merge fields available.</label>
+                                                </div>
+                                            </li>
+                                            
+                                            <li class="{!IF(newTemplate.Audience__c == 'Agent', 'is-selected', '')}">
+                                                <div class="radio-box">
+                                                    <div class="custom-user-input radio">
+                                                        <apex:outputText rendered="{!isIDCARDSelectionAllowed}">
+                                                            <apex:outputText rendered="{!newTemplate.Audience__c == 'Agent'}">
+                                                                <input class="user-input radio" onchange="setAudience(this.value);" id="new-template-agent" type="radio" name="audience" value="Agent" checked="checked" />
+                                                            </apex:outputText>
+                                                            <apex:outputText rendered="{!newTemplate.Audience__c != 'Agent'}">
+                                                                <input class="user-input radio" onchange="setAudience(this.value);" id="new-template-agent" type="radio" name="audience" value="Agent" />
+                                                            </apex:outputText>
+                                                        </apex:outputText>  
+                                                        <apex:outputText rendered="{!NOT(isIDCARDSelectionAllowed)}">
+                                                            <apex:outputText rendered="{!newTemplate.Audience__c == 'Agent'}">
+                                                                <input class="disabled-user-input radio"  style="min-width: 20px;" id="new-template-agent" type="radio" name="audience" value="Agent" checked="checked" disabled="true" />
+                                                            </apex:outputText>
+                                                            <apex:outputText rendered="{!newTemplate.Audience__c != 'Agent'}">
+                                                                <input class="disabled-user-input radio" style="min-width: 20px;"  id="new-template-agent" type="radio" name="audience" value="Agent"  disabled="true"/>
+                                                            </apex:outputText>
+                                                        </apex:outputText>  
+                                                       	<label class="{!IF(isIDCARDSelectionAllowed,'custom-radio','')}" for="new-template-agent"><i class="icon"></i></label>
+                                                        
+                                                    </div>
+                                                    
+                                                    <label class="input-label" for="new-template-agent">IATA/IATAN ID Cardholders<br />Can be used to target travel professionals only. All applicable merge fields available.</label>
+                                                </div>
+                                            </li>
+                                            
+                                            <li class="{!IF(newTemplate.Audience__c == 'Neutral', 'is-selected', '')}">
+                                                <div class="radio-box">
+                                                    <div class="custom-user-input radio">
+                                                        <apex:outputText rendered="{!newTemplate.Audience__c == 'Neutral'}">
+                                                            <input class="user-input radio" onchange="setAudience(this.value);" id="new-template-neutral" type="radio" name="audience" value="Neutral" checked="checked" />
+                                                        </apex:outputText>
+                                                        <apex:outputText rendered="{!newTemplate.Audience__c != 'Neutral'}">
+                                                            <input class="user-input radio" onchange="setAudience(this.value);" id="new-template-neutral" type="radio" name="audience" value="Neutral" />
+                                                        </apex:outputText>
+                                                        
+                                                        <label class="custom-radio" for="new-template-neutral"><i class="icon"></i></label>
+                                                    </div>
+                                                    <label class="input-label" for="new-template-neutral">General Audience<br />Can be used to target both agencies and travel professionals. Offers a limited number of merge fields.</label>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                        
+                                    </div>
+                                    <!--
+                                    <footer class="modal-footer">
+                                        <div class="footer-actions text-right">
+                                            <ul class="list actions">
+                                                <li>
+                                                    <a href="https://{!$Site.Domain}{!URLFOR($Page.IECEBC_TemplateList)}" class="text-link">Cancel</a>
+                                                </li>
+                                                <li>
+                                                    <apex:outputText rendered="{!ISBLANK(newTemplate.Audience__c)}">
+                                                        <a href="javascript:void(0);" class="button disabled" data-default-state="disabled">Continue</a> 
+                                                    </apex:outputText>
+                                                    <apex:commandLink rendered="{!NOT(ISBLANK(newTemplate.Audience__c))}" onclick="jQuery('body').css('cursor', 'wait');" action="{!validateNewTemplate}" styleClass="button" value="Continue" rerender="create-template,bottom2" oncomplete="jQuery('body').css('cursor', 'auto');">
+                                                        <apex:param assignTo="{!newTemplateStepNumber}" name="firstParam" value="2" />
+                                                    </apex:commandLink>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </footer>
+									-->
+                                </apex:outputText>
+                                <apex:outputText rendered="{!newTemplateStepNumber == 2}">
+                                    <div >
+                                        <h3 class="step-title">Layout</h3>
+                                        <div class="tab-container js-tabs">
+                                            <ul class="nav tabs">
+                                                <li class="active" data-target="#pane-1"><a href="#" onclick="resetTemplate(jQuery('input:checked', jQuery(this).closest('li').attr('data-target')).val());">Basic Templates</a></li>
+                                                
+                                                <li data-target="#pane-2"><a href="#" onclick="resetTemplate('{!customHtmlTemplate.Id}');">Use your HTML code</a></li>
+                                            </ul>
+                                            
+                                            <div class="tab-content">
+                                                <div class="tab-pane is-open" id="pane-1">                                                    
+                                                    <c:IECEBC_TemplateList global="true" limitToAudience="{!newTemplate.Audience__c}" />
+                                                </div>
+                                                
+                                                <div class="tab-pane" id="pane-2">
+                                                    <c:IECEBC_TemplateCustomCode />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                 </apex:outputText>
+                                 
+                                <apex:outputText rendered="{!newTemplateStepNumber == 3}">
+                                    <div >
+                                        <h3 class="step-title">Name</h3>
+                                        
+                                        <apex:outputPanel id="newTemplateNameField" layout="block" styleClass="field-group text template-name">
+                                            <label>
+                                                <span class="input-label">Please provide a template name</span>
+                                                <apex:inputField type="text" styleClass="user-input text js-remaining-characters" value="{!newTemplate.Name}" html-data-target-element=".js-remaining-count" html-data-target-id="template-name" html-data-max-length="{!$ObjectType.EBC_Template__c.fields.Name.length}" required="true" />
+                                            </label>
+                                            <BR/>
+                                            <span class="input-remaining">
+                                                <span class="js-remaining-count" data-id="template-name">{!$ObjectType.EBC_Template__c.fields.Name.length}</span>
+                                            </span>
+                                            
+                                            <apex:outputText rendered="{!isSaved}">
+                                                <script type="text/javascript">
+                                                //window.location.href = 'https://{!$Site.Domain}{!URLFOR($Page.IECEBC_RecipientList)}';
+                                                alert('saved!');
+                                                </script>
+                                            </apex:outputText>
+                                        </apex:outputPanel>
+                                    </div>
+                                    <!--
+                                    <footer class="footer">
+                                        <div class="footer-actions text-right">
+                                            <ul class="list actions">
+                                                <li>
+                                                    <a href="https://{!$Site.Domain}{!URLFOR($Page.IECEBC_TemplateList)}" class="text-link">Cancel</a>
+                                                </li>
+                                                <li>
+                                                    <apex:outputText rendered="{!ISBLANK(newTemplate.Audience__c)}">
+                                                        <a href="javascript:void(0);" class="button disabled" data-default-state="disabled">Continue</a> 
+                                                    </apex:outputText>
+                                                    <apex:commandLink rendered="{!NOT(ISBLANK(newTemplate.Audience__c))}" onclick="jQuery('body').css('cursor', 'wait');" action="{!createTemplate}" styleClass="button" value="Continue" rerender="create-template" oncomplete="jQuery('body').css('cursor', 'auto');">
+                                                        <apex:param assignTo="{!newTemplateStepNumber}" name="firstParam" value="4" />
+                                                    </apex:commandLink>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </footer>
+									-->
+                                </apex:outputText>
+                                
+                                <apex:outputPanel id="footerActions">
+                                  
+                                        <div class="footer-actions text-right">
+                                            <ul class="list actions">
+                                                <li>
+                                                    <a href="https://{!$Site.Domain}{!URLFOR($Page.IECEBC_TemplateList)}" class="text-link">Cancel</a>
+                                                </li>
+                                                <li>
+                                                    <apex:outputText rendered="{!AND(newTemplateStepNumber == 1,ISBLANK(newTemplate.Audience__c))}">
+                                                        <a href="javascript:void(0);" class="button disabled" data-default-state="disabled">Continue</a> 
+                                                    </apex:outputText>
+                                                    <apex:commandLink rendered="{!AND(newTemplateStepNumber == 1, NOT(ISBLANK(newTemplate.Audience__c)))}" onclick="jQuery('body').css('cursor', 'wait');" action="{!validateNewTemplate}" styleClass="button" value="Continue" rerender="create-template,bottom2" oncomplete="jQuery('body').css('cursor', 'auto');">
+                                                        <apex:param assignTo="{!newTemplateStepNumber}" name="firstParam" value="2" />
+                                                    </apex:commandLink>
+													<apex:outputText rendered="{!newTemplateStepNumber == 2 && (ISBLANK(selectedTemplateId) || selectedTemplateId == null)}">
+                                                        <a href="javascript:void(0);" class="button disabled" data-default-state="disabled">Continue</a> 
+                                                    </apex:outputText>
+                                                    <apex:commandLink rendered="{!newTemplateStepNumber == 2 && NOT(ISBLANK(selectedTemplateId) || selectedTemplateId == null)}" onclick="jQuery('body').css('cursor', 'wait');" action="{!validateNewTemplate}" styleClass="button" value="Continue" rerender="create-template" oncomplete="jQuery('body').css('cursor', 'auto');">
+                                                        <apex:param assignTo="{!newTemplateStepNumber}" name="firstParam" value="3" />
+                                                    </apex:commandLink>
+                                                    
+                                                    <apex:outputText rendered="{!AND(newTemplateStepNumber == 3,ISBLANK(newTemplate.Audience__c))}">
+                                                        <a href="javascript:void(0);" class="button disabled" data-default-state="disabled">Continue</a> 
+                                                    </apex:outputText>
+                                                    <apex:commandLink rendered="{!AND(newTemplateStepNumber == 3,NOT(ISBLANK(newTemplate.Audience__c)))}" onclick="jQuery('body').css('cursor', 'wait');" action="{!createTemplate}" styleClass="button" value="Continue" rerender="create-template" oncomplete="jQuery('body').css('cursor', 'auto');">
+                                                        <apex:param assignTo="{!newTemplateStepNumber}" name="firstParam" value="4" />
+                                                    </apex:commandLink>
+                                                    
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    
+                                </apex:outputPanel>
+                                <BR/>
+                            </apex:outputPanel>
+                        </section>
+                   </apex:outputPanel>
+                   </apex:form>
+                   </div>
+                </div>
+            </main>
+            
+            
+            
+            <!-- End of Page Content -->
+        </apex:define>
+    </apex:composition>
+</apex:page>

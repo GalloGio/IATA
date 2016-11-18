@@ -41,6 +41,127 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Class_Type__c</fullName>
+        <description>List of class type for which the change code has to be generated</description>
+        <externalId>false</externalId>
+        <label>Class Type</label>
+        <length>50</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Field1Values__c</fullName>
+        <description>Values to check on the first field</description>
+        <externalId>false</externalId>
+        <label>Field1Values</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Field1__c</fullName>
+        <description>API Name of the first field to check</description>
+        <externalId>false</externalId>
+        <label>Field1</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Field2Values__c</fullName>
+        <description>Values to check on the second field</description>
+        <externalId>false</externalId>
+        <label>Field2Values</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Field2__c</fullName>
+        <description>Second field to check</description>
+        <externalId>false</externalId>
+        <label>Field2</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Field3Values__c</fullName>
+        <description>Values to check on the third field</description>
+        <externalId>false</externalId>
+        <label>Field3Values</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Field3__c</fullName>
+        <description>Third field to check</description>
+        <externalId>false</externalId>
+        <label>Field3</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Field4Values__c</fullName>
+        <description>Values to check on the fourth field</description>
+        <externalId>false</externalId>
+        <label>Field4Values</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Field4__c</fullName>
+        <description>Fourth field to check</description>
+        <externalId>false</externalId>
+        <label>Field4</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Field5Values__c</fullName>
+        <description>Values to check on the fifth field</description>
+        <externalId>false</externalId>
+        <label>Field5Values</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Field5__c</fullName>
+        <description>Fifth field to check</description>
+        <externalId>false</externalId>
+        <label>Field5</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Integration_RecId__c</fullName>
         <description>Value for RecId on the Integration process with SAP PI, 3 possible values: A (Addition), C (Change) and D (Termination)</description>
         <externalId>false</externalId>
@@ -50,6 +171,15 @@
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Published_in_bulletin__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Defines the default value on the change code when generated</description>
+        <externalId>false</externalId>
+        <label>Published in bulletin</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>Reason_Code_Description__c</fullName>
@@ -70,6 +200,26 @@
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Record_Type__c</fullName>
+        <description>Used to filter the action based on the recordtype of the case that is generating the change code.</description>
+        <externalId>false</externalId>
+        <label>Record Type</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Risk_ChangeCode__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>True if change code relates to risk management</description>
+        <externalId>false</externalId>
+        <label>Risk ChangeCode</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
     </fields>
     <label>AMS Change Codes</label>
     <visibility>Protected</visibility>

@@ -1,0 +1,230 @@
+public class AMS_CertificateManagerController {
+
+	// *****************************
+	// ********** variables ********
+	// *****************************
+
+	private Set<Schema.SObjectField> accountFields{
+		get{
+			return new Set<Schema.SObjectField>{
+				Account.Certificate_Generated_Current_Year__c,
+				Account.Name,
+				Account.IATACode__c
+			};
+		}
+	}
+
+	private List<String> accountFieldList{
+		get{
+			List<String> fieldList = new List<String>();
+			for(Schema.SObjectField field : accountFields) fieldList.add(field.getDescribe().getName());
+			return fieldList;
+		}
+	}
+
+	public List<String> noteList{
+		get{
+			return new List<String>{
+				'If your file has the headers on the first line, make the the IATA Code header is "IATA Code"',
+				'If your file dosn\'t have headers, the IATA Code must be on the first column',
+				'The csv values must be separated by commas (,). Make sure your editor don\'t make the separation by semi-colons  (;)',
+				'Your file must contain only headers and records, remove any other information (Example: Copyright and confidentiality)'
+			};
+		}
+	}
+
+	public String year {
+		get{
+			if(year == null) year = String.valueOf(System.today().year());
+			return year;
+		} 
+		set;
+	}
+
+	public List<SelectOption> years{
+		get{
+			if(years == null){
+				years = new List<SelectOption>();
+				Integer noOptions = 5;
+				Integer start = System.today().addYears(-noOptions).year();
+				for(Integer i = 1; i <= noOptions; i++){
+					String y = String.valueOf(start+i);
+					years.add(new SelectOption(y, y));
+				}
+				years.add(new SelectOption('Other', 'Other'));
+			}
+			return years;
+		}
+		set;
+	}
+
+	public Boolean showWarning{
+		get{
+			if(showWarning == null) showWarning = false;
+			return showWarning;
+		}
+		set;
+	}
+
+	public Boolean ignoreWarning{
+		get{
+			if(ignoreWarning == null) ignoreWarning = false;
+			return ignoreWarning;
+		}
+		set;
+	}
+
+	public Boolean parsedFile{
+		get{
+			return !accountIds.isEmpty();
+		}
+	}
+
+	public Set<Id> accountIds{
+		get{
+			if(accountIds == null) accountIds = new Set<Id>();
+			return accountIds;
+		}
+		set;
+	}
+
+	public AsyncApexJob job{
+		get{
+			if(requestCreation != null) job = [SELECT Status, NumberOfErrors, ExtendedStatus FROM AsyncApexJob WHERE Id = :requestCreation];
+			return job;
+		}
+		set;
+	}
+
+	public Set<Id> reqIds{
+		get{
+			if(reqIds == null) reqIds = new Set<Id>();
+			return reqIds;
+		}
+		set;
+	}
+
+	public List<AMS_Certificate_Request__c> requests{
+		get{
+			return [SELECT Id, Name, (SELECT Id, Name FROM Attachments) FROM AMS_Certificate_Request__c WHERE Id IN :reqids];
+		}
+	}
+	
+	public Blob fileBody { get; set; }
+	public Id requestCreation { get; set; }
+	public String yearText { get; set; }
+
+
+	// *****************************
+	// ********** methods ********
+	// *****************************
+
+	public void parseFile() {
+		if(fileBody == null){
+			ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, 'Please, select a file'));
+			return;
+		}
+
+		List<String> lines = fileBody.toString().split('\n');
+
+		if(lines.isEmpty()){
+			ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, 'No content on the file'));
+			return;
+		}
+
+		Integer iataCodeIndex = 0;
+		Boolean hasHeaders = false;
+		List<String> headers = lines[0].split(',');
+
+		System.debug(loggingLevel.Debug, '____ [cls AMS_CertificateManagerController - parseFile] headers - ' + headers);
+		for(Integer i = 0; i < headers.size(); i++){
+			if(headers[i].removeEnd('"').removeStart('"').equalsIgnoreCase('IATA Code')){
+				iataCodeIndex = i;
+				hasHeaders = true;
+				break;
+			}
+		}
+
+		System.debug(loggingLevel.Debug, '____ [cls AMS_CertificateManagerController - parseFile] iataCodeIndex - ' + iataCodeIndex);
+
+		List<String> iataCodes = new List<String>();
+		for(String line : lines){
+			if(hasHeaders) hasHeaders = false; //skips first line if is a header
+			else{
+				List<String> entries = line.split(',');
+
+				System.debug(loggingLevel.Debug, '____ [cls AMS_CertificateManagerController - parseFile] entries - ' + entries);
+				iataCodes.add(entries[iataCodeIndex].removeEnd('"').removeStart('"'));
+			}
+		}
+
+		System.debug(loggingLevel.Debug, '____ [cls AMS_CertificateManagerController - parseFile] iataCodes - ' + iataCodes);
+
+		List<Account> accounts = Database.query('SELECT Id, '+String.join(accountFieldList, ', ')+' FROM Account WHERE IataCode__c IN :iataCodes');
+
+
+		if(lines.isEmpty()){
+			ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, 'No accounts found. Check the formating of the file'));
+			return;
+		}
+
+		List<Account> warnings = new List<Account>();
+		if(!accounts.isEmpty()){
+			for(Account acc : accounts){
+				accountIds.add(acc.Id);
+				if(acc.Certificate_Generated_Current_Year__c) warnings.add(acc);
+			}
+		}
+
+		if(!warnings.isEmpty()){
+			showWarning = true;
+			String warning = 'The following accounts already received the certificate for the current year: ';
+			for(Account acc : warnings) warning += '<br/>- '+acc.Name+' ('+acc.IATACode__c+')';
+
+			ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.WARNING, warning));
+		}
+	}
+
+	public void generateCertificates() {
+		List<Set<Id>> requestsToCreate = new List<Set<Id>>();
+		Set<Id> singleRequest = new Set<Id>();
+		for(Id accountId : accountIds){
+			singleRequest.add(accountId);
+
+			if(singleRequest.size() == 2000){
+				requestsToCreate.add(singleRequest.clone());
+				singleRequest.clear();
+			}
+		}
+		requestsToCreate.add(singleRequest.clone());
+
+		List<AMS_Certificate_Request__c> requestsToInsert = new List<AMS_Certificate_Request__c>();
+		for(Set<Id> accounts : requestsToCreate){
+			AMS_Certificate_Request__c request = new AMS_Certificate_Request__c();
+			request.AccountIds__c = JSON.serializePretty(accounts);
+			requestsToInsert.add(request);
+		}
+		insert requestsToInsert;
+		reqIds = new Map<Id, AMS_Certificate_Request__c>(requestsToInsert).keySet();
+		
+		requestCreation = System.enqueueJob(new AMS_CertificateHelper.CertificateCreation(requests, (year == 'Other' ? yearText : year), UserInfo.getUserEmail()));
+
+		updateAccounts();
+	}
+
+	private void updateAccounts() {
+		Map<Id, Account> accounts = new Map<Id, Account>();
+		for(Account a : Database.query('SELECT Id, '+String.join(accountFieldList, ', ')+' FROM Account WHERE Id IN :accountIds')){
+			if(!a.Certificate_Generated_Current_Year__c){
+				a.Certificate_Generated_Current_Year__c = true;
+				accounts.put(a.Id, a);
+			}
+		}
+
+		if(accounts.size() > (Limits.getLimitDMLRows() - Limits.getDMLRows())) Database.executeBatch(new AMS_UpdateCertificateCampaign(accounts.keySet()));
+		else{
+			update accounts.values();
+		}
+	}
+
+}

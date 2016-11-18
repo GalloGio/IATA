@@ -94,6 +94,18 @@
         <type>Lookup</type>
     </fields>
     <fields>
+        <fullName>EF_Role__c</fullName>
+        <description>EF CRM. Role of contact within the billing agreement</description>
+        <externalId>false</externalId>
+        <globalPicklist>EF_Role</globalPicklist>
+        <label>Role</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
         <fullName>Role__c</fullName>
         <externalId>false</externalId>
         <globalPicklist>EF_Role</globalPicklist>

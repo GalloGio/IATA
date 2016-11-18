@@ -8,15 +8,15 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Required</behavior>
+                <field>Name</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Required</behavior>
                 <field>EBC_Template__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
                 <field>EBC_Resource__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Required</behavior>
-                <field>Name</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -55,10 +55,6 @@
         <layoutColumns/>
         <style>CustomLinks</style>
     </layoutSections>
-    <miniLayout>
-        <fields>EBC_Template__c</fields>
-        <fields>EBC_Resource__c</fields>
-    </miniLayout>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
     <showInteractionLogPanel>false</showInteractionLogPanel>
