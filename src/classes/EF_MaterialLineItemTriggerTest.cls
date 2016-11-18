@@ -7,7 +7,7 @@ public class EF_MaterialLineItemTriggerTest {
         User u = EF_TestDataFactory.getEfProfileAndRole(0, 2);
         EF_TestDataFactory.createCustomSettings();
         
-    	System.runAs(u){
+        System.runAs(u){
             
             List <Account> accList = new List <Account> ();
             
@@ -19,6 +19,7 @@ public class EF_MaterialLineItemTriggerTest {
                 Category__c = 'ANSP',
                 EF_type__c = 'E&F Client',
                 EF_Status__c = 'Active',
+                EF_SubStatus__c = 'Chapter 7',
                 EF_Effective_Date__c = Date.today(),
                 Reason_for_creation__c = 'new client needed'
                 );
@@ -33,6 +34,7 @@ public class EF_MaterialLineItemTriggerTest {
                 Category__c = 'ANSP',
                 EF_type__c = 'E&F Client',
                 EF_Status__c = 'Active',
+                EF_SubStatus__c = 'Chapter 7',
                 EF_Effective_Date__c = Date.today(),
                 Reason_for_creation__c = 'new client needed'
                 );
@@ -47,6 +49,7 @@ public class EF_MaterialLineItemTriggerTest {
                 Category__c = 'ANSP',
                 EF_type__c = 'E&F Client',
                 EF_Status__c = 'Active',
+                EF_SubStatus__c = 'Chapter 7',
                 EF_Effective_Date__c = Date.today(),
                 Reason_for_creation__c = 'new client needed'
                 );
@@ -61,6 +64,7 @@ public class EF_MaterialLineItemTriggerTest {
                 Category__c = 'ANSP',
                 EF_type__c = 'E&F Operator',
                 EF_Status__c = 'Active',
+                EF_SubStatus__c = 'Chapter 7',
                 EF_Effective_Date__c = Date.today(),
                 Reason_for_creation__c = 'new customer needed'
                 );
@@ -98,7 +102,7 @@ public class EF_MaterialLineItemTriggerTest {
                 EF_Status__c = 'Active'
                 );
             insert contract2;
-    		
+            
             List <Product2> prodList = new List <Product2> ();
             Product2 prd = new Product2 (
                 Name = 'Test product 1',
@@ -154,15 +158,15 @@ public class EF_MaterialLineItemTriggerTest {
                 Payment_Method__c = 'Credit Card',
                 Location_Code__c = '1234',
                 Airline__c = customer.id,
-                Status__c = 'Active',
+                EF_Status__c = 'Active',
                 Billing_Currency__c = 'AED',
                 Payment_Currency__c = 'AED',
-                Payment_Terms__c = '30 days after invoice date',
+                //Payment_Terms__c = '30 days after invoice date',
                 Invoice_Distribution_Method__c = 'Electronic Via Platform'           
             );
             
             insert rel;    
-    		
+            
             List <EF_Material_Line_Item__c> mliList = new List <EF_Material_Line_Item__c> ();
             EF_Material_Line_Item__c mli = new EF_Material_Line_Item__c(
                 RecordTypeId = Schema.SObjectType.EF_Material_Line_Item__c.getRecordTypeInfosByName().get('Contract Line Item').getRecordTypeId(),
@@ -243,8 +247,8 @@ public class EF_MaterialLineItemTriggerTest {
             Test.startTest();
                 insert mli;
             
-            	mli.EF_Material__c = prd2.id;
-            	update mli;            
+                mli.EF_Material__c = prd2.id;
+                update mli;            
             Test.stopTest();
             System.assert(false);               
         } catch(System.Exception e) {
@@ -268,8 +272,8 @@ public class EF_MaterialLineItemTriggerTest {
             Test.startTest();
                 insert mli;
             
-            	mli.EF_Material__c = prd3.id;
-            	update mli;            
+                mli.EF_Material__c = prd3.id;
+                update mli;            
             Test.stopTest();
             System.assert(true);               
         } catch(System.Exception e) {
@@ -298,7 +302,7 @@ public class EF_MaterialLineItemTriggerTest {
         try {
             Test.startTest();
                 insert mli;           
-            	insert mli2;
+                insert mli2;
             Test.stopTest();
             System.assert(false);               
         } catch(System.Exception e) {
@@ -307,11 +311,11 @@ public class EF_MaterialLineItemTriggerTest {
     }
     
     @isTest static void EF_MaterialLineItemTrigger_InsertMaterialLineItemInsertAndDeleteSeveralLines() {        
-        EF_Billing_Agreement__c rel = [Select id From EF_Billing_Agreement__c where Location_Code__c = '1234'];
+        EF_Billing_Agreement__c rel = [Select id, Contract__c From EF_Billing_Agreement__c where Location_Code__c = '1234'];
         Product2 prd = [Select id From Product2 where Name = 'Test product 1'];
         
         Product2 prd3 = [Select id From Product2 where Name = 'Test product 3'];
-                
+        
         EF_Material_Line_Item__c mli = new EF_Material_Line_Item__c(
             RecordTypeId = Schema.SObjectType.EF_Material_Line_Item__c.getRecordTypeInfosByName().get('Relationship Line Item').getRecordTypeId(),
             EF_Relationship__c = rel.id,

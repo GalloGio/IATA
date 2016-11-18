@@ -297,14 +297,29 @@ public with sharing class AMS_AccreditationContactController {
             if(accountWrapper.size() > 0)
             {
                 Id standardAccountRtId = AMS_Utils.getId('Account', 'Standard_Account');
+                List<Account> accountInsertList = new List<Account>();
                 List<AMS_Accreditation_Contact__c> acUpsertList = new List<AMS_Accreditation_Contact__c>();
                 for(AccountWrapper aw : accountWrapper)
                 {
                     aw.accountAc.Financial_interest__c = aw.financialInterest;
                     aw.accountAc.Registration_number__c = aw.registrationNumber;
 
+                    if(aw.account.Id == null)
+                    {
+                        aw.account.Name = aw.account.Legal_Name__c;
+                        aw.account.RecordTypeId = standardAccountRtId;
+                        accountInsertList.add(aw.account);
+                    }
                     aw.accountAc.Agency_owner__c = true;
+                }
 
+                if(accountInsertList.size() > 0)
+                {
+                    insert accountInsertList;
+                }
+                
+                for(AccountWrapper aw : accountWrapper)
+                {
                     aw.accountAc.Company__c = aw.account.Id;
                     aw.accountAc.Name = aw.account.Legal_Name__c;
                     acUpsertList.add(aw.accountAc);

@@ -123,12 +123,12 @@
                             </div>
                         </li>
                         
-                        <apex:outputText rendered="{!isIDCARDSelectionAllowed}"> 
+                        <apex:outputText > 
                             <apex:variable var="isOptionDisabled" value="{!NOT(ISBLANK(limitToAudience)) && limitToAudience != 'Agent'}" />
                             <li class="{!IF(isOptionDisabled, ' disabled', '')} {!IF(newFilter.Audience__c == 'Agent', 'is-selected', '')}">
                                 <div class="radio-box">
                                     <div class="custom-user-input radio">
-                                        <apex:outputText rendered="{!NOT(isOptionDisabled)}">
+                                        <apex:outputText rendered="{!isIDCARDSelectionAllowed}">                                        
                                             <apex:outputText rendered="{!newFilter.Audience__c == 'Agent'}">
                                                 <input class="user-input radio" onchange="updateAudience(this.value);" type="radio" name="audience" id="Agent" value="Agent" checked="checked" />
                                             </apex:outputText>
@@ -136,22 +136,26 @@
                                                 <input class="user-input radio" onchange="updateAudience(this.value);" type="radio" name="audience" id="Agent" value="Agent" />
                                             </apex:outputText>
                                         </apex:outputText>
-                                        <apex:outputText rendered="{!isOptionDisabled}">
-                                            <input disabled="disabled" readonly="readonly" class="user-input radio" type="radio" name="audience" id="Agent" value="Agent" />
-                                        </apex:outputText>
-                                        
-                                        <label class="custom-radio" for="Agent"><i class="icon"></i></label>
+                                        <apex:outputText rendered="{!NOT(isIDCARDSelectionAllowed)}">
+                                            <apex:outputText rendered="{!newFilter.Audience__c == 'Agent'}">
+                                                <input disabled="disabled" readonly="readonly" class="disabled-user-input radio" style="min-width: 20px;" type="radio" name="audience" id="Agent" value="Agent" checked="checked" />
+                                            </apex:outputText>
+                                            <apex:outputText rendered="{!newFilter.Audience__c != 'Agent'}">
+                                                <input disabled="disabled" readonly="readonly" class="disabled-user-input radio" style="min-width: 20px;" type="radio" name="audience" id="Agent" value="Agent" />
+                                            </apex:outputText>                                            
+                                        </apex:outputText>                                        
+                                        <label class="{!IF(isIDCARDSelectionAllowed,'custom-radio','')}" for="Agent"><i class="icon"></i></label>
                                     </div>
                                     <label class="input-label" for="Agent">IATA/IATAN ID Cardholders</label>
                                 </div>
                             </li>
                         </apex:outputText>
-                        <apex:outputText rendered="{!isCodeSelectionAllowed}"> 
+                        <apex:outputText > 
                             <apex:variable var="isOptionDisabled" value="{!NOT(ISBLANK(limitToAudience)) && limitToAudience != 'Custom'}" />
                             <li class="{!IF(isOptionDisabled, ' disabled', '')} {!IF(newFilter.Audience__c == 'Custom', 'is-selected', '')}">
                                 <div class="radio-box">
                                     <div class="custom-user-input radio">
-                                        <apex:outputText rendered="{!NOT(isOptionDisabled)}">
+                                        <apex:outputText rendered="{!isCodeSelectionAllowed}">
                                             <apex:outputText rendered="{!newFilter.Audience__c == 'Custom'}">
                                                 <input class="user-input radio" onchange="updateAudience(this.value);" type="radio" name="audience" id="new-list-3" value="Custom" checked="checked" />
                                             </apex:outputText>
@@ -159,11 +163,16 @@
                                                 <input class="user-input radio" onchange="updateAudience(this.value);" type="radio" name="audience" id="new-list-3" value="Custom" />
                                             </apex:outputText>
                                         </apex:outputText>
-                                        <apex:outputText rendered="{!isOptionDisabled}">
-                                            <input disabled="disabled" readonly="readonly" class="user-input radio" type="radio" name="audience" id="new-list-3" value="Custom" />
+                                        <apex:outputText rendered="{!NOT(isCodeSelectionAllowed)}">
+                                            <apex:outputText rendered="{!newFilter.Audience__c == 'Custom'}">
+                                                <input disabled="disabled" readonly="readonly" class="disabled-user-input radio" style="min-width: 20px;" type="radio" name="audience" id="new-list-3" value="Custom" checked="checked" />
+                                            </apex:outputText>
+                                            <apex:outputText rendered="{!newFilter.Audience__c != 'Custom'}">
+                                                <input disabled="disabled" readonly="readonly" class="disabled-user-input radio" style="min-width: 20px;" type="radio" name="audience" id="new-list-3" value="Custom" />
+                                            </apex:outputText>                                            
                                         </apex:outputText>
                                         
-                                        <label class="custom-radio" for="new-list-3"><i class="icon"></i></label>
+                                        <label class="{!IF(isCodeSelectionAllowed,'custom-radio','')}" for="new-list-3"><i class="icon"></i></label>
                                     </div>
                                     <label class="input-label" for="new-list-3">Provide a list of IATA Numeric Codes</label>
                                 </div>
@@ -298,10 +307,10 @@
                                                         </apex:selectList>
                                                     </apex:outputPanel>
                                                     
-                                                <apex:commandLink styleClass="action-link" action="{!removeGeoFilter}" rerender="geoFilters">
-                                                    <i class="icon fa fa-minus-circle" aria-hidden="true"></i>Remove
-                                                    <apex:param name="firstParam" assignTo="{!geoFilterIndex}" value="{!ind}" />
-                                                </apex:commandLink>
+                                                    <apex:commandLink styleClass="action-link" action="{!removeGeoFilter}" rerender="geoFilters">
+                                                        <i class="icon fa fa-minus-circle" aria-hidden="true"></i>Remove
+                                                        <apex:param name="firstParam" assignTo="{!geoFilterIndex}" value="{!ind}" />
+                                                    </apex:commandLink>
                                                 </apex:outputText>
                                             </apex:outputPanel>
                                         </apex:repeat>

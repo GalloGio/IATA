@@ -976,6 +976,8 @@ public without sharing class AMS_Utils {
                 acc.Company_Type__c = transformCompanyType(onlineAcc.ISSP_AMS_Legal_Status__c);
                 acc.GDS__c = transformGDS(onlineAcc.ISSP_AMS_GDS_with_signed_contract__c);
                 acc.BillingCountry = onlineAcc.Branch_Office_Country__r.Name;
+                acc.ShippingCountry = onlineAcc.Shipping_ISO_Country__r.Name;
+                acc.ShippingState = onlineAcc.Shipping_ISO_State__r.Name;
                 acc.BillingState = onlineAcc.IATA_ISO_State__r.Name;
                 onlineAccToCreateAccountRole.add(onlineAcc);
 

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
     <customButtons>Zuora__Sync_Data_from_ZBilling</customButtons>
-    <excludeButtons>DataDotComClean</excludeButtons>
+    <excludeButtons>DataDotComAccountInsights</excludeButtons>
+    <excludeButtons>DataDotComCompanyHierarchy</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
         <customLabel>true</customLabel>
@@ -47,10 +48,6 @@
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Type</field>
-            </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Key_Customer__c</field>
@@ -506,7 +503,7 @@
         <fields>NAME</fields>
         <fields>Client__c</fields>
         <fields>Contract__c</fields>
-        <fields>Status__c</fields>
+        <fields>EF_Status__c</fields>
         <fields>Payment_Method_Code__c</fields>
         <fields>Data_Currency__c</fields>
         <fields>Billing_Currency__c</fields>
@@ -518,7 +515,7 @@
         <fields>NAME</fields>
         <fields>Airline__c</fields>
         <fields>Contract__c</fields>
-        <fields>Status__c</fields>
+        <fields>EF_Status__c</fields>
         <fields>Payment_Method_Code__c</fields>
         <fields>Data_Currency__c</fields>
         <fields>Billing_Currency__c</fields>
