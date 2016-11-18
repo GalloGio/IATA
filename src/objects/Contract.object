@@ -435,7 +435,8 @@ E&amp;F CRM Project</description>
         <label>E&amp;F Billing Frequency</label>
         <required>false</required>
         <trackHistory>true</trackHistory>
-        <type>Picklist</type>
+        <type>MultiselectPicklist</type>
+        <visibleLines>5</visibleLines>
     </fields>
     <fields>
         <fullName>EF_Client_SIS_Code__c</fullName>
@@ -1343,6 +1344,29 @@ IF(ISPICKVAL(Third_Party__c, &quot;Berlitz&quot;), 0.10,
             </values>
             <values>
                 <fullName>9</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>EF_Frequency</picklist>
+            <values>
+                <fullName>2x%2FWeek</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>4x%2FMonth</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fortnightly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Monthly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Weekly</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -2568,6 +2592,29 @@ IF(ISPICKVAL(Third_Party__c, &quot;Berlitz&quot;), 0.10,
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>EF_Frequency</picklist>
+            <values>
+                <fullName>2x%2FWeek</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>4x%2FMonth</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fortnightly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Monthly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Weekly</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>EF_ICH_Period__c</picklist>
             <values>
                 <fullName>1</fullName>
@@ -2726,6 +2773,29 @@ IF(ISPICKVAL(Third_Party__c, &quot;Berlitz&quot;), 0.10,
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>EF_Frequency</picklist>
+            <values>
+                <fullName>2x%2FWeek</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>4x%2FMonth</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fortnightly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Monthly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Weekly</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>EF_ICH_Period__c</picklist>
             <values>
                 <fullName>1</fullName>
@@ -2842,13 +2912,19 @@ IF(ISPICKVAL(Third_Party__c, &quot;Berlitz&quot;), 0.10,
         <customTabListAdditionalFields>CONTRACT.STATUS</customTabListAdditionalFields>
         <lookupDialogsAdditionalFields>CONTRACT.CONTRACT_NUMBER</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>CONTRACT.NAME</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>CORE.USERS.ALIAS</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>SALES.ACCOUNT.NAME</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>EF_Status__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>CONTRACT.STATUS</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>CONTRACT.START_DATE</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>CONTRACT.END_DATE</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>CONTRACT_TERM</lookupDialogsAdditionalFields>
         <lookupPhoneDialogsAdditionalFields>CONTRACT.CONTRACT_NUMBER</lookupPhoneDialogsAdditionalFields>
         <lookupPhoneDialogsAdditionalFields>CONTRACT.NAME</lookupPhoneDialogsAdditionalFields>
         <lookupPhoneDialogsAdditionalFields>CORE.USERS.ALIAS</lookupPhoneDialogsAdditionalFields>
         <searchResultsAdditionalFields>CONTRACT.CONTRACT_NUMBER</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>CONTRACT.NAME</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>SALES.ACCOUNT.NAME</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>EF_Status__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>CONTRACT.STATUS</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>CONTRACT.START_DATE</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>CONTRACT.END_DATE</searchResultsAdditionalFields>
