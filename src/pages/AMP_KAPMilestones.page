@@ -11,7 +11,7 @@
 					<apex:column styleClass="narrow-table-column">
 						<apex:facet name="header">Actions</apex:facet>
 
-						<apex:commandLink value="Del" action="{!deleteTask}" styleClass="actionLink" onclick="if(!confirm('Are you sure you want to delete this line?')){return false};" rendered="{!IF(AND(isTaskEditMode, idTaskConcerned==task.Id), false, true)}" >
+						<apex:commandLink value="Del" action="{!deleteTask}" styleClass="actionLink" onclick="if(!confirm('Are you sure you want to delete this line?')){return false};" rendered="{!IF(AND(isTaskEditMode, idTaskConcerned==task.Id), false, true)}" status="actStatusId">
 								<apex:param name="idTaskConcerned" value="{!task.Id}" assignTo="{!idTaskConcerned}"/>
 						</apex:commandLink>
 					<apex:commandLink value="Save" action="{!saveTask}" styleClass="actionLink" reRender="theBlock" oncomplete="enableShowMoreOrLess();"   rendered="{!IF(AND(isTaskEditMode, idTaskConcerned==task.Id), true, false)}" status="actStatusId">
