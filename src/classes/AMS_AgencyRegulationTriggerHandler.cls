@@ -49,47 +49,51 @@ public class AMS_AgencyRegulationTriggerHandler {
     public static void sendEmailAlert(List<Contact> recipents, Id oscarId, Map<String, EmailTemplate> countryTemplates) {
         
         Id templateId;
+
+        if(recipents != null){
         
-        List<Messaging.SingleEmailMessage> mailsToSend = new List<Messaging.SingleEmailMessage>();
+            List<Messaging.SingleEmailMessage> mailsToSend = new List<Messaging.SingleEmailMessage>();
 
-        system.debug('DGR sendEmailAlert: country templates ' + countryTemplates);
+            system.debug('DGR sendEmailAlert: country templates ' + countryTemplates);
 
-        for(Contact recipient: recipents){
+            for(Contact recipient: recipents){
 
-            if(recipient.Preferred_Language__c == 'English')
-                templateId = countryTemplates.get('AMS_DGR_Renewal_EN') != null ? countryTemplates.get('AMS_DGR_Renewal_EN').Id : null;
-            else if(recipient.Preferred_Language__c == 'Chinese')
-                templateId = countryTemplates.get('AMS_DGR_Renewal_CN') != null ? countryTemplates.get('AMS_DGR_Renewal_CN').Id : null;
-            else if(recipient.Preferred_Language__c == 'French')
-                templateId = countryTemplates.get('AMS_DGR_Renewal_FR') != null ? countryTemplates.get('AMS_DGR_Renewal_FR').Id : null;
-            else if(recipient.Preferred_Language__c == 'Korean')
-                templateId = countryTemplates.get('AMS_DGR_Renewal_KR') != null ? countryTemplates.get('AMS_DGR_Renewal_KR').Id : null;
-            else if(recipient.Preferred_Language__c == 'Italian')
-                templateId = countryTemplates.get('AMS_DGR_Renewal_IT') != null ? countryTemplates.get('AMS_DGR_Renewal_IT').Id : null;
-            else if(recipient.Preferred_Language__c == 'Japanese')
-                templateId = countryTemplates.get('AMS_DGR_Renewal_JP') != null ? countryTemplates.get('AMS_DGR_Renewal_JP').Id : null;
-            else if(recipient.Preferred_Language__c == 'Portuguese')
-                templateId = countryTemplates.get('AMS_DGR_Renewal_PT') != null ? countryTemplates.get('AMS_DGR_Renewal_PT').Id : null;
-            else if(recipient.Preferred_Language__c == 'Spanish')
-                templateId = countryTemplates.get('AMS_DGR_Renewal_SP') != null ? countryTemplates.get('AMS_DGR_Renewal_SP').Id : null;
-            else
-                templateId = countryTemplates.get('AMS_DGR_Renewal_EN') != null ? countryTemplates.get('AMS_DGR_Renewal_EN').Id : null;
+                if(recipient.Preferred_Language__c == 'English')
+                    templateId = countryTemplates.get('AMS_DGR_Renewal_EN') != null ? countryTemplates.get('AMS_DGR_Renewal_EN').Id : null;
+                else if(recipient.Preferred_Language__c == 'Chinese')
+                    templateId = countryTemplates.get('AMS_DGR_Renewal_CN') != null ? countryTemplates.get('AMS_DGR_Renewal_CN').Id : null;
+                else if(recipient.Preferred_Language__c == 'French')
+                    templateId = countryTemplates.get('AMS_DGR_Renewal_FR') != null ? countryTemplates.get('AMS_DGR_Renewal_FR').Id : null;
+                else if(recipient.Preferred_Language__c == 'Korean')
+                    templateId = countryTemplates.get('AMS_DGR_Renewal_KR') != null ? countryTemplates.get('AMS_DGR_Renewal_KR').Id : null;
+                else if(recipient.Preferred_Language__c == 'Italian')
+                    templateId = countryTemplates.get('AMS_DGR_Renewal_IT') != null ? countryTemplates.get('AMS_DGR_Renewal_IT').Id : null;
+                else if(recipient.Preferred_Language__c == 'Japanese')
+                    templateId = countryTemplates.get('AMS_DGR_Renewal_JP') != null ? countryTemplates.get('AMS_DGR_Renewal_JP').Id : null;
+                else if(recipient.Preferred_Language__c == 'Portuguese')
+                    templateId = countryTemplates.get('AMS_DGR_Renewal_PT') != null ? countryTemplates.get('AMS_DGR_Renewal_PT').Id : null;
+                else if(recipient.Preferred_Language__c == 'Spanish')
+                    templateId = countryTemplates.get('AMS_DGR_Renewal_SP') != null ? countryTemplates.get('AMS_DGR_Renewal_SP').Id : null;
+                else
+                    templateId = countryTemplates.get('AMS_DGR_Renewal_EN') != null ? countryTemplates.get('AMS_DGR_Renewal_EN').Id : null;
 
-            system.debug('DGR sendEmailAlert: Template selected ' + templateId);
+                system.debug('DGR sendEmailAlert: Template selected ' + templateId);
 
-            Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-            mail.saveAsActivity = false;
-            mail.setToAddresses(new List<String>{recipient.Email});
-            mail.setTemplateId(templateId);
-            mail.setTargetObjectId(recipient.Id);
-            mail.setWhatId(oscarId);
+                Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+                mail.saveAsActivity = false;
+                mail.setToAddresses(new List<String>{recipient.Email});
+                mail.setTemplateId(templateId);
+                mail.setTargetObjectId(recipient.Id);
+                mail.setWhatId(oscarId);
 
-            mailsToSend.add(mail);
-        
+                mailsToSend.add(mail);
+            
+            }
+
+            if(!Test.isRunningTest())   
+                Messaging.sendEmail(mailsToSend);
+
         }
-
-        if(!Test.isRunningTest())   
-            Messaging.sendEmail(mailsToSend);
     }
 
     public static void createRenewalOSCARs(List<AMS_Agency_Regulation__c> regulationsRequiringRenewal, Map<Id, List<Contact>> keyContactsPerAccount){
@@ -108,12 +112,14 @@ public class AMS_AgencyRegulationTriggerHandler {
         //Need to get all the non expired agency regulations for each account
         //List<AMS_Agency_Regulation__c> allDGR = new List<AMS_Agency_Regulation__c>([SELECT Id, Account__c, First_Name__c, Last_Name__c, Position__c, Type_of_Certificate__c, Account__r.IATA_ISO_Country__c, Account__r.Location_Class__c FROM AMS_Agency_Regulation__c WHERE Account__c IN :accts AND Expired__c = FALSE AND Type_of_Certificate__c = 'DGR']);
 
-        Map<Id, AMS_Agency_Regulation__c> allDGR = new Map<Id, AMS_Agency_Regulation__c>([SELECT Id, Account__c, First_Name__c, Last_Name__c, Position__c, Type_of_Certificate__c, Account__r.IATA_ISO_Country__c, Account__r.Location_Class__c FROM AMS_Agency_Regulation__c WHERE Account__c IN :accts AND Expired__c = FALSE AND Type_of_Certificate__c = 'DGR']);
+        Map<Id, AMS_Agency_Regulation__c> allDGR = new Map<Id, AMS_Agency_Regulation__c>([SELECT Id, Account__c, First_Name__c, Last_Name__c, Position__c, Type_of_Certificate__c, Account__r.IATA_ISO_Country__c, Account__r.Location_Class__c, Expired__c FROM AMS_Agency_Regulation__c WHERE Account__c IN :accts /*AND Expired__c = FALSE */AND Type_of_Certificate__c = 'DGR']);
 
         for(AMS_Agency_Regulation__c agReg : allDGR.values()){
-            if(!allNonExpiredDGRPerAccount.containsKey(agReg.Account__c))
-                allNonExpiredDGRPerAccount.put(agReg.Account__c, new List<AMS_Agency_Regulation__c>());
-            allNonExpiredDGRPerAccount.get(agReg.Account__c).add(agReg);
+            if(!agReg.Expired__c){
+                if(!allNonExpiredDGRPerAccount.containsKey(agReg.Account__c))
+                    allNonExpiredDGRPerAccount.put(agReg.Account__c, new List<AMS_Agency_Regulation__c>());
+                allNonExpiredDGRPerAccount.get(agReg.Account__c).add(agReg);
+            }
         }
 
         for(AMS_Agency_Regulation__c agReg : regulationsRequiringRenewal){
@@ -127,7 +133,8 @@ public class AMS_AgencyRegulationTriggerHandler {
                                                                    License_Number__c, VAT_Number__c, Is_your_firm_handling_Dangerous_Goods__c, Location_Class__c, 
                                                                    Location_Type__c, Mobile__c, Operation__c, Remittance_frequency__c, ShippingCity, ShippingCountry, 
                                                                    ShippingPostalCode, ShippingState, ShippingStreet, Short_Name__c, Solicitation_Flag__c, TradeName__c, 
-                                                                   VAT_Number_2__c, Website, BillingCountry, Region_formula__c, Legal_name__c, IATA_ISO_Country__r.Name
+                                                                   VAT_Number_2__c, Website, BillingCountry, Region_formula__c, Legal_name__c, IATA_ISO_Country__r.Name,
+                                                                   IATA_ISO_Country__r.ISO_Code__c
                                                             FROM Account WHERE Id IN :accts]);
 
         for(Account acc: accountData.values())
