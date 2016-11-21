@@ -1350,10 +1350,6 @@ IF(ISPICKVAL(Third_Party__c, &quot;Berlitz&quot;), 0.10,
         <picklistValues>
             <picklist>EF_Frequency</picklist>
             <values>
-                <fullName>2x%2FWeek</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>4x%2FMonth</fullName>
                 <default>false</default>
             </values>
@@ -2279,6 +2275,10 @@ IF(ISPICKVAL(Third_Party__c, &quot;Berlitz&quot;), 0.10,
         <picklistValues>
             <picklist>EF_Frequency</picklist>
             <values>
+                <fullName>2x%2FWeek</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>4x%2FMonth</fullName>
                 <default>false</default>
             </values>
@@ -2594,10 +2594,6 @@ IF(ISPICKVAL(Third_Party__c, &quot;Berlitz&quot;), 0.10,
         <picklistValues>
             <picklist>EF_Frequency</picklist>
             <values>
-                <fullName>2x%2FWeek</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>4x%2FMonth</fullName>
                 <default>false</default>
             </values>
@@ -2774,10 +2770,6 @@ IF(ISPICKVAL(Third_Party__c, &quot;Berlitz&quot;), 0.10,
         </picklistValues>
         <picklistValues>
             <picklist>EF_Frequency</picklist>
-            <values>
-                <fullName>2x%2FWeek</fullName>
-                <default>false</default>
-            </values>
             <values>
                 <fullName>4x%2FMonth</fullName>
                 <default>false</default>
