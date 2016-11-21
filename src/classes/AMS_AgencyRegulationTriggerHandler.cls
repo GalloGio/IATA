@@ -200,7 +200,7 @@ public class AMS_AgencyRegulationTriggerHandler {
         //TODO:theCommunicationCase.Origin
         //TODO:theCommunicationCase.Reason1__c
         theCommunicationCase.Region__c = accountData.Region_formula__c;
-        theCommunicationCase.Subject = 'DGR renewal - ' + accountData.Legal_name__c + ' - ' + accountData.IATACode__c;
+        theCommunicationCase.Subject = 'DGR renewal - ' + accountData.Name + ' - ' + accountData.IATACode__c;
         //TODO:theCommunicationCase.Type_of_customer__c = 
 
         insert theCommunicationCase;
