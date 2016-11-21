@@ -198,6 +198,14 @@
         <type>Picklist</type>
     </fields>
     <fields>
+        <fullName>Last_Run__c</fullName>
+        <externalId>false</externalId>
+        <label>Last Run</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
         <fullName>Opt_in__c</fullName>
         <defaultValue>false</defaultValue>
         <description>Opt in</description>

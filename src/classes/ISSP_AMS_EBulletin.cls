@@ -36,12 +36,14 @@ public with sharing class ISSP_AMS_EBulletin {
 	public Contact con {get; set;}
 	public String displayLanguage {get; set;}
 	public String displayLanguageDatePicker {get; set;}
+	public String userGuideLink {get; set;}
 
 	public boolean bIsAdmin {get; set;}     //identify if a user is administrator or not
 	public String applyLanguage {get; set;}
 	public string stepNumber {get; set;}
 
 	public boolean param {get; set;}
+	public boolean isStepHome {get; set;}
 	public boolean isStep1 {get; set;}
 	public boolean isStep1_1 {get; set;}
 	public boolean isStep1_2 {get; set;}
@@ -55,17 +57,20 @@ public with sharing class ISSP_AMS_EBulletin {
     public boolean weeklyCountrySelectAll {get; set;}
     public List<SelectOption> dailyCountrySelected {get; set;}
     public List<SelectOption> weeklyCountrySelected {get; set;}
+    public List <ISSP_PDF_Per_Region__c> pdfUserGuide {get; set;}
     
 
     public ISSP_AMS_EBulletin() {
-
-System.debug('DEBUG FM - 1');
 
 		applyLanguage = UserInfo.getLanguage();
 		displayLanguage = UserInfo.getLanguage();
 
 		//set iso code to match datpicker format, in case of "english" the value is set to empty
 		displayLanguageDatePicker = displayLanguage.equalsIgnoreCase('en_US') || displayLanguage.equalsIgnoreCase('in')  ? '' : displayLanguage.replace('_', '-');
+
+		//Get the custom setting with the name of the userguide custom setting (ex: "EBULLETIN-USERGUIDE-"")
+		String paramUserGuide = ISSP_CS__c.getValues('eBulletin_UserGuide').Value__c;
+		userGuideLink = getUserGuideFileLink(paramUserGuide, displayLanguage);
 
 		newFormDaily = new AMS_eBulletin_Profile__c();
 		newFormWeekly = new AMS_eBulletin_Profile__c();
@@ -126,14 +131,17 @@ System.debug('DEBUG FM - 1');
 			stepNumber = '0';
 			param = false;
 		}
-
+		
+		isStepHome = false;
 		isStep1 = false;
 		isStep1_1 = false;
 		isStep1_2 = false;
     	isStep2 = false;
     	isStep3 = false;
 
-    	if(stepNumber.equalsIgnoreCase('1')){
+    	if(stepNumber.equalsIgnoreCase('Home')){
+        	isStepHome = true;
+        }else if(stepNumber.equalsIgnoreCase('1')){
         	isStep1 = true;
         }else if(stepNumber.equalsIgnoreCase('1_1')){
         	isStep1_1 = true;
@@ -221,6 +229,55 @@ System.debug('DEBUG FM - 1');
 		popContact();  //Get the contact details of currently logged in user
 	}
 
+	public PageReference checkRedirect(){
+		//If the param "Step" have the "home" value the page will not be redirected 
+		if(isStepHome){
+			return null;
+			  //when NOT 1st time the page is redirected to the daily record 	
+		}else if(!isFirstTime){
+        	return goToStep2();
+        }
+        else{
+            return null;
+        }
+	}
+
+	//Get the User Guide Document link
+ 	public String getUserGuideFileLink(String param, String lang){
+		
+		String sRet = '';
+ 		String defaultLang = 'en_US';
+
+ 		String paramString = param + '%';
+
+		pdfUserGuide = [SELECT Name, Address__c, Link_To_PDF__c FROM ISSP_PDF_Per_Region__c
+                                           WHERE Name Like :paramString ];
+
+System.debug('getUserGuideFileLink pdfUserGuide: ' + pdfUserGuide);
+		//If we get result we go thru the records to find the one with the choosen lang 
+		if(pdfUserGuide.size() > 0){
+        
+			for(ISSP_PDF_Per_Region__c pdf : pdfUserGuide){
+
+				//Check for choosen Lang
+				if(pdf.Name.toLowerCase().contains(lang.toLowerCase()) ){
+					sRet = pdf.Link_To_PDF__c;
+					  //Check for Default Lang, only set's the value if the value is still empty		
+				}else if(pdf.Name.toLowerCase().contains(defaultLang.toLowerCase()) ){
+					if(sRet.equalsIgnoreCase('')){
+						sRet = pdf.Link_To_PDF__c;
+					}
+				}
+
+			}
+
+        	
+        }
+System.debug('getUserGuideFileLink sRet: ' + sRet);
+        return sRet;
+ 	}
+
+
 	public List<SelectOption> getTimeZone(){
 	  List<SelectOption> options = new List<SelectOption>();
 	  Schema.DescribeFieldResult fieldResult =User.TimeZoneSidKey.getDescribe();
@@ -230,8 +287,6 @@ System.debug('DEBUG FM - 1');
 	   }       
 	   return options;
 	}
-
-
 
 	public List<SelectOption> getItemsDaysOfWeek() {
 
@@ -320,7 +375,6 @@ system.debug('iDays: ' + iDays);
 		
 		return options; 
 	}
-
 
 	public List<SelectOption> countryNameListSelectOptionDaily {
 		get {
@@ -895,6 +949,10 @@ system.debug('iDays: ' + iDays);
         return true;
     }
 
+    public Pagereference goToStepHome() {
+        //return new Pagereference('/ISSP_AMS_EBulletin?dailyId=' + newFormDaily.Id + '&weeklyId=' + newFormWeekly.Id + '&step=2');
+        return new Pagereference('/ISSP_EBulletin_Home?step=home');
+    }
  
     public Pagereference goToStep1() {
         //return new Pagereference('/ISSP_AMS_EBulletin?dailyId=' + newFormDaily.Id + '&weeklyId=' + newFormWeekly.Id + '&step=2');
