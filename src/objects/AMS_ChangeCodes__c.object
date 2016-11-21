@@ -23,6 +23,28 @@
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Bulletin_Memo_Text2__c</fullName>
+        <description>Because of possible length of bulletin memo text, it is broke down into multiple fields</description>
+        <externalId>false</externalId>
+        <label>Bulletin Memo Text2</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Bulletin_Memo_Text3__c</fullName>
+        <description>Because of possible length of bulletin memo text, it is broke down into multiple fields</description>
+        <externalId>false</externalId>
+        <label>Bulletin Memo Text3</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Bulletin_Memo_Text__c</fullName>
         <externalId>false</externalId>
         <label>Bulletin Memo Text</label>
@@ -155,6 +177,26 @@
         <description>Fifth field to check</description>
         <externalId>false</externalId>
         <label>Field5</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Field6Values__c</fullName>
+        <externalId>false</externalId>
+        <label>Field6Values</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Field6__c</fullName>
+        <externalId>false</externalId>
+        <label>Field6</label>
         <length>255</length>
         <required>false</required>
         <trackTrending>false</trackTrending>
