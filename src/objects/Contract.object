@@ -435,8 +435,7 @@ E&amp;F CRM Project</description>
         <label>E&amp;F Billing Frequency</label>
         <required>false</required>
         <trackHistory>true</trackHistory>
-        <type>MultiselectPicklist</type>
-        <visibleLines>5</visibleLines>
+        <type>Picklist</type>
     </fields>
     <fields>
         <fullName>EF_Client_SIS_Code__c</fullName>
@@ -649,7 +648,8 @@ E&amp;F CRM Project</description>
         <label>E&amp;F Reporting Frequency</label>
         <required>false</required>
         <trackHistory>true</trackHistory>
-        <type>Picklist</type>
+        <type>MultiselectPicklist</type>
+        <visibleLines>5</visibleLines>
     </fields>
     <fields>
         <fullName>EF_Reporting_Level__c</fullName>
