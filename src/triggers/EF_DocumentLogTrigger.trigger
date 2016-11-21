@@ -4,7 +4,7 @@ trigger EF_DocumentLogTrigger on EF_Document_Log__c (before insert, before updat
 	{
 		for(EF_Document_Log__c dl : Trigger.new)
 		{
-			EF_DocumentLogHelper.setStatus(dl, 'Attachment Uploaded', 'The standard attachment was successfully uploaded with ID: '+dl.AttachmentId__c+'.');
+			EF_DocumentLogHelper.setStatus(dl, 'Attachment - Uploaded', 'The standard attachment was successfully uploaded with ID: '+dl.AttachmentId__c+'.');
 		}
 	}
 
