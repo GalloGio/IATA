@@ -53,7 +53,7 @@
                     <li class="slds-tabs--default__item slds-text-heading--label" title="Board Monitored Activities" role="presentation" aura:id="Monitored Activities">
                         <ui:outputText value="Monitored Activities"  click="{!c.changeTab}" class="slds-tabs--default__link"/>
                     </li>
-                    <li class="slds-tabs--default__item slds-text-heading--label" title="Key Account Plan" role="presentation" aura:id="Account Plan">
+                    <li class="slds-tabs--default__item slds-text-heading--label" title="Account Plan" role="presentation" aura:id="Account Plan">
                         <ui:outputText value="Account Plan"  click="{!c.changeTab}" class="slds-tabs--default__link"/>
                     </li>
                     <li class="slds-tabs--default__item slds-text-heading--label" title="Chatter" role="presentation" aura:id="Chatter">
