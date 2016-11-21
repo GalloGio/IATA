@@ -1,24 +1,44 @@
-trigger EF_DocumentLogTrigger on EF_Document_Log__c (before insert, after update)
+trigger EF_DocumentLogTrigger on EF_Document_Log__c (before insert, before update, after update)
 {
 	if(Trigger.isBefore && Trigger.isInsert)
 	{
-		// TODO: place log line of successful attachment insertion
+		for(EF_Document_Log__c dl : Trigger.new)
+		{
+			EF_DocumentLogHelper.setStatus(dl, 'Attachment Uploaded', 'The standard attachment was successfully uploaded with ID: '+dl.AttachmentId__c+'.');
+		}
 	}
 
 	if(Trigger.isBefore && Trigger.isUpdate)
 	{
-		// Ensure that mandatory fields are set up correctly:
-		for(EF_Document_Log__c l : Trigger.new)
-		{
-			if(EF_DocumentLogHelper.validateMandatoryFields(l))
-				l.Status__c = 'Metadata Updated';
-			else
-				l.Status__c = 'Attachment - Failure';
-		}
+		EF_DocumentLogHelper.identifyDocumentsWithCompleteMetadata(Trigger.new, Trigger.oldMap);
+		
 	}
 
 	if(Trigger.isAfter && Trigger.isUpdate)
 	{
-		EF_DocumentLogHelper.updateLogRecords(Trigger.new, Trigger.oldMap);
+		List<EF_Document_Log__c> toAmazonList = EF_DocumentLogHelper.identifyDocumentsForAmazonProcessing(Trigger.new, Trigger.oldMap);
+		System.debug('**************** toAmazonList '+toAmazonList);
+		if(toAmazonList.size() > 0)
+		{
+			// TODO: start the Amazon processing
+		}
+
+		Set<Id> standardAttachmentsToDelete = EF_DocumentLogHelper.identifyDocumentsWithSuccessfulAmazonProcessing(Trigger.new, Trigger.oldMap);
+		// TODO: have a list of EF_Document_Logs to be updated with success or failure status...
+
+
+		if(standardAttachmentsToDelete.size() > 0)
+		{
+			// Delete the standard attachments
+			List<Attachment> stAttachmentstoDelete = [select Id from Attachment where Id in :standardAttachmentsToDelete];
+			try
+			{
+				delete stAttachmentstoDelete;
+				// Log success
+			} catch(Exception e)
+			{
+				// Log failure
+			}
+		}
 	}
 }

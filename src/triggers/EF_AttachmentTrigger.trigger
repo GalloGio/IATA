@@ -10,7 +10,14 @@ trigger EF_AttachmentTrigger on Attachment (after insert)
 
 		if(toUploadList.size() > 0)
 		{
-			insert toUploadList;
+			try
+			{
+				insert toUploadList;
+
+			} catch(Exception e)
+			{
+				// EF_DocumentLogHelper.logError()
+			}
 		}
 	}
 }
