@@ -1,4 +1,4 @@
-({
+({ 
     //Fetch the owner / subsidiary accounts from the Apex controller
     getRelatedAccountList: function(component) {
         var requestedAccountType = component.get("v.displayType");
