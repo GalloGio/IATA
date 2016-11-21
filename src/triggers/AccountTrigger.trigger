@@ -33,8 +33,10 @@ trigger AccountTrigger on Account (before insert, after insert, after update, be
   }
 
   if(Trigger.isAfter && Trigger.isUpdate){
-    //E&F Account After Update
+    //E&F Account After Update - Handles account inactivation
     EF_AccountTriggerHandler.handleAfterUpdate(Trigger.new, Trigger.oldMap);
+    //E&F Notification of fields identified as critical. List of fields set on custom setting.
+    EF_AccountTriggerHandler.manageCriticalFieldChanges(Trigger.new, Trigger.oldMap);
   }
 
 }

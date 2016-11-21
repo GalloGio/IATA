@@ -403,7 +403,11 @@ public class AMS_AccountHierarchySelectionController {
 				mainAccount = hi.acc;
 				oscar.Account__c = hi.acc.Id;
 			}
+			System.debug(loggingLevel.Debug, '____ [cls AMS_AccountHierarchySelectionController - selectMain] hi.acc.Name - ' + hi.acc.Name);
+			System.debug(loggingLevel.Debug, '____ [cls AMS_AccountHierarchySelectionController - selectMain] hi.main - ' + hi.main);
+			System.debug(loggingLevel.Debug, '____ [cls AMS_AccountHierarchySelectionController - selectMain] hi.selected - ' + hi.selected);
 		}
+		System.debug(loggingLevel.Debug, '____ [cls AMS_AccountHierarchySelectionController - selectMain] mainAccount.Name - ' + mainAccount.Name);
 	}
 
 	public void save(){

@@ -1972,6 +1972,7 @@
         }],
         "DisplayFields": [
         "Change_effective_as_of__c",
+        "BSPLink_participation__c",
         "STEP10__c"],
         "IsDependent": false
         }]
@@ -2000,6 +2001,7 @@
                   }
                 ],
                 "DisplayFields": [
+                  "BSPLink_participation__c",
                   "STEP6__c"
                 ],
                 "IsDependent": false
@@ -2051,46 +2053,6 @@
         }]
       },
       {
-        "Name": "AMS_OSCAR_VALIDATION",
-        "Steps": [{
-        "Name": "STEP15",
-        "Required": [],
-        "Actions": [],
-        "Automations": [{
-          "Status": "Passed",
-          "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step15_succeeded"
-        },
-        {
-          "Status": "Failed",
-          "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step15_failed"
-        }],
-        "DisplayFields": [
-        "Comments_validate__c",
-        "Validation_Status__c"],
-        "IsDependent": false
-        }]
-      },
-      {
-        "Name": "AMS_OSCAR_APPROVAL",
-        "Steps": [{
-        "Name": "STEP2",
-        "Required": [],
-        "Actions": [],
-        "Automations": [{
-          "Status": "Passed",
-          "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step2_succeeded"
-        },
-        {
-          "Status": "Failed",
-          "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step2_failed"
-        }],
-        "DisplayFields": [
-        "RPM_Approval__c",
-        "Comments_approval__c"],
-        "IsDependent": false
-        }]
-      },
-      {
         "Name": "AMS_OSCAR_APP_FINALIZATION",
         "Steps": [
         {
@@ -2100,7 +2062,14 @@
                 "Automations": [
                   {
                     "Status": "Passed",
-                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step1_succeeded"
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step1_succeeded",
+                    "ChangeCode": {
+                      "Name": "FIN",
+                      "ReasonCode": "91",
+                      "MemoText": "New application - GSA finalized",
+                      "ReasonDesc": "ACCREDITED–MEETS–STANDARDS",
+                      "Status": "9"
+                    }
                   },
                   {
                     "Status": "Failed",
@@ -2112,14 +2081,8 @@
                   }
                 ],
                 "DisplayFields": [
-                  "Update_DPC__c",
-                  "Update_IRIS__c",
-                  "Update_BSPLink_CASSLink__c",
                   "Update_Portal_Setup__c",
                   "Send_approval_letter__c",
-                  "Welcome_pack__c",
-                  "Off_site_storage__c",
-                  "Welcome_call__c",
                   "Change_effective_as_of__c",
                   "STEP1__c"
                 ],
@@ -2127,6 +2090,39 @@
               }
             ]
           },
+
+          {
+        "Name": "AMS_OSCAR_DISAPPROVAL",
+        "Steps": [{
+        "Name": "STEP3",
+        "Required": [],
+        "Actions": [],
+        "Automations": [{
+          "Status": "Passed",
+          "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step3_succeeded",
+          "ChangeCode": {
+            "Name": "DIS",
+            "ReasonCode": "00",
+            "MemoText": "New application - GSA disapproved",
+            "ReasonDesc": "NON COMPLIANCE TO CRITERIA",
+            "Status": "0"
+            }
+        },
+        {
+          "Status": "Failed",
+          "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step3_failed"
+        },
+        {
+          "Status": "Not Applicable",
+          "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step3_notApplicable"
+        }],
+        "DisplayFields": [
+        "Issue_disapproval_pack__c",
+        "Issue_credit_note_if_applicable__c",
+        "STEP3__c"],
+        "IsDependent": false
+        }]
+      },
       {
         "Name": "AMS_OSCAR_REJECTION_FINALIZATION",
         "Steps": [{
@@ -2181,6 +2177,7 @@
                 ],
                 "DisplayFields": [
                   "Issue_Withdrawal_notification__c",
+                  "Issue_credit_note_withdrawal__c",
                   "STEP4__c"
                 ],
                 "IsDependent": false
@@ -2294,53 +2291,6 @@
       }]
       },
       {
-      "Name": "AMS_OSCAR_VALIDATION",
-      "Steps": [{
-      "Name": "STEP15",
-      "Required": [],
-      "Actions": [],
-      "Automations": [{
-      "Status": "Passed",
-      "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step15_succeeded"
-      },
-      {
-      "Status": "Failed",
-      "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step15_failed"
-      }],
-      "DisplayFields": [
-      "Comments_validate__c",
-      "Validation_Status__c"],
-      "IsDependent": false
-      }]
-      },
-      {
-        "Name": "AMS_OSCAR_APPROVAL",
-        "Steps": [{
-        "Name": "STEP2",
-        "Required": [],
-        "Actions": [],
-        "Automations": [{
-          "Status": "Passed",
-          "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step2_succeeded",
-      "ChangeCode": {
-                      "Name": "FIN",
-                      "ReasonCode": "91",
-                      "MemoText": "New application - GSSA finalized",
-                      "ReasonDesc": "ACCREDITED–MEETS–STANDARDS",
-                      "Status": "9"
-                    }
-        },
-        {
-          "Status": "Failed",
-          "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step2_failed"
-        }],
-        "DisplayFields": [
-        "RPM_Approval__c",
-        "Comments_approval__c"],
-        "IsDependent": false
-        }]
-      },
-      {
         "Name": "AMS_OSCAR_APP_FINALIZATION",
         "Steps": [
         {
@@ -2350,7 +2300,14 @@
                 "Automations": [
                   {
                     "Status": "Passed",
-                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step1_succeeded"
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step1_succeeded",
+                    "ChangeCode": {
+                      "Name": "FIN",
+                      "ReasonCode": "91",
+                      "MemoText": "New application - GSSA finalized",
+                      "ReasonDesc": "ACCREDITED–MEETS–STANDARDS",
+                      "Status": "9"
+                    }
                   },
                   {
                     "Status": "Failed",
@@ -2362,14 +2319,8 @@
                   }
                 ],
                 "DisplayFields": [
-                  "Update_DPC__c",
-                  "Update_IRIS__c",
-                  "Update_BSPLink_CASSLink__c",
                   "Update_Portal_Setup__c",
                   "Send_approval_letter__c",
-                  "Welcome_pack__c",
-                  "Off_site_storage__c",
-                  "Welcome_call__c",
                   "Change_effective_as_of__c",
                   "STEP1__c"
                 ],
@@ -2377,6 +2328,38 @@
               }
             ]
           },
+          {
+        "Name": "AMS_OSCAR_DISAPPROVAL",
+        "Steps": [{
+        "Name": "STEP3",
+        "Required": [],
+        "Actions": [],
+        "Automations": [{
+          "Status": "Passed",
+          "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step3_succeeded",
+          "ChangeCode": {
+            "Name": "DIS",
+            "ReasonCode": "00",
+            "MemoText": "New application - GSSA disapproved",
+            "ReasonDesc": "NON COMPLIANCE TO CRITERIA",
+            "Status": "0"
+            }
+        },
+        {
+          "Status": "Failed",
+          "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step3_failed"
+        },
+        {
+          "Status": "Not Applicable",
+          "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step3_notApplicable"
+        }],
+        "DisplayFields": [
+        "Issue_disapproval_pack__c",
+        "Issue_credit_note_if_applicable__c",
+        "STEP3__c"],
+        "IsDependent": false
+        }]
+      },
       {
         "Name": "AMS_OSCAR_REJECTION_FINALIZATION",
         "Steps": [{
@@ -2385,14 +2368,7 @@
         "Actions": [],
         "Automations": [{
           "Status": "Passed",
-          "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step18_succeeded",
-          "ChangeCode": {
-                      "Name": "DIS",
-                      "ReasonCode": "00",
-                      "MemoText": "New application - GSSA disapproved",
-                      "ReasonDesc": "NON COMPLIANCE TO CRITERIA",
-                      "Status": "0"
-                    }
+          "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step18_succeeded"
         },
         {
           "Status": "Failed",
@@ -2507,6 +2483,7 @@
         }],
         "DisplayFields": [
         "Change_effective_as_of__c",
+        "BSPLink_participation__c",
         "STEP10__c"],
         "IsDependent": false
         }]
@@ -2535,6 +2512,7 @@
                   }
                 ],
                 "DisplayFields": [
+                  "BSPLink_participation__c",
                   "STEP6__c"
                 ],
                 "IsDependent": false
@@ -2586,46 +2564,6 @@
         }]
       },
       {
-        "Name": "AMS_OSCAR_VALIDATION",
-        "Steps": [{
-        "Name": "STEP15",
-        "Required": [],
-        "Actions": [],
-        "Automations": [{
-          "Status": "Passed",
-          "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step15_succeeded"
-        },
-        {
-          "Status": "Failed",
-          "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step15_failed"
-        }],
-        "DisplayFields": [
-        "Comments_validate__c",
-        "Validation_Status__c"],
-        "IsDependent": false
-        }]
-      },
-      {
-        "Name": "AMS_OSCAR_APPROVAL",
-        "Steps": [{
-        "Name": "STEP2",
-        "Required": [],
-        "Actions": [],
-        "Automations": [{
-          "Status": "Passed",
-          "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step2_succeeded"
-        },
-        {
-          "Status": "Failed",
-          "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step2_failed"
-        }],
-        "DisplayFields": [
-        "RPM_Approval__c",
-        "Comments_approval__c"],
-        "IsDependent": false
-        }]
-      },
-      {
         "Name": "AMS_OSCAR_APP_FINALIZATION",
         "Steps": [
         {
@@ -2635,7 +2573,14 @@
                 "Automations": [
                   {
                     "Status": "Passed",
-                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step1_succeeded"
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step1_succeeded",
+                    "ChangeCode": {
+                      "Name": "FIN",
+                      "ReasonCode": "91",
+                      "MemoText": "New application - AHA finalized",
+                      "ReasonDesc": "ACCREDITED–MEETS–STANDARDS",
+                      "Status": "9"
+                    }
                   },
                   {
                     "Status": "Failed",
@@ -2647,14 +2592,8 @@
                   }
                 ],
                 "DisplayFields": [
-                  "Update_DPC__c",
-                  "Update_IRIS__c",
-                  "Update_BSPLink_CASSLink__c",
                   "Update_Portal_Setup__c",
                   "Send_approval_letter__c",
-                  "Welcome_pack__c",
-                  "Off_site_storage__c",
-                  "Welcome_call__c",
                   "Change_effective_as_of__c",
                   "STEP1__c"
                 ],
@@ -2662,6 +2601,39 @@
               }
             ]
           },
+
+          {
+        "Name": "AMS_OSCAR_DISAPPROVAL",
+        "Steps": [{
+        "Name": "STEP3",
+        "Required": [],
+        "Actions": [],
+        "Automations": [{
+          "Status": "Passed",
+          "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step3_succeeded",
+          "ChangeCode": {
+            "Name": "DIS",
+            "ReasonCode": "00",
+            "MemoText": "New application - AHA disapproved",
+            "ReasonDesc": "NON COMPLIANCE TO CRITERIA",
+            "Status": "0"
+            }
+        },
+        {
+          "Status": "Failed",
+          "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step3_failed"
+        },
+        {
+          "Status": "Not Applicable",
+          "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step3_notApplicable"
+        }],
+        "DisplayFields": [
+        "Issue_disapproval_pack__c",
+        "Issue_credit_note_if_applicable__c",
+        "STEP3__c"],
+        "IsDependent": false
+        }]
+      },
       {
         "Name": "AMS_OSCAR_REJECTION_FINALIZATION",
         "Steps": [{
