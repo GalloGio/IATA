@@ -15,7 +15,8 @@ public with sharing class AMS_MigrationToolHelper {
             'CHN - Change of Name' => 'MAJOR.CHANGES',
             'CHC – Change of Shareholding' => 'MAJOR.CHANGES',
             'New SA / CHV – New Code' => 'NEW.SA.1.0',
-            'VMFR Setup/Update' => 'MAJOR.CHANGES'
+            'VMFR Setup/Update' => 'MAJOR.CHANGES',
+			'TIDS' => 'NEW.TIDS.1.0'
             };
         }
         set;
@@ -253,6 +254,11 @@ public with sharing class AMS_MigrationToolHelper {
 
 		String devName = 'General Online Accreditation';
 
+		if(locationClass == 'T'){
+			if(processType == 'NEW.TIDS.1.0')
+				devName = 'General Online Accreditation';
+		}
+
 		if(locationClass == 'P'){
 			if(processType == 'NEW.HO.1.0')
 				devName = 'Travel Agent - HO';
@@ -402,7 +408,7 @@ public with sharing class AMS_MigrationToolHelper {
 
 		AMS_Accreditation_Contact__c contact = new AMS_Accreditation_Contact__c();
 
-		if(processType == 'NEW.HO.1.0' || processType == 'MAJOR.CHANGES')
+		if(processType == 'NEW.HO.1.0' || processType == 'MAJOR.CHANGES' || processType == 'NEW.TIDS.1.0')
 			contact.AMS_Ownership_Role__c = role.Id;
 
 		contact.AMS_Pax_Accreditation_Form__c = accreditationObj.Id;
