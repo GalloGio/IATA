@@ -219,7 +219,7 @@
     <fields>
         <fullName>IsAgencyEligibleForCountryAverage__c</fullName>
         <externalId>false</externalId>
-        <formula>YEAR(Account__r.Accreditation_date__c ) &lt; YEAR(TODAY()) 
+        <formula>YEAR(Account__r.Accreditation_date__c ) &lt; (YEAR(TODAY()) - 1) 
 &amp;&amp; 
 IsAgencyEligible__c</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -231,7 +231,7 @@ IsAgencyEligible__c</formula>
     <fields>
         <fullName>IsAgencyEligible__c</fullName>
         <externalId>false</externalId>
-        <formula>YEAR(Account__r.Accreditation_date__c ) &lt;= YEAR(TODAY()) 
+        <formula>YEAR(Account__r.Accreditation_date__c ) &lt;= (YEAR(TODAY()) -1) 
 &amp;&amp; 
 NOT(ISPICKVAL(Account__r.Status__c ,&quot;Cash basis/no commission&quot;)) 
 &amp;&amp; 
