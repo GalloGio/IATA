@@ -44,11 +44,8 @@
                     <li class="slds-tabs--default__item slds-text-heading--label" title="Core Relationship" role="presentation" aura:id="Core Relationship">
                         <ui:outputText value="Core Relationship"  click="{!c.changeTab}" class="slds-tabs--default__link"/>
                     </li>
-                    <li class="slds-tabs--default__item slds-text-heading--label" title="Products" role="presentation" aura:id="Products">
-                        <ui:outputText value="Products"  click="{!c.changeTab}" class="slds-tabs--default__link"/>
-                    </li>
-                    <li class="slds-tabs--default__item slds-text-heading--label" title="Services" role="presentation" aura:id="Services">
-                        <ui:outputText value="Services"  click="{!c.changeTab}" class="slds-tabs--default__link"/>
+                    <li class="slds-tabs--default__item slds-text-heading--label" title="Products" role="presentation" aura:id="Products and Services">
+                        <ui:outputText value="Products and Services"  click="{!c.changeTab}" class="slds-tabs--default__link"/>
                     </li>
                     <li class="slds-tabs--default__item slds-text-heading--label" title="Groups" role="presentation" aura:id="Groups">
                         <ui:outputText value="Groups"  click="{!c.changeTab}" class="slds-tabs--default__link"/>
@@ -116,18 +113,10 @@
 
                 </aura:if>
 
-                <aura:if isTrue="{!v.activeTab=='Products'}">
+                <aura:if isTrue="{!v.activeTab=='Products and Services'}">
                     <div class="slds-grid slds-wrap slds-p-around--medium">
                         <div class="slds-size--1-of-1">
                             <c:AMP_Products accountId="{!v.accountId}" account="{!v.account}"/>
-                        </div>
-                    </div>
-                </aura:if>
-
-                <aura:if isTrue="{!v.activeTab=='Services'}">
-                    <div class="slds-grid slds-wrap slds-p-around--medium">
-                        <div class="slds-size--1-of-1">
-                            <c:AMP_Services accountId="{!v.accountId}"/>
                         </div>
                     </div>
                 </aura:if>
