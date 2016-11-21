@@ -9,11 +9,11 @@
                              'Owner_Account__c' : '',
                              'Percentage__c': 0.0
                              }"/><!-- new Owner or subsidiary -->
-    
+
     <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
     <aura:handler name="deleteAccount" event="c:AMP_deleteAccount" action="c.handleDeleteAccount" />
     <aura:handler name="updateAccount" event="c:AMP_updateAccount" action="c.handleUpdateAccount" />
-    
+
     <aura:registerEvent name="AMP_OwnershipError" type="c:AMP_OwnershipError"/>
 
     <div class="slds-card">
@@ -27,12 +27,12 @@
                     <span class="slds-text-heading--small">{!v.displayType}</span>
                 </div>
             </div>
-            
+
             <div class="slds-no-flex">
                 <button class="slds-button slds-button--neutral slds-col--bump-left" onclick="{!c.addAccountRole}">New</button>
                 <!--<ui:button label="New" press="{!c.addAccountRole}"/>-->
             </div>
-            
+
         </div>
 
         <div class="slds-card__body">
@@ -54,7 +54,7 @@
                     </aura:iteration>
                 </tbody>
            </table>
-					 
+
         </div>
 
     </div>

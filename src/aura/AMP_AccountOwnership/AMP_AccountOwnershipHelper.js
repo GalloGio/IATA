@@ -3,7 +3,7 @@
     getRelatedAccountList: function(component) {
         var requestedAccountType = component.get("v.displayType");
         var action;
-        
+
         // select the action to execute
         if (requestedAccountType == "Owners") {
             action = component.get("c.getOwners");
@@ -13,7 +13,7 @@
         action.setParams({
             "AccountId": component.get("v.accountId")
         });
-        
+
         //Set up the callback
         var self = this;
         action.setCallback(this, function(actionResult) {
