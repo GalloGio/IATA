@@ -6,6 +6,8 @@
     Change log:
     - 2015-12-07: Sonny Leman: map File_Description__c.Product_Type__c to JSON FileProduction.ProductType
     - 2015-12-11: Abdellah Bellahssan/Sonny Leman: add LastRecordID in the return JSON message, add IsUniqueRequest parameter  
+    - 2016-11-17: Abdellah Bellahssan Weekly Calendar needs to be on the Sundays and Semi-Monthly Calendar on the First of the Month and on The 16th of the Month
+
 ******************************************************************************/
 @RestResource(urlMapping='/GSS/v0/FileProduction/*')
 global with sharing class GSS_REST_FileProduction{
@@ -145,11 +147,18 @@ global with sharing class GSS_REST_FileProduction{
               if (fp.Duration__c!=null) FileSize=String.ValueOf(fp.Duration__c);
           }
           //Make sure to Generate when needed
+          //What is the Calendar based on Weekly or Semi-Monthly
+          //Semi-Monthly
+          Date NextDateProduction = System.Today();
          
-          if (fs.Frequency__c=='Daily' && LastDateFileProduction<System.Today()) ProduceFile=true;
-          if (fs.Frequency__c=='Weekly' && (LastDateFileProduction<System.Today()-7)) ProduceFile=true;
-          if (fs.Frequency__c=='Semi-Monthly' && (LastDateFileProduction<System.Today()-14)) ProduceFile=true;
-          if (fs.Frequency__c=='Monthly' && (LastDateFileProduction.Month()<System.Today().Month())) ProduceFile=true;
+          //Weekly
+          Datetime NextDateTimeProduction = DateTime.newInstance(NextDateProduction, Time.newInstance(0, 0, 0, 0));
+          String dayOfWeek=NextDateTimeProduction.format('EEEE').ToLowerCase();
+              
+          if (fs.Frequency__c=='Daily' && LastDateFileProduction<NextDateProduction) ProduceFile=true;
+          if (fs.Frequency__c=='Weekly' && (LastDateFileProduction<NextDateProduction && dayOfWeek=='sunday' )) ProduceFile=true;
+          if (fs.Frequency__c=='Semi-Monthly' && LastDateFileProduction<NextDateProduction && (NextDateProduction.Day()==16 || NextDateProduction.Day()==1) )  ProduceFile=true;
+          if (fs.Frequency__c=='Monthly' && (LastDateFileProduction.Month()<NextDateProduction.Month())) ProduceFile=true;
           
           if (ProduceFile)
           {
@@ -431,6 +440,4 @@ global with sharing class GSS_REST_FileProduction{
             this.Duration='';
         } // end of FileProduction constructor
     } // end of FileProduction class
- 
-    
 }
