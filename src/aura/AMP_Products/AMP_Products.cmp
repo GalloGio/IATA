@@ -1,4 +1,4 @@
-<aura:component controller="AMP_ServicesExtension">
+<aura:component controller="AMP_ProductsController">
         <aura:attribute name="accountId" type="String" />
         <aura:attribute name="account" type="Account" />
         <aura:attribute name="canRead" type="Boolean" default="false"/>
