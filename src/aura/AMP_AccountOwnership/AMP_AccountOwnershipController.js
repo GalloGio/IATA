@@ -1,4 +1,4 @@
-({ 
+({
     doInit: function(component, event, helper) {
         helper.getRelatedAccountList(component);
         helper.getCanEdit(component);
