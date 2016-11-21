@@ -71,4 +71,4 @@
             </div>
         </div>
 		<c:IDCard_footerComponent />
-</apex:page>         
+</apex:page>

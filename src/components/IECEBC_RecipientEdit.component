@@ -199,7 +199,7 @@
                         <ul class="list actions">
                             <apex:outputText rendered="{!campaign == null}">
                                 <li>
-                                    <a href="https://{!$Site.Domain}{!URLFOR($Page.IECEBC_RecipientList)}" class="text-link">Discard</a>
+                                    <a href="{!URLFOR($Page.IECEBC_RecipientList)}" class="text-link">Discard</a>
                                 </li>
                             </apex:outputText>
                             <li>
@@ -339,7 +339,7 @@
                         <ul class="list actions">
                             <apex:outputText rendered="{!campaign == null}">
                                 <li>
-                                    <a href="https://{!$Site.Domain}{!URLFOR($Page.IECEBC_RecipientList)}" class="text-link">Discard</a>
+                                    <a href="{!URLFOR($Page.IECEBC_RecipientList)}" class="text-link">Discard</a>
                                 </li>
                             </apex:outputText>
                             <li>
@@ -465,7 +465,7 @@
                         <ul class="list actions">
                             <apex:outputText rendered="{!campaign == null}">
                                 <li>
-                                    <a href="https://{!$Site.Domain}{!URLFOR($Page.IECEBC_RecipientList)}" class="text-link">Discard</a>
+                                    <a href="{!URLFOR($Page.IECEBC_RecipientList)}" class="text-link">Discard</a>
                                 </li>
                             </apex:outputText>
                             <li>
@@ -526,10 +526,10 @@
                                 <apex:outputText rendered="{!isSaved}">
                                     <script type="text/javascript">
                                     <apex:outputText rendered="{!campaign != null}">
-                                        window.location.href = 'https://{!$Site.Domain}{!URLFOR($Page.IECEBC_CampaignTemplate)}?id={!campaign.id}';
+                                        window.location.href = '{!URLFOR($Page.IECEBC_CampaignTemplate)}?id={!campaign.id}';
                                     </apex:outputText>
                                     <apex:outputText rendered="{!campaign == null}">
-                                        window.location.href = 'https://{!$Site.Domain}{!URLFOR($Page.IECEBC_RecipientList)}';
+                                        window.location.href = '{!URLFOR($Page.IECEBC_RecipientList)}';
                                     </apex:outputText>
                                     </script>
                                 </apex:outputText>
@@ -574,7 +574,7 @@
                                                     <apex:variable var="cost" value="{!productRatePlan.EBC_Currency_Cost_Per_Email__c * IF((billingAccount.eBroadcast_Email_Balance__c - newFilter.Number_of_Recipients__c) < 0, ABS(billingAccount.eBroadcast_Email_Balance__c - newFilter.Number_of_Recipients__c), 0)}" />
                                                     <strong class="text-orange">$<apex:outputText value="{0, number, ###,###,##0.00}"><apex:param value="{!cost}"/></apex:outputText></strong>
                                                     <apex:outputText rendered="{!cost > 0}">
-                                                        <p>for <apex:outputText value="{0, number, ###,###,##0}"><apex:param value="{!IF((billingAccount.eBroadcast_Email_Balance__c - newFilter.Number_of_Recipients__c) < 0, ABS(billingAccount.eBroadcast_Email_Balance__c - newFilter.Number_of_Recipients__c), 0)}"/></apex:outputText> email(s) at $<apex:outputText value="{0, number, ###,###,##0.00}"><apex:param value="{!productRatePlan.EBC_Currency_Cost_Per_Email__c}"/></apex:outputText> /email</p>
+                                                        <p>for <apex:outputText value="{0, number, ###,###,##0}"><apex:param value="{!IF((billingAccount.eBroadcast_Email_Balance__c - newFilter.Number_of_Recipients__c) < 0, ABS(billingAccount.eBroadcast_Email_Balance__c - newFilter.Number_of_Recipients__c), 0)}"/></apex:outputText> email(s) at $<apex:outputText value="{0, number, ###,###,##0.000}"><apex:param value="{!productRatePlan.EBC_Currency_Cost_Per_Email__c}"/></apex:outputText> /email</p>
                                                     </apex:outputText>
                                                 </div>
                                             </td> 
@@ -604,7 +604,7 @@
                         <ul class="list actions">
                             <apex:outputText rendered="{!campaign == null}">
                                 <li>
-                                    <a href="https://{!$Site.Domain}{!URLFOR($Page.IECEBC_RecipientList)}" class="text-link">Discard</a>
+                                    <a href="{!URLFOR($Page.IECEBC_RecipientList)}" class="text-link">Discard</a>
                                 </li>
                             </apex:outputText>
                             <li>

@@ -1223,7 +1223,7 @@
 <fieldPermissions><editable>false</editable><field>AP_Process_Form__c.Master_Card_Name_of_Acquirer__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>AP_Process_Form__c.Name_Appearing_in_VAT__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AP_Process_Form__c.Name_of_business_comm_assoc__c</field><readable>false</readable></fieldPermissions>
-<fieldPermissions><editable>false</editable><field>AP_Process_Form__c.Online_carrier_in_the_BSP_country__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>true</editable><field>AP_Process_Form__c.Online_carrier_in_the_BSP_country__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AP_Process_Form__c.Other_Card_brand_accepted_for_BSP_ticket__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AP_Process_Form__c.Other_TAX_Identification__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AP_Process_Form__c.PDF_File_Recipient_Email_1__c</field><readable>false</readable></fieldPermissions>
@@ -5199,6 +5199,7 @@
 <fieldPermissions><editable>false</editable><field>Lead.Company_Type__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Lead.Confirm_Email_A__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Lead.Confirm_Email_B__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>true</editable><field>Lead.Contact_Role__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Lead.Country__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Lead.Course_Name__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Lead.Crisis_Communications_Members__c</field><readable>true</readable></fieldPermissions>
