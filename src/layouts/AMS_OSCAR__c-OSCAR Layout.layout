@@ -121,6 +121,14 @@
                 <behavior>Edit</behavior>
                 <field>Proof_of_payment_received__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Confirm_second_payment_received__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Confirm_third_payment_received__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
