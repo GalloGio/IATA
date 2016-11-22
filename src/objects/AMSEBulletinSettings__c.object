@@ -21,6 +21,14 @@
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>IRR_field__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>IRR field</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Label__c</fullName>
         <externalId>false</externalId>
         <label>Label</label>
