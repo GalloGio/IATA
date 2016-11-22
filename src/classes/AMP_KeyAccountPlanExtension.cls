@@ -27,6 +27,8 @@ public with sharing class AMP_KeyAccountPlanExtension {
 	private Id taskRecordTypeId {get;set;}
 	private Id objectiveRecordTypeId {get;set;}
 
+	public Boolean canEdit {get; set;}
+
     // public AMP_KeyAccountPlanExtension() {}
     public AMP_KeyAccountPlanExtension(ApexPages.StandardController stdController) {
         // this.mysObject = (sObject)stdController.getRecord();
@@ -45,7 +47,40 @@ public with sharing class AMP_KeyAccountPlanExtension {
 			lsMilestones = getTasks(objectiveId);
 			objectiveName = [SELECT Id, Name FROM Objective__c WHERE Id =:objectiveId LIMIT 1].Name;
 		}
+		canEdit = getCanEdit();
     }
+
+	public static List<String> getKAPFields() {
+        List<String> kapAccessFields = new String [] {
+            // 'Id',
+            'Name',
+			'Account_Issue_or_Priority__c',
+			// 'Account_Issue_or_Priority__r.Name',
+			'Benefits_to_Account__c',
+			'Details__c',
+			'AM_Level_of_importance__c',
+			'Status__c',
+			'Deadline__c'
+        };
+        return kapAccessFields;
+
+        }
+	@AuraEnabled
+	public static Boolean getCanEdit() {
+	  Boolean canEdit = true;
+	  // Obtain the field name/token map for the Objective__c object
+	  Map<String,Schema.SObjectField> m = Schema.SObjectType.Objective__c.fields.getMap();
+
+	  List<String> lsKAPFields = getKAPFields();
+	  for (String fieldToCheck : lsKAPFields) {
+	      // Check if the user has access to view field
+	      if (!m.get(fieldToCheck).getDescribe().isUpdateable() ) {
+	          canEdit = false;
+	      }
+	  }
+
+	  return canEdit;
+	}
 
 	public void updateLists() {
 		DateTime now = System.now();

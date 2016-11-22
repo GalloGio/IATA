@@ -2,6 +2,7 @@
     <aura:attribute name="activity" type="Objective__c"  />
     <aura:attribute name="accountId" type="String" />
     <aura:attribute name="index" type="Integer"  />
+    <aura:attribute name="canEdit" type="Boolean" default="false" />
     <aura:attribute name="isEditMode" type="Boolean" default="false"/>
     <aura:attribute name="isError" type="Boolean" default="false"/>
     <aura:attribute name="errorMessage" type="String"/>

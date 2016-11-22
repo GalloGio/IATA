@@ -12,8 +12,8 @@ public with sharing class AMP_ProductsController {
 
 	@AuraEnabled
 	public Static List<Account_Service__c> getAccountServices(Id accountId) {
-		return [SELECT Id, Service__r.Name, Active__c
+		return [SELECT Id, Service__r.Name, Service__r.Service_Publication__c, Active__c
 		FROM Account_Service__c WHERE Account__c = :accountId
-		ORDER BY Service__r.Order__c];
+		ORDER BY Service__r.Service_Publication__c, Service__r.Order__c];
 	}
 }
