@@ -4003,7 +4003,7 @@
 <fieldPermissions><editable>false</editable><field>GDP_Address__c.Address__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>GDP_Address__c.GDP_Geo_Detail__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>GDP_Address__c.IATA_ISO_Country__c</field><readable>true</readable></fieldPermissions>
-<fieldPermissions><editable>false</editable><field>GDP_Address__c.IATA_ISO_NCode__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>true</editable><field>GDP_Address__c.IATA_ISO_NCode__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>GDP_Address__c.IATA_ISO_State__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>GDP_Address__c.Profit_Center__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>GDP_Address__c.Related_Account__c</field><readable>true</readable></fieldPermissions>
@@ -7274,7 +7274,7 @@
 <recordTypeVisibilities><default>false</default><recordType>Agency_Applied_Change_code__c.Irregularities</recordType><visible>true</visible></recordTypeVisibilities>
 <recordTypeVisibilities><default>true</default><personAccountDefault>true</personAccountDefault><recordType>Agency_Applied_Change_code__c.Standard</recordType><visible>true</visible></recordTypeVisibilities>
 <recordTypeVisibilities><default>false</default><recordType>Agency_Owner__c.GDP</recordType><visible>true</visible></recordTypeVisibilities>
-<recordTypeVisibilities><default>true</default><recordType>Agency_Owner__c.Live</recordType><visible>true</visible></recordTypeVisibilities>
+<recordTypeVisibilities><default>true</default><personAccountDefault>true</personAccountDefault><recordType>Agency_Owner__c.Live</recordType><visible>true</visible></recordTypeVisibilities>
 <recordTypeVisibilities><default>false</default><recordType>AmazonFile__c.AMS_File</recordType><visible>false</visible></recordTypeVisibilities>
 <recordTypeVisibilities><default>true</default><recordType>AmazonFile__c.EF_File</recordType><visible>true</visible></recordTypeVisibilities>
 <recordTypeVisibilities><default>false</default><recordType>AmazonFile__c.File</recordType><visible>false</visible></recordTypeVisibilities>
@@ -7370,11 +7370,11 @@
 <recordTypeVisibilities><default>false</default><recordType>EmailTemplate__c.ID_Card_Application</recordType><visible>true</visible></recordTypeVisibilities>
 <recordTypeVisibilities><default>true</default><recordType>EmailTemplate__c.IFAP</recordType><visible>true</visible></recordTypeVisibilities>
 <recordTypeVisibilities><default>false</default><recordType>GDP_Address__c.GDP</recordType><visible>true</visible></recordTypeVisibilities>
-<recordTypeVisibilities><default>true</default><recordType>GDP_Address__c.Live</recordType><visible>true</visible></recordTypeVisibilities>
+<recordTypeVisibilities><default>true</default><personAccountDefault>true</personAccountDefault><recordType>GDP_Address__c.Live</recordType><visible>true</visible></recordTypeVisibilities>
 <recordTypeVisibilities><default>false</default><recordType>GDP_Agency_Profile_Specialization__c.GDP</recordType><visible>true</visible></recordTypeVisibilities>
 <recordTypeVisibilities><default>true</default><recordType>GDP_Agency_Profile_Specialization__c.Live</recordType><visible>true</visible></recordTypeVisibilities>
 <recordTypeVisibilities><default>false</default><recordType>GDP_Phone__c.GDP</recordType><visible>true</visible></recordTypeVisibilities>
-<recordTypeVisibilities><default>true</default><recordType>GDP_Phone__c.Live</recordType><visible>true</visible></recordTypeVisibilities>
+<recordTypeVisibilities><default>true</default><personAccountDefault>true</personAccountDefault><recordType>GDP_Phone__c.Live</recordType><visible>true</visible></recordTypeVisibilities>
 <recordTypeVisibilities><default>true</default><recordType>GDP_Products_Account_View__c.GDP</recordType><visible>true</visible></recordTypeVisibilities>
 <recordTypeVisibilities><default>false</default><recordType>GDS__c.GDP</recordType><visible>true</visible></recordTypeVisibilities>
 <recordTypeVisibilities><default>true</default><recordType>GDS__c.Live</recordType><visible>true</visible></recordTypeVisibilities>
