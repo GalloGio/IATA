@@ -11,7 +11,7 @@
 					<apex:column styleClass="narrow-table-column">
 						<apex:facet name="header">Actions</apex:facet>
 
-						<apex:commandLink value="Del" action="{!deleteTask}" styleClass="actionLink" onclick="if(!confirm('Are you sure you want to delete this line?')){return false};" rendered="{!IF(AND(isTaskEditMode, idTaskConcerned==task.Id, NOT(canEdit)), false, true)}" status="actStatusId">
+						<apex:commandLink value="Del" action="{!deleteTask}" styleClass="actionLink" onclick="if(!confirm('Are you sure you want to delete this line?')){return false};" rendered="{!IF(OR(AND(isTaskEditMode, idTaskConcerned==task.Id), NOT(canEdit)), false, true)}" status="actStatusId">
 								<apex:param name="idTaskConcerned" value="{!task.Id}" assignTo="{!idTaskConcerned}"/>
 						</apex:commandLink>
 					<apex:commandLink value="Save" action="{!saveTask}" styleClass="actionLink" reRender="theBlock" oncomplete="enableShowMoreOrLess();"   rendered="{!IF(AND(isTaskEditMode, idTaskConcerned==task.Id), true, false)}" status="actStatusId">
@@ -23,7 +23,7 @@
                         </apex:facet>
                     </apex:actionStatus>
 						&nbsp;|&nbsp;
-						<apex:commandLink value="Edit" action="{!editTask}" styleClass="actionLink" reRender="theBlock" oncomplete="enableShowMoreOrLess();"   rendered="{!IF(AND(isTaskEditMode, idTaskConcerned==task.Id, NOT(canEdit)), false, true)}" >
+						<apex:commandLink value="Edit" action="{!editTask}" styleClass="actionLink" reRender="theBlock" oncomplete="enableShowMoreOrLess();"   rendered="{!IF(OR(AND(isTaskEditMode, idTaskConcerned==task.Id), NOT(canEdit)), false, true)}" >
 								<apex:param name="idTaskConcerned" value="{!task.Id}" assignTo="{!idTaskConcerned}"/>
 						</apex:commandLink>
 
