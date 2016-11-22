@@ -28,6 +28,8 @@ public class AMS_ChangeCodesHelper {
         public String fieldAPI{get;set;}
         public String oldValue{get;set;}
         public String newValue{get;set;}
+        public String oldValueLookupID{get;set;}
+        public String newValueLookupID{get;set;}
         
         public ObjectChange(String objectAPI,String fieldAPI, String oldValue, String newValue){
 
@@ -35,6 +37,13 @@ public class AMS_ChangeCodesHelper {
             this.fieldAPI = fieldAPI;
             this.oldValue = oldValue;
             this.newValue = newValue;
+        }
+        public ObjectChange(String objectAPI,String fieldAPI, String oldValue, String newValue, String oldValueLookupID, String newValueLookupID){
+
+            this( objectAPI, fieldAPI, oldValue, newValue);
+    
+            this.oldValueLookupID = oldValueLookupID;
+            this.newValueLookupID = newValueLookupID;
         }
 
     }
@@ -256,14 +265,18 @@ public class AMS_ChangeCodesHelper {
                 system.debug('change.fieldAPI  : ' + change.fieldAPI );
                 system.debug('change.newValue: ' + change.newValue);                    
                 system.debug('change.oldValue: ' + change.oldValue);
+                system.debug('change.newValueLookupID: ' + change.newValueLookupID);                    
+                system.debug('change.oldValueLookupID: ' + change.oldValueLookupID);
     
                 AMS_Agency_A_Change_code_History__c aacNEWHistory = 
                                 new AMS_Agency_A_Change_code_History__c(
-                                                        Agency_Applied_Change_Code__c = null                , //ID will be added after the Insert
-                                                        Object_API_Name__c            = change.objectAPI    ,
-                                                        Field_API_Name__c             = change.fieldAPI     ,
-                                                        Field_New_Value__c            = change.newValue     ,
-                                                        Field_Old_Value__c            = change.oldValue     
+                                                        Agency_Applied_Change_Code__c = null                        ,//ID will be added after the Insert
+                                                        Object_API_Name__c            = change.objectAPI            ,
+                                                        Field_API_Name__c             = change.fieldAPI             ,
+                                                        Field_New_Value__c            = change.newValue             ,
+                                                        Field_Old_Value__c            = change.oldValue             ,
+                                                        Field_Lookup_New_Value__c     = change.newValueLookupID     ,
+                                                        Field_Lookup_Old_Value__c     = change.oldValueLookupID     
                                                         );
     
     

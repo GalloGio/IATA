@@ -78,24 +78,40 @@
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>Field_New_Value__c</fullName>
+        <fullName>Field_Lookup_New_Value__c</fullName>
         <externalId>false</externalId>
-        <label>Field New Value</label>
-        <length>80</length>
+        <label>Field_Lookup_New_Value</label>
+        <length>18</length>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>Field_Old_Value__c</fullName>
+        <fullName>Field_Lookup_Old_Value__c</fullName>
         <externalId>false</externalId>
-        <label>Field Old Value</label>
-        <length>80</length>
+        <label>Field Lookup Old Value</label>
+        <length>18</length>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Field_New_Value__c</fullName>
+        <externalId>false</externalId>
+        <label>Field New Value</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Field_Old_Value__c</fullName>
+        <externalId>false</externalId>
+        <label>Field Old Value</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
     </fields>
     <fields>
         <fullName>Object_API_Name__c</fullName>
