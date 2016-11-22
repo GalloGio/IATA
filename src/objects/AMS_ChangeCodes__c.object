@@ -13,6 +13,14 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Apply_to_hierarchy__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Apply to hierarchy</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Billable__c</fullName>
         <defaultValue>false</defaultValue>
         <description>sets the change code to be sent for external systems for the emission of a sales order</description>
@@ -53,6 +61,36 @@
         <type>TextArea</type>
     </fields>
     <fields>
+        <fullName>CNS_Bulletin_Memo_Text2__c</fullName>
+        <externalId>false</externalId>
+        <label>CNS Bulletin Memo Text2</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>CNS_Bulletin_Memo_Text3__c</fullName>
+        <externalId>false</externalId>
+        <label>CNS Bulletin Memo Text3</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>CNS_Bulletin_Memo_Text__c</fullName>
+        <externalId>false</externalId>
+        <label>CNS Bulletin Memo Text</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Change_Code__c</fullName>
         <externalId>false</externalId>
         <label>Change Code</label>
@@ -72,6 +110,14 @@
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Clear_Irregularities__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Clear Irregularities</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>Field1Values__c</fullName>
@@ -260,6 +306,16 @@
         <description>True if change code relates to risk management</description>
         <externalId>false</externalId>
         <label>Risk ChangeCode</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Used_By_CNS__c</fullName>
+        <defaultValue>true</defaultValue>
+        <description>If false, means the change code is not generated for CNS agencies</description>
+        <externalId>false</externalId>
+        <inlineHelpText>If false, means the change code is not generated for CNS agencies</inlineHelpText>
+        <label>Used By CNS</label>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
