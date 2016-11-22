@@ -1258,7 +1258,7 @@ public class AMS_OSCARTriggerHandler {
 				Integer minDgrBR = minimumBRDgrRequirements.get(key) == null ? 0 : minimumBRDgrRequirements.get(key);
 				system.debug('validateCertificates -> minDgrBR ' + minDgrBR);
 
-				String countryName = oscar.AMS_Online_Accreditation__r.Branch_Office_Country__r.Name;
+				String countryCode = oscar.AMS_Online_Accreditation__r.Branch_Office_Country__r.ISO_Code__c;
 
 				if(oscar.AMS_Online_Accreditation__r.Is_your_firm_handling_Dangerous_Goods__c == 'Yes'){
 					/*if(oscar.AMS_Online_Accreditation__r.Location_Type__c == AMS_Utils.HO){
@@ -1267,20 +1267,20 @@ public class AMS_OSCARTriggerHandler {
 					else if(oscar.AMS_Online_Accreditation__r.Location_Type__c == AMS_Utils.BR){
 						checkCertifications(trainedStaffPerAccount.get(oscar.Account__c), AMS_Utils.BR, true, locationClass);
 					}*/
-					checkCertifications(trainedStaffPerAccount.get(oscar.Account__c), locationType, true, locationClass, countryName, minDgrHO, minDgrBR);
+					checkCertifications(trainedStaffPerAccount.get(oscar.Account__c), locationType, true, locationClass, countryCode, minDgrHO, minDgrBR);
 				}
 				else{
 					//If an agency is non handling, it must have a certificate of awareness (DGA)
 					if(oscar.AMS_Online_Accreditation__r.Location_Type__c == AMS_Utils.HO || oscar.AMS_Online_Accreditation__r.Location_Type__c == AMS_Utils.BR){
 						System.debug('OSCARTriggerHandler -> validateCertificates: Non handling '+ oscar.AMS_Online_Accreditation__r.Location_Type__c + ' agency.');
-						checkCertifications(trainedStaffPerAccount.get(oscar.Account__c), locationType, false, locationClass, countryName, minDgrHO, minDgrBR);
+						checkCertifications(trainedStaffPerAccount.get(oscar.Account__c), locationType, false, locationClass, countryCode, minDgrHO, minDgrBR);
 					}
 				}
 			}
 		}
 	}
 
-	private static void checkCertifications(List<AMS_Accreditation_Contact__c> trainedStaff, String accountLocationType, boolean handling, String locationClass, String countryName, Integer minimumHODgrRequirements, Integer minimumBRDgrRequirements){
+	private static void checkCertifications(List<AMS_Accreditation_Contact__c> trainedStaff, String accountLocationType, boolean handling, String locationClass, String countryCode, Integer minimumHODgrRequirements, Integer minimumBRDgrRequirements){
 
 		Integer numberDGR = 0;
 		Integer numberDGA = 0;
@@ -1297,7 +1297,7 @@ public class AMS_OSCARTriggerHandler {
 		System.debug('OSCARTriggerHandler -> checkCertifications: number of DGA ' + numberDGA);
 
 		if(handling){
-			if(countryName.equalsIgnoreCase('People\'s Republic of China') && locationClass == 'C' && numberDGR < 3){
+			if(countryCode == 'CN' && locationClass == 'C' && numberDGR < 3){
 				throw new AMSException('##This agency must have at least 3 DGR that are not expired.##');
 			}
 			else if(locationClass == 'C'){
