@@ -24,7 +24,7 @@ private class LiveAgentPostChatControllerTest {
 		Insert user;
 
 		Id caseRtId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('CasesEurope');
-		Case relCase = new Case(RecordTypeId = caseRtId, AccountId = a.Id, ContactId = c.Id, Subject = 'testPostChat', Origin = 'Chat', Status= 'closed', OwnerId = user.Id, LastModifiedById = user.Id);
+		Case relCase = new Case(RecordTypeId = caseRtId, AccountId = a.Id, ContactId = c.Id, Subject = 'testPostChat', Origin = 'Chat', Status= 'closed', OwnerId = user.Id);
 		Insert relCase;
 	}
 
