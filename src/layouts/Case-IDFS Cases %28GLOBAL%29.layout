@@ -173,6 +173,10 @@
                 <behavior>Edit</behavior>
                 <field>Subtopic__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Country_concerned_by_the_query__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
