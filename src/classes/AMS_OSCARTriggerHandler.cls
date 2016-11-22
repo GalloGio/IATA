@@ -1201,7 +1201,7 @@ public class AMS_OSCARTriggerHandler {
 			oscarIds.add(oscar.Id);
 		}
 
-		List<AMS_OSCAR__c> oscarsList = new List<AMS_OSCAR__c>([SELECT Id, RecordTypeId, Account__c, AMS_Online_Accreditation__r.Location_Type__c, AMS_Online_Accreditation__r.Location_Class__c, AMS_Online_Accreditation__r.Is_your_firm_handling_Dangerous_Goods__c, AMS_Online_Accreditation__r.Branch_Office_Country__c, AMS_Online_Accreditation__r.Branch_Office_Country__r.Name FROM AMS_OSCAR__c WHERE Id IN :oscarIds]);
+		List<AMS_OSCAR__c> oscarsList = new List<AMS_OSCAR__c>([SELECT Id, RecordTypeId, Account__c, AMS_Online_Accreditation__r.Location_Type__c, AMS_Online_Accreditation__r.Location_Class__c, AMS_Online_Accreditation__r.Is_your_firm_handling_Dangerous_Goods__c, AMS_Online_Accreditation__r.Branch_Office_Country__c, AMS_Online_Accreditation__r.Branch_Office_Country__r.ISO_Code__c FROM AMS_OSCAR__c WHERE Id IN :oscarIds]);
 
 		for(AMS_OSCAR__c oscar: oscarsList)
 			isoCountries.add(oscar.AMS_Online_Accreditation__r.Branch_Office_Country__c);
