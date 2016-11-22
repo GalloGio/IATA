@@ -1639,4 +1639,63 @@ public static String fetchTypeOfCustomer (String locationType , String category)
 
 }
 
+public static Integer binarySearchGapFinder(List<Integer> orderedSlotsOccupied){
+ 
+        Integer first = 0;
+        Integer last = orderedSlotsOccupied.size()-1;
+        Integer mid = (first+last)/2;
+ 
+        while(first < last){
+            //check for gaps in first half of the list
+            if(orderedSlotsOccupied[mid]-orderedSlotsOccupied[first] != (mid - first)){
+                //found a gap
+                if ((mid-first) == 1 && (orderedSlotsOccupied[mid]-orderedSlotsOccupied[first] > 1)) {
+                    return (orderedSlotsOccupied[first]+1);
+                }   
+                last = mid;
+            }
+            //check for gaps in second half of the list
+            else if ((orderedSlotsOccupied[last]-orderedSlotsOccupied[mid]) != (last-mid)) {
+                //found a gap
+                if ((last-mid) == 1 && (orderedSlotsOccupied[last]-orderedSlotsOccupied[mid] > 1)) {
+                    return (orderedSlotsOccupied[mid]+1);
+                }   
+                first = mid;
+            }   
+            else
+                return -1; 
+ 
+            mid = (first+last)/2;
+ 
+        }
+ 
+        return -1;
+ 
+    }
+ 
+    public static Integer findGapInRange(Integer minRange, Integer maxRange, List<Integer> orderedSlotsOccupied){
+ 
+        Integer availableNumberInRange = -1;
+ 
+        //invalid range
+        if(maxRange-minRange <= 0)
+            return -1;
+        
+        //no available slots
+        if(orderedSlotsOccupied.size() > maxRange-minRange)
+            return -1;
+ 
+ 
+        if(orderedSlotsOccupied.isEmpty() || (!orderedSlotsOccupied.isEmpty() && orderedSlotsOccupied[0] > minRange))
+            availableNumberInRange = minRange;
+        else
+            availableNumberInRange = binarySearchGapFinder(orderedSlotsOccupied);
+ 
+        if(availableNumberInRange == -1 && orderedSlotsOccupied[orderedSlotsOccupied.size()-1] < maxRange)
+            availableNumberInRange = orderedSlotsOccupied[orderedSlotsOccupied.size()-1] +1;
+ 
+        return availableNumberInRange;
+ 
+    }
+
 }
