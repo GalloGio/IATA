@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Document xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>This logo is used to display in the customer portal as a logo image</description>
+    <internalUseOnly>false</internalUseOnly>
+    <name>IATA Logo Cust Portal</name>
+    <public>true</public>
+</Document>

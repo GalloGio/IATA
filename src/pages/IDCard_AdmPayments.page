@@ -96,7 +96,8 @@
                                                 <span style="display:{!IF(p.Payment_Credit_Card_Number__c!='','block','none')}">{!p.Payment_Credit_Card_Number__c}  </span>
                                               </td>
                                               <td>{!p.Payment_Amount__c} {!p.Payment_Currency__c}</td>
-                                              <td><a class="fancybox" href="#inline{!p.Id}" style="display:{!IF(p.Application_Status__c!='Cancelled','block','none')}">Details</a></td>
+                                              <td><apex:outputLink value="/apex/IDCard_DetailsAdmPayments" target="_blank">Details  <apex:param name="id" value="{!p.Id}"/> </apex:outputLink></td>
+                                              <!--<td><a class="fancybox" href="#inline{!p.Id}" style="display:{!IF(p.Application_Status__c!='Cancelled','block','none')}">Details</a></td>-->
                                           </tr>
                                       </apex:repeat>
                                   </tbody>
@@ -107,7 +108,7 @@
            </div> 
         </div>
         <!-- Inbox... --> 
-        <apex:repeat value="{!singleAppsPerMassApps}" var="k" >
+       <!-- <apex:repeat value="{!singleAppsPerMassApps}" var="k" >
             <div id="inline{!k}" style="display:none;" >
             <h2>This purchase had been ordered by: {!contacts[k].Name}</h2>
            <table  style="border:1px solid  black;" >
@@ -131,7 +132,7 @@
                    </tbody>
             </table>
         </div>
-        </apex:repeat>
+        </apex:repeat>-->
          <script>
                
                function refreshDataTable(){

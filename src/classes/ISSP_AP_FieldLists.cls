@@ -45,7 +45,7 @@ public class ISSP_AP_FieldLists {
                           
    //Mandatory BSP fields specific to Mexico
     public static final Map<String,String> bsp_MX_MandatoryFields = new Map<String,String>{
-        'AP_BR_Address_CNP__c'     					=> '',
+        //'AP_BR_Address_CNP__c'     					=> '',
             'AP_BR_Address_To_Insert__c'				=> '',
             'BSP_Country_VAT_Tax_number__c'				=> ''
             };             

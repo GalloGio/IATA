@@ -533,6 +533,7 @@
 <classAccesses><apexClass>IDCard_CleanUp_RenewalReminder_Scheduler</apexClass><enabled>false</enabled></classAccesses>
 <classAccesses><apexClass>IDCard_ConfirmationPageController</apexClass><enabled>false</enabled></classAccesses>
 <classAccesses><apexClass>IDCard_ConfirmationPageControllerTest</apexClass><enabled>false</enabled></classAccesses>
+<classAccesses><apexClass>IDCard_DetailsAdmPaymentsCtrl</apexClass><enabled>false</enabled></classAccesses>
 <classAccesses><apexClass>IDCard_PendingOpsAndProcessedAppTest</apexClass><enabled>false</enabled></classAccesses>
 <classAccesses><apexClass>IDCard_Refund</apexClass><enabled>true</enabled></classAccesses>
 <classAccesses><apexClass>IDCard_RenewalReminder_Batch</apexClass><enabled>false</enabled></classAccesses>
@@ -1611,6 +1612,7 @@
 <pageAccesses><apexPage>IDCard_Checkout</apexPage><enabled>false</enabled></pageAccesses>
 <pageAccesses><apexPage>IDCard_CheckoutConfirmation</apexPage><enabled>false</enabled></pageAccesses>
 <pageAccesses><apexPage>IDCard_CheckoutSingleApplication</apexPage><enabled>false</enabled></pageAccesses>
+<pageAccesses><apexPage>IDCard_DetailsAdmPayments</apexPage><enabled>false</enabled></pageAccesses>
 <pageAccesses><apexPage>IDCard_MultipleAgency_Details</apexPage><enabled>false</enabled></pageAccesses>
 <pageAccesses><apexPage>IDCard_PendingCase_Details</apexPage><enabled>false</enabled></pageAccesses>
 <pageAccesses><apexPage>IDCard_PendingIdCardApp_Details</apexPage><enabled>false</enabled></pageAccesses>
@@ -1846,8 +1848,8 @@
 <pageAccesses><apexPage>MITA_MemoConcurrences</apexPage><enabled>false</enabled></pageAccesses>
 <pageAccesses><apexPage>MITA_MemoWithdrawals</apexPage><enabled>false</enabled></pageAccesses>
 <pageAccesses><apexPage>MITA_Memorandums</apexPage><enabled>false</enabled></pageAccesses>
-<pageAccesses><apexPage>MITA_PortalAgreements</apexPage><enabled>false</enabled></pageAccesses>
-<pageAccesses><apexPage>MITA_PortalMyAgreements</apexPage><enabled>false</enabled></pageAccesses>
+<pageAccesses><apexPage>MITA_PortalAgreements</apexPage><enabled>true</enabled></pageAccesses>
+<pageAccesses><apexPage>MITA_PortalMyAgreements</apexPage><enabled>true</enabled></pageAccesses>
 <pageAccesses><apexPage>MITA_Txt</apexPage><enabled>false</enabled></pageAccesses>
 <pageAccesses><apexPage>MassCaseCreationNonCompliance</apexPage><enabled>true</enabled></pageAccesses>
 <pageAccesses><apexPage>MassCloseCases</apexPage><enabled>true</enabled></pageAccesses>
