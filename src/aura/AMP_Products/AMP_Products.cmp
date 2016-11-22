@@ -62,11 +62,6 @@
                                 <td class="{!service.rowspan==0 ? 'dontIndent':''}"><ui:outputText value="{!service.Name}" /></td>
                                 <td><ui:outputCheckbox value="{!service.Active}" /></td>
                             </tr>
-                            <!-- <tr>
-                                <td><ui:outputText value="{!service.Service__r.Service_Publication__c}" /></td>
-                                <td><ui:outputText value="{!service.Service__r.Name}" /></td>
-                                <td><ui:outputCheckbox value="{!service.Active__c}" /></td>
-                            </tr> -->
 
                         </aura:iteration>
                     </tbody>
