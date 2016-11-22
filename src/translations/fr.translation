@@ -6167,7 +6167,10 @@ Pouvez-vous s&apos;il vous plaît confirmer pour quel pays vous avez déjà reç
         <label>Monnaie</label>
         <name>ISSP_Currency</name>
     </customLabels>
-
+    <customLabels>
+        <label>Filtrage par la monnaie</label>
+        <name>ISSP_Currency_Filter</name>
+    </customLabels>
     <customLabels>
         <label>Mot de passe actuel</label>
         <name>ISSP_CurrentPassword</name>
