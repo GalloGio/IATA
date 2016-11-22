@@ -36,6 +36,7 @@
                 .inner-wrapper {
                 	 max-width: 100% !important;
                 }
+                html, body { overflow-y: hidden; }
             </style>
             <!-- End of Page </head> -->
         </apex:define>
