@@ -3,6 +3,16 @@
     <customSettingsType>List</customSettingsType>
     <enableFeeds>false</enableFeeds>
     <fields>
+        <fullName>Agency_Information__c</fullName>
+        <externalId>false</externalId>
+        <label>Agency Information</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Order__c</fullName>
         <externalId>false</externalId>
         <label>Order</label>
