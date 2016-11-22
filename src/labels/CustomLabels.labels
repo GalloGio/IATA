@@ -15960,7 +15960,7 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>LiveAgentPostChatThankContact</shortDescription>
-        <value>Thank you for your contact!</value>
+        <value>We weren&apos;t able to successfully answer your chat request. Please try again in a few moments or create a case instead. Thank you!</value>
     </labels>
     <labels>
         <fullName>LiveAgentPostChatThankFeedback</fullName>

@@ -5,7 +5,27 @@ public with sharing class LiveAgentPostChatController {
 	public Boolean isSuccess {get; set;}
 	public Boolean isSubmitted {get; set;}
 	public Boolean isResubmission {get; set;}
-	public User agent;
+	public User agent {
+		get{
+			if (agent == null){
+				if (relatedCase != null){
+					if (relatedCase.OwnerId != null && relatedCase.LastModifiedById != null){
+						Integer countUser = [SELECT COUNT() FROM User WHERE Id =:relatedCase.OwnerId];
+						String id;
+						if (countUser > 0){
+							id = relatedCase.OwnerId;
+						}else{
+							//Owner is a Queue. We will get LastModifiedById
+							id = relatedCase.LastModifiedById;
+						}
+						agent = [SELECT Id, Name, FirstName, LastName FROM User WHERE Id = :id LIMIT 1][0];
+					}
+				}
+			}
+			return agent;
+		}
+		set;
+	}
 	public Boolean isIncomplete {
 		get{
 			if (relatedCase.Subject != null && relatedCase.OwnerId != null){
@@ -33,16 +53,19 @@ public with sharing class LiveAgentPostChatController {
 	public String lang{
 		get{
 			if (lang == null){
-				String jsn = ApexPages.currentPage().getParameters().get('chatDetails');
-				WrapperDetailsChatDetails details = new WrapperDetailsChatDetails();
-				details = (WrapperDetailsChatDetails)System.JSON.deserialize(jsn, WrapperDetailsChatDetails.class);
-				List<WrapperCustomDetails> customDetails = details.customDetails;
-				lang = 'en';
-				for (WrapperCustomDetails detail : customDetails){
-					if (detail.label == 'buttonlanguage'){
-						lang = detail.value;
-						break;
+				try{
+					String jsn = ApexPages.currentPage().getParameters().get('chatDetails');
+					WrapperDetailsChatDetails details = new WrapperDetailsChatDetails();
+					details = (WrapperDetailsChatDetails)System.JSON.deserialize(jsn, WrapperDetailsChatDetails.class);
+					List<WrapperCustomDetails> customDetails = details.customDetails;
+					lang = 'en';
+					for (WrapperCustomDetails detail : customDetails){
+						if (detail.label == 'buttonlanguage'){
+							lang = detail.value;
+							break;
+						}
 					}
+				}catch(Exception e){
 				}
 			}
 			return lang;
@@ -60,20 +83,25 @@ public with sharing class LiveAgentPostChatController {
 		}
 		set;
 	}
-	public User getAgent(){
-		if (agent == null){
-			Integer countUser = [SELECT COUNT() FROM User WHERE Id =:relatedCase.OwnerId];
-			String id;
-			if (countUser > 0){
-				id = relatedCase.OwnerId;
-			}else{
-				//Owner is a Queue. We will get LastModifiedById
-				id = relatedCase.LastModifiedById;
-			}
-			agent = [SELECT Id, Name, FirstName, LastName FROM User WHERE Id = :id LIMIT 1][0];
-		}
-		return agent;
-	}
+	// public User getAgent(){
+	// 	if (agent == null){
+	// 		if (relatedCase != null){
+	// 			if (relatedCase.OwnerId != null && relatedCase.LastModifiedById != null){
+	// 				Integer countUser = [SELECT COUNT() FROM User WHERE Id =:relatedCase.OwnerId];
+	// 				String id;
+	// 				if (countUser > 0){
+	// 					id = relatedCase.OwnerId;
+	// 				}else{
+	// 					//Owner is a Queue. We will get LastModifiedById
+	// 					id = relatedCase.LastModifiedById;
+	// 				}
+	// 				agent = [SELECT Id, Name, FirstName, LastName FROM User WHERE Id = :id LIMIT 1][0];
+	// 			}
+	// 		}
+	// 		agent = null;
+	// 	}
+	// 	return agent;
+	// }
 	public void setChannelAnswer(String answer) {
 		channelAnswer = answer;
 	}
@@ -92,9 +120,11 @@ public with sharing class LiveAgentPostChatController {
 	public void submit(){
 		if (relatedCase != null){
 			if (relatedCase.Subject != null && relatedCase.OwnerId != null){
-				if (channelAnswer != null && agentExperienceAnswer != null){
+				System.debug('## agentExperienceAnswer: '+agentExperienceAnswer);
+				if (channelAnswer != null && channelAnswer != '' && agentExperienceAnswer != null && agentExperienceAnswer != ''){
 					Integer countSurvey = [SELECT COUNT() FROM Instant_Surveys__c WHERE Relationship_to_Case__c =:relatedCase.Id];
 					if(countSurvey < 1){
+						System.debug('cenas: '+agent);
 						Instant_Surveys__c survey = new Instant_Surveys__c();
 						survey.Chat_Agent__c = agent.Id;
 						survey.Name = 'Chat - ' + relatedCase.Subject;
@@ -103,6 +133,7 @@ public with sharing class LiveAgentPostChatController {
 						survey.Chat_Comment__c = commentAnswer;
 						survey.Chat_Agent_Experience__c = agentExperienceAnswer;
 						survey.RecordTypeId  = Schema.SObjectType.Instant_Surveys__c.getRecordTypeInfosByName().get('Live Agent Chat').getRecordTypeId();
+						System.debug('## survey: '+survey);
 						try{
 							insert survey;
 							isSuccess = true;
@@ -114,7 +145,15 @@ public with sharing class LiveAgentPostChatController {
 					}
 				}else{
 					isSubmitted = true;
+					if (channelAnswer == null || channelAnswer == ''){
+						channelAnswer = null;
+					}
+					if (agentExperienceAnswer == null || agentExperienceAnswer == ''){
+						agentExperienceAnswer = null;
+					}
 				}
+			}else{
+				ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Case information is incomplete'));
 			}
 		}else{
 			ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Case not found'));
@@ -129,6 +168,10 @@ public with sharing class LiveAgentPostChatController {
 		}
 		return options;
 	}
+
+	// private void setAgent(){
+	//
+	// }
 
 	public Class WrapperDetailsChatDetails {
 		public List<String> prechatDetails;
@@ -161,6 +204,10 @@ public with sharing class LiveAgentPostChatController {
 	}
 
 	public LiveAgentPostChatController() {
-		 agent = getAgent();
+		agentExperienceAnswer = null;
+		channelAnswer = null;
+		if (agent == null){
+			isIncomplete = true;
+		}
 	}
 }

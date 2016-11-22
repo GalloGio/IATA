@@ -465,10 +465,10 @@
                                 </div>
                             </li>
 
-</ul>  
+</ul>
                     <!--------------------------------- BUTTONS  SECTION -------------------------------------------->
                     <apex:outputPanel id="OPpbButton">
-                            <apex:outputPanel layout="none" rendered="{!IF(currentButtonsToShow = 'OnlyCancel', true, false)}">
+                            <apex:outputPanel layout="none" rendered="{!OR(IF(currentButtonsToShow = 'OnlyCancel', true, false),AND(IF(currentButtonsToShow = 'CancelAndCreateACase', true, false),newCase.IFAP_Country_ISO__c = null))}">
                                 <div class="col-md-6">
                                     <apex:commandButton styleclass="btn btn_iata_cancel  btn-block" immediate="true" action="{!back}" value="{!$Label.ISSP_Cancel}" id="back" />
                                 </div>
@@ -476,7 +476,7 @@
 
 
 
-                            <apex:outputPanel layout="none" rendered="{!IF(currentButtonsToShow = 'CancelAndCreateACase', true, false)}">
+                            <apex:outputPanel layout="none" rendered="{!AND(IF(currentButtonsToShow = 'CancelAndCreateACase', true, false),newCase.IFAP_Country_ISO__c != null)}">
                               <div class="row">
                                   <div class="col-md-6">
                                       <apex:commandbutton styleclass="btn_iata_success btn btn-block" action="{!create}" value="{!$Label.ISSP_F2CCreate}" rerender="FieldsRep,RightPanel,TopicsAndArticlesForm,countryPnl,AirlinesPnl,OPpbButton,op_subtopic_helptext,op_topic_helptext" />

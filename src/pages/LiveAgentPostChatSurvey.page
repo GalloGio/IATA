@@ -71,22 +71,19 @@
 
     <script>
       $(document).ready(function(){
+        $('[id$="commentInput"]').attr("placeholder","{!$Label.LiveAgentPostChatPlaceHolder}");
+
         $("input[name='agentRadio']").change(function(){
           var selected_value = $("input[name='agentRadio']:checked").val();
           $("[id$='hidInp'").val(selected_value);
-
           if (selected_value == "Yes"){
             $(".glyphicon-thumbs-up").css("color","#255");
             $(".glyphicon-thumbs-down").css("color","#ffffff");
-
           }else if (selected_value == "No"){
             $(".glyphicon-thumbs-up").css("color","#ffffff");
-            $(".glyphicon-thumbs-down").css("color","#255").css("touch-action","manipulation");
+            $(".glyphicon-thumbs-down").css("color","#255");
           }
         });
-        $(function(){
-          $('[id$="commentInput"]').attr("placeholder","{!$Label.LiveAgentPostChatPlaceHolder}");
-        })
       });
     </script>
 
@@ -102,7 +99,7 @@
                         <div class="questionLbl">
                             <br/>
                             <b>{!$Label.LiveAgentPostChatExperienceAnswer} {!agent.FirstName} ?</b>
-                            <apex:outputText value="*" rendered="{!AND(isSubmitted,agentExperienceAnswer == null)}" styleclass="requiredFieldLbl"/>
+                            <apex:outputText value="*" rendered="{!AND(isSubmitted,OR(agentExperienceAnswer == null,agentExperienceAnswer == ''))}" styleclass="requiredFieldLbl"/>
                         </div>
 
                         <div class="selectOptRadBtn" >
@@ -130,7 +127,7 @@
                         <br/>
                         <div class="questionLbl">
                           <b>{!$Label.LiveAgentPostChatChannelQuestion}</b>
-                          <apex:outputText value="*" rendered="{!AND(isSubmitted,channelAnswer == null)}" styleclass="requiredFieldLbl"/>
+                          <apex:outputText value="*" rendered="{!AND(isSubmitted, OR(channelAnswer == null, channelAnswer == ''))}" styleclass="requiredFieldLbl"/>
                         </div>
                         <apex:selectRadio styleClass="selectOptRadBtn" layout="pageDirection" value="{!channelAnswer}">
                           <apex:selectOptions value="{!channel}"/>
@@ -143,9 +140,9 @@
                         <apex:inputTextarea id="commentInput" styleClass="inputField" value="{!commentAnswer}"/>
 
                         <br/>
-                        <apex:outputText value="*{!$Label.LiveAgentPostChatFieldsRequired}" rendered="{!AND(isSubmitted,OR(channelAnswer == null, agentExperienceAnswer == null))}" style="font-size: 13px; margin: 5px; right: 5px; position: absolute;" styleclass="requiredFieldLbl"/>
+                        <apex:outputText value="*{!$Label.LiveAgentPostChatFieldsRequired}" rendered="{!AND(isSubmitted,OR(OR(channelAnswer == null, channelAnswer == ''), OR(agentExperienceAnswer == null, agentExperienceAnswer == '')))}" style="font-size: 13px; margin: 5px; right: 5px; position: absolute;" styleclass="requiredFieldLbl"/>
                         <button onClick="subm(); return false;" class="btn btn-block btn_iata_primary">{!$Label.LiveAgentPostChatSubmitButton}</button>
-                        <apex:actionFunction action="{!submit}" name="subm" rerender="surveyPanel,successPanel"/>
+                        <apex:actionFunction action="{!submit}" name="subm" rerender="radbtns,surveyPanel,successPanel"/>
                   </div>
                 </apex:outputPanel>
             </apex:outputPanel>
