@@ -22,7 +22,7 @@ global class AMS_PurgeAccountBatch implements Database.Batchable<sObject>,  Data
 
 		oldIataCodes = new Map<Id,String>();
 
-		this.query = 'SELECT Id , IATACode__c , Purge_Flag__c from Account where Id in :accountsToPurge and IATACode__c != null and Purge_Flag__c = false';
+		this.query = 'SELECT Id , IATACode__c , Site, Purge_Flag__c from Account where Id in :accountsToPurge and IATACode__c != null and Purge_Flag__c = false';
 	
 	}
 	
@@ -39,6 +39,7 @@ global class AMS_PurgeAccountBatch implements Database.Batchable<sObject>,  Data
 			oldIataCodes.put(act.Id,act.IATACode__c);
 
 			act.IATACode__c = transformIATACodeintoPurged(act.IATACode__c);
+			act.Site = transformIATACodeintoPurged(act.site);
 			act.Purge_Flag__c = false;
 			//act.Name = act.Name + 'Ltd';
 
@@ -129,7 +130,16 @@ global class AMS_PurgeAccountBatch implements Database.Batchable<sObject>,  Data
 
 	public static String transformIATACodeintoPurged(String iataCode){
 
-		return 'X' + iataCode;
+		//Prefix will be PYYMM_
+
+		if(iataCode == null)
+			return iataCode;
+
+		Datetime nowDate = Datetime.now();
+		
+		String formattedDate = nowDate.format('yyMM');
+
+		return 'P' + formattedDate + '_' + iataCode ;
 	}
 
 	public void updateAccounts(List<Account> accounts){

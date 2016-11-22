@@ -8106,7 +8106,7 @@ WSPN-Worldspan</inlineHelpText>
         <fullName>IATACode__c</fullName>
         <externalId>false</externalId>
         <label>IATA Code</label>
-        <length>14</length>
+        <length>17</length>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
