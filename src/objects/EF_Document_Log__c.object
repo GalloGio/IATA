@@ -455,9 +455,10 @@
         <label>All</label>
     </listViews>
     <nameField>
+        <displayFormat>EFDL-{00000000}</displayFormat>
         <label>E&amp;F Document Log Name</label>
         <trackHistory>false</trackHistory>
-        <type>Text</type>
+        <type>AutoNumber</type>
     </nameField>
     <pluralLabel>E&amp;F Document Logs</pluralLabel>
     <searchLayouts/>
