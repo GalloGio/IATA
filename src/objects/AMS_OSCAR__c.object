@@ -14836,7 +14836,7 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
         <errorConditionFormula>NOT(ISBLANK(Form_Effective_Date__c))
 &amp;&amp; ISPICKVAL(Account__r.Location_Class__c, &apos;C&apos;)
 &amp;&amp; (Form_Effective_Date__c - Dossier_Reception_Date__c &lt; 90)</errorConditionFormula>
-        <errorMessage>Form Effective Date must be at least 30 days from the Dossier Reception Date</errorMessage>
+        <errorMessage>Form Effective Date must be at least 90 days from the Dossier Reception Date</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Form_Date_Courier_Cass_Associates</fullName>
