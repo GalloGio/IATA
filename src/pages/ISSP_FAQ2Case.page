@@ -505,7 +505,7 @@
 
                         <apex:outputPanel id="chatButtonsPnl">
               							<div id="liveAgentIframes" class="row">
-              							    <apex:iframe id="iframeLiveAgentEng" src="/LiveAgentButtonFAQ2Case?selTopics={!topic}.{!subtopic}&topiclbl={!encTopicLbl}&subtopiclbl={!encSubtopiclbl}&concernedCountry={!encIsoCountry}&csButton=AirlineEnglish" width="100%" height="38px" scrolling="false" rendered="{!AND(newCase.IFAP_Country_ISO__c = 'UK', Sector='Airline',showButton)}"/>
+              							    <apex:iframe id="iframeLiveAgentEng" src="/LiveAgentButtonFAQ2Case?selTopics={!topic}.{!subtopic}&topiclbl={!encTopicLbl}&subtopiclbl={!encSubtopiclbl}&concernedCountry={!encIsoCountry}&csButton=AirlineEnglish" width="100%" height="38px" scrolling="false" rendered="{!AND(newCase.IFAP_Country_ISO__c = 'GB', Sector='Airline',showButton)}"/>
               						</div>
                       </apex:outputPanel>
 
