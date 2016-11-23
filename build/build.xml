@@ -13,6 +13,87 @@
 
 
 
+
+<target name="deployPermissions"> 
+    <echo level="info">Deploying APEX and VISUALFORCE</echo>
+   <antcallback target="deldir" />
+   <mkdir dir="${basedir}/Code"/>
+  
+      <mkdir dir="${basedir}/Code/permissionsets"/>
+       <mkdir dir="${basedir}/Code/profiles"/>
+
+
+     <echo level="info">moving files</echo>
+      
+      <for list="${objectFolders}" param="param" delimiter=",">
+        <sequential>
+          <move todir="${basedir}/Code/permissionsets">
+            <fileset dir="${basedir}/src/permissionsetsObjects">
+            </fileset>
+          </move>
+       </sequential>
+     </for>
+
+
+   <for list="${objectFolders}" param="param" delimiter=",">
+        <sequential>
+          <move todir="${basedir}/Code/profiles">
+            <fileset dir="${basedir}/src/profilesObjects">
+            </fileset>
+          </move>
+       </sequential>
+     </for>
+
+
+ <move file="${basedir}/src/permissions.xml" tofile="${basedir}/Code/package.xml"/>  
+      
+      <antcallback target="deployCodeLocal" />
+          <antcallback target="deployProfilesApex" />
+
+  </target> 
+
+
+
+<target name="deployProfilesApex"> 
+    <echo level="info">Deploying APEX and VISUALFORCE</echo>
+   <antcallback target="deldir" />
+   <mkdir dir="${basedir}/Code"/>
+  
+       <mkdir dir="${basedir}/Code/permissionsets"/>
+        <mkdir dir="${basedir}/Code/profiles"/>
+
+     <echo level="info">moving files</echo>
+
+   <for list="${apexFolders}" param="param" delimiter=",">
+        <sequential>
+          <move todir="${basedir}/Code/permissionsets">
+            <fileset dir="${basedir}/src/permissionsetsApex">
+            </fileset>
+          </move>
+       </sequential>
+     </for>
+
+
+   <for list="${apexFolders}" param="param" delimiter=",">
+        <sequential>
+          <move todir="${basedir}/Code/profiles">
+            <fileset dir="${basedir}/src/profilesApex">
+            </fileset>
+          </move>
+       </sequential>
+     </for>
+
+
+
+ <move file="${basedir}/src/permissions2.xml" tofile="${basedir}/Code/package.xml"/>  
+      
+      <antcallback target="deployCodeLocal" />
+
+  </target> 
+
+
+
+
 <target name="checkCodeFolder">
   <condition property="deldir">
     <available file="${basedir}/Code" type="dir"/>
@@ -374,7 +455,7 @@
  <move file="${basedir}/src/approvalPackage.xml" tofile="${basedir}/Code/package.xml"/>  
       
       <antcallback target="deployCodeLocal" />
-            <antcallback target="deployDontRetrieve" />
+         <!--   <antcallback target="deployDontRetrieve" /> -->
 
   </target> 
 
@@ -701,22 +782,31 @@
     
 
 
-    <target name="getCodePointAndClick">
-      <echo level="info">Retrieving the server's version of OBJECTS </echo>
+   <target name="getCodePointAndClick">
+      <echo level="info">Retrieving the server's version of OBJECTs </echo>
       <mkdir dir="${basedir}/${sfdc.retrieveTarget}"/>
       <sf:retrieve
         retrieveTarget="${basedir}/${sfdc.retrieveTarget}"
         username="${sfdc.username}"
         password="${sfdc.password}"
         serverurl="${sfdc.serverurl}"
-        unpackaged="src/objectPackage.xml" />
+        unpackaged="src/objectPackageRetrieve.xml" />
 
-      <move file="${basedir}/${sfdc.retrieveTarget}/package.xml" tofile="src/objectPackage.xml" />  
-
-
+      <move file="${basedir}/${sfdc.retrieveTarget}/package.xml" tofile="src/objectPackageRetrieve.xml" />  
+      <move file="${basedir}/${sfdc.retrieveTarget}/profiles/" tofile="src/profilesObjects/" />  
+      <move file="${basedir}/${sfdc.retrieveTarget}/permissionsets/" tofile="src/permissionsetsObjects/" />  
 
       <move file="${basedir}/${sfdc.retrieveTarget}" tofile="src"/>
-        <antcallback target="getLabelPointAndClick" />
+   
+        <antcallback target="compressProfiles" >
+         <param name="folder" value="profilesObjects"/>
+      </antcallback>
+
+        <antcallback target="compressPermissionSets" >
+         <param name="folderPermissionSet" value="permissionsetsObjects"/>
+      </antcallback>
+
+     <antcallback target="getLabelPointAndClick" /> 
     </target>
 
 
@@ -899,8 +989,7 @@
          <param name="folder" value="profilesObjects"/>
       </antcallback>
 
-        <antcallback target="compressPermissionSets" >
-         <param name="folderPermissionSet" value="permissionsetsObjects"/>
+        <antcallback target="getProfilesApex" >
       </antcallback>
 
     </target>

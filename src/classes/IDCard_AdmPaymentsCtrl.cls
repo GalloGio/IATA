@@ -55,11 +55,11 @@ public class IDCard_AdmPaymentsCtrl extends IDCardAbstractController {
                		cases.put(c.Related_ID_Card_Application__c,c);
                 	caseskeyset += c.Related_ID_Card_Application__c;
                }
-               List<ID_Card_Application__c>   allSingleList = [SELECT Payment_Amount__c, Applicable_Fee__c, Application_Status__c,
+               /*List<ID_Card_Application__c>   allSingleList = [SELECT Payment_Amount__c, Applicable_Fee__c, Application_Status__c,
                													 Case_Number__c, IATA_Code__c, First_Name__c, Displayed_Name__c, Title__c, Type_of_application__c, Id, 
                													 Single_Application_Processing_Step__c, Tax_1_Name__c, Tax_1_Value__c, Tax_2_Name__c, Tax_2_Value__c, 
                													 Payment_Type__c, Payment_Date__c, Mass_order_Application__c, Last_Name__c, ID_Card_Fee__c, IDCard_Expedite_Delivery__c,
-               													 Name, IATA_Code_for_previous_agency__c, Gender__c FROM ID_Card_Application__c where Mass_order_Application__c in:singleAppsPerMassApps.keySet()  ORDER BY createdDate desc limit 80];
+               													 Name, IATA_Code_for_previous_agency__c, Gender__c FROM ID_Card_Application__c where Mass_order_Application__c in:singleAppsPerMassApps.keySet()];
                	system.debug('[PAYMENTCTRL] single size '+allSingleList.size());
                	for(ID_Card_Application__c singleApp: allSingleList){
                		system.debug('[PAYMENTCTRL] add  '+singleApp.Id+' to '+singleApp.Mass_order_Application__c);
@@ -72,7 +72,7 @@ public class IDCard_AdmPaymentsCtrl extends IDCardAbstractController {
                		for(Contact c:cts)
                			if(c.Ver_Number_2__c == mass.VER_Number__c )
                				contacts.put(mass.Id,c);
-                 }
+                 }*/
                 
         }catch(TransformationException e){
             ApexPages.addMessage(new ApexPages.Message(ApexPages.severity.info, e.getmessage()));

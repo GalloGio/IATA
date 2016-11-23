@@ -1,4 +1,4 @@
-trigger trgIDCard_Contact_BeforeUpdate on Contact (before update, before Insert) {
+trigger trgIDCard_Contact_BeforeUpdate on Contact (before update, before insert) {
 
     boolean CardToSync = false;
 
@@ -15,7 +15,7 @@ trigger trgIDCard_Contact_BeforeUpdate on Contact (before update, before Insert)
             }
     }
 
-    if (trigger.isUpdate) {
+    if (trigger.isUpdate && IDCardUtil.isFirstTime) {
 
         // force to sync ver num and ver num 2
         for (Contact c : trigger.new) {
@@ -41,6 +41,9 @@ trigger trgIDCard_Contact_BeforeUpdate on Contact (before update, before Insert)
 
 
         for (Contact CurrentContact : trigger.new) {
+        	
+        	IDCardUtil.isFirstTime = false;
+        	
             //CurrentContact.addError(IDCards.size()+'   Related_Contact__r.Id  ' +IDCards[0].Related_Contact__r.Id+ '  CurrentContact.Id ' +CurrentContact.Id );
             Boolean isAdmin = false;
             if (currentUserProfile.Name.toLowerCase().contains('system administrator'))
