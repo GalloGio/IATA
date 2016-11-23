@@ -76839,7 +76839,7 @@ OR(RecordType.Name=&apos;Operator&apos;, RecordType.Name=&apos;Airline Branch&ap
 OR(RecordType.DeveloperName=&apos;Standard_Account&apos;, RecordType.DeveloperName=&apos;Others&apos;, RecordType.DeveloperName=&apos;Operator&apos;, 
 RecordType.DeveloperName=&apos;IATA_Airline_BR&apos;,
 RecordType.DeveloperName=&apos;IATA_Airline&apos;),
-OR(ISPICKVAL(EF_Type__c,&quot;&quot;), ISPICKVAL( EF_Status__c, &quot;&quot;), ISPICKVAL( EF_SubStatus__c ,&quot;&quot;), ISNULL(EF_Effective_Date__c) )
+OR(ISPICKVAL(EF_Type__c,&quot;&quot;), ISPICKVAL( EF_Status__c, &quot;&quot;), AND(ISPICKVAL( EF_Status__c, &quot;Inactive&quot;), ISPICKVAL( EF_SubStatus__c ,&quot;&quot;)), ISNULL(EF_Effective_Date__c) )
 )</errorConditionFormula>
         <errorMessage>Please fill in E&amp;F Type, E&amp;F Status, E&amp;F Sub-Status, E&amp;F Status Date Change</errorMessage>
     </validationRules>
