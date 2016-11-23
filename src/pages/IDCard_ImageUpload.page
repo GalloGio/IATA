@@ -1,0 +1,42 @@
+<apex:page docType="html-4.01-strict" title="IATA ID Card Online Platform" cache="true" expires="600"    sidebar="false" showHeader="false" language="{!$CurrentPage.parameters.lang}">
+	<html xmlns="http://www.w3.org/1999/xhtml">
+        <head>
+            <meta http-equiv="x-ua-compatible" content="IE=9"/>
+            <apex:stylesheet value="{!URLFOR($Resource.IDCard_Styles, 'IATA_IDCard.css')}" />
+            <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+            <title>IATA/IATAN ID Card Online Platform</title>
+            
+            <style>
+				#bground {
+				    background-color: #FFFFFF;
+				}
+			</style>
+        </head>
+        
+        <body >
+            <c:IDCardToolsComponent />
+            <apex:includeScript value="/soap/ajax/24.0/connection.js" />
+            <apex:includeScript value="/soap/ajax/10.0/apex.js" />
+            <script type="text/javascript">
+            	/**
+				 * Function called when cropper tool has finished uploaded the image
+				 */ 
+				function receiveFilenameFromCropperTool(fileFullUri) {
+				    //document.getElementById('{!$Component.idcardForm.pb3.hdnFilename}').value = fileFullUri;
+				}
+
+            </script>
+
+            <div id="page_wrapper">
+            	<div id="bground">
+		            <apex:form forceSSL="true" id="idcardForm">
+			            
+			                        
+			            <c:IDCard_Cropper sessionId="{!$CurrentPage.parameters.sid}" fileId="{!$CurrentPage.parameters.filename}" jsCallbackName="receiveFilenameFromCropperTool" />
+		            </apex:form>
+	            </div>
+            </div>
+
+        </body>
+    </html>
+</apex:page>

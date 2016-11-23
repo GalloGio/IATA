@@ -97,7 +97,7 @@ public class S3 {
         private String[] apex_schema_type_info = new String[]{'http://s3.amazonaws.com/doc/2006-03-01/','true'};
         private String[] field_order_type_info = new String[]{'Metadata','Name','Prefix','Marker','NextMarker','MaxKeys','Delimiter','IsTruncated','Contents','CommonPrefixes'};
     }
-   /*
+   /**/
     public class CopyObjectResult {
         public DateTime LastModified;
         public String ETag;
@@ -107,7 +107,7 @@ public class S3 {
         private String[] field_order_type_info = new String[]{'LastModified','ETag'};
     }
     
-    */
+    
     
     
     public class ListAllMyBucketsList {
@@ -133,6 +133,7 @@ public class S3 {
         private String[] apex_schema_type_info = new String[]{'http://s3.amazonaws.com/doc/2006-03-01/','true'};
         private String[] field_order_type_info = new String[]{'GetBucketAccessControlPolicyResponse'};
     }
+    */
     public class GetObjectResponse_element {
         public S3.GetObjectResult GetObjectResponse;
         private String[] GetObjectResponse_type_info = new String[]{'GetObjectResponse','http://s3.amazonaws.com/doc/2006-03-01/','GetObjectResult','1','1','false'};
@@ -140,7 +141,7 @@ public class S3 {
         private String[] field_order_type_info = new String[]{'GetObjectResponse'};
     }
     
-    */
+    
     
     
     /*
@@ -175,7 +176,7 @@ public class S3 {
 		
 		public string secret { get; set; }
 		public string key { get; set; }
-	    public String endpoint_x = 'https://s3.amazonaws.com/soap';
+	    public String endpoint_x = 'https://s3-eu-west-1.amazonaws.com/soap'; //'https://s3.amazonaws.com/soap';
         public Map<String,String> inputHttpHeaders_x;
         public Map<String,String> outputHttpHeaders_x;
         public String clientCert_x;
@@ -211,7 +212,7 @@ public class S3 {
         
         */
         
-        /*
+        
         public S3.GetObjectResult GetObject(String Bucket,String Key,Boolean GetMetadata,Boolean GetData,Boolean InlineData,String AWSAccessKeyId,DateTime Timestamp,String Signature,String Credential) {
             S3.GetObject_element request_x = new S3.GetObject_element();
             S3.GetObjectResponse_element response_x;
@@ -223,7 +224,7 @@ public class S3 {
             request_x.AWSAccessKeyId = AWSAccessKeyId;
             request_x.Timestamp = Timestamp;
             request_x.Signature = Signature;
-            request_x.Credential = Credential;
+            //request_x.Credential = Credential;
             Map<String, S3.GetObjectResponse_element> response_map_x = new Map<String, S3.GetObjectResponse_element>();
             response_map_x.put('response_x', response_x);
             WebServiceCallout.invoke(
@@ -241,7 +242,7 @@ public class S3 {
             response_x = response_map_x.get('response_x');
             return response_x.GetObjectResponse;
         }
-        */
+        
         
         
         /*
@@ -511,8 +512,43 @@ public class S3 {
         
         */
         
+        public S3.CopyObjectResult CopyObject(String SourceBucket,String SourceKey,String DestinationBucket,String DestinationKey,String MetadataDirective,S3.MetadataEntry[] Metadata,S3.AccessControlList AccessControlList,DateTime CopySourceIfModifiedSince,DateTime CopySourceIfUnmodifiedSince,String[] CopySourceIfMatch,String[] CopySourceIfNoneMatch,String StorageClass,String AWSAccessKeyId,DateTime Timestamp,String Signature,String Credential) {
+            S3.CopyObject_element request_x = new S3.CopyObject_element();
+            S3.CopyObjectResponse_element response_x;
+            request_x.SourceBucket = SourceBucket;
+            request_x.SourceKey = SourceKey;
+            request_x.DestinationBucket = DestinationBucket;
+            request_x.DestinationKey = DestinationKey;
+            request_x.MetadataDirective = MetadataDirective;
+            request_x.Metadata = Metadata;
+            request_x.AccessControlList = AccessControlList;
+            request_x.CopySourceIfModifiedSince = CopySourceIfModifiedSince;
+            request_x.CopySourceIfUnmodifiedSince = CopySourceIfUnmodifiedSince;
+            request_x.CopySourceIfMatch = CopySourceIfMatch;
+            request_x.CopySourceIfNoneMatch = CopySourceIfNoneMatch;
+            request_x.StorageClass = StorageClass;
+            request_x.AWSAccessKeyId = AWSAccessKeyId;
+            request_x.Timestamp = Timestamp;
+            request_x.Signature = Signature;
+            request_x.Credential = Credential;
+            Map<String, S3.CopyObjectResponse_element> response_map_x = new Map<String, S3.CopyObjectResponse_element>();
+            response_map_x.put('response_x', response_x);
+            WebServiceCallout.invoke(
+              this,
+              request_x,
+              response_map_x,
+              new String[]{endpoint_x,
+              '',
+              'http://s3.amazonaws.com/doc/2006-03-01/',
+              'CopyObject',
+              'http://s3.amazonaws.com/doc/2006-03-01/',
+              'CopyObjectResponse',
+              'S3.CopyObjectResponse_element'}
+            );
+            response_x = response_map_x.get('response_x');
+            return response_x.CopyObjectResponse;
+        }
         /*
-        
         public S3.CopyObjectResult CopyObject(String SourceBucket,String SourceKey,String DestinationBucket,String DestinationKey,String MetadataDirective,S3.MetadataEntry[] Metadata,S3.AccessControlList AccessControlList,DateTime CopySourceIfModifiedSince,DateTime CopySourceIfUnmodifiedSince,String[] CopySourceIfMatch,String[] CopySourceIfNoneMatch,String StorageClass,String AWSAccessKeyId,DateTime Timestamp,String Signature,String Credential) {
             S3.CopyObject_element request_x = new S3.CopyObject_element();
             S3.CopyObjectResponse_element response_x;
@@ -549,7 +585,6 @@ public class S3 {
             response_x = response_map_x.get('response_x');
             return response_x.CopyObjectResult;
         }
-        
         */
         
         /*
@@ -1113,7 +1148,7 @@ public class S3 {
         private String[] LoggingEnabled_type_info = new String[]{'LoggingEnabled','http://s3.amazonaws.com/doc/2006-03-01/','LoggingSettings','0','1','false'};
         private String[] apex_schema_type_info = new String[]{'http://s3.amazonaws.com/doc/2006-03-01/','true'};
         private String[] field_order_type_info = new String[]{'LoggingEnabled'};
-    }
+    }*/
     public class GetObject_element {
         public String Bucket;
         public String Key;
@@ -1135,7 +1170,7 @@ public class S3 {
         private String[] Credential_type_info = new String[]{'Credential','http://www.w3.org/2001/XMLSchema','string','0','1','false'};
         private String[] apex_schema_type_info = new String[]{'http://s3.amazonaws.com/doc/2006-03-01/','true'};
         private String[] field_order_type_info = new String[]{'Bucket','Key','GetMetadata','GetData','InlineData','AWSAccessKeyId','Timestamp','Signature','Credential'};
-    }
+    }/*
     public class Group_x extends Grantee {
         public String URI;
         private String[] URI_type_info = new String[]{'URI','http://www.w3.org/2001/XMLSchema','string','1','1','false'};
@@ -1157,14 +1192,16 @@ public class S3 {
         private String[] apex_schema_type_info = new String[]{'http://s3.amazonaws.com/doc/2006-03-01/','true'};
         //private String[] field_order_type_info = new String[]{'URI'};
         private String[] field_order_type_info = new String[]{};
-    }
+    }*/
     public class CopyObjectResponse_element {
-        public S3.CopyObjectResult CopyObjectResult;
-        private String[] CopyObjectResult_type_info = new String[]{'CopyObjectResult','http://s3.amazonaws.com/doc/2006-03-01/','CopyObjectResult','1','1','false'};
+        public S3.CopyObjectResult CopyObjectResponse; //CopyObjectResult;
+        //private String[] CopyObjectResult_type_info = new String[]{'CopyObjectResult','http://s3.amazonaws.com/doc/2006-03-01/','CopyObjectResult','1','1','false'};
+        private String[] CopyObjectResponse_type_info = new String[]{'CopyObjectResponse','http://s3.amazonaws.com/doc/2006-03-01/','CopyObjectResult','1','1','false'};
         private String[] apex_schema_type_info = new String[]{'http://s3.amazonaws.com/doc/2006-03-01/','true'};
-        private String[] field_order_type_info = new String[]{'CopyObjectResult'};
+        //private String[] field_order_type_info = new String[]{'CopyObjectResult'};
+        private String[] field_order_type_info = new String[]{'CopyObjectResponse'};
     }
-    */
+    
     public class CanonicalUser {
         public String ID;
         public String DisplayName;
@@ -1228,7 +1265,7 @@ public class S3 {
     }
     
     
-    /*
+    
     public class GetObjectResult {
         public S3.MetadataEntry[] Metadata;
         public String Data;
@@ -1241,7 +1278,7 @@ public class S3 {
         private String[] apex_schema_type_info = new String[]{'http://s3.amazonaws.com/doc/2006-03-01/','true'};
         private String[] field_order_type_info = new String[]{'Metadata','Data','LastModified','ETag'};
     }
-    */
+    
     public class PutObjectInline_element {
         public String Bucket;
         public String Key;
@@ -1272,7 +1309,7 @@ public class S3 {
     public class LocationConstraint {
         private String[] apex_schema_type_info = new String[]{'http://s3.amazonaws.com/doc/2006-03-01/','true'};
         private String[] field_order_type_info = new String[]{};
-    }
+    }*/
     public class CopyObject_element {
         public String SourceBucket;
         public String SourceKey;
@@ -1309,7 +1346,7 @@ public class S3 {
         private String[] apex_schema_type_info = new String[]{'http://s3.amazonaws.com/doc/2006-03-01/','true'};
         private String[] field_order_type_info = new String[]{'SourceBucket','SourceKey','DestinationBucket','DestinationKey','MetadataDirective','Metadata','AccessControlList','CopySourceIfModifiedSince','CopySourceIfUnmodifiedSince','CopySourceIfMatch','CopySourceIfNoneMatch','StorageClass','AWSAccessKeyId','Timestamp','Signature','Credential'};
     }
-    */
+    
     public class CreateBucket_element {
         public String Bucket;
         public S3.AccessControlList AccessControlList;
@@ -1403,8 +1440,8 @@ public class S3 {
 	    public HttpResponse makeRequest()  { // leaves result in res instance member
 	        error = null;
 	        HttpRequest req = new HttpRequest();   
-	        req.setEndpoint('https://s3.amazonaws.com/soap');
-	        
+	        //req.setEndpoint('https://s3.amazonaws.com/soap');
+          req.setEndpoint('https://s3-eu-west-1.amazonaws.com/soap');
 	        
 	        req.setMethod('POST'); 
 	        //req.setCompressed(true); // otherwise we hit a limit of 32000   
