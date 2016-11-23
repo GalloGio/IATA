@@ -34,7 +34,7 @@ public class AMS_AgencyRegulationTriggerHandler {
 
         for(AMS_Agency_Regulation__c agReg: agencyRegulations){
 
-            if(!oldAgRegulationValues.get(agReg.Id).Notification_Sent__c && agReg.Notification_Sent__c && agReg.Type_of_Certificate__c == AMS_Utils.CERT_DGR){
+            if(!oldAgRegulationValues.get(agReg.Id).Notification_Sent__c && agReg.Notification_Sent__c && agReg.Type_of_Certificate__c == AMS_Utils.CERT_DGR && agReg.Handling_Account__c){
                 //system.debug('sending renewal emails to :' + keyContactsPerAccount.get(agReg.Account__c));
                 //sendEmailAlert(keyContactsPerAccount.get(agReg.Account__c));
                 regulationsRequiringRenewal.add(agReg);
