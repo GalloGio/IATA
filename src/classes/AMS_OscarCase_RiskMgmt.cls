@@ -144,13 +144,17 @@ public class AMS_OscarCase_RiskMgmt {
 								  Termination_Reason__c, Ticketing_Authority_Re_assigned__c, Update_AIMS_DEF__c, Update_AIMS_IRR__c, Update_AIMS_IRRWITH__c, Update_AIMS_REI_DEFWITH__c, 
 								  Update_AIMS_Repayment_agreed__c, Update_AIMS_TER__c, Parent.OSCAR__r.Type_of_change__c, Parent.OSCAR__c, IRR_Approval_Rejection_Date__c, IRR_Type__c,
 								  Termination_date__c, Outstanding_Amount__c, 
-								  Account.Location_Class__c, AccountId, Account.Status__c, Account.PreviousStatus__c, Account.Previous_Reason__c, Account.Reason__c, Account.Accumulated_Irregularities__c
+								  Account.Location_Class__c, AccountId, Account.Status__c, Account.PreviousStatus__c, Account.Previous_Reason__c, Account.Reason__c, Account.Accumulated_Irregularities__c, Account.IATA_ISO_Country__r.Enable_Risk_Change_Codes__c
 								  //DTULLO UNCOMMENT FOR CNS, COMMENT/DELETE SIMILAR LINES AFTER
 								  //, Account.CNS_Agency__c
 								  from case where id in:mapTrgNew.keySet()]);
 			
 			for(Case c: mapCases.values()){
-				string LocClass = mapAccnt.get(c.AccountId).Location_Class__c;
+				//Pilot countries only!
+				if(!c.Account.IATA_ISO_Country__r.Enable_Risk_Change_Codes__c)
+					continue;
+				//string LocClass = mapAccnt.get(c.AccountId).Location_Class__c;
+				string LocClass = c.Account.Location_Class__c;
 				
 				if(LocClass==null || LocClass == '')
 					throw new transformationException('Account is missing Location Class!');
