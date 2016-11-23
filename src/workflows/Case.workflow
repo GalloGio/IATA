@@ -14708,7 +14708,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <criteriaItems>
             <field>Case.Origin</field>
             <operation>notEqual</operation>
-            <value>Internal Case,Phone</value>
+            <value>Internal Case,Phone,Chat</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.OwnerId</field>
