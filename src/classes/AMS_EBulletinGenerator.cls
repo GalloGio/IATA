@@ -4,7 +4,7 @@ global class AMS_EBulletinGenerator implements Schedulable {
 	global void execute(SchedulableContext sc) {
 		String typeEBulletin = 'Daily';
 
-		AMS_EBulletinReportHelper.getEBulletinCCExtraction(typeEBulletin + '__c');
+		//AMS_EBulletinReportHelper.getEBulletinCCExtraction(typeEBulletin + '__c');
 		
 		Set <String> ccNamesToRecover = AMS_CustomSettingsUtils.ccNameSectionMap.keyset();
 		
