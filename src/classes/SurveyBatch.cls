@@ -333,7 +333,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 
 
       /****** Clicktools Workflow_AM_CX_.... *****/
-      if (/*1*/ (c.RecordType.DeveloperName == 'ProcessEuropeSCE' || c.RecordType.DeveloperName == 'OSCAR Communication') &&
+      if (/*1*/ (c.RecordType.DeveloperName == 'ProcessEuropeSCE' || c.RecordType.DeveloperName == 'OSCAR_Communication') &&
                 /*2 aggregate the country for all the Clicktools AM_CX*/
                 /*3*/!c.Contact.Email.contains('@iata.org') &&
                 !c.Contact.Email.contains('@salesforce.com') &&
