@@ -1347,7 +1347,7 @@ public static String errorMessageBeautifyer(Exception ex) {
         errorString = ex.getMessage().substring(startOfErrorMessage, ex.getMessage().length());
         errorString = errorString.substringBefore('##');
     }
-    return 'ERROR: ' + errorString;
+    return 'ERROR: ' + errorString.unescapeHtml4();
 }
 
 public static RecordType getRecordType(String sObjectType, String developerName) {

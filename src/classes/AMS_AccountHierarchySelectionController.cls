@@ -23,6 +23,12 @@ public class AMS_AccountHierarchySelectionController {
 		set;
 	}
 
+	private Boolean isVoluntaryRelinquishment{
+		get{
+			return (oscar.Process__c == AMS_Utils.VOLRELINQUISH || oscar.Process__c == AMS_Utils.VOLRELINQUISH_CA);
+		}
+	}
+
 
 	private Set<String> oscarFields{
 		get{
@@ -63,7 +69,7 @@ public class AMS_AccountHierarchySelectionController {
 		get{
 			notes = new Set<String>();
 
-			if(oscar.Process__c == AMS_Utils.VOLRELINQUISH) notes.add('Voluntary relinquishment: select from the below list all the agencies listed in the pdf form received as attachment of the OSCAR. All the selected Agencies will be processed in the same way, there is no distinction between Main Agency and the other ones.');
+			if(isVoluntaryRelinquishment) notes.add('Voluntary relinquishment: select from the below list all the agencies listed in the pdf form received as attachment of the OSCAR. All the selected Agencies will be processed in the same way, there is no distinction between Main Agency and the other ones.');
 
 			else if(oscar.Type_of_Change__c != null){
 				
@@ -231,7 +237,7 @@ public class AMS_AccountHierarchySelectionController {
 
 	public Boolean showTopPanel{
 		get{
-			return !(oscar.Process__c == AMS_Utils.VOLRELINQUISH);
+			return !(isVoluntaryRelinquishment);
 		}
 		private set;
 	}
@@ -269,6 +275,7 @@ public class AMS_AccountHierarchySelectionController {
 
 				//to prevent nullpointer on agencies with no hierarchy
 				accountIds.add(oscar.Account__c);
+				childAccounts.put(oscar.Account__c, new Set<Id>());
 				
 				for(AMS_Agencies_relationhip__c r : relationshipMap.get(oscar.Account__c)){
 					accountIds.add(r.Child_Account__c);
@@ -365,7 +372,7 @@ public class AMS_AccountHierarchySelectionController {
 				if(!hi.selected && !hi.main) ownershipAgenciesNotSelected = true;
 			}
 
-			if(oscar.Process__c == AMS_Utils.VOLRELINQUISH && isPartialHierarchy(hi)) errorChecks.put('Partial VR selection', true);
+			if(isVoluntaryRelinquishment && isPartialHierarchy(hi)) errorChecks.put('Partial VR selection', true);
 			
 		}
 
