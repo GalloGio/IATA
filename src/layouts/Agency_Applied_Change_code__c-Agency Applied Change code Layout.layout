@@ -23,6 +23,10 @@
                 <behavior>Edit</behavior>
                 <field>Bulletin_Information__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>AIMS_Updated_by__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -36,6 +40,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Reason_Description__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Updated_AIMS__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
