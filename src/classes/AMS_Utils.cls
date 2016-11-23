@@ -1678,7 +1678,7 @@ public static Integer binarySearchGapFinder(List<Integer> orderedSlotsOccupied){
         Integer availableNumberInRange = -1;
  
         //invalid range
-        if(maxRange-minRange <= 0)
+        if(maxRange-minRange < 0)
             return -1;
         
         //no available slots
