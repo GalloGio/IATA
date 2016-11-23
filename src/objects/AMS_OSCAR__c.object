@@ -14875,6 +14875,24 @@ $Profile.Name = &apos;System Administrator - automated processes&apos;
 &amp;&amp; NOT(Suspend_in_BSPLink_CASSLink__c)</errorConditionFormula>
         <errorMessage>Suspension can only be completed after suspension in BSPLink/CASSLink</errorMessage>
     </validationRules>
+    <validationRules>
+        <fullName>Voluntary_Relinquishment_Termination</fullName>
+        <active>true</active>
+        <errorConditionFormula>RecordType.Name = &apos;VOLUNTARY RELINQUISHMENT&apos;
+&amp;&amp; ISCHANGED(STEP31__c)
+&amp;&amp; ISPICKVAL(STEP31__c, &apos;Passed&apos;)
+&amp;&amp; OR(
+  NOT(ISPICKVAL(STEP6__c, &apos;Passed&apos;)),
+  AND(
+    NOT(ISPICKVAL(Process__c, &apos;VR.1.0.CA&apos;)),
+    OR(
+      NOT(ISPICKVAL(STEP30__c, &apos;Passed&apos;)),
+      ISPICKVAL(STEP32__c, &apos;Passed&apos;)
+    )
+  )
+)</errorConditionFormula>
+        <errorMessage>In order to close the agency, make sure all previous steps have been completed</errorMessage>
+    </validationRules>
     <webLinks>
         <fullName>CongaSession</fullName>
         <availability>online</availability>
