@@ -78,7 +78,9 @@
             <td>
                 <div>
                     <div style="display: inline-block;">
-                        <c:AMP_EditSaveMenu />
+                        <aura:if isTrue="{!v.canEdit}">
+                            <c:AMP_EditSaveMenu />
+                        </aura:if>
                     </div>
 
                     <button class="slds-button slds-button--icon-border-filled slds-button--icon-small slds-m-around--xx-small" onclick="{!c.showMilestones}" >

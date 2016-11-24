@@ -53,16 +53,18 @@
                         <th scope="col" class="milestoneWideColumn"><span class="slds-truncate">Comments</span></th>
                     </tr>
                 </thead>
-                
+
                 <tbody>
                     <aura:iteration items="{!v.milestones}" var="milestone" indexVar="index">
                         <tr>
-                            <c:AMP_Milestone milestone="{!milestone}" index="{!index}"/>
+                            <aura:if isTrue="{!v.canEdit}">
+                                <c:AMP_Milestone milestone="{!milestone}" index="{!index}" canEdit="{!v.canEdit}"/>
+                            </aura:if>
                         </tr>
                     </aura:iteration>
                 </tbody>
             </table>
         </div>
-        
+
     </div>
 </aura:component>
