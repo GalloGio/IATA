@@ -16,7 +16,6 @@ trigger EF_DocumentLogTrigger on EF_Document_Log__c (before insert, before updat
 	if(Trigger.isAfter && Trigger.isUpdate)
 	{
 		Set<Id> toAmazonList = EF_DocumentLogHelper.identifyDocumentsForAmazonProcessing(Trigger.new, Trigger.oldMap);
-		System.debug('**************** toAmazonList '+toAmazonList);
 		if(toAmazonList.size() > 0)
 		{
 			// Start the Amazon processing
