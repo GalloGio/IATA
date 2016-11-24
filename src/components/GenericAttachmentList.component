@@ -6,6 +6,7 @@
     <apex:attribute name="scrollable" description="scrollable" type="Boolean" required="false" assignTo="{!scroll}" />
 
     <apex:includeScript value="{!$Resource.jQuery_min_1_11_0}"/>
+    <apex:includeScript value="/support/console/30.0/integration.js"/>
 
     <c:Loading />
 
@@ -50,9 +51,27 @@
             return false;
         }
 
+        function ServiceConsoleIntegration(redirectUrl)
+        {
+            if (sforce.console.isInConsole()) {
+                sforce.console.getEnclosingTabId(function(enclosingResult){
+                    sforce.console.getEnclosingPrimaryTabId(function(primaryResult){
+                        sforce.console.openSubtab(primaryResult.id, redirectUrl, true, '', null);
+                    });
+                });
+            } else {
+                window.top.location.href = redirectUrl;
+            }
+        }
+
         function redirect(page) {
-            window.top.location=page;
-            return false;
+            var redirectUrl = page;
+            if (sforce.console.isInConsole()) {
+                ServiceConsoleIntegration(redirectUrl);
+            } else {
+                window.top.location=redirectUrl;
+            }
+            //return false;
         }
     </script>
 
