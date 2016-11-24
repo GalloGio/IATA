@@ -4,6 +4,7 @@
     <aura:attribute name="activityId" type="String" />
     <aura:attribute name="activity" type="Objective__c" />
     <aura:attribute name="milestones" type="Task[]" />
+    <aura:attribute name="canEdit" type="Boolean" default="false" />
     <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
     
     <aura:handler name="deleteMilestone" event="c:AMP_UpdateOrDeleteTask" action="c.handleDeleteMilestone" />
