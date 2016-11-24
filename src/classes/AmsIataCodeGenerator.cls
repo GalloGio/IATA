@@ -287,7 +287,7 @@ global class AmsIataCodeGenerator{
                         List<AggregateResult> rangeAgenciesBeforeFilter = Database.query(query);
                         
                         List<Account> rangeAgencies = new List<Account>();
-                        Set<Integer> usedValuesInRange = new Set<Integer>();
+                        List<Integer> usedValuesInRange = new List<Integer>();
 
                         if(rangeAgenciesBeforeFilter == null)
                         {
@@ -308,7 +308,7 @@ global class AmsIataCodeGenerator{
                         System.debug('Min range ---> ' + minRangeInt);
                         System.debug('Max range ---> ' + maxRangeInt);
 
-                        Integer rangeValueToUse = AMS_Utils.findGapInRange(minRangeInt, maxRangeInt, new List<Integer>(usedValuesInRange));
+                        Integer rangeValueToUse = AMS_Utils.findGapInRange(minRangeInt, maxRangeInt, usedValuesInRange);
 
                         if(rangeValueToUse == -1){
                             // No availability within the code ranges: IATA Code can't be created for the current Agency configuration.

@@ -1638,19 +1638,29 @@ public static String fetchTypeOfCustomer (String locationType , String category)
     return categoryCustomerMap.get(category);
 
 }
-
-public static Integer binarySearchGapFinder(List<Integer> orderedSlotsOccupied){
  
-        Integer first = 0;
-        Integer last = orderedSlotsOccupied.size()-1;
-        Integer mid = (first+last)/2;
- 
-        while(first < last){
-            //check for gaps in first half of the list
-            if(orderedSlotsOccupied[mid]-orderedSlotsOccupied[first] != (mid - first)){
-                //found a gap
-                if ((mid-first) == 1 && (orderedSlotsOccupied[mid]-orderedSlotsOccupied[first] > 1)) {
-                    return (orderedSlotsOccupied[first]+1);
+ 	public static Integer findGapInRange(Integer minRange, Integer maxRange, List<Integer> orderedSlotsOccupied){
+	    //invalid range
+	    if(maxRange-minRange < 0)
+	        return -1;
+	
+	    Integer candidate = minRange;
+	        
+		for(Integer occupiedSlot : orderedSlotsOccupied){
+			if(occupiedSlot >= minRange & occupiedSlot <= maxRange){
+				if(occupiedSlot > candidate){
+					System.debug('Candidate found : ' + candidate);
+					return candidate;
+				}
+				else{
+					candidate++;
+				}
+			}
+		}
+		
+		return -1;
+	}
+}rn (orderedSlotsOccupied[first]+1);
                 }   
                 last = mid;
             }
