@@ -73,9 +73,13 @@ public without sharing class AMS_Utils {
     public static final String SANITYCHECK = 'Perform Sanity Check';
     public static final String APPROVAL = 'Manager Approval';
     public static final String WITHDRAWAL = 'Application Withdrawal';
+    public static final String SUSPENSION = 'Process suspension';
+    public static final String TERMINATION = 'Process termination';
 
     public static final String PASSED = 'Passed';
     public static final String FAILED = 'Failed';
+    public static final String NOT_APPLICABLE = 'Not Applicable';
+
     public static final String AUTH_APPROVAL = 'Authorize Approval';
     public static final String AUTH_DISAPPROVAL ='Authorize Disapproval';
     public static final String LOCATION_TYPE = 'Location type';
@@ -87,7 +91,7 @@ public without sharing class AMS_Utils {
     public static final String MIN_SHAREHOLDING = 'Minor Shareholding';
     public static final String NAME = 'Name';
     public static final String LEGAL_STATUS = 'Legal Status';
-    public static final String VFMR = 'VFMR';
+    public static final String VFMR = 'VMFR';
 
 
     public static final String OSCAR_CLOSED = 'Closed (Closed)';
@@ -113,7 +117,13 @@ public without sharing class AMS_Utils {
     //Processes of type CHANGES
     public static final String COR              = 'CORRECTION.1.0'  ;
     public static final String AGENCYCHANGES    = 'MAJOR.CHANGES'   ;
+    public static final String VOLRELINQUISH    = 'VR.1.0'          ;
+    public static final String VOLRELINQUISH_CA = 'VR.1.0.CA'       ;
+    public static final String BANKACCCHANGES   = 'BANK.ACCOUNT.CHANGES';
     public static final String CERTIFICATION    = 'CERTIFICATION.1.0';
+
+    //other types of process
+    public static final String CERTIFICATE      = 'CER.1.0'         ;
 
     //Types of Certificate
     public static final String CERT_DGR         = 'DGR';
@@ -696,6 +706,19 @@ public without sharing class AMS_Utils {
             toReturn = oscarAgency;
         }
 
+        if(oscar != null){
+            if(aacNEW.Change_Code__c == 'FIN' && new Set<String>{'C','P'}.contains(oscar.Location_Class__c)){
+                oscarAgency.Annual_Renewal_Certificates__c = true;
+                toReturn = oscarAgency;
+            }
+        }       
+
+        if(aacNew.Change_Code__c == 'CER'){
+            oscarAgency.Annual_Renewal_Certificates__c = true;
+            oscarAgency.Certificate_Generated_Current_Year__c = true;
+            toReturn = oscarAgency;
+        }
+
         if( aacNEW.Change_Code__c == 'FIN' ){
             
             oscarAgency.Is_AIMS_Account__c = true;
@@ -1204,17 +1227,18 @@ public without sharing class AMS_Utils {
 
         List<AMS_Inspection__c> modifiedInspections = new List<AMS_Inspection__c>();
 
-        for(AMS_Inspection__c insp: inspections)
-        {
+        if(inspections != null)
+            for(AMS_Inspection__c insp: inspections)
+            {
 
-            insp.Account__c = insp.OSCAR__r.Account__c;
-            
-            insp.Date_Organisation_Status_attained__c = (insp.Date_Organisation_Status_attained__c == null) ? system.today() : insp.Date_Organisation_Status_attained__c;
-            insp.Accreditation_Endorsement_Status_code__c = statusToApply;
-            insp.Last_synchronization__c = system.today();
-            
-            modifiedInspections.add(insp);
-        }
+                insp.Account__c = insp.OSCAR__r.Account__c;
+                
+                insp.Date_Organisation_Status_attained__c = (insp.Date_Organisation_Status_attained__c == null) ? system.today() : insp.Date_Organisation_Status_attained__c;
+                insp.Accreditation_Endorsement_Status_code__c = statusToApply;
+                insp.Last_synchronization__c = system.today();
+                
+                modifiedInspections.add(insp);
+            }
 
         return modifiedInspections;
 
@@ -1323,7 +1347,7 @@ public static String errorMessageBeautifyer(Exception ex) {
         errorString = ex.getMessage().substring(startOfErrorMessage, ex.getMessage().length());
         errorString = errorString.substringBefore('##');
     }
-    return 'ERROR: ' + errorString;
+    return 'ERROR: ' + errorString.unescapeHtml4();
 }
 
 public static RecordType getRecordType(String sObjectType, String developerName) {
@@ -1652,5 +1676,100 @@ public static String fetchTypeOfCustomer (String locationType , String category)
     return categoryCustomerMap.get(category);
 
 }
+
+    public static final Date knownSunday = date.newInstance(2012, 7, 1);
+    
+    private static Map<String, Set<Integer>> weekendDaysPerBusinessHours{
+        get{
+            if(weekendDaysPerBusinessHours == null) weekendDaysPerBusinessHours = new Map<String, Set<Integer>>();
+            return weekendDaysPerBusinessHours;
+        }
+        set;
+    }
+
+    private static Set<Integer> addBusinessHours(String businessHours){
+        String findBusinessHours = (businessHours == null ? 'Default' : businessHours);
+
+        if(!weekendDaysPerBusinessHours.containsKey(findBusinessHours)){
+            List<BusinessHours> hs = [SELECT Id, Name, isDefault, isActive, SundayStartTime, MondayStartTime, TuesdayStartTime, WednesdayStartTime, ThursdayStartTime, FridayStartTime, SaturdayStartTime FROM BusinessHours WHERE isActive = true AND (Name = :findBusinessHours OR isDefault = true)];
+
+            Set<Integer> weekendDays = new Set<Integer>();
+            if(hs.isEmpty()){
+                System.debug(loggingLevel.ERROR, '____ [cls AMS_Utils - addBusinessHours] ************ no businessHours found -- using Sunday and Saturday ');
+                weekendDays.add(0);
+                weekendDays.add(6);
+                weekendDaysPerBusinessHours.put(findBusinessHours, weekendDays);
+            }else{
+                for(BusinessHours h : hs){
+                    weekendDays = new Set<Integer>();
+                    if(h.SundayStartTime == null) weekendDays.add(0);
+                    if(h.MondayStartTime == null) weekendDays.add(1);
+                    if(h.TuesdayStartTime == null) weekendDays.add(2);
+                    if(h.WednesdayStartTime == null) weekendDays.add(3);
+                    if(h.ThursdayStartTime == null) weekendDays.add(4);
+                    if(h.FridayStartTime == null) weekendDays.add(5);
+                    if(h.SaturdayStartTime == null) weekendDays.add(6);
+                    
+                    if(h.Name == findBusinessHours) weekendDaysPerBusinessHours.put(h.Name, weekendDays);
+                    else if(h.isDefault) weekendDaysPerBusinessHours.put('Default', weekendDays);
+                }
+                //if we went through all business hours and didn't find the desired one, copy the default
+                if(!weekendDaysPerBusinessHours.containsKey(findBusinessHours)){
+                System.debug(loggingLevel.ERROR, '____ [cls AMS_Utils - addBusinessHours] ************ no businessHours found for region -- copying default one ');
+                    weekendDaysPerBusinessHours.put(findBusinessHours, weekendDaysPerBusinessHours.get('Default'));
+                }
+            }           
+        }
+
+        return weekendDaysPerBusinessHours.get(findBusinessHours);
+    }
+    
+
+    public static Boolean IsWeekendDay(Date dateParam, String businessHours){
+        return IsWeekendDay(DateTime.newInstance(dateParam, Time.newInstance(0, 0, 0, 0)), businessHours);
+    }
+
+    public static Boolean IsWeekendDay(Datetime dateParam, String businessHours){
+       //Integer dayOfWeek  = Integer.valueOf(dateParam.format('u'));
+       //Integer dayOfWeek = dateParam.date().toStartOfWeek().daysBetween(dateParam.date());
+       Integer dayOfWeek = Math.mod(knownSunday.daysBetween(dateParam.date()), 7);
+
+       System.debug(loggingLevel.Debug, '____ [cls AMS_Utils - AddBusinessDays] dateParam - ' + dateParam);
+       System.debug(loggingLevel.Debug, '____ [cls AMS_Utils - IsWeekendDay] dayOfWeek - ' + dayOfWeek);
+
+       Set<Integer> weekendDays = new Set<Integer>();
+       if(weekendDaysPerBusinessHours.containsKey(businessHours)) weekendDays = weekendDaysPerBusinessHours.get(businessHours);
+       else weekendDays = addBusinessHours(businessHours);
+
+       System.debug(loggingLevel.Debug, '____ [cls AMS_Utils - IsWeekendDay] weekendDays - ' + weekendDays);
+
+       return weekendDays.contains(dayOfWeek);
+    }
+
+    public static Date AddBusinessDays(Date d, Integer businessDaysToAdd, String businessHours){
+        return AddBusinessDays(Datetime.newInstance(d, Time.newInstance(0, 0, 0, 0)), businessDaysToAdd, businessHours).date();
+    }
+
+    public static Datetime AddBusinessDays(Datetime d, Integer businessDaysToAdd, String businessHours){
+        System.debug(loggingLevel.Debug, '____ [cls AMS_Utils - AddBusinessDays] d - ' + d);
+        System.debug(loggingLevel.Debug, '____ [cls AMS_Utils - AddBusinessDays] businessHours - ' + businessHours);
+
+        Datetime finalDate = d;
+
+        //Add or decrease in businessDaysToAdd days 
+        Integer direction = businessDaysToAdd < 0 ? -1 : 1;
+
+        while(businessDaysToAdd != 0){
+            finalDate = finalDate.AddDays(direction);
+            if (!isWeekendDay(finalDate, businessHours)) businessDaysToAdd -= direction;
+        }
+
+        System.debug(loggingLevel.Debug, '____ [cls AMS_Utils - AddBusinessDays] finalDate - ' + finalDate);
+        return finalDate;
+    } 
+
+    public static Date lastDayOfMonth(Date dateField) {
+        return dateField.addMonths(1).toStartOfMonth().addDays(-1);
+    }
 
 }

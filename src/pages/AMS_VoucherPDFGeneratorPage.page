@@ -1,4 +1,4 @@
-<apex:page showHeader="false" sidebar="false" renderAs="pdf" controller="AMS_VoucherPDFGeneratorController" applyBodyTag="false" >
+<apex:page showHeader="false" sidebar="false" renderAs="pdf" controller="AMS_VoucherPDFGeneratorController" applyBodyTag="false" readOnly="true">
     <apex:stylesheet value="{!$Resource.voucherpdfgeneratorpage}"/>
     <apex:variable value="{!0}" var="rowNum"/>
     <apex:repeat value="{!vouchersToPrintList}" var="voucher">
@@ -26,7 +26,7 @@
                 </div>
                 <div id="voucherInfo">
                     <div class="{!IF(MOD(rowNum, 3) == 0,'voucherYear1', IF(MOD(rowNum, 3) == 1,'voucherYear2', 'voucherYear3'))}">
-                        <apex:outputText value="{!voucher.Voucher_Information__r.Year__c}"/>
+                        <apex:outputText value="{!voucher.Voucher_Information__r.Year__c + 1}"/>
                     </div>
                     <div class="{!IF(MOD(rowNum, 3) == 0,'voucherName1', IF(MOD(rowNum, 3) == 1,'voucherName2', 'voucherName3'))}">
                         <apex:outputText value="{!voucher.Name}"/>

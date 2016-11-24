@@ -68,6 +68,20 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>AIMS_Updated_by__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>The user who created this change code in AIMS</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The user who created this change code in AIMS</inlineHelpText>
+        <label>AIMS Updated by</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Agencies_Applied_Change_codes</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>Account__c</fullName>
         <externalId>false</externalId>
         <label>Account</label>
@@ -823,6 +837,17 @@
         <externalId>false</externalId>
         <inlineHelpText>Uncheck if the change code should not appear in the e-bulletin</inlineHelpText>
         <label>To Publish in e-Bulletin</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Updated_AIMS__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Flag for Analyst to check if the Minor Change has been carried out to AIMS</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Flag for Analyst to check if the Minor Change has been carried out to AIMS</inlineHelpText>
+        <label>Updated AIMS</label>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>

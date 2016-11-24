@@ -22,7 +22,7 @@ global class AMS_VouchersCalculationBatch implements Database.Batchable<sObject>
 
 		String yearToProcess = String.valueOf(System.today().year());
 
-		this.query = 'SELECT Id, Account__c, Amount_Currency__c, AmountLastYearSales__c , Account__r.IATA_ISO_Country__r.Region__c, Account__r.IATA_ISO_Country__c, Account__r.IATA_ISO_Country__r.Name,Account__r.IATA_ISO_Country__r.AMS_Max_Vouchers_Per_Year__c, Account__r.IATA_ISO_Country__r.AMS_Vouchers_Benchmark__c, Account__r.Location_Class__c FROM AMS_Voucher_Information__c WHERE IsAgencyEligibleForCountryAverage__c = true and Year__c = \'' + yearToProcess + '\' and Account__r.IATA_ISO_Country__c in :countriesToProcess';
+		this.query = 'SELECT Id, Account__c, Exchange_Rate__c, Amount_Currency__c, AmountLastYearSales__c , Account__r.IATA_ISO_Country__r.Region__c, Account__r.IATA_ISO_Country__c, Account__r.IATA_ISO_Country__r.Name,Account__r.IATA_ISO_Country__r.AMS_Max_Vouchers_Per_Year__c, Account__r.IATA_ISO_Country__r.AMS_Vouchers_Benchmark__c, Account__r.Location_Class__c FROM AMS_Voucher_Information__c WHERE IsAgencyEligibleForCountryAverage__c = true and Year__c = \'' + yearToProcess + '\' and Account__r.IATA_ISO_Country__c in :countriesToProcess';
 	
 		System.debug('Entry query for AMS_VouchersCalculationBatch:' + this.query);
 	}
