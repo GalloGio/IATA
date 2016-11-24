@@ -232,7 +232,7 @@ public without sharing class vfISSP_FAQ2Case
     }
     public Boolean showButton {
         get{
-            if(topicsToShowButton.contains(topic+'.'+subtopic)){
+            if(topicsToShowButton.contains(subtopic)){
                 return true;
             }
             return false;
