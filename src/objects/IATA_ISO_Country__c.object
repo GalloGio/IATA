@@ -1666,6 +1666,16 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Enable_Risk_Change_Codes__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Used to enable a country to use risk change code, generated from SIDRA or SIDRA Lite</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Used to enable a country to use risk change code, generated from SIDRA or SIDRA Lite</inlineHelpText>
+        <label>Enable Risk Change Codes</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Hide_Tax_Number_VAT__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
