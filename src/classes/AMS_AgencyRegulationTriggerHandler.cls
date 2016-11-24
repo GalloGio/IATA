@@ -34,7 +34,7 @@ public class AMS_AgencyRegulationTriggerHandler {
 
         for(AMS_Agency_Regulation__c agReg: agencyRegulations){
 
-            if(!oldAgRegulationValues.get(agReg.Id).Notification_Sent__c && agReg.Notification_Sent__c && agReg.Type_of_Certificate__c == AMS_Utils.CERT_DGR){
+            if(!oldAgRegulationValues.get(agReg.Id).Notification_Sent__c && agReg.Notification_Sent__c && agReg.Type_of_Certificate__c == AMS_Utils.CERT_DGR && agReg.Handling_Account__c){
                 //system.debug('sending renewal emails to :' + keyContactsPerAccount.get(agReg.Account__c));
                 //sendEmailAlert(keyContactsPerAccount.get(agReg.Account__c));
                 regulationsRequiringRenewal.add(agReg);
@@ -59,7 +59,7 @@ public class AMS_AgencyRegulationTriggerHandler {
             for(Contact recipient: recipents){
 
                 if(recipient.Preferred_Language__c == 'English')
-                    templateId = countryTemplates.get('AMS_DGR_Renewal_EN') != null ? countryTemplates.get('AMS_DGR_Renewal_EN').Id : null;
+                    templateId = countryTemplates.get('AMS_DGR_Renewal_EN1') != null ? countryTemplates.get('AMS_DGR_Renewal_EN1').Id : null;
                 else if(recipient.Preferred_Language__c == 'Chinese')
                     templateId = countryTemplates.get('AMS_DGR_Renewal_CN') != null ? countryTemplates.get('AMS_DGR_Renewal_CN').Id : null;
                 else if(recipient.Preferred_Language__c == 'French')
@@ -75,7 +75,7 @@ public class AMS_AgencyRegulationTriggerHandler {
                 else if(recipient.Preferred_Language__c == 'Spanish')
                     templateId = countryTemplates.get('AMS_DGR_Renewal_SP') != null ? countryTemplates.get('AMS_DGR_Renewal_SP').Id : null;
                 else
-                    templateId = countryTemplates.get('AMS_DGR_Renewal_EN') != null ? countryTemplates.get('AMS_DGR_Renewal_EN').Id : null;
+                    templateId = countryTemplates.get('AMS_DGR_Renewal_EN1') != null ? countryTemplates.get('AMS_DGR_Renewal_EN1').Id : null;
 
                 system.debug('DGR sendEmailAlert: Template selected ' + templateId);
 
@@ -112,10 +112,10 @@ public class AMS_AgencyRegulationTriggerHandler {
         //Need to get all the non expired agency regulations for each account
         //List<AMS_Agency_Regulation__c> allDGR = new List<AMS_Agency_Regulation__c>([SELECT Id, Account__c, First_Name__c, Last_Name__c, Position__c, Type_of_Certificate__c, Account__r.IATA_ISO_Country__c, Account__r.Location_Class__c FROM AMS_Agency_Regulation__c WHERE Account__c IN :accts AND Expired__c = FALSE AND Type_of_Certificate__c = 'DGR']);
 
-        Map<Id, AMS_Agency_Regulation__c> allDGR = new Map<Id, AMS_Agency_Regulation__c>([SELECT Id, Account__c, First_Name__c, Last_Name__c, Position__c, Type_of_Certificate__c, Account__r.IATA_ISO_Country__c, Account__r.Location_Class__c, Expired__c FROM AMS_Agency_Regulation__c WHERE Account__c IN :accts /*AND Expired__c = FALSE */AND Type_of_Certificate__c = 'DGR']);
+        Map<Id, AMS_Agency_Regulation__c> allDGR = new Map<Id, AMS_Agency_Regulation__c>([SELECT Id, Account__c, First_Name__c, Last_Name__c, Position__c, Type_of_Certificate__c, Account__r.IATA_ISO_Country__c, Account__r.Location_Class__c, Expired__c, Notification_Sent__c FROM AMS_Agency_Regulation__c WHERE Account__c IN :accts /*AND Expired__c = FALSE */AND Type_of_Certificate__c = 'DGR']);
 
         for(AMS_Agency_Regulation__c agReg : allDGR.values()){
-            if(!agReg.Expired__c){
+            if(!agReg.Expired__c && !agReg.Notification_Sent__c){
                 if(!allNonExpiredDGRPerAccount.containsKey(agReg.Account__c))
                     allNonExpiredDGRPerAccount.put(agReg.Account__c, new List<AMS_Agency_Regulation__c>());
                 allNonExpiredDGRPerAccount.get(agReg.Account__c).add(agReg);
@@ -181,7 +181,7 @@ public class AMS_AgencyRegulationTriggerHandler {
 
             system.debug('accountData ' + accountData.get(agReg.Account__c));
 
-            if(isToCreateRenewalForDGR(accountData.get(agReg.Account__c), allNonExpiredDGRPerAccount.get(agReg.Account__c).size(), minDgrHO, minDgrBR)){
+            if(isToCreateRenewalForDGR(accountData.get(agReg.Account__c), allNonExpiredDGRPerAccount.get(agReg.Account__c).size()-1, minDgrHO, minDgrBR)){
                 system.debug('creating renewal for DGR');
                 AMS_OSCAR__c oscar = createStagingArea(agReg, accountData.get(agReg.Account__c), DGRToRenewPerAccount.get(agReg.Account__c));
                 sendEmailAlert(keyContactsPerAccount.get(agReg.Account__c), oscar.Id, countryTemplates);
@@ -202,13 +202,9 @@ public class AMS_AgencyRegulationTriggerHandler {
         theCommunicationCase.AccountId = agReg.Account__c;
         theCommunicationCase.Account_Concerned__c = agReg.Account__c;
         theCommunicationCase.BSPCountry__c = accountData.BillingCountry;
-        //TODO:theCommunicationCase.CaseArea__c = 
-        //TODO:theCommunicationCase.ContactId
-        //TODO:theCommunicationCase.Origin
-        //TODO:theCommunicationCase.Reason1__c
+        theCommunicationCase.Reason1__c = 'Certificate DGR';
         theCommunicationCase.Region__c = accountData.Region_formula__c;
-        theCommunicationCase.Subject = 'DGR renewal - ' + accountData.Name + ' - ' + accountData.IATACode__c;
-        //TODO:theCommunicationCase.Type_of_customer__c = 
+        //theCommunicationCase.Subject = 'DGR renewal - ' + accountData.Name + ' - ' + accountData.IATACode__c;
 
         insert theCommunicationCase;
 
@@ -230,17 +226,13 @@ public class AMS_AgencyRegulationTriggerHandler {
         theStagingArea.CASS_Number__c                           = accountData.CASS_Number__c;
         theStagingArea.IATACode__c                              = accountData.IATACode__c;
         theStagingArea.IATA_ISO_State__c                        = accountData.Iso_State__c;
-        //TODO:theStagingArea.ISSP_AMS_GDS_with_signed_contract__c  = accountData.AMSAccreditationGDS;
-        //TODO:theStagingArea.ISSP_AMS_Legal_Status__c              = {!AMSAccreditedLegalStatus};
         theStagingArea.ISSP_AMS_License_No__c                   = accountData.License_Number__c;
-        //TODO:theStagingArea.ISSP_AMS_Premises_located_at_airport__c  = accountData.AreThePremissesInAirportFormula;
         theStagingArea.ISSP_AMS_VAT_number__c                   = accountData.VAT_Number__c;
         theStagingArea.Is_your_firm_handling_Dangerous_Goods__c = accountData.Is_your_firm_handling_Dangerous_Goods__c;
         theStagingArea.Location_Class__c                        = accountData.Location_Class__c;
         theStagingArea.Location_Type__c                         = accountData.Location_Type__c;
         theStagingArea.Mobile__c                                = accountData.Mobile__c;
         theStagingArea.Operation__c                             = accountData.Operation__c;
-        //TODO:theStagingArea.RecordTypeId                          = 
         theStagingArea.Remittance_frequency__c                  = accountData.Remittance_frequency__c;
         theStagingArea.Shipping_City__c                         = accountData.ShippingCity;
         theStagingArea.Shipping_Country__c                      = accountData.ShippingCountry;
@@ -303,19 +295,19 @@ public class AMS_AgencyRegulationTriggerHandler {
     private static Boolean isToCreateRenewalForDGR(Account accountData, Integer numberOfActiveDGR, Integer minimumHODgrRequirements, Integer minimumBRDgrRequirements){
 
         if(accountData.Is_your_firm_handling_Dangerous_Goods__c == 'Yes'){
-            if(accountData.IATA_ISO_Country__r.ISO_Code__c == 'CN' && accountData.Location_Class__c == 'C' && numberOfActiveDGR <= 3){
+            if(accountData.IATA_ISO_Country__r.ISO_Code__c == 'CN' && accountData.Location_Class__c == 'C' && numberOfActiveDGR < 3){
                 return true;
             }
             else if(accountData.Location_Class__c == 'C'){
-                if(accountData.Location_Type__c == AMS_Utils.HO && numberOfActiveDGR <= 2 )
+                if(accountData.Location_Type__c == AMS_Utils.HO && numberOfActiveDGR < 2 )
                     return true;
-                else if(accountData.Location_Type__c == AMS_Utils.BR && numberOfActiveDGR  <= 1)
+                else if(accountData.Location_Type__c == AMS_Utils.BR && numberOfActiveDGR  < 1)
                     return true;
             }else if(accountData.Location_Class__c == 'R'){
                 //Only America is using DGR for Cass associate.
-                if(accountData.Location_Class__c == AMS_Utils.HO && numberOfActiveDGR <= minimumHODgrRequirements )
+                if(accountData.Location_Class__c == AMS_Utils.HO && numberOfActiveDGR < minimumHODgrRequirements )
                     return true;
-                else if(accountData.Location_Type__c == AMS_Utils.BR && numberOfActiveDGR <= minimumBRDgrRequirements){
+                else if(accountData.Location_Type__c == AMS_Utils.BR && numberOfActiveDGR < minimumBRDgrRequirements){
                     return true;
                 }
             }
