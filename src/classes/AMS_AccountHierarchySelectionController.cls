@@ -284,7 +284,7 @@ public class AMS_AccountHierarchySelectionController {
 					if(!childAccounts.containsKey(r.Parent_Account__c)) childAccounts.put(r.Parent_Account__c, new Set<Id>());
 					if(!childAccounts.containsKey(r.Child_Account__c)) childAccounts.put(r.Child_Account__c, new Set<Id>());
 
-					childAccounts.get(r.Parent_Account__c).add(r.Child_Account__c);
+					if(r.Child_Account__r.Status__c != AMS_Utils.ACC_S0_TERMINATED) childAccounts.get(r.Parent_Account__c).add(r.Child_Account__c);
 				}
 
 				for(Account a : Database.query('SELECT Id, '+String.join(accountFieldList, ',')+' FROM Account WHERE Id IN :accountIds AND Status__c != \''+AMS_Utils.ACC_S0_TERMINATED+'\'')){

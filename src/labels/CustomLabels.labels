@@ -122,6 +122,13 @@
         <value>Reactivate the agency in BSPLink</value>
     </labels>
     <labels>
+        <fullName>AMS_OSCAR_Action12</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_Action12</shortDescription>
+        <value>Generate Certificates</value>
+    </labels>
+    <labels>
         <fullName>AMS_OSCAR_Action2</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -176,6 +183,14 @@
         <protected>false</protected>
         <shortDescription>AMS_OSCAR_Action9</shortDescription>
         <value>Suspend the agency in BSPLink</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_CERTIFICATE</fullName>
+        <categories>LeftSidePanel, Headers</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_CERTIFICATE</shortDescription>
+        <value>Generate Certificate</value>
     </labels>
     <labels>
         <fullName>AMS_OSCAR_CHANGE_DISAPPROVAL</fullName>
@@ -504,6 +519,13 @@
         <protected>false</protected>
         <shortDescription>AMS_OSCAR_STEP32</shortDescription>
         <value>Process Withdrawal</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_STEP33</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_STEP33</shortDescription>
+        <value>Certificate</value>
     </labels>
     <labels>
         <fullName>AMS_OSCAR_STEP4</fullName>
