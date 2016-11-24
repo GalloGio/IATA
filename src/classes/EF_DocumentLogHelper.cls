@@ -30,7 +30,12 @@ public with sharing class EF_DocumentLogHelper
                 Additional_Information__c = dl.Additional_Information__c,
                 EF_Private__c = dl.EF_Private__c,
                 Size_MB__c = filesize* 0.000001,
-                RecordTypeId = recordType
+                RecordTypeId = recordType,
+                EF_Created_By__c = dl.Created_By__c, 
+                EF_Created_On__c = dl.Created_On__c, 
+                EF_Enterprise_Keywords__c = dl.Enterprise_Keywords__c, 
+                EF_Modified_By__c = dl.Modified_By__c,
+				EF_Modified_On__c = dl.Modified_On__c
             );
             return amazonFile;
         } catch(Exception e) {
@@ -108,8 +113,9 @@ public with sharing class EF_DocumentLogHelper
 
 	public static Map<Id, EF_Document_Log__c> getLogRecordsToUpdateMap(Set<Id> attachmentIds)
 	{
-		List<EF_Document_Log__c> dls = [select Id, AttachmentId__c, Created_On__c, Status__c, Log__c, Additional_Information__c, Category__c, SubCategory__c, 
-				EF_Private__c, SAP_Reference__c, Expired__c, Expiry_Date__c from EF_Document_Log__c where AttachmentId__c in :attachmentIds];
+		List<EF_Document_Log__c> dls = [select Id, AttachmentId__c, Status__c, Log__c, Additional_Information__c, Category__c, SubCategory__c, 
+				EF_Private__c, SAP_Reference__c, Expired__c, Expiry_Date__c, Created_By__c, Created_On__c, Enterprise_Keywords__c, Modified_By__c,
+				Modified_On__c from EF_Document_Log__c where AttachmentId__c in :attachmentIds];
 		Map<Id, EF_Document_Log__c> attIdDlMap = new Map<Id, EF_Document_Log__c>();
 		for(EF_Document_Log__c dl : dls)
 		{
