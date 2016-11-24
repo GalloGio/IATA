@@ -518,8 +518,7 @@
         <language>en_US</language>
     </listViews>
     <listViews>
-        <fullName>modlast90days</fullName>
-        <booleanFilter>(1 OR 3) AND 2</booleanFilter>
+        <fullName>modlast30090days</fullName>
         <columns>NAME</columns>
         <columns>Agreement_type__c</columns>
         <columns>Airline_1__c</columns>
@@ -533,21 +532,48 @@
         <columns>LAST_UPDATE</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>Cancellation_date__c</field>
+            <field>LAST_UPDATE</field>
             <operation>equals</operation>
-            <value>LAST_N_DAYS:7</value>
+            <value>LAST_N_DAYS:30</value>
         </filters>
         <filters>
             <field>MITAorBIETA__c</field>
             <operation>equals</operation>
-            <value>BIETA</value>
+            <value>MITA</value>
         </filters>
         <filters>
-            <field>Effective_date__c</field>
-            <operation>equals</operation>
-            <value>LAST_N_DAYS:7</value>
+            <field>UPDATEDBY_USER.ALIAS</field>
+            <operation>notEqual</operation>
+            <value>mgarc</value>
         </filters>
-        <label>Modified BIETA Agreements last 7 days</label>
+        <label>Modified MITA Agreements last 30 days</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>modlast3090days</fullName>
+        <columns>NAME</columns>
+        <columns>Agreement_type__c</columns>
+        <columns>Airline_1__c</columns>
+        <columns>Airline1_designator_code__c</columns>
+        <columns>Airline_2__c</columns>
+        <columns>Airline2_designator_code__c</columns>
+        <columns>Effective_date__c</columns>
+        <columns>Cancellation_date__c</columns>
+        <columns>Cancellation_Reason__c</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <columns>LAST_UPDATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>LAST_UPDATE</field>
+            <operation>equals</operation>
+            <value>LAST_N_DAYS:30</value>
+        </filters>
+        <filters>
+            <field>MITAorBIETA__c</field>
+            <operation>equals</operation>
+            <value>MITA</value>
+        </filters>
+        <label>Modified MITA Agreements last 30 days</label>
         <language>en_US</language>
     </listViews>
     <nameField>
