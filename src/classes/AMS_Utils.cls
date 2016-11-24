@@ -1645,18 +1645,16 @@ public static String fetchTypeOfCustomer (String locationType , String category)
 	        return -1;
 	
 	    Integer candidate = minRange;
-	        
+	    
 		for(Integer occupiedSlot : orderedSlotsOccupied){
-			if(occupiedSlot >= minRange){
-				if(occupiedSlot > candidate){
-					System.debug('Candidate found : ' + candidate);
-					return candidate;
-				}
-				else{
-					candidate++;
-					if(candidate > maxRange){
-						return -1;
-					}
+			if(occupiedSlot > candidate){
+				System.debug('Candidate found : ' + candidate);
+				return candidate;
+			}
+			else if(occupiedSlot == candidate){
+				candidate++;
+				if(candidate > maxRange){
+					return -1;
 				}
 			}
 		}
