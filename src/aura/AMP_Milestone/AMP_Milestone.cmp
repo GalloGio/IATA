@@ -57,9 +57,13 @@
         </td>
         <td><ui:inputDate value="{!v.milestone.ActivityDate}"   class="slds-input required" displayDatePicker="true"/></td>
         <td><ui:inputTextArea value="{!v.milestone.Description}" class="slds-textarea" rows="5"/></td>
-        
+
         <aura:set attribute="else">
-            <td><c:AMP_EditSaveMenu /></td>
+            <td>
+                <aura:if isTrue="{!v.canEdit}">
+                    <c:AMP_EditSaveMenu />
+                </aura:if>
+            </td>
             <td><ui:outputText value="{!v.milestone.Subject}" class="slds-truncate"/></td>
             <td><c:AMP_LongText text="{!v.milestone.AM_Responsible__c}" /></td>
             <td><c:AMP_LongText text="{!v.milestone.AM_Involved__c}" /></td>

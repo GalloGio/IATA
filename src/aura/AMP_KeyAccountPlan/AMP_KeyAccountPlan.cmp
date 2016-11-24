@@ -92,7 +92,7 @@
                     Back to Activities
                 </button>
 
-                <c:AMP_Milestones accountId="{!v.accountId}" activity="{!v.activity}" activityId="{!v.activityId}" activityName="{!v.activityName}" milestones="{!v.milestones}"/>
+                <c:AMP_Milestones accountId="{!v.accountId}" activity="{!v.activity}" activityId="{!v.activityId}" activityName="{!v.activityName}" milestones="{!v.milestones}" canEdit="{!v.canEdit}"/>
             </aura:set>
         </aura:if>
 
