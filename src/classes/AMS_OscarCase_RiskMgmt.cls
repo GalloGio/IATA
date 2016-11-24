@@ -20,6 +20,10 @@ public class AMS_OscarCase_RiskMgmt {
 	    }
     }
     
+    public static void EndRun(){
+    	run=true;
+    }
+    
     private static map<id, list<Agency_Applied_Change_code__c>> mapIRRS = new map<id, list<Agency_Applied_Change_code__c>>();	//Store all Irregularities previously created for agencies in the trigger. Used in the memo text
     private static map<id, list<Financial_Security__c>> mapFinancialSecurity = new map<id, list<Financial_security__c>>();		//Store all Financial Securities previously created for agencies in the trigger. Used in the memo text
     private static map<id, id> mapAllHOs = new map<id, id>();		//For each agencies in the trigger, stores their HO Id
@@ -149,8 +153,14 @@ public class AMS_OscarCase_RiskMgmt {
 								  //, Account.CNS_Agency__c
 								  from case where id in:mapTrgNew.keySet()]);
 			
+			system.debug(Logginglevel.ERROR, 'DTULLO 152 ' + mapCases.size());
+			string sss = 'First Run';
+			
 			for(Case c: mapCases.values()){
 				//Pilot countries only!
+				system.debug(Logginglevel.ERROR, 'DTULLO 157 ' + sss);
+				system.debug(Logginglevel.ERROR, 'DTULLO 156 ' + c.Account.IATA_ISO_Country__r.Enable_Risk_Change_Codes__c);
+				sss = 'Second Run?';
 				if(!c.Account.IATA_ISO_Country__r.Enable_Risk_Change_Codes__c)
 					continue;
 				//string LocClass = mapAccnt.get(c.AccountId).Location_Class__c;
@@ -165,9 +175,14 @@ public class AMS_OscarCase_RiskMgmt {
 				
 				for(AMS_ChangeCodes__c conf:lsConf){
 					set<string> setLocClass = new set<string>(conf.Class_Type__c.toUpperCase().split(';'));
+					
+					system.debug(Logginglevel.ERROR, 'DTULLO 172 ' + setLocClass.contains(LocClass));
+					
 					if(!setLocClass.contains(LocClass))
 						continue;
-						
+					
+					system.debug(Logginglevel.ERROR, 'DTULLO 177 ' + sRecordTypeName.equalsIgnoreCase(conf.Record_Type__c));
+					
 					if(!sRecordTypeName.equalsIgnoreCase(conf.Record_Type__c))
 						continue;
 						
@@ -176,27 +191,35 @@ public class AMS_OscarCase_RiskMgmt {
 					//	continue;
 					
 					boolean CCToBeGenerated = false;
+					system.debug(Logginglevel.ERROR, 'DTULLO 179 ' + conf.Change_code__c);
 					if(conf.Field1__c!=null)
 						CCToBeGenerated = bCheckCondition(c, conf.Field1__c, conf.Field1Values__c.toUpperCase(), mapTrgOld.get(c.Id), mapExistingChangeCodes);
-						
+					
+					system.debug(Logginglevel.ERROR, 'DTULLO 183. CCToBeGenerated ' + CCToBeGenerated);
 					if(conf.Field2__c!=null && CCToBeGenerated)
 						CCToBeGenerated = bCheckCondition(c, conf.Field2__c, conf.Field2Values__c.toUpperCase(), mapTrgOld.get(c.Id), mapExistingChangeCodes);
-						
+					
+					system.debug(Logginglevel.ERROR, 'DTULLO 187. CCToBeGenerated ' + CCToBeGenerated);
 					if(conf.Field3__c!=null && CCToBeGenerated)
 						CCToBeGenerated = bCheckCondition(c, conf.Field3__c, conf.Field3Values__c.toUpperCase(), mapTrgOld.get(c.Id), mapExistingChangeCodes);
-						
+					
+					system.debug(Logginglevel.ERROR, 'DTULLO 191. CCToBeGenerated ' + CCToBeGenerated);
 					if(conf.Field4__c!=null && CCToBeGenerated)
 						CCToBeGenerated = bCheckCondition(c, conf.Field4__c, conf.Field4Values__c.toUpperCase(), mapTrgOld.get(c.Id), mapExistingChangeCodes);
-						
+					
+					system.debug(Logginglevel.ERROR, 'DTULLO 195. CCToBeGenerated ' + CCToBeGenerated);
 					if(conf.Field5__c!=null && CCToBeGenerated)
 						CCToBeGenerated = bCheckCondition(c, conf.Field5__c, conf.Field5Values__c.toUpperCase(), mapTrgOld.get(c.Id), mapExistingChangeCodes);
-						
+					
+					system.debug(Logginglevel.ERROR, 'DTULLO 199. CCToBeGenerated ' + CCToBeGenerated);
 					if(conf.Field6__c!=null && CCToBeGenerated)
 						CCToBeGenerated = bCheckCondition(c, conf.Field6__c, conf.Field6Values__c.toUpperCase(), mapTrgOld.get(c.Id), mapExistingChangeCodes);
 					
+					system.debug(Logginglevel.ERROR, 'DTULLO 203. CCToBeGenerated ' + CCToBeGenerated);
 					if(CCToBeGenerated)
 						CCToBeGenerated = CheckOldNewValues(c,  mapTrgOld.get(c.Id), conf.Field1__c, conf.Field2__c, conf.Field3__c, conf.Field4__c, conf.Field5__c, conf.Field6__c);
 					
+					system.debug(Logginglevel.ERROR, 'DTULLO 207. CCToBeGenerated ' + CCToBeGenerated);
 					if(CCToBeGenerated){
 						//mapCasePerAccount.put(c.AccountId, c);
 						list<AMS_ChangeCodes__c> ls;
@@ -255,7 +278,7 @@ public class AMS_OscarCase_RiskMgmt {
 	//private static Agency_Applied_Change_code__c CreateChangeCode(map<id, case> mapCases, id idCase, AMS_ChangeCodes__c cc, Account acc, boolean bIsCNS){
 	private static Agency_Applied_Change_code__c CreateChangeCode(map<id, case> mapCases, id idCase, AMS_ChangeCodes__c cc, Account acc){
 		Agency_Applied_Change_code__c AACC = new Agency_Applied_Change_code__c();
-						
+		
 		id AccountId = (Acc==null?mapCases.get(idCase).AccountId:acc.id);
 		//if(acc==null)
 		//	AccountId = mapCases.get(idCase).AccountId;
@@ -294,6 +317,8 @@ public class AMS_OscarCase_RiskMgmt {
 		AACC.Applied_Configuration__c = cc.id;
 		AACC.OSCAR__c = mapCases.get(idCase).Parent.OSCAR__c;
 		
+		//NEED TO ADD UNIQUE ID!
+		//AACC.AIMS_ID__C = ;
 		//Handles update on account
 		boolean bAccntToUpd = false;
 		Account accnt = new Account();
@@ -390,13 +415,19 @@ public class AMS_OscarCase_RiskMgmt {
 	private static boolean bCheckCondition(case NewCaseValues, string sFieldToCheck, string condition, case OldCaseValues, map<id, list<Agency_Applied_Change_code__c>> mapCC){
 		set<string> setValues = new set<string>();
 		
+		system.debug(Logginglevel.ERROR, 'DTULLO bCheckCondition ' + sFieldToCheck);
+		system.debug(Logginglevel.ERROR, 'DTULLO bCheckCondition ' + condition);
+		//system.debug(Logginglevel.ERROR, 'DTULLO bCheckCondition ' + string.ValueOf(NewCaseValues.get(sFieldToCheck)));
+		
 		if(condition.equals('NOT BLANK')){
+			system.debug(Logginglevel.ERROR, 'DTULLO bCheckCondition NOT BLANK' + string.ValueOf(NewCaseValues.get(sFieldToCheck))!=null);
 			if(string.ValueOf(NewCaseValues.get(sFieldToCheck))!=null)
 				return true;
 			else return false;
 		}
 		
 		if(condition.equals('BLANK')){
+			system.debug(Logginglevel.ERROR, 'DTULLO bCheckCondition BLANK' + string.ValueOf(NewCaseValues.get(sFieldToCheck))==null);
 			if(string.ValueOf(NewCaseValues.get(sFieldToCheck))==null)
 				return true;
 			else return false;
@@ -466,6 +497,7 @@ public class AMS_OscarCase_RiskMgmt {
 	
 	
 	//Method generates the bulletin memo text. It reads the stored values and replace all <xxxxxx> value with corresponding real value
+	@TestVisible
 	private static string GenerateMemoText(case theCase, Agency_Applied_Change_code__c CC, string sMemo1, string sMemo2, string sMemo3, list<Agency_Applied_Change_code__c> lsIrr, list<Financial_Security__c> lsFS){
 		string sMemoText;
 		if(sMemo1!=null)	sMemoText = sMemoText + sMemo1;
@@ -478,7 +510,8 @@ public class AMS_OscarCase_RiskMgmt {
 			string sTmpVal = '';
 			//Start substitutions!
 			if(sMemoText.containsIgnoreCase('<Termination Date>')){
-				sMemoText = sMemoText.replace('<Termination Date>', GenerateDateForBulletin(theCase.Termination_date__c));
+				if(theCase.Termination_date__c != null)
+					sMemoText = sMemoText.replace('<Termination Date>', GenerateDateForBulletin(theCase.Termination_date__c));
 			}
 			
 			if(sMemoText.containsIgnoreCase('<Financial Securities>')){
@@ -494,19 +527,23 @@ public class AMS_OscarCase_RiskMgmt {
 			}
 			
 			if(sMemoText.containsIgnoreCase('<DEF Withdrawal reason>')){
-				sMemoText = sMemoText.replace('<DEF Withdrawal reason>', theCase.DEF_Withdrawal_Reason__c);
+				if(theCase.DEF_Withdrawal_Reason__c!=null)
+					sMemoText = sMemoText.replace('<DEF Withdrawal reason>', theCase.DEF_Withdrawal_Reason__c);
 			}
 			
 			if(sMemoText.containsIgnoreCase('<SIDRA Lite Reason>')){
-				sMemoText = sMemoText.replace('<SIDRA Lite Reason>', theCase.SIDRA_Lite_Reason__c);
+				if(theCase.SIDRA_Lite_Reason__c!=null)
+					sMemoText = sMemoText.replace('<SIDRA Lite Reason>', theCase.SIDRA_Lite_Reason__c);
 			}
 			
 			if(sMemoText.containsIgnoreCase('<End Grace Period Date>')){
-				sMemoText = sMemoText.replace('<End Grace Period Date>', GenerateDateForBulletin(theCase.End_of_Grace_Period_Date__c));
+				if(theCase.End_of_Grace_Period_Date__c!=null)
+					sMemoText = sMemoText.replace('<End Grace Period Date>', GenerateDateForBulletin(theCase.End_of_Grace_Period_Date__c));
 			}
 			
 			if(sMemoText.containsIgnoreCase('<IRR Withdrawal Reason>')){
-				sMemoText = sMemoText.replace('<IRR Withdrawal Reason>', theCase.IRR_Withdrawal_Reason__c);
+				if(theCase.IRR_Withdrawal_Reason__c!=null)
+					sMemoText = sMemoText.replace('<IRR Withdrawal Reason>', theCase.IRR_Withdrawal_Reason__c);
 			}
 			
 			if(sMemoText.containsIgnoreCase('<IRRS Sequence>')){
@@ -530,19 +567,23 @@ public class AMS_OscarCase_RiskMgmt {
 			}
 			
 			if(sMemoText.containsIgnoreCase('<Outstanding Amount>')){
-				sMemoText = sMemoText.replace('<Outstanding Amount>', string.valueOf(theCase.Outstanding_Amount__c));
+				if(theCase.Outstanding_Amount__c!=null)
+					sMemoText = sMemoText.replace('<Outstanding Amount>', string.valueOf(theCase.Outstanding_Amount__c));
 			}
 			
 			if(sMemoText.containsIgnoreCase('<OSCAR Type>')){
-				sMemoText = sMemoText.replace('<OSCAR Type>', theCase.Parent.OSCAR__r.Type_of_change__c);
+				if(theCase.Parent.OSCAR__r.Type_of_change__c!=null)
+					sMemoText = sMemoText.replace('<OSCAR Type>', theCase.Parent.OSCAR__r.Type_of_change__c);
 			}
 			
 			if(sMemoText.containsIgnoreCase('<Termination Reason>')){
-				sMemoText = sMemoText.replace('<Termination Reason>', theCase.Termination_Reason__c);
+				if(theCase.Termination_Reason__c!=null)
+					sMemoText = sMemoText.replace('<Termination Reason>', theCase.Termination_Reason__c);
 			}
 			
 			if(sMemoText.containsIgnoreCase('<Update AIMS-DEF>')){
-				sMemoText = sMemoText.replace('<Update AIMS-DEF>', GenerateDateForBulletin(date.ValueOf(theCase.Update_AIMS_DEF__c)));
+				if(theCase.Update_AIMS_DEF__c!=null)
+					sMemoText = sMemoText.replace('<Update AIMS-DEF>', GenerateDateForBulletin(date.ValueOf(theCase.Update_AIMS_DEF__c)));
 			}
 			
 		}
