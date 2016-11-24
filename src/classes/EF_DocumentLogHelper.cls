@@ -13,11 +13,42 @@ public with sharing class EF_DocumentLogHelper
 		'ParentId__c'
 	};
 
+    public static AmazonFile__c createAmazonFileRecord(String fileName, String amazonKey, Long filesize, String parentId, String recordType, EF_Document_Log__c dl)
+    {
+    	AmazonFile__c amazonFile;
+        try {
+              amazonFile = new AmazonFile__c(
+                Name = fileName,
+                sObject_Id__c = parentId,
+                Full_Name_Unique__c = amazonKey,
+                Category__c = dl.Category__c,
+                Subcategory__c = dl.SubCategory__c,
+                Document_Date__c = Date.newInstance(dl.Created_On__c.year(), dl.Created_On__c.month(), dl.Created_On__c.day()),
+                Expired__c = dl.Expired__c,
+                Expiry_Date__c = dl.Expiry_Date__c,
+                SAP_Number__c = dl.SAP_Reference__c,
+                Additional_Information__c = dl.Additional_Information__c,
+                EF_Private__c = dl.EF_Private__c,
+                Size_MB__c = filesize* 0.000001,
+                RecordTypeId = recordType
+            );
+            return amazonFile;
+        } catch(Exception e) {
+            System.debug('******** Error creating an AmazonFile__c object: ' + e.getMessage());
+        }
+
+        return null;
+    }
+
 	@Future(callout=true)
 	public static void createAmazonAttachmentsFromAttachments(Set<Id> lsAttachmentIds)
 	{	
 		Map<Id, EF_Document_Log__c> logsToUpdate = getLogRecordsToUpdateMap(lsAttachmentIds);		
 		List<EF_Document_Log__c> toUpdateList = new List<EF_Document_Log__c>();
+		List<AmazonFile__c> attachmentsToInsert = new List<AmazonFile__c>();
+		AmazonFile__c af;
+		EF_Document_Log__c dl;
+		Id efFileRtId = AMS_Utils.getId('AmazonFile__c', 'EF_File');
 
 		List<Attachment> lsAttachments = [SELECT Id, Name, ParentId, ContentType, BodyLength, Body FROM Attachment WHERE Id IN :lsAttachmentIds];
 		EF_AttachmentListController c = new EF_AttachmentListController();
@@ -46,28 +77,39 @@ public with sharing class EF_DocumentLogHelper
 			{
 				if(logsToUpdate.get(a.Id) != null)
 				{
-					EF_Document_Log__c dl = logsToUpdate.get(a.Id);
+					dl = logsToUpdate.get(a.Id);
 					setStatus(dl, 'Amazon - Upload Successful', 'File uploaded successfully to Amazon WS.');
 					toUpdateList.add(dl);
+				}
+				if(logsToUpdate.get(a.Id) != null)
+				{
+					dl = logsToUpdate.get(a.Id);
+					af = createAmazonFileRecord(a.Name, credentialNames.fullFileNameEncoded, a.BodyLength, a.ParentId, efFileRtId, dl);
+					if(af != null)
+						attachmentsToInsert.add(af);
 				}
 			}
 			else
 			{
 				if(logsToUpdate.get(a.Id) != null)
 				{
-					EF_Document_Log__c dl = logsToUpdate.get(a.Id);
+					dl = logsToUpdate.get(a.Id);
 					setStatus(logsToUpdate.get(a.Id), 'Amazon - Upload Error', 'Error occurred during Amazon WS upload: '+res1.toString());
 					toUpdateList.add(dl);
 				}
 			}
 		}
+
 		if(toUpdateList.size() > 0)
 			update toUpdateList;
+		if(attachmentsToInsert.size() > 0)
+			insert attachmentsToInsert;
 	}
 
 	public static Map<Id, EF_Document_Log__c> getLogRecordsToUpdateMap(Set<Id> attachmentIds)
 	{
-		List<EF_Document_Log__c> dls = [select Id, AttachmentId__c, Status__c, Log__c from EF_Document_Log__c where AttachmentId__c in :attachmentIds];
+		List<EF_Document_Log__c> dls = [select Id, AttachmentId__c, Created_On__c, Status__c, Log__c, Additional_Information__c, Category__c, SubCategory__c, 
+				EF_Private__c, SAP_Reference__c, Expired__c, Expiry_Date__c from EF_Document_Log__c where AttachmentId__c in :attachmentIds];
 		Map<Id, EF_Document_Log__c> attIdDlMap = new Map<Id, EF_Document_Log__c>();
 		for(EF_Document_Log__c dl : dls)
 		{
