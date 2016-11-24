@@ -16,7 +16,8 @@ public with sharing class AMS_MigrationToolHelper {
             'CHC – Change of Shareholding' => 'MAJOR.CHANGES',
             'New SA / CHV – New Code' => 'NEW.SA.1.0',
             'VMFR Setup/Update' => 'MAJOR.CHANGES',
-			'TIDS' => 'NEW.TIDS.1.0'
+			'TIDS' => 'NEW.TIDS.1.0',
+			'ERSP' => 'CORRECTION.1.0'
             };
         }
         set;
@@ -382,7 +383,7 @@ public with sharing class AMS_MigrationToolHelper {
 
 		Account directAccount = directAccountLst.get(0);
 
-		if( (processType != 'NEW.TIDS.1.0' ) && (directAccount.Location_Type__c == 'BR' || directAccount.Location_Type__c == 'SA')){
+		if( (processType != 'NEW.TIDS.1.0' && processType != 'CORRECTION.1.0' ) && (directAccount.Location_Type__c == 'BR' || directAccount.Location_Type__c == 'SA')){
 
 			List<Account> parentAccountLst = [SELECT Id, ParentId , Abbreviated_address__c,Abbreviated_name__c,Name,BillingState,BillingCity,IATA_ISO_Country__c,Email__c,Fax,Phone,BillingPostalCode,BillingStreet,CASS_Number__c,IATACode__c,Iso_State__c,GDS__c,Company_Type__c,License_Number__c,In_a_Airport__c,VAT_Number__c,Is_your_firm_handling_Dangerous_Goods__c,Location_Class__c,Location_Type__c,Mobile__c,Operation__c,Remittance_frequency__c,ShippingCity,ShippingCountry,IATA_ISO_Shipping_Country__c,IATA_ISO_Shipping_State__c,ShippingPostalCode,ShippingState,ShippingStreet,Short_Name__c,Solicitation_Flag__c,TradeName__c,VAT_Number_2__c,Website from Account where Id = :directAccount.ParentId ];
 
@@ -408,7 +409,7 @@ public with sharing class AMS_MigrationToolHelper {
 
 		AMS_Accreditation_Contact__c contact = new AMS_Accreditation_Contact__c();
 
-		if(processType == 'NEW.HO.1.0' || processType == 'MAJOR.CHANGES' || processType == 'NEW.TIDS.1.0')
+		if(processType == 'NEW.HO.1.0' || processType == 'MAJOR.CHANGES' || processType == 'NEW.TIDS.1.0' || processType == 'CORRECTION.1.0')
 			contact.AMS_Ownership_Role__c = role.Id;
 
 		contact.AMS_Pax_Accreditation_Form__c = accreditationObj.Id;
