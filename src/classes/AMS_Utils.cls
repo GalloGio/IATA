@@ -802,6 +802,7 @@ public without sharing class AMS_Utils {
 
             if (previousIFAPCase.Financial_Review_Result__c <> updatedIFAPCase.Financial_Review_Result__c) {
                 oscar[0].Financial_Review_Result__c = updatedIFAPCase.Financial_Review_Result__c;
+                oscar[0].Reason_for_change_of_Financial_result__c = updatedIFAPCase.Reason_for_change_of_Financial_result__c;
                 mustUpdateOSCAR = true;
             }
 
