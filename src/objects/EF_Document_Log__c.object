@@ -263,7 +263,7 @@
         <type>DateTime</type>
     </fields>
     <fields>
-        <fullName>ParentID__c</fullName>
+        <fullName>ParentId__c</fullName>
         <description>Salesforce Record ID to which this file is attached to.</description>
         <externalId>false</externalId>
         <label>Parent Record ID</label>
@@ -308,6 +308,10 @@
             </picklistValues>
             <picklistValues>
                 <fullName>Attachment - Failure</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Metadata Updated</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -445,10 +449,16 @@
         <type>Picklist</type>
     </fields>
     <label>E&amp;F Document Log</label>
+    <listViews>
+        <fullName>All</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
     <nameField>
+        <displayFormat>EFDL-{00000000}</displayFormat>
         <label>E&amp;F Document Log Name</label>
         <trackHistory>false</trackHistory>
-        <type>Text</type>
+        <type>AutoNumber</type>
     </nameField>
     <pluralLabel>E&amp;F Document Logs</pluralLabel>
     <searchLayouts/>

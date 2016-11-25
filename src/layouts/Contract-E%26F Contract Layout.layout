@@ -94,7 +94,7 @@
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
-        <label>E&amp;F</label>
+        <label>E&amp;F Information</label>
         <layoutColumns>
             <layoutItems>
                 <behavior>Required</behavior>
