@@ -14822,6 +14822,16 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
     <sharingModel>ReadWrite</sharingModel>
     <startsWith>Vowel</startsWith>
     <validationRules>
+        <fullName>Effective_date_mandatory_in_VR</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+  RecordType.DeveloperName = &quot;VOLUNTARY_RELINQUISHMENT&quot;,
+  ISBLANK(Change_effective_as_of__c ),
+  ISPICKVAL(STEP6__c, &quot;Passed&quot;)
+)</errorConditionFormula>
+        <errorMessage>Sanity checks cannot be set as passed if &quot;Change effective as of&quot; is empty</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>Effective_date_mandatory_in_changes</fullName>
         <active>true</active>
         <errorConditionFormula>AND(
