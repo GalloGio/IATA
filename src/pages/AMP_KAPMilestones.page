@@ -104,7 +104,7 @@
 
 					<apex:column headerValue="End Date" styleClass="narrow-table-column">
 							<apex:outputField value="{!task.ActivityDate}" rendered="{!!AND(isTaskEditMode,idTaskConcerned==task.Id)}"/>
-							<apex:inputField value="{!task.ActivityDate}" rendered="{!AND(isTaskEditMode,idTaskConcerned==task.Id)}"/>
+							<apex:inputField value="{!task.ActivityDate}" rendered="{!AND(isTaskEditMode,idTaskConcerned==task.Id)}" required="true"/>
 					</apex:column>
 
 			</apex:pageBlockTable>
