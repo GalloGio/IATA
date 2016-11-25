@@ -252,55 +252,65 @@ global class AmsIataCodeGenerator{
                         System.debug('****************** max: '+maxRange);
                         
                         List<String> rangesToSearch = new List<String>();
-                        if(range.Min_Range__c < 1000 || range.Max_Range__c < 1000)
+                        if(range.Min_Range__c < 1000)
                         {
                             rangesToSearch.add(infLimit+'0');
                         }
                         
-                        if(range.Min_Range__c >= 1000 || range.Max_Range__c >= 1000)
+                        if(range.Max_Range__c >= 1000)
                         {
-                            for(integer i=minRange; i<=maxRange; i++)
+                            for(integer i = (range.Min_Range__c < 1000? 1 : minRange); i<=maxRange; i++)
                             {
                                 rangesToSearch.add(infLimit+String.valueOf(i));
                             }
                         }
                         
-                        String query;
+                        String accountQuery;
+                        String accreditationFormQuery;
                         if(rangesToSearch.size() == 1)
                         {
-                            query = 'select IATACode__c from Account where IATACode__c like \'' +rangesToSearch.get(0) +'%\' group by IATACode__c order by IATACode__c';
+                            accountQuery = 'select IATACode__c from Account where IATACode__c like \'' +rangesToSearch.get(0) +'%\' group by IATACode__c order by IATACode__c';
+                            accreditationFormQuery = 'select IATACode__c from Account where IATACode__c like \'' +rangesToSearch.get(0) +'%\' group by IATACode__c order by IATACode__c';
                         }
                         else if(rangesToSearch.size() > 1)
                         {
-                            query = 'select IATACode__c from Account where (';
+                            String queryPart1 = 'select IATACode__c from ';
+                            String queryPart2 = ' where (';
                             for(String rangeToSearch : rangesToSearch)
                             {
-                                query = query + 'IATACode__c like \'' + rangeToSearch + '%\' or ';
+                                queryPart2 = queryPart2 + 'IATACode__c like \'' + rangeToSearch + '%\' or ';
                             }
                             
-                            query = query.subString(0, query.length()-4);
-                            query = query + ') group by IATACode__c order by IATACode__c';
-                        }
-                        
-                        System.debug('*********************** query: '+query);
-                        
-                        List<AggregateResult> rangeAgenciesBeforeFilter = Database.query(query);
-                        
-                        List<Account> rangeAgencies = new List<Account>();
-                        List<Integer> usedValuesInRange = new List<Integer>();
-
-                        if(rangeAgenciesBeforeFilter == null)
-                        {
-                            rangeAgenciesBeforeFilter = new List<AggregateResult>();
-                        }
-                        for(AggregateResult ag : rangeAgenciesBeforeFilter)
-                        {
-                            String iatacode = (String) ag.get('IATACode__c');
+                            queryPart2 = queryPart2.subString(0, queryPart2.length()-4);
+                            queryPart2 = queryPart2 + ') group by IATACode__c order by IATACode__c';
                             
-                            usedValuesInRange.add(Integer.valueOf(iatacode.subString(3, 7)));
+                            accountQuery = queryPart1 + 'Account' + queryPart2;
+                            accreditationFormQuery = queryPart1 + 'AMS_Pax_Accreditation_Form__c' + queryPart2;
                         }
+                        
+                        System.debug('*********************** Account query: '+accountQuery);
+                        System.debug('*********************** Accreditation form query: '+accreditationFormQuery);
+                        
+                        List<AggregateResult> rangeAgenciesBeforeFilterAccount = Database.query(accountQuery);
+                        List<AggregateResult> rangeAgenciesBeforeFilterAccreditationForm = Database.query(accreditationFormQuery);
+                        
+                        Set<Integer> usedValuesInRange = new Set<Integer>();
 
-                        system.debug('Used values in the defined range: '+ usedValuesInRange);
+                        if(rangeAgenciesBeforeFilterAccount != null){
+	                        for(AggregateResult ag : rangeAgenciesBeforeFilterAccount){
+	                            String iatacode = (String) ag.get('IATACode__c');
+	                            usedValuesInRange.add(Integer.valueOf(iatacode.subString(3, 7)));
+	                        }
+                        }
+                        system.debug('Used values in the defined range (accounts): '+ usedValuesInRange.size());
+
+                        if(rangeAgenciesBeforeFilterAccreditationForm != null){
+	                        for(AggregateResult ag : rangeAgenciesBeforeFilterAccreditationForm){
+	                            String iatacode = (String) ag.get('IATACode__c');
+	                            usedValuesInRange.add(Integer.valueOf(iatacode.subString(3, 7)));
+	                        }
+                        }
+                        system.debug('Used values in the defined range (accounts + accreditation forms): '+ usedValuesInRange.size());
 
                         Integer minRangeInt = Integer.valueOf(String.valueOf(range.Min_Range__c).replace(',', ''));
                         Integer maxRangeInt = Integer.valueOf(String.valueOf(range.Max_Range__c).replace(',', ''));
@@ -308,7 +318,10 @@ global class AmsIataCodeGenerator{
                         System.debug('Min range ---> ' + minRangeInt);
                         System.debug('Max range ---> ' + maxRangeInt);
 
-                        Integer rangeValueToUse = AMS_Utils.findGapInRange(minRangeInt, maxRangeInt, usedValuesInRange);
+						List<Integer> orderedSlotsOccupied = new List<Integer>(usedValuesInRange);
+						orderedSlotsOccupied.sort();
+
+                        Integer rangeValueToUse = AMS_Utils.findGapInRange(minRangeInt, maxRangeInt, orderedSlotsOccupied);
 
                         if(rangeValueToUse == -1){
                             // No availability within the code ranges: IATA Code can't be created for the current Agency configuration.
