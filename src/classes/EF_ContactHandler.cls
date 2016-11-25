@@ -111,7 +111,7 @@ public class EF_ContactHandler {
 
 			List<String> recipientEmails = new List <String> {'efs@iata.org'};
 			
-			if(c.EF_Client_Services_Specialist_Email__c != ''){
+			if(c.EF_Client_Services_Specialist_Email__c != null && c.EF_Client_Services_Specialist_Email__c != ''){
 				recipientEmails.add(c.EF_Client_Services_Specialist_Email__c);
 			}
 			
