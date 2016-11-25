@@ -56,6 +56,30 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
+        <fullName>Additional_Information__c</fullName>
+        <description>Additional information if the E&amp;F Category is Ad-Hoc Report or Miscellaneous</description>
+        <externalId>false</externalId>
+        <label>Additional Information</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Base_URL__c</fullName>
+        <externalId>false</externalId>
+        <formula>LEFT($Api.Enterprise_Server_URL_300, FIND(&apos;/services&apos;,$Api.Enterprise_Server_URL_300))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Base URL</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Case__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
@@ -69,6 +93,71 @@
         <type>Lookup</type>
     </fields>
     <fields>
+        <fullName>Category__c</fullName>
+        <externalId>false</externalId>
+        <label>Category</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Contractual</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Meeting Minutes</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Client Pricing or Charges</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Garnishee/Sanctions</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>VAT Certificate</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Operating License/Certificate</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Aircraft/Fleet Information</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Operational Calendars</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Debt Management</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Communications</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Ad-Hoc Report</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Audit</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Miscellaneous</fullName>
+                <default>false</default>
+            </picklistValues>
+            <restrictedPicklist>true</restrictedPicklist>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
         <fullName>Description__c</fullName>
         <externalId>false</externalId>
         <label>Description</label>
@@ -78,6 +167,16 @@
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Document_Date__c</fullName>
+        <defaultValue>TODAY()</defaultValue>
+        <externalId>false</externalId>
+        <label>Document Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
     </fields>
     <fields>
         <fullName>EF_Category__c</fullName>
@@ -171,6 +270,15 @@
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>EF_Private__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>E&amp;F Private</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>EF_SAP_Number__c</fullName>
@@ -300,6 +408,24 @@
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Expired__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Expired</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Expiry_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Expiry Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
     </fields>
     <fields>
         <fullName>File_Identifier__c</fullName>
@@ -578,6 +704,17 @@
         <type>TextArea</type>
     </fields>
     <fields>
+        <fullName>Owner_Email__c</fullName>
+        <defaultValue>$User.Email</defaultValue>
+        <externalId>false</externalId>
+        <label>Owner Email</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Review_Status__c</fullName>
         <externalId>false</externalId>
         <label>Review Status</label>
@@ -606,6 +743,17 @@
         <type>Picklist</type>
     </fields>
     <fields>
+        <fullName>SAP_Number__c</fullName>
+        <externalId>false</externalId>
+        <label>SAP Number</label>
+        <length>40</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Size_MB__c</fullName>
         <externalId>false</externalId>
         <label>Size MB</label>
@@ -616,6 +764,15 @@
         <trackTrending>false</trackTrending>
         <type>Number</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Skip_Validation__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Skip Validation</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>Source__c</fullName>
@@ -634,6 +791,115 @@
         </picklist>
         <required>false</required>
         <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Subcategory__c</fullName>
+        <externalId>false</externalId>
+        <label>Subcategory</label>
+        <picklist>
+            <controllingField>Category__c</controllingField>
+            <picklistValues>
+                <fullName>Contract/Amendment</fullName>
+                <default>false</default>
+                <controllingFieldValues>Contractual</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Notam/AIP</fullName>
+                <default>false</default>
+                <controllingFieldValues>Contractual</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Signatory Authority</fullName>
+                <default>false</default>
+                <controllingFieldValues>Contractual</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Bank</fullName>
+                <default>false</default>
+                <controllingFieldValues>Contractual</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Termination</fullName>
+                <default>false</default>
+                <controllingFieldValues>Contractual</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Signatory Authentication</fullName>
+                <default>false</default>
+                <controllingFieldValues>Contractual</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Proof of legal existence</fullName>
+                <default>false</default>
+                <controllingFieldValues>Contractual</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Deal Value Calculation</fullName>
+                <default>false</default>
+                <controllingFieldValues>Contractual</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Implementation Summary</fullName>
+                <default>false</default>
+                <controllingFieldValues>Contractual</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>BSP</fullName>
+                <default>false</default>
+                <controllingFieldValues>Operational Calendars</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>ICH</fullName>
+                <default>false</default>
+                <controllingFieldValues>Operational Calendars</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Client</fullName>
+                <default>false</default>
+                <controllingFieldValues>Operational Calendars</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Airline Status</fullName>
+                <default>false</default>
+                <controllingFieldValues>Debt Management</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Legal Case</fullName>
+                <default>false</default>
+                <controllingFieldValues>Debt Management</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Funds Management</fullName>
+                <default>false</default>
+                <controllingFieldValues>Debt Management</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Campaign</fullName>
+                <default>false</default>
+                <controllingFieldValues>Communications</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Inbound letter/fax</fullName>
+                <default>false</default>
+                <controllingFieldValues>Communications</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Outbound letter/fax</fullName>
+                <default>false</default>
+                <controllingFieldValues>Communications</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Circular/Notification</fullName>
+                <default>false</default>
+                <controllingFieldValues>Communications</controllingFieldValues>
+            </picklistValues>
+            <restrictedPicklist>true</restrictedPicklist>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -675,6 +941,61 @@
         <fullName>AMS_File</fullName>
         <active>true</active>
         <label>AMS File</label>
+        <picklistValues>
+            <picklist>Category__c</picklist>
+            <values>
+                <fullName>Ad-Hoc Report</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Aircraft%2FFleet Information</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Audit</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Client Pricing or Charges</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Communications</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Contractual</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Debt Management</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Garnishee%2FSanctions</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Meeting Minutes</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Miscellaneous</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Operating License%2FCertificate</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Operational Calendars</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>VAT Certificate</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
         <picklistValues>
             <picklist>EF_Category__c</picklist>
             <values>
@@ -1074,11 +1395,145 @@
                 <default>false</default>
             </values>
         </picklistValues>
+        <picklistValues>
+            <picklist>Subcategory__c</picklist>
+            <values>
+                <fullName>Airline Status</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BSP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Bank</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Campaign</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Circular%2FNotification</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Client</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Contract%2FAmendment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Deal Value Calculation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Funds Management</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICH</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Implementation Summary</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inbound letter%2Ffax</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Legal Case</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Notam%2FAIP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Outbound letter%2Ffax</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Proof of legal existence</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Signatory Authentication</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Signatory Authority</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Termination</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
     </recordTypes>
     <recordTypes>
         <fullName>EF_File</fullName>
         <active>true</active>
         <label>E&amp;F File</label>
+        <picklistValues>
+            <picklist>Category__c</picklist>
+            <values>
+                <fullName>Ad-Hoc Report</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Aircraft%2FFleet Information</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Audit</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Client Pricing or Charges</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Communications</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Contractual</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Debt Management</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Garnishee%2FSanctions</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Meeting Minutes</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Miscellaneous</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Operating License%2FCertificate</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Operational Calendars</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>VAT Certificate</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
         <picklistValues>
             <picklist>EF_Category__c</picklist>
             <values>
@@ -1474,11 +1929,145 @@
                 <default>false</default>
             </values>
         </picklistValues>
+        <picklistValues>
+            <picklist>Subcategory__c</picklist>
+            <values>
+                <fullName>Airline Status</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BSP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Bank</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Campaign</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Circular%2FNotification</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Client</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Contract%2FAmendment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Deal Value Calculation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Funds Management</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICH</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Implementation Summary</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inbound letter%2Ffax</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Legal Case</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Notam%2FAIP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Outbound letter%2Ffax</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Proof of legal existence</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Signatory Authentication</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Signatory Authority</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Termination</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
     </recordTypes>
     <recordTypes>
         <fullName>File</fullName>
         <active>true</active>
         <label>File</label>
+        <picklistValues>
+            <picklist>Category__c</picklist>
+            <values>
+                <fullName>Ad-Hoc Report</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Aircraft%2FFleet Information</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Audit</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Client Pricing or Charges</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Communications</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Contractual</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Debt Management</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Garnishee%2FSanctions</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Meeting Minutes</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Miscellaneous</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Operating License%2FCertificate</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Operational Calendars</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>VAT Certificate</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
         <picklistValues>
             <picklist>EF_Category__c</picklist>
             <values>
@@ -1867,6 +2456,85 @@
             </values>
             <values>
                 <fullName>Portal</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Subcategory__c</picklist>
+            <values>
+                <fullName>Airline Status</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BSP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Bank</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Campaign</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Circular%2FNotification</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Client</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Contract%2FAmendment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Deal Value Calculation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Funds Management</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICH</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Implementation Summary</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inbound letter%2Ffax</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Legal Case</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Notam%2FAIP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Outbound letter%2Ffax</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Proof of legal existence</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Signatory Authentication</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Signatory Authority</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Termination</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

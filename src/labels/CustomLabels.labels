@@ -75,7 +75,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS_OSCAR_APP_FINALIZATION</shortDescription>
-        <value>Approval Finalization</value>
+        <value>Application Finalization</value>
     </labels>
     <labels>
         <fullName>AMS_OSCAR_APP_RECONSIDERATION</fullName>
@@ -180,7 +180,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS OSCAR DISAPPROVAL</shortDescription>
-        <value>Disapproval Finalization</value>
+        <value>Application Disapproval</value>
     </labels>
     <labels>
         <fullName>AMS_OSCAR_MASTERDATA</fullName>
@@ -236,14 +236,14 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS_OSCAR_REJECTION_FINALIZATION</shortDescription>
-        <value>Rejection Finalization</value>
+        <value>Application Rejection</value>
     </labels>
     <labels>
         <fullName>AMS_OSCAR_STEP1</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS OSCAR STEP1</shortDescription>
-        <value>Approval Finalization</value>
+        <value>Application Finalization</value>
     </labels>
     <labels>
         <fullName>AMS_OSCAR_STEP10</fullName>
@@ -306,7 +306,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS OSCAR STEP18</shortDescription>
-        <value>Rejection finalization</value>
+        <value>Application Rejection</value>
     </labels>
     <labels>
         <fullName>AMS_OSCAR_STEP19</fullName>
@@ -369,7 +369,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS OSCAR STEP3</shortDescription>
-        <value>Disapproval Finalization</value>
+        <value>Application Disapproval</value>
     </labels>
     <labels>
         <fullName>AMS_OSCAR_STEP4</fullName>

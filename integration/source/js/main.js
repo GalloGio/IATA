@@ -26,19 +26,39 @@ jQuery(document).ready(function($) {
     var body = $('body');
 
     body.on('click', function() {
-        closeModal();
-        $('.tooltip-container').removeClass(className.open);
-    });
-
-    $('.modal-header, .modal-body, .modal-footer, .tooltip-container').on('click', function(event) {
-        var target = event.target;
-        if (!$(target).hasClass('fa-times') || !$(target).hasClass('fa-exclamation-triangle')) {
-            event.stopPropagation();
-            console.log(target);
+        if ($('.tooltip-container.is-open').length) {
+            $('.tooltip-container').removeClass(className.open);
+        }
+        // if ($('.js-tabs.is-open').length) {
+        //     $('.js-tabs').removeClass(className.open);
+        // }
+    }).on('click', '.overlay', function() {
+        if ($(this).is('#js-main-nav-overlay')) {
+            $('#js-main-nav-overlay').remove();
+            $('.sub-nav').removeClass(className.open);
+        } else {
+            closeModal();
         }
     });
 
+    $('.tooltip-container, #js-main-nav').on('click', function(event) {
+        event.stopPropagation();
+    });
 
+    $('#js-main-nav').on('click', function(event) {
+        event.preventDefault();
+        var self = $(this),
+            subNav = self.next('.sub-nav');
+        if (!subNav.hasClass('is-open')) {
+            self.addClass(className.open);
+            subNav.addClass(className.open);
+            body.append('<div id="js-main-nav-overlay" class="overlay"></div>')
+        } else {
+            self.removeClass(className.open);
+            subNav.removeClass(className.open);
+            $('#js-main-nav-overlay').remove();
+        }
+    });
 
     $(document).on('keyup', '.js-remaining-characters', function() {
         var targetElement = $(this).data('target-element'),
@@ -136,9 +156,7 @@ jQuery(document).ready(function($) {
             var targetStickyElement = parent.find(targetPane + ' .sub-container.payment-confirmation');
             stickyElementContainerWidth = targetStickyElement.width();
             stickyElementPositionTop = targetStickyElement.offset().top;
-
         }
-
     });
 
     var isClicked = false;
@@ -151,10 +169,7 @@ jQuery(document).ready(function($) {
         // $(target).siblings('.group-container').removeAttr('style');
     });
 
-    $('#js-main-nav').on('click', function(event) {
-        event.preventDefault();
-        $(this).next('.sub-nav').toggleClass(className.open);
-    });
+    
 
     $('.js-multi-select').on('click', function() {
         $(this).toggleClass(className.open).next().toggleClass(className.open);

@@ -147,7 +147,7 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Payment_Terms__c</field>
+            <field>Contract_Payment_Terms__c</field>
             <table>EF_Billing_Agreement__c</table>
         </columns>
         <columns>
@@ -172,7 +172,82 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Status__c</field>
+            <field>Airline_ID__c</field>
+            <table>EF_Billing_Agreement__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Airline_Location_ID__c</field>
+            <table>EF_Billing_Agreement__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Airline_Name__c</field>
+            <table>EF_Billing_Agreement__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Bill_to__c</field>
+            <table>EF_Billing_Agreement__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>EF_Comments__c</field>
+            <table>EF_Billing_Agreement__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contract_Group_Code__c</field>
+            <table>EF_Billing_Agreement__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>EF_Approver_Email__c</field>
+            <table>EF_Billing_Agreement__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>EF_Location_ID_Name__c</field>
+            <table>EF_Billing_Agreement__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>EF_Submitter_Email__c</field>
+            <table>EF_Billing_Agreement__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>EF_History__c</field>
+            <table>EF_Billing_Agreement__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Payer__c</field>
+            <table>EF_Billing_Agreement__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Payment_Terms__c</field>
+            <table>EF_Billing_Agreement__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Skip_Approval__c</field>
+            <table>EF_Billing_Agreement__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Ship_to__c</field>
+            <table>EF_Billing_Agreement__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Sold_to__c</field>
+            <table>EF_Billing_Agreement__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>EF_Airline_Id__c</field>
             <table>EF_Billing_Agreement__c</table>
         </columns>
         <masterLabel>E&amp;F Airline Billing Agreements</masterLabel>
@@ -235,7 +310,7 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Role__c</field>
+            <field>EF_Role__c</field>
             <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
         </columns>
         <columns>
