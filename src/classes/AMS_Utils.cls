@@ -73,6 +73,8 @@ public without sharing class AMS_Utils {
     public static final String SANITYCHECK = 'Perform Sanity Check';
     public static final String APPROVAL = 'Manager Approval';
     public static final String WITHDRAWAL = 'Application Withdrawal';
+    public static final String SUSPENSION = 'Process suspension';
+    public static final String TERMINATION = 'Process termination';
 
     public static final String PASSED = 'Passed';
     public static final String FAILED = 'Failed';
@@ -115,6 +117,8 @@ public without sharing class AMS_Utils {
     //Processes of type CHANGES
     public static final String COR              = 'CORRECTION.1.0'  ;
     public static final String AGENCYCHANGES    = 'MAJOR.CHANGES'   ;
+    public static final String VOLRELINQUISH    = 'VR.1.0'          ;
+    public static final String VOLRELINQUISH_CA = 'VR.1.0.CA'       ;
     public static final String BANKACCCHANGES   = 'BANK.ACCOUNT.CHANGES';
     public static final String CERTIFICATION    = 'CERTIFICATION.1.0';
 
@@ -144,6 +148,12 @@ public without sharing class AMS_Utils {
     public static final String ACC_S7_UNDERREVIEW = 'Under review';
     public static final String ACC_S8_CHANGESPROCESSED = 'Changes processed';
     public static final String ACC_S9_APPROVED = 'Approved';
+     
+    public static final String AACC_INPROGRESS = 'in progress';
+    public static final String AACC_FINALIZED = 'finalized';
+    public static final String AACC_WITHDRAWAL = 'withdrawn';
+    public static final String AACC_DISAPPROVED = 'disapproved';
+    public static final Set<String> AACC_FINALS = new Set<String>{AACC_FINALIZED, AACC_DISAPPROVED, AACC_WITHDRAWAL};
      
     public static final String CHLOCTYPEBEHAVIOR_NOSWAP = 'Don’t change the parent';        
     public static final String CHLOCTYPEBEHAVIOR_SWAP = 'Swap with the parent';
@@ -1657,5 +1667,183 @@ public static String fetchTypeOfCustomer (String locationType , String category)
     return categoryCustomerMap.get(category);
 
 }
+
+    public static Integer findGapInRange(Integer minRange, Integer maxRange, List<Integer> orderedSlotsOccupied){
+        //invalid range
+        if(maxRange-minRange < 0)
+            return -1;
+    
+        Integer candidate = minRange;
+        
+        for(Integer occupiedSlot : orderedSlotsOccupied){
+            if(occupiedSlot > candidate){
+                System.debug('Candidate found : ' + candidate);
+                return candidate;
+            }
+            else if(occupiedSlot == candidate){
+                candidate++;
+                if(candidate > maxRange){
+                    return -1;
+                }
+            }
+        }
+        
+        return candidate;
+    }    
+
+    public static final Date knownSunday = date.newInstance(2012, 7, 1);
+    
+    private static Map<String, Set<Integer>> weekendDaysPerBusinessHours{
+        get{
+            if(weekendDaysPerBusinessHours == null) weekendDaysPerBusinessHours = new Map<String, Set<Integer>>();
+            return weekendDaysPerBusinessHours;
+        }
+        set;
+    }
+
+    private static Set<Integer> addBusinessHours(String businessHours){
+        String findBusinessHours = (businessHours == null ? 'Default' : businessHours);
+
+        if(!weekendDaysPerBusinessHours.containsKey(findBusinessHours)){
+            List<BusinessHours> hs = [SELECT Id, Name, isDefault, isActive, SundayStartTime, MondayStartTime, TuesdayStartTime, WednesdayStartTime, ThursdayStartTime, FridayStartTime, SaturdayStartTime FROM BusinessHours WHERE isActive = true AND (Name = :findBusinessHours OR isDefault = true)];
+
+            Set<Integer> weekendDays = new Set<Integer>();
+            if(hs.isEmpty()){
+                System.debug(loggingLevel.ERROR, '____ [cls AMS_Utils - addBusinessHours] ************ no businessHours found -- using Sunday and Saturday ');
+                weekendDays.add(0);
+                weekendDays.add(6);
+                weekendDaysPerBusinessHours.put(findBusinessHours, weekendDays);
+            }else{
+                for(BusinessHours h : hs){
+                    weekendDays = new Set<Integer>();
+                    if(h.SundayStartTime == null) weekendDays.add(0);
+                    if(h.MondayStartTime == null) weekendDays.add(1);
+                    if(h.TuesdayStartTime == null) weekendDays.add(2);
+                    if(h.WednesdayStartTime == null) weekendDays.add(3);
+                    if(h.ThursdayStartTime == null) weekendDays.add(4);
+                    if(h.FridayStartTime == null) weekendDays.add(5);
+                    if(h.SaturdayStartTime == null) weekendDays.add(6);
+                    
+                    if(h.Name == findBusinessHours) weekendDaysPerBusinessHours.put(h.Name, weekendDays);
+                    else if(h.isDefault) weekendDaysPerBusinessHours.put('Default', weekendDays);
+                }
+                //if we went through all business hours and didn't find the desired one, copy the default
+                if(!weekendDaysPerBusinessHours.containsKey(findBusinessHours)){
+                System.debug(loggingLevel.ERROR, '____ [cls AMS_Utils - addBusinessHours] ************ no businessHours found for region -- copying default one ');
+                    weekendDaysPerBusinessHours.put(findBusinessHours, weekendDaysPerBusinessHours.get('Default'));
+                }
+            }           
+        }
+
+        return weekendDaysPerBusinessHours.get(findBusinessHours);
+    }
+    
+
+    public static Boolean IsWeekendDay(Date dateParam, String businessHours){
+        return IsWeekendDay(DateTime.newInstance(dateParam, Time.newInstance(0, 0, 0, 0)), businessHours);
+    }
+
+    public static Boolean IsWeekendDay(Datetime dateParam, String businessHours){
+       //Integer dayOfWeek  = Integer.valueOf(dateParam.format('u'));
+       //Integer dayOfWeek = dateParam.date().toStartOfWeek().daysBetween(dateParam.date());
+       Integer dayOfWeek = Math.mod(knownSunday.daysBetween(dateParam.date()), 7);
+
+       System.debug(loggingLevel.Debug, '____ [cls AMS_Utils - AddBusinessDays] dateParam - ' + dateParam);
+       System.debug(loggingLevel.Debug, '____ [cls AMS_Utils - IsWeekendDay] dayOfWeek - ' + dayOfWeek);
+
+       Set<Integer> weekendDays = new Set<Integer>();
+       if(weekendDaysPerBusinessHours.containsKey(businessHours)) weekendDays = weekendDaysPerBusinessHours.get(businessHours);
+       else weekendDays = addBusinessHours(businessHours);
+
+       System.debug(loggingLevel.Debug, '____ [cls AMS_Utils - IsWeekendDay] weekendDays - ' + weekendDays);
+
+       return weekendDays.contains(dayOfWeek);
+    }
+
+    public static Date AddBusinessDays(Date d, Integer businessDaysToAdd, String businessHours){
+        return AddBusinessDays(Datetime.newInstance(d, Time.newInstance(0, 0, 0, 0)), businessDaysToAdd, businessHours).date();
+    }
+
+    public static Datetime AddBusinessDays(Datetime d, Integer businessDaysToAdd, String businessHours){
+        System.debug(loggingLevel.Debug, '____ [cls AMS_Utils - AddBusinessDays] d - ' + d);
+        System.debug(loggingLevel.Debug, '____ [cls AMS_Utils - AddBusinessDays] businessHours - ' + businessHours);
+
+        Datetime finalDate = d;
+
+        //Add or decrease in businessDaysToAdd days 
+        Integer direction = businessDaysToAdd < 0 ? -1 : 1;
+
+        while(businessDaysToAdd != 0){
+            finalDate = finalDate.AddDays(direction);
+            if (!isWeekendDay(finalDate, businessHours)) businessDaysToAdd -= direction;
+        }
+
+        System.debug(loggingLevel.Debug, '____ [cls AMS_Utils - AddBusinessDays] finalDate - ' + finalDate);
+        return finalDate;
+    } 
+
+    public static Date lastDayOfMonth(Date dateField) {
+        return dateField.addMonths(1).toStartOfMonth().addDays(-1);
+    }
+
+
+    /** 
+        Process Parent Objects fields (up to 5 Parents?)
+    */
+    public static String processParentDependecies(String field , sObject sObj)
+    {
+
+            if(field.contains('.'))
+            {
+                //Get the Object directly related to the field
+                wrapperData wDObj = new wrapperData(sObj,field);
+                
+                return
+                    String.valueOf(
+                        (
+                            wDObj.sObj == null || wDObj.sObj.get(wDObj.fieldName) == null ) ? '' :wDObj.sObj.get(wDObj.fieldName)
+                        )
+                    ;
+            }
+
+            else
+                return
+                    String.valueOf(
+                        (
+                            sObj.get(field) == null) ? '' : sObj.get(field)
+                        )
+                    ;
+    }
+
+    /** 
+     Wrapper Object for Mapping the Entity for Field 
+     Example : change_code__r.Account__r.name 
+
+    */
+    private class wrapperData {
+        
+        private sObject sObj{get;set;}
+        private String fieldName{get;set;}
+    /** 
+         Get Object for the Field  (up to 5 Parents?)
+    */
+        private wrapperData(SObject sObjParent, String field){
+
+            List <String> strList = field.split('\\.');
+            integer lastPos = strList.size() -1;
+        
+            sObject sObj = sObjParent;
+
+            for(integer i = 0 ; i < lastPos ; i++) //avoid last element
+            {               
+                sObj = sObj.getSObject(strList.get(i));
+            }
+
+            this.sObj   = sObj;
+            this.fieldName = strList.get(lastPos); 
+
+        }
+
+    }
 
 }

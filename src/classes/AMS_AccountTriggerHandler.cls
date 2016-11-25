@@ -281,8 +281,8 @@ system.debug(LoggingLevel.ERROR, 'LF: handleManualMinorChanges() For cycle finis
 
     public class AccountChangesStruct {
 
-        private List<AMS_RecordCreatorWebservice.AccountChanges> changes{get;set;}
-        private Account acct{get;set;}
+        public List<AMS_RecordCreatorWebservice.AccountChanges> changes{get;set;}
+        public Account acct{get;set;}
 
         public AccountChangesStruct(List<AMS_RecordCreatorWebservice.AccountChanges> changes, Account acct){
 

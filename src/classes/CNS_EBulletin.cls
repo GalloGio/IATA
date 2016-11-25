@@ -60,7 +60,7 @@ public with sharing class CNS_EBulletin {
     public List <ISSP_PDF_Per_Region__c> pdfUserGuide {get; set;}
     
 
-    public ISSP_AMS_EBulletin() {
+    public CNS_EBulletin() {
 
         applyLanguage = UserInfo.getLanguage();
         displayLanguage = UserInfo.getLanguage();
