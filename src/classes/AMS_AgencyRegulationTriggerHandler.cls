@@ -34,7 +34,8 @@ public class AMS_AgencyRegulationTriggerHandler {
     //After a notification is sent by email we need to create a certification renewal Oscar
     public static void processPostNotifSentActions(List<AMS_Agency_Regulation__c> agencyRegulations, Map<Id,AMS_Agency_Regulation__c> oldAgRegulationValues){
 
-        List<AMS_Agency_Regulation__c> regulationsRequiringRenewal = new List<AMS_Agency_Regulation__c>();
+        List<AMS_Agency_Regulation__c> regulationsRequiringRenewalDGR = new List<AMS_Agency_Regulation__c>();
+        List<AMS_Agency_Regulation__c> regulationsRequiringRenewalTSA = new List<AMS_Agency_Regulation__c>();
         List<Contact> keyContacts = new List<Contact>();
 
         Map<Id, List<Contact>> keyContactsPerAccount = new Map<Id, List<Contact>>();
@@ -54,16 +55,20 @@ public class AMS_AgencyRegulationTriggerHandler {
         }
 
         for(AMS_Agency_Regulation__c agReg: agencyRegulations){
-
-            if(!oldAgRegulationValues.get(agReg.Id).Notification_Sent__c && agReg.Notification_Sent__c && agReg.Type_of_Certificate__c == AMS_Utils.CERT_DGR){
+            // TODO CNS ### not run for CNS account - probably is better to validate this here also
+            if(!oldAgRegulationValues.get(agReg.Id).Notification_Sent__c && agReg.Notification_Sent__c && (agReg.Type_of_Certificate__c == AMS_Utils.CERT_DGR || agReg.Type_of_Certificate__c == AMS_Utils.CERT_TSA)){
                 //system.debug('sending renewal emails to :' + keyContactsPerAccount.get(agReg.Account__c));
                 //sendEmailAlert(keyContactsPerAccount.get(agReg.Account__c));
-                regulationsRequiringRenewal.add(agReg);
+                if(agReg.Type_Of_Certificate__c == AMS_Utils.CERT_TSA)
+                	regulationsRequiringRenewalTSA.add(agReg);
+                else
+                	regulationsRequiringRenewalDGR.add(agReg);
             }
 
         }
 
-        createRenewalOSCARs(regulationsRequiringRenewal, keyContactsPerAccount);
+        createRenewalOSCARs_DGR(regulationsRequiringRenewalDGR, keyContactsPerAccount);
+        createRenewalOSCARs_TSA(regulationsRequiringRenewalTSA, keyContactsPerAccount);
 
     }
 
@@ -90,86 +95,174 @@ public class AMS_AgencyRegulationTriggerHandler {
             Messaging.sendEmail(mailsToSend);
     }
 
-    public static void createRenewalOSCARs(List<AMS_Agency_Regulation__c> regulationsRequiringRenewal, Map<Id, List<Contact>> keyContactsPerAccount){
+    public static void createRenewalOSCARs_DGR(List<AMS_Agency_Regulation__c> regulationsRequiringRenewal, Map<Id, List<Contact>> keyContactsPerAccount){
+	
+		if(regulationsRequiringRenewal != null && regulationsRequiringRenewal.isEmpty() == false){
+			
+	        Set<Id> accts = new Set<Id>();
+	        Set<Id> isoCountries = new Set<Id>();
+	
+	        Map<Id, List<AMS_Agency_Regulation__c>> DGRToRenewPerAccount = new Map<Id, List<AMS_Agency_Regulation__c>>();
+	
+	        Map<Id, List<AMS_Agency_Regulation__c>> allNonExpiredDGRPerAccount = new Map<Id, List<AMS_Agency_Regulation__c>>();
+	
+	        for(AMS_Agency_Regulation__c agReg: regulationsRequiringRenewal)
+	            accts.add(agReg.Account__c);
+	
+	
+	        //Need to get all the non expired agency regulations for each account
+	        List<AMS_Agency_Regulation__c> allDGR = new List<AMS_Agency_Regulation__c>([SELECT Id, Account__c, First_Name__c, Last_Name__c, Position__c, Type_of_Certificate__c, Account__r.IATA_ISO_Country__c, Account__r.Location_Class__c FROM AMS_Agency_Regulation__c WHERE Account__c IN :accts AND Expired__c = FALSE AND Type_of_Certificate__c = 'DGR']);
+	
+	        for(AMS_Agency_Regulation__c agReg : allDGR){
+	            if(!allNonExpiredDGRPerAccount.containsKey(agReg.Account__c))
+	                allNonExpiredDGRPerAccount.put(agReg.Account__c, new List<AMS_Agency_Regulation__c>());
+	            allNonExpiredDGRPerAccount.get(agReg.Account__c).add(agReg);
+	        }
+	
+	        for(AMS_Agency_Regulation__c agReg : regulationsRequiringRenewal){
+	            if(!DGRToRenewPerAccount.containsKey(agReg.Account__c))
+	                DGRToRenewPerAccount.put(agReg.Account__c, new List<AMS_Agency_Regulation__c>());
+	            DGRToRenewPerAccount.get(agReg.Account__c).add(agReg);
+	        }
+	
+	        Map<Id, Account> accountData = new Map<Id, Account>([SELECT Abbreviated_address__c, Abbreviated_name__c, Name, BillingState, BillingCity, IATA_ISO_Country__c, 
+	                                                                   Email__c, Fax, Phone, BillingPostalCode, BillingStreet, CASS_Number__c, IATACode__c, Iso_State__c, 
+	                                                                   License_Number__c, VAT_Number__c, Is_your_firm_handling_Dangerous_Goods__c, Location_Class__c, 
+	                                                                   Location_Type__c, Mobile__c, Operation__c, Remittance_frequency__c, ShippingCity, ShippingCountry, 
+	                                                                   ShippingPostalCode, ShippingState, ShippingStreet, Short_Name__c, Solicitation_Flag__c, TradeName__c, 
+	                                                                   VAT_Number_2__c, Website, BillingCountry, Region_formula__c, Legal_name__c, IATA_ISO_Country__r.Name
+	                                                            FROM Account WHERE Id IN :accts]);
+	
+	        for(Account acc: accountData.values())
+	            isoCountries.add(acc.IATA_ISO_Country__c);
+	
+	        //minimum requirements for location class 'R'
+	        Map<String, Integer> minimumHODgrRequirements = new Map<String, Integer>();
+	        Map<String, Integer> minimumBRDgrRequirements = new Map<String, Integer>();
+	        for(IATA_ISO_Country__c country : [SELECT Id, (SELECT Id, Minimum_DGR_BR__c, Minimum_DGR_HO__c, Location_Class__c
+	                                                       FROM AMS_Country_Specific_Attributes__r
+	                                                       WHERE RecordType.Name = 'DGR Minimum Requirements')
+	                                           FROM IATA_ISO_Country__c
+	                                           WHERE Id IN :isoCountries])
+	        {
+	            system.debug('country.AMS_Country_Specific_Attributes__r ' + country.AMS_Country_Specific_Attributes__r);
+	            for(AMS_Country_Specific_Attribute__c att : country.AMS_Country_Specific_Attributes__r){
+	                if(att != null){
+	                    minimumHODgrRequirements.put(''+country.Id+att.Location_Class__c, att.Minimum_DGR_HO__c == null ? 0 : Integer.valueOf(att.Minimum_DGR_HO__c));
+	                    minimumBRDgrRequirements.put(''+country.Id+att.Location_Class__c, att.Minimum_DGR_BR__c == null ? 0 : Integer.valueOf(att.Minimum_DGR_BR__c));
+	                }
+	            }
+	        }
+	
+	        system.debug('minimumHODgrRequirements ' + minimumHODgrRequirements);
+	        system.debug('minimumBRDgrRequirements ' + minimumBRDgrRequirements);
+	
+	        system.debug('regulationsRequiringRenewal ' + regulationsRequiringRenewal);
+	
+	        for(AMS_Agency_Regulation__c agReg: regulationsRequiringRenewal){
+	            //only create renewal if account is going below DGR/DGA requirements
+	
+	            String key = agReg.Account__r.IATA_ISO_Country__c + agReg.Account__r.Location_Class__c;
+	            system.debug('key value ' + key);
+	            Integer minDgrHO = minimumHODgrRequirements.get(key) == null ? 0 : minimumHODgrRequirements.get(key);
+	            system.debug('minDgrHO ' + minDgrHO);
+	            Integer minDgrBR = minimumBRDgrRequirements.get(key) == null ? 0 : minimumBRDgrRequirements.get(key);
+	            system.debug('minDgrBR ' + minDgrBR);
+	
+	            system.debug('accountData ' + accountData.get(agReg.Account__c));
+	
+	            if(isToCreateRenewalForDGR(accountData.get(agReg.Account__c), allNonExpiredDGRPerAccount.get(agReg.Account__c).size(), minDgrHO, minDgrBR)){
+	                system.debug('creating renewal for DGR');
+	                AMS_OSCAR__c oscar = createStagingArea(agReg, accountData.get(agReg.Account__c), DGRToRenewPerAccount.get(agReg.Account__c));
+	                sendEmailAlert(keyContactsPerAccount.get(agReg.Account__c), oscar.Id);
+	            }
+	        }
+		}
+    }
 
-        Set<Id> accts = new Set<Id>();
-        Set<Id> isoCountries = new Set<Id>();
+    public static void createRenewalOSCARs_TSA(List<AMS_Agency_Regulation__c> regulationsRequiringRenewal, Map<Id, List<Contact>> keyContactsPerAccount){
 
-        Map<Id, List<AMS_Agency_Regulation__c>> DGRToRenewPerAccount = new Map<Id, List<AMS_Agency_Regulation__c>>();
-
-        Map<Id, List<AMS_Agency_Regulation__c>> allNonExpiredDGRPerAccount = new Map<Id, List<AMS_Agency_Regulation__c>>();
-
-        for(AMS_Agency_Regulation__c agReg: regulationsRequiringRenewal)
-            accts.add(agReg.Account__c);
-
-
-        //Need to get all the non expired agency regulations for each account
-        List<AMS_Agency_Regulation__c> allDGR = new List<AMS_Agency_Regulation__c>([SELECT Id, Account__c, First_Name__c, Last_Name__c, Position__c, Type_of_Certificate__c, Account__r.IATA_ISO_Country__c, Account__r.Location_Class__c FROM AMS_Agency_Regulation__c WHERE Account__c IN :accts AND Expired__c = FALSE AND Type_of_Certificate__c = 'DGR']);
-
-        for(AMS_Agency_Regulation__c agReg : allDGR){
-            if(!allNonExpiredDGRPerAccount.containsKey(agReg.Account__c))
-                allNonExpiredDGRPerAccount.put(agReg.Account__c, new List<AMS_Agency_Regulation__c>());
-            allNonExpiredDGRPerAccount.get(agReg.Account__c).add(agReg);
-        }
-
-        for(AMS_Agency_Regulation__c agReg : regulationsRequiringRenewal){
-            if(!DGRToRenewPerAccount.containsKey(agReg.Account__c))
-                DGRToRenewPerAccount.put(agReg.Account__c, new List<AMS_Agency_Regulation__c>());
-            DGRToRenewPerAccount.get(agReg.Account__c).add(agReg);
-        }
-
-        Map<Id, Account> accountData = new Map<Id, Account>([SELECT Abbreviated_address__c, Abbreviated_name__c, Name, BillingState, BillingCity, IATA_ISO_Country__c, 
-                                                                   Email__c, Fax, Phone, BillingPostalCode, BillingStreet, CASS_Number__c, IATACode__c, Iso_State__c, 
-                                                                   License_Number__c, VAT_Number__c, Is_your_firm_handling_Dangerous_Goods__c, Location_Class__c, 
-                                                                   Location_Type__c, Mobile__c, Operation__c, Remittance_frequency__c, ShippingCity, ShippingCountry, 
-                                                                   ShippingPostalCode, ShippingState, ShippingStreet, Short_Name__c, Solicitation_Flag__c, TradeName__c, 
-                                                                   VAT_Number_2__c, Website, BillingCountry, Region_formula__c, Legal_name__c, IATA_ISO_Country__r.Name
-                                                            FROM Account WHERE Id IN :accts]);
-
-        for(Account acc: accountData.values())
-            isoCountries.add(acc.IATA_ISO_Country__c);
-
-        //minimum requirements for location class 'R'
-        Map<String, Integer> minimumHODgrRequirements = new Map<String, Integer>();
-        Map<String, Integer> minimumBRDgrRequirements = new Map<String, Integer>();
-        for(IATA_ISO_Country__c country : [SELECT Id, (SELECT Id, Minimum_DGR_BR__c, Minimum_DGR_HO__c, Location_Class__c
-                                                       FROM AMS_Country_Specific_Attributes__r
-                                                       WHERE RecordType.Name = 'DGR Minimum Requirements')
-                                           FROM IATA_ISO_Country__c
-                                           WHERE Id IN :isoCountries])
-        {
-            system.debug('country.AMS_Country_Specific_Attributes__r ' + country.AMS_Country_Specific_Attributes__r);
-            for(AMS_Country_Specific_Attribute__c att : country.AMS_Country_Specific_Attributes__r){
-                if(att != null){
-                    minimumHODgrRequirements.put(''+country.Id+att.Location_Class__c, att.Minimum_DGR_HO__c == null ? 0 : Integer.valueOf(att.Minimum_DGR_HO__c));
-                    minimumBRDgrRequirements.put(''+country.Id+att.Location_Class__c, att.Minimum_DGR_BR__c == null ? 0 : Integer.valueOf(att.Minimum_DGR_BR__c));
-                }
-            }
-        }
-
-        system.debug('minimumHODgrRequirements ' + minimumHODgrRequirements);
-        system.debug('minimumBRDgrRequirements ' + minimumBRDgrRequirements);
-
-        system.debug('regulationsRequiringRenewal ' + regulationsRequiringRenewal);
-
-        for(AMS_Agency_Regulation__c agReg: regulationsRequiringRenewal){
-            //only create renewal if account is going below DGR/DGA requirements
-
-            String key = agReg.Account__r.IATA_ISO_Country__c + agReg.Account__r.Location_Class__c;
-            system.debug('key value ' + key);
-            Integer minDgrHO = minimumHODgrRequirements.get(key) == null ? 0 : minimumHODgrRequirements.get(key);
-            system.debug('minDgrHO ' + minDgrHO);
-            Integer minDgrBR = minimumBRDgrRequirements.get(key) == null ? 0 : minimumBRDgrRequirements.get(key);
-            system.debug('minDgrBR ' + minDgrBR);
-
-            system.debug('accountData ' + accountData.get(agReg.Account__c));
-
-            if(isToCreateRenewalForDGR(accountData.get(agReg.Account__c), allNonExpiredDGRPerAccount.get(agReg.Account__c).size(), minDgrHO, minDgrBR)){
-                system.debug('creating renewal for DGR');
-                AMS_OSCAR__c oscar = createStagingArea(agReg, accountData.get(agReg.Account__c), DGRToRenewPerAccount.get(agReg.Account__c));
-                sendEmailAlert(keyContactsPerAccount.get(agReg.Account__c), oscar.Id);
-            }
-        }
+		if(regulationsRequiringRenewal != null && regulationsRequiringRenewal.isEmpty() == false){
+	
+	        Set<Id> accts = new Set<Id>();
+	        Set<Id> isoCountries = new Set<Id>();
+	
+	        Map<Id, List<AMS_Agency_Regulation__c>> TSAToRenewPerAccount = new Map<Id, List<AMS_Agency_Regulation__c>>();
+	
+	        Map<Id, List<AMS_Agency_Regulation__c>> allNonExpiredTSAPerAccount = new Map<Id, List<AMS_Agency_Regulation__c>>();
+	
+	        for(AMS_Agency_Regulation__c agReg: regulationsRequiringRenewal)
+	            accts.add(agReg.Account__c);
+	
+	
+	        //Need to get all the non expired agency regulations for each account
+	        List<AMS_Agency_Regulation__c> allTSA = new List<AMS_Agency_Regulation__c>([SELECT Id, Account__c, First_Name__c, Last_Name__c, Position__c, Type_of_Certificate__c, Account__r.IATA_ISO_Country__c, Account__r.Location_Class__c FROM AMS_Agency_Regulation__c WHERE Account__c IN :accts AND Expired__c = FALSE AND Type_of_Certificate__c = 'TSA']);
+	
+	        for(AMS_Agency_Regulation__c agReg : allTSA){
+	            if(!allNonExpiredTSAPerAccount.containsKey(agReg.Account__c))
+	                allNonExpiredTSAPerAccount.put(agReg.Account__c, new List<AMS_Agency_Regulation__c>());
+	            allNonExpiredTSAPerAccount.get(agReg.Account__c).add(agReg);
+	        }
+	
+	        for(AMS_Agency_Regulation__c agReg : regulationsRequiringRenewal){
+	            if(!TSAToRenewPerAccount.containsKey(agReg.Account__c))
+	                TSAToRenewPerAccount.put(agReg.Account__c, new List<AMS_Agency_Regulation__c>());
+	            TSAToRenewPerAccount.get(agReg.Account__c).add(agReg);
+	        }
+	
+	        Map<Id, Account> accountData = new Map<Id, Account>([SELECT Abbreviated_address__c, Abbreviated_name__c, Name, BillingState, BillingCity, IATA_ISO_Country__c, 
+	                                                                   Email__c, Fax, Phone, BillingPostalCode, BillingStreet, CASS_Number__c, IATACode__c, Iso_State__c, 
+	                                                                   License_Number__c, VAT_Number__c, Is_your_firm_handling_Dangerous_Goods__c, Location_Class__c, 
+	                                                                   Location_Type__c, Mobile__c, Operation__c, Remittance_frequency__c, ShippingCity, ShippingCountry, 
+	                                                                   ShippingPostalCode, ShippingState, ShippingStreet, Short_Name__c, Solicitation_Flag__c, TradeName__c, 
+	                                                                   VAT_Number_2__c, Website, BillingCountry, Region_formula__c, Legal_name__c, IATA_ISO_Country__r.Name
+	                                                            FROM Account WHERE Id IN :accts]);
+	
+	        for(Account acc: accountData.values())
+	            isoCountries.add(acc.IATA_ISO_Country__c);
+	
+	        //minimum requirements for location class 'R'
+	        Map<String, Integer> minimumHOTSARequirements = new Map<String, Integer>();
+	        Map<String, Integer> minimumBRTSARequirements = new Map<String, Integer>();
+	        for(IATA_ISO_Country__c country : [SELECT Id, (SELECT Id, Minimum_DGR_BR__c, Minimum_DGR_HO__c, Location_Class__c
+	                                                       FROM AMS_Country_Specific_Attributes__r
+	                                                       WHERE RecordType.Name = 'DGR Minimum Requirements')
+	                                           FROM IATA_ISO_Country__c
+	                                           WHERE Id IN :isoCountries])
+	        {
+	            system.debug('country.AMS_Country_Specific_Attributes__r ' + country.AMS_Country_Specific_Attributes__r);
+	            for(AMS_Country_Specific_Attribute__c att : country.AMS_Country_Specific_Attributes__r){
+	                if(att != null){
+	                    minimumHOTSARequirements.put(''+country.Id+att.Location_Class__c, att.Minimum_DGR_HO__c == null ? 0 : Integer.valueOf(att.Minimum_DGR_HO__c));
+	                    minimumBRTSARequirements.put(''+country.Id+att.Location_Class__c, att.Minimum_DGR_BR__c == null ? 0 : Integer.valueOf(att.Minimum_DGR_BR__c));
+	                }
+	            }
+	        }
+	
+	        system.debug('minimumHOTSARequirements ' + minimumHOTSARequirements);
+	        system.debug('minimumBRTSARequirements ' + minimumBRTSARequirements);
+	
+	        system.debug('regulationsRequiringRenewal ' + regulationsRequiringRenewal);
+	
+	        for(AMS_Agency_Regulation__c agReg: regulationsRequiringRenewal){
+	            //only create renewal if account is going below TSA requirements
+	
+	            String key = agReg.Account__r.IATA_ISO_Country__c + agReg.Account__r.Location_Class__c;
+	            system.debug('key value ' + key);
+	            Integer minTSAHO = minimumHOTSARequirements.get(key) == null ? 0 : minimumHOTSARequirements.get(key);
+	            system.debug('minTSAHO ' + minTSAHO);
+	            Integer minTSABR = minimumBRTSARequirements.get(key) == null ? 0 : minimumBRTSARequirements.get(key);
+	            system.debug('minTSABR ' + minTSABR);
+	
+	            system.debug('accountData ' + accountData.get(agReg.Account__c));
+	
+	            if(isToCreateRenewalForDGR(accountData.get(agReg.Account__c), allNonExpiredTSAPerAccount.get(agReg.Account__c).size(), minTSAHO, minTSABR)){
+	                system.debug('creating renewal for TSA');
+	                AMS_OSCAR__c oscar = createStagingArea(agReg, accountData.get(agReg.Account__c), TSAToRenewPerAccount.get(agReg.Account__c));
+	                sendEmailAlert(keyContactsPerAccount.get(agReg.Account__c), oscar.Id);
+	            }
+	        }
+		}
     }
 
     public static AMS_OSCAR__c createStagingArea(AMS_Agency_Regulation__c agReg, Account accountData, List<AMS_Agency_Regulation__c> regulations){
@@ -190,7 +283,10 @@ public class AMS_AgencyRegulationTriggerHandler {
         //TODO:theCommunicationCase.Origin
         //TODO:theCommunicationCase.Reason1__c
         theCommunicationCase.Region__c = accountData.Region_formula__c;
-        theCommunicationCase.Subject = 'DGR renewal - ' + accountData.Legal_name__c + ' - ' + accountData.IATACode__c;
+        if(agReg.Type_Of_Certificate__c == AMS_Utils.CERT_TSA)
+        	theCommunicationCase.Subject = 'TSA renewal - ' + accountData.Legal_name__c + ' - ' + accountData.IATACode__c;
+        else
+        	theCommunicationCase.Subject = 'DGR renewal - ' + accountData.Legal_name__c + ' - ' + accountData.IATACode__c;
         //TODO:theCommunicationCase.Type_of_customer__c = 
 
         insert theCommunicationCase;

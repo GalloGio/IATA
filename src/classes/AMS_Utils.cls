@@ -121,6 +121,7 @@ public without sharing class AMS_Utils {
     //Types of Certificate
     public static final String CERT_DGR         = 'DGR';
     public static final String CERT_DGA         = 'DGA';
+    public static final String CERT_TSA         = 'TSA';
 
     //Record Types
     public static final String RECTYPE_NEW      = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('NEW').getRecordTypeId();
