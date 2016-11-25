@@ -63,7 +63,7 @@
         <referenceTo>Account</referenceTo>
         <relationshipName>Inspections_AMS</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -141,16 +141,16 @@
     </fields>
     <fields>
         <fullName>Accreditation_Endorsement_organisation__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
         <label>Accreditation/Endorsement organisation</label>
         <referenceTo>AMS_Accreditation_Organization__c</referenceTo>
+        <relationshipLabel>Appointments (AMS)</relationshipLabel>
         <relationshipName>Inspections_AMS</relationshipName>
-        <relationshipOrder>0</relationshipOrder>
-        <reparentableMasterDetail>true</reparentableMasterDetail>
+        <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
-        <type>MasterDetail</type>
-        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+        <type>Lookup</type>
     </fields>
     <fields>
         <fullName>Agency__c</fullName>
@@ -160,9 +160,53 @@
         <referenceTo>AMS_Agency__c</referenceTo>
         <relationshipName>Inspections</relationshipName>
         <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Airline_Code__c</fullName>
+        <externalId>false</externalId>
+        <formula>Airline__r.Airline_designator__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Airline Code</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Airline__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Airline</label>
+        <lookupFilter>
+            <active>true</active>
+            <errorMessage>The selected Account must be an Airline Headquarter</errorMessage>
+            <filterItems>
+                <field>Account.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Airline Headquarters, Airline Branch</value>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Appointments (AMS) (Airline)</relationshipLabel>
+        <relationshipName>Appointments_AMS</relationshipName>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>BSPLink_or_CASSLink_activation__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>BSPLink or CASSLink activation</label>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>Date_Organisation_Status_attained__c</fullName>
@@ -174,21 +218,33 @@
         <type>Date</type>
     </fields>
     <fields>
+        <fullName>IATA_Non_IATA_Carrier__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(Airline__r.Membership_status__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>IATA/Non-IATA Carrier</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Last_synchronization__c</fullName>
         <externalId>false</externalId>
         <label>Last synchronization</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>DateTime</type>
     </fields>
     <fields>
         <fullName>Legacy_External_ID__c</fullName>
-        <externalId>false</externalId>
+        <externalId>true</externalId>
         <label>Legacy External ID</label>
         <length>80</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -217,7 +273,7 @@
             <sorted>false</sorted>
         </picklist>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -229,7 +285,7 @@
         <referenceTo>AMS_OSCAR__c</referenceTo>
         <relationshipName>Appointments</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -237,11 +293,11 @@
     <nameField>
         <displayFormat>INS-{0000000}</displayFormat>
         <label>Appointment Name</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Appointments (AMS)</pluralLabel>
     <searchLayouts/>
-    <sharingModel>ControlledByParent</sharingModel>
+    <sharingModel>ReadWrite</sharingModel>
     <startsWith>Vowel</startsWith>
 </CustomObject>

@@ -44,6 +44,11 @@
     bottom: 0;
 }
 
+#js-main-nav-overlay {
+    opacity: 0;
+}
+
+
 .modal-header {
     position: relative;
     background: #134045;
@@ -70,6 +75,7 @@
     position: relative;
     z-index: 200;
     margin: auto;
+    max-width: 1200px;
 
     .list-radio-select .custom-radio {
         top: 2px;

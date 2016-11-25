@@ -48,10 +48,6 @@
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Type</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Key_Customer__c</field>
             </layoutItems>
@@ -347,6 +343,10 @@
                 <behavior>Readonly</behavior>
                 <field>LastModifiedById</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ACLI_SAP_Id__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -506,7 +506,7 @@
         <fields>NAME</fields>
         <fields>Client__c</fields>
         <fields>Contract__c</fields>
-        <fields>Status__c</fields>
+        <fields>EF_Status__c</fields>
         <fields>Payment_Method_Code__c</fields>
         <fields>Data_Currency__c</fields>
         <fields>Billing_Currency__c</fields>
@@ -518,7 +518,7 @@
         <fields>NAME</fields>
         <fields>Airline__c</fields>
         <fields>Contract__c</fields>
-        <fields>Status__c</fields>
+        <fields>EF_Status__c</fields>
         <fields>Payment_Method_Code__c</fields>
         <fields>Data_Currency__c</fields>
         <fields>Billing_Currency__c</fields>

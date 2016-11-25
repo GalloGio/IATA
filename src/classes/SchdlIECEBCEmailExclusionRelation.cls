@@ -60,12 +60,12 @@ global class SchdlIECEBCEmailExclusionRelation implements Database.Batchable<sOb
         CronTrigger ct = [Select c.Id, c.CronJobDetail.Name, c.CronJobDetailId, c.CronExpression From CronTrigger c Where Id = :SC.getTriggerId()];
 
         SchdlIECEBCEmailExclusionRelation n = new SchdlIECEBCEmailExclusionRelation();
-        n.EXISTING_RELATION = ct.CronJobDetail.Name == 'SchdlIECEBCEmailExclusionRelationDaily';
+        n.EXISTING_RELATION = ct.CronJobDetail.Name == 'SchdlIECEBCEmailExclusionRelationDaily' + (Test.isRunningTest() ? 'Test' : '');
         Database.executeBatch(n,SchdlIECEBCEmailExclusionRelation.BATCH_SIZE);
     }
     global static void cancel() {
-        cancel('SchdlIECEBCEmailExclusionRelationDaily');
-        cancel('SchdlIECEBCEmailExclusionRelationHourly');
+        cancel('SchdlIECEBCEmailExclusionRelationDaily' + (Test.isRunningTest() ? 'Test' : ''));
+        cancel('SchdlIECEBCEmailExclusionRelationHourly' + (Test.isRunningTest() ? 'Test' : ''));
     }
     global static void cancel(String name) {
         CronTrigger ct = [SELECT Id, CronJobDetail.Id, CronJobDetail.Name, CronJobDetail.JobType FROM CronTrigger Where CronJobDetail.Name = :name LIMIT 1];
@@ -73,7 +73,7 @@ global class SchdlIECEBCEmailExclusionRelation implements Database.Batchable<sOb
     }
     
     global static void Schedule() {
-        System.schedule('SchdlIECEBCEmailExclusionRelationDaily', '0 0 4 * * ?', new SchdlIECEBCEmailExclusionRelation());
-        System.schedule('SchdlIECEBCEmailExclusionRelationHourly', '0 35 * * * ?', new SchdlIECEBCEmailExclusionRelation());
+        System.schedule('SchdlIECEBCEmailExclusionRelationDaily' + (Test.isRunningTest() ? 'Test' : ''), '0 0 4 * * ?', new SchdlIECEBCEmailExclusionRelation());
+        System.schedule('SchdlIECEBCEmailExclusionRelationHourly' + (Test.isRunningTest() ? 'Test' : ''), '0 35 * * * ?', new SchdlIECEBCEmailExclusionRelation());
     }
 }

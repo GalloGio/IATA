@@ -60,6 +60,15 @@
     }
 }
 
+#js-main-nav.is-open {
+    position: relative;
+    z-index: 150;
+}
+
+.sub-nav.is-open {
+    z-index: 150;
+}
+
 .site-logo,
 .main-nav,
 .account-nav li {
