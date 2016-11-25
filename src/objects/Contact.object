@@ -5683,6 +5683,17 @@ Formula field that copies the E&amp;F Type.</description>
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>EF_Client_Services_Specialist_Email__c</fullName>
+        <externalId>false</externalId>
+        <formula>Account.EF_Client_Services_Specialist_Email__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>E&amp;F Client Services Specialist Email</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>EF_Role__c</fullName>
         <externalId>false</externalId>
         <globalPicklist>EF_Role</globalPicklist>
