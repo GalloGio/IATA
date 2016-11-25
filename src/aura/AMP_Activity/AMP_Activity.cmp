@@ -42,7 +42,7 @@
                     </a>
                     <div class="slds-popover slds-nubbin--top-left slds-theme--error" role="alert" aria-live="polite" >
                         <div class="slds-popover__body slds-text-longform">
-                            {!v.errorMessage}
+                            <ui:outputRichText value="{!v.errorMessage}"/>
                         </div>
                     </div>
                 </div>
@@ -60,7 +60,7 @@
                 <ui:inputSelectOption label="Cancelled" text="Cancelled" value="{!v.activity.Status__c == 'Cancelled'}" />/>
             </ui:inputSelect>
         </td>
-        <td class="allignTop"><ui:inputDate value="{!v.activity.Deadline__c}" aura:id="deadline"  class="slds-input" displayDatePicker="true" /></td>
+        <td class="allignTop"><ui:inputDate value="{!v.activity.Deadline__c}" aura:id="deadline"  class="slds-input required" displayDatePicker="true" /></td>
         <td class="allignTop">
             <!-- <ui:inputText value="{!v.activity.Account_Issue_or_Priority__c}" /> -->
             <c:LookupSObject aura:id="accountIssueLookup"

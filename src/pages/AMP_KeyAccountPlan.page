@@ -100,7 +100,7 @@
 
       					<apex:column headerValue="Deadline" styleClass="narrow-table-column">
                     <apex:outputField value="{!objective.Deadline__c}"  rendered="{!!AND(isEditMode, IdConcerned==objective.Id)}"/>
-                    <apex:inputField value="{!objective.Deadline__c}" rendered="{!AND(isEditMode, IdConcerned==objective.Id)}"  />
+                    <apex:inputField value="{!objective.Deadline__c}" rendered="{!AND(isEditMode, IdConcerned==objective.Id)}" required="true"/>
                 </apex:column>
 
               </apex:pageBlockTable>
