@@ -63,13 +63,13 @@
 					<span class="iata-code">
 						<apex:outputText value="{0}-{1} {2} {3}" rendered="{!acc.Location_Class__c == 'P'}">
 							<apex:param value="{!LEFT(acc.IATACode__c, 2)}"/>
-							<apex:param value="{!RIGHT(LEFT(acc.IATACode__c, 4), 1)}"/>
+							<apex:param value="{!RIGHT(LEFT(acc.IATACode__c, 3), 1)}"/>
 							<apex:param value="{!RIGHT(LEFT(acc.IATACode__c, 7), 4)}"/>
 							<apex:param value="{!RIGHT(LEFT(acc.IATACode__c, 8), 1)}"/>
 						</apex:outputText> 
 						<apex:outputText value="{0}-{1} {2}" rendered="{!NOT(acc.Location_Class__c == 'P')}">
 							<apex:param value="{!LEFT(acc.IATACode__c, 2)}"/>
-							<apex:param value="{!RIGHT(LEFT(acc.IATACode__c, 4), 1)}"/>
+							<apex:param value="{!RIGHT(LEFT(acc.IATACode__c, 3), 1)}"/>
 							<apex:param value="{!RIGHT(LEFT(acc.IATACode__c, 7), 4)}"/>
 						</apex:outputText> 
 					</span>
