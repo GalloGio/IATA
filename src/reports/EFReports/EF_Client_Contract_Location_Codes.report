@@ -92,7 +92,7 @@
     <format>Summary</format>
     <groupingsDown>
         <dateGranularity>Day</dateGranularity>
-        <field>Account.Contracts$Contract_Name__c</field>
+        <field>Account.Contracts$Name</field>
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
     <name>E&amp;F Client Contract - Location Codes</name>
