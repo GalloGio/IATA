@@ -4,7 +4,7 @@
         <field>Account.Contracts$ContractNumber</field>
     </columns>
     <columns>
-        <field>Account.Contracts$Account</field>
+        <field>Account$Name</field>
     </columns>
     <columns>
         <field>Account.Contracts$EF_Status__c</field>
