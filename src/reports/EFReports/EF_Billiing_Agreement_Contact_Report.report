@@ -25,7 +25,7 @@
         <field>EF_Billing_Agreement__c.EF_Contact_Relationships__r$Contact__c.Title</field>
     </columns>
     <columns>
-        <field>EF_Billing_Agreement__c.EF_Contact_Relationships__r$Role__c</field>
+        <field>EF_Billing_Agreement__c.EF_Contact_Relationships__r$EF_Role__c</field>
     </columns>
     <columns>
         <field>EF_Billing_Agreement__c.EF_Contact_Relationships__r$Status__c</field>
