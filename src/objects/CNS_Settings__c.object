@@ -3,10 +3,10 @@
     <customSettingsType>Hierarchy</customSettingsType>
     <enableFeeds>false</enableFeeds>
     <fields>
-        <fullName>DGR_Check_Minimum_Amount__c</fullName>
+        <fullName>DGR_Validate_Certificates__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
-        <label>DGR - Check Minimum Amount</label>
+        <label>DGR - Validate Certificates</label>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
