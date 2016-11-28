@@ -50,7 +50,7 @@ global without sharing class AMS_EBulletinReportWebservice {
 	 	eBulletinProfile.Last_Run__c = system.now();
 
 		Attachment attachment = new Attachment();
-		//attachment.ContentType= 'text/csv;charset=ISO';
+		attachment.ContentType= 'text/csv;charset=ANSI';
 		attachment.Body = Blob.valueOf( csv );
 		attachment.Name = String.valueOf(eBulletinProfile.name + '_testChangeCodes_'+date.today()+'.csv');
 

@@ -28,18 +28,19 @@ public without sharing class AMS_EBulletinReportHelper {
 	public static final String CHANGECODE       = 	'14-Change Code';
 	public static final String CHANGECODEREASON = 	'15-Change Code';
 
-	public static final String OWNERS 	   		=	'22-Owner1';
+	public static final String OWNERS 	   		=	'23-Owner1';
 	public static final String OWNERAPINAME 	=	'Account__r.Owners';
 
+	// position in the owner name, example: 22-Owner1 will be recovering the value 1
 	public static final Integer OWNERPOS 			=	8;
 	public static final Integer NEWOWNERPOS 		=	12;
 
-	public static final String NEWSTATE 	    =	'43-New Country or State';
-	public static final String NEWCOUNTRY 		= 	'44-New Country or State';
+	public static final String NEWSTATE 	    =	'44-New Country or State';
+	public static final String NEWCOUNTRY 		= 	'45-New Country or State';
 
-	public static final String IRRREASON 		=	'67-IRR: Reason';
-	public static final String IRRPERIODSD 		= 	'68-IRR: Period';
-	public static final String IRRPERIODED		= 	'69-IRR: Period';
+	public static final String IRRREASON 		=	'68-IRR: Reason';
+	public static final String IRRPERIODSD 		= 	'69-IRR: Period';
+	public static final String IRRPERIODED		= 	'70-IRR: Period';
 
 	public static final String IRRCHANGECODE = 'IRR';
 
@@ -627,7 +628,8 @@ public without sharing class AMS_EBulletinReportHelper {
 				recordsList.add('');
 			}
 			else {
-				String strVal = AMS_Utils.processParentDependecies(fieldsList.get(position - customFieldsCounter),cc);
+				String strVal = checkForDateValue(AMS_Utils.processParentDependecies(fieldsList.get(position - customFieldsCounter),cc))
+						;
 
 				recordsList.add(strVal);
 			}
@@ -765,7 +767,7 @@ public without sharing class AMS_EBulletinReportHelper {
 		if(objValCountry != null)
 			countryIsoCode = headerVal.is_Field_New__c ? countryIsoCodeMap.get(objValCountry.newValueLookupID) : countryIsoCodeMap.get(objValCountry.oldValueLookupID) ;
 		else
-			countryIsoCode = AMS_Utils.processParentDependecies(countryStateList.get(0).split(',').get(1),cc);
+			countryIsoCode = String.valueOf(AMS_Utils.processParentDependecies(countryStateList.get(0).split(',').get(1),cc));
 
 		//return State if country in COUNTRYOVERRIDESET
 		if (COUNTRYOVERRIDESET.contains(countryIsoCode))
@@ -775,7 +777,7 @@ public without sharing class AMS_EBulletinReportHelper {
 			return headerVal.is_Field_New__c ? objValCountry.newValue : objValCountry.oldValue;
 		//else return country from account
 		else
-			return headerVal.is_Field_New__c ? '' : AMS_Utils.processParentDependecies(countryStateList.get(0).split(',').get(0),cc);
+			return headerVal.is_Field_New__c ? '' :String.valueOf(AMS_Utils.processParentDependecies(countryStateList.get(0).split(',').get(0),cc));
 		
 	}
 	
@@ -870,13 +872,13 @@ public without sharing class AMS_EBulletinReportHelper {
 	{
 		//Country ISO Code
 		//
-		String countryIsoCode = AMS_Utils.processParentDependecies(countryStateList.get(0).split(',').get(1),cc);
+		String countryIsoCode = String.valueOf(AMS_Utils.processParentDependecies(countryStateList.get(0).split(',').get(1),cc));
 
 		//return State if
 		if (COUNTRYOVERRIDESET.contains(countryIsoCode))
-			return AMS_Utils.processParentDependecies(countryStateList.get(1).split(',').get(0),cc);
+			return String.valueOf(AMS_Utils.processParentDependecies(countryStateList.get(1).split(',').get(0),cc));
 
-		return AMS_Utils.processParentDependecies(countryStateList.get(0).split(',').get(0),cc);
+		return String.valueOf(AMS_Utils.processParentDependecies(countryStateList.get(0).split(',').get(0),cc));
 	}
 
 
@@ -1010,6 +1012,31 @@ public without sharing class AMS_EBulletinReportHelper {
         	this.fieldLabel = fieldLabel;
         }
 
+	}
+
+	/** 
+		 Get Date Value from current field beeing extracted
+	*/
+	public String checkForDateValue(Object potencialDate)
+	{
+		Date dateVal;
+		
+		if(potencialDate instanceof Date) dateVal = (Date) potencialDate;
+		else if(potencialDate instanceof Datetime) 
+		{
+			Datetime dateTimeVal = (Datetime) potencialDate;
+			dateVal = dateTimeVal.date();
+		}
+
+
+		return (dateVal == null) ? String.valueOf(potencialDate) : generateDateForBulletin(dateVal);
+	}
+	
+	//Format the date in the eBulletin Format (dd-mmm-yyyy)
+	public String generateDateForBulletin(date dValue){
+		if(dValue==null) return '';
+		list<string> lsMonthName = new list<string>{'-','JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'};
+		return string.valueOf(dValue.day() + '-' + lsMonthName.get(dValue.month()) + '-' + dValue.year());
 	}
 
 		/** 
