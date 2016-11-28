@@ -147,20 +147,21 @@ public class AMS_CertificateManagerController {
 
 		System.debug(loggingLevel.Debug, '____ [cls AMS_CertificateManagerController - parseFile] iataCodeIndex - ' + iataCodeIndex);
 
-		List<String> iataCodes = new List<String>();
+		Map<String, Boolean> iataCodes = new Map<String, Boolean>();
 		for(String line : lines){
 			if(hasHeaders) hasHeaders = false; //skips first line if is a header
 			else{
 				List<String> entries = line.split(',');
 
 				System.debug(loggingLevel.Debug, '____ [cls AMS_CertificateManagerController - parseFile] entries - ' + entries);
-				iataCodes.add(entries[iataCodeIndex].removeEnd('"').removeStart('"'));
+				iataCodes.put(entries[iataCodeIndex].removeEnd('"').removeStart('"'), false);
 			}
 		}
 
 		System.debug(loggingLevel.Debug, '____ [cls AMS_CertificateManagerController - parseFile] iataCodes - ' + iataCodes);
 
-		List<Account> accounts = Database.query('SELECT Id, '+String.join(accountFieldList, ', ')+' FROM Account WHERE IataCode__c IN :iataCodes');
+		Set<String> iataCodesSet = iataCodes.keySet();
+		List<Account> accounts = Database.query('SELECT Id, '+String.join(accountFieldList, ', ')+' FROM Account WHERE IataCode__c IN :iataCodesSet');
 
 
 		if(lines.isEmpty()){
@@ -172,6 +173,7 @@ public class AMS_CertificateManagerController {
 		if(!accounts.isEmpty()){
 			for(Account acc : accounts){
 				accountIds.add(acc.Id);
+				iataCodes.put(acc.IATACode__c, true);
 				if(acc.Certificate_Generated_Current_Year__c) warnings.add(acc);
 			}
 		}
@@ -183,6 +185,13 @@ public class AMS_CertificateManagerController {
 
 			ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.WARNING, warning));
 		}
+
+
+		String iataCodewarning = 'The following iata codes on the file were not found on the database: ';
+		String errorCodes = '';
+		for(String iataCode : iataCodes.keySet()) if(!iataCodes.get(iataCode)) errorCodes += '<br/>- '+iataCode;
+
+		if(String.isNotEmpty(errorCodes)) ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.WARNING, iataCodewarning+errorCodes));
 	}
 
 	public void generateCertificates() {
