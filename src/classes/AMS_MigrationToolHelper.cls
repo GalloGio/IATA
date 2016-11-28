@@ -55,7 +55,7 @@ public with sharing class AMS_MigrationToolHelper {
 		return cont;
 	}
 
-	private static void alignOwners(AMS_Pax_Accreditation_Form__c accreditationObj, Case commCase){
+	public static void alignOwners(AMS_Pax_Accreditation_Form__c accreditationObj, Case commCase){
 
 		//List<Contact> contactsFromAccountToMatch= [Select Id, Email from Contact where AccountId = :commCase.AccountId];
 
@@ -429,7 +429,7 @@ public with sharing class AMS_MigrationToolHelper {
 		return accreditationObj;
 	}
 
-	private static AMS_Accreditation_Contact__c createAccreditationContact(AMS_Pax_Accreditation_Form__c accreditationObj, AMS_Account_Role__c role, String processType){
+	public static AMS_Accreditation_Contact__c createAccreditationContact(AMS_Pax_Accreditation_Form__c accreditationObj, AMS_Account_Role__c role, String processType){
 
 		AMS_Accreditation_Contact__c contact = new AMS_Accreditation_Contact__c();
 
@@ -630,81 +630,7 @@ public with sharing class AMS_MigrationToolHelper {
 
 	}
 
-	private static CaseContainer processNotFromPortal(CaseContainer cont){
-
-		Case caseToProcess = cont.c;
-
-		AMS_Pax_Accreditation_Form__c accreditationObj = fetchAccreditation(caseToProcess.Id);
-
-		String processType = processTypeMap.get(caseToProcess.Reason1__c);
-
-		if(processType == null){
-
-			cont.migrated = true;
-			cont.processing = false;
-			cont.errorMessage = 'Could not match case reason from case ('+caseToProcess.Reason1__c+') with type of process to be run.';
-			
-			return cont;
-		}
-
-
-		String resultValidations = performValidations(caseToProcess,processType);
-
-		Map<String, Object> flowVarMap = new Map<String, Object>();
-      	
-      	flowVarMap.put('accountId', caseToProcess.AccountId);
-      	flowVarMap.put('Type_of_OSCAR_process_in', processType);
-      	flowVarMap.put('ContactChooserEmailInput_in', caseToProcess.Contact.Email);
-      	
-
-      	System.debug('Starting with flow ...');
-
-		Flow.Interview.OSCAR_Wizard_SIMPLEX_Automatic_v2_0 wizardFlow = new Flow.Interview.OSCAR_Wizard_SIMPLEX_Automatic_v2_0(flowVarMap);
-		wizardFlow.start();
-
-		System.debug('Flow has ended...');
-
-		String oscarCaseId = (String)(wizardFlow.getVariableValue('OscarCaseId'));
-		String oscarId = (String)(wizardFlow.getVariableValue('OscarId'));
-
-		Case caseCreated = (Case)(wizardFlow.getVariableValue('CaseCreatedObject'));
-		AMS_OSCAR__c oscarCreated = (AMS_OSCAR__c)(wizardFlow.getVariableValue('CreatedOscarObject'));
-
-
-		System.debug('Oscar case id is ' + oscarCaseId);
-		System.debug('Oscar id is ' + oscarId);
-		
-		caseToProcess.ParentId = oscarCaseId;
-
-		update caseToProcess;
-
-		System.debug('Case updated.');
-
-		cont.oscarId = oscarId;
-		cont.oscarCaseId = oscarCaseId;
-		cont.oscarCreated = oscarCreated;
-		cont.caseCreated = caseCreated;
-		cont.processing = false;
-		cont.migrated = true;
-
-		if(accreditationObj == null)
-			accreditationObj = fetchAccreditation(oscarCaseId);
-
-		if(accreditationObj.IATACode__c == null && caseToProcess.Account.IATACode__c != null){
-			
-			accreditationObj.IATACode__c = caseToProcess.Account.IATACode__c;
-			
-			update accreditationObj;
-		}
-
-		System.debug('Process finished.');
-
-		return cont;
-
-
-	}
-
-	private static String performValidations(Case c, String processType){
+	public static String performValidations(Case c, String processType){
 
 
 		Set<String> categories = new Set<String> {
