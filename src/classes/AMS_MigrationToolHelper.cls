@@ -288,23 +288,52 @@ public with sharing class AMS_MigrationToolHelper {
 
 	private static AMS_Pax_Accreditation_Form__c fillAccreditation(AMS_Pax_Accreditation_Form__c accreditationObj, Account acct, Account directAccount, String processType, String caseId){
 
-		accreditationObj.Abbreviated_Address__c = accreditationObj.Abbreviated_Address__c == null ? acct.Abbreviated_address__c : accreditationObj.Abbreviated_Address__c;
+
+		if(processType == 'NEW.SA.1.0'){
+
+			accreditationObj.Branch_Office_City__c = accreditationObj.Branch_Office_City__c == null ? acct.BillingCity : accreditationObj.Branch_Office_City__c;
+			accreditationObj.Branch_Office_Country__c = accreditationObj.Branch_Office_Country__c == null ? (processType == 'NEW.BR.ABROAD' ?  directAccount.IATA_ISO_Country__c : acct.IATA_ISO_Country__c) : accreditationObj.Branch_Office_Country__c;
+			accreditationObj.Branch_Office_Postal_code__c = accreditationObj.Branch_Office_Postal_code__c == null ? acct.BillingPostalCode : accreditationObj.Branch_Office_Postal_code__c;
+			accreditationObj.Branch_Office_Street_name_number__c = accreditationObj.Branch_Office_Street_name_number__c == null ? acct.BillingStreet : accreditationObj.Branch_Office_Street_name_number__c;
+			accreditationObj.Billing_State__c = accreditationObj.Billing_State__c == null ? acct.BillingState : accreditationObj.Billing_State__c;
+			accreditationObj.Abbreviated_Address__c = accreditationObj.Abbreviated_Address__c == null ? acct.Abbreviated_address__c : accreditationObj.Abbreviated_Address__c;
+			accreditationObj.IATA_ISO_State__c = accreditationObj.IATA_ISO_State__c == null ? acct.Iso_State__c : accreditationObj.IATA_ISO_State__c;
+			accreditationObj.Shipping_City__c = accreditationObj.Shipping_City__c == null ? acct.ShippingCity : accreditationObj.Shipping_City__c;
+			accreditationObj.Shipping_Country__c = accreditationObj.Shipping_Country__c == null ? acct.ShippingCountry : accreditationObj.Shipping_Country__c;
+			accreditationObj.Shipping_ISO_Country__c = accreditationObj.Shipping_ISO_Country__c == null ? acct.IATA_ISO_Shipping_Country__c : accreditationObj.Shipping_ISO_Country__c;
+			accreditationObj.Shipping_ISO_State__c = accreditationObj.Shipping_ISO_State__c == null ? acct.IATA_ISO_Shipping_State__c : accreditationObj.Shipping_ISO_State__c;
+			accreditationObj.Shipping_Postal_Code__c = accreditationObj.Shipping_Postal_Code__c == null ? acct.ShippingPostalCode : accreditationObj.Shipping_Postal_Code__c;
+			accreditationObj.Shipping_State__c = accreditationObj.Shipping_State__c == null ? acct.ShippingState : accreditationObj.Shipping_State__c;
+			accreditationObj.Shipping_Street__c = accreditationObj.Shipping_Street__c == null ? acct.ShippingStreet : accreditationObj.Shipping_Street__c;
+
+		}
+		else{
+
+			accreditationObj.Branch_Office_City__c = accreditationObj.Branch_Office_City__c == null ? directAccount.BillingCity : accreditationObj.Branch_Office_City__c;
+			accreditationObj.Branch_Office_Country__c = accreditationObj.Branch_Office_Country__c == null ? (processType == 'NEW.BR.ABROAD' ?  directAccount.IATA_ISO_Country__c : acct.IATA_ISO_Country__c) : accreditationObj.Branch_Office_Country__c;
+			accreditationObj.Branch_Office_Postal_code__c = accreditationObj.Branch_Office_Postal_code__c == null ? directAccount.BillingPostalCode : accreditationObj.Branch_Office_Postal_code__c;
+			accreditationObj.Branch_Office_Street_name_number__c = accreditationObj.Branch_Office_Street_name_number__c == null ? directAccount.BillingStreet : accreditationObj.Branch_Office_Street_name_number__c;
+			accreditationObj.Billing_State__c = accreditationObj.Billing_State__c == null ? directAccount.BillingState : accreditationObj.Billing_State__c;
+			accreditationObj.Abbreviated_Address__c = accreditationObj.Abbreviated_Address__c == null ? directAccount.Abbreviated_address__c : accreditationObj.Abbreviated_Address__c;
+			accreditationObj.IATA_ISO_State__c = accreditationObj.IATA_ISO_State__c == null ? directAccount.Iso_State__c : accreditationObj.IATA_ISO_State__c;
+			accreditationObj.Shipping_City__c = accreditationObj.Shipping_City__c == null ? directAccount.ShippingCity : accreditationObj.Shipping_City__c;
+			accreditationObj.Shipping_Country__c = accreditationObj.Shipping_Country__c == null ? directAccount.ShippingCountry : accreditationObj.Shipping_Country__c;
+			accreditationObj.Shipping_ISO_Country__c = accreditationObj.Shipping_ISO_Country__c == null ? directAccount.IATA_ISO_Shipping_Country__c : accreditationObj.Shipping_ISO_Country__c;
+			accreditationObj.Shipping_ISO_State__c = accreditationObj.Shipping_ISO_State__c == null ? directAccount.IATA_ISO_Shipping_State__c : accreditationObj.Shipping_ISO_State__c;
+			accreditationObj.Shipping_Postal_Code__c = accreditationObj.Shipping_Postal_Code__c == null ? directAccount.ShippingPostalCode : accreditationObj.Shipping_Postal_Code__c;
+			accreditationObj.Shipping_State__c = accreditationObj.Shipping_State__c == null ? directAccount.ShippingState : accreditationObj.Shipping_State__c;
+			accreditationObj.Shipping_Street__c = accreditationObj.Shipping_Street__c == null ? directAccount.ShippingStreet : accreditationObj.Shipping_Street__c;
+		}
+
 		accreditationObj.Abbreviated_name__c = accreditationObj.Abbreviated_name__c == null ? directAccount.Abbreviated_name__c : accreditationObj.Abbreviated_name__c;
 		accreditationObj.Accept_terms_and_conditions__c = accreditationObj.Accept_terms_and_conditions__c == null ? true : accreditationObj.Accept_terms_and_conditions__c;
 		accreditationObj.Account_Name__c = accreditationObj.Account_Name__c == null ? acct.Name : accreditationObj.Account_Name__c;
-		accreditationObj.Billing_State__c = accreditationObj.Billing_State__c == null ? directAccount.BillingState : accreditationObj.Billing_State__c;
-		accreditationObj.Branch_Office_City__c = accreditationObj.Branch_Office_City__c == null ? acct.BillingCity : accreditationObj.Branch_Office_City__c;
-
-		accreditationObj.Branch_Office_Country__c = accreditationObj.Branch_Office_Country__c == null ? (processType == 'NEW.BR.ABROAD' ?  directAccount.IATA_ISO_Country__c : acct.IATA_ISO_Country__c) : accreditationObj.Branch_Office_Country__c;
 		
 		accreditationObj.Branch_Office_Email__c = accreditationObj.Branch_Office_Email__c == null ? directAccount.Email__c : accreditationObj.Branch_Office_Email__c;
 		accreditationObj.Branch_Office_FAX__c = accreditationObj.Branch_Office_FAX__c == null ? directAccount.Fax : accreditationObj.Branch_Office_FAX__c;
 		accreditationObj.Branch_Office_Phone__c = accreditationObj.Branch_Office_Phone__c == null ? directAccount.Phone : accreditationObj.Branch_Office_Phone__c;
-		accreditationObj.Branch_Office_Postal_code__c = accreditationObj.Branch_Office_Postal_code__c == null ? acct.BillingPostalCode : accreditationObj.Branch_Office_Postal_code__c;
-		accreditationObj.Branch_Office_Street_name_number__c = accreditationObj.Branch_Office_Street_name_number__c == null ? acct.BillingStreet : accreditationObj.Branch_Office_Street_name_number__c;
 		accreditationObj.CASS_Number__c = accreditationObj.CASS_Number__c == null ? directAccount.CASS_Number__c : accreditationObj.CASS_Number__c;
 		accreditationObj.IATACode__c = accreditationObj.IATACode__c == null ? directAccount.IATACode__c : accreditationObj.IATACode__c;
-		accreditationObj.IATA_ISO_State__c = accreditationObj.IATA_ISO_State__c == null ? acct.Iso_State__c : accreditationObj.IATA_ISO_State__c;
 		accreditationObj.ISSP_AMS_GDS_with_signed_contract__c = accreditationObj.ISSP_AMS_GDS_with_signed_contract__c == null ? AMS_AgencyHelper.transformGDS(directAccount.GDS__c) : accreditationObj.ISSP_AMS_GDS_with_signed_contract__c;
 		accreditationObj.ISSP_AMS_Legal_Status__c = accreditationObj.ISSP_AMS_Legal_Status__c == null ? decode(acct.Company_Type__c) : accreditationObj.ISSP_AMS_Legal_Status__c;
 		accreditationObj.ISSP_AMS_License_No__c = accreditationObj.ISSP_AMS_License_No__c == null ? directAccount.License_Number__c : accreditationObj.ISSP_AMS_License_No__c;
@@ -321,13 +350,7 @@ public with sharing class AMS_MigrationToolHelper {
 		if(accreditationObj.SAAM_Case__c == null)
 			accreditationObj.SAAM_Case__c = caseId;
 		
-		accreditationObj.Shipping_City__c = accreditationObj.Shipping_City__c == null ? directAccount.ShippingCity : accreditationObj.Shipping_City__c;
-		accreditationObj.Shipping_Country__c = accreditationObj.Shipping_Country__c == null ? directAccount.ShippingCountry : accreditationObj.Shipping_Country__c;
-		accreditationObj.Shipping_ISO_Country__c = accreditationObj.Shipping_ISO_Country__c == null ? acct.IATA_ISO_Shipping_Country__c : accreditationObj.Shipping_ISO_Country__c;
-		accreditationObj.Shipping_ISO_State__c = accreditationObj.Shipping_ISO_State__c == null ? acct.IATA_ISO_Shipping_State__c : accreditationObj.Shipping_ISO_State__c;
-		accreditationObj.Shipping_Postal_Code__c = accreditationObj.Shipping_Postal_Code__c == null ? acct.ShippingPostalCode : accreditationObj.Shipping_Postal_Code__c;
-		accreditationObj.Shipping_State__c = accreditationObj.Shipping_State__c == null ? directAccount.ShippingState : accreditationObj.Shipping_State__c;
-		accreditationObj.Shipping_Street__c = accreditationObj.Shipping_Street__c == null ? acct.ShippingStreet : accreditationObj.Shipping_Street__c;
+
 		accreditationObj.Short_Name__c = accreditationObj.Short_Name__c == null ? directAccount.Short_Name__c : accreditationObj.Short_Name__c;
 		accreditationObj.Solicitation_Flag__c = accreditationObj.Solicitation_Flag__c == null ? directAccount.Solicitation_Flag__c : accreditationObj.Solicitation_Flag__c;
 		accreditationObj.Submitted_to_IATA__c = accreditationObj.Submitted_to_IATA__c == null ? true : accreditationObj.Submitted_to_IATA__c;
