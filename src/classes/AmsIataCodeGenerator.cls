@@ -270,7 +270,7 @@ global class AmsIataCodeGenerator{
                         if(rangesToSearch.size() == 1)
                         {
                             accountQuery = 'select IATACode__c from Account where IATACode__c like \'' +rangesToSearch.get(0) +'%\' group by IATACode__c order by IATACode__c';
-                            accreditationFormQuery = 'select IATACode__c from Account where IATACode__c like \'' +rangesToSearch.get(0) +'%\' group by IATACode__c order by IATACode__c';
+                            accreditationFormQuery = 'select IATACode__c from AMS_Pax_Accreditation_Form__c where IATACode__c like \'' +rangesToSearch.get(0) +'%\' group by IATACode__c order by IATACode__c';
                         }
                         else if(rangesToSearch.size() > 1)
                         {
