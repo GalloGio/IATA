@@ -533,7 +533,7 @@
 								</tr>
 								<tr class="total">
 									<th>
-										Total
+										Total in USD
 									</th>
 									<td class="price">
 										<apex:outputText value="${0,number,###,###,##0.00}"><apex:param value="{!totalAmountDue}" /></apex:outputText>

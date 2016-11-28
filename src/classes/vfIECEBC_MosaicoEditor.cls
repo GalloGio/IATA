@@ -87,7 +87,7 @@ global class vfIECEBC_MosaicoEditor extends vfIECEBC_Controller {
         newAttachments.add(a);
         
         // Html
-		xHtmlContent = xHtmlContent.replaceAll('/iec/services/apexrest/Resources/(00P[a-zA-Z0-9]{15})', '{EBCResource' + '{' + '$1' + '}' + '/EBCResource}');
+		xHtmlContent = xHtmlContent.replaceAll('services/apexrest/Resources/(00P[a-zA-Z0-9]{15})', '{EBCResource' + '{' + '$1' + '}' + '/EBCResource}');
 
         Pattern p = Pattern.compile(vfIECEBC_Template.regexImagePlaceholder);
         Matcher mo = p.matcher(xHtmlContent);
@@ -135,13 +135,17 @@ global class vfIECEBC_MosaicoEditor extends vfIECEBC_Controller {
     
     public static Integer getStaticDailyCount(Id templateId) {
         datetime dt = System.now()-1;
-        return Database.countQuery('SELECT count() FROM EBC_Template_Test__c WHERE EBC_Template__c = :templateId AND Event_Date__c > :dt');
+        return Database.countQuery('SELECT count() FROM EBC_Template_Test__c WHERE EBC_Template__c = :templateId AND Event_Date__c >= :dt') + 1;
+    }
+    
+    webService static Integer dailyCount(Id templateId) {
+        return getStaticDailyCount(templateId);
     }
     
     webService static void sendTest(Id templateId, String email) {
         Integer dailyCount = getStaticDailyCount(templateId);
 
-        if (dailyCount >= 10) {
+        if (dailyCount > 10) {
             throw new DailyLimitReached_Exception('Daily limit of 10 tests for that design/template has been reached.');
         }
         

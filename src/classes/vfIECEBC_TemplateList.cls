@@ -8,15 +8,14 @@ public class vfIECEBC_TemplateList extends vfIECEBC_Abstract_List {
     public override List<SelectOption> getSortByOptions() {
         List<SelectOption> options = new List<SelectOption>();
         if (getIsFirstTimeLoadPage()) options.add(new SelectOption('CreatedDate DESC','Sort by'));
-        options.add(new SelectOption('Audience__c DESC','Audience'));
-        options.add(new SelectOption('CreatedDate DESC','Creation Date DESC'));
-        options.add(new SelectOption('CreatedDate ASC','Creation Date ASC'));
-        options.add(new SelectOption('LastModifiedDate DESC','Last Edited DESC'));
-        options.add(new SelectOption('LastModifiedDate ASC','Last Edited ASC'));
-        options.add(new SelectOption('Name ASC','Name'));
+        options.add(new SelectOption('Name ASC','Template Name'));
+        options.add(new SelectOption('Audience__c ASC','Template Audience'));
+        options.add(new SelectOption('CreatedDate ASC','Created Date - Ascending'));
+        options.add(new SelectOption('CreatedDate DESC','Created Date - Descending'));
+        options.add(new SelectOption('LastModifiedDate ASC','Last Edited - Ascending'));
+        options.add(new SelectOption('LastModifiedDate DESC','Last Edited - Descending'));
 
         return options;
-       
     }
     public boolean flagTabBasicTemplate {get { if (flagTabBasicTemplate==null) flagTabBasicTemplate=true; return flagTabBasicTemplate;} set;}
     public boolean flagTabUseHtml{ get{ if (flagTabUseHtml==null) flagTabUseHtml=false; return flagTabUseHtml;} set;}
@@ -198,6 +197,7 @@ public class vfIECEBC_TemplateList extends vfIECEBC_Abstract_List {
             if (newTemplateStepNumber == 2 && e.getMessage().contains('Audience__c')) newTemplateFieldsValidity.put('Audience__c', false);
             if (newTemplateStepNumber == 4 && e.getMessage().contains('Name')) newTemplateFieldsValidity.put('Name', false);
         }
+        
         
         return null;
     }

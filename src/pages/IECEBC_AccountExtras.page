@@ -20,7 +20,7 @@
 				<div class="inner-wrapper">
 					<h1 class="page-title">Account Details</h1>
 					 
-					<div class="tab-container">
+					<div class="tab-container js-tabs">
 						<ul class="nav tabs">
 							<li><a href="{!URLFOR($Page.IECEBC_AccountManage)}">Overview</a></li>
 							<li><a href="{!URLFOR($Page.IECEBC_AccountRatePlan)}">Rate plan</a></li>
@@ -125,8 +125,9 @@
 																		</tr>
 																	</apex:outputPanel>
 																	<apex:repeat id="purchaseItemRepeat" value="{!productRatePlanWrapperAddonNewPurchaseList}" var="purchaseItem">
-																		<tr class="item no-space">
+																		<tr class="item">
 																			<th>
+                                                                                
 																				<strong> {!purchaseItem.name}</strong>
 																				<!--
 																				{!purchaseItem.description}

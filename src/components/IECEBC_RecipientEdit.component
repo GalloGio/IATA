@@ -138,13 +138,13 @@
                                         </apex:outputText>
                                         <apex:outputText rendered="{!NOT(isIDCARDSelectionAllowed)}">
                                             <apex:outputText rendered="{!newFilter.Audience__c == 'Agent'}">
-                                                <input disabled="disabled" readonly="readonly" class="disabled-user-input radio" style="min-width: 20px;" type="radio" name="audience" id="Agent" value="Agent" checked="checked" />
+                                                <input disabled="disabled" readonly="readonly" class="disabled user-input radio" style="min-width: 20px;" type="radio" name="audience" id="Agent" value="Agent" checked="checked" />
                                             </apex:outputText>
                                             <apex:outputText rendered="{!newFilter.Audience__c != 'Agent'}">
-                                                <input disabled="disabled" readonly="readonly" class="disabled-user-input radio" style="min-width: 20px;" type="radio" name="audience" id="Agent" value="Agent" />
+                                                <input disabled="disabled" readonly="readonly" class="disabled user-input radio" style="min-width: 20px;" type="radio" name="audience" id="Agent" value="Agent" />
                                             </apex:outputText>                                            
                                         </apex:outputText>                                        
-                                        <label class="{!IF(isIDCARDSelectionAllowed,'custom-radio','')}" for="Agent"><i class="icon"></i></label>
+                                        <label class="custom-radio" for="Agent"><i class="icon"></i></label>
                                     </div>
                                     <label class="input-label" for="Agent">IATA/IATAN ID Cardholders</label>
                                 </div>
@@ -165,14 +165,14 @@
                                         </apex:outputText>
                                         <apex:outputText rendered="{!NOT(isCodeSelectionAllowed)}">
                                             <apex:outputText rendered="{!newFilter.Audience__c == 'Custom'}">
-                                                <input disabled="disabled" readonly="readonly" class="disabled-user-input radio" style="min-width: 20px;" type="radio" name="audience" id="new-list-3" value="Custom" checked="checked" />
+                                                <input disabled="disabled" readonly="readonly" class="disabled user-input radio" style="min-width: 20px;" type="radio" name="audience" id="new-list-3" value="Custom" checked="checked" />
                                             </apex:outputText>
                                             <apex:outputText rendered="{!newFilter.Audience__c != 'Custom'}">
-                                                <input disabled="disabled" readonly="readonly" class="disabled-user-input radio" style="min-width: 20px;" type="radio" name="audience" id="new-list-3" value="Custom" />
+                                                <input disabled="disabled" readonly="readonly" class="disabled user-input radio" style="min-width: 20px;" type="radio" name="audience" id="new-list-3" value="Custom" />
                                             </apex:outputText>                                            
                                         </apex:outputText>
                                         
-                                        <label class="{!IF(isCodeSelectionAllowed,'custom-radio','')}" for="new-list-3"><i class="icon"></i></label>
+                                        <label class="custom-radio" for="new-list-3"><i class="icon"></i></label>
                                     </div>
                                     <label class="input-label" for="new-list-3">Provide a list of IATA Numeric Codes</label>
                                 </div>
