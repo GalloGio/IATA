@@ -4,6 +4,8 @@ global without sharing class AMS_EBulletinReportWebservice {
 	private static String objectBaseQuery = 'Agency_Applied_Change_code__c';
 	private static String objectHistBaseQuery = 'AMS_Agency_A_Change_code_History__c';
 	private static String eBulletinCSVFormat = '","';
+	private static String recordTypeName = '';
+
 	private static AMSEBulletinFilters filters;
 	//private static String typeEBulletin = 'W';
 
@@ -20,6 +22,8 @@ global without sharing class AMS_EBulletinReportWebservice {
 		if(period.equalsIgnoreCase('Last') && eBulletinProfile.Last_Run__c != null && eBulletinProfile.Last_Run__c > startDate)
 			startDate = eBulletinProfile.Last_Run__c;
 
+
+		recordTypeName =Schema.SObjectType.AMS_eBulletin_Profile__c.RecordTypeInfosById.get(eBulletinProfile.RecordTypeId).Name;
 
 		filters = new AMSEBulletinFilters(eBulletinProfile, startDate, endDate);
 
@@ -50,12 +54,20 @@ global without sharing class AMS_EBulletinReportWebservice {
 	 	eBulletinProfile.Last_Run__c = system.now();
 
 		Attachment attachment = new Attachment();
-		//attachment.ContentType= 'text/csv;charset=ISO';
+		//attachment.ContentType= 'text/csv;charset=ANSI';
 		attachment.Body = Blob.valueOf( csv );
-		attachment.Name = String.valueOf(eBulletinProfile.name + '_testChangeCodes_'+date.today()+'.csv');
+		
 
-		//'a8L3E0000008kzs'
-			
+		String csvName = 'EBulletin ' + recordTypeName + ' Report ';
+		String csvDate = '';
+
+		if(startDate.addDays(1) == endDate) csvDate = AMS_EBulletinReportHelper.generateDateForBulletin(startDate.date());
+		else csvDate = AMS_EBulletinReportHelper.generateDateForBulletin(startDate.date()) +  ' - ' + AMS_EBulletinReportHelper.generateDateForBulletin(endDate.date());
+		
+
+		attachment.Name = csvName + csvDate + '.csv';
+
+
 		attachment.ParentId = eBulletinProfile.id; 
 	 	
 	 	insert attachment;
@@ -116,7 +128,7 @@ global without sharing class AMS_EBulletinReportWebservice {
         public AMSEBulletinFilters(AMS_eBulletin_Profile__c eBulletinProfile, Datetime fromCCDate, Datetime toCCDate){
         		//Daily or Weekly by record type
 			
-			this.typeEBulletin = Schema.SObjectType.AMS_eBulletin_Profile__c.RecordTypeInfosById.get(eBulletinProfile.RecordTypeId).Name.substring(0, 1).ToUpperCase();
+			this.typeEBulletin = recordTypeName.substring(0, 1).ToUpperCase();
 			
 			
 			// map with field Account__r.IATA_ISO_Country__r.IATA_Regional_Office__c

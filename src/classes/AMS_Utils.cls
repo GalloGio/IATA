@@ -1148,8 +1148,8 @@ public without sharing class AMS_Utils {
                         String newValue,oldValue,oldValueLookupID,newValueLookupID;
                         if (String.valueOf(fldType) == 'REFERENCE'){
 
-                            oldValue = processParentDependecies(accFieldApiName.replace('__c','__r.Name'),acc);
-                            newValue = processParentDependecies(fieldsMapping.get(accFieldApiName).replace('__c','__r.Name'),oscarOnlineAccreditation); 
+                            oldValue = String.valueOf(processParentDependecies(accFieldApiName.replace('__c','__r.Name'),acc));
+                            newValue = String.valueOf(processParentDependecies(fieldsMapping.get(accFieldApiName).replace('__c','__r.Name'),oscarOnlineAccreditation)); 
                             oldValueLookupID = String.valueOf(acc.get(accFieldApiName));
                             newValueLookupID = String.valueOf(accountFieldNewValue.get(accFieldApiName));
                             
@@ -1899,7 +1899,7 @@ public static String fetchTypeOfCustomer (String locationType , String category)
     /** 
         Process Parent Objects fields (up to 5 Parents?)
     */
-    public static String processParentDependecies(String field , sObject sObj)
+    public static Object processParentDependecies(String field , sObject sObj)
     {
 
             if(field.contains('.'))
@@ -1907,21 +1907,11 @@ public static String fetchTypeOfCustomer (String locationType , String category)
                 //Get the Object directly related to the field
                 wrapperData wDObj = new wrapperData(sObj,field);
                 
-                return
-                    String.valueOf(
-                        (
-                            wDObj.sObj == null || wDObj.sObj.get(wDObj.fieldName) == null ) ? '' :wDObj.sObj.get(wDObj.fieldName)
-                        )
-                    ;
+                return (wDObj.sObj == null || wDObj.sObj.get(wDObj.fieldName) == null ) ? '' :wDObj.sObj.get(wDObj.fieldName);
             }
 
             else
-                return
-                    String.valueOf(
-                        (
-                            sObj.get(field) == null) ? '' : sObj.get(field)
-                        )
-                    ;
+                return (sObj.get(field) == null) ? '' : sObj.get(field);
     }
 
     /** 
