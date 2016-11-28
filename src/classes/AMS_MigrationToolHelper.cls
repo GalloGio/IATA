@@ -17,7 +17,8 @@ public with sharing class AMS_MigrationToolHelper {
             'New SA / CHV – New Code' => 'NEW.SA.1.0',
             'VMFR Setup/Update' => 'MAJOR.CHANGES',
 			'TIDS' => 'NEW.TIDS.1.0',
-			'ERSP' => 'CORRECTION.1.0'
+			'ERSP' => 'CORRECTION.1.0',
+			'Certificate DGR' => 'CERTIFICATION.1.0'
             };
         }
         set;
@@ -575,7 +576,8 @@ public with sharing class AMS_MigrationToolHelper {
 			return cont;
 		}
 
-		List<AMS_Accreditation_Contact__c> contacts = createAccreditationContacts(accreditationObj,caseToProcess.AccountId,processType);
+		if(processType != 'CERTIFICATION.1.0')
+			List<AMS_Accreditation_Contact__c> contacts = createAccreditationContacts(accreditationObj,caseToProcess.AccountId,processType);
 
 		String oscarId = AMS_RecordCreatorWebservice.createAccreditation(caseToProcess.AccountId, accreditationObj.Id, processType, caseToProcess.Id);
 
