@@ -1017,7 +1017,7 @@ public without sharing class AMS_EBulletinReportHelper {
 	/** 
 		 Get Date Value from current field beeing extracted
 	*/
-	public String checkForDateValue(Object potencialDate)
+	public static String checkForDateValue(Object potencialDate)
 	{
 		Date dateVal;
 		
@@ -1033,7 +1033,7 @@ public without sharing class AMS_EBulletinReportHelper {
 	}
 	
 	//Format the date in the eBulletin Format (dd-mmm-yyyy)
-	public String generateDateForBulletin(date dValue){
+	public static String generateDateForBulletin(Date dValue){
 		if(dValue==null) return '';
 		list<string> lsMonthName = new list<string>{'-','JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'};
 		return string.valueOf(dValue.day() + '-' + lsMonthName.get(dValue.month()) + '-' + dValue.year());
