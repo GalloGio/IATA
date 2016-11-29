@@ -113,8 +113,9 @@
     function workingFirstName() {
         
         var firstName = (removeDiacritics(this.document.getElementById('{!$Component.idcardForm.pb1.sc1.first}').value));
-        document.getElementById('{!$Component.idcardForm.pb1.sc1.first}').value = firstName.capitalize();
-        
+        //document.getElementById('{!$Component.idcardForm.pb1.sc1.first}').value = firstName.capitalize();
+        document.getElementById('{!$Component.idcardForm.pb1.sc1.first}').value = firstName.toUpperCase();
+
         //removing apostrophe 
         var name = (removeDiacritics(this.document.getElementById('{!$Component.idcardForm.pb1.sc1.first}').value));
         name = name.replace(/'/,' ');
@@ -129,7 +130,8 @@
     function workingLastName() {
 
         var lastName = (removeDiacritics(this.document.getElementById('{!$Component.idcardForm.pb1.sc1.last}').value));
-        document.getElementById('{!$Component.idcardForm.pb1.sc1.last}').value = lastName.capitalize();
+        //document.getElementById('{!$Component.idcardForm.pb1.sc1.last}').value = lastName.capitalize();
+        document.getElementById('{!$Component.idcardForm.pb1.sc1.last}').value = lastName.toUpperCase();
 
         //removing apostrophe 
         var name = (removeDiacritics(this.document.getElementById('{!$Component.idcardForm.pb1.sc1.last}').value));
