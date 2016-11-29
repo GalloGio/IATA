@@ -3,8 +3,8 @@
     <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 
     <head>
-      <apex:stylesheet value="{!URLFOR($Resource.SLDS102, 'assets/styles/salesforce-lightning-design-system-vf.css')}" />
-      <apex:stylesheet value="{!URLFOR($Resource.AMP_helper, 'css/general.css')}"/>
+      <!-- <apex:stylesheet value="{!URLFOR($Resource.SLDS102, 'assets/styles/salesforce-lightning-design-system-vf.css')}" />
+      <apex:stylesheet value="{!URLFOR($Resource.AMP_helper, 'css/general.css')}"/> -->
 
     </head>
     <body class="container" ng-controller="DemoCtrl">
@@ -41,7 +41,7 @@
                     </apex:commandLink>
                 </apex:facet>
                     <apex:outputField value="{!i.Name}" rendered="{!NOT(AND(isEditMode, IdConcerned==i.Id))}"/>
-                    <apex:inputField value="{!i.Name}" rendered="{!AND(isEditMode, IdConcerned==i.Id)}"/>
+                    <apex:inputField value="{!i.Name}" rendered="{!AND(isEditMode, IdConcerned==i.Id)}" required="true"/>
                 </apex:column>
 
                 <apex:column >
@@ -94,7 +94,7 @@
                     </apex:commandLink>
                 </apex:facet>
                     <apex:outputField value="{!i.AM_Level_of_importance__c}" rendered="{!NOT(AND(isEditMode, IdConcerned==i.Id))}"/>
-                    <apex:inputField value="{!i.AM_Level_of_importance__c}" rendered="{!AND(isEditMode, IdConcerned==i.Id)}" />
+                    <apex:inputField value="{!i.AM_Level_of_importance__c}" rendered="{!AND(isEditMode, IdConcerned==i.Id)}" required="true"/>
                 </apex:column>
                 <!-- <apex:column styleClass="narrow-table-column">
 
@@ -118,7 +118,7 @@
                     </apex:commandLink>
                 </apex:facet>
                     <apex:outputField value="{!i.Status__c}" rendered="{!NOT(AND(isEditMode, IdConcerned==i.Id))}"/>
-                    <apex:inputField value="{!i.Status__c}" rendered="{!AND(isEditMode, IdConcerned==i.Id)}" />
+                    <apex:inputField value="{!i.Status__c}" rendered="{!AND(isEditMode, IdConcerned==i.Id)}" required="true"/>
                 </apex:column>
                 <apex:column styleClass="narrow-table-column">
 

@@ -9,6 +9,7 @@ public with sharing class AMP_IssuesAndPrioritiesExtension {
     public List<Objective__c> lsIssuesAndPriorities {get; set;}
     public String sortOrder {get;set;}
     private final Id objectiveRecordTypeId ;
+    public Objective__c newIssue {get; set;}
 
     private List<String> lsIssueFields;
 
@@ -184,7 +185,7 @@ public with sharing class AMP_IssuesAndPrioritiesExtension {
 
     public void newLine() {
       try {
-          Objective__c newIssue = new Objective__c();
+          newIssue = new Objective__c();
           newIssue.Account__c = this.myAccount.Id;
           newIssue.RecordTypeId = this.objectiveRecordTypeId;
           //newIssue.Name = 'new issue or priority';
@@ -199,7 +200,7 @@ public with sharing class AMP_IssuesAndPrioritiesExtension {
 
           isEditMode = true;
           isNewLine = true;
-          IdConcerned = newIssue.Id;
+          IdConcerned = null;
           sortOrder = ' CreatedDate ASC ';
         //   lsIssuesAndPriorities = getIssuesAndPriorities();
 
@@ -216,7 +217,14 @@ public with sharing class AMP_IssuesAndPrioritiesExtension {
 
         public void SaveLine() {
             try {
-                upsert lsIssuesAndPriorities;
+                // upsert lsIssuesAndPriorities;
+                for(Objective__c i : lsIssuesAndPriorities) {
+                    if(i.Id == IdConcerned) {
+                        newIssue = i;
+                        break;
+                    }
+                }
+                upsert newIssue;
                 isEditMode = false;
                 } catch (DMLException e) {
                     ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,e.getDmlMessage(0)));
