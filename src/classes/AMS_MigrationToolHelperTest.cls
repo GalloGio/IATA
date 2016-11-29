@@ -57,6 +57,7 @@ private class AMS_MigrationToolHelperTest {
 			thecase.Financial_Assessment_deadline__c = Date.Today();
 			thecase.Financial_Assessment_requested__c = Date.Today();
 			thecase.Financial_Review_Result__c = 'Satisfactory';
+			thecase.Financial_Assessment_compliant__c = 'Satisfactory';
 			thecase.Invoice_number__c = '12312323';
 			thecase.Local_Inspection_compliant__c = 'No';
 			thecase.Local_Inspection_deadline__c = Date.Today();
@@ -81,7 +82,9 @@ private class AMS_MigrationToolHelperTest {
 
 		Test.startTest();
 
-		List<Case> casesList = [SELECT id, Status, RecordType__c, Reason1__c, AccountId, BSPCountry__c ,Financial_Assessment_received__c,Bank_Guarantee_amount__c,Bank_Guarantee_deadline__c,Bank_Guarantee_received__c,Bank_Guarantee_requested__c,Change_effective_as_of__c,Criteria_remarks__c,Documentation_remarks__c,Dossier_reception_date__c,Fees_refund_requested__c,Finalization_checklist__c,Financial_Assessment_deadline__c,Financial_Assessment_requested__c,Financial_Review_Result__c,Invoice_number__c,Local_Inspection_compliant__c,Local_Inspection_deadline__c,Local_Inspection_received__c,Local_Inspection_requested__c,Process_Start_Date__c,Proof_of_payment_received__c,PSAA_EACP_Agreement_received__c,PSAA_signed_copy_sent__c,SAAM_Deadline_Date__c,AIMS_updated__c,Finalized_in_AIMS__c from case];
+		AMS_MigrationToolHelper.decode('V');
+
+		List<Case> casesList = [SELECT id, Financial_Assessment_compliant__c, Status, RecordType__c, Reason1__c, AccountId, BSPCountry__c ,Financial_Assessment_received__c,Bank_Guarantee_amount__c,Bank_Guarantee_deadline__c,Bank_Guarantee_received__c,Bank_Guarantee_requested__c,Change_effective_as_of__c,Criteria_remarks__c,Documentation_remarks__c,Dossier_reception_date__c,Fees_refund_requested__c,Finalization_checklist__c,Financial_Assessment_deadline__c,Financial_Assessment_requested__c,Financial_Review_Result__c,Invoice_number__c,Local_Inspection_compliant__c,Local_Inspection_deadline__c,Local_Inspection_received__c,Local_Inspection_requested__c,Process_Start_Date__c,Proof_of_payment_received__c,PSAA_EACP_Agreement_received__c,PSAA_signed_copy_sent__c,SAAM_Deadline_Date__c,AIMS_updated__c,Finalized_in_AIMS__c from case];
 
 		if(casesList.isEmpty())
 			System.assertEquals(true,false);
@@ -154,6 +157,48 @@ private class AMS_MigrationToolHelperTest {
 		System.assertEquals(true , oscar.Update_AIMS_Rejection_Date__c != null );
 		System.assertEquals(true , oscar.Update_AIMS_Approval_Date__c != null );
 
+
+		Test.stopTest();
+    }
+
+
+    static testMethod void test_verifyCaseMigration2() {
+
+		Test.startTest();
+
+		List<Case> casesList = [SELECT id, Account.Category__c, Account.Location_Type__c , Financial_Assessment_compliant__c, Status, RecordType__c, Reason1__c, AccountId, BSPCountry__c ,Financial_Assessment_received__c,Bank_Guarantee_amount__c,Bank_Guarantee_deadline__c,Bank_Guarantee_received__c,Bank_Guarantee_requested__c,Change_effective_as_of__c,Criteria_remarks__c,Documentation_remarks__c,Dossier_reception_date__c,Fees_refund_requested__c,Finalization_checklist__c,Financial_Assessment_deadline__c,Financial_Assessment_requested__c,Financial_Review_Result__c,Invoice_number__c,Local_Inspection_compliant__c,Local_Inspection_deadline__c,Local_Inspection_received__c,Local_Inspection_requested__c,Process_Start_Date__c,Proof_of_payment_received__c,PSAA_EACP_Agreement_received__c,PSAA_signed_copy_sent__c,SAAM_Deadline_Date__c,AIMS_updated__c,Finalized_in_AIMS__c from case];
+
+		if(casesList.isEmpty())
+			System.assertEquals(true,false);
+
+		Case c = casesList.get(0);
+
+		AMS_MigrationToolHelper.CaseContainer cc = new AMS_MigrationToolHelper.CaseContainer(c,true);
+
+		cc = AMS_MigrationToolHelper.migratecases(cc);
+
+		AMS_MigrationToolHelper.performValidations(c,'New HO');
+
+		AMS_Pax_Accreditation_Form__c accreditationObj = new AMS_Pax_Accreditation_Form__c();
+		
+		accreditationObj.SAAM_Case__c = c.Id;
+
+		insert accreditationObj;
+
+		accreditationObj = [select Id, SAAM_Case__c from AMS_Pax_Accreditation_Form__c LIMIT 1].get(0);
+
+		AMS_Account_Role__c role = new AMS_Account_Role__c();
+		role.Legacy_External_ID__c = '123213';
+		role.Owner_Name__c = 'TEST';
+		role.Legacy_System__c = 'AIMS';
+
+		insert role;
+
+		role = [SELECT Id , Legacy_External_ID__c,Owner_Name__c, Legacy_System__c, Owner_Account__c, Contact__c, Contact_Email__c, Percentage__c, Person__c, Contact_Phone__c from AMS_Account_Role__c LIMIT 1].get(0);
+
+		AMS_MigrationToolHelper.createAccreditationContact(accreditationObj, role, 'NEW.HO.1.0');
+
+		AMS_MigrationToolHelper.alignOwners(accreditationObj, c);
 
 		Test.stopTest();
     }

@@ -8,6 +8,9 @@ global without sharing class AMS_RecordCreatorWebservice {
     private static String MAJOR_CHANGES_PV = 'MAJOR.CHANGES';
     private static String DGR_DGA_PV = 'DGR.DGA';
     private static String NEWBRABRD_PV= 'NEW.BR.ABROAD';
+    private static String NEWTIDS_PV= 'NEW.TIDS.1.0';
+    private static String NEWCORRECTION_PV = 'CORRECTION.1.0';
+    private static String NEWDGR_PV = 'CERTIFICATION.1.0';
 
     /**
         Creates an Oscar (AMS_OSCAR__c) given an Account Id, an Accreditation Id and the Type of Process
@@ -56,8 +59,8 @@ global without sharing class AMS_RecordCreatorWebservice {
                 throw new CalloutException('There was an error on OSCAR object creation. Please check the logs or contact the System Administrator.');
                 //return 'There was an error on OSCAR object creation. Please check the logs or contact the System Administrator.';
 
-            if(typeOfProcess.equalsIgnoreCase(NEWBR_PV) || typeOfProcess.equalsIgnoreCase(NEWBRABRD_PV)){
-                if(!createHierarchy(realAccountId)){
+            if(typeOfProcess.equalsIgnoreCase(NEWBR_PV) || typeOfProcess.equalsIgnoreCase(NEWBRABRD_PV) || typeOfProcess.equalsIgnoreCase(NEWTIDS_PV) ){
+                if(!createHierarchy(realAccountId, typeOfProcess)){
                     Database.rollback(sp);
                     throw new CalloutException('There was an error on hierarchy object creation (does the account have a parent ?) . Please check the logs or contact the System Administrator.');
                     //return 'There was an error on hierarchy object creation (does the account have a parent ?) . Please check the logs or contact the System Administrator.';
@@ -112,18 +115,24 @@ global without sharing class AMS_RecordCreatorWebservice {
         return null;
     }
 
-    private static boolean createHierarchy(String accountId){
+    private static boolean createHierarchy(String accountId, String typeOfProcess){
 
         Account account = new Account(Id = accountId);
 
         System.debug('Account to create hierarchy is ' + account.Id);
 
-        List<Account> parentIdLst = [SELECT Id, ParentId from Account where Id = :account.Id LIMIT 1];
+        List<Account> parentIdLst = [SELECT Id, ParentId, Location_Type__c from Account where Id = :account.Id LIMIT 1];
+
+        if((!parentIdLst.isEmpty()) && typeOfProcess.equalsIgnoreCase(NEWTIDS_PV) && parentIdLst.get(0).Location_Type__c != 'BR'){
+            System.debug('There is no Parent Id to create an Hierarchy but its a TIDS so lets assume its an HO.');
+            return true;
+        }
 
         if(parentIdLst.isEmpty()){
             System.debug('There is no Parent Id to create an Hierarchy.');
             return false;
         }
+
 
         System.debug('Parent account to create hierarchy is ' + parentIdLst.get(0).ParentId);
 
@@ -161,11 +170,17 @@ global without sharing class AMS_RecordCreatorWebservice {
 
     private static String fetchOscarRecordType(String typeOfProcess){
 
-        if(typeOfProcess.equalsIgnoreCase(NEWBR_PV) || typeOfProcess.equalsIgnoreCase(NEWHO_PV) || typeOfProcess.equalsIgnoreCase(NEWBRABRD_PV))
+        if(typeOfProcess.equalsIgnoreCase(NEWBR_PV) || typeOfProcess.equalsIgnoreCase(NEWHO_PV) || typeOfProcess.equalsIgnoreCase(NEWBRABRD_PV) || typeOfProcess.equalsIgnoreCase(NEWTIDS_PV))
             return oscarRT.get('NEW');
 
         if(typeOfProcess.equalsIgnoreCase(BANK_ACCOUNT_CHANGES_PV) || typeOfProcess.equalsIgnoreCase(MAJOR_CHANGES_PV) || typeOfProcess.equalsIgnoreCase(DGR_DGA_PV))
             return oscarRT.get('CHANGE');
+
+        if(typeOfProcess.equalsIgnoreCase(NEWCORRECTION_PV))
+            return oscarRT.get('CORRECTION');
+
+        if(typeOfProcess.equalsIgnoreCase(NEWDGR_PV))
+            return oscarRT.get('CERTIFICATION');
 
         return null;
     
@@ -374,16 +389,9 @@ global without sharing class AMS_RecordCreatorWebservice {
         if(account == null)
             throw new CalloutException('Account could not be found.');
 
-        List<Agency_Applied_Change_code__c> accountActiveChangeCode = [SELECT Reason_Code__c, Reason_Description__c FROM Agency_Applied_Change_code__c WHERE Account__c =: accountId AND Active__c = TRUE];
-
         if(containsTradeName(accountChanges)){
                   
             changeCodeTN = generateChangeCodeTN(accountChanges, account.Status__c == 'Approved');
-
-            if(accountActiveChangeCode.size() > 0){
-                changeCodeTN.reasonCode = accountActiveChangeCode[0].Reason_Code__c;
-                changeCodeTN.reasonDesc = accountActiveChangeCode[0].Reason_Description__c;
-            }
 
             accountsToProcess.add(account);
             changeCodesToProcess.add(changeCodeTN);
@@ -395,11 +403,6 @@ global without sharing class AMS_RecordCreatorWebservice {
         if(accountChanges.size() > 1 ||  ( accountChanges.size() == 1 && !processedTN)){
 
             changeCode = generateChangeCode(accountChanges);
-            
-            if(accountActiveChangeCode.size() > 0){
-                changeCode.reasonCode = accountActiveChangeCode[0].Reason_Code__c;
-                changeCode.reasonDesc = accountActiveChangeCode[0].Reason_Description__c;
-            }
             
             accountsToProcess.add(account);
             changeCodesToProcess.add(changeCode);
@@ -477,7 +480,9 @@ global without sharing class AMS_RecordCreatorWebservice {
         AMS_OSCAR_JSON.ChangeCode toReturn = new AMS_OSCAR_JSON.ChangeCode();
 
         toReturn.name = 'CAD';
+        toReturn.reasonCode = 'Change data';
         toReturn.memoText = 'Minor Changes';//createMemoText(accountChanges);
+        toReturn.reasonDesc  = 'Accredited-Meets Criteria.';
         toReturn.status  = null;
 
         return toReturn;
@@ -488,8 +493,12 @@ global without sharing class AMS_RecordCreatorWebservice {
         AMS_OSCAR_JSON.ChangeCode toReturn = new AMS_OSCAR_JSON.ChangeCode();
 
         toReturn.name = 'CTA';
+        toReturn.reasonCode = 'Change data';
         toReturn.memoText = 'Change of trade name';//createMemoText(accountChanges);
-        toReturn.status  = null;
+        toReturn.reasonDesc  = 'Accredited-Meets Criteria.';
+        
+        if(isToChangeStatus)
+            toReturn.status  = '8'; // Accredited
 
         return toReturn;
     }
