@@ -12,11 +12,7 @@
 	<types>
         <members>*</members>
         <name>Profile</name>
-<<<<<<< HEAD
     </types>
-=======
-    </types>  -->
->>>>>>> 9c0b5ee81554d2fe2fa214ea07e46cd6acd1c78a
     <types>
         <members>*</members>
         <name>ReportType</name>

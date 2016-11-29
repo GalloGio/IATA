@@ -179,14 +179,6 @@
         <type>Date</type>
     </fields>
     <fields>
-<<<<<<< HEAD
-        <fullName>EF_Created_By__c</fullName>
-        <description>For storing names of non-Salesforce users who have originally provided the document to IATA.</description>
-        <externalId>false</externalId>
-        <inlineHelpText>For storing names of non-Salesforce users who have originally provided the document to IATA.</inlineHelpText>
-        <label>E&amp;F Created By</label>
-        <length>255</length>
-=======
         <fullName>EF_Category__c</fullName>
         <externalId>false</externalId>
         <label>E&amp;F Category</label>
@@ -252,24 +244,52 @@
         <type>Picklist</type>
     </fields>
     <fields>
+        <fullName>EF_Created_By__c</fullName>
+        <description>For storing names of non-Salesforce users who have originally provided the document to IATA.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>For storing names of non-Salesforce users who have originally provided the document to IATA.</inlineHelpText>
+        <label>E&amp;F Created By</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>EF_Created_On__c</fullName>
+        <description>For storing the original creation date of the document.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The original creation date of the document.</inlineHelpText>
+        <label>E&amp;F Created On</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
         <fullName>EF_Document_Date__c</fullName>
         <defaultValue>TODAY()</defaultValue>
         <externalId>false</externalId>
         <label>E&amp;F Document Date</label>
->>>>>>> 9c0b5ee81554d2fe2fa214ea07e46cd6acd1c78a
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
     </fields>
     <fields>
-<<<<<<< HEAD
-        <fullName>EF_Created_On__c</fullName>
-        <description>For storing the original creation date of the document.</description>
+        <fullName>EF_Enterprise_Keywords__c</fullName>
+        <description>For storing keywords regarding a document and a related company.</description>
         <externalId>false</externalId>
-        <inlineHelpText>The original creation date of the document.</inlineHelpText>
-        <label>E&amp;F Created On</label>
-=======
+        <inlineHelpText>For storing keywords regarding a document and a related company.</inlineHelpText>
+        <label>E&amp;F Enterprise Keywords</label>
+        <length>32768</length>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
         <fullName>EF_Expired__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
@@ -282,43 +302,18 @@
         <fullName>EF_Expiry_Date__c</fullName>
         <externalId>false</externalId>
         <label>E&amp;F Expiry Date</label>
->>>>>>> 9c0b5ee81554d2fe2fa214ea07e46cd6acd1c78a
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
-        <type>DateTime</type>
+        <type>Date</type>
     </fields>
     <fields>
-<<<<<<< HEAD
-        <fullName>EF_Enterprise_Keywords__c</fullName>
-        <description>For storing keywords regarding a document and a related company.</description>
-=======
-        <fullName>EF_Private__c</fullName>
-        <defaultValue>false</defaultValue>
->>>>>>> 9c0b5ee81554d2fe2fa214ea07e46cd6acd1c78a
-        <externalId>false</externalId>
-        <inlineHelpText>For storing keywords regarding a document and a related company.</inlineHelpText>
-        <label>E&amp;F Enterprise Keywords</label>
-        <length>32768</length>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>LongTextArea</type>
-        <visibleLines>3</visibleLines>
-    </fields>
-    <fields>
-<<<<<<< HEAD
         <fullName>EF_Modified_By__c</fullName>
         <description>For storing names of non-Salesforce users who have modified the related document.</description>
         <externalId>false</externalId>
         <inlineHelpText>For storing names of non-Salesforce users who have modified the related document.</inlineHelpText>
         <label>E&amp;F Modified By</label>
         <length>255</length>
-=======
-        <fullName>EF_SAP_Number__c</fullName>
-        <externalId>false</externalId>
-        <label>E&amp;F SAP Number</label>
-        <length>40</length>
->>>>>>> 9c0b5ee81554d2fe2fa214ea07e46cd6acd1c78a
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -326,25 +321,17 @@
         <unique>false</unique>
     </fields>
     <fields>
-<<<<<<< HEAD
         <fullName>EF_Modified_On__c</fullName>
         <description>For storing the last modified date of the document.</description>
         <externalId>false</externalId>
         <inlineHelpText>The last modified date of the document.</inlineHelpText>
         <label>E&amp;F Modified On</label>
         <required>false</required>
-=======
-        <fullName>EF_Skip_Validation__c</fullName>
-        <defaultValue>false</defaultValue>
-        <externalId>false</externalId>
-        <label>E&amp;F Skip Validation</label>
->>>>>>> 9c0b5ee81554d2fe2fa214ea07e46cd6acd1c78a
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>DateTime</type>
     </fields>
     <fields>
-<<<<<<< HEAD
         <fullName>EF_Private__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
@@ -352,7 +339,28 @@
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
-=======
+    </fields>
+    <fields>
+        <fullName>EF_SAP_Number__c</fullName>
+        <externalId>false</externalId>
+        <label>E&amp;F SAP Number</label>
+        <length>40</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>EF_Skip_Validation__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>E&amp;F Skip Validation</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>EF_Subcategory__c</fullName>
         <externalId>false</externalId>
         <label>E&amp;F Subcategory</label>
@@ -460,7 +468,6 @@
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
->>>>>>> 9c0b5ee81554d2fe2fa214ea07e46cd6acd1c78a
     </fields>
     <fields>
         <fullName>Expired__c</fullName>
@@ -996,8 +1003,6 @@
         <label>AMS File</label>
         <picklistValues>
             <picklist>Category__c</picklist>
-<<<<<<< HEAD
-=======
             <values>
                 <fullName>Ad-Hoc Report</fullName>
                 <default>false</default>
@@ -1053,7 +1058,6 @@
         </picklistValues>
         <picklistValues>
             <picklist>EF_Category__c</picklist>
->>>>>>> 9c0b5ee81554d2fe2fa214ea07e46cd6acd1c78a
             <values>
                 <fullName>Ad-Hoc Report</fullName>
                 <default>false</default>
@@ -1591,8 +1595,6 @@
             </values>
         </picklistValues>
         <picklistValues>
-<<<<<<< HEAD
-=======
             <picklist>EF_Category__c</picklist>
             <values>
                 <fullName>Ad-Hoc Report</fullName>
@@ -1727,7 +1729,6 @@
             </values>
         </picklistValues>
         <picklistValues>
->>>>>>> 9c0b5ee81554d2fe2fa214ea07e46cd6acd1c78a
             <picklist>File_Identifier_picklist__c</picklist>
             <values>
                 <fullName>ACC_GRMNY</fullName>
@@ -2128,8 +2129,6 @@
             </values>
         </picklistValues>
         <picklistValues>
-<<<<<<< HEAD
-=======
             <picklist>EF_Category__c</picklist>
             <values>
                 <fullName>Ad-Hoc Report</fullName>
@@ -2264,7 +2263,6 @@
             </values>
         </picklistValues>
         <picklistValues>
->>>>>>> 9c0b5ee81554d2fe2fa214ea07e46cd6acd1c78a
             <picklist>File_Identifier_picklist__c</picklist>
             <values>
                 <fullName>ACC_GRMNY</fullName>
