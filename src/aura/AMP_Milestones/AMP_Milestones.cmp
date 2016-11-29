@@ -34,7 +34,9 @@
             
             <div class="slds-no-flex">
                 <div class="slds-button-group" role="group">
+                    <aura:if isTrue="{!v.canEdit}">
                     <button class="slds-button slds-button--neutral slds-col--bump-left" onclick="{!c.addMilestone}">New</button>
+                    </aura:if>
                 </div>
             </div>                
         </div>
