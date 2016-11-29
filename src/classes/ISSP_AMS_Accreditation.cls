@@ -2800,7 +2800,7 @@ public without sharing class ISSP_AMS_Accreditation {
         String emailTemplateName;
         String fromaddress;
 
-        if (isNoticeOfChange) {
+        if (isNoticeOfChange && con.id == newCase.ContactId) {
             SYSTEM.DEBUG('Sending NoC Confirmation 1');
             emailTemplateName = 'ISSP AMS Process Notification';
             fromaddress = 'IATA Service Centre (noreply@iata.org)';
