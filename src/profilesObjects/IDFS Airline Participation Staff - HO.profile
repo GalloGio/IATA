@@ -7035,7 +7035,7 @@
 <recordTypeVisibilities><default>false</default><recordType>Case.CasesMENA</recordType><visible>true</visible></recordTypeVisibilities>
 <recordTypeVisibilities><default>false</default><recordType>Case.Cases_China_North_Asia</recordType><visible>true</visible></recordTypeVisibilities>
 <recordTypeVisibilities><default>false</default><recordType>Case.Cases_Global_TEST</recordType><visible>false</visible></recordTypeVisibilities>
-<recordTypeVisibilities><default>false</default><recordType>Case.Cases_SIS_Help_Desk</recordType><visible>true</visible></recordTypeVisibilities>
+<recordTypeVisibilities><default>false</default><recordType>Case.Cases_SIS_Help_Desk</recordType><visible>false</visible></recordTypeVisibilities>
 <recordTypeVisibilities><default>false</default><recordType>Case.Cases_TTBS</recordType><visible>false</visible></recordTypeVisibilities>
 <recordTypeVisibilities><default>false</default><recordType>Case.ComplaintIDFS</recordType><visible>false</visible></recordTypeVisibilities>
 <recordTypeVisibilities><default>false</default><recordType>Case.DIP_Review_Process</recordType><visible>false</visible></recordTypeVisibilities>
