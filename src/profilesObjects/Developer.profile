@@ -1644,7 +1644,7 @@
 <fieldPermissions><editable>true</editable><field>Agency_Applied_Change_code__c.Date_time_of_change__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Agency_Applied_Change_code__c.Effective_Date__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Agency_Applied_Change_code__c.End_Date__c</field><readable>true</readable></fieldPermissions>
-<fieldPermissions><editable>false</editable><field>Agency_Applied_Change_code__c.For_Integration__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>Agency_Applied_Change_code__c.For_Integration__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Agency_Applied_Change_code__c.IRR_Expiration_Date__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Agency_Applied_Change_code__c.Irregularities_Expired__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Agency_Applied_Change_code__c.Irregularities_Points__c</field><readable>true</readable></fieldPermissions>

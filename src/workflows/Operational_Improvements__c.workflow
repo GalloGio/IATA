@@ -404,7 +404,7 @@
     </rules>
     <rules>
         <fullName>OI Action Plan 1</fullName>
-        <active>false</active>
+        <active>true</active>
         <criteriaItems>
             <field>Operational_Improvements__c.Action_1_Due_Date__c</field>
             <operation>notEqual</operation>
@@ -445,7 +445,7 @@
     </rules>
     <rules>
         <fullName>OI Action Plan 10</fullName>
-        <active>false</active>
+        <active>true</active>
         <criteriaItems>
             <field>Operational_Improvements__c.Action_10_Due_Date__c</field>
             <operation>notEqual</operation>
@@ -486,7 +486,7 @@
     </rules>
     <rules>
         <fullName>OI Action Plan 2</fullName>
-        <active>false</active>
+        <active>true</active>
         <criteriaItems>
             <field>Operational_Improvements__c.Action_2_Due_Date__c</field>
             <operation>notEqual</operation>
@@ -527,7 +527,7 @@
     </rules>
     <rules>
         <fullName>OI Action Plan 3</fullName>
-        <active>false</active>
+        <active>true</active>
         <criteriaItems>
             <field>Operational_Improvements__c.Action_3_Due_Date__c</field>
             <operation>notEqual</operation>
@@ -568,7 +568,7 @@
     </rules>
     <rules>
         <fullName>OI Action Plan 4</fullName>
-        <active>false</active>
+        <active>true</active>
         <criteriaItems>
             <field>Operational_Improvements__c.Action_4_Due_Date__c</field>
             <operation>notEqual</operation>
@@ -609,7 +609,7 @@
     </rules>
     <rules>
         <fullName>OI Action Plan 5</fullName>
-        <active>false</active>
+        <active>true</active>
         <criteriaItems>
             <field>Operational_Improvements__c.Action_5_Due_Date__c</field>
             <operation>notEqual</operation>
@@ -650,7 +650,7 @@
     </rules>
     <rules>
         <fullName>OI Action Plan 6</fullName>
-        <active>false</active>
+        <active>true</active>
         <criteriaItems>
             <field>Operational_Improvements__c.Action_6_Due_Date__c</field>
             <operation>notEqual</operation>
@@ -691,7 +691,7 @@
     </rules>
     <rules>
         <fullName>OI Action Plan 7</fullName>
-        <active>false</active>
+        <active>true</active>
         <criteriaItems>
             <field>Operational_Improvements__c.Action_7_Due_Date__c</field>
             <operation>notEqual</operation>
@@ -732,7 +732,7 @@
     </rules>
     <rules>
         <fullName>OI Action Plan 8</fullName>
-        <active>false</active>
+        <active>true</active>
         <criteriaItems>
             <field>Operational_Improvements__c.Action_8_Due_Date__c</field>
             <operation>notEqual</operation>
@@ -773,7 +773,7 @@
     </rules>
     <rules>
         <fullName>OI Action Plan 9</fullName>
-        <active>false</active>
+        <active>true</active>
         <criteriaItems>
             <field>Operational_Improvements__c.Action_9_Due_Date__c</field>
             <operation>notEqual</operation>
