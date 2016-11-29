@@ -45,10 +45,6 @@
                 <behavior>Edit</behavior>
                 <field>Updated_AIMS__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>For_Integration__c</field>
-            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
