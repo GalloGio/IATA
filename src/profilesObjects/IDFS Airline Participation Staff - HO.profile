@@ -5199,6 +5199,7 @@
 <fieldPermissions><editable>false</editable><field>Lead.Company_Type__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Lead.Confirm_Email_A__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Lead.Confirm_Email_B__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>true</editable><field>Lead.Contact_Role__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Lead.Country__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Lead.Course_Name__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Lead.Crisis_Communications_Members__c</field><readable>false</readable></fieldPermissions>
@@ -7034,7 +7035,7 @@
 <recordTypeVisibilities><default>false</default><recordType>Case.CasesMENA</recordType><visible>true</visible></recordTypeVisibilities>
 <recordTypeVisibilities><default>false</default><recordType>Case.Cases_China_North_Asia</recordType><visible>true</visible></recordTypeVisibilities>
 <recordTypeVisibilities><default>false</default><recordType>Case.Cases_Global_TEST</recordType><visible>false</visible></recordTypeVisibilities>
-<recordTypeVisibilities><default>false</default><recordType>Case.Cases_SIS_Help_Desk</recordType><visible>false</visible></recordTypeVisibilities>
+<recordTypeVisibilities><default>false</default><recordType>Case.Cases_SIS_Help_Desk</recordType><visible>true</visible></recordTypeVisibilities>
 <recordTypeVisibilities><default>false</default><recordType>Case.Cases_TTBS</recordType><visible>false</visible></recordTypeVisibilities>
 <recordTypeVisibilities><default>false</default><recordType>Case.ComplaintIDFS</recordType><visible>false</visible></recordTypeVisibilities>
 <recordTypeVisibilities><default>false</default><recordType>Case.DIP_Review_Process</recordType><visible>false</visible></recordTypeVisibilities>

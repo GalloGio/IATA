@@ -2207,6 +2207,62 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Contact_Role__c</fullName>
+        <externalId>false</externalId>
+        <label>Contact Role</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Operations</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Accounts Receivable</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Accounts Payable</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Revenue Accounting</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Finance (Other)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Invoicing</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>General Management</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Dispute Management</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Sales</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Debt Management</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Other  (Please Specify)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>MultiselectPicklist</type>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
         <fullName>Country__c</fullName>
         <externalId>false</externalId>
         <label>Country</label>
@@ -5749,6 +5805,53 @@ albam@iata.org</description>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Contact_Role__c</picklist>
+            <values>
+                <fullName>Accounts Payable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Accounts Receivable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Debt Management</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Dispute Management</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Finance %28Other%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>General Management</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Invoicing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Operations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other  %28Please Specify%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Revenue Accounting</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sales</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Discount_preference__c</picklist>
             <values>
                 <fullName>A%3A 0%25 %2F B%3A 50%25</fullName>
@@ -6632,6 +6735,53 @@ albam@iata.org</description>
             </values>
             <values>
                 <fullName>Morning</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Contact_Role__c</picklist>
+            <values>
+                <fullName>Accounts Payable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Accounts Receivable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Debt Management</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Dispute Management</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Finance %28Other%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>General Management</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Invoicing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Operations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other  %28Please Specify%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Revenue Accounting</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sales</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -7703,6 +7853,53 @@ albam@iata.org</description>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Contact_Role__c</picklist>
+            <values>
+                <fullName>Accounts Payable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Accounts Receivable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Debt Management</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Dispute Management</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Finance %28Other%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>General Management</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Invoicing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Operations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other  %28Please Specify%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Revenue Accounting</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sales</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Discount_preference__c</picklist>
             <values>
                 <fullName>A%3A 0%25 %2F B%3A 50%25</fullName>
@@ -8569,6 +8766,53 @@ albam@iata.org</description>
             </values>
             <values>
                 <fullName>Morning</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Contact_Role__c</picklist>
+            <values>
+                <fullName>Accounts Payable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Accounts Receivable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Debt Management</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Dispute Management</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Finance %28Other%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>General Management</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Invoicing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Operations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other  %28Please Specify%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Revenue Accounting</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sales</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -9636,6 +9880,53 @@ albam@iata.org</description>
             </values>
             <values>
                 <fullName>Morning</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Contact_Role__c</picklist>
+            <values>
+                <fullName>Accounts Payable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Accounts Receivable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Debt Management</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Dispute Management</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Finance %28Other%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>General Management</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Invoicing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Operations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other  %28Please Specify%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Revenue Accounting</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sales</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
