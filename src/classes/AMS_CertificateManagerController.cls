@@ -28,7 +28,8 @@ public class AMS_CertificateManagerController {
 				'If your file has the headers on the first line, make the the IATA Code header is "IATA Code"',
 				'If your file dosn\'t have headers, the IATA Code must be on the first column',
 				'The csv values must be separated by commas (,). Make sure your editor don\'t make the separation by semi-colons  (;)',
-				'Your file must contain only headers and records, remove any other information (Example: Copyright and confidentiality)'
+				'Your file must contain only headers and records, remove any other information (Example: Copyright and confidentiality)',
+				'Your file must NOT contain multi-line text field (rich text, text area or long text area)'
 			};
 		}
 	}
@@ -125,7 +126,14 @@ public class AMS_CertificateManagerController {
 			return;
 		}
 
-		List<String> lines = fileBody.toString().split('\n');
+		String body = fileBody.toString();
+		String newLine = '\n';
+		if(body.indexOf('\r\n') > 0) newLine = '\r\n';
+		else if(body.indexOf('\r') > 0) newLine = '\r';
+
+		//System.debug(loggingLevel.Debug, '____ [cls AMS_CertificateManagerController - parseFile] body - ' + body);
+		System.debug(loggingLevel.Debug, '____ [cls AMS_CertificateManagerController - parseFile] newLine - ' + newLine.replace('\r', 'r').replace('\n','n'));
+		List<String> lines = body.split(newLine);
 
 		if(lines.isEmpty()){
 			ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, 'No content on the file'));
@@ -138,7 +146,7 @@ public class AMS_CertificateManagerController {
 
 		System.debug(loggingLevel.Debug, '____ [cls AMS_CertificateManagerController - parseFile] headers - ' + headers);
 		for(Integer i = 0; i < headers.size(); i++){
-			if(headers[i].removeEnd('"').removeStart('"').equalsIgnoreCase('IATA Code')){
+			if(headers[i].removeEnd('"').removeStart('"').trim().equalsIgnoreCase('IATA Code')){
 				iataCodeIndex = i;
 				hasHeaders = true;
 				break;
@@ -154,7 +162,7 @@ public class AMS_CertificateManagerController {
 				List<String> entries = line.split(',');
 
 				System.debug(loggingLevel.Debug, '____ [cls AMS_CertificateManagerController - parseFile] entries - ' + entries);
-				iataCodes.put(entries[iataCodeIndex].removeEnd('"').removeStart('"'), false);
+				iataCodes.put(entries[iataCodeIndex].removeEnd('"').removeStart('"').trim(), false);
 			}
 		}
 

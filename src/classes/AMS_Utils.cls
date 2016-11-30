@@ -726,6 +726,18 @@ public without sharing class AMS_Utils {
             toReturn = oscarAgency;
         }
 
+        if( aacNEW.Change_Code__c == 'CLO' ){
+            
+            oscarAgency.Expiry_Date__c = Date.Today();            
+            toReturn = oscarAgency;
+        }
+
+        if( aacNEW.Change_Code__c == 'REI' ){
+            
+            oscarAgency.Expiry_Date__c = null;            
+            toReturn = oscarAgency;
+        }
+
         return new ChangeCodeStruct(aacNEW, toReturn);
     }
 
