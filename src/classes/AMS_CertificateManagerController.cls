@@ -172,13 +172,11 @@ public class AMS_CertificateManagerController {
 		List<Account> accounts = Database.query('SELECT Id, '+String.join(accountFieldList, ', ')+' FROM Account WHERE IataCode__c IN :iataCodesSet');
 
 
-		if(lines.isEmpty()){
+		List<Account> warnings = new List<Account>();
+		if(accounts.isEmpty()){
 			ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, 'No accounts found. Check the formating of the file'));
 			return;
-		}
-
-		List<Account> warnings = new List<Account>();
-		if(!accounts.isEmpty()){
+		}else{
 			for(Account acc : accounts){
 				accountIds.add(acc.Id);
 				iataCodes.put(acc.IATACode__c, true);

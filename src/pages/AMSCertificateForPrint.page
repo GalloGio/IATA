@@ -55,7 +55,7 @@
 		</style>
 	</head>
 	<body>
-		<apex:repeat value="{!certificatesTesting}" var="page">
+		<apex:repeat value="{!certificates}" var="page">
 		<apex:repeat value="{!page}" var="acc">
 		<div class="certificate-page">
 			<div class="certificate">
