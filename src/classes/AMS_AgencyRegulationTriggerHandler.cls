@@ -134,7 +134,7 @@ public class AMS_AgencyRegulationTriggerHandler {
                                                                    Location_Type__c, Mobile__c, Operation__c, Remittance_frequency__c, ShippingCity, ShippingCountry, 
                                                                    ShippingPostalCode, ShippingState, ShippingStreet, Short_Name__c, Solicitation_Flag__c, TradeName__c, 
                                                                    VAT_Number_2__c, Website, BillingCountry, Region_formula__c, Legal_name__c, IATA_ISO_Country__r.Name,
-                                                                   IATA_ISO_Country__r.ISO_Code__c
+                                                                   IATA_ISO_Country__r.ISO_Code__c, Company_Type__c
                                                             FROM Account WHERE Id IN :accts]);
 
         for(Account acc: accountData.values())
@@ -245,6 +245,7 @@ public class AMS_AgencyRegulationTriggerHandler {
         theStagingArea.Trade_Name__c                            = accountData.TradeName__c;
         theStagingArea.VAT_Number_2__c                          = accountData.VAT_Number_2__c;
         theStagingArea.Website__c                               = accountData.Website;
+        theStagingArea.ISSP_AMS_Legal_Status__c                 = AMS_AgencyHelper.transformCompanyType(accountData.Company_Type__c);
 
         insert theStagingArea;
 
@@ -297,6 +298,9 @@ public class AMS_AgencyRegulationTriggerHandler {
         if(accountData.Is_your_firm_handling_Dangerous_Goods__c == 'Yes'){
             if(accountData.IATA_ISO_Country__r.ISO_Code__c == 'CN' && accountData.Location_Class__c == 'C' && numberOfActiveDGR < 3){
                 return true;
+            }else if(accountData.IATA_ISO_Country__r.ISO_Code__c == 'IN' && accountData.Location_Class__c == 'C' && accountData.Location_Type__c == AMS_Utils.BR && accountData.CASS_Number__c != null && Integer.valueOf(accountData.CASS_Number__c) >= 900 && Integer.valueOf(accountData.CASS_Number__c) <= 999){
+                 //India has this particular exception to the normal behaviour, no check is to be done
+                 return false;
             }
             else if(accountData.Location_Class__c == 'C'){
                 if(accountData.Location_Type__c == AMS_Utils.HO && numberOfActiveDGR < 2 )
