@@ -13,7 +13,7 @@
     		$('.selected-flag').hide();
     	}
          //alert({!isEditMode});
-  		});
+  		}); 
      </script>
       <style>
            	.has-error .hiddenerror {display: inline !important;}
@@ -55,7 +55,7 @@
                                 <apex:inputField styleclass="form-control editMode editModeTradeName" value="{!con.Account.TradeName__c}"/>
                                	<span class="saveMode saveModeTradeName" style="line-height: 24px;">
                                 	<apex:outputField value="{!con.Account.TradeName__c}"/>
-                                    <apex:outputLink value="#form" styleClass="saveMode" onclick="$('.saveModeTradeName').hide();$('.editModeTradeName').show();$('.editModeBtn').show();" rendered="{!AND(bIsAdmin,isIATAAgencyAcct,bIsMinorChangeEnabled, NOT(bBlockTradeNameChange))}"> [{!$Label.ISSP_edit_lowercase}]</apex:outputLink>
+                                    <apex:outputLink value="#form" styleClass="saveMode" onclick="$('.saveModeTradeName').hide();$('.editModeTradeName').show();$('.editModeBtn').show();" rendered="{!AND(bIsAdmin,isIATAAgencyAcct,bIsMinorChangeEnabled,!isTerminatedAgent, NOT(bBlockTradeNameChange))}"> [{!$Label.ISSP_edit_lowercase}]</apex:outputLink>
                                     </span>
                             	</div>
                             </div>
@@ -138,7 +138,7 @@
                   					</div>   
                                     <span class="saveMode saveModePhone" style="line-height: 36px;">
                                         <apex:outputField value="{!con.Account.Phone}"/>
-                                        <span style="padding-left:10px"><apex:outputLink value="#form" styleClass="saveMode" onclick="$('.saveModePhone').hide();$('.phone .selected-flag').show();$('.editModePhone').show();$('.editModeBtn').show()" rendered="{!AND(bIsAdmin,isIATAAgencyAcct,bIsMinorChangeEnabled)}">[{!$Label.ISSP_edit_lowercase}]</apex:outputLink></span>
+                                        <span style="padding-left:10px"><apex:outputLink value="#form" styleClass="saveMode" onclick="$('.saveModePhone').hide();$('.phone .selected-flag').show();$('.editModePhone').show();$('.editModeBtn').show()" rendered="{!AND(bIsAdmin,isIATAAgencyAcct,bIsMinorChangeEnabled,!isTerminatedAgent)}">[{!$Label.ISSP_edit_lowercase}]</apex:outputLink></span>
                                     </span>
                                 </div>
                          </div>
@@ -152,7 +152,7 @@
                                     <apex:inputField id="businessfaxinput" styleclass="form-control editMode editModeFax col-lg-8" value="{!con.Account.FAXNational__c}" onblur="setInternationalPhoneNo('fax');"/>
                                     <span class="saveMode saveModeFax">
                                         <apex:outputField value="{!con.Account.Fax}"/>
-                                        <span style="padding-left:10px"><apex:outputLink value="#form" styleClass="saveMode" onclick="$('.saveModeFax').hide();$('.fax .selected-flag').show();$('.editModeFax').show();$('.editModeBtn').show()" rendered="{!AND(bIsAdmin,isIATAAgencyAcct,bIsMinorChangeEnabled)}">[{!$Label.ISSP_edit_lowercase}]</apex:outputLink></span>
+                                        <span style="padding-left:10px"><apex:outputLink value="#form" styleClass="saveMode" onclick="$('.saveModeFax').hide();$('.fax .selected-flag').show();$('.editModeFax').show();$('.editModeBtn').show()" rendered="{!AND(bIsAdmin,isIATAAgencyAcct,bIsMinorChangeEnabled,!isTerminatedAgent)}">[{!$Label.ISSP_edit_lowercase}]</apex:outputLink></span>
                                     </span>
                                 </div>
                             </div>
@@ -166,7 +166,7 @@
                                     <apex:inputField id="businessemailinput" styleclass="form-control editMode editModeEmail col-lg-8" value="{!con.Account.Email__c}"/>
                                     <span class="saveMode saveModeEmail">
                                         <apex:outputField value="{!con.Account.Email__c}"/>
-                                        <span style="padding-left:10px"><apex:outputLink value="#form" styleClass="saveMode" onclick="$('.saveModeEmail').hide();$('.editModeEmail').show();$('.editModeBtn').show()" rendered="{!AND(bIsAdmin,isIATAAgencyAcct,bIsMinorChangeEnabled)}">[{!$Label.ISSP_edit_lowercase}]</apex:outputLink></span>
+                                        <span style="padding-left:10px"><apex:outputLink value="#form" styleClass="saveMode" onclick="$('.saveModeEmail').hide();$('.editModeEmail').show();$('.editModeBtn').show()" rendered="{!AND(bIsAdmin,isIATAAgencyAcct,bIsMinorChangeEnabled,!isTerminatedAgent)}">[{!$Label.ISSP_edit_lowercase}]</apex:outputLink></span>
                                     </span>
                                 </div>
                             </div>
@@ -180,7 +180,7 @@
                                     <apex:inputField id="businesswebsiteinput" styleclass="form-control editMode editModeWebSite col-lg-8" value="{!con.Account.WebSite}"/>
                                     <span class="saveMode saveModeWebSite">
                                         <apex:outputField value="{!con.Account.WebSite}"/>
-                                        <span style="padding-left:10px"><apex:outputLink value="#form" styleClass="saveMode" onclick="$('.saveModeWebSite').hide();$('.editModeWebSite').show();$('.editModeBtn').show()" rendered="{!AND(bIsAdmin,isIATAAgencyAcct,bIsMinorChangeEnabled)}">[{!$Label.ISSP_edit_lowercase}]</apex:outputLink></span>
+                                        <span style="padding-left:10px"><apex:outputLink value="#form" styleClass="saveMode" onclick="$('.saveModeWebSite').hide();$('.editModeWebSite').show();$('.editModeBtn').show()" rendered="{!AND(bIsAdmin,isIATAAgencyAcct,bIsMinorChangeEnabled,!isTerminatedAgent)}">[{!$Label.ISSP_edit_lowercase}]</apex:outputLink></span>
                                     </span>
                                 </div>
                             </div>
@@ -453,8 +453,8 @@
         
         <apex:form id="branchOffice" rendered="{!AND(isIATAAgencyAcct, bIsAdmin, PAXBranches.size > 1)}" >
             <apex:actionFunction name="getBranchOffice" action="{!getBranchOffice}" reRender="branchOffice">
-        	<apex:param value="" assignTo="{!selectedBranchAccount}" name="selectedBranchAccount"/>
-        </apex:actionFunction>
+        	   <apex:param value="" assignTo="{!selectedBranchAccount}" name="selectedBranchAccount"/>
+            </apex:actionFunction>
         <div class="panel panel-primary">
             <div class="panel-heading head_panel_green">
                 <h3 class="panel-title">{!$Label.ISSP_AMS_View_Branch_details}</h3>
@@ -490,7 +490,7 @@
                                 <apex:inputField styleclass="form-control editModeBR editModeTradeNameBR" value="{!branchOffice.TradeName__c}"/>
                                	<span class="saveModeBR saveModeTradeNameBR" style="line-height: 24px;">
                                 	<apex:outputField value="{!branchOffice.TradeName__c}"/>
-                                    <apex:outputLink value="#formBR" styleClass="saveMode" onclick="$('.saveModeTradeNameBR').hide();$('.editModeTradeNameBR').show();$('.editModeBtnBR').show();" rendered="{!AND(bIsAdmin,bUserHO,isIATAAgencyAcctBR,bIsMinorChangeEnabledBR, NOT(bBlockTradeNameChangeBR))}"> [{!$Label.ISSP_edit_lowercase}]</apex:outputLink>
+                                    <apex:outputLink value="#formBR" styleClass="saveMode" onclick="$('.saveModeTradeNameBR').hide();$('.editModeTradeNameBR').show();$('.editModeBtnBR').show();" rendered="{!AND(bIsAdmin,bUserHO,isIATAAgencyAcctBR,bIsMinorChangeEnabledBR,!isTerminatedAgent, NOT(bBlockTradeNameChangeBR))}"> [{!$Label.ISSP_edit_lowercase}]</apex:outputLink>
                                     </span>
                             	</div>
                             </div>
@@ -536,7 +536,7 @@
                   					</div>   
                                     <span class="saveModeBR saveModePhoneBR" style="line-height: 36px;">
                                         <apex:outputField value="{!branchOffice.Phone}"/>
-                                        <span style="padding-left:10px"><apex:outputLink value="#formBR" styleClass="saveMode" onclick="$('.saveModePhoneBR').hide();$('.phoneBR .selected-flag').show();$('.editModePhoneBR').show();$('.editModeBtnBR').show()" rendered="{!AND(bIsAdmin,bUserHO,isIATAAgencyAcctBR,bIsMinorChangeEnabledBR)}">[{!$Label.ISSP_edit_lowercase}]</apex:outputLink></span>
+                                        <span style="padding-left:10px"><apex:outputLink value="#formBR" styleClass="saveMode" onclick="$('.saveModePhoneBR').hide();$('.phoneBR .selected-flag').show();$('.editModePhoneBR').show();$('.editModeBtnBR').show()" rendered="{!AND(bIsAdmin,bUserHO,isIATAAgencyAcctBR,bIsMinorChangeEnabledBR,!isTerminatedAgent)}">[{!$Label.ISSP_edit_lowercase}]</apex:outputLink></span>
                                     </span>
                                 </div>
                          </div>
@@ -551,7 +551,7 @@
                                     <apex:inputField id="businessfaxinput" styleclass="form-control editModeBR editModeFaxBR col-lg-8" value="{!branchOffice.FAXNational__c}" onblur="setInternationalPhoneNoBR('fax');"/>
                                     <span class="saveModeBR saveModeFaxBR">
                                         <apex:outputField value="{!branchOffice.Fax}"/>
-                                        <span style="padding-left:10px"><apex:outputLink value="#formBR" styleClass="saveMode" onclick="$('.saveModeFaxBR').hide();$('.faxBR .selected-flag').show();$('.editModeFaxBR').show();$('.editModeBtnBR').show()" rendered="{!AND(bIsAdmin,bUserHO,isIATAAgencyAcctBR,bIsMinorChangeEnabledBR)}">[{!$Label.ISSP_edit_lowercase}]</apex:outputLink></span>
+                                        <span style="padding-left:10px"><apex:outputLink value="#formBR" styleClass="saveMode" onclick="$('.saveModeFaxBR').hide();$('.faxBR .selected-flag').show();$('.editModeFaxBR').show();$('.editModeBtnBR').show()" rendered="{!AND(bIsAdmin,bUserHO,isIATAAgencyAcctBR,bIsMinorChangeEnabledBR,!isTerminatedAgent)}">[{!$Label.ISSP_edit_lowercase}]</apex:outputLink></span>
                                     </span>
                                 </div>
                             </div>
@@ -565,7 +565,7 @@
                                     <apex:inputField id="businessemailinput" styleclass="form-control editModeBR editModeEmailBR col-lg-8" value="{!branchOffice.Email__c}"/>
                                     <span class="saveModeBR saveModeEmailBR">
                                         <apex:outputField value="{!branchOffice.Email__c}"/>
-                                        <span style="padding-left:10px"><apex:outputLink value="#formBR" styleClass="saveMode" onclick="$('.saveModeEmailBR').hide();$('.editModeEmailBR').show();$('.editModeBtnBR').show()" rendered="{!AND(bIsAdmin,bUserHO,isIATAAgencyAcctBR,bIsMinorChangeEnabledBR)}">[{!$Label.ISSP_edit_lowercase}]</apex:outputLink></span>
+                                        <span style="padding-left:10px"><apex:outputLink value="#formBR" styleClass="saveMode" onclick="$('.saveModeEmailBR').hide();$('.editModeEmailBR').show();$('.editModeBtnBR').show()" rendered="{!AND(bIsAdmin,bUserHO,isIATAAgencyAcctBR,bIsMinorChangeEnabledBR,!isTerminatedAgent)}">[{!$Label.ISSP_edit_lowercase}]</apex:outputLink></span>
                                     </span>
                                 </div>
                             </div>
@@ -579,7 +579,7 @@
                                     <apex:inputField id="businesswebsiteinput" styleclass="form-control editModeBR editModeWebSiteBR col-lg-8" value="{!branchOffice.WebSite}"/>
                                     <span class="saveModeBR saveModeWebSiteBR" id='businesswebsiteBR'>
                                         <apex:outputField value="{!branchOffice.WebSite}"/>
-                                        <span style="padding-left:10px"><apex:outputLink value="#formBR" styleClass="saveMode" onclick="$('.saveModeWebSiteBR').hide();$('.editModeWebSiteBR').show();$('.editModeBtnBR').show()" rendered="{!AND(bIsAdmin,bUserHO,isIATAAgencyAcctBR,bIsMinorChangeEnabledBR)}">[{!$Label.ISSP_edit_lowercase}]</apex:outputLink></span>
+                                        <span style="padding-left:10px"><apex:outputLink value="#formBR" styleClass="saveMode" onclick="$('.saveModeWebSiteBR').hide();$('.editModeWebSiteBR').show();$('.editModeBtnBR').show()" rendered="{!AND(bIsAdmin,bUserHO,isIATAAgencyAcctBR,bIsMinorChangeEnabledBR,!isTerminatedAgent)}">[{!$Label.ISSP_edit_lowercase}]</apex:outputLink></span>
                                     </span>
                                 </div>
                             </div>
