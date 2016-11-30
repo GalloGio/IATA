@@ -386,7 +386,7 @@ public with sharing class AMS_AccreditationContactController {
             ownership = ownership + aWrapped.financialInterest;
         }
         
-        if(ownership != 100)
+        if(aoa.SAAM_Case__r.OSCAR__r.Account__r.CNS_Agency__c == false && ownership != 100)
         {
             return false;
         } else
