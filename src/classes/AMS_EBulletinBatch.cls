@@ -7,11 +7,15 @@ global class AMS_EBulletinBatch implements Database.Batchable<sObject> {
 	global AMS_EBulletinBatch(String typeEBulletin,Set <String> ccNamesToRecover) {
 		this.ccNamesToRecover = ccNamesToRecover;
 		this.typeEBulletin = typeEBulletin;
+
+		String fieldsToRecover  = 'id,User__c,Name,CountriesList__c,RecordType.Name,Area_1__c,Area_2__c,Area_3__c,Program_Cargo__c,Program_CASS_Associates__c,Program_Passage__c';
 		
-		this.query = 'select id,NAME,CountriesList__c,RecordType.Name,Area_1__c,Area_2__c,Area_3__c,Program_Cargo__c,Program_CASS_Associates__c,Program_Passage__c from AMS_eBulletin_Profile__c where recordType.name = :typeEBulletin and Opt_out_Bulletin__c = TRUE';
+		String filters = 'where recordType.name = :typeEBulletin and Opt_out_Bulletin__c = FALSE and Opt_in__c = TRUE ';
+
+		this.query = 'select ' + fieldsToRecover + ' from AMS_eBulletin_Profile__c ' + filters;
 		
-		system.debug(loggingLevel.Debug,'typeEBulletin: ' + typeEBulletin);
-		system.debug(loggingLevel.Debug,'ccNamesToRecover: ' + ccNamesToRecover);	
+		system.debug('typeEBulletin: ' + typeEBulletin);
+		system.debug('ccNamesToRecover: ' + ccNamesToRecover);	
 	}
 	
 	global Database.QueryLocator start(Database.BatchableContext BC) {
@@ -26,13 +30,13 @@ global class AMS_EBulletinBatch implements Database.Batchable<sObject> {
 
 		for(AMS_eBulletin_Profile__c eBprof : scope){
 			
-			AMS_EBulletinReportWebservice.AMSEBulletinFilters filters = new AMS_EBulletinReportWebservice.AMSEBulletinFilters(eBprof, date.today() - 365 , date.today() );
+			AMS_EBulletinReportWebservice.AMSEBulletinFilters filters = new AMS_EBulletinReportWebservice.AMSEBulletinFilters(eBprof, eBprof.Last_Run__c , system.now() );
 
 			//run the eBulletinReport
 			
 			//AMS_EBulletinReportWebservice.generateEBulletinReport( eBprof );
 			
-			system.debug(loggingLevel.Debug,'ccNamesToRecover: ' + ccNamesToRecover);
+			system.debug('ccNamesToRecover: ' + ccNamesToRecover);
 
 			Integer count = [SELECT count() FROM Agency_Applied_Change_code__c 
 								WHERE Change_Code__c IN :ccNamesToRecover 
@@ -41,14 +45,9 @@ global class AMS_EBulletinBatch implements Database.Batchable<sObject> {
 									and Account__r.Location_Class__c IN :filters.programsList
 									and CreatedDate > :filters.fromCCDate  and CreatedDate < :filters.toCCDate ];
 
-			system.debug(loggingLevel.Debug,'Change Codes count: ' + count);
+			system.debug('Change Codes count: ' + count);
 
-			if(count > 0)
-			{
-				//TODO Create an Email template
-            	mailsToSend.add(setEmailContents());
-
-			}
+			if(count > 0) mailsToSend.add(setEmailContents());
 		}
 
 		if(!Test.isRunningTest())  Messaging.sendEmail(mailsToSend);
@@ -62,6 +61,8 @@ global class AMS_EBulletinBatch implements Database.Batchable<sObject> {
 
 	private Messaging.SingleEmailMessage setEmailContents()
 	{
+		//TODO Create an Email template
+		//
 		Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
     	mail.saveAsActivity = false;
     	mail.setToAddresses(new List<String>{'diogo.roxo@b-i.com'});

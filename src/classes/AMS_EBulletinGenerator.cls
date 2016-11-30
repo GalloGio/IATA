@@ -9,7 +9,7 @@ global class AMS_EBulletinGenerator implements Schedulable {
 		Set <String> ccNamesToRecover = AMS_CustomSettingsUtils.ccNameSectionMap.keyset();
 		
 		AMS_EBulletinBatch b = new AMS_EBulletinBatch(typeEBulletin,ccNamesToRecover);
-		database.executebatch(b);
+		database.executebatch(b,50);
 	}
 
 }
