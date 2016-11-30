@@ -30,10 +30,10 @@
     }
     
     /**
-     * Function called when cropper tool has finished uploaded the image
-     */ 
-    function receiveFilenameFromCropperTool(fileFullUri) {
-        document.getElementById('{!$Component.idcardForm.pb3.hdnFilename}').value = fileFullUri;
+             * Function called when the iFrame sends back the filename (meaning it was uploaded, cropped and submitted)
+             */ 
+    function receiveFilenameFromIFrame(filename) {
+        document.getElementById('{!$Component.idcardForm.pb3.hdnFilename}').value = filename.data;
     }
     
     function scrollToTop() {
@@ -159,7 +159,8 @@
     function workingFirstName() {
 
         var firstName = (removeDiacritics(this.document.getElementById('{!$Component.idcardForm.pb1.section1.itemFirstName.txtFirstName}').value));
-        document.getElementById('{!$Component.idcardForm.pb1.section1.itemFirstName.txtFirstName}').value = firstName.capitalize();
+        //document.getElementById('{!$Component.idcardForm.pb1.section1.itemFirstName.txtFirstName}').value = firstName.capitalize();
+        document.getElementById('{!$Component.idcardForm.pb1.section1.itemFirstName.txtFirstName}').value = firstName.toUpperCase();
 
         //removing apostrophe 
         var name = (removeDiacritics(this.document.getElementById('{!$Component.idcardForm.pb1.section1.itemFirstName.txtFirstName}').value));
@@ -175,7 +176,8 @@
     function workingLastName() {
 
         var lastName = (removeDiacritics(this.document.getElementById('{!$Component.idcardForm.pb1.section1.itemLastName.txtLastName}').value));
-        document.getElementById('{!$Component.idcardForm.pb1.section1.itemLastName.txtLastName}').value = lastName.capitalize();
+        //document.getElementById('{!$Component.idcardForm.pb1.section1.itemLastName.txtLastName}').value = lastName.capitalize();
+        document.getElementById('{!$Component.idcardForm.pb1.section1.itemLastName.txtLastName}').value = lastName.toUpperCase();
 
         //removing apostrophe 
         var name = (removeDiacritics(this.document.getElementById('{!$Component.idcardForm.pb1.section1.itemLastName.txtLastName}').value));
@@ -819,11 +821,7 @@ rendered="{!isEmployee}" accept="application/pdf" />
                         <apex:inputHidden id="hdnFilename" value="{!hiddenFilename}" />
                     </apex:outputPanel>
                     
-                    <c:IDCard_Cropper sessionId="{!$Api.Session_ID}" fileId="{!PhotoFilename}" jsCallbackName="receiveFilenameFromCropperTool" />
                     
-
-
-            <!-- OLD IMAGE CROPPER & UPLOADER        
                     <apex:outputPanel id="divIframeViewer" style="width:100%" rendered="{!IsViewerDisplayed}">                   <apex:outputText styleClass="sectionHeader" rendered="{!CanRenderPage}"><b style="font-size:15px">{!$Label.ID_Card_Disclaimer}</b></apex:outputText>      
                         <center>
                             <iframe name="iframeImageViewer"
@@ -852,7 +850,8 @@ rendered="{!isEmployee}" accept="application/pdf" />
                             </tr>
                         </table>
                     </apex:outputPanel>
-            -->        
+                    
+                    
                     
                     <table  style="width: 85%;padding-left: 2px; padding-left: 2px">
                         <tr>
