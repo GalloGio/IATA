@@ -1235,7 +1235,8 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
         oSubsRequest.SubscribeOptions = new Zuora.zApi.SubscribeOptions();
         //if (i == listCartItems.size() - 1) {
         oSubsRequest.SubscribeOptions.GenerateInvoice = true;
-        oSubsRequest.SubscribeOptions.ProcessPayments = (PaymentMethodType == IECConstants.PaymentType.CREDIT_CARD); // can only set ProcessPayments=true for electronic payments (credit card)
+        oSubsRequest.SubscribeOptions.ProcessPayments = false;
+        if (!IsPreview) oSubsRequest.SubscribeOptions.ProcessPayments = (PaymentMethodType == IECConstants.PaymentType.CREDIT_CARD); // can only set ProcessPayments=true for electronic payments (credit card)
         
         oSubsRequest.SubscribeOptions.SubscribeInvoiceProcessingOptions = new Zuora.zApi.SubscribeInvoiceProcessingOptions();
         //oSubsRequest.SubscribeOptions.SubscribeInvoiceProcessingOptions.InvoiceProcessingScope = 'Account';
@@ -1358,7 +1359,7 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
         if (loggedCustomer.AccountExistsInZuora) {
           oSubsRequest.ZAccount = new Zuora.zObject('Account');
           oSubsRequest.ZAccount.setValue('Id', (String)loggedCustomer.RelatedZuoraAccount.getValue('Id'));
-          oSubsRequest.ZAccount.setValue('DefaultPaymentMethodId', selectedCreditCardPaymentId);
+          if (!IsPreview) oSubsRequest.ZAccount.setValue('DefaultPaymentMethodId', selectedCreditCardPaymentId);
           if(PaymentMethodType == IECConstants.PaymentType.BANK_TRANSFER)  oSubsRequest.ZAccount.setValue('DefaultPaymentMethodId', IECConstants.PaymentMethod_BankTransfer_ZuoraID);
           if(PaymentMethodType == IECConstants.PaymentType.ICH)  oSubsRequest.ZAccount.setValue('DefaultPaymentMethodId', IECConstants.PaymentMethod_ICH_ZuoraID);
           // if the default payment method has changed, update the Default Payment Method, AutoPay flag and Invoice Template Id 
@@ -1392,7 +1393,7 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
              ErrorMessage='paymentMethodZId was not provided';
         }
         if (isPreview){ 
-        	Zuora.zApi.PreviewOptions previewOpt = new Zuora.zApi.PreviewOptions();
+          Zuora.zApi.PreviewOptions previewOpt = new Zuora.zApi.PreviewOptions();
             previewOpt.EnablePreviewMode = true;
             previewOpt.NumberOfPeriods = 1;
             oSubsRequest.PreviewOptions=previewOpt;

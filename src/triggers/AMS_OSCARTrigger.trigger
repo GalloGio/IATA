@@ -241,7 +241,7 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
                     }
 
                     //Remove TERMINATED Accounts from list
-                    for(Account acc: [SELECT Id, Status__c FROM Account WHERE Id IN :allHierarchyAccountIds]){
+                    for(Account acc: [SELECT Id, Status__c FROM Account WHERE Id IN :allHierarchyAccountIds AND Status__c <> null]){
                         if(acc.Status__c.equalsIgnoreCase(AMS_Utils.ACC_S0_TERMINATED))
                             allHierarchyAccountIds.remove(acc.Id);
                     }

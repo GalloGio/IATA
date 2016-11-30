@@ -1848,8 +1848,8 @@
 <pageAccesses><apexPage>MITA_MemoConcurrences</apexPage><enabled>false</enabled></pageAccesses>
 <pageAccesses><apexPage>MITA_MemoWithdrawals</apexPage><enabled>false</enabled></pageAccesses>
 <pageAccesses><apexPage>MITA_Memorandums</apexPage><enabled>false</enabled></pageAccesses>
-<pageAccesses><apexPage>MITA_PortalAgreements</apexPage><enabled>false</enabled></pageAccesses>
-<pageAccesses><apexPage>MITA_PortalMyAgreements</apexPage><enabled>false</enabled></pageAccesses>
+<pageAccesses><apexPage>MITA_PortalAgreements</apexPage><enabled>true</enabled></pageAccesses>
+<pageAccesses><apexPage>MITA_PortalMyAgreements</apexPage><enabled>true</enabled></pageAccesses>
 <pageAccesses><apexPage>MITA_Txt</apexPage><enabled>false</enabled></pageAccesses>
 <pageAccesses><apexPage>MassCaseCreationNonCompliance</apexPage><enabled>true</enabled></pageAccesses>
 <pageAccesses><apexPage>MassCloseCases</apexPage><enabled>true</enabled></pageAccesses>
