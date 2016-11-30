@@ -1639,5 +1639,27 @@ public static String fetchTypeOfCustomer (String locationType , String category)
     return categoryCustomerMap.get(category);
 
 }
-
+ 
+ 	public static Integer findGapInRange(Integer minRange, Integer maxRange, List<Integer> orderedSlotsOccupied){
+	    //invalid range
+	    if(maxRange-minRange < 0)
+	        return -1;
+	
+	    Integer candidate = minRange;
+	    
+		for(Integer occupiedSlot : orderedSlotsOccupied){
+			if(occupiedSlot > candidate){
+				System.debug('Candidate found : ' + candidate);
+				return candidate;
+			}
+			else if(occupiedSlot == candidate){
+				candidate++;
+				if(candidate > maxRange){
+					return -1;
+				}
+			}
+		}
+		
+		return candidate;
+	}
 }
