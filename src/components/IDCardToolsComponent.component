@@ -149,20 +149,6 @@
                 
             }
  
- 
-            /**
-             * Called on body load
-             */
-            $(function(){
-
-                var if_url = 'http://localhost/';
-        
-                //$.receiveMessage(receiveFilenameFromIFrame, if_url);
-                $.receiveMessage(receiveFilenameFromIFrame);
-       
-            });
-
-
             /**
              * Number fields that are required are by default filled with zeros, so we remove them onload
              */
