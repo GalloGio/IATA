@@ -148,7 +148,8 @@ public class AMS_OscarCase_RiskMgmt {
 								  Termination_Reason__c, Ticketing_Authority_Re_assigned__c, Update_AIMS_DEF__c, Update_AIMS_IRR__c, Update_AIMS_IRRWITH__c, Update_AIMS_REI_DEFWITH__c, 
 								  Update_AIMS_Repayment_agreed__c, Update_AIMS_TER__c, Parent.OSCAR__r.Type_of_change__c, Parent.OSCAR__c, IRR_Approval_Rejection_Date__c, IRR_Type__c,
 								  Termination_date__c, Outstanding_Amount__c, 
-								  Account.Location_Class__c, AccountId, Account.Status__c, Account.PreviousStatus__c, Account.Previous_Reason__c, Account.Reason__c, Account.Accumulated_Irregularities__c, Account.IATA_ISO_Country__r.Enable_Risk_Change_Codes__c
+								  Account.Location_Class__c, AccountId, Account.Status__c, Account.PreviousStatus__c, Account.Previous_Reason__c, Account.Reason__c, Account.Accumulated_Irregularities__c
+								  , Account.IATA_ISO_Country__r.Enable_Risk_Change_Codes__c, Account.AIMS_ID__c, Account.WebStar_ID__c, Account.IATACode__c
 								  //DTULLO UNCOMMENT FOR CNS, COMMENT/DELETE SIMILAR LINES AFTER
 								  //, Account.CNS_Agency__c
 								  from case where id in:mapTrgNew.keySet()]);
@@ -277,6 +278,8 @@ public class AMS_OscarCase_RiskMgmt {
 	//DTULLO UNCOMMENT FOR CNS, COMMENT/DELETE SIMILAR LINES AFTER
 	//private static Agency_Applied_Change_code__c CreateChangeCode(map<id, case> mapCases, id idCase, AMS_ChangeCodes__c cc, Account acc, boolean bIsCNS){
 	private static Agency_Applied_Change_code__c CreateChangeCode(map<id, case> mapCases, id idCase, AMS_ChangeCodes__c cc, Account acc){
+		datetime dt = system.now();
+		
 		Agency_Applied_Change_code__c AACC = new Agency_Applied_Change_code__c();
 		
 		id AccountId = (Acc==null?mapCases.get(idCase).AccountId:acc.id);
@@ -286,6 +289,16 @@ public class AMS_OscarCase_RiskMgmt {
 		//	AccountId = acc.id;
 		
 		AACC.Account__c = AccountId;
+		
+		string sUniqueId = '';
+		if(mapCases.get(idCase).Account.WebStar_ID__c != '' && mapCases.get(idCase).Account.WebStar_ID__c != null)
+			sUniqueId = mapCases.get(idCase).Account.WebStar_ID__c;
+		else if(mapCases.get(idCase).Account.AIMS_ID__c != '' && mapCases.get(idCase).Account.AIMS_ID__c != null)
+			sUniqueId = mapCases.get(idCase).Account.AIMS_ID__c;
+		else
+			sUniqueId = mapCases.get(idCase).Account.IATACode__c;
+		
+		sUniqueId = sUniqueId + '_' + cc.Change_Code__c + '_' + dt.year() + dt.month() + dt.day() + dt.hour() + dt.second();
 		
 		//DTULLO UNCOMMENT FOR CNS, COMMENT/DELETE SIMILAR LINES AFTER
 		//AACC.Bulletin_Information__c = GenerateMemoText(mapCases.get(idCase), null
@@ -306,10 +319,12 @@ public class AMS_OscarCase_RiskMgmt {
 					
 		if(cc.Change_Code__c == 'IRR' || cc.Change_Code__c == 'IRS'){
 			AACC.Operation__c = 'A';
+			sUniqueId = sUniqueId + '_A';
 		}
 		
 		if(cc.Change_Code__c == 'IRW'){
 			AACC.Operation__c = 'W';
+			sUniqueId = sUniqueId + '_W';
 		}
 		
 		AACC.SIDRA_Case__c = idCase;
@@ -317,8 +332,13 @@ public class AMS_OscarCase_RiskMgmt {
 		AACC.Applied_Configuration__c = cc.id;
 		AACC.OSCAR__c = mapCases.get(idCase).Parent.OSCAR__c;
 		
-		//NEED TO ADD UNIQUE ID!
-		//AACC.AIMS_ID__C = ;
+		if(mapCases.get(idCase).Recordtype.DeveloperName=='SIDRA')
+			AACC.DEF_Non_Payment__c = true;
+		
+		AACC.CreatedDate_User__c = GenerateDateForBulletin(system.today());
+		
+		AACC.AIMS_ID__C = sUniqueId;
+
 		//Handles update on account
 		boolean bAccntToUpd = false;
 		Account accnt = new Account();
@@ -442,6 +462,12 @@ public class AMS_OscarCase_RiskMgmt {
 		
 		if(condition.equalsIgnoreCase('TODAY')){
 			if((date)NewCaseValues.get(sFieldToCheck)==system.today())
+				return true;
+			else return false;
+		}
+		
+		if(condition.startsWithIgnoreCase('<=:')){
+			if((double)NewCaseValues.get(sFieldToCheck)<=double.valueOf(condition.right(condition.length()-'<=:'.length())))
 				return true;
 			else return false;
 		}
@@ -584,6 +610,11 @@ public class AMS_OscarCase_RiskMgmt {
 			if(sMemoText.containsIgnoreCase('<Update AIMS-DEF>')){
 				if(theCase.Update_AIMS_DEF__c!=null)
 					sMemoText = sMemoText.replace('<Update AIMS-DEF>', GenerateDateForBulletin(date.ValueOf(theCase.Update_AIMS_DEF__c)));
+			}
+			
+			if(sMemoText.containsIgnoreCase('<Reason for default>')){
+				if(theCase.Reason_for_Default__c!=null)
+					sMemoText = sMemoText.replace('<Reason for default>', theCase.Reason_for_Default__c);
 			}
 			
 		}

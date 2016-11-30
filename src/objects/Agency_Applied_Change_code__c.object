@@ -322,6 +322,17 @@
         <type>Picklist</type>
     </fields>
     <fields>
+        <fullName>CreatedDate_User__c</fullName>
+        <externalId>false</externalId>
+        <label>HUB Effective Date</label>
+        <length>30</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Created_Date_To_Show__c</fullName>
         <externalId>false</externalId>
         <formula>BLANKVALUE( Date_time_of_change__c ,  CreatedDate )</formula>
@@ -330,6 +341,15 @@
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>DEF_Non_Payment__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>DEF Non-Payment</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>Date_Memo_Sent__c</fullName>
