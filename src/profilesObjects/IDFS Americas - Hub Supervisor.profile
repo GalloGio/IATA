@@ -3937,9 +3937,9 @@
 <fieldPermissions><editable>true</editable><field>FAQ__kav.Answer__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>FAQ__kav.To_display_on_Homepage__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>FDS_KPI_Reporting__c.Area_Concerned__c</field><readable>true</readable></fieldPermissions>
-<fieldPermissions><editable>false</editable><field>FDS_KPI_Reporting__c.Definition__c</field><readable>false</readable></fieldPermissions>
-<fieldPermissions><editable>false</editable><field>FDS_KPI_Reporting__c.Target__c</field><readable>false</readable></fieldPermissions>
-<fieldPermissions><editable>false</editable><field>FDS_KPI_Reporting__c.Value_Type__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>FDS_KPI_Reporting__c.Definition__c</field><readable>true</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>FDS_KPI_Reporting__c.Target__c</field><readable>true</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>FDS_KPI_Reporting__c.Value_Type__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Financial_Assessment_Result__c.Case__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Financial_Institution__c.Address__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Financial_Institution__c.Agent_IATA_code__c</field><readable>false</readable></fieldPermissions>
@@ -4368,7 +4368,7 @@
 <fieldPermissions><editable>false</editable><field>IATA_ISO_Country__c.EACP_Country__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>IATA_ISO_Country__c.EU_Country__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>IATA_ISO_Country__c.Enable_Minor_Changes_from_Portal__c</field><readable>true</readable></fieldPermissions>
-<fieldPermissions><editable>false</editable><field>IATA_ISO_Country__c.Enable_Notice_of_Change__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>IATA_ISO_Country__c.Enable_Notice_of_Change__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>IATA_ISO_Country__c.Hide_Tax_Number_VAT__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>IATA_ISO_Country__c.IATA_COUNTRY_EN__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>IATA_ISO_Country__c.IATA_Contry_KR__c</field><readable>true</readable></fieldPermissions>
@@ -4386,10 +4386,10 @@
 <fieldPermissions><editable>false</editable><field>IATA_ISO_Country__c.Is_Non_Compliant__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>IATA_ISO_Country__c.Local_language_Agency_details_required__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>IATA_ISO_Country__c.MDM_Integration__c</field><readable>false</readable></fieldPermissions>
-<fieldPermissions><editable>false</editable><field>IATA_ISO_Country__c.OSCAR_enabled__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>IATA_ISO_Country__c.OSCAR_enabled__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>IATA_ISO_Country__c.Passenger_Agency_Accredition__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>IATA_ISO_Country__c.Pilot_Country__c</field><readable>true</readable></fieldPermissions>
-<fieldPermissions><editable>false</editable><field>IATA_ISO_Country__c.Prevent_Portal_Trade_Name_Change__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>IATA_ISO_Country__c.Prevent_Portal_Trade_Name_Change__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>IATA_ISO_Country__c.Profit_Center__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>IATA_ISO_Country__c.Region__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>IATA_ISO_Country__c.SAAM_enable_non_IATA_Cargo_Agents__c</field><readable>false</readable></fieldPermissions>
@@ -4406,7 +4406,7 @@
 <fieldPermissions><editable>false</editable><field>IATA_ISO_Country__c.Travel_Branch_Country__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>IATA_ISO_Country__c.Travel_HO_Country__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>IATA_ISO_Country__c.VAT_Validation_Required__c</field><readable>false</readable></fieldPermissions>
-<fieldPermissions><editable>false</editable><field>IATA_ISO_Country__c.original_bank_details_not_required__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>IATA_ISO_Country__c.original_bank_details_not_required__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>IATA_ISO_State__c.IEC_Valid_SAP__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>IATA_ISO_State__c.ISO_CODE_STANDARD__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>IATA_ISO_State__c.Informatica_Value__c</field><readable>true</readable></fieldPermissions>

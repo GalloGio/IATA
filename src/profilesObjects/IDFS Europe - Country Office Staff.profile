@@ -5732,7 +5732,7 @@
 <fieldPermissions><editable>true</editable><field>PortalUserLocaleSetting__c.Language__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>PortalUserLocaleSetting__c.Time_Zone_S__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>PortalUserLocaleSetting__c.Time_Zone__c</field><readable>true</readable></fieldPermissions>
-<fieldPermissions><editable>true</editable><field>Portal_Application_Right__c.Access_Status_Reason__c</field><readable>true</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>Portal_Application_Right__c.Access_Status_Reason__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Portal_Application_Right__c.Account_Country__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Portal_Application_Right__c.Account_HQ_BR__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Portal_Application_Right__c.Account_Name__c</field><readable>true</readable></fieldPermissions>
@@ -5745,7 +5745,7 @@
 <fieldPermissions><editable>true</editable><field>Portal_Application_Right__c.Case_creation_record_type__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Portal_Application_Right__c.ContactId__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Portal_Application_Right__c.Contact_User_Portal_Status__c</field><readable>true</readable></fieldPermissions>
-<fieldPermissions><editable>true</editable><field>Portal_Application_Right__c.Currency1__c</field><readable>true</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>Portal_Application_Right__c.Currency1__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Portal_Application_Right__c.Currency2__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Portal_Application_Right__c.IATA_Code__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Portal_Application_Right__c.Invoice_Type__c</field><readable>false</readable></fieldPermissions>
@@ -6888,6 +6888,8 @@
 <objectPermissions><allowCreate>true</allowCreate><allowDelete>true</allowDelete><allowEdit>true</allowEdit><allowRead>true</allowRead><modifyAllRecords>false</modifyAllRecords><object>Meeting_Participant__c</object><viewAllRecords>false</viewAllRecords></objectPermissions>
 <objectPermissions><allowCreate>false</allowCreate><allowDelete>false</allowDelete><allowEdit>false</allowEdit><allowRead>true</allowRead><modifyAllRecords>false</modifyAllRecords><object>Opportunity</object><viewAllRecords>false</viewAllRecords></objectPermissions>
 <objectPermissions><allowCreate>true</allowCreate><allowDelete>true</allowDelete><allowEdit>true</allowEdit><allowRead>true</allowRead><modifyAllRecords>false</modifyAllRecords><object>Participant__c</object><viewAllRecords>false</viewAllRecords></objectPermissions>
+<objectPermissions><allowCreate>true</allowCreate><allowDelete>false</allowDelete><allowEdit>true</allowEdit><allowRead>true</allowRead><modifyAllRecords>false</modifyAllRecords><object>Portal_Application_Right__c</object><viewAllRecords>false</viewAllRecords></objectPermissions>
+<objectPermissions><allowCreate>false</allowCreate><allowDelete>false</allowDelete><allowEdit>false</allowEdit><allowRead>true</allowRead><modifyAllRecords>false</modifyAllRecords><object>Portal_Applications__c</object><viewAllRecords>false</viewAllRecords></objectPermissions>
 <objectPermissions><allowCreate>false</allowCreate><allowDelete>false</allowDelete><allowEdit>false</allowEdit><allowRead>true</allowRead><modifyAllRecords>false</modifyAllRecords><object>Pricebook2</object><viewAllRecords>false</viewAllRecords></objectPermissions>
 <objectPermissions><allowCreate>false</allowCreate><allowDelete>false</allowDelete><allowEdit>false</allowEdit><allowRead>true</allowRead><modifyAllRecords>false</modifyAllRecords><object>Product2</object><viewAllRecords>false</viewAllRecords></objectPermissions>
 <objectPermissions><allowCreate>false</allowCreate><allowDelete>false</allowDelete><allowEdit>false</allowEdit><allowRead>true</allowRead><modifyAllRecords>false</modifyAllRecords><object>Product_Assignment__c</object><viewAllRecords>false</viewAllRecords></objectPermissions>
@@ -7368,6 +7370,7 @@
 <userPermissions><enabled>true</enabled><name>ExportReport</name></userPermissions>
 <userPermissions><enabled>true</enabled><name>ManageCases</name></userPermissions>
 <userPermissions><enabled>true</enabled><name>ManageCssUsers</name></userPermissions>
+<userPermissions><enabled>true</enabled><name>ManagePartners</name></userPermissions>
 <userPermissions><enabled>true</enabled><name>MassInlineEdit</name></userPermissions>
 <userPermissions><enabled>true</enabled><name>RunReports</name></userPermissions>
 <userPermissions><enabled>true</enabled><name>SelectFilesFromSalesforce</name></userPermissions>
