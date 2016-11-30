@@ -6,6 +6,8 @@
     <customButtons>Reset_New_interactions</customButtons>
     <customButtons>Escalate_within_IATA</customButtons>
     <customButtons>Create_SAAM_Case</customButtons>
+	<customButtons>Deactivate_BSPLink</customButtons>
+	<customButtons>Reactivate_BSPLink</customButtons>
     <emailDefault>false</emailDefault>
     <excludeButtons>Clone</excludeButtons>
     <excludeButtons>Delete</excludeButtons>
@@ -443,6 +445,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Additional_Financial_Security_Remarks__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Payment_Remarks__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>

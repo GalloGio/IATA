@@ -2,6 +2,8 @@ global class AMS_VouchersCreationBatch implements Database.Batchable<sObject>, D
 	
 	public final Integer GOVERNORLIMIT = 10000;
 
+	public final Integer VOUCHERSPERPDF = 1000;
+
 	String query;
 
 	public List<AMS_Voucher_Information__c> allVouchersInfo;
@@ -22,8 +24,16 @@ global class AMS_VouchersCreationBatch implements Database.Batchable<sObject>, D
 
 	public AMS_Voucher_Process_Run__c process;
 
+	public List<Attachment> attachments;
+
+	public Integer totalVouchersCreated;
+
 	global AMS_VouchersCreationBatch(Map<IATA_ISO_Country__c,Decimal> averageMetrics, AMS_Voucher_Process_Run__c process) {
-		
+
+		totalVouchersCreated = 0;
+
+		attachments = new List<Attachment>();
+
 		vouchersToPrint = new Set<Id>();
 
 		this.process = process;
@@ -38,7 +48,7 @@ global class AMS_VouchersCreationBatch implements Database.Batchable<sObject>, D
 
 		String yearToProcess = String.valueOf(System.today().year());
 
-		this.query = 'SELECT Id, Account__c, Amount_Currency__c, Number_Of_Vouchers__c , Account__r.IATA_ISO_Country__r.Region__c , AmountLastYearSales__c , Account__r.IATA_ISO_Country__c, Account__r.IATA_ISO_Country__r.Name, Account__r.Location_Class__c,Account__r.IATA_ISO_Country__r.AMS_Max_Vouchers_Per_Year__c, Account__r.IATA_ISO_Country__r.AMS_Vouchers_Benchmark__c FROM AMS_Voucher_Information__c WHERE IsAgencyEligible__c = true and Year__c = \'' + yearToProcess + '\' and Account__r.IATA_ISO_Country__c in :countries';
+		this.query = 'SELECT Id, Account__c, Exchange_Rate__c, Amount_Currency__c, Number_Of_Vouchers__c , Account__r.IATA_ISO_Country__r.Region__c , AmountLastYearSales__c , Account__r.IATA_ISO_Country__c, Account__r.IATA_ISO_Country__r.Name, Account__r.Location_Class__c,Account__r.IATA_ISO_Country__r.AMS_Max_Vouchers_Per_Year__c, Account__r.IATA_ISO_Country__r.AMS_Vouchers_Benchmark__c FROM AMS_Voucher_Information__c WHERE IsAgencyEligible__c = true and Year__c = \'' + yearToProcess + '\' and Account__r.IATA_ISO_Country__c in :countries';
 	
 		List<AMS_Voucher_Region__c> regions = [SELECT Id, Name from AMS_Voucher_Region__c];
 
@@ -72,7 +82,7 @@ global class AMS_VouchersCreationBatch implements Database.Batchable<sObject>, D
 				continue;
 			}
 
-			Decimal totalAgencySales = vInfo.AmountLastYearSales__c * AMS_VoucherCalculationHelper.conversionRateMap.get(vInfo.Amount_Currency__c);
+			Decimal totalAgencySales = vInfo.AmountLastYearSales__c * vInfo.Exchange_Rate__c;
 			Decimal countryAverage = averageMetrics.get(vInfo.Account__r.IATA_ISO_Country__r);
 			Integer maxAmountVouchersCountry = Integer.ValueOf(vInfo.Account__r.IATA_ISO_Country__r.AMS_Max_Vouchers_Per_Year__c);
 			Decimal countryBenchmark = Integer.ValueOf(vInfo.Account__r.IATA_ISO_Country__r.AMS_Vouchers_Benchmark__c);
@@ -83,7 +93,9 @@ global class AMS_VouchersCreationBatch implements Database.Batchable<sObject>, D
 			
 		}
 
-		vouchers = AMS_VoucherCalculationHelper.createVouchersForAgencies(vouchersToCreate,process.Id);
+		vouchers = AMS_VoucherCalculationHelper.createVouchersForAgencies(vouchersToCreate,process.Id,totalVouchersCreated,VOUCHERSPERPDF,region.Name);
+
+		totalVouchersCreated += vouchers.size();
 
 		if(!vouchers.isEmpty()){
 	
@@ -129,5 +141,6 @@ global class AMS_VouchersCreationBatch implements Database.Batchable<sObject>, D
 
 		insert vouchers;
 	}
+
 	
 }

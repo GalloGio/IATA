@@ -8,7 +8,7 @@ public class vfIECEBC_ResourceList extends vfIECEBC_Abstract_List {
         get {
                 if (MessageFlag==null) {
                     MessageFlag=false;
-                }
+                } 
             return Messageflag;
         }
         private set;
@@ -180,11 +180,6 @@ public class vfIECEBC_ResourceList extends vfIECEBC_Abstract_List {
             UploadInit();
             return null;
         } catch(IECEBC_Utility.Attachment_Size_Exceeds_Capacity_Exception e) {
-            MessageFlag=true;
-            MessageContent=e.getMessage();
-            UploadInit();
-            return null;
-        } catch(IECEBC_Utility.Resource_Name_Already_Exists_Exception e) {
             MessageFlag=true;
             MessageContent=e.getMessage();
             UploadInit();

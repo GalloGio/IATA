@@ -2,10 +2,11 @@
 <Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
     <alerts>
         <fullName>EF_Billing_Agreement_Rejected</fullName>
-        <description>Notify Owner of Manager Rejection</description>
+        <description>Notify Submitter of Manager Rejection</description>
         <protected>false</protected>
         <recipients>
-            <type>owner</type>
+            <field>EF_Submitter_Email__c</field>
+            <type>email</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
@@ -13,14 +14,27 @@
     </alerts>
     <alerts>
         <fullName>EF_Notify_BA_Owner_of_Manager_Approval</fullName>
-        <description>Notify Owner of Manager Approval</description>
+        <description>Notify Submitter of Manager Approval</description>
         <protected>false</protected>
         <recipients>
-            <type>owner</type>
+            <field>EF_Submitter_Email__c</field>
+            <type>email</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
         <template>E_F_Services/EF_Billing_Agreement_Approved</template>
+    </alerts>
+    <alerts>
+        <fullName>Notify_Approver_of_Recall</fullName>
+        <description>Notify Approver of Recall</description>
+        <protected>false</protected>
+        <recipients>
+            <field>EF_Approver_Email__c</field>
+            <type>email</type>
+        </recipients>
+        <senderAddress>noreply@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>E_F_Services/EF_Billing_Agreement_Recalled</template>
     </alerts>
     <fieldUpdates>
         <fullName>Add_Approver_Email</fullName>

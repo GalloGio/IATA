@@ -217,7 +217,7 @@ global class SchdlIECEBCStartCampaign implements Database.Batchable<sObject>, Da
         reschedule();
     }
     global static void cancel() {
-        cancel('SchdlIECEBCStartCampaign');
+        cancel('SchdlIECEBCStartCampaign' + (Test.isRunningTest() ? 'Test' : ''));
     }
     global static void cancel(String name) {
         CronTrigger ct = [SELECT Id, CronJobDetail.Id, CronJobDetail.Name, CronJobDetail.JobType FROM CronTrigger Where CronJobDetail.Name = :name LIMIT 1];
@@ -230,7 +230,7 @@ global class SchdlIECEBCStartCampaign implements Database.Batchable<sObject>, Da
             Datetime nextSchedules = Datetime.now().addMinutes(2);
             sch = String.valueOf(nextSchedules.second()) + ' ' + String.valueOf(nextSchedules.minute()) + ' * * * ?';
         }
-        System.schedule('SchdlIECEBCStartCampaign', sch, a);
+        System.schedule('SchdlIECEBCStartCampaign' + (Test.isRunningTest() ? 'Test' : ''), sch, a);
     }
     
     global static void reschedule() {
