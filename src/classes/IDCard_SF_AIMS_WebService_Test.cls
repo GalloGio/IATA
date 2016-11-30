@@ -84,10 +84,14 @@ private class IDCard_SF_AIMS_WebService_Test {
     }
     
     private static Account CreateAccountTest()
-    {       
+    {   IATA_ISO_Country__c country_fr = new IATA_ISO_Country__c(Name = 'France', ISO_Code__c = 'FR', Region__c = 'Europe');
+        insert country_fr;
+
+        ID rectypeid = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency').getRecordTypeId();
+
         Account aAccount = new Account();
         aAccount.Name = 'Unit Test Account 1';
-        aAccount.IATACode__c = '1234567';
+        aAccount.IATACode__c = '12345678';
         aAccount.Industry = 'Travel Agent';
         aAccount.Type = 'IATA Passenger Sales Agent';
         aAccount.BillingCity = 'Montreal';
@@ -95,7 +99,8 @@ private class IDCard_SF_AIMS_WebService_Test {
         aAccount.BillingPostalCode = 'H4G 2S4';
         aAccount.BillingState = 'Quebec';
         aAccount.BillingStreet = '666 Sherbrooke';
-        aAccount.RecordTypeID = '012w0000000QBMW';
+        aAccount.RecordTypeID = rectypeid; //'012w0000000QBMW';
+        aAccount.IATA_ISO_Country__c = country_fr.Id;
         
         insert aAccount;
         
@@ -390,6 +395,8 @@ private class IDCard_SF_AIMS_WebService_Test {
     private static ID_Card__c CreateAIDCardTest()
     {       
         ID_Card__c aIdCard = new ID_Card__c();
+        aIdCard.FirstName__c = 'Test';
+        aIdCard.LastName__c = 'Contact 1';
         aIdCard.Name_on_ID_Card__c = 'Test IDCard';
         aIdCard.Nature_of_ID_Card__c = 'Nenew';
         aIdCard.Card_Status__c = 'Approved';
@@ -402,6 +409,36 @@ private class IDCard_SF_AIMS_WebService_Test {
         aIdCard.Hours_per_week__c = '35h or more';
         aIdCard.Start_Date_Agency_Month__c = 'DECEMBER';
         aIdCard.Start_Date_Agency_Year__c = '2000';
+        aIdCard.Date_of_Birth__c = Date.newInstance(1985, 06, 23);
+        insert aIdCard;
+        
+        return aIdCard;
+    }
+
+    private static ID_Card__c CreateValidIDCardTest()
+    {       
+        ID_Card__c aIdCard = new ID_Card__c();
+        aIdCard.FirstName__c = 'Test';
+        aIdCard.LastName__c = 'Contact 1';
+        aIdCard.Agency_Name__c = 'Test IDCard';
+        aIdCard.Agency_IATA_Code__c = '12345678';
+        aIdCard.Name_on_ID_Card__c = 'Test IDCard';
+        aIdCard.Nature_of_ID_Card__c = 'Nenew';
+        aIdCard.Card_Status__c = 'Approved';
+        aIdCard.Type_of_ID_Card__c = 'Passenger';
+        aIdCard.Photo_Flag__c = 'Digital';
+        aIdCard.Photo__c = '54668';
+        aIdCard.Card_Variation_Code__c ='2';
+        aIdCard.Card_Code__c = 'TACB';
+        aIdCard.CIN__c = 'TACB';
+        aIdCard.MustSyncWithAIMS__c = true;     
+        aIdCard.Hours_per_week__c = '35h or more';
+        aIdCard.Start_Date_Agency_Month__c = 'DECEMBER';
+        aIdCard.Start_Date_Agency_Year__c = '2000';
+        aIdCard.Start_Date_Industry__c = '2000';
+        aIdCard.Valid_To_Date__c = Date.newInstance(2099, 06, 23);
+        aIdCard.VER_Number__c = '5036048956';
+        aIdCard.Date_of_Birth__c = Date.newInstance(1985, 06, 23);
         insert aIdCard;
         
         return aIdCard;
@@ -432,4 +469,116 @@ private class IDCard_SF_AIMS_WebService_Test {
         
         return aApplication;
     }
+
+
+
+    static testMethod void GetIdCardPrintInfoTest1() {
+
+        // Create IDCardApplication, Account, Contact & ID Card Object
+        Account aAccount = CreateAccountTest();
+        list<Contact> lstContacts = CreateListOfContactTest();
+        ID_Card_Application__c aApplication = CreateAIdCardApplication();
+        ID_Card__c aCard = CreateAIDCardTest();
+        
+        for (Contact aContact : lstContacts){
+            aContact.AccountId = aAccount.Id;
+        }
+
+        aCard.Related_Contact__c = lstContacts[0].Id;
+        aCard.ID_Card_Application__c = aApplication.Id;
+        
+        update lstContacts;
+        update aCard;
+        
+        IDCard_SF_AIMS_WebService.GetIdCardPrintInfo('WW');
+    }
+
+    static testMethod void GetIdCardPrintInfoTest2() {
+
+        test.startTest();
+        // Create IDCardApplication, Account, Contact & ID Card Object
+        Account aAccount = CreateAccountTest();
+        list<Contact> lstContacts = CreateListOfContactTest();
+        ID_Card_Application__c aApplication = CreateAIdCardApplication();
+        ID_Card__c aCard = CreateValidIDCardTest();
+        
+        for (Contact aContact : lstContacts){
+            aContact.AccountId = aAccount.Id;
+        }
+
+        aCard.Related_Contact__c = lstContacts[0].Id;
+        aCard.ID_Card_Application__c = aApplication.Id;
+        
+        update lstContacts;
+        update aCard;
+        test.stopTest();
+        
+        IDCard_SF_AIMS_WebService.GetIdCardPrintInfo('WW');
+    }
+
+
+    static testMethod void GDResponseWebServicesTest() {
+        
+        string STATUSNOPHOTO = 'ERROR Picture Missing';
+        string STATUSREJECTED = 'ERROR Rejected by G&D';
+        string CSPRINTEDDELIVERED = 'Printed/Delivered';
+
+        test.startTest();
+        // Create IDCardApplication, Account, Contact & ID Card Object
+        Account aAccount = CreateAccountTest();
+        list<Contact> lstContacts = CreateListOfContactTest();
+        ID_Card_Application__c aApplication = CreateAIdCardApplication();
+        ID_Card__c aCard = CreateValidIDCardTest();
+        
+        for (Contact aContact : lstContacts){
+            aContact.AccountId = aAccount.Id;
+        }
+
+        aCard.Related_Contact__c = lstContacts[0].Id;
+        aCard.ID_Card_Application__c = aApplication.Id;
+        
+        update lstContacts;
+        update aCard;
+
+        //IDCard_SF_AIMS_WebService.UpdateSFIdCards(null, null, null, null, null, aCard.Id, null);
+        test.stopTest();
+        
+//aCard = [SELECT Id, Card_Status__c, Related_Contact__r.UIR__c FROM ID_Card__c WHERE Id = :aCard.Id];
+//system.assertEquals('54668', aCard.Related_Contact__r.UIR__c);
+        // LogMissingPhotoErrors
+        list<String> lstIdCardIds = new list<String>();
+        lstIdCardIds.add(aCard.Id);
+        IDCard_SF_AIMS_WebService.LogMissingPhotoErrors(lstIdCardIds);
+
+        aCard = [SELECT Id, Card_Status__c FROM ID_Card__c WHERE Id = :aCard.Id];
+        system.assertEquals(STATUSNOPHOTO, aCard.Card_Status__c);
+
+        IDCard_SF_AIMS_WebService.SetMustSynchWithAIMSFlagToFalse(lstIdCardIds);
+
+        // UpdatePrintedIdCard
+        IDCard_SF_AIMS_WebService.UpdatePrintedIdCard('54668');
+        aCard = [SELECT Id, Card_Status__c FROM ID_Card__c WHERE Id = :aCard.Id];
+        system.assertEquals(CSPRINTEDDELIVERED, aCard.Card_Status__c);
+
+        aCard.Received_From_AIMS__c = null;
+        update aCard;
+
+        // UpdateRejectedIdCards
+        IDCard_SF_AIMS_WebService.UpdateRejectedIdCards(new list<String>{'54668'});
+        aCard = [SELECT Id, Card_Status__c FROM ID_Card__c WHERE Id = :aCard.Id];
+        system.assertEquals(STATUSREJECTED, aCard.Card_Status__c);
+
+
+        // LogSystemError
+        list<IEC_Error_Log__c> lstLogs = [SELECT Id FROM IEC_Error_Log__c];
+        system.assertEquals(0, lstLogs.size());
+
+        IDCard_SF_AIMS_WebService.LogSystemError('test error', 'Amazon S3', '<input data>', '<full error message>');
+
+        lstLogs = [SELECT Id FROM IEC_Error_Log__c];
+        system.assertEquals(1, lstLogs.size());
+        
+    }
+
+
 }
