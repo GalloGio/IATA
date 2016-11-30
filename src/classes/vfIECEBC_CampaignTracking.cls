@@ -96,13 +96,16 @@ public class vfIECEBC_CampaignTracking extends vfIECEBC_Controller{
         private set;
     }
     public Integer Adjustments {
-        get {           
-         	List<AggregateResult> rec = [Select Sum(Total_Count__c) cnt                            	
-                                                      From EBC_Activity__c
-                                                      Where EBC_Campaign__c = :campaign.Id
-                                                     And Activity_Type__c = 'Adjustment'
-                                                     ];
-            return  Integer.valueOf(rec[0].get('cnt'));
+        get {
+            if (Adjustments == null) {
+                List<AggregateResult> rec = [Select Sum(Total_Count__c) cnt                            	
+                                             From EBC_Activity__c
+                                             Where EBC_Campaign__c = :campaign.Id
+                                             And Activity_Type__c = 'Adjustment'
+                                            ];
+                Adjustments = Integer.valueOf(rec[0].get('cnt'));
+            }
+            return Adjustments;
         }
         private set;
     }
@@ -329,10 +332,14 @@ public class vfIECEBC_CampaignTracking extends vfIECEBC_Controller{
         return  JSON.serialize(fst7DaysClicks);
     }
     
-    //Retrieve campaign sent date
-    public String getSentDate(){      
-        String senddate = [Select Send_Datetime__c from EBC_Campaign__c where ID = :campaign.Id].get(0).Send_Datetime__c.format('M/d/yyyy h:mm a');
-        return 'Sent time ' + senddate;     
+    public String SentDate {
+        get {
+            if (SentDate == null) {
+                SentDate = 'Sent time ' + [Select Send_Datetime__c from EBC_Campaign__c where ID = :campaign.Id].get(0).Send_Datetime__c.format('M/d/yyyy h:mm a');
+            }
+            return SentDate;
+        }
+        set;
     }
     
     //Generation a map <Hour,null> based on hours for retrieve opens/clicks use 
@@ -345,6 +352,7 @@ public class vfIECEBC_CampaignTracking extends vfIECEBC_Controller{
     }
     
     //Generation a map <Hour,null> based on hours for retrieve opens/clicks use 
+    /*
     public static Map<Integer, String> generateMapString(Integer numberOfHours){    
         Map<Integer, String> initMap = new Map<Integer, String>();
         for (integer i=0; i<numberOfHours; i++){
@@ -352,6 +360,7 @@ public class vfIECEBC_CampaignTracking extends vfIECEBC_Controller{
         }       
         return initMap;
     }
+    */
     
     //X-axis for 7-days chart
     public String getXAxis7d(){

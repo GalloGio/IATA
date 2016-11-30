@@ -8,6 +8,8 @@ global class AMS_VoucherPDFCreationBatch implements Database.Batchable<sObject>,
 
 	public Integer run = 0;
 
+	public Integer runOffSet = 0;
+
 	public AMS_Voucher_Region__c region;
 
 	public AMS_Voucher_Process_Run__c process;
@@ -16,7 +18,7 @@ global class AMS_VoucherPDFCreationBatch implements Database.Batchable<sObject>,
 
 		vouchersToPrint = vouchersToPrintSet;
 
-		this.query = 'SELECT Id FROM AMS_Voucher__c WHERE Id in :vouchersToPrint';
+		this.query = 'SELECT Id FROM AMS_Voucher__c WHERE Id in :vouchersToPrint order by runExecution__c';
 
 		this.region = regionInput;
 
@@ -25,6 +27,8 @@ global class AMS_VoucherPDFCreationBatch implements Database.Batchable<sObject>,
 		this.attachments = new List<Attachment>();
 
 		run = fetchProperRun(regionInput);
+        
+        System.debug('AMS_VoucherPDFCreationBatch - Size of list to print is:' + vouchersToPrintSet.size());
 	}
 	
 	global Database.QueryLocator start(Database.BatchableContext BC) {
@@ -35,12 +39,17 @@ global class AMS_VoucherPDFCreationBatch implements Database.Batchable<sObject>,
 
    	global void execute(Database.BatchableContext BC, List<AMS_Voucher__c> scope) {
 		
+        System.debug('List to execute vouchers printing:' + scope.size());
+
+        System.debug('CPU time is ' + Limits.getCpuTime() + '(1)');
+        
 		run ++;
 
-		String filename = savePDF(scope,run);
+		String filename = savePDF(runOffSet);
 
 		List<AMS_Voucher__c> toUpdate = new List<AMS_Voucher__c>();
 
+/*
 		for(AMS_Voucher__c v : scope){
 
 			v.Pdf_Attachment_File__c = filename;
@@ -49,10 +58,13 @@ global class AMS_VoucherPDFCreationBatch implements Database.Batchable<sObject>,
 
 		if(!toUpdate.isEmpty())
 			update toUpdate;
+*/
 
-			System.debug('Vouchers to Update pdf name:' + toUpdate);
-            
-
+		System.debug('Vouchers to Update pdf name:' + toUpdate);
+        
+        System.debug('CPU time is ' + Limits.getCpuTime() + '(5)');
+        
+		runOffSet ++;
 	}
 	
 	global void finish(Database.BatchableContext BC) {
@@ -74,7 +86,49 @@ global class AMS_VoucherPDFCreationBatch implements Database.Batchable<sObject>,
 	}
 
 
+	private String savePDF(Integer runExe) {
+        
+        System.debug('CPU time is ' + Limits.getCpuTime() + '(2)');
+
+		Datetime nowDate = Datetime.now();
+
+		String formattedDate = nowDate.format('yyyyMMdd');
+
+        String filename = 'Vouchers_'+ region.Name + '_' + (runExe+1) + '_' + formattedDate + '.pdf';
+
+		PageReference pdf = Page.AMS_VoucherPDFGeneratorPage;
+		
+		pdf.getParameters().put('runExec',JSON.serialize(runOffSet));
+		pdf.getParameters().put('runId',JSON.serialize(process.Id));
+
+	    Attachment attach = new Attachment();
+
+	    System.debug('CPU time is ' + Limits.getCpuTime() + '(3)');
+
+	    Blob body;
+
+	    if(Test.isRunningTest()){
+			body = Blob.valueOf('Test');
+	    }else
+			body = pdf.getContent();
+
+		System.debug('CPU time is ' + Limits.getCpuTime() + '(4)');
+
+		attach.Body = body;
+
+		attach.Name = filename;
+
+		attach.IsPrivate = false;
 	
+		attach.ParentId = region.Id;
+
+		attachments.add(attach);
+
+		return filename;
+
+	}
+
+	/*
 	private String savePDF(List<AMS_Voucher__c> scope, Integer runExe) {
         
 		Datetime nowDate = Datetime.now();
@@ -121,6 +175,9 @@ global class AMS_VoucherPDFCreationBatch implements Database.Batchable<sObject>,
 		return filename;
 
 	}
+	*/
+
+
 
 	public static void sendSingleMail(String myCustomString,User activeUser, AMS_Voucher_Region__c region){
 

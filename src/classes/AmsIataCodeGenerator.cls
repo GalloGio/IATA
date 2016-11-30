@@ -54,6 +54,7 @@ global class AmsIataCodeGenerator{
         allowedProgramCodes.add('M');
         allowedProgramCodes.add('G');
         allowedProgramCodes.add('X');
+        allowedProgramCodes.add('D');
         
         
         // This means handling these program codes as if they were Cargo agencies,
@@ -90,7 +91,7 @@ global class AmsIataCodeGenerator{
             if(!allowedProgramCodes.contains(theAccreditation.Location_Class__c))
             {
                 returnedValues[0]='2';
-                returnedValues[1]='IATA Code Generation is only allowed for C, I, P, Q, R, T, M, G, X and P Location Classes.';
+                returnedValues[1]='IATA Code Generation is only allowed for C, D, I, P, Q, R, T, M, G, X and P Location Classes.';
                 return returnedValues;
             }
             
@@ -126,7 +127,7 @@ global class AmsIataCodeGenerator{
                     if(theAccreditation.SAAM_Case__r.OSCAR__r.Process__c == AMS_Utils.new_GSSA && theAccount.Location_Class__c == 'G')
                         theAccount.Category__c = 'GSSA Cargo';
                     else
-                    theAccount.Category__c = programCategoryMap.get(theAccount.Location_Class__c);
+                        theAccount.Category__c = programCategoryMap.get(theAccount.Location_Class__c);
                 }
                 else
                 {
@@ -188,36 +189,36 @@ global class AmsIataCodeGenerator{
 
                 String isoState = theAccreditation.IATA_ISO_State__c;
                 if(isoState == null && theAccreditation.Branch_Office_Country__c != null)
-				{
-					try
-					{
-	                	// Get the default state value for the accreditation's country -- unfortunately join subselect can't be used due to the SF limits...
-	                	List<IATA_ISO_Country__c> accreditationCountry = [select AMS_Default_State__c, name from iata_iso_country__c where id = :theAccreditation.Branch_Office_Country__c limit 1];
-	                	if(accreditationCountry.size() > 0)
-	                	{
-	                		String countryDefaultState = accreditationCountry.get(0).AMS_Default_State__c;
-	                		List<IATA_ISO_State__c> defaultIsoStateList = [select id, Name, ISO_Code__c from iata_iso_state__c where ISO_Code__c = :countryDefaultState and IATA_ISO_Country__c = :theAccreditation.Branch_Office_Country__c];
-	                		isoState = defaultIsoStateList.get(0).Id;
-	                	}
-	                	else
-	                	{
-	                		// Something is seriously wrong in the iso country + iso state setup.
-	                		returnedValues[0]='2';
-		                    returnedValues[1]='The agency you were submitting does not have IATA ISO State set. The system failed to find a default one to use for your selected ISO Country. Please provide a State value as well and try generating the IATA code again, please.';
-	                		return returnedValues;
-	                	}
-					} catch(Exception e)
-					{
-						// Something is seriously wrong in the iso country + iso state setup.
-                		returnedValues[0]='2';
-	                    returnedValues[1]='The agency you were submitting does not have IATA ISO State set. The system failed to find a default one to use for your selected ISO Country. Please provide a State value as well and try generating the IATA code again, please.';
-                		return returnedValues;
-					}
+                {
+                    try
+                    {
+                        // Get the default state value for the accreditation's country -- unfortunately join subselect can't be used due to the SF limits...
+                        List<IATA_ISO_Country__c> accreditationCountry = [select AMS_Default_State__c, name from iata_iso_country__c where id = :theAccreditation.Branch_Office_Country__c limit 1];
+                        if(accreditationCountry.size() > 0)
+                        {
+                            String countryDefaultState = accreditationCountry.get(0).AMS_Default_State__c;
+                            List<IATA_ISO_State__c> defaultIsoStateList = [select id, Name, ISO_Code__c from iata_iso_state__c where ISO_Code__c = :countryDefaultState and IATA_ISO_Country__c = :theAccreditation.Branch_Office_Country__c];
+                            isoState = defaultIsoStateList.get(0).Id;
+                        }
+                        else
+                        {
+                            // Something is seriously wrong in the iso country + iso state setup.
+                            returnedValues[0]='2';
+                            returnedValues[1]='The agency you were submitting does not have IATA ISO State set. The system failed to find a default one to use for your selected ISO Country. Please provide a State value as well and try generating the IATA code again, please.';
+                            return returnedValues;
+                        }
+                    } catch(Exception e)
+                    {
+                        // Something is seriously wrong in the iso country + iso state setup.
+                        returnedValues[0]='2';
+                        returnedValues[1]='The agency you were submitting does not have IATA ISO State set. The system failed to find a default one to use for your selected ISO Country. Please provide a State value as well and try generating the IATA code again, please.';
+                        return returnedValues;
+                    }
                 }
                 else
                 {
-                	isoState = theAccreditation.IATA_ISO_State__c;
-                	System.debug('************ isostate existed: '+isoState);
+                    isoState = theAccreditation.IATA_ISO_State__c;
+                    System.debug('************ isostate existed: '+isoState);
                 }
                 
                 acceptableRanges  = [select IATA_ISO_State__r.Name, Area__c, Area_Code__c, Prefix__c, IATA_ISO_Country__c, IATA_ISO_State__c, Max_Range__c, Min_Range__c, ProgramCode__c, Program__c, Name from Code_Range__c where 
@@ -253,15 +254,15 @@ global class AmsIataCodeGenerator{
                         List<String> rangesToSearch = new List<String>();
                         if(range.Min_Range__c < 1000 || range.Max_Range__c < 1000)
                         {
-                        	rangesToSearch.add(infLimit+'0');
+                            rangesToSearch.add(infLimit+'0');
                         }
                         
                         if(range.Min_Range__c >= 1000 || range.Max_Range__c >= 1000)
                         {
-	                        for(integer i=minRange; i<=maxRange; i++)
-	                        {
-	                            rangesToSearch.add(infLimit+String.valueOf(i));
-	                        }
+                            for(integer i=minRange; i<=maxRange; i++)
+                            {
+                                rangesToSearch.add(infLimit+String.valueOf(i));
+                            }
                         }
                         
                         String query;
@@ -314,26 +315,26 @@ global class AmsIataCodeGenerator{
                                 // Incorrect IATACode format
                             }
                         }
-                        
+
                         for(String shortIataCode : tempStorage)
                         {
                             rangeAgencies.add(new Account(IATACode__c = shortIataCode));
                         }
-                        
+
                         if(rangeAgencies == null)
                         {
                             rangeAgencies = new List<Account>();
                         }
                         System.debug('**** [IATA CODE GENerator] System calc '+rangeAgencies.size()+' existing codes for Range '+range.Name);
-                        
-                        
+
+
                         System.debug('**** JH: rangeAgencies.size(): '+rangeAgencies.size() + ' max range: ' + range.Max_Range__c + ' - min range: ' +range.Min_Range__c);
                         //test if there enought place in this range
                         if(rangeAgencies.size() <= (range.Max_Range__c-range.Min_Range__c))
                         {
                             //case we have only one 
                             //TODO
-                            
+
                             //other case
                             System.debug('**** rangeAgencies ' +rangeagencies.size());
                             for(Integer i =1; i < rangeAgencies.size(); i++)
@@ -349,74 +350,74 @@ global class AmsIataCodeGenerator{
                                     iataCode = iataCode.replace(' ', '');
                                     theAccreditation.N_Code__c = resizeNumericString(String.valueOf(Integer.valueof(iataCode.right(4)) +1), 4);
                                     theAccreditation.A_Code__c = String.valueOf(range.Area_Code__c);
-                                    theAccreditation.C_Code__c = resizeNumericString(String.valueOf(range.Prefix__c), 2);
+                            theAccreditation.C_Code__c = resizeNumericString(String.valueOf(range.Prefix__c), 2);
                                     //theAccreditation.IATACode__c =  theAccreditation.C_Code__c + theAccreditation.A_Code__c + theAccreditation.N_Code__c;
-                                    
-                                    String iatacodeToValidate = generateIATACodeWithCheckDigit(theAccreditation, theAccount);
 
-                                    if(iatacodeToValidate == null){
-                                        returnedValues[1] = 'Couldn\'t generate IATA Code, please make sure the location class and category are correct';
-                                        returnedValues[0] = '4';
-                                        return returnedValues;
-                                    }
-                                    
-                                    if(!isIATACodeGeneratedUnique(iatacodeToValidate)){
-                                        returnedValues[1] = 'The IATA code generated is not unique. Please check the CASS Number (if it is a branch) in the hierarchy or search for the IATA Code ' + theAccreditation.IATACode__c + ' in the search tool ';
-                                        returnedValues[0] = '2';
-                                        return returnedValues;
-                                    }
+                            String iatacodeToValidate = generateIATACodeWithCheckDigit(theAccreditation, theAccount);
 
-                                    //theAccount.IATACode__c = theAccreditation.IATACode__c;
-                                    theAccount.RecordTypeId = AMS_Utils.getId('Account', 'IATA_Agency');
-                                    if(allowedProgramCodes.contains(theAccreditation.Location_Class__c))
-                                    {
+                            if(iatacodeToValidate == null){
+                                returnedValues[1] = 'Couldn\'t generate IATA Code, please make sure the location class and category are correct';
+                                returnedValues[0] = '4';
+                                return returnedValues;
+                            }
+
+                            if(!isIATACodeGeneratedUnique(iatacodeToValidate)){
+                                returnedValues[1] = 'The IATA code generated is not unique. Please check the CASS Number (if it is a branch) in the hierarchy or search for the IATA Code ' + theAccreditation.IATACode__c + ' in the search tool ';
+                                returnedValues[0] = '2';
+                                return returnedValues;
+                            }
+
+                            //theAccount.IATACode__c = theAccreditation.IATACode__c;
+                            theAccount.RecordTypeId = AMS_Utils.getId('Account', 'IATA_Agency');
+                            if(allowedProgramCodes.contains(theAccreditation.Location_Class__c))
+                            {
                                 if(theAccreditation.SAAM_Case__r.OSCAR__r.Process__c == AMS_Utils.new_GSSA && theAccount.Location_Class__c == 'G')
                                     theAccount.Category__c = 'GSSA Cargo';
                                 else
-                                        theAccount.Category__c = programCategoryMap.get(theAccount.Location_Class__c);
-                                    }
-                                    else
-                                    {
-                                        // TODO Later... These are already mapped, but there's no task to activate these yet
-                                        // When the moment comes, we should remove the above IF and this ELSE
-                                        
-                                        // theAccount.Category__c = programCategoryMap.get(theAccount.Location_Class__c);
-                                    }
-                                    System.debug('**** storing accreditation with iata code: '+theAccreditation.IATACode__c);
-                                    List<Code_Range__c> codeRangesToLock = [select id, AMS_Deplicate_Prevention_Lock__c from Code_Range__c where id = :range.Id for update];
-		                            Code_Range__c codeRange = codeRangesToLock.get(0);
-		                            codeRange.AMS_Deplicate_Prevention_Lock__c = true;
-		                            update codeRangesToLock;
+                                    theAccount.Category__c = programCategoryMap.get(theAccount.Location_Class__c);
+                            }
+                            else
+                            {
+                                // TODO Later... These are already mapped, but there's no task to activate these yet
+                                // When the moment comes, we should remove the above IF and this ELSE
+                                
+                                // theAccount.Category__c = programCategoryMap.get(theAccount.Location_Class__c);
+                            }
+                            System.debug('**** storing accreditation with iata code: '+theAccreditation.IATACode__c);
+                            List<Code_Range__c> codeRangesToLock = [select id, AMS_Deplicate_Prevention_Lock__c from Code_Range__c where id = :range.Id for update];
+                            Code_Range__c codeRange = codeRangesToLock.get(0);
+                            codeRange.AMS_Deplicate_Prevention_Lock__c = true;
+                            update codeRangesToLock;
 
-                                    Database.SaveResult sr = Database.update(theAccreditation, true);
-                                    if(!sr.isSuccess())
-                                    { 
-                                        returnedValues[1] = sr.getErrors()[0].getMessage();
-                                    }
-                                    else
-                                    {
-                                        returnedValues[1] = 'Iata code generated successfully';
-                                        returnedValues[0] = '1';
-                                        //checkDigitCreation(theAccreditation, theAccount);
-                                    }
-                                    
-                                    System.debug('**** storing account with iata code: '+theAccount.IATACode__c);
-                                    Database.SaveResult srForAccount = Database.update(theAccount, true); 
-                                    if(!srForAccount.isSuccess())
-                                    { 
-                                        returnedValues[1] = srForAccount.getErrors()[0].getMessage();
-                                    }
-                                    else
-                                    {
-                                        returnedValues[1] = 'Iata code generated successfully';
-                                        returnedValues[0] = '1';
-                                        //checkDigitCreation(theAccreditation, theAccount);
-                                    }
-                                    
-                                    codeRange.AMS_Deplicate_Prevention_Lock__c = false;
-                            		update codeRangesToLock;
-                                    return returnedValues;
-                                }
+                            Database.SaveResult sr = Database.update(theAccreditation, true);
+                            if(!sr.isSuccess())
+                            { 
+                                returnedValues[1] = sr.getErrors()[0].getMessage();
+                            }
+                            else
+                            {
+                                returnedValues[1] = 'Iata code generated successfully';
+                                returnedValues[0] = '1';
+                                //checkDigitCreation(theAccreditation, theAccount);
+                            }
+
+                            System.debug('**** storing account with iata code: '+theAccount.IATACode__c);
+                            Database.SaveResult srForAccount = Database.update(theAccount, true); 
+                            if(!srForAccount.isSuccess())
+                            { 
+                                returnedValues[1] = srForAccount.getErrors()[0].getMessage();
+                            }
+                            else
+                            {
+                                returnedValues[1] = 'Iata code generated successfully';
+                                returnedValues[0] = '1';
+                                //checkDigitCreation(theAccreditation, theAccount);
+                            }
+
+                            codeRange.AMS_Deplicate_Prevention_Lock__c = false;
+                            update codeRangesToLock;
+                            return returnedValues;
+                        }                                   
                             }
                             
                             // If we end up here, it means that there weren't any holes in the range of Accounts' IATACodes
@@ -455,7 +456,7 @@ global class AmsIataCodeGenerator{
                             {
                                 // TODO Later... These are already mapped, but there's no task to activate these yet
                                 // When the moment comes, we should remove the above IF and this ELSE
-                                
+                        
                                 // theAccount.Category__c = programCategoryMap.get(theAccount.Location_Class__c);
                             }
                             
@@ -468,7 +469,7 @@ global class AmsIataCodeGenerator{
                             if(!sr.isSuccess())
                             { 
                                 returnedValues[1] = sr.getErrors()[0].getMessage();
-                            }
+                    }
                             else
                             {
                                 returnedValues[1] = 'Iata code generated successfully';
@@ -529,7 +530,7 @@ global class AmsIataCodeGenerator{
     {
         checkDigitCreation(agt, act, false);
         
-        if(agt.Location_Class__c.equalsIgnoreCase('P') || agt.Location_Class__c.equalsIgnoreCase('M') || (agt.Location_Class__c.equalsIgnoreCase('G') && act.Sector__c == 'Travel Agent') || agt.Location_Class__c.equalsIgnoreCase('X') || agt.Location_Class__c.equalsIgnoreCase('T'))
+        if(agt.Location_Class__c.equalsIgnoreCase('P') || agt.Location_Class__c.equalsIgnoreCase('M') || (agt.Location_Class__c.equalsIgnoreCase('G') && act.Sector__c == 'Travel Agent') || agt.Location_Class__c.equalsIgnoreCase('X') || agt.Location_Class__c.equalsIgnoreCase('T') || agt.Location_Class__c.equalsIgnoreCase('D'))
         {
             agt.IATACode__c = agt.C_Code__c +agt.A_Code__c+agt.N_Code__c+agt.Chk_Dgt__c;
             act.Site = agt.C_Code__c +agt.A_Code__c+agt.N_Code__c;

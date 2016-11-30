@@ -3,16 +3,28 @@
     <active>true</active>
     <allowRecall>true</allowRecall>
     <allowedSubmitters>
+        <submitter>EF_Client_Users_Group</submitter>
+        <type>group</type>
+    </allowedSubmitters>
+    <allowedSubmitters>
+        <submitter>EF_Operator_Users_Group</submitter>
+        <type>group</type>
+    </allowedSubmitters>
+    <allowedSubmitters>
+        <submitter>EFServices</submitter>
+        <type>group</type>
+    </allowedSubmitters>
+    <allowedSubmitters>
         <type>owner</type>
+    </allowedSubmitters>
+    <allowedSubmitters>
+        <submitter>E_F</submitter>
+        <type>role</type>
     </allowedSubmitters>
     <approvalPageFields>
         <field>ContractNumber</field>
         <field>Owner</field>
-        <field>EF_Admin_Fee__c</field>
-        <field>EF_Billing_Currency__c</field>
-        <field>EF_Billing_Frequency__c</field>
-        <field>EF_Group_Code__c</field>
-        <field>CCF_Number__c</field>
+        <field>Requested_Changes__c</field>
     </approvalPageFields>
     <approvalStep>
         <allowDelegate>false</allowDelegate>
@@ -90,6 +102,10 @@
         <action>
             <name>EF_Set_Contract_Require_Approval_False</name>
             <type>FieldUpdate</type>
+        </action>
+        <action>
+            <name>Notify_Approver_of_Recall</name>
+            <type>Alert</type>
         </action>
     </recallActions>
     <recordEditability>AdminOnly</recordEditability>
