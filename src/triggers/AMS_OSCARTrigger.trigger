@@ -274,12 +274,18 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
                         system.debug(LoggingLevel.ERROR,'applyChangeCodesWithDependencies() -> generate the change code');
                         AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
 
+                        List<Agency_Applied_Change_code__c> accountActiveChangeCode = [SELECT Reason_Code__c, Reason_Description__c FROM Agency_Applied_Change_code__c WHERE Account__c =: updatedOscar.Account__c AND Active__c = TRUE];
+
                         changeCode.name = 'CAD';
                         changeCode.reasonCode = 'Change data';
                         changeCode.memoText = 'Minor Changes';
                         changeCode.reasonDesc  = 'Accredited-Meets Criteria.';
                         changeCode.status  = null;
 
+                        if(accountActiveChangeCode.size() > 0){
+                            changeCode.reasonCode = accountActiveChangeCode[0].Reason_Code__c;
+                            changeCode.reasonDesc = accountActiveChangeCode[0].Reason_Description__c;
+                        }
                         Account acct = new Account(Id = updatedOscar.Account__c);
                         AMS_Utils.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {updatedOscar}, new List<Account> {acct}, true);
                     }
