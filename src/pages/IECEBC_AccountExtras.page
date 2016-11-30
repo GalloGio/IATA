@@ -155,7 +155,7 @@
 														<div class="footer-actions">
 															<ul class="list actions sectionActions">
                                                                 <li><apex:commandLink onclick="ShowWaitingStatus('.sectionActions');window.location='{!URLFOR($Page.IECEBC_AccountExtras)}';" styleClass="text-link"  value="Cancel" /></li>
-																<li><apex:commandLink onclick="ShowWaitingStatus('.sectionActions');" action="{!goToPaymentPage}" styleClass="button" value="Submit payment" rendered="{!selectedProductRatePlan!=null}"/></li>
+																<li><apex:commandLink onclick="ShowWaitingStatus('.sectionActions');" action="{!goToPaymentPage}" styleClass="button" value="Proceed to payment" rendered="{!selectedProductRatePlan!=null}"/></li>
 															</ul>
 														</div>
     												</apex:outputPanel>
