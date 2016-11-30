@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -114,6 +110,19 @@ two record types:
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>CIN__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <description>Unique CIN/TCIN number of the card</description>
+        <externalId>false</externalId>
+        <label>CIN</label>
+        <length>18</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
         <fullName>Cancellation_Date__c</fullName>
         <externalId>false</externalId>
         <label>Cancellation Date</label>
@@ -177,6 +186,18 @@ two record types:
             </picklistValues>
             <picklistValues>
                 <fullName>Valid ID Card</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>ERROR Picture Missing</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>ERROR Rejected by G&amp;D</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>ERROR Missing Information</fullName>
                 <default>false</default>
             </picklistValues>
             <sorted>false</sorted>
@@ -847,6 +868,17 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Missing_Information__c</fullName>
+        <description>This field is to be used for logging the errors encountered due to missing information on the ID Card, while trying to generate the CIN or trying to send the card for printing.</description>
+        <externalId>false</externalId>
+        <label>Missing Information</label>
+        <length>1024</length>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
         <fullName>MustSyncWithAIMS__c</fullName>
         <defaultValue>false</defaultValue>
         <description>Boolean that indicates whether the information should be synchronized with AIMS.</description>
@@ -1308,6 +1340,18 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
             </values>
             <values>
                 <fullName>Cancelled</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ERROR Missing Information</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ERROR Picture Missing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ERROR Rejected by G%26D</fullName>
                 <default>false</default>
             </values>
             <values>
