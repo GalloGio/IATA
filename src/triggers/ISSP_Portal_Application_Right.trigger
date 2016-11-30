@@ -14,8 +14,6 @@ trigger ISSP_Portal_Application_Right on Portal_Application_Right__c (after inse
     Set <Id> contactBaggageRemove = new Set <Id>();
     Set <Id> manageAccessTDidSet = new Set <Id>();
 	Set <Id> ContactDelRightSet = new Set <Id>();
-    Set <Id> contactIdIATAAccreditationSet = new Set <Id>();
-    Set <Id> contactIdRemoveIATAAccreditationSet = new Set <Id>();
 	
     
     for(Portal_Application_Right__c access : trigger.new){
@@ -100,26 +98,6 @@ trigger ISSP_Portal_Application_Right on Portal_Application_Right__c (after inse
                 }
             }
         }
-        else if (access.Application_Name__c.startsWith('IATA Accreditation')){
-            
-            if (trigger.isInsert && access.Right__c == 'Access Granted'){
-                system.debug('IS INSERT AND GRANTED');
-                contactIdIATAAccreditationSet.add(access.Contact__c);
-            }
-            else if (trigger.isUpdate){
-                Portal_Application_Right__c oldAccess = trigger.oldMap.get(access.Id);
-                if (access.Right__c != oldAccess.Right__c){
-                    if (access.Right__c == 'Access Granted'){
-                        system.debug('IS UPDATE AND GRANTED');
-                        contactIdIATAAccreditationSet.add(access.Contact__c);
-                    }
-                    else if (access.Right__c == 'Access Denied'){
-                        system.debug('IS UPDATE AND DENIED');
-                        contactIdRemoveIATAAccreditationSet.add(access.Contact__c);
-                    }
-                }
-            }
-        }
         /*
         else if (access.Application_Name__c == 'ASD'){
         	system.debug('IS ASD');
@@ -198,18 +176,6 @@ trigger ISSP_Portal_Application_Right on Portal_Application_Right__c (after inse
     	PortalServiceAccessTriggerHandler.manageAccessTD(manageAccessTDidSet, contactFedIdSet);
     }
     
-    if (!contactIdIATAAccreditationSet.isEmpty() || !contactIdRemoveIATAAccreditationSet.isEmpty()){
-        system.debug('WILL START FUTURE METHOD');
-
-        // Validate: Give permission set only to Accounts with record type == 'Standard Account' 
-        List<Contact> lsContact = [SELECT Id FROM Contact where Account.recordtype.name ='Standard Account' and id in :contactIdIATAAccreditationSet];
-        contactIdIATAAccreditationSet = (new Map<Id,SObject>(lsContact)).keySet(); //Replace current set with the filtered results from the query
-            
-        if (!ISSP_UserTriggerHandler.preventTrigger)
-            ISSP_UserTriggerHandler.updateUserPermissionSet('ISSP_New_Agency_permission_set', contactIdIATAAccreditationSet, contactIdRemoveIATAAccreditationSet);
-        ISSP_UserTriggerHandler.preventTrigger = true;
-    }
-
     if(!trigger.isDelete){
         if(Trigger.new.size()>1)
             return;

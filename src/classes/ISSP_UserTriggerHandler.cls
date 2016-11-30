@@ -119,6 +119,7 @@ public without sharing class ISSP_UserTriggerHandler {
             system.debug('Updating contacts from future: ' + updateContactList.size());
             preventTrigger = true;
             update updateContactList;
+
         }
     }
     
@@ -194,67 +195,6 @@ public without sharing class ISSP_UserTriggerHandler {
         system.debug('FUTURE METHOD, REMOVE: ' + contactRemoveIdSet);
         String permissionSetId = '';
         List <PermissionSet> setList = [SELECT Id FROM PermissionSet WHERE Name = 'ISS_Portal_Permission_Set_SIS_users'];
-        if (!setList.isEmpty()){
-            permissionSetId = setList[0].Id;
-        }
-        if (permissionSetId != ''){
-            if (!contactIdSet.isEmpty()){
-                List <User> userList = [SELECT Id FROM User WHERE ContactId IN :contactIdSet AND IsActive = true];
-                Set <Id> userSetId = new Set <Id>();
-                Map <Id, Id> userMap = new Map <Id, Id>(); 
-                if (!userList.isEmpty()){
-                    for (User thisUser : userList){
-                        userSetId.add(thisUser.Id);
-                        userMap.put(thisUser.Id, thisUser.Id);
-                    }
-                    List <PermissionSetAssignment> assignmentList = [SELECT Id, AssigneeId FROM PermissionSetAssignment
-                                                                    WHERE AssigneeId IN :userSetId
-                                                                    AND PermissionSetId = :permissionSetId];
-                    if (!assignmentList.isEmpty()){
-                        for (PermissionSetAssignment thisAssignment : assignmentList){
-                            if (userMap.containsKey(thisAssignment.AssigneeId)){
-                                userMap.remove(thisAssignment.AssigneeId);
-                            }
-                        }
-                    }
-                    if (!userMap.isEmpty()){
-                        List <PermissionSetAssignment> newPermissionList = new List <PermissionSetAssignment>();
-                        List <Id> idList = userMap.values();
-                        for (Id thisId : idList){
-                            PermissionSetAssignment newPermission = new PermissionSetAssignment();
-                            newPermission.AssigneeId = thisId;
-                            newPermission.PermissionSetId = permissionSetId;
-                            newPermissionList.add(newPermission);
-                        }
-                        insert newPermissionList;
-                    }
-                }
-            }
-            if (!contactRemoveIdSet.isEmpty()){
-                List <User> userListRemove = [SELECT Id FROM User WHERE ContactId IN :contactRemoveIdSet AND IsActive = true];
-                Set <Id> userSetIdRemove = new Set <Id>(); 
-                if (!userListRemove.isEmpty()){
-                    for (User thisUser : userListRemove){
-                        userSetIdRemove.add(thisUser.Id);
-                    }
-                    List <PermissionSetAssignment> assignmentListRemove = [SELECT Id, AssigneeId FROM PermissionSetAssignment
-                                                                    WHERE AssigneeId IN :userSetIdRemove
-                                                                    AND PermissionSetId = :permissionSetId];
-                    if (!assignmentListRemove.isEmpty()){
-                        delete assignmentListRemove;
-                    }
-
-                }
-            }
-        }
-    }
-
-    @future
-    public static void updateUserPermissionSet(String permisionSetName, Set<Id> contactIdSet, Set<Id> contactRemoveIdSet){
-        system.debug('FUTURE METHOD, ADD: ' + contactIdSet);
-        system.debug('FUTURE METHOD, REMOVE: ' + contactRemoveIdSet);
-        String permissionSetId = '';
-        List <PermissionSet> setList = [SELECT Id FROM PermissionSet WHERE Name = :permisionSetName];
         if (!setList.isEmpty()){
             permissionSetId = setList[0].Id;
         }
