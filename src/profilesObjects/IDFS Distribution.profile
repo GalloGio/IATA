@@ -1260,7 +1260,7 @@
 <fieldPermissions><editable>false</editable><field>AWS_S3_Object__c.Preview_Link__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Account.ACH_Member__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Account.ACLI_ID__c</field><readable>true</readable></fieldPermissions>
-<fieldPermissions><editable>false</editable><field>Account.ACLI_SAP_Id__c</field><readable>true</readable></fieldPermissions>
+<fieldPermissions><editable>true</editable><field>Account.ACLI_SAP_Id__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Account.ACLI_Status__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Account.AFRD_Date__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Account.AFRD_Status__c</field><readable>false</readable></fieldPermissions>

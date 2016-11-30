@@ -200,7 +200,7 @@
 <fieldPermissions><editable>false</editable><field>AMS_Account_Role__c.Owner_Name__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AMS_Account_Role__c.Owner_Sequence__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AMS_Account_Role__c.Percentage__c</field><readable>false</readable></fieldPermissions>
-<fieldPermissions><editable>false</editable><field>AMS_Account_Role__c.Person__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>true</editable><field>AMS_Account_Role__c.Person__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AMS_Account_Role__c.Position__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AMS_Account_Role__c.Registration_Date__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AMS_Account_Role__c.SIMPLEX__c</field><readable>false</readable></fieldPermissions>
@@ -216,7 +216,7 @@
 <fieldPermissions><editable>true</editable><field>AMS_Accreditation_Contact__c.AMS_ContactId__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AMS_Accreditation_Contact__c.AMS_Employee_Role__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>AMS_Accreditation_Contact__c.AMS_OwnershipId__c</field><readable>true</readable></fieldPermissions>
-<fieldPermissions><editable>false</editable><field>AMS_Accreditation_Contact__c.AMS_Ownership_Role__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>true</editable><field>AMS_Accreditation_Contact__c.AMS_Ownership_Role__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>AMS_Accreditation_Contact__c.Accredited_employer_1__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>AMS_Accreditation_Contact__c.Accredited_employer_2__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>AMS_Accreditation_Contact__c.AddressCity__c</field><readable>true</readable></fieldPermissions>
@@ -256,7 +256,7 @@
 <fieldPermissions><editable>true</editable><field>AMS_Accreditation_Contact__c.Mobile__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>AMS_Accreditation_Contact__c.Name_of_Previous_employers__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>AMS_Accreditation_Contact__c.Number_Of_Shares__c</field><readable>true</readable></fieldPermissions>
-<fieldPermissions><editable>false</editable><field>AMS_Accreditation_Contact__c.Person_AMS__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>true</editable><field>AMS_Accreditation_Contact__c.Person_AMS__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>AMS_Accreditation_Contact__c.PhoneNational__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>AMS_Accreditation_Contact__c.Phone__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>AMS_Accreditation_Contact__c.Portal_administrator__c</field><readable>true</readable></fieldPermissions>
@@ -373,7 +373,7 @@
 <fieldPermissions><editable>false</editable><field>AMS_Agency_Updates__c.Agency__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>AMS_Agency_Updates__c.Change_Code__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AMS_Agency_Updates__c.Country_ISO_Code__c</field><readable>false</readable></fieldPermissions>
-<fieldPermissions><editable>false</editable><field>AMS_Agency_Updates__c.IATACode__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>AMS_Agency_Updates__c.IATACode__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AMS_Agency_Updates__c.IATA_Regional_Office__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AMS_Agency_Updates__c.Location_Type_Ordered__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AMS_Agency_Updates__c.RelationShip__c</field><readable>false</readable></fieldPermissions>
@@ -4653,8 +4653,8 @@
 <fieldPermissions><editable>true</editable><field>IEC_Error_Log__c.Source__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>IEC_Error_Log__c.Stack_Trace__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>IEC_Error_Log__c.Type__c</field><readable>true</readable></fieldPermissions>
-<fieldPermissions><editable>false</editable><field>IEC_Event_Release_Log__c.Error_Message__c</field><readable>false</readable></fieldPermissions>
-<fieldPermissions><editable>false</editable><field>IEC_Event_Release_Log__c.Message__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>true</editable><field>IEC_Event_Release_Log__c.Error_Message__c</field><readable>true</readable></fieldPermissions>
+<fieldPermissions><editable>true</editable><field>IEC_Event_Release_Log__c.Message__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>IEC_Event_Release_Log__c.Order__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>IEC_Event_Release_Log__c.Stage__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>IEC_Event_Release_Log__c.Subscriber__c</field><readable>false</readable></fieldPermissions>
@@ -7340,7 +7340,7 @@
 <recordTypeVisibilities><default>false</default><recordType>Case.YMQCustomerCare</recordType><visible>true</visible></recordTypeVisibilities>
 <recordTypeVisibilities><default>false</default><recordType>Case.myIATA</recordType><visible>true</visible></recordTypeVisibilities>
 <recordTypeVisibilities><default>false</default><recordType>Case.sMAP_sales_Monitoring_Alert_Process</recordType><visible>true</visible></recordTypeVisibilities>
-<recordTypeVisibilities><default>false</default><recordType>Code_Range__c.IATA_Code</recordType><visible>false</visible></recordTypeVisibilities>
+<recordTypeVisibilities><default>true</default><personAccountDefault>true</personAccountDefault><recordType>Code_Range__c.IATA_Code</recordType><visible>true</visible></recordTypeVisibilities>
 <recordTypeVisibilities><default>false</default><recordType>Comment__c.Objective_Independent</recordType><visible>false</visible></recordTypeVisibilities>
 <recordTypeVisibilities><default>false</default><recordType>Comment__c.Objective_Related</recordType><visible>false</visible></recordTypeVisibilities>
 <recordTypeVisibilities><default>false</default><recordType>Contact.GDP_Contact</recordType><visible>true</visible></recordTypeVisibilities>
