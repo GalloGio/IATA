@@ -178,7 +178,7 @@ global class vfIECEBC_MosaicoEditor extends vfIECEBC_Controller {
         
         String mailingId = 'TEST_' + template.Id + '_'+IECEBC_Utility.generateRandomString(12);
         
-        IECEBC_ETTriggeredSendDefinitionCreate.createTriggeredSendDefinition(mailingId, template.External_Id__c, 'Default', '27f87e21-4ed1-e511-9e76-8cdcd4af9375');
+        IECEBC_ETTriggeredSendDefinitionCreate.createTriggeredSendDefinition(mailingId, template.External_Id__c, 'EBC', 'f12d235d-74b6-e611-8302-8cdcd4afd9e9');
         IECEBC_ETTriggeredSendDefinitionStart.updateTriggeredSendDefinition(mailingId);
         
         Map<String, String> attributes = new Map<String, String>();
