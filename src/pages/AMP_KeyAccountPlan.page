@@ -98,7 +98,7 @@
                     </apex:outputPanel>
                 </apex:column>
 
-      					<apex:column headerValue="Deadline" styleClass="narrow-table-column">
+				<apex:column headerValue="End Date" styleClass="narrow-table-column">
                     <apex:outputField value="{!objective.Deadline__c}"  rendered="{!!AND(isEditMode, IdConcerned==objective.Id)}"/>
                     <apex:inputField value="{!objective.Deadline__c}" rendered="{!AND(isEditMode, IdConcerned==objective.Id)}" required="true"/>
                 </apex:column>

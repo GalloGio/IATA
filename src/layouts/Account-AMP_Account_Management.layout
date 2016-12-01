@@ -223,7 +223,7 @@
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>false</editHeading>
-        <label>IATA products purchased</label>
+        <label>SAP Products and Services</label>
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
