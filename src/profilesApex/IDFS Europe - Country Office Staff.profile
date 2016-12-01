@@ -157,6 +157,7 @@
 <classAccesses><apexClass>AMS_RecordCreatorWebservice</apexClass><enabled>false</enabled></classAccesses>
 <classAccesses><apexClass>AMS_RecordCreatorWebserviceTest</apexClass><enabled>false</enabled></classAccesses>
 <classAccesses><apexClass>AMS_SAAMCaseMigrationController</apexClass><enabled>false</enabled></classAccesses>
+<classAccesses><apexClass>AMS_SAAMCaseMigrationControllerTest</apexClass><enabled>false</enabled></classAccesses>
 <classAccesses><apexClass>AMS_SearchAccountByUserData</apexClass><enabled>false</enabled></classAccesses>
 <classAccesses><apexClass>AMS_SearchAccountByUserDataTest</apexClass><enabled>false</enabled></classAccesses>
 <classAccesses><apexClass>AMS_SettlementsAndOperationLoaderCtrl</apexClass><enabled>false</enabled></classAccesses>
@@ -1927,6 +1928,7 @@
 <userPermissions><enabled>true</enabled><name>ExportReport</name></userPermissions>
 <userPermissions><enabled>true</enabled><name>ManageCases</name></userPermissions>
 <userPermissions><enabled>true</enabled><name>ManageCssUsers</name></userPermissions>
+<userPermissions><enabled>true</enabled><name>ManagePartners</name></userPermissions>
 <userPermissions><enabled>true</enabled><name>MassInlineEdit</name></userPermissions>
 <userPermissions><enabled>true</enabled><name>RunReports</name></userPermissions>
 <userPermissions><enabled>true</enabled><name>SelectFilesFromSalesforce</name></userPermissions>

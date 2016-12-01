@@ -4849,6 +4849,10 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                 <controllingFieldValues>Travel Agent</controllingFieldValues>
             </picklistValues>
             <picklistValues>
+                <fullName>IATAN Passenger Agent</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>IATA Passenger Sales Agent</fullName>
                 <default>false</default>
                 <controllingFieldValues>Travel Agent</controllingFieldValues>
@@ -31623,6 +31627,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>IATA Passenger Sales Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATAN Passenger Agent</fullName>
                 <default>false</default>
             </values>
             <values>

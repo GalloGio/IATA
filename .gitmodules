@@ -1,0 +1,3 @@
+[submodule "3rdparty/mosaico"]
+	path = 3rdparty/mosaico
+	url = https://github.com/voidlabs/mosaico.git
