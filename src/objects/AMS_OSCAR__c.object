@@ -3402,7 +3402,7 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Closed_ Not Accepted</fullName>
+                <fullName>Closed_Not Accepted</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -5381,7 +5381,7 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
                 <default>false</default>
             </values>
             <values>
-                <fullName>Closed_ Not Accepted</fullName>
+                <fullName>Closed_Not Accepted</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -7024,7 +7024,7 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
                 <default>false</default>
             </values>
             <values>
-                <fullName>Closed_ Not Accepted</fullName>
+                <fullName>Closed_Not Accepted</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -8663,7 +8663,7 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
                 <default>false</default>
             </values>
             <values>
-                <fullName>Closed_ Not Accepted</fullName>
+                <fullName>Closed_Not Accepted</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -10247,7 +10247,7 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
                 <default>false</default>
             </values>
             <values>
-                <fullName>Closed_ Not Accepted</fullName>
+                <fullName>Closed_Not Accepted</fullName>
                 <default>false</default>
             </values>
             <values>
