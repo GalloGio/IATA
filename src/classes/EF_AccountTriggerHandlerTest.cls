@@ -225,16 +225,24 @@ private class EF_AccountTriggerHandlerTest {
                 
                 EF_Contact_Relationship__c rel1= new EF_Contact_Relationship__c();
                 rel1.Contact__c = customer1Contact.Id;
-                rel1.EF_Airline_Billing_Agreement__c = parentBillingAgreement.Id;
+                rel1.EF_Airline_Billing_Agreement__c = ba.Id;
                 rel1.Status__c = 'Active';
                 rel1.EF_Role__c ='Operations';
                 contRel.add(rel1);
                 
             }
             
-            try{//insert mliListBA; 
+            try{
+                insert mliListBA;
                 //System.debug('#### materials for BA created? ' +mliListBA);
                 insert contRel;
+                
+                // once BA material line items have been created, we can activate the billing agreements
+                parentBillingAgreement.EF_Status__c = 'Active';
+                childBillingAgreement.EF_Status__c = 'Active';
+                
+                update billingAgreements;
+                
                }catch( Exception e){System.debug('#### what?? ' +e);}
      
            }
@@ -261,11 +269,6 @@ private class EF_AccountTriggerHandlerTest {
             System.assertEquals(billingAgreement.EF_Status__c, 'Inactive');
         }
         
-        List<EF_Contact_Relationship__c> relationships = [select Id, Status__c from EF_Contact_Relationship__c];
-        for(EF_Contact_Relationship__c relationship : relationships){
-            System.assertEquals(relationship.Status__c, 'Inactive');
-        }
-
         List<EF_Material_Line_Item__c> materialLineItems = [select Id, EF_Status__c from EF_Material_Line_Item__c ];
         for(EF_Material_Line_Item__c materialLineItem : materialLineItems){
             System.assertEquals(materialLineItem.EF_Status__c, 'Inactive');
