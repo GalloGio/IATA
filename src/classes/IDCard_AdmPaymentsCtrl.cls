@@ -1,7 +1,7 @@
 public class IDCard_AdmPaymentsCtrl extends IDCardAbstractController {
     
     public list<ID_Card_Application__c> IdCardApplications {get; set;}
-    
+    public list<ID_Card_Application__c> applicationToCancel {get; set;}
     public Map<String, list<ID_Card_Application__c>> singleAppsPerMassApps  {get;set;}
     
     public Map<String, Contact> contacts  {get;set;}
@@ -85,13 +85,14 @@ public class IDCard_AdmPaymentsCtrl extends IDCardAbstractController {
     public Pagereference cancelPendingMassOperation(){
     	if(toCancel !=null)
     	{
-    		List<ID_Card_Application__c> singleAppa = singleAppsPerMassApps.get(toCancel);
-    		for(ID_Card_Application__c app:singleAppa)    {
+        applicationToCancel = [SELECT id, Mass_order_Application__c, Application_Status__c from ID_Card_Application__c where Mass_order_Application__c = : toCancel];
+    		//List<ID_Card_Application__c> singleAppa = singleAppsPerMassApps.get(toCancel);
+    		for(ID_Card_Application__c app:applicationToCancel)    {
     			app.Mass_order_Application__c = null;
     			app.Application_Status__c = 'Pending';
     		}	
     		
-    		update 	singleAppa;
+    		update 	applicationToCancel;
     		for(ID_Card_Application__c app:IdCardApplications)    {
     			if(app.Id == toCancel){
     				app.Application_Status__c = 'Cancelled';
