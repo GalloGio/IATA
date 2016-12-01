@@ -24,15 +24,22 @@ public with sharing class CNS_EBulletin {
     public String pWeekStart { get; set; }
     public String pWeekEnd { get; set; }
     
-
     //Start date for weekly data.
     public String eBulletin_StartDate { get; set; }
     public String eBulletin_StartDate_year { get; set; }
     public String eBulletin_StartDate_month { get; set; }
     public String eBulletin_StartDate_day { get; set; }
 
-    public AMS_eBulletin_Profile__c newFormDaily {get; set;}
-    public AMS_eBulletin_Profile__c newFormWeekly {get; set;}
+    public AMS_eBulletin_Profile__c newFormDaily {get {
+    	
+    	return this.newFormDaily;
+    	
+    } set;}
+    public AMS_eBulletin_Profile__c newFormWeekly {get {
+    	
+    	return this.newFormWeekly;
+    	
+    } set;}
     public Contact con {get; set;}
     public String displayLanguage {get; set;}
     public String displayLanguageDatePicker {get; set;}
@@ -110,7 +117,6 @@ public with sharing class CNS_EBulletin {
         dailyCountrySelected = populateSelectedCountries(dailyCountry);
         weeklyCountrySelected = populateSelectedCountries(weeklyCountry);
 
-
         //Checks if timezone is empty, if so fill in with the user timezone
         TimeZone tz = UserInfo.getTimeZone();
         if(newFormDaily.TimeZone__c == null){
@@ -119,10 +125,6 @@ public with sharing class CNS_EBulletin {
         if(newFormWeekly.TimeZone__c == null){
             newFormWeekly.TimeZone__c = tz.toString();
         }
-
-
-        //system.debug('dailyCountry: ' + dailyCountry);
-        //system.debug('weeklyCountry: ' + weeklyCountry);
 
         if (ApexPages.currentPage().getParameters().containsKey('step')){
             stepNumber = ApexPages.currentPage().getParameters().get('step');
@@ -154,10 +156,6 @@ public with sharing class CNS_EBulletin {
         }else{
             //No Parameter area, when loading 1st time it passes here!
 
-            System.debug('1st time');
-            System.debug('newFormDaily: ' + newFormDaily);
-            System.debug('newFormWeekly: ' + newFormWeekly);
-
             //Check if is "firstTime", this will lead the user for 1st step or 2nd step
             if(isFirstTime){
                 isStep1_1 = true;   
@@ -166,42 +164,8 @@ public with sharing class CNS_EBulletin {
             }else{
                 isStep2 = true;     
             }
-
-            ////Checks if Subscription is suspended or not
-            //if(newFormDaily.Suspend_Subscription__c){
-            //  onOff = false;
-            //  dailyOnOff = false;
-            //}else{
-            //  //Checks if Daily is Opt out
-            //  if(newFormDaily.Opt_out_Bulletin__c){
-            //      onOff = false;
-            //      dailyOnOff = false;
-            //  }else{
-            //      onOff = true;
-            //      dailyOnOff = true;
-            //  }
-            //}
-
-            //if(newFormWeekly.Suspend_Subscription__c){
-            //  onOff = false;
-            //  weeklyOnOff = false;
-            //}else{
-            //  //Checks if Weekly is Opt out
-            //  if(newFormWeekly.Opt_out_Bulletin__c){
-            //      onOff = false;
-            //      weeklyOnOff = false;
-            //  }else{
-            //      onOff = true;
-            //      weeklyOnOff = true;
-            //  }
-            //}
-
         }    
-
-        System.debug('isStep1: ' + isStep1);
-        System.debug('isStep2: ' + isStep2);
-        System.debug('isStep3: ' + isStep3);
-
+        
         //Set Selected value for the "day" field in the Daily selection
         daysOfWeek = Datetime.now().format('dd/MM/yyyy');
         todayOption = daysOfWeek;
@@ -226,7 +190,7 @@ public with sharing class CNS_EBulletin {
         }
         week = dtWeekStart.format('dd/MM/yyyy')+ '-' +dtWeekEnd.format('dd/MM/yyyy');
 
-        popContact();  //Get the contact details of currently logged in user
+        //popContact();  //Get the contact details of currently logged in user
     }
 
     public PageReference checkRedirect(){
@@ -253,7 +217,6 @@ public with sharing class CNS_EBulletin {
         pdfUserGuide = [SELECT Name, Address__c, Link_To_PDF__c FROM ISSP_PDF_Per_Region__c
                                            WHERE Name Like :paramString ];
 
-System.debug('getUserGuideFileLink pdfUserGuide: ' + pdfUserGuide);
         //If we get result we go thru the records to find the one with the choosen lang 
         if(pdfUserGuide.size() > 0){
         
@@ -268,12 +231,8 @@ System.debug('getUserGuideFileLink pdfUserGuide: ' + pdfUserGuide);
                         sRet = pdf.Link_To_PDF__c;
                     }
                 }
-
-            }
-
-            
+            }   
         }
-System.debug('getUserGuideFileLink sRet: ' + sRet);
         return sRet;
     }
 
@@ -293,12 +252,6 @@ System.debug('getUserGuideFileLink sRet: ' + sRet);
         Datetime dtToday = Datetime.now();
         String weekDay = dtToday.format('EEEE');
 
-        
-        //while(!weekDay.equalsIgnoreCase('Saturday')){
-        //  dtToday = dtToday.addDays(-1);
-        //  weekDay = dtToday.format('EEEE');
-        //}
-
         List<SelectOption> options = new List<SelectOption>(); 
         options.add(new SelectOption(dtToday.format('dd/MM/yyyy'),' ' + dtToday.format(' EEEE, d MMMM, yyyy'),dtToday > Datetime.now()?true:false));
         options.add(new SelectOption(dtToday.addDays(-1).format('dd/MM/yyyy'),' ' + dtToday.addDays(-1).format(' EEEE, d MMMM, yyyy'),dtToday.addDays(-1) > Datetime.now()?true:false));
@@ -310,11 +263,6 @@ System.debug('getUserGuideFileLink sRet: ' + sRet);
 
         //Sets today Option for validation on the VFP in order to present the period (midnight or last execution)
         todayOption = options.get(0).getValue();
-        //for(SelectOption so: options){
-        //  if(!so.getDisabled()){
-        //      todayOption = so.getValue();
-        //  }
-        //}
 
         return options; 
     }
@@ -361,8 +309,7 @@ System.debug('getUserGuideFileLink sRet: ' + sRet);
         Datetime startDate = Datetime.newInstance(Integer.valueOf(splitDate.get(2)), Integer.valueOf(splitDate.get(1)), Integer.valueOf(splitDate.get(0)));
         
         //Integer iDays = dtToday.g - startDate;
-        integer iDays = Integer.valueOf((dtToday.getTime() - startDate.getTime())/(1000*60*60*24));
-system.debug('iDays: ' + iDays);   
+        integer iDays = Integer.valueOf((dtToday.getTime() - startDate.getTime())/(1000*60*60*24));   
 
         //check if the start date is bigger than a year, if so we set the limit to 365 days instead of the calculated days 
         if(iDays > 365){
@@ -397,11 +344,6 @@ system.debug('iDays: ' + iDays);
                         dailyCountrySelected.remove(i);
                     }
                 }
-                
-
-                //system.debug('Initial auxListSO.size(): ' + auxListSO.size());
-                //system.debug('Initial auxListSO_clone.size(): ' + auxListSO_clone.size());
-
 
                 //Remove Selected Values from the "to select" list
                 for(Integer i=auxListSO_clone.size()-1; i >= 0 ; i--){
@@ -413,7 +355,6 @@ system.debug('iDays: ' + iDays);
                             break;
                         }
                     }
-
                 }
             }else{
                 dailyCountrySelected.clear();
@@ -447,13 +388,9 @@ system.debug('iDays: ' + iDays);
                     }
                 }
 
-                //system.debug('Weekly Initial auxListSO.size(): ' + auxListSO.size());
-                //system.debug('Weekly Initial auxListSO_clone.size(): ' + auxListSO_clone.size());
-
-                
                 //Remove Selected Values from the "to select" list
                 for(Integer i=auxListSO_clone.size()-1; i >= 0 ; i--){
-                    //system.debug('Weekly i: ' + i + ' || auxListSO.size(): ' + auxListSO.size());
+
                     Boolean bExist = false;
                     for(SelectOption auxSO2 : weeklyCountrySelected){
                         if(auxListSO.get(i) != null && auxSO2.getValue() != null && auxListSO.get(i).getValue() == auxSO2.getValue()){
@@ -461,7 +398,6 @@ system.debug('iDays: ' + iDays);
                             break;
                         }
                     }
-
                 }
             }else{
                 weeklyCountrySelected.clear();
@@ -470,7 +406,6 @@ system.debug('iDays: ' + iDays);
             }
 
             return auxListSO;
-            
         }
         set;
     }
@@ -532,19 +467,11 @@ system.debug('iDays: ' + iDays);
 
         List<String> auxSO = new List<String>();
 
-        //System.debug('getCountryName - lCountries: ' + lCountries);
-        //System.debug('getCountryName - lCountries.size(): ' + lCountries.size());
-        //System.debug('getCountryName - lCountries.isEmpty(): ' + lCountries.isEmpty());
-
         for(String aux : lCountries){
-            
-            //System.debug('getCountryName - mCountries: ' + mCountries);
-            //System.debug('getCountryName - aux: ' + aux);
 
             IATA_ISO_Country__c iso = mCountries.get(aux);
 
             if(iso != null){
-                //System.debug('getCountryName - IATA_ISO_Country__c - iso: ' + iso);
 
                 if (applyLanguage == 'es') {
                     if (iso.IATA_Country_SP__c != null)
@@ -589,7 +516,6 @@ system.debug('iDays: ' + iDays);
             sRegion.add('China & North Asia');
             sRegion.add('Asia & Pacific');
         }
-
 
         if(sRegion.size() > 0){
             list<IATA_ISO_Country__c> isoList;
@@ -645,10 +571,7 @@ system.debug('iDays: ' + iDays);
         }
 
         return options;
-
     }
-
-
 
     public void fillMapCountries() {
 
@@ -669,11 +592,8 @@ system.debug('iDays: ' + iDays);
                 mCountries.put(iso.ISO_Code__c , iso);
             }
         }
-
     }
 
-
-   
     public void fetchAMSProcessForm() {
         List <AMS_eBulletin_Profile__c> newForms = [
                     SELECT Agency_Info_Agency_Changes__c,Agency_Info_Defaults__c,Agency_Info_Irregularities__c,Agency_Info_New_Aplication_Processes__c,
@@ -681,11 +601,9 @@ system.debug('iDays: ' + iDays);
                         Id,LastModifiedDate,Name,Opt_out_Bulletin__c,Program_Cargo__c,Program_CASS_Associates__c,Program_Passage__c,Program_Domestic__c,Suspend_Subscription__c,
                         RecordTypeId,User__c, TimeZone__c,Opt_in__c,StatusDisplay__c
                     FROM AMS_eBulletin_Profile__c
-                    WHERE User__c = :Userinfo.getuserid()
+                    WHERE CNS__c = true
                     LIMIT 2
                 ];
-
-        system.debug('fetchAMSProcessForm newForms: ' + newForms);
 
         if (newForms.size() > 0) {
 
@@ -703,23 +621,24 @@ system.debug('iDays: ' + iDays);
         }
     }
 
-
-    private void popContact() {
+    /*private void popContact() {
         User user = DAL_ISSP.getUser(Userinfo.getUserId());
-        system.debug('user.ContactId ' + user.ContactId);
-        con = DAL_ISSP.getContact(user.ContactId);
-
-        if (con.User_Portal_Status__c == 'Administrator' || con.User_Portal_Status__c == 'Approved Admin' || con.User_Portal_Status__c == 'Regional Administrator' || con.User_Portal_Status__c == 'R. Administrator' )
-            bIsAdmin = true;
-    }
+        if(user.ContactId != null){
+	        system.debug('user.ContactId ' + user.ContactId);
+	        con = DAL_ISSP.getContact(user.ContactId);
+	
+	        if (con.User_Portal_Status__c == 'Administrator' || con.User_Portal_Status__c == 'Approved Admin' || con.User_Portal_Status__c == 'Regional Administrator' || con.User_Portal_Status__c == 'R. Administrator' )
+	            bIsAdmin = true;
+        }else{
+        	//TODO CNS ### check if admin?
+        	//bIsAdmin = true;
+        }
+    }*/
 
     public Pagereference securityCheck() {
 
-        
-
         return null;
     }
-
 
     public String getMultiSelectToSave(List<String> vals) {
         String res = '';
@@ -759,9 +678,7 @@ system.debug('iDays: ' + iDays);
 
     public Pagereference saveAMSFormAndStay() {
         try {
-            system.debug('Salesforce saveAMSFormAndStay: start ' + newFormDaily);
             boolean bRes = saveAMSForm();
-            system.debug('Salesforce saveAMSFormAndStay bRes: ' + bRes);
 
             if (!validateCharactersInForm())
                 return null;
@@ -778,26 +695,12 @@ system.debug('iDays: ' + iDays);
         return null;
     }
 
-
     public boolean saveAMSForm() {
 
         boolean bRes = true;
 
-        
-        system.debug('Salesforce saveAMSForm newFormDaily: ' + newFormDaily);
-        system.debug('Salesforce saveAMSForm newFormWeekly: ' + newFormWeekly);
-
-        system.debug('Salesforce saveAMSForm dailyCountry: ' + dailyCountry);
-        system.debug('Salesforce saveAMSForm weeklyCountry: ' + weeklyCountry);
-        
-        //newFormDaily.CountriesList__c = getMultiSelectToSave(dailyCountry);
-        //newFormWeekly.CountriesList__c = getMultiSelectToSave(weeklyCountry);
         newFormDaily.CountriesList__c = getMultiSelectOptionsToSave(dailyCountrySelected);
         newFormWeekly.CountriesList__c = getMultiSelectOptionsToSave(weeklyCountrySelected);
-
-        system.debug('Salesforce saveAMSForm newFormDaily: ' + newFormDaily);
-        system.debug('Salesforce saveAMSForm newFormWeekly: ' + newFormWeekly);
-
 
         //Since on the form the timezone is set to the Daily form we just give the same value to the WEEKLY one
         newFormWeekly.TimeZone__c = newFormDaily.TimeZone__c;
@@ -806,30 +709,22 @@ system.debug('iDays: ' + iDays);
 
             upsert newFormDaily;
             upsert newFormWeekly;
-
-           
         } catch (DmlException ex) {
             ApexPages.addMessages(ex);
-            system.debug('Salesforce saveAMSForm ex: ' + ex);
             bRes = false;
        
         } catch (Exception ex) {
             ApexPages.addMessages(ex);
-            system.debug('Salesforce saveAMSForm ex: ' + ex);
             bRes = false;
-       
         }
+        
         return bRes;
     }
-
 
     public Pagereference saveAMSFormAndGoBack() {
 
         try {
-            //system.debug('kerensen Zohar goToFinalStep newForm: ' + newForm);
-            //system.debug('kerensen Zohar goToFinalStep newCase: ' + newCase);
 
-            //newForm.Validation_ERRORS__c = FALSE;
             boolean bRes = saveAMSForm();
             
             if (!validateCharactersInForm())
@@ -850,10 +745,7 @@ system.debug('iDays: ' + iDays);
     public Pagereference saveAMSFormAndGoForward() {
 
         try {
-            //system.debug('kerensen Zohar goToFinalStep newForm: ' + newForm);
-            //system.debug('kerensen Zohar goToFinalStep newCase: ' + newCase);
 
-            //newForm.Validation_ERRORS__c = FALSE;
             boolean bRes = saveAMSForm();
             
             if (!validateCharactersInForm())
@@ -878,12 +770,10 @@ system.debug('iDays: ' + iDays);
         return null;
     }
 
-
     public Pagereference suspendSubscription() {
 
         ApexPages.Message myMsg;
-        
-
+       
         if(newFormDaily.Suspend_Subscription__c){
             newFormDaily.Suspend_Subscription__c = false;
             newFormWeekly.Suspend_Subscription__c = false;
@@ -897,17 +787,8 @@ system.debug('iDays: ' + iDays);
         try {
             boolean bRes = saveAMSForm();
 
-            system.debug('suspendSubscription - newFormDaily.CountriesList__c: ' + newFormDaily.CountriesList__c);
-            system.debug('suspendSubscription - newFormWeekly.CountriesList__c: ' + newFormWeekly.CountriesList__c);
-
-            system.debug('suspendSubscription - before - dailyCountry: ' + dailyCountry);
-            system.debug('suspendSubscription - before - weeklyCountry: ' + weeklyCountry);
-
             dailyCountry = newFormDaily.CountriesList__c == null ? new List<String>() : newFormDaily.CountriesList__c.split(';');
             weeklyCountry = newFormWeekly.CountriesList__c == null ? new List<String>() : newFormWeekly.CountriesList__c.split(';');
-
-            system.debug('suspendSubscription - after - dailyCountry: ' + dailyCountry);
-            system.debug('suspendSubscription - after - weeklyCountry: ' + weeklyCountry);
 
             dailyCountryName = getCountryName(dailyCountry);
             weeklyCountryName = getCountryName(weeklyCountry);
@@ -918,7 +799,6 @@ system.debug('iDays: ' + iDays);
             ApexPages.addMessages(ex);
         }
         
-        //return new Pagereference('/ISSP_AMS_EBulletin');
         return null;
         
     }
@@ -927,127 +807,76 @@ system.debug('iDays: ' + iDays);
         boolean errorFound = false;
         Pattern p = Pattern.compile(ISO_8859_1_regEx);
 
-        //if (newForm.ISSP_AMS_where_incorporated__c != null && !p.matcher(newForm.ISSP_AMS_where_incorporated__c).matches()) {
-        //    newForm.ISSP_AMS_where_incorporated__c.addError(Label.ISSP_EnterValidString);
-        //    errorFound = true;
-        //}
-        
-       
-        //String allowedUrlRegEx = ISSP_CS__c.getValues('ISSP AMS ALLOWED AGENCY URL').Value__c;
-
-        //Pattern validUrl = Pattern.compile(allowedUrlRegEx);
-
-        //if (newForm.ISSP_AMS_Online_Agency_URL__c != null && !validUrl.matcher(newForm.ISSP_AMS_Online_Agency_URL__c.toLowerCase()).matches()) {
-        //    newForm.ISSP_AMS_Online_Agency_URL__c.addError(Label.ISSP_AMS_Valid_URL);
-        //    errorFound = true;
-        //}
-        
-
         if (errorFound)
             return false;
 
         return true;
     }
-
-    public Pagereference goToStepHome() {
-        //return new Pagereference('/ISSP_AMS_EBulletin?dailyId=' + newFormDaily.Id + '&weeklyId=' + newFormWeekly.Id + '&step=2');
-        return new Pagereference('/ISSP_EBulletin_Home?step=home');
-    }
  
     public Pagereference goToStep1() {
-        //return new Pagereference('/ISSP_AMS_EBulletin?dailyId=' + newFormDaily.Id + '&weeklyId=' + newFormWeekly.Id + '&step=2');
-        return new Pagereference('/ISSP_AMS_EBulletin?step=1');
+     	Pagereference pageRef = Page.CNS_EBulletin;
+     	pageref.getParameters().put('step','1');
+     	pageref.setRedirect(true);
+        return pageref;
     }
 
      public Pagereference goToStep1_1() {
-        //return new Pagereference('/ISSP_AMS_EBulletin?dailyId=' + newFormDaily.Id + '&weeklyId=' + newFormWeekly.Id + '&step=2');
-        return new Pagereference('/ISSP_AMS_EBulletin?step=1_1');
+     	Pagereference pageRef = Page.CNS_EBulletin;
+     	pageref.getParameters().put('step','1_1');
+     	pageref.setRedirect(true);
+        return pageref;
     }
 
      public Pagereference goToStep1_2() {
-        //return new Pagereference('/ISSP_AMS_EBulletin?dailyId=' + newFormDaily.Id + '&weeklyId=' + newFormWeekly.Id + '&step=2');
-        return new Pagereference('/ISSP_AMS_EBulletin?step=1_2');
+     	Pagereference pageRef = Page.CNS_EBulletin;
+     	pageref.getParameters().put('step','1_2');
+     	pageref.setRedirect(true);
+        return pageref;
     }
 
     public Pagereference goToStep2() {
-        //return new Pagereference('/ISSP_AMS_EBulletin?dailyId=' + newFormDaily.Id + '&weeklyId=' + newFormWeekly.Id + '&step=2');
-        return new Pagereference('/ISSP_AMS_EBulletin?step=2');
+     	Pagereference pageRef = Page.CNS_EBulletin;
+     	pageref.getParameters().put('step','2');
+     	pageref.setRedirect(true);
+        return pageref;
     }
 
     public Pagereference goToStep3() {
-        //return new Pagereference('/ISSP_AMS_EBulletin?dailyId=' + newFormDaily.Id + '&weeklyId=' + newFormWeekly.Id + '&step=2');
-        return new Pagereference('/ISSP_AMS_EBulletin?step=3');
+     	Pagereference pageRef = Page.CNS_EBulletin;
+     	pageref.getParameters().put('step','3');
+     	pageref.setRedirect(true);
+        return pageref;
     }
 
     public Pagereference dailyReportDownload() {
-        System.debug('dailyReportDownload');
-
-
-        System.debug('pDateStart - ' + pDateStart);
-
-        System.debug('daysOfWeek - ' + daysOfWeek);
-        System.debug('todayPeriod - ' + todayPeriod);
-        System.debug('Salesforce saveAMSForm newFormDaily: ' + newFormDaily.Id);
 
         //'dd/MM/yyyy'
         List<String> splitDate = pDateStart.split('/');
-        System.debug('splitDate - ' + splitDate);
-
-        //Datetime dtOrgStatusAttained = Datetime.newInstance(auxAgAppChangeCode.CreatedDate.year(), auxAgAppChangeCode.CreatedDate.month(),auxAgAppChangeCode.CreatedDate.day());
                             
         Datetime startDate = Datetime.newInstance(Integer.valueOf(splitDate.get(2)), Integer.valueOf(splitDate.get(1)), Integer.valueOf(splitDate.get(0)));
         Datetime endDate;
         String period = todayPeriod == null?'':todayPeriod;
 
-        System.debug('startDate - ' + startDate);
-        System.debug('period - ' + period);
-         
-
         Id res = callGenerateEBulletinReportWS( newFormDaily, startDate, startDate.addDays(1), period);
 
         dailyFileDownload = '/servlet/servlet.FileDownload?file=' + res;
 
-        System.debug('dailyFileDownload - ' + dailyFileDownload);
-
-        //return new Pagereference(dailyFileDownload);
         return null;
     }
     
     public Pagereference weeklyReportDownload() {
 
-        
-
-        System.debug('weeklyReportDownload');
-
-        System.debug('week - ' + week);
-        System.debug('Salesforce saveAMSForm newFormWeekly: ' + newFormWeekly.Id);
-        System.debug('Salesforce saveAMSForm pWeekStart: ' + pWeekStart);
-        System.debug('Salesforce saveAMSForm pWeekEnd: ' + pWeekEnd);
-
-        //dtWeekStart.format('dd/MM/yyyy')+ '-' +dtWeekEnd.format('dd/MM/yyyy')
-        //List<String> splitDate = week.split('-');
-        //List<String> splitStartDate = splitDate.get(0).split('/');
-        //List<String> splitEndDate = splitDate.get(1).split('/');
         List<String> splitStartDate = pWeekStart.split('/');
         List<String> splitEndDate = pWeekEnd.split('/');
-        //System.debug('splitDate - ' + splitDate);
-        //System.debug('splitStartDate - ' + splitStartDate);
-        //System.debug('splitEndDate - ' + splitEndDate);
 
         Datetime startDate = Datetime.newInstance(Integer.valueOf(splitStartDate.get(2)), Integer.valueOf(splitStartDate.get(1)), Integer.valueOf(splitStartDate.get(0)));
         Datetime endDate = Datetime.newInstance(Integer.valueOf(splitEndDate.get(2)), Integer.valueOf(splitEndDate.get(1)), Integer.valueOf(splitEndDate.get(0)));
         String period = '';
 
-        //System.debug('startDate - ' + startDate);
-        //System.debug('endDate - ' + endDate);
-
         Id res = callGenerateEBulletinReportWS( newFormWeekly , startDate, endDate, period);
 
         weeklyFileDownload = '/servlet/servlet.FileDownload?file=' + res;
 
-        System.debug('weeklyFileDownload - ' + weeklyFileDownload);
-
-        //return new Pagereference(weeklyFileDownload);
         return null;
     }
 
@@ -1058,65 +887,4 @@ system.debug('iDays: ' + iDays);
         
         return res;
     }
-    //callToMinorChangesWS(getWSInstance(), accountConcerned.Id, accChanges_List);
-
-
-    //public static ISSP_AMS_RecordCreator_Class.AMS_RecordCreatorWebservice getWSInstance() {
-    //    ISSP_AMS_RecordCreator_Class.AMS_RecordCreatorWebservice newInstance;
-    //    try {
-    //        partnerSoapSforceCom.Soap sp = new partnerSoapSforceCom.Soap();
-    //        String userName;
-    //        string password;
-    //        if (ISSP_Ams_Login_Credentials__c.getValues('AmsDev1') != null) {
-    //            userName = ISSP_Ams_Login_Credentials__c.getValues('AmsDev1').User_Name__c;
-    //            password = ISSP_Ams_Login_Credentials__c.getValues('AmsDev1').Password__c;
-    //        }
-    //        partnerSoapSforceCom.LoginResult loginResult = sp.login(userName, password);
-    //        newInstance = new ISSP_AMS_RecordCreator_Class.AMS_RecordCreatorWebservice();
-
-    //        ISSP_AMS_RecordCreator_Class.SessionHeader_element newSessionInstance = new ISSP_AMS_RecordCreator_Class.SessionHeader_element();
-    //        newSessionInstance.sessionId = loginResult.sessionId;
-    //        newInstance.SessionHeader = newSessionInstance;
-    //    } catch (Exception e) {
-    //        system.debug('login failed: ' + e.getMessage());
-    //    }
-
-    //    return newInstance;
-
-    //}
-
-    //public static Void callToMinorChangesWS(ISSP_AMS_RecordCreator_Class.AMS_RecordCreatorWebservice instanceWS, String accountId, List<AccountChanges> accChanges) {
-    //    /**USE WS Method
-    //    ISSP_AMS_RecordCreator_Class.AccountChanges[] accChangesWS = new ISSP_AMS_RecordCreator_Class.AccountChanges[]{};
-    //    for(AccountChanges accChange :accChanges){
-    //        ISSP_AMS_RecordCreator_Class.AccountChanges accChangeWS = new ISSP_AMS_RecordCreator_Class.AccountChanges();
-    //        accChangeWS.accountFieldAPI=accChange.accountFieldAPI;
-    //        accChangeWS.newValue=accChange.newValue;
-    //        accChangeWS.oldValue=accChange.oldValue;
-    //        accChangesWS.add(accChangeWS);
-    //    }
-    //    **/
-
-    //    // USE Static Method
-    //    List<AMS_RecordCreatorWebservice.AccountChanges> accChangesWS = new List<AMS_RecordCreatorWebservice.AccountChanges>();
-    //    for (AccountChanges accChange : accChanges) {
-    //        AMS_RecordCreatorWebservice.AccountChanges accChangeWS = new AMS_RecordCreatorWebservice.AccountChanges(accChange.accountFieldAPI, accChange.oldValue, accChange.newValue);
-    //        accChangesWS.add(accChangeWS);
-    //    }
-        
-            
-    //    try {
-    //        system.debug('createMinorChangesChangeCode(' + accountId + ', ' + accChangesWS + ')');
-
-    //        /** USE WS Method
-    //        instanceWS.createMinorChangesChangeCode(accountId,accChangesWS);
-    //        **/
-
-    //        // USE Static Method
-    //        AMS_RecordCreatorWebservice.createMinorChangesChangeCode(accountId, accChangesWS);
-                
-    //    } catch (Exception e) {
-    //        system.debug('Creation of change code failed: ' + e.getMessage());
-    //    }
-    //}
 }

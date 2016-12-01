@@ -433,7 +433,7 @@
             
      <div class="container">
        <div id="contentWrapper">
-           <c:ISSP_CustomNavigation />
+           <!-- <c:ISSP_CustomNavigation /> -->
             
    
             
@@ -760,7 +760,7 @@
                             <apex:pageBlockSection columns="1">
                                 <apex:pageBlockSectionItem dataStyle="text-align:right; width: 25%;" rendered="{!isStep1_1}">
                                     <apex:outputPanel >
-                                        <apex:commandButton action="{!goToStepHome}" value="{!$Label.ISSP_Cancel}" />
+                                        <apex:commandButton action="{!goToStep2}" value="{!$Label.ISSP_Cancel}" />
                                         &nbsp;&nbsp;
                                         <apex:commandButton action="{!saveAMSFormAndGoForward}" value="{!$Label.ISSP_AMS_eBulletin_btn_SaveGenerateReport}" rendered="{!newFormDaily.Opt_in__c}"/>
                                     </apex:outputPanel>
@@ -1022,7 +1022,7 @@
                             <apex:pageBlockSection columns="1">
                                 <apex:pageBlockSectionItem dataStyle="text-align:right; width: 50%;" rendered="{!isStep1_2}">
                                     <apex:outputPanel >
-                                        <apex:commandButton action="{!goToStepHome}" value="{!$Label.ISSP_Cancel}" />
+                                        <apex:commandButton action="{!goToStep2}" value="{!$Label.ISSP_Cancel}" />
                                         &nbsp;&nbsp;
                                         <apex:commandButton action="{!saveAMSFormAndGoForward}" value="{!$Label.ISSP_AMS_eBulletin_btn_SaveGenerateReport}" rendered="{!newFormWeekly.Opt_in__c}"/>
                                     </apex:outputPanel>    
