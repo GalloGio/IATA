@@ -34,7 +34,7 @@ public class AMS_AgencyRegulationTriggerHandler {
 
         for(AMS_Agency_Regulation__c agReg: agencyRegulations){
 
-            if(!oldAgRegulationValues.get(agReg.Id).Notification_Sent__c && agReg.Notification_Sent__c && agReg.Type_of_Certificate__c == AMS_Utils.CERT_DGR){
+            if(!oldAgRegulationValues.get(agReg.Id).Notification_Sent__c && agReg.Notification_Sent__c && agReg.Type_of_Certificate__c == AMS_Utils.CERT_DGR && agReg.Handling_Account__c){
                 //system.debug('sending renewal emails to :' + keyContactsPerAccount.get(agReg.Account__c));
                 //sendEmailAlert(keyContactsPerAccount.get(agReg.Account__c));
                 regulationsRequiringRenewal.add(agReg);
@@ -59,7 +59,7 @@ public class AMS_AgencyRegulationTriggerHandler {
             for(Contact recipient: recipents){
 
                 if(recipient.Preferred_Language__c == 'English')
-                    templateId = countryTemplates.get('AMS_DGR_Renewal_EN') != null ? countryTemplates.get('AMS_DGR_Renewal_EN').Id : null;
+                    templateId = countryTemplates.get('AMS_DGR_Renewal_EN1') != null ? countryTemplates.get('AMS_DGR_Renewal_EN1').Id : null;
                 else if(recipient.Preferred_Language__c == 'Chinese')
                     templateId = countryTemplates.get('AMS_DGR_Renewal_CN') != null ? countryTemplates.get('AMS_DGR_Renewal_CN').Id : null;
                 else if(recipient.Preferred_Language__c == 'French')
@@ -75,7 +75,7 @@ public class AMS_AgencyRegulationTriggerHandler {
                 else if(recipient.Preferred_Language__c == 'Spanish')
                     templateId = countryTemplates.get('AMS_DGR_Renewal_SP') != null ? countryTemplates.get('AMS_DGR_Renewal_SP').Id : null;
                 else
-                    templateId = countryTemplates.get('AMS_DGR_Renewal_EN') != null ? countryTemplates.get('AMS_DGR_Renewal_EN').Id : null;
+                    templateId = countryTemplates.get('AMS_DGR_Renewal_EN1') != null ? countryTemplates.get('AMS_DGR_Renewal_EN1').Id : null;
 
                 system.debug('DGR sendEmailAlert: Template selected ' + templateId);
 

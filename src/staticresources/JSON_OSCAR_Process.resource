@@ -3129,7 +3129,14 @@
           "Name": "STEP6",
           "Required": [],
           "Actions": [],
-          "Automations": [],
+          "Automations": [{
+            "Status": "Passed",
+            "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step6_succeeded"
+          },
+          {
+            "Status": "Failed",
+            "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step6_failed"
+          }],
           "DisplayFields": [
           "STEP6__c"],
           "IsDependent": false
@@ -3159,7 +3166,6 @@
             "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step6_failed"
           }],
           "DisplayFields": [
-          "Dossier_Reception_Date__c",
           "Form_Effective_Date__c",
           "Financial_Security_expiry_date__c",
           "STEP6__c"],
@@ -3252,7 +3258,6 @@
             "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step6_failed"
           }],
           "DisplayFields": [
-          "Dossier_Reception_Date__c",
           "Change_effective_as_of__c",
           "STEP6__c"],
           "IsDependent": false

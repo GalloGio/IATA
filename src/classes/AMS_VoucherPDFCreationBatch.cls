@@ -76,8 +76,7 @@ global class AMS_VoucherPDFCreationBatch implements Database.Batchable<sObject>,
 
 		User activeUser = [Select Email From User where Username = : userName limit 1];
 
-		if(!Test.isRunningTest())
-			sendSingleMail(buildCustomReport(),activeUser,region);
+		sendSingleMail(buildCustomReport(),activeUser,region);
 
 		process.Status__c = 'Ended';
 
@@ -92,7 +91,7 @@ global class AMS_VoucherPDFCreationBatch implements Database.Batchable<sObject>,
 
 		Datetime nowDate = Datetime.now();
 
-		String formattedDate = nowDate.format('yyyyMMdd');
+		String formattedDate = nowDate.format('yyyyMMddHHmm');
 
         String filename = 'Vouchers_'+ region.Name + '_' + (runExe+1) + '_' + formattedDate + '.pdf';
 
@@ -207,8 +206,8 @@ global class AMS_VoucherPDFCreationBatch implements Database.Batchable<sObject>,
 	    email.setSubject(subject);
 	    email.setHtmlBody(htmlBody);
 	    //email.setPlainTextBody(plainBody);
-
-	    Messaging.sendEmail(new Messaging.SingleEmailmessage[] {email});
+		if(!Test.isRunningTest())
+	    	Messaging.sendEmail(new Messaging.SingleEmailmessage[] {email});
 	}
 
 	private String buildCustomReport(){

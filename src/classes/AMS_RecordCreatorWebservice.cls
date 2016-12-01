@@ -9,6 +9,8 @@ global without sharing class AMS_RecordCreatorWebservice {
     private static String DGR_DGA_PV = 'DGR.DGA';
     private static String NEWBRABRD_PV= 'NEW.BR.ABROAD';
     private static String NEWTIDS_PV= 'NEW.TIDS.1.0';
+    private static String NEWCORRECTION_PV = 'CORRECTION.1.0';
+    private static String NEWDGR_PV = 'CERTIFICATION.1.0';
 
     /**
         Creates an Oscar (AMS_OSCAR__c) given an Account Id, an Accreditation Id and the Type of Process
@@ -173,6 +175,12 @@ global without sharing class AMS_RecordCreatorWebservice {
 
         if(typeOfProcess.equalsIgnoreCase(BANK_ACCOUNT_CHANGES_PV) || typeOfProcess.equalsIgnoreCase(MAJOR_CHANGES_PV) || typeOfProcess.equalsIgnoreCase(DGR_DGA_PV))
             return oscarRT.get('CHANGE');
+
+        if(typeOfProcess.equalsIgnoreCase(NEWCORRECTION_PV))
+            return oscarRT.get('CORRECTION');
+
+        if(typeOfProcess.equalsIgnoreCase(NEWDGR_PV))
+            return oscarRT.get('CERTIFICATION');
 
         return null;
     

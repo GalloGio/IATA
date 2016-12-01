@@ -726,6 +726,18 @@ public without sharing class AMS_Utils {
             toReturn = oscarAgency;
         }
 
+        if( aacNEW.Change_Code__c == 'CLO' ){
+            
+            oscarAgency.Expiry_Date__c = Date.Today();            
+            toReturn = oscarAgency;
+        }
+
+        if( aacNEW.Change_Code__c == 'REI' ){
+            
+            oscarAgency.Expiry_Date__c = null;            
+            toReturn = oscarAgency;
+        }
+
         return new ChangeCodeStruct(aacNEW, toReturn);
     }
 
@@ -834,6 +846,7 @@ public without sharing class AMS_Utils {
 
             if (previousIFAPCase.Financial_Review_Result__c <> updatedIFAPCase.Financial_Review_Result__c) {
                 oscar[0].Financial_Review_Result__c = updatedIFAPCase.Financial_Review_Result__c;
+                oscar[0].Reason_for_change_of_Financial_result__c = updatedIFAPCase.Reason_for_change_of_Financial_result__c;
                 mustUpdateOSCAR = true;
             }
 
@@ -1347,7 +1360,7 @@ public static String errorMessageBeautifyer(Exception ex) {
         errorString = ex.getMessage().substring(startOfErrorMessage, ex.getMessage().length());
         errorString = errorString.substringBefore('##');
     }
-    return 'ERROR: ' + errorString;
+    return 'ERROR: ' + errorString.unescapeHtml4();
 }
 
 public static RecordType getRecordType(String sObjectType, String developerName) {
@@ -1772,4 +1785,27 @@ public static String fetchTypeOfCustomer (String locationType , String category)
         return dateField.addMonths(1).toStartOfMonth().addDays(-1);
     }
 
+ 
+ 	public static Integer findGapInRange(Integer minRange, Integer maxRange, List<Integer> orderedSlotsOccupied){
+	    //invalid range
+	    if(maxRange-minRange < 0)
+	        return -1;
+	
+	    Integer candidate = minRange;
+	    
+		for(Integer occupiedSlot : orderedSlotsOccupied){
+			if(occupiedSlot > candidate){
+				System.debug('Candidate found : ' + candidate);
+				return candidate;
+			}
+			else if(occupiedSlot == candidate){
+				candidate++;
+				if(candidate > maxRange){
+					return -1;
+				}
+			}
+		}
+		
+		return candidate;
+	}
 }
