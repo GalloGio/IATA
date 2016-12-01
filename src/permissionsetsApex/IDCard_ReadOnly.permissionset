@@ -483,7 +483,7 @@
 <classAccesses><apexClass>IDCardAgencyDetailsControllerTest</apexClass><enabled>false</enabled></classAccesses>
 <classAccesses><apexClass>IDCardApplicationException</apexClass><enabled>false</enabled></classAccesses>
 <classAccesses><apexClass>IDCardApplicationFactory</apexClass><enabled>false</enabled></classAccesses>
-<classAccesses><apexClass>IDCardApplicationImageViewerController</apexClass><enabled>false</enabled></classAccesses>
+<classAccesses><apexClass>IDCardApplicationImageViewerController</apexClass><enabled>true</enabled></classAccesses>
 <classAccesses><apexClass>IDCardApplicationImageViewerCtrlTest</apexClass><enabled>false</enabled></classAccesses>
 <classAccesses><apexClass>IDCardCroppingToolWebService</apexClass><enabled>true</enabled></classAccesses>
 <classAccesses><apexClass>IDCardCryptoUtil</apexClass><enabled>false</enabled></classAccesses>
@@ -539,7 +539,7 @@
 <classAccesses><apexClass>IDCard_CropperCtrl</apexClass><enabled>false</enabled></classAccesses>
 <classAccesses><apexClass>IDCard_CropperCtrlTest</apexClass><enabled>false</enabled></classAccesses>
 <classAccesses><apexClass>IDCard_DetailsAdmPaymentsCtrl</apexClass><enabled>false</enabled></classAccesses>
-<classAccesses><apexClass>IDCard_ImageViewerController</apexClass><enabled>false</enabled></classAccesses>
+<classAccesses><apexClass>IDCard_ImageViewerController</apexClass><enabled>true</enabled></classAccesses>
 <classAccesses><apexClass>IDCard_ImageViewerControllerTest</apexClass><enabled>false</enabled></classAccesses>
 <classAccesses><apexClass>IDCard_PendingOpsAndProcessedAppTest</apexClass><enabled>false</enabled></classAccesses>
 <classAccesses><apexClass>IDCard_Refund</apexClass><enabled>false</enabled></classAccesses>

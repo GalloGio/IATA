@@ -2679,8 +2679,9 @@ if (currentPic == null || currentPic == &apos;&apos;)
 	sforce.connection.update([idcardApp]); 
 }
 
-var url = &apos;{!$Label.IDCard_CroppingTool}Crop.aspx?filename=&apos;+fileName+&apos;&amp;sid={!$Api.Session_ID}&amp;lang={!ID_Card_Application__c.Selected_Preferred_Language__c}&apos;;
-var win = window.open(url,&apos;&apos;,&apos;width=935,height=614&apos;);
+//var url = &apos;{!$Label.IDCard_CroppingTool}Crop.aspx?filename=&apos;+fileName+&apos;&amp;sid={!$Api.Session_ID}&amp;lang={!ID_Card_Application__c.Selected_Preferred_Language__c}&apos;;
+var url = &apos;/apex/IDCard_ImageUpload?filename=&apos;+fileName+&apos;&amp;sid={!$Api.Session_ID}&amp;lang={!ID_Card_Application__c.Selected_Preferred_Language__c}&apos;;
+var win = window.open(url,&apos;&apos;,&apos;width=935,height=650&apos;);
 
 
 //refresh page when window is closed
