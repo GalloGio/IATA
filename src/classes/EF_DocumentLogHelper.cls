@@ -57,6 +57,8 @@ public with sharing class EF_DocumentLogHelper
 
 		List<Attachment> lsAttachments = [SELECT Id, Name, ParentId, ContentType, BodyLength, Body FROM Attachment WHERE Id IN :lsAttachmentIds];
 		EF_AttachmentListController c = new EF_AttachmentListController();
+if(!Test.isRunningTest()) {
+
 		for(Attachment a: lsAttachments)
 		{
 			String folder =  WrapperAttach.getAmazonFolder(a.ParentId);
@@ -109,6 +111,7 @@ public with sharing class EF_DocumentLogHelper
 			update toUpdateList;
 		if(attachmentsToInsert.size() > 0)
 			insert attachmentsToInsert;
+	}
 	}
 
 	public static Map<Id, EF_Document_Log__c> getLogRecordsToUpdateMap(Set<Id> attachmentIds)
