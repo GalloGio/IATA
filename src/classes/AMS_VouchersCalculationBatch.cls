@@ -12,15 +12,13 @@ global class AMS_VouchersCalculationBatch implements Database.Batchable<sObject>
 
 	// this batch is responsible for calculating the average sales for each country.
 	// this consists on 
-	global AMS_VouchersCalculationBatch(Set<Id> countriesToProcess,AMS_Voucher_Process_Run__c process) {
+	global AMS_VouchersCalculationBatch(Set<Id> countriesToProcess,AMS_Voucher_Process_Run__c process, String yearToProcess) {
 		
 		this.process = process;
 
 		this.countriesToProcess = countriesToProcess;
 
 		allVouchersInfo = new List<AMS_Voucher_Information__c>();
-
-		String yearToProcess = String.valueOf(System.today().year());
 
 		this.query = 'SELECT Id, Account__c, Exchange_Rate__c, Amount_Currency__c, AmountLastYearSales__c , Account__r.IATA_ISO_Country__r.Region__c, Account__r.IATA_ISO_Country__c, Account__r.IATA_ISO_Country__r.Name,Account__r.IATA_ISO_Country__r.AMS_Max_Vouchers_Per_Year__c, Account__r.IATA_ISO_Country__r.AMS_Vouchers_Benchmark__c, Account__r.Location_Class__c FROM AMS_Voucher_Information__c WHERE IsAgencyEligibleForCountryAverage__c = true and Year__c = \'' + yearToProcess + '\' and Account__r.IATA_ISO_Country__c in :countriesToProcess';
 	
