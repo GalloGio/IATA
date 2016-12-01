@@ -1666,22 +1666,6 @@
         <apexClass>EF_RelatedRecordsHandlerTest</apexClass>
         <enabled>true</enabled>
     </classAccesses>
-	<classAccesses>
-        <apexClass>EF_Utilities</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-	<classAccesses>
-        <apexClass>EF_RelatedRecordsHandler</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-	<classAccesses>
-        <apexClass>EF_ContractHistoryController</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-	<classAccesses>
-        <apexClass>EF_BaHistoryController</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
     <classAccesses>
         <apexClass>EF_TestDataFactory</apexClass>
         <enabled>true</enabled>
@@ -13531,6 +13515,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>AmazonFile__c.Case__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>AmazonFile__c.Category__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -13552,12 +13541,9 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>AmazonFile__c.EF_Created_On__c</field>
-	<fieldPermissions>
-        <editable>true</editable>
-        <field>AmazonFile__c.Case__c</field>
         <readable>true</readable>
     </fieldPermissions>
-	<fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>AmazonFile__c.EF_Enterprise_Keywords__c</field>
         <readable>true</readable>
@@ -13609,27 +13595,12 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>AmazonFile__c.isPublic__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>AmazonFile__c.SAP_Number__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>AmazonFile__c.Review_Status__c</field>
         <readable>false</readable>
     </fieldPermissions>
-	<fieldPermissions>
-        <editable>true</editable>
-        <field>AmazonFile__c.SAP_Number__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>AmazonFile__c.Skip_Validation__c</field>
+        <field>AmazonFile__c.SAP_Number__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -13637,15 +13608,15 @@
         <field>AmazonFile__c.Size_MB__c</field>
         <readable>false</readable>
     </fieldPermissions>
-	<fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>AmazonFile__c.Skip_Validation__c</field>
         <readable>true</readable>
     </fieldPermissions>
-	<fieldPermissions>
-        <editable>true</editable>
-        <field>AmazonFile__c.sObject_Id__c</field>
-        <readable>true</readable>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>AmazonFile__c.Source__c</field>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -13654,12 +13625,12 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>AmazonFile__c.Source__c</field>
+        <field>AmazonFile__c.isPublic__c</field>
         <readable>false</readable>
     </fieldPermissions>
-	<fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
-        <field>AmazonFile__c.Subcategory__c</field>
+        <field>AmazonFile__c.sObject_Id__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -22790,36 +22761,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>EF_Document_Log__c.SubCategory__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>EF_Location_Code__c.Contract_BA_Id__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>EF_Location_Code__c.Contract__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>EF_Location_Code__c.EF_Airline_Billing_Agreement__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>EF_Location_Code__c.Location_Code_Details__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>EF_Location_Currency__c.Base_URL__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>EF_Location_Currency__c.EF_Approver_Email__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -38918,17 +38859,6 @@
         <recordType>EF_Location_Code__c.EF_Contract_Location_Code</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>EF_Location_Code__c-E%26F Location Code BA Layout</layout>
-        <recordType>EF_Location_Code__c.EF_BA_Location_Code</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>EF_Location_Code__c-E%26F Location Code Contract Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>EF_Location_Code__c-E%26F Location Code Contract Layout</layout>
-        <recordType>EF_Location_Code__c.EF_Contract_Location_Code</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
         <layout>EF_Location_Currency__c-E%26F Location Currency Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -40959,15 +40889,6 @@
         <allowRead>true</allowRead>
         <modifyAllRecords>true</modifyAllRecords>
         <object>EF_Document_Log__c</object>
-        <viewAllRecords>true</viewAllRecords>
-    </objectPermissions>
-    <objectPermissions>
-        <allowCreate>true</allowCreate>
-        <allowDelete>true</allowDelete>
-        <allowEdit>true</allowEdit>
-        <allowRead>true</allowRead>
-        <modifyAllRecords>true</modifyAllRecords>
-        <object>EF_Location_Code__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
@@ -44844,6 +44765,11 @@
     <recordTypeVisibilities>
         <default>true</default>
         <recordType>EF_Related_Records__c.FIR_Code</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>EF_Related_Records__c.Location_Code</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
