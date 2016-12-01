@@ -10,7 +10,35 @@ public class AMS_OscarCaseTriggerHelper {
 
     private static Id OSCARCaseRecordTypeID = Schema.Case.sObjectType.getDescribe().getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
 
+	//remove OSCAR from child case, if case is being cloned from OSCAR parent
+    public static void removeOscarFromChild(list<Case> triggerNew){
 
+		List<Case> casestoremoveoscar = new List<Case>();
+	    List<Id> parentcaseIds = new List<Id>();
+
+		//check parent record type
+		for(Case c: triggerNew)
+        	if(c.ParentId != null)
+            	parentcaseIds.add(c.ParentId);
+                
+        Map<Id, Case> parentCase = new Map<Id, Case>([SELECT Id, Oscar__c, RecordTypeId FROM Case WHERE Id IN :parentcaseIds AND RecordTypeId = :OSCARCaseRecordTypeID]);
+        
+        for(Case c: triggerNew){
+        	
+        	Case parent = parentCase.get(c.parentId);	
+        	
+        	if(c.ParentId != null && c.Oscar__c != null && parent.Oscar__c != null){
+            	if(c.RecordTypeId == OSCARCaseRecordTypeID && parent.RecordTypeId == OSCARCaseRecordTypeID && parent.Oscar__c <> null && c.Oscar__c == parent.Oscar__c)
+                	casestoremoveoscar.add(c);
+        	}         
+        }
+        
+	    for(Case c: casestoremoveoscar){ 
+          
+                c.Oscar__c = null;
+        }
+	}
+	
     public static void OSCARCaseCreationRules(list<Case> triggerNew){
 
         List<Case> oscarCases = new List<Case>();
@@ -192,7 +220,7 @@ public class AMS_OscarCaseTriggerHelper {
 
 
     //All cases having a parent which has Record Type OSCAR Communication must have the OSCAR field automaticaly populated
-    public static void fillOSCARLookup(list<Case> triggerNew){
+    /*public static void fillOSCARLookup(list<Case> triggerNew){
 
         List<Id> parentcaseIds = new List<Id>();
 
@@ -209,7 +237,7 @@ public class AMS_OscarCaseTriggerHelper {
                 c.Oscar__c = parent.Oscar__c;
         }
 
-    }
+    }*/
 
     public static Set<Id> caseIrregularityCreated{
         get{

@@ -1,6 +1,39 @@
 <apex:page showHeader="true" sidebar="true" controller="AMS_CertificateManagerController">
+
+	<style>
+		.pos-relative{ position: relative; }
+		.loading-backdrop{ 
+			position: absolute; 
+			top: 0; 
+			bottom: 0; 
+			right: 0; 
+			left: 0; 
+			background: #FFF; 
+			opacity: 0.5; 
+			z-index: 95;
+		}
+		.loading-img{
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			margin-top: -16px;
+			margin-left: -16px;
+			z-index: 96;
+		}
+	</style>
+
 	<apex:sectionHeader subtitle="Annual Certificate Campaign" />
-	<apex:form>
+	<apex:form styleClass="pos-relative" >
+
+	<apex:actionStatus id="loading" >
+		<apex:facet name="start">
+			<apex:outputPanel layout="none">
+				<apex:outputPanel layout="block" styleClass="loading-backdrop"/>
+				<apex:image value="/../img/loading32.gif" styleClass="loading-img"/>
+			</apex:outputPanel>
+		</apex:facet>
+	</apex:actionStatus> 
+
 	<apex:pageBlock mode="edit">
 
 		<apex:pageBlockSection id="notes" columns="1" title="Notes" collapsible="true">
@@ -16,7 +49,7 @@
 			
 			<apex:pageBlockSection columns="2">
 				<apex:inputFile  value="{!fileBody}" accept=".csv, .txt, .xls, .xlsx"/>
-				<apex:commandButton value="Read File" action="{!parseFile}"/>
+				<apex:commandButton value="Read File" action="{!parseFile}" status="loading"/>
 			</apex:pageBlockSection>
 		</apex:pageBlockSection>
 			

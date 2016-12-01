@@ -157,6 +157,7 @@
 <classAccesses><apexClass>AMS_RecordCreatorWebservice</apexClass><enabled>false</enabled></classAccesses>
 <classAccesses><apexClass>AMS_RecordCreatorWebserviceTest</apexClass><enabled>false</enabled></classAccesses>
 <classAccesses><apexClass>AMS_SAAMCaseMigrationController</apexClass><enabled>false</enabled></classAccesses>
+<classAccesses><apexClass>AMS_SAAMCaseMigrationControllerTest</apexClass><enabled>false</enabled></classAccesses>
 <classAccesses><apexClass>AMS_SearchAccountByUserData</apexClass><enabled>false</enabled></classAccesses>
 <classAccesses><apexClass>AMS_SearchAccountByUserDataTest</apexClass><enabled>false</enabled></classAccesses>
 <classAccesses><apexClass>AMS_SettlementsAndOperationLoaderCtrl</apexClass><enabled>false</enabled></classAccesses>
@@ -1461,7 +1462,7 @@
 <pageAccesses><apexPage>AMP_KeyAccountPlan</apexPage><enabled>false</enabled></pageAccesses>
 <pageAccesses><apexPage>AMP_KeyAccountPlanPrintable</apexPage><enabled>false</enabled></pageAccesses>
 <pageAccesses><apexPage>AMP_KeyContacts</apexPage><enabled>false</enabled></pageAccesses>
-<pageAccesses><apexPage>AMP_NewIATAGroup</apexPage><enabled>false</enabled></pageAccesses>
+<pageAccesses><apexPage>AMP_NewIATAGroup</apexPage><enabled>true</enabled></pageAccesses>
 <pageAccesses><apexPage>AMSAccreditationContact</apexPage><enabled>false</enabled></pageAccesses>
 <pageAccesses><apexPage>AMSAccreditationContactLookup</apexPage><enabled>false</enabled></pageAccesses>
 <pageAccesses><apexPage>AMSAgencyKPI</apexPage><enabled>false</enabled></pageAccesses>
