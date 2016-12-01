@@ -30,7 +30,7 @@ public class EF_MaterialLineItemHandler
         Map<Id, EF_Material_Line_Item__c> relevantMaterials  = new Map<Id, EF_Material_Line_Item__c>();
         for(EF_Material_Line_Item__c mat : newMap.values())
         {
-            if(mat.EF_Relationship__c != null)
+            if(mat.EF_Relationship__c != null && mat.EF_Status__c == 'Active')
             {
                 relevantMaterials.put(mat.Id, mat);
             }
