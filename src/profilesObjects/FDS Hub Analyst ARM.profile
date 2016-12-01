@@ -4507,7 +4507,7 @@
 <fieldPermissions><editable>false</editable><field>ID_Card__c.Approving_Manager_s_Email__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>ID_Card__c.Approving_Manager_s_Name__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>ID_Card__c.Blacklisted__c</field><readable>true</readable></fieldPermissions>
-<fieldPermissions><editable>false</editable><field>ID_Card__c.CIN__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>ID_Card__c.CIN__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>ID_Card__c.Cancellation_Date__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>ID_Card__c.Card_Code__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>ID_Card__c.Card_Status__c</field><readable>true</readable></fieldPermissions>
@@ -4565,7 +4565,7 @@
 <fieldPermissions><editable>false</editable><field>ID_Card__c.Json_WS_Simple__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>ID_Card__c.LastName__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>ID_Card__c.Middle_Initial__c</field><readable>true</readable></fieldPermissions>
-<fieldPermissions><editable>false</editable><field>ID_Card__c.Missing_Information__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>ID_Card__c.Missing_Information__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>ID_Card__c.MustSyncWithAIMS__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>ID_Card__c.Nature_of_ID_Card__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>ID_Card__c.Opt_in__c</field><readable>false</readable></fieldPermissions>
