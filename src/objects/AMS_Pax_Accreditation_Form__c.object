@@ -194,11 +194,6 @@
     <fieldSets>
         <fullName>AMS_locationtype</fullName>
         <description>fields to be migrated when we have a change of location type process</description>
-        <displayedFields>
-            <field>Location_Type__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
         <label>LocationType</label>
     </fieldSets>
     <fieldSets>
