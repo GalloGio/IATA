@@ -3129,7 +3129,14 @@
           "Name": "STEP6",
           "Required": [],
           "Actions": [],
-          "Automations": [],
+          "Automations": [{
+            "Status": "Passed",
+            "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step6_succeeded"
+          },
+          {
+            "Status": "Failed",
+            "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step6_failed"
+          }],
           "DisplayFields": [
           "STEP6__c"],
           "IsDependent": false

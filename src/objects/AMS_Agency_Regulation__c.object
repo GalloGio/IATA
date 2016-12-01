@@ -115,6 +115,15 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Handling_Account__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(TEXT(Account__r.Is_your_firm_handling_Dangerous_Goods__c) = &apos;Yes&apos;, TRUE, FALSE)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Handling Account</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>IATA_FIATA_training_history__c</fullName>
         <externalId>false</externalId>
         <label>IATA/FIATA training history</label>

@@ -1260,7 +1260,7 @@
 <fieldPermissions><editable>false</editable><field>AWS_S3_Object__c.Preview_Link__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Account.ACH_Member__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Account.ACLI_ID__c</field><readable>true</readable></fieldPermissions>
-<fieldPermissions><editable>false</editable><field>Account.ACLI_SAP_Id__c</field><readable>true</readable></fieldPermissions>
+<fieldPermissions><editable>true</editable><field>Account.ACLI_SAP_Id__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Account.ACLI_Status__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Account.AFRD_Date__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Account.AFRD_Status__c</field><readable>false</readable></fieldPermissions>
@@ -6994,7 +6994,7 @@
 <recordTypeVisibilities><default>false</default><recordType>Account.MACSSalesAccount</recordType><visible>false</visible></recordTypeVisibilities>
 <recordTypeVisibilities><default>false</default><recordType>Account.Operator</recordType><visible>false</visible></recordTypeVisibilities>
 <recordTypeVisibilities><default>false</default><recordType>Account.Others</recordType><visible>false</visible></recordTypeVisibilities>
-<recordTypeVisibilities><default>true</default><recordType>Account.Standard_Account</recordType><visible>true</visible></recordTypeVisibilities>
+<recordTypeVisibilities><default>true</default><personAccountDefault>true</personAccountDefault><recordType>Account.Standard_Account</recordType><visible>true</visible></recordTypeVisibilities>
 <recordTypeVisibilities><default>false</default><recordType>Account_Category__c.GDP</recordType><visible>false</visible></recordTypeVisibilities>
 <recordTypeVisibilities><default>false</default><recordType>Account_Category__c.Live</recordType><visible>false</visible></recordTypeVisibilities>
 <recordTypeVisibilities><default>false</default><recordType>Accreditation__c.GDP</recordType><visible>false</visible></recordTypeVisibilities>

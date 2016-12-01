@@ -217,6 +217,7 @@
     <tab>SIDRA_Lite_Mass_Approval</tab>
     <tab>Voucher_Management</tab>
     <tab>AMS_Voucher_Region__c</tab>
+    <tab>Purge_IATA_Code_Process</tab>
     <tab>Annual_Certificate_Campaign</tab>
     <workspaceMappings>
         <mapping>
@@ -236,6 +237,9 @@
         </mapping>
         <mapping>
             <tab>SIDRA_Lite_Mass_Approval</tab>
+        </mapping>
+        <mapping>
+            <tab>Purge_IATA_Code_Process</tab>
         </mapping>
         <mapping>
             <tab>Voucher_Management</tab>

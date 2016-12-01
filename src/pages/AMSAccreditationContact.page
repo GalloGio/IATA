@@ -49,13 +49,20 @@
         .slds-m-bottom--xx-small {
             font-size: 13px !important;
         }
+
+        textarea {
+            resize: none;
+        }
         
     </style>
     <apex:includeScript value="/support/console/20.0/integration.js"/>
     <script type="text/javascript">
         function setTabTitle() {
             //Set the current tab's title
-            sforce.console.setTabTitle('Agency owners');
+            if({!isCertificationOSCAR})
+                sforce.console.setTabTitle('Agency trained staff');
+            else
+                sforce.console.setTabTitle('Agency owners');
         }
         var pageLoad = window.onload;
         window.onload = function()
@@ -701,7 +708,7 @@
                                                                 </apex:inputField>
                                                             </td>
                                                             <td class="slds-size--1-of-8" data-label="{ObjectType.AMS_Accreditation_Contact__c.Fields.Valid_until__c.Label}">
-                                                                 <apex:inputTextArea id="expiration" rows="1" html-class="slds-input inputPointer" value="{!tsw.validUntil}"/>
+                                                                 <apex:inputTextArea id="expiration" rows="1" html-class="slds-input inputPointer" value="{!tsw.validUntil}" html-placeholder="YYYY-MM-DD"/>
                                                             </td>
                                                             <td class="slds-size--1-of-8" data-label="{ObjectType.AMS_Accreditation_Contact__c.Fields.Position_trained_staff__c.Label}">
                                                                 <apex:inputField html-class="slds-input inputPointer" value="{!tsw.ac.Position_trained_staff__c}"/>
@@ -728,7 +735,7 @@
                                             |&nbsp;
                                             <a href="#" onClick="addEmptyCompanyRow();return false;">Add a Company<span class="slds-assistive-text">entity type</span></a>
                                         </apex:outputPanel>
-                                        <apex:outputPanel rendered="{!isCargoAgency}">
+                                        <apex:outputPanel rendered="{!AND(OR(isNewProcess,isCertificationOSCAR),isCargoAgency)}">
                                             |&nbsp;
                                             <a href="#" onClick="addEmptyTrainedStaffRow();return false;">Add Trained Staff<span class="slds-assistive-text">entity type</span></a>
                                         </apex:outputPanel>

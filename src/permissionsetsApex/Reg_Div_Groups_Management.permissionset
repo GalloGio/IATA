@@ -1461,7 +1461,7 @@
 <pageAccesses><apexPage>AMP_KeyAccountPlan</apexPage><enabled>false</enabled></pageAccesses>
 <pageAccesses><apexPage>AMP_KeyAccountPlanPrintable</apexPage><enabled>false</enabled></pageAccesses>
 <pageAccesses><apexPage>AMP_KeyContacts</apexPage><enabled>false</enabled></pageAccesses>
-<pageAccesses><apexPage>AMP_NewIATAGroup</apexPage><enabled>false</enabled></pageAccesses>
+<pageAccesses><apexPage>AMP_NewIATAGroup</apexPage><enabled>true</enabled></pageAccesses>
 <pageAccesses><apexPage>AMSAccreditationContact</apexPage><enabled>false</enabled></pageAccesses>
 <pageAccesses><apexPage>AMSAccreditationContactLookup</apexPage><enabled>false</enabled></pageAccesses>
 <pageAccesses><apexPage>AMSAgencyKPI</apexPage><enabled>false</enabled></pageAccesses>
