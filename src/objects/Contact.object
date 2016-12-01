@@ -27220,9 +27220,10 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
         <fullName>Change_id_card_holder_cont_name</fullName>
         <active>true</active>
         <errorConditionFormula>AND(
-ISPICKVAL($User.UserType,&quot;Standard&quot;), 
+ISPICKVAL($User.UserType,&quot;Standard&quot;),
 ID_Card_Holder__c=true,
-ISCHANGED(ISSP_Contact_Name__c )
+ISCHANGED(LastName),
+UPPER(PRIORVALUE(LastName)) &lt;&gt; UPPER(LastName)
 )</errorConditionFormula>
         <errorMessage>This contact is an ID Card holder. To change name, please raise an internal case to ID Card team</errorMessage>
     </validationRules>

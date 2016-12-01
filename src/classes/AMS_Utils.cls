@@ -802,6 +802,7 @@ public without sharing class AMS_Utils {
 
             if (previousIFAPCase.Financial_Review_Result__c <> updatedIFAPCase.Financial_Review_Result__c) {
                 oscar[0].Financial_Review_Result__c = updatedIFAPCase.Financial_Review_Result__c;
+                oscar[0].Reason_for_change_of_Financial_result__c = updatedIFAPCase.Reason_for_change_of_Financial_result__c;
                 mustUpdateOSCAR = true;
             }
 
@@ -1638,5 +1639,27 @@ public static String fetchTypeOfCustomer (String locationType , String category)
     return categoryCustomerMap.get(category);
 
 }
-
+ 
+ 	public static Integer findGapInRange(Integer minRange, Integer maxRange, List<Integer> orderedSlotsOccupied){
+	    //invalid range
+	    if(maxRange-minRange < 0)
+	        return -1;
+	
+	    Integer candidate = minRange;
+	    
+		for(Integer occupiedSlot : orderedSlotsOccupied){
+			if(occupiedSlot > candidate){
+				System.debug('Candidate found : ' + candidate);
+				return candidate;
+			}
+			else if(occupiedSlot == candidate){
+				candidate++;
+				if(candidate > maxRange){
+					return -1;
+				}
+			}
+		}
+		
+		return candidate;
+	}
 }
