@@ -42,7 +42,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS_OSCAR_ANTIMONEYLAUNDERING</shortDescription>
-        <value>Anti Money Laundering</value>
+        <value>Due diligence</value>
     </labels>
     <labels>
         <fullName>AMS_OSCAR_APPLICATIONPROCESSING</fullName>
