@@ -141,7 +141,7 @@
         <filters>
             <field>Record__c</field>
             <operation>contains</operation>
-            <value>13382106</value>
+            <value>08088080</value>
         </filters>
         <label>AMS - 1 record</label>
         <language>en_US</language>
@@ -178,6 +178,11 @@
             <field>Status__c</field>
             <operation>equals</operation>
             <value>Error</value>
+        </filters>
+        <filters>
+            <field>start_date__c</field>
+            <operation>equals</operation>
+            <value>11/14/2016 12:00 AM</value>
         </filters>
         <label>AMS Errors</label>
         <language>en_US</language>

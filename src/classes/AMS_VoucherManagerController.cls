@@ -17,6 +17,8 @@ public with sharing class AMS_VoucherManagerController {
         public boolean countriesUploaded{get;set;}
 
         public string region{get; set;}
+
+        public String year{get; set;}
     
 		public AMS_Voucher_Region__c regionObject{get;set;}
 
@@ -88,7 +90,9 @@ public with sharing class AMS_VoucherManagerController {
 
                 ams_VPM.setCountries(setCountries);
 
-                Id batchCountryAverageId = ams_VPM.runVouchersProcess();
+                System.debug('Starting the process for year ' +  year);
+
+                Id batchCountryAverageId = ams_VPM.runVouchersProcess(year);
 
                 String urlCode = String.valueof(URL.getSalesforceBaseUrl().toExternalForm());
 
@@ -164,6 +168,19 @@ public with sharing class AMS_VoucherManagerController {
 
         }
 
+    public list<selectoption> getyearobj(){
+
+                list<selectoption> options= new list<selectoption>();
+
+                
+                for( Integer i = 1990 ; i <= 2100 ; i++){
+
+                        options.add(new selectoption(String.valueOf(i),String.valueOf(i)));
+                }
+
+                return options;
+
+        }
 
         public boolean getcanExecuteBatch(){
 
