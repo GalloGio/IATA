@@ -41,6 +41,12 @@ global with sharing class IDCard_SF_AIMS_WebService {
     private static map<String, String> ISOCountry_AIMSArea;
 
     WebService static string ExtractIdCardInfo() {
+
+        // This is the old web service for AIMS
+        // disabled on 01.Dec.2016 in order to not interfere with the new web service that is bypassing AIMS
+        if (!Test.isRunningTest()) return null;
+
+
         List<AIMSFileInfo> infos = new List<AIMSFileInfo>();
 
         ID rectypeid = Schema.SObjectType.ID_Card__c.getRecordTypeInfosByName().get('AIMS').getRecordTypeId();
