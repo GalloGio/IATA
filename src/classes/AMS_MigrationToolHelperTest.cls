@@ -117,7 +117,6 @@ private class AMS_MigrationToolHelperTest {
 		System.assertEquals(c.Finalization_checklist__c,oscar.Finalization_checklist__c);
 		System.assertEquals(c.Financial_Assessment_deadline__c,oscar.Financial_Assessment_deadline__c);
 		System.assertEquals(c.Financial_Assessment_requested__c,oscar.Financial_Assessment_requested__c);
-		System.assertEquals(c.Financial_Review_Result__c,oscar.Financial_Review_Result__c);
 		System.assertEquals(c.Invoice_number__c,oscar.Billing_Document_Number__c);
 		System.assertEquals(c.Local_Inspection_deadline__c,oscar.Local_Inspection_deadline__c);
 		System.assertEquals(c.Local_Inspection_received__c,oscar.Local_Inspection_received__c);
