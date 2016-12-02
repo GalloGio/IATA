@@ -1,4 +1,4 @@
-public with sharing class LiveAgentPostChatController {
+public without sharing class LiveAgentPostChatController {
 	public String channelAnswer {get; set;}
 	public String agentExperienceAnswer {get; set;}
 	public String commentAnswer {get; set;}
