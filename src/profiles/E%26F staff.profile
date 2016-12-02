@@ -38998,20 +38998,6 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>EF_Location_Code__c-E%26F Location Code Contract Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>EF_Location_Code__c-E%26F Location Code Contract Layout</layout>
-        <recordType>EF_Location_Code__c.EF_Contract_Location_Code</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>EF_Location_Code__c-E%26F Location Code BA Layout</layout>
-        <recordType>EF_Location_Code__c.EF_BA_Location_Code</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>EF_Location_Code__c-E%26F Location Code Contract Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>EF_Location_Code__c-E%26F Location Code Contract Layout</layout>
         <recordType>EF_Location_Code__c.EF_Contract_Location_Code</recordType>
     </layoutAssignments>
     <layoutAssignments>
