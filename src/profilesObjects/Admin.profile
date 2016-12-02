@@ -526,6 +526,7 @@
 <fieldPermissions><editable>false</editable><field>AMS_Fields_Translation__c.Legacy_System__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AMS_Fields_Translation__c.Translation__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AMS_Fields_Translation__c.User__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>AMS_Inspection__c.AMS_Appointment_Type__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>AMS_Inspection__c.Account__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>AMS_Inspection__c.Accreditation_Endorsement_Status_code__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>AMS_Inspection__c.Accreditation_Endorsement_organisation__c</field><readable>true</readable></fieldPermissions>
@@ -4506,7 +4507,7 @@
 <fieldPermissions><editable>true</editable><field>ID_Card__c.Approving_Manager_s_Email__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>ID_Card__c.Approving_Manager_s_Name__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>ID_Card__c.Blacklisted__c</field><readable>true</readable></fieldPermissions>
-<fieldPermissions><editable>false</editable><field>ID_Card__c.CIN__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>true</editable><field>ID_Card__c.CIN__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>ID_Card__c.Cancellation_Date__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>ID_Card__c.Card_Code__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>ID_Card__c.Card_Status__c</field><readable>true</readable></fieldPermissions>
@@ -4564,7 +4565,7 @@
 <fieldPermissions><editable>false</editable><field>ID_Card__c.Json_WS_Simple__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>ID_Card__c.LastName__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>ID_Card__c.Middle_Initial__c</field><readable>true</readable></fieldPermissions>
-<fieldPermissions><editable>false</editable><field>ID_Card__c.Missing_Information__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>true</editable><field>ID_Card__c.Missing_Information__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>ID_Card__c.MustSyncWithAIMS__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>ID_Card__c.Nature_of_ID_Card__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>ID_Card__c.Opt_in__c</field><readable>false</readable></fieldPermissions>
@@ -7363,9 +7364,9 @@
 <recordTypeVisibilities><default>false</default><recordType>Contact.New_contact_for_iss_portal</recordType><visible>true</visible></recordTypeVisibilities>
 <recordTypeVisibilities><default>false</default><recordType>Contact.Senior</recordType><visible>true</visible></recordTypeVisibilities>
 <recordTypeVisibilities><default>false</default><recordType>Contact.Standard_Contact</recordType><visible>true</visible></recordTypeVisibilities>
-<recordTypeVisibilities><default>true</default><recordType>Contract.EF_Client_Agreement</recordType><visible>true</visible></recordTypeVisibilities>
-<recordTypeVisibilities><default>false</default><recordType>Contract.MACS_General</recordType><visible>false</visible></recordTypeVisibilities>
-<recordTypeVisibilities><default>false</default><recordType>Contract.RCRM_Contract</recordType><visible>false</visible></recordTypeVisibilities>
+<recordTypeVisibilities><default>false</default><recordType>Contract.EF_Client_Agreement</recordType><visible>true</visible></recordTypeVisibilities>
+<recordTypeVisibilities><default>false</default><recordType>Contract.MACS_General</recordType><visible>true</visible></recordTypeVisibilities>
+<recordTypeVisibilities><default>true</default><personAccountDefault>true</personAccountDefault><recordType>Contract.RCRM_Contract</recordType><visible>true</visible></recordTypeVisibilities>
 <recordTypeVisibilities><default>false</default><recordType>EBC_Template__c.Global</recordType><visible>false</visible></recordTypeVisibilities>
 <recordTypeVisibilities><default>false</default><recordType>EBC_Template__c.User_Templates</recordType><visible>false</visible></recordTypeVisibilities>
 <recordTypeVisibilities><default>false</default><recordType>EF_Location_Code__c.EF_BA_Location_Code</recordType><visible>true</visible></recordTypeVisibilities>

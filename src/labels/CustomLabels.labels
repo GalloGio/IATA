@@ -3733,6 +3733,13 @@ Kindly note that home-based agents are required to coordinate with their colleag
         <value>Select</value>
     </labels>
     <labels>
+        <fullName>IDCard_SelectNewImage</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IDCard_SelectNewImage</shortDescription>
+        <value>SELECT A NEW IMAGE</value>
+    </labels>
+    <labels>
         <fullName>IDCard_Select_Description</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -3787,6 +3794,20 @@ Kindly note that home-based agents are required to coordinate with their colleag
         <protected>false</protected>
         <shortDescription>IDCard_StartDateSuperior</shortDescription>
         <value>Agency start date must be superior or equal to Industry start year.</value>
+    </labels>
+    <labels>
+        <fullName>IDCard_Step1</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IDCard_Step1</shortDescription>
+        <value>STEP 1: SELECT YOUR PICTURE FILE</value>
+    </labels>
+    <labels>
+        <fullName>IDCard_Step2</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IDCard_Step2</shortDescription>
+        <value>STEP 2: SELECT THE PICTURE SECTION TO BE SHOWN ON YOUR IDCARD THEN CLICK ON &quot;CONFIRM SELECTION&quot; TO PROCEED</value>
     </labels>
     <labels>
         <fullName>IDCard_Terms_and_Conditions_Err</fullName>
@@ -4235,6 +4256,13 @@ Your ID Card application manager has been informed of your request.</value>
         <protected>false</protected>
         <shortDescription>ID Card Confirm Replacement</shortDescription>
         <value>Please confirm the ID Card replacement</value>
+    </labels>
+    <labels>
+        <fullName>ID_Card_Confirm_Selection</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ID_Card_Confirm_Selection</shortDescription>
+        <value>CONFIRM SELECTION</value>
     </labels>
     <labels>
         <fullName>ID_Card_Confirmation_Page_title</fullName>

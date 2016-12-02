@@ -525,6 +525,7 @@
 <fieldPermissions><editable>false</editable><field>AMS_Fields_Translation__c.Legacy_System__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AMS_Fields_Translation__c.Translation__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AMS_Fields_Translation__c.User__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>AMS_Inspection__c.AMS_Appointment_Type__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AMS_Inspection__c.Account__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AMS_Inspection__c.Accreditation_Endorsement_Status_code__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AMS_Inspection__c.Accreditation_Endorsement_organisation__c</field><readable>false</readable></fieldPermissions>
