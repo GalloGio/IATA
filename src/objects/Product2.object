@@ -2025,6 +2025,10 @@ SIS Charge Code Type.</description>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>Passenger Data Exchange</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>Passenger Fare Construction Toolkit</fullName>
                 <default>false</default>
             </picklistValues>
@@ -6646,6 +6650,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Passenger Data Exchange</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Passenger Fare Construction Toolkit</fullName>
                 <default>false</default>
             </values>
@@ -9605,6 +9613,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Passenger Data Exchange</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Passenger Fare Construction Toolkit</fullName>
                 <default>false</default>
             </values>
@@ -12525,6 +12537,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Passenger Agency Conference Resolutions Manual</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passenger Data Exchange</fullName>
                 <default>false</default>
             </values>
             <values>
