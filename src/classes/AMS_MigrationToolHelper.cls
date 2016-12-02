@@ -23,7 +23,7 @@ public with sharing class AMS_MigrationToolHelper {
 			'Certificate DGR' => 'CERTIFICATION.1.0',
 			'CLO - Closure' => 'VR.1.0',
 			'ID Card' => 'VR.1.0.CA',
-			'Operational Changes' => 'VR.1.0.CA',
+			'Operational changes' => 'VR.1.0.CA',
 			'PAX/CARGO Certificate' => 'CER.1.0'
             };
         }
