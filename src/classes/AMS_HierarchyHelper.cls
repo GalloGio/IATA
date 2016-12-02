@@ -570,13 +570,14 @@ global class AMS_HierarchyHelper {
 		Map<Id, Map<Id, Set<Id>>> childAccounts = new Map<Id, Map<Id, Set<Id>>>();
 		for(AMS_Oscar__c oscar : oscars){
 			childAccounts.put(oscar.Id, new Map<Id, Set<Id>>());
+			childAccounts.get(oscar.Id).put(oscar.Account__c, new Set<Id>());
 
 			for(AMS_Agencies_relationhip__c r : relationshipMap.get(oscar.Account__c)){
 
 				if(!childAccounts.get(oscar.Id).containsKey(r.Parent_Account__c)) childAccounts.get(oscar.Id).put(r.Parent_Account__c, new Set<Id>());
 				if(!childAccounts.get(oscar.Id).containsKey(r.Child_Account__c)) childAccounts.get(oscar.Id).put(r.Child_Account__c, new Set<Id>());
 
-				childAccounts.get(oscar.Id).get(r.Parent_Account__c).add(r.Child_Account__c);
+				if(r.Child_Account__r.Status__c != AMS_Utils.ACC_S0_TERMINATED) childAccounts.get(oscar.Id).get(r.Parent_Account__c).add(r.Child_Account__c);
 			}
 		}
 

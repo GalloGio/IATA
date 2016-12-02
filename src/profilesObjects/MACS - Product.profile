@@ -1224,7 +1224,7 @@
 <fieldPermissions><editable>false</editable><field>AP_Process_Form__c.Master_Card_Name_of_Acquirer__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>AP_Process_Form__c.Name_Appearing_in_VAT__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AP_Process_Form__c.Name_of_business_comm_assoc__c</field><readable>false</readable></fieldPermissions>
-<fieldPermissions><editable>false</editable><field>AP_Process_Form__c.Online_carrier_in_the_BSP_country__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>true</editable><field>AP_Process_Form__c.Online_carrier_in_the_BSP_country__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AP_Process_Form__c.Other_Card_brand_accepted_for_BSP_ticket__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AP_Process_Form__c.Other_TAX_Identification__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AP_Process_Form__c.PDF_File_Recipient_Email_1__c</field><readable>false</readable></fieldPermissions>
@@ -4507,6 +4507,7 @@
 <fieldPermissions><editable>false</editable><field>ID_Card__c.Approving_Manager_s_Email__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>ID_Card__c.Approving_Manager_s_Name__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>ID_Card__c.Blacklisted__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>ID_Card__c.CIN__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>ID_Card__c.Cancellation_Date__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>ID_Card__c.Card_Code__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>ID_Card__c.Card_Status__c</field><readable>false</readable></fieldPermissions>
@@ -4564,6 +4565,7 @@
 <fieldPermissions><editable>false</editable><field>ID_Card__c.Json_WS_Simple__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>ID_Card__c.LastName__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>ID_Card__c.Middle_Initial__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>ID_Card__c.Missing_Information__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>ID_Card__c.MustSyncWithAIMS__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>ID_Card__c.Nature_of_ID_Card__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>ID_Card__c.Opt_in__c</field><readable>false</readable></fieldPermissions>
@@ -5200,6 +5202,7 @@
 <fieldPermissions><editable>false</editable><field>Lead.Company_Type__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Lead.Confirm_Email_A__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Lead.Confirm_Email_B__c</field><readable>true</readable></fieldPermissions>
+<fieldPermissions><editable>true</editable><field>Lead.Contact_Role__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Lead.Country__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Lead.Course_Name__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Lead.Crisis_Communications_Members__c</field><readable>false</readable></fieldPermissions>
@@ -6073,12 +6076,15 @@
 <fieldPermissions><editable>false</editable><field>Quality__c.Action_6_Milestone__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Quality__c.Action_6_Owner__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Quality__c.Activity__c</field><readable>true</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>Quality__c.Additional_analysis_optional__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Quality__c.Africa_MENA_CC__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Quality__c.Africa_MENA_Evidences_Needed__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Quality__c.Agree_Bypass__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Quality__c.All_HUB__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Quality__c.Americas_CC__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Quality__c.Americas_Evidences_Needed__c</field><readable>true</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>Quality__c.Apparent_Cause__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>Quality__c.Apparent_Cause_if_other__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Quality__c.Approval_Status__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Quality__c.Approval_Time__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Quality__c.Asia_Pacific_CC__c</field><readable>true</readable></fieldPermissions>
@@ -6149,6 +6155,7 @@
 <fieldPermissions><editable>true</editable><field>Quality__c.Input_RCMR__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Quality__c.Input_RQ__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Quality__c.Input_Sec__c</field><readable>true</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>Quality__c.Is_OI_logged__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Quality__c.Key_Control_Type__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Quality__c.Key_Control__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Quality__c.Legal__c</field><readable>true</readable></fieldPermissions>
@@ -6168,6 +6175,8 @@
 <fieldPermissions><editable>false</editable><field>Quality__c.Missed_Mandatory_Inputs_Check__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Quality__c.Noteonrejection__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Quality__c.Number_of_Evidences_to_be_Collected__c</field><readable>true</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>Quality__c.Number_of_affected_customers__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>Quality__c.OI_number_if_logged__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Quality__c.Object_Type__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Quality__c.Open_Date__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Quality__c.Operation_Additional_Data__c</field><readable>true</readable></fieldPermissions>
@@ -6178,6 +6187,8 @@
 <fieldPermissions><editable>true</editable><field>Quality__c.R_S_Legacy_R_S_EXE_Log_2011_2012__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Quality__c.Reason_for_Exception__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Quality__c.Reason_for_lack_of_Compensation_Control__c</field><readable>true</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>Quality__c.Reason_for_requesting_exception__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>Quality__c.Reason_for_requesting_exception_if_othe__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Quality__c.Region__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Quality__c.Regional_Cargo_Manager_Regional__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Quality__c.Regional_Cargo_Manager_cargo_agent_HO__c</field><readable>true</readable></fieldPermissions>
@@ -6874,7 +6885,7 @@
 <objectPermissions><allowCreate>false</allowCreate><allowDelete>false</allowDelete><allowEdit>false</allowEdit><allowRead>true</allowRead><modifyAllRecords>false</modifyAllRecords><object>IEC_Subscription_History__c</object><viewAllRecords>false</viewAllRecords></objectPermissions>
 <objectPermissions><allowCreate>false</allowCreate><allowDelete>false</allowDelete><allowEdit>false</allowEdit><allowRead>true</allowRead><modifyAllRecords>false</modifyAllRecords><object>Internal_FAQ__kav</object><viewAllRecords>false</viewAllRecords></objectPermissions>
 <objectPermissions><allowCreate>true</allowCreate><allowDelete>true</allowDelete><allowEdit>true</allowEdit><allowRead>true</allowRead><modifyAllRecords>false</modifyAllRecords><object>Lead</object><viewAllRecords>false</viewAllRecords></objectPermissions>
-<objectPermissions><allowCreate>true</allowCreate><allowDelete>true</allowDelete><allowEdit>true</allowEdit><allowRead>true</allowRead><modifyAllRecords>false</modifyAllRecords><object>Opportunity</object><viewAllRecords>false</viewAllRecords></objectPermissions>
+<objectPermissions><allowCreate>true</allowCreate><allowDelete>true</allowDelete><allowEdit>true</allowEdit><allowRead>true</allowRead><modifyAllRecords>true</modifyAllRecords><object>Opportunity</object><viewAllRecords>true</viewAllRecords></objectPermissions>
 <objectPermissions><allowCreate>false</allowCreate><allowDelete>false</allowDelete><allowEdit>true</allowEdit><allowRead>true</allowRead><modifyAllRecords>false</modifyAllRecords><object>Pricebook2</object><viewAllRecords>false</viewAllRecords></objectPermissions>
 <objectPermissions><allowCreate>true</allowCreate><allowDelete>false</allowDelete><allowEdit>true</allowEdit><allowRead>true</allowRead><modifyAllRecords>false</modifyAllRecords><object>Product2</object><viewAllRecords>false</viewAllRecords></objectPermissions>
 <objectPermissions><allowCreate>false</allowCreate><allowDelete>false</allowDelete><allowEdit>false</allowEdit><allowRead>true</allowRead><modifyAllRecords>false</modifyAllRecords><object>Product_Category__c</object><viewAllRecords>false</viewAllRecords></objectPermissions>

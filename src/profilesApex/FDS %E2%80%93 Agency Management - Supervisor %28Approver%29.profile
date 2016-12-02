@@ -157,6 +157,7 @@
 <classAccesses><apexClass>AMS_RecordCreatorWebservice</apexClass><enabled>true</enabled></classAccesses>
 <classAccesses><apexClass>AMS_RecordCreatorWebserviceTest</apexClass><enabled>true</enabled></classAccesses>
 <classAccesses><apexClass>AMS_SAAMCaseMigrationController</apexClass><enabled>false</enabled></classAccesses>
+<classAccesses><apexClass>AMS_SAAMCaseMigrationControllerTest</apexClass><enabled>false</enabled></classAccesses>
 <classAccesses><apexClass>AMS_SearchAccountByUserData</apexClass><enabled>true</enabled></classAccesses>
 <classAccesses><apexClass>AMS_SearchAccountByUserDataTest</apexClass><enabled>false</enabled></classAccesses>
 <classAccesses><apexClass>AMS_SettlementsAndOperationLoaderCtrl</apexClass><enabled>false</enabled></classAccesses>
@@ -533,6 +534,7 @@
 <classAccesses><apexClass>IDCard_CleanUp_RenewalReminder_Scheduler</apexClass><enabled>false</enabled></classAccesses>
 <classAccesses><apexClass>IDCard_ConfirmationPageController</apexClass><enabled>false</enabled></classAccesses>
 <classAccesses><apexClass>IDCard_ConfirmationPageControllerTest</apexClass><enabled>false</enabled></classAccesses>
+<classAccesses><apexClass>IDCard_DetailsAdmPaymentsCtrl</apexClass><enabled>false</enabled></classAccesses>
 <classAccesses><apexClass>IDCard_PendingOpsAndProcessedAppTest</apexClass><enabled>false</enabled></classAccesses>
 <classAccesses><apexClass>IDCard_Refund</apexClass><enabled>true</enabled></classAccesses>
 <classAccesses><apexClass>IDCard_RenewalReminder_Batch</apexClass><enabled>false</enabled></classAccesses>
@@ -1611,6 +1613,7 @@
 <pageAccesses><apexPage>IDCard_Checkout</apexPage><enabled>false</enabled></pageAccesses>
 <pageAccesses><apexPage>IDCard_CheckoutConfirmation</apexPage><enabled>false</enabled></pageAccesses>
 <pageAccesses><apexPage>IDCard_CheckoutSingleApplication</apexPage><enabled>false</enabled></pageAccesses>
+<pageAccesses><apexPage>IDCard_DetailsAdmPayments</apexPage><enabled>false</enabled></pageAccesses>
 <pageAccesses><apexPage>IDCard_MultipleAgency_Details</apexPage><enabled>false</enabled></pageAccesses>
 <pageAccesses><apexPage>IDCard_PendingCase_Details</apexPage><enabled>false</enabled></pageAccesses>
 <pageAccesses><apexPage>IDCard_PendingIdCardApp_Details</apexPage><enabled>false</enabled></pageAccesses>

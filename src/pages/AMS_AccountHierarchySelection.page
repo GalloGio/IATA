@@ -78,7 +78,7 @@
 			}
 	</style>
 	
-	<apex:sectionHeader title="Account Hierarchy Selection" subtitle="{!oscar.Account__r.Name}"/>
+	<apex:sectionHeader title="Account Hierarchy Selection" subtitle="{!AMS_OSCAR__c.Account__r.Name}"/>
 	
 	<apex:form styleClass="pos-relative">
 		<apex:pageBlock mode="edit" rendered="{!editable}">

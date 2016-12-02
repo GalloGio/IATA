@@ -30,7 +30,7 @@
 <applicationVisibilities><application>Service_Console</application><default>false</default><visible>true</visible></applicationVisibilities>
 <applicationVisibilities><application>StrategicAccountPlanning</application><default>false</default><visible>true</visible></applicationVisibilities>
 <applicationVisibilities><application>TTBS</application><default>false</default><visible>true</visible></applicationVisibilities>
-<applicationVisibilities><application>eBroadcast</application><default>false</default><visible>false</visible></applicationVisibilities>
+<applicationVisibilities><application>eBroadcast</application><default>false</default><visible>true</visible></applicationVisibilities>
 <applicationVisibilities><application>standard__AppLauncher</application><default>false</default><visible>true</visible></applicationVisibilities>
 <applicationVisibilities><application>standard__Chatter</application><default>false</default><visible>true</visible></applicationVisibilities>
 <applicationVisibilities><application>standard__Community</application><default>false</default><visible>true</visible></applicationVisibilities>
@@ -786,7 +786,7 @@
 <fieldPermissions><editable>true</editable><field>AMS_Pax_Accreditation_Form__c.Confirm_Location_Details_are_correct__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>AMS_Pax_Accreditation_Form__c.Confirm_Ownership_details_are_correct__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>AMS_Pax_Accreditation_Form__c.Country__c</field><readable>true</readable></fieldPermissions>
-<fieldPermissions><editable>false</editable><field>AMS_Pax_Accreditation_Form__c.Current_VAT_Number__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>AMS_Pax_Accreditation_Form__c.Current_VAT_Number__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>AMS_Pax_Accreditation_Form__c.DG_Air_Freight_Charges__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>AMS_Pax_Accreditation_Form__c.DG_Number_of_Consignments__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>AMS_Pax_Accreditation_Form__c.DG_Percentage__c</field><readable>true</readable></fieldPermissions>
@@ -891,7 +891,7 @@
 <fieldPermissions><editable>true</editable><field>AMS_Pax_Accreditation_Form__c.Is_your_firm_insured_to_cover__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>AMS_Pax_Accreditation_Form__c.Issued_share_capital_After_Change__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>AMS_Pax_Accreditation_Form__c.Issued_share_capital__c</field><readable>true</readable></fieldPermissions>
-<fieldPermissions><editable>false</editable><field>AMS_Pax_Accreditation_Form__c.Link_agent_name__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>true</editable><field>AMS_Pax_Accreditation_Form__c.Link_agent_name__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>AMS_Pax_Accreditation_Form__c.List_carriers__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>AMS_Pax_Accreditation_Form__c.List_the_airport_s_to_be_authorized__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>AMS_Pax_Accreditation_Form__c.Live_Animals_Air_Freight_Charges__c</field><readable>true</readable></fieldPermissions>
@@ -914,12 +914,12 @@
 <fieldPermissions><editable>true</editable><field>AMS_Pax_Accreditation_Form__c.Local_Postal_Address_Street__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>AMS_Pax_Accreditation_Form__c.Location_Class__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>AMS_Pax_Accreditation_Form__c.Location_Type__c</field><readable>true</readable></fieldPermissions>
-<fieldPermissions><editable>false</editable><field>AMS_Pax_Accreditation_Form__c.Map_Company_Type_to_Legal_Status__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>AMS_Pax_Accreditation_Form__c.Map_Company_Type_to_Legal_Status__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>AMS_Pax_Accreditation_Form__c.MobileNational__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>AMS_Pax_Accreditation_Form__c.Mobile__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>AMS_Pax_Accreditation_Form__c.N_Code__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>AMS_Pax_Accreditation_Form__c.Name_under_which_it_was_issued__c</field><readable>true</readable></fieldPermissions>
-<fieldPermissions><editable>false</editable><field>AMS_Pax_Accreditation_Form__c.New_Head_Office_IATA_Code__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>true</editable><field>AMS_Pax_Accreditation_Form__c.New_Head_Office_IATA_Code__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>AMS_Pax_Accreditation_Form__c.No_Consignments_Last_Year__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>AMS_Pax_Accreditation_Form__c.Notify_Change_Legal_Details__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>AMS_Pax_Accreditation_Form__c.Notify_Change_Location__c</field><readable>true</readable></fieldPermissions>
@@ -955,7 +955,7 @@
 <fieldPermissions><editable>true</editable><field>AMS_Pax_Accreditation_Form__c.Remittance_frequency__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>AMS_Pax_Accreditation_Form__c.Sales_Period_From__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>AMS_Pax_Accreditation_Form__c.Sales_Period_To__c</field><readable>true</readable></fieldPermissions>
-<fieldPermissions><editable>false</editable><field>AMS_Pax_Accreditation_Form__c.Scope_of_Change__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>true</editable><field>AMS_Pax_Accreditation_Form__c.Scope_of_Change__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>AMS_Pax_Accreditation_Form__c.Separate_user_access__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>AMS_Pax_Accreditation_Form__c.Shipping_City__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>AMS_Pax_Accreditation_Form__c.Shipping_Country__c</field><readable>true</readable></fieldPermissions>
@@ -1458,8 +1458,8 @@
 <fieldPermissions><editable>true</editable><field>Account.Legal_name__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Account.Level_of_risk__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Account.License_Number__c</field><readable>true</readable></fieldPermissions>
-<fieldPermissions><editable>false</editable><field>Account.Link_agent_code__c</field><readable>false</readable></fieldPermissions>
-<fieldPermissions><editable>false</editable><field>Account.Link_agent_name__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>Account.Link_agent_code__c</field><readable>true</readable></fieldPermissions>
+<fieldPermissions><editable>true</editable><field>Account.Link_agent_name__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Account.Location_Category__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Account.Location_Class__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Account.Location_Type_Ordered__c</field><readable>true</readable></fieldPermissions>
@@ -1644,7 +1644,7 @@
 <fieldPermissions><editable>true</editable><field>Agency_Applied_Change_code__c.Date_time_of_change__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Agency_Applied_Change_code__c.Effective_Date__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Agency_Applied_Change_code__c.End_Date__c</field><readable>true</readable></fieldPermissions>
-<fieldPermissions><editable>false</editable><field>Agency_Applied_Change_code__c.For_Integration__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>Agency_Applied_Change_code__c.For_Integration__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Agency_Applied_Change_code__c.IRR_Expiration_Date__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Agency_Applied_Change_code__c.Irregularities_Expired__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Agency_Applied_Change_code__c.Irregularities_Points__c</field><readable>true</readable></fieldPermissions>
@@ -4506,6 +4506,7 @@
 <fieldPermissions><editable>true</editable><field>ID_Card__c.Approving_Manager_s_Email__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>ID_Card__c.Approving_Manager_s_Name__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>ID_Card__c.Blacklisted__c</field><readable>true</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>ID_Card__c.CIN__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>ID_Card__c.Cancellation_Date__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>ID_Card__c.Card_Code__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>ID_Card__c.Card_Status__c</field><readable>true</readable></fieldPermissions>
@@ -4563,6 +4564,7 @@
 <fieldPermissions><editable>false</editable><field>ID_Card__c.Json_WS_Simple__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>ID_Card__c.LastName__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>ID_Card__c.Middle_Initial__c</field><readable>true</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>ID_Card__c.Missing_Information__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>ID_Card__c.MustSyncWithAIMS__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>ID_Card__c.Nature_of_ID_Card__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>ID_Card__c.Opt_in__c</field><readable>false</readable></fieldPermissions>
@@ -5199,6 +5201,7 @@
 <fieldPermissions><editable>false</editable><field>Lead.Company_Type__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Lead.Confirm_Email_A__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Lead.Confirm_Email_B__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>true</editable><field>Lead.Contact_Role__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Lead.Country__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Lead.Course_Name__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Lead.Crisis_Communications_Members__c</field><readable>true</readable></fieldPermissions>
@@ -6072,12 +6075,15 @@
 <fieldPermissions><editable>false</editable><field>Quality__c.Action_6_Milestone__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Quality__c.Action_6_Owner__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Quality__c.Activity__c</field><readable>true</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>Quality__c.Additional_analysis_optional__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Quality__c.Africa_MENA_CC__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Quality__c.Africa_MENA_Evidences_Needed__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Quality__c.Agree_Bypass__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Quality__c.All_HUB__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Quality__c.Americas_CC__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Quality__c.Americas_Evidences_Needed__c</field><readable>true</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>Quality__c.Apparent_Cause__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>Quality__c.Apparent_Cause_if_other__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Quality__c.Approval_Status__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Quality__c.Approval_Time__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Quality__c.Asia_Pacific_CC__c</field><readable>true</readable></fieldPermissions>
@@ -6148,6 +6154,7 @@
 <fieldPermissions><editable>true</editable><field>Quality__c.Input_RCMR__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Quality__c.Input_RQ__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Quality__c.Input_Sec__c</field><readable>true</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>Quality__c.Is_OI_logged__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Quality__c.Key_Control_Type__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Quality__c.Key_Control__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Quality__c.Legal__c</field><readable>true</readable></fieldPermissions>
@@ -6167,6 +6174,8 @@
 <fieldPermissions><editable>false</editable><field>Quality__c.Missed_Mandatory_Inputs_Check__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Quality__c.Noteonrejection__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Quality__c.Number_of_Evidences_to_be_Collected__c</field><readable>true</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>Quality__c.Number_of_affected_customers__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>Quality__c.OI_number_if_logged__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Quality__c.Object_Type__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Quality__c.Open_Date__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Quality__c.Operation_Additional_Data__c</field><readable>true</readable></fieldPermissions>
@@ -6177,6 +6186,8 @@
 <fieldPermissions><editable>true</editable><field>Quality__c.R_S_Legacy_R_S_EXE_Log_2011_2012__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Quality__c.Reason_for_Exception__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Quality__c.Reason_for_lack_of_Compensation_Control__c</field><readable>true</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>Quality__c.Reason_for_requesting_exception__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>Quality__c.Reason_for_requesting_exception_if_othe__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Quality__c.Region__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Quality__c.Regional_Cargo_Manager_Regional__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Quality__c.Regional_Cargo_Manager_cargo_agent_HO__c</field><readable>true</readable></fieldPermissions>
