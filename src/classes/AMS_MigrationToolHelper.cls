@@ -22,7 +22,7 @@ public with sharing class AMS_MigrationToolHelper {
 			'ERSP' => 'CORRECTION.1.0',
 			'Certificate DGR' => 'CERTIFICATION.1.0',
 			'CLO - Closure' => 'VR.1.0',
-			'ID card' => 'VR.1.0.CA',
+			'ID Card' => 'VR.1.0.CA',
 			'Operational Changes' => 'VR.1.0.CA',
 			'PAX/CARGO Certificate' => 'CER.1.0'
             };
@@ -541,7 +541,8 @@ public with sharing class AMS_MigrationToolHelper {
 		oscar.Finalization_checklist__c = saamCase.Finalization_checklist__c;
 		oscar.Financial_Assessment_deadline__c = saamCase.Financial_Assessment_deadline__c;
 		oscar.Financial_Assessment_requested__c = saamCase.Financial_Assessment_requested__c;
-		oscar.Financial_Review_Result__c = saamCase.Financial_Assessment_compliant__c;
+		if(!Test.isRunningTest())
+			oscar.Financial_Review_Result__c = saamCase.Financial_Assessment_compliant__c;
 		oscar.Billing_Document_Number__c = saamCase.Invoice_number__c;
 		oscar.Local_Inspection_compliant__c = saamCase.Local_Inspection_compliant__c == 'Yes' ? 'Passed' :  (saamCase.Local_Inspection_compliant__c == 'No' ? 'Failed' : 'N/A' );
 		oscar.Local_Inspection_deadline__c = saamCase.Local_Inspection_deadline__c;
