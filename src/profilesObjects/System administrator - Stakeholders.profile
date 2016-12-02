@@ -1636,7 +1636,7 @@
 <fieldPermissions><editable>false</editable><field>Agency_Applied_Change_code__c.AIMS_ID__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Agency_Applied_Change_code__c.AIMS_Updated_by__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Agency_Applied_Change_code__c.Active__c</field><readable>true</readable></fieldPermissions>
-<fieldPermissions><editable>false</editable><field>Agency_Applied_Change_code__c.Agency__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>Agency_Applied_Change_code__c.Agency__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Agency_Applied_Change_code__c.Amount__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Agency_Applied_Change_code__c.Bulletin_Information__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Agency_Applied_Change_code__c.Change_Code__c</field><readable>true</readable></fieldPermissions>
@@ -4507,6 +4507,7 @@
 <fieldPermissions><editable>true</editable><field>ID_Card__c.Approving_Manager_s_Email__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>ID_Card__c.Approving_Manager_s_Name__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>ID_Card__c.Blacklisted__c</field><readable>true</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>ID_Card__c.CIN__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>ID_Card__c.Cancellation_Date__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>ID_Card__c.Card_Code__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>ID_Card__c.Card_Status__c</field><readable>true</readable></fieldPermissions>
@@ -4564,6 +4565,7 @@
 <fieldPermissions><editable>false</editable><field>ID_Card__c.Json_WS_Simple__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>ID_Card__c.LastName__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>ID_Card__c.Middle_Initial__c</field><readable>true</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>ID_Card__c.Missing_Information__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>ID_Card__c.MustSyncWithAIMS__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>ID_Card__c.Nature_of_ID_Card__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>ID_Card__c.Opt_in__c</field><readable>false</readable></fieldPermissions>
@@ -6074,12 +6076,15 @@
 <fieldPermissions><editable>false</editable><field>Quality__c.Action_6_Milestone__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Quality__c.Action_6_Owner__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Quality__c.Activity__c</field><readable>true</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>Quality__c.Additional_analysis_optional__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Quality__c.Africa_MENA_CC__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Quality__c.Africa_MENA_Evidences_Needed__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Quality__c.Agree_Bypass__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Quality__c.All_HUB__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Quality__c.Americas_CC__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Quality__c.Americas_Evidences_Needed__c</field><readable>true</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>Quality__c.Apparent_Cause__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>Quality__c.Apparent_Cause_if_other__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Quality__c.Approval_Status__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Quality__c.Approval_Time__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Quality__c.Asia_Pacific_CC__c</field><readable>true</readable></fieldPermissions>
@@ -6150,6 +6155,7 @@
 <fieldPermissions><editable>true</editable><field>Quality__c.Input_RCMR__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Quality__c.Input_RQ__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Quality__c.Input_Sec__c</field><readable>true</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>Quality__c.Is_OI_logged__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Quality__c.Key_Control_Type__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Quality__c.Key_Control__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Quality__c.Legal__c</field><readable>true</readable></fieldPermissions>
@@ -6169,6 +6175,8 @@
 <fieldPermissions><editable>false</editable><field>Quality__c.Missed_Mandatory_Inputs_Check__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Quality__c.Noteonrejection__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Quality__c.Number_of_Evidences_to_be_Collected__c</field><readable>true</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>Quality__c.Number_of_affected_customers__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>Quality__c.OI_number_if_logged__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Quality__c.Object_Type__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Quality__c.Open_Date__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Quality__c.Operation_Additional_Data__c</field><readable>true</readable></fieldPermissions>
@@ -6179,6 +6187,8 @@
 <fieldPermissions><editable>true</editable><field>Quality__c.R_S_Legacy_R_S_EXE_Log_2011_2012__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Quality__c.Reason_for_Exception__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Quality__c.Reason_for_lack_of_Compensation_Control__c</field><readable>true</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>Quality__c.Reason_for_requesting_exception__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>Quality__c.Reason_for_requesting_exception_if_othe__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Quality__c.Region__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Quality__c.Regional_Cargo_Manager_Regional__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Quality__c.Regional_Cargo_Manager_cargo_agent_HO__c</field><readable>true</readable></fieldPermissions>
@@ -6918,7 +6928,7 @@
 <objectPermissions><allowCreate>false</allowCreate><allowDelete>false</allowDelete><allowEdit>false</allowEdit><allowRead>true</allowRead><modifyAllRecords>false</modifyAllRecords><object>Account_Statement__c</object><viewAllRecords>true</viewAllRecords></objectPermissions>
 <objectPermissions><allowCreate>true</allowCreate><allowDelete>true</allowDelete><allowEdit>true</allowEdit><allowRead>true</allowRead><modifyAllRecords>true</modifyAllRecords><object>Accreditation__c</object><viewAllRecords>true</viewAllRecords></objectPermissions>
 <objectPermissions><allowCreate>true</allowCreate><allowDelete>true</allowDelete><allowEdit>true</allowEdit><allowRead>true</allowRead><modifyAllRecords>true</modifyAllRecords><object>Adjacent_Airport__c</object><viewAllRecords>true</viewAllRecords></objectPermissions>
-<objectPermissions><allowCreate>false</allowCreate><allowDelete>false</allowDelete><allowEdit>false</allowEdit><allowRead>true</allowRead><modifyAllRecords>false</modifyAllRecords><object>Agency_Applied_Change_code__c</object><viewAllRecords>true</viewAllRecords></objectPermissions>
+<objectPermissions><allowCreate>false</allowCreate><allowDelete>false</allowDelete><allowEdit>true</allowEdit><allowRead>true</allowRead><modifyAllRecords>false</modifyAllRecords><object>Agency_Applied_Change_code__c</object><viewAllRecords>true</viewAllRecords></objectPermissions>
 <objectPermissions><allowCreate>true</allowCreate><allowDelete>true</allowDelete><allowEdit>true</allowEdit><allowRead>true</allowRead><modifyAllRecords>true</modifyAllRecords><object>Agency_Owner__c</object><viewAllRecords>true</viewAllRecords></objectPermissions>
 <objectPermissions><allowCreate>true</allowCreate><allowDelete>true</allowDelete><allowEdit>true</allowEdit><allowRead>true</allowRead><modifyAllRecords>true</modifyAllRecords><object>Agents__c</object><viewAllRecords>true</viewAllRecords></objectPermissions>
 <objectPermissions><allowCreate>true</allowCreate><allowDelete>true</allowDelete><allowEdit>true</allowEdit><allowRead>true</allowRead><modifyAllRecords>true</modifyAllRecords><object>Airline_Input__c</object><viewAllRecords>true</viewAllRecords></objectPermissions>
@@ -7327,8 +7337,8 @@
 <recordTypeVisibilities><default>true</default><personAccountDefault>true</personAccountDefault><recordType>Accreditation__c.Live</recordType><visible>true</visible></recordTypeVisibilities>
 <recordTypeVisibilities><default>false</default><recordType>Adjacent_Airport__c.GDP</recordType><visible>true</visible></recordTypeVisibilities>
 <recordTypeVisibilities><default>true</default><personAccountDefault>true</personAccountDefault><recordType>Adjacent_Airport__c.Live</recordType><visible>true</visible></recordTypeVisibilities>
-<recordTypeVisibilities><default>false</default><recordType>Agency_Applied_Change_code__c.Irregularities</recordType><visible>false</visible></recordTypeVisibilities>
-<recordTypeVisibilities><default>false</default><recordType>Agency_Applied_Change_code__c.Standard</recordType><visible>false</visible></recordTypeVisibilities>
+<recordTypeVisibilities><default>true</default><personAccountDefault>true</personAccountDefault><recordType>Agency_Applied_Change_code__c.Irregularities</recordType><visible>true</visible></recordTypeVisibilities>
+<recordTypeVisibilities><default>false</default><recordType>Agency_Applied_Change_code__c.Standard</recordType><visible>true</visible></recordTypeVisibilities>
 <recordTypeVisibilities><default>false</default><recordType>Agency_Owner__c.GDP</recordType><visible>true</visible></recordTypeVisibilities>
 <recordTypeVisibilities><default>true</default><personAccountDefault>true</personAccountDefault><recordType>Agency_Owner__c.Live</recordType><visible>true</visible></recordTypeVisibilities>
 <recordTypeVisibilities><default>false</default><recordType>AmazonFile__c.AMS_File</recordType><visible>false</visible></recordTypeVisibilities>
