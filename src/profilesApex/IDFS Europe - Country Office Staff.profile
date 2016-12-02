@@ -157,6 +157,7 @@
 <classAccesses><apexClass>AMS_RecordCreatorWebservice</apexClass><enabled>false</enabled></classAccesses>
 <classAccesses><apexClass>AMS_RecordCreatorWebserviceTest</apexClass><enabled>false</enabled></classAccesses>
 <classAccesses><apexClass>AMS_SAAMCaseMigrationController</apexClass><enabled>false</enabled></classAccesses>
+<classAccesses><apexClass>AMS_SAAMCaseMigrationControllerTest</apexClass><enabled>false</enabled></classAccesses>
 <classAccesses><apexClass>AMS_SearchAccountByUserData</apexClass><enabled>false</enabled></classAccesses>
 <classAccesses><apexClass>AMS_SearchAccountByUserDataTest</apexClass><enabled>false</enabled></classAccesses>
 <classAccesses><apexClass>AMS_SettlementsAndOperationLoaderCtrl</apexClass><enabled>false</enabled></classAccesses>
@@ -482,6 +483,8 @@
 <classAccesses><apexClass>IDCardAgencyDetailsControllerTest</apexClass><enabled>false</enabled></classAccesses>
 <classAccesses><apexClass>IDCardApplicationException</apexClass><enabled>false</enabled></classAccesses>
 <classAccesses><apexClass>IDCardApplicationFactory</apexClass><enabled>false</enabled></classAccesses>
+<classAccesses><apexClass>IDCardApplicationImageViewerController</apexClass><enabled>false</enabled></classAccesses>
+<classAccesses><apexClass>IDCardApplicationImageViewerCtrlTest</apexClass><enabled>false</enabled></classAccesses>
 <classAccesses><apexClass>IDCardCroppingToolWebService</apexClass><enabled>false</enabled></classAccesses>
 <classAccesses><apexClass>IDCardCryptoUtil</apexClass><enabled>false</enabled></classAccesses>
 <classAccesses><apexClass>IDCardLoginController</apexClass><enabled>false</enabled></classAccesses>
@@ -533,7 +536,11 @@
 <classAccesses><apexClass>IDCard_CleanUp_RenewalReminder_Scheduler</apexClass><enabled>false</enabled></classAccesses>
 <classAccesses><apexClass>IDCard_ConfirmationPageController</apexClass><enabled>false</enabled></classAccesses>
 <classAccesses><apexClass>IDCard_ConfirmationPageControllerTest</apexClass><enabled>false</enabled></classAccesses>
+<classAccesses><apexClass>IDCard_CropperCtrl</apexClass><enabled>false</enabled></classAccesses>
+<classAccesses><apexClass>IDCard_CropperCtrlTest</apexClass><enabled>false</enabled></classAccesses>
 <classAccesses><apexClass>IDCard_DetailsAdmPaymentsCtrl</apexClass><enabled>false</enabled></classAccesses>
+<classAccesses><apexClass>IDCard_ImageViewerController</apexClass><enabled>false</enabled></classAccesses>
+<classAccesses><apexClass>IDCard_ImageViewerControllerTest</apexClass><enabled>false</enabled></classAccesses>
 <classAccesses><apexClass>IDCard_PendingOpsAndProcessedAppTest</apexClass><enabled>false</enabled></classAccesses>
 <classAccesses><apexClass>IDCard_Refund</apexClass><enabled>true</enabled></classAccesses>
 <classAccesses><apexClass>IDCard_RenewalReminder_Batch</apexClass><enabled>false</enabled></classAccesses>
@@ -1613,6 +1620,7 @@
 <pageAccesses><apexPage>IDCard_CheckoutConfirmation</apexPage><enabled>false</enabled></pageAccesses>
 <pageAccesses><apexPage>IDCard_CheckoutSingleApplication</apexPage><enabled>false</enabled></pageAccesses>
 <pageAccesses><apexPage>IDCard_DetailsAdmPayments</apexPage><enabled>false</enabled></pageAccesses>
+<pageAccesses><apexPage>IDCard_ImageUpload</apexPage><enabled>false</enabled></pageAccesses>
 <pageAccesses><apexPage>IDCard_MultipleAgency_Details</apexPage><enabled>false</enabled></pageAccesses>
 <pageAccesses><apexPage>IDCard_PendingCase_Details</apexPage><enabled>false</enabled></pageAccesses>
 <pageAccesses><apexPage>IDCard_PendingIdCardApp_Details</apexPage><enabled>false</enabled></pageAccesses>
@@ -1927,6 +1935,7 @@
 <userPermissions><enabled>true</enabled><name>ExportReport</name></userPermissions>
 <userPermissions><enabled>true</enabled><name>ManageCases</name></userPermissions>
 <userPermissions><enabled>true</enabled><name>ManageCssUsers</name></userPermissions>
+<userPermissions><enabled>true</enabled><name>ManagePartners</name></userPermissions>
 <userPermissions><enabled>true</enabled><name>MassInlineEdit</name></userPermissions>
 <userPermissions><enabled>true</enabled><name>RunReports</name></userPermissions>
 <userPermissions><enabled>true</enabled><name>SelectFilesFromSalesforce</name></userPermissions>

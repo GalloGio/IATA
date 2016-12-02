@@ -4,6 +4,8 @@
     <apex:includeScript value="/soap/ajax/26.0/connection.js"/>
     <apex:includeScript value="/soap/ajax/26.0/apex.js"/>
     <apex:includeScript value="{!$Resource.jquery2_1_4}"/>
+    <apex:includeScript value="{!URLFOR($Resource.Tablesorter, 'jquery.tablesorter.js')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.Tablesorter,'/themes/blue/style.css')}" />
 
     <script type="text/javascript">
 
@@ -135,7 +137,7 @@
             if (sforce.console.isInConsole()) {
                     ServiceConsoleIntegration(retUrl);
                 } else {
-                    window.top.location= retUrl;
+                    window.top.location=retUrl;
         }
         }
 
@@ -239,7 +241,7 @@
                                 </div>
                             </td>
                             <td class=" dataCell ">
-                                <a style="font-weight: bold; cursor: pointer;" href="#" onclick="openSubTab('{!message.Id}');">
+                                <a style="font-weight: bold; color:#015ba7; cursor: pointer;" href="{!$Label.SF_Base_URL}/{!message.Id}" target="_blank" onclick="openSubTab('{!message.Id}');return false;">
                                    {!if((message.Subject==null || message.Subject==''),'No Subject',message.Subject)}</a> <br/>
                                     <font style="font-style: italic; font-decoration: none; font-size: 11px;">{!LEFT(message.TextBody,77)}...</font></td>
                             <td class=" dataCell ">
