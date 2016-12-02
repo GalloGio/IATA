@@ -526,7 +526,7 @@
 <fieldPermissions><editable>false</editable><field>AMS_Fields_Translation__c.Legacy_System__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AMS_Fields_Translation__c.Translation__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AMS_Fields_Translation__c.User__c</field><readable>false</readable></fieldPermissions>
-<fieldPermissions><editable>false</editable><field>AMS_Inspection__c.AMS_Appointment_Type__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>AMS_Inspection__c.AMS_Appointment_Type__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>AMS_Inspection__c.Account__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>AMS_Inspection__c.Accreditation_Endorsement_Status_code__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>AMS_Inspection__c.Accreditation_Endorsement_organisation__c</field><readable>true</readable></fieldPermissions>
@@ -536,9 +536,9 @@
 <fieldPermissions><editable>true</editable><field>AMS_Inspection__c.BSPLink_or_CASSLink_activation__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>AMS_Inspection__c.Date_Organisation_Status_attained__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AMS_Inspection__c.IATA_Non_IATA_Carrier__c</field><readable>true</readable></fieldPermissions>
-<fieldPermissions><editable>false</editable><field>AMS_Inspection__c.Last_synchronization__c</field><readable>false</readable></fieldPermissions>
-<fieldPermissions><editable>false</editable><field>AMS_Inspection__c.Legacy_External_ID__c</field><readable>false</readable></fieldPermissions>
-<fieldPermissions><editable>false</editable><field>AMS_Inspection__c.Legacy_System__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>AMS_Inspection__c.Last_synchronization__c</field><readable>true</readable></fieldPermissions>
+<fieldPermissions><editable>true</editable><field>AMS_Inspection__c.Legacy_External_ID__c</field><readable>true</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>AMS_Inspection__c.Legacy_System__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>AMS_Inspection__c.OSCAR__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AMS_OSCAR_Event__c.Accept__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AMS_OSCAR_Event__c.Action__c</field><readable>false</readable></fieldPermissions>
@@ -3424,7 +3424,7 @@
 <fieldPermissions><editable>false</editable><field>Contract.IATA_Contract_Value__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Contract.IsMine__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Contract.Manager_Approval__c</field><readable>true</readable></fieldPermissions>
-<fieldPermissions><editable>false</editable><field>Contract.Name</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>true</editable><field>Contract.Name</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Contract.Number_of_times_renewed__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Contract.Opportunity_OwnerEmail__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Contract.OwnerExpirationNotice</field><readable>true</readable></fieldPermissions>

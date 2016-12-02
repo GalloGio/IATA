@@ -1390,6 +1390,26 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
         <language>en_US</language>
     </listViews>
     <listViews>
+        <fullName>must_synch_with_aims</fullName>
+        <columns>NAME</columns>
+        <columns>MustSyncWithAIMS__c</columns>
+        <columns>Sent_to_AIMS_on__c</columns>
+        <columns>Card_Status__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>MustSyncWithAIMS__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <filters>
+            <field>Card_Status__c</field>
+            <operation>equals</operation>
+            <value>Cancelled</value>
+        </filters>
+        <label>must synch with aims</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
         <fullName>yesterday</fullName>
         <columns>NAME</columns>
         <columns>Sent_to_AIMS_on__c</columns>
