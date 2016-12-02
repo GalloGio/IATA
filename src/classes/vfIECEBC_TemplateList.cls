@@ -80,7 +80,7 @@ public class vfIECEBC_TemplateList extends vfIECEBC_Abstract_List {
     public PageReference Duplicate(){ 
         EBC_Template__c nTemplate = duplicate(selectedItem.Id, ((EBC_Template__c)selectedItem).Name, billingAccount.Id, true);
         
-        PageReference pr = new PageReference('/iec/IECEBC_TemplateEdit?id=' + nTemplate.Id);
+        PageReference pr = new PageReference('/apex/IECEBC_TemplateEdit?id=' + nTemplate.Id);
         pr.setRedirect(true);
         return pr;
     }
@@ -241,7 +241,7 @@ public class vfIECEBC_TemplateList extends vfIECEBC_Abstract_List {
         }
         
         if (newTemplate.Parent_Template__c != null) {
-            pr = new PageReference('/iec/IECEBC_TemplateEdit');
+            pr = new PageReference('/apex/IECEBC_TemplateEdit');
             pr.getParameters().put('id', newTemplate.Id);
         } else {
             pr = new PageReference('/' + newTemplate.Id);

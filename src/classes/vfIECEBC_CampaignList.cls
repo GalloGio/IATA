@@ -95,7 +95,7 @@ public class vfIECEBC_CampaignList extends vfIECEBC_Controller {
         
         insert nCampaign;
         
-        PageReference pr = new PageReference('/iec/IECEBC_Campaign?id=' + nCampaign.Id);
+        PageReference pr = new PageReference('/apex/IECEBC_Campaign?id=' + nCampaign.Id);
         pr.setRedirect(true);
         return pr;
     }
