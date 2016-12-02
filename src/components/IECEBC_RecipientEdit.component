@@ -179,7 +179,7 @@
                                 <apex:outputPanel rendered="{!newFilter.Audience__c == 'Custom'}" styleClass="show-hide-toggle">
                                     <div class="field-group textarea">
                                         <label>
-                                            <span class="input-label">Paste your list of IATA Numeric Codes in the box below</span>
+                                            <span class="input-label" style="font-weight: normal;">Paste your list of IATA Numeric Codes in the box below</span>
                                             <apex:inputField value="{!newFilter.IATA_Codes__c}" styleClass="user-input textarea" style="font-family: tahoma, open sans-serif;" />
                                         </label>
                                         <p class="input-description">Each IATA Numeric Code needs to be entered separated by a semicolon with a max of <strong>5,000 codes</strong>.</p>
