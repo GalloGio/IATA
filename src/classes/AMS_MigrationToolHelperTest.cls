@@ -142,7 +142,6 @@ private class AMS_MigrationToolHelperTest {
 		System.assertEquals(true , oscar.Finalization_checklist__c != null );
 		System.assertEquals(true , oscar.Financial_Assessment_deadline__c != null );
 		System.assertEquals(true , oscar.Financial_Assessment_requested__c != null );
-		System.assertEquals(true , oscar.Financial_Review_Result__c != null );
 		System.assertEquals(true , oscar.Billing_Document_Number__c != null );
 		System.assertEquals(true , oscar.Local_Inspection_compliant__c != null );
 		System.assertEquals(true , oscar.Local_Inspection_deadline__c != null );
