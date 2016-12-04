@@ -120,6 +120,8 @@ global with sharing class IDCardUtil {
 @RemoteAction
     public static final string CASESTATUS_PENDING_AGENT_FEEDBACK = 'Pending Agent feedback';
 @RemoteAction
+    public static final string CASESTATUS_PENDING_TO_BE_APPROVED = 'To be Approved';
+@RemoteAction
     public Static final string CASESTATUS_INPROGRESS = 'In progress';
 @RemoteAction
     public static final string CASESTATUS_READYFORPRODUCTION= 'Ready for production';  
@@ -1883,5 +1885,18 @@ global with sharing class IDCardUtil {
         if (aMonth==12)    return 'December';
          else return 'ERROR';   
     }
+
+    //INC291433
+    @RemoteAction 
+     WebService static String setTobeapproved(String applicationIdParam) {
+        List<Case> c = [select id, ID_Card_Status__c from Case c where  c.Related_ID_Card_Application__c =: applicationIdParam and c.RecordTypeId =: IDCardcaseRecordTypeID  limit 1];
+        
+        if(!c.isEmpty() && c.size() > 0) {
+            c[0].Status = IDCardUtil.CASESTATUS_PENDING_TO_BE_APPROVED;
+            update c[0];            
+            return c[0].id;
+        }        
+        return '';
+    }  
     
 }
