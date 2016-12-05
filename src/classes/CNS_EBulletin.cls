@@ -82,20 +82,22 @@ public with sharing class CNS_EBulletin {
         newFormDaily = new AMS_eBulletin_Profile__c();
         newFormWeekly = new AMS_eBulletin_Profile__c();
 
-        //mark "FirstTime" as true, below if we get records for this user we mark it as "false"
-        isFirstTime = true;
+        //for CNS 1st time is always false!
+        isFirstTime = false;
 
         dailyCountrySelectAll = false;
         weeklyCountrySelectAll = false;
 
         if(newFormDaily.RecordTypeId == null){
             newFormDaily.RecordTypeId = DAILY_RECORD_TYPE_ID;
-            newFormDaily.User__c = Userinfo.getuserid();
+            //For CNS we don't need a user
+            //newFormDaily.User__c = Userinfo.getuserid();
         }
 
         if(newFormWeekly.RecordTypeId == null){
             newFormWeekly.RecordTypeId = WEEKLY_RECORD_TYPE_ID;
-            newFormWeekly.User__c = Userinfo.getuserid();
+            //For CNS we don't need a user
+            //newFormWeekly.User__c = Userinfo.getuserid();
         }
 
         eBulletin_StartDate = ISSP_CS__c.getValues('eBulletin_StartDate').Value__c;
@@ -156,14 +158,15 @@ public with sharing class CNS_EBulletin {
         }else{
             //No Parameter area, when loading 1st time it passes here!
 
+            // FOR CNS - entry point is always step2
             //Check if is "firstTime", this will lead the user for 1st step or 2nd step
-            if(isFirstTime){
-                isStep1_1 = true;   
-                newFormDaily.Opt_in__c = newFormDaily.Opt_in__c == null? true : newFormDaily.Opt_in__c;
-                newFormWeekly.Opt_in__c = newFormWeekly.Opt_in__c == null? true : newFormWeekly.Opt_in__c;
-            }else{
+            //if(isFirstTime){
+            //    isStep1_1 = true;   
+            //    newFormDaily.Opt_in__c = newFormDaily.Opt_in__c == null? true : newFormDaily.Opt_in__c;
+            //    newFormWeekly.Opt_in__c = newFormWeekly.Opt_in__c == null? true : newFormWeekly.Opt_in__c;
+            //}else{
                 isStep2 = true;     
-            }
+            //}
         }    
         
         //Set Selected value for the "day" field in the Daily selection
@@ -595,6 +598,9 @@ public with sharing class CNS_EBulletin {
     }
 
     public void fetchAMSProcessForm() {
+        
+        System.debug('fetchAMSProcessForm - begin');
+        
         List <AMS_eBulletin_Profile__c> newForms = [
                     SELECT Agency_Info_Agency_Changes__c,Agency_Info_Defaults__c,Agency_Info_Irregularities__c,Agency_Info_New_Aplication_Processes__c,
                         Agency_Info_Reviews__c,Agency_Info_Termination_Closures__c,Area_1__c,Area_2__c,Area_3__c,CountriesList__c,CreatedDate,Daily_Frequency__c,
@@ -605,6 +611,8 @@ public with sharing class CNS_EBulletin {
                     LIMIT 2
                 ];
 
+        System.debug('fetchAMSProcessForm - newForms.size(): ' + newForms.size());
+        
         if (newForms.size() > 0) {
 
             //Since we got records we mark "firstTime" as false
@@ -617,7 +625,68 @@ public with sharing class CNS_EBulletin {
                 if(aux.RecordTypeId == WEEKLY_RECORD_TYPE_ID){
                     newFormWeekly = aux;    
                 }
+                
+                System.debug('fetchAMSProcessForm - newFormDaily: ' + newFormDaily);
+                System.debug('fetchAMSProcessForm - newFormWeekly: ' + newFormWeekly);
             }
+        }else{
+            //No records returned - 1st time we create the Daily and Weekly records for CNS
+            isFirstTime = true;
+            
+            //Fetch country list for CNS
+            //
+            List<IATA_ISO_Country__c> isoList;
+            String sCountryList = '';
+            
+            isoList = [SELECT Name, Id, ISO_Code__c
+                FROM IATA_ISO_Country__c
+                WHERE CNS_Country__c = True
+                ORDER BY Name];
+            
+            Boolean Start = true;
+        
+            for (IATA_ISO_Country__c iso : isoList) {
+                if(Start) {
+                    sCountryList = iso.ISO_Code__c;
+                    Start = false;
+                } else {               
+                    sCountryList = sCountryList + ';' + iso.ISO_Code__c;
+                }
+            }
+            System.debug('sCountryList: ' + sCountryList);
+            
+            //Daily
+            newFormDaily.RecordTypeId = DAILY_RECORD_TYPE_ID;
+            newFormDaily.Program_Cargo__c = true;
+            newFormDaily.Program_CASS_Associates__c = true;
+            newFormDaily.Program_Domestic__c = true;
+            newFormDaily.Program_Passage__c = true;
+            newFormDaily.Agency_Info_Irregularities__c = true;
+            newFormDaily.Agency_Info_Defaults__c = true;
+            newFormDaily.Agency_Info_Termination_Closures__c = true;
+            newFormDaily.Agency_Info_Reviews__c = true;
+            newFormDaily.CountriesList__c = sCountryList;
+            newFormDaily.Opt_in__c = true;
+            newFormDaily.Opt_out_Bulletin__c = true;
+            newFormDaily.CNS__c = true;
+                    
+            //Weekly
+            newFormWeekly.RecordTypeId = WEEKLY_RECORD_TYPE_ID;    
+            newFormWeekly.Program_Cargo__c = true;
+            newFormWeekly.Program_CASS_Associates__c = true;
+            newFormWeekly.Program_Domestic__c = true;
+            newFormWeekly.Program_Passage__c = true;
+            newFormWeekly.Agency_Info_Agency_Changes__c = true;
+            newFormWeekly.Agency_Info_Defaults__c = true;
+            newFormWeekly.Agency_Info_Irregularities__c = true;
+            newFormWeekly.Agency_Info_New_Aplication_Processes__c = true;
+            newFormWeekly.Agency_Info_Reviews__c = true;
+            newFormWeekly.Agency_Info_Termination_Closures__c = true;
+            newFormWeekly.CountriesList__c = sCountryList;
+            newFormWeekly.Opt_in__c = true;
+            newFormWeekly.Opt_out_Bulletin__c = true;
+            newFormWeekly.CNS__c = true;
+            
         }
     }
 
@@ -696,28 +765,31 @@ public with sharing class CNS_EBulletin {
     }
 
     public boolean saveAMSForm() {
-
+	
         boolean bRes = true;
 
-        newFormDaily.CountriesList__c = getMultiSelectOptionsToSave(dailyCountrySelected);
-        newFormWeekly.CountriesList__c = getMultiSelectOptionsToSave(weeklyCountrySelected);
-
-        //Since on the form the timezone is set to the Daily form we just give the same value to the WEEKLY one
-        newFormWeekly.TimeZone__c = newFormDaily.TimeZone__c;
-
-        try {
-
-            upsert newFormDaily;
-            upsert newFormWeekly;
-        } catch (DmlException ex) {
-            ApexPages.addMessages(ex);
-            bRes = false;
-       
-        } catch (Exception ex) {
-            ApexPages.addMessages(ex);
-            bRes = false;
-        }
+        //only saves records on the 1st time
+        if(isFirstTime){
         
+            //newFormDaily.CountriesList__c = getMultiSelectOptionsToSave(dailyCountrySelected);
+            //newFormWeekly.CountriesList__c = getMultiSelectOptionsToSave(weeklyCountrySelected);
+    
+            //Since on the form the timezone is set to the Daily form we just give the same value to the WEEKLY one
+            newFormWeekly.TimeZone__c = newFormDaily.TimeZone__c;
+    
+            try {
+    
+                upsert newFormDaily;
+                upsert newFormWeekly;
+            } catch (DmlException ex) {
+                ApexPages.addMessages(ex);
+                bRes = false;
+           
+            } catch (Exception ex) {
+                ApexPages.addMessages(ex);
+                bRes = false;
+            }
+        }
         return bRes;
     }
 

@@ -6,8 +6,8 @@
            standardStylesheets="true"
            applyBodyTag="false"
            applyHtmlTag="false"
-           action="{!securityCheck}"
            docType="html-5.0" 
+           action="{!saveAMSFormAndStay}"
            >
 
     <html> 
@@ -1129,7 +1129,8 @@
                                             <tr>
                                                 <td>
                                                     <apex:outputpanel >
-                                                        <span class="h4">{!$Label.ISSP_AMS_eBulletin_FilterOptionsDaily}</span> <apex:commandButton action="{!goToStep1_1}" value="{!$Label.ISSP_AMS_eBulletin_btn_EditSelectionCriteria}" style="margin-left:30px;vertical-align:bottom !important"/>
+                                                        <span class="h4">{!$Label.ISSP_AMS_eBulletin_FilterOptionsDaily}</span> 
+                                                        <apex:commandButton action="{!goToStep1_1}" value="{!$Label.ISSP_AMS_eBulletin_btn_EditSelectionCriteria}" rendered="false" style="margin-left:30px;vertical-align:bottom !important"/>
                                                     </apex:outputpanel>
                                                 </td>
                                             </tr>
@@ -1385,7 +1386,8 @@
                                             <tr>
                                                 <td>
                                                 <apex:outputpanel >
-                                                        <span class="h4">{!$Label.ISSP_AMS_eBulletin_FilterOptionsWeekly}</span> <apex:commandButton action="{!goToStep1_2}" value="{!$Label.ISSP_AMS_eBulletin_btn_EditSelectionCriteria}" style="margin-left:20px;vertical-align:bottom !important"/>
+                                                        <span class="h4">{!$Label.ISSP_AMS_eBulletin_FilterOptionsWeekly}</span> 
+                                                    <apex:commandButton action="{!goToStep1_2}" value="{!$Label.ISSP_AMS_eBulletin_btn_EditSelectionCriteria}" rendered="false" style="margin-left:20px;vertical-align:bottom !important"/>
                                                     </apex:outputpanel>
                                                </td>
                                             </tr>
