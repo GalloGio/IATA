@@ -9,7 +9,7 @@ public class vfIECEBC_CampaignList extends vfIECEBC_Controller {
             if (value == true) CAMPAIGNS_PER_PAGE = 2;
         }
     }
-    public static Integer CAMPAIGNS_PER_PAGE = 25;
+    public static Integer CAMPAIGNS_PER_PAGE = 10;
     
     public Id selectedCampaignId { get; set; }
     public EBC_Campaign__c selectedCampaign {
@@ -95,7 +95,7 @@ public class vfIECEBC_CampaignList extends vfIECEBC_Controller {
         
         insert nCampaign;
         
-        PageReference pr = new PageReference('/iec/IECEBC_Campaign?id=' + nCampaign.Id);
+        PageReference pr = new PageReference('/apex/IECEBC_Campaign?id=' + nCampaign.Id);
         pr.setRedirect(true);
         return pr;
     }
@@ -202,6 +202,8 @@ public class vfIECEBC_CampaignList extends vfIECEBC_Controller {
             fields.add('Owner.Name'); 
             fields.add('EBC_Master_Filter__r.Name');
             fields.add('LastModifiedDate');
+            fields.add('Send_Datetime__c');
+             
         }
         
         return 'Select ' + String.join(fields, ',') + ' FROM EBC_Campaign__c WHERE Billing_Account__c = \'' + vfIECEBC.billingAccount.Id + '\'';

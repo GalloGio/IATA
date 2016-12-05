@@ -30,7 +30,7 @@
                         </apex:actionFunction>
                         <script type="text/javascript">
                         function resetTemplate(recordId) {
-                            document.getElementById('{!$Component.selectedTemplate}').value = recordId;
+                            document.getElementById('{!$Component.selectedTemplate}').value = (typeof(recordId) != 'undefined' ? recordId : '');
                         }
                         </script>
                         <section >
@@ -54,7 +54,7 @@
                                                         </apex:outputText>
                                                         <label class="custom-radio" for="new-template-agency"><i class="icon"></i></label>
                                                     </div>
-                                                    <label class="input-label" for="new-template-agency">IATA Travel Agencies<br />Can be used to target agencies only. All applicable merge fields available.</label>
+                                                    <label class="input-label" for="new-template-agency"><strong>IATA Travel Agencies</strong><br />Can be used to target agencies only. All applicable merge fields available.</label>
                                                 </div>
                                             </li>
                                             
@@ -81,7 +81,7 @@
                                                         
                                                     </div>
                                                     
-                                                    <label class="input-label" for="new-template-agent">IATA/IATAN ID Cardholders<br />Can be used to target travel professionals only. All applicable merge fields available.</label>
+                                                    <label class="input-label" for="new-template-agent"><strong>IATA/IATAN ID Cardholders</strong><br />Can be used to target travel professionals only. All applicable merge fields available.</label>
                                                 </div>
                                             </li>
                                             
@@ -97,7 +97,7 @@
                                                         
                                                         <label class="custom-radio" for="new-template-neutral"><i class="icon"></i></label>
                                                     </div>
-                                                    <label class="input-label" for="new-template-neutral">General Audience<br />Can be used to target both agencies and travel professionals. Offers a limited number of merge fields.</label>
+                                                    <label class="input-label" for="new-template-neutral"><strong>General Audience</strong><br />Can be used to target both agencies and travel professionals. Offers a limited number of merge fields.</label>
                                                 </div>
                                             </li>
                                         </ul>
@@ -126,11 +126,13 @@
                                 <apex:outputText rendered="{!newTemplateStepNumber == 2}">
                                     <div >
                                         <h3 class="step-title">Layout</h3>
+                                        
+                        <apex:pageMessages />
                                         <div class="tab-container js-tabs">
                                             <ul class="nav tabs">
-                                                <li class="active" data-target="#pane-1"><a href="#" onclick="resetTemplate(jQuery('input:checked', jQuery(this).closest('li').attr('data-target')).val());">Basic Templates</a></li>
+                                                <li class="active" data-target="#pane-1"><a href="#" onclick="resetTemplate(jQuery('input:checked', jQuery(this).closest('li').attr('data-target')).val()); rerenderFooterActions();">Basic Templates</a></li>
                                                 
-                                                <li data-target="#pane-2"><a href="#" onclick="resetTemplate('{!customHtmlTemplate.Id}');">Use your HTML code</a></li>
+                                                <li data-target="#pane-2"><a href="#" onclick="resetTemplate('{!customHtmlTemplate.Id}'); rerenderFooterActions();">Use your HTML code</a></li>
                                             </ul>
                                             
                                             <div class="tab-content">

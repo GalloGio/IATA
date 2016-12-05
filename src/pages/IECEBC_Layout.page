@@ -22,9 +22,6 @@
                 jQuery(document).ready(function(){resetForms()});
             </script>
             <apex:insert name="pageHeadAdditions" />
-            <style type="text/css">
-                main { margin-bottom: 140px; }
-            </style>
         </head>
         <body data-is-modal-open="false" id="page-top">
             <div class="app-container">

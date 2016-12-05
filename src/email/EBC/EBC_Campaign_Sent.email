@@ -1,18 +1,8 @@
-<messaging:emailTemplate subject="Your Campaign {!relatedTo.Name} has been approved" recipientType="User" relatedToType="EBC_Campaign__c">
-<messaging:plainTextEmailBody >
-Dear {!relatedTo.Owner.Name},
-
-We are happy to inform you that you campaign is now approved. It will be sent on {!relatedTo.Scheduled_Date__c} as per your instructions.
-
-No further action is required by you. Should you want to change your campaign schedule date, you can do so from the eBroadcast Dashboard.
-
-We hope you have a successful campaign,
-The IATA eBroadcast Team
-</messaging:plainTextEmailBody>
+<messaging:emailTemplate subject="Your Campaign {!relatedTo.Name} has been sent" recipientType="User" relatedToType="EBC_Campaign__c">
 <messaging:htmlEmailBody >
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>IATA eBroadcast Account</title>
+<title>IATA eBroadcast Campaign</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <!--[if !mso]><!-->
@@ -118,8 +108,8 @@ text-align: right;
     <td class="two-columns" style="text-align: left; padding: 0 20px;">
 
                 Dear {!relatedTo.Owner.Name},<br /><br />
-We are happy to inform you that you campaign is now approved. It will be sent {!IF(!ISBLANK(relatedTo.Scheduled_Date__c) && relatedTo.Scheduled_Date__c > NOW(), 'on ' + TEXT(relatedTo.Scheduled_Date__c), 'now')} as per your instructions.<br /><br />
-No further action is required by you. Should you want to change your campaign schedule date, you can do so from the eBroadcast Dashboard.<br /><br />
+We are happy to inform you that you campaign has been sent.<br /><br />
+No further action is required by you.<br /><br />
 We hope you have a successful campaign,<br />
 The IATA eBroadcast Team
 
