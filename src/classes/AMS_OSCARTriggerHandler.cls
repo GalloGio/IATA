@@ -1387,7 +1387,7 @@ public class AMS_OSCARTriggerHandler {
 		}
 
 		//find all agencies involved
-		for (AMS_Process_Detail__c pd : [SELECT Id, Account__c, OSCAR__c FROM AMS_Process_Detail__c WHERE OSCAR__c IN :oscars AND Account__c != '' AND Account__r.Status__c != :AMS_Utils.ACC_S0_TERMINATED]) {
+		for (AMS_Process_Detail__c pd : [SELECT Id, Account__c, OSCAR__c FROM AMS_Process_Detail__c WHERE OSCAR__c IN :oscars AND Account__c != '']) {
 			
 			accountsInvolved.get(pd.OSCAR__c).add(pd.Account__c);
 		}
