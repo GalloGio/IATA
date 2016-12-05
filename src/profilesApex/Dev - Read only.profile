@@ -483,6 +483,8 @@
 <classAccesses><apexClass>IDCardAgencyDetailsControllerTest</apexClass><enabled>true</enabled></classAccesses>
 <classAccesses><apexClass>IDCardApplicationException</apexClass><enabled>true</enabled></classAccesses>
 <classAccesses><apexClass>IDCardApplicationFactory</apexClass><enabled>false</enabled></classAccesses>
+<classAccesses><apexClass>IDCardApplicationImageViewerController</apexClass><enabled>false</enabled></classAccesses>
+<classAccesses><apexClass>IDCardApplicationImageViewerCtrlTest</apexClass><enabled>false</enabled></classAccesses>
 <classAccesses><apexClass>IDCardCroppingToolWebService</apexClass><enabled>true</enabled></classAccesses>
 <classAccesses><apexClass>IDCardCryptoUtil</apexClass><enabled>true</enabled></classAccesses>
 <classAccesses><apexClass>IDCardLoginController</apexClass><enabled>true</enabled></classAccesses>
@@ -534,7 +536,11 @@
 <classAccesses><apexClass>IDCard_CleanUp_RenewalReminder_Scheduler</apexClass><enabled>true</enabled></classAccesses>
 <classAccesses><apexClass>IDCard_ConfirmationPageController</apexClass><enabled>true</enabled></classAccesses>
 <classAccesses><apexClass>IDCard_ConfirmationPageControllerTest</apexClass><enabled>false</enabled></classAccesses>
+<classAccesses><apexClass>IDCard_CropperCtrl</apexClass><enabled>false</enabled></classAccesses>
+<classAccesses><apexClass>IDCard_CropperCtrlTest</apexClass><enabled>false</enabled></classAccesses>
 <classAccesses><apexClass>IDCard_DetailsAdmPaymentsCtrl</apexClass><enabled>false</enabled></classAccesses>
+<classAccesses><apexClass>IDCard_ImageViewerController</apexClass><enabled>false</enabled></classAccesses>
+<classAccesses><apexClass>IDCard_ImageViewerControllerTest</apexClass><enabled>false</enabled></classAccesses>
 <classAccesses><apexClass>IDCard_PendingOpsAndProcessedAppTest</apexClass><enabled>false</enabled></classAccesses>
 <classAccesses><apexClass>IDCard_Refund</apexClass><enabled>true</enabled></classAccesses>
 <classAccesses><apexClass>IDCard_RenewalReminder_Batch</apexClass><enabled>true</enabled></classAccesses>
@@ -1615,6 +1621,7 @@
 <pageAccesses><apexPage>IDCard_CheckoutConfirmation</apexPage><enabled>true</enabled></pageAccesses>
 <pageAccesses><apexPage>IDCard_CheckoutSingleApplication</apexPage><enabled>false</enabled></pageAccesses>
 <pageAccesses><apexPage>IDCard_DetailsAdmPayments</apexPage><enabled>false</enabled></pageAccesses>
+<pageAccesses><apexPage>IDCard_ImageUpload</apexPage><enabled>true</enabled></pageAccesses>
 <pageAccesses><apexPage>IDCard_MultipleAgency_Details</apexPage><enabled>true</enabled></pageAccesses>
 <pageAccesses><apexPage>IDCard_PendingCase_Details</apexPage><enabled>true</enabled></pageAccesses>
 <pageAccesses><apexPage>IDCard_PendingIdCardApp_Details</apexPage><enabled>false</enabled></pageAccesses>
