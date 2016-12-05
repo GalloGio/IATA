@@ -35,9 +35,6 @@
     </columns>
     <columns>
         <field>EF_Billing_Agreement__c.EF_Contact_Relationships__r$Contact__c.Phone</field>
-    </columns>
-    <columns>
-        <field>EF_Billing_Agreement__c.EF_Contact_Relationships__r$Contact__c.Fax</field>
     </columns>	
     <columns>
         <field>EF_Billing_Agreement__c.EF_Contact_Relationships__r$Contact__c.MailingAddress</field>
