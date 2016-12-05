@@ -357,8 +357,9 @@
        </sequential>
      </for>
 
- <move file="${basedir}/src/codePackage.xml" tofile="${basedir}/Code/package.xml"/>  
+    <move file="${basedir}/src/codePackage.xml" tofile="${basedir}/Code/package.xml"/>  
     <move file="${basedir}/src/destructiveChangesPre.xml" tofile="${basedir}/Code/destructiveChangesPre.xml"/>  
+    <move file="${basedir}/src/destructiveChangesPost.xml" tofile="${basedir}/Code/destructiveChangesPost.xml"/>  
    
       <antcallback target="deployCodeLocal" />
           <antcallback target="deployLayout" />

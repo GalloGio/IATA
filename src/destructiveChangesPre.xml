@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
 
     <types>
         <members>BtchEBCCountGdpAgencies</members>
 <members>BtchEBCFixIdCardAgencyLink</members>
-<members>SchdlEBCAgencyCacheRefresh</members>
 <members>SchdlEBCPeriodicQueryOnAgent</members>
-<members>SchdlEBCFixIdCardAgencyLink</members>
+<!--<members>SchdlEBCFixIdCardAgencyLink</members> -->
 <members>SchdlEBCPeriodicQueryOnAgent_tst</members>
 
         <name>ApexClass</name>
