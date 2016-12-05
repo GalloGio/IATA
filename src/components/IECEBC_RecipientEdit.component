@@ -125,7 +125,7 @@
                         
                         <apex:outputText > 
                             <apex:variable var="isOptionDisabled" value="{!NOT(ISBLANK(limitToAudience)) && limitToAudience != 'Agent'}" />
-                            <li class="{!IF(isOptionDisabled, ' disabled', '')} {!IF(newFilter.Audience__c == 'Agent', 'is-selected', '')}">
+                            <li class="{!IF(isOptionDisabled || !isIDCARDSelectionAllowed, ' disabled', '')} {!IF(newFilter.Audience__c == 'Agent', 'is-selected', '')}">
                                 <div class="radio-box">
                                     <div class="custom-user-input radio">
                                         <apex:outputText rendered="{!isIDCARDSelectionAllowed}">                                        
@@ -152,7 +152,7 @@
                         </apex:outputText>
                         <apex:outputText > 
                             <apex:variable var="isOptionDisabled" value="{!NOT(ISBLANK(limitToAudience)) && limitToAudience != 'Custom'}" />
-                            <li class="{!IF(isOptionDisabled, ' disabled', '')} {!IF(newFilter.Audience__c == 'Custom', 'is-selected', '')}">
+                            <li class="{!IF(isOptionDisabled || !isCodeSelectionAllowed, ' disabled', '')} {!IF(newFilter.Audience__c == 'Custom', 'is-selected', '')}">
                                 <div class="radio-box">
                                     <div class="custom-user-input radio">
                                         <apex:outputText rendered="{!isCodeSelectionAllowed}">

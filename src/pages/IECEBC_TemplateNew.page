@@ -58,7 +58,7 @@
                                                 </div>
                                             </li>
                                             
-                                            <li class="{!IF(newTemplate.Audience__c == 'Agent', 'is-selected', '')}">
+                                            <li class="{!IF(newTemplate.Audience__c == 'Agent', 'is-selected', '')} {!IF(NOT(isIDCARDSelectionAllowed), ' disabled', '')}">
                                                 <div class="radio-box">
                                                     <div class="custom-user-input radio">
                                                         <apex:outputText rendered="{!isIDCARDSelectionAllowed}">
@@ -71,13 +71,13 @@
                                                         </apex:outputText>  
                                                         <apex:outputText rendered="{!NOT(isIDCARDSelectionAllowed)}">
                                                             <apex:outputText rendered="{!newTemplate.Audience__c == 'Agent'}">
-                                                                <input class="disabled-user-input radio"  style="min-width: 20px;" id="new-template-agent" type="radio" name="audience" value="Agent" checked="checked" disabled="true" />
+                                                                <input class="disabled user-input radio"  style="min-width: 20px;" id="new-template-agent" type="radio" name="audience" value="Agent" checked="checked" disabled="true" />
                                                             </apex:outputText>
                                                             <apex:outputText rendered="{!newTemplate.Audience__c != 'Agent'}">
-                                                                <input class="disabled-user-input radio" style="min-width: 20px;"  id="new-template-agent" type="radio" name="audience" value="Agent"  disabled="true"/>
+                                                                <input class="disabled user-input radio" style="min-width: 20px;"  id="new-template-agent" type="radio" name="audience" value="Agent"  disabled="true"/>
                                                             </apex:outputText>
                                                         </apex:outputText>  
-                                                       	<label class="{!IF(isIDCARDSelectionAllowed,'custom-radio','')}" for="new-template-agent"><i class="icon"></i></label>
+                                                       	<label class="custom-radio" for="new-template-agent"><i class="icon"></i></label>
                                                         
                                                     </div>
                                                     
