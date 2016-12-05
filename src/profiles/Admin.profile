@@ -23525,7 +23525,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>FIR_Code__r.FIR_Code_Name__c</field>
+        <field>FIR_Code__c.FIR_Code_Name__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
