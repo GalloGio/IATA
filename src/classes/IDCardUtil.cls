@@ -1,7 +1,7 @@
 global with sharing class IDCardUtil {
-	
-	//flag to determine if idcard contact trigger can run more than once per execution
-    public static Boolean isFirstTime = true;	  
+  
+  //flag to determine if idcard contact trigger can run more than once per execution
+    public static Boolean isFirstTime = true;    
     @RemoteAction
     public static final String PARAM_APPLICATIONTYPE = 'atype';
     @RemoteAction
@@ -853,13 +853,17 @@ global with sharing class IDCardUtil {
 
         // Get current max for the increment digits for each template
 
-        list<ID_Card__c> lstRelatedIdCards = [SELECT Id, CIN__c, Gender__c FROM ID_Card__c WHERE CIN__c <> null AND CIN__c LIKE :setCinTemplates];
+        list<ID_Card__c> lstRelatedIdCards = [SELECT Id, CIN__c, LastName__c, Gender__c FROM ID_Card__c WHERE CIN__c <> null AND CIN__c LIKE :setCinTemplates];
 
         for (ID_Card__c idcard : lstRelatedIdCards) {
-            Integer incDigits = Integer.valueOf(idcard.CIN__c.mid(10, 2));
+            // for Last Names shorter than 3 chars
+            Integer LNamelength = idCard.LastName__c.left(3).length();
+            Integer incDigitsStartPosition = LNamelength + 7; // 10 normally
+
+            Integer incDigits = Integer.valueOf(idcard.CIN__c.mid(incDigitsStartPosition, 2));
             
-            if ( incDigits > mapIncDigitsPerCinTemplate.get( (idcard.Gender__c == 'Male' ? 'M' : 'F') + idcard.CIN__c.left(10) + '__' + idcard.CIN__c.substring(12) ) ) {
-                mapIncDigitsPerCinTemplate.put( (idcard.Gender__c == 'Male' ? 'M' : 'F') + idcard.CIN__c.left(10) + '__' + idcard.CIN__c.substring(12), incDigits );
+            if ( incDigits > mapIncDigitsPerCinTemplate.get( (idcard.Gender__c == 'Male' ? 'M' : 'F') + idcard.CIN__c.left(incDigitsStartPosition) + '__' + idcard.CIN__c.substring(incDigitsStartPosition + 2) ) ) {
+                mapIncDigitsPerCinTemplate.put( (idcard.Gender__c == 'Male' ? 'M' : 'F') + idcard.CIN__c.left(incDigitsStartPosition) + '__' + idcard.CIN__c.substring(incDigitsStartPosition + 2), incDigits );
             }
         }
 
