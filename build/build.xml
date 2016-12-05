@@ -358,7 +358,8 @@
      </for>
 
  <move file="${basedir}/src/codePackage.xml" tofile="${basedir}/Code/package.xml"/>  
-      
+    <move file="${basedir}/src/destructiveChangesPre.xml" tofile="${basedir}/Code/destructiveChangesPre.xml"/>  
+   
       <antcallback target="deployCodeLocal" />
           <antcallback target="deployLayout" />
 
