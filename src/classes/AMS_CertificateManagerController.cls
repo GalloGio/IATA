@@ -46,9 +46,9 @@ public class AMS_CertificateManagerController {
 		get{
 			if(years == null){
 				years = new List<SelectOption>();
-				Integer noOptions = 5;
-				Integer start = System.today().addYears(-noOptions).year();
-				for(Integer i = 1; i <= noOptions; i++){
+				Integer noOptions = 7;
+				Integer start = System.today().addYears(-2).year();
+				for(Integer i = 0; i <= noOptions; i++){
 					String y = String.valueOf(start+i);
 					years.add(new SelectOption(y, y));
 				}
