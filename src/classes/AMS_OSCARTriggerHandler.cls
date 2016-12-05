@@ -62,9 +62,9 @@ public class AMS_OSCARTriggerHandler {
 
         Set<Id> targetAccountsIds = new Set<Id>();
         Set<Id> oscarOnlineAccredIds = new Set<Id>();
-        List<AMS_OSCAR__c> oscarsToProcess = new List<AMS_OSCAR__c>();
+		List<AMS_OSCAR__c> oscarsToProcess = new List<AMS_OSCAR__c>();
 
-        for(AMS_OSCAR__c oscar: (List<AMS_OSCAR__c>)Trigger.New){
+		for(AMS_OSCAR__c oscar : (List<AMS_OSCAR__c>)Trigger.New){
             if(oscar.AMS_Target_Agency__c != null && oscar.Type_of_change__c.containsIgnoreCase(AMS_Utils.OWNERSHIP_IATA)){
                 AMS_OSCAR__c oldOscar;
                 if(Trigger.isUpdate)
@@ -74,12 +74,12 @@ public class AMS_OSCARTriggerHandler {
                 if(Trigger.isInsert || (Trigger.isUpdate && oscar.AMS_Target_Agency__c != oldOscar.AMS_Target_Agency__c)){
                     targetAccountsIds.add(oscar.AMS_Target_Agency__c);
                     oscarOnlineAccredIds.add(oscar.AMS_Online_Accreditation__c);
-                    oscarsToProcess.add(oscar);
+				oscarsToProcess.add(oscar);
                 }
-            }
-        }
+			}
+		}
 
-        if(!oscarsToProcess.isEmpty()){
+		if(!oscarsToProcess.isEmpty()){
 
             Map<Id, Account> targetAccounts = new Map<Id, Account>([SELECT Name, IATACode__c, Company_Type__c, Short_Name__c, TradeName__c, License_Number__c, VAT_Number__c, GDS__c, Operation__c,
                     BillingCountry, BillingStreet, BillingPostalCode, BillingState, BillingCity, IATA_ISO_Country__c, Iso_State__c, ShippingCountry,
@@ -96,17 +96,17 @@ public class AMS_OSCARTriggerHandler {
                     ,Shipping_ISO_Country__c,Shipping_ISO_State__c, Shipping_ISO_Country__r.Name, Shipping_ISO_State__r.Name, IATA_ISO_State__r.Name
                     FROM AMS_Pax_Accreditation_Form__c
                     WHERE Id IN :oscarOnlineAccredIds]);
-
+				
             for (AMS_OSCAR__c oscar : oscarsToProcess) {
                 onlineAccredsToUpdate.add(AMS_Utils.CopyDataFromAccountToStaging(AMS_UTILS.OWNERSHIP_IATA, targetAccounts.get(oscar.AMS_Target_Agency__c), onlineAccreditations.get(oscar.AMS_Online_Accreditation__c)));
-            }
+			}
 
             if(!onlineAccredsToUpdate.isEmpty())
                 update onlineAccredsToUpdate;
-        }
+			}
 
 
-    }
+	}
 
 	//*************************************
 	//********** helper methods ***********
@@ -186,7 +186,7 @@ public class AMS_OSCARTriggerHandler {
 					if (notApplicableSteps != null)
 						AMS_AgencyChangesConfigHelper.setNotApplicableSteps(notApplicableSteps, oscarStepsApiName, oscar);
 				}
-			}
+	}
 		}
 	}
 
@@ -311,20 +311,9 @@ public class AMS_OSCARTriggerHandler {
 					accountsChangeCode.put(accId, changeCode);
 		}
 
-		Map<Id, Account> accounts = new Map<Id, Account>([SELECT Id, ParentId, Parent.Location_Type__c, Status__c, Name, IATACode__c, Company_Type__c, Short_Name__c, TradeName__c, License_Number__c, VAT_Number__c, GDS__c, Operation__c,
-		        BillingCountry, BillingStreet, BillingPostalCode, BillingState, BillingCity, IATA_ISO_Country__c, Iso_State__c, ShippingCountry, Is_Branch_Abroad__c,
-		        ShippingStreet, ShippingPostalCode, ShippingState, ShippingCity, Email__c, Website, Phone, Fax, In_a_Airport__c, Abbreviated_name__c, Abbreviated_address__c,
-		        Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Is_your_firm_handling_Dangerous_Goods__c, Link_agent_name__c FROM Account WHERE Id IN :accountIds]);
 
-
-		Map<Id, AMS_Pax_Accreditation_Form__c> onlineAccreditations = new Map<Id, AMS_Pax_Accreditation_Form__c>([SELECT Account_Name__c, IATACode__c, ISSP_AMS_Legal_Status__c, Short_Name__c, Trade_Name__c, ISSP_AMS_License_No__c, ISSP_AMS_VAT_number__c,
-		        ISSP_AMS_GDS_with_signed_contract__c, Operation__c, Branch_Office_Country__r.Name, Branch_Office_Street_name_number__c, Branch_Office_Postal_code__c,
-		        Billing_State__c, Branch_Office_City__c, ISO_Country__c, IATA_ISO_State__c, Shipping_Country__c, Shipping_Street__c, Shipping_Postal_Code__c,
-		        Shipping_State__c, Shipping_City__c, Branch_Office_Email__c, Website__c, Branch_Office_Phone__c, Branch_Office_FAX__c, ISSP_AMS_Premises_located_at_airport__c,
-		        Abbreviated_name__c, Abbreviated_address__c, Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Is_your_firm_handling_Dangerous_Goods__c,
-		        Shipping_ISO_Country__c, Shipping_ISO_State__c, Shipping_ISO_Country__r.Name, Shipping_ISO_State__r.Name, IATA_ISO_State__r.Name, Link_agent_name__c
-		        FROM AMS_Pax_Accreditation_Form__c
-		        WHERE Id IN :oscarOnlineAccredIds]);
+		Map<Id, Account> accounts = getAccounts(accountIds);
+		Map<Id, AMS_Pax_Accreditation_Form__c> onlineAccreditations = getAccreditations(oscarOnlineAccredIds);
 
 		//Here we will save the accounts that will suffer ownership changes
 		Map<Id, Set<Id>> accountsAffectedPerOnlineAccreditation = new Map<Id, Set<Id>>();
@@ -1139,9 +1128,9 @@ public class AMS_OSCARTriggerHandler {
 					oscarsToProcess.add(oscar);
 			}
 		}
-		
+
 		if(!oscarsToProcess.isEmpty()){
-									
+
 			validateCertificates(oscarsToProcess);
 
 			createCargoAgencyRegulations(oscarsToProcess);
@@ -1199,7 +1188,7 @@ public class AMS_OSCARTriggerHandler {
 			agReg.Air_cargo_transport_business_exp__c = ac.Air_cargo_transport_business_exp__c;
 			agReg.IATA_FIATA_training_history__c = ac.IATA_FIATA_training_history__c;
 			agReg.Training_dangerous_goods_completed__c = ac.Training_dangerous_goods_completed__c;
-			
+
 			agencyregulationsToCreate.add(agReg);
 
 		}
@@ -1500,7 +1489,7 @@ public class AMS_OSCARTriggerHandler {
 		if(!oscarsToCheckHierarchy.isEmpty()){
 			Map<Id, Boolean> isChildrenSelected = AMS_HierarchyHelper.isAllChildrenSelected(oscarsToCheckHierarchy, relationshipMap, accountsInvolved);
 			for(AMS_Oscar__c oscar : oscarsToCheckHierarchy) if(!isChildrenSelected.get(oscar.Id)) oscar.addError('For Voluntary Relinquishment, the analyst cannot select a parent account without its children');
-	}
+		}
 
 		//insert the change codes
 		if (changesContainer.size() > 0) {
@@ -1548,7 +1537,7 @@ public class AMS_OSCARTriggerHandler {
 
 	private static Map<Id, Account> getAccounts(Set<Id> accountIds) {
 		return new Map<Id, Account>([SELECT Id, ParentId, Parent.Location_Type__c, Status__c, Name, IATACode__c, Company_Type__c, Short_Name__c, TradeName__c, License_Number__c, VAT_Number__c, GDS__c, Operation__c,
-		        BillingCountry, BillingStreet, BillingPostalCode, BillingState, BillingCity, IATA_ISO_Country__c, Iso_State__c, ShippingCountry,
+		        BillingCountry, BillingStreet, BillingPostalCode, BillingState, BillingCity, IATA_ISO_Country__c, Iso_State__c, ShippingCountry,Is_Branch_Abroad__c,
 		        ShippingStreet, ShippingPostalCode, ShippingState, ShippingCity, Email__c, Website, Phone, Fax, In_a_Airport__c, Abbreviated_name__c, Abbreviated_address__c,
 		        Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Is_your_firm_handling_Dangerous_Goods__c FROM Account WHERE Id IN :accountIds]);
 	}
