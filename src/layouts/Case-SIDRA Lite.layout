@@ -157,6 +157,10 @@
                 <field>Total_Irregularities__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Accumulated_Irregularities__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Acc_IRR_leading_to_DEF__c</field>
             </layoutItems>
