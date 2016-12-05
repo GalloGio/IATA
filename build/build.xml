@@ -366,7 +366,7 @@
   </target> 
 
 
-<target name="deployApexAMS"> 
+<target name="deployApexAndDeploy"> 
     <echo level="info">Deploying APEX and VISUALFORCE</echo>
    <antcallback target="deldir" />
    <mkdir dir="${basedir}/Code"/>
