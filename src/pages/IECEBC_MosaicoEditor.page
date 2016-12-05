@@ -158,7 +158,7 @@
                                 try {
                                     /*
                                     var xHtml = viewModel.exportHTML();
-                                    var imagePathRegex = new RegExp('/iec/services/apexrest/Resources/(00P[a-zA-Z0-9]{15})', "g");
+                                    var imagePathRegex = new RegExp(('{!URLFOR($Page.IECEBC_Dashboard)}').replace('/IECEBC_Dashboard', '') + '/services/apexrest/Resources/(00P[a-zA-Z0-9]{15})', "g");
 									xHtml = xHtml.replace(imagePathRegex, '{EBCResource' + '{' + '$1' + '}' + '/EBCResource}');
                                     */
                                     
@@ -281,7 +281,7 @@
                                 'Authorization': 'Bearer ' + sforce.connection.sessionId
                             }
                         }
-                    }, '/iec/services/apexrest/Resources/{!EBC_Template__c.Parent_Template__c}/', undefined /* metadata */, {!IF(templateJSON == null, 'undefined', '"' + JSENCODE(JSONString) + '"')} /* model */, plugins);
+                    }, ('{!URLFOR($Page.IECEBC_Dashboard)}').replace('/IECEBC_Dashboard', '') + '/services/apexrest/Resources/{!EBC_Template__c.Parent_Template__c}/', undefined /* metadata */, {!IF(templateJSON == null, 'undefined', '"' + JSENCODE(JSONString) + '"')} /* model */, plugins);
                     
                     
                 });

@@ -3129,7 +3129,14 @@
           "Name": "STEP6",
           "Required": [],
           "Actions": [],
-          "Automations": [],
+          "Automations": [{
+            "Status": "Passed",
+            "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step6_succeeded"
+          },
+          {
+            "Status": "Failed",
+            "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step6_failed"
+          }],
           "DisplayFields": [
           "STEP6__c"],
           "IsDependent": false
@@ -3159,7 +3166,6 @@
             "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step6_failed"
           }],
           "DisplayFields": [
-          "Dossier_Reception_Date__c",
           "Form_Effective_Date__c",
           "Financial_Security_expiry_date__c",
           "STEP6__c"],
@@ -3252,7 +3258,6 @@
             "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step6_failed"
           }],
           "DisplayFields": [
-          "Dossier_Reception_Date__c",
           "Change_effective_as_of__c",
           "STEP6__c"],
           "IsDependent": false
@@ -3290,6 +3295,30 @@
             "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step32_notApplicable"
           }],
           "DisplayFields": ["STEP32__c"],
+          "IsDependent": false
+        }]
+      }]
+    },
+    {
+      "Name": "CER.1.0",
+      "Flows": [{
+        "Name": "AMS_OSCAR_CERTIFICATE",
+        "Steps": [{
+          "Name": "STEP33",
+          "Required": [],
+          "Actions": [{
+            "FunctionName": "generateCertificates",
+            "ActionLabel": "AMS_OSCAR_Action12",
+            "args": ["oscarid", "agencyid"]
+          }],
+          "Automations": [],
+          "DisplayFields": [
+            "Form_Effective_Date__c",
+            "Certificate_Quantity__c",
+            "Confirm_Payment_if_applicable__c",
+            "Send_Confirmation__c",
+            "STEP33__c"
+          ],
           "IsDependent": false
         }]
       }]

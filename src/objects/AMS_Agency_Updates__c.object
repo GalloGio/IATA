@@ -271,9 +271,9 @@
         <columns>UPDATEDBY_USER</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>Account__c</field>
+            <field>IATACode__c</field>
             <operation>equals</operation>
-            <value>ACC test agency</value>
+            <value>96085776</value>
         </filters>
         <label>AMS - Debug 1 rec</label>
         <language>en_US</language>

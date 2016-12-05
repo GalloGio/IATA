@@ -75,7 +75,7 @@ public without sharing class AMS_VoucherCalculationHelper {
 
 		Datetime nowDate = Datetime.now();
 		
-		String formattedDate = nowDate.format('yyyyMMdd');
+		String formattedDate = nowDate.format('yyyyMMddhmm');
 
         String filename = '';
 

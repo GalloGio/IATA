@@ -3040,6 +3040,15 @@
         <trackHistory>true</trackHistory>
     </fields>
     <fields>
+        <fullName>Annual_Renewal_Certificates__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Annual Renewal of Certificates</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Anti_Money_Laundering_Compliance_Date__c</fullName>
         <externalId>false</externalId>
         <label>Anti-Money Laundering Compliance Date</label>
@@ -4840,6 +4849,10 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                 <controllingFieldValues>Travel Agent</controllingFieldValues>
             </picklistValues>
             <picklistValues>
+                <fullName>IATAN Passenger Agent</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>IATA Passenger Sales Agent</fullName>
                 <default>false</default>
                 <controllingFieldValues>Travel Agent</controllingFieldValues>
@@ -5035,6 +5048,15 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Certificate_Generated_Current_Year__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Certificate Generated for Current Year</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>Check_Digit__c</fullName>
@@ -8088,7 +8110,7 @@ WSPN-Worldspan</inlineHelpText>
         <fullName>IATACode__c</fullName>
         <externalId>false</externalId>
         <label>IATA Code</label>
-        <length>14</length>
+        <length>17</length>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
@@ -10285,6 +10307,73 @@ J-Joint Vent</inlineHelpText>
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>PreviousStatus__c</fullName>
+        <externalId>false</externalId>
+        <label>PreviousStatus</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Approved</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Cash basis/no commission</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Cash basis/with commission</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Changes processed</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Listed</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>New application pending</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Not accreditated</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Not in operation</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Terminated</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Under review</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>No longer a customer</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+    </fields>
+	<fields>
+        <fullName>Previous_Reason__c</fullName>
+        <externalId>false</externalId>
+        <label>Previous Reason</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Price_Group__c</fullName>
         <description>IEC - SAP price group granted to customer</description>
         <externalId>false</externalId>
@@ -10374,6 +10463,18 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Reason__c</fullName>
+        <description>Contains the reason from AMS</description>
+        <externalId>false</externalId>
+        <label>Reason</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Reason_for_creation__c</fullName>
@@ -10551,7 +10652,7 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
     <fields>
         <fullName>SAP_BW_report_with_sales_figures__c</fullName>
         <externalId>false</externalId>
-        <formula>HYPERLINK(&quot;https://sap.iata.org/irj/servlet/prt/portal/prtroot/pcd!3aportal_content!2fcom.sap.pct!2fplatform_add_ons!2fcom.sap.ip.bi!2fiViews!2fcom.sap.ip.bi.bex?QUERY=ZVSD_M07_Q010&amp;VARIABLE_SCREENX&amp;DUMMY=1&amp;BI_COMMAND_1-BI_COMMAND_TYPE=SET_VARIABLES_STATE&amp;BI_COMMAND_1-VARIABLE_VALUES-VARIABLE_VALUE_1-VARIABLE_TYPE=VARIABLE_INPUT_STRING&amp;BI_COMMAND_1-VARIABLE_VALUES-VARIABLE_VALUE_1-VARIABLE=UMI_CUSTOMER_001&amp;BI_COMMAND_1-VARIABLE_VALUES-VARIABLE_VALUE_1-VARIABLE_TYPE-VARIABLE_INPUT_STRING=&quot; &amp; TEXT( Higher_Level_Customer__c ) , &quot; SAP/BW report with sales figures &quot;)</formula>
+        <formula>IF(ISBLANK(Higher_Level_Customer__c) || Higher_Level_Customer__c = 0,&quot;&quot;, HYPERLINK(&quot;https://sap.iata.org/irj/servlet/prt/portal/prtroot/pcd!3aportal_content!2fcom.sap.pct!2fplatform_add_ons!2fcom.sap.ip.bi!2fiViews!2fcom.sap.ip.bi.bex?QUERY=ZVSD_M07_Q010&amp;VARIABLE_SCREENX&amp;DUMMY=1&amp;BI_COMMAND_1-BI_COMMAND_TYPE=SET_VARIABLES_STATE&amp;BI_COMMAND_1-VARIABLE_VALUES-VARIABLE_VALUE_1-VARIABLE_TYPE=VARIABLE_INPUT_STRING&amp;BI_COMMAND_1-VARIABLE_VALUES-VARIABLE_VALUE_1-VARIABLE=UMI_CUSTOMER_001&amp;BI_COMMAND_1-VARIABLE_VALUES-VARIABLE_VALUE_1-VARIABLE_TYPE-VARIABLE_INPUT_STRING=&quot; &amp; TEXT( Higher_Level_Customer__c ) , &quot; SAP/BW report with sales figures &quot;))</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Main Products Purchased</label>
         <required>false</required>
@@ -10562,7 +10663,7 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
     <fields>
         <fullName>SAP_BW_report_without_sales_figures__c</fullName>
         <externalId>false</externalId>
-        <formula>HYPERLINK(&quot;https://sap.iata.org/irj/servlet/prt/portal/prtroot/pcd!3aportal_content!2fcom.sap.pct!2fplatform_add_ons!2fcom.sap.ip.bi!2fiViews!2fcom.sap.ip.bi.bex?QUERY=ZVSD_M07_Q011&amp;VARIABLE_SCREENX&amp;DUMMY=1&amp;BI_COMMAND_1-BI_COMMAND_TYPE=SET_VARIABLES_STATE&amp;BI_COMMAND_1-VARIABLE_VALUES-VARIABLE_VALUE_1-VARIABLE_TYPE=VARIABLE_INPUT_STRING&amp;BI_COMMAND_1-VARIABLE_VALUES-VARIABLE_VALUE_1-VARIABLE=UMI_CUSTOMER_001&amp;BI_COMMAND_1-VARIABLE_VALUES-VARIABLE_VALUE_1-VARIABLE_TYPE-VARIABLE_INPUT_STRING=&quot; &amp; TEXT( Higher_Level_Customer__c ) , &quot; SAP/BW report without sales figures &quot;)</formula>
+        <formula>IF(ISBLANK(Higher_Level_Customer__c) || Higher_Level_Customer__c = 0,&quot;&quot;, HYPERLINK(&quot;https://sap.iata.org/irj/servlet/prt/portal/prtroot/pcd!3aportal_content!2fcom.sap.pct!2fplatform_add_ons!2fcom.sap.ip.bi!2fiViews!2fcom.sap.ip.bi.bex?QUERY=ZVSD_M07_Q011&amp;VARIABLE_SCREENX&amp;DUMMY=1&amp;BI_COMMAND_1-BI_COMMAND_TYPE=SET_VARIABLES_STATE&amp;BI_COMMAND_1-VARIABLE_VALUES-VARIABLE_VALUE_1-VARIABLE_TYPE=VARIABLE_INPUT_STRING&amp;BI_COMMAND_1-VARIABLE_VALUES-VARIABLE_VALUE_1-VARIABLE=UMI_CUSTOMER_001&amp;BI_COMMAND_1-VARIABLE_VALUES-VARIABLE_VALUE_1-VARIABLE_TYPE-VARIABLE_INPUT_STRING=&quot; &amp; TEXT( Higher_Level_Customer__c ) , &quot; SAP/BW report without sales figures &quot;))</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Main Products Purchased</label>
         <required>false</required>
@@ -31526,6 +31627,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>IATA Passenger Sales Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATAN Passenger Agent</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -77035,7 +77140,7 @@ PRIORVALUE( Total_Value_Won_Opportunities__c ) = Total_Value_Won_Opportunities__
         <fullName>General_Public_Admin_only</fullName>
         <active>true</active>
         <description>Only administrators can edit General Public accounts</description>
-        <errorConditionFormula>IF((CONTAINS(Name, &quot;General Public&quot;) || CONTAINS(Name, &quot;general public&quot;) || CONTAINS(Name, &quot;GENERAL PUBLIC&quot;) ||  CONTAINS(Name, &quot;General public&quot;) || TEXT(Sector__c) = &quot;General Public&quot;) &amp;&amp; NOT(CONTAINS($User.Profile_Name__c, &quot;System Administrator&quot;) || CONTAINS($User.Profile_Name__c, &quot;System administrator&quot;)), TRUE, FALSE)</errorConditionFormula>
+        <errorConditionFormula>IF((CONTAINS(Name, &quot;General Public&quot;) || CONTAINS(Name, &quot;general public&quot;) || CONTAINS(Name, &quot;GENERAL PUBLIC&quot;) || CONTAINS(Name, &quot;General public&quot;) || TEXT(Sector__c) = &quot;General Public&quot; || ISPICKVAL(PRIORVALUE(Sector__c),&quot;General Public&quot;)) &amp;&amp; NOT(CONTAINS($User.Profile_Name__c, &quot;System Administrator&quot;) || CONTAINS($User.Profile_Name__c, &quot;System administrator&quot;)), TRUE, FALSE)</errorConditionFormula>
         <errorMessage>Please contact an administrator if you wish to create or modify a general public account</errorMessage>
     </validationRules>
     <validationRules>

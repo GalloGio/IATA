@@ -46,6 +46,17 @@
         <senderType>OrgWideEmailAddress</senderType>
         <template>AMS/AMS_Notify_OSCAR_Owner_on_Manager_Rejection</template>
     </alerts>
+    <alerts>
+        <fullName>AMS_Notify_Owner_of_Late_NOC_Termination</fullName>
+        <description>AMS - Notify Owner of Late NOC Termination</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderAddress>noreply@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>AMS/AMS_Late_NOC_Termination_Notification</template>
+    </alerts>
     <rules>
         <fullName>AMS - Notify Owner of Late NOC Termination</fullName>
         <active>true</active>

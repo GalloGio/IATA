@@ -9,14 +9,14 @@ private class EF_AccountTriggerHandlerTest {
             User CSpecialist2 = EF_TestDataFactory.getEfProfileAndRole(1,2);
             User CSpecialist3 = EF_TestDataFactory.getEfProfileAndRole(1,3);
             User runningUser =  EF_TestDataFactory.getEfProfileAndRole(0, 4);     
-			EF_TestDataFactory.createCustomSettings();
-			EF_TestDataFactory.skipContractCreationValidationRule();
+            EF_TestDataFactory.createCustomSettings();
+            EF_TestDataFactory.skipContractCreationValidationRule();
         
            System.runAs(runningUser) {
             //create parent client account
             Account parentClient = new Account(
                 Name='Test Account Parent Client',
-                RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Airline Headquarters').getRecordTypeId(), // Standard Account
+                RecordTypeId = AMS_Utils.getId('Account', 'IATA_Airline'), // Standard Account
                 Sector__c = 'IATA Supplier',
                 Category__c = 'ANSP',
                 EF_type__c = 'E&F Client',
@@ -35,7 +35,7 @@ private class EF_AccountTriggerHandlerTest {
 
             Account childClient = new Account(
                 Name='Test Account Child Client',
-                RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Others').getRecordTypeId(), 
+                RecordTypeId = AMS_Utils.getId('Account', 'Others'), 
                 ParentId = parentClient.Id,
                 Sector__c = 'IATA Supplier',
                 Category__c = 'ANSP',
@@ -53,7 +53,7 @@ private class EF_AccountTriggerHandlerTest {
 
             Account customer1 = new Account(
                 Name='Test Account customer 1',
-                RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Operator').getRecordTypeId(),
+                RecordTypeId = AMS_Utils.getId('Account', 'Standard_Account'),
                 Sector__c = 'IATA Supplier',
                 Category__c = 'ANSP',
                 EF_type__c = 'E&F Operator',
@@ -69,7 +69,7 @@ private class EF_AccountTriggerHandlerTest {
 
             Account customer2 = new Account(
                 Name='Test Account customer 2',
-                RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Standard Account').getRecordTypeId(),
+                RecordTypeId = AMS_Utils.getId('Account', 'Standard_Account'),
                 Sector__c = 'IATA Supplier',
                 Category__c = 'ANSP',
                 EF_type__c = 'E&F Operator',
@@ -97,7 +97,7 @@ private class EF_AccountTriggerHandlerTest {
             List<Contract> contracts = new List<Contract>();
 
             Contract parentContract = new Contract (
-                RecordTypeId = Schema.SObjectType.Contract.getRecordTypeInfosByName().get('E&F Client Agreement').getRecordTypeId(),
+                RecordTypeId = AMS_Utils.getId('Contract', 'EF_Client_Agreement'),
                 accountId= parentClient.Id,
                 ContractTerm=12,
                 EF_Allow_Billing_Agreements__c = 'Allowed',
@@ -107,7 +107,7 @@ private class EF_AccountTriggerHandlerTest {
                 );
 
             Contract childContract = new Contract (
-                RecordTypeId = Schema.SObjectType.Contract.getRecordTypeInfosByName().get('E&F Client Agreement').getRecordTypeId(),
+                RecordTypeId = AMS_Utils.getId('Contract', 'EF_Client_Agreement'),
                 accountId= childClient.Id,
                 CCF_Number__c= '1',
                 Budget_Section__c='aaaa',
@@ -128,14 +128,14 @@ private class EF_AccountTriggerHandlerTest {
                 System.debug('##### error contracts :'+e);
             }
         
-        	Product2 prod = EF_TestDataFactory.createEFProduct();
+            Product2 prod = EF_TestDataFactory.createEFProduct();
               
         //Create contacts
             List<Contact> contacts = new List<Contact>();
 
             Contact customer1Contact = new Contact(
                 AccountId = customer1.Id,
-                RecordTypeId = Schema.SObjectType.Contact.getRecordTypeInfosByName().get('Standard').getRecordTypeId(),
+                RecordTypeId = AMS_Utils.getId('Contact', 'Standard_Contact'),
                 firstname = 'James',
                 lastname = 'Bond',
                 EF_Status__c = 'Active',
@@ -144,7 +144,7 @@ private class EF_AccountTriggerHandlerTest {
 
             Contact customer2Contact = new Contact(
                 AccountId = customer2.Id,
-                RecordTypeId = Schema.SObjectType.Contact.getRecordTypeInfosByName().get('Standard').getRecordTypeId(),
+                RecordTypeId = AMS_Utils.getId('Contact', 'Standard_Contact'),
                 firstname = 'James',
                 lastname = 'Bond',
                 EF_Status__c = 'Active',
@@ -159,17 +159,17 @@ private class EF_AccountTriggerHandlerTest {
             catch(Exception e){
                 System.debug('##### error contacts :'+e);
             }
-        	
-        	//Insert Material Line Items on Contract
-        	List <EF_Material_Line_Item__c> mliList = new List <EF_Material_Line_Item__c> ();
-        	//Insert contacts to Contracts
-        	List <EF_Contact_EF_Contract__c> ccontactList = new List <EF_Contact_EF_Contract__c> ();
+            
+            //Insert Material Line Items on Contract
+            List <EF_Material_Line_Item__c> mliList = new List <EF_Material_Line_Item__c> ();
+            //Insert contacts to Contracts
+            List <EF_Contact_EF_Contract__c> ccontactList = new List <EF_Contact_EF_Contract__c> ();
         
-        	for(Contract c: contracts){
+            for(Contract c: contracts){
                 EF_Material_Line_Item__c mliC = new EF_Material_Line_Item__c();
-                mliC.RecordTypeId= Schema.SObjectType.EF_Material_Line_Item__c.getRecordTypeInfosByName().get('Contract Line Item').getRecordTypeId();
-            	mliC.Contract__c = c.Id;            	
-            	mliC.EF_Status__c = 'Active';
+                mliC.RecordTypeId= AMS_Utils.getId('EF_Material_Line_Item__c', 'Contract_Line_Item');
+                mliC.Contract__c = c.Id;                
+                mliC.EF_Status__c = 'Active';
                 mliC.EF_Material__c= prod.Id;
                 mliList.add(mliC); 
                 
@@ -210,16 +210,16 @@ private class EF_AccountTriggerHandlerTest {
             }
         
             //Insert Material Line Items on Contract
-        	List <EF_Material_Line_Item__c> mliListBA = new List <EF_Material_Line_Item__c> ();
-        	
-        	//insert Contacts related to BA
-        	List<EF_Contact_Relationship__c> contRel = new List<EF_Contact_Relationship__c>();
+            List <EF_Material_Line_Item__c> mliListBA = new List <EF_Material_Line_Item__c> ();
+            
+            //insert Contacts related to BA
+            List<EF_Contact_Relationship__c> contRel = new List<EF_Contact_Relationship__c>();
         
-        	for(EF_Billing_Agreement__c ba: billingAgreements){
+            for(EF_Billing_Agreement__c ba: billingAgreements){
                 EF_Material_Line_Item__c mliC = new EF_Material_Line_Item__c();
-                mliC.RecordTypeId= Schema.SObjectType.EF_Material_Line_Item__c.getRecordTypeInfosByName().get('Relationship Line Item').getRecordTypeId();
-            	mliC.EF_Relationship__c = ba.Id;            	
-            	mliC.EF_Status__c = 'Active';
+                mliC.RecordTypeId= AMS_Utils.getId('EF_Material_Line_Item__c', 'Relationship_Line_Item');
+                mliC.EF_Relationship__c = ba.Id;                
+                mliC.EF_Status__c = 'Active';
                 mliC.EF_Material__c= prod.Id;
                 mliListBA.add(mliC);
                 

@@ -5,7 +5,7 @@ public class AMS_OSCARTriggerHandler {
 	//*************************************
 
 	class AMSException extends Exception {}
-
+	
 	//used to identify situations where the LocationType of an SA Agency should not be changed
 	public static Boolean keepSALocationTypeFlag = false;
 	
@@ -62,9 +62,9 @@ public class AMS_OSCARTriggerHandler {
 
         Set<Id> targetAccountsIds = new Set<Id>();
         Set<Id> oscarOnlineAccredIds = new Set<Id>();
-        List<AMS_OSCAR__c> oscarsToProcess = new List<AMS_OSCAR__c>();
+		List<AMS_OSCAR__c> oscarsToProcess = new List<AMS_OSCAR__c>();
 
-        for(AMS_OSCAR__c oscar: (List<AMS_OSCAR__c>)Trigger.New){
+		for(AMS_OSCAR__c oscar : (List<AMS_OSCAR__c>)Trigger.New){
             if(oscar.AMS_Target_Agency__c != null && oscar.Type_of_change__c.containsIgnoreCase(AMS_Utils.OWNERSHIP_IATA)){
                 AMS_OSCAR__c oldOscar;
                 if(Trigger.isUpdate)
@@ -74,12 +74,12 @@ public class AMS_OSCARTriggerHandler {
                 if(Trigger.isInsert || (Trigger.isUpdate && oscar.AMS_Target_Agency__c != oldOscar.AMS_Target_Agency__c)){
                     targetAccountsIds.add(oscar.AMS_Target_Agency__c);
                     oscarOnlineAccredIds.add(oscar.AMS_Online_Accreditation__c);
-                    oscarsToProcess.add(oscar);
+				oscarsToProcess.add(oscar);
                 }
-            }
-        }
+			}
+		}
 
-        if(!oscarsToProcess.isEmpty()){
+		if(!oscarsToProcess.isEmpty()){
 
             Map<Id, Account> targetAccounts = new Map<Id, Account>([SELECT Name, IATACode__c, Company_Type__c, Short_Name__c, TradeName__c, License_Number__c, VAT_Number__c, GDS__c, Operation__c,
                     BillingCountry, BillingStreet, BillingPostalCode, BillingState, BillingCity, IATA_ISO_Country__c, Iso_State__c, ShippingCountry,
@@ -96,17 +96,17 @@ public class AMS_OSCARTriggerHandler {
                     ,Shipping_ISO_Country__c,Shipping_ISO_State__c, Shipping_ISO_Country__r.Name, Shipping_ISO_State__r.Name, IATA_ISO_State__r.Name
                     FROM AMS_Pax_Accreditation_Form__c
                     WHERE Id IN :oscarOnlineAccredIds]);
-
+				
             for (AMS_OSCAR__c oscar : oscarsToProcess) {
                 onlineAccredsToUpdate.add(AMS_Utils.CopyDataFromAccountToStaging(AMS_UTILS.OWNERSHIP_IATA, targetAccounts.get(oscar.AMS_Target_Agency__c), onlineAccreditations.get(oscar.AMS_Online_Accreditation__c)));
-            }
+			}
 
             if(!onlineAccredsToUpdate.isEmpty())
                 update onlineAccredsToUpdate;
-        }
+			}
 
 
-    }
+	}
 
 	//*************************************
 	//********** helper methods ***********
@@ -186,7 +186,7 @@ public class AMS_OSCARTriggerHandler {
 					if (notApplicableSteps != null)
 						AMS_AgencyChangesConfigHelper.setNotApplicableSteps(notApplicableSteps, oscarStepsApiName, oscar);
 				}
-			}
+	}
 		}
 	}
 
@@ -311,7 +311,7 @@ public class AMS_OSCARTriggerHandler {
 					accountsChangeCode.put(accId, changeCode);
 		}
 
-		
+
 		Map<Id, Account> accounts = getAccounts(accountIds);
 		Map<Id, AMS_Pax_Accreditation_Form__c> onlineAccreditations = getAccreditations(oscarOnlineAccredIds);
 
@@ -1096,9 +1096,6 @@ public class AMS_OSCARTriggerHandler {
 		//Check if agency is a Cargo Agent
 		List<AMS_OSCAR__c> oscarsToProcess = new List<AMS_OSCAR__c>();
 
-		//Oscars that will require a validation on the number of certificates the agency has
-		List<AMS_OSCAR__c> oscarsToValidate = new List<AMS_OSCAR__c>();
-
 		Map<Id, AMS_OSCAR__c> oldMap = (Map<Id,AMS_OSCAR__c>) Trigger.oldMap;
 
 		//check which oscars are related to Cargo Agencies and have passed sanity check
@@ -1171,12 +1168,6 @@ public class AMS_OSCARTriggerHandler {
 			agReg.Air_cargo_transport_business_exp__c = ac.Air_cargo_transport_business_exp__c;
 			agReg.IATA_FIATA_training_history__c = ac.IATA_FIATA_training_history__c;
 			agReg.Training_dangerous_goods_completed__c = ac.Training_dangerous_goods_completed__c;
-			
-
-			//AMS_Agency_Regulation__c agReg = new AMS_Agency_Regulation__c(Certificate_Name__c = ac.Certificate_Name__c, Issued_on__c = ac.Certificate_Issued_on__c, Type_Of_Certificate__c = ac.Type_of_Certificate__c,
-			//																Validity__c = ac.Certificate_Validity__c, First_Name__c = ac.First_name__c, Last_name__c = ac.Last_name__c, Issuer__c = ac.Certificate_Issuer__c,
-			//																Account__c = ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.Oscar__r.Account__c, Position__c = ac.Position_trained_staff__c,
-			//																Oscar__c = ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.Oscar__c);
 
 			agencyregulationsToCreate.add(agReg);
 
@@ -1201,7 +1192,7 @@ public class AMS_OSCARTriggerHandler {
 			oscarIds.add(oscar.Id);
 		}
 
-		List<AMS_OSCAR__c> oscarsList = new List<AMS_OSCAR__c>([SELECT Id, RecordTypeId, Account__c, AMS_Online_Accreditation__r.Location_Type__c, AMS_Online_Accreditation__r.Location_Class__c, AMS_Online_Accreditation__r.Is_your_firm_handling_Dangerous_Goods__c, AMS_Online_Accreditation__r.Branch_Office_Country__c, AMS_Online_Accreditation__r.Branch_Office_Country__r.Name FROM AMS_OSCAR__c WHERE Id IN :oscarIds]);
+		List<AMS_OSCAR__c> oscarsList = new List<AMS_OSCAR__c>([SELECT Id, RecordTypeId, Account__c, AMS_Online_Accreditation__r.Location_Type__c, AMS_Online_Accreditation__r.Location_Class__c, AMS_Online_Accreditation__r.Is_your_firm_handling_Dangerous_Goods__c, AMS_Online_Accreditation__r.Branch_Office_Country__c, AMS_Online_Accreditation__r.Branch_Office_Country__r.ISO_Code__c FROM AMS_OSCAR__c WHERE Id IN :oscarIds]);
 
 		for(AMS_OSCAR__c oscar: oscarsList)
 			isoCountries.add(oscar.AMS_Online_Accreditation__r.Branch_Office_Country__c);
@@ -1253,34 +1244,29 @@ public class AMS_OSCARTriggerHandler {
 				String locationType = oscar.AMS_Online_Accreditation__r.Location_Type__c;
 				System.debug('OSCARTriggerHandler -> validateCertificates: all trained staff ' + trainedStaffPerAccount.get(oscar.Account__c));
 				String key = oscar.AMS_Online_Accreditation__r.Branch_Office_Country__c + locationClass;
+				system.debug('validateCertificates - key -> ' + key);
 				Integer minDgrHO = minimumHODgrRequirements.get(key) == null ? 0 : minimumHODgrRequirements.get(key);
 				system.debug('validateCertificates -> minDgrHO ' + minDgrHO);
 				Integer minDgrBR = minimumBRDgrRequirements.get(key) == null ? 0 : minimumBRDgrRequirements.get(key);
 				system.debug('validateCertificates -> minDgrBR ' + minDgrBR);
 
-				String countryName = oscar.AMS_Online_Accreditation__r.Branch_Office_Country__r.Name;
+				String countryCode = oscar.AMS_Online_Accreditation__r.Branch_Office_Country__r.ISO_Code__c;
 
 				if(oscar.AMS_Online_Accreditation__r.Is_your_firm_handling_Dangerous_Goods__c == 'Yes'){
-					/*if(oscar.AMS_Online_Accreditation__r.Location_Type__c == AMS_Utils.HO){
-						checkCertifications(trainedStaffPerAccount.get(oscar.Account__c), AMS_Utils.HO, true, locationClass);
-					}
-					else if(oscar.AMS_Online_Accreditation__r.Location_Type__c == AMS_Utils.BR){
-						checkCertifications(trainedStaffPerAccount.get(oscar.Account__c), AMS_Utils.BR, true, locationClass);
-					}*/
-					checkCertifications(trainedStaffPerAccount.get(oscar.Account__c), locationType, true, locationClass, countryName, minDgrHO, minDgrBR);
+					checkCertifications(trainedStaffPerAccount.get(oscar.Account__c), locationType, true, locationClass, countryCode, minDgrHO, minDgrBR);
 				}
 				else{
 					//If an agency is non handling, it must have a certificate of awareness (DGA)
 					if(oscar.AMS_Online_Accreditation__r.Location_Type__c == AMS_Utils.HO || oscar.AMS_Online_Accreditation__r.Location_Type__c == AMS_Utils.BR){
 						System.debug('OSCARTriggerHandler -> validateCertificates: Non handling '+ oscar.AMS_Online_Accreditation__r.Location_Type__c + ' agency.');
-						checkCertifications(trainedStaffPerAccount.get(oscar.Account__c), locationType, false, locationClass, countryName, minDgrHO, minDgrBR);
+						checkCertifications(trainedStaffPerAccount.get(oscar.Account__c), locationType, false, locationClass, countryCode, minDgrHO, minDgrBR);
 					}
 				}
 			}
 		}
 	}
 
-	private static void checkCertifications(List<AMS_Accreditation_Contact__c> trainedStaff, String accountLocationType, boolean handling, String locationClass, String countryName, Integer minimumHODgrRequirements, Integer minimumBRDgrRequirements){
+	private static void checkCertifications(List<AMS_Accreditation_Contact__c> trainedStaff, String accountLocationType, boolean handling, String locationClass, String countryCode, Integer minimumHODgrRequirements, Integer minimumBRDgrRequirements){
 
 		Integer numberDGR = 0;
 		Integer numberDGA = 0;
@@ -1297,7 +1283,7 @@ public class AMS_OSCARTriggerHandler {
 		System.debug('OSCARTriggerHandler -> checkCertifications: number of DGA ' + numberDGA);
 
 		if(handling){
-			if(countryName.equalsIgnoreCase('People\'s Republic of China') && locationClass == 'C' && numberDGR < 3){
+			if(countryCode == 'CN' && locationClass == 'C' && numberDGR < 3){
 				throw new AMSException('##This agency must have at least 3 DGR that are not expired.##');
 			}
 			else if(locationClass == 'C'){
@@ -1427,7 +1413,7 @@ public class AMS_OSCARTriggerHandler {
 		Map<Id, Agency_Applied_Change_code__c> accountsChangeCode = new Map<Id, Agency_Applied_Change_code__c>();
 		for (Agency_Applied_Change_code__c changeCode : [SELECT Id, Account__c, Reason_Code__c, Reason_Description__c, Bulletin_Information__c FROM Agency_Applied_Change_code__c WHERE Account__c IN :accountIds AND Active__c = true]){
 			accountsChangeCode.put(changeCode.Account__c, changeCode);
-		}
+	}
 
 
 		List<AMS_Utils.Container> changesContainer = new List<AMS_Utils.Container>();
@@ -1501,7 +1487,7 @@ public class AMS_OSCARTriggerHandler {
 				theoscars.addAll(c.oscars);
 			}
 
-			AMS_ChangeCodesHelper.createAAChangeCodes(null, changeCodes, theoscars, accts, true);
+			AMS_Utils.createAAChangeCodes( changeCodes, theoscars, accts, true);
 		}
 		
 	}

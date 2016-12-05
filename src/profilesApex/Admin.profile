@@ -157,6 +157,7 @@
 <classAccesses><apexClass>AMS_RecordCreatorWebservice</apexClass><enabled>true</enabled></classAccesses>
 <classAccesses><apexClass>AMS_RecordCreatorWebserviceTest</apexClass><enabled>true</enabled></classAccesses>
 <classAccesses><apexClass>AMS_SAAMCaseMigrationController</apexClass><enabled>true</enabled></classAccesses>
+<classAccesses><apexClass>AMS_SAAMCaseMigrationControllerTest</apexClass><enabled>true</enabled></classAccesses>
 <classAccesses><apexClass>AMS_SearchAccountByUserData</apexClass><enabled>true</enabled></classAccesses>
 <classAccesses><apexClass>AMS_SearchAccountByUserDataTest</apexClass><enabled>true</enabled></classAccesses>
 <classAccesses><apexClass>AMS_SettlementsAndOperationLoaderCtrl</apexClass><enabled>true</enabled></classAccesses>
@@ -533,6 +534,7 @@
 <classAccesses><apexClass>IDCard_CleanUp_RenewalReminder_Scheduler</apexClass><enabled>true</enabled></classAccesses>
 <classAccesses><apexClass>IDCard_ConfirmationPageController</apexClass><enabled>true</enabled></classAccesses>
 <classAccesses><apexClass>IDCard_ConfirmationPageControllerTest</apexClass><enabled>true</enabled></classAccesses>
+<classAccesses><apexClass>IDCard_DetailsAdmPaymentsCtrl</apexClass><enabled>true</enabled></classAccesses>
 <classAccesses><apexClass>IDCard_PendingOpsAndProcessedAppTest</apexClass><enabled>true</enabled></classAccesses>
 <classAccesses><apexClass>IDCard_Refund</apexClass><enabled>true</enabled></classAccesses>
 <classAccesses><apexClass>IDCard_RenewalReminder_Batch</apexClass><enabled>true</enabled></classAccesses>
@@ -1362,6 +1364,8 @@
 <classAccesses><apexClass>vfIECEBC_TemplateList</apexClass><enabled>true</enabled></classAccesses>
 <classAccesses><apexClass>vfIECEBC_Test</apexClass><enabled>true</enabled></classAccesses>
 <classAccesses><apexClass>vfIECEBC_Test1</apexClass><enabled>true</enabled></classAccesses>
+<classAccesses><apexClass>vfIECEBC_TestPayment</apexClass><enabled>true</enabled></classAccesses>
+<classAccesses><apexClass>vfIECEBC_TestPaymentSuite</apexClass><enabled>true</enabled></classAccesses>
 <classAccesses><apexClass>vfIECEBC_TestSuite</apexClass><enabled>true</enabled></classAccesses>
 <classAccesses><apexClass>vfIECEBC_TestSuite1</apexClass><enabled>true</enabled></classAccesses>
 <classAccesses><apexClass>vfIECEncryptUtility</apexClass><enabled>true</enabled></classAccesses>
@@ -1610,6 +1614,7 @@
 <pageAccesses><apexPage>IDCard_Checkout</apexPage><enabled>true</enabled></pageAccesses>
 <pageAccesses><apexPage>IDCard_CheckoutConfirmation</apexPage><enabled>true</enabled></pageAccesses>
 <pageAccesses><apexPage>IDCard_CheckoutSingleApplication</apexPage><enabled>true</enabled></pageAccesses>
+<pageAccesses><apexPage>IDCard_DetailsAdmPayments</apexPage><enabled>true</enabled></pageAccesses>
 <pageAccesses><apexPage>IDCard_MultipleAgency_Details</apexPage><enabled>true</enabled></pageAccesses>
 <pageAccesses><apexPage>IDCard_PendingCase_Details</apexPage><enabled>true</enabled></pageAccesses>
 <pageAccesses><apexPage>IDCard_PendingIdCardApp_Details</apexPage><enabled>true</enabled></pageAccesses>
@@ -1915,6 +1920,7 @@
 <userPermissions><enabled>true</enabled><name>ApproveContract</name></userPermissions>
 <userPermissions><enabled>true</enabled><name>AssignPermissionSets</name></userPermissions>
 <userPermissions><enabled>true</enabled><name>AssignTopics</name></userPermissions>
+<userPermissions><enabled>true</enabled><name>AssignUserToSkill</name></userPermissions>
 <userPermissions><enabled>true</enabled><name>AuthorApex</name></userPermissions>
 <userPermissions><enabled>true</enabled><name>BulkMacrosAllowed</name></userPermissions>
 <userPermissions><enabled>true</enabled><name>CanInsertFeedSystemFields</name></userPermissions>

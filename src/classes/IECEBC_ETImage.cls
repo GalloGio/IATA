@@ -20,7 +20,16 @@ public class IECEBC_ETImage {
         req.setTimeout(IECEBC_ETInit.TimeOut);        
         //system.debug('ImageStatus request body: ' + req.getBody());
         // get response
-        HTTPResponse response = http.send(req);        
+        // 
+        System.debug(req.getBody());
+        HTTPResponse response;
+        if (!Test.isRunningTest()) {
+            response = http.send(req);        
+        } else {
+            response = new HTTPResponse();
+            response.setStatusCode(200);
+            response.setBody('<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"><soap:Header><wsa:Action>RetrieveResponse</wsa:Action><wsa:MessageID>urn:uuid:15167e1a-0a44-49b9-9265-17d701d94a53</wsa:MessageID><wsa:RelatesTo>urn:uuid:8474103d-de71-419a-be8a-6cd4b544f23f</wsa:RelatesTo><wsa:To>http://schemas.xmlsoap.org/ws/2004/08/addressing/role/anonymous</wsa:To><wsse:Security><wsu:Timestamp wsu:Id="Timestamp-656abaaf-613c-4a63-a7ae-02f8b18f6edb"><wsu:Created>2016-11-10T18:44:59Z</wsu:Created><wsu:Expires>2016-11-10T18:49:59Z</wsu:Expires></wsu:Timestamp></wsse:Security></soap:Header><soap:Body><RetrieveResponseMsg xmlns="http://exacttarget.com/wsdl/partnerAPI"><OverallStatus>OK</OverallStatus><RequestID>2ac37278-9461-4068-823e-226aa6ebe900</RequestID><Results xsi:type="Portfolio"><Client><ID>7237978</ID></Client><PartnerKey xsi:nil="true" /><ObjectID xsi:nil="true" /><CustomerKey>fe9b2b61-1505-434b-a633-c6710df07a6d</CustomerKey><CategoryID>739</CategoryID><FileName>a7d8E000000CbtyQAC.jpg</FileName><DisplayName>a7d8E000000CbtyQAC</DisplayName><Description /><TypeDescription>JPEG Image</TypeDescription><IsUploaded>true</IsUploaded><IsActive>true</IsActive><FileSizeKB>149</FileSizeKB><ThumbSizeKB>3</ThumbSizeKB><FileWidthPX>800</FileWidthPX><FileHeightPX>489</FileHeightPX><FileURL>http://image.S7.exacttarget.com/lib/fe84137276630d7a7d/m/1/a7d8E000000CbtyQAC.jpg</FileURL><ThumbURL>http://image.S7.exacttarget.com/lib/fe84137276630d7a7d/m/1/thumb/jpg/a7d8E000000CbtyQAC.jpg</ThumbURL></Results></RetrieveResponseMsg></soap:Body></soap:Envelope>');
+        }
         System.debug(response.getBody());
         status.put('IsUploaded', false);
         if (response.getStatusCode() == 200) { 
@@ -32,92 +41,5 @@ public class IECEBC_ETImage {
         }
         // return Image instance
         return status;
-    }
-    
-    // Retrieve all portolios that modified from the given timestamp to now
-    // Replace '2016-08-25T00:00:00Z' to formatted timestamp variable 
-    @future(callout = true)
-    public static void getLastUpdate(String timeStamp){
-        String bodyContent = 
-            '<RetrieveRequestMsg xmlns="http://exacttarget.com/wsdl/partnerAPI">' +
-            '<RetrieveRequest>' +
-            '<ObjectType>Portfolio</ObjectType>' +
-            '<Properties>FileName</Properties>' +
-            '<Properties>IsUploaded</Properties>' +
-            '<Properties>IsActive</Properties>' +
-            '<Properties>FileURL</Properties>' +
-            '<Properties>ThumbURL</Properties>' +
-            '<Filter xsi:type="SimpleFilterPart">' +
-            '<Property>ModifiedDate</Property>' +
-            '<SimpleOperator>greaterThan</SimpleOperator>' +
-            '<DateValue>' + '2016-08-25T00:00:00Z' + '</DateValue>' +      
-            '</Filter>' +
-            '</RetrieveRequest>' +
-            '</RetrieveRequestMsg>'; 
-        
-        
-        HttpRequest req = new HttpRequest(); 
-        Http http = new Http();
-        req.setTimeout(IECEBC_ETInit.TimeOut);
-        IECEBC_ETHelper.SetSoapRequest(req, 'Retrieve', bodyContent);
-        system.debug('Last updated request body :' + req.getBody());
-        HttpResponse res = new HttpResponse();
-        try{
-            res = http.send(req);
-        }catch(System.CalloutException e){
-        }
-        
-        system.debug('Last updated Images:' + res.getBody());
-        if (res.getStatusCode() == 200) { 
-            
-            if (IECEBC_ETHelper.parse(res, 'StatusCode') != 'OK') {
-                //System.debug(IECEBC_ETHelper.parse(res, 'StatusMessage'));
-                //throw new UnexpectedResponse_Exception('Unexpected Response');
-            }         
-            //sendClassificationId = IECEBC_ETHelper.parse(res, 'ObjectID');
-            //system.debug('Send Classification creation finished with id :' + sendClassificationId);
-            //return sendClassificationId;
-        } else{
-            System.debug(res);
-            //throw new UnexpectedResponse_Exception('Unexpected Response');
-        } 
-        
-    }    
-    
-        
-    // class define an Image
-    public class Image {
-        public String Status{get; set;}
-        public String URL{get; set;}
-    }
-    
-    // get image status and URL from Portfolio if its IsUploaded == true
-    Public static Image getImage(String categoryId, String fileName) {
-        // http instances and variables        
-        Http http = new Http();
-        HttpRequest req = new HttpRequest();
-        Image img = new Image();
-        
-        // header
-        IECEBC_ETHelper.setSoapRequestHeader(req, 'Retrieve');
-        // body 
-        // CategoryId =  2723632, fileName = 'TestAug10.jpg'
-        req.setBody(
-            IECEBC_ETHelper.createXMLHeader()            
-            + IECEBC_ETHelper.retrieveRequestPortfolio(categoryId, fileName) // category id of the portfolio folder
-            + IECEBC_ETHelper.createXMLFooter()              
-        );                
-        req.setTimeout(IECEBC_ETInit.TimeOut);        
-        
-        // get response
-        HTTPResponse response = http.send(req);        
-        if (response.getStatusCode() == 200) { 
-            img.Status = IECEBC_ETHelper.parse(response, 'IsUploaded');
-            if(img.Status == 'true'){
-                img.URL = IECEBC_ETHelper.parse(response, 'FileURL');
-            }
-        }
-        // return Image instance
-        return img;
     }
 }
