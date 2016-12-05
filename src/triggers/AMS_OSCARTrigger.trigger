@@ -102,6 +102,8 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
                 oscar.BSPLink_participation__c = true;
             //removed in issue AMS-1584
             //oscar.Sanity_check_deadline__c = Date.today() + 15;
+            if(oscar.Process__c == AMS_Utils.CERTIFICATION)
+                oscar.Sanity_check_deadline__c = Date.today()+90;
 
 
             oscars.add(oscar);

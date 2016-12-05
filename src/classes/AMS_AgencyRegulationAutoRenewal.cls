@@ -92,26 +92,33 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
         Map<String, Id> countryTemplates = DGRemailTemplates();
 
         for(AMS_Agency_Regulation__c agReg: regulationsRequiringRenewal){
-            //only create renewal if account is going below DGR/DGA requirements
-            String key = allDGR.get(agReg.Id).Account__r.IATA_ISO_Country__c + allDGR.get(agReg.Id).Account__r.Location_Class__c;
-            system.debug('key value ' + key);
-            Integer minDgrHO = minimumHODgrRequirements.get(key) == null ? 0 : minimumHODgrRequirements.get(key);
-            system.debug('minDgrHO ' + minDgrHO);
-            Integer minDgrBR = minimumBRDgrRequirements.get(key) == null ? 0 : minimumBRDgrRequirements.get(key);
-            system.debug('minDgrBR ' + minDgrBR);
 
-            Integer activeDGRInAccount = allNonExpiredDGRPerAccount.get(agReg.Account__c).size();
-            Integer dgrToRenewInAccount = DGRToRenewPerAccount.get(agReg.Account__c).size();
-            Integer numberOfRemainingDGRInAccountToExpire = activeDGRInAccount-dgrToRenewInAccount;
+        	if(agReg.Type_Of_Certificate__c == AMS_Utils.CERT_DGR){
+	            //only create renewal if account is going below DGR requirements
+	            String key = allDGR.get(agReg.Id).Account__r.IATA_ISO_Country__c + allDGR.get(agReg.Id).Account__r.Location_Class__c;
+	            system.debug('key value ' + key);
+	            Integer minDgrHO = minimumHODgrRequirements.get(key) == null ? 0 : minimumHODgrRequirements.get(key);
+	            system.debug('minDgrHO ' + minDgrHO);
+	            Integer minDgrBR = minimumBRDgrRequirements.get(key) == null ? 0 : minimumBRDgrRequirements.get(key);
+	            system.debug('minDgrBR ' + minDgrBR);
 
-            system.debug('creating renewal for DGR ' + numberOfRemainingDGRInAccountToExpire);
-            if(isCountBelowThreshold(accountData.get(agReg.Account__c), numberOfRemainingDGRInAccountToExpire, minDgrHO, minDgrBR)){
-                
-                system.debug('creating renewal for DGR');
-                AMS_OSCAR__c oscar = createStagingArea(agReg, accountData.get(agReg.Account__c), DGRToRenewPerAccount.get(agReg.Account__c));
+	            Integer activeDGRInAccount = allNonExpiredDGRPerAccount.get(agReg.Account__c).size();
+	            Integer dgrToRenewInAccount = DGRToRenewPerAccount.get(agReg.Account__c).size();
+	            Integer numberOfRemainingDGRInAccountToExpire = activeDGRInAccount-dgrToRenewInAccount;
 
-                sendEmailAlert(keyContactsPerAccount.get(agReg.Account__c), oscar.Id, countryTemplates, oscar.Oscar_Communication_Case_Id__c);
-            }
+	            system.debug('creating renewal for DGR ' + numberOfRemainingDGRInAccountToExpire);
+	            if(isCountBelowThreshold(accountData.get(agReg.Account__c), numberOfRemainingDGRInAccountToExpire, minDgrHO, minDgrBR)){
+	                
+	                system.debug('creating renewal for DGR');
+	                AMS_OSCAR__c oscar = createStagingArea(agReg, accountData.get(agReg.Account__c), DGRToRenewPerAccount.get(agReg.Account__c));
+
+	                sendEmailAlert(keyContactsPerAccount.get(agReg.Account__c), oscar.Id, countryTemplates, oscar.Oscar_Communication_Case_Id__c);
+	            }
+        	}
+        	else if(agReg.Type_Of_Certificate__c == AMS_Utils.CERT_CATA){
+        		system.debug('creating renewal for CATA');
+	            AMS_OSCAR__c oscar = createStagingArea(agReg, accountData.get(agReg.Account__c), DGRToRenewPerAccount.get(agReg.Account__c));
+        	}
         }
 
     }
@@ -156,7 +163,7 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
         theCommunicationCase.AccountId = agReg.Account__c;
         theCommunicationCase.Account_Concerned__c = agReg.Account__c;
         theCommunicationCase.BSPCountry__c = accountData.BillingCountry;
-        theCommunicationCase.Reason1__c = 'Certificate DGR';
+        theCommunicationCase.Reason1__c = 'Certificate ' + agReg.Type_of_certificate__c;
         theCommunicationCase.Region__c = accountData.Region_formula__c;
         //theCommunicationCase.Subject = 'DGR renewal - ' + accountData.Name + ' - ' + accountData.IATACode__c;
 

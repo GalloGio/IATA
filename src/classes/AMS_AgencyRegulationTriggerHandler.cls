@@ -20,7 +20,7 @@ public class AMS_AgencyRegulationTriggerHandler {
         for(AMS_Agency_Regulation__c agReg: agencyRegulations){
             accountIds.add(agReg.Account__c);
 
-            if(!oldAgRegulationValues.get(agReg.Id).Notification_Sent__c && agReg.Notification_Sent__c && agReg.Type_of_Certificate__c == AMS_Utils.CERT_DGR && agReg.Handling_Account__c)
+            if(!oldAgRegulationValues.get(agReg.Id).Notification_Sent__c && agReg.Notification_Sent__c && (agReg.Type_of_Certificate__c == AMS_Utils.CERT_DGR || agReg.Type_of_Certificate__c == AMS_Utils.CERT_CATA) && agReg.Handling_Account__c)
                 dgrRegulationsExpiringIn90Days.add(agReg);
         }
 
