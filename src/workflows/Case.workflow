@@ -12276,10 +12276,6 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <name>FDS_Set_Status_Pending_customer</name>
             <type>FieldUpdate</type>
         </actions>
-        <actions>
-            <name>ASP_Case_created_Status_to_be_updated_in_MDM</name>
-            <type>Task</type>
-        </actions>
         <active>true</active>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
@@ -12303,10 +12299,6 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <actions>
             <name>FDS_Set_Status_Pending_customer</name>
             <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>ASP_Case_created_Status_to_be_updated_in_MDM</name>
-            <type>Task</type>
         </actions>
         <active>true</active>
         <criteriaItems>
