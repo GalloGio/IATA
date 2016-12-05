@@ -58,13 +58,13 @@
         <field>Contract$EF_Billing_Currency__c</field>
     </columns>
     <columns>
+        <field>Contract$Dunning_Procedure__c</field>
+    </columns>
+    <columns>
         <field>Contract.EF_Locations_Currencies__r$Location_ID_Name__c</field>
     </columns>
     <columns>
         <field>Contract.EF_Locations_Currencies__r$CurrencyIsoCode</field>
-    </columns>
-    <columns>
-        <field>Contract$Dunning_Procedure__c</field>
     </columns>
     <currency>USD</currency>
     <filter>

@@ -60,9 +60,6 @@
     <columns>
         <field>Contact.EF_Signatory__c</field>
     </columns>
-    <columns>
-        <field>Contact.Account_Management_Key_Contact__c</field>
-    </columns>
     <currency>USD</currency>
     <format>Tabular</format>
     <name>E&amp;F Contact Report</name>

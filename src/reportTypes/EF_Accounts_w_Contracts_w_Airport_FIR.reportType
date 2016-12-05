@@ -2490,6 +2490,16 @@
             <field>FIR_Code__c</field>
             <table>Account.Contracts.Airports_FIR_Codes__r</table>
         </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>FIR_Code_Name__c</field>
+            <table>Account.Contracts.Airports_FIR_Codes__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contract__c</field>
+            <table>Account.Contracts.Airports_FIR_Codes__r</table>
+        </columns>
         <masterLabel>Airports/FIR Codes</masterLabel>
     </sections>
 </ReportType>

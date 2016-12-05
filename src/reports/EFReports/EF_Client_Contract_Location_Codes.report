@@ -22,7 +22,7 @@
         <field>Account.Contracts$EF_Group_Code__c</field>
     </columns>
     <columns>
-        <field>Account$EF_SIS_Code__c</field>
+        <field>Account.Contracts$EF_Client_SIS_Code__c</field>
     </columns>
     <columns>
         <field>Account$EF_SIS_Designator__c</field>

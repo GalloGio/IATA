@@ -4,7 +4,7 @@
         <field>ACCOUNT.NAME</field>
     </columns>
     <columns>
-        <field>Account.Quality__c</field>
+        <field>Account.RecordType</field>
     </columns>
     <columns>
         <field>PARENT.NAME</field>
