@@ -94,9 +94,7 @@
     <scope>organization</scope>
     <showDetails>true</showDetails>
     <timeFrameFilter>
-        <dateColumn>EF_Billing_Agreement__c$CreatedDate</dateColumn>
-        <endDate>2016-11-25</endDate>
+        <dateColumn>CREATED_DATE</dateColumn>
         <interval>INTERVAL_CUSTOM</interval>
-        <startDate>2016-11-25</startDate>
     </timeFrameFilter>
 </Report>

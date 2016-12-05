@@ -4,7 +4,7 @@
         <field>EF_Billing_Agreement__c$Name</field>
     </columns>
     <columns>
-        <field>EF_Billing_Agreement__c$Billing_Agreement_Name__c</field>
+        <field>EF_Billing_Agreement__c$BillingAgreement_Name__c</field>
     </columns>
     <columns>
         <field>EF_Billing_Agreement__c$Client__c</field>
@@ -36,6 +36,9 @@
     <columns>
         <field>EF_Billing_Agreement__c.EF_Contact_Relationships__r$Contact__c.Phone</field>
     </columns>
+    <columns>
+        <field>EF_Billing_Agreement__c.EF_Contact_Relationships__r$Contact__c.Fax</field>
+    </columns>	
     <columns>
         <field>EF_Billing_Agreement__c.EF_Contact_Relationships__r$Contact__c.MailingAddress</field>
     </columns>

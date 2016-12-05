@@ -7703,11 +7703,6 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
-        <field>EF_Billing_Agreement__c.Billing_Agreement_Name__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
         <editable>true</editable>
         <field>EF_Billing_Agreement__c.Billing_Currency__c</field>
         <readable>true</readable>
@@ -8085,6 +8080,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>EF_Related_Records__c.Type__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>FIR_Code__r.FIR_Code_Name__c</field>
         <readable>true</readable>
     </fieldPermissions>
 	<fieldPermissions>

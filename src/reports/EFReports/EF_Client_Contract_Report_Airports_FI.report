@@ -25,7 +25,7 @@
         <field>Account.Contracts$EF_Group_Code__c</field>
     </columns>
     <columns>
-        <field>Account$EF_SIS_Code__c</field>
+        <field>Account.Contracts$EF_Client_SIS_Code__c</field>
     </columns>
     <columns>
         <field>Account.Contracts$EF_Admin_Fee__c</field>
@@ -58,13 +58,19 @@
         <field>Account.Contracts$EF_Billing_Currency__c</field>
     </columns>
     <columns>
+        <field>Account.Contracts$Dunning_Procedure__c</field>
+    </columns>
+    <columns>
+        <field>Account.Contracts.Airports_FIR_Codes__r$Id</field>
+    </columns>
+    <columns>
         <field>Account.Contracts.Airports_FIR_Codes__r$Name</field>
     </columns>
     <columns>
-        <field>Account.Contracts.Airports_FIR_Codes__r$FIR_Code__c</field>
+        <field>Account.Contracts.Airports_FIR_Codes__r$FIR_Code_Name__c</field>
     </columns>
     <columns>
-        <field>Account.Contracts$Dunning_Procedure__c</field>
+        <field>Account.Contracts.Airports_FIR_Codes__r$FIR_Code__c</field>
     </columns>
     <currency>USD</currency>
     <format>Tabular</format>
@@ -77,9 +83,7 @@
     <scope>organization</scope>
     <showDetails>true</showDetails>
     <timeFrameFilter>
-        <dateColumn>Account$Accreditation_date__c</dateColumn>
-        <endDate>2016-11-25</endDate>
+        <dateColumn>CREATED_DATE</dateColumn>
         <interval>INTERVAL_CUSTOM</interval>
-        <startDate>2016-11-25</startDate>
     </timeFrameFilter>
 </Report>

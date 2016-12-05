@@ -52,13 +52,13 @@
         <field>FK_$Contract.EF_Billing_Currency__c</field>
     </columns>
     <columns>
+        <field>FK_$Contract.Dunning_Procedure__c</field>
+    </columns>
+    <columns>
         <field>CUST_NAME</field>
     </columns>
     <columns>
         <field>EF_Material_Line_Item__c.EF_Material_Name__c</field>
-    </columns>
-    <columns>
-        <field>FK_$Contract.Dunning_Procedure__c</field>
     </columns>
     <currency>USD</currency>
     <filter>
