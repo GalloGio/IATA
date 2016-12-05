@@ -27,7 +27,7 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Billing_Agreement_Name__c</field>
+            <field>BillingAgreement_Name__c</field>
             <table>EF_Billing_Agreement__c</table>
         </columns>
         <columns>
