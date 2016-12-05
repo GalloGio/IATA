@@ -354,6 +354,10 @@ private class SIDRAliteMassApprovalControllerTest {
         controller.SelectAll();
         controller.confirmMassApproveCases();
         //controller.confirmApproval = true;
+        cse = controller.listWrapperCase[0].cse;
+        cse.Type_of_REI_WD__c = 'DEF/SUS REI';
+        cse.DEF_Withdrawal_Reason__c = 'Agent error';
+        cse.Reason_of_REI_WD__c = 'Commissioner decision';
         controller.confirmMassApproveCases();
         controller.massApproveUpdateCases();
         test.stopTest();
