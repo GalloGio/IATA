@@ -212,12 +212,18 @@ global class AMS_VoucherPDFCreationBatch implements Database.Batchable<sObject>,
 
 	private String buildCustomReport(){
 		
-		Report rep = [select id, name, description from report where Name = 'Voucher Batch Report' LIMIT 1];
+        Report rep = null;
+        
+        if(!Test.isRunningTest())
+			rep = [select id, name, description from report where Name = 'Voucher Batch Report' LIMIT 1];
 
 		String urlCode = String.valueof(URL.getSalesforceBaseUrl().toExternalForm());
 
-		return urlCode + '/' + rep.Id +  '?pn0=eq&pv0=' +  String.valueOf(process.Id).substring(0, 15);
-	}
+        if(!Test.isRunningTest())
+			return urlCode + '/' + rep.Id +  '?pn0=eq&pv0=' +  String.valueOf(process.Id).substring(0, 15);
+		else
+            return '';
+    }
 
 	private static String buildCustomPDFLink(AMS_Voucher_Region__c region){
 
