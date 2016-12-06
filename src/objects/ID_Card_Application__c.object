@@ -2660,16 +2660,17 @@ function guid() {
 }
 
 
-var fileName= &apos;{!ID_Card_Application__c.UIR__c}&apos;;
+var fileName; //#= &apos;{!ID_Card_Application__c.UIR__c}&apos;;
 var currentPic = &apos;{!ID_Card_Application__c.Photo__c}&apos;;
-if(fileName == null || fileName ==&apos;&apos;)
-{
+//#if(fileName == null || fileName ==&apos;&apos;)
+//#{
 	
 	if (currentPic != null &amp;&amp; currentPic != &apos;&apos;)
 		fileName = currentPic;
 	else	
 		fileName = guid();
-}
+//#}
+
 //Rename photo field	
 if (currentPic == null || currentPic == &apos;&apos;)
 {

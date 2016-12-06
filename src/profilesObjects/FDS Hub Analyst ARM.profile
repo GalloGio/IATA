@@ -1779,6 +1779,7 @@
 <fieldPermissions><editable>true</editable><field>Archived_Attachment__c.Internal_Comments__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Archived_Attachment__c.OriginalCreatedBy__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Archived_Attachment__c.Original_Creation_Date__c</field><readable>true</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>Archived_Attachment__c.Originally_Created_By__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Archived_Message__c.EmailMessage__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>ArticleStatistics__c.Article_Number__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>ArticleStatistics__c.Stat_Type__c</field><readable>true</readable></fieldPermissions>
@@ -3687,6 +3688,7 @@
 <fieldPermissions><editable>false</editable><field>EBC_Order__c.eBroadcast_Payment_Target__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>EBC_Order__c.eBroadcast_Payment_Token__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>EBC_Preference__c.Billing_Account__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>true</editable><field>EBC_Preference__c.Default_From_Name__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>EBC_Preference__c.Default_Google_Analytics_Tracker__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>EBC_Preference__c.Monthly_Account_Status__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>EBC_Preference__c.Notify_On_Send__c</field><readable>false</readable></fieldPermissions>
@@ -6077,15 +6079,15 @@
 <fieldPermissions><editable>false</editable><field>Quality__c.Action_6_Milestone__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Quality__c.Action_6_Owner__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Quality__c.Activity__c</field><readable>true</readable></fieldPermissions>
-<fieldPermissions><editable>false</editable><field>Quality__c.Additional_analysis_optional__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>true</editable><field>Quality__c.Additional_analysis_optional__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Quality__c.Africa_MENA_CC__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Quality__c.Africa_MENA_Evidences_Needed__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Quality__c.Agree_Bypass__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Quality__c.All_HUB__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Quality__c.Americas_CC__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Quality__c.Americas_Evidences_Needed__c</field><readable>true</readable></fieldPermissions>
-<fieldPermissions><editable>false</editable><field>Quality__c.Apparent_Cause__c</field><readable>false</readable></fieldPermissions>
-<fieldPermissions><editable>false</editable><field>Quality__c.Apparent_Cause_if_other__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>true</editable><field>Quality__c.Apparent_Cause__c</field><readable>true</readable></fieldPermissions>
+<fieldPermissions><editable>true</editable><field>Quality__c.Apparent_Cause_if_other__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Quality__c.Approval_Status__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Quality__c.Approval_Time__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Quality__c.Asia_Pacific_CC__c</field><readable>true</readable></fieldPermissions>
@@ -6156,7 +6158,7 @@
 <fieldPermissions><editable>true</editable><field>Quality__c.Input_RCMR__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Quality__c.Input_RQ__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Quality__c.Input_Sec__c</field><readable>true</readable></fieldPermissions>
-<fieldPermissions><editable>false</editable><field>Quality__c.Is_OI_logged__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>true</editable><field>Quality__c.Is_OI_logged__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Quality__c.Key_Control_Type__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Quality__c.Key_Control__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Quality__c.Legal__c</field><readable>true</readable></fieldPermissions>
@@ -6176,8 +6178,8 @@
 <fieldPermissions><editable>false</editable><field>Quality__c.Missed_Mandatory_Inputs_Check__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Quality__c.Noteonrejection__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Quality__c.Number_of_Evidences_to_be_Collected__c</field><readable>true</readable></fieldPermissions>
-<fieldPermissions><editable>false</editable><field>Quality__c.Number_of_affected_customers__c</field><readable>false</readable></fieldPermissions>
-<fieldPermissions><editable>false</editable><field>Quality__c.OI_number_if_logged__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>true</editable><field>Quality__c.Number_of_affected_customers__c</field><readable>true</readable></fieldPermissions>
+<fieldPermissions><editable>true</editable><field>Quality__c.OI_number_if_logged__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Quality__c.Object_Type__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Quality__c.Open_Date__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Quality__c.Operation_Additional_Data__c</field><readable>true</readable></fieldPermissions>
@@ -6188,8 +6190,8 @@
 <fieldPermissions><editable>true</editable><field>Quality__c.R_S_Legacy_R_S_EXE_Log_2011_2012__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Quality__c.Reason_for_Exception__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Quality__c.Reason_for_lack_of_Compensation_Control__c</field><readable>true</readable></fieldPermissions>
-<fieldPermissions><editable>false</editable><field>Quality__c.Reason_for_requesting_exception__c</field><readable>false</readable></fieldPermissions>
-<fieldPermissions><editable>false</editable><field>Quality__c.Reason_for_requesting_exception_if_othe__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>true</editable><field>Quality__c.Reason_for_requesting_exception__c</field><readable>true</readable></fieldPermissions>
+<fieldPermissions><editable>true</editable><field>Quality__c.Reason_for_requesting_exception_if_othe__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Quality__c.Region__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Quality__c.Regional_Cargo_Manager_Regional__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Quality__c.Regional_Cargo_Manager_cargo_agent_HO__c</field><readable>true</readable></fieldPermissions>
