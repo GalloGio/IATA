@@ -2992,6 +2992,22 @@ la funzione &quot;Password dimenticata?&quot;</label>
         <name>ISSP_60Day_Password_Reset</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_ACCR_Alert1 --></label>
+        <name>ISSP_AMS_ACCR_Alert1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_ACCR_Review_Msg --></label>
+        <name>ISSP_AMS_ACCR_Review_Msg</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_ACCR_Submit_Msg_CargoBR --></label>
+        <name>ISSP_AMS_ACCR_Submit_Msg_CargoBR</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_ACCR_Submit_Msg_CargoHO --></label>
+        <name>ISSP_AMS_ACCR_Submit_Msg_CargoHO</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS Accept TOS --></label>
         <name>ISSP_AMS_Accept_TOS</name>
     </customLabels>
@@ -3152,6 +3168,10 @@ la funzione &quot;Password dimenticata?&quot;</label>
         <name>ISSP_AMS_CGO_BR_ReadOnly_Separate_user_access</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_CGO_GrossMoneyValue --></label>
+        <name>ISSP_AMS_CGO_GrossMoneyValue</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_CGO_ReadOnly_LBL1 --></label>
         <name>ISSP_AMS_CGO_ReadOnly_LBL1</name>
     </customLabels>
@@ -3198,6 +3218,54 @@ la funzione &quot;Password dimenticata?&quot;</label>
     <customLabels>
         <label><!-- ISSP_AMS_CGO_ReadOnly_SECTION2 --></label>
         <name>ISSP_AMS_CGO_ReadOnly_SECTION2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_CGO_ReadOnly_SECTION4 --></label>
+        <name>ISSP_AMS_CGO_ReadOnly_SECTION4</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_CGO_Region_Africa --></label>
+        <name>ISSP_AMS_CGO_Region_Africa</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_CGO_Region_Australia --></label>
+        <name>ISSP_AMS_CGO_Region_Australia</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_CGO_Region_CentralAmerica --></label>
+        <name>ISSP_AMS_CGO_Region_CentralAmerica</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_CGO_Region_Europe --></label>
+        <name>ISSP_AMS_CGO_Region_Europe</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_CGO_Region_FarEast --></label>
+        <name>ISSP_AMS_CGO_Region_FarEast</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_CGO_Region_MiddleEast --></label>
+        <name>ISSP_AMS_CGO_Region_MiddleEast</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_CGO_Region_SouthAmerica --></label>
+        <name>ISSP_AMS_CGO_Region_SouthAmerica</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_CGO_Region_USA --></label>
+        <name>ISSP_AMS_CGO_Region_USA</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_CGO_SpecialTypes_DangerousGoods --></label>
+        <name>ISSP_AMS_CGO_SpecialTypes_DangerousGoods</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_CGO_SpecialTypes_LiveAnimals --></label>
+        <name>ISSP_AMS_CGO_SpecialTypes_LiveAnimals</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_CGO_SpecialTypes_Other --></label>
+        <name>ISSP_AMS_CGO_SpecialTypes_Other</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_CGO_T_Cs_TXT1 --></label>
@@ -3434,6 +3502,10 @@ la funzione &quot;Password dimenticata?&quot;</label>
     <customLabels>
         <label><!-- ISSP_AMS_Cargo_Branch_Form_SECTION5_TXT6 --></label>
         <name>ISSP_AMS_Cargo_Branch_Form_SECTION5_TXT6</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Cargo_Branch_Form_SECTION5_TXT7 --></label>
+        <name>ISSP_AMS_Cargo_Branch_Form_SECTION5_TXT7</name>
     </customLabels>
     <customLabels>
         <label><!-- shortDescription --></label>
@@ -3818,6 +3890,10 @@ la funzione &quot;Password dimenticata?&quot;</label>
     <customLabels>
         <label><!-- ISSP AMS Fin Contact --></label>
         <name>ISSP_AMS_Fin_Contact</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Financial Interest --></label>
+        <name>ISSP_AMS_Financial_Interest</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS First 8 Digits --></label>
@@ -4234,6 +4310,10 @@ la funzione &quot;Password dimenticata?&quot;</label>
     <customLabels>
         <label><!-- ISSP AMS Name of employer --></label>
         <name>ISSP_AMS_Name_of_employer</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS New HO details --></label>
+        <name>ISSP_AMS_New_HO_details</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_NoC_Additional_Information --></label>
@@ -5560,8 +5640,256 @@ la funzione &quot;Password dimenticata?&quot;</label>
         <name>ISSP_AMS_download_a_PDF_version</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_download_a_PDF_version_Application --></label>
+        <name>ISSP_AMS_download_a_PDF_version_Application</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_download_a_PDF_version_Of_your --></label>
+        <name>ISSP_AMS_download_a_PDF_version_Of_your</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_download_of --></label>
         <name>ISSP_AMS_download_of</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_eBulletin_AgencyChanges --></label>
+        <name>ISSP_AMS_eBulletin_AgencyChanges</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_eBulletin_AgencyInformation --></label>
+        <name>ISSP_AMS_eBulletin_AgencyInformation</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_eBulletin_Area1 --></label>
+        <name>ISSP_AMS_eBulletin_Area1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_eBulletin_Area2 --></label>
+        <name>ISSP_AMS_eBulletin_Area2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_eBulletin_Area3 --></label>
+        <name>ISSP_AMS_eBulletin_Area3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_eBulletin_AvailableCountries --></label>
+        <name>ISSP_AMS_eBulletin_AvailableCountries</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_eBulletin_CASS --></label>
+        <name>ISSP_AMS_eBulletin_CASS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_eBulletin_Cargo --></label>
+        <name>ISSP_AMS_eBulletin_Cargo</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_eBulletin_Countries --></label>
+        <name>ISSP_AMS_eBulletin_Countries</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_eBulletin_CountrySelection --></label>
+        <name>ISSP_AMS_eBulletin_CountrySelection</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_eBulletin_Country_SelectAll --></label>
+        <name>ISSP_AMS_eBulletin_Country_SelectAll</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_eBulletin_DAILY_Bulletin --></label>
+        <name>ISSP_AMS_eBulletin_DAILY_Bulletin</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_eBulletin_DailyFrequency --></label>
+        <name>ISSP_AMS_eBulletin_DailyFrequency</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_eBulletin_Defaults --></label>
+        <name>ISSP_AMS_eBulletin_Defaults</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_eBulletin_Description --></label>
+        <name>ISSP_AMS_eBulletin_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_eBulletin_Disabled --></label>
+        <name>ISSP_AMS_eBulletin_Disabled</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_eBulletin_Domestic --></label>
+        <name>ISSP_AMS_eBulletin_Domestic</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_eBulletin_Enabled --></label>
+        <name>ISSP_AMS_eBulletin_Enabled</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_eBulletin_FilterOptionsDaily --></label>
+        <name>ISSP_AMS_eBulletin_FilterOptionsDaily</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_eBulletin_FilterOptionsWeekly --></label>
+        <name>ISSP_AMS_eBulletin_FilterOptionsWeekly</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_eBulletin_Filter_Geographic_Area --></label>
+        <name>ISSP_AMS_eBulletin_Filter_Geographic_Area</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_eBulletin_GeographicArea --></label>
+        <name>ISSP_AMS_eBulletin_GeographicArea</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_eBulletin_Instructions --></label>
+        <name>ISSP_AMS_eBulletin_Instructions</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_eBulletin_Irregularities --></label>
+        <name>ISSP_AMS_eBulletin_Irregularities</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_eBulletin_NewApplicationProcesses --></label>
+        <name>ISSP_AMS_eBulletin_NewApplicationProcesses</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_eBulletin_OptOut_Daily_Notifications --></label>
+        <name>ISSP_AMS_eBulletin_OptOut_Daily_Notifications</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_eBulletin_OptOut_Weekly_Notifications --></label>
+        <name>ISSP_AMS_eBulletin_OptOut_Weekly_Notifications</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_eBulletin_Passenger --></label>
+        <name>ISSP_AMS_eBulletin_Passenger</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_eBulletin_Processing_eBulletin --></label>
+        <name>ISSP_AMS_eBulletin_Processing_eBulletin</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_eBulletin_Program --></label>
+        <name>ISSP_AMS_eBulletin_Program</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_eBulletin_ProgramSelection --></label>
+        <name>ISSP_AMS_eBulletin_ProgramSelection</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_eBulletin_Receive_eBulletin_TimeZone --></label>
+        <name>ISSP_AMS_eBulletin_Receive_eBulletin_TimeZone</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_eBulletin_Reviews --></label>
+        <name>ISSP_AMS_eBulletin_Reviews</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_eBulletin_RunReport --></label>
+        <name>ISSP_AMS_eBulletin_RunReport</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_eBulletin_RunReport_opt_LastExecution --></label>
+        <name>ISSP_AMS_eBulletin_RunReport_opt_LastExecution</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_eBulletin_RunReport_opt_Today --></label>
+        <name>ISSP_AMS_eBulletin_RunReport_opt_Today</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_eBulletin_SelectWeek --></label>
+        <name>ISSP_AMS_eBulletin_SelectWeek</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_eBulletin_SelectedCountries --></label>
+        <name>ISSP_AMS_eBulletin_SelectedCountries</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_eBulletin_Selection_Criteria --></label>
+        <name>ISSP_AMS_eBulletin_Selection_Criteria</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_eBulletin_Selection_Download --></label>
+        <name>ISSP_AMS_eBulletin_Selection_Download</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_eBulletin_Status --></label>
+        <name>ISSP_AMS_eBulletin_Status</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_eBulletin_SubscriptionInformation --></label>
+        <name>ISSP_AMS_eBulletin_SubscriptionInformation</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_eBulletin_Termination_Closures --></label>
+        <name>ISSP_AMS_eBulletin_Termination_Closures</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_eBulletin_TimeZone_Selection --></label>
+        <name>ISSP_AMS_eBulletin_TimeZone_Selection</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_eBulletin_Title --></label>
+        <name>ISSP_AMS_eBulletin_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_eBulletin_WEEKLY_Bulletin --></label>
+        <name>ISSP_AMS_eBulletin_WEEKLY_Bulletin</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_eBulletin_btn_DownloadDailyReport --></label>
+        <name>ISSP_AMS_eBulletin_btn_DownloadDailyReport</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_eBulletin_btn_DownloadWeeklyReport --></label>
+        <name>ISSP_AMS_eBulletin_btn_DownloadWeeklyReport</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_eBulletin_btn_EditSelectionCriteria --></label>
+        <name>ISSP_AMS_eBulletin_btn_EditSelectionCriteria</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_eBulletin_btn_SaveGenerateReport --></label>
+        <name>ISSP_AMS_eBulletin_btn_SaveGenerateReport</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_eBulletin_eBulletin_UserGuide --></label>
+        <name>ISSP_AMS_eBulletin_eBulletin_UserGuide</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_eBulletin_home_btn --></label>
+        <name>ISSP_AMS_eBulletin_home_btn</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_eBulletin_home_lbl1 --></label>
+        <name>ISSP_AMS_eBulletin_home_lbl1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_eBulletin_home_lbl2 --></label>
+        <name>ISSP_AMS_eBulletin_home_lbl2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_eBulletin_home_lbl3 --></label>
+        <name>ISSP_AMS_eBulletin_home_lbl3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_eBulletin_home_lbl4 --></label>
+        <name>ISSP_AMS_eBulletin_home_lbl4</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_eBulletin_info_1 --></label>
+        <name>ISSP_AMS_eBulletin_info_1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_eBulletin_info_2 --></label>
+        <name>ISSP_AMS_eBulletin_info_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_eBulletin_info_Daily_available_days --></label>
+        <name>ISSP_AMS_eBulletin_info_Daily_available_days</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_eBulletin_lbl_Enable --></label>
+        <name>ISSP_AMS_eBulletin_lbl_Enable</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AP_Bank_Details_Change --></label>
@@ -7134,12 +7462,24 @@ La preghiamo di indicarci il paese per il quale richiede assistenza</label>
         <name>ISSP_Loading_Account</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_Loading_CASS_Associate_Details --></label>
+        <name>ISSP_Loading_CASS_Associate_Details</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP Loading Cargo Agency Details --></label>
         <name>ISSP_Loading_Cargo_Agency_Details</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Loading Cargo Company Details --></label>
+        <name>ISSP_Loading_Cargo_Company_Details</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP Loading Travel Agency Details --></label>
         <name>ISSP_Loading_Travel_Agency_Details</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Loading_Travel_Agent_Details --></label>
+        <name>ISSP_Loading_Travel_Agent_Details</name>
     </customLabels>
     <customLabels>
         <label>Città</label>
@@ -7356,6 +7696,10 @@ Se desidera accreditare una nuova filiale della sua agenzia nel suo paese, facci
 &lt;br/&gt;&lt;br/&gt;
 Se continua ad avere problemi per registrarsi nel portale clienti, la preghiamo di consultare il&lt;a href=http://theiatahub.force.com/iatapkb/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US target=_blank&gt;Manuale di aiuto&lt;/a&gt;</label>
         <name>ISSP_NoRecordsFoundCreateAgency</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_NoRecordsFoundCreateAgency2 --></label>
+        <name>ISSP_NoRecordsFoundCreateAgency2</name>
     </customLabels>
     <customLabels>
         <label>Nessun risultato per il suo criterio di ricerca. La preghiamo di cambiare i criteri della ricerca e di provare di nuovo oppure scegliere Nuovo per creare un nuovo conto</label>
@@ -8077,6 +8421,10 @@ Se desiderate ripristinare la password, tornate alla schermata di accesso e util
     <customLabels>
         <label><!-- ISSP_SharePoint_Thanks --></label>
         <name>ISSP_SharePoint_Thanks</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Shipping Address --></label>
+        <name>ISSP_Shipping_Address</name>
     </customLabels>
     <customLabels>
         <label>Obbligatorio</label>
@@ -8854,6 +9202,22 @@ ll Dashboard di tesoreria IATA è uno strumento web dinamico  che assiste e supp
     <customLabels>
         <label><!-- Message --></label>
         <name>Message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- MultiselectPicklist_Add --></label>
+        <name>MultiselectPicklist_Add</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- MultiselectPicklist_Down --></label>
+        <name>MultiselectPicklist_Down</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- MultiselectPicklist_Remove --></label>
+        <name>MultiselectPicklist_Remove</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- MultiselectPicklist_Up --></label>
+        <name>MultiselectPicklist_Up</name>
     </customLabels>
     <customLabels>
         <label><!-- My_Renewals --></label>
@@ -10452,48 +10816,6 @@ ll Dashboard di tesoreria IATA è uno strumento web dinamico  che assiste e supp
         <name>wire_transfer_payment_msg</name>
     </customLabels>
     <globalPicklists>
-        <name>EF_Payment_Terms</name>
-        <picklistValues>
-            <masterLabel>07 days after invoice date</masterLabel>
-            <translation><!-- 07 days after invoice date --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>10 days after invoice date</masterLabel>
-            <translation><!-- 10 days after invoice date --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>15 days after invoice date</masterLabel>
-            <translation><!-- 15 days after invoice date --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>20 days after invoice date</masterLabel>
-            <translation><!-- 20 days after invoice date --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>30 days after invoice date</masterLabel>
-            <translation><!-- 30 days after invoice date --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Payable immediately due net</masterLabel>
-            <translation><!-- Payable immediately due net --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
-        <name>EF_Allow_Billing_Agreements</name>
-        <picklistValues>
-            <masterLabel>Allowed</masterLabel>
-            <translation><!-- Allowed --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Allowed with Approval</masterLabel>
-            <translation><!-- Allowed with Approval --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Not Allowed</masterLabel>
-            <translation><!-- Not Allowed --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
         <name>EF_Currency</name>
         <picklistValues>
             <masterLabel>AED</masterLabel>
@@ -11209,36 +11531,6 @@ ll Dashboard di tesoreria IATA è uno strumento web dinamico  che assiste e supp
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
-        <name>EF_Frequency</name>
-        <picklistValues>
-            <masterLabel>4x/Month</masterLabel>
-            <translation><!-- 4x/Month --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Fortnightly</masterLabel>
-            <translation><!-- Fortnightly --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Monthly</masterLabel>
-            <translation><!-- Monthly --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Weekly</masterLabel>
-            <translation><!-- Weekly --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
-        <name>EF_Status</name>
-        <picklistValues>
-            <masterLabel>Active</masterLabel>
-            <translation><!-- Active --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Inactive</masterLabel>
-            <translation><!-- Inactive --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
         <name>EF_Role</name>
         <picklistValues>
             <masterLabel>Account Manager</masterLabel>
@@ -11298,22 +11590,22 @@ ll Dashboard di tesoreria IATA è uno strumento web dinamico  che assiste e supp
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
-        <name>EF_Invoice_Distribution</name>
+        <name>EF_Frequency</name>
         <picklistValues>
-            <masterLabel>Electronic Via Email</masterLabel>
-            <translation><!-- Electronic Via Email --></translation>
+            <masterLabel>4x/Month</masterLabel>
+            <translation><!-- 4x/Month --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Electronic Via Platform</masterLabel>
-            <translation><!-- Electronic Via Platform --></translation>
+            <masterLabel>Fortnightly</masterLabel>
+            <translation><!-- Fortnightly --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>No Invoice</masterLabel>
-            <translation><!-- No Invoice --></translation>
+            <masterLabel>Monthly</masterLabel>
+            <translation><!-- Monthly --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Paper</masterLabel>
-            <translation><!-- Paper --></translation>
+            <masterLabel>Weekly</masterLabel>
+            <translation><!-- Weekly --></translation>
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
@@ -11337,6 +11629,37 @@ ll Dashboard di tesoreria IATA è uno strumento web dinamico  che assiste e supp
         <picklistValues>
             <masterLabel>Rejected</masterLabel>
             <translation><!-- Rejected --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
+        <name>EF_User_Role</name>
+        <picklistValues>
+            <masterLabel>Airline Services Specialists</masterLabel>
+            <translation><!-- Airline Services Specialists --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Client Services Specialists</masterLabel>
+            <translation><!-- Client Services Specialists --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>E&amp;F General Access</masterLabel>
+            <translation><!-- E&amp;F General Access --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Head, Client Services</masterLabel>
+            <translation><!-- Head, Client Services --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Manager, Airline Services &amp; Head, Business Delivery</masterLabel>
+            <translation><!-- Manager, Airline Services &amp; Head, Business Delivery --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Manager, Business Development</masterLabel>
+            <translation><!-- Manager, Business Development --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Manager, Invoicing &amp; Accounting &amp; Data Transformation</masterLabel>
+            <translation><!-- Manager, Invoicing &amp; Accounting &amp; Data Transformation --></translation>
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
@@ -11682,6 +12005,40 @@ ll Dashboard di tesoreria IATA è uno strumento web dinamico  che assiste e supp
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
+        <name>EF_Allow_Billing_Agreements</name>
+        <picklistValues>
+            <masterLabel>Allowed</masterLabel>
+            <translation><!-- Allowed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Allowed with Approval</masterLabel>
+            <translation><!-- Allowed with Approval --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not Allowed</masterLabel>
+            <translation><!-- Not Allowed --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
+        <name>EF_Invoice_Distribution</name>
+        <picklistValues>
+            <masterLabel>Electronic Via Email</masterLabel>
+            <translation><!-- Electronic Via Email --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Electronic Via Platform</masterLabel>
+            <translation><!-- Electronic Via Platform --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No Invoice</masterLabel>
+            <translation><!-- No Invoice --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Paper</masterLabel>
+            <translation><!-- Paper --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
         <name>EF_Payment_Method</name>
         <picklistValues>
             <masterLabel>Bank transfer</masterLabel>
@@ -11709,34 +12066,41 @@ ll Dashboard di tesoreria IATA è uno strumento web dinamico  che assiste e supp
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
-        <name>EF_User_Role</name>
+        <name>EF_Status</name>
         <picklistValues>
-            <masterLabel>Airline Services Specialists</masterLabel>
-            <translation><!-- Airline Services Specialists --></translation>
+            <masterLabel>Active</masterLabel>
+            <translation><!-- Active --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Client Services Specialists</masterLabel>
-            <translation><!-- Client Services Specialists --></translation>
+            <masterLabel>Inactive</masterLabel>
+            <translation><!-- Inactive --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
+        <name>EF_Payment_Terms</name>
+        <picklistValues>
+            <masterLabel>07 days after invoice date</masterLabel>
+            <translation><!-- 07 days after invoice date --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>E&amp;F General Access</masterLabel>
-            <translation><!-- E&amp;F General Access --></translation>
+            <masterLabel>10 days after invoice date</masterLabel>
+            <translation><!-- 10 days after invoice date --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Head, Client Services</masterLabel>
-            <translation><!-- Head, Client Services --></translation>
+            <masterLabel>15 days after invoice date</masterLabel>
+            <translation><!-- 15 days after invoice date --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Manager, Airline Services &amp; Head, Business Delivery</masterLabel>
-            <translation><!-- Manager, Airline Services &amp; Head, Business Delivery --></translation>
+            <masterLabel>20 days after invoice date</masterLabel>
+            <translation><!-- 20 days after invoice date --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Manager, Business Development</masterLabel>
-            <translation><!-- Manager, Business Development --></translation>
+            <masterLabel>30 days after invoice date</masterLabel>
+            <translation><!-- 30 days after invoice date --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Manager, Invoicing &amp; Accounting &amp; Data Transformation</masterLabel>
-            <translation><!-- Manager, Invoicing &amp; Accounting &amp; Data Transformation --></translation>
+            <masterLabel>Payable immediately due net</masterLabel>
+            <translation><!-- Payable immediately due net --></translation>
         </picklistValues>
     </globalPicklists>
 </Translations>

@@ -1779,6 +1779,7 @@
 <fieldPermissions><editable>false</editable><field>Archived_Attachment__c.Internal_Comments__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Archived_Attachment__c.OriginalCreatedBy__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Archived_Attachment__c.Original_Creation_Date__c</field><readable>true</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>Archived_Attachment__c.Originally_Created_By__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Archived_Message__c.EmailMessage__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>ArticleStatistics__c.Article_Number__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>ArticleStatistics__c.Stat_Type__c</field><readable>true</readable></fieldPermissions>
@@ -3687,6 +3688,7 @@
 <fieldPermissions><editable>false</editable><field>EBC_Order__c.eBroadcast_Payment_Target__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>EBC_Order__c.eBroadcast_Payment_Token__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>EBC_Preference__c.Billing_Account__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>true</editable><field>EBC_Preference__c.Default_From_Name__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>EBC_Preference__c.Default_Google_Analytics_Tracker__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>EBC_Preference__c.Monthly_Account_Status__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>EBC_Preference__c.Notify_On_Send__c</field><readable>false</readable></fieldPermissions>
@@ -7023,6 +7025,7 @@
 <objectPermissions><allowCreate>false</allowCreate><allowDelete>false</allowDelete><allowEdit>false</allowEdit><allowRead>true</allowRead><modifyAllRecords>false</modifyAllRecords><object>EBC_Resource__c</object><viewAllRecords>true</viewAllRecords></objectPermissions>
 <objectPermissions><allowCreate>false</allowCreate><allowDelete>false</allowDelete><allowEdit>false</allowEdit><allowRead>true</allowRead><modifyAllRecords>false</modifyAllRecords><object>EBC_Setup__c</object><viewAllRecords>true</viewAllRecords></objectPermissions>
 <objectPermissions><allowCreate>false</allowCreate><allowDelete>false</allowDelete><allowEdit>false</allowEdit><allowRead>true</allowRead><modifyAllRecords>false</modifyAllRecords><object>EBC_Statistic__c</object><viewAllRecords>true</viewAllRecords></objectPermissions>
+<objectPermissions><allowCreate>false</allowCreate><allowDelete>false</allowDelete><allowEdit>false</allowEdit><allowRead>true</allowRead><modifyAllRecords>false</modifyAllRecords><object>EBC_Sub_Continent__c</object><viewAllRecords>true</viewAllRecords></objectPermissions>
 <objectPermissions><allowCreate>false</allowCreate><allowDelete>false</allowDelete><allowEdit>false</allowEdit><allowRead>true</allowRead><modifyAllRecords>false</modifyAllRecords><object>EBC_Template_Resource__c</object><viewAllRecords>true</viewAllRecords></objectPermissions>
 <objectPermissions><allowCreate>false</allowCreate><allowDelete>false</allowDelete><allowEdit>false</allowEdit><allowRead>true</allowRead><modifyAllRecords>false</modifyAllRecords><object>EBC_Template_Test__c</object><viewAllRecords>true</viewAllRecords></objectPermissions>
 <objectPermissions><allowCreate>false</allowCreate><allowDelete>false</allowDelete><allowEdit>false</allowEdit><allowRead>true</allowRead><modifyAllRecords>false</modifyAllRecords><object>EBC_Template__c</object><viewAllRecords>true</viewAllRecords></objectPermissions>
@@ -7511,7 +7514,7 @@
 <recordTypeVisibilities><default>true</default><personAccountDefault>true</personAccountDefault><recordType>eTSP_Certification__c.New_eTSP_Certification</recordType><visible>true</visible></recordTypeVisibilities>
 <recordTypeVisibilities><default>false</default><recordType>eTSP_Certification__c.WebLink</recordType><visible>true</visible></recordTypeVisibilities>
 <tabVisibilities><tab>ACCA_Service_Request__c</tab><visibility>DefaultOn</visibility></tabVisibilities>
-<tabVisibilities><tab>AMS_Accreditation_Country_CheckList__c</tab><visibility>Hidden</visibility></tabVisibilities>
+<tabVisibilities><tab>AMS_Accreditation_Country_CheckList__c</tab><visibility>DefaultOn</visibility></tabVisibilities>
 <tabVisibilities><tab>AMS_Accreditation_Organization__c</tab><visibility>Hidden</visibility></tabVisibilities>
 <tabVisibilities><tab>AMS_Agency__c</tab><visibility>DefaultOff</visibility></tabVisibilities>
 <tabVisibilities><tab>AMS_Airport__c</tab><visibility>Hidden</visibility></tabVisibilities>

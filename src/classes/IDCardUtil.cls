@@ -120,6 +120,8 @@ global with sharing class IDCardUtil {
 @RemoteAction
     public static final string CASESTATUS_PENDING_AGENT_FEEDBACK = 'Pending Agent feedback';
 @RemoteAction
+    public static final string CASESTATUS_PENDING_TO_BE_APPROVED = 'To be Approved';
+@RemoteAction
     public Static final string CASESTATUS_INPROGRESS = 'In progress';
 @RemoteAction
     public static final string CASESTATUS_READYFORPRODUCTION= 'Ready for production';  
@@ -806,8 +808,7 @@ global with sharing class IDCardUtil {
         return returnValue;
     }
 
-
-    /**
+   /**
      * Generate the CIN/TCIN for newly created ID Card records
      */
     @future(callout=true)
@@ -849,17 +850,27 @@ global with sharing class IDCardUtil {
            mapCinTemplatePerIdCardId.put(idCard.Id, CIN);
            mapIncDigitsPerCinTemplate.put(CIN, idCard.Gender__c == 'Male' ? 0 : 50);
            setCinTemplates.add(CIN.substring(1)); // add to the set without the prefix, to correctly match in the DB
+
+           system.debug('CIN template: ' + CIN.substring(1));
         }
 
         // Get current max for the increment digits for each template
 
-        list<ID_Card__c> lstRelatedIdCards = [SELECT Id, CIN__c, Gender__c FROM ID_Card__c WHERE CIN__c <> null AND CIN__c LIKE :setCinTemplates];
+        list<ID_Card__c> lstRelatedIdCards = [SELECT Id, CIN__c, LastName__c, Gender__c FROM ID_Card__c WHERE CIN__c <> null AND CIN__c LIKE :setCinTemplates];
 
         for (ID_Card__c idcard : lstRelatedIdCards) {
-            Integer incDigits = Integer.valueOf(idcard.CIN__c.mid(10, 2));
+            system.debug('Found related CIN: ' + idcard.CIN__c);
+
+            // for Last Names shorter than 3 chars
+            Integer LNamelength = idCard.LastName__c.left(3).length();
+            Integer incDigitsStartPosition = LNamelength + 7; // 10 normally
+
+            system.debug('incDigitsStartPosition: ' + incDigitsStartPosition);
+
+            Integer incDigits = Integer.valueOf(idcard.CIN__c.mid(incDigitsStartPosition, 2));
             
-            if ( incDigits > mapIncDigitsPerCinTemplate.get( (idcard.Gender__c == 'Male' ? 'M' : 'F') + idcard.CIN__c.left(10) + '__' + idcard.CIN__c.substring(12) ) ) {
-                mapIncDigitsPerCinTemplate.put( (idcard.Gender__c == 'Male' ? 'M' : 'F') + idcard.CIN__c.left(10) + '__' + idcard.CIN__c.substring(12), incDigits );
+            if ( incDigits > mapIncDigitsPerCinTemplate.get( (idcard.Gender__c == 'Male' ? 'M' : 'F') + idcard.CIN__c.left(incDigitsStartPosition) + '__' + idcard.CIN__c.substring(incDigitsStartPosition + 2) ) ) {
+                mapIncDigitsPerCinTemplate.put( (idcard.Gender__c == 'Male' ? 'M' : 'F') + idcard.CIN__c.left(incDigitsStartPosition) + '__' + idcard.CIN__c.substring(incDigitsStartPosition + 2), incDigits );
             }
         }
 
@@ -883,6 +894,8 @@ global with sharing class IDCardUtil {
             strCIN = strCIN.substring(1);
 
             idCard.CIN__c = strCIN;
+
+            system.debug('New CIN assigned: ' + strCIN);
         }
 
 
@@ -906,8 +919,7 @@ global with sharing class IDCardUtil {
         }
 
     }
-
-
+    
     private static String getCharAtIndex(String str, Integer index){
         if (str == null) 
             return null;
@@ -2031,5 +2043,18 @@ global with sharing class IDCardUtil {
         if (aMonth==12)    return 'December';
          else return 'ERROR';   
     }
+
+    //INC291433
+    @RemoteAction 
+     WebService static String setTobeapproved(String applicationIdParam) {
+        List<Case> c = [select id, ID_Card_Status__c from Case c where  c.Related_ID_Card_Application__c =: applicationIdParam and c.RecordTypeId =: IDCardcaseRecordTypeID  limit 1];
+        
+        if(!c.isEmpty() && c.size() > 0) {
+            c[0].Status = IDCardUtil.CASESTATUS_PENDING_TO_BE_APPROVED;
+            update c[0];            
+            return c[0].id;
+        }        
+        return '';
+    }  
     
 }

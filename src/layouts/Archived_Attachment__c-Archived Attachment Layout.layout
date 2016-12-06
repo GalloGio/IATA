@@ -35,6 +35,10 @@
                 <behavior>Required</behavior>
                 <field>Bucket__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Originally_Created_By__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
