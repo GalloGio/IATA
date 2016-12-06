@@ -462,12 +462,15 @@
 					ISPICKVAL(Payment_Method__c, &apos;Virtual Account Payment&apos;), &apos;V&apos;,
 					IF(
 						ISPICKVAL(Payment_Method__c, &apos;ICCS payments&apos;), &apos;Y&apos;,
+            IF(
+            ISPICKVAL(Payment_Method__c, &apos;IRIS&apos;), &apos;R&apos;,
 						&apos;&apos;
 					)
 				)
 			)
 		)
 	)
+  )
 )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Payment Method Code</label>
