@@ -176,7 +176,7 @@ global class AMS_OSCAR_Webservice {
                 }
 
                 Case issCase = new Case(RecordTypeId = InternalCaseRecordTypeID, Reason1__c = 'New Accredited Agent', CaseArea__c = 'Corporate Compliance',
-                                    ParentId = oscarCommCase.Id, AccountId = oscar[0].Account__c, Subject = 'Anti Money Laundering – ' + oscar[0].Account__r.Name,
+                                    ParentId = oscarCommCase.Id, AccountId = oscar[0].Account__c, Subject = 'Due Diligence – ' + oscar[0].Account__r.Name,
                                     OSCAR__c = oscar[0].Id, Region__c = oscar[0].Account__r.IATA_ISO_Country__r.Region__c, BSPCountry__c = oscar[0].Account__r.IATA_ISO_Country__r.Name);
 
                 insert issCase;
