@@ -237,6 +237,13 @@
                 <behavior>Readonly</behavior>
                 <field>SAP_BW_report_without_sales_figures__c</field>
             </layoutItems>
+            <layoutItems>
+                <height>300</height>
+                <page>AMP_Services</page>
+                <showLabel>false</showLabel>
+                <showScrollbars>true</showScrollbars>
+                <width>100%</width>
+            </layoutItems>
         </layoutColumns>
         <style>OneColumn</style>
     </layoutSections>
