@@ -87,8 +87,8 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-				<field>Process_Start_Date__c</field>
-			</layoutItems>
+                <field>Process_Start_Date__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
