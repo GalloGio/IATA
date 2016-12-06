@@ -4,7 +4,7 @@ global without sharing class AMS_EBulletinReportWebservice {
 	private static String objectBaseQuery = 'Agency_Applied_Change_code__c';
 	private static String objectHistBaseQuery = 'AMS_Agency_A_Change_code_History__c';
 	private static String eBulletinCSVFormat = '","';
-	private static String recordTypeName = '';
+	public static String recordTypeName = '';
 
 	private static AMSEBulletinFilters filters;
 	//private static String typeEBulletin = 'W';

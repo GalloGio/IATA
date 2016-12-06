@@ -76,7 +76,7 @@ public without sharing class AMS_EBulletinReportHelper {
 		set;}	
 
 
-	private static List<AMS_CustomSettingsUtils.AMS_EBulletinCCSection> eBulletinCCSectionsList{
+	public static List<AMS_CustomSettingsUtils.AMS_EBulletinCCSection> eBulletinCCSectionsList{
 		get{ 
 			if(eBulletinCCSectionsList == null) eBulletinCCSectionsList = new List<AMS_CustomSettingsUtils.AMS_EBulletinCCSection>();return eBulletinCCSectionsList;
 		}
@@ -208,18 +208,9 @@ public without sharing class AMS_EBulletinReportHelper {
 	*/
 	public String processEBulletinRecords(AMS_EBulletinReportWebservice.AMSEBulletinFilters filters, String objectBaseQuery, String objectHistBaseQuery, String csvFormat)
 	{
-		//Recover Ebulletin Sections
-		getEBulletinCCSections();
 
-		//Get Sections to be extracted depending on Agency Information from the Portal
-		Map<String,Boolean> agencyInfoSectionMap = new Map<String,Boolean>();
+		getChangeCodesForExtraction(filters);
 
-		agencyInfoSectionMap = getAgencyInfoPerSection(eBulletinCCSectionsList,filters.eBulletinProfile);
-
-		system.debug('agencyInfoSectionMap:  ' + agencyInfoSectionMap);
-		// Recover EBulletin Type
-		getEBulletinCCExtraction(TYPEEBULLETINMAP.get(filters.typeEBulletin),agencyInfoSectionMap);
-		
 		//Recover EBulletin Countries
 		List<String> countriesFilter = filters.countriesList;
 		
@@ -383,6 +374,25 @@ public without sharing class AMS_EBulletinReportHelper {
 	}
 
 	/** 
+		 Get EBulletin Change to be extracted considering also the sections they belong
+	*/
+
+	public static void getChangeCodesForExtraction(AMS_EBulletinReportWebservice.AMSEBulletinFilters filters){
+				//Recover Ebulletin Sections
+		getEBulletinCCSections();
+
+		//Get Sections to be extracted depending on Agency Information from the Portal
+		Map<String,Boolean> trackAgencyInfoSectionMap = new Map<String,Boolean>();
+
+		trackAgencyInfoSectionMap = getAgencyInfoPerSection(eBulletinCCSectionsList,filters.eBulletinProfile);
+
+		system.debug('agencyInfoSectionMap:  ' + trackAgencyInfoSectionMap);
+		// Recover EBulletin Type
+		getEBulletinCCExtraction(TYPEEBULLETINMAP.get(filters.typeEBulletin),trackAgencyInfoSectionMap);
+		
+	}
+
+	/** 
 		 Get EBulletin Settings with the Account / Oscar / Change Codes fields to be recovered 
 	*/
 	private static void getEBulletinSettings(String typeEBulletin)
@@ -407,12 +417,12 @@ public without sharing class AMS_EBulletinReportHelper {
 	/** 
 		 Get EBulletin Change Codes To process depending on the EBulletin Type 
 	*/
-	public static void  getEBulletinCCExtraction(String typeEBulletin, Map<String,Boolean> agencyInfoSectionMap)
+	public static void  getEBulletinCCExtraction(String typeEBulletin, Map<String,Boolean> trackAgencyInfoSectionMap)
 	{
 
 		for(AMSEBulletinCCExtration__c setting : AMSEBulletinCCExtration__c.getAll().values()){
 
-			if( (Boolean) setting.get(typeEBulletin) && agencyInfoSectionMap.containsKey(setting.Section__c) && agencyInfoSectionMap.get(setting.Section__c)) 
+			if( (Boolean) setting.get(typeEBulletin) && trackAgencyInfoSectionMap.containsKey(setting.Section__c) && trackAgencyInfoSectionMap.get(setting.Section__c)) 
 				new AMS_CustomSettingsUtils.AMS_EBulletinCCExtraction(setting);
 		}
 
@@ -421,7 +431,7 @@ public without sharing class AMS_EBulletinReportHelper {
 	/** 
 		 Get EBulletin Settings with the Account / Oscar / Change Codes fields to be recovered 
 	*/
-	private static void getEBulletinCCSections()
+	public static void getEBulletinCCSections()
 	{
 
 		for(AMSEBulletinCCSections__c setting : AMSEBulletinCCSections__c.getAll().values()){
@@ -449,14 +459,16 @@ public without sharing class AMS_EBulletinReportHelper {
 
 
 	/** 
-		 recover the field Track_CC_History__c from the List of EBulletin Sections (list recovered from the Custom Setting AMSEBulletinCCSections) 
+		 recover the field Agency_Information__c from the List of EBulletin Sections (list recovered from the Custom Setting AMSEBulletinCCSections) 
 	*/
-	private static Map<String,Boolean> getAgencyInfoPerSection(List<AMS_CustomSettingsUtils.AMS_EBulletinCCSection> sectionsList, AMS_eBulletin_Profile__c eBulletinProfile)
+	public static Map<String,Boolean> getAgencyInfoPerSection(List<AMS_CustomSettingsUtils.AMS_EBulletinCCSection> sectionsList, AMS_eBulletin_Profile__c eBulletinProfile)
 	{
 		Map<String,Boolean> trackAgencyInfoPerSectionMap = new Map<String,Boolean>();
 
 		for (AMS_CustomSettingsUtils.AMS_EBulletinCCSection sectionObj : sectionsList)
 			trackAgencyInfoPerSectionMap.put(sectionObj.eBulletinCCSection.name,(Boolean) eBulletinProfile.get(sectionObj.eBulletinCCSection.Agency_Information__c));
+
+		system.debug('trackAgencyInfoPerSectionMap: ' + trackAgencyInfoPerSectionMap);
 
 		return trackAgencyInfoPerSectionMap;
 	}
