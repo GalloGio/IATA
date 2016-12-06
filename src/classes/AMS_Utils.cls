@@ -1773,28 +1773,26 @@ public static String fetchTypeOfCustomer (String locationType , String category)
     }
 
     public static Integer findGapInRange(Integer minRange, Integer maxRange, List<Integer> orderedSlotsOccupied){
-
-        Integer availableNumberInRange = -1;
-
         //invalid range
-        if(maxRange-minRange <= 0)
+        if(maxRange-minRange < 0)
             return -1;
         
-        //no available slots
-        if(orderedSlotsOccupied.size() > maxRange-minRange)
-            return -1;
+        Integer candidate = minRange;
 
+        for(Integer occupiedSlot : orderedSlotsOccupied){
+            if(occupiedSlot > candidate){
+                System.debug('Candidate found : ' + candidate);
+                return candidate;
+            }
+            else if(occupiedSlot == candidate){
+                candidate++;
+                if(candidate > maxRange){
+                    return -1;
+    }
+            }
+        }
 
-        if(orderedSlotsOccupied.isEmpty() || (!orderedSlotsOccupied.isEmpty() && orderedSlotsOccupied[0] > minRange))
-            availableNumberInRange = minRange;
-        else
-            availableNumberInRange = binarySearchGapFinder(orderedSlotsOccupied);
-
-        if(availableNumberInRange == -1 && orderedSlotsOccupied[orderedSlotsOccupied.size()-1] < maxRange)
-            availableNumberInRange = orderedSlotsOccupied[orderedSlotsOccupied.size()-1] +1;
-
-        return availableNumberInRange;
-
+        return candidate;
     }
 
     
