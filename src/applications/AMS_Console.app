@@ -208,6 +208,7 @@
     <saveUserSessions>true</saveUserSessions>
     <tab>standard-Account</tab>
     <tab>standard-Case</tab>
+    <tab>AMS_OSCAR__c</tab>
     <tab>standard-report</tab>
     <tab>standard-Dashboard</tab>
     <tab>IATA_Code_Loader</tab>
@@ -216,6 +217,9 @@
     <tab>APXTConga4__Conga_Template__c</tab>
     <tab>SIDRA_Lite_Mass_Approval</tab>
     <workspaceMappings>
+        <mapping>
+            <tab>AMS_OSCAR__c</tab>
+        </mapping>
         <mapping>
             <tab>APXTConga4__Conga_Template__c</tab>
         </mapping>
