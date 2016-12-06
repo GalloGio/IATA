@@ -10483,7 +10483,7 @@ Select at least one Authorized Signatory, and choose the Financial Assessment Co
         <shortDescription>ISSP_AMS_download_a_PDF_version</shortDescription>
         <value>download a PDF version</value>
     </labels>
-<labels>
+    <labels>
         <fullName>ISSP_AMS_download_a_PDF_version_Application</fullName>
         <language>en_US</language>
         <protected>false</protected>

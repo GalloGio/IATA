@@ -177,7 +177,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
             return null;
         }
 
-        List<AMS_OSCAR__c> oSCARs = [SELECT Change_Code__c,Invoice_number__c,Process_Start_Date__c,Operational_Systems_Updated__c,New_docs_Received__c,
+        List<AMS_OSCAR__c> oSCARs = [SELECT Change_Code__c,Invoice_number__c,Process_Start_Date__c,Invoice_Requested__c,Operational_Systems_Updated__c,New_docs_Received__c,
                         Fees_refund_requested__c,Dossier_Validation__c,Welcome_Pack_Sent__c,status__c,Documentation_Compliant__c,Proof_of_payment_received__c,
                         Financial_Assessment_requested__c,Financial_Assessment_deadline__c,Bank_Guarantee_requested__c,Bank_Guarantee_deadline__c,
                         Bank_Guarantee_received__c,Bank_Guarantee_amount__c,Local_Inspection_requested__c,Local_Inspection_deadline__c,
