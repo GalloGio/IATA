@@ -157,47 +157,53 @@ global class AMS_OSCAR_Webservice {
         
     }
 
-    WebService static String createAMLCase(String oscarId){
+    WebService static String createAMLCaseWithNoOscarUpdate(AMS_OSCAR__c oscar) {
+        return execCreateAMLCase(oscar, false);
+    }
 
+    WebService static String createAMLCase(String oscarId){
+        List<AMS_OSCAR__c> oscar = [select Name, Account__c, Account__r.Name, Account__r.IATA_ISO_Country__r.Region__c, Account__r.IATA_ISO_Country__r.Name from AMS_OSCAR__c where Id =: oscarId];
+        if(oscar!=null && oscar.size()>0) {
+            return execCreateAMLCase(oscar[0], true);
+        }        
+        return 'ERROR: OSCAR not found.';
+    }
+
+    private static String execCreateAMLCase(AMS_OSCAR__c oscar, Boolean updateOscar) {
         String result = '';
 
         try{
 
             ID InternalCaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('Internal Cases (IDFS ISS)');
 
-            List<AMS_OSCAR__c> oscar = [select Name, Account__c, Account__r.Name, Account__r.IATA_ISO_Country__r.Region__c, Account__r.IATA_ISO_Country__r.Name from AMS_OSCAR__c where Id =: oscarId];
-            if(oscar!=null && oscar.size()>0){
-
-                Case oscarCommCase = [select Id from Case where OSCAR__c =: oscar[0].Id AND ( ParentId = null or Parent.RecordType.Name != 'OSCAR Communication' ) limit 1];
-                
-                if(oscarCommCase == null){
-                    result = 'Could not find a the Oscar Communication case related to this OSCAR.';
-                    return 'ERROR: ' + result;
-                }
-
-                Case issCase = new Case(RecordTypeId = InternalCaseRecordTypeID, Reason1__c = 'New Accredited Agent', CaseArea__c = 'Corporate Compliance',
-                                    ParentId = oscarCommCase.Id, AccountId = oscar[0].Account__c, Subject = 'Due Diligence – ' + oscar[0].Account__r.Name,
-                                    OSCAR__c = oscar[0].Id, Region__c = oscar[0].Account__r.IATA_ISO_Country__r.Region__c, BSPCountry__c = oscar[0].Account__r.IATA_ISO_Country__r.Name);
-
-                insert issCase;
-
-                oscar[0].STEP17__c = 'In Progress';
-                oscar[0].AML_requested__c = Date.today();
-                oscar[0].AML_deadline__c = Date.today()+3;
-                update oscar;
-
-                update new Account(Id=oscar[0].Account__c, Due_Diligence_Status__c = 'In Progress');
-
-                return issCase.Id;
-
+            Case oscarCommCase = [select Id from Case where OSCAR__c =: oscar.Id AND ( ParentId = null or Parent.RecordType.Name != 'OSCAR Communication' ) limit 1];
+            
+            if(oscarCommCase == null){
+                result = 'Could not find a the Oscar Communication case related to this OSCAR.';
+                return 'ERROR: ' + result;
             }
 
-            return 'ERROR: OSCAR not found.';
+            Case issCase = new Case(RecordTypeId = InternalCaseRecordTypeID, Reason1__c = 'New Accredited Agent', CaseArea__c = 'Corporate Compliance',
+                                ParentId = oscarCommCase.Id, AccountId = oscar.Account__c, Subject = 'Due Diligence – ' + oscar.Account__r.Name,
+                                OSCAR__c = oscar.Id, Region__c = oscar.Account__r.IATA_ISO_Country__r.Region__c, BSPCountry__c = oscar.Account__r.IATA_ISO_Country__r.Name);
+
+            insert issCase;
+            
+            oscar.STEP17__c = 'In Progress';
+            oscar.AML_requested__c = Date.today();
+            oscar.AML_deadline__c = Date.today()+3;
+
+            if(updateOscar) {                    
+                update oscar;
+            }
+
+            update new Account(Id=oscar.Account__c, Due_Diligence_Status__c = 'In Progress');
+
+            return issCase.Id;            
 
         }catch(Exception ex){
             return AMS_Utils.errorMessageBeautifyer(ex);
         }
-        
     }
 
     WebService static String copyDataToAccount(String oscarId){
@@ -394,45 +400,5 @@ global class AMS_OSCAR_Webservice {
         
     }
 
-    WebService static String generateCertificates(String oscarId, String agencyId){
-
-        try{
-
-            //creates request
-            AMS_Certificate_Request__c request = new AMS_Certificate_Request__c();
-            request.OSCAR__c = oscarId;
-            request.AccountIds__c = JSON.serializePretty(new Set<String>{agencyId});
-
-            //creates certificates on amazon
-            String result = AMS_CertificateHelper.createCertificate(request);
-
-            //inserts request
-            if(result.startsWithIgnoreCase('ERROR: ')) return result;
-            
-            insert request;            
-            
-            //creates attachments (for the request)
-            System.enqueueJob(new AMS_CertificateHelper.CertificateCreation(request.Id, System.now().format('YYYY'), null));
-
-            //creates change code
-            Account acct = new Account(Id = agencyId);
-            AMS_OSCAR__c oscar = new AMS_OSCAR__c(Id = oscarId);
-            AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
-            changeCode.name = 'CER';
-            changeCode.reasonCode = '91';
-            changeCode.reasonDesc  = 'ACCREDITED-MEETS STANDARD';
-            changeCode.status  = '9';
-
-            AMS_Utils.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {oscar}, new List<Account> {acct}, true);
-
-            oscar.Certificate_Generated__c = System.today();
-            update oscar;
-
-            return result;
-
-        }catch(Exception ex){
-            return AMS_Utils.errorMessageBeautifyer(ex);
-        }
-    }
 
 }

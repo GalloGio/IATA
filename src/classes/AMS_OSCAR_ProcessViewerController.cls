@@ -29,6 +29,16 @@ public class AMS_OSCAR_ProcessViewerController {
             );
         }
     }
+
+    public Boolean dueDiligenceBlocked {
+        get{
+            return (
+                oscar != null
+                && (oscar.RecordType.DeveloperName == AMS_Utils.RECTYPE_NEW || oscar.RecordType.DeveloperName == AMS_Utils.RECTYPE_CHANGE)
+                && (( oscar.STEP6__c != AMS_Utils.PASSED) || ((oscar.STEP17__c == AMS_Utils.FAILED) || (oscar.STEP17__c == AMS_Utils.PASSED)))
+            );
+        }
+    }    
     
     public String getEffectiveDate(){
         return oscar.Change_effective_as_of__c.format();
