@@ -1,11 +1,13 @@
 <apex:page standardController="Case"  extensions="EmailMessagesViewCon" showHeader="false">
 
+<apex:messages />
+<apex:message />
     <apex:includeScript value="/support/console/30.0/integration.js"/>
     <apex:includeScript value="/soap/ajax/26.0/connection.js"/>
     <apex:includeScript value="/soap/ajax/26.0/apex.js"/>
     <apex:includeScript value="{!$Resource.jquery2_1_4}"/>
-    <apex:includeScript value="{!URLFOR($Resource.Tablesorter, 'jquery.tablesorter.js')}"/>
-    <apex:stylesheet value="{!URLFOR($Resource.Tablesorter,'/themes/blue/style.css')}" />
+
+
 
     <script type="text/javascript">
 
@@ -34,7 +36,7 @@
                     //window.top.location.reload();
                     //window.parent.location.reload();
                     // var temp = window.top.location;
-                     window.top.location = ("{!$Label.SF_Base_URL}/" + caseId);
+                     window.top.location = ("{!$Site.BaseURL}/" + caseId);
                 }
                 else
                 {
@@ -110,7 +112,7 @@
 
             var countryEmail = getCountryEmail();
             var redirectUrlOne = "{!$Label.SF_Base_URL}/email/author/emailauthor.jsp?retURL=" + caseId + "&p2_lkid={!cse.ContactId}&p3_lkid=" + caseId + "&rtype=003&p26=" + countryEmail;
-            var redirectUrlTwo = ("{!$Label.SF_Base_URL}/email/author/emailauthor.jsp?retURL=" + caseId + "&p2_lkid={!cse.ContactId}&p3_lkid=" + caseId + "&rtype=003");
+            var redirectUrlTwo = "{!$Label.SF_Base_URL}/email/author/emailauthor.jsp?retURL=" + caseId + "&p2_lkid={!cse.ContactId}&p3_lkid=" + caseId + "&rtype=003";
 
             if(countryEmail != '')
             {
@@ -201,23 +203,28 @@
                     <th class=" zen-deemphasize" scope="col">Email Address</th>
                     <th class=" zen-deemphasize" scope="col">Message Date</th>
                     </tr>
-                    <apex:repeat var="message" value="{!emails}">
+
+ <apex:repeat var="msg" value="{!UnifiedList}">
+    <apex:outputPanel rendered="{!NOT(msg.ArchivedEmail)}" > 
+
+
                         <tr class="dataRow even ">
                             <td class="actionColumn">
-                                      <a href ="" onclick="ReplyMethod('{!message.Id}');return false;"  title="Reply" style="color:#015ba7; cursor: pointer;">
+                                      <a href ="" onclick="ReplyMethod('{!msg.message.Id}');return false;"  title="Reply" style="color:#015ba7; cursor: pointer;">
                                         <span value="View" class="view">Reply</span>
                                       </a>
                                       <span value="|" class="view"> |</span>
-                                       <a href ="" onclick="ToAllMethod('{!message.Id}');return false;" style="color:#015ba7; cursor: pointer;" title="To All">
+                                       <a href ="" onclick="ToAllMethod('{!msg.message.Id}');return false;" style="color:#015ba7; cursor: pointer;" title="To All">
                                          <apex:outputText value="To All" />
                                        </a>
                                        <span value="|" class="view"> |</span>
-                                      <a href ="" onclick="DeleteMethod('{!message.Id}');return false;" style="color:#015ba7; cursor: pointer;" title="Delete">
+                                      <a href ="" onclick="DeleteMethod('{!msg.message.Id}');return false;" style="color:#015ba7; cursor: pointer;" title="Delete">
                                         <apex:outputText value="Del" />
                                       </a>
+
                             </td>
                             <td class=" dataCell " scope="row">
-                                   <apex:outputText value="{!message.Status}" id="numberStatus" />
+                                   <apex:outputText value="{!msg.message.Status}" id="numberStatus" />
                                    <script>
                                        var state =document.getElementById("{!$Component.numberStatus}").innerHTML ;
                                        var CleanState;
@@ -236,31 +243,32 @@
                             </td>
                             <td class=" dataCell "  width="50" >
                                 <div class="bEmailStatus">
-                                    <img width="16" height="13" src="/img/{!IF((message.Incoming ==true),"emailInbound","emailOutbound")}.gif" title="{!IF((message.Incoming ==true),"Inbound","Outbound")}"/>
-                                    <img width="16" height="13" src="/img/emailHasAttach.gif" style="display:{!IF((message.HasAttachment ==true),"","none")}"/>
+                                    <img width="16" height="13" src="/img/{!IF((msg.message.Incoming ==true),"emailInbound","emailOutbound")}.gif" title="{!IF((msg.message.Incoming ==true),"Inbound","Outbound")}"/>
+                                    <img width="16" height="13" src="/img/emailHasAttach.gif" style="display:{!IF((msg.message.HasAttachment ==true),"","none")}"/>
                                 </div>
                             </td>
                             <td class=" dataCell ">
-                                <a style="font-weight: bold; color:#015ba7; cursor: pointer;" href="{!$Label.SF_Base_URL}/{!message.Id}" target="_blank" onclick="openSubTab('{!message.Id}');return false;">
-                                   {!if((message.Subject==null || message.Subject==''),'No Subject',message.Subject)}</a> <br/>
-                                    <font style="font-style: italic; font-decoration: none; font-size: 11px;">{!LEFT(message.TextBody,77)}...</font></td>
+                                <a style="font-weight: bold; cursor: pointer;" href="{!$Label.SF_Base_URL}/{!msg.message.Id}" target="_blank" onclick="openSubTab('{!msg.message.Id}');return false;">
+                                   {!if((msg.message.Subject==null || msg.message.Subject==''),'No Subject',msg.message.Subject)}</a> <br/>
+                                    <font style="font-style: italic; font-decoration: none; font-size: 11px;">{!LEFT(msg.message.TextBody,77)}...</font></td>
                             <td class=" dataCell ">
-                                {!If((message.Incoming==true),message.FromAddress,message.ToAddress)}
+                                {!If((msg.message.Incoming==true),msg.message.FromAddress,msg.message.ToAddress)}
                             </td>
-                            <td class=" dataCell "><apex:outputField value="{!message.MessageDate}"/></td>
+                            <td class=" dataCell "><apex:outputField value="{!msg.message.MessageDate}"/></td>
                         </tr>
-                    </apex:repeat>
-                    <apex:repeat var="message" value="{!archivedMessages}">
-                        <tr class="dataRow even ">
+
+            </apex:outputPanel> 
+     <apex:outputPanel rendered="{!msg.ArchivedEmail}">
+                     <tr class="dataRow even ">
                             <td class="actionColumn">
-                                <a class="actionLink actionLink" title="Reply"  target="_parent" href="/_ui/core/email/author/EmailAuthor?email_id={!message.EmailMessage__c}&replyToAll=0&retURL=%2F{!aCaseId}">Reply</a>
+                                <a class="actionLink actionLink" title="Reply"  target="_parent" href="/_ui/core/email/author/EmailAuthor?email_id={!msg.message.id}&replyToAll=0&retURL=%2F{!aCaseId}">Reply</a>
                                 |
-                                <a class="actionLink actionLink" title="To All" target="_parent" href="/_ui/core/email/author/EmailAuthor?email_id={!message.EmailMessage__c}&replyToAll=1&retURL=%2F{!aCaseId}">To All</a>
+                                <a class="actionLink actionLink" title="To All" target="_parent" href="/_ui/core/email/author/EmailAuthor?email_id={!msg.message.id}&replyToAll=1&retURL=%2F{!aCaseId}">To All</a>
                             </td>
                             <td class=" dataCell " scope="row">
-                                 <apex:outputText value="{!originalEmail[message.EmailMessage__c].Status}" id="numberStatus" />
+                                 <apex:outputText value="{!originalEmail[msg.message.id].Status}" id="numberStatus2" />
                                    <script>
-                                       var state = document.getElementById("{!$Component.numberStatus}").innerHTML ;
+                                       var state = document.getElementById("{!$Component.numberStatus2}").innerHTML ;
                                        var CleanState;
                                         if(state == '0')
                                          CleanState = 'New';
@@ -272,25 +280,27 @@
                                          CleanState = 'Sent';
                                         if(state =='4')
                                          CleanState = 'Forwarded';
-                                        document.getElementById("{!$Component.numberStatus}").innerHTML =  CleanState + ' [Archived]';
+                                        document.getElementById("{!$Component.numberStatus2}").innerHTML =  CleanState + ' [Archived]';
                                    </script>
                             </td>
                             <td class=" dataCell ">
                                 <div class="bEmailStatus">
-                                    <img width="16" height="13" src="/img/{!IF((originalEmail[message.EmailMessage__c].Incoming ==true),"emailInbound","emailOutbound")}.gif" title="{!IF((originalEmail[message.EmailMessage__c].Incoming ==true),"Inbound","Outbound")}"/>
+                                    <img width="16" height="13" src="/img/{!IF((originalEmail[msg.message.id].Incoming ==true),"emailInbound","emailOutbound")}.gif" title="{!IF((originalEmail[msg.message.id].Incoming ==true),"Inbound","Outbound")}"/>
                                     <img width="16" height="13" src="/img/emailHasAttach.gif"/>
                                 </div>
                             </td>
                             <td class=" dataCell ">
-                                <a style="font-weight: bold;"  href="/{!message.Id}" target="_parent">
-                                    {!if(ISBLANK(originalEmail[message.EmailMessage__c].Subject),'No Subject',originalEmail[message.EmailMessage__c].Subject)}</a> <br/>
-                                    <font style="font-style: italic; font-decoration: none; font-size: 11px;">{!LEFT(originalEmail[message.EmailMessage__c].TextBody,77)}...</font></td>
+                                <a style="font-weight: bold;"  href="/{!msg.ArchEmailMessageID }" target="_parent">
+                                    {!if(ISBLANK(originalEmail[msg.message.id].Subject),'No Subject',originalEmail[msg.message.id].Subject)}</a> <br/>
+                                    <font style="font-style: italic; font-decoration: none; font-size: 11px;">{!LEFT(originalEmail[msg.message.id].TextBody,77)}...</font></td>
                             <td class=" dataCell ">
-                                {!If((originalEmail[message.EmailMessage__c].Incoming==true),originalEmail[message.EmailMessage__c].FromAddress,originalEmail[message.EmailMessage__c].ToAddress)}
+                                {!If((originalEmail[msg.message.id].Incoming==true),originalEmail[msg.message.id].FromAddress,originalEmail[msg.message.id].ToAddress)}
                             </td>
-                            <td class=" dataCell "><apex:outputField value="{!originalEmail[message.EmailMessage__c].MessageDate}"/></td>
+                            <td class=" dataCell "><apex:outputField value="{!originalEmail[msg.message.id].MessageDate}"/></td>
                         </tr>
-                    </apex:repeat>
+</apex:outputPanel>
+</apex:repeat>
+
                     <!--TRACKED EMAIL -->
                     <apex:repeat var="trackedEmail" value="{!trackedEmails}">
                         <tr class="dataRow even ">
