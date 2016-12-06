@@ -255,5 +255,25 @@ private class AMS_AccountTriggerHandlerTest {
 
         Test.stopTest();
 	}
+
+	static testMethod void test_DDcheck() {
+		
+		/*IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US')  ;
+		insert ctry;*/
+
+		Account a = new Account(RecordTypeId = AMS_Utils.getId('Account', 'Standard_Account'), Name='Test Agency', IATAcode__c = '1234567', Location_Class__c = 'Test');
+		insert a;
+
+		insert new AMS_Oscar__c(Account__c = a.Id, Status__c = 'Open');
+
+		Test.startTest();
+
+		a.Due_Diligence_Status__c = 'Cleared';
+		update a;
+
+		Test.stopTest();
+
+		System.assertEquals('Passed', [SELECT Id, STEP17__c FROM AMS_OSCAR__c LIMIT 1].STEP17__c);
+	}
 	
 }
