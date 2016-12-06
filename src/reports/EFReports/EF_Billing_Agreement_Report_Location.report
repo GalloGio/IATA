@@ -13,19 +13,25 @@
         <field>EF_Billing_Agreement__c$Contract_Group_Code__c</field>
     </columns>
     <columns>
-        <field>EF_Billing_Agreement__c$Contract__c.SAP_Contract_Number__c</field>
+        <field>EF_Billing_Agreement__c$Client__c.SAP_Number__c</field>
     </columns>
     <columns>
         <field>EF_Billing_Agreement__c$Airline__c.EF_SIS_Code__c</field>
+    </columns>
+    <columns>
+        <field>EF_Billing_Agreement__c$Airline__c.EF_SIS_Designator__c</field>
+    </columns>
+    <columns>
+        <field>EF_Billing_Agreement__c$Client__c.EF_SIS_Code__c</field>
+    </columns>
+    <columns>
+        <field>EF_Billing_Agreement__c$Client__c.EF_SIS_Designator__c</field>
     </columns>
     <columns>
         <field>EF_Billing_Agreement__c$Airline__c</field>
     </columns>
     <columns>
         <field>EF_Billing_Agreement__c$Airline__c.EF_Legacy_Code__c</field>
-    </columns>
-    <columns>
-        <field>EF_Billing_Agreement__c$Sold_to__c</field>
     </columns>
     <columns>
         <field>EF_Billing_Agreement__c$Bill_to__c</field>
@@ -35,9 +41,6 @@
     </columns>
     <columns>
         <field>EF_Billing_Agreement__c$Payer__c</field>
-    </columns>
-    <columns>
-        <field>EF_Billing_Agreement__c$Airline__c.EF_SIS_Designator__c</field>
     </columns>
     <columns>
         <field>EF_Billing_Agreement__c$EF_Status__c</field>
@@ -79,7 +82,7 @@
     <filter>
         <criteriaItems>
             <column>EF_Billing_Agreement__c$Airline__c</column>
-            <operator>equals</operator>
+            <operator>notEqual</operator>
             <value></value>
         </criteriaItems>
         <language>en_US</language>

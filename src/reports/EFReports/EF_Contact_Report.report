@@ -60,6 +60,36 @@
     <columns>
         <field>Contact.EF_Signatory__c</field>
     </columns>
+    <columns>
+        <field>ACCOUNT.ADDRESS1_STREET</field>
+    </columns>
+    <columns>
+        <field>ACCOUNT.ADDRESS1_CITY</field>
+    </columns>
+    <columns>
+        <field>ACCOUNT.ADDRESS1_STATE</field>
+    </columns>
+    <columns>
+        <field>ACCOUNT.ADDRESS1_ZIP</field>
+    </columns>
+    <columns>
+        <field>ACCOUNT.ADDRESS1_COUNTRY</field>
+    </columns>
+    <columns>
+        <field>ACCOUNT.ADDRESS2_STREET</field>
+    </columns>
+    <columns>
+        <field>ACCOUNT.ADDRESS2_CITY</field>
+    </columns>
+    <columns>
+        <field>ACCOUNT.ADDRESS2_STATE</field>
+    </columns>
+    <columns>
+        <field>ACCOUNT.ADDRESS2_ZIP</field>
+    </columns>
+    <columns>
+        <field>ACCOUNT.ADDRESS2_COUNTRY</field>
+    </columns>
     <currency>USD</currency>
     <format>Tabular</format>
     <name>E&amp;F Contact Report</name>
