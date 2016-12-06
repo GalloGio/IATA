@@ -312,7 +312,15 @@ public class AMS_OscarCase_RiskMgmt {
 		}
 		
 		AACC.SIDRA_Case__c = idCase;
-		AACC.To_Publish_in_e_Bulletin__c = cc.Published_in_bulletin__c;
+		if(cc.Apply_to_hierarchy__c){
+			if(cc.Publish_HO_Only__c){
+				if(mapAllHOs.keyset().contains(AccountId))
+					AACC.To_Publish_in_e_Bulletin__c = cc.Published_in_bulletin__c;
+			}else
+				AACC.To_Publish_in_e_Bulletin__c = cc.Published_in_bulletin__c;
+		}else
+			AACC.To_Publish_in_e_Bulletin__c = cc.Published_in_bulletin__c;
+	
 		AACC.Applied_Configuration__c = cc.id;
 		AACC.OSCAR__c = mapCases.get(idCase).Parent.OSCAR__c;
 		
@@ -501,7 +509,7 @@ public class AMS_OscarCase_RiskMgmt {
 		return [select id, Billable__c, Change_Code__c, Published_in_bulletin__c, Reason_Code__c, Reason_Code_Description__c, Record_Type__c, Risk_ChangeCode__c, 
 			    Field1__c, Field1Values__c, Field2__c, Field2Values__c, Field3__c, Field3Values__c, Field4__c, Field4Values__c, Field5__c, Field5Values__c, Field6__c, Field6Values__c, 
 			    Account_status_change__c, Class_Type__c, Bulletin_Memo_Text__c, Bulletin_Memo_Text2__c, Bulletin_Memo_Text3__c, Apply_to_hierarchy__c, Clear_Irregularities__c, Integration_RecId__c,
-			    Used_By_CNS__c, CNS_Bulletin_Memo_Text__c, CNS_Bulletin_Memo_Text2__c, CNS_Bulletin_Memo_Text3__c
+			    Used_By_CNS__c, CNS_Bulletin_Memo_Text__c, CNS_Bulletin_Memo_Text2__c, CNS_Bulletin_Memo_Text3__c, Publish_HO_Only__c
 			    from AMS_ChangeCodes__c where Risk_ChangeCode__c=true];
 	}
 	
