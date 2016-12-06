@@ -186,6 +186,8 @@ global class AMS_OSCAR_Webservice {
                 oscar[0].AML_deadline__c = Date.today()+3;
                 update oscar;
 
+                update new Account(Id=oscar[0].Account__c, Due_Diligence_Status__c = 'In Progress');
+
                 return issCase.Id;
 
             }
