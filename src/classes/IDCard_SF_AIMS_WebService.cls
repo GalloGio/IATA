@@ -591,7 +591,7 @@ global with sharing class IDCard_SF_AIMS_WebService {
                 //this.Country = agency.IATA_ISO_Country__r.Name.toUpperCase().left(COUNTRYMAXLENGTH).rightPad(COUNTRYMAXLENGTH);
                 String tmpCountry = agency.ShippingCountry != null ? agency.ShippingCountry : (agency.BillingCountry != null ? agency.BillingCountry : agency.IATA_ISO_Country__r.Name); 
                 this.Country = tmpCountry.toUpperCase().left(COUNTRYMAXLENGTH).rightPad(COUNTRYMAXLENGTH);
-                this.CountryISO = idcard.Related_Contact__r.UIR__c.mid(0,2).toUpperCase();
+                this.CountryISO = agency.IATA_ISO_Country__r.ISO_Code__c.toUpperCase();//idcard.Related_Contact__r.UIR__c.mid(0,2).toUpperCase();
                 this.RequestNumber = GetRequestNumber(regionCode).toUpperCase();
                 this.Track1 = GetTrack1(idCard).toUpperCase();
                 this.Track2 = GetTrack2(idCard).toUpperCase();
