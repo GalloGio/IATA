@@ -64,7 +64,7 @@
         <field>Contract.EF_Locations_Currencies__r$Location_ID_Name__c</field>
     </columns>
     <columns>
-        <field>Contract.EF_Locations_Currencies__r$CurrencyIsoCode</field>
+        <field>Contract.EF_Locations_Currencies__r$EF_Billing_Currency__c</field>
     </columns>
     <currency>USD</currency>
     <filter>
