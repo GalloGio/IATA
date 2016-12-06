@@ -29,7 +29,7 @@ public class AMS_AgencyRegulationTriggerHandler {
             //contacts that will receive notifications for DGR certificates renewal
             Map<Id, List<Contact>> keyContactsPerAccount = new Map<Id, List<Contact>>();
 
-            List<Contact> allContacts = new List<Contact>([SELECT Id, Email, AccountId, Preferred_Language__c FROM Contact WHERE AccountId IN :accountIds AND (BSP_CASS_Payment_contact__c = TRUE OR Financial_Assessment_Contact__c = TRUE)]);
+            List<Contact> allContacts = new List<Contact>([SELECT Id, Email, AccountId, Preferred_Language__c, User_Portal_Status__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c FROM Contact WHERE AccountId IN :accountIds AND (BSP_CASS_Payment_contact__c = TRUE OR Financial_Assessment_Contact__c = TRUE OR User_Portal_Status__c = 'Approved Admin')]);
 
             for(Contact c: allContacts){
                 if(!keyContactsPerAccount.containsKey(c.AccountId))

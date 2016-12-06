@@ -1192,7 +1192,7 @@ public class AMS_OSCARTriggerHandler {
 			oscarIds.add(oscar.Id);
 		}
 
-		List<AMS_OSCAR__c> oscarsList = new List<AMS_OSCAR__c>([SELECT Id, RecordTypeId, Account__c, AMS_Online_Accreditation__r.Location_Type__c, AMS_Online_Accreditation__r.Location_Class__c, AMS_Online_Accreditation__r.Is_your_firm_handling_Dangerous_Goods__c, AMS_Online_Accreditation__r.Branch_Office_Country__c, AMS_Online_Accreditation__r.Branch_Office_Country__r.ISO_Code__c FROM AMS_OSCAR__c WHERE Id IN :oscarIds]);
+		List<AMS_OSCAR__c> oscarsList = new List<AMS_OSCAR__c>([SELECT Id, RecordTypeId, Account__c, AMS_Online_Accreditation__r.Location_Type__c, AMS_Online_Accreditation__r.Location_Class__c, AMS_Online_Accreditation__r.Is_your_firm_handling_Dangerous_Goods__c, AMS_Online_Accreditation__r.Branch_Office_Country__c, AMS_Online_Accreditation__r.Branch_Office_Country__r.ISO_Code__c, AMS_Online_Accreditation__r.CASS_Number__c FROM AMS_OSCAR__c WHERE Id IN :oscarIds]);
 
 		for(AMS_OSCAR__c oscar: oscarsList)
 			isoCountries.add(oscar.AMS_Online_Accreditation__r.Branch_Office_Country__c);
@@ -1255,16 +1255,16 @@ public class AMS_OSCARTriggerHandler {
 
 				System.debug('CHECK CASS: ' + oscar.AMS_Online_Accreditation__r.CASS_Number__c);
 
-				if(oscar.AMS_Online_Accreditation__r.Is_your_firm_handling_Dangerous_Goods__c == 'Yes'){
-					checkCertifications(trainedStaffPerAccount.get(oscar.Account__c), locationType, true, locationClass, countryCode, minDgrHO, minDgrBR, cassNumber);
-				}
-				else{
+				if(oscar.AMS_Online_Accreditation__r.Is_your_firm_handling_Dangerous_Goods__c == 'No'){
 					//If an agency is non handling, it must have a certificate of awareness (DGA)
 					if(oscar.AMS_Online_Accreditation__r.Location_Type__c == AMS_Utils.HO || oscar.AMS_Online_Accreditation__r.Location_Type__c == AMS_Utils.BR){
 						System.debug('OSCARTriggerHandler -> validateCertificates: Non handling '+ oscar.AMS_Online_Accreditation__r.Location_Type__c + ' agency.');
 						checkCertifications(trainedStaffPerAccount.get(oscar.Account__c), locationType, false, locationClass, countryCode, minDgrHO, minDgrBR, cassNumber);
 					}
+				}else{
+					checkCertifications(trainedStaffPerAccount.get(oscar.Account__c), locationType, true, locationClass, countryCode, minDgrHO, minDgrBR, cassNumber);
 				}
+
 			}
 		}
 	}
