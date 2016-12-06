@@ -10498,6 +10498,20 @@ Select at least one Authorized Signatory, and choose the Financial Assessment Co
         <value>of your</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_download_a_PDF_version_Application</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_download_a_PDF_version_Application</shortDescription>
+        <value>application.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_download_a_PDF_version_Of_your</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_download_a_PDF_version_Of_your</shortDescription>
+        <value>of your</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_download_of</fullName>
         <categories>ISSP AMS</categories>
         <language>en_US</language>
