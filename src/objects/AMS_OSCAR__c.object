@@ -3761,6 +3761,15 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
     </listViews>
     <listViews>
         <fullName>AgencyManagementAP_AMS_OSCAR</fullName>
+        <columns>NAME</columns>
+        <columns>Account__c</columns>
+        <columns>Process__c</columns>
+        <columns>Type_of_change__c</columns>
+        <columns>Status__c</columns>
+        <columns>OWNER.ALIAS</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <columns>Date_Time_Closed__c</columns>
+        <columns>CREATED_DATE</columns>
         <filterScope>Queue</filterScope>
         <label>Agency Management - A&amp;P</label>
         <queue>AgencyManagementAP</queue>
@@ -3770,6 +3779,15 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
     </listViews>
     <listViews>
         <fullName>AgencyManagementAfricaME_AMS_OSCAR</fullName>
+        <columns>NAME</columns>
+        <columns>Account__c</columns>
+        <columns>Process__c</columns>
+        <columns>Type_of_change__c</columns>
+        <columns>Status__c</columns>
+        <columns>OWNER.ALIAS</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <columns>Date_Time_Closed__c</columns>
+        <columns>CREATED_DATE</columns>
         <filterScope>Queue</filterScope>
         <label>Agency Management - Africa &amp; ME</label>
         <queue>AgencyManagementAfricaME</queue>
@@ -3779,6 +3797,15 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
     </listViews>
     <listViews>
         <fullName>AgencyManagementAmericas_AMS_OSCAR</fullName>
+        <columns>NAME</columns>
+        <columns>Account__c</columns>
+        <columns>Process__c</columns>
+        <columns>Type_of_change__c</columns>
+        <columns>Status__c</columns>
+        <columns>OWNER.ALIAS</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <columns>Date_Time_Closed__c</columns>
+        <columns>CREATED_DATE</columns>
         <filterScope>Queue</filterScope>
         <label>Agency Management - Americas</label>
         <queue>AgencyManagementAmericas</queue>
@@ -3788,6 +3815,15 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
     </listViews>
     <listViews>
         <fullName>AgencyManagementChinaNAsia_AMS_OSCAR</fullName>
+        <columns>NAME</columns>
+        <columns>Account__c</columns>
+        <columns>Process__c</columns>
+        <columns>Type_of_change__c</columns>
+        <columns>Status__c</columns>
+        <columns>OWNER.ALIAS</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <columns>Date_Time_Closed__c</columns>
+        <columns>CREATED_DATE</columns>
         <filterScope>Queue</filterScope>
         <label>Agency Management - China &amp; N. Asia</label>
         <queue>AgencyManagementChinaNAsia</queue>
@@ -3815,6 +3851,15 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
     </listViews>
     <listViews>
         <fullName>CasesACCEuropeOffOnshore_AMS_OSCAR</fullName>
+        <columns>NAME</columns>
+        <columns>Account__c</columns>
+        <columns>Process__c</columns>
+        <columns>Type_of_change__c</columns>
+        <columns>Status__c</columns>
+        <columns>OWNER.ALIAS</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <columns>Date_Time_Closed__c</columns>
+        <columns>CREATED_DATE</columns>
         <filterScope>Queue</filterScope>
         <label>Agency Management - Europe</label>
         <queue>CasesACCEuropeOffOnshore</queue>
