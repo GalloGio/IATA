@@ -203,6 +203,10 @@
                 </apex:pageBlockSectionItem>
             </apex:repeat>
 
+            <apex:outputField value="{!accreditationObj.Is_your_firm_handling_Dangerous_Goods__c}" rendered="{!isCargoAgency}">
+                <apex:inlineEditSupport event="ondblClick" showonEdit="saveButton,cancelButton" disabled="{!IF(isCertificationOSCAR, true, false)}"/>
+            </apex:outputField>
+
         </apex:pageBlockSection>
              
 

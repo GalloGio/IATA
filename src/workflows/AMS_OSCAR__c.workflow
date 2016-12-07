@@ -46,6 +46,27 @@
         <senderType>OrgWideEmailAddress</senderType>
         <template>AMS/AMS_Notify_OSCAR_Owner_on_Manager_Rejection</template>
     </alerts>
+    <alerts>
+        <fullName>AMS_Notify_Owner_of_Late_NOC_Termination</fullName>
+        <description>AMS - Notify Owner of Late NOC Termination</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderAddress>noreply@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>AMS/AMS_Late_NOC_Termination_Notification</template>
+    </alerts>
+    <fieldUpdates>
+        <fullName>AMS_Set_OSCAR_status_to_Open</fullName>
+        <description>Set the OSCAR status to Open</description>
+        <field>Status__c</field>
+        <literalValue>Open</literalValue>
+        <name>AMS Set OSCAR status to Open</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
     <rules>
         <fullName>AMS - Notify Owner of Late NOC Termination</fullName>
         <active>true</active>
@@ -117,5 +138,34 @@
         </criteriaItems>
         <description>OSCAR Owner will receive an email alert after the OSCAR approval processing has been completed by the assistant manager and the manager set in the Case Team.</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>AMS set OSCAR status to Open when process date reached</fullName>
+        <active>true</active>
+        <criteriaItems>
+            <field>AMS_OSCAR__c.Process_Start_Date__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>AMS_OSCAR__c.Status__c</field>
+            <operation>equals</operation>
+            <value>Accepted_Future Date</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>AMS_OSCAR__c.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>CHANGE,VOLUNTARY RELINQUISHMENT</value>
+        </criteriaItems>
+        <description>When the OSCAR for VMFR and Voluntary Relinquishment is in status &quot;Accepted_Future Date&quot; and reaches the Process start date, it is automatically set to &quot;Open&quot;</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <workflowTimeTriggers>
+            <actions>
+                <name>AMS_Set_OSCAR_status_to_Open</name>
+                <type>FieldUpdate</type>
+            </actions>
+            <offsetFromField>AMS_OSCAR__c.Process_Start_Date__c</offsetFromField>
+            <timeLength>1</timeLength>
+            <workflowTimeTriggerUnit>Hours</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
     </rules>
 </Workflow>

@@ -409,6 +409,63 @@
     </fields>
     <label>MITA Agreement</label>
     <listViews>
+        <fullName>clast90days</fullName>
+        <columns>NAME</columns>
+        <columns>Active__c</columns>
+        <columns>Agreement_type__c</columns>
+        <columns>Airline_1__c</columns>
+        <columns>Airline1_designator_code__c</columns>
+        <columns>Airline_2__c</columns>
+        <columns>Airline2_designator_code__c</columns>
+        <columns>Agreement_processed_date__c</columns>
+        <columns>Cancellation_date__c</columns>
+        <columns>Cancellation_processed_date__c</columns>
+        <columns>Cancellation_Reason__c</columns>
+        <columns>Created_date__c</columns>
+        <columns>MITAorBIETA__c</columns>
+        <columns>Status__c</columns>
+        <columns>CREATEDBY_USER</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Cancellation_processed_date__c</field>
+            <operation>equals</operation>
+            <value>LAST_90_DAYS</value>
+        </filters>
+        <label>Cancelled last 90 days</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>iclast90days</fullName>
+        <columns>NAME</columns>
+        <columns>Active__c</columns>
+        <columns>Agreement_type__c</columns>
+        <columns>Airline_1__c</columns>
+        <columns>Airline1_designator_code__c</columns>
+        <columns>Airline_2__c</columns>
+        <columns>Airline2_designator_code__c</columns>
+        <columns>Agreement_processed_date__c</columns>
+        <columns>Cancellation_date__c</columns>
+        <columns>Cancellation_processed_date__c</columns>
+        <columns>Cancellation_Reason__c</columns>
+        <columns>Created_date__c</columns>
+        <columns>MITAorBIETA__c</columns>
+        <columns>Status__c</columns>
+        <columns>CREATEDBY_USER</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Cancellation_processed_date__c</field>
+            <operation>equals</operation>
+            <value>LAST_90_DAYS</value>
+        </filters>
+        <filters>
+            <field>Cancellation_Reason__c</field>
+            <operation>notEqual</operation>
+            <value>Airline 1 leaves agreement,Airline 2 leaves agreement</value>
+        </filters>
+        <label>Cancelled individual last 90 days</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
         <fullName>last30days</fullName>
         <columns>NAME</columns>
         <columns>Active__c</columns>
@@ -458,6 +515,65 @@
             <value>LAST_90_DAYS</value>
         </filters>
         <label>Created last 90 days</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>modlast30090days</fullName>
+        <columns>NAME</columns>
+        <columns>Agreement_type__c</columns>
+        <columns>Airline_1__c</columns>
+        <columns>Airline1_designator_code__c</columns>
+        <columns>Airline_2__c</columns>
+        <columns>Airline2_designator_code__c</columns>
+        <columns>Effective_date__c</columns>
+        <columns>Cancellation_date__c</columns>
+        <columns>Cancellation_Reason__c</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <columns>LAST_UPDATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>LAST_UPDATE</field>
+            <operation>equals</operation>
+            <value>LAST_N_DAYS:30</value>
+        </filters>
+        <filters>
+            <field>MITAorBIETA__c</field>
+            <operation>equals</operation>
+            <value>MITA</value>
+        </filters>
+        <filters>
+            <field>UPDATEDBY_USER.ALIAS</field>
+            <operation>notEqual</operation>
+            <value>mgarc</value>
+        </filters>
+        <label>Modified MITA Agreements last 30 days</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>modlast3090days</fullName>
+        <columns>NAME</columns>
+        <columns>Agreement_type__c</columns>
+        <columns>Airline_1__c</columns>
+        <columns>Airline1_designator_code__c</columns>
+        <columns>Airline_2__c</columns>
+        <columns>Airline2_designator_code__c</columns>
+        <columns>Effective_date__c</columns>
+        <columns>Cancellation_date__c</columns>
+        <columns>Cancellation_Reason__c</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <columns>LAST_UPDATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>LAST_UPDATE</field>
+            <operation>equals</operation>
+            <value>LAST_N_DAYS:30</value>
+        </filters>
+        <filters>
+            <field>MITAorBIETA__c</field>
+            <operation>equals</operation>
+            <value>MITA</value>
+        </filters>
+        <label>Modified MITA Agreements last 30 days</label>
         <language>en_US</language>
     </listViews>
     <nameField>
@@ -574,16 +690,20 @@ The seniorship is calculate on a different date for each agreement type.</descri
 &apos;Bilateral, both carriers can issue electronic tickets&apos;, 
 IF(Airline_1__r.BIETA_Bilateral_Date__c &gt; Airline_2__r.BIETA_Bilateral_Date__c,&apos;t&apos;,&apos;f&apos;), 
 
-&apos;One Way Passenger Issuing Airline&apos;, &apos;f&apos;,
+&apos;One Way Passenger Issuing Airline&apos;, 
+IF(Airline_1__r.BIETA_One_way_Electronic_Issuing_Airline__c&gt; Airline_2__r.BIETA_One_way_Electronic_Issuing_Airline__c,&apos;t&apos;,&apos;f&apos;),
 
-&apos;One Way Passenger Partcipating&apos;, &apos;f&apos;,
+&apos;One Way Passenger Partcipating&apos;, 
+IF(Airline_1__r.BIETA_One_way_Electronic_Participating__c &gt; Airline_2__r.BIETA_One_way_Electronic_Participating__c,&apos;t&apos;,&apos;f&apos;),
 
-&apos;One Way Intermodal Issuing Date&apos;, &apos;f&apos;,
+&apos;One Way Intermodal Issuing Date&apos;, 
+IF(Airline_1__r.BIETA_One_way_Intermodal_Issuing_Airline__c  &gt; Airline_2__r.BIETA_One_way_Intermodal_Issuing_Airline__c ,&apos;t&apos;,&apos;f&apos;),
 
-&apos;One Way Intermodal Participating Date&apos;, &apos;f&apos;,
+&apos;One Way Intermodal Participating Date&apos;, 
+IF(Airline_1__r.BIETA_One_way_Intermodal_Participating__c&gt; Airline_2__r.BIETA_One_way_Intermodal_Participating__c,&apos;t&apos;,&apos;f&apos;),
 
 &apos;f&apos; )=&apos;t&apos;,true,false))</errorConditionFormula>
-        <errorMessage>The selected airline has more seniority than the actual one</errorMessage>
+        <errorMessage>The selected airline 2 has more seniority than airline 1</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>N4_MITA_Seniority</fullName>
@@ -594,20 +714,20 @@ The seniorship is calculate on a different date for each agreement type.</descri
  Active__c,ISPICKVAL(Cancellation_Reason__c, &quot;&quot;),
 IF(CASE(TEXT(Agreement_type__c), 
 &apos;The Passenger and Cargo Interline Traffic Agreement&apos;, 
-IF(AND(Airline_1__r.MITA_IATA_Interline_Passenger__c &gt; Airline_2__r.MITA_IATA_Interline_Passenger__c, Airline_1__r.MITA_IATA_Interline_Cargo__c &gt; Airline_2__r.MITA_IATA_Interline_Cargo__c),&apos;t&apos;,&apos;f&apos;), 
+IF(AND(Airline_1__r.MITA_IATA_Interline_Passenger__c &gt; Airline_2__r.MITA_IATA_Interline_Passenger__c, Airline_1__r.MITA_IATA_Interline_Cargo__c &lt; Airline_2__r.MITA_IATA_Interline_Cargo__c),&apos;t&apos;,&apos;f&apos;), 
 
 
-&apos;The Passenger Interline Agreement&apos;, &apos;f&apos;,
+&apos;The Passenger Interline Agreement&apos;,IF(AND(Airline_1__r.MITA_IATA_Interline_Passenger__c &gt; Airline_2__r.MITA_IATA_Interline_Passenger__c),&apos;t&apos;, &apos;f&apos;),
 
-&apos;The Cargo Interline Agreement&apos;, &apos;f&apos;,
+&apos;The Cargo Interline Agreement&apos;, IF(AND(Airline_1__r.MITA_IATA_Interline_Cargo__c &gt; Airline_2__r.MITA_IATA_Interline_Cargo__c),&apos;t&apos;, &apos;f&apos;),
 
-&apos;The One Way Issuing Airline&apos;, &apos;f&apos;,
+&apos;The One Way Issuing Airline&apos;,IF(AND(Airline_1__r.MITA_One_way_Pass_Issuing_Airline__c &gt; Airline_2__r.MITA_One_way_Pass_Issuing_Airline__c),&apos;t&apos;, &apos;f&apos;),
 
-&apos;The One Way Participating Airline&apos;, &apos;f&apos;,
+&apos;The One Way Participating Airline&apos;, IF(AND(Airline_1__r.MITA_One_way_Pass_Participating__c &gt; Airline_2__r.MITA_One_way_Pass_Participating__c),&apos;t&apos;, &apos;f&apos;),
 
 &apos;f&apos; 
 )=&apos;t&apos;,true,false)
 )</errorConditionFormula>
-        <errorMessage>The selected airline has more seniority than the actual one</errorMessage>
+        <errorMessage>Airline 2 has more seniority than airline 1 for this agreement type.</errorMessage>
     </validationRules>
 </CustomObject>

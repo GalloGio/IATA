@@ -929,6 +929,10 @@
                 <fullName>Other</fullName>
                 <default>false</default>
             </picklistValues>
+            <picklistValues>
+                <fullName>CATA</fullName>
+                <default>false</default>
+            </picklistValues>
             <restrictedPicklist>true</restrictedPicklist>
             <sorted>false</sorted>
         </picklist>
@@ -1519,6 +1523,10 @@
             <picklist>Type_Of_Certificate__c</picklist>
             <values>
                 <fullName>BCH</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CATA</fullName>
                 <default>false</default>
             </values>
             <values>

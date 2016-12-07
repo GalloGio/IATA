@@ -106,7 +106,7 @@ public  class AmazonRest {
             req.setBodyasBlob(fileBody);
 
             Http http = new Http();
-            String status = !Test.isRunningTest() ? http.send(req).getStatus() : TESTSTRING ;
+            String status = !Test.isRunningTest() ? http.send(req).getStatus() : TESTRESULT ;
 
             return status.equals('OK');
           }
@@ -148,6 +148,9 @@ public static string TESTSTRING =
  +'<Size>425</Size>'+'<Owner>'+'<ID>e18db9b8fe5497707f9898c0757cd504274323d97f61502a3a5d1208e58bb5ff</ID>'
  +'<DisplayName>iataawsnonprod</DisplayName>'+'</Owner>'+'<StorageClass>STANDARD</StorageClass>'+'</Contents>'
  +'</ListBucketResult>';
+
+
+ public static string TESTRESULT = 'OK';
     
         public static final string SEPARATOR = '/';
         

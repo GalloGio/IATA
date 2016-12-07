@@ -157,6 +157,7 @@
 <classAccesses><apexClass>AMS_RecordCreatorWebservice</apexClass><enabled>true</enabled></classAccesses>
 <classAccesses><apexClass>AMS_RecordCreatorWebserviceTest</apexClass><enabled>true</enabled></classAccesses>
 <classAccesses><apexClass>AMS_SAAMCaseMigrationController</apexClass><enabled>true</enabled></classAccesses>
+<classAccesses><apexClass>AMS_SAAMCaseMigrationControllerTest</apexClass><enabled>true</enabled></classAccesses>
 <classAccesses><apexClass>AMS_SearchAccountByUserData</apexClass><enabled>true</enabled></classAccesses>
 <classAccesses><apexClass>AMS_SearchAccountByUserDataTest</apexClass><enabled>true</enabled></classAccesses>
 <classAccesses><apexClass>AMS_SettlementsAndOperationLoaderCtrl</apexClass><enabled>true</enabled></classAccesses>
@@ -1919,6 +1920,7 @@
 <userPermissions><enabled>true</enabled><name>ApproveContract</name></userPermissions>
 <userPermissions><enabled>true</enabled><name>AssignPermissionSets</name></userPermissions>
 <userPermissions><enabled>true</enabled><name>AssignTopics</name></userPermissions>
+<userPermissions><enabled>true</enabled><name>AssignUserToSkill</name></userPermissions>
 <userPermissions><enabled>true</enabled><name>AuthorApex</name></userPermissions>
 <userPermissions><enabled>true</enabled><name>BulkMacrosAllowed</name></userPermissions>
 <userPermissions><enabled>true</enabled><name>CanInsertFeedSystemFields</name></userPermissions>

@@ -4,7 +4,7 @@ public class AMS_AccountHierarchySelectionController {
 	// ******* private variables *********
 	// ***********************************
 
-	private final Id ANALYST_PROFILE_ID = [SELECT Id, Name FROM Profile WHERE Name = 'FDS Hub Analyst ARM'].Id;
+	//private final Id ANALYST_PROFILE_ID = [SELECT Id, Name FROM Profile WHERE Name = 'FDS Hub Analyst ARM'].Id;
 
 	@TestVisible
 	private Account mainAccount{
@@ -21,6 +21,12 @@ public class AMS_AccountHierarchySelectionController {
 			return oscarId;
 		}
 		set;
+	}
+
+	private Boolean isVoluntaryRelinquishment{
+		get{
+			return (oscar.Process__c == AMS_Utils.VOLRELINQUISH || oscar.Process__c == AMS_Utils.VOLRELINQUISH_CA);
+		}
 	}
 
 
@@ -48,6 +54,7 @@ public class AMS_AccountHierarchySelectionController {
 				accountFields = new Set<String>{
 					'Name'
 					, 'Location_Type__c'
+					, 'Is_Branch_Abroad__c'
 					, 'IATACode__c'
 					, 'Status__c'
 					, 'BillingCity'
@@ -63,7 +70,7 @@ public class AMS_AccountHierarchySelectionController {
 		get{
 			notes = new Set<String>();
 
-			if(oscar.Process__c == AMS_Utils.VOLRELINQUISH) notes.add('Voluntary relinquishment: select from the below list all the agencies listed in the pdf form received as attachment of the OSCAR. All the selected Agencies will be processed in the same way, there is no distinction between Main Agency and the other ones.');
+			if(isVoluntaryRelinquishment) notes.add('Voluntary relinquishment: select from the below list all the agencies listed in the pdf form received as attachment of the OSCAR. All the selected Agencies will be processed in the same way, there is no distinction between Main Agency and the other ones.');
 
 			else if(oscar.Type_of_Change__c != null){
 				
@@ -74,7 +81,7 @@ public class AMS_AccountHierarchySelectionController {
 				if(tocList.contains(AMS_Utils.OWNERSHIP_IATA)) notes.add('Change of ownership to IATA will move all the agencies selected under the target agency');
 				if(tocList.contains(AMS_Utils.OWNERSHIP_NON_IATA)) notes.add('Change of ownership to non IATA will transform the main agency into the new HO. All the other agencies will keep their location type and will be put under the new HO');
 				if(tocList.contains(AMS_Utils.MAJ_SHAREHOLDING) || tocList.contains(AMS_Utils.MIN_SHAREHOLDING)) notes.add('Change of shareholding must be applied to all the hierarchy');
-				if(tocList.contains(AMS_Utils.VFMR)) notes.add('Change of remittance frequency must be applied to all the hierarchy');
+				if(tocList.contains(AMS_Utils.VFMR)) notes.add('Change of remittance frequency must be applied to all the hierarchy (except for branches abroad)');
 			}
 			return notes;
 		}
@@ -197,7 +204,8 @@ public class AMS_AccountHierarchySelectionController {
 
 	public Boolean editable {
 		get{
-			return (UserInfo.getProfileId() != ANALYST_PROFILE_ID || oscar.STEP6__c != AMS_Utils.PASSED);
+			//return (UserInfo.getProfileId() != ANALYST_PROFILE_ID || oscar.STEP6__c != AMS_Utils.PASSED);
+			return (oscar.STEP6__c != AMS_Utils.PASSED);
 		}
 		set;
 	}
@@ -231,7 +239,7 @@ public class AMS_AccountHierarchySelectionController {
 
 	public Boolean showTopPanel{
 		get{
-			return !(oscar.Process__c == AMS_Utils.VOLRELINQUISH);
+			return !(isVoluntaryRelinquishment);
 		}
 		private set;
 	}
@@ -269,6 +277,7 @@ public class AMS_AccountHierarchySelectionController {
 
 				//to prevent nullpointer on agencies with no hierarchy
 				accountIds.add(oscar.Account__c);
+				childAccounts.put(oscar.Account__c, new Set<Id>());
 				
 				for(AMS_Agencies_relationhip__c r : relationshipMap.get(oscar.Account__c)){
 					accountIds.add(r.Child_Account__c);
@@ -277,7 +286,7 @@ public class AMS_AccountHierarchySelectionController {
 					if(!childAccounts.containsKey(r.Parent_Account__c)) childAccounts.put(r.Parent_Account__c, new Set<Id>());
 					if(!childAccounts.containsKey(r.Child_Account__c)) childAccounts.put(r.Child_Account__c, new Set<Id>());
 
-					childAccounts.get(r.Parent_Account__c).add(r.Child_Account__c);
+					if(r.Child_Account__r.Status__c != AMS_Utils.ACC_S0_TERMINATED) childAccounts.get(r.Parent_Account__c).add(r.Child_Account__c);
 				}
 
 				for(Account a : Database.query('SELECT Id, '+String.join(accountFieldList, ',')+' FROM Account WHERE Id IN :accountIds AND Status__c != \''+AMS_Utils.ACC_S0_TERMINATED+'\'')){
@@ -356,7 +365,8 @@ public class AMS_AccountHierarchySelectionController {
 				errorChecks.put(AMS_Utils.MIN_SHAREHOLDING, true);
 			}
 
-			if(tocList.contains(AMS_Utils.VFMR) && !hi.selected && !hi.main){
+			
+			if(tocList.contains(AMS_Utils.VFMR) && !hi.selected && !hi.main && hi.acc.Is_Branch_Abroad__c!='Yes'){
 				errorChecks.put(AMS_Utils.VFMR, true);
 			}
 
@@ -365,7 +375,7 @@ public class AMS_AccountHierarchySelectionController {
 				if(!hi.selected && !hi.main) ownershipAgenciesNotSelected = true;
 			}
 
-			if(oscar.Process__c == AMS_Utils.VOLRELINQUISH && isPartialHierarchy(hi)) errorChecks.put('Partial VR selection', true);
+			if(isVoluntaryRelinquishment && isPartialHierarchy(hi)) errorChecks.put('Partial VR selection', true);
 			
 		}
 
