@@ -4593,14 +4593,10 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
     <fields>
         <fullName>CNS_Agency__c</fullName>
         <externalId>false</externalId>
-        <formula>IF(
- AND( 
+        <formula>AND( 
    IATA_ISO_Country__r.CNS_Country__c=true, 
    OR(ISPICKVAL(Location_Class__c,&quot;C&quot;),ISPICKVAL(Location_Class__c,&quot;R&quot;))
- ),
- true, 
- false
-)</formula>
+ )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>CNS Agency</label>
         <trackHistory>false</trackHistory>
@@ -6020,6 +6016,25 @@ V - Co-operative</inlineHelpText>
         <type>Picklist</type>
     </fields>
     <fields>
+        <fullName>DEBUG__c</fullName>
+        <externalId>false</externalId>
+        <formula>&quot;ISO COUNTRY IS CNS = &quot;+IF(IATA_ISO_Country__r.CNS_Country__c, &quot;true&quot;, &quot;false&quot;)+
+&quot; - LOCATION CLASS IS CNS = &quot;+IF(OR(ISPICKVAL(Location_Class__c,&quot;C&quot;),ISPICKVAL(Location_Class__c,&quot;R&quot;)),&quot;true&quot;,&quot;false&quot;) +
+&quot; - FINAL RESULT = &quot;+
+IF(
+AND( 
+   IATA_ISO_Country__r.CNS_Country__c=true, 
+   OR(ISPICKVAL(Location_Class__c,&quot;C&quot;),ISPICKVAL(Location_Class__c,&quot;R&quot;))
+ )
+,&quot;true&quot;,&quot;false&quot;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>DEBUG</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>DSE__DS_Country_ISO_Code__c</fullName>
         <deprecated>false</deprecated>
         <externalId>false</externalId>
@@ -7285,7 +7300,7 @@ V - Co-operative</inlineHelpText>
         <externalId>false</externalId>
         <inlineHelpText>Temporary duplicate bill-to (4xxxx) SAP number</inlineHelpText>
         <label>E&amp;F Additional SAP Nr.</label>
-        <length>250</length>
+        <length>20</length>
         <required>false</required>
         <trackFeedHistory>true</trackFeedHistory>
         <trackHistory>false</trackHistory>
@@ -7328,17 +7343,6 @@ V - Co-operative</inlineHelpText>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Currency</type>
-    </fields>
-    <fields>
-        <fullName>EF_Client_Services_Specialist_Email__c</fullName>
-        <externalId>false</externalId>
-        <formula>EF_Client_Services_Specialist__r.Email</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>E&amp;F Client Services Specialist Email</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <type>Text</type>
-        <unique>false</unique>
     </fields>
     <fields>
         <fullName>EF_Client_Services_Specialist__c</fullName>
@@ -8122,7 +8126,7 @@ WSPN-Worldspan</inlineHelpText>
         <fullName>IATACode__c</fullName>
         <externalId>false</externalId>
         <label>IATA Code</label>
-        <length>17</length>
+        <length>14</length>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
@@ -8829,7 +8833,14 @@ Approval: Key Contact can see pending request approve it one by one</inlineHelpT
         <fullName>Is_Branch_Abroad__c</fullName>
         <description>FDS AGM checks if the branch account is in a different country to the parent&apos;s.</description>
         <externalId>false</externalId>
-        <formula>if(AND(RecordType.Name = &quot;Agency&quot; , ispickval(Location_Type__c, &quot;BR&quot;)),IF(Parent.IATA_ISO_Country__c &lt;&gt; IATA_ISO_Country__c,&quot;Yes&quot;,&quot;No&quot;),&quot;&quot;)</formula>
+        <formula>IF(
+ AND(RecordType.Name = &quot;Agency&quot; , ispickval(Location_Type__c, &quot;BR&quot;)),
+ IF(AND(Parent.IATA_ISO_Country__c &lt;&gt; IATA_ISO_Country__c, NOT(CNS_Agency__c)),
+  &quot;Yes&quot;,
+  &quot;No&quot;
+ ),
+ &quot;&quot;
+)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Is Branch Abroad</label>
         <required>false</required>
@@ -10319,73 +10330,6 @@ J-Joint Vent</inlineHelpText>
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>PreviousStatus__c</fullName>
-        <externalId>false</externalId>
-        <label>PreviousStatus</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Approved</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Cash basis/no commission</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Cash basis/with commission</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Changes processed</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Listed</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>New application pending</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Not accreditated</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Not in operation</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Terminated</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Under review</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>No longer a customer</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
-        <required>false</required>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
-        <type>Picklist</type>
-    </fields>
-	<fields>
-        <fullName>Previous_Reason__c</fullName>
-        <externalId>false</externalId>
-        <label>Previous Reason</label>
-        <length>255</length>
-        <required>false</required>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
         <fullName>Price_Group__c</fullName>
         <description>IEC - SAP price group granted to customer</description>
         <externalId>false</externalId>
@@ -10475,18 +10419,6 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
-    </fields>
-    <fields>
-        <fullName>Reason__c</fullName>
-        <description>Contains the reason from AMS</description>
-        <externalId>false</externalId>
-        <label>Reason</label>
-        <length>255</length>
-        <required>false</required>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
-        <type>Text</type>
-        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Reason_for_creation__c</fullName>
@@ -10664,7 +10596,7 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
     <fields>
         <fullName>SAP_BW_report_with_sales_figures__c</fullName>
         <externalId>false</externalId>
-        <formula>IF(ISBLANK(Higher_Level_Customer__c) || Higher_Level_Customer__c = 0,&quot;&quot;, HYPERLINK(&quot;https://sap.iata.org/irj/servlet/prt/portal/prtroot/pcd!3aportal_content!2fcom.sap.pct!2fplatform_add_ons!2fcom.sap.ip.bi!2fiViews!2fcom.sap.ip.bi.bex?QUERY=ZVSD_M07_Q010&amp;VARIABLE_SCREENX&amp;DUMMY=1&amp;BI_COMMAND_1-BI_COMMAND_TYPE=SET_VARIABLES_STATE&amp;BI_COMMAND_1-VARIABLE_VALUES-VARIABLE_VALUE_1-VARIABLE_TYPE=VARIABLE_INPUT_STRING&amp;BI_COMMAND_1-VARIABLE_VALUES-VARIABLE_VALUE_1-VARIABLE=UMI_CUSTOMER_001&amp;BI_COMMAND_1-VARIABLE_VALUES-VARIABLE_VALUE_1-VARIABLE_TYPE-VARIABLE_INPUT_STRING=&quot; &amp; TEXT( Higher_Level_Customer__c ) , &quot; SAP/BW report with sales figures &quot;))</formula>
+        <formula>HYPERLINK(&quot;https://sap.iata.org/irj/servlet/prt/portal/prtroot/pcd!3aportal_content!2fcom.sap.pct!2fplatform_add_ons!2fcom.sap.ip.bi!2fiViews!2fcom.sap.ip.bi.bex?QUERY=ZVSD_M07_Q010&amp;VARIABLE_SCREENX&amp;DUMMY=1&amp;BI_COMMAND_1-BI_COMMAND_TYPE=SET_VARIABLES_STATE&amp;BI_COMMAND_1-VARIABLE_VALUES-VARIABLE_VALUE_1-VARIABLE_TYPE=VARIABLE_INPUT_STRING&amp;BI_COMMAND_1-VARIABLE_VALUES-VARIABLE_VALUE_1-VARIABLE=UMI_CUSTOMER_001&amp;BI_COMMAND_1-VARIABLE_VALUES-VARIABLE_VALUE_1-VARIABLE_TYPE-VARIABLE_INPUT_STRING=&quot; &amp; TEXT( Higher_Level_Customer__c ) , &quot; SAP/BW report with sales figures &quot;)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Main Products Purchased</label>
         <required>false</required>
@@ -10675,7 +10607,7 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
     <fields>
         <fullName>SAP_BW_report_without_sales_figures__c</fullName>
         <externalId>false</externalId>
-        <formula>IF(ISBLANK(Higher_Level_Customer__c) || Higher_Level_Customer__c = 0,&quot;&quot;, HYPERLINK(&quot;https://sap.iata.org/irj/servlet/prt/portal/prtroot/pcd!3aportal_content!2fcom.sap.pct!2fplatform_add_ons!2fcom.sap.ip.bi!2fiViews!2fcom.sap.ip.bi.bex?QUERY=ZVSD_M07_Q011&amp;VARIABLE_SCREENX&amp;DUMMY=1&amp;BI_COMMAND_1-BI_COMMAND_TYPE=SET_VARIABLES_STATE&amp;BI_COMMAND_1-VARIABLE_VALUES-VARIABLE_VALUE_1-VARIABLE_TYPE=VARIABLE_INPUT_STRING&amp;BI_COMMAND_1-VARIABLE_VALUES-VARIABLE_VALUE_1-VARIABLE=UMI_CUSTOMER_001&amp;BI_COMMAND_1-VARIABLE_VALUES-VARIABLE_VALUE_1-VARIABLE_TYPE-VARIABLE_INPUT_STRING=&quot; &amp; TEXT( Higher_Level_Customer__c ) , &quot; SAP/BW report without sales figures &quot;))</formula>
+        <formula>HYPERLINK(&quot;https://sap.iata.org/irj/servlet/prt/portal/prtroot/pcd!3aportal_content!2fcom.sap.pct!2fplatform_add_ons!2fcom.sap.ip.bi!2fiViews!2fcom.sap.ip.bi.bex?QUERY=ZVSD_M07_Q011&amp;VARIABLE_SCREENX&amp;DUMMY=1&amp;BI_COMMAND_1-BI_COMMAND_TYPE=SET_VARIABLES_STATE&amp;BI_COMMAND_1-VARIABLE_VALUES-VARIABLE_VALUE_1-VARIABLE_TYPE=VARIABLE_INPUT_STRING&amp;BI_COMMAND_1-VARIABLE_VALUES-VARIABLE_VALUE_1-VARIABLE=UMI_CUSTOMER_001&amp;BI_COMMAND_1-VARIABLE_VALUES-VARIABLE_VALUE_1-VARIABLE_TYPE-VARIABLE_INPUT_STRING=&quot; &amp; TEXT( Higher_Level_Customer__c ) , &quot; SAP/BW report without sales figures &quot;)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Main Products Purchased</label>
         <required>false</required>
@@ -24978,7 +24910,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
     </recordTypes>
     <recordTypes>
         <fullName>IATA</fullName>
-        <active>true</active>
+        <active>false</active>
         <description>Used for all standard Accounts (airlines, agents, partners etc)</description>
         <label>IATA Standard Account</label>
         <picklistValues>
@@ -77027,39 +76959,6 @@ NOT(CONTAINS($Profile.Name, &quot;Developer&quot;))
         <errorMessage>Airline head office accounts can be created only by an administrator</errorMessage>
     </validationRules>
     <validationRules>
-        <fullName>EF_AS_Specialist_Prevent_Client_Edit</fullName>
-        <active>true</active>
-        <description>If User is Airline Service Specialist prevent editing Client Accounts</description>
-        <errorConditionFormula>AND( 
-ISPICKVAL($User.EF_User_Role__c, &apos;Airline Services Specialists&apos;), 
-RecordType.Name=&apos;Others&apos; )</errorConditionFormula>
-        <errorMessage>You don&apos;t have the right level of access to edit Client Accounts</errorMessage>
-    </validationRules>
-    <validationRules>
-        <fullName>EF_Account_Client_Reactivation</fullName>
-        <active>true</active>
-        <description>E&amp;F Status on Client can be reactivated if the user has the correct setting on his user</description>
-        <errorConditionFormula>AND(
-NOT($User.EF_Client_Reactivation__c),
-OR(ISPICKVAL(EF_Status__c, &apos;Active&apos;), ISPICKVAL(EF_Status__c, &apos;&apos;) ),
-TEXT(PRIORVALUE(EF_Status__c))=&apos;Inactive&apos;,
-RecordType.Name=&apos;Others&apos;
-)</errorConditionFormula>
-        <errorMessage>You are not allowed to reactivate Client accounts for E&amp;F.</errorMessage>
-    </validationRules>
-    <validationRules>
-        <fullName>EF_Account_Customer_Reactivation</fullName>
-        <active>true</active>
-        <description>E&amp;F Status on Customers can be reactivated if the user has the correct setting on his user</description>
-        <errorConditionFormula>AND(
-NOT($User.EF_Customer_Reactivation__c),  
-OR(ISPICKVAL(EF_Status__c, &apos;Active&apos;), ISPICKVAL(EF_Status__c, &apos;&apos;) ),
-TEXT(PRIORVALUE(EF_Status__c))=&apos;Inactive&apos;,
-OR(RecordType.Name=&apos;Operator&apos;, RecordType.Name=&apos;Airline Branch&apos;, RecordType.Name=&apos;Airline Headquarters&apos;) 
-)</errorConditionFormula>
-        <errorMessage>You are not allowed to reactivate Customer accounts for E&amp;F.</errorMessage>
-    </validationRules>
-    <validationRules>
         <fullName>EF_BlockRemoveSISVerifiedOnOperator</fullName>
         <active>true</active>
         <description>Can&apos;t set to false SIS Verified if Record Type is Operator</description>
@@ -77081,19 +76980,6 @@ OR(RecordType.Name=&apos;Operator&apos;, RecordType.Name=&apos;Airline Branch&ap
 )</errorConditionFormula>
         <errorDisplayField>EF_SIS_Code_Verified__c</errorDisplayField>
         <errorMessage>SIS Verified can&apos;t be checked if SIS Accounting Code or SIS Designator are empty</errorMessage>
-    </validationRules>
-    <validationRules>
-        <fullName>EF_MandatoryFields</fullName>
-        <active>true</active>
-        <description>Sets the mandatory fields for E&amp;F Profiles. (E&amp;F Type, E&amp;F Status, E&amp;F Sub-status, E&amp;F Status DAte Change)</description>
-        <errorConditionFormula>AND( 
- CONTAINS($User.Profile_Name__c, &apos;E&amp;F&apos;),   
-OR(RecordType.DeveloperName=&apos;Standard_Account&apos;, RecordType.DeveloperName=&apos;Others&apos;, RecordType.DeveloperName=&apos;Operator&apos;, 
-RecordType.DeveloperName=&apos;IATA_Airline_BR&apos;,
-RecordType.DeveloperName=&apos;IATA_Airline&apos;),
-OR(ISPICKVAL(EF_Type__c,&quot;&quot;), ISPICKVAL( EF_Status__c, &quot;&quot;), ISPICKVAL( EF_SubStatus__c ,&quot;&quot;), ISNULL(EF_Effective_Date__c) )
-)</errorConditionFormula>
-        <errorMessage>Please fill in E&amp;F Type, E&amp;F Status, E&amp;F Sub-Status, E&amp;F Status Date Change</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>EF_SIS_Location_ID_format_check</fullName>
@@ -77148,7 +77034,7 @@ PRIORVALUE( Total_Value_Won_Opportunities__c ) = Total_Value_Won_Opportunities__
         <fullName>General_Public_Admin_only</fullName>
         <active>true</active>
         <description>Only administrators can edit General Public accounts</description>
-        <errorConditionFormula>IF((CONTAINS(Name, &quot;General Public&quot;) || CONTAINS(Name, &quot;general public&quot;) || CONTAINS(Name, &quot;GENERAL PUBLIC&quot;) || CONTAINS(Name, &quot;General public&quot;) || TEXT(Sector__c) = &quot;General Public&quot; || ISPICKVAL(PRIORVALUE(Sector__c),&quot;General Public&quot;)) &amp;&amp; NOT(CONTAINS($User.Profile_Name__c, &quot;System Administrator&quot;) || CONTAINS($User.Profile_Name__c, &quot;System administrator&quot;)), TRUE, FALSE)</errorConditionFormula>
+        <errorConditionFormula>IF((CONTAINS(Name, &quot;General Public&quot;) || CONTAINS(Name, &quot;general public&quot;) || CONTAINS(Name, &quot;GENERAL PUBLIC&quot;) ||  CONTAINS(Name, &quot;General public&quot;) || TEXT(Sector__c) = &quot;General Public&quot;) &amp;&amp; NOT(CONTAINS($User.Profile_Name__c, &quot;System Administrator&quot;) || CONTAINS($User.Profile_Name__c, &quot;System administrator&quot;)), TRUE, FALSE)</errorConditionFormula>
         <errorMessage>Please contact an administrator if you wish to create or modify a general public account</errorMessage>
     </validationRules>
     <validationRules>
