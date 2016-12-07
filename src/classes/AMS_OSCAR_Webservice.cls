@@ -400,5 +400,45 @@ global class AMS_OSCAR_Webservice {
         
     }
 
+    WebService static String generateCertificates(String oscarId, String agencyId){
+
+        try{
+
+            //creates request
+            AMS_Certificate_Request__c request = new AMS_Certificate_Request__c();
+            request.OSCAR__c = oscarId;
+            request.AccountIds__c = JSON.serializePretty(new Set<String>{agencyId});
+
+            //creates certificates on amazon
+            String result = AMS_CertificateHelper.createCertificate(request);
+
+            //inserts request
+            if(result.startsWithIgnoreCase('ERROR: ')) return result;
+            
+            insert request;            
+            
+            //creates attachments (for the request)
+            System.enqueueJob(new AMS_CertificateHelper.CertificateCreation(request.Id, System.now().format('YYYY'), null));
+
+            //creates change code
+            Account acct = new Account(Id = agencyId);
+            AMS_OSCAR__c oscar = new AMS_OSCAR__c(Id = oscarId);
+            AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
+            changeCode.name = 'CER';
+            changeCode.reasonCode = '91';
+            changeCode.reasonDesc  = 'ACCREDITED-MEETS STANDARD';
+            changeCode.status  = '9';
+
+            AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {oscar}, new List<Account> {acct}, true);
+
+            oscar.Certificate_Generated__c = System.today();
+            update oscar;
+
+            return result;
+
+        }catch(Exception ex){
+            return AMS_Utils.errorMessageBeautifyer(ex);
+        }
+    }
 
 }
