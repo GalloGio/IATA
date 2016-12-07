@@ -14817,7 +14817,8 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
     </recordTypes>
     <searchLayouts>
         <excludedStandardButtons>New</excludedStandardButtons>
-        <listViewButtons>Start_Oscar_Wizzard_button</listViewButtons>
+        <excludedStandardButtons>Accept</excludedStandardButtons>
+        <excludedStandardButtons>Forward</excludedStandardButtons>
     </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <startsWith>Vowel</startsWith>
