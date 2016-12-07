@@ -272,7 +272,7 @@ public without sharing class AMS_EBulletinReportHelper {
 
 
 		if(ccList.isEmpty())
-			throw new AMS_EBulletinException('There is no Change Codes Information to extract for the specified period!');
+			throw new AMS_EBulletinException('01');
 		//system.debug('Records history query: ' +AMS_QueryUtils.getAllFieldQuery(objectHistBaseQuery,objectBaseQuery.replace('__c', '__r.Id') + ' IN :ccList', false));
 		
 		//Recover current active Owners Info from the Accounts linked to the Change Codes

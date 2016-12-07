@@ -36,7 +36,7 @@ global class AMS_EBulletinBatch implements Database.Batchable<sObject> {
 		
 		List<Messaging.SingleEmailMessage> mailsToSend = new List<Messaging.SingleEmailMessage>();
 
-		system.debug(loggingLevel.Debug,'scope: ' + scope);
+		system.debug('scope: ' + scope);
 
 		for(AMS_eBulletin_Profile__c eBprof : scope){
 			
@@ -51,22 +51,31 @@ global class AMS_EBulletinBatch implements Database.Batchable<sObject> {
 		
 			Set <String> ccNamesToRecover = AMS_CustomSettingsUtils.ccNameSectionMap.keyset();
 
+			for (String cc : ccNamesToRecover) system.debug('cc: ' + cc);
+
+
+			List<String> countriesToRecover = filters.countriesList;
+			List<String> programsToRecover = filters.programsList;
 
 			system.debug('ccNamesToRecover: ' + ccNamesToRecover);
-			system.debug('filters.countriesList: ' + filters.countriesList);
-			system.debug('filters.programsList: ' + filters.programsList);
+			system.debug('filters.countriesList: ' + countriesToRecover);
+			system.debug('filters.programsList: ' + programsToRecover);
 			system.debug('filters.fromCCDate: ' + filters.fromCCDate);
 			system.debug('filters.toCCDate: ' + filters.toCCDate);
 			
-			Integer count = 0;			
+			Integer count = 0;
 			if(this.typeEBulletin == 'Daily'){	
 
-				count = [SELECT count() FROM Agency_Applied_Change_code__c 
-								WHERE Change_Code__c IN :ccNamesToRecover 
-										and Published_on_EBulletin__c = TRUE 
-										and Account__r.IATA_ISO_Country__r.ISO_Code__c IN :filters.countriesList 
-										and Account__r.Location_Class__c IN :filters.programsList
-										and CreatedDate > :filters.fromCCDate  and CreatedDate < :filters.toCCDate ];
+				String baseq 			= 'SELECT count() FROM Agency_Applied_Change_code__c WHERE Change_Code__c ';
+				String filtersCC 		= 'IN :ccNamesToRecover ';   
+				String filtersPublished = 'and Published_on_EBulletin__c = TRUE ';
+				String filtersCountries = 'and Account__r.IATA_ISO_Country__r.ISO_Code__c IN :countriesToRecover ';
+				String filtersLC 		= 'and Account__r.Location_Class__c IN :programsToRecover ';
+				String filtersDates		= 'and CreatedDate > ' + filters.fromCCDate.format('yyyy-MM-dd\'T\'hh:mm:ss\'Z\'') + ' and CreatedDate < ' + filters.toCCDate.format('yyyy-MM-dd\'T\'hh:mm:ss\'Z\'');
+				
+				count = Database.countQuery(baseq + filtersCC + filtersPublished + filtersCountries + filtersLC + filtersDates) ;
+
+				system.debug('Count Query: ' + baseq + filtersCC + filtersPublished + filtersCountries + filtersLC + filtersDates);
 			}
 			else if (this.typeEBulletin == 'Weekly'){
 				count = 1;

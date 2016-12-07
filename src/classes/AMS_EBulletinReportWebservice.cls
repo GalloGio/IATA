@@ -23,8 +23,6 @@ global without sharing class AMS_EBulletinReportWebservice {
 			startDate = eBulletinProfile.Last_Run__c;
 
 
-		recordTypeName =Schema.SObjectType.AMS_eBulletin_Profile__c.RecordTypeInfosById.get(eBulletinProfile.RecordTypeId).Name;
-
 		filters = new AMSEBulletinFilters(eBulletinProfile, startDate, endDate);
 
 		System.debug('Initializing...');
@@ -128,6 +126,8 @@ global without sharing class AMS_EBulletinReportWebservice {
         public AMSEBulletinFilters(AMS_eBulletin_Profile__c eBulletinProfile, Datetime fromCCDate, Datetime toCCDate){
         		//Daily or Weekly by record type
 			
+			recordTypeName =Schema.SObjectType.AMS_eBulletin_Profile__c.RecordTypeInfosById.get(eBulletinProfile.RecordTypeId).Name;
+
 			this.typeEBulletin = recordTypeName.substring(0, 1).ToUpperCase();
 			
 			
