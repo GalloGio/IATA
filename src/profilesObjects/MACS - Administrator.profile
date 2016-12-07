@@ -2686,6 +2686,7 @@
 <fieldPermissions><editable>true</editable><field>Case.Modified_Report__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Case.MustSyncIrisCase__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Case.NOI_sent__c</field><readable>true</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>Case.NOT_Approval__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Case.NOT_Date__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Case.NOT_Sent__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Case.NOW_ACCA_Date_Time_New_c__c</field><readable>false</readable></fieldPermissions>
@@ -2813,6 +2814,7 @@
 <fieldPermissions><editable>false</editable><field>Case.Reason_for_change_to_AssessmentPerformed__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Case.Reason_internal_case__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Case.Reason_of_Item__c</field><readable>true</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>Case.Reason_of_REI_WD__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Case.Reason_of_rejection_IFAP__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Case.Reason_to_be__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Case.Reasons_of_Reject__c</field><readable>false</readable></fieldPermissions>
@@ -2945,6 +2947,7 @@
 <fieldPermissions><editable>true</editable><field>Case.Type_of_Budget__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Case.Type_of_Change__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Case.Type_of_Customer_from_account__c</field><readable>true</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>Case.Type_of_REI_WD__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Case.Type_of_case_Portal__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Case.Type_of_customer__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Case.UAT_Date__c</field><readable>true</readable></fieldPermissions>
@@ -7196,6 +7199,7 @@
 <tabVisibilities><tab>AMS_Accreditation_Organization__c</tab><visibility>Hidden</visibility></tabVisibilities>
 <tabVisibilities><tab>AMS_Agency__c</tab><visibility>Hidden</visibility></tabVisibilities>
 <tabVisibilities><tab>AMS_Airport__c</tab><visibility>Hidden</visibility></tabVisibilities>
+<tabVisibilities><tab>AMS_OSCAR__c</tab><visibility>Hidden</visibility></tabVisibilities>
 <tabVisibilities><tab>AMS_Operation__c</tab><visibility>Hidden</visibility></tabVisibilities>
 <tabVisibilities><tab>AMS_Segment__c</tab><visibility>Hidden</visibility></tabVisibilities>
 <tabVisibilities><tab>AMS_Settlement_System__c</tab><visibility>Hidden</visibility></tabVisibilities>
