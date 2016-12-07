@@ -13,6 +13,7 @@ public class AMS_OSCAR_ProcessViewerController {
  
     public Map<String,String> statusIcons {get;set;}
     public Map<String,String> statusLabel {get;set;}
+    public Map<String,Boolean> ddBlock {get;set;}
     public Map<String,StepFieldsDataWrapper> stepFieldsData {get;set;}
     
     public static Map<String, Schema.SObjectField> fieldMap = Schema.getGlobalDescribe().get('AMS_OSCAR__c').getDescribe().fields.getMap();
@@ -30,15 +31,28 @@ public class AMS_OSCAR_ProcessViewerController {
         }
     }
 
-    public Boolean dueDiligenceBlocked {
+    private Boolean dueDiligenceBlocked {
         get{
             return (
                 oscar != null
-                && (oscar.RecordType.DeveloperName == AMS_Utils.RECTYPE_NEW || oscar.RecordType.DeveloperName == AMS_Utils.RECTYPE_CHANGE)
-                && (( oscar.STEP6__c != AMS_Utils.PASSED) || ((oscar.STEP17__c == AMS_Utils.FAILED) || (oscar.STEP17__c == AMS_Utils.PASSED)))
+                && oscar.STEP17__c == AMS_Utils.IN_PROGRESS
             );
         }
-    }    
+    }
+
+    private Set<String> alwaysOnSteps{
+        get{
+            return new Set<String>{
+                'STEP6__c',
+                'STEP10__c',
+                'STEP17__c'
+            };
+        }
+    } 
+
+    private Boolean isStepBlocked(String stepApiName){
+        return alwaysOnSteps.contains(stepApiName) ? false : dueDiligenceBlocked;
+    }
     
     public String getEffectiveDate(){
         return oscar.Change_effective_as_of__c.format();
@@ -141,6 +155,7 @@ public class AMS_OSCAR_ProcessViewerController {
     
                 statusIcons.put(step.name,iconFileName);
                 statusLabel.put(step.name, stepValue);
+                ddBlock.put(flow.name, isStepBlocked(stepApiName));
             }
     }
     
@@ -302,6 +317,7 @@ public class AMS_OSCAR_ProcessViewerController {
 
         statusIcons = new Map<String,String>();
         statusLabel = new Map<String,String>();
+        ddBlock = new Map<String,Boolean>();
 
         for(AMS_OSCAR_JSON.Process p: pr){
             process.put(p.Name, p);

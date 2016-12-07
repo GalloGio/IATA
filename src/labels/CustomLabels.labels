@@ -26,7 +26,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS Due Diligence Lock</shortDescription>
-        <value>Only available after Sanity Check is passed and Due Diligence is completed</value>
+        <value>Only available after Due Diligence is completed</value>
     </labels>
     <labels>
         <fullName>AMS_Duplicate_Username</fullName>
