@@ -48,6 +48,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>AMS_Appointment_Type__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>OSCAR__c</field>
             </layoutItems>
         </layoutColumns>
