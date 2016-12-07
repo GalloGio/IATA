@@ -232,7 +232,7 @@ var dyn_functions = {
 
                     var changeTab = function(result){
                         if(result.success == true){
-                            sforce.console.focusPrimaryTabById(caseId);
+                            //sforce.console.focusPrimaryTabById(caseId);
                         }
                     };
 
