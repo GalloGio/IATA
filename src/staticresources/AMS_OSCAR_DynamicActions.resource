@@ -18,7 +18,7 @@ var dyn_functions = {
 
 
                     // Query the database to check if the flags for :IATACODE, Copy Data to Account and send Data to SAP ECC 
-                    var resultOscarData = sforce.connection.query("SELECT Flag_Data_to_Account__c,Flag_Data_to_SAPECC__c,ID, STEP10__c,STEP8__c,Process_Start_Date__c,recordTypeID,Process__c, Account__r.IATA_ISO_Country__r.Due_diligence_mandatory__c FROM AMS_OSCAR__C WHERE Id ='" + argList[2] + "'");
+                    var resultOscarData = sforce.connection.query("SELECT Flag_Data_to_Account__c,Flag_Data_to_SAPECC__c,ID, STEP10__c,STEP8__c,Process_Start_Date__c,recordTypeID,Process__c, Account__r.Due_Diligence_Status__c, Account__r.IATA_ISO_Country__r.Due_diligence_mandatory__c FROM AMS_OSCAR__C WHERE Id ='" + argList[2] + "'");
                     var records = resultOscarData.getArray("records");
 
                     //if oscar is mso do not allow more than one appointment
@@ -98,13 +98,26 @@ var dyn_functions = {
                             
                         }
 
-                        if (records.length > 0 && recordsFlag[0].Flag_IATACode_Formula__c == 'true' &&
-                                records[0].Account__r.IATA_ISO_Country__r.Due_diligence_mandatory__c == 'true' ) {
-                            var resultAms = this.performAMLaux(argList[2]);
-                            sResult = sResult + '- ' + resultAms;
-                        } else {
-                            sResult = sResult + '- Due diligence - ByPassed! \n\r';   
-                        }
+                        var ddResult = 'ByPassed!';
+
+                        if (
+                            records.length > 0 && recordsFlag[0].Flag_IATACode_Formula__c == 'true'
+                            && records[0].Account__r.IATA_ISO_Country__r.Due_diligence_mandatory__c == 'true' 
+                            && (records[0].Process__c == 'NEW.HO.1.0' || records[0].Process__c == 'NEW.BR.ABROAD' || records[0].Process__c == 'NEW.TIDS.1.0')
+                        ){
+                            
+                            if(records[0].Account__r.Due_Diligence_Status__c == 'In Progress'){
+                                ddResult = 'ByPassed (process is already in progress)';
+                                records[0].STEP17__c = 'In progress';
+                                bUpdate = true;
+                            }else{
+                                ddResult = this.performAMLaux(argList[2]);
+                            }
+                            
+
+                        } 
+
+                        sResult = sResult + '- Due diligence - ' + ddResult + '\r\n'; 
 
                         if(bUpdate){
                             sforce.connection.update(records);
@@ -210,29 +223,25 @@ var dyn_functions = {
                 alert(result);
            },
            performAMLaux:function (arg) {
-                var rc;
-                var result;
-                result = sforce.apex.execute("AMS_OSCAR_Webservice", "createAMLCase", {oscarId: arg});
+                var rc = 'Due Diligence Case created successfully.';
+                var result = sforce.apex.execute("AMS_OSCAR_Webservice", "createAMLCase", {oscarId: arg});
 
                 // OK
                 if (result[0].substring(0, 6) != 'ERROR:') {                    
                     var caseId = result[0];
 
                     var changeTab = function(result){
-                        //if(result.success == true){
-                            //sforce.console.focusPrimaryTabById(caseId);
-                            //result = 'AML Case created successfully.';
-                        //}
+                        if(result.success == true){
+                            sforce.console.focusPrimaryTabById(caseId);
+                        }
                     };
 
                     // Use the results primary tab id and open a new subtab
                    var openSubtab = function(result)
                    {            
-                        sforce.console.openSubtab(result.id, '/'+caseId, true, 'AML Case', null, changeTab);    
+                        sforce.console.openSubtab(result.id, '/'+caseId, true, 'Due Diligence Case', null, changeTab);    
                    };
                    sforce.console.getEnclosingPrimaryTabId(openSubtab);
-
-                   rc = 'AML Case created successfully.';
 
                 } else {
                     rc = result;
