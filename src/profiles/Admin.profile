@@ -22610,6 +22610,11 @@
     </fieldPermissions>
 	<fieldPermissions>
         <editable>true</editable>
+        <field>EF_Billing_Agreement__c.Sold_to__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>true</editable>
         <field>EF_Billing_Agreement__c.Skip_Approval__c</field>
         <readable>true</readable>
     </fieldPermissions>
