@@ -10489,7 +10489,7 @@ alert(&apos; Failed to generate a new IATA CODE. Please contact your administrat
         <protected>false</protected>
         <url>{!REQUIRESCRIPT(&quot;/support/console/30.0/integration.js&quot;)} 
 
-if (sforce.console.isInConsole()) { 
+if (typeof(srcUp) == &apos;function&apos;) {
 srcUp(&quot;/apex/AMS_OSCAR_Attachment_List?id={!AMS_OSCAR__c.Id}&quot;); 
 } else { 
 window.open(&quot;/apex/AMS_OSCAR_Attachment_List?id={!AMS_OSCAR__c.Id}&quot;); 
