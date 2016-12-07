@@ -14,7 +14,7 @@
     <enableListViewReskin>true</enableListViewReskin>
     <enableMultiMonitorComponents>true</enableMultiMonitorComponents>
     <enablePinTabs>true</enablePinTabs>
-    <enableTabHover>false</enableTabHover>
+    <enableTabHover>true</enableTabHover>
     <enableTabLimits>false</enableTabLimits>
     <isServiceCloudConsole>true</isServiceCloudConsole>
     <keyboardShortcuts>
@@ -216,6 +216,7 @@
     <tab>standard-Chatter</tab>
     <tab>APXTConga4__Conga_Template__c</tab>
     <tab>SIDRA_Lite_Mass_Approval</tab>
+    <tab>standard-Knowledge</tab>
     <workspaceMappings>
         <mapping>
             <tab>AMS_OSCAR__c</tab>
@@ -243,6 +244,9 @@
         </mapping>
         <mapping>
             <tab>standard-Dashboard</tab>
+        </mapping>
+        <mapping>
+            <tab>standard-Knowledge</tab>
         </mapping>
         <mapping>
             <tab>standard-report</tab>
