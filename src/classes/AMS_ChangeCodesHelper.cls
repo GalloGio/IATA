@@ -63,10 +63,12 @@ public class AMS_ChangeCodesHelper {
 
             if(step == AMS_Utils.SANITYCHECK){
                 changeCode.name = 'VRR';
-                changeCode.memoText = 'Advance notification for voluntary relinquishment by Agent by '+oscar.Termination_Date__c;
-                changeCode.reasonCode = lastChangeCode.Reason_Code__c;
-                changeCode.reasonDesc = lastChangeCode.Reason_Description__c;
+                changeCode.memoText = 'Advance notification for voluntary relinquishment by Agent by '+oscar.Change_Effective_as_of__c.format();
                 changeCode.status = AMS_Utils.getIATANumericStatus(acc.Status__c);
+
+                // lastChangeCode can be null so,
+                changeCode.reasonCode = lastChangeCode == null? '' : lastChangeCode.Reason_Code__c;
+                changeCode.reasonDesc = lastChangeCode == null? '' : lastChangeCode.Reason_Description__c;                
             }else if(step == AMS_Utils.SUSPENSION){
                 String accType = acc.Location_Class__c == 'R' ? 'Cass Associate' : 'Agent';
 
@@ -95,10 +97,12 @@ public class AMS_ChangeCodesHelper {
                 changeCode.name = 'NTW';
                 changeCode.memoText = 'Voluntary relinquishment request cancelled by the Agent. Agent is retained back to IATA Agency List';
 
-                if(AMS_Utils.getIATANumericStatus(acc.Status__c) == '8'){
-                    changeCode.reasonCode = lastChangeCode.Reason_Code__c;
-                    changeCode.reasonDesc = lastChangeCode.Reason_Description__c;
+                if(AMS_Utils.getIATANumericStatus(acc.Status__c) == '8'){ 
                     changeCode.status ='8';
+
+                    // lastChangeCode can be null so,
+                    changeCode.reasonCode = lastChangeCode == null? '' : lastChangeCode.Reason_Code__c;
+                    changeCode.reasonDesc = lastChangeCode == null? '' : lastChangeCode.Reason_Description__c;  
                 }else{
 
                     changeCode.reasonCode = '91';
@@ -109,10 +113,12 @@ public class AMS_ChangeCodesHelper {
             }else if(step == AMS_Utils.WITHDRAWAL && oscar.Process__c == AMS_UTils.VOLRELINQUISH){
 
                 changeCode.name = 'VRW';
-                changeCode.memoText = 'Agent Terminated due to Voluntary Relinquishment';
-                changeCode.reasonCode = lastChangeCode.Reason_Code__c;
-                changeCode.reasonDesc = lastChangeCode.Reason_Description__c;
+                changeCode.memoText = 'Voluntary Relinquishment Request withdrawn by Agent.';
                 changeCode.status = AMS_Utils.getIATANumericStatus(acc.Status__c);
+
+                // lastChangeCode can be null so,
+                changeCode.reasonCode = lastChangeCode == null? '' : lastChangeCode.Reason_Code__c;
+                changeCode.reasonDesc = lastChangeCode == null? '' : lastChangeCode.Reason_Description__c;  
             }
 
             changeCodes.add(changeCode);

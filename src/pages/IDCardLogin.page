@@ -136,7 +136,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     function workingFirstName() {
        
         var firstName = (removeDiacritics(this.document.getElementById('{!$Component.idcardForm.pb1.sec1.txtFIRSTNAME}').value));
-        document.getElementById('{!$Component.idcardForm.pb1.sec1.txtFIRSTNAME}').value = firstName.capitalize();
+        //document.getElementById('{!$Component.idcardForm.pb1.sec1.txtFIRSTNAME}').value = firstName.capitalize();
+        document.getElementById('{!$Component.idcardForm.pb1.sec1.txtFIRSTNAME}').value = firstName.toUpperCase();
 
         //removing apostrophe 
         var name = (removeDiacritics(this.document.getElementById('{!$Component.idcardForm.pb1.sec1.txtFIRSTNAME}').value));
@@ -152,7 +153,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     function workingLastName() {
 
         var lastName = (removeDiacritics(this.document.getElementById('{!$Component.idcardForm.pb1.sec1.txtLASTNAME}').value));
-        document.getElementById('{!$Component.idcardForm.pb1.sec1.txtLASTNAME}').value = lastName.capitalize();
+        //document.getElementById('{!$Component.idcardForm.pb1.sec1.txtLASTNAME}').value = lastName.capitalize();
+        document.getElementById('{!$Component.idcardForm.pb1.sec1.txtLASTNAME}').value = lastName.toUpperCase();
 
         //removing apostrophe 
         var name = (removeDiacritics(this.document.getElementById('{!$Component.idcardForm.pb1.sec1.txtLASTNAME}').value));

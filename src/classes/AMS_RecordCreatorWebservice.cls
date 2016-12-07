@@ -8,6 +8,13 @@ global without sharing class AMS_RecordCreatorWebservice {
     private static String MAJOR_CHANGES_PV = 'MAJOR.CHANGES';
     private static String DGR_DGA_PV = 'DGR.DGA';
     private static String NEWBRABRD_PV= 'NEW.BR.ABROAD';
+    private static String NEWTIDS_PV= 'NEW.TIDS.1.0';
+    private static String NEWCORRECTION_PV = 'CORRECTION.1.0';
+    private static String NEWDGR_PV = 'CERTIFICATION.1.0';
+    private static String NEWVR_PV = 'VR.1.0'; 
+    private static String NEWVRCA_PV = 'VR.1.0.CA';
+
+    private static String EMPTYACCREDITATIONID = 'EMPTY';
 
     /**
         Creates an Oscar (AMS_OSCAR__c) given an Account Id, an Accreditation Id and the Type of Process
@@ -56,8 +63,8 @@ global without sharing class AMS_RecordCreatorWebservice {
                 throw new CalloutException('There was an error on OSCAR object creation. Please check the logs or contact the System Administrator.');
                 //return 'There was an error on OSCAR object creation. Please check the logs or contact the System Administrator.';
 
-            if(typeOfProcess.equalsIgnoreCase(NEWBR_PV) || typeOfProcess.equalsIgnoreCase(NEWBRABRD_PV)){
-                if(!createHierarchy(realAccountId)){
+            if(typeOfProcess.equalsIgnoreCase(NEWBR_PV) || typeOfProcess.equalsIgnoreCase(NEWBRABRD_PV) || typeOfProcess.equalsIgnoreCase(NEWTIDS_PV) ){
+                if(!createHierarchy(realAccountId, typeOfProcess)){
                     Database.rollback(sp);
                     throw new CalloutException('There was an error on hierarchy object creation (does the account have a parent ?) . Please check the logs or contact the System Administrator.');
                     //return 'There was an error on hierarchy object creation (does the account have a parent ?) . Please check the logs or contact the System Administrator.';
@@ -112,18 +119,24 @@ global without sharing class AMS_RecordCreatorWebservice {
         return null;
     }
 
-    private static boolean createHierarchy(String accountId){
+    private static boolean createHierarchy(String accountId, String typeOfProcess){
 
         Account account = new Account(Id = accountId);
 
         System.debug('Account to create hierarchy is ' + account.Id);
 
-        List<Account> parentIdLst = [SELECT Id, ParentId from Account where Id = :account.Id LIMIT 1];
+        List<Account> parentIdLst = [SELECT Id, ParentId, Location_Type__c from Account where Id = :account.Id LIMIT 1];
+
+        if((!parentIdLst.isEmpty()) && typeOfProcess.equalsIgnoreCase(NEWTIDS_PV) && parentIdLst.get(0).Location_Type__c != 'BR'){
+            System.debug('There is no Parent Id to create an Hierarchy but its a TIDS so lets assume its an HO.');
+            return true;
+        }
 
         if(parentIdLst.isEmpty()){
             System.debug('There is no Parent Id to create an Hierarchy.');
             return false;
         }
+
 
         System.debug('Parent account to create hierarchy is ' + parentIdLst.get(0).ParentId);
 
@@ -161,11 +174,20 @@ global without sharing class AMS_RecordCreatorWebservice {
 
     private static String fetchOscarRecordType(String typeOfProcess){
 
-        if(typeOfProcess.equalsIgnoreCase(NEWBR_PV) || typeOfProcess.equalsIgnoreCase(NEWHO_PV) || typeOfProcess.equalsIgnoreCase(NEWBRABRD_PV))
+        if(typeOfProcess.equalsIgnoreCase(NEWBR_PV) || typeOfProcess.equalsIgnoreCase(NEWHO_PV) || typeOfProcess.equalsIgnoreCase(NEWBRABRD_PV) || typeOfProcess.equalsIgnoreCase(NEWTIDS_PV))
             return oscarRT.get('NEW');
 
         if(typeOfProcess.equalsIgnoreCase(BANK_ACCOUNT_CHANGES_PV) || typeOfProcess.equalsIgnoreCase(MAJOR_CHANGES_PV) || typeOfProcess.equalsIgnoreCase(DGR_DGA_PV))
             return oscarRT.get('CHANGE');
+
+        if(typeOfProcess.equalsIgnoreCase(NEWCORRECTION_PV))
+            return oscarRT.get('CORRECTION');
+
+        if(typeOfProcess.equalsIgnoreCase(NEWDGR_PV))
+            return oscarRT.get('CERTIFICATION');
+
+        if(typeOfProcess.equalsIgnoreCase(NEWVR_PV) || typeOfProcess.equalsIgnoreCase(NEWVRCA_PV))
+            return oscarRT.get('VOLUNTARY_RELINQUISHMENT');
 
         return null;
     
@@ -193,9 +215,13 @@ global without sharing class AMS_RecordCreatorWebservice {
         AMS_Pax_Accreditation_Form__c accreditationObj;
  
         if(owner == null)
-            oscar = new AMS_OSCAR__c(Account__c = accountId, Process__c = processType, RecordTypeId =recordTypeId, Status__c = oscarStatus, AMS_Online_Accreditation__c = accreditationId );
+            oscar = new AMS_OSCAR__c(Account__c = accountId, Process__c = processType, RecordTypeId =recordTypeId, Status__c = oscarStatus);
         else
-            oscar = new AMS_OSCAR__c(Account__c = accountId, Process__c = processType, RecordTypeId =recordTypeId, Status__c = oscarStatus, AMS_Online_Accreditation__c = accreditationId, OwnerId = owner );
+            oscar = new AMS_OSCAR__c(Account__c = accountId, Process__c = processType, RecordTypeId =recordTypeId, Status__c = oscarStatus, OwnerId = owner );
+
+        if(processType != NEWVR_PV && processType != NEWVRCA_PV){
+            oscar.AMS_Online_Accreditation__c = accreditationId;
+        }
 
         if(processType.equalsIgnoreCase(MAJOR_CHANGES_PV)){
 
@@ -211,7 +237,7 @@ global without sharing class AMS_RecordCreatorWebservice {
         
         insert oscar;
 
-        if(processType.equalsIgnoreCase(MAJOR_CHANGES_PV)){
+        if(processType.equalsIgnoreCase(MAJOR_CHANGES_PV) && processType != NEWVR_PV && processType != NEWVRCA_PV){
             processOscarProcessDetail(oscar,accreditationObj,accountId);
         }
 
@@ -394,6 +420,7 @@ global without sharing class AMS_RecordCreatorWebservice {
             oscarsToProcess.add(null);
         }
 
+        //AMS_ChangeCodesHelper.createAAChangeCodes(changeCodesToProcess, oscarsToProcess, accountsToProcess, false);
         AMS_Utils.createAAChangeCodes(changeCodesToProcess, oscarsToProcess, accountsToProcess, false);
 
         // for now we shouldn't sent any notification.

@@ -52,7 +52,6 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
                 , AMS_Pax_Accreditation_Form__c.Solicitation_Flag__c
                 , AMS_Pax_Accreditation_Form__c.VAT_Number_2__c 
                 , AMS_Pax_Accreditation_Form__c.Link_agent_name__c
-                , AMS_Pax_Accreditation_Form__c.Is_your_firm_handling_Dangerous_Goods__c
             };
         }
     }
@@ -148,7 +147,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
                 from AMS_Pax_Accreditation_Form__c where Id = :accreditationId];*/
 
         //query is done using the same fields that will appear on the page
-        List<AMS_Pax_Accreditation_Form__c> accreditationLst = Database.query('SELECT Id, '+String.join(accreditationFieldNames, ', ')+' FROM AMS_Pax_Accreditation_Form__c WHERE Id = :accreditationId');
+        List<AMS_Pax_Accreditation_Form__c> accreditationLst = Database.query('SELECT Id, Is_your_firm_handling_Dangerous_Goods__c, '+String.join(accreditationFieldNames, ', ')+' FROM AMS_Pax_Accreditation_Form__c WHERE Id = :accreditationId');
 
         if(accreditationLst.size() > 0){
             return accreditationLst.get(0);

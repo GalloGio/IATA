@@ -49,13 +49,20 @@
         .slds-m-bottom--xx-small {
             font-size: 13px !important;
         }
+
+        textarea {
+            resize: none;
+        }
         
     </style>
     <apex:includeScript value="/support/console/20.0/integration.js"/>
     <script type="text/javascript">
         function setTabTitle() {
             //Set the current tab's title
-            sforce.console.setTabTitle('Agency owners');
+            if({!isCertificationOSCAR})
+                sforce.console.setTabTitle('Agency trained staff');
+            else
+                sforce.console.setTabTitle('Agency owners');
         }
         var pageLoad = window.onload;
         window.onload = function()
@@ -661,55 +668,66 @@
                                             <table id="wt" class="slds-table slds-table--bordered slds-max-small-table--stacked-horizontal slds-no-row-hover">
                                                 <thead>
                                                     <tr>
-                                                        <th class="slds-text-heading--label slds-size--1-of-8" scope="col">{!$ObjectType.AMS_Accreditation_Contact__c.Fields.Certificate_Name__c.Label}</th>
-                                                        <th class="slds-text-heading--label slds-size--1-of-8" scope="col">{!$ObjectType.AMS_Accreditation_Contact__c.Fields.Certificate_Issuer__c.Label}</th>
-                                                        <th class="slds-text-heading--label slds-size--1-of-8" scope="col">{!$ObjectType.AMS_Accreditation_Contact__c.Fields.First_Name__c.Label}</th>
-                                                        <th class="slds-text-heading--label slds-size--1-of-8" scope="col">{!$ObjectType.AMS_Accreditation_Contact__c.Fields.Last_name__c.Label}</th>
-                                                        <th class="slds-text-heading--label slds-size--1-of-8" scope="col">{!$ObjectType.AMS_Accreditation_Contact__c.Fields.Type_of_Certificate__c.Label}</th>
-                                                        <th class="slds-text-heading--label slds-size--1-of-8" scope="col">{!$ObjectType.AMS_Accreditation_Contact__c.Fields.Certificate_Issued_on__c.Label}</th>
-                                                        <th class="slds-text-heading--label slds-size--1-of-8" scope="col">{!$ObjectType.AMS_Accreditation_Contact__c.Fields.Certificate_Validity__c.Label}</th>
-                                                        <th class="slds-text-heading--label slds-size--1-of-8" scope="col">{!$ObjectType.AMS_Accreditation_Contact__c.Fields.Valid_until__c.Label}</th>
-                                                        <th class="slds-text-heading--label slds-size--1-of-8" scope="col">{!$ObjectType.AMS_Accreditation_Contact__c.Fields.Position_trained_staff__c.Label}</th>
+                                                        <th class="slds-text-heading--label slds-size--1-of-5" scope="col">{!$ObjectType.AMS_Accreditation_Contact__c.Fields.Certificate_Name__c.Label}</th>
+                                                        <th class="slds-text-heading--label slds-size--1-of-5" scope="col">{!$ObjectType.AMS_Accreditation_Contact__c.Fields.Certificate_Issuer__c.Label}</th>
+                                                        <th class="slds-text-heading--label slds-size--1-of-5" scope="col">{!$ObjectType.AMS_Accreditation_Contact__c.Fields.First_Name__c.Label}</th>
+                                                        <th class="slds-text-heading--label slds-size--1-of-5" scope="col">{!$ObjectType.AMS_Accreditation_Contact__c.Fields.Last_name__c.Label}</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                         <tr class="slds-hint-parent">
-                                                            <td class="slds-size--1-of-8" data-label="{ObjectType.AMS_Accreditation_Contact__c.Fields.Certificate_Name__c.Label}">
+                                                            <td class="slds-size--1-of-5" data-label="{ObjectType.AMS_Accreditation_Contact__c.Fields.Certificate_Name__c.Label}">
                                                                 <apex:inputField html-class="slds-input inputPointer" value="{!tsw.ac.Certificate_Name__c}"/>
                                                             </td>
-                                                             <td class="slds-size--1-of-8" data-label="{ObjectType.AMS_Accreditation_Contact__c.Fields.Certificate_Issuer__c.Label}">
+                                                             <td class="slds-size--1-of-5" data-label="{ObjectType.AMS_Accreditation_Contact__c.Fields.Certificate_Issuer__c.Label}">
                                                                 <apex:inputField html-class="slds-input inputPointer" value="{!tsw.ac.Certificate_Issuer__c}"/>
                                                             </td>
-                                                            <td class="slds-size--1-of-8" data-label="{ObjectType.AMS_Accreditation_Contact__c.Fields.First_Name__c.Label}">
+                                                            <td class="slds-size--1-of-5" data-label="{ObjectType.AMS_Accreditation_Contact__c.Fields.First_Name__c.Label}">
                                                                 <apex:inputField html-class="slds-input inputPointer" value="{!tsw.ac.First_name__c}"/>
                                                             </td>
-                                                            <td class="slds-size--1-of-8" data-label="{ObjectType.AMS_Accreditation_Contact__c.Fields.Last_name__c.Label}">
+                                                            <td class="slds-size--1-of-5" data-label="{ObjectType.AMS_Accreditation_Contact__c.Fields.Last_name__c.Label}">
                                                                 <apex:inputField html-class="slds-input inputPointer" value="{!tsw.ac.Last_name__c}"/>
                                                             </td>
-                                                            <td class="slds-size--1-of-8" data-label="{ObjectType.AMS_Accreditation_Contact__c.Fields.Type_of_Certificate__c.Label}">
+                                                        </tr>
+                                                </tbody>
+                                                <thead>
+                                                    <tr>
+                                                        <th class="slds-text-heading--label slds-size--1-of-5" scope="col">{!$ObjectType.AMS_Accreditation_Contact__c.Fields.Type_of_Certificate__c.Label}</th>
+                                                        <th class="slds-text-heading--label slds-size--1-of-5" scope="col">{!$ObjectType.AMS_Accreditation_Contact__c.Fields.Certificate_Issued_on__c.Label}</th>
+                                                        <th class="slds-text-heading--label slds-size--1-of-5" scope="col">{!$ObjectType.AMS_Accreditation_Contact__c.Fields.Certificate_Validity__c.Label}</th>
+                                                        <th class="slds-text-heading--label slds-size--1-of-5" scope="col">{!$ObjectType.AMS_Accreditation_Contact__c.Fields.Valid_until__c.Label}</th>
+                                                        <th class="slds-text-heading--label slds-size--1-of-5" scope="col">{!$ObjectType.AMS_Accreditation_Contact__c.Fields.Position_trained_staff__c.Label}</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                        <tr>
+                                                            <td class="slds-size--1-of-5" data-label="{ObjectType.AMS_Accreditation_Contact__c.Fields.Type_of_Certificate__c.Label}">
                                                                 <apex:inputField html-class="slds-input inputPointer" value="{!tsw.ac.Type_of_Certificate__c}"/>
                                                             </td>
 
-                                                            <td class="slds-size--1-of-8" data-label="{ObjectType.AMS_Accreditation_Contact__c.Fields.Certificate_Issued_on__c.Label}">
+                                                            <td class="slds-size--1-of-5" data-label="{ObjectType.AMS_Accreditation_Contact__c.Fields.Certificate_Issued_on__c.Label}">
                                                                 <apex:inputTextArea rows="1" html-class="slds-input inputPointer" value="{!tsw.certificateIssueDate}" html-placeholder="YYYY-MM-DD">
                                                                     <apex:actionSupport event="onchange" reRender="expiration"/>
                                                                 </apex:inputTextArea>
                                                             </td>
-                                                            <td class="slds-size--1-of-8" data-label="{ObjectType.AMS_Accreditation_Contact__c.Fields.Certificate_Validity__c.Label}">
+                                                            <td class="slds-size--1-of-5" data-label="{ObjectType.AMS_Accreditation_Contact__c.Fields.Certificate_Validity__c.Label}">
                                                                 <apex:inputField html-class="slds-input inputPointer" value="{!tsw.ac.Certificate_Validity__c}">
                                                                     <apex:actionSupport event="onchange" reRender="expiration"/>
                                                                 </apex:inputField>
                                                             </td>
-                                                            <td class="slds-size--1-of-8" data-label="{ObjectType.AMS_Accreditation_Contact__c.Fields.Valid_until__c.Label}">
-                                                                 <apex:inputTextArea id="expiration" rows="1" html-class="slds-input inputPointer" value="{!tsw.validUntil}"/>
+                                                            <td class="slds-size--1-of-5" data-label="{ObjectType.AMS_Accreditation_Contact__c.Fields.Valid_until__c.Label}">
+                                                                 <apex:inputTextArea id="expiration" rows="1" html-class="slds-input inputPointer" value="{!tsw.validUntil}" html-placeholder="YYYY-MM-DD"/>
                                                             </td>
-                                                            <td class="slds-size--1-of-8" data-label="{ObjectType.AMS_Accreditation_Contact__c.Fields.Position_trained_staff__c.Label}">
+                                                            <td class="slds-size--1-of-5" data-label="{ObjectType.AMS_Accreditation_Contact__c.Fields.Position_trained_staff__c.Label}">
                                                                 <apex:inputField html-class="slds-input inputPointer" value="{!tsw.ac.Position_trained_staff__c}"/>
                                                             </td>
                                                         </tr>
                                                 </tbody>
                                             </table>
                                         <apex:variable value="{!trainedStaffIndex + 1}" var="trainedStaffIndex"/>
+                                        <apex:outputPanel rendered="{!trainedStaffIndex > 0}">
+                                            <div class="slds-box-x--small slds-theme--info slds-theme--alert-texture">&nbsp;</div>
+                                        </apex:outputPanel>
                                         </apex:repeat>
                                     </div>
                                     </apex:outputPanel>
@@ -728,7 +746,7 @@
                                             |&nbsp;
                                             <a href="#" onClick="addEmptyCompanyRow();return false;">Add a Company<span class="slds-assistive-text">entity type</span></a>
                                         </apex:outputPanel>
-                                        <apex:outputPanel rendered="{!isCargoAgency}">
+                                        <apex:outputPanel rendered="{!AND(OR(isNewProcess,isCertificationOSCAR),isCargoAgency)}">
                                             |&nbsp;
                                             <a href="#" onClick="addEmptyTrainedStaffRow();return false;">Add Trained Staff<span class="slds-assistive-text">entity type</span></a>
                                         </apex:outputPanel>
