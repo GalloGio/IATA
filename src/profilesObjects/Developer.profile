@@ -7364,7 +7364,7 @@
 <recordTypeVisibilities><default>false</default><recordType>Case.YMQCustomerCare</recordType><visible>true</visible></recordTypeVisibilities>
 <recordTypeVisibilities><default>false</default><recordType>Case.myIATA</recordType><visible>true</visible></recordTypeVisibilities>
 <recordTypeVisibilities><default>false</default><recordType>Case.sMAP_sales_Monitoring_Alert_Process</recordType><visible>false</visible></recordTypeVisibilities>
-<recordTypeVisibilities><default>false</default><recordType>Code_Range__c.IATA_Code</recordType><visible>false</visible></recordTypeVisibilities>
+<recordTypeVisibilities><default>true</default><personAccountDefault>true</personAccountDefault><recordType>Code_Range__c.IATA_Code</recordType><visible>true</visible></recordTypeVisibilities>
 <recordTypeVisibilities><default>false</default><recordType>Comment__c.Objective_Independent</recordType><visible>false</visible></recordTypeVisibilities>
 <recordTypeVisibilities><default>false</default><recordType>Comment__c.Objective_Related</recordType><visible>false</visible></recordTypeVisibilities>
 <recordTypeVisibilities><default>false</default><recordType>Contact.GDP_Contact</recordType><visible>false</visible></recordTypeVisibilities>
