@@ -91,7 +91,8 @@ public without sharing class AMS_Utils {
     public static final String MIN_SHAREHOLDING = 'Minor Shareholding';
     public static final String NAME = 'Name';
     public static final String LEGAL_STATUS = 'Legal Status';
-    public static final String VFMR = 'VMFR';
+    public static final String VFMR = 'VFMR';
+    public static final String REMOVALTRADENAME = 'CNS - Removal of trade name';
 
 
     public static final String OSCAR_CLOSED = 'Closed (Closed)';
@@ -122,12 +123,10 @@ public without sharing class AMS_Utils {
     public static final String BANKACCCHANGES   = 'BANK.ACCOUNT.CHANGES';
     public static final String CERTIFICATION    = 'CERTIFICATION.1.0';
 
-    //other types of process
-    public static final String CERTIFICATE      = 'CER.1.0'         ;
-
     //Types of Certificate
     public static final String CERT_DGR         = 'DGR';
     public static final String CERT_DGA         = 'DGA';
+    public static final String CERT_TSA         = 'TSA';
 
     //Record Types
     public static final String RECTYPE_NEW      = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('NEW').getRecordTypeId();
@@ -150,6 +149,12 @@ public without sharing class AMS_Utils {
     public static final String ACC_S7_UNDERREVIEW = 'Under review';
     public static final String ACC_S8_CHANGESPROCESSED = 'Changes processed';
     public static final String ACC_S9_APPROVED = 'Approved';
+     
+    public static final String AACC_INPROGRESS = 'in progress';
+    public static final String AACC_FINALIZED = 'finalized';
+    public static final String AACC_WITHDRAWAL = 'withdrawn';
+    public static final String AACC_DISAPPROVED = 'disapproved';
+    public static final Set<String> AACC_FINALS = new Set<String>{AACC_FINALIZED, AACC_DISAPPROVED, AACC_WITHDRAWAL};
      
     public static final String CHLOCTYPEBEHAVIOR_NOSWAP = 'Don’t change the parent';        
     public static final String CHLOCTYPEBEHAVIOR_SWAP = 'Swap with the parent';
@@ -703,19 +708,6 @@ public without sharing class AMS_Utils {
         if (newVal <> oscarAgency.Status__c && newVal != null) {
 
             oscarAgency.Status__c = newVal;
-            toReturn = oscarAgency;
-        }
-
-        if(oscar != null){
-            if(aacNEW.Change_Code__c == 'FIN' && new Set<String>{'C','P'}.contains(oscar.Location_Class__c)){
-                oscarAgency.Annual_Renewal_Certificates__c = true;
-                toReturn = oscarAgency;
-            }
-        }       
-
-        if(aacNew.Change_Code__c == 'CER'){
-            oscarAgency.Annual_Renewal_Certificates__c = true;
-            oscarAgency.Certificate_Generated_Current_Year__c = true;
             toReturn = oscarAgency;
         }
 
@@ -1347,7 +1339,7 @@ public static String errorMessageBeautifyer(Exception ex) {
         errorString = ex.getMessage().substring(startOfErrorMessage, ex.getMessage().length());
         errorString = errorString.substringBefore('##');
     }
-    return 'ERROR: ' + errorString.unescapeHtml4();
+    return 'ERROR: ' + errorString;
 }
 
 public static RecordType getRecordType(String sObjectType, String developerName) {
@@ -1677,6 +1669,29 @@ public static String fetchTypeOfCustomer (String locationType , String category)
 
 }
 
+    public static Integer findGapInRange(Integer minRange, Integer maxRange, List<Integer> orderedSlotsOccupied){
+        //invalid range
+        if(maxRange-minRange < 0)
+            return -1;
+    
+        Integer candidate = minRange;
+        
+        for(Integer occupiedSlot : orderedSlotsOccupied){
+            if(occupiedSlot > candidate){
+                System.debug('Candidate found : ' + candidate);
+                return candidate;
+            }
+            else if(occupiedSlot == candidate){
+                candidate++;
+                if(candidate > maxRange){
+                    return -1;
+                }
+            }
+        }
+        
+        return candidate;
+    }    
+
     public static final Date knownSunday = date.newInstance(2012, 7, 1);
     
     private static Map<String, Set<Integer>> weekendDaysPerBusinessHours{
@@ -1770,6 +1785,66 @@ public static String fetchTypeOfCustomer (String locationType , String category)
 
     public static Date lastDayOfMonth(Date dateField) {
         return dateField.addMonths(1).toStartOfMonth().addDays(-1);
+    }
+
+
+    /** 
+        Process Parent Objects fields (up to 5 Parents?)
+    */
+    public static String processParentDependecies(String field , sObject sObj)
+    {
+
+            if(field.contains('.'))
+            {
+                //Get the Object directly related to the field
+                wrapperData wDObj = new wrapperData(sObj,field);
+                
+                return
+                    String.valueOf(
+                        (
+                            wDObj.sObj == null || wDObj.sObj.get(wDObj.fieldName) == null ) ? '' :wDObj.sObj.get(wDObj.fieldName)
+                        )
+                    ;
+            }
+
+            else
+                return
+                    String.valueOf(
+                        (
+                            sObj.get(field) == null) ? '' : sObj.get(field)
+                        )
+                    ;
+    }
+
+    /** 
+     Wrapper Object for Mapping the Entity for Field 
+     Example : change_code__r.Account__r.name 
+
+    */
+    private class wrapperData {
+        
+        private sObject sObj{get;set;}
+        private String fieldName{get;set;}
+    /** 
+         Get Object for the Field  (up to 5 Parents?)
+    */
+        private wrapperData(SObject sObjParent, String field){
+
+            List <String> strList = field.split('\\.');
+            integer lastPos = strList.size() -1;
+        
+            sObject sObj = sObjParent;
+
+            for(integer i = 0 ; i < lastPos ; i++) //avoid last element
+            {               
+                sObj = sObj.getSObject(strList.get(i));
+            }
+
+            this.sObj   = sObj;
+            this.fieldName = strList.get(lastPos); 
+
+        }
+
     }
 
 }

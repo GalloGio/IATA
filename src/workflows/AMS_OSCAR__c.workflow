@@ -57,6 +57,16 @@
         <senderType>OrgWideEmailAddress</senderType>
         <template>AMS/AMS_Late_NOC_Termination_Notification</template>
     </alerts>
+    <fieldUpdates>
+        <fullName>AMS_Set_OSCAR_status_to_Open</fullName>
+        <description>Set the OSCAR status to Open</description>
+        <field>Status__c</field>
+        <literalValue>Open</literalValue>
+        <name>AMS Set OSCAR status to Open</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
     <rules>
         <fullName>AMS - Notify Owner of Late NOC Termination</fullName>
         <active>true</active>
