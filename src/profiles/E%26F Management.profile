@@ -22496,7 +22496,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>EF_Billing_Agreement__c.Billing_Agreement_Name__c</field>
+        <field>EF_Billing_Agreement__c.BillingAgreement_Name__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
