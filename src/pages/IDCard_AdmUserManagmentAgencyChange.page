@@ -145,7 +145,8 @@
                                         <apex:repeat value="{!currentRecords}" var="key">
                                         <tr>
                                             <td rowspan="4">
-                                                <img src="{!$Label.IDCard_CroppingTool}/images/{!currentRecords[key].Photo}" style="height:120px; width:90px;"/>
+                                                <!--<img src="{!$Label.IDCard_CroppingTool}/images/{!currentRecords[key].Photo}" style="height:120px; width:90px;"/>-->
+                                                <img src="{!currentRecords[key].awsImageURL}" style="height:120px; width:90px;"/>
                                             </td>
                                             
                                             
@@ -219,7 +220,8 @@
                                     <table>
                                         <tr>
                                             <td rowspan="4">
-                                                <img src="{!$Label.IDCard_CroppingTool}/images/{!theChosenOne.Photo}" style="height:120px; width:90px;"/>
+                                                <!--<img src="{!$Label.IDCard_CroppingTool}/images/{!theChosenOne.Photo}" style="height:120px; width:90px;"/>-->
+                                                <img src="{!theChosenOne.awsImageURL}" style="height:120px; width:90px;"/>
                                             </td>
                                             <td><b>Ver Number:&nbsp;&nbsp;</b> <apex:outputText value="{!theChosenOne.verNum}" /></td>
                                         </tr><tr>
