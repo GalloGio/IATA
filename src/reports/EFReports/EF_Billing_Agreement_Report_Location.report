@@ -7,6 +7,9 @@
         <field>EF_Billing_Agreement__c$BillingAgreement_Name__c</field>
     </columns>
     <columns>
+        <field>EF_Billing_Agreement__c$EF_Status__c</field>
+    </columns>
+    <columns>
         <field>EF_Billing_Agreement__c$Client__c</field>
     </columns>
     <columns>
@@ -49,19 +52,16 @@
         <field>EF_Billing_Agreement__c$EF_Location_ID__c</field>
     </columns>
     <columns>
-        <field>EF_Billing_Agreement__c$EF_Status__c</field>
+        <field>EF_Billing_Agreement__c.Location_Codes__r$Name</field>
     </columns>
     <columns>
-        <field>EF_Billing_Agreement__c.Location_Codes__r$Name</field>
+        <field>EF_Billing_Agreement__c.Location_Codes__r$Id</field>
     </columns>
     <columns>
         <field>EF_Billing_Agreement__c.Location_Codes__r$Location_Code__c</field>
     </columns>
     <columns>
         <field>EF_Billing_Agreement__c.Location_Codes__r$Location_Code_Details__c</field>
-    </columns>
-    <columns>
-        <field>EF_Billing_Agreement__c.Location_Codes__r$Id</field>
     </columns>
     <columns>
         <field>EF_Billing_Agreement__c$Billing_Currency__c</field>
@@ -79,23 +79,21 @@
         <field>EF_Billing_Agreement__c$Payment_Method__c</field>
     </columns>
     <columns>
-        <field>EF_Billing_Agreement__c$Payment_Terms__c</field>
+        <field>EF_Billing_Agreement__c$Payment_Method_Code__c</field>
     </columns>
     <columns>
         <field>EF_Billing_Agreement__c$Contract_Payment_Terms__c</field>
     </columns>
     <columns>
+        <field>EF_Billing_Agreement__c$Payment_Terms_Code__c</field>
+    </columns>
+    <columns>
         <field>EF_Billing_Agreement__c$Invoice_Distribution_Method__c</field>
     </columns>
+    <columns>
+        <field>EF_Billing_Agreement__c$Invoice_Distribution_Method_Code__c</field>
+    </columns>
     <currency>USD</currency>
-    <filter>
-        <criteriaItems>
-            <column>EF_Billing_Agreement__c$Airline__c</column>
-            <operator>notEqual</operator>
-            <value></value>
-        </criteriaItems>
-        <language>en_US</language>
-    </filter>
     <format>Tabular</format>
     <name>E&amp;F Billing Agreement Report - Location</name>
     <params>
