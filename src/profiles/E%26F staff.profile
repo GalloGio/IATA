@@ -22754,6 +22754,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>EF_Contact_EF_Contract__c.Contract_Name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>EF_Contact_EF_Contract__c.EF_Contact__c</field>
         <readable>true</readable>
@@ -22773,6 +22778,11 @@
         <field>EF_Contact_EF_Contract__c.EF_Status__c</field>
         <readable>true</readable>
     </fieldPermissions>    
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>EF_Contact_Relationship__c.Billing_Agreement_Name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>EF_Contact_Relationship__c.Contact_Account__c</field>

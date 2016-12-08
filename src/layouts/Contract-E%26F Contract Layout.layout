@@ -311,6 +311,7 @@
     </relatedContent>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Contract_Name__c</fields>
         <fields>EF_Contact__c</fields>
         <fields>Contact_Account__c</fields>
         <fields>EF_Status__c</fields>
