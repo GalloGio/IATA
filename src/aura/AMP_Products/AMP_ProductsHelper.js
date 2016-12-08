@@ -39,6 +39,7 @@
 						var sWrapper = {
 							rowspan : rowspan,
 							Service_Publication : services[i].Service__r.Service_Publication__c,
+							Id : services[i].Service__c,
 							Name : services[i].Service__r.Name,
 							Active : services[i].Active__c
 						};
