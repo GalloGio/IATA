@@ -2451,11 +2451,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Contract__c.Contract_Name__c</field>
-            <table>EF_Billing_Agreement__c</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>Contract__c.CCF_Number__c</field>
             <table>EF_Billing_Agreement__c</table>
         </columns>
