@@ -2486,9 +2486,9 @@
 <fieldPermissions><editable>true</editable><field>Case.Continous_Feed_SAF__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Case.Correct_Resolution__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Case.Cost_Centre__c</field><readable>true</readable></fieldPermissions>
-<fieldPermissions><editable>false</editable><field>Case.Country_Manager_Backup_2__c</field><readable>false</readable></fieldPermissions>
-<fieldPermissions><editable>false</editable><field>Case.Country_Manager_Backup__c</field><readable>false</readable></fieldPermissions>
-<fieldPermissions><editable>false</editable><field>Case.Country_Manager__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>true</editable><field>Case.Country_Manager_Backup_2__c</field><readable>true</readable></fieldPermissions>
+<fieldPermissions><editable>true</editable><field>Case.Country_Manager_Backup__c</field><readable>true</readable></fieldPermissions>
+<fieldPermissions><editable>true</editable><field>Case.Country_Manager__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Case.Country__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Case.Country_concerned__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Case.Country_concerned_by_the_query__c</field><readable>true</readable></fieldPermissions>
@@ -2543,7 +2543,7 @@
 <fieldPermissions><editable>true</editable><field>Case.Deadline_Date__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Case.Deadline_for_Implementation__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Case.Decision_Date__c</field><readable>true</readable></fieldPermissions>
-<fieldPermissions><editable>false</editable><field>Case.Decision__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>true</editable><field>Case.Decision__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Case.Default_Actions_Approval__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Case.Default_Date__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Case.Defaulted_Amount_USD__c</field><readable>false</readable></fieldPermissions>
@@ -2997,7 +2997,7 @@
 <fieldPermissions><editable>false</editable><field>Case.SuppliedName</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Case.SuppliedPhone</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Case.Support_Evaluation_Grade__c</field><readable>false</readable></fieldPermissions>
-<fieldPermissions><editable>false</editable><field>Case.Suspension_Date__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>Case.Suspension_Date__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Case.Sync_to_R_S_tool__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Case.System_Test_Effort__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Case.TER_Approval_Rejection_Date__c</field><readable>true</readable></fieldPermissions>
@@ -3026,7 +3026,7 @@
 <fieldPermissions><editable>false</editable><field>Case.Time_from_Last_Email_sent__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Case.To_be_implemented_in_ISIS2__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Case.Topic__c</field><readable>true</readable></fieldPermissions>
-<fieldPermissions><editable>false</editable><field>Case.Total_Cash_Sales__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>true</editable><field>Case.Total_Cash_Sales__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Case.Total_Defaulted_Amount__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Case.Total_Irregularities__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Case.Total_Outstanding_Amounts_Bankruptcy_del__c</field><readable>true</readable></fieldPermissions>
@@ -3072,8 +3072,8 @@
 <fieldPermissions><editable>true</editable><field>Case.myIATA_origin__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Case.non_Airline_Input__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Case.pkbgeolocalization__c</field><readable>false</readable></fieldPermissions>
-<fieldPermissions><editable>false</editable><field>Case.secondFAnonComplianceDate__c</field><readable>false</readable></fieldPermissions>
-<fieldPermissions><editable>false</editable><field>Case.secondFSnonComplianceDate__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>true</editable><field>Case.secondFAnonComplianceDate__c</field><readable>true</readable></fieldPermissions>
+<fieldPermissions><editable>true</editable><field>Case.secondFSnonComplianceDate__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Case.test_owner__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Case_Daily_Workload__c.Assigned_Alias__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Case_Daily_Workload__c.Case_Owner__c</field><readable>true</readable></fieldPermissions>

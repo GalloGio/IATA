@@ -19898,6 +19898,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <columns>ACCOUNT.PHONE1</columns>
         <columns>ACCOUNT.RATING</columns>
         <columns>CORE.USERS.ALIAS</columns>
+        <columns>Key_Customer__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>ACCOUNT.TYPE</field>
@@ -21170,6 +21171,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <columns>ACCOUNT.LAST_UPDATE</columns>
         <columns>ACCOUNT.TYPE</columns>
         <columns>CORE.USERS.ALIAS</columns>
+        <columns>Key_Customer__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>ACCOUNT.ADDRESS1_COUNTRY</field>
