@@ -151,6 +151,9 @@ public class AMS_OSCARTriggerHandler {
 		//do Not run minor changes on agency changes trigger????
 		AMS_AccountTriggerHandler.processMinorChangesValidationFlag = false;
 		AMS_AccountTriggerHandler.minorChangesComingFromOSCAR = true;
+		for(AMS_OSCAR__c oscar : oscars)
+			if(oscar.Type_of_change__c!=null && oscar.Type_of_change__c.contains(AMS_Utils.REMOVALTRADENAME))
+				AMS_AccountTriggerHandler.comingFromOSCARforRemoveTradeName = true;
 		Id changeRT = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('CHANGE').getRecordTypeId();
 		List<AMS_OSCAR__c> oscarsToValidate = filterOSCARbyRT(changeRT, oscars);
 

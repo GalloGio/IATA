@@ -22,6 +22,7 @@ public class AMS_AccountTriggerHandler {
 
     public static boolean processMinorChangesValidationFlag = true;
     public static boolean minorChangesComingFromOSCAR = false;
+    public static boolean comingFromOSCARforRemoveTradeName = false;
 
     public static Integer runningVCU = 0;
 
@@ -205,7 +206,7 @@ public class AMS_AccountTriggerHandler {
             AccountChangesStruct struct = new AccountChangesStruct(accountChanges,acct);
             accountChangesList.add(struct);
         }
-system.debug(LoggingLevel.ERROR, 'LF: handleManualMinorChanges() For cycle finished' );            
+        system.debug(LoggingLevel.ERROR, 'LF: handleManualMinorChanges() For cycle finished' );            
          if(!accountChangesList.isEmpty()){
                 System.debug('Number of accounts to be created AACC:' + accountChangesList.size());
                 createMinorChangesChangeCode(accountChangesList);
@@ -250,7 +251,7 @@ system.debug(LoggingLevel.ERROR, 'LF: handleManualMinorChanges() For cycle finis
             Account account = actChange.acct;
             system.debug(LoggingLevel.ERROR, 'LF: createMinorChangesChangeCode() check change! Is CNS ? '+actChange.isCNS());
 
-            if(AMS_RecordCreatorWebservice.containsTradeName(actChange.changes) ){
+            if(!comingFromOSCARforRemoveTradeName && AMS_RecordCreatorWebservice.containsTradeName(actChange.changes) ){
 
                 changeCodeTN = AMS_RecordCreatorWebservice.generateChangeCodeTN(null, account.Status__c == 'Approved' );
 
@@ -264,7 +265,7 @@ system.debug(LoggingLevel.ERROR, 'LF: handleManualMinorChanges() For cycle finis
             }else 
 
 
-            if(actChange.changes.size() > 1 ||  ( actChange.changes.size() == 1 && !processedTN)){
+            if(!comingFromOSCARforRemoveTradeName && (actChange.changes.size() > 1 ||  ( actChange.changes.size() == 1 && !processedTN))){
 
                 changeCode = AMS_RecordCreatorWebservice.generateChangeCode(null);
             
@@ -281,8 +282,8 @@ system.debug(LoggingLevel.ERROR, 'LF: handleManualMinorChanges() For cycle finis
 
     public class AccountChangesStruct {
 
-        private List<AMS_RecordCreatorWebservice.AccountChanges> changes{get;set;}
-        private Account acct{get;set;}
+        public List<AMS_RecordCreatorWebservice.AccountChanges> changes{get;set;}
+        public Account acct{get;set;}
 
         public AccountChangesStruct(List<AMS_RecordCreatorWebservice.AccountChanges> changes, Account acct){
 

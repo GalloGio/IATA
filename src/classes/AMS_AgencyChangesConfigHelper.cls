@@ -10,7 +10,8 @@ public class AMS_AgencyChangesConfigHelper{
                 'VMFR' => true,
                 'Location type' => false,
                 'Name' => true,
-                'Minor Shareholding' => true};
+                'Minor Shareholding' => true,
+            	'CNS - Removal of trade name' => true};
 
 	public static List<Map<String, String>> getAgencyChangesConfigData() {
 

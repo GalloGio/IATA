@@ -129,10 +129,10 @@
         <type>Checkbox</type>
     </fields>
     <fields>
-        <fullName>TC_Trade_name_removal__c</fullName>
+        <fullName>TC_Removal_of_trade_name__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
-        <label>Trade name removal</label>
+        <label>CNS - Removal of trade name</label>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
