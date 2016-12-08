@@ -453,9 +453,12 @@ public class ISSP_WS_KAVI {
 				}
 
 				private static String notNull(String fieldName, Object fieldValue){
-					if(fieldValue!=null)
-						return '<' + fieldName + '>' + fieldValue + '</' + fieldName + '>';
-
+					if(fieldValue!=null){
+						String target = '&';
+						String replacement = '&amp;';						
+						String myString = String.valueOf(fieldValue).replace(target, replacement);											
+						return '<' + fieldName + '>' + myString + '</' + fieldName + '>';						
+					}
 					return '';
 				}
 
