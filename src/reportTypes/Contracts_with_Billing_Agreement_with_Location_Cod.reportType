@@ -659,7 +659,7 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Billing_Agreement_Name__c</field>
+            <field>BillingAgreement_Name__c</field>
             <table>Contract.EF_Relationships__r</table>
         </columns>
         <columns>
