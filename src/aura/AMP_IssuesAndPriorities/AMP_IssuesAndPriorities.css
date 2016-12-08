@@ -25,3 +25,6 @@
 .THIS .uiMenuList--default .uiMenuItem>a {
       height: 2em;
 }
+.THIS td.allignTop {
+  vertical-align: top;
+}
