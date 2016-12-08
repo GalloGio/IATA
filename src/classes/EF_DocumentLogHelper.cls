@@ -91,7 +91,10 @@ if(!Test.isRunningTest()) {
 				if(logsToUpdate.get(a.Id) != null)
 				{
 					dl = logsToUpdate.get(a.Id);
-					af = createAmazonFileRecord(a.Name, credentialNames.fullFileNameEncoded, a.BodyLength, a.ParentId, efFileRtId, dl);
+					List<String> splitFullFileName = credentialNames.fullFileName.split('/');
+					String filename = splitFullFileName.isEmpty()? '': splitFullFileName.get(splitFullFileName.size()-1);
+
+					af = createAmazonFileRecord(fileName, credentialNames.fullFileName, a.BodyLength, a.ParentId, efFileRtId, dl);
 					if(af != null)
 						attachmentsToInsert.add(af);
 				}
