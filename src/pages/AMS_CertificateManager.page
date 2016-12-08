@@ -48,12 +48,12 @@
 			<apex:pageMessages rendered="{!NOT(showWarning)}" escape="false"/>
 			
 			<apex:pageBlockSection columns="2">
-				<apex:inputFile  value="{!fileBody}" accept=".csv, .txt, .xls, .xlsx"/>
+				<apex:inputFile value="{!fileBody}" accept=".csv, .txt, .xls, .xlsx"/>
 				<apex:commandButton value="Read File" action="{!parseFile}" status="loading"/>
 			</apex:pageBlockSection>
 		</apex:pageBlockSection>
 			
-		<apex:actionRegion>
+		<apex:actionRegion >
 
 			<apex:pageBlockSection title="Action" rendered="{!parsedFile && ISBLANK(requestCreation)}" columns="1">
 
@@ -68,9 +68,9 @@
 
 				<apex:pageBlockSection columns="2" >
 
-					<apex:pageBlockSectionItem>
+					<apex:pageBlockSectionItem >
 						<apex:outputLabel value="Year:"/>
-						<apex:outputPanel>
+						<apex:outputPanel >
 							<apex:selectList size="1" multiselect="false" value="{!year}">
 								<apex:selectOptions value="{!years}"/>
 								<apex:actionSupport event="onchange" reRender="selectYear"/>
@@ -95,14 +95,14 @@
 			.status.Failed { color: #9e0e21; }
 		</style>
 
-		<apex:actionRegion>
+		<apex:actionRegion >
 			<apex:pageBlock title="Results" rendered="{!NOT(ISBLANK(requestCreation))}">
 				<apex:actionPoller reRender="results" enabled="{!AND(job.Status != 'Failed', job.Status != 'Completed')}" interval="15" />
 
 				<apex:pageBlockSection columns="1">
 					<apex:pageBlockSectionItem dataStyleClass="status {!job.Status}">
 						<apex:outputLabel value="Status:"/>
-						<apex:outputPanel>
+						<apex:outputPanel >
 							<apex:image value="/../img/icon/pending12.gif" rendered="{!AND(job.Status != 'Failed', job.Status != 'Completed')}"/>
 							<apex:image value="/../img/icon/approve12.gif" rendered="{!job.Status == 'Completed'}"/>
 							<apex:image value="/../img/icon/reject12.gif" rendered="{!job.Status == 'Failed'}"/>
@@ -112,7 +112,7 @@
 
 					<apex:pageBlockTable value="{!requests}" var="request">
 						<apex:column headerValue="Request">
-							<apex:outputLink value="{!URLFOR($Action.AMS_Certificate_Request__c.view,request.id)}">{!request.name}</apex:outputLink>
+							<apex:outputLink value="{!URLFOR($Action.AMS_Certificate_Request__c.View,request.id)}">{!request.name}</apex:outputLink>
 						</apex:column>
 						<apex:column headerValue="Certificate">
 							<apex:dataList value="{!request.Attachments}" var="att">
