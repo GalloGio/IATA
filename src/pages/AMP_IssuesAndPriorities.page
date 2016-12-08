@@ -28,7 +28,8 @@
                                             <apex:param name="IdConcerned" value="{!i.Id}" assignTo="{!IdConcerned}"/>
                                         </apex:commandLink>
                                         &nbsp;
-                                        <apex:commandLink value="Cancel" action="{!CancelEdit}" rerender="issueTable" oncomplete="enableShowMoreOrLess();" rendered="{!IF(AND(isEditMode, IdConcerned==i.Id), true, false)}" >
+                                        <apex:commandLink value="Cancel" action="{!CancelEdit}" rerender="issueTable" oncomplete="enableShowMoreOrLess();" rendered="{!IF(AND(isEditMode, IdConcerned==i.Id), true, false)}" immediate="true"
+                                          html-formnovalidate="formnovalidate">
                                             <apex:param name="IdConcerned" value="{!i.Id}" assignTo="{!IdConcerned}"/>
                                         </apex:commandLink>
                     <apex:actionStatus id="actStatusId" >
