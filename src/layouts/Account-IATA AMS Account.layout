@@ -51,6 +51,9 @@
             </containers>
         </subtabComponents>
     </customConsoleComponents>
+    <excludeButtons>DataDotComAccountInsights</excludeButtons>
+    <excludeButtons>DataDotComClean</excludeButtons>
+    <excludeButtons>DataDotComCompanyHierarchy</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
         <customLabel>true</customLabel>
@@ -95,8 +98,12 @@
                 <field>Portal_Service_Report__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>Company_Type__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Is_your_firm_handling_Dangerous_Goods__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -312,7 +319,7 @@
                 <field>CCG_IRR_Distribution_list__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>CCG_Participant__c</field>
             </layoutItems>
         </layoutColumns>
@@ -370,6 +377,25 @@
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
+        <label>Certificate</label>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Annual_Renewal_Certificates__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Certificate_Generated_Current_Year__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <style>TwoColumnsTopToBottom</style>
     </layoutSections>
     <layoutSections>
         <customLabel>true</customLabel>
@@ -540,7 +566,18 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Amount_to_be_Paid__c</fields>
+        <fields>Balance__c</fields>
+        <fields>Billing_Adjustment__c</fields>
+        <fields>Billing_Amount__c</fields>
+        <fields>CURRENCY_ISO_CODE</fields>
+        <fields>Group__c</fields>
+        <fields>Paid__c</fields>
+        <fields>Period__c</fields>
+        <fields>Remittance_Date__c</fields>
         <relatedList>Account_Statement__c.Account__c</relatedList>
+        <sortField>Remittance_Date__c</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
@@ -610,6 +647,18 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>First_Name__c</fields>
+        <fields>Last_Name__c</fields>
+        <fields>Type_Of_Certificate__c</fields>
+        <fields>Issued_on__c</fields>
+        <fields>Validity__c</fields>
+        <fields>Expiry_Date__c</fields>
+        <relatedList>AMS_Agency_Regulation__c.Account__c</relatedList>
+        <sortField>Expiry_Date__c</sortField>
+        <sortOrder>Asc</sortOrder>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
         <relatedList>AMS_Agency_Affiliation__c.Account__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -625,11 +674,27 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Parent_Account__c</fields>
+        <fields>Hierarchy__c</fields>
         <relatedList>AMS_Agencies_relationhip__c.Child_Account__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Child_Account__c</fields>
+        <fields>Hierarchy__c</fields>
         <relatedList>AMS_Agencies_relationhip__c.Parent_Account__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>AmountLastYearSales__c</fields>
+        <fields>Amount_Currency__c</fields>
+        <fields>Year__c</fields>
+        <fields>Number_Of_Vouchers__c</fields>
+        <fields>IsAgencyEligibleForCountryAverage__c</fields>
+        <fields>IsAgencyEligible__c</fields>
+        <relatedList>AMS_Voucher_Information__c.Account__c</relatedList>
+        <sortField>Year__c</sortField>
+        <sortOrder>Asc</sortOrder>
     </relatedLists>
     <relatedObjects>ParentId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>

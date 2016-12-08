@@ -26,6 +26,8 @@
         z-index:1002;
         overflow: auto;
     }
+    .errorMessage {color: #D8000C;}
+    .successMessage {color: #4F8A10;}
   </style>
 
   <apex:form id="mainForm">
@@ -72,7 +74,7 @@
     <td valign="top">
 
     <!-- List Cases Section -->
-    <apex:pageBlock title="Cases" mode="edit" id="results" >
+    <apex:pageBlock title="Cases" mode="edit" id="results" rendered="{!!showProcessedSection}" >
 
       <apex:pageBlockButtons location="both">
           <apex:commandButton value="{!approvalButtonLabel}" action="{!confirmMassApproveCases}" rerender="mainForm" status="Loading" rendered="{!filter.selectedActionType!=''}"/>
@@ -127,6 +129,25 @@
         <apex:column value="{!wrapper.cse.AccountId}"/>
         <apex:column value="{!wrapper.cse.AIMS_status__c}"/>
         <apex:column value="{!wrapper.cse.CreatedDate}"/>
+
+      </apex:pageBlockTable>
+    </apex:pageBlock>
+
+    <!-- Approved Cases Section -->
+    <apex:pageBlock title="Processed results" mode="edit" id="processed" rendered="{!showProcessedSection}">
+
+      <apex:pageBlockTable value="{!listWrapperCase}" styleclass="result-table" var="wrapper" id="results" rendered="{!listWrapperCase.size>0}">
+
+        <apex:column >
+          <apex:facet name="header">Case Number</apex:facet>
+          <apex:outputLink value="/{!wrapper.cse.Id}?retURL={!$CurrentPage.URL}">{!wrapper.cse.CaseNumber}</apex:outputLink>
+        </apex:column>
+
+        <apex:column >
+          <apex:facet name="header">Processing Result</apex:facet>
+          <apex:outputText value="Sucess" styleclass="successMessage" rendered="{!wrapper.IsSuccess}"/>
+          <apex:outputText value="{!wrapper.listErrors}" styleclass="errorMessage" rendered="{!!wrapper.IsSuccess}"/>
+        </apex:column>
 
       </apex:pageBlockTable>
     </apex:pageBlock>

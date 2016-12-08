@@ -2497,14 +2497,14 @@ if (records.length &gt; 0) {
 			}
 			else 
 			{			
-				conf = confirm(&quot;You are redirecting to Email Sending Page. Do you want to send email to the agent ?&quot;);
+				conf = confirm(&quot;Please contact the applicant for information that you require&quot;);
 			}
 		}
 		if(conf == true){
 			
 			var caseId = sforce.apex.execute(&quot;IDCardUtil&quot;,&quot;setPendingAdditionalInfo&quot;, {applicationId:&quot;{!ID_Card_Application__c.Id}&quot;});
 			var contactId = &quot;&quot;;
-
+                        parent.location.href = &quot;/&quot;+caseId; 
 			if(caseId == &quot;&quot;) 
 			{ 
 				alert(&quot;Error!&quot;); 
@@ -2637,6 +2637,83 @@ alert(err);
 }</url>
     </webLinks>
     <webLinks>
+        <fullName>To_Be_Approved</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>To Be Approved</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/24.0/connection.js&quot;)} 
+{!REQUIRESCRIPT(&quot;/soap/ajax/24.0/apex.js&quot;)} 
+
+sforce.connection.sessionId = &quot;{!$Api.Session_ID}&quot;;
+
+var IDCardAppID = &apos;{!ID_Card_Application__c.Id}&apos;; 
+var caseNumber = sforce.apex.execute(&quot;IDCardUtil&quot;,&quot;getIDCardApplicationCase&quot;, {IDCardApplicationID:IDCardAppID}); 
+
+var query = &apos;Select c.ContactId, c.ID_Card_Status__c, c.OwnerId From Case c where CaseNumber = \&apos;&apos;+caseNumber+&apos;\&apos;&apos;; 
+var queryresult = sforce.connection.query(query);
+var records = queryresult.getArray(&apos;records&apos;);
+var record = records[0];	
+var currentUser = &apos;{!User.Id}&apos;;
+var valid = true;
+
+if (records.length &gt; 0) {	
+
+if(valid == true &amp;&amp; record.ID_Card_Status__c == &apos;Pending Manager Approval&apos;)
+{
+alert(&quot;The status of this Application/Case is currently submitted for Manager Approval&quot;);
+valid = false;
+}
+// If Current user is not the owner of the case
+if (valid == true &amp;&amp; !((record.OwnerId).indexOf(currentUser) != -1)) 
+{
+alert(&quot;Please, you have to accept the case before.&quot;); 
+valid = false;	
+}	
+if(valid == true)
+{
+var conf;	
+if(record.ID_Card_Status__c == &apos;Approved&apos;)
+{	
+alert(&quot;You can not use this button when the case is already Approved. To send an email to the Contact please navigate back to the related case and send an email from there. Thanks.&quot;);
+conf = false;	
+}
+else
+{	
+if(record.ID_Card_Status__c == &apos;Rejected&apos;)
+{	
+conf = confirm(&quot;The status of this Application/Case is currently Rejected and Closed.\nContinuing with this will result in opening the Case again.&quot;);	
+}
+else 
+{	
+conf = confirm(&quot;This ID Card will be &apos;To Be Approved&apos;&quot;);
+}
+}
+if(conf == true){
+
+var caseId = sforce.apex.execute(&quot;IDCardUtil&quot;,&quot;setTobeapproved&quot;, {applicationId:&quot;{!ID_Card_Application__c.Id}&quot;});
+var contactId = &quot;&quot;;
+
+
+if(caseId == &quot;&quot;) 
+{ 
+alert(&quot;Error!&quot;); 
+} 
+else 
+{	var caseId = caseId+&quot;&quot;;
+var cid = caseId.substring(0,15);
+ document.location.reload(true)
+}
+}
+}
+}
+else {
+alert(&quot;No Case is available for this ID Card Application&quot;);
+}</url>
+    </webLinks>
+    <webLinks>
         <fullName>Upload_IDCard_Application_Picture</fullName>
         <availability>online</availability>
         <displayType>link</displayType>
@@ -2660,16 +2737,17 @@ function guid() {
 }
 
 
-var fileName= &apos;{!ID_Card_Application__c.UIR__c}&apos;;
+var fileName; //#= &apos;{!ID_Card_Application__c.UIR__c}&apos;;
 var currentPic = &apos;{!ID_Card_Application__c.Photo__c}&apos;;
-if(fileName == null || fileName ==&apos;&apos;)
-{
+//#if(fileName == null || fileName ==&apos;&apos;)
+//#{
 	
 	if (currentPic != null &amp;&amp; currentPic != &apos;&apos;)
 		fileName = currentPic;
 	else	
 		fileName = guid();
-}
+//#}
+
 //Rename photo field	
 if (currentPic == null || currentPic == &apos;&apos;)
 {

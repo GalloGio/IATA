@@ -733,6 +733,11 @@
                 <default>false</default>
                 <controllingFieldValues>Communications</controllingFieldValues>
             </picklistValues>
+            <picklistValues>
+                <fullName>AML Forms</fullName>
+                <default>false</default>
+                <controllingFieldValues>Contractual</controllingFieldValues>
+            </picklistValues>
             <restrictedPicklist>true</restrictedPicklist>
             <sorted>false</sorted>
         </picklist>

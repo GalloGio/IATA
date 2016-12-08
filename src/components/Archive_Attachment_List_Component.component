@@ -171,12 +171,12 @@
                             <tbody>
                                 <tr class="headerRow">
                                     <th class="actionColumn" scope="col">Action</th>
-                                    <th class=" zen-deemphasize" scope="col">{!$Label.ISSP_Public}</th>
+                                    <!--<th class=" zen-deemphasize" scope="col">{!$Label.ISSP_Public}</th> -->
                                     <th class=" zen-deemphasize" scope="col">Name</th>
                                     <th class=" zen-deemphasize" scope="col">File Size</th>
                                     <th class=" zen-deemphasize" scope="col">Created Date</th>
                                     <th class=" zen-deemphasize" scope="col">Created By</th>
-                                    <th class=" zen-deemphasize" scope="col">Location</th>
+                                    <!-- <th class=" zen-deemphasize" scope="col">Location</th> -->
                                 </tr>
 
                                 
@@ -253,9 +253,9 @@
                                             <apex:outputField value="{!attachment.Original_Creation_Date__c}" />
                                         </td>
                                         <td class=" dataCell ">
-                                            <apex:outputField value="{!attachment.OriginalCreatedBy__c}" />
+                                            <apex:outputField value="{!attachment.Originally_Created_By__c}" />
                                         </td>
-                                        <td class=" dataCell " scope="row">Archived</td>
+                                        <!-- <td class=" dataCell " scope="row">Archived</td> -->
                                     </tr>
                                 </apex:repeat>
 
@@ -300,7 +300,7 @@
                                         </td>
                                         <td class=" dataCell " scope="row"><apex:outputField value="{!attachment.BodyLength__c}" /></td>
                                         <td class=" dataCell ">
-                                            <apex:outputField value="{!attachment.OriginalCreatedBy__c}" />
+                                            <apex:outputField value="{!attachment.Originally_Created_By__c}" />
                                         </td> 
                                     </tr>
                                 </apex:repeat>
