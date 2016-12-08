@@ -27,13 +27,18 @@ public with sharing class SidraLiteHelperForSMAP {
             newCase.Region__c = cse.Region__c;
             newCase.BSPCountry__c = cse.BSPCountry__c;
             newCase.SIDRA_Lite_Reason__c = 'Prejudiced Collection of Funds';
-            newCase.Reason_for_Default__c = 'Suspension - Prejudiced Collection of Funds';
-            newCase.SIDRA_Lite_Default_Date__c = Date.Today();
-            newCase.Confirmation_moneys_not_received__c = Date.today();
-            newCase.Termination_date_manual_entry__c = SidraLiteUtil.lastMonthDay(Date.today().addMonths(1));
-            newCase.Total_Irregularities__c = String.ValueOf(cse.account.Accumulated_Irregularities__c);
-            newCase.Total_Irregularities__c = String.ValueOf(cse.account.Accumulated_Irregularities__c);
             newCase.BSP_CASS__c = SidraLiteUtil.getBSPCASS(cse.account);
+
+            if (SidraLiteUtil.isAccountActive(cse.account)) {
+                newCase.Reason_for_Default__c = 'Suspension - Prejudiced Collection of Funds';
+                newCase.SIDRA_Lite_Default_Date__c = Date.Today();
+                newCase.Confirmation_moneys_not_received__c = Date.today();
+                newCase.Termination_date_manual_entry__c = SidraLiteUtil.lastMonthDay(Date.today().addMonths(1));
+                newCase.Total_Irregularities__c = String.ValueOf(cse.account.Accumulated_Irregularities__c);
+            } else {
+                newCase.IRR_Withdrawal_Reason__c = 'Default Prev';
+                newCase.Termination_date_manual_entry__c = WSSidraLite.getTerminationDateFromRelatedCase(cse.account);
+            }
             return newCase;
 
         } catch(Exception e) {

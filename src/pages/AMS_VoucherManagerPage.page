@@ -1,0 +1,176 @@
+<apex:page controller="AMS_VoucherManagerController">
+
+    <style type="text/css">
+        .processText { font-size: 100%; color: green ;margin-left: 70px; font: bold;}
+    </style>
+
+    <apex:sectionHeader title="Voucher Management" />
+    
+    <apex:form id="form">
+
+        <apex:pageBlock mode="edit" id="pageBlock">
+
+            <apex:pageBlockSection id="notes" columns="1" title="Notes" collapsible="true">
+            
+                <apex:dataList value="{!noteList}" var="note" rendered="{!noteList.size > 0}">
+            
+                    <apex:outputText value="{!note}"/>
+            
+                </apex:dataList>
+            </apex:pageBlockSection>
+
+            <apex:panelGrid id="fields" columns="2" width="30%">
+
+                <apex:pageBlockSection columns="3" title="Region / Country Selection / Year">
+                    
+                    
+
+                    <apex:pageblockSectionItem >
+                
+                        <apex:outputLabel value="Region Name"/>
+
+                        <apex:outputPanel styleClass="requiredInput" layout="block">
+            
+                            <apex:outputPanel styleClass="requiredBlock" layout="block"/>
+                            
+                            <apex:selectList size="1" value="{!region}">
+
+                                <apex:selectoptions value="{!regionobj}"/>
+                                <apex:actionSupport event="onchange" reRender="countries,fields2"/>
+                            
+                            </apex:selectList>
+
+                        </apex:outputPanel>
+
+                    </apex:pageblockSectionItem>
+                    
+                    <apex:pageblockSectionItem >
+
+                        <apex:outputLabel value="Country" />
+                        
+                        <apex:outputPanel styleClass="requiredInput" layout="block">
+
+                            <apex:selectList size="10" value="{!countriesLst}" id="countries" multiselect="true">
+
+                                <apex:selectoptions value="{!countryobj}"/>
+                                <apex:actionSupport event="onchange" reRender="fields2"/>
+
+                            </apex:selectList>
+
+                        </apex:outputPanel>
+
+                    </apex:pageblockSectionItem>
+                    
+                    <apex:pageblockSectionItem >
+
+                        <apex:outputLabel value="Sales Year" />
+                        
+                        <apex:outputPanel styleClass="requiredInput" layout="block">
+
+                            <apex:selectList size="1" value="{!year}" id="year">
+
+                                <apex:selectoptions value="{!yearobj}"/>
+
+                            </apex:selectList>
+
+                        </apex:outputPanel>
+
+                    </apex:pageblockSectionItem>
+
+                </apex:pageBlockSection>
+
+            </apex:panelGrid>
+
+
+            <apex:actionRegion id="execRegion" >
+                <apex:panelGrid id="fields2" columns="2" width="100%">
+                    <apex:pageMessages id="pageMessages"/>
+    
+                    <apex:pageBlockSection columns="2" title="Execution Area" collapsible="true">
+                    
+    
+                    <apex:pageBlockSectionItem />
+                    <apex:pageBlockSectionItem />
+    
+                    <apex:pageBlockSectionItem >
+    
+                        <apex:outputLabel value="I've uploaded countries benchmark and ceeling values and uploaded agencies voucher information"/>
+                        
+    
+                        <apex:inputCheckbox value="{!countriesUploaded}">
+                            <apex:actionSupport event="onchange" rerender="fields2"/>
+                        </apex:inputCheckbox>
+                    
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem />
+					<apex:pageBlockSectionItem />
+                    <apex:pageBlockSectionItem />
+                        
+                    <apex:pageBlockSectionItem id="buttonAction">
+    
+                        <apex:commandButton value="Begin vouchers assignation process" action="{!runCountryAverageBatch}" id="actionButton" disabled="{!NOT(canExecuteBatch)}"/>
+                        
+                    </apex:pageBlockSectionItem>
+
+                    
+                    
+    
+                    </apex:pageBlockSection>
+    
+                </apex:panelGrid>
+            </apex:actionRegion>
+        </apex:pageBlock>
+
+        <apex:pageBlock mode="edit" id="StatusPageBlock">
+          
+
+            <apex:pageBlockSection columns="1" title="Process Status" rendered="{!batchStatusBool}">
+
+                <apex:actionStatus id="act" startText="Checking..." />
+
+                <apex:outputText styleClass="processText" value="Vouchers PDF creation process status: {!batchAverageStatus}"/>
+
+                <apex:outputText styleClass="processText" value="{!emailNotification}" style="color: black; font-weight: bold; padding-top: 10px"/>
+
+                <apex:actionPoller interval="5" action="{!checkBatchStatus}" enabled="{!pollerBool}" reRender="StatusPageBlock,ReportPageBlock" status="act"/>
+            
+            </apex:pageBlockSection>
+      
+
+            <apex:pageBlockSection columns="1" title="PDF Vouchers" rendered="{!batchStatusBool}">
+
+				<apex:repeat value="{!regionObject.attachments}" var="att">
+				            <apex:panelgrid columns="1">
+                               
+                                <h1><apex:outputLink value="/servlet/servlet.FileDownload?file={!att.Id}" target="_blank">{!att.Name}</apex:outputLink></h1>
+
+				            </apex:panelgrid>
+				</apex:repeat>
+            
+            </apex:pageBlockSection>
+
+
+        </apex:pageBlock>
+
+
+
+
+        <apex:pageBlock mode="edit" id="ReportPageBlock">
+          
+            <apex:pageBlockSection columns="1" title="Vouchers Report" rendered="{!batchStatusBool}">
+
+                <apex:outputPanel id="VouchersReportId" >
+
+                    <analytics:reportChart size="small" developerName="Voucher_Batch_Report" filter="{column:'AMS_Voucher__c.AMS_Voucher_Process_Run__c.Id', operator:'equals', value:'{!process.Id}'}"></analytics:reportChart>
+
+                </apex:outputPanel>
+           
+            </apex:pageBlockSection>
+      
+
+        </apex:pageBlock>
+
+
+    </apex:form>
+
+</apex:page>
