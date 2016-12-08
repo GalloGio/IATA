@@ -314,6 +314,16 @@
         <visibleLines>5</visibleLines>
     </fields>
     <fields>
+        <fullName>Apply_Penalty_Fee__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Apply Penalty Fee</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Approval_disapproval_date__c</fullName>
         <externalId>false</externalId>
         <label>Approval / disapproval date</label>
@@ -1093,6 +1103,29 @@ IF(Bank_Guarantee_received__c - Bank_Guarantee_requested__c =6, TEXT(4), TEXT((B
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Certificate_Generated__c</fullName>
+        <externalId>false</externalId>
+        <label>Certificate Generated</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Certificate_Quantity__c</fullName>
+        <externalId>false</externalId>
+        <label>Quantity</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Change_Code__c</fullName>
         <externalId>false</externalId>
         <label>Change Code</label>
@@ -1116,6 +1149,17 @@ IF(Bank_Guarantee_received__c - Bank_Guarantee_requested__c =6, TEXT(4), TEXT((B
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Change_Effective_as_of_formula__c</fullName>
+        <externalId>false</externalId>
+        <formula>Change_effective_as_of__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Change Effective as of</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
     </fields>
     <fields>
         <fullName>Change_effective_as_of__c</fullName>
@@ -1240,6 +1284,26 @@ IF(Bank_Guarantee_received__c - Bank_Guarantee_requested__c =6, TEXT(4), TEXT((B
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Confirm_Payment_if_applicable__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Confirm Payment (if applicable)</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Confirmation_Sent__c</fullName>
+        <externalId>false</externalId>
+        <label>Confirmation Sent</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
     </fields>
     <fields>
         <fullName>Contact_Email__c</fullName>
@@ -1721,6 +1785,16 @@ IF(Financial_Assessment_received__c - Financial_Assessment_requested__c =6, TEXT
         <type>Picklist</type>
     </fields>
     <fields>
+        <fullName>Financial_Security_expiry_date__c</fullName>
+        <externalId>false</externalId>
+        <label>Financial Security expiry date</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
         <fullName>Financial_Security_released__c</fullName>
         <externalId>false</externalId>
         <label>Financial Security released</label>
@@ -1817,6 +1891,16 @@ IF(Financial_Assessment_received__c - Financial_Assessment_requested__c =6, TEXT
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Form_Effective_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Form Effective Date</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
     </fields>
     <fields>
         <fullName>IFAP_Financial_Year__c</fullName>
@@ -2071,6 +2155,61 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Location_Class__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(Account__r.Location_Class__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Location Class</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NOC_Deadline__c</fullName>
+        <description>Used for Late/Absence of NOC</description>
+        <externalId>false</externalId>
+        <label>NOC Deadline</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>NOC_Received_Date__c</fullName>
+        <description>Used for Late/Absence of NOC</description>
+        <externalId>false</externalId>
+        <label>NOC Received Date</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>NOC_Received__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>NOC Received</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>NOC_Requested__c</fullName>
+        <description>Used for Late/Absence of NOC</description>
+        <externalId>false</externalId>
+        <label>NOC Requested</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
         <fullName>New_IFAP_Deadline_date__c</fullName>
         <externalId>false</externalId>
         <label>New IFAP Deadline date</label>
@@ -2086,6 +2225,48 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
         <description>CS and LO Check this box whenever a new document has been received and attached to the case. ACC unchecks when the documentation has been reviewed</description>
         <externalId>false</externalId>
         <label>New docs. Received</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Notify_Agent_Reactivation__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Used on Late/Absence NOC</description>
+        <externalId>false</externalId>
+        <label>Notify Agent</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Notify_Agent_Suspension__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Notify Agent for Suspension</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Notify_Agent_Termination__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Used on Late/Absence NOC</description>
+        <externalId>false</externalId>
+        <label>Notify Agent for Termination</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Notify_Agent_Withdrawal__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Notify Agent</label>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -2270,6 +2451,22 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
                 <fullName>CORRECTION.1.0</fullName>
                 <default>false</default>
             </picklistValues>
+            <picklistValues>
+                <fullName>CERTIFICATION.1.0</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>VR.1.0</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>VR.1.0.CA</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>CER.1.0</fullName>
+                <default>false</default>
+            </picklistValues>
             <sorted>false</sorted>
         </picklist>
         <required>false</required>
@@ -2399,6 +2596,36 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
         <type>Picklist</type>
     </fields>
     <fields>
+        <fullName>Reactivate_Agent_in_BSPlink_CASSlink__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Reactivate Agent in BSPlink / CASSlink</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Reactivate_Ticketing_Authority__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Reactivate Ticketing Authority</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Reactivated_Agent_in_BSPlink_CASSlink__c</fullName>
+        <externalId>false</externalId>
+        <label>Reactivated Agent in BSPlink / CASSlink</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
         <fullName>Reason_For_KPI__c</fullName>
         <description>This field calculate the value to push to CASE REASON1__C field in order to calculate the KPIs correctly</description>
         <externalId>false</externalId>
@@ -2486,6 +2713,29 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
         <type>Picklist</type>
     </fields>
     <fields>
+        <fullName>Region__c</fullName>
+        <description>Used so we can access the region on triggers</description>
+        <externalId>false</externalId>
+        <formula>TEXT(Account__r.IATA_ISO_Country__r.Region__c)</formula>
+        <label>Region</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Reinstate_STDs_Reactivation__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Used on Late/Absence of NOC</description>
+        <externalId>false</externalId>
+        <label>Reinstate STDs</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Rejection_notification_sent__c</fullName>
         <externalId>false</externalId>
         <label>Rejection notification sent</label>
@@ -2535,6 +2785,17 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Release FS (if applicable)</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Remove_STDs__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Used on Late/Absence NOC</description>
+        <externalId>false</externalId>
+        <label>Remove STDs</label>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -3054,9 +3315,241 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
         <type>Picklist</type>
     </fields>
     <fields>
+        <fullName>STEP26__c</fullName>
+        <externalId>false</externalId>
+        <label>STEP26</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>STEP27__c</fullName>
+        <externalId>false</externalId>
+        <label>STEP27</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>STEP28__c</fullName>
+        <externalId>false</externalId>
+        <label>STEP28</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>STEP29__c</fullName>
+        <externalId>false</externalId>
+        <label>STEP29</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
         <fullName>STEP2__c</fullName>
         <externalId>false</externalId>
         <label>STEP2</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>STEP30__c</fullName>
+        <externalId>false</externalId>
+        <label>STEP30</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>STEP31__c</fullName>
+        <externalId>false</externalId>
+        <label>STEP31</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>STEP32__c</fullName>
+        <externalId>false</externalId>
+        <label>STEP32</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>STEP33__c</fullName>
+        <externalId>false</externalId>
+        <label>STEP33</label>
         <picklist>
             <picklistValues>
                 <fullName>Passed</fullName>
@@ -3327,6 +3820,16 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
         <type>Picklist</type>
     </fields>
     <fields>
+        <fullName>Send_Confirmation__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Send Confirmation</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Send_FS_request__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
@@ -3441,6 +3944,10 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
                 <fullName>Closed (Closed)</fullName>
                 <default>false</default>
             </picklistValues>
+            <picklistValues>
+                <fullName>Open - EDMC</fullName>
+                <default>false</default>
+            </picklistValues>
             <sorted>false</sorted>
         </picklist>
         <required>false</required>
@@ -3458,6 +3965,79 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Suspend_in_BSPLink_CASSLink__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Suspend in BSPLink/CASSLink</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Suspended_in_BSPLink_CASSLink__c</fullName>
+        <externalId>false</externalId>
+        <label>Suspended in BSPLink/CASSLink</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Suspension_result__c</fullName>
+        <externalId>false</externalId>
+        <label>Suspension result</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Termination_Date__c</fullName>
+        <description>Used for Late/Absence of NOC</description>
+        <externalId>false</externalId>
+        <label>Termination Date</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Termination_result__c</fullName>
+        <externalId>false</externalId>
+        <label>Termination result</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
     </fields>
     <fields>
         <fullName>Type_of_change__c</fullName>
@@ -3912,6 +4492,3683 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
     <pluralLabel>OSCARs</pluralLabel>
     <recordTypeTrackFeedHistory>false</recordTypeTrackFeedHistory>
     <recordTypeTrackHistory>false</recordTypeTrackHistory>
+    <recordTypes>
+        <fullName>CERTIFICATE</fullName>
+        <active>true</active>
+        <description>Certificate OSCAR Process Record Type</description>
+        <label>CERTIFICATE</label>
+        <picklistValues>
+            <picklist>AML_result__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>AMS_Correction_change_code__c</picklist>
+            <values>
+                <fullName>CAD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>COR</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Agreement_result__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N%2FA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Applicable_changes__c</picklist>
+            <values>
+                <fullName>Change of legal status</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Change of location</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Change of name</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Change of ownership</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Change of shareholding</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Bank_Guarantee_Currency__c</picklist>
+            <values>
+                <fullName>AED</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ALL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AMD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ANG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AOA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ARS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AUD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AWG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AZN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BAM</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BBD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BDT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BGN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BHD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BIF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BMD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BND</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BOB</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BRL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BSD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BTN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BWP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BZD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CAD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CDF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CHF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CLP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CNY</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>COP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CRC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CUP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CVE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CZK</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DJF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DKK</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DOP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DZD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EGP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ERN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ETB</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EUR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FJD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FKP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GBP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GEL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GHS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GIP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GMD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GNF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GTQ</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GWP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GYD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HKD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HNL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HRK</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HTG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HUF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IDR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ILS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>INR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IQD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IRR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISK</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>JMD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>JOD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>JPY</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>KES</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>KHR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>KMF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>KPW</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>KRW</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>KWD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>KYD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>KZT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LAK</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LBP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LKR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LRD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LSL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LTL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LVL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LYD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MAD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MGA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MKD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MMK</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MNT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MOP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MRO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MUR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MVR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MWK</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MXN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MYR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MZM</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MZN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NAD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NGN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NIO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NOK</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NPR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NZD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>OMR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PAB</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PEN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PGK</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PHP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PKR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PLN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PYG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>QAR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RON</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RSD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RUB</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RUR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RWF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SAR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SBD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SCR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SDD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SDG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SEK</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SGD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SHP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SLL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SOS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>STD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SVC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SYP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SZL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>THB</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TND</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TRY</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TTD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TWD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TZS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>UAH</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>UGX</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>USD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>UYU</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>VEF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>VND</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>VUV</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>WST</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>XAF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>XCD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>XOF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>XPF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>YER</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ZAR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ZMK</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ZMW</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ZWD</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Change_Code__c</picklist>
+            <values>
+                <fullName>DIS - Application Disapproved</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FIN - Application Finalized</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NEW - New Application</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Change_of_location_type_behavior__c</picklist>
+            <values>
+                <fullName>Don%E2%80%99t change the parent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Swap with the parent</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Disapproval_result__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N%2FA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Finalization_checklist__c</picklist>
+            <values>
+                <fullName>Approval email sent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Approval letter sent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BG Updated in CAIMS %28C%26NA%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BG attached</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BG updated in AIMS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Original BG sent to LO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PSAA %2F Agreement signed and stored</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Setup in BSPlink%2FMaestro%2FmyIATA</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Finalization_result__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N%2FA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Financial_Assessment_compliant__c</picklist>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Satisfactory</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Unsatisfactory</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Financial_Review_Result__c</picklist>
+            <values>
+                <fullName>Satisfactory - New Financial Security</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Satisfactory - No Action</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Satisfactory - Release Financial Security</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Satisfactory - Update Financial Security</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Unsatisfactory - New Financial Security</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Unsatisfactory - No action</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Unsatisfactory - Update Financial Security</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Financial_security_result__c</picklist>
+            <values>
+                <fullName>N%2FA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rejected</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Valid</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>IRIS_update_result__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Invoice_status__c</picklist>
+            <values>
+                <fullName>N%2FA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Outstanding</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Paid</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Local_Inspection_compliant__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N%2FA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Process__c</picklist>
+            <values>
+                <fullName>BANK%2EACCOUNT%2ECHANGES</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CER%2E1%2E0</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CHANGE%2E1%2E0</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CHANGE%2ECHINESE%2E1%2E1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CORRECTION%2E1%2E0</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DGR%2EDGA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MAJOR%2ECHANGES</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NEW%2E1%2E1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NEW%2EAHA%2E1%2E0</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NEW%2EAHA%2E1%2E0%2EBSP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NEW%2EBR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NEW%2EBR%2EABROAD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NEW%2EGSA%2E1%2E0</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NEW%2EGSA%2E1%2E0%2EBSP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NEW%2EGSSA%2E1%2E0</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NEW%2EHO%2E1%2E0</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>NEW%2EMSO%2E1%2E0</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NEW%2ESA%2E1%2E0</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NEW%2ETIDS%2E1%2E0</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TERMINATED%2E1%2E0</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>VR%2E1%2E0</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>VR%2E1%2E0%2ECA</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>RPM_Approval__c</picklist>
+            <values>
+                <fullName>Authorize Approval</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Authorize Disapproval</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Started</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Reject Disapproval</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Reject approval</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Reprocess case</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Reconsideration_result__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N%2FA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Rejection_result__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N%2FA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP10__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP11__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP12__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP13__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP14__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP15__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP16__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP17__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP18__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP19__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP1__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP20__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP21__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP22__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP23__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP24__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP25__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP26__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP27__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP28__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP29__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP2__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP30__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP31__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP32__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP33__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP3__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP4__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP5__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP6__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP7__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP8__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP9__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Sanity_check_results__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Accepted_Future Date</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Accepted_Pending Agreement</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Accepted_Pending BG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Accepted_Pending Docs</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Closed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Closed %28Closed%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Closed_Not Accepted</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Closed_Rejected</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Closed_Withdrawn</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>On Hold_External</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>On Hold_Internal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Open</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pending Approval</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pending Validation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Reopen</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Suspension_result__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Termination_result__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type_of_change__c</picklist>
+            <values>
+                <fullName>Legal status</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Location</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Location type</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Location with inspection</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Major Shareholding</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Minor Shareholding</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Name</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ownership to IATA Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ownership to non-IATA Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>VMFR</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Validation_Status__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Validation_result__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Withdrawal_result__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N%2FA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>CERTIFICATION</fullName>
+        <active>true</active>
+        <label>CERTIFICATION</label>
+        <picklistValues>
+            <picklist>AML_result__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>AMS_Correction_change_code__c</picklist>
+            <values>
+                <fullName>CAD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>COR</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Agreement_result__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N%2FA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Applicable_changes__c</picklist>
+            <values>
+                <fullName>Change of legal status</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Change of location</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Change of name</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Change of ownership</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Change of shareholding</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Bank_Guarantee_Currency__c</picklist>
+            <values>
+                <fullName>AED</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ALL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AMD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ANG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AOA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ARS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AUD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AWG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AZN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BAM</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BBD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BDT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BGN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BHD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BIF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BMD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BND</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BOB</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BRL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BSD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BTN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BWP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BZD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CAD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CDF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CHF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CLP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CNY</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>COP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CRC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CUP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CVE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CZK</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DJF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DKK</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DOP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DZD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EGP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ERN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ETB</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EUR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FJD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FKP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GBP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GEL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GHS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GIP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GMD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GNF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GTQ</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GWP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GYD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HKD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HNL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HRK</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HTG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HUF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IDR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ILS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>INR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IQD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IRR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISK</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>JMD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>JOD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>JPY</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>KES</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>KHR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>KMF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>KPW</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>KRW</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>KWD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>KYD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>KZT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LAK</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LBP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LKR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LRD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LSL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LTL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LVL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LYD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MAD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MGA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MKD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MMK</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MNT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MOP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MRO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MUR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MVR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MWK</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MXN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MYR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MZM</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MZN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NAD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NGN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NIO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NOK</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NPR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NZD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>OMR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PAB</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PEN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PGK</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PHP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PKR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PLN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PYG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>QAR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RON</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RSD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RUB</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RUR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RWF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SAR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SBD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SCR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SDD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SDG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SEK</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SGD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SHP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SLL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SOS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>STD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SVC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SYP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SZL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>THB</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TND</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TRY</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TTD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TWD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TZS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>UAH</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>UGX</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>USD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>UYU</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>VEF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>VND</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>VUV</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>WST</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>XAF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>XCD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>XOF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>XPF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>YER</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ZAR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ZMK</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ZMW</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ZWD</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Change_Code__c</picklist>
+            <values>
+                <fullName>DIS - Application Disapproved</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FIN - Application Finalized</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NEW - New Application</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Change_of_location_type_behavior__c</picklist>
+            <values>
+                <fullName>Don%E2%80%99t change the parent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Swap with the parent</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Disapproval_result__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N%2FA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Finalization_checklist__c</picklist>
+            <values>
+                <fullName>Approval email sent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Approval letter sent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BG Updated in CAIMS %28C%26NA%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BG attached</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BG updated in AIMS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Original BG sent to LO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PSAA %2F Agreement signed and stored</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Setup in BSPlink%2FMaestro%2FmyIATA</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Finalization_result__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N%2FA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Financial_Assessment_compliant__c</picklist>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Satisfactory</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Unsatisfactory</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Financial_Review_Result__c</picklist>
+            <values>
+                <fullName>Satisfactory - New Financial Security</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Satisfactory - No Action</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Satisfactory - Release Financial Security</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Satisfactory - Update Financial Security</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Unsatisfactory - New Financial Security</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Unsatisfactory - No action</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Unsatisfactory - Update Financial Security</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Financial_security_result__c</picklist>
+            <values>
+                <fullName>N%2FA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rejected</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Valid</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>IRIS_update_result__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Invoice_status__c</picklist>
+            <values>
+                <fullName>N%2FA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Outstanding</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Paid</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Local_Inspection_compliant__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N%2FA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Process__c</picklist>
+            <values>
+                <fullName>BANK%2EACCOUNT%2ECHANGES</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CERTIFICATION%2E1%2E0</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CHANGE%2E1%2E0</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CHANGE%2ECHINESE%2E1%2E1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CORRECTION%2E1%2E0</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DGR%2EDGA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MAJOR%2ECHANGES</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NEW%2E1%2E1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NEW%2EAHA%2E1%2E0</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NEW%2EAHA%2E1%2E0%2EBSP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NEW%2EBR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NEW%2EBR%2EABROAD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NEW%2EGSA%2E1%2E0</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NEW%2EGSA%2E1%2E0%2EBSP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NEW%2EGSSA%2E1%2E0</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NEW%2EHO%2E1%2E0</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>NEW%2EMSO%2E1%2E0</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NEW%2ESA%2E1%2E0</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NEW%2ETIDS%2E1%2E0</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TERMINATED%2E1%2E0</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>RPM_Approval__c</picklist>
+            <values>
+                <fullName>Authorize Approval</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Authorize Disapproval</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Started</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Reject Disapproval</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Reject approval</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Reprocess case</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Reconsideration_result__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N%2FA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Rejection_result__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N%2FA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP10__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP11__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP12__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP13__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP14__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP15__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP16__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP17__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP18__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP19__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP1__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP20__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP21__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP22__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP23__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP24__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP25__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP26__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP27__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP28__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP29__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP2__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP30__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP31__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP32__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP33__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP3__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP4__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP5__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP6__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP7__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP8__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP9__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Sanity_check_results__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Accepted_Future Date</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Accepted_Pending Agreement</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Accepted_Pending BG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Accepted_Pending Docs</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Closed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Closed %28Closed%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Closed_Not Accepted</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Closed_Rejected</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>On Hold_External</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>On Hold_Internal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Open</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pending Approval</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pending Validation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Reopen</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Suspension_result__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Termination_result__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type_of_change__c</picklist>
+            <values>
+                <fullName>Legal status</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Location</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Location type</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Location with inspection</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Major Shareholding</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Minor Shareholding</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Name</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ownership to IATA Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ownership to non-IATA Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>VMFR</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Validation_Status__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Validation_result__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Withdrawal_result__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N%2FA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
     <recordTypes>
         <fullName>CHANGE</fullName>
         <active>true</active>
@@ -5241,7 +9498,102 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>STEP26__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP27__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP28__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP29__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>STEP2__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP33__c</picklist>
             <values>
                 <fullName>Failed</fullName>
                 <default>false</default>
@@ -6903,6 +11255,82 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>STEP30__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP31__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP32__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP33__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>STEP3__c</picklist>
             <values>
                 <fullName>Failed</fullName>
@@ -7102,6 +11530,28 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
             </values>
             <values>
                 <fullName>Reopen</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Suspension_result__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Termination_result__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -8542,6 +12992,82 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>STEP30__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP31__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP32__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP33__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>STEP3__c</picklist>
             <values>
                 <fullName>Failed</fullName>
@@ -8745,6 +13271,28 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Suspension_result__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Termination_result__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Type_of_change__c</picklist>
             <values>
                 <fullName>Name</fullName>
@@ -8817,6 +13365,17 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
             </values>
             <values>
                 <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>AMS_Correction_change_code__c</picklist>
+            <values>
+                <fullName>CAD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>COR</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -9744,6 +14303,14 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
                 <fullName>TERMINATED%2E1%2E0</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>VR%2E1%2E0</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>VR%2E1%2E0%2ECA</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>RPM_Approval__c</picklist>
@@ -10126,6 +14693,82 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>STEP30__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP31__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP32__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP33__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>STEP3__c</picklist>
             <values>
                 <fullName>Failed</fullName>
@@ -10321,6 +14964,28 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Suspension_result__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Termination_result__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Type_of_change__c</picklist>
             <values>
                 <fullName>Name</fullName>
@@ -10381,6 +15046,16 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
     <sharingModel>ReadWrite</sharingModel>
     <startsWith>Vowel</startsWith>
     <validationRules>
+        <fullName>Effective_date_mandatory_in_VR</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+  RecordType.DeveloperName = &quot;VOLUNTARY_RELINQUISHMENT&quot;,
+  ISBLANK(Change_effective_as_of__c ),
+  ISPICKVAL(STEP6__c, &quot;Passed&quot;)
+)</errorConditionFormula>
+        <errorMessage>Sanity checks cannot be set as passed if &quot;Change effective as of&quot; is empty</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>Effective_date_mandatory_in_changes</fullName>
         <active>true</active>
         <errorConditionFormula>AND(
@@ -10392,6 +15067,22 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
   ISPICKVAL(STEP6__c, &quot;Passed&quot;)
 )</errorConditionFormula>
         <errorMessage>Sanity checks cannot be set as passed if &quot;Change effective as of&quot; is empty or in the future</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Form_Date_Courier_Cargo</fullName>
+        <active>true</active>
+        <errorConditionFormula>NOT(ISBLANK(Form_Effective_Date__c))
+&amp;&amp; ISPICKVAL(Account__r.Location_Class__c, &apos;C&apos;)
+&amp;&amp; (Form_Effective_Date__c - Dossier_Reception_Date__c &lt; 90)</errorConditionFormula>
+        <errorMessage>Form Effective Date must be at least 90 days from the Dossier Reception Date</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Form_Date_Courier_Cass_Associates</fullName>
+        <active>true</active>
+        <errorConditionFormula>NOT(ISBLANK(Form_Effective_Date__c))
+&amp;&amp; OR(ISPICKVAL(Account__r.Category__c, &apos;Courier&apos;), ISPICKVAL(Account__r.Category__c, &apos;Cass Associate&apos;))
+&amp;&amp; (Form_Effective_Date__c - Dossier_Reception_Date__c &lt; 30)</errorConditionFormula>
+        <errorMessage>Form Effective Date must be at least 30 days from the Dossier Reception Date</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>IFAP_Changing_Financial_Review_Result</fullName>
@@ -10413,6 +15104,32 @@ $Profile.Name = &apos;System Administrator - automated processes&apos;
 )</errorConditionFormula>
         <errorDisplayField>Financial_Review_Result__c</errorDisplayField>
         <errorMessage>To change the Financial Review Result you need to provide a reason for the change in &quot;Reason for change of Financial result&quot;.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Voluntary_Relinquishment_Suspension</fullName>
+        <active>true</active>
+        <errorConditionFormula>RecordType.Name = &apos;VOLUNTARY RELINQUISHMENT&apos;
+&amp;&amp; ISPICKVAL(STEP30__c, &apos;Passed&apos;)
+&amp;&amp; NOT(Suspend_in_BSPLink_CASSLink__c)</errorConditionFormula>
+        <errorMessage>Suspension can only be completed after suspension in BSPLink/CASSLink</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Voluntary_Relinquishment_Termination</fullName>
+        <active>true</active>
+        <errorConditionFormula>RecordType.Name = &apos;VOLUNTARY RELINQUISHMENT&apos;
+&amp;&amp; ISCHANGED(STEP31__c)
+&amp;&amp; ISPICKVAL(STEP31__c, &apos;Passed&apos;)
+&amp;&amp; OR(
+  NOT(ISPICKVAL(STEP6__c, &apos;Passed&apos;)),
+  AND(
+    NOT(ISPICKVAL(Process__c, &apos;VR.1.0.CA&apos;)),
+    OR(
+      NOT(ISPICKVAL(STEP30__c, &apos;Passed&apos;)),
+      ISPICKVAL(STEP32__c, &apos;Passed&apos;)
+    )
+  )
+)</errorConditionFormula>
+        <errorMessage>In order to close the agency, make sure all previous steps have been completed</errorMessage>
     </validationRules>
     <webLinks>
         <fullName>CongaSession</fullName>
@@ -10500,7 +15217,7 @@ window.open(&quot;/apex/AMS_OSCAR_Attachment_List?id={!AMS_OSCAR__c.Id}&quot;);
         <availability>online</availability>
         <displayType>button</displayType>
         <linkType>javascript</linkType>
-        <masterLabel>Manage owners / contacts</masterLabel>
+        <masterLabel>Manage owners / contacts / trained staff</masterLabel>
         <openType>onClickJavaScript</openType>
         <protected>false</protected>
         <url>if (sforce.console.isInConsole()) { 
