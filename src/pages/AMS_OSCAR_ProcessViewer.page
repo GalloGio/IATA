@@ -348,7 +348,7 @@ function buildFunctionCall(func, argList){
 </apex:pageBlock>
 
 
-<apex:pageBlock rendered="{!IF(oscar != null && NOT(oscar.AMS_Online_Accreditation__r.Ready_for_Accreditation__c),true,false)}">
+<apex:pageBlock rendered="{!showRequiredOverlay}">
     <div class="overlay">
     <div class="overlay-content">
         <p style="font-size: 36px;">LOCKED</p>
@@ -406,7 +406,7 @@ function buildFunctionCall(func, argList){
                                 <apex:image value="{!URLFOR($Resource.AMS_Icons, statusIcons[step.name])}" styleClass="hasTooltip"/>
                                 <div class="hidden">
                                     <p><b>{!statusLabel[step.name]}</b><br/>
-                                       <i>Other info: TO BE DEFINED</i>!</p> 
+                                       <!--<i>Other info: TO BE DEFINED</i>!--></p> 
                                 </div>
                         </apex:outputPanel>
                         </apex:pageBlockSectionItem>
@@ -432,17 +432,17 @@ function buildFunctionCall(func, argList){
                 
                 <apex:repeat value="{!step.displayFields}" var="sf">
                     <br/><h2>{!stepFieldsData[sf].fieldLabel}</h2>
-                    <div id="{!sf}">
-                        <apex:inputField value="{!oscar[sf]}" styleClass="inputElem" rendered="{!IF(stepFieldsData[sf].picklistvalues != null, false, true)}"/>
-                        
+                    <div id="{!sf}">                        
                         <apex:outputPanel rendered="{!$ObjectType.AMS_OSCAR__c.fields[stepFieldsData[sf].fieldApiName].Updateable}">
+                            <apex:inputField value="{!oscar[sf]}" styleClass="inputElem" rendered="{!stepFieldsData[sf].picklistvalues == null}"/>
                             <apex:selectList size="1" rendered="{!IF(stepFieldsData[sf].picklistvalues != null, true, false)}" styleClass="inputElem">
                                 <apex:selectOptions value="{!stepFieldsData[sf].picklistvalues}"/>
                             </apex:selectList>
                         </apex:outputPanel>
                         
                         <apex:outputPanel rendered="{!NOT($ObjectType.AMS_OSCAR__c.fields[stepFieldsData[sf].fieldApiName].Updateable)}">
-                            <apex:selectList disabled="true" size="1" rendered="{!IF(stepFieldsData[sf].picklistvalues != null, true, false)}" styleClass="inputElem">
+                            <apex:outputField value="{!oscar[sf]}" rendered="{!stepFieldsData[sf].picklistvalues == null}"/>
+                            <apex:selectList disabled="true" size="1" rendered="{!stepFieldsData[sf].picklistvalues != null}" >
                                 <apex:selectOptions value="{!stepFieldsData[sf].picklistvalues}"/>
                             </apex:selectList>
                         </apex:outputPanel>
