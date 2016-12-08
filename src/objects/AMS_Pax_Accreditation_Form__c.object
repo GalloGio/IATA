@@ -57,6 +57,21 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fieldSets>
+        <fullName>AMS_cnsremovaloftradename</fullName>
+        <description>fields to be migrated when we have a removal of trade name process (CNS)</description>
+        <displayedFields>
+            <field>TradeName__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Trade_Name__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>RemovalOfTradeName</label>
+    </fieldSets>
+    <fieldSets>
         <fullName>AMS_legalstatus</fullName>
         <description>fields to be migrated when we have a change of legal status process</description>
         <displayedFields>
@@ -3795,8 +3810,7 @@ $Label.ISSP_AMS_LS_Sole_Owner)</formula>
     <fields>
         <fullName>Ready_for_Accreditation__c</fullName>
         <externalId>false</externalId>
-        <formula>OR (Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp;  TEXT(Location_Type__c) != null  &amp;&amp; Branch_Office_Country__c != null &amp;&amp;  Branch_Office_Street_name_number__c != null &amp;&amp; Branch_Office_City__c != null  &amp;&amp;  TEXT(ISSP_AMS_Legal_Status__c) != null  &amp;&amp; Branch_Office_Email__c != null &amp;&amp;  Branch_Office_Phone__c != null &amp;&amp; !ISPICKVAL(SAAM_Case__r.OSCAR__r.Process__c,&quot;NEW.MSO.1.0&quot;),ISPICKVAL(SAAM_Case__r.OSCAR__r.Process__c,&quot;NEW.MSO.1.0&quot;) &amp;&amp; 
-Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp;  TEXT(Location_Type__c) != null  &amp;&amp; Branch_Office_Country__c != null &amp;&amp;  Branch_Office_Street_name_number__c != null &amp;&amp; Branch_Office_City__c != null  &amp;&amp;  ISPICKVAL(SAAM_Case__r.OSCAR__r.Process__c,&quot;NEW.MSO.1.0&quot;))</formula>
+        <formula>Account_Name__c != null  &amp;&amp;  TEXT(ISSP_AMS_Legal_Status__c) != null &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp;  TEXT(Location_Type__c) != null  &amp;&amp; Branch_Office_Country__c != null &amp;&amp;  Branch_Office_Street_name_number__c != null &amp;&amp; Branch_Office_City__c != null &amp;&amp; Branch_Office_Email__c != null &amp;&amp;  Branch_Office_Phone__c != null</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Ready for Accreditation</label>
         <trackHistory>false</trackHistory>
