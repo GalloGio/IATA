@@ -144,24 +144,18 @@ public class AMS_OscarCase_RiskMgmt {
 			map<id, case> mapCases = new map<id, case>([
 			select id, recordType.DeveloperName, DEF_Withdrawal_Approval_Rejection__c, DEF_Withdrawal_Reason__c, DEF_Approval_Rejection__c, End_of_Grace_Period_Date__c, 
 								  Shut_Down_TKT_System_GDS_and_BSPlink__c, IRR_Approval_Rejection__c, IRR_Withdrawal_Approval_Rejection__c, IRR_Withdrawal_Reason__c, NOT_Date__c, NOT_Sent__c, 
-								  Notify_Agreement_Approval_to_AG__c, Reason_for_Default__c, REI_ApprovalRejectin__c, Repayment_Schedule_Approval__c, SIDRA_Lite_Reason__c, TER_Approval_Rejection__c, 
+								  Notify_Agreement_Approval_to_AG__c, Reason_for_Default__c, REI_ApprovalRejectin__c, Repayment_Schedule_Approval__c, SIDRA_Lite_Reason__c, TER_Approval_Rejection__c, Current_Outstanding_Amount_USD__c, Type_of_REI_WD__c, 
 								  Termination_Reason__c, Ticketing_Authority_Re_assigned__c, Update_AIMS_DEF__c, Update_AIMS_IRR__c, Update_AIMS_IRRWITH__c, Update_AIMS_REI_DEFWITH__c, 
 								  Update_AIMS_Repayment_agreed__c, Update_AIMS_TER__c, Parent.OSCAR__r.Type_of_change__c, Parent.OSCAR__c, IRR_Approval_Rejection_Date__c, IRR_Type__c,
-								  Termination_date__c, Outstanding_Amount__c, 
+								  Termination_date__c, Outstanding_Amount__c, Reason_of_REI_WD__c, 
 								  Account.Location_Class__c, AccountId, Account.Status__c, Account.PreviousStatus__c, Account.Previous_Reason__c, Account.Reason__c, Account.Accumulated_Irregularities__c
 								  , Account.IATA_ISO_Country__r.Enable_Risk_Change_Codes__c, Account.AIMS_ID__c, Account.WebStar_ID__c, Account.IATACode__c
 								  //DTULLO UNCOMMENT FOR CNS, COMMENT/DELETE SIMILAR LINES AFTER
 								  //, Account.CNS_Agency__c
 								  from case where id in:mapTrgNew.keySet()]);
 			
-			system.debug(Logginglevel.ERROR, 'DTULLO 152 ' + mapCases.size());
-			string sss = 'First Run';
-			
 			for(Case c: mapCases.values()){
 				//Pilot countries only!
-				system.debug(Logginglevel.ERROR, 'DTULLO 157 ' + sss);
-				system.debug(Logginglevel.ERROR, 'DTULLO 156 ' + c.Account.IATA_ISO_Country__r.Enable_Risk_Change_Codes__c);
-				sss = 'Second Run?';
 				if(!c.Account.IATA_ISO_Country__r.Enable_Risk_Change_Codes__c)
 					continue;
 				//string LocClass = mapAccnt.get(c.AccountId).Location_Class__c;
@@ -177,12 +171,8 @@ public class AMS_OscarCase_RiskMgmt {
 				for(AMS_ChangeCodes__c conf:lsConf){
 					set<string> setLocClass = new set<string>(conf.Class_Type__c.toUpperCase().split(';'));
 					
-					system.debug(Logginglevel.ERROR, 'DTULLO 172 ' + setLocClass.contains(LocClass));
-					
 					if(!setLocClass.contains(LocClass))
 						continue;
-					
-					system.debug(Logginglevel.ERROR, 'DTULLO 177 ' + sRecordTypeName.equalsIgnoreCase(conf.Record_Type__c));
 					
 					if(!sRecordTypeName.equalsIgnoreCase(conf.Record_Type__c))
 						continue;
@@ -192,35 +182,27 @@ public class AMS_OscarCase_RiskMgmt {
 					//	continue;
 					
 					boolean CCToBeGenerated = false;
-					system.debug(Logginglevel.ERROR, 'DTULLO 179 ' + conf.Change_code__c);
 					if(conf.Field1__c!=null)
 						CCToBeGenerated = bCheckCondition(c, conf.Field1__c, conf.Field1Values__c.toUpperCase(), mapTrgOld.get(c.Id), mapExistingChangeCodes);
 					
-					system.debug(Logginglevel.ERROR, 'DTULLO 183. CCToBeGenerated ' + CCToBeGenerated);
 					if(conf.Field2__c!=null && CCToBeGenerated)
 						CCToBeGenerated = bCheckCondition(c, conf.Field2__c, conf.Field2Values__c.toUpperCase(), mapTrgOld.get(c.Id), mapExistingChangeCodes);
 					
-					system.debug(Logginglevel.ERROR, 'DTULLO 187. CCToBeGenerated ' + CCToBeGenerated);
 					if(conf.Field3__c!=null && CCToBeGenerated)
 						CCToBeGenerated = bCheckCondition(c, conf.Field3__c, conf.Field3Values__c.toUpperCase(), mapTrgOld.get(c.Id), mapExistingChangeCodes);
 					
-					system.debug(Logginglevel.ERROR, 'DTULLO 191. CCToBeGenerated ' + CCToBeGenerated);
 					if(conf.Field4__c!=null && CCToBeGenerated)
 						CCToBeGenerated = bCheckCondition(c, conf.Field4__c, conf.Field4Values__c.toUpperCase(), mapTrgOld.get(c.Id), mapExistingChangeCodes);
 					
-					system.debug(Logginglevel.ERROR, 'DTULLO 195. CCToBeGenerated ' + CCToBeGenerated);
 					if(conf.Field5__c!=null && CCToBeGenerated)
 						CCToBeGenerated = bCheckCondition(c, conf.Field5__c, conf.Field5Values__c.toUpperCase(), mapTrgOld.get(c.Id), mapExistingChangeCodes);
 					
-					system.debug(Logginglevel.ERROR, 'DTULLO 199. CCToBeGenerated ' + CCToBeGenerated);
 					if(conf.Field6__c!=null && CCToBeGenerated)
 						CCToBeGenerated = bCheckCondition(c, conf.Field6__c, conf.Field6Values__c.toUpperCase(), mapTrgOld.get(c.Id), mapExistingChangeCodes);
 					
-					system.debug(Logginglevel.ERROR, 'DTULLO 203. CCToBeGenerated ' + CCToBeGenerated);
 					if(CCToBeGenerated)
 						CCToBeGenerated = CheckOldNewValues(c,  mapTrgOld.get(c.Id), conf.Field1__c, conf.Field2__c, conf.Field3__c, conf.Field4__c, conf.Field5__c, conf.Field6__c);
 					
-					system.debug(Logginglevel.ERROR, 'DTULLO 207. CCToBeGenerated ' + CCToBeGenerated);
 					if(CCToBeGenerated){
 						//mapCasePerAccount.put(c.AccountId, c);
 						list<AMS_ChangeCodes__c> ls;
@@ -265,7 +247,9 @@ public class AMS_OscarCase_RiskMgmt {
 				
 				if(!lsAACC.isEmpty())
 					insert lsAACC;
-					
+				
+				system.debug(Logginglevel.ERROR, 'DTULLO 251 --> mapAccntToUpdate.isEmpty(): ' + mapAccntToUpdate.isEmpty());
+				
 				if(!mapAccntToUpdate.isEmpty())
 					update mapAccntToUpdate.values();
 					
@@ -328,7 +312,15 @@ public class AMS_OscarCase_RiskMgmt {
 		}
 		
 		AACC.SIDRA_Case__c = idCase;
-		AACC.To_Publish_in_e_Bulletin__c = cc.Published_in_bulletin__c;
+		if(cc.Apply_to_hierarchy__c){
+			if(cc.Publish_HO_Only__c){
+				if(mapAllHOs.keyset().contains(AccountId))
+					AACC.To_Publish_in_e_Bulletin__c = cc.Published_in_bulletin__c;
+			}else
+				AACC.To_Publish_in_e_Bulletin__c = cc.Published_in_bulletin__c;
+		}else
+			AACC.To_Publish_in_e_Bulletin__c = cc.Published_in_bulletin__c;
+	
 		AACC.Applied_Configuration__c = cc.id;
 		AACC.OSCAR__c = mapCases.get(idCase).Parent.OSCAR__c;
 		
@@ -345,11 +337,13 @@ public class AMS_OscarCase_RiskMgmt {
 		accnt.Id = AccountId;
 		if(cc.Account_status_change__c != null){
 			bAccntToUpd = true;
-			if(cc.Account_status_change__c.toUpperCase()=='PREV')
+			if(cc.Account_status_change__c.toUpperCase()=='PREV'){
 				if( (acc==null?(mapCases.get(idCase).Account.PreviousStatus__c):acc.PreviousStatus__c) != null )
 					accnt.Status__c = mapCases.get(idCase).Account.PreviousStatus__c;
-			else
+			}
+			else{
 				accnt.Status__c = AMS_Utils.getIATAReadableStatus(cc.Account_status_change__c);
+			}
 		}
 		
 		//Handles Reason code and description on both Account and Change Code
@@ -375,6 +369,10 @@ public class AMS_OscarCase_RiskMgmt {
 		
 		if(cc.Clear_Irregularities__c)
 			setAccntIdIRRToClear.add(AccountId);
+		
+		system.debug(Logginglevel.ERROR, 'DTULLO 361 --> AccountId: ' + AccountId);
+		system.debug(Logginglevel.ERROR, 'DTULLO 362 --> bAccntToUpd: ' + bAccntToUpd);
+		system.debug(Logginglevel.ERROR, 'DTULLO 363 --> accnt: ' + accnt);
 		
 		if(bAccntToUpd)
 			mapAccntToUpdate.put(AccountId, accnt);
@@ -435,19 +433,13 @@ public class AMS_OscarCase_RiskMgmt {
 	private static boolean bCheckCondition(case NewCaseValues, string sFieldToCheck, string condition, case OldCaseValues, map<id, list<Agency_Applied_Change_code__c>> mapCC){
 		set<string> setValues = new set<string>();
 		
-		system.debug(Logginglevel.ERROR, 'DTULLO bCheckCondition ' + sFieldToCheck);
-		system.debug(Logginglevel.ERROR, 'DTULLO bCheckCondition ' + condition);
-		//system.debug(Logginglevel.ERROR, 'DTULLO bCheckCondition ' + string.ValueOf(NewCaseValues.get(sFieldToCheck)));
-		
 		if(condition.equals('NOT BLANK')){
-			system.debug(Logginglevel.ERROR, 'DTULLO bCheckCondition NOT BLANK' + string.ValueOf(NewCaseValues.get(sFieldToCheck))!=null);
 			if(string.ValueOf(NewCaseValues.get(sFieldToCheck))!=null)
 				return true;
 			else return false;
 		}
 		
 		if(condition.equals('BLANK')){
-			system.debug(Logginglevel.ERROR, 'DTULLO bCheckCondition BLANK' + string.ValueOf(NewCaseValues.get(sFieldToCheck))==null);
 			if(string.ValueOf(NewCaseValues.get(sFieldToCheck))==null)
 				return true;
 			else return false;
@@ -498,16 +490,16 @@ public class AMS_OscarCase_RiskMgmt {
 	
 	//Check if there all the fields that lead to generation of change code had a change
 	private static boolean CheckOldNewValues(case NewCaseValues, case OldCaseValues, string Field1, string Field2, string Field3, string Field4, string Field5, string Field6){
-		if(OldCaseValues!=null)
-			if( (Field1 != null && NewCaseValues.get(Field1) == OldCaseValues.get(Field1)) &&
-				(Field2 != null && NewCaseValues.get(Field2) == OldCaseValues.get(Field2)) &&
-				(Field3 != null && NewCaseValues.get(Field3) == OldCaseValues.get(Field3)) &&
-				(Field4 != null && NewCaseValues.get(Field4) == OldCaseValues.get(Field4)) &&
-				(Field5 != null && NewCaseValues.get(Field5) == OldCaseValues.get(Field5)) &&
-				(Field6 != null && NewCaseValues.get(Field6) == OldCaseValues.get(Field6))
+		if(OldCaseValues!=null){
+			if( (Field1==null || (Field1 != null && NewCaseValues.get(Field1) == OldCaseValues.get(Field1))) &&
+				(Field2==null || (Field2 != null && NewCaseValues.get(Field2) == OldCaseValues.get(Field2))) &&
+				(Field3==null || (Field3 != null && NewCaseValues.get(Field3) == OldCaseValues.get(Field3))) &&
+				(Field4==null || (Field4 != null && NewCaseValues.get(Field4) == OldCaseValues.get(Field4))) &&
+				(Field5==null || (Field5 != null && NewCaseValues.get(Field5) == OldCaseValues.get(Field5))) &&
+				(Field6==null || (Field6 != null && NewCaseValues.get(Field6) == OldCaseValues.get(Field6)))
 				)
 				return false;
-
+		}
 		return true;
 	}
 	
@@ -517,7 +509,7 @@ public class AMS_OscarCase_RiskMgmt {
 		return [select id, Billable__c, Change_Code__c, Published_in_bulletin__c, Reason_Code__c, Reason_Code_Description__c, Record_Type__c, Risk_ChangeCode__c, 
 			    Field1__c, Field1Values__c, Field2__c, Field2Values__c, Field3__c, Field3Values__c, Field4__c, Field4Values__c, Field5__c, Field5Values__c, Field6__c, Field6Values__c, 
 			    Account_status_change__c, Class_Type__c, Bulletin_Memo_Text__c, Bulletin_Memo_Text2__c, Bulletin_Memo_Text3__c, Apply_to_hierarchy__c, Clear_Irregularities__c, Integration_RecId__c,
-			    Used_By_CNS__c, CNS_Bulletin_Memo_Text__c, CNS_Bulletin_Memo_Text2__c, CNS_Bulletin_Memo_Text3__c
+			    Used_By_CNS__c, CNS_Bulletin_Memo_Text__c, CNS_Bulletin_Memo_Text2__c, CNS_Bulletin_Memo_Text3__c, Publish_HO_Only__c
 			    from AMS_ChangeCodes__c where Risk_ChangeCode__c=true];
 	}
 	
@@ -525,19 +517,18 @@ public class AMS_OscarCase_RiskMgmt {
 	//Method generates the bulletin memo text. It reads the stored values and replace all <xxxxxx> value with corresponding real value
 	@TestVisible
 	private static string GenerateMemoText(case theCase, Agency_Applied_Change_code__c CC, string sMemo1, string sMemo2, string sMemo3, list<Agency_Applied_Change_code__c> lsIrr, list<Financial_Security__c> lsFS){
-		string sMemoText;
+		string sMemoText  = '';
 		if(sMemo1!=null)	sMemoText = sMemoText + sMemo1;
 		if(sMemo2!=null)	sMemoText = sMemoText + sMemo2;
 		if(sMemo3!=null)	sMemoText = sMemoText + sMemo3;
 
-		if(sMemoText==null)
+		if(sMemoText=='')
 			return '';
 		else{
 			string sTmpVal = '';
 			//Start substitutions!
 			if(sMemoText.containsIgnoreCase('<Termination Date>')){
-				if(theCase.Termination_date__c != null)
-					sMemoText = sMemoText.replace('<Termination Date>', GenerateDateForBulletin(theCase.Termination_date__c));
+				sMemoText = sMemoText.replace('<Termination Date>', theCase.Termination_date__c==null?'Nil':GenerateDateForBulletin(theCase.Termination_date__c));
 			}
 			
 			if(sMemoText.containsIgnoreCase('<Financial Securities>')){
@@ -553,23 +544,19 @@ public class AMS_OscarCase_RiskMgmt {
 			}
 			
 			if(sMemoText.containsIgnoreCase('<DEF Withdrawal reason>')){
-				if(theCase.DEF_Withdrawal_Reason__c!=null)
-					sMemoText = sMemoText.replace('<DEF Withdrawal reason>', theCase.DEF_Withdrawal_Reason__c);
+				sMemoText = sMemoText.replace('<DEF Withdrawal reason>', theCase.DEF_Withdrawal_Reason__c==null?'Nil':theCase.DEF_Withdrawal_Reason__c);
 			}
 			
 			if(sMemoText.containsIgnoreCase('<SIDRA Lite Reason>')){
-				if(theCase.SIDRA_Lite_Reason__c!=null)
-					sMemoText = sMemoText.replace('<SIDRA Lite Reason>', theCase.SIDRA_Lite_Reason__c);
+				sMemoText = sMemoText.replace('<SIDRA Lite Reason>', theCase.SIDRA_Lite_Reason__c==null?'Nil':theCase.SIDRA_Lite_Reason__c);
 			}
 			
 			if(sMemoText.containsIgnoreCase('<End Grace Period Date>')){
-				if(theCase.End_of_Grace_Period_Date__c!=null)
-					sMemoText = sMemoText.replace('<End Grace Period Date>', GenerateDateForBulletin(theCase.End_of_Grace_Period_Date__c));
+				sMemoText = sMemoText.replace('<End Grace Period Date>', theCase.End_of_Grace_Period_Date__c==null?'Nil':GenerateDateForBulletin(theCase.End_of_Grace_Period_Date__c));
 			}
 			
 			if(sMemoText.containsIgnoreCase('<IRR Withdrawal Reason>')){
-				if(theCase.IRR_Withdrawal_Reason__c!=null)
-					sMemoText = sMemoText.replace('<IRR Withdrawal Reason>', theCase.IRR_Withdrawal_Reason__c);
+				sMemoText = sMemoText.replace('<IRR Withdrawal Reason>', theCase.IRR_Withdrawal_Reason__c==null?'Nil':theCase.IRR_Withdrawal_Reason__c);
 			}
 			
 			if(sMemoText.containsIgnoreCase('<IRRS Sequence>')){
@@ -593,30 +580,32 @@ public class AMS_OscarCase_RiskMgmt {
 			}
 			
 			if(sMemoText.containsIgnoreCase('<Outstanding Amount>')){
-				if(theCase.Outstanding_Amount__c!=null)
-					sMemoText = sMemoText.replace('<Outstanding Amount>', string.valueOf(theCase.Outstanding_Amount__c));
+				sMemoText = sMemoText.replace('<Outstanding Amount>', theCase.Outstanding_Amount__c==null?'Nil':string.valueOf(theCase.Outstanding_Amount__c));
 			}
 			
 			if(sMemoText.containsIgnoreCase('<OSCAR Type>')){
-				if(theCase.Parent.OSCAR__r.Type_of_change__c!=null)
-					sMemoText = sMemoText.replace('<OSCAR Type>', theCase.Parent.OSCAR__r.Type_of_change__c);
+				sMemoText = sMemoText.replace('<OSCAR Type>', theCase.Parent.OSCAR__r.Type_of_change__c==null?'Nil':theCase.Parent.OSCAR__r.Type_of_change__c);
 			}
 			
 			if(sMemoText.containsIgnoreCase('<Termination Reason>')){
-				if(theCase.Termination_Reason__c!=null)
-					sMemoText = sMemoText.replace('<Termination Reason>', theCase.Termination_Reason__c);
+				sMemoText = sMemoText.replace('<Termination Reason>', theCase.Termination_Reason__c==null?'Nil':theCase.Termination_Reason__c);
 			}
 			
 			if(sMemoText.containsIgnoreCase('<Update AIMS-DEF>')){
-				if(theCase.Update_AIMS_DEF__c!=null)
-					sMemoText = sMemoText.replace('<Update AIMS-DEF>', GenerateDateForBulletin(date.ValueOf(theCase.Update_AIMS_DEF__c)));
+				sMemoText = sMemoText.replace('<Update AIMS-DEF>', theCase.Update_AIMS_DEF__c==null?'Nil':GenerateDateForBulletin(date.ValueOf(theCase.Update_AIMS_DEF__c)));
 			}
 			
 			if(sMemoText.containsIgnoreCase('<Reason for default>')){
-				if(theCase.Reason_for_Default__c!=null)
-					sMemoText = sMemoText.replace('<Reason for default>', theCase.Reason_for_Default__c);
+				sMemoText = sMemoText.replace('<Reason for default>', theCase.Reason_for_Default__c==null?'Nil':theCase.Reason_for_Default__c);
 			}
 			
+			if(sMemoText.containsIgnoreCase('<Reason of REI/WD>')){
+				sMemoText = sMemoText.replace('<Reason of REI/WD>', theCase.Reason_of_REI_WD__c==null?'Nil':theCase.Reason_of_REI_WD__c);
+			}
+			
+			if(sMemoText.containsIgnoreCase('<Inform GDS to Shut Down TKT System>')){
+				sMemoText = sMemoText.replace('<Inform GDS to Shut Down TKT System>', theCase.Shut_Down_TKT_System_GDS_and_BSPlink__c==null?'Nil':GenerateDateForBulletin(theCase.Shut_Down_TKT_System_GDS_and_BSPlink__c));
+			}
 		}
 		return sMemoText;
 	}
@@ -624,6 +613,12 @@ public class AMS_OscarCase_RiskMgmt {
 	
 	//Format the date in the eBulletin Format (dd-mmm-yyyy)
 	private static string GenerateDateForBulletin(date dValue){
+		if(dValue==null) return '';
+		list<string> lsMonthName = new list<string>{'-','JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'};
+		return string.valueOf(dValue.day() + '-' + lsMonthName.get(dValue.month()) + '-' + dValue.year());
+	}
+	
+	private static string GenerateDateForBulletin(datetime dValue){
 		if(dValue==null) return '';
 		list<string> lsMonthName = new list<string>{'-','JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'};
 		return string.valueOf(dValue.day() + '-' + lsMonthName.get(dValue.month()) + '-' + dValue.year());
