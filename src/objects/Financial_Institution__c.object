@@ -117,6 +117,38 @@
         <type>AutoNumber</type>
     </fields>
     <fields>
+        <fullName>Institution_Status_Image__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(ISPICKVAL(Institution_Status__c,&quot;&quot;), &quot;&quot;, IF(ISPICKVAL(Institution_Status__c , &quot;Inactive&quot;),IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000004cgNr&quot;,&quot;Inactive&quot;,30,30), 
+IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000004cgNm&quot;,&quot;Active&quot;,30,30)))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Institution Status Image</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Institution_Status__c</fullName>
+        <externalId>false</externalId>
+        <label>Institution Status</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Active</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Inactive</fullName>
+                <default>false</default>
+            </picklistValues>
+            <restrictedPicklist>true</restrictedPicklist>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
         <fullName>Institution_Type__c</fullName>
         <description>SARA</description>
         <externalId>false</externalId>

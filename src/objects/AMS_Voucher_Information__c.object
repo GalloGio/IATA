@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>false</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Account__c</fullName>
+        <externalId>false</externalId>
+        <label>Account</label>
+        <lookupFilter>
+            <active>true</active>
+            <errorMessage>Value does not exist or does not match filter criteria. (Account must be an Head Office)</errorMessage>
+            <filterItems>
+                <field>Account.Location_Type__c</field>
+                <operation>equals</operation>
+                <value>HO</value>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Vouchers Information</relationshipLabel>
+        <relationshipName>Vouchers_Information</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>AmountLastYearSales__c</fullName>
+        <externalId>false</externalId>
+        <label>Sales</label>
+        <precision>18</precision>
+        <required>true</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Amount_Currency__c</fullName>
+        <externalId>false</externalId>
+        <label>Amount Currency</label>
+        <picklist>
+            <picklistValues>
+                <fullName>ALL</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>EUR</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>AZN</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>BYR</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>BAM</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>BGN</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>HRK</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>CZK</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>DKK</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>GEL</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>HUF</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>ISK</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>CHF</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>MKD</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>MDL</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>NOK</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>PLN</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>RON</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>RUB</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>RSD</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SEK</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>TRY</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>UAH</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>GBP</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>USD</fullName>
+                <default>false</default>
+            </picklistValues>
+            <restrictedPicklist>true</restrictedPicklist>
+            <sorted>false</sorted>
+        </picklist>
+        <required>true</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Exchange_Rate__c</fullName>
+        <externalId>false</externalId>
+        <label>Exchange Rate</label>
+        <precision>18</precision>
+        <required>true</required>
+        <scale>5</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>IsAgencyEligibleForCountryAverage__c</fullName>
+        <externalId>false</externalId>
+        <formula>YEAR(Account__r.Accreditation_date__c ) &lt; (YEAR(TODAY()) - 1) 
+&amp;&amp; 
+IsAgencyEligible__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Is agency eligible for country average</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>IsAgencyEligible__c</fullName>
+        <externalId>false</externalId>
+        <formula>YEAR(Account__r.Accreditation_date__c ) &lt;= (YEAR(TODAY()) -1) 
+&amp;&amp; 
+NOT(ISPICKVAL(Account__r.Status__c ,&quot;Terminated&quot;)) 
+&amp;&amp; 
+NOT(ISBLANK(AmountLastYearSales__c) || AmountLastYearSales__c == 0) 
+&amp;&amp; 
+(ISPICKVAL(Account__r.Location_Class__c ,&quot;C&quot;)) 
+&amp;&amp; 
+NOT(ISBLANK(Account__r.IATA_ISO_Country__r.AMS_Max_Vouchers_Per_Year__c)) 
+&amp;&amp; 
+NOT(ISBLANK(Account__r.IATA_ISO_Country__r.AMS_Vouchers_Benchmark__c)) 
+&amp;&amp; 
+ISPICKVAL(Account__r.Location_Type__c ,&quot;HO&quot;)</formula>
+        <inlineHelpText>An non eligible Voucher Information:
+
+Sales of that year not found
+Agency approval date is after that year
+Default status 5, any reason or Default status 6, reasons 61, 62, 68
+Submitted international sales of that year is zero or nil</inlineHelpText>
+        <label>Is agency eligible to print vouchers</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Number_Of_Vouchers__c</fullName>
+        <description>Total Number Of Vouchers</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Total Number Of Vouchers</inlineHelpText>
+        <label>Number Of Vouchers</label>
+        <summaryForeignKey>AMS_Voucher__c.Voucher_Information__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Vouchers_Issued_Last_Year__c</fullName>
+        <externalId>false</externalId>
+        <label>Vouchers Issued Last Year</label>
+        <precision>8</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Year__c</fullName>
+        <externalId>false</externalId>
+        <label>Sales year</label>
+        <length>4</length>
+        <required>true</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>Voucher Information</label>
+    <nameField>
+        <displayFormat>VI-{000000000}</displayFormat>
+        <label>Voucher information Name</label>
+        <trackHistory>false</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Vouchers Information</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ControlledByParent</sharingModel>
+    <validationRules>
+        <fullName>AccountMustBeHO</fullName>
+        <active>true</active>
+        <description>Only head offices can have a record for Voucher information.</description>
+        <errorConditionFormula>NOT(ISPICKVAL(Account__r.Location_Type__c ,&quot;HO&quot;))</errorConditionFormula>
+        <errorMessage>Only head offices can have a record for Voucher information.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Ensure_year_correct_input_value</fullName>
+        <active>true</active>
+        <errorConditionFormula>NOT(
+NOT(ISBLANK ( Year__c ) )
+&amp;&amp; 
+ISNUMBER ( Year__c )
+&amp;&amp;
+LEN ( Year__c ) =  4
+&amp;&amp;
+ ( BEGINS(Year__c , &apos;19&apos;) || BEGINS(Year__c , &apos;20&apos;))
+)</errorConditionFormula>
+        <errorDisplayField>Year__c</errorDisplayField>
+        <errorMessage>Please check the Year format YYYY (&gt; 1900)</errorMessage>
+    </validationRules>
+</CustomObject>
