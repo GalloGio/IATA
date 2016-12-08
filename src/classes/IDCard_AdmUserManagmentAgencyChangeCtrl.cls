@@ -25,6 +25,8 @@ public class IDCard_AdmUserManagmentAgencyChangeCtrl extends IDCardAbstractContr
     //public String UIR {get;set;}
 
 	public boolean success {get;set;}
+
+
 	
 	public IDCard_AdmUserManagmentAgencyChangeCtrl(){
 		initialize(true);
@@ -290,6 +292,11 @@ public class IDCard_AdmUserManagmentAgencyChangeCtrl extends IDCardAbstractContr
 		public string startmonth {get;set;}
 		public string startyear {get;set;}
 		
+        public String awsImageURL {
+        	get{
+        		return IDCardUtil.AWSImageAuthorizationLink(this.photo);
+    		} set;}
+
 		public AgencyChangeWrapper(){
 			
 		}
@@ -308,4 +315,5 @@ public class IDCard_AdmUserManagmentAgencyChangeCtrl extends IDCardAbstractContr
 	public integer getCurrentRecordsSize(){
 		return currentRecords.keyset().size();
 	}
+
 }
