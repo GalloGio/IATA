@@ -4,5 +4,13 @@
         <members>*</members>
         <name>Layout</name>
     </types>
+        <types>
+        <members>*</members>
+        <name>CustomTab</name>
+    </types>
+        <types>
+        <members>*</members>
+        <name>CustomApplication</name>
+    </types>
     <version>37.0</version>
 </Package>
