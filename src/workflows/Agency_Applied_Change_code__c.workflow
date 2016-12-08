@@ -75,7 +75,7 @@
         <criteriaItems>
             <field>Agency_Applied_Change_code__c.Change_Code__c</field>
             <operation>equals</operation>
-            <value>IRR</value>
+            <value>IRR,IRS,IRW</value>
         </criteriaItems>
         <description>Assign Recordtype &quot;Irregularities&quot; for Change Code with Type &quot;IRR&quot;</description>
         <triggerType>onCreateOnly</triggerType>
@@ -90,7 +90,7 @@
         <criteriaItems>
             <field>Agency_Applied_Change_code__c.Change_Code__c</field>
             <operation>notEqual</operation>
-            <value>IRR</value>
+            <value>IRR,IRS,IRW</value>
         </criteriaItems>
         <description>Assign Recordtype &quot;Standard&quot; for Change Code with Type not equal to &quot;IRR&quot;</description>
         <triggerType>onCreateOnly</triggerType>

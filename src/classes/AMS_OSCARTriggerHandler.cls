@@ -1007,7 +1007,7 @@ public class AMS_OSCARTriggerHandler {
         		caseChanged = true;
         	}
         	if(c.Process_Start_Date__c == null){
-        		c.Process_Start_Date__c = updatedOSCAR.Sanity_check_received__c;
+        		c.Process_Start_Date__c = updatedOSCAR.Process_Start_Date__c;
         		caseChanged = true;
         	}
 
@@ -1387,7 +1387,7 @@ public class AMS_OSCARTriggerHandler {
 		}
 
 		//find all agencies involved
-		for (AMS_Process_Detail__c pd : [SELECT Id, Account__c, OSCAR__c FROM AMS_Process_Detail__c WHERE OSCAR__c IN :oscars AND Account__c != '' AND Account__r.Status__c != :AMS_Utils.ACC_S0_TERMINATED]) {
+		for (AMS_Process_Detail__c pd : [SELECT Id, Account__c, OSCAR__c FROM AMS_Process_Detail__c WHERE OSCAR__c IN :oscars AND Account__c != '']) {
 			
 			accountsInvolved.get(pd.OSCAR__c).add(pd.Account__c);
 		}
@@ -1448,7 +1448,8 @@ public class AMS_OSCARTriggerHandler {
 			if (oldOSCAR.STEP30__c != AMS_Utils.PASSED && updatedOSCAR.STEP30__c == AMS_Utils.PASSED) {
 			    updatedOSCAR.Status__c = 'Accepted_Future Date';
 
-			    Date terminationDate = updatedOSCAR.Location_Class__c == 'P'? AMS_Utils.lastDayOfMonth(Date.today().addMonths(1)) : Date.today().addDays(15);
+			    Set<String> nextMonthLocations = new Set<String>{'P', 'D'};
+			    Date terminationDate = nextMonthLocations.contains(updatedOSCAR.Location_Class__c) ? AMS_Utils.lastDayOfMonth(Date.today().addMonths(1)) : Date.today().addDays(15);
 			    if (AMS_Utils.IsWeekendDay(terminationDate, updatedOSCAR.Region__c)) {
 			        terminationDate = AMS_Utils.AddBusinessDays(terminationDate, 1, updatedOSCAR.Region__c);
 			    }
