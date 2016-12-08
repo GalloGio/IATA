@@ -59,7 +59,7 @@
                                 <aura:if isTrue="{!service.rowspan>0}">
                                     <td rowspan="{!service.rowspan}"><ui:outputText value="{!service.Service_Publication}" /></td>
                                 </aura:if>
-                                <td class="{!service.rowspan==0 ? 'dontIndent':''}"><ui:outputText value="{!service.Name}" /></td>
+                                <td class="{!service.rowspan==0 ? 'dontIndent':''}"><a href="{!'/' +service.Id}" target="_blank">{!service.Name}</a></td>
                                 <td><ui:outputCheckbox value="{!service.Active}" /></td>
                             </tr>
 
