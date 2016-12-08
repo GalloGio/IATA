@@ -207,16 +207,6 @@ E&amp;F CRM Project</description>
         <type>AutoNumber</type>
     </fields>
     <fields>
-        <fullName>Contract_Name__c</fullName>
-        <externalId>false</externalId>
-        <label>Contract Name</label>
-        <length>255</length>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
         <fullName>Contract_Notes__c</fullName>
         <description>This field is a text area where the contract owner can add contract-related information.</description>
         <externalId>false</externalId>
