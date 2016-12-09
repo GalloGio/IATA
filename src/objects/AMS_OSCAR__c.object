@@ -68,7 +68,7 @@
     <fields>
         <fullName>AML_deadline__c</fullName>
         <externalId>false</externalId>
-        <label>AML deadline</label>
+        <label>Due diligence deadline</label>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
@@ -78,7 +78,7 @@
     <fields>
         <fullName>AML_performed_date__c</fullName>
         <externalId>false</externalId>
-        <label>AML performed date</label>
+        <label>Due diligence performed date</label>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
@@ -88,7 +88,7 @@
     <fields>
         <fullName>AML_requested__c</fullName>
         <externalId>false</externalId>
-        <label>AML requested</label>
+        <label>Due diligence requested</label>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
@@ -98,7 +98,7 @@
     <fields>
         <fullName>AML_result__c</fullName>
         <externalId>false</externalId>
-        <label>AML result</label>
+        <label>Due diligence result</label>
         <picklist>
             <picklistValues>
                 <fullName>Passed</fullName>
@@ -272,7 +272,7 @@
     <fields>
         <fullName>Anti_Money_Laundering_Complete__c</fullName>
         <externalId>false</externalId>
-        <label>Anti-Money Laundering Complete</label>
+        <label>Due Diligence Complete</label>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
@@ -1571,6 +1571,18 @@ IF(Bank_Guarantee_received__c - Bank_Guarantee_requested__c =6, TEXT(4), TEXT((B
         <type>Date</type>
     </fields>
     <fields>
+        <fullName>Emails_reference_Id__c</fullName>
+        <externalId>false</externalId>
+        <label>Emails reference Id</label>
+        <length>50</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Fees_refund_requested__c</fullName>
         <externalId>false</externalId>
         <label>Fees refund requested</label>
@@ -2301,6 +2313,18 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Oscar_Communication_Case_Id__c</fullName>
+        <externalId>false</externalId>
+        <label>Oscar Communication Case Id</label>
+        <length>100</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Out_of_deadline_SAAM__c</fullName>
