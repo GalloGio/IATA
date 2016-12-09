@@ -6,17 +6,11 @@ public class AMS_AccountTriggerHandler {
                 'email__c',
                 'website',
                 'mobile__c',
-                'shippingaddress',
                 'manager_first_name__c',
                 'manager_last_name__c',
                 'tradename__c',
-                'shippingstreet',
-                'shippingcity',
-                'shippingcountry',
-                'shippingstate',
-                'shippingpostalcode',
-                'VAT_number__c',
-                'VAT_number_2__c'
+                'Solicitation_Flag__c'
+                
             };
     public static Set<String> minorchangesRestrictedForCNS = new Set<String>{'tradename__c'};
 
