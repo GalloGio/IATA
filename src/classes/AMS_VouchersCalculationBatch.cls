@@ -53,13 +53,33 @@ global class AMS_VouchersCalculationBatch implements Database.Batchable<sObject>
 
 		AMS_VouchersCreationBatch creationBatch = new AMS_VouchersCreationBatch(averageMetrics,process);
 
-		Id aMS_VouchersCreationBatchId = Database.executeBatch(creationBatch,50);
+		Integer scopeRun = calculateMaxRunScope(allVouchersInfo);
+
+        Integer numberOfVouchersInfo = Math.min(Math.Max(scopeRun,1),50);
+        
+        System.debug('__AMS_VouchersCalculationBatch__ Running with ' + numberOfVouchersInfo +  ' scopes.');
+        
+		Id aMS_VouchersCreationBatchId = Database.executeBatch(creationBatch,numberOfVouchersInfo);
 
 		process.AMS_Vouchers_Creation_Batch__c = aMS_VouchersCreationBatchId;
 
 		process.Country_Averages__c = processMetricsForAverage(averageMetrics);
 
 		update process;
+
+	}
+
+	private Integer calculateMaxRunScope(List<AMS_Voucher_Information__c> vouchersInfo){
+
+		Decimal maxNumber = 50;
+
+		for(AMS_Voucher_Information__c vInfo : vouchersInfo){
+
+			if(vInfo.Account__r.IATA_ISO_Country__r.AMS_Max_Vouchers_Per_Year__c > maxNumber)
+				maxNumber = vInfo.Account__r.IATA_ISO_Country__r.AMS_Max_Vouchers_Per_Year__c;
+		}
+
+		return Integer.valueOf(1000 / maxNumber);
 
 	}
 

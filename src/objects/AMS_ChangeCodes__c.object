@@ -261,6 +261,15 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Publish_HO_Only__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Used by change code applicable to the whole hierarchy. If true, only the HO will get the change code published, otherwise the whole hierarchy will.</inlineHelpText>
+        <label>Publish HO Only</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Published_in_bulletin__c</fullName>
         <defaultValue>false</defaultValue>
         <description>Defines the default value on the change code when generated</description>

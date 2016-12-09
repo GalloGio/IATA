@@ -11,6 +11,10 @@ global without sharing class AMS_RecordCreatorWebservice {
     private static String NEWTIDS_PV= 'NEW.TIDS.1.0';
     private static String NEWCORRECTION_PV = 'CORRECTION.1.0';
     private static String NEWDGR_PV = 'CERTIFICATION.1.0';
+    private static String NEWVR_PV = 'VR.1.0'; 
+    private static String NEWVRCA_PV = 'VR.1.0.CA';
+
+    private static String EMPTYACCREDITATIONID = 'EMPTY';
 
     /**
         Creates an Oscar (AMS_OSCAR__c) given an Account Id, an Accreditation Id and the Type of Process
@@ -182,6 +186,9 @@ global without sharing class AMS_RecordCreatorWebservice {
         if(typeOfProcess.equalsIgnoreCase(NEWDGR_PV))
             return oscarRT.get('CERTIFICATION');
 
+        if(typeOfProcess.equalsIgnoreCase(NEWVR_PV) || typeOfProcess.equalsIgnoreCase(NEWVRCA_PV))
+            return oscarRT.get('VOLUNTARY_RELINQUISHMENT');
+
         return null;
     
     }
@@ -208,9 +215,13 @@ global without sharing class AMS_RecordCreatorWebservice {
         AMS_Pax_Accreditation_Form__c accreditationObj;
  
         if(owner == null)
-            oscar = new AMS_OSCAR__c(Account__c = accountId, Process__c = processType, RecordTypeId =recordTypeId, Status__c = oscarStatus, AMS_Online_Accreditation__c = accreditationId );
+            oscar = new AMS_OSCAR__c(Account__c = accountId, Process__c = processType, RecordTypeId =recordTypeId, Status__c = oscarStatus);
         else
-            oscar = new AMS_OSCAR__c(Account__c = accountId, Process__c = processType, RecordTypeId =recordTypeId, Status__c = oscarStatus, AMS_Online_Accreditation__c = accreditationId, OwnerId = owner );
+            oscar = new AMS_OSCAR__c(Account__c = accountId, Process__c = processType, RecordTypeId =recordTypeId, Status__c = oscarStatus, OwnerId = owner );
+
+        if(processType != NEWVR_PV && processType != NEWVRCA_PV){
+            oscar.AMS_Online_Accreditation__c = accreditationId;
+        }
 
         if(processType.equalsIgnoreCase(MAJOR_CHANGES_PV)){
 
@@ -226,7 +237,7 @@ global without sharing class AMS_RecordCreatorWebservice {
         
         insert oscar;
 
-        if(processType.equalsIgnoreCase(MAJOR_CHANGES_PV)){
+        if(processType.equalsIgnoreCase(MAJOR_CHANGES_PV) && processType != NEWVR_PV && processType != NEWVRCA_PV){
             processOscarProcessDetail(oscar,accreditationObj,accountId);
         }
 
@@ -409,6 +420,7 @@ global without sharing class AMS_RecordCreatorWebservice {
             oscarsToProcess.add(null);
         }
 
+        //AMS_ChangeCodesHelper.createAAChangeCodes(changeCodesToProcess, oscarsToProcess, accountsToProcess, false);
         AMS_Utils.createAAChangeCodes(changeCodesToProcess, oscarsToProcess, accountsToProcess, false);
 
         // for now we shouldn't sent any notification.

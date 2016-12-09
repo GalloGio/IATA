@@ -22,6 +22,25 @@
         }]
       },
       {
+        "Name": "AMS_OSCAR_MASTERDATA",
+        "Steps": [{
+          "Name": "STEP10",
+          "Required": [],
+          "Actions": [{
+            "FunctionName": "generateIataCode",
+            "ActionLabel": "AMS_OSCAR_Action1",
+            "args": ["agencyid", "accreditationid", "oscarid"]
+          }],
+          "Automations": [{
+            "Status": "Passed",
+            "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step10_succeeded"
+          }],
+          "DisplayFields": [
+          "STEP10__c"],
+          "IsDependent": false
+        }]
+      },
+      {
         "Name": "AMS_OSCAR_ANTIMONEYLAUNDERING",
         "Steps": [{
           "Name": "STEP17",
@@ -47,26 +66,7 @@
           "STEP17__c"],
           "IsDependent": false
         }]
-      },
-      {
-        "Name": "AMS_OSCAR_MASTERDATA",
-        "Steps": [{
-          "Name": "STEP10",
-          "Required": [],
-          "Actions": [{
-            "FunctionName": "generateIataCode",
-            "ActionLabel": "AMS_OSCAR_Action1",
-            "args": ["agencyid", "accreditationid", "oscarid"]
-          }],
-          "Automations": [{
-            "Status": "Passed",
-            "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step10_succeeded"
-          }],
-          "DisplayFields": [
-          "STEP10__c"],
-          "IsDependent": false
-        }]
-      },
+      },      
       {
         "Name": "AMS_OSCAR_AGENCYFEES",
         "Steps": [{
@@ -844,10 +844,6 @@
           "Name": "STEP6",
           "Required": [],
           "Actions": [{
-            "FunctionName": "performAML",
-            "ActionLabel": "AMS_OSCAR_Action4",
-            "args": ["oscarid"]
-          },{
             "FunctionName": "checkAccountHierarchy",
             "ActionLabel": "AMS_OSCAR_Action6",
             "args": ["oscarid"]
@@ -862,7 +858,35 @@
           "STEP6__c"],
           "IsDependent": false
         }]
-      },{
+      },
+      {
+        "Name": "AMS_OSCAR_ANTIMONEYLAUNDERING",
+        "Steps": [{
+          "Name": "STEP17",
+          "Required": [],
+          "Actions": [{
+            "FunctionName": "performAML",
+            "ActionLabel": "AMS_OSCAR_Action4",
+            "args": ["oscarid"]
+          }],
+          "Automations": [{
+            "Status": "In Progress",
+            "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step17_inProgress"
+          },
+          {
+            "Status": "Passed",
+            "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step17_succeeded"
+          },
+          {
+            "Status": "Failed",
+            "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step17_failed"
+          }],
+          "DisplayFields": [
+          "STEP17__c"],
+          "IsDependent": false
+        }]
+      },
+      {
         "Name": "AMS_OSCAR_PENALTY",
         "Steps": [{
           "Name": "STEP26",
@@ -885,7 +909,8 @@
             "STEP26__c"
           ],
           "IsDependent": false
-        },{
+      },
+      {
           "Name": "STEP27",
           "Required": [],
           "Actions": [],
@@ -1257,6 +1282,25 @@
         }]
       },
       {
+        "Name": "AMS_OSCAR_MASTERDATA",
+        "Steps": [{
+          "Name": "STEP10",
+          "Required": [],
+          "Actions": [{
+            "FunctionName": "generateIataCode",
+            "ActionLabel": "AMS_OSCAR_Action1",
+            "args": ["agencyid", "accreditationid", "oscarid"]
+          }],
+          "Automations": [{
+            "Status": "Passed",
+            "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step10_succeeded"
+          }],
+          "DisplayFields": [
+          "STEP10__c"],
+          "IsDependent": false
+        }]
+      },
+      {
         "Name": "AMS_OSCAR_ANTIMONEYLAUNDERING",
         "Steps": [{
           "Name": "STEP17",
@@ -1280,25 +1324,6 @@
           }],
           "DisplayFields": [
           "STEP17__c"],
-          "IsDependent": false
-        }]
-      },
-      {
-        "Name": "AMS_OSCAR_MASTERDATA",
-        "Steps": [{
-          "Name": "STEP10",
-          "Required": [],
-          "Actions": [{
-            "FunctionName": "generateIataCode",
-            "ActionLabel": "AMS_OSCAR_Action1",
-            "args": ["agencyid", "accreditationid", "oscarid"]
-          }],
-          "Automations": [{
-            "Status": "Passed",
-            "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step10_succeeded"
-          }],
-          "DisplayFields": [
-          "STEP10__c"],
           "IsDependent": false
         }]
       },
@@ -1661,6 +1686,25 @@
             ]
           },
       {
+      "Name": "AMS_OSCAR_MASTERDATA",
+      "Steps": [{
+        "Name": "STEP10",
+        "Required": [],
+        "Actions": [{
+        "FunctionName": "generateIataCode",
+        "ActionLabel": "AMS_OSCAR_Action1",
+        "args": ["agencyid", "accreditationid", "oscarid"]
+        }],
+        "Automations": [{
+        "Status": "Passed",
+        "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step10_succeeded"
+        }],
+        "DisplayFields": [
+        "STEP10__c"],
+        "IsDependent": false
+        }]
+      },
+      {
       "Name": "AMS_OSCAR_ANTIMONEYLAUNDERING",
       "Steps": [{
         "Name": "STEP17",
@@ -1687,25 +1731,6 @@
         "IsDependent": false
         }]
       },
-      {
-      "Name": "AMS_OSCAR_MASTERDATA",
-      "Steps": [{
-        "Name": "STEP10",
-        "Required": [],
-        "Actions": [{
-        "FunctionName": "generateIataCode",
-        "ActionLabel": "AMS_OSCAR_Action1",
-        "args": ["agencyid", "accreditationid", "oscarid"]
-        }],
-        "Automations": [{
-        "Status": "Passed",
-        "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step10_succeeded"
-        }],
-        "DisplayFields": [
-        "STEP10__c"],
-        "IsDependent": false
-        }]
-    },
     {
         "Name": "AMS_OSCAR_AGENCYFEES",
         "Steps": [{
