@@ -196,7 +196,7 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
                 changeCode.status  = '9';
 
                 Account acct = new Account(Id = updatedOscar.Account__c);
-                AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {updatedOscar}, new List<Account> {acct}, true);
+                AMS_Utils.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {updatedOscar}, new List<Account> {acct}, true);
 
             } else if (oldOSCAR.STEP2__c != 'Failed' && updatedOscar.STEP2__c == 'Failed' && updatedOscar.RPM_Approval__c=='Authorize Disapproval') {
 
@@ -209,7 +209,7 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
                 changeCode.status  = '0';
 
                 Account acct = new Account(Id = updatedOscar.Account__c);
-                AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {updatedOscar}, new List<Account> {acct}, true);
+                AMS_Utils.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {updatedOscar}, new List<Account> {acct}, true);
             }
         // Management of CORRECTION OSCARs
         }else if (updatedOscar.recordTypeID == corrRT){
@@ -222,7 +222,7 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
                     // Regardless the changecode is generated or not, move data to Master Data
                     // First move the account
                     system.debug(LoggingLevel.ERROR,'applyChangeCodesWithDependencies() -> move to MD account data');
-                    List<AMS_ChangeCodesHelper.ObjectChangesStruct> changes = AMS_Utils.copyDataToAccount(new List<AMS_OSCAR__c>{updatedOscar}, false);
+                    AMS_Utils.copyDataToAccount(new List<AMS_OSCAR__c>{updatedOscar}, false);
 
                     // THen move the owners
                     Map<Id, Set<Id>> stagingToAccounts = new Map<Id, Set<Id>>();
@@ -267,7 +267,7 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
                         changeCode.status  = '9';
 
                         Account acct = new Account(Id = updatedOscar.Account__c);
-                        AMS_ChangeCodesHelper.createAAChangeCodes(changes, new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {updatedOscar}, new List<Account> {acct}, true);
+                        AMS_Utils.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {updatedOscar}, new List<Account> {acct}, true);
                     }
                     // If the picklist is set create a CAD change code.
                     if(updatedOscar.AMS_Correction_change_code__c == 'CAD') {
@@ -287,7 +287,7 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
                             changeCode.reasonDesc = accountActiveChangeCode[0].Reason_Description__c;
                         }
                         Account acct = new Account(Id = updatedOscar.Account__c);
-                        AMS_ChangeCodesHelper.createAAChangeCodes(changes, new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {updatedOscar}, new List<Account> {acct}, true);
+                        AMS_Utils.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {updatedOscar}, new List<Account> {acct}, true);
                     }
 
                 } catch (Exception ex) {
@@ -353,7 +353,12 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
             'Roll_back_account_data__c'                 => 'Account_data_rolled_back__c',
             'Issue_billing_document__c'                 => 'Process_Start_Date__c',
             'Notify_Agent_Suspension__c'                => 'NOC_Requested__c',
-            'NOC_Received__c'                           => 'NOC_Received_Date__c'
+            'NOC_Received__c'                           => 'NOC_Received_Date__c',
+            'Suspend_in_BSPLINK_CASSLink__c'            => 'Suspended_in_BSPLINK_CASSLink__c',
+            'Release_FS_if_applicable__c'               => 'Financial_Security_released__c',
+            'Reactivate_Agent_in_BSPlink_CASSlink__c'   => 'Reactivated_Agent_in_BSPlink_CASSlink__c',
+            'Confirm_Payment_if_applicable__c'          => 'Proof_of_payment_received__c',
+            'Send_Confirmation__c'                      => 'Confirmation_Sent__c'
             };
            //Map to update Date related checkbox values
         for (String oscarDateFieldKey: oscarDateFieldsMap.keyset())
@@ -434,7 +439,7 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
                 updatedOscar.STEP15__c = updatedOscar.Validation_Status__c;
         }
 
-       if (oldOSCAR.BSPLink_participation__c == false && updatedOscar.BSPLink_participation__c == true && oldOSCAR.Process__c == AMS_Utils.new_GSA)
+        if (oldOSCAR.BSPLink_participation__c == false && updatedOscar.BSPLink_participation__c == true && oldOSCAR.Process__c == AMS_Utils.new_GSA)
             updatedOSCAR.Process__c = AMS_Utils.new_GSA_BSP;
 
         if (oldOSCAR.BSPLink_participation__c == true && updatedOscar.BSPLink_participation__c == false && oldOSCAR.Process__c == AMS_Utils.new_GSA_BSP)
@@ -445,6 +450,7 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
 
         if (oldOSCAR.BSPLink_participation__c == true && updatedOscar.BSPLink_participation__c == false && oldOSCAR.Process__c == AMS_Utils.new_AHA_BSP)
             updatedOSCAR.Process__c = AMS_Utils.new_AHA;
+
         if (oldOSCAR.Apply_Penalty_Fee__c == false && updatedOscar.Apply_Penalty_Fee__c == true) {
 
             //late/absence of NOC - penalty fees can only be applied for some ToC (could add validation for dates)
@@ -452,7 +458,6 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
             if(updatedOscar.Type_of_Change__c != null) tocList.addAll(updatedOscar.Type_of_change__c.split(';'));
 
             System.debug(loggingLevel.Debug, '____ [trg AMS_OSCARTrigger - validateStep29] tocList - ' + tocList);
-
             if(
                 !tocList.contains(AMS_Utils.OWNERSHIP_IATA)
                 && !tocList.contains(AMS_Utils.OWNERSHIP_NON_IATA)
@@ -464,7 +469,6 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
                 updatedOSCAR.addError('Penalty fees can only be applied for \n-'+AMS_Utils.OWNERSHIP_IATA+'\n-'+AMS_Utils.OWNERSHIP_NON_IATA+'\n-'+AMS_Utils.MAJ_SHAREHOLDING+'\n-'+AMS_Utils.NAME+'\n-'+AMS_Utils.LEGAL_STATUS+'\n-'+AMS_Utils.LOCATION);
             }
         }
-
         if (oldOSCAR.Apply_Penalty_Fee__c == true && updatedOscar.Apply_Penalty_Fee__c == false) {
             updatedOSCAR.addError('It\'s not possible to cancel the penalty fees that were applied');
         }
@@ -472,7 +476,7 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
         if (oldOSCAR.Notify_Agent_Suspension__c == false && updatedOscar.Notify_Agent_Suspension__c == true) {
             updatedOSCAR.NOC_Deadline__c = AMS_Utils.AddBusinessDays(System.today(), 5, 'Late NOC - '+updatedOSCAR.Region__c);
         }
-
+        
         if (oldOSCAR.Notify_Agent_Termination__c == false && updatedOscar.Notify_Agent_Termination__c == true) {
             updatedOSCAR.Termination_Date__c = AMS_Utils.lastDayOfMonth(System.today().addMonths(1));
             System.debug(loggingLevel.Debug, '____ [trg AMS_OSCARTrigger - beforUpdate] updatedOSCAR.Termination_Date__c - ' + updatedOSCAR.Termination_Date__c);
@@ -530,5 +534,6 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
             insert eventsToInsert;
 
     }
+
 
 }
