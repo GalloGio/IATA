@@ -473,6 +473,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Type_of_REI_WD__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Update_AIMS_REI_DEFWITH__c</field>
             </layoutItems>
             <layoutItems>
@@ -492,6 +496,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Open_TKT_System__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Reason_of_REI_WD__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -518,6 +526,10 @@
                 <behavior>Edit</behavior>
                 <field>NOT_Date__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>NOT_Approval__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -533,6 +545,10 @@
         <editHeading>true</editHeading>
         <label>Termination</label>
         <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Total_Outstanding_Amounts_Bankruptcy_del__c</field>
+            </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Propose_Default__c</field>
