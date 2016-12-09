@@ -315,6 +315,7 @@ public class AMS_OSCARTriggerHandler {
 		}
 
 
+
 		Map<Id, Account> accounts = getAccounts(accountIds);
 		Map<Id, AMS_Pax_Accreditation_Form__c> onlineAccreditations = getAccreditations(oscarOnlineAccredIds);
 
@@ -328,6 +329,22 @@ public class AMS_OSCARTriggerHandler {
 		AMS_Utils.AgChangesConfig config3;
 
 		system.debug('processAgencyChanges() --> oscars = ' + oscars);
+
+		boolean needValidationsOnStagingArea = false;
+		Set<ID> stagingAreaIDs = new Set<ID>();
+		Map<ID,AMS_Pax_Accreditation_Form__c> stagingAreas = new Map<ID,AMS_Pax_Accreditation_Form__c>();
+		for (AMS_OSCAR__c oscar : oscars){
+			if(oscar.AMS_Online_Accreditation__c!=null)
+				stagingAreaIDs.add(oscar.AMS_Online_Accreditation__c);
+			if(oscar.Type_of_change__c!=null && oscar.Type_of_change__c.contains(AMS_Utils.REMOVALTRADENAME))
+				needValidationsOnStagingArea = true;
+		}
+
+		if(needValidationsOnStagingArea){
+			stagingAreas = new Map<ID,AMS_Pax_Accreditation_Form__c>([SELECT Id, Trade_Name__c FROM AMS_Pax_Accreditation_Form__c WHERE ID IN :stagingAreaIDs]);
+		}
+
+
 		for (AMS_OSCAR__c oscar : oscars) {
 
 			AMS_OSCAR__c oldOSCAR = oldMap.get(oscar.Id);
@@ -399,7 +416,7 @@ public class AMS_OSCARTriggerHandler {
 
 					isSanityCheck = true;
 
-					if(!performOscarValidations(toclist, agenciesAffected, oscar, accounts, accountHierarchyRelationships))
+					if(!performOscarValidations(toclist, agenciesAffected, oscar, accounts, accountHierarchyRelationships, stagingAreas))
 						return;
 
 					//Location Type will always be selected as a single change.
@@ -868,7 +885,7 @@ public class AMS_OSCARTriggerHandler {
 
 	}
 
-	public static boolean performOscarValidations(Set<String> toclist, Set<Id> agenciesAffected, AMS_OSCAR__c oscar, Map<Id, Account> accounts, Map<Id, List<AMS_Agencies_relationhip__c>> accountHierarchyRelationships) {
+	public static boolean performOscarValidations(Set<String> toclist, Set<Id> agenciesAffected, AMS_OSCAR__c oscar, Map<Id, Account> accounts, Map<Id, List<AMS_Agencies_relationhip__c>> accountHierarchyRelationships, Map<ID,AMS_Pax_Accreditation_Form__c> stagingAreas) {
 
 		boolean validationsPassed = true;
 		Set<Id> agenciesToMigrate = new Set<Id>(agenciesAffected);
@@ -888,6 +905,11 @@ public class AMS_OSCARTriggerHandler {
 
 		if (tocList.contains(AMS_Utils.OWNERSHIP_IATA) && oscar.AMS_Target_Agency__c == null){
 			oscar.AMS_Target_Agency__c.addError('The field "Target Agency" is mandatory when a change of ownership to IATA agent is being performed.');
+			validationsPassed= false;
+		}
+
+		if(tocList.contains(AMS_Utils.REMOVALTRADENAME) && (stagingAreas.get(oscar.AMS_Online_Accreditation__c)==null || !String.isBlank(stagingAreas.get(oscar.AMS_Online_Accreditation__c).Trade_Name__c))){
+			oscar.AMS_Target_Agency__c.addError('If the type of change includes "'+AMS_Utils.REMOVALTRADENAME+'" the field Trade Name must be empty.');
 			validationsPassed= false;
 		}
 
