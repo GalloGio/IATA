@@ -4,7 +4,7 @@ public class AMS_AccountHierarchySelectionController {
 	// ******* private variables *********
 	// ***********************************
 
-	private final Id ANALYST_PROFILE_ID = [SELECT Id, Name FROM Profile WHERE Name = 'FDS Hub Analyst ARM'].Id;
+	//private final Id ANALYST_PROFILE_ID = [SELECT Id, Name FROM Profile WHERE Name = 'FDS Hub Analyst ARM'].Id;
 
 	@TestVisible
 	private Account mainAccount{
@@ -203,7 +203,8 @@ public class AMS_AccountHierarchySelectionController {
 
 	public Boolean editable {
 		get{
-			return (UserInfo.getProfileId() != ANALYST_PROFILE_ID || oscar.STEP6__c != AMS_Utils.PASSED);
+			//return (UserInfo.getProfileId() != ANALYST_PROFILE_ID || oscar.STEP6__c != AMS_Utils.PASSED);
+			return (oscar.STEP6__c != AMS_Utils.PASSED);
 		}
 		set;
 	}

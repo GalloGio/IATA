@@ -527,6 +527,7 @@
 <fieldPermissions><editable>false</editable><field>AMS_Fields_Translation__c.Legacy_System__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AMS_Fields_Translation__c.Translation__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AMS_Fields_Translation__c.User__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>AMS_Inspection__c.AMS_Appointment_Type__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AMS_Inspection__c.Account__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AMS_Inspection__c.Accreditation_Endorsement_Status_code__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>AMS_Inspection__c.Accreditation_Endorsement_organisation__c</field><readable>true</readable></fieldPermissions>
@@ -1778,6 +1779,7 @@
 <fieldPermissions><editable>false</editable><field>Archived_Attachment__c.Internal_Comments__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Archived_Attachment__c.OriginalCreatedBy__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Archived_Attachment__c.Original_Creation_Date__c</field><readable>true</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>Archived_Attachment__c.Originally_Created_By__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Archived_Message__c.EmailMessage__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>ArticleStatistics__c.Article_Number__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>ArticleStatistics__c.Stat_Type__c</field><readable>true</readable></fieldPermissions>
@@ -2684,6 +2686,7 @@
 <fieldPermissions><editable>false</editable><field>Case.Modified_Report__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Case.MustSyncIrisCase__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Case.NOI_sent__c</field><readable>true</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>Case.NOT_Approval__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Case.NOT_Date__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Case.NOT_Sent__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Case.NOW_ACCA_Date_Time_New_c__c</field><readable>true</readable></fieldPermissions>
@@ -2811,6 +2814,7 @@
 <fieldPermissions><editable>false</editable><field>Case.Reason_for_change_to_AssessmentPerformed__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Case.Reason_internal_case__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Case.Reason_of_Item__c</field><readable>true</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>Case.Reason_of_REI_WD__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Case.Reason_of_rejection_IFAP__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Case.Reason_to_be__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Case.Reasons_of_Reject__c</field><readable>true</readable></fieldPermissions>
@@ -2943,6 +2947,7 @@
 <fieldPermissions><editable>false</editable><field>Case.Type_of_Budget__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Case.Type_of_Change__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Case.Type_of_Customer_from_account__c</field><readable>true</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>Case.Type_of_REI_WD__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Case.Type_of_case_Portal__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Case.Type_of_customer__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Case.UAT_Date__c</field><readable>true</readable></fieldPermissions>
@@ -3686,6 +3691,7 @@
 <fieldPermissions><editable>false</editable><field>EBC_Order__c.eBroadcast_Payment_Target__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>EBC_Order__c.eBroadcast_Payment_Token__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>EBC_Preference__c.Billing_Account__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>true</editable><field>EBC_Preference__c.Default_From_Name__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>EBC_Preference__c.Default_Google_Analytics_Tracker__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>EBC_Preference__c.Monthly_Account_Status__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>EBC_Preference__c.Notify_On_Send__c</field><readable>false</readable></fieldPermissions>
@@ -7005,6 +7011,7 @@
 <objectPermissions><allowCreate>false</allowCreate><allowDelete>false</allowDelete><allowEdit>false</allowEdit><allowRead>true</allowRead><modifyAllRecords>false</modifyAllRecords><object>EBC_Resource__c</object><viewAllRecords>true</viewAllRecords></objectPermissions>
 <objectPermissions><allowCreate>false</allowCreate><allowDelete>false</allowDelete><allowEdit>false</allowEdit><allowRead>true</allowRead><modifyAllRecords>false</modifyAllRecords><object>EBC_Setup__c</object><viewAllRecords>true</viewAllRecords></objectPermissions>
 <objectPermissions><allowCreate>false</allowCreate><allowDelete>false</allowDelete><allowEdit>false</allowEdit><allowRead>true</allowRead><modifyAllRecords>false</modifyAllRecords><object>EBC_Statistic__c</object><viewAllRecords>true</viewAllRecords></objectPermissions>
+<objectPermissions><allowCreate>false</allowCreate><allowDelete>false</allowDelete><allowEdit>false</allowEdit><allowRead>true</allowRead><modifyAllRecords>false</modifyAllRecords><object>EBC_Sub_Continent__c</object><viewAllRecords>true</viewAllRecords></objectPermissions>
 <objectPermissions><allowCreate>false</allowCreate><allowDelete>false</allowDelete><allowEdit>false</allowEdit><allowRead>true</allowRead><modifyAllRecords>false</modifyAllRecords><object>EBC_Template_Resource__c</object><viewAllRecords>true</viewAllRecords></objectPermissions>
 <objectPermissions><allowCreate>false</allowCreate><allowDelete>false</allowDelete><allowEdit>false</allowEdit><allowRead>true</allowRead><modifyAllRecords>false</modifyAllRecords><object>EBC_Template_Test__c</object><viewAllRecords>true</viewAllRecords></objectPermissions>
 <objectPermissions><allowCreate>false</allowCreate><allowDelete>false</allowDelete><allowEdit>false</allowEdit><allowRead>true</allowRead><modifyAllRecords>false</modifyAllRecords><object>EBC_Template__c</object><viewAllRecords>true</viewAllRecords></objectPermissions>
@@ -7187,6 +7194,8 @@
 <objectPermissions><allowCreate>false</allowCreate><allowDelete>false</allowDelete><allowEdit>false</allowEdit><allowRead>true</allowRead><modifyAllRecords>false</modifyAllRecords><object>Salesforce_Solution__kav</object><viewAllRecords>false</viewAllRecords></objectPermissions>
 <objectPermissions><allowCreate>false</allowCreate><allowDelete>false</allowDelete><allowEdit>false</allowEdit><allowRead>true</allowRead><modifyAllRecords>false</modifyAllRecords><object>Services_Rendered__c</object><viewAllRecords>true</viewAllRecords></objectPermissions>
 <objectPermissions><allowCreate>false</allowCreate><allowDelete>false</allowDelete><allowEdit>false</allowEdit><allowRead>true</allowRead><modifyAllRecords>false</modifyAllRecords><object>SidraLiteAllowedCountries__c</object><viewAllRecords>true</viewAllRecords></objectPermissions>
+<objectPermissions><allowCreate>false</allowCreate><allowDelete>false</allowDelete><allowEdit>false</allowEdit><allowRead>true</allowRead><modifyAllRecords>false</modifyAllRecords><object>SidraLiteCongaTemplates__c</object><viewAllRecords>true</viewAllRecords></objectPermissions>
+<objectPermissions><allowCreate>false</allowCreate><allowDelete>false</allowDelete><allowEdit>false</allowEdit><allowRead>true</allowRead><modifyAllRecords>false</modifyAllRecords><object>SidraLiteEmailTemplates__c</object><viewAllRecords>true</viewAllRecords></objectPermissions>
 <objectPermissions><allowCreate>false</allowCreate><allowDelete>false</allowDelete><allowEdit>false</allowEdit><allowRead>true</allowRead><modifyAllRecords>false</modifyAllRecords><object>SkillAssignmentMetadata__c</object><viewAllRecords>true</viewAllRecords></objectPermissions>
 <objectPermissions><allowCreate>false</allowCreate><allowDelete>false</allowDelete><allowEdit>false</allowEdit><allowRead>true</allowRead><modifyAllRecords>false</modifyAllRecords><object>Skill_Assignment__c</object><viewAllRecords>true</viewAllRecords></objectPermissions>
 <objectPermissions><allowCreate>false</allowCreate><allowDelete>false</allowDelete><allowEdit>false</allowEdit><allowRead>true</allowRead><modifyAllRecords>false</modifyAllRecords><object>Skill_Types__c</object><viewAllRecords>true</viewAllRecords></objectPermissions>
@@ -7476,6 +7485,7 @@
 <tabVisibilities><tab>AMS_Accreditation_Organization__c</tab><visibility>Hidden</visibility></tabVisibilities>
 <tabVisibilities><tab>AMS_Agency__c</tab><visibility>Hidden</visibility></tabVisibilities>
 <tabVisibilities><tab>AMS_Airport__c</tab><visibility>Hidden</visibility></tabVisibilities>
+<tabVisibilities><tab>AMS_OSCAR__c</tab><visibility>Hidden</visibility></tabVisibilities>
 <tabVisibilities><tab>AMS_Operation__c</tab><visibility>Hidden</visibility></tabVisibilities>
 <tabVisibilities><tab>AMS_Segment__c</tab><visibility>Hidden</visibility></tabVisibilities>
 <tabVisibilities><tab>AMS_Settlement_System__c</tab><visibility>Hidden</visibility></tabVisibilities>
