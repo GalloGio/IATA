@@ -1,10 +1,6 @@
 @isTest
 public class WSSidraLiteTest {
 
-    @testSetup static void loadData() {
-        insert new SidraLiteAllowedCountries__c(Name = 'Canada');
-    }
-
     private static Case createSIDRALite(Case parent) {
         Case cse = new Case(
             RecordtypeId = SidraLiteManager.RECORDTYPE_SIDRA_LITE,
@@ -681,7 +677,7 @@ public class WSSidraLiteTest {
 
         //activate account
         Account acc = [Select Status__c from Account where id = :saamCase.AccountId];
-        acc.Status__c = 'Cash basis/no commission';
+        acc.Status__c = 'Terminated';
         update acc;
 
         Test.startTest();
