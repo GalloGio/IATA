@@ -21,6 +21,10 @@ var dyn_functions = {
                     var resultOscarData = sforce.connection.query("SELECT Flag_Data_to_Account__c,Flag_Data_to_SAPECC__c,ID, STEP10__c,STEP8__c,Process_Start_Date__c,recordTypeID,Process__c, Account__r.Due_Diligence_Status__c, Account__r.IATA_ISO_Country__r.Due_diligence_mandatory__c FROM AMS_OSCAR__C WHERE Id ='" + argList[2] + "'");
                     var records = resultOscarData.getArray("records");
 
+                    //Prevent error with cross reference fields
+                    var oscar = new sforce.SObject("AMS_OSCAR__c");
+                    oscar.Id = records[0].Id;
+
                     //if oscar is mso do not allow more than one appointment
                     if(records.length > 0 && records[0].Process__c == 'NEW.MSO.1.0'){
                         var nInspections = sforce.connection.query("SELECT Id FROM AMS_Inspection__c WHERE Oscar__c ='" + argList[2] + "'");
@@ -47,7 +51,7 @@ var dyn_functions = {
 
                             
                             if(result[0] == '1'){
-                                records[0].STEP10__c = 'Passed';
+                                oscar.STEP10__c = 'Passed';
                                 sResult = '- Generate IATACode - Success!\n\r';
 
                                 //Update data after IATACode Generation
@@ -61,7 +65,7 @@ var dyn_functions = {
                                 //    records[0].Flag_Data_to_Account__c = true;
                                 //}
                             } else{
-                                records[0].STEP10__c = 'Failed';
+                                oscar.STEP10__c = 'Failed';
                                 sResult = '- Generate IATACode - Error! '+ result[1] + ' (code: '+ result[0] +')\n\r';
                             }
                             //sforce.connection.update(records);
@@ -78,7 +82,7 @@ var dyn_functions = {
                                 sResult = sResult + '- Move Data To Account - Failed to copy data to Account. Please contact your Administrator.\n(Error: ' + result2 +')\n\r';
                                 createNewChangeCode = false;
                             }else{
-                                records[0].Flag_Data_to_Account__c = 'true';
+                                oscar.Flag_Data_to_Account__c = 'true';
                                 bUpdate = true;
                                 sResult = sResult + '- Move Data To Account - Success!\n\r';
                             }
@@ -93,8 +97,8 @@ var dyn_functions = {
                         if (records.length>0 && recordsFlag[0].Flag_IATACode_Formula__c == 'true' && records[0].Flag_Data_to_Account__c == 'true' 
                                 && records[0].Flag_Data_to_SAPECC__c == 'false') {
                             
-                            records[0].Flag_Data_to_SAPECC__c = 'true';
-                            records[0].STEP8__c = 'In Progress';
+                            oscar.Flag_Data_to_SAPECC__c = 'true';
+                            oscar.STEP8__c = 'In Progress';
                             
                         }
 
@@ -108,7 +112,7 @@ var dyn_functions = {
                             
                             if(records[0].Account__r.Due_Diligence_Status__c == 'In Progress'){
                                 ddResult = 'ByPassed (process is already in progress)';
-                                records[0].STEP17__c = 'In progress';
+                                oscar.STEP17__c = 'In progress';
                                 bUpdate = true;
                             }else{
                                 ddResult = this.performAMLaux(argList[2]);
@@ -120,7 +124,7 @@ var dyn_functions = {
                         sResult = sResult + '- Due diligence - ' + ddResult + '\r\n'; 
 
                         if(bUpdate){
-                            sforce.connection.update(records);
+                            console.info("Update result: "+sforce.connection.update([oscar]));
                         }
 
                     }
