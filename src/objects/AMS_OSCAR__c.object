@@ -14846,7 +14846,7 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
     </validationRules>
     <validationRules>
         <fullName>Form_Date_Courier_Cargo</fullName>
-        <active>true</active>
+        <active>false</active>
         <errorConditionFormula>RecordType.DeveloperName = &quot;VOLUNTARY_RELINQUISHMENT&quot;
 &amp;&amp; NOT(ISBLANK(Form_Effective_Date__c))
 &amp;&amp; ISPICKVAL(Account__r.Location_Class__c, &apos;C&apos;)
@@ -14855,7 +14855,7 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
     </validationRules>
     <validationRules>
         <fullName>Form_Date_Courier_Cass_Associates</fullName>
-        <active>true</active>
+        <active>false</active>
         <errorConditionFormula>RecordType.DeveloperName = &quot;VOLUNTARY_RELINQUISHMENT&quot;
 &amp;&amp; NOT(ISBLANK(Form_Effective_Date__c))
 &amp;&amp; OR(ISPICKVAL(Account__r.Category__c, &apos;Courier&apos;), ISPICKVAL(Account__r.Category__c, &apos;Cass Associate&apos;))
