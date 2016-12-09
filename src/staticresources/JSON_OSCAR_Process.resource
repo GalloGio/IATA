@@ -22,6 +22,25 @@
         }]
       },
       {
+        "Name": "AMS_OSCAR_MASTERDATA",
+        "Steps": [{
+          "Name": "STEP10",
+          "Required": [],
+          "Actions": [{
+            "FunctionName": "generateIataCode",
+            "ActionLabel": "AMS_OSCAR_Action1",
+            "args": ["agencyid", "accreditationid", "oscarid"]
+          }],
+          "Automations": [{
+            "Status": "Passed",
+            "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step10_succeeded"
+          }],
+          "DisplayFields": [
+          "STEP10__c"],
+          "IsDependent": false
+        }]
+      },
+      {
         "Name": "AMS_OSCAR_ANTIMONEYLAUNDERING",
         "Steps": [{
           "Name": "STEP17",
@@ -47,26 +66,7 @@
           "STEP17__c"],
           "IsDependent": false
         }]
-      },
-      {
-        "Name": "AMS_OSCAR_MASTERDATA",
-        "Steps": [{
-          "Name": "STEP10",
-          "Required": [],
-          "Actions": [{
-            "FunctionName": "generateIataCode",
-            "ActionLabel": "AMS_OSCAR_Action1",
-            "args": ["agencyid", "accreditationid", "oscarid"]
-          }],
-          "Automations": [{
-            "Status": "Passed",
-            "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step10_succeeded"
-          }],
-          "DisplayFields": [
-          "STEP10__c"],
-          "IsDependent": false
-        }]
-      },
+      },      
       {
         "Name": "AMS_OSCAR_AGENCYFEES",
         "Steps": [{
@@ -343,10 +343,10 @@
             "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step4_succeeded",
             "ChangeCode": {
               "Name": "NWD",
-              "ReasonCode": "03",
+              "ReasonCode": "11",
               "MemoText": "New application withdrawn",
               "ReasonDesc": "APPLICATION WITHDRAWN",
-              "Status": "0"
+              "Status": "1"
             }
             
           },
@@ -721,10 +721,10 @@
             "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step4_succeeded",
             "ChangeCode": {
               "Name": "NWD",
-              "ReasonCode": "03",
+              "ReasonCode": "11",
               "MemoText": "New application - Branch withdrawn",
               "ReasonDesc": "APPLICATION WITHDRAWN",
-              "Status": "0"
+              "Status": "1"
             }
             
           },
@@ -844,10 +844,6 @@
           "Name": "STEP6",
           "Required": [],
           "Actions": [{
-            "FunctionName": "performAML",
-            "ActionLabel": "AMS_OSCAR_Action4",
-            "args": ["oscarid"]
-          },{
             "FunctionName": "checkAccountHierarchy",
             "ActionLabel": "AMS_OSCAR_Action6",
             "args": ["oscarid"]
@@ -862,7 +858,35 @@
           "STEP6__c"],
           "IsDependent": false
         }]
-      },{
+      },
+      {
+        "Name": "AMS_OSCAR_ANTIMONEYLAUNDERING",
+        "Steps": [{
+          "Name": "STEP17",
+          "Required": [],
+          "Actions": [{
+            "FunctionName": "performAML",
+            "ActionLabel": "AMS_OSCAR_Action4",
+            "args": ["oscarid"]
+          }],
+          "Automations": [{
+            "Status": "In Progress",
+            "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step17_inProgress"
+          },
+          {
+            "Status": "Passed",
+            "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step17_succeeded"
+          },
+          {
+            "Status": "Failed",
+            "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step17_failed"
+          }],
+          "DisplayFields": [
+          "STEP17__c"],
+          "IsDependent": false
+        }]
+      },
+      {
         "Name": "AMS_OSCAR_PENALTY",
         "Steps": [{
           "Name": "STEP26",
@@ -885,7 +909,8 @@
             "STEP26__c"
           ],
           "IsDependent": false
-        },{
+      },
+      {
           "Name": "STEP27",
           "Required": [],
           "Actions": [],
@@ -1257,6 +1282,25 @@
         }]
       },
       {
+        "Name": "AMS_OSCAR_MASTERDATA",
+        "Steps": [{
+          "Name": "STEP10",
+          "Required": [],
+          "Actions": [{
+            "FunctionName": "generateIataCode",
+            "ActionLabel": "AMS_OSCAR_Action1",
+            "args": ["agencyid", "accreditationid", "oscarid"]
+          }],
+          "Automations": [{
+            "Status": "Passed",
+            "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step10_succeeded"
+          }],
+          "DisplayFields": [
+          "STEP10__c"],
+          "IsDependent": false
+        }]
+      },
+      {
         "Name": "AMS_OSCAR_ANTIMONEYLAUNDERING",
         "Steps": [{
           "Name": "STEP17",
@@ -1280,25 +1324,6 @@
           }],
           "DisplayFields": [
           "STEP17__c"],
-          "IsDependent": false
-        }]
-      },
-      {
-        "Name": "AMS_OSCAR_MASTERDATA",
-        "Steps": [{
-          "Name": "STEP10",
-          "Required": [],
-          "Actions": [{
-            "FunctionName": "generateIataCode",
-            "ActionLabel": "AMS_OSCAR_Action1",
-            "args": ["agencyid", "accreditationid", "oscarid"]
-          }],
-          "Automations": [{
-            "Status": "Passed",
-            "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step10_succeeded"
-          }],
-          "DisplayFields": [
-          "STEP10__c"],
           "IsDependent": false
         }]
       },
@@ -1578,10 +1603,10 @@
             "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step4_succeeded",
             "ChangeCode": {
               "Name": "NWD",
-              "ReasonCode": "03",
+              "ReasonCode": "11",
               "MemoText": "New application withdrawn",
               "ReasonDesc": "APPLICATION WITHDRAWN",
-              "Status": "0"
+              "Status": "1"
             }
             
           },
@@ -1661,6 +1686,25 @@
             ]
           },
       {
+      "Name": "AMS_OSCAR_MASTERDATA",
+      "Steps": [{
+        "Name": "STEP10",
+        "Required": [],
+        "Actions": [{
+        "FunctionName": "generateIataCode",
+        "ActionLabel": "AMS_OSCAR_Action1",
+        "args": ["agencyid", "accreditationid", "oscarid"]
+        }],
+        "Automations": [{
+        "Status": "Passed",
+        "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step10_succeeded"
+        }],
+        "DisplayFields": [
+        "STEP10__c"],
+        "IsDependent": false
+        }]
+      },
+      {
       "Name": "AMS_OSCAR_ANTIMONEYLAUNDERING",
       "Steps": [{
         "Name": "STEP17",
@@ -1687,25 +1731,6 @@
         "IsDependent": false
         }]
       },
-      {
-      "Name": "AMS_OSCAR_MASTERDATA",
-      "Steps": [{
-        "Name": "STEP10",
-        "Required": [],
-        "Actions": [{
-        "FunctionName": "generateIataCode",
-        "ActionLabel": "AMS_OSCAR_Action1",
-        "args": ["agencyid", "accreditationid", "oscarid"]
-        }],
-        "Automations": [{
-        "Status": "Passed",
-        "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step10_succeeded"
-        }],
-        "DisplayFields": [
-        "STEP10__c"],
-        "IsDependent": false
-        }]
-    },
     {
         "Name": "AMS_OSCAR_AGENCYFEES",
         "Steps": [{
@@ -1797,10 +1822,10 @@
           "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step3_succeeded",
           "ChangeCode": {
             "Name": "DIS",
-            "ReasonCode": "00",
+            "ReasonCode": "12",
             "MemoText": "New application - TIDS disapproved",
-            "ReasonDesc": "NON COMPLIANCE TO CRITERIA",
-            "Status": "0"
+            "ReasonDesc": "APPLICATION DISAPPROVED",
+            "Status": "1"
             }
         },
         {
@@ -1855,10 +1880,10 @@
                     "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step4_succeeded",
                     "ChangeCode": {
                       "Name": "NWD",
-                      "ReasonCode": "03",
+                      "ReasonCode": "11",
                       "MemoText": "New application - TIDS withdrawn",
                       "ReasonDesc": "APPLICATION WITHDRAWN",
-                      "Status": "0"
+                      "Status": "1"
                     }
                   },
                   {
@@ -2102,10 +2127,10 @@
           "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step3_succeeded",
           "ChangeCode": {
             "Name": "DIS",
-            "ReasonCode": "00",
+            "ReasonCode": "12",
             "MemoText": "New application - GSA disapproved",
-            "ReasonDesc": "NON COMPLIANCE TO CRITERIA",
-            "Status": "0"
+            "ReasonDesc": "APPLICATION DISAPPROVED",
+            "Status": "1"
             }
         },
         {
@@ -2160,10 +2185,10 @@
                     "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step4_succeeded",
                     "ChangeCode": {
                       "Name": "NWD",
-                      "ReasonCode": "03",
+                      "ReasonCode": "11",
                       "MemoText": "New application - GSA withdrawn",
                       "ReasonDesc": "APPLICATION WITHDRAWN",
-                      "Status": "0"
+                      "Status": "1"
                     }
                   },
                   {
@@ -2339,10 +2364,10 @@
           "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step3_succeeded",
           "ChangeCode": {
             "Name": "DIS",
-            "ReasonCode": "00",
+            "ReasonCode": "12",
             "MemoText": "New application - GSSA disapproved",
-            "ReasonDesc": "NON COMPLIANCE TO CRITERIA",
-            "Status": "0"
+            "ReasonDesc": "APPLICATION DISAPPROVED",
+            "Status": "1"
             }
         },
         {
@@ -2397,10 +2422,10 @@
                     "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step4_succeeded",
                     "ChangeCode": {
                       "Name": "NWD",
-                      "ReasonCode": "03",
+                      "ReasonCode": "11",
                       "MemoText": "New application - GSSA withdrawn",
                       "ReasonDesc": "APPLICATION WITHDRAWN",
-                      "Status": "0"
+                      "Status": "1"
                     }
                   },
                   {
@@ -2613,10 +2638,10 @@
           "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step3_succeeded",
           "ChangeCode": {
             "Name": "DIS",
-            "ReasonCode": "00",
+            "ReasonCode": "12",
             "MemoText": "New application - AHA disapproved",
-            "ReasonDesc": "NON COMPLIANCE TO CRITERIA",
-            "Status": "0"
+            "ReasonDesc": "APPLICATION DISAPPROVED",
+            "Status": "1"
             }
         },
         {
@@ -2671,10 +2696,10 @@
                     "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step4_succeeded",
                     "ChangeCode": {
                       "Name": "NWD",
-                      "ReasonCode": "03",
+                      "ReasonCode": "11",
                       "MemoText": "New application - AHA withdrawn",
                       "ReasonDesc": "APPLICATION WITHDRAWN",
-                      "Status": "0"
+                      "Status": "1"
                     }
                   },
                   {
@@ -3040,10 +3065,10 @@
             "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step4_succeeded",
             "ChangeCode": {
               "Name": "NWD",
-              "ReasonCode": "03",
+              "ReasonCode": "11",
               "MemoText": "New application - SA withdrawn",
               "ReasonDesc": "APPLICATION WITHDRAWN",
-              "Status": "0"
+              "Status": "1"
             }
             
           },
@@ -3313,7 +3338,6 @@
           }],
           "Automations": [],
           "DisplayFields": [
-            "Form_Effective_Date__c",
             "Certificate_Quantity__c",
             "Confirm_Payment_if_applicable__c",
             "Send_Confirmation__c",

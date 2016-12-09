@@ -63,7 +63,7 @@ global class AMS_BSPLinkIntegration {
 			setAccntId.add(a.Account__c);
 		}
 		
-		if(lsToRemove.size()<=100){
+		if(lsToRemove.size()<80){
 			AMS_BSPLink_Integration__c BSPLinkParameter = AMS_BSPLink_Integration__c.getInstance();
 			
 	    	if(string.isEmpty(BSPLinkParameter.EndpointToken__c) || string.isEmpty(BSPLinkParameter.Password__c) || string.isEmpty(BSPLinkParameter.Username__c) || string.isEmpty(BSPLinkParameter.GrantType__c)){
@@ -121,7 +121,7 @@ global class AMS_BSPLinkIntegration {
 			
 			response r = new response();
 			r.result = 'Ok';
-			r.description = 'More than 100 agencies will be deactivated. You\'ll receive an email when process is finished';
+			r.description = 'More than 80 agencies will be deactivated. You\'ll receive an email when process is finished';
 			oReturn.Add(r);
 		}
 

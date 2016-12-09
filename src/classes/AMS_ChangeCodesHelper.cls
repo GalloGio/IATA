@@ -63,7 +63,7 @@ public class AMS_ChangeCodesHelper {
 
             if(step == AMS_Utils.SANITYCHECK){
                 changeCode.name = 'VRR';
-                changeCode.memoText = 'Advance notification for voluntary relinquishment by Agent by '+oscar.Change_Effective_as_of__c;
+                changeCode.memoText = 'Advance notification for voluntary relinquishment by Agent by '+oscar.Change_Effective_as_of__c.format();
                 changeCode.status = AMS_Utils.getIATANumericStatus(acc.Status__c);
 
                 // lastChangeCode can be null so,
