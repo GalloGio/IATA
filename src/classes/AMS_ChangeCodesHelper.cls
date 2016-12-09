@@ -359,8 +359,8 @@ public class AMS_ChangeCodesHelper {
 
     public static AMS_Utils.Container generateChangeCodes(AMS_OSCAR__c oscar, AMS_Utils.AgChangesConfig config, Map<Id, Account> accounts, Map<Id, Agency_Applied_Change_code__c> accountsPrevChangeCode, String action, Set<Id> allHierarchyAccountsToApplyCC) {
 
-        System.debug(LoggingLevel.ERROR,'AGENCY CHANGES: Accounts to apply change code: ' + allHierarchyAccountsToApplyCC);
-        System.debug(LoggingLevel.ERROR,'LF: generateChangeCodes() Accounts to apply change code: ' + allHierarchyAccountsToApplyCC);
+        System.debug('AGENCY CHANGES: Accounts to apply change code: ' + allHierarchyAccountsToApplyCC);
+
         List<AMS_OSCAR_JSON.ChangeCode> changeCodes = new List<AMS_OSCAR_JSON.ChangeCode>();
         List<Account> accts = new List<Account>();
         List<AMS_OSCAR__c> oscars = new List<AMS_OSCAR__c>();
@@ -375,8 +375,7 @@ public class AMS_ChangeCodesHelper {
         else if (action == AMS_Utils.WITHDRAWAL)
             changeCodeIdentifier = AMS_AgencyChangesConfigHelper.getWithdrawalChangeCode(config.config);
 
-        system.debug(LoggingLevel.ERROR,'AGENCY CHANGES: Change code to apply: ' + changeCodeIdentifier);
-        system.debug(LoggingLevel.ERROR,'LF: generateChangeCodes() Change code to apply: ' + changeCodeIdentifier);
+        system.debug('AGENCY CHANGES: Change code to apply: ' + changeCodeIdentifier);
         if (changeCodeIdentifier != null) {
 
             //in this case apply change code only to the account related to the oscar
@@ -401,9 +400,9 @@ public class AMS_ChangeCodesHelper {
 
         }
 
-        system.debug(LoggingLevel.ERROR,'AGENCY CHANGES: changeCodes: ' + changeCodes);
-        system.debug(LoggingLevel.ERROR,'AGENCY CHANGES: Accounts: ' + accts);
-        system.debug(LoggingLevel.ERROR,'AGENCY CHANGES: oscars: ' + oscars);
+        system.debug('AGENCY CHANGES: changeCodes: ' + changeCodes);
+        system.debug('AGENCY CHANGES: Accounts: ' + accts);
+        system.debug('AGENCY CHANGES: oscars: ' + oscars);
 
         return new AMS_Utils.Container(changeCodes, accts, oscars);
     }

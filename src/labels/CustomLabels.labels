@@ -17029,6 +17029,34 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <value>Message</value>
     </labels>
     <labels>
+        <fullName>MultiselectPicklist_Add</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>MultiselectPicklist_Add</shortDescription>
+        <value>Add</value>
+    </labels>
+    <labels>
+        <fullName>MultiselectPicklist_Down</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>MultiselectPicklist_Down</shortDescription>
+        <value>Down</value>
+    </labels>
+    <labels>
+        <fullName>MultiselectPicklist_Remove</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>MultiselectPicklist_Remove</shortDescription>
+        <value>Remove</value>
+    </labels>
+    <labels>
+        <fullName>MultiselectPicklist_Up</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>MultiselectPicklist_Up</shortDescription>
+        <value>Up</value>
+    </labels>
+    <labels>
         <fullName>My_Renewals</fullName>
         <categories>Ecommerce</categories>
         <language>en_US</language>
