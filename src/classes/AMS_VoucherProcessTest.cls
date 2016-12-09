@@ -78,7 +78,7 @@ private class AMS_VoucherProcessTest {
 
         ams_VPM.setCountries(setCountries);
 
-        Id batchCountryAverageId = ams_VPM.runVouchersProcess();
+        Id batchCountryAverageId = ams_VPM.runVouchersProcess('2016');
 
 		Test.stopTest();
 

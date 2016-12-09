@@ -76,8 +76,7 @@ global class AMS_VoucherPDFCreationBatch implements Database.Batchable<sObject>,
 
 		User activeUser = [Select Email From User where Username = : userName limit 1];
 
-		if(!Test.isRunningTest())
-			sendSingleMail(buildCustomReport(),activeUser,region);
+		sendSingleMail(buildCustomReport(),activeUser,region);
 
 		process.Status__c = 'Ended';
 
@@ -92,7 +91,7 @@ global class AMS_VoucherPDFCreationBatch implements Database.Batchable<sObject>,
 
 		Datetime nowDate = Datetime.now();
 
-		String formattedDate = nowDate.format('yyyyMMdd');
+		String formattedDate = nowDate.format('yyyyMMddHHmm');
 
         String filename = 'Vouchers_'+ region.Name + '_' + (runExe+1) + '_' + formattedDate + '.pdf';
 
@@ -207,18 +206,24 @@ global class AMS_VoucherPDFCreationBatch implements Database.Batchable<sObject>,
 	    email.setSubject(subject);
 	    email.setHtmlBody(htmlBody);
 	    //email.setPlainTextBody(plainBody);
-
-	    Messaging.sendEmail(new Messaging.SingleEmailmessage[] {email});
+		if(!Test.isRunningTest())
+	    	Messaging.sendEmail(new Messaging.SingleEmailmessage[] {email});
 	}
 
 	private String buildCustomReport(){
 		
-		Report rep = [select id, name, description from report where Name = 'Voucher Batch Report' LIMIT 1];
+        Report rep = null;
+        
+        if(!Test.isRunningTest())
+			rep = [select id, name, description from report where Name = 'Voucher Batch Report' LIMIT 1];
 
 		String urlCode = String.valueof(URL.getSalesforceBaseUrl().toExternalForm());
 
-		return urlCode + '/' + rep.Id +  '?pn0=eq&pv0=' +  String.valueOf(process.Id).substring(0, 15);
-	}
+        if(!Test.isRunningTest())
+			return urlCode + '/' + rep.Id +  '?pn0=eq&pv0=' +  String.valueOf(process.Id).substring(0, 15);
+		else
+            return '';
+    }
 
 	private static String buildCustomPDFLink(AMS_Voucher_Region__c region){
 

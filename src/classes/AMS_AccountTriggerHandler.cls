@@ -234,10 +234,16 @@ public class AMS_AccountTriggerHandler {
 
             Account account = actChange.acct;
 
+            List<Agency_Applied_Change_code__c> accountActiveChangeCode = [SELECT Reason_Code__c, Reason_Description__c FROM Agency_Applied_Change_code__c WHERE Account__c =: account.Id AND Active__c = TRUE];
 
             if(AMS_RecordCreatorWebservice.containsTradeName(actChange.changes)){
 
                 changeCodeTN = AMS_RecordCreatorWebservice.generateChangeCodeTN(null, account.Status__c == 'Approved' );
+
+                if(accountActiveChangeCode.size() > 0){
+                    changeCodeTN.reasonCode = accountActiveChangeCode[0].Reason_Code__c;
+                    changeCodeTN.reasonDesc = accountActiveChangeCode[0].Reason_Description__c;
+                }
 
                 accountsToProcess.add(account);
                 changeCodesToProcess.add(changeCodeTN);
@@ -251,6 +257,11 @@ public class AMS_AccountTriggerHandler {
 
                 changeCode = AMS_RecordCreatorWebservice.generateChangeCode(null);
             
+                if(accountActiveChangeCode.size() > 0){
+                    changeCode.reasonCode = accountActiveChangeCode[0].Reason_Code__c;
+                    changeCode.reasonDesc = accountActiveChangeCode[0].Reason_Description__c;
+                }
+
                 accountsToProcess.add(account);
                 changeCodesToProcess.add(changeCode);
                 oscarsToProcess.add(null);

@@ -219,6 +219,19 @@ private class AMS_OscarCase_RiskMgmt_Test {
     	Financial_Security__c FS = new Financial_Security__c(CURRENCYISOCODE='USD', Account__c=a.Id, AMOUNT__C=3000, EXPIRY_DATE__C=system.Today().AddDays(100), FINANCIAL_INSTITUTION__c=FI.Id, SECURITY_STATUS__C='Active', Security_Type__c='Bank Guarantee');
     	insert FS;
     	
+    	list<Agency_applied_change_code__c> lsCC = new list<Agency_applied_change_code__c>();
+    	lsCC.add(new Agency_Applied_change_code__c(Account__c = a.Id, Change_code__c = 'IRW', Effective_date__c = system.today().addDays(1), Irregularities_Points__c=2, Operation__c='W', AIMS_ID__c='1'));
+    	lsCC.add(new Agency_Applied_change_code__c(Account__c = a.Id, Change_code__c = 'IRR', Effective_date__c = system.today(), Irregularities_Points__c=2, Operation__c='A', AIMS_ID__c='2'));
+    	lsCC.add(new Agency_Applied_change_code__c(Account__c = a.Id, Change_code__c = 'IRR', Effective_date__c = system.today().addDays(-1), Irregularities_Points__c=2, Operation__c='A', AIMS_ID__c='3'));
+    	
+    	system.debug(Logginglevel.ERROR, 'DTULLO AMS OscarCase Risk Mgmt TEST 1 --> Query issued: ' + Limits.getQueries()); 
+    	
+    	insert lsCC;
+    	
+    	system.debug(Logginglevel.ERROR, 'DTULLO AMS OscarCase Risk Mgmt TEST 2 --> Query issued: ' + Limits.getQueries()); 
+    	
+    	test.StartTest();
+    	
     	Case SidraLiteCase4 = new Case();
 	    	SidraLiteCase4.AccountId = a.Id;
 			SidraLiteCase4.recordtypeId = SIDRALiteRTId;
@@ -233,19 +246,26 @@ private class AMS_OscarCase_RiskMgmt_Test {
 	    	SidraLiteCase4.IRR_Withdrawal_Reason__c = 'Exception raised';
 	    	SidraLiteCase4.Outstanding_Amount__c = 3000;
 	    	SidraLiteCase4.Termination_Reason__c = 'Non Payment';
+	    	SidraLiteCase4.Reason_for_Default__c = 'Annual Fees';
+	    	SidraLiteCase4.Reason_of_REI_WD__c = 'IATA Error';
+	    	SidraLiteCase4.Shut_Down_TKT_System_GDS_and_BSPlink__c = system.now();
 		insert SidraLiteCase4;
 		
-    	test.StartTest();
+		system.debug(Logginglevel.ERROR, 'DTULLO AMS OscarCase Risk Mgmt TEST 3 --> Query issued: ' + Limits.getQueries()); 
+		
+    	
+    	system.debug(Logginglevel.ERROR, 'DTULLO AMS OscarCase Risk Mgmt TEST 4 --> Query issued: ' + Limits.getQueries()); 
+    	
     	string sMemo1 = '<Termination Date> <Financial Securities> <DEF Withdrawal reason> <SIDRA Lite Reason>';
     	string sMemo2 = ' <End Grace Period Date> <IRR Withdrawal Reason> <Outstanding Amount> <Termination Reason>';
-    	string sMemo3 = ' <Update AIMS-DEF>';
+    	string sMemo3 = ' <Update AIMS-DEF> <IRRS Sequence> <Reason for default> <Reason of REI/WD> <Inform GDS to Shut Down TKT System>';
     	
     	list<Case> lsCase = [select id, recordType.DeveloperName, DEF_Withdrawal_Approval_Rejection__c, DEF_Withdrawal_Reason__c, DEF_Approval_Rejection__c, End_of_Grace_Period_Date__c, 
 								  Shut_Down_TKT_System_GDS_and_BSPlink__c, IRR_Approval_Rejection__c, IRR_Withdrawal_Approval_Rejection__c, IRR_Withdrawal_Reason__c, NOT_Date__c, NOT_Sent__c, 
 								  Notify_Agreement_Approval_to_AG__c, Reason_for_Default__c, REI_ApprovalRejectin__c, Repayment_Schedule_Approval__c, SIDRA_Lite_Reason__c, TER_Approval_Rejection__c, 
 								  Termination_Reason__c, Ticketing_Authority_Re_assigned__c, Update_AIMS_DEF__c, Update_AIMS_IRR__c, Update_AIMS_IRRWITH__c, Update_AIMS_REI_DEFWITH__c, 
 								  Update_AIMS_Repayment_agreed__c, Update_AIMS_TER__c, Parent.OSCAR__r.Type_of_change__c, Parent.OSCAR__c, IRR_Approval_Rejection_Date__c, IRR_Type__c,
-								  Termination_date__c, Outstanding_Amount__c, 
+								  Termination_date__c, Outstanding_Amount__c, Reason_of_REI_WD__c,
 								  Account.Location_Class__c, AccountId, Account.Status__c, Account.PreviousStatus__c, Account.Previous_Reason__c, Account.Reason__c, Account.Accumulated_Irregularities__c, Account.IATA_ISO_Country__r.Enable_Risk_Change_Codes__c
 								  from case where AccountId = :a.Id];
     	
@@ -253,73 +273,31 @@ private class AMS_OscarCase_RiskMgmt_Test {
 										  from Financial_Security__c 
 										  where Account__c = :a.Id];
     	
+    	system.debug(Logginglevel.ERROR, 'DTULLO AMS OscarCase Risk Mgmt TEST 5 --> Query issued: ' + Limits.getQueries()); 
+    	
     	string s = AMS_OscarCase_RiskMgmt.GenerateMemoText(lsCase.get(0), null, sMemo1, sMemo2, sMemo3, null, lsFS);
+    	
+    	system.debug(Logginglevel.ERROR, 'DTULLO AMS OscarCase Risk Mgmt TEST 6 --> Query issued: ' + Limits.getQueries()); 
     	
     	test.StopTest();
     }
     
-    
-    /*
-    static testMethod void TestPilotCountryIRRWithdrawn(){
-    	test.StartTest();
-    	
+    static testMethod void TestBulletinMemoTextIRR(){
     	Account a = [select id, Name, IATA_ISO_Country__r.Enable_Risk_Change_Codes__c from Account where name='Accnt2'];
 
-    	Case SidraLiteCase = new Case();
-			SidraLiteCase.AccountId = a.Id;
-			SidraLiteCase.recordtypeId = SIDRALiteRTId;
-	    	SidraLiteCase.SIDRA_Lite_Reason__c = 'Financial Review Non-compliance';
-	    	SidraLiteCase.IRR_Approval_Rejection__c = 'Approved';
-	    	SidraLiteCase.IRR_Approval_Rejection_Date__c = system.now();
-	    	SidraLiteCase.Update_AIMS_IRR__c = system.Now();
-	    	SidraLiteCase.IRR_Type__c = 'Double Irregularity';
-	    	SidraLiteCase.CS_Rep_Acc_IRR_DEF__c = userinfo.getUserId();
-    	insert SidraLiteCase;
+    	list<Agency_applied_change_code__c> lsCC = new list<Agency_applied_change_code__c>();
+    	lsCC.add(new Agency_Applied_change_code__c(Account__c = a.Id, Change_code__c = 'IRW', Effective_date__c = system.today().addDays(1), Irregularities_Points__c=2, Operation__c='W', AIMS_ID__c='1'));
+    	lsCC.add(new Agency_Applied_change_code__c(Account__c = a.Id, Change_code__c = 'IRR', Effective_date__c = system.today(), Irregularities_Points__c=2, Operation__c='A', AIMS_ID__c='2'));
+    	lsCC.add(new Agency_Applied_change_code__c(Account__c = a.Id, Change_code__c = 'IRR', Effective_date__c = system.today().addDays(-1), Irregularities_Points__c=2, Operation__c='A', AIMS_ID__c='3'));
     	
-    	list<Agency_applied_change_code__c> AACC = [select id, Change_code__c, Operation__c, Irregularities_Points__c from Agency_applied_Change_code__c where Account__c =:a.Id];
+    	insert lsCC;
     	
-    	system.assertEquals(1, AACC.size(), '1 IRR Created');
-    	system.assertEquals('IRR', AACC.get(0).Change_code__c, 'IRR Created');
-    	system.assertEquals('A', AACC.get(0).Operation__c, 'Addition IRR Created');
-    	system.assertEquals(2, AACC.get(0).Irregularities_Points__c, '1 IRR Created with 2 points created');
-    	system.assertEquals(2, [select Accumulated_irregularities__c from Account where id =: a.id].Accumulated_Irregularities__C, 'Total Acc Irr: 2');
+    	system.debug(Logginglevel.ERROR, 'DTULLO AMS OscarCase Risk Mgmt TEST 1 --> Query issued: ' + Limits.getQueries()); 
     	
-    	AACC.clear();
-		
-		AMS_OscarCase_RiskMgmt.EndRun();
-		
-    	Case SidraLiteCase2 = new Case();
-	    	SidraLiteCase2.AccountId = a.Id;
-			SidraLiteCase2.recordtypeId = SIDRALiteRTId;
-	    	SidraLiteCase2.SIDRA_Lite_Reason__c = 'Financial Review Non-compliance';
-	    	SidraLiteCase2.IRR_Approval_Rejection__c = 'Approved';
-	    	SidraLiteCase2.IRR_Approval_Rejection_Date__c = system.now();
-	    	SidraLiteCase2.Update_AIMS_IRR__c = system.Now();
-	    	SidraLiteCase2.IRR_Type__c = 'Double Irregularity';
-	    	SidraLiteCase2.CS_Rep_Acc_IRR_DEF__c = userinfo.getUserId();
-    	insert SidraLiteCase2;
+    	test.StartTest();
     	
-    	AACC = [select id, Change_code__c, Operation__c, Irregularities_Points__c from Agency_applied_Change_code__c where Account__c =:a.Id];
+    	system.debug(Logginglevel.ERROR, 'DTULLO AMS OscarCase Risk Mgmt TEST 2 --> Query issued: ' + Limits.getQueries());
     	
-    	system.assertEquals(2, AACC.size(), '2nd IRR Created');
-    	system.assertEquals(4, [select Accumulated_irregularities__c from Account where id =: a.id].Accumulated_Irregularities__C, 'Total Acc Irr: 4');
-    	
-    	AMS_OscarCase_RiskMgmt.EndRun();
-    	
-    	//WithDraw 1 IRR
-    	Case c3 = [select id, IRR_Withdrawal_Approval_Rejection__c, IRR_Withdrawal_Reason__c, Update_AIMS_IRRWITH__c from Case where id=:SidraLiteCase.Id];
-	    	c3.IRR_Withdrawal_Approval_Rejection__c = 'Approved';
-	    	c3.IRR_Withdrawal_Reason__c = 'Exception raised';
-	    	c3.Update_AIMS_IRRWITH__c = system.Now();
-	    	c3.CS_Rep_Acc_IRR_DEF__c = userinfo.getUserId();
-    	update c3;
-    	
-    	system.assertEquals(2, [select id from Agency_applied_Change_code__c where Account__c =:a.Id].size(), '2 IRR still remains');
-    	system.assertEquals(2, [select Accumulated_irregularities__c from Account where id =: a.id].Accumulated_Irregularities__C, 'Total Acc Irr: 2');
-    	
-    	AMS_OscarCase_RiskMgmt.EndRun();
-    	
-    	//Generate a change code that will clear all IRRS:
     	Case SidraLiteCase4 = new Case();
 	    	SidraLiteCase4.AccountId = a.Id;
 			SidraLiteCase4.recordtypeId = SIDRALiteRTId;
@@ -327,11 +305,37 @@ private class AMS_OscarCase_RiskMgmt_Test {
 	    	SidraLiteCase4.DEF_Withdrawal_Approval_Rejection__c = 'Approved';
 	    	SidraLiteCase4.Update_AIMS_REI_DEFWITH__c = system.now();
 	    	SidraLiteCase4.CS_Rep_Acc_IRR_DEF__c = userinfo.getUserId();
+	    	SidraLiteCase4.Termination_date_manual_entry__c = system.today();
+	    	SidraLiteCase4.DEF_Withdrawal_Reason__c='Bank error';
+	    	SIdraLiteCase4.SIDRA_Lite_Reason__c = 'Annual Fees';
+	    	SidraLiteCase4.End_of_Grace_Period_Date__c = system.Today().addDays(15);
+	    	SidraLiteCase4.IRR_Withdrawal_Reason__c = 'Exception raised';
+	    	SidraLiteCase4.Outstanding_Amount__c = 3000;
+	    	SidraLiteCase4.Termination_Reason__c = 'Non Payment';
+	    	SidraLiteCase4.Reason_for_Default__c = 'Annual Fees';
+	    	SidraLiteCase4.Reason_of_REI_WD__c = 'IATA Error';
+	    	SidraLiteCase4.Shut_Down_TKT_System_GDS_and_BSPlink__c = system.now();
 		insert SidraLiteCase4;
-		    	
-    	system.assertEquals(2, [select id from Agency_applied_Change_code__c where Account__c =:a.Id].size(), '2 IRR still remains');
-    	system.assertEquals(0, [select Accumulated_irregularities__c from Account where id =: a.id].Accumulated_Irregularities__C, 'Total Acc Irr: 0 - Cleared');
+		
+		system.debug(Logginglevel.ERROR, 'DTULLO AMS OscarCase Risk Mgmt TEST 3 --> Query issued: ' + Limits.getQueries());
+		
+    	string sMemo1 = '<IRRS Sequence>';
+    	
+    	list<Case> lsCase = [select id, recordType.DeveloperName, DEF_Withdrawal_Approval_Rejection__c, DEF_Withdrawal_Reason__c, DEF_Approval_Rejection__c, End_of_Grace_Period_Date__c, 
+								  Shut_Down_TKT_System_GDS_and_BSPlink__c, IRR_Approval_Rejection__c, IRR_Withdrawal_Approval_Rejection__c, IRR_Withdrawal_Reason__c, NOT_Date__c, NOT_Sent__c, 
+								  Notify_Agreement_Approval_to_AG__c, Reason_for_Default__c, REI_ApprovalRejectin__c, Repayment_Schedule_Approval__c, SIDRA_Lite_Reason__c, TER_Approval_Rejection__c, 
+								  Termination_Reason__c, Ticketing_Authority_Re_assigned__c, Update_AIMS_DEF__c, Update_AIMS_IRR__c, Update_AIMS_IRRWITH__c, Update_AIMS_REI_DEFWITH__c, 
+								  Update_AIMS_Repayment_agreed__c, Update_AIMS_TER__c, Parent.OSCAR__r.Type_of_change__c, Parent.OSCAR__c, IRR_Approval_Rejection_Date__c, IRR_Type__c,
+								  Termination_date__c, Outstanding_Amount__c, Reason_of_REI_WD__c,
+								  Account.Location_Class__c, AccountId, Account.Status__c, Account.PreviousStatus__c, Account.Previous_Reason__c, Account.Reason__c, Account.Accumulated_Irregularities__c, Account.IATA_ISO_Country__r.Enable_Risk_Change_Codes__c
+								  from case where AccountId = :a.Id];
+    	
+    	system.debug(Logginglevel.ERROR, 'DTULLO AMS OscarCase Risk Mgmt TEST 4 --> Query issued: ' + Limits.getQueries());
+    	
+    	string s = AMS_OscarCase_RiskMgmt.GenerateMemoText(lsCase.get(0), null, sMemo1, null, null, lsCC, null);
+    	
+    	system.debug(Logginglevel.ERROR, 'DTULLO AMS OscarCase Risk Mgmt TEST 5 --> Query issued: ' + Limits.getQueries());
     	
     	test.StopTest();
-    }*/
+    }
 }

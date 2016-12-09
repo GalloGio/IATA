@@ -14,9 +14,9 @@ public class AMS_VoucherProcessManager {
 		this.countriesSet = countries;
 	}
 
-	public Id runVouchersProcess(){
+	public Id runVouchersProcess(String yearToProcess){
 
-		processBatch = new AMS_VouchersCalculationBatch(countriesSet,process);
+		processBatch = new AMS_VouchersCalculationBatch(countriesSet,process, yearToProcess);
 
 		Id batchCountryAverageId = Database.executeBatch(processBatch, 200);
 
