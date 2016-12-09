@@ -1632,6 +1632,16 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Due_diligence_mandatory__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Due diligence step mandatory?</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Due diligence step mandatory?</inlineHelpText>
+        <label>Due diligence mandatory</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>EACP_Country__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
@@ -1662,6 +1672,16 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
         <externalId>false</externalId>
         <inlineHelpText>Allow accredited agents in this country to apply online for a Notice of Change (Change of Bank details, Location, Legal Name or Ownership / Legal Status)</inlineHelpText>
         <label>Enable Notice of Change</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Enable_Risk_Change_Codes__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Used to enable a country to use risk change code, generated from SIDRA or SIDRA Lite</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Used to enable a country to use risk change code, generated from SIDRA or SIDRA Lite</inlineHelpText>
+        <label>Enable Risk Change Codes</label>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>

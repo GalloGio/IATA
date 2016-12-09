@@ -438,6 +438,16 @@ If( Contact.Account.ICH_Member__c = true,&quot;ICH&quot;, &quot;&quot;)</formula
         <type>Hierarchy</type>
     </fields>
     <fields>
+        <fullName>EF_Client_Reactivation__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>EF CRM. Sets the right to change Client Account E&amp;F Status from Inactive to Active</description>
+        <externalId>false</externalId>
+        <inlineHelpText>EF CRM. Sets the right to change Client Account E&amp;F Status from Inactive to Active</inlineHelpText>
+        <label>E&amp;F Client Reactivation</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>EF_Contract_Approver_Email__c</fullName>
         <externalId>false</externalId>
         <formula>EF_Contract_Approver__r.Email</formula>
@@ -455,6 +465,16 @@ If( Contact.Account.ICH_Member__c = true,&quot;ICH&quot;, &quot;&quot;)</formula
         <restrictedAdminField>false</restrictedAdminField>
         <trackFeedHistory>false</trackFeedHistory>
         <type>Hierarchy</type>
+    </fields>
+    <fields>
+        <fullName>EF_Customer_Reactivation__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>EF CRM. Sets the right to change E&amp;F Status from Inactive to Active</description>
+        <externalId>false</externalId>
+        <inlineHelpText>EF CRM. Sets the right to change E&amp;F Status from Inactive to Active</inlineHelpText>
+        <label>E&amp;F Customer Reactivation</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>EF_User_Role__c</fullName>
@@ -2634,8 +2654,14 @@ Currently (26/10/15) used to identify which user haven&apos;t complete the suppo
             <value>1</value>
         </filters>
         <filters>
-            <field>CORE.USERS.LAST_LOGIN</field>
+            <field>CORE.PROFILE.NAME</field>
+            <operation>contains</operation>
+            <value>Portal</value>
+        </filters>
+        <filters>
+            <field>LANGUAGE</field>
             <operation>notEqual</operation>
+            <value>1</value>
         </filters>
         <label>TD</label>
         <language>en_US</language>

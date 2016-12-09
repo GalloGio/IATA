@@ -53,6 +53,13 @@ private class AMP_CoreRelationshipExtensionTest {
 			testGroup.RecordTypeId = [SELECT Id FROM RecordType WHERE SObjectType='LocalGovernance__c' AND DeveloperName = 'Reg_Div_Groups'].Id;
 			insert testGroup;
 
+			LocalGovernance__c testGroup2 = new LocalGovernance__c();
+			testGroup2.Name = 'testGroup2';
+			testGroup2.Region__c = 'testGroup2';
+			testGroup2.Division__c = 'N/A';
+			testGroup2.RecordTypeId = [SELECT Id FROM RecordType WHERE SObjectType='LocalGovernance__c' AND DeveloperName = 'Reg_Div_Groups'].Id;
+			insert testGroup2;
+
 			Participant__c testParticipant = new Participant__c();
 			testParticipant.Contact__c = testContact.Id;
 			testParticipant.Participant_Type__c = '1. Chair';
@@ -63,8 +70,11 @@ private class AMP_CoreRelationshipExtensionTest {
 			ApexPages.StandardController stdController = new ApexPages.StandardController(a);
 			AMP_CoreRelationshipExtension crExtension  = new AMP_CoreRelationshipExtension(stdController);
 			List<String> lsGroupNames = AMP_CoreRelationshipExtension.getGroupNames();
-			System.debug(lsGroupNames);
+
+			List<LocalGovernance__c> lsGroups = AMP_CoreRelationshipExtension.getGroups();
+
 			List<AMP_CoreRelationshipExtension.Participant> lsParticipants = AMP_CoreRelationshipExtension.getParticipantWrappers(a.Id);
+			
 			// there are actually 2 participant wrappers since once has the place holder 'not this time'
 			System.assertEquals(2, lsParticipants.size(), 'There should be 2 Participant');
 		}

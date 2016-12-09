@@ -82,7 +82,7 @@
     <fields>
         <fullName>AmountLastYearSales__c</fullName>
         <externalId>false</externalId>
-        <label>Amount Last Year (Sales)</label>
+        <label>Sales</label>
         <precision>18</precision>
         <required>true</required>
         <scale>0</scale>
@@ -205,9 +205,21 @@
         <type>Picklist</type>
     </fields>
     <fields>
+        <fullName>Exchange_Rate__c</fullName>
+        <externalId>false</externalId>
+        <label>Exchange Rate</label>
+        <precision>18</precision>
+        <required>true</required>
+        <scale>5</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>IsAgencyEligibleForCountryAverage__c</fullName>
         <externalId>false</externalId>
-        <formula>YEAR(Account__r.Accreditation_date__c ) &lt; YEAR(TODAY()) 
+        <formula>YEAR(Account__r.Accreditation_date__c ) &lt; (YEAR(TODAY()) - 1) 
 &amp;&amp; 
 IsAgencyEligible__c</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -219,19 +231,19 @@ IsAgencyEligible__c</formula>
     <fields>
         <fullName>IsAgencyEligible__c</fullName>
         <externalId>false</externalId>
-        <formula>YEAR(Account__r.Accreditation_date__c ) &lt;= YEAR(TODAY())
-&amp;&amp;
- NOT(ISPICKVAL(Account__r.Status__c ,&quot;Cash basis/no commission&quot;))
-&amp;&amp;
- NOT(ISPICKVAL(Account__r.Status__c ,&quot;Cash basis/with commission&quot;))
-&amp;&amp;
- NOT(ISBLANK(AmountLastYearSales__c) || AmountLastYearSales__c == 0)
-&amp;&amp;
- (ISPICKVAL(Account__r.Location_Class__c ,&quot;C&quot;))
-&amp;&amp;
-NOT(ISBLANK(Account__r.IATA_ISO_Country__r.AMS_Max_Vouchers_Per_Year__c))
-&amp;&amp;
-NOT(ISBLANK(Account__r.IATA_ISO_Country__r.AMS_Vouchers_Benchmark__c))</formula>
+        <formula>YEAR(Account__r.Accreditation_date__c ) &lt;= (YEAR(TODAY()) -1) 
+&amp;&amp; 
+NOT(ISPICKVAL(Account__r.Status__c ,&quot;Terminated&quot;)) 
+&amp;&amp; 
+NOT(ISBLANK(AmountLastYearSales__c) || AmountLastYearSales__c == 0) 
+&amp;&amp; 
+(ISPICKVAL(Account__r.Location_Class__c ,&quot;C&quot;)) 
+&amp;&amp; 
+NOT(ISBLANK(Account__r.IATA_ISO_Country__r.AMS_Max_Vouchers_Per_Year__c)) 
+&amp;&amp; 
+NOT(ISBLANK(Account__r.IATA_ISO_Country__r.AMS_Vouchers_Benchmark__c)) 
+&amp;&amp; 
+ISPICKVAL(Account__r.Location_Type__c ,&quot;HO&quot;)</formula>
         <inlineHelpText>An non eligible Voucher Information:
 
 Sales of that year not found
@@ -270,7 +282,7 @@ Submitted international sales of that year is zero or nil</inlineHelpText>
     <fields>
         <fullName>Year__c</fullName>
         <externalId>false</externalId>
-        <label>Current Year</label>
+        <label>Sales year</label>
         <length>4</length>
         <required>true</required>
         <trackHistory>false</trackHistory>

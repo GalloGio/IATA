@@ -1,6 +1,6 @@
 public class vfIECEBC_RecipientList extends vfIECEBC_Abstract_List {
     public static Integer ITEMS_PER_PAGE = 2;
-    private boolean firsttimepageload=true;
+    private boolean firsttimepageload=true; 
     public vfIECEBC_RecipientList() {
     }
     

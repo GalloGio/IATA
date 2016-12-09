@@ -30,7 +30,7 @@
                         <td class="name">
                             <ul class="list campaign">
                                 <li>
-                                    <apex:outputLink rendered="{!c.Status__c != 'REJECTED'}" value="https://{!$Site.Domain}{!URLFOR($Page.IECEBC_Campaign)}?id={!c.Id}" styleClass="js-campaign-name">{!c.Name}</apex:outputLink>
+                                    <apex:outputLink rendered="{!c.Status__c != 'REJECTED'}" value="{!URLFOR($Page.IECEBC_Campaign)}?id={!c.Id}" styleClass="js-campaign-name">{!c.Name}</apex:outputLink>
                                     <apex:outputText rendered="{!c.Status__c == 'REJECTED'}" styleClass="js-campaign-name">{!c.Name}</apex:outputText>
                                 </li>
                                 <li>{!c.EBC_Master_Filter__r.Name}</li>
@@ -339,10 +339,10 @@
                         break;
                     case 'preview':
                         console.log(campaign);
-                        window.open('/iec/IECEBC_CampaignPreview?id=' + campaign.EBC_Design__c);
+                        window.open('{!URLFOR($Page.IECEBC_CampaignPreview)}?id=' + campaign.EBC_Design__c);
                         break;
                     case 'report':
-                        location.href = '/iec/IECEBC_ManageReportsDetails?id=' + campaign.Id; 
+                        location.href = '{!URLFOR($Page.IECEBC_ManageReportsDetails)}?id=' + campaign.Id; 
                         break;
                 	default:
                         alert('The action ' + $(this).val() + ' has not been defined yet.');

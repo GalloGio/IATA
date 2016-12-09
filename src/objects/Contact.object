@@ -12049,7 +12049,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
     </recordTypes>
     <recordTypes>
         <fullName>IATAStandardContact</fullName>
-        <active>false</active>
+        <active>true</active>
         <description>Used for all standard Contacts</description>
         <label>IATA Standard Contact</label>
         <picklistValues>
@@ -27209,9 +27209,10 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
         <fullName>Change_id_card_holder_cont_name</fullName>
         <active>true</active>
         <errorConditionFormula>AND(
-ISPICKVAL($User.UserType,&quot;Standard&quot;), 
+ISPICKVAL($User.UserType,&quot;Standard&quot;),
 ID_Card_Holder__c=true,
-ISCHANGED(ISSP_Contact_Name__c )
+ISCHANGED(LastName),
+UPPER(PRIORVALUE(LastName)) &lt;&gt; UPPER(LastName)
 )</errorConditionFormula>
         <errorMessage>This contact is an ID Card holder. To change name, please raise an internal case to ID Card team</errorMessage>
     </validationRules>
@@ -27288,16 +27289,16 @@ OR(
  TEXT(CEO_CFO__c)=&quot;CEO&quot;,
  TEXT(CEO_CFO__c)=&quot;CFO&quot;,
  TEXT(CEO_CFO__c)=&quot;COO&quot;,
- Membership_Main_Contact__c,
- NOT(ISBLANK(Function__c))
+ Membership_Main_Contact__c
 ),
 OR(
  ISBLANK(FirstName ) ,
  ISBLANK(LastName),
  ISBLANK(Title ) ,
  ISBLANK(Email) ,
- ISBLANK(AccountId ) ))</errorConditionFormula>
-        <errorMessage>Please make sure you filled in all the following fields: First Name, Last Name, Job Title, Job Function, Email address and Account</errorMessage>
+ ISBLANK(AccountId ),
+ ISBLANK(Membership_Function__c) ))</errorConditionFormula>
+        <errorMessage>Please make sure you filled in all the following fields: First Name, Last Name, Title, Job Function, Email address and Account</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Phone_or_email_mandatory</fullName>

@@ -10,83 +10,123 @@ var dyn_functions = {
                 var result3;
                 var bUpdate = false;
                 var createNewChangeCode = true;
+                var inspectionRecs;
                 var sResult = '';
                 if (r == true) {
                     
 					var argList = args.split(", ");
 
+
                     // Query the database to check if the flags for :IATACODE, Copy Data to Account and send Data to SAP ECC 
-                    var resultOscarData = sforce.connection.query("SELECT Flag_Data_to_Account__c,Flag_Data_to_SAPECC__c,ID, STEP10__c,STEP8__c,Invoice_Requested__c,recordTypeID FROM AMS_OSCAR__C WHERE Id ='" + argList[2] + "'");
+                    var resultOscarData = sforce.connection.query("SELECT Flag_Data_to_Account__c,Flag_Data_to_SAPECC__c,ID, STEP10__c,STEP8__c,Process_Start_Date__c,recordTypeID,Process__c, Account__r.Due_Diligence_Status__c, Account__r.IATA_ISO_Country__r.Due_diligence_mandatory__c FROM AMS_OSCAR__C WHERE Id ='" + argList[2] + "'");
                     var records = resultOscarData.getArray("records");
 
-                    var resultOscarDataFlag = sforce.connection.query("SELECT Flag_IATACode_Formula__c FROM AMS_OSCAR__C WHERE Id ='" + argList[2] + "'");
-                    var recordsFlag = resultOscarDataFlag.getArray("records");
+                    //Prevent error with cross reference fields
+                    var oscar = new sforce.SObject("AMS_OSCAR__c");
+                    oscar.Id = records[0].Id;
 
-                    var resultCC = sforce.connection.query("SELECT Id FROM Agency_Applied_Change_code__c WHERE  OSCAR__c ='" + argList[2] + "'");
-                    var recordsCC = resultCC.getArray("records");
-
-                    if (records.length>0 && recordsFlag[0].Flag_IATACode_Formula__c == 'false') {
-
-                        result = sforce.apex.execute("AmsIataCodeGenerator", "generatedAgencyIATACode", {accountId: argList[0], onlineAccreditationId: argList[1]});
-                        
-                        //FM - Validar com o Maçarico... a query está a pesquisar por conta... podem existir vários Oscar com a mesma conta, logo mudei para ir por OscarId (mas na query acima...)!
-                        //var queryResult = sforce.connection.query("SELECT ID, STEP10__c from AMS_OSCAR__c WHERE Account__c='" + argList[0] + "'");
-                        //var records = queryResult.getArray('records');
-
-                    	if(result[0] == '1'){
-                            records[0].STEP10__c = 'Passed';
-                            sResult = '- Generate IATACode - Success!\n\r';
-
-                            //Update data after IATACode Generation
-                            resultOscarDataFlag = sforce.connection.query("SELECT Flag_IATACode_Formula__c FROM AMS_OSCAR__C WHERE Id ='" + argList[2] + "'");
-                            recordsFlag = resultOscarDataFlag.getArray("records");
-
-                            //result2 = sforce.apex.execute("AMS_OSCAR_Webservice", "copyDataToAccount", {oscarId: argList[2]});
-                            //if(result2 != 'OK'){
-                            //    alert('Failed to copy data to Account. Please contact your Administrator. ' + result2);
-                            //}else{
-                            //    records[0].Flag_Data_to_Account__c = true;
-                            //}
-                    	} else{
-                    		records[0].STEP10__c = 'Failed';
-                            sResult = '- Generate IATACode - Error! '+ result[1] + ' (code: '+ result[0] +')\n\r';
-                    	}
-                    	//sforce.connection.update(records);
-                        bUpdate = true;
-                    }else{
-					
-                        sResult = '- IATA code already generated \n\r';
+                    //if oscar is mso do not allow more than one appointment
+                    if(records.length > 0 && records[0].Process__c == 'NEW.MSO.1.0'){
+                        var nInspections = sforce.connection.query("SELECT Id FROM AMS_Inspection__c WHERE Oscar__c ='" + argList[2] + "'");
+                        inspectionRecs = nInspections.getArray("records");
                     }
 
+                    if(inspectionRecs != null && inspectionRecs.length > 1)
+                        sResult = '- A New MSO cannot have more than one Appointment. Please review the appointments section and try again - \n\r';
+                    else{
 
-                    if (records.length>0 && recordsFlag[0].Flag_IATACode_Formula__c == 'true' && records[0].Flag_Data_to_Account__c == 'false') {
-                        result2 = sforce.apex.execute("AMS_OSCAR_Webservice", "copyDataToAccount", {oscarId: argList[2]});
-                        if(result2 != 'OK'){
-                            sResult = sResult + '- Move Data To Account - Failed to copy data to Account. Please contact your Administrator.\n(Error: ' + result2 +')\n\r';
-                            createNewChangeCode = false;
-                        }else{
-                            records[0].Flag_Data_to_Account__c = 'true';
+                        var resultOscarDataFlag = sforce.connection.query("SELECT Flag_IATACode_Formula__c FROM AMS_OSCAR__C WHERE Id ='" + argList[2] + "'");
+                        var recordsFlag = resultOscarDataFlag.getArray("records");
+
+                        var resultCC = sforce.connection.query("SELECT Id FROM Agency_Applied_Change_code__c WHERE  OSCAR__c ='" + argList[2] + "'");
+                        var recordsCC = resultCC.getArray("records");
+
+                        if (records.length>0 && recordsFlag[0].Flag_IATACode_Formula__c == 'false') {
+
+                            result = sforce.apex.execute("AmsIataCodeGenerator", "generatedAgencyIATACode", {accountId: argList[0], onlineAccreditationId: argList[1]});
+                            
+                            //FM - Validar com o Maçarico... a query está a pesquisar por conta... podem existir vários Oscar com a mesma conta, logo mudei para ir por OscarId (mas na query acima...)!
+                            //var queryResult = sforce.connection.query("SELECT ID, STEP10__c from AMS_OSCAR__c WHERE Account__c='" + argList[0] + "'");
+                            //var records = queryResult.getArray('records');
+
+                            
+                            if(result[0] == '1'){
+                                oscar.STEP10__c = 'Passed';
+                                sResult = '- Generate IATACode - Success!\n\r';
+
+                                //Update data after IATACode Generation
+                                resultOscarDataFlag = sforce.connection.query("SELECT Flag_IATACode_Formula__c FROM AMS_OSCAR__C WHERE Id ='" + argList[2] + "'");
+                                recordsFlag = resultOscarDataFlag.getArray("records");
+
+                                //result2 = sforce.apex.execute("AMS_OSCAR_Webservice", "copyDataToAccount", {oscarId: argList[2]});
+                                //if(result2 != 'OK'){
+                                //    alert('Failed to copy data to Account. Please contact your Administrator. ' + result2);
+                                //}else{
+                                //    records[0].Flag_Data_to_Account__c = true;
+                                //}
+                            } else{
+                                oscar.STEP10__c = 'Failed';
+                                sResult = '- Generate IATACode - Error! '+ result[1] + ' (code: '+ result[0] +')\n\r';
+                            }
+                            //sforce.connection.update(records);
                             bUpdate = true;
-                            sResult = sResult + '- Move Data To Account - Success!\n\r';
+                        }else{
+                        
+                            sResult = '- IATA code already generated \n\r';
                         }
 
-                    }else{
-                        sResult = sResult + '- Move Data To Account - ByPassed! \n\r';
-                    }
 
-                    if (createNewChangeCode && recordsFlag[0].Flag_IATACode_Formula__c == 'true' && recordsCC.length == 0)
-                        sforce.apex.execute("AMS_OSCAR_Webservice", "createChangeCodeNEW", {oscarId: argList[2]});
-               
-                    if (records.length>0 && recordsFlag[0].Flag_IATACode_Formula__c == 'true' && records[0].Flag_Data_to_Account__c == 'true' 
-                            && records[0].Flag_Data_to_SAPECC__c == 'false') {
-                        
-                        records[0].Flag_Data_to_SAPECC__c = 'true';
-                        records[0].STEP8__c = 'In Progress';
-                        
-                    }
+                        if (records.length>0 && recordsFlag[0].Flag_IATACode_Formula__c == 'true' && records[0].Flag_Data_to_Account__c == 'false') {
+                            result2 = sforce.apex.execute("AMS_OSCAR_Webservice", "copyDataToAccount", {oscarId: argList[2]});
+                            if(result2 != 'OK'){
+                                sResult = sResult + '- Move Data To Account - Failed to copy data to Account. Please contact your Administrator.\n(Error: ' + result2 +')\n\r';
+                                createNewChangeCode = false;
+                            }else{
+                                oscar.Flag_Data_to_Account__c = 'true';
+                                bUpdate = true;
+                                sResult = sResult + '- Move Data To Account - Success!\n\r';
+                            }
 
-                    if(bUpdate){
-                        sforce.connection.update(records);
+                        }else{
+                            sResult = sResult + '- Move Data To Account - ByPassed! \n\r';
+                        }
+
+                        if (createNewChangeCode && recordsFlag[0].Flag_IATACode_Formula__c == 'true' && recordsCC.length == 0)
+                            sforce.apex.execute("AMS_OSCAR_Webservice", "createChangeCodeNEW", {oscarId: argList[2]});
+                   
+                        if (records.length>0 && recordsFlag[0].Flag_IATACode_Formula__c == 'true' && records[0].Flag_Data_to_Account__c == 'true' 
+                                && records[0].Flag_Data_to_SAPECC__c == 'false') {
+                            
+                            oscar.Flag_Data_to_SAPECC__c = 'true';
+                            oscar.STEP8__c = 'In Progress';
+                            
+                        }
+
+                        var ddResult = 'ByPassed!';
+
+                        if (
+                            records.length > 0 && recordsFlag[0].Flag_IATACode_Formula__c == 'true'
+                            && records[0].Account__r.IATA_ISO_Country__r.Due_diligence_mandatory__c == 'true' 
+                            && (records[0].Process__c == 'NEW.HO.1.0' || records[0].Process__c == 'NEW.BR.ABROAD' || records[0].Process__c == 'NEW.TIDS.1.0')
+                        ){
+                            
+                            if(records[0].Account__r.Due_Diligence_Status__c == 'In Progress'){
+                                ddResult = 'ByPassed (process is already in progress)';
+                                oscar.STEP17__c = 'In progress';
+                                bUpdate = true;
+                            }else{
+                                ddResult = this.performAMLaux(argList[2]);
+                            }
+                            
+
+                        } 
+
+                        sResult = sResult + '- Due diligence - ' + ddResult + '\r\n'; 
+
+                        if(bUpdate){
+                            console.info("Update result: "+sforce.connection.update([oscar]));
+                        }
+
                     }
 
                 } else {
@@ -183,40 +223,39 @@ var dyn_functions = {
                 }
            },
            performAML:function (arg) {
-                var result;
-                result = sforce.apex.execute("AMS_OSCAR_Webservice", "createAMLCase", {oscarId: arg});
-                
-                // error
-                if (result[0].substring(0, 6) == 'ERROR:') {
-                    alert(result);
-                } 
-                else {
-                    
+                var result = this.performAMLaux(arg);
+                alert(result);
+           },
+           performAMLaux:function (arg) {
+                var rc = 'Due Diligence Case created successfully.';
+                var result = sforce.apex.execute("AMS_OSCAR_Webservice", "createAMLCase", {oscarId: arg});
+
+                // OK
+                if (result[0].substring(0, 6) != 'ERROR:') {                    
                     var caseId = result[0];
 
                     var changeTab = function(result){
                         if(result.success == true){
                             //sforce.console.focusPrimaryTabById(caseId);
-                            alert('AML Case created successfully.');
                         }
                     };
 
                     // Use the results primary tab id and open a new subtab
                    var openSubtab = function(result)
                    {            
-                        sforce.console.openSubtab(result.id, '/'+caseId, true, 'AML Case', null, changeTab);    
+                        sforce.console.openSubtab(result.id, '/'+caseId, true, 'Due Diligence Case', null, changeTab);    
                    };
                    sforce.console.getEnclosingPrimaryTabId(openSubtab);
 
+                } else {
+                    rc = result;
                 }
-           
+                return rc;           
            },
            congaMerge:function(args){
                 
                 var argList = args.split(", ");
-
-                
-
+            
                 var arg1 = argList[0];
                 var arg2 = argList[1];
                 var arg3 = argList[2];
@@ -334,6 +373,90 @@ var dyn_functions = {
                    sforce.console.getEnclosingPrimaryTabId(openSubtab);
 
                 }
+            
+            },
+            createFSReleaseCase:function (arg) {
+                var result;
+                result = sforce.apex.execute("AMS_OSCAR_Webservice", "createFSReleaseCase", {oscarId: arg});
+                
+                // error
+                if (result[0].substring(0, 6) == 'ERROR:') {
+                    alert(result);
+                } 
+                else {
+                    
+                    var caseId = result[0];
+
+                    var changeTab = function(result){
+                        if(result.success == true){
+                            alert('Case created successfully.');
+                        }
+                    };
+
+                    // Use the results primary tab id and open a new subtab
+                    var openSubtab = function(result)
+                    {               
+                        sforce.console.openSubtab(result.id, '/'+caseId, true, 'Case for FS Release', null, changeTab);  
+                    };
+                    sforce.console.getEnclosingPrimaryTabId(openSubtab);
+
+                }
+            
+            },
+
+            deactivateBSPLink:function (arg) {
+
+                var oscarIdsToRemove = [];
+                var sMessageSuccess = "";
+                var sMessageError = "";
+
+                if(confirm('Do you want to proceed deactivating agencies?')){
+                    oscarIdsToRemove.push(arg);
+
+                    var response = sforce.apex.execute("AMS_BSPLinkIntegration","ProcessBSPLink",{sProcess:"Deactivation",objectIds:oscarIdsToRemove,sTypeOfRemoval:"AccountsInvolved"});
+
+                    for (var i = 0; i < response.length; i++) {
+                        if(response[i].result=='Ok'){
+                            sMessageSuccess = sMessageSuccess + "Success: " + response[i].IATACode + ": " + response[i].description + "\n";
+                        }
+                        if(response[i].result=='Error'){
+                            sMessageError = sMessageError + "Error: " + response[i].IATACode + ": " + response[i].description + "\n";
+                        }
+                    }
+                    alert("Result: \n\n" + sMessageError + "\n\n" + sMessageSuccess);
+                }
+            },
+
+            reactivateBSPLink:function (arg) {
+                var oscarIdsToRemove = [];
+                var sMessageSuccess = "";
+                var sMessageError = "";
+
+                if(confirm('Do you want to proceed reactivating agencies?')){
+                    oscarIdsToRemove.push(arg);
+
+                    var response = sforce.apex.execute("AMS_BSPLinkIntegration","ProcessBSPLink",{sProcess:"DeactivationUndoOrReactivation",objectIds:oscarIdsToRemove,sTypeOfRemoval:"AccountsInvolved"});
+
+                    for (var i = 0; i < response.length; i++) {
+                        if(response[i].result=='Ok'){
+                            sMessageSuccess = sMessageSuccess + "Success: " + response[i].IATACode + ": " + response[i].description + "\n";
+                        }
+                        if(response[i].result=='Error'){
+                            sMessageError = sMessageError + "Error: " + response[i].IATACode + ": " + response[i].description + "\n";
+                        }
+                    }
+                    alert("Result: \n\n" + sMessageError + "\n\n" + sMessageSuccess);
+                }
+            },
+            
+            generateCertificates:function (args) {
+
+                var argList = args.split(", ");
+
+                var result;
+                result = sforce.apex.execute("AMS_OSCAR_Webservice", "generateCertificates", {oscarId: argList[0], agencyId: argList[1]});
+                
+                alert(result);
            
            }
 

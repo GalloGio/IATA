@@ -21,6 +21,7 @@ public with sharing class AMS_AccreditationContactController {
     private Id AcCurrentCompanyRt;
     private Id AcCurrentOwnerRt;
     public List<TrainedStaffWrapper> trainedStaffWrapper{get; set;}
+    public boolean isNewProcess {get; set;}
 
     public static Map<String, String> accreditationContactRT = new Map<String, String> {
 
@@ -77,7 +78,7 @@ public with sharing class AMS_AccreditationContactController {
                 {
                     accList = new Map<Id, Account>([select Id, Email__c, Name, Legal_Name__c, IATACode__c, Phone_Number__c from Account where Id in :accountsToLoadSet]);
                 }
-                
+
                 AccreditationContactWrapper wrapper;
                 AccountWrapper accWrapper;
                 for(AMS_Accreditation_Contact__c ac : acList)
@@ -126,7 +127,10 @@ public with sharing class AMS_AccreditationContactController {
 
         isCorrection = aoa.SAAM_Case__r.OSCAR__r.Process__c == AMS_Utils.COR;
         isCargoAgency = aoa.SAAM_Case__r.OSCAR__r.Account__r.Sector__c == AMS_Utils.SECTOR_CARGO;
+
         isCertificationOSCAR = aoa.SAAM_Case__r.OSCAR__r.Process__c == AMS_Utils.CERTIFICATION ? true : false;
+
+        isNewProcess = aoa.SAAM_Case__r.OSCAR__r.RecordTypeId == AMS_Utils.RECTYPE_NEW? true : false;
     }
     
     public void addEmptyRow()
@@ -135,13 +139,6 @@ public with sharing class AMS_AccreditationContactController {
 
         AccreditationContactWrapper acWrapper = new AccreditationContactWrapper(new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = this.aoa.Id, RecordTypeId =  rt, Company__c = this.aoa.SAAM_Case__r.OSCAR__r.Account__c));
         this.acWrapper.add(acWrapper);
-    }
-    
-    public void addEmptyTrainedStaffRow()
-    {
-        Id rt = AMS_Utils.AccreditationContactTrainedStaffRT;
-        
-        this.trainedStaffWrapper.add(new TrainedStaffWrapper(new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = this.aoa.Id, RecordTypeId = rt, Last_Name__c = '-', Phone__c = '-')));
     }
     
     public void cloneLastRow()
@@ -172,6 +169,13 @@ public with sharing class AMS_AccreditationContactController {
         
         this.accountWrapper.add(new AccountWrapper(new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = this.aoa.Id, RecordTypeId = rt, Last_Name__c = '-', Phone__c = '-'), new Account(), '', true));
     }
+
+    public void addEmptyTrainedStaffRow()
+    {
+        Id rt = AMS_Utils.AccreditationContactTrainedStaffRT;
+        
+        this.trainedStaffWrapper.add(new TrainedStaffWrapper(new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = this.aoa.Id, RecordTypeId = rt/*, Last_Name__c = '-', Phone__c = '-'*/)));
+    }
     
     public PageReference removeFromAcList()
     {
@@ -201,7 +205,7 @@ public with sharing class AMS_AccreditationContactController {
     
     public PageReference onSave()
     {
-        if(!calculateTotalOwnership())
+        if(!calculateTotalOwnership() && !isCertificationOSCAR)
         {
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, 'Total ownershiprate for all inserted contacts is ' + ownership + '%. Please set it to 100% before saving.'));
             return null;
@@ -221,8 +225,8 @@ public with sharing class AMS_AccreditationContactController {
             return null;
         }
         
-        String firstErrorDate = verifyDateFormatting();
-        if(firstErrorDate != null)
+        String firstErrorDate = verifyDateFormattingNew();
+        if(firstErrorDate != null && firstErrorDate != '')
         {
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, 'Please make sure the date field format is "YYYY-MM-DD". First error with: '+firstErrorDate));
             return null;
@@ -232,6 +236,12 @@ public with sharing class AMS_AccreditationContactController {
         if(duplicatedContacts != null)
         {
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, 'Please make sure the Owners are not using the same email address: '+duplicatedContacts));
+            return null;
+        }
+
+        String errorMissingExpiryDate = validateMandatoryExpiryDate();
+        if(errorMissingExpiryDate != null){
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, errorMissingExpiryDate));
             return null;
         }
         
@@ -304,7 +314,7 @@ public with sharing class AMS_AccreditationContactController {
                 {
                     aw.accountAc.Financial_interest__c = aw.financialInterest;
                     aw.accountAc.Registration_number__c = aw.registrationNumber;
-                    
+
                     if(aw.account.Id == null)
                     {
                         aw.account.Name = aw.account.Legal_Name__c;
@@ -313,12 +323,12 @@ public with sharing class AMS_AccreditationContactController {
                     }
                     aw.accountAc.Agency_owner__c = true;
                 }
-                
+
                 if(accountInsertList.size() > 0)
                 {
                     insert accountInsertList;
                 }
-                
+
                 for(AccountWrapper aw : accountWrapper)
                 {
                     aw.accountAc.Company__c = aw.account.Id;
@@ -327,7 +337,7 @@ public with sharing class AMS_AccreditationContactController {
                 }
                 upsert acUpsertList;
             }
-            
+
             //save trained staff
             if(trainedStaffWrapper.size() > 0)
             {
@@ -382,6 +392,25 @@ public with sharing class AMS_AccreditationContactController {
             return true;
         }
     }
+
+    public String validateMandatoryExpiryDate(){
+
+        for(TrainedStaffWrapper tsw : trainedStaffWrapper)
+        {
+            
+            if(tsw.ac.Type_of_certificate__c == AMS_Utils.CERT_DGR && (tsw.validUntil == null || tsw.validUntil == '')){
+            
+                String tsFirstName = tsw.ac.First_Name__c == null ? '' : tsw.ac.First_Name__c;
+                String tsLastName = tsw.ac.Last_Name__c == null ? '' : tsw.ac.Last_Name__c;
+
+                return tsFirstName + ' ' + tsLastName + ' ' + tsw.ac.Type_of_certificate__c + ' Certificate needs to have the field Valid Until populated.';
+            }
+
+        }
+
+        return null;
+
+    }
     
     public String verifyOwnerFlagIsSelectIfFinancialInterestAboveZero()
     {
@@ -426,8 +455,90 @@ public with sharing class AMS_AccreditationContactController {
         return null;
     }
 
+    public static Boolean dateFieldValidation(String dateField){
+
+        if(dateField == '' || dateField == null)
+            return true;
+        
+        if(!dateField.contains('-'))
+            return false;
 
 
+        String numbersOnly = dateField.replace('-', '');
+        if(!numbersOnly.isNumeric())
+            return false;
+
+        String[] fieldSplit = dateField.split('-');
+        if(fieldSplit.size() != 3)
+            return false;
+
+        if(fieldSplit[0].length() != 4 || fieldSplit[1].length() > 2 || fieldSplit[2].length() > 2)
+            return false;
+
+        if(Integer.valueOf(fieldSplit[0]) < 1950 || Integer.valueOf(fieldSplit[0]) > 2100 ||
+           Integer.valueOf(fieldSplit[1]) < 1 || Integer.valueOf(fieldSplit[1]) > 12 ||
+           Integer.valueOf(fieldSplit[2]) < 1 || Integer.valueOf(fieldSplit[2]) > 31)
+        {
+            return false;
+        }
+
+        return true;
+
+    }
+
+    public String verifyDateFormattingNew(){
+
+        for(AccreditationContactWrapper wrapped : acWrapper)
+        {
+            String fieldToCheck = '';
+            boolean returnError = false;
+
+            for(Integer i=0;i<5;i++)
+            {
+                if(i == 0)
+                    fieldToCheck = wrapped.dateJoined;
+                if(i == 1)
+                    fieldtoCheck = wrapped.prev1From;
+                if(i == 2)
+                    fieldtoCheck = wrapped.prev1To;
+                if(i == 3)
+                    fieldtoCheck = wrapped.prev2From;
+                if(i == 4)
+                    fieldtoCheck = wrapped.prev2To;
+
+                if(!dateFieldValidation(fieldtoCheck))
+                    return wrapped.ac.First_Name__c + ' '+wrapped.ac.Last_Name__c + ' with date: ' + fieldToCheck;
+            }
+
+        }
+
+        for(TrainedStaffWrapper tsw : trainedStaffWrapper)
+        {
+
+            String fieldToCheck = '';
+            boolean returnError = false;
+
+            for(Integer i=0;i<2;i++)
+            {
+                if(i == 0)
+                    fieldToCheck = tsw.certificateIssueDate;
+                if(i == 1)
+                    fieldtoCheck = tsw.validUntil;
+
+                if(!dateFieldValidation(fieldtoCheck))
+                {
+                    String tsFirstName = tsw.ac.First_Name__c == null ? '' : tsw.ac.First_Name__c;
+                    String tsLastName = tsw.ac.Last_Name__c == null ? '' : tsw.ac.Last_Name__c;
+
+                    return tsFirstName + ' ' + tsLastName + ' with date: ' + fieldToCheck;
+                }
+            }
+
+        }
+
+        return null;
+
+    }
 
     public String verifyDateFormatting()
     {
@@ -816,8 +927,8 @@ public with sharing class AMS_AccreditationContactController {
             this.isNewRecord=isNewRecord;
         }
     }
-    
-    private static Boolean validateDateFormat(String field){
+
+    /*private static Boolean validateDateFormat(String field){
 
         if(!field.contains('-'))
             return false;
@@ -839,18 +950,18 @@ public with sharing class AMS_AccreditationContactController {
             return false;
         
         return true;
-    }
+    }*/
 
     public class TrainedStaffWrapper
     {
         public AMS_Accreditation_Contact__c ac {get; set;}
         public String certificateIssueDate {get; set;}
         public String validUntil {get; set;}
-        public String expiryDate {
+        /*public String expiryDate {
             get{
                 if(validUntil != null)
                     return validUntil;
-                else if(certificateIssueDate != null && ac.Certificate_Validity__c != null && validateDateFormat(certificateIssueDate)){
+                else if(certificateIssueDate != null && ac.Certificate_Validity__c != null && dateFieldValidation(certificateIssueDate)){
                 
                     Date issueDate = Date.valueOf(certificateIssueDate+' 00:00:00');
                     Integer validityYears = Integer.valueOf(ac.Certificate_Validity__c.left(1));
@@ -862,8 +973,11 @@ public with sharing class AMS_AccreditationContactController {
                     
                 return null;
             }
-            set;
-        }
+            set{
+                validUntil = expiryDate;
+            }
+
+        }*/
         
         public TrainedStaffWrapper(AMS_Accreditation_Contact__c trainedStaffAc)
         {

@@ -56,7 +56,7 @@ private class AMP_KeyAccountPlanExtensionTest {
 			// ApexPages.StandardController stdController = new ApexPages.StandardController(a);
 			AMP_KeyAccountPlanExtension kapExtension  = new AMP_KeyAccountPlanExtension(stdController);
 			//kapExtension.getAccountName();
-			kapExtension.showNext();
+			// kapExtension.showNext();
 			kapExtension.showPrevious();
 			kapExtension.showThis();
 			kapExtension.newObjective();
@@ -68,12 +68,12 @@ private class AMP_KeyAccountPlanExtensionTest {
 			kapExtension.DeleteLine();
 			kapExtension.newTask();
 
-			kapExtension.showMilestones();
+			// kapExtension.showMilestones();
 			kapExtension.editTask();
 			kapExtension.saveTask();
 			kapExtension.cancelTaskEdit();
 			kapExtension.deleteTask();
-			kapExtension.hideMilestones();
+			// kapExtension.hideMilestones();
 
 			// for @AuraEnabled
 			AMP_KeyAccountPlanExtension.getTasksByAccount(a.Id);

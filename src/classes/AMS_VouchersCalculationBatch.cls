@@ -10,19 +10,21 @@ global class AMS_VouchersCalculationBatch implements Database.Batchable<sObject>
 
 	public Map<IATA_ISO_Country__c,Decimal> averageMetrics;
 
+	public String yearToProcess;
+
 	// this batch is responsible for calculating the average sales for each country.
 	// this consists on 
-	global AMS_VouchersCalculationBatch(Set<Id> countriesToProcess,AMS_Voucher_Process_Run__c process) {
+	global AMS_VouchersCalculationBatch(Set<Id> countriesToProcess,AMS_Voucher_Process_Run__c process, String yearToProcess) {
 		
+		this.yearToProcess = yearToProcess;
+
 		this.process = process;
 
 		this.countriesToProcess = countriesToProcess;
 
 		allVouchersInfo = new List<AMS_Voucher_Information__c>();
 
-		String yearToProcess = String.valueOf(System.today().year());
-
-		this.query = 'SELECT Id, Account__c, Amount_Currency__c, AmountLastYearSales__c , Account__r.IATA_ISO_Country__r.Region__c, Account__r.IATA_ISO_Country__c, Account__r.IATA_ISO_Country__r.Name,Account__r.IATA_ISO_Country__r.AMS_Max_Vouchers_Per_Year__c, Account__r.IATA_ISO_Country__r.AMS_Vouchers_Benchmark__c, Account__r.Location_Class__c FROM AMS_Voucher_Information__c WHERE IsAgencyEligibleForCountryAverage__c = true and Year__c = \'' + yearToProcess + '\' and Account__r.IATA_ISO_Country__c in :countriesToProcess';
+		this.query = 'SELECT Id, Account__c, Exchange_Rate__c, Amount_Currency__c, AmountLastYearSales__c , Account__r.IATA_ISO_Country__r.Region__c, Account__r.IATA_ISO_Country__c, Account__r.IATA_ISO_Country__r.Name,Account__r.IATA_ISO_Country__r.AMS_Max_Vouchers_Per_Year__c, Account__r.IATA_ISO_Country__r.AMS_Vouchers_Benchmark__c, Account__r.Location_Class__c FROM AMS_Voucher_Information__c WHERE IsAgencyEligibleForCountryAverage__c = true and Year__c = \'' + yearToProcess + '\' and Account__r.IATA_ISO_Country__c in :countriesToProcess';
 	
 		System.debug('Entry query for AMS_VouchersCalculationBatch:' + this.query);
 	}
@@ -53,15 +55,35 @@ global class AMS_VouchersCalculationBatch implements Database.Batchable<sObject>
 
 		averageMetrics = AMS_VoucherCalculationHelper.calculateAverageCountries(allVouchersInfo);
 
-		AMS_VouchersCreationBatch creationBatch = new AMS_VouchersCreationBatch(averageMetrics,process);
+		AMS_VouchersCreationBatch creationBatch = new AMS_VouchersCreationBatch(averageMetrics,process,yearToProcess);
 
-		Id aMS_VouchersCreationBatchId = Database.executeBatch(creationBatch,50);
+		Integer scopeRun = calculateMaxRunScope(allVouchersInfo);
+
+        Integer numberOfVouchersInfo = Math.min(Math.Max(scopeRun,1),50);
+        
+        System.debug('__AMS_VouchersCalculationBatch__ Running with ' + numberOfVouchersInfo +  ' scopes.');
+        
+		Id aMS_VouchersCreationBatchId = Database.executeBatch(creationBatch,numberOfVouchersInfo);
 
 		process.AMS_Vouchers_Creation_Batch__c = aMS_VouchersCreationBatchId;
 
 		process.Country_Averages__c = processMetricsForAverage(averageMetrics);
 
 		update process;
+
+	}
+
+	private Integer calculateMaxRunScope(List<AMS_Voucher_Information__c> vouchersInfo){
+
+		Decimal maxNumber = 50;
+
+		for(AMS_Voucher_Information__c vInfo : vouchersInfo){
+
+			if(vInfo.Account__r.IATA_ISO_Country__r.AMS_Max_Vouchers_Per_Year__c > maxNumber)
+				maxNumber = vInfo.Account__r.IATA_ISO_Country__r.AMS_Max_Vouchers_Per_Year__c;
+		}
+
+		return Integer.valueOf(1000 / maxNumber);
 
 	}
 

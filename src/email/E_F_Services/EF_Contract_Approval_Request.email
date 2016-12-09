@@ -1,10 +1,10 @@
-Dear {!User.FirstName},
+Dear recipient,
 
 a Contract has been updated by {!Contract.LastModifiedBy}.<br/>
 
 The following key-fields have changed:<br/>
 
-<table border="1" width="800px">{!Contract.EF_Requested_Changes__c}
+<table border="1" width="800px">{!Contract.Requested_Changes__c}
 </table>
 <br/><br/>
 

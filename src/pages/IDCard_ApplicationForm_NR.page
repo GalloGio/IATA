@@ -159,7 +159,8 @@
     function workingFirstName() {
 
         var firstName = (removeDiacritics(this.document.getElementById('{!$Component.idcardForm.pb1.section1.itemFirstName.txtFirstName}').value));
-        document.getElementById('{!$Component.idcardForm.pb1.section1.itemFirstName.txtFirstName}').value = firstName.capitalize();
+        //document.getElementById('{!$Component.idcardForm.pb1.section1.itemFirstName.txtFirstName}').value = firstName.capitalize();
+        document.getElementById('{!$Component.idcardForm.pb1.section1.itemFirstName.txtFirstName}').value = firstName.toUpperCase();
 
         //removing apostrophe 
         var name = (removeDiacritics(this.document.getElementById('{!$Component.idcardForm.pb1.section1.itemFirstName.txtFirstName}').value));
@@ -175,7 +176,8 @@
     function workingLastName() {
 
         var lastName = (removeDiacritics(this.document.getElementById('{!$Component.idcardForm.pb1.section1.itemLastName.txtLastName}').value));
-        document.getElementById('{!$Component.idcardForm.pb1.section1.itemLastName.txtLastName}').value = lastName.capitalize();
+        //document.getElementById('{!$Component.idcardForm.pb1.section1.itemLastName.txtLastName}').value = lastName.capitalize();
+        document.getElementById('{!$Component.idcardForm.pb1.section1.itemLastName.txtLastName}').value = lastName.toUpperCase();
 
         //removing apostrophe 
         var name = (removeDiacritics(this.document.getElementById('{!$Component.idcardForm.pb1.section1.itemLastName.txtLastName}').value));

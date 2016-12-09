@@ -71,8 +71,8 @@
                 <field>BSP__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>BSP_Country_free_text__c</field>
+                <behavior>Readonly</behavior>
+                <field>AMS_Settlement_System__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -83,6 +83,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Cargo_Agency_Accreditation__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>AMS_Settlement_System_CASS__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -175,6 +179,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Local_language_Agency_details_required__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Enable_Risk_Change_Codes__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -284,6 +292,25 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Tax_number_help_text__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <style>TwoColumnsLeftToRight</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
+        <label>Vouchers Information Section</label>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>AMS_Max_Vouchers_Per_Year__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>AMS_Vouchers_Benchmark__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>

@@ -44,8 +44,8 @@ private class AMS_VoucherProcessTest {
 		account2.Location_Class__c = 'C';
 		insert account2;
 
-		AMS_Voucher_Information__c voucherInfo1 = new  AMS_Voucher_Information__c(Account__c = account1.Id, Amount_Currency__c = 'USD', AmountLastYearSales__c = 1000000, Year__c = '2016');
-		AMS_Voucher_Information__c voucherInfo2 = new  AMS_Voucher_Information__c(Account__c = account2.Id, Amount_Currency__c = 'USD', AmountLastYearSales__c = 2000000, Year__c = '2016');
+		AMS_Voucher_Information__c voucherInfo1 = new  AMS_Voucher_Information__c(Account__c = account1.Id, Amount_Currency__c = 'USD', AmountLastYearSales__c = 1000000, Exchange_Rate__c =1 , Year__c = '2016');
+		AMS_Voucher_Information__c voucherInfo2 = new  AMS_Voucher_Information__c(Account__c = account2.Id, Amount_Currency__c = 'USD', AmountLastYearSales__c = 2000000, Exchange_Rate__c =1 , Year__c = '2016');
 	
 		insert new List<AMS_Voucher_Information__c>{voucherInfo1,voucherInfo2};
 
@@ -59,7 +59,7 @@ private class AMS_VoucherProcessTest {
 
 		System.debug('List of Accounts is:' + accts);
 
-		List<AMS_Voucher_Information__c> vInfo = [SELECT Id , AmountLastYearSales__c, Year__c , Amount_Currency__c, IsAgencyEligibleForCountryAverage__c,IsAgencyEligible__c from AMS_Voucher_Information__c ];
+		List<AMS_Voucher_Information__c> vInfo = [SELECT Id , AmountLastYearSales__c, Year__c , Amount_Currency__c, IsAgencyEligibleForCountryAverage__c,IsAgencyEligible__c,Exchange_Rate__c from AMS_Voucher_Information__c ];
 
 		System.assertEquals(vInfo.size(),2);
 
@@ -78,7 +78,7 @@ private class AMS_VoucherProcessTest {
 
         ams_VPM.setCountries(setCountries);
 
-        Id batchCountryAverageId = ams_VPM.runVouchersProcess();
+        Id batchCountryAverageId = ams_VPM.runVouchersProcess('2016');
 
 		Test.stopTest();
 
@@ -88,7 +88,7 @@ private class AMS_VoucherProcessTest {
 
 		List<AMS_Voucher__c> vouchersCreated  = [SELECT Id from AMS_Voucher__c];
 
-		System.assertEquals(7 , vouchersCreated.size());
+		System.assertEquals(6 , vouchersCreated.size());
 
 	}
 
@@ -124,7 +124,8 @@ private class AMS_VoucherProcessTest {
 
         Test.setCurrentPageReference(pageRef);
 
-        ApexPages.currentPage().getParameters().put('sizeList', '0');
+        ApexPages.currentPage().getParameters().put('runId', '0');
+		ApexPages.currentPage().getParameters().put('runExec', '0');
 
         AMS_VoucherPDFGeneratorController controller = new AMS_VoucherPDFGeneratorController();
 
@@ -134,7 +135,7 @@ private class AMS_VoucherProcessTest {
 
         List<String> idsToPrint = new List<String>();
 
-        controller.fetchVouchersInfo(idsToPrint);
+        controller.fetchVouchersInfo();
 
         Test.stopTest();
 

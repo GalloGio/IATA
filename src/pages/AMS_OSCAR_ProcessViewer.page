@@ -276,6 +276,26 @@ body.loading .modal {
     display: block;
 }
 
+/*Blocks specific steps*/
+.sectionWrapper{ position: relative; }
+.sectionBlocker{
+    position: absolute;
+    top: 0; 
+    bottom: 0; 
+    right: 0; 
+    left: 0; 
+    opacity: 0.85;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0, 0.85);
+    z-index: 95;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: white;
+}
+
 </style>
 <script>
 function buildFunctionCall(func, argList){
@@ -348,21 +368,21 @@ function buildFunctionCall(func, argList){
 </apex:pageBlock>
 
 
-<apex:pageBlock rendered="{!IF(oscar != null && NOT(oscar.AMS_Online_Accreditation__r.Ready_for_Accreditation__c) && oscar.Process__c != 'CERTIFICATION.1.0',true,false)}">
+<apex:pageBlock rendered="{!showRequiredOverlay}">
     <div class="overlay">
     <div class="overlay-content">
         <p style="font-size: 36px;">LOCKED</p>
         <p>In order to proceed please fill the following fields in the Account Information section: 
             <ul>
                 <li>Account Name</li>
-                <li>* Specify Legal Status</li>
+                <li>* Specify Legal Status (except for MSO process)</li>
                 <li>Location Class</li>
                 <li>Country</li>
                 <li>Street name and number</li>
                 <li>Location Type</li>
                 <li>City</li>
-                <li>Email</li>
-                <li>Phone</li>
+                <li>Email (except for MSO process)</li>
+                <li>Phone (except for MSO process)</li>
             </ul>
         </p>
       </div>
@@ -380,37 +400,44 @@ function buildFunctionCall(func, argList){
 
 <apex:form id="oscarForm" rendered="{!IF(oscar != null && oscar.Process__c!=null ,true, false)}">
     <apex:outputPanel id="theProcess">
-    <apex:pageBlock >
-        <apex:variable var="p" value="{!process[oscar.Process__c]}" />
+        <apex:pageBlock >
+            <apex:variable var="p" value="{!process[oscar.Process__c]}" />
             <apex:repeat value="{!p.flows}" var="flow">
-                <apex:pageBlockSection id="theSection" title="{!$Label[flow.name]}" collapsible="true" columns="3">
-                    <apex:repeat value="{!flow.steps}" var="step">
-                        <apex:pageBlockSectionItem dataStyle="width: 40px;">
-                            <apex:outputPanel >
-                                <a id="{!step.name}" class="lightbox" href="#inline{!step.name}" onclick="clicked(this)">
-                                    <apex:image value="{!IF((step.isDependent), URLFOR($Resource.AMS_Icons, 'dependent_wrench.jpg'), URLFOR($Resource.AMS_Icons, 'wrench.jpg'))}"/><br></br>
-                                </a>
-                            </apex:outputPanel>
-                        </apex:pageBlockSectionItem>
-                        <apex:pageBlockSectionItem dataStyle="width:100%; padding-bottom: 8px;">
-                            <apex:outputPanel >
-                                <div style="padding-top: {!IF((step.isDependent), '0px', '20px')}">
-                                    <a id="{!step.name}" class="lightbox" href="#inline{!step.name}" onclick="clicked(this)">
-                                        <apex:outputText value="{!$Label[step.label]}"/>
-                                    </a>
-                                </div>
-                            </apex:outputPanel>
-                        </apex:pageBlockSectionItem>
-                        <apex:pageBlockSectionItem >
-                            <apex:outputPanel >
-                                <apex:image value="{!URLFOR($Resource.AMS_Icons, statusIcons[step.name])}" styleClass="hasTooltip"/>
-                                <div class="hidden">
-                                    <p><b>{!statusLabel[step.name]}</b><br/>
-                                       <!--<i>Other info: TO BE DEFINED</i>!--></p> 
-                                </div>
+                <apex:pageBlockSection id="theSection" title="{!$Label[flow.name]}" collapsible="true" columns="1">
+                    <apex:outputPanel layout="block" styleClass="sectionWrapper">
+                        <apex:outputPanel layout="block" styleClass="sectionBlocker" rendered="{!ddBlock[flow.name]}">
+                            <p>{!$Label.AMS_Due_Diligence_Lock}</p>
                         </apex:outputPanel>
-                        </apex:pageBlockSectionItem>
-                    </apex:repeat>
+                        <apex:pageBlockSection columns="3">
+                            <apex:repeat value="{!flow.steps}" var="step">
+                                <apex:pageBlockSectionItem dataStyle="width: 40px;">
+                                    <apex:outputPanel >
+                                        <a id="{!step.name}" class="lightbox" href="#inline{!step.name}" onclick="clicked(this)">
+                                            <apex:image value="{!IF((step.isDependent), URLFOR($Resource.AMS_Icons, 'dependent_wrench.jpg'), URLFOR($Resource.AMS_Icons, 'wrench.jpg'))}"/><br></br>
+                                        </a>
+                                    </apex:outputPanel>
+                                </apex:pageBlockSectionItem>
+                                <apex:pageBlockSectionItem dataStyle="width:100%; padding-bottom: 8px;">
+                                    <apex:outputPanel >
+                                        <div style="padding-top: {!IF((step.isDependent), '0px', '20px')}">
+                                            <a id="{!step.name}" class="lightbox" href="#inline{!step.name}" onclick="clicked(this)">
+                                                <apex:outputText value="{!$Label[step.label]}"/>
+                                            </a>
+                                        </div>
+                                    </apex:outputPanel>
+                                </apex:pageBlockSectionItem>
+                                <apex:pageBlockSectionItem >
+                                    <apex:outputPanel >
+                                        <apex:image value="{!URLFOR($Resource.AMS_Icons, statusIcons[step.name])}" styleClass="hasTooltip"/>
+                                        <div class="hidden">
+                                            <p><b>{!statusLabel[step.name]}</b><br/>
+                                               <!--<i>Other info: TO BE DEFINED</i>!--></p> 
+                                        </div>
+                                    </apex:outputPanel>
+                                </apex:pageBlockSectionItem>
+                            </apex:repeat>
+                        </apex:pageBlockSection>
+                    </apex:outputPanel>
                 </apex:pageBlockSection>
             </apex:repeat>
         </apex:pageBlock>
@@ -432,17 +459,17 @@ function buildFunctionCall(func, argList){
                 
                 <apex:repeat value="{!step.displayFields}" var="sf">
                     <br/><h2>{!stepFieldsData[sf].fieldLabel}</h2>
-                    <div id="{!sf}">
-                        <apex:inputField value="{!oscar[sf]}" styleClass="inputElem" rendered="{!IF(stepFieldsData[sf].picklistvalues != null, false, true)}"/>
-                        
+                    <div id="{!sf}">                        
                         <apex:outputPanel rendered="{!$ObjectType.AMS_OSCAR__c.fields[stepFieldsData[sf].fieldApiName].Updateable}">
+                            <apex:inputField value="{!oscar[sf]}" styleClass="inputElem" rendered="{!stepFieldsData[sf].picklistvalues == null}"/>
                             <apex:selectList size="1" rendered="{!IF(stepFieldsData[sf].picklistvalues != null, true, false)}" styleClass="inputElem">
                                 <apex:selectOptions value="{!stepFieldsData[sf].picklistvalues}"/>
                             </apex:selectList>
                         </apex:outputPanel>
                         
                         <apex:outputPanel rendered="{!NOT($ObjectType.AMS_OSCAR__c.fields[stepFieldsData[sf].fieldApiName].Updateable)}">
-                            <apex:selectList disabled="true" size="1" rendered="{!IF(stepFieldsData[sf].picklistvalues != null, true, false)}" styleClass="inputElem">
+                            <apex:outputField value="{!oscar[sf]}" rendered="{!stepFieldsData[sf].picklistvalues == null}"/>
+                            <apex:selectList disabled="true" size="1" rendered="{!stepFieldsData[sf].picklistvalues != null}" >
                                 <apex:selectOptions value="{!stepFieldsData[sf].picklistvalues}"/>
                             </apex:selectList>
                         </apex:outputPanel>
