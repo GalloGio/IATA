@@ -205,10 +205,10 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
                 AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
 
                 changeCode.name = 'DIS';
-                changeCode.reasonCode = '00';
+                changeCode.reasonCode = '12';
                 changeCode.memoText = AMS_Utils.getChangeCodeMemoText(updatedOscar.Process__c,changeCode.name);
-                changeCode.reasonDesc  = 'NON COMPLIANCE TO CRITERIA';
-                changeCode.status  = '0';
+                changeCode.reasonDesc  = 'APPLICATION DISAPPROVED';
+                changeCode.status  = '1';
 
                 Account acct = new Account(Id = updatedOscar.Account__c);
                 AMS_Utils.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {updatedOscar}, new List<Account> {acct}, true);

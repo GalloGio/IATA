@@ -343,10 +343,10 @@
             "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step4_succeeded",
             "ChangeCode": {
               "Name": "NWD",
-              "ReasonCode": "03",
+              "ReasonCode": "11",
               "MemoText": "New application withdrawn",
               "ReasonDesc": "APPLICATION WITHDRAWN",
-              "Status": "0"
+              "Status": "1"
             }
             
           },
@@ -721,10 +721,10 @@
             "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step4_succeeded",
             "ChangeCode": {
               "Name": "NWD",
-              "ReasonCode": "03",
+              "ReasonCode": "11",
               "MemoText": "New application - Branch withdrawn",
               "ReasonDesc": "APPLICATION WITHDRAWN",
-              "Status": "0"
+              "Status": "1"
             }
             
           },
@@ -1603,10 +1603,10 @@
             "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step4_succeeded",
             "ChangeCode": {
               "Name": "NWD",
-              "ReasonCode": "03",
+              "ReasonCode": "11",
               "MemoText": "New application withdrawn",
               "ReasonDesc": "APPLICATION WITHDRAWN",
-              "Status": "0"
+              "Status": "1"
             }
             
           },
@@ -1822,10 +1822,10 @@
           "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step3_succeeded",
           "ChangeCode": {
             "Name": "DIS",
-            "ReasonCode": "00",
+            "ReasonCode": "12",
             "MemoText": "New application - TIDS disapproved",
-            "ReasonDesc": "NON COMPLIANCE TO CRITERIA",
-            "Status": "0"
+            "ReasonDesc": "APPLICATION DISAPPROVED",
+            "Status": "1"
             }
         },
         {
@@ -1880,10 +1880,10 @@
                     "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step4_succeeded",
                     "ChangeCode": {
                       "Name": "NWD",
-                      "ReasonCode": "03",
+                      "ReasonCode": "11",
                       "MemoText": "New application - TIDS withdrawn",
                       "ReasonDesc": "APPLICATION WITHDRAWN",
-                      "Status": "0"
+                      "Status": "1"
                     }
                   },
                   {
@@ -2127,10 +2127,10 @@
           "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step3_succeeded",
           "ChangeCode": {
             "Name": "DIS",
-            "ReasonCode": "00",
+            "ReasonCode": "12",
             "MemoText": "New application - GSA disapproved",
-            "ReasonDesc": "NON COMPLIANCE TO CRITERIA",
-            "Status": "0"
+            "ReasonDesc": "APPLICATION DISAPPROVED",
+            "Status": "1"
             }
         },
         {
@@ -2185,10 +2185,10 @@
                     "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step4_succeeded",
                     "ChangeCode": {
                       "Name": "NWD",
-                      "ReasonCode": "03",
+                      "ReasonCode": "11",
                       "MemoText": "New application - GSA withdrawn",
                       "ReasonDesc": "APPLICATION WITHDRAWN",
-                      "Status": "0"
+                      "Status": "1"
                     }
                   },
                   {
@@ -2364,10 +2364,10 @@
           "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step3_succeeded",
           "ChangeCode": {
             "Name": "DIS",
-            "ReasonCode": "00",
+            "ReasonCode": "12",
             "MemoText": "New application - GSSA disapproved",
-            "ReasonDesc": "NON COMPLIANCE TO CRITERIA",
-            "Status": "0"
+            "ReasonDesc": "APPLICATION DISAPPROVED",
+            "Status": "1"
             }
         },
         {
@@ -2422,10 +2422,10 @@
                     "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step4_succeeded",
                     "ChangeCode": {
                       "Name": "NWD",
-                      "ReasonCode": "03",
+                      "ReasonCode": "11",
                       "MemoText": "New application - GSSA withdrawn",
                       "ReasonDesc": "APPLICATION WITHDRAWN",
-                      "Status": "0"
+                      "Status": "1"
                     }
                   },
                   {
@@ -2638,10 +2638,10 @@
           "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step3_succeeded",
           "ChangeCode": {
             "Name": "DIS",
-            "ReasonCode": "00",
+            "ReasonCode": "12",
             "MemoText": "New application - AHA disapproved",
-            "ReasonDesc": "NON COMPLIANCE TO CRITERIA",
-            "Status": "0"
+            "ReasonDesc": "APPLICATION DISAPPROVED",
+            "Status": "1"
             }
         },
         {
@@ -2696,10 +2696,10 @@
                     "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step4_succeeded",
                     "ChangeCode": {
                       "Name": "NWD",
-                      "ReasonCode": "03",
+                      "ReasonCode": "11",
                       "MemoText": "New application - AHA withdrawn",
                       "ReasonDesc": "APPLICATION WITHDRAWN",
-                      "Status": "0"
+                      "Status": "1"
                     }
                   },
                   {
@@ -3065,10 +3065,10 @@
             "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step4_succeeded",
             "ChangeCode": {
               "Name": "NWD",
-              "ReasonCode": "03",
+              "ReasonCode": "11",
               "MemoText": "New application - SA withdrawn",
               "ReasonDesc": "APPLICATION WITHDRAWN",
-              "Status": "0"
+              "Status": "1"
             }
             
           },
