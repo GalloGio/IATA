@@ -23,7 +23,7 @@
 
                     <apex:pageBlockSectionItem>
 
-                        <apex:outputLink value="/apex/AMS_SOQL_ExportPage?Id={!fullPurgeId}" target="_blank">Download Results here</apex:outputLink>
+                        <button onclick="window.open('/apex/AMS_SOQL_ExportPage?Id={!fullPurgeId}'); return false;">Download Results here</button>
 
                     </apex:pageBlockSectionItem>
 
@@ -55,7 +55,7 @@
 
                     <apex:pageBlockSectionItem>
 
-                        <apex:outputLink value="/apex/AMS_SOQL_ExportPage?Id={!litePurgeId}" target="_blank">Download Results here</apex:outputLink>
+                        <button onclick="window.open('/apex/AMS_SOQL_ExportPage?Id={!litePurgeId}'); return false;">Download Results here</button>
 
                     </apex:pageBlockSectionItem>
 

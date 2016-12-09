@@ -22,7 +22,7 @@ public with sharing class AMS_MigrationToolHelper {
 			'ERSP' => 'CORRECTION.1.0',
 			'Certificate DGR' => 'CERTIFICATION.1.0',
 			'CLO - Closure' => 'VR.1.0',
-			'ID card' => 'VR.1.0.CA',
+			'ID Card' => 'VR.1.0.CA',
 			'Operational Changes' => 'VR.1.0.CA',
 			'PAX/CARGO Certificate' => 'CER.1.0'
             };
