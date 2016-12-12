@@ -2542,4 +2542,23 @@
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
     <startsWith>Vowel</startsWith>
+    <webLinks>
+        <fullName>Download</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Download</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/31.0/connection.js&quot;)} 
+{!REQUIRESCRIPT(&quot;/soap/ajax/31.0/apex.js&quot;)} 
+
+var id = sforce.apex.execute(&quot;AMS_OSCAR_Attachments&quot;,&quot;getExpiringLinkWS&quot;, 
+{fileName:&apos;{!AmazonFile__c.Full_Name_Unique__c}&apos;}); 
+var result2= String(id).replace(&quot;&amp;amp;&quot;,&quot;&amp;&quot;); 
+var newWin = window.open(result2); 
+if(!newWin || newWin.closed || typeof newWin.closed==&apos;undefined&apos;){ 
+alert(&apos;{!$Label.Check_popup_settings}&apos;); 
+}</url>
+    </webLinks>
 </CustomObject>
