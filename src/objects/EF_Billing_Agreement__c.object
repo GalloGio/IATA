@@ -53,7 +53,7 @@
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
-    <enableSearch>false</enableSearch>
+    <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
@@ -142,12 +142,13 @@
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>Billing_Agreement_Name__c</fullName>
+        <fullName>BillingAgreement_Name__c</fullName>
         <externalId>false</externalId>
+        <formula>Contract__r.Name  &amp; &apos; - &apos; &amp;  Airline__r.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Billing Agreement Name</label>
-        <length>255</length>
         <required>false</required>
-        <trackHistory>true</trackHistory>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -318,6 +319,7 @@
         <fullName>EF_Status__c</fullName>
         <externalId>false</externalId>
         <globalPicklist>EF_Status</globalPicklist>
+        <inlineHelpText>If no active material line item exist, the E&amp;F Status is automatically set to Inactive</inlineHelpText>
         <label>E&amp;F Status</label>
         <required>false</required>
         <trackHistory>true</trackHistory>
@@ -602,8 +604,29 @@
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>E&amp;F Airline Billing Agreements</pluralLabel>
-    <searchLayouts/>
+    <searchLayouts>
+        <lookupDialogsAdditionalFields>BillingAgreement_Name__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Client__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Airline__c</lookupDialogsAdditionalFields>
+        <searchResultsAdditionalFields>BillingAgreement_Name__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Client__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Airline__c</searchResultsAdditionalFields>
+    </searchLayouts>
     <sharingModel>ControlledByParent</sharingModel>
+    <validationRules>
+        <fullName>EF_Prevent_Airline_Change_After_Creation</fullName>
+        <active>true</active>
+        <errorConditionFormula>ISCHANGED( Airline__c )  &amp;&amp;  !ISNEW()</errorConditionFormula>
+        <errorDisplayField>Airline__c</errorDisplayField>
+        <errorMessage>Airline cannot be modified after Billing Agreement creation</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>EF_Prevent_Client_Change_After_Creation</fullName>
+        <active>true</active>
+        <errorConditionFormula>ISCHANGED( Client__c ) &amp;&amp;  !ISNEW()</errorConditionFormula>
+        <errorDisplayField>Client__c</errorDisplayField>
+        <errorMessage>Client cannot be modified after Billing Agreement creation</errorMessage>
+    </validationRules>
     <validationRules>
         <fullName>EF_Prevent_For_Inactive_Accounts</fullName>
         <active>true</active>

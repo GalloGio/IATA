@@ -3919,6 +3919,8 @@
 <fieldPermissions><editable>true</editable><field>EF_Contact_Relationship__c.EF_Role__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>EF_Contact_Relationship__c.Role__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>EF_Contact_Relationship__c.Status__c</field><readable>true</readable></fieldPermissions>
+<fieldPermissions><editable>true</editable><field>EF_Document_Log__c.Additional_Information__c</field><readable>true</readable></fieldPermissions>
+<fieldPermissions><editable>true</editable><field>EF_Document_Log__c.AttachmentId__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>EF_Location_Code__c.Contract_BA_Id__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>EF_Location_Code__c.Contract__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>EF_Location_Code__c.EF_Airline_Billing_Agreement__c</field><readable>true</readable></fieldPermissions>
