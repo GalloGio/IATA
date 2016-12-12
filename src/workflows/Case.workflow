@@ -3509,11 +3509,11 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>shalbakf@iata.org</recipient>
+            <recipient>parkyr@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>zhangxl@iata.org</recipient>
+            <recipient>shalbakf@iata.org</recipient>
             <type>user</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
