@@ -1165,7 +1165,7 @@ public class AMS_OSCARTriggerHandler {
 		}
 		
 		if(!oscarsToProcess.isEmpty()){
-									
+			List<AMS_OSCAR__c> oscarsToValidate = new List<AMS_OSCAR__c>();					
 			for(AMS_OSCAR__c oscar : oscarsToProcess){
 
 				if(!oscarAux.get(oscar.Id).Account__r.CNS_Agency__c || (oscarAux.get(oscar.Id).Account__r.CNS_Agency__c && CNS_Settings__c.getInstance().DGR_Validate_Certificates__c))
