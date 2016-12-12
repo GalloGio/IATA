@@ -8,10 +8,6 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Required</behavior>
-                <field>Default_From_Name__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Required</behavior>
                 <field>PrimaryContact_Email__c</field>
             </layoutItems>
             <layoutItems>
@@ -64,7 +60,6 @@
         <style>CustomLinks</style>
     </layoutSections>
     <miniLayout>
-        <fields>Default_From_Name__c</fields>
         <fields>PrimaryContact_Email__c</fields>
         <fields>PrimaryContact_Name__c</fields>
     </miniLayout>

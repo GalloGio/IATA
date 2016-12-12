@@ -171,12 +171,12 @@
                             <tbody>
                                 <tr class="headerRow">
                                     <th class="actionColumn" scope="col">Action</th>
-                                    <th class=" zen-deemphasize" scope="col">{!$Label.ISSP_Public}</th>
+                                    <!--<th class=" zen-deemphasize" scope="col">{!$Label.ISSP_Public}</th> -->
                                     <th class=" zen-deemphasize" scope="col">Name</th>
                                     <th class=" zen-deemphasize" scope="col">File Size</th>
                                     <th class=" zen-deemphasize" scope="col">Created Date</th>
-                                    <th class=" zen-deemphasize" scope="col">Created By</th>
-                                    <th class=" zen-deemphasize" scope="col">Location</th>
+                                    <!-- <th class=" zen-deemphasize" scope="col">Created By</th> -->
+                                    <!-- <th class=" zen-deemphasize" scope="col">Location</th> -->
                                 </tr>
 
                                 
@@ -227,9 +227,9 @@
                                         <td class=" dataCell " scope="row"><apex:outputField value="{!sfAttachment.recordAttachment.BodyLength}" /></td>
                                         <td class=" dataCell " scope="row"><apex:outputField value="{!sfAttachment.recordAttachment.CreatedDate}" /></td>
                                         <td class=" dataCell " scope="row">
-                                            <apex:outputLink value="/{!sfAttachment.recordAttachment.CreatedById}" target="_top">
+                                            <!-- <apex:outputLink value="/{!sfAttachment.recordAttachment.CreatedById}" target="_top">
                                                 {!sfAttachment.recordAttachment.CreatedBy.Name}
-                                            </apex:outputLink>
+                                            </apex:outputLink> -->
                                         </td>
                                         <td class=" dataCell " scope="row">Salesforce</td>
                                     </tr>
@@ -252,10 +252,10 @@
                                         <td class=" zen-deemphasize" scope="col">
                                             <apex:outputField value="{!attachment.Original_Creation_Date__c}" />
                                         </td>
-                                        <td class=" dataCell ">
-                                            <apex:outputField value="{!attachment.OriginalCreatedBy__c}" />
+                                        <!-- <td class=" dataCell ">
+                                            <apex:outputField value="{!attachment.Originally_Created_By__c}" />
                                         </td>
-                                        <td class=" dataCell " scope="row">Archived</td>
+                                        <td class=" dataCell " scope="row">Archived</td> -->
                                     </tr>
                                 </apex:repeat>
 
@@ -299,9 +299,9 @@
                                             {!attachment.Name}
                                         </td>
                                         <td class=" dataCell " scope="row"><apex:outputField value="{!attachment.BodyLength__c}" /></td>
-                                        <td class=" dataCell ">
-                                            <apex:outputField value="{!attachment.OriginalCreatedBy__c}" />
-                                        </td> 
+                                        <!-- <td class=" dataCell ">
+                                            <apex:outputField value="{!attachment.Originally_Created_By__c}" />
+                                        </td> -->
                                     </tr>
                                 </apex:repeat>
                             </tbody>

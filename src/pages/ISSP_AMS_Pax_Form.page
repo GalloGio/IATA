@@ -182,8 +182,6 @@
         $j(".country__c").attr('disabled','disabled');
         $j(".labelText").hide();
         $j("#branch_office_phone__c").hide();
-        
-
     });
 
     function initFieldsSettings(){
@@ -446,6 +444,9 @@
                 document.getElementById(ownerModalFields[6]).disabled = false;
                 document.getElementById(ownerModalFields[7]).disabled = false;
             }
+        
+         if($j('[id$=contactBlock]').find('.contactcountry').val()==null)
+        	$j('[id$=contactBlock]').find('.contactcountry').val('');
     }
 
     function toggleModalManagerFields(managerId) {
@@ -785,7 +786,7 @@
                         </apex:outputpanel>
                     </apex:facet>
                   </apex:pageBlockSection>
-                <apex:outputpanel id="HQdetails" rendered="{!AND(amsOfficeType=='HO',newCase.Reason1__c!='New BR Abroad')}">
+                <apex:outputpanel id="HQdetails" rendered="{!AND(amsOfficeType=='HO',newCase.Reason1__c!='New BR Abroad', NOT(isTerminatedAgent), NOT(isNewHOforAccredAgent))}">
                     <apex:pageblocksection columns="2">
                         <apex:actionstatus id="actEditAccount" style="float:right">
                             <apex:facet name="start">
@@ -793,7 +794,7 @@
                                 {!$Label.ISSP_Loading_Travel_Agency_Details}
                             </apex:facet>
                         </apex:actionstatus>
-                        <apex:commandlink styleclass="pull-right" style="margin-right:5px;display:{!IF(isHOAccredited,'none','')}" status="actEditAccount" oncomplete="showUpdateAgencyDialog();" ><span class="glyphicon glyphicon-pencil"></span>{!$Label.ISSP_AMS_Update_Agency}</apex:commandlink>
+                        <apex:commandlink styleclass="pull-right" style="margin-right:5px;display:{!IF(OR(isHOAccredited, isTerminatedAgent), 'none','')}" status="actEditAccount" oncomplete="showUpdateAgencyDialog();" ><span class="glyphicon glyphicon-pencil"></span>{!$Label.ISSP_AMS_Update_Agency}</apex:commandlink>
                         <apex:pageblocksectionitem rendered="{!newCase.Reason1__c!='New BR Abroad'}">
                             <apex:outputlabel value="{!IF(isocountry.Local_language_Agency_details_required__c, txtLocalAgencyDetailsLegalNameENG, $ObjectType.Account.fields.Legal_name__c.Label)}" />
                             <apex:outputfield value="{!hqAccount.Name}" />
@@ -812,8 +813,7 @@
                             <apex:image value="/img/msg_icons/info16.png" style="margin-left:3px;" title="{!$Label.ISSP_AMS_PAX_Issuing_Address}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
                            </apex:outputPanel>
                         </apex:pageBlockSectionItem>
-                       
-                        
+                           
                         <apex:outputfield value="{!hqAccount.Website}" />
                         <apex:outputfield value="{!hqAccount.Phone}" />
                         <apex:outputfield value="{!hqAccount.Email__c}" />
@@ -873,11 +873,11 @@
                 </apex:outputPanel>
                 
                 <apex:pageBlockSection columns="2">
-                     <apex:pageblocksectionitem rendered="{!newCase.Reason1__c=='New BR Abroad'}">
+                     <apex:pageblocksectionitem rendered="{!OR(newCase.Reason1__c=='New BR Abroad', isTerminatedAgent, isNewHOforAccredAgent)}">
                             <apex:outputlabel value="* {!$ObjectType.Account.fields.Legal_name__c.Label}" />
                             <apex:inputfield value="{!newForm.Account_Name__c}"/>
                         </apex:pageblocksectionitem>
-                    <apex:inputfield value="{!newForm.Trade_Name__c}" rendered="{!newCase.Reason1__c=='New BR Abroad'}"/>
+                    <apex:inputfield value="{!newForm.Trade_Name__c}" rendered="{!OR(newCase.Reason1__c=='New BR Abroad', isTerminatedAgent, isNewHOforAccredAgent)}"/>
                     <apex:inputField showDatePicker="true" id="dateOpenedAsTravelAgency" value="{!newForm.ISSP_AMS_Pax_Office_Open_Date__c}"/>
                     <apex:outputtext ><!--empty: move following field to next row --></apex:outputtext>
                     <apex:inputfield value="{!newForm.ISSP_AMS_License_No__c}" rendered="{!AND(OR(amsOfficeType=='HO',amsOfficeType=='Branch'), countryCheckList.License_required__c==true)}" />
@@ -885,9 +885,8 @@
                     <apex:inputfield value="{!newForm.ISSP_AMS_Date_license_granted__c}" showdatepicker="true" rendered="{!AND(OR(amsOfficeType=='HO',amsOfficeType=='Branch'), countryCheckList.License_required__c==true)}" />                
                     <apex:inputfield value="{!newForm.ISSP_AMS_Date_Registration_granted__c}" showdatepicker="true" rendered="{!AND(OR(amsOfficeType=='HO',amsOfficeType=='Branch'), countryCheckList.Registration_required__c==true)}" /> 
                </apex:pageBlockSection>
-
-               <apex:pageBlockSection columns="2" id="branchphonefax" rendered="{!amsOfficeType!='HO' || newCase.Reason1__c=='New BR Abroad'}">
-                    <apex:outputText value="{!$Label.ISSP_AMS_Branch_Office_address_details}" style="font-weight:bold"/>
+               <apex:pageBlockSection columns="2" id="branchphonefax" rendered="{!OR(newCase.Reason1__c=='New BR Abroad', amsOfficeType=='Branch', isTerminatedAgent, isNewHOforAccredAgent)}">
+                    <apex:outputText value="{!IF(OR(isTerminatedAgent, isNewHOforAccredAgent), $Label.ISSP_AMS_New_HO_details, $Label.ISSP_AMS_Branch_Office_address_details)}" style="font-weight:bold"/>
                     <apex:outputtext ><!--empty: move following field to next row --></apex:outputtext>
                         
                     <apex:pageBlockSection columns="1" >
@@ -904,7 +903,6 @@
                         </DSE:DS_DataQuality>
                     </apex:pageBlockSection>
                     <apex:pageBlockSection columns="1" id="subbranchsection">
-                        <!-- <apex:inputField value="{!newForm.Branch_Office_Phone__c}" /> -->
                         <apex:pageBlockSectionItem id="branchphonefields">
                             <apex:outputText value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Branch_Office_Phone__c.Label}"/>
                             <apex:outputPanel layout="none">
@@ -944,9 +942,6 @@
                             StatusStyle="col-lg-1 col-md-1 col-sm-1 col-xs-1 statusBox"
                             FormControlStyle="apcontainer wid">
                         </DSE:DS_DataQuality>
-
-                        <!-- <apex:inputField value="{!newForm.Branch_Office_FAX__c}" /> -->
-                         <!-- problematic -->
                     </apex:pageBlockSection>
                 </apex:pageBlockSection>
                
@@ -1213,7 +1208,7 @@
                        </div>
                      <apex:commandLink id="addcompany" style="margin-right:5px" onfocus="showNewCompanyDialog();" rendered="{!AND(amsOfficeType=='HO',newCase.Reason1__c!='New BR Abroad')}"><span class="glyphicon glyphicon-plus"></span>{!$Label.ISSP_AMS_ADD_COMPANY}</apex:commandLink>
                      <apex:outputText value="{!$Label.ISSP_AMS_NoC_No_Company_Owners}" styleClass="alert alert-info" rendered="{!AND(OR(amsOfficeType='Branch',newCase.Reason1__c=='New BR Abroad'), List_AgencyCompanies.size==0)}"/>
-                     <apex:pageBlockTable value="{!List_AgencyCompanies}" var="agencycon"  id="companyList" styleClass="table-hover table table-condensed table-responsive" rendered="{!List_AgencyCompanies.size>0}">
+                     <apex:pageBlockTable value="{!List_AgencyCompanies}" var="agencycon"  id="companyList" styleClass="table-hover table table-condensed table-responsive" >
                             <apex:column headerValue="{!$ObjectType.Account.fields.Legal_name__c.Label}" value="{!agencycon.Name} {!IF(isocountry.Local_language_Agency_details_required__c,'('+agencycon.Company_Name_Local__c + ')','')}"/>
                             <apex:column value="{!agencycon.Registration_number__c}"/>
                             <apex:column value="{!agencycon.IATACode__c}"/>
@@ -1416,8 +1411,8 @@
                     <apex:inputField value="{!newContact.Agency_owner__c}" id="owner" onclick="toggleModalContactFields('{!$Component.owner}','{!$Component.newContact.contactBlock.contactSection.contactItemDom.dom}', '{!$Component.newContact.contactBlock.prevWorkedFor}')"/>
                 </apex:pageBlockSectionItem>
                
-                 <apex:pageBlockSectionItem id="contactItemDom" labelStyle="white-space: nowrap;font-size:110%" dataStyle="width:15%">
-                    <apex:outputLabel id="roleContactTitle">{!CASE(roleLabelType, 'director', $Label.ISSP_AMS_Director, $Label.ISSP_AMS_Manager)}</apex:outputLabel>
+                 <apex:pageBlockSectionItem id="contactItemDom" labelStyle="font-size:110%" dataStyle="width:15%">
+                    <apex:outputLabel id="roleContactTitle" escape="false" value="{!CASE(roleLabelType, 'director', $Label.ISSP_AMS_Director, $Label.ISSP_AMS_Manager)}" />
                     <apex:inputField value="{!newContact.Agency_role__c}" id="dom" onclick="toggleModalContactFields('{!$Component.newContact.contactBlock.contactSection.contactItemOwner.owner}','{!$Component.dom}', '{!$Component.newContact.contactBlock.prevWorkedFor}')"/>
                 </apex:pageBlockSectionItem>
                 <apex:pageBlockSectionItem labelStyle="white-space: nowrap;font-size:110%" dataStyle="width:15%">
@@ -1481,8 +1476,9 @@
                                 </td></tr>
                             <tr><td class="modalrow">
                                 <apex:outputText value="{!$ObjectType.Contact.fields.Email.Label}" /><br/>
-                                <apex:inputField value="{!newContact.Email__c}" required="true"/>
-                                </td></tr>     
+                                <apex:inputField value="{!newContact.Email__c}" required="true" rendered="{!newContact.Contact__c == null}"/>
+                                <apex:outputField value="{!newContact.Email__c}" rendered="{!newContact.Contact__c != null}"/>
+                                </td></tr>
                         </table>
                       </td>
                       <td style="width:25%">
@@ -1497,8 +1493,7 @@
                             <tr><td class="modalrow">
                                 <apex:inputField value="{!newContact.AddressPostcode__c}" id="contactPostalCode" html-disabled="true" html-placeholder="{!$Label.ISSP_AMS_PostCode}"/>
                                 </td></tr>
-                            <tr><td class="modalrow">
-                                <br/>
+                            <tr><td class="modalrow" style="vertical-align:top;padding-bottom:30px">
                                 <apex:selectList styleClass="contactcountry" id="contactcountry" style="width:85%" value="{!amsContactCountry}" size="1">
                                     <apex:selectOptions value="{!countryNameList}"/>
                                 </apex:selectList>
@@ -1623,7 +1618,7 @@
             reRender="contactList, ownerList, theMessages">
             <apex:param value="Person" name="persontype" assignTo="{!contactType}" />
          </apex:commandButton>&nbsp;
-        <button type="button" class="btn btn-default" onclick="cancelAgentUpdate();$j( '.datePicker').css('position','absolute'); return false;" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">{!$Label.ISSP_Cancel}</span></button>
+        <button type="button" class="btn btn-default" onclick="cancelAgentUpdate();setPortalAdmin('{!$Component.AMSForm.PortalAdminId}');$j( '.datePicker').css('position','absolute'); return false;" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">{!$Label.ISSP_Cancel}</span></button>
       </div>
         <script src="{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/build/js/intlTelInput.js')}"></script>  
         <script>
@@ -1711,7 +1706,7 @@
                     <apex:inputCheckBox value="{!newContact.Agency_owner__c}" disabled="true"/>
                 </apex:pageBlockSectionItem>
                  <apex:pageBlockSectionItem id="contactItemDom" labelStyle="white-space: nowrap;font-size:110%" dataStyle="width:15%">
-                    <apex:outputLabel id="roleContactTitle">{!CASE(roleLabelType, 'director', $Label.ISSP_AMS_Director, $Label.ISSP_AMS_Manager)}</apex:outputLabel>
+                    <apex:outputLabel id="roleContactTitle" escape="false" value="{!CASE(roleLabelType, 'director', $Label.ISSP_AMS_Director, $Label.ISSP_AMS_Manager)}"/>
                     <apex:inputField value="{!newContact.Agency_role__c}" id="dom" onclick="toggleModalContactFields('{!$Component.newContact.contactBlock.contactSection.contactItemOwner.owner}','{!$Component.dom}', '{!$Component.newContact.contactBlock.prevWorkedFor}')"/>
                 </apex:pageBlockSectionItem>
                 <apex:pageBlockSectionItem labelStyle="white-space: nowrap;font-size:110%" dataStyle="width:15%">
@@ -1728,12 +1723,12 @@
       
       <div class="modal-footer">
         <apex:commandButton action="{!createAgencyContact}" status="WaitingStatus" styleClass="btn btn-default" value="{!$Label.ISSP_Submit}"
-            oncomplete="if ({!contactSaved==true}){closeUpdateOwnerModal(); cancelOwnerUpdate();} this.removeAttribute('disabled');"
+            oncomplete="if ({!contactSaved==true}){closeUpdateOwnerModal(); cancelOwnerUpdate();} this.removeAttribute('disabled');setPortalAdmin('{!$Component.AMSForm.PortalAdminId}');"
             onclick="this.disabled='disabled';"
             reRender="contactList, ownerList, theMessages">
             <apex:param value="Person" name="persontype" assignTo="{!contactType}" />
          </apex:commandButton>&nbsp;
-        <button type="button" class="btn btn-default" onclick="cancelOwnerUpdate();$j( '.datePicker').css('position','absolute'); return false;" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">{!$Label.ISSP_Cancel}</span></button>
+        <button type="button" class="btn btn-default" onclick="cancelOwnerUpdate();setPortalAdmin('{!$Component.AMSForm.PortalAdminId}');$j( '.datePicker').css('position','absolute'); return false;" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">{!$Label.ISSP_Cancel}</span></button>
       </div>
               
     </div>

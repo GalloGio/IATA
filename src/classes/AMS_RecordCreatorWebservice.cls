@@ -11,10 +11,10 @@ global without sharing class AMS_RecordCreatorWebservice {
     private static String NEWTIDS_PV= 'NEW.TIDS.1.0';
     private static String NEWCORRECTION_PV = 'CORRECTION.1.0';
     private static String NEWDGR_PV = 'CERTIFICATION.1.0';
-    private static String NEWVR_PV = 'VR.1.0'; 
-    private static String NEWVRCA_PV = 'VR.1.0.CA';
+    public static String NEWVR_PV = 'VR.1.0'; 
+    public static String NEWVRCA_PV = 'VR.1.0.CA';
 
-    private static String EMPTYACCREDITATIONID = 'EMPTY';
+    public static String EMPTYACCREDITATIONID = 'EMPTY';
 
     /**
         Creates an Oscar (AMS_OSCAR__c) given an Account Id, an Accreditation Id and the Type of Process
@@ -420,7 +420,6 @@ global without sharing class AMS_RecordCreatorWebservice {
             oscarsToProcess.add(null);
         }
 
-        //AMS_ChangeCodesHelper.createAAChangeCodes(changeCodesToProcess, oscarsToProcess, accountsToProcess, false);
         AMS_Utils.createAAChangeCodes(changeCodesToProcess, oscarsToProcess, accountsToProcess, false);
 
         // for now we shouldn't sent any notification.
