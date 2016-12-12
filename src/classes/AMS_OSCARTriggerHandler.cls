@@ -193,8 +193,9 @@ public class AMS_OSCARTriggerHandler {
 			}
 		}
 	}
-		return true;
-		}
+	
+	return true;
+		
 	}
 
 	//get only the Agency Change OSCARs that need to be processed
@@ -1554,7 +1555,7 @@ public class AMS_OSCARTriggerHandler {
 				theoscars.addAll(c.oscars);
 			}
 
-			AMS_Utils.createAAChangeCodes( changeCodes, theoscars, accts, true);
+			AMS_ChangeCodesHelper.createAAChangeCodes( changeCodes, theoscars, accts, true);
 		}
 		
 	}
