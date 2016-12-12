@@ -1853,11 +1853,28 @@
     <fields>
         <fullName>OI_Status_auto__c</fullName>
         <externalId>false</externalId>
-        <formula>IF(NOT(ISBLANK(Date_Time_Closed__c)),&quot;Closed&quot;,IF(NOT(ISNULL(Extension_approved_date__c)), 
-      IF(Closest_Action_Plan_due_date__c&gt;= TODAY(), &quot;Extended&quot;,&quot;Delayed&quot;), 
-      IF(NOT(ISNULL(Submission_for_extension_date__c)),&quot;Pending Extension Approval&quot;, IF(NOT(ISNULL(OI_Approval_date__c)), 
-            IF(Closest_Action_Plan_due_date__c&gt;= TODAY(),&quot;Ongoing Action Plan&quot;,&quot;Delayed&quot;), 
-              IF(NOT(ISNULL(Submission_for_Approval_Date__c)), &quot;Pending Approval&quot;,&quot;Investigation&quot;)))))</formula>
+        <formula>IF( ISNULL(Date_Time_Closed__c),
+	IF( ISNULL(Extension_approved_date__c),
+		IF( ISNULL(Submission_for_extension_date__c),
+			IF( ISNULL(OI_Approval_date__c),
+				IF( ISNULL(Submission_for_Approval_Date__c),
+					&quot;Investigation&quot;,
+					&quot;Pending Approval&quot;
+				),
+				IF(Overall_Deadline__c&lt;TODAY(),
+					&quot;Delayed&quot;,
+					&quot;Ongoing Action Plan&quot;
+				)
+			),
+			&quot;Pending Extension Approval&quot;
+		),
+		IF(Overall_Deadline__c&lt;TODAY(),
+			&quot;Delayed&quot;,
+			&quot;Extended&quot;
+		)
+	),
+	&quot;Closed&quot;
+)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <inlineHelpText>This status is automatically deducted from the date field in the OI</inlineHelpText>
         <label>OI Status (auto)</label>
