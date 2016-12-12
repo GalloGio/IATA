@@ -40841,10 +40841,6 @@
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
-        <apexPage>EF_UpdateBillingAgreement</apexPage>
-        <enabled>true</enabled>
-    </pageAccesses>
-    <pageAccesses>
         <apexPage>EF_Billing_Agreement_Attachment_List</apexPage>
         <enabled>true</enabled>
     </pageAccesses>

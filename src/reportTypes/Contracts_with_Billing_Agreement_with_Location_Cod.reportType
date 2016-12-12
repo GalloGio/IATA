@@ -431,11 +431,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Contract_Name__c</field>
-            <table>Contract</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>EF_Admin_Fee__c</field>
             <table>Contract</table>
         </columns>
@@ -770,11 +765,6 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>Send_to_SAP__c</field>
-            <table>Contract.EF_Relationships__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Status__c</field>
             <table>Contract.EF_Relationships__r</table>
         </columns>
         <columns>

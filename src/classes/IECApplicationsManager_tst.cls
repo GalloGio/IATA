@@ -324,64 +324,7 @@ private class IECApplicationsManager_tst {
     } // testCustomerSearch2
       
     
-    
-    // ====================================================================
-    // test customer search functionality: part 3
-    // starting with GAD Advanced Search
-    @isTest(SeeAllData=true)
-    static void testCustomerSearch3_GAD() {
-        initDataForCustomerSearch();
-        
-        IECTestUtil.trgPortalUserAfterInserUpdate = true;
-        List<IEC_Product_Access__c> lstProductAccess = null;
-        List<GDP_Products_Account_View__c> lstSearchResult = null;
-        ID_Card__c oSearchedIDCard = null;
-        Integer iUsageAccess;
-        
-        test.startTest();
-        
-        System.runAs(oCommunityUser) {
-            
-            ///////////////////////
-            // GAD Advanced search
-            // Test #7 - search for unknown sub-continent
-            // create some filter for unkown sub-continent
-            IATA_ISO_Country__c oISOCountry = IECTestUtil.CreateSampleIATAISOCountry();
-            insert oISOCountry;
-            GDP_Geo_Detail__c oGEODetail = IECTestUtil.CreateSampleGDPGeoDetail(oISOCountry);
-            insert oGEODetail;
-            GDP_Address__c oGDPAddress1 = IECTestUtil.CreateSampleGDPAddress(oGDPAccount1, oISOCountry, null, oGEODetail);
-            oGDPAddress1.Address_City__c = 'BOYA';
-            insert oGDPAddress1;
-            oGDPAccount1.Related_GDP_Address__c = oGDPAddress1.Id;
-            update oGDPAccount1;
-            SchdlGDPProductsAccountSnapshotCleanup bat = new SchdlGDPProductsAccountSnapshotCleanup();
-            List<GDP_Products_Account_View__c> gpav = Database.query(SchdlGDPProductsAccountSnapshotCleanup.query + ' limit 100 ');
-            bat.execute(null, gpav);
-
-
-
-            IEC_Application_Filter__c oFilter = new IEC_Application_Filter__c();
-            oFilter.Sub_Continent__c = 'Some sub-continent';
-            lstSearchResult = IECApplicationsManager.customerSearchAgencyByAdvancedFilters(oFilter, IECConstants.ProductCategory_SF_CACPRO, IECCustomer.getCurrentIECCustomer());
-            system.assert(lstSearchResult == null || lstSearchResult.size() == 0, 'No agency should be found');
-            
-            // Test #8 - search for known sub-continent
-            
-            // throw new transformationException('oFilter.sub-continent ' + oGEODetail.Sub_Continent__c);
-            // list<GDP_Products_Account_View__c> GDPs = (list<GDP_Products_Account_View__c>)database.query(sQueryFields);
-            // throw new  transformationException('GDP_Products_Account_View__cs   ' +GDPs);
-            
-            oFilter.Sub_Continent__c = oGEODetail.Sub_Continent__c;
-            lstSearchResult = IECApplicationsManager.customerSearchAgencyByAdvancedFilters(oFilter,
-                                                IECConstants.ProductCategory_SF_CACPRO,
-                                                 IECCustomer.getCurrentIECCustomer());
-            
-            
-          } // end runAs
-          test.stopTest();  
-    } // testCustomerSearch3_GAD
-      
+   
 
    static void testCustomerSearch3Pre() {  
             //account 3 - start

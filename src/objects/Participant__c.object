@@ -381,37 +381,36 @@ First Name, Last Name, Title, Email and Account Name. Please complete these info
         <active>true</active>
         <description>Verify the account type for the participiant</description>
         <errorConditionFormula>AND(
- AND(
-  AND(
-    AND( Contact__r.Account.RecordType.DeveloperName = &quot;Agency&quot;,
-      NOT(OR(ISPICKVAL(Local_Group_Type__c, &quot;ALWG&quot;),
-        ISPICKVAL(Local_Group_Type__c, &quot;APJC&quot;),
-        ISPICKVAL(Local_Group_Type__c, &quot;APJC / FAG&quot;),
-        ISPICKVAL(Local_Group_Type__c, &quot;CAPJC&quot;),
-        ISPICKVAL(Local_Group_Type__c, &quot;CEC&quot;),
-        ISPICKVAL(Local_Group_Type__c, &quot;CGA&quot;),
-        ISPICKVAL(Local_Group_Type__c, &quot;EACP JC&quot;),
-        ISPICKVAL(Local_Group_Type__c, &quot;JALWG&quot;))
-      )
-    ),
-    NOT(OR(Contact__r.Account.RecordType.DeveloperName = &quot;IATA_Airline&quot;,
-       Contact__r.Account.RecordType.DeveloperName = &quot;IATA_Airline_BR&quot;)
-    )
-  ),
-  AND( ISPICKVAL(Contact__r.Account.Sector__c,&quot;Association&quot;),
-       Contact__r.Account.RecordType.DeveloperName = &quot;Standard_Account&quot;,
-       OR(ISPICKVAL(Local_Group_Type__c, &quot;ALWG&quot;),
-        ISPICKVAL(Local_Group_Type__c, &quot;APJC&quot;),
-        ISPICKVAL(Local_Group_Type__c, &quot;APJC / FAG&quot;),
-        ISPICKVAL(Local_Group_Type__c, &quot;CAPJC&quot;),
-        ISPICKVAL(Local_Group_Type__c, &quot;CEC&quot;),
-        ISPICKVAL(Local_Group_Type__c, &quot;CGA&quot;),
-        ISPICKVAL(Local_Group_Type__c, &quot;EACP JC&quot;),
-        ISPICKVAL(Local_Group_Type__c, &quot;JALWG&quot;)
-      )
-  )
- ),
- Group_RecordType__c = &quot;Local_Groups&quot;
+AND(
+AND(
+NOT(AND( Contact__r.Account.RecordType.DeveloperName = &quot;IATA_Agency&quot;,
+OR(ISPICKVAL(Local_Group_Type__c, &quot;ALWG&quot;),
+ISPICKVAL(Local_Group_Type__c, &quot;APJC&quot;),
+ISPICKVAL(Local_Group_Type__c, &quot;APJC / FAG&quot;),
+ISPICKVAL(Local_Group_Type__c, &quot;CAPJC&quot;),
+ISPICKVAL(Local_Group_Type__c, &quot;CEC&quot;),
+ISPICKVAL(Local_Group_Type__c, &quot;CGA&quot;),
+ISPICKVAL(Local_Group_Type__c, &quot;EACP JC&quot;),
+ISPICKVAL(Local_Group_Type__c, &quot;JALWG&quot;))
+)),
+NOT(OR(Contact__r.Account.RecordType.DeveloperName = &quot;IATA_Airline&quot;,
+Contact__r.Account.RecordType.DeveloperName = &quot;IATA_Airline_BR&quot;)
+)
+),
+NOT(AND( ISPICKVAL(Contact__r.Account.Sector__c,&quot;Association&quot;),
+Contact__r.Account.RecordType.DeveloperName = &quot;Standard_Account&quot;,
+OR(ISPICKVAL(Local_Group_Type__c, &quot;ALWG&quot;),
+ISPICKVAL(Local_Group_Type__c, &quot;APJC&quot;),
+ISPICKVAL(Local_Group_Type__c, &quot;APJC / FAG&quot;),
+ISPICKVAL(Local_Group_Type__c, &quot;CAPJC&quot;),
+ISPICKVAL(Local_Group_Type__c, &quot;CEC&quot;),
+ISPICKVAL(Local_Group_Type__c, &quot;CGA&quot;),
+ISPICKVAL(Local_Group_Type__c, &quot;EACP JC&quot;),
+ISPICKVAL(Local_Group_Type__c, &quot;JALWG&quot;)
+)
+))
+),
+Group_RecordType__c = &quot;Local_Groups&quot;
 )</errorConditionFormula>
         <errorMessage>The new participant is not related to an Airline or an Agency or this group does not allow participants from Agencies</errorMessage>
     </validationRules>

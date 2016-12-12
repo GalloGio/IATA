@@ -2318,6 +2318,13 @@ IMAGE(&quot;/servlet/servlet.FileDownload?file=015200000011tph&quot;,&quot;Reque
     </searchLayouts>
     <sharingModel>ControlledByParent</sharingModel>
     <validationRules>
+        <fullName>Check_Financial_institution_status</fullName>
+        <active>true</active>
+        <errorConditionFormula>ISPICKVAL(Financial_Institution__r.Institution_Status__c, &quot;Inactive&quot;)</errorConditionFormula>
+        <errorDisplayField>Financial_Institution__c</errorDisplayField>
+        <errorMessage>Financial institution is not active. Please request agent to submit a financial security from alternative provider.</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>Financial_Security_Validation_is_mandato</fullName>
         <active>true</active>
         <description>ACR 06749697 - A validation rule to force the user update the field &quot;Financial Security Validation&quot;</description>

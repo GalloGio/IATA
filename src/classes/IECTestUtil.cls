@@ -8,7 +8,7 @@
   *
   */
 //*** (Thai) change to "without" to fix issue of "INSUFFICIENT_ACCESS_ON_CROSS_REFERENCE_ENTITY" when create state in "CreateSampleIECAddress"
-public without sharing class IECTestUtil {
+public without sharing class IECTestUtil { 
     public static Id PortalUserAccountId;
     public static string InvoiceTestOrigin = '';
     public static string TEST_CLASS_AIMSID = 'Flag4Test';
@@ -269,7 +269,7 @@ public without sharing class IECTestUtil {
         // insert account
         Account newAccount = createSampleAccount(ClientType);
         insert newAccount;
-
+ 
         // create Bill To contact info
         Contact newContact = new Contact();
         newContact.RecordTypeId = IECUserManager.getContactRecordTypeForIEC();

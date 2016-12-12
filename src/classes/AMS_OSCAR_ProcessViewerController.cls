@@ -16,6 +16,19 @@ public class AMS_OSCAR_ProcessViewerController {
     public Map<String,StepFieldsDataWrapper> stepFieldsData {get;set;}
     
     public static Map<String, Schema.SObjectField> fieldMap = Schema.getGlobalDescribe().get('AMS_OSCAR__c').getDescribe().fields.getMap();
+
+    public Boolean showRequiredOverlay{
+        get{
+            return (
+                oscar != null
+                && oscar.Process__c != AMS_Utils.VOLRELINQUISH
+                && oscar.Process__c != AMS_Utils.VOLRELINQUISH_CA
+                && oscar.Process__c != AMS_Utils.CERTIFICATION
+                && oscar.Process__c != AMS_Utils.CERTIFICATE
+                && !oscar.AMS_Online_Accreditation__r.Ready_for_Accreditation__c
+            );
+        }
+    }
     
     public String getEffectiveDate(){
         return oscar.Change_effective_as_of__c.format();

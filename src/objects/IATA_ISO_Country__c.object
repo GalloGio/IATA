@@ -104,6 +104,18 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>AMS_Max_Vouchers_Per_Year__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Maximum number of vouchers (ceiling) allocated per year</inlineHelpText>
+        <label>Max Vouchers Per Year</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>AMS_Pilot_Country__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
@@ -134,6 +146,18 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>AMS_Vouchers_Benchmark__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Vouchers process - This represents the maximum country average.</inlineHelpText>
+        <label>Vouchers Benchmark</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>3</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Acli_Country__c</fullName>
@@ -1638,6 +1662,16 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
         <externalId>false</externalId>
         <inlineHelpText>Allow accredited agents in this country to apply online for a Notice of Change (Change of Bank details, Location, Legal Name or Ownership / Legal Status)</inlineHelpText>
         <label>Enable Notice of Change</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Enable_Risk_Change_Codes__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Used to enable a country to use risk change code, generated from SIDRA or SIDRA Lite</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Used to enable a country to use risk change code, generated from SIDRA or SIDRA Lite</inlineHelpText>
+        <label>Enable Risk Change Codes</label>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>

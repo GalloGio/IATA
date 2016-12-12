@@ -91,7 +91,15 @@ System.debug('******* 2 oscar: ' + oscar);
 
         Test.stopTest();
     }
-    
 
+    static testMethod void vr_tests() {
+        setup();
+
+        Test.startTest();
+        String resultFSRelease = AMS_OSCAR_Webservice.createFSReleaseCase(oscar4.id);
+        Test.stopTest();
+
+        System.assert(Id.valueOf(resultFSRelease).getSObjectType() == Case.SObjectType, 'Returned error');
+    }
 
 }

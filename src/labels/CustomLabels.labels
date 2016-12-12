@@ -30,6 +30,7 @@
     </labels>
     <labels>
         <fullName>AMS_OSCAR_AGENCYFEES</fullName>
+        <categories>LeftSidePanel, Headers</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS OSCAR AGENCYFEES</shortDescription>
@@ -37,6 +38,7 @@
     </labels>
     <labels>
         <fullName>AMS_OSCAR_ANTIMONEYLAUNDERING</fullName>
+        <categories>LeftSidePanel, Headers</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS_OSCAR_ANTIMONEYLAUNDERING</shortDescription>
@@ -44,6 +46,7 @@
     </labels>
     <labels>
         <fullName>AMS_OSCAR_APPLICATIONPROCESSING</fullName>
+        <categories>LeftSidePanel, Headers</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS OSCAR APPLICATIONPROCESSING</shortDescription>
@@ -51,6 +54,7 @@
     </labels>
     <labels>
         <fullName>AMS_OSCAR_APPLICATIONRECEIPT</fullName>
+        <categories>LeftSidePanel, Headers</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS OSCAR APPLICATIONRECEIPT</shortDescription>
@@ -58,6 +62,7 @@
     </labels>
     <labels>
         <fullName>AMS_OSCAR_APPLICATION_FINALIZATION</fullName>
+        <categories>LeftSidePanel, Headers</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS OSCAR APPLICATION FINALIZATION</shortDescription>
@@ -65,6 +70,7 @@
     </labels>
     <labels>
         <fullName>AMS_OSCAR_APPROVAL</fullName>
+        <categories>LeftSidePanel, Headers</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS OSCAR APPROVAL</shortDescription>
@@ -72,13 +78,15 @@
     </labels>
     <labels>
         <fullName>AMS_OSCAR_APP_FINALIZATION</fullName>
+        <categories>LeftSidePanel, Headers</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS_OSCAR_APP_FINALIZATION</shortDescription>
-        <value>Approval Finalization</value>
+        <value>Application Finalization</value>
     </labels>
     <labels>
         <fullName>AMS_OSCAR_APP_RECONSIDERATION</fullName>
+        <categories>LeftSidePanel, Headers</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS_OSCAR_APP_RECONSIDERATION</shortDescription>
@@ -86,6 +94,7 @@
     </labels>
     <labels>
         <fullName>AMS_OSCAR_APP_REJECTION_WITHDRAWAL</fullName>
+        <categories>LeftSidePanel, Headers</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS OSCAR APP WITHDRAWAL</shortDescription>
@@ -97,6 +106,27 @@
         <protected>false</protected>
         <shortDescription>AMS OSCAR Action1</shortDescription>
         <value>Generate IATA Code</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_Action10</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_Action10</shortDescription>
+        <value>Generate Case to release FS</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_Action11</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_Action11</shortDescription>
+        <value>Reactivate the agency in BSPLink</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_Action12</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_Action12</shortDescription>
+        <value>Generate Certificates</value>
     </labels>
     <labels>
         <fullName>AMS_OSCAR_Action2</fullName>
@@ -148,7 +178,23 @@
         <value>Create Commissioner Case</value>
     </labels>
     <labels>
+        <fullName>AMS_OSCAR_Action9</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_Action9</shortDescription>
+        <value>Suspend the agency in BSPLink</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_CERTIFICATE</fullName>
+        <categories>LeftSidePanel, Headers</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_CERTIFICATE</shortDescription>
+        <value>Generate Certificate</value>
+    </labels>
+    <labels>
         <fullName>AMS_OSCAR_CHANGE_DISAPPROVAL</fullName>
+        <categories>LeftSidePanel, Headers</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS_OSCAR_CHANGE_DISAPPROVAL</shortDescription>
@@ -156,6 +202,7 @@
     </labels>
     <labels>
         <fullName>AMS_OSCAR_CHANGE_FINALIZATION</fullName>
+        <categories>LeftSidePanel, Headers</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS_OSCAR_CHANGE_FINALIZATION</shortDescription>
@@ -163,6 +210,7 @@
     </labels>
     <labels>
         <fullName>AMS_OSCAR_CHANGE_PROCESSING</fullName>
+        <categories>LeftSidePanel, Headers</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS_OSCAR_CHANGE_PROCESSING</shortDescription>
@@ -170,6 +218,7 @@
     </labels>
     <labels>
         <fullName>AMS_OSCAR_CHANGE_RECONSIDERATION</fullName>
+        <categories>LeftSidePanel, Headers</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS_OSCAR_CHANGE_RECONSIDERATION</shortDescription>
@@ -177,6 +226,7 @@
     </labels>
     <labels>
         <fullName>AMS_OSCAR_CHANGE_WITHDRAWAL</fullName>
+        <categories>LeftSidePanel, Headers</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS_OSCAR_CHANGE_WITHDRAWAL</shortDescription>
@@ -184,6 +234,7 @@
     </labels>
     <labels>
         <fullName>AMS_OSCAR_CODEASSIGNMENT</fullName>
+        <categories>LeftSidePanel, Headers</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS_OSCAR_CODEASSIGNMENT</shortDescription>
@@ -191,13 +242,15 @@
     </labels>
     <labels>
         <fullName>AMS_OSCAR_DISAPPROVAL</fullName>
+        <categories>LeftSidePanel, Headers</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS OSCAR DISAPPROVAL</shortDescription>
-        <value>Disapproval Finalization</value>
+        <value>Application Disapproval</value>
     </labels>
     <labels>
         <fullName>AMS_OSCAR_MASTERDATA</fullName>
+        <categories>LeftSidePanel, Headers</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS OSCAR MASTERDATA</shortDescription>
@@ -205,10 +258,35 @@
     </labels>
     <labels>
         <fullName>AMS_OSCAR_PENALTY</fullName>
+        <categories>LeftSidePanel, Headers</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS OSCAR PENALTY</shortDescription>
         <value>Penalty</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_PROCESSSUSPENSION</fullName>
+        <categories>LeftSidePanel, Headers</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_PROCESSSUSPENSION</shortDescription>
+        <value>Process Suspension</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_PROCESSTERMINATION</fullName>
+        <categories>LeftSidePanel, Headers</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_PROCESSTERMINATION</shortDescription>
+        <value>Process Termination</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_PROCESSWITHDRAWAL</fullName>
+        <categories>LeftSidePanel, Headers</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_PROCESSWITHDRAWAL</shortDescription>
+        <value>Process Withdrawal</value>
     </labels>
     <labels>
         <fullName>AMS_OSCAR_Process_A1</fullName>
@@ -254,17 +332,18 @@
     </labels>
     <labels>
         <fullName>AMS_OSCAR_REJECTION_FINALIZATION</fullName>
+        <categories>LeftSidePanel, Headers</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS_OSCAR_REJECTION_FINALIZATION</shortDescription>
-        <value>Rejection Finalization</value>
+        <value>Application Rejection</value>
     </labels>
     <labels>
         <fullName>AMS_OSCAR_STEP1</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS OSCAR STEP1</shortDescription>
-        <value>Approval Finalization</value>
+        <value>Application Finalization</value>
     </labels>
     <labels>
         <fullName>AMS_OSCAR_STEP10</fullName>
@@ -327,7 +406,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS OSCAR STEP18</shortDescription>
-        <value>Rejection finalization</value>
+        <value>Application Rejection</value>
     </labels>
     <labels>
         <fullName>AMS_OSCAR_STEP19</fullName>
@@ -418,7 +497,35 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS OSCAR STEP3</shortDescription>
-        <value>Disapproval Finalization</value>
+        <value>Application Disapproval</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_STEP30</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_STEP30</shortDescription>
+        <value>Process Suspension</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_STEP31</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_STEP31</shortDescription>
+        <value>Process Termination</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_STEP32</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_STEP32</shortDescription>
+        <value>Process Withdrawal</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_STEP33</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_STEP33</shortDescription>
+        <value>Certificate</value>
     </labels>
     <labels>
         <fullName>AMS_OSCAR_STEP4</fullName>
@@ -464,6 +571,7 @@
     </labels>
     <labels>
         <fullName>AMS_OSCAR_VALIDATION</fullName>
+        <categories>LeftSidePanel, Headers</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS OSCAR VALIDATION</shortDescription>
@@ -475,13 +583,6 @@
         <protected>false</protected>
         <shortDescription>AMS_OSCAR_Warning_1</shortDescription>
         <value>There are still no Appointments created for this OSCAR Process</value>
-    </labels>
-    <labels>
-        <fullName>AMS_PERFORM_CORRECTION</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>AMS_PERFORM_CORRECTION</shortDescription>
-        <value>Perform Correction</value>
     </labels>
     <labels>
         <fullName>ANY</fullName>
@@ -629,42 +730,42 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AirlineSuspensionEmailGDS</shortDescription>
-        <value>ncedmstkt@amadeus.com, system.support@sabre.com, tim.powell@sabre.com, gabriel.licio@sabre.com, admbsp@kiusys.com, producto@kiusys.com, customer.support@der.de, christian.pohlig@der.net, michael.preiser@sita.aero, HelpDesk@farelogix.com, iata@ml.axess.co.jp, axset@ml.axess.co.jp, travelportairlinesupport@travelport.com, emyoon@topas.net, byyeom@topas.net, ncedmstkt@amadeus.com, e-tkt@topas.net, cscall@topas.net, res@topas.net, accreditation@ttinteractive.com, mouanaim@ttinteractive.com, Hanao@elal.co.il, Shmuelp@elal.co.il, ZPYU@TRAVELSKY.COM, jiajia@travelsky.com, SowFung_Leong@abacus.com.sg, Poovaneswari_Selvaraj@abacus.com.sg, alice_lee@abacus.com.sg, support@abacus.com.sg, julio.delarosa@e-sav.net, iataprocesosaerolineas@e-sav.net, pasajetkt@iberia.es, resiberteam@iberia.es, pk@infini-trvl.co.jp, eisen@infini-trvl.co.jp   </value>
+        <value> ncedmstkt@amadeus.com, gregory.tarrusson@amadeus.com, rsamson@amadeus.com, palexandre@amadeus.com, ncedmsgcd@amadeus.com, system.support@sabre.com, tim.powell@sabre.com, gabriel.licio@sabre.com, admbsp@kiusys.com, producto@kiusys.com, customer.support@der.de, christian.pohlig@der.net, HelpDesk@farelogix.com, pricing@farelogix.com, nmoore@farelogix.com, iata@ml.axess.co.jp, axset@ml.axess.co.jp, travelportairlinesupport@travelport.com, mike.walker@travelport.com, emyoon@topas.net, byyeom@topas.net,  e-tkt@topas.net, cscall@topas.net, accreditation@ttinteractive.com, Hanao@elal.co.il, Shmuelp@elal.co.il, zpyu@travelsky.com, net_ncc@travelsky.com, net_mor@travelsky.com, jiajia@travelsky.com, iReq@abacus.com.sg,  support@abacus.com.sg, sowfung_leong@abacus.com.sg, julio.delarosa@e-sav.net, iataprocesosaerolineas@e-sav.net, pasajetkt@iberia.es, resiberteam@iberia.es , pk@infini-trvl.co.jp, eisen@infini-trvl.co.jp</value>
     </labels>
     <labels>
         <fullName>AirlineSuspensionEmailRecipientsAfricaMiddleEast</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AirlineSuspensionEmailRecipientsAfricaMiddleEast</shortDescription>
-        <value>dabbash@iata.org, kosticd@iata.org, grobotekt@iata.org, shishanis@iata.org, mirb@iata.org, isicheic@iata.org, sadiqs@iata.org, yousefr@iata.org, suwal@iata.org, sorokink@iata.org, tadrosc@iata.org, salaha@iata.org, almuhaisem@iata.org, amulelea@iata.org</value>
+        <value>cliffordc@iata.org,kuuchir@iata.org,kosticd@iata.org,grobotekt@iata.org,StancuA@iata.org,mirb@iata.org,isicheic@iata.org,sadiqs@iata.org,yousefr@iata.org,rajputf@iata.org,suwal@iata.org,sorokink@iata.org,tadrosc@iata.org,salaha@iata.org,almuhaisem@iata.org,amulelea@iata.org</value>
     </labels>
     <labels>
         <fullName>AirlineSuspensionEmailRecipientsAmericas</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AirlineSuspensionEmailRecipientsAmericas</shortDescription>
-        <value>cerdap@iata.org, odelej@iata.org, ciriloc@iata.org, hanonl@iata.org, linesa@iata.org, pughr@iata.org, reisf@iata.org, hanonl@iata.org, fondacarop@iata.org, corvoj@iata.org, molinac@iata.org, salaar@iata.org, solorzanoj@iata.org, medeirosk@iata.org, montielk@iata.org, lopezr@iata.org, smojet@iata.org, kinoshitan@iata.org</value>
+        <value>cerdap@iata.org, odelej@iata.org, ciriloc@iata.org, hanonl@iata.org, linesa@iata.org, pughr@iata.org, reisf@iata.org, hanonl@iata.org, fondacarop@iata.org, corvoj@iata.org, molinac@iata.org, salaar@iata.org, solorzanoj@iata.org, medeirosk@iata.org, montielk@iata.org, lopezr@iata.org, smojet@iata.org, kinoshitan@iata.org, larranagad@iata.org, orebc@iata.org, americasopsmanagement@iata.org</value>
     </labels>
     <labels>
         <fullName>AirlineSuspensionEmailRecipientsAsiaPacific</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AirlineSuspensionEmailRecipientsAsiaPacific</shortDescription>
-        <value>cliffordc@iata.org, yeohhc@iata.org, mcleank@iata.org, azaharia@iata.org, hoj@iata.org, goelv@iata.org, choudhuryr@iata.org, kwongr@iata.org, kotharik@iata.org, chewj@iata.org, kimdh@iata.org, chowdhurym@iata.org, kwongr@iata.org, leet@iata.org, nguyenth@iata.org, nalawadem@iata.org, mohananb@iata.org, shahb@iata.org, rodrigos@iata.org, vitharanai@iata.org, reyesr@iata.org, ohv@iata.org, pekm@iata.org</value>
+        <value>cliffordc@iata.org, yeohhc@iata.org, cowlesb@iata.org, azaharia@iata.org, hoj@iata.org, goelv@iata.org, choudhuryr@iata.org, kwongr@iata.org, kotharik@iata.org, chewj@iata.org, chowdhurym@iata.org, kwongr@iata.org, leet@iata.org, nguyenth@iata.org, nalawadem@iata.org, mohananb@iata.org, shahb@iata.org, rodrigos@iata.org, vitharanai@iata.org, reyesr@iata.org, ohv@iata.org, pekm@iata.org, praban@iata.org, shaikhn@iata.org</value>
     </labels>
     <labels>
         <fullName>AirlineSuspensionEmailRecipientsChinaNorthAsia</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AirlineSuspensionEmailRecipientsChinaNorthAsia</shortDescription>
-        <value>zhangbj@iata.org, liyp@iata.org, liwx@iata.org, lusm@iata.org, wangls@iata.org, pengs@iata.org, houk@iata.org, lusm@iata.org, zhaor@iata.org, mayh@iata.org, songy@iata.org, sundy@iata.org, gaom@iata.org, wangyy@iata.org, zhangxl@iata.org, zhangy@iata.org, niuy@iata.org, juyi@iata.org, guoy@iata.org</value>
+        <value>zhangbj@iata.org, liyp@iata.org, liwx@iata.org, wangls@iata.org, pengs@iata.org, houk@iata.org, lusm@iata.org, zhaor@iata.org, mayh@iata.org, sundy@iata.org, gaom@iata.org, wangyy@iata.org, zhangxl@iata.org, zhangy@iata.org, niuy@iata.org, juyi@iata.org, guoy@iata.org, xuj@iata.org</value>
     </labels>
     <labels>
         <fullName>AirlineSuspensionEmailRecipientsEurope</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AirlineSuspensionEmailRecipientsEurope</shortDescription>
-        <value>schvartzmanr@iata.org, moralesa@iata.org, buonog@iata.org, fernandezs@iata.org, escalantej@iata.org, higginsm@iata.org, girondoe@iata.org, castrom@iata.org, ivanovam@iata.org, perezp@iata.org, pascualr@iata.org, paredesv@iata.org, blazqueza@iata.org, diasdasalj@iata.org, ingladas@iata.org, martinezm@iata.org, albuquerqd@iata.org, batagliaf@iata.org, baissonm@iata.org, paredesc@iata.org, saremyt@iata.org, nolls@iata.org, wallacee@iata.org, peinadol@iata.org</value>
+        <value>schvartzmanr@iata.org, moralesa@iata.org, buonog@iata.org, giannisj@iata.org, escalantej@iata.org, girondoe@iata.org, wallacee@iata.org, castrom@iata.org, ivanovam@iata.org, perezp@iata.org, pascualr@iata.org, paredesv@iata.org, blazqueza@iata.org, diasdasalj@iata.org, ingladas@iata.org, martinezm@iata.org, batagliaf@iata.org, baissonm@iata.org, paredesc@iata.org, saremyt@iata.org, nolls@iata.org, peinadol@iata.org, martinyuks@iata.org, garciate@iata.org, amorl@iata.org, abbadid@iata.org</value>
     </labels>
     <labels>
         <fullName>Ask_Delete_Attachment</fullName>
@@ -3632,6 +3733,13 @@ Kindly note that home-based agents are required to coordinate with their colleag
         <value>Select</value>
     </labels>
     <labels>
+        <fullName>IDCard_SelectNewImage</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IDCard_SelectNewImage</shortDescription>
+        <value>SELECT A NEW IMAGE</value>
+    </labels>
+    <labels>
         <fullName>IDCard_Select_Description</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -3686,6 +3794,20 @@ Kindly note that home-based agents are required to coordinate with their colleag
         <protected>false</protected>
         <shortDescription>IDCard_StartDateSuperior</shortDescription>
         <value>Agency start date must be superior or equal to Industry start year.</value>
+    </labels>
+    <labels>
+        <fullName>IDCard_Step1</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IDCard_Step1</shortDescription>
+        <value>STEP 1: SELECT YOUR PICTURE FILE</value>
+    </labels>
+    <labels>
+        <fullName>IDCard_Step2</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IDCard_Step2</shortDescription>
+        <value>STEP 2: SELECT THE PICTURE SECTION TO BE SHOWN ON YOUR IDCARD THEN CLICK ON &quot;CONFIRM SELECTION&quot; TO PROCEED</value>
     </labels>
     <labels>
         <fullName>IDCard_Terms_and_Conditions_Err</fullName>
@@ -4134,6 +4256,13 @@ Your ID Card application manager has been informed of your request.</value>
         <protected>false</protected>
         <shortDescription>ID Card Confirm Replacement</shortDescription>
         <value>Please confirm the ID Card replacement</value>
+    </labels>
+    <labels>
+        <fullName>ID_Card_Confirm_Selection</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ID_Card_Confirm_Selection</shortDescription>
+        <value>CONFIRM SELECTION</value>
     </labels>
     <labels>
         <fullName>ID_Card_Confirmation_Page_title</fullName>
@@ -5444,6 +5573,34 @@ In order to upload your financial documents, please, login to Customer Portal on
         <value>Your password has not been changed over the last 90 days. For security reasons, please, change it now.</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_ACCR_Alert1</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_ACCR_Alert1</shortDescription>
+        <value>Please check the pop-up settings of your browser!</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_ACCR_Review_Msg</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_ACCR_Review_Msg</shortDescription>
+        <value>You can also review your online application below before uploading a signed, scanned PDF copy above.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_ACCR_Submit_Msg_CargoBR</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_ACCR_Submit_Msg_CargoBR</shortDescription>
+        <value>Thank you for submitting your Accreditation application for your Cargo Agency Branch Office.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_ACCR_Submit_Msg_CargoHO</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_ACCR_Submit_Msg_CargoHO</shortDescription>
+        <value>Thank you for submitting your Accreditation application for your Cargo Agency Head Office.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Accept_TOS</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
@@ -5734,6 +5891,13 @@ In order to upload your financial documents, please, login to Customer Portal on
         <value>A separate user access is needed in CASSlink for this branch:</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_CGO_GrossMoneyValue</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_CGO_GrossMoneyValue</shortDescription>
+        <value>% gross monetary volume</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_CGO_ReadOnly_LBL1</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -5816,6 +5980,90 @@ In order to upload your financial documents, please, login to Customer Portal on
         <protected>false</protected>
         <shortDescription>ISSP_AMS_CGO_ReadOnly_SECTION2</shortDescription>
         <value>SECTION 2 - Identification of Intermediary Location for which Approval Requested</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_CGO_ReadOnly_SECTION4</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_CGO_ReadOnly_SECTION4</shortDescription>
+        <value>SECTION 4 - Additional Agent Details</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_CGO_Region_Africa</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_CGO_Region_Africa</shortDescription>
+        <value>Africa</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_CGO_Region_Australia</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_CGO_Region_Australia</shortDescription>
+        <value>Australia &amp; S. Pacific</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_CGO_Region_CentralAmerica</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_CGO_Region_CentralAmerica</shortDescription>
+        <value>Central America &amp; Caribbean</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_CGO_Region_Europe</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_CGO_Region_Europe</shortDescription>
+        <value>Europe</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_CGO_Region_FarEast</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_CGO_Region_FarEast</shortDescription>
+        <value>Far East</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_CGO_Region_MiddleEast</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_CGO_Region_MiddleEast</shortDescription>
+        <value>Middle East</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_CGO_Region_SouthAmerica</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_CGO_Region_SouthAmerica</shortDescription>
+        <value>South America</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_CGO_Region_USA</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_CGO_Region_USA</shortDescription>
+        <value>USA / Canada</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_CGO_SpecialTypes_DangerousGoods</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_CGO_SpecialTypes_DangerousGoods</shortDescription>
+        <value>Dangerous Goods</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_CGO_SpecialTypes_LiveAnimals</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_CGO_SpecialTypes_LiveAnimals</shortDescription>
+        <value>Live Animals</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_CGO_SpecialTypes_Other</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_CGO_SpecialTypes_Other</shortDescription>
+        <value>Other</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_CGO_T_Cs_TXT1</fullName>
@@ -6232,6 +6480,13 @@ In order to upload your financial documents, please, login to Customer Portal on
         <value>(b) List dangerous goods awareness certificate completed</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Cargo_Branch_Form_SECTION5_TXT7</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Cargo_Branch_Form_SECTION5_TXT7</shortDescription>
+        <value>Describe experience in air transport business</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Cargo_Cass_Contact</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -6424,7 +6679,7 @@ In order to upload your financial documents, please, login to Customer Portal on
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Director</shortDescription>
-        <value>Director/Officer</value>
+        <value>Director/&lt;br/&gt;Officer</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Domestic</fullName>
@@ -6981,6 +7236,14 @@ In order to upload your financial documents, please, login to Customer Portal on
         <protected>false</protected>
         <shortDescription>ISSP AMS Fin Contact</shortDescription>
         <value>Financial Assess.&lt;br/&gt;Contact</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Financial_Interest</fullName>
+        <categories>ISSP, Portal, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Financial Interest</shortDescription>
+        <value>Financial&lt;br/&gt;Interest (%)</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_First_8_Digits</fullName>
@@ -7780,6 +8043,14 @@ For each section below either:&lt;br/&gt;
         <protected>false</protected>
         <shortDescription>ISSP AMS Name of employer</shortDescription>
         <value>Name of employer:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_New_HO_details</fullName>
+        <categories>ISSP, Portal, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS New HO details</shortDescription>
+        <value>New Head Office address details</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_Additional_Information</fullName>
@@ -10370,12 +10641,446 @@ Select at least one Authorized Signatory, and choose the Financial Assessment Co
         <value>download a PDF version</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_download_a_PDF_version_Application</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_download_a_PDF_version_Application</shortDescription>
+        <value>application.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_download_a_PDF_version_Of_your</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_download_a_PDF_version_Of_your</shortDescription>
+        <value>of your</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_download_of</fullName>
         <categories>ISSP AMS</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_download_of</shortDescription>
         <value>of your Notice Of Change application.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_eBulletin_AgencyChanges</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_eBulletin_AgencyChanges</shortDescription>
+        <value>Agency Changes</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_eBulletin_AgencyInformation</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_eBulletin_AgencyInformation</shortDescription>
+        <value>Agency Information</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_eBulletin_Area1</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_eBulletin_Area1</shortDescription>
+        <value>Area 1 - North, Central, South America &amp; Environs</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_eBulletin_Area2</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_eBulletin_Area2</shortDescription>
+        <value>Area 2 - Europe, Middle East &amp; Africa</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_eBulletin_Area3</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_eBulletin_Area3</shortDescription>
+        <value>Area 3 - Far East, Australia, New Zealand &amp; Pacific Islands</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_eBulletin_AvailableCountries</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_eBulletin_AvailableCountries</shortDescription>
+        <value>Available Countries</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_eBulletin_CASS</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_eBulletin_CASS</shortDescription>
+        <value>CASS Associates, Import, Courier Agents</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_eBulletin_Cargo</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_eBulletin_Cargo</shortDescription>
+        <value>Cargo</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_eBulletin_Countries</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_eBulletin_Countries</shortDescription>
+        <value>Countries</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_eBulletin_CountrySelection</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_eBulletin_CountrySelection</shortDescription>
+        <value>Country Selection</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_eBulletin_Country_SelectAll</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_eBulletin_Country_SelectAll</shortDescription>
+        <value>Select All</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_eBulletin_DAILY_Bulletin</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_eBulletin_DAILY_Bulletin</shortDescription>
+        <value>Enable DAILY eBulletin</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_eBulletin_DailyFrequency</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_eBulletin_DailyFrequency</shortDescription>
+        <value>Daily Frequency</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_eBulletin_Defaults</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_eBulletin_Defaults</shortDescription>
+        <value>Defaults</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_eBulletin_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_eBulletin_Description</shortDescription>
+        <value>Allows the generation of DAILY &amp; WEEKLY Reports for Agency related changes.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_eBulletin_Disabled</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_eBulletin_Disabled</shortDescription>
+        <value>Inactive</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_eBulletin_Domestic</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_eBulletin_Domestic</shortDescription>
+        <value>Domestic (Indonesia &amp; China only)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_eBulletin_Enabled</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_eBulletin_Enabled</shortDescription>
+        <value>Active</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_eBulletin_FilterOptionsDaily</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_eBulletin_FilterOptionsDaily</shortDescription>
+        <value>Filter Options (DAILY)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_eBulletin_FilterOptionsWeekly</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_eBulletin_FilterOptionsWeekly</shortDescription>
+        <value>Filter Options (WEEKLY)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_eBulletin_Filter_Geographic_Area</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_eBulletin_Filter_Geographic_Area</shortDescription>
+        <value>Filter by Geographic Area</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_eBulletin_GeographicArea</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_eBulletin_GeographicArea</shortDescription>
+        <value>Geographic Area</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_eBulletin_Instructions</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_eBulletin_Instructions</shortDescription>
+        <value>Instructions</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_eBulletin_Irregularities</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_eBulletin_Irregularities</shortDescription>
+        <value>Irregularities</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_eBulletin_NewApplicationProcesses</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_eBulletin_NewApplicationProcesses</shortDescription>
+        <value>New Application Processes</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_eBulletin_OptOut_Daily_Notifications</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_eBulletin_OptOut_Daily_Notifications</shortDescription>
+        <value>Opt out from Daily eMail Notifications</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_eBulletin_OptOut_Weekly_Notifications</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_eBulletin_OptOut_Weekly_Notifications</shortDescription>
+        <value>Opt out from Weekly eMail Notifications</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_eBulletin_Passenger</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_eBulletin_Passenger</shortDescription>
+        <value>Passenger</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_eBulletin_Processing_eBulletin</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_eBulletin_Processing_eBulletin</shortDescription>
+        <value>Processing eBulletin...</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_eBulletin_Program</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_eBulletin_Program</shortDescription>
+        <value>Program</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_eBulletin_ProgramSelection</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_eBulletin_ProgramSelection</shortDescription>
+        <value>Program Selection</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_eBulletin_Receive_eBulletin_TimeZone</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_eBulletin_Receive_eBulletin_TimeZone</shortDescription>
+        <value>Receive E-Bulletin for Time Zone</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_eBulletin_Reviews</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_eBulletin_Reviews</shortDescription>
+        <value>Reviews</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_eBulletin_RunReport</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_eBulletin_RunReport</shortDescription>
+        <value>Run report:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_eBulletin_RunReport_opt_LastExecution</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_eBulletin_RunReport_opt_LastExecution</shortDescription>
+        <value>Since last download today</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_eBulletin_RunReport_opt_Today</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_eBulletin_RunReport_opt_Today</shortDescription>
+        <value>Full day</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_eBulletin_SelectWeek</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_eBulletin_SelectWeek</shortDescription>
+        <value>Select week:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_eBulletin_SelectedCountries</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_eBulletin_SelectedCountries</shortDescription>
+        <value>Selected Countries</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_eBulletin_Selection_Criteria</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_eBulletin_Selection_Criteria</shortDescription>
+        <value>Selection Criteria</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_eBulletin_Selection_Download</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_eBulletin_Selection_Download</shortDescription>
+        <value>Selection Criteria / Download Reports</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_eBulletin_Status</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_eBulletin_Status</shortDescription>
+        <value>Status</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_eBulletin_SubscriptionInformation</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_eBulletin_SubscriptionInformation</shortDescription>
+        <value>Subscription Information</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_eBulletin_Termination_Closures</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_eBulletin_Termination_Closures</shortDescription>
+        <value>Termination &amp; Closures</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_eBulletin_TimeZone_Selection</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_eBulletin_TimeZone_Selection</shortDescription>
+        <value>Time Zone Selection</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_eBulletin_Title</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_eBulletin_Title</shortDescription>
+        <value>AIRS / CAIRS Online Bulletin</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_eBulletin_WEEKLY_Bulletin</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_eBulletin_WEEKLY_Bulletin</shortDescription>
+        <value>Enable WEEKLY eBulletin</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_eBulletin_btn_DownloadDailyReport</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_eBulletin_btn_DownloadDailyReport</shortDescription>
+        <value>Download Daily Report</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_eBulletin_btn_DownloadWeeklyReport</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_eBulletin_btn_DownloadWeeklyReport</shortDescription>
+        <value>Download Weekly Report</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_eBulletin_btn_EditSelectionCriteria</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_eBulletin_btn_EditSelectionCriteria</shortDescription>
+        <value>Edit Selection Criteria</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_eBulletin_btn_SaveGenerateReport</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_eBulletin_btn_SaveGenerateReport</shortDescription>
+        <value>Save &amp; Generate Report</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_eBulletin_eBulletin_UserGuide</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_eBulletin_eBulletin_UserGuide</shortDescription>
+        <value>e-Bulletin User Guide</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_eBulletin_home_btn</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_eBulletin_home_btn</shortDescription>
+        <value>Continue to E-Bulletin</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_eBulletin_home_lbl1</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_eBulletin_home_lbl1</shortDescription>
+        <value>Then please consult the</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_eBulletin_home_lbl2</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_eBulletin_home_lbl2</shortDescription>
+        <value>User Guide</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_eBulletin_home_lbl3</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_eBulletin_home_lbl3</shortDescription>
+        <value>Manage your selection criteria and generate the reports.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_eBulletin_home_lbl4</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_eBulletin_home_lbl4</shortDescription>
+        <value>Need help using the</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_eBulletin_info_1</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_eBulletin_info_1</shortDescription>
+        <value>Please download a WEEKLY report if you wish to report on DAILY items prior to the last 7 days.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_eBulletin_info_2</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_eBulletin_info_2</shortDescription>
+        <value>(You may need to adjust your WEEKLY filter options beforehand)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_eBulletin_info_Daily_available_days</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_eBulletin_info_Daily_available_days</shortDescription>
+        <value>DAILY bulletin available for last 7 days:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_eBulletin_lbl_Enable</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_eBulletin_lbl_Enable</shortDescription>
+        <value>Enable:</value>
     </labels>
     <labels>
         <fullName>ISSP_AP_Bank_Details_Change</fullName>
@@ -10534,7 +11239,8 @@ Select at least one Authorized Signatory, and choose the Financial Assessment Co
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP Account Statements Disclaimer</shortDescription>
-        <value>NOTE: Kindly note that the balances are updated on the portal at least one business day after IATA&apos;s account has been credited</value>
+        <value>NOTE: Kindly note that these balances are updated on the portal at least one business day after IATA’s account has been credited.
+Also note that the data contained in ICE is provided to IATA by third parties at 24 hour intervals, and may not be current, accurate or complete</value>
     </labels>
     <labels>
         <fullName>ISSP_Account_Statements_Title</fullName>
@@ -11698,7 +12404,7 @@ Can you please confirm which country you&apos;ve previously received support for
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP EBulletin</shortDescription>
-        <value>E-Bulletin</value>
+        <value>AIRS / CAIRS Online Bulletin</value>
     </labels>
     <labels>
         <fullName>ISSP_EBulletin_Description</fullName>
@@ -13489,6 +14195,13 @@ this is the tiess topic help</value>
         <value>Loading Account details...</value>
     </labels>
     <labels>
+        <fullName>ISSP_Loading_CASS_Associate_Details</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Loading_CASS_Associate_Details</shortDescription>
+        <value>Loading CASS Associate details...</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Loading_Cargo_Agency_Details</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -13497,12 +14210,27 @@ this is the tiess topic help</value>
         <value>Loading Cargo Agent details...</value>
     </labels>
     <labels>
+        <fullName>ISSP_Loading_Cargo_Company_Details</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Loading Cargo Company Details</shortDescription>
+        <value>Loading Cargo Company details...</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Loading_Travel_Agency_Details</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP Loading Travel Agency Details</shortDescription>
         <value>Loading Travel Agency details...</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Loading_Travel_Agent_Details</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Loading_Travel_Agent_Details</shortDescription>
+        <value>Loading Travel Agent Details...</value>
     </labels>
     <labels>
         <fullName>ISSP_Location</fullName>
@@ -15137,7 +15865,7 @@ If you want to reset your password, go back to login screen and use &quot;forgot
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP SIDRA Withdraw Approval Date</shortDescription>
-        <value>Default Withdrawal Approval Date</value>
+        <value>Default Withdrawal Date</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_1_Description</fullName>
@@ -15349,6 +16077,14 @@ If you want to reset your password, go back to login screen and use &quot;forgot
         <protected>false</protected>
         <shortDescription>ISSP_SharePoint_Thanks</shortDescription>
         <value>http://www.iata.org/customer-portal/Pages/thankspage.aspx</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Shipping_Address</fullName>
+        <categories>ISSP, Portal, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Shipping Address</shortDescription>
+        <value>Shipping Address</value>
     </labels>
     <labels>
         <fullName>ISSP_Should_be_mandatory</fullName>
@@ -16935,6 +17671,34 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <protected>false</protected>
         <shortDescription>Message</shortDescription>
         <value>Message</value>
+    </labels>
+    <labels>
+        <fullName>MultiselectPicklist_Add</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>MultiselectPicklist_Add</shortDescription>
+        <value>Add</value>
+    </labels>
+    <labels>
+        <fullName>MultiselectPicklist_Down</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>MultiselectPicklist_Down</shortDescription>
+        <value>Down</value>
+    </labels>
+    <labels>
+        <fullName>MultiselectPicklist_Remove</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>MultiselectPicklist_Remove</shortDescription>
+        <value>Remove</value>
+    </labels>
+    <labels>
+        <fullName>MultiselectPicklist_Up</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>MultiselectPicklist_Up</shortDescription>
+        <value>Up</value>
     </labels>
     <labels>
         <fullName>My_Renewals</fullName>

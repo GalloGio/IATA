@@ -1287,7 +1287,15 @@
             <type>user</type>
         </recipients>
         <recipients>
+            <recipient>ogandoi@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>paredesc@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>sanchezc@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -2917,6 +2925,33 @@
         <template>SCESIDRACases/DEF_DEFWITH01_DefaultWithdrawalProposedbyCM</template>
     </alerts>
     <alerts>
+        <fullName>SIDRA_IRIS_CLIENT_BALANCE</fullName>
+        <description>SIDRA_IRIS_CLIENT_BALANCE</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>SIDRA ACC &amp; Risk</recipient>
+            <type>caseTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>SIDRA ACC &amp; Risk &amp; LO</recipient>
+            <type>caseTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>SIDRA Approvals &amp; ACC &amp; Risk</recipient>
+            <type>caseTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>SIDRA LO &amp; RISK</recipient>
+            <type>caseTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>SIDRA RISK</recipient>
+            <type>caseTeam</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>unfiled$public/IRIS_Client_Balance</template>
+    </alerts>
+    <alerts>
         <fullName>SIDRA_IRRDEF02_IrregularityDefaultapprovedby2hoursMailtoRSESPTCY</fullName>
         <description>SIDRA_IRR/DEF02_Irregularity/Default approved by 2 hours - Mail to R&amp;S - ES - PT - CY</description>
         <protected>false</protected>
@@ -3474,11 +3509,11 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>shalbakf@iata.org</recipient>
+            <recipient>parkyr@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>zhangxl@iata.org</recipient>
+            <recipient>shalbakf@iata.org</recipient>
             <type>user</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
@@ -11467,7 +11502,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         </actions>
         <active>true</active>
         <description>Clear New interaction field when Query is closed. It is necessary when query  had another Record Type with New Interaction Info</description>
-        <formula>AND(OR ( RecordType.DeveloperName = &quot;OSCAR_Communication&quot;,  RecordType.DeveloperName = &quot;CasesAmericas&quot;, RecordType.DeveloperName = &quot;CasesEurope&quot;, RecordType.DeveloperName = &quot;InternalCasesEuropeSCE&quot; ,RecordType.DeveloperName = &quot;CasesMENA&quot; ,RecordType.DeveloperName = &quot;ExternalCasesIDFSglobal&quot;,  RecordType.DeveloperName = &quot;Cases_China_North_Asia&quot;,  RecordType.DeveloperName = &quot;ProcessEuropeSCE&quot;,  RecordType.DeveloperName = &quot;sMAP_sales_Monitoring_Alert_Process&quot;, RecordType.DeveloperName = &quot;ComplaintIDFS&quot;, RecordType.DeveloperName = &quot;IDFS_Airline_Participation_Process&quot;, RecordType.DeveloperName = &quot;CS_Process_IDFS_ISS&quot;,  RecordType.DeveloperName =&quot;IATA_Financial_Review&quot;,  RecordType.DeveloperName =&quot;ID_Card_Application&quot;) , OwnerId = LastModifiedById, ispickval(Status, &quot;Closed&quot;), not(ispickval(New_interaction__c, &quot;&quot;)))</formula>
+        <formula>AND(OR ( RecordType.DeveloperName = &quot;OSCAR_Communication&quot;,   RecordType.DeveloperName = &quot;CasesAmericas&quot;,  RecordType.DeveloperName = &quot;CasesEurope&quot;,  RecordType.DeveloperName = &quot;InternalCasesEuropeSCE&quot; , RecordType.DeveloperName = &quot;CasesMENA&quot; , RecordType.DeveloperName = &quot;ExternalCasesIDFSglobal&quot;,   RecordType.DeveloperName = &quot;Cases_China_North_Asia&quot;,   RecordType.DeveloperName = &quot;ProcessEuropeSCE&quot;,   RecordType.DeveloperName = &quot;sMAP_sales_Monitoring_Alert_Process&quot;,  RecordType.DeveloperName = &quot;ComplaintIDFS&quot;,  RecordType.DeveloperName = &quot;IDFS_Airline_Participation_Process&quot;,  RecordType.DeveloperName = &quot;CS_Process_IDFS_ISS&quot;,   RecordType.DeveloperName =&quot;IATA_Financial_Review&quot;,   RecordType.DeveloperName =&quot;ID_Card_Application&quot;) ,  OwnerId = LastModifiedById, contains(TEXT(Status),&quot;Closed&quot;), not(ispickval(New_interaction__c, &quot;&quot;)))</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -12241,10 +12276,6 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <name>FDS_Set_Status_Pending_customer</name>
             <type>FieldUpdate</type>
         </actions>
-        <actions>
-            <name>ASP_Case_created_Status_to_be_updated_in_MDM</name>
-            <type>Task</type>
-        </actions>
         <active>true</active>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
@@ -12268,10 +12299,6 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <actions>
             <name>FDS_Set_Status_Pending_customer</name>
             <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>ASP_Case_created_Status_to_be_updated_in_MDM</name>
-            <type>Task</type>
         </actions>
         <active>true</active>
         <criteriaItems>
@@ -14632,7 +14659,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <criteriaItems>
             <field>Case.Reason1__c</field>
             <operation>notEqual</operation>
-            <value>CHC – Change of Shareholding,CHG – Data Maintenance,CHL - Change of Location,CHN - Change of Name,CHO / CHS – Change of Ownership / Legal Status,CLO - Closure,Direct Debit Setup/Update,IRIS Bank Detail Update,New BR / IP,New BR Abroad</value>
+            <value>CHC – Change of Shareholding,CHG – Data Maintenance,CHL - Change of Location,CHN - Change of Name,CHO / CHS – Change of Ownership / Legal Status,CLO - Closure,Direct Debit Setup/Update,IRIS Bank Detail Update,New BR / IP,New BR Abroad,Certificate DGR</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Reason1__c</field>
@@ -14673,7 +14700,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <criteriaItems>
             <field>Case.Origin</field>
             <operation>notEqual</operation>
-            <value>Internal Case,Phone</value>
+            <value>Internal Case,Phone,Chat</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.OwnerId</field>
@@ -15005,14 +15032,6 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
         <workflowTimeTriggers>
             <actions>
-                <name>ISSP_Send_expiration_Reminder</name>
-                <type>Alert</type>
-            </actions>
-            <timeLength>13</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-        <workflowTimeTriggers>
-            <actions>
                 <name>ISS_Portal_Make_case_invisible</name>
                 <type>FieldUpdate</type>
             </actions>
@@ -15025,6 +15044,14 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
                 <type>FieldUpdate</type>
             </actions>
             <timeLength>15</timeLength>
+            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+        <workflowTimeTriggers>
+            <actions>
+                <name>ISSP_Send_expiration_Reminder</name>
+                <type>Alert</type>
+            </actions>
+            <timeLength>13</timeLength>
             <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
         </workflowTimeTriggers>
     </rules>
@@ -17021,6 +17048,17 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
             <value>Israel</value>
         </criteriaItems>
         <description>SCE</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>SIDRA_IRIS_Client_Balance</fullName>
+        <actions>
+            <name>SIDRA_IRIS_CLIENT_BALANCE</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <description>Sending notifications to ARM when R&amp;S update the IRIS Client balance</description>
+        <formula>AND ((RecordType.Name = &quot;SIDRA&quot;), AND(NOT(ISBLANK(IRIS_Client_Balance__c))))</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
