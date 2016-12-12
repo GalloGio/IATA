@@ -655,12 +655,10 @@ public class AMS_OSCARTriggerHandler {
 					AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
 
 					changeCode.name = 'LNF';
+					//changeCode.memoText = lastChangeCode.Bulletin_Information__c;
+					changeCode.reasonCode = lastChangeCode.Reason_Code__c;
+					changeCode.reasonDesc = lastChangeCode.Reason_Description__c;
 					changeCode.status = AMS_Utils.getIATANumericStatus(accounts.get(oscar.Account__c).Status__c);
-
-					// lastChangeCode can be null so,
-					changeCode.reasonCode = lastChangeCode == null? '' : lastChangeCode.Reason_Code__c;
-					changeCode.reasonDesc = lastChangeCode == null? '' : lastChangeCode.Reason_Description__c;   
-					//changeCode.memoText = lastChangeCode == null? '' : lastChangeCode.Bulletin_Information__c;
 
 					System.debug(loggingLevel.ERROR, '____ [cls AMS_OSCARTriggerHandler - processAgencyChanges] changeCode - ' + changeCode);
 
@@ -1009,7 +1007,7 @@ public class AMS_OSCARTriggerHandler {
         		caseChanged = true;
         	}
         	if(c.Process_Start_Date__c == null){
-        		c.Process_Start_Date__c = updatedOSCAR.Process_Start_Date__c;
+        		c.Process_Start_Date__c = updatedOSCAR.Sanity_check_received__c;
         		caseChanged = true;
         	}
 
@@ -1257,16 +1255,16 @@ public class AMS_OSCARTriggerHandler {
 
 				System.debug('CHECK CASS: ' + oscar.AMS_Online_Accreditation__r.CASS_Number__c);
 
-				if(oscar.AMS_Online_Accreditation__r.Is_your_firm_handling_Dangerous_Goods__c == 'Yes'){
-					checkCertifications(trainedStaffPerAccount.get(oscar.Account__c), locationType, true, locationClass, countryCode, minDgrHO, minDgrBR, cassNumber);
-				}
-				else{
+				if(oscar.AMS_Online_Accreditation__r.Is_your_firm_handling_Dangerous_Goods__c == 'No'){
 					//If an agency is non handling, it must have a certificate of awareness (DGA)
 					if(oscar.AMS_Online_Accreditation__r.Location_Type__c == AMS_Utils.HO || oscar.AMS_Online_Accreditation__r.Location_Type__c == AMS_Utils.BR){
 						System.debug('OSCARTriggerHandler -> validateCertificates: Non handling '+ oscar.AMS_Online_Accreditation__r.Location_Type__c + ' agency.');
 						checkCertifications(trainedStaffPerAccount.get(oscar.Account__c), locationType, false, locationClass, countryCode, minDgrHO, minDgrBR, cassNumber);
 					}
+				}else{
+					checkCertifications(trainedStaffPerAccount.get(oscar.Account__c), locationType, true, locationClass, countryCode, minDgrHO, minDgrBR, cassNumber);
 				}
+
 			}
 		}
 	}

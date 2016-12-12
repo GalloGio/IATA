@@ -16,7 +16,7 @@
         <criteriaItems>
             <field>AMS_Agency_Regulation__c.Type_Of_Certificate__c</field>
             <operation>equals</operation>
-            <value>DGR</value>
+            <value>DGR,CATA</value>
         </criteriaItems>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
         <workflowTimeTriggers>
