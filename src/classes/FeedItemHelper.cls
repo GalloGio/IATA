@@ -16,7 +16,7 @@ public with sharing class FeedItemHelper {
 		// get the accounts of interest to which the feed items are linked - we only apply the logic to Airline HQ accounts that are IATA Members
 		set<Id> setRelatedAccountIds = new set<Id>();
 		for (FeedItem fi : lstTriggerNew) {
- 	   		if (String.valueOf(fi.ParentId).startsWith('001') && fi.Body != null && !fi.Body.contains('#') && fi.Type == 'TextPost') {
+ 	   		if (String.valueOf(fi.ParentId).startsWith('001') && !fi.Body.contains('#') && fi.Type == 'TextPost') {
  	   			setRelatedAccountIds.add(fi.ParentId);
  	   		}
  	   	}

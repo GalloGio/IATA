@@ -394,7 +394,7 @@
                                                                     </strong>
                                                                     email credits.
                                                                     <br/>
-                                                                    <apex:outputText value="At a unit cost of ${0,number,###,###,##0.00}/email">
+                                                                    <apex:outputText value="At a unit cost of ${0,number,###,###,##0.000}/email">
                                                                         <apex:param value="{!emailUnitCost}"/>
                                                                     </apex:outputText>
                                                                 </apex:outputPanel>

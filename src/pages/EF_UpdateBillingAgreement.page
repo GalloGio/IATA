@@ -12,7 +12,7 @@
                 <apex:column value="{!ba.Name}"/>
                 <apex:column value="{!ba.Billing_Agreement_Name__c}"/>
                 <apex:column headerValue="Status">
-                    <apex:inputField value="{!ba.EF_Status__c}"/>
+                    <apex:inputField value="{!ba.Status__c}"/>
                 </apex:column>               
                 <apex:column headerValue="Data Currency">
                     <apex:inputField value="{!ba.Data_Currency__c}"/>

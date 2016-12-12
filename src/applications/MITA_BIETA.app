@@ -7,4 +7,5 @@
     <tab>Agreements</tab>
     <tab>Memorandums</tab>
     <tab>AmazonFile__c</tab>
+    <tab>MITA_Agreement__c</tab>
 </CustomApplication>
