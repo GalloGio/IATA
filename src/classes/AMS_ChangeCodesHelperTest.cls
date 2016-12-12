@@ -51,7 +51,7 @@ private class AMS_ChangeCodesHelperTest {
 		Set<Id> accountsInvolved = new Set<Id>{acc.Id};
 		Map<Id, Account> accounts = new Map<Id, Account>{acc.Id => acc};
 
-		AMS_OSCAR__c oscar = new AMS_Oscar__c(Process__c = AMS_Utils.VOLRELINQUISH, Account__c = acc.Id, Termination_Date__c = System.today()+30);
+		AMS_OSCAR__c oscar = new AMS_Oscar__c(Process__c = AMS_Utils.VOLRELINQUISH, Account__c = acc.Id, Termination_Date__c = System.today()+30, Change_Effective_as_of__c = system.today());
 
 		Agency_Applied_Change_Code__c aacc = new Agency_Applied_Change_Code__c(Reason_code__c = '91', Reason_Description__c = 'ACCREDITED-MEET-STANDARDS');
 
