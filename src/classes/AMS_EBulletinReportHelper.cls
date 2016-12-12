@@ -23,10 +23,10 @@ public without sharing class AMS_EBulletinReportHelper {
 
 	public static final String SECTION			= 	'0-Section';
 
-	public static final String STATE  	        = 	'7-Country or State';
-	public static final String COUNTRY  	    =	'8-Country or State';
-	public static final String CHANGECODE       = 	'14-Change Code';
-	public static final String CHANGECODEREASON = 	'15-Change Code';
+	public static final String STATE  	        = 	'9-Country or State';
+	public static final String COUNTRY  	    =	'10-Country or State';
+	public static final String CHANGECODE       = 	'1-Change Code';
+	public static final String CHANGECODEREASON = 	'2-Change Code';
 
 	public static final String OWNERS 	   		=	'23-Owner1';
 	public static final String OWNERAPINAME 	=	'Account__r.Owners';
