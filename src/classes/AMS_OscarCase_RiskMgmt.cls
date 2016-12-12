@@ -31,6 +31,7 @@ public class AMS_OscarCase_RiskMgmt {
     private static map<id, list<Account>> mapAccntValues = new map<id, list<Account>>();	//contains all the accounts associated with a HO.
     private static map<id, Account> mapAccntToUpdate = new map<id, account>();	//Stores account to be updated (Status and reason code)
 	private static set<id> setAccntIdIRRToClear = new set<id>();	//Account IDs for which a clear of irregularities is needed
+	private static map<id, list<Agency_Applied_Change_code__c>> mapExistingChangeCodes = new map<id, list<Agency_Applied_Change_code__c>>();
     
     //Main Method
 	public static void CreateRiskChangeCode(map<id, case> mapTrgOld, map<id, case> mapTrgNew){
@@ -91,16 +92,17 @@ public class AMS_OscarCase_RiskMgmt {
 			}
 			
 			//Get all previously generated change code from same sidra/sidra lite
-			map<id, list<Agency_Applied_Change_code__c>> mapExistingChangeCodes = new map<id, list<Agency_Applied_Change_code__c>>();
-			list<Agency_Applied_Change_code__c> lsAACC;
+			list<Agency_Applied_Change_code__c> lsAACC = new list<Agency_applied_change_code__c>();
 			for(Agency_Applied_Change_code__c aa:[select id, Account__c, Account__r.Location_Class__c, Change_Code__c, SIDRA_Case__c from Agency_Applied_Change_code__c where SIDRA_Case__c in:mapTrgNew.keyset()]){
-				lsAACC = new list<Agency_Applied_Change_code__c>();
+				list<Agency_Applied_Change_code__c> lsAACCtmp;
 				if(mapExistingChangeCodes.keyset().contains(aa.Account__c))
-					lsAACC = mapExistingChangeCodes.get(aa.Account__c);
+					lsAACCtmp = mapExistingChangeCodes.get(aa.Account__c);
+				else
+					lsAACCtmp = new list<Agency_Applied_Change_code__c>();
 				
-				lsAACC.add(aa);
+				lsAACCtmp.add(aa);
 				
-				mapExistingChangeCodes.put(aa.Account__c, lsAACC);
+				mapExistingChangeCodes.put(aa.Account__c, lsAACCtmp);
 			}
 			
 			//Get all financial securities related with accounts in the trigger. Used for generating bulletin memo text
@@ -133,10 +135,6 @@ public class AMS_OscarCase_RiskMgmt {
 				
 				mapIRRS.put(irr.Account__c, lsIRRS);
 			}
-			
-			//Clear the list: it will be used later to get data to insert, I don't need it anymore before.
-			if(lsAACC!=null)
-				lsAACC.clear();
 			
 			
 			//Query the Cases and account info: from the trigger, I'm not getting all necessary lookup value. Trigger is always running AFTER
@@ -180,8 +178,11 @@ public class AMS_OscarCase_RiskMgmt {
 					//if(mapCases.get(c).Account.CNS_Agency__c && !conf.Used_By_CNS__c)
 					//	continue;
 					
-					boolean CCToBeGenerated = false;
-					if(conf.Field1__c!=null)
+					
+											  //Check that the same change code does not exists generated from the same SIDRA (Lite)
+					boolean CCToBeGenerated = bCheckCondition(c, null, 'NOT EXISTS:' + conf.Change_Code__c, null, mapExistingChangeCodes);
+					
+					if(conf.Field1__c!=null && CCToBeGenerated)
 						CCToBeGenerated = bCheckCondition(c, conf.Field1__c, conf.Field1Values__c.toUpperCase(), mapTrgOld.get(c.Id), mapExistingChangeCodes);
 					
 					if(conf.Field2__c!=null && CCToBeGenerated)
@@ -455,6 +456,19 @@ public class AMS_OscarCase_RiskMgmt {
 			}
 			
 			return false;
+		}
+		
+		//This is used to check if there is already an existing same change code generated from the same SIDRA (Lite): we don't want to have it generated twice.
+		if(condition.startsWithIgnoreCase('NOT EXISTS:')){
+			if(mapCC.keyset().contains(NewCaseValues.AccountId)){
+				string sChangeCode = (condition.right(condition.length()-'NOT EXISTS:'.length()));
+				for(Agency_Applied_Change_code__c aa:mapCC.get(NewCaseValues.AccountId)){
+					if(aa.Change_Code__c==sChangeCode)
+						return false;
+				}
+			}
+			
+			return true;
 		}
 		
 		if(condition.startsWithIgnoreCase('VALUES:')){
