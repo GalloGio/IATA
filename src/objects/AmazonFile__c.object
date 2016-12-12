@@ -244,6 +244,30 @@
         <type>Picklist</type>
     </fields>
     <fields>
+        <fullName>EF_Created_By__c</fullName>
+        <description>For storing names of non-Salesforce users who have originally provided the document to IATA.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>For storing names of non-Salesforce users who have originally provided the document to IATA.</inlineHelpText>
+        <label>E&amp;F Created By</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>EF_Created_On__c</fullName>
+        <description>For storing the original creation date of the document.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The original creation date of the document.</inlineHelpText>
+        <label>E&amp;F Created On</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
         <fullName>EF_Document_Date__c</fullName>
         <defaultValue>TODAY()</defaultValue>
         <externalId>false</externalId>
@@ -252,6 +276,18 @@
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>EF_Enterprise_Keywords__c</fullName>
+        <description>For storing keywords regarding a document and a related company.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>For storing keywords regarding a document and a related company.</inlineHelpText>
+        <label>E&amp;F Enterprise Keywords</label>
+        <length>32768</length>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
     </fields>
     <fields>
         <fullName>EF_Expired__c</fullName>
@@ -270,6 +306,30 @@
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>EF_Modified_By__c</fullName>
+        <description>For storing names of non-Salesforce users who have modified the related document.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>For storing names of non-Salesforce users who have modified the related document.</inlineHelpText>
+        <label>E&amp;F Modified By</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>EF_Modified_On__c</fullName>
+        <description>For storing the last modified date of the document.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The last modified date of the document.</inlineHelpText>
+        <label>E&amp;F Modified On</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
     </fields>
     <fields>
         <fullName>EF_Private__c</fullName>
