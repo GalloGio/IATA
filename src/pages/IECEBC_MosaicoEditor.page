@@ -209,7 +209,7 @@
                                             return ;
                                         }
                                         
-                                        var email = window.prompt(viewModel.t("Total test emails sent today: " + result[0] + "/10\n\nNote: Test emails will only reflect saved changes\n\n Enter test email address"), '{!JSENCODE(preferences.PrimaryContact_Email__c)}');
+                                        var email = window.prompt(viewModel.t("Total test emails sent today: " + (result[0] - 1) + "/10\n\nNote: Test emails will only reflect saved changes\n\n Enter test email address"), '{!JSENCODE(preferences.PrimaryContact_Email__c)}');
                                         
                                         if (email != null) {
                                             viewModel.notifier.options.onShown = function() {

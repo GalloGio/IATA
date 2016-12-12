@@ -76,7 +76,7 @@ text-align: right;
                                 <table class="text-align-right" style="-ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; border-collapse: collapse !important; border-spacing: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt;" border="0" cellpadding="0" cellspacing="0" width="100%">
                                     <tbody>
                                         <tr>
-                                            <td class="main-title" style="-ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; color: #666666; font-family: Arial, Helvetica, sans-serif; font-size: 24px; font-weight: bold; line-height: 26px; mso-table-lspace: 0pt; mso-table-rspace: 0pt;">Your eBroadcast Campaign has been approved</td>
+                                            <td class="main-title" style="-ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; color: #666666; font-family: Arial, Helvetica, sans-serif; font-size: 24px; font-weight: bold; line-height: 26px; mso-table-lspace: 0pt; mso-table-rspace: 0pt;">Your eBroadcast Campaign has been sent</td>
                                         </tr>
                                     </tbody>
                                 </table></td>
@@ -98,7 +98,7 @@ text-align: right;
     <table style="-ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; border-collapse: collapse !important; border-spacing: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt;" border="0" cellpadding="0" cellspacing="0" width="100%">
         <tbody>
             <tr>
-                <td class="section-title" style="-ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; color: #666666; font-family: Arial, Helvetica, sans-serif; font-size: 18px; font-weight: bold; line-height: 22px; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 20px 20px 10px 20px;" align="left">Congratulations! Your Campaign {!relatedTo.Name} has been approved.</td>
+                <td class="section-title" style="-ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; color: #666666; font-family: Arial, Helvetica, sans-serif; font-size: 18px; font-weight: bold; line-height: 22px; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 20px 20px 10px 20px;" align="left">Congratulations!<br />Your Campaign {!relatedTo.Name} was just sent.</td>
             </tr>
         </tbody>
     </table></td>
@@ -108,8 +108,8 @@ text-align: right;
     <td class="two-columns" style="text-align: left; padding: 0 20px;">
 
                 Dear {!relatedTo.Owner.Name},<br /><br />
-We are happy to inform you that you campaign has been sent.<br /><br />
-No further action is required by you.<br /><br />
+We are happy to inform you that you campaign was just sent on {!relatedTo.Send_Datetime__c} per your instructions.<br /><br />
+No further action is required by you. To see how your campaign performs, simply access the Reporting section of eBroadcast.<br /><br />
 We hope you have a successful campaign,<br />
 The IATA eBroadcast Team
 
@@ -125,7 +125,7 @@ The IATA eBroadcast Team
                 <table class="button" style="-ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; border-collapse: collapse !important; border-spacing: 0; height: 50px; margin: 20px 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 200px;" border="0" cellpadding="0" cellspacing="0">
                     <tbody>
                         <tr>
-                            <td style="-ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; background-color: #747474; border-radius: 4px; mso-table-lspace: 0pt; mso-table-rspace: 0pt; text-align: center;"><a href="https://store.iata.org" target="_blank" class="button-link-font" style="-ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; color: #ffffff; font-family: Arial, Helvetica, sans-serif; font-size: 16px; line-height: 18px; text-decoration: none;">Manage your campaign</a></td>
+                            <td style="-ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; background-color: #747474; border-radius: 4px; mso-table-lspace: 0pt; mso-table-rspace: 0pt; text-align: center;"><a href="https://store.iata.org/IECEBC_ManageReportsDetails?id={!relatedTo.Id}" target="_blank" class="button-link-font" style="-ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; color: #ffffff; font-family: Arial, Helvetica, sans-serif; font-size: 16px; line-height: 18px; text-decoration: none;">View campaign report</a></td>
                         </tr>
                     </tbody>
                 </table></td>
