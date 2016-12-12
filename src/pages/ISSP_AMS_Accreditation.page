@@ -356,7 +356,7 @@
                     var result2= result.replace("&amp;","&"); 
                     var newWin = window.open(result2);
                     if(!newWin || newWin.closed || typeof newWin.closed=='undefined'){
-                        alert('Please check the pop-up settings of your browser!');
+                        alert('{!$Label.ISSP_AMS_ACCR_Alert1}');
                     }
                     $("#loading").hide();
                 },{escape:false});
@@ -579,6 +579,7 @@
                                                                    rightOptions="{!agencyCodesConcerned}"
                                                                    size="8"
                                                                    width="300px"
+                                                                   btn_up_down="false"
                                             />
                                         </div>
                                     </div>  
@@ -602,33 +603,32 @@
 
                             <!-- apex:outputpanel id="langGSA" rendered="{!NOT(BEGINS(sectorValue,'Cargo_Agent')) || isNoticeOfChange}" -->
                             <apex:outputpanel id="langGSA">
-                            <apex:outputpanel rendered="{!NOT(AND(BEGINS(sectorValue,'Cargo_Agent'), NOT(isNoticeOfChange)))}">
-         
-                                <div class="form-group"> 
-                                <label for="applylanguage" class="col-lg-3 control-label">{!$Label.ISSP_AMS_Step1_Lang_Display}</label>
-                                <div class="col-lg-9">
-                                    <apex:selectList styleClass="form-control" style="width:15%;float:left;" id="applylanguage" size="1" value="{!applyLanguage}" >
-                                        <apex:selectOptions value="{!applyLanguageList}"/>
-                                    </apex:selectList>&nbsp;
-                                    <apex:image value="/img/msg_icons/info16.png" title="{!$Label.ISSP_AMS_Step1_Lang_Display_Help}" html-data-placement="right" html-data-toggle="tooltip"/>
-                                </div>
-                                </div>
-                            </apex:outputpanel>
-                       
-                            
-                            <apex:outputpanel rendered="{!AND(NOT(isNoticeOfChange),newCase.Status!='Open - EDMC')}">  
-                            <apex:outputpanel id="GSAPanel" rendered="{!NOT(BEGINS(sectorValue,'Cargo_Agent'))}">
-                                <div class="form-group" id="isGSA">
-                                    <label for="isGSA" class="col-lg-3 control-label">{!$Label.ISSP_AMS_Step1_Is_GSA}</label>
-                                    <div class="col-lg-9" style="padding-top:7px">
-                                        <apex:selectradio style="width:15%" label="{!$Label.ISSP_AMS_Step1_Is_GSA}" value="{!amsIsGSA}" required="{!isGSARequired }">
-                                            <apex:selectOption itemValue="YES" itemLabel="{!$Label.ISSP_Yes}" />
-                                            <apex:selectOption itemValue="NO" itemLabel="{!$Label.ISSP_No}" />
-                                        </apex:selectradio>
+                                <apex:outputpanel rendered="{!NOT(AND(BEGINS(sectorValue,'Cargo_Agent'), NOT(isNoticeOfChange)))}">
+             					    <div class="form-group"> 
+                                    <label for="applylanguage" class="col-lg-3 control-label">{!$Label.ISSP_AMS_Step1_Lang_Display}</label>
+                                    <div class="col-lg-9">
+                                        <apex:selectList styleClass="form-control" style="width:15%;float:left;" id="applylanguage" size="1" value="{!applyLanguage}" >
+                                            <apex:selectOptions value="{!applyLanguageList}"/>
+                                        </apex:selectList>&nbsp;
+                                        <apex:image value="/img/msg_icons/info16.png" title="{!$Label.ISSP_AMS_Step1_Lang_Display_Help}" html-data-placement="right" html-data-toggle="tooltip"/>
                                     </div>
-                                </div>
-                            </apex:outputpanel>  
-                            </apex:outputpanel>
+                                    </div>
+                                </apex:outputpanel>
+                           
+                                
+                                <apex:outputpanel rendered="{!AND(NOT(isNoticeOfChange),newCase.Status!='Open - EDMC')}">  
+                                    <apex:outputpanel id="GSAPanel" rendered="{!NOT(BEGINS(sectorValue,'Cargo_Agent'))}">
+                                        <div class="form-group" id="isGSA">
+                                            <label for="isGSA" class="col-lg-3 control-label">{!$Label.ISSP_AMS_Step1_Is_GSA}</label>
+                                            <div class="col-lg-9" style="padding-top:7px">
+                                                <apex:selectradio style="width:15%" label="{!$Label.ISSP_AMS_Step1_Is_GSA}" value="{!amsIsGSA}" required="{!isGSARequired }">
+                                                    <apex:selectOption itemValue="YES" itemLabel="{!$Label.ISSP_Yes}" />
+                                                    <apex:selectOption itemValue="NO" itemLabel="{!$Label.ISSP_No}" />
+                                                </apex:selectradio>
+                                            </div>
+                                        </div>
+                                    </apex:outputpanel>  
+                                </apex:outputpanel>
                             </apex:outputpanel>                       
                     </apex:outputPanel>
             </apex:pageBlock>
@@ -741,13 +741,13 @@
             <div class="panel-heading head_panel_green">
                 <h3 class="panel-title">
                 <!--{ ! IF(BEGINS(sectorValue,'Travel_Agent'), $Label.ISSP_AMS_StepsAll_Travel_Title, 'Application for approval as' + IF(OR(BEGINS(newForm.Agent_Type__c, 'I'),BEGINS(newForm.Agent_Type__c, 'E')), ' an ', ' a ') + newForm.Agent_Type__c) } -->
-                {!IF(BEGINS(sectorValue,'Travel_Agent'), $Label.ISSP_AMS_StepsAll_Travel_Title, 
-                        IF(newForm.Agent_Type__c == 'IATA Cargo Agent', $Label.ISSP_AMS_StepsAll_Cargo_Title, 
-                            IF(newForm.Agent_Type__c == 'IATA Passenger Sales Agent', $Label.ISSP_AMS_StepsAll_Passenger_Title, 
-                                IF(newForm.Agent_Type__c == 'EACP Intermediary', $Label.ISSP_AMS_StepsAll_Cargo_EACP_Intermediary_Title, 
-                                    IF(newForm.Agent_Type__c == 'CASS Associate', $Label.ISSP_AMS_StepsAll_Cargo_CASS_Associate_Title, 
-                                        IF(newForm.Agent_Type__c == 'Import Agent', $Label.ISSP_AMS_StepsAll_Import_Agent_Title, 
-                                            IF(newForm.Agent_Type__c == 'Courier', $Label.ISSP_AMS_StepsAll_Courier_Title, $Label.ISSP_AMS_StepsAll_Application_Approval_Title)))))))}    
+                        {!IF(isNoticeOfChange, lblNoCRequest,
+                    IF(BEGINS(sectorValue,'Travel_Agent'), lblPAXTitle, 
+                        IF(newForm.Agent_Type__c == 'IATA Cargo Agent', lblCargoTitle,
+                            IF(newForm.Agent_Type__c == 'EACP Intermediary', lblEACPTitle, 
+                                IF(newForm.Agent_Type__c == 'CASS Associate', lblCASSTitle, 
+                                    IF(newForm.Agent_Type__c == 'Import Agent', lblImporAgentTitle, 
+                                        IF(newForm.Agent_Type__c == 'Courier', lblCourierTitle, $Label.ISSP_AMS_StepsAll_Application_Approval_Title)))))))}
 
                 </h3>
             </div>
@@ -761,7 +761,7 @@
                 <apex:commandLink styleclass="btn btn-default" action="{!goToStep2}" value="{!lblStepB}" id="Prev2"/>
             </div>
             <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 22%">
-                <apex:commandLink styleclass="btn btn-default" action="{!goToStep3}" value="{!lblStepC}" id="Prev3"/>
+                <apex:commandLink styleclass="btn btn-default" action="{!goToStep3}" value="{!IF(NOT(isNoticeOfChange),lblStepC, lblNoCStepC)}" id="Prev3"/>
             </div>
             <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 16%;display:{!IF(isNoticeOfChange && newForm.Is_change_ownership_or_shareholding__c, 'none', '')}">
                 <apex:commandLink styleclass="btn btn-default" action="{!goToStep4}" value="{!lblStepD}" id="Prev4"/>
@@ -775,7 +775,8 @@
          <apex:pageMessages />
         <apex:outputPanel rendered="{!BEGINS(sector, 'Cargo Agent') && !isNoticeOfChange}">
             <img src="{!URLFOR($Resource.PDF_icon_large)}" style="vertical-align:middle"/>
-            <a href="/ISSP_AMS_PDF_CGO?caseId={!newCase.Id}&mode=pdf" target="_new">download a PDF version</a> of your {!newForm.Agent_Type__c} {!amsOfficeType} application.
+            <a href="/ISSP_AMS_PDF_CGO?caseId={!newCase.Id}&mode=pdf" target="_new">{!$Label.ISSP_AMS_download_a_PDF_version}
+</a> {!$Label.ISSP_AMS_download_a_PDF_version_Of_your} {!newForm.Agent_Type__c} {!amsOfficeType} {!$Label.ISSP_AMS_download_a_PDF_version_Application}
         </apex:outputPanel>
         <apex:form >
         <apex:outputPanel rendered="{!isNoticeOfChange && !isBankAccountChange}" id="pdfnoc">
@@ -848,7 +849,7 @@
         <apex:pageBlock rendered="{!BEGINS(sectorValue,'Cargo_Agent') && !isNoticeOfChange}">
             <apex:facet name="header">
                 <apex:outputPanel style="margin:20px 0px;font-size:110%">
-                    <apex:outputText escape="false" value="You can also review your online application below before uploading a signed, scanned PDF copy above."/>
+                    <apex:outputText escape="false" value="{!$Label.ISSP_AMS_ACCR_Review_Msg}"/>
                 </apex:outputPanel>
                </apex:facet>
         </apex:pageBlock>
@@ -955,8 +956,8 @@
                {!IF(BEGINS(sectorValue, 'Travel_Agent'),
                IF(amsOfficeType!='HO', $Label.ISSP_AMS_StepFinal_Pax_Branch_Thanks, IF(newCase.Reason1__c!='New BR Abroad', $Label.ISSP_AMS_StepFinal_Thanks, $Label.ISSP_AMS_StepFinal_Pax_BR_Abroad_Thanks)),
                IF(amsOfficeType=='HO',
-               'Thank you for submitting your Accreditation application for your Cargo Agency Head Office.',
-               'Thank you for submitting your Accreditation application for your Cargo Agency Branch Office.')
+               $Label.ISSP_AMS_ACCR_Submit_Msg_CargoHO,
+               $Label.ISSP_AMS_ACCR_Submit_Msg_CargoBR)
                )}
                </apex:outputPanel>
                <apex:outputPanel rendered="{!isNoticeOfChange}">

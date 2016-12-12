@@ -13,6 +13,10 @@
         <label>Information</label>
         <layoutColumns>
             <layoutItems>
+                <behavior>Required</behavior>
+                <field>Exchange_Rate__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Name</field>
             </layoutItems>
@@ -104,6 +108,9 @@
         <layoutColumns/>
         <style>CustomLinks</style>
     </layoutSections>
+    <miniLayout>
+        <fields>Exchange_Rate__c</fields>
+    </miniLayout>
     <relatedLists>
         <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>

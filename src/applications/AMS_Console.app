@@ -14,7 +14,7 @@
     <enableListViewReskin>true</enableListViewReskin>
     <enableMultiMonitorComponents>true</enableMultiMonitorComponents>
     <enablePinTabs>true</enablePinTabs>
-    <enableTabHover>false</enableTabHover>
+    <enableTabHover>true</enableTabHover>
     <enableTabLimits>false</enableTabLimits>
     <isServiceCloudConsole>true</isServiceCloudConsole>
     <keyboardShortcuts>
@@ -208,6 +208,7 @@
     <saveUserSessions>true</saveUserSessions>
     <tab>standard-Account</tab>
     <tab>standard-Case</tab>
+    <tab>AMS_OSCAR__c</tab>
     <tab>standard-report</tab>
     <tab>standard-Dashboard</tab>
     <tab>IATA_Code_Loader</tab>
@@ -215,10 +216,15 @@
     <tab>standard-Chatter</tab>
     <tab>APXTConga4__Conga_Template__c</tab>
     <tab>SIDRA_Lite_Mass_Approval</tab>
+    <tab>standard-Knowledge</tab>
     <tab>Voucher_Management</tab>
     <tab>AMS_Voucher_Region__c</tab>
+    <tab>Purge_IATA_Code_Process</tab>
     <tab>Annual_Certificate_Campaign</tab>
     <workspaceMappings>
+        <mapping>
+            <tab>AMS_OSCAR__c</tab>
+        </mapping>
         <mapping>
             <tab>AMS_Voucher_Region__c</tab>
         </mapping>
@@ -238,6 +244,9 @@
             <tab>SIDRA_Lite_Mass_Approval</tab>
         </mapping>
         <mapping>
+            <tab>Purge_IATA_Code_Process</tab>
+        </mapping>
+        <mapping>
             <tab>Voucher_Management</tab>
         </mapping>
         <mapping>
@@ -251,6 +260,9 @@
         </mapping>
         <mapping>
             <tab>standard-Dashboard</tab>
+        </mapping>
+        <mapping>
+            <tab>standard-Knowledge</tab>
         </mapping>
         <mapping>
             <tab>standard-report</tab>
