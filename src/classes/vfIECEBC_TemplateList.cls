@@ -31,14 +31,14 @@ public class vfIECEBC_TemplateList extends vfIECEBC_Abstract_List {
     public static EBC_Template__c duplicate(Id templateId, String name, Id billingAccountId, Boolean isReusable) {
         EBC_Template__c original = [
             Select
-            	Id,
+                Id,
                 Name,
-	            Audience__c,
-	            Parent_Template__c,
-	            RecordTypeId
+                Audience__c,
+                Parent_Template__c,
+                RecordTypeId
             From EBC_Template__c
             Where
-            	Id = :templateId
+                Id = :templateId
         ];
         
         EBC_Template__c newTemplate = new EBC_Template__c();
@@ -137,7 +137,7 @@ public class vfIECEBC_TemplateList extends vfIECEBC_Abstract_List {
                     WHERE
                         Recordtype.DeveloperName = 'Global' AND 
                         Audience__c = :newTemplate.Audience__c AND
-                    	External_Id__c LIKE 'customhtml-%'
+                        External_Id__c LIKE 'customhtml-%'
                     LIMIT 1
                 ];
             }
@@ -194,12 +194,22 @@ public class vfIECEBC_TemplateList extends vfIECEBC_Abstract_List {
             newTemplate.Id = null;
         } catch(Exception e) { 
             newTemplate.Id = null;
-            if (newTemplateStepNumber == 2 && e.getMessage().contains('Audience__c')) newTemplateFieldsValidity.put('Audience__c', false);
+            
+            if (newTemplateStepNumber == 2 && e.getMessage().contains('Audience__c')) newTemplateFieldsValidity.put('Audience__c', false); 
             if (newTemplateStepNumber == 4 && e.getMessage().contains('Name')) newTemplateFieldsValidity.put('Name', false);
+            //is there any issue
+           
+            
+        
         }
+       String ErrorMessage=''; 
+       if (newTemplateStepNumber == 3 && String.isEmpty(selectedTemplateId)) ErrorMessage='Please select a Template before proceeding.';
+        //is there any issue
+           
+       ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.ERROR,ErrorMessage);
+        if (!ErrorMessage.equals('')) {ApexPages.addMessage(myMsg); newTemplateStepNumber =2;}
         
-        
-        return null;
+       return null;
     }
     
     public PageReference createTemplate() {
@@ -210,13 +220,13 @@ public class vfIECEBC_TemplateList extends vfIECEBC_Abstract_List {
         if (!String.isBlank(selectedTemplateId)) {
             parentTemplate = [
                 Select
-                	Id,
-                	Name,
-                	RecordType.DeveloperName,
-                	Parent_Template__c
+                    Id,
+                    Name,
+                    RecordType.DeveloperName,
+                    Parent_Template__c
                 From EBC_Template__c
                 Where
-                	Id = :selectedTemplateId
+                    Id = :selectedTemplateId
             ];
             
             /*if (parentTemplate.RecordType.DeveloperName != 'Global') {
@@ -264,9 +274,9 @@ public class vfIECEBC_TemplateList extends vfIECEBC_Abstract_List {
                 //SelectionAllowed.add('IATA/IATAN ID Cardholders');
                 List<Zuora__CustomerAccount__c> balist = New List<Zuora__CustomerAccount__c>();
                 balist=[Select Id
-                        		,eBroadcast_Audience_Selection__c
-                       		From Zuora__CustomerAccount__c
-                       		where Id=:vfIECEBC.billingAccount.Id];
+                                ,eBroadcast_Audience_Selection__c
+                            From Zuora__CustomerAccount__c
+                            where Id=:vfIECEBC.billingAccount.Id];
                 if (balist.size()==0) return SelectionAllowed;
                 //Read Values
                 if ( balist[0].eBroadcast_Audience_Selection__c==null) return SelectionAllowed;
