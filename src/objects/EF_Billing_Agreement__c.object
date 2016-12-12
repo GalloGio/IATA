@@ -154,6 +154,17 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Billing_Agreement_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Billing Agreement Name</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Billing_Currency__c</fullName>
         <externalId>false</externalId>
         <globalPicklist>EF_Currency</globalPicklist>
