@@ -216,12 +216,13 @@
     <tab>standard-Chatter</tab>
     <tab>APXTConga4__Conga_Template__c</tab>
     <tab>SIDRA_Lite_Mass_Approval</tab>
-	<tab>standard-Knowledge</tab>
+    <tab>standard-Knowledge</tab>
     <tab>Voucher_Management</tab>
     <tab>AMS_Voucher_Region__c</tab>
+    <tab>Purge_IATA_Code_Process</tab>
     <tab>Annual_Certificate_Campaign</tab>
     <workspaceMappings>
-		 <mapping>
+        <mapping>
             <tab>AMS_OSCAR__c</tab>
         </mapping>
         <mapping>
@@ -241,6 +242,9 @@
         </mapping>
         <mapping>
             <tab>SIDRA_Lite_Mass_Approval</tab>
+        </mapping>
+        <mapping>
+            <tab>Purge_IATA_Code_Process</tab>
         </mapping>
         <mapping>
             <tab>Voucher_Management</tab>
