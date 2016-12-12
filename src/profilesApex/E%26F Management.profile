@@ -1986,6 +1986,7 @@
 <userPermissions><enabled>true</enabled><name>MassInlineEdit</name></userPermissions>
 <userPermissions><enabled>true</enabled><name>OverrideForecasts</name></userPermissions>
 <userPermissions><enabled>true</enabled><name>RunReports</name></userPermissions>
+<userPermissions><enabled>true</enabled><name>ScheduleReports</name></userPermissions>
 <userPermissions><enabled>true</enabled><name>SelectFilesFromSalesforce</name></userPermissions>
 <userPermissions><enabled>true</enabled><name>SendSitRequests</name></userPermissions>
 <userPermissions><enabled>true</enabled><name>ShowCompanyNameAsUserBadge</name></userPermissions>
