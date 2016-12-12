@@ -79,8 +79,10 @@
                     </apex:outputText>
                     
                     <apex:outputText rendered="{!IF(campaigns.size == 0, true, false)}">
-                        <h3 class="lead">You have no reports yet</h3>
-                        <p>Send your first campaign and see how you perform</p>
+                        <div class="group-container campaigns">
+                            <h3 class="lead">You have no reports yet</h3>
+                            <p>Send your first campaign and see how you perform</p>
+                        </div>
                     </apex:outputText>
                 </div>
                 
