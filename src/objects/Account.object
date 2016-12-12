@@ -7538,16 +7538,6 @@ Controlling picklist of E&amp;F Sub-Status Account</description>
                 <default>false</default>
                 <controllingFieldValues>Inactive</controllingFieldValues>
             </picklistValues>
-            <picklistValues>
-                <fullName>Chapter 7</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-            </picklistValues>
-            <picklistValues>
-                <fullName>None</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-            </picklistValues>
             <restrictedPicklist>true</restrictedPicklist>
             <sorted>false</sorted>
         </picklist>

@@ -98,7 +98,7 @@
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
-        <label>E&amp;F</label>
+        <label>E&amp;F Information</label>
         <layoutColumns>
             <layoutItems>
                 <behavior>Required</behavior>
@@ -315,6 +315,7 @@
     </relatedContent>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Contract_Name__c</fields>
         <fields>EF_Contact__c</fields>
         <fields>Contact_Account__c</fields>
         <fields>EF_Status__c</fields>
@@ -342,6 +343,7 @@
     <relatedLists>
         <customButtons>Edit_All</customButtons>
         <fields>NAME</fields>
+        <fields>BillingAgreement_Name__c</fields>
         <fields>Client__c</fields>
         <fields>Airline__c</fields>
         <fields>EF_Location_ID__c</fields>
