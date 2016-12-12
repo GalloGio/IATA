@@ -99,6 +99,7 @@ public class AMS_AccountTriggerHandler {
     public static void handleAfterUpdate(List<Account> accs, Map<Id,Account> oldMap){
         
         handleAgenciesOperations(accs,oldMap);
+        handleDDUpdates(accs, oldMap);
 
     }
 
@@ -244,10 +245,16 @@ public class AMS_AccountTriggerHandler {
 
             Account account = actChange.acct;
             system.debug(LoggingLevel.ERROR, 'LF: createMinorChangesChangeCode() check change! Is CNS ? '+actChange.isCNS());
+            List<Agency_Applied_Change_code__c> accountActiveChangeCode = [SELECT Reason_Code__c, Reason_Description__c FROM Agency_Applied_Change_code__c WHERE Account__c =: account.Id AND Active__c = TRUE];
 
             if(!comingFromOSCARforRemoveTradeName && AMS_RecordCreatorWebservice.containsTradeName(actChange.changes) ){
 
                 changeCodeTN = AMS_RecordCreatorWebservice.generateChangeCodeTN(null, account.Status__c == 'Approved' );
+
+                if(accountActiveChangeCode.size() > 0){
+                    changeCodeTN.reasonCode = accountActiveChangeCode[0].Reason_Code__c;
+                    changeCodeTN.reasonDesc = accountActiveChangeCode[0].Reason_Description__c;
+                }
 
                 accountsToProcess.add(account);
                 changeCodesToProcess.add(changeCodeTN);
@@ -263,6 +270,11 @@ public class AMS_AccountTriggerHandler {
 
                 changeCode = AMS_RecordCreatorWebservice.generateChangeCode(null);
             
+                if(accountActiveChangeCode.size() > 0){
+                    changeCode.reasonCode = accountActiveChangeCode[0].Reason_Code__c;
+                    changeCode.reasonDesc = accountActiveChangeCode[0].Reason_Description__c;
+                }
+
                 accountsToProcess.add(account);
                 changeCodesToProcess.add(changeCode);
                 oscarsToProcess.add(null);
@@ -454,5 +466,46 @@ public class AMS_AccountTriggerHandler {
             return true;
         }
         return false;
+    }
+
+    //This method applies the Due Diligence status from the account on all open Oscars
+    public static void handleDDUpdates(List<Account> accs, Map<Id,Account> oldMap){
+
+        Set<Id> accountsToCheck = new Set<Id>();
+        accountsToCheck.add(AMS_Utils.getId('Account', 'Standard_Account'));
+        accountsToCheck.add(AMS_Utils.getId('Account', 'IATA_Agency'));
+
+
+        Set<String> closedStatus = new Set<String>{
+            'Closed', 'Closed_Not Accepted', 'Closed_Rejected', 'Closed_Withdrawn'
+        };
+
+        Map<String, String> ddStatus = new Map<String, String>{
+            'Cleared' => 'Passed',
+            'Sanctioned. Please contact compliance' => 'Failed'
+        };
+
+        Map<Id,Account> ddAccounts = new Map<Id,Account>();
+        for(Account acc : accs){
+            if(acc.Due_Diligence_Status__c != oldMap.get(acc.Id).Due_Diligence_Status__c
+                && ddStatus.containsKey(acc.Due_Diligence_Status__c)
+                && accountsToCheck.contains(acc.RecordTypeId)){
+
+                ddAccounts.put(acc.Id, acc);
+            }
+        }
+
+        if(ddAccounts.isEmpty()) return;
+
+        System.debug(loggingLevel.FINE, '____ [cls AMS_AccountTriggerHandler - handleDDUpdates] ddAccounts - ' + ddAccounts.keySet());
+
+        List<AMS_OSCAR__c> oscars = [SELECT Id, Account__c  FROM AMS_OSCAR__c WHERE Account__c IN :ddAccounts.keySet() AND Status__c NOT IN :closedStatus];
+        for(AMS_OSCAR__c oscar : oscars){
+            Account acc = ddAccounts.get(oscar.Account__c);
+
+            oscar.STEP17__c = ddStatus.get(acc.Due_Diligence_Status__c);
+        }
+
+        if(!oscars.isEmpty()) update oscars;
     }
 }

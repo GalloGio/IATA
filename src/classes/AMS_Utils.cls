@@ -78,6 +78,7 @@ public without sharing class AMS_Utils {
 
     public static final String PASSED = 'Passed';
     public static final String FAILED = 'Failed';
+    public static final String IN_PROGRESS = 'In Progress';
     public static final String NOT_APPLICABLE = 'Not Applicable';
 
     public static final String AUTH_APPROVAL = 'Authorize Approval';
@@ -91,7 +92,7 @@ public without sharing class AMS_Utils {
     public static final String MIN_SHAREHOLDING = 'Minor Shareholding';
     public static final String NAME = 'Name';
     public static final String LEGAL_STATUS = 'Legal Status';
-    public static final String VFMR = 'VFMR';
+    public static final String VFMR = 'VMFR';
     public static final String REMOVALTRADENAME = 'CNS - Removal of trade name';
 
 
@@ -123,9 +124,13 @@ public without sharing class AMS_Utils {
     public static final String BANKACCCHANGES   = 'BANK.ACCOUNT.CHANGES';
     public static final String CERTIFICATION    = 'CERTIFICATION.1.0';
 
+    //other types of process
+    public static final String CERTIFICATE      = 'CER.1.0'         ;
+
     //Types of Certificate
     public static final String CERT_DGR         = 'DGR';
     public static final String CERT_DGA         = 'DGA';
+    public static final String CERT_CATA        = 'CATA';
     public static final String CERT_TSA         = 'TSA';
 
     //Record Types
@@ -711,10 +716,35 @@ public without sharing class AMS_Utils {
             toReturn = oscarAgency;
         }
 
+        if(oscar != null){
+            if(aacNEW.Change_Code__c == 'FIN' && new Set<String>{'C','P'}.contains(oscar.Location_Class__c)){
+                oscarAgency.Annual_Renewal_Certificates__c = true;
+                toReturn = oscarAgency;
+            }
+        }       
+
+        if(aacNew.Change_Code__c == 'CER'){
+            oscarAgency.Annual_Renewal_Certificates__c = true;
+            oscarAgency.Certificate_Generated_Current_Year__c = true;
+            toReturn = oscarAgency;
+        }
+
         if( aacNEW.Change_Code__c == 'FIN' ){
             
             oscarAgency.Is_AIMS_Account__c = true;
             oscarAgency.Accreditation_Date__c = Date.Today();            
+            toReturn = oscarAgency;
+        }
+
+        if( aacNEW.Change_Code__c == 'CLO' ){
+            
+            oscarAgency.Expiry_Date__c = Date.Today();            
+            toReturn = oscarAgency;
+        }
+
+        if( aacNEW.Change_Code__c == 'REI' ){
+            
+            oscarAgency.Expiry_Date__c = null;            
             toReturn = oscarAgency;
         }
 
@@ -826,6 +856,7 @@ public without sharing class AMS_Utils {
 
             if (previousIFAPCase.Financial_Review_Result__c <> updatedIFAPCase.Financial_Review_Result__c) {
                 oscar[0].Financial_Review_Result__c = updatedIFAPCase.Financial_Review_Result__c;
+                oscar[0].Reason_for_change_of_Financial_result__c = updatedIFAPCase.Reason_for_change_of_Financial_result__c;
                 mustUpdateOSCAR = true;
             }
 
@@ -1339,7 +1370,7 @@ public static String errorMessageBeautifyer(Exception ex) {
         errorString = ex.getMessage().substring(startOfErrorMessage, ex.getMessage().length());
         errorString = errorString.substringBefore('##');
     }
-    return 'ERROR: ' + errorString;
+    return 'ERROR: ' + errorString.unescapeHtml4();
 }
 
 public static RecordType getRecordType(String sObjectType, String developerName) {
@@ -1669,29 +1700,6 @@ public static String fetchTypeOfCustomer (String locationType , String category)
 
 }
 
-    public static Integer findGapInRange(Integer minRange, Integer maxRange, List<Integer> orderedSlotsOccupied){
-        //invalid range
-        if(maxRange-minRange < 0)
-            return -1;
-    
-        Integer candidate = minRange;
-        
-        for(Integer occupiedSlot : orderedSlotsOccupied){
-            if(occupiedSlot > candidate){
-                System.debug('Candidate found : ' + candidate);
-                return candidate;
-            }
-            else if(occupiedSlot == candidate){
-                candidate++;
-                if(candidate > maxRange){
-                    return -1;
-                }
-            }
-        }
-        
-        return candidate;
-    }    
-
     public static final Date knownSunday = date.newInstance(2012, 7, 1);
     
     private static Map<String, Set<Integer>> weekendDaysPerBusinessHours{
@@ -1787,8 +1795,76 @@ public static String fetchTypeOfCustomer (String locationType , String category)
         return dateField.addMonths(1).toStartOfMonth().addDays(-1);
     }
 
+ 
+ 	public static Integer findGapInRange(Integer minRange, Integer maxRange, List<Integer> orderedSlotsOccupied){
+	    //invalid range
+	    if(maxRange-minRange < 0)
+	        return -1;
+	
+	    Integer candidate = minRange;
+	    
+		for(Integer occupiedSlot : orderedSlotsOccupied){
+			if(occupiedSlot > candidate){
+				System.debug('Candidate found : ' + candidate);
+				return candidate;
+			}
+			else if(occupiedSlot == candidate){
+				candidate++;
+				if(candidate > maxRange){
+					return -1;
+				}
+			}
+		}
+		
+		return candidate;
+	}
+	
+	public static String CASE_REF_FORMAT = 'ref:{0}.{1}:ref';
 
-    /** 
+    @testVisible
+    private static String shortenOrgId(String id) {
+         String part = id.substring(0,15);
+         Pattern p = Pattern.compile('^([A-Za-z0-9]{5})([A-Za-z0-9]*)$');
+         Matcher m = p.matcher(part);
+
+         if (m.matches()) {
+              return '_' + m.group(1) + m.group(2).replace('0', '');
+         }
+
+         return '';
+    }
+
+    @testVisible
+    private static String shortenCaseId(String id) {
+         String part = id.substring(0,15);
+         Pattern p = Pattern.compile('^([A-Za-z0-9]{5})([A-Za-z0-9]*)([A-Za-z0-9]{5})$');
+         Matcher m = p.matcher(part);
+
+         if (m.matches()) {
+              return '_' + m.group(1) + m.group(2).replace('0', '') + m.group(3);
+         }
+
+         return '';
+    }
+
+    public static String caseRefId(String orgId, String caseId) {
+         if (orgId == null || caseId == null) {
+              return '';
+         }
+
+         String shortenedOrgId = shortenOrgId(orgId);
+         String shortenedCaseId = shortenCaseId(caseId);
+
+         return String.format(
+              CASE_REF_FORMAT,
+              new List<String>{
+                   shortenedOrgId,
+                   shortenedCaseId
+              }
+         );
+    }
+
+	/** 
         Process Parent Objects fields (up to 5 Parents?)
     */
     public static String processParentDependecies(String field , sObject sObj)
@@ -1846,5 +1922,4 @@ public static String fetchTypeOfCustomer (String locationType , String category)
         }
 
     }
-
 }

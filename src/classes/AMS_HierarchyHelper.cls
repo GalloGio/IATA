@@ -472,11 +472,11 @@ global class AMS_HierarchyHelper {
 			Account child = accounts.get(childId);
 
 			if(!bypassBranchesAbroad || parent.Is_Branch_Abroad__c!='Yes')
-				if (parent.Status__c != AMS_Utils.ACC_S0_TERMINATED && parent.Status__c != AMS_Utils.ACC_S1_NOTACCREDITED && !agenciesSelected.contains(parentId))
-					return false;
+			if (parent.Status__c != AMS_Utils.ACC_S0_TERMINATED && parent.Status__c != AMS_Utils.ACC_S1_NOTACCREDITED && !agenciesSelected.contains(parentId))
+				return false;
 			if(!bypassBranchesAbroad || child.Is_Branch_Abroad__c!='Yes')
-				if (child.Status__c != AMS_Utils.ACC_S0_TERMINATED && child.Status__c != AMS_Utils.ACC_S1_NOTACCREDITED && !agenciesSelected.contains(childId))
-					return false;
+			if (child.Status__c != AMS_Utils.ACC_S0_TERMINATED && child.Status__c != AMS_Utils.ACC_S1_NOTACCREDITED && !agenciesSelected.contains(childId))
+				return false;
 		}
 
 		return true;

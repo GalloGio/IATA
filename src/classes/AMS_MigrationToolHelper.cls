@@ -3,6 +3,8 @@ public with sharing class AMS_MigrationToolHelper {
 	
 	final static ID rtCommCase = Schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
 
+	private Static Map<string, Id> oscarRT = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'AMS_OSCAR__c'}).get('AMS_OSCAR__c');
+
     private static Map<String, String> processTypeMap {
         get {
             return new Map<String, String> {
@@ -18,7 +20,11 @@ public with sharing class AMS_MigrationToolHelper {
             'VMFR Setup/Update' => 'MAJOR.CHANGES',
 			'TIDS' => 'NEW.TIDS.1.0',
 			'ERSP' => 'CORRECTION.1.0',
-			'Certificate DGR' => 'CERTIFICATION.1.0'
+			'Certificate DGR' => 'CERTIFICATION.1.0',
+			'CLO - Closure' => 'VR.1.0',
+			'ID Card' => 'VR.1.0.CA',
+			'Operational Changes' => 'VR.1.0.CA',
+			'PAX/CARGO Certificate' => 'CER.1.0'
             };
         }
         set;
@@ -221,14 +227,42 @@ public with sharing class AMS_MigrationToolHelper {
 		String caseStatus = caseToProcess.Status;
 
         update caseToProcess;
+
+        String oscarId = '';
+
+        AMS_Pax_Accreditation_Form__c accreditationObj = null;
         
-		AMS_Pax_Accreditation_Form__c accreditationObj = fetchAccreditation(caseToProcess.Id);
+        if(processType != 'VR.1.0' && processType != 'VR.1.0.CA' && processType != 'CER.1.0'){
 
-		accreditationObj = fillMissingFieldsOnAccreditation(accreditationObj,caseToProcess.AccountId, processType, caseToProcess.Id);
+			accreditationObj = fetchAccreditation(caseToProcess.Id);
 
-		alignOwners(accreditationObj,caseToProcess);
+			accreditationObj = fillMissingFieldsOnAccreditation(accreditationObj,caseToProcess.AccountId, processType, caseToProcess.Id);
 
-		String oscarId = AMS_RecordCreatorWebservice.createAccreditation(caseToProcess.AccountId, accreditationObj.Id, processType, caseToProcess.Id);
+			alignOwners(accreditationObj,caseToProcess);
+
+			oscarId = AMS_RecordCreatorWebservice.createAccreditation(caseToProcess.AccountId, accreditationObj.Id, processType, caseToProcess.Id);
+
+		}else{
+
+			//oscarId = AMS_RecordCreatorWebservice.createAccreditation(caseToProcess.AccountId, accreditationObj.Id, processType, caseToProcess.Id);
+
+			Id oscarRTId = null;
+
+			if(processType == 'VR.1.0' || processType == 'VR.1.0.CA')
+				oscarRTId = oscarRT.get('VOLUNTARY_RELINQUISHMENT');
+			if(processType == 'CER.1.0')
+				oscarRTId = oscarRT.get('CERTIFICATE');
+
+			AMS_OSCAR__c oscar = new AMS_OSCAR__c(Account__c = caseToProcess.AccountId, Process__c = processType, RecordTypeId =oscarRTId, Status__c = caseToProcess.Status, OwnerId = caseToProcess.OwnerId );
+
+			insert oscar;
+
+			oscarId = oscar.Id;
+
+			caseToProcess.OSCAR__c = oscar.Id;
+			
+			update caseToProcess;
+		}
 
 		postOscarUpdate(oscarId,caseToProcess.CaseNumber, caseToProcess.AccountId, true, caseStatus,caseToProcess);
 
@@ -240,13 +274,12 @@ public with sharing class AMS_MigrationToolHelper {
 		cont.processing = false;
 		cont.migrated = true;
 
-		if(accreditationObj.IATACode__c == null && caseToProcess.Account.IATACode__c != null){
+		if(processType != 'VR.1.0' && processType != 'VR.1.0.CA' && processType != 'CER.1.0' && accreditationObj.IATACode__c == null && caseToProcess.Account.IATACode__c != null){
 			
 			accreditationObj.IATACode__c = caseToProcess.Account.IATACode__c;
+
+			update accreditationObj;
 		}
-
-		update accreditationObj;
-
 
 		return cont;
 
@@ -588,21 +621,53 @@ public with sharing class AMS_MigrationToolHelper {
 
         update caseToProcess;
 
-        AMS_Pax_Accreditation_Form__c accreditationObj = createAccreditation(caseToProcess.Id,caseToProcess.AccountId,processType);
+        AMS_Pax_Accreditation_Form__c accreditationObj = null;
 
-        if(accreditationObj == null){
+		if(processType != 'VR.1.0' && processType != 'VR.1.0.CA' && processType != 'CER.1.0'){
+        
+	        accreditationObj = createAccreditation(caseToProcess.Id,caseToProcess.AccountId,processType);
 
-			cont.migrated = true;
-			cont.processing = false;
-			cont.errorMessage = 'Could not create the accreditation object - please check the logs for more information.';
-			
-			return cont;
+	        if(accreditationObj == null){
+
+				cont.migrated = true;
+				cont.processing = false;
+				cont.errorMessage = 'Could not create the accreditation object - please check the logs for more information.';
+				
+				return cont;
+			}
+
 		}
 
-		if(processType != 'CERTIFICATION.1.0')
+		if(processType != 'CERTIFICATION.1.0' && processType != 'VR.1.0' && processType != 'VR.1.0.CA' && processType != 'CER.1.0')
 			List<AMS_Accreditation_Contact__c> contacts = createAccreditationContacts(accreditationObj,caseToProcess.AccountId,processType);
 
-		String oscarId = AMS_RecordCreatorWebservice.createAccreditation(caseToProcess.AccountId, accreditationObj.Id, processType, caseToProcess.Id);
+
+		String oscarId = null;
+
+		if(processType != 'VR.1.0' && processType != 'VR.1.0.CA' && processType != 'CER.1.0'){
+
+			oscarId = AMS_RecordCreatorWebservice.createAccreditation(caseToProcess.AccountId, accreditationObj.Id, processType, caseToProcess.Id);
+
+		}
+		else{
+
+			Id oscarRTId = null;
+
+			if(processType == 'VR.1.0' || processType == 'VR.1.0.CA')
+				oscarRTId = oscarRT.get('VOLUNTARY_RELINQUISHMENT');
+			if(processType == 'CER.1.0')
+				oscarRTId = oscarRT.get('CERTIFICATE');
+
+			AMS_OSCAR__c oscar = new AMS_OSCAR__c(Account__c = caseToProcess.AccountId, Process__c = processType, RecordTypeId =oscarRTId, Status__c = caseToProcess.Status, OwnerId = caseToProcess.OwnerId );
+
+			insert oscar;
+
+			oscarId = oscar.Id;
+
+			caseToProcess.OSCAR__c = oscar.Id;
+			
+			update caseToProcess;
+		}
 
 		AMS_OSCAR__c oscarUpdated = postOscarUpdate(oscarId,caseToProcess.CaseNumber, caseToProcess.AccountId, false,caseStatus,caseToProcess);
 

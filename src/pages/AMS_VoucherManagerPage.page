@@ -21,10 +21,9 @@
 
             <apex:panelGrid id="fields" columns="2" width="30%">
 
-                <apex:pageBlockSection columns="2" title="Region / Country Selection">
+                <apex:pageBlockSection columns="3" title="Region / Country Selection / Year">
                     
-                    <apex:pageblockSectionItem />
-                    <apex:pageblockSectionItem />
+                    
 
                     <apex:pageblockSectionItem >
                 
@@ -62,6 +61,22 @@
 
                     </apex:pageblockSectionItem>
                     
+                    <apex:pageblockSectionItem >
+
+                        <apex:outputLabel value="Sales Year" />
+                        
+                        <apex:outputPanel styleClass="requiredInput" layout="block">
+
+                            <apex:selectList size="1" value="{!year}" id="year">
+
+                                <apex:selectoptions value="{!yearobj}"/>
+
+                            </apex:selectList>
+
+                        </apex:outputPanel>
+
+                    </apex:pageblockSectionItem>
+
                 </apex:pageBlockSection>
 
             </apex:panelGrid>
