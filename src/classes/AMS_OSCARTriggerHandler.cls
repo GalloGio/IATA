@@ -655,10 +655,12 @@ public class AMS_OSCARTriggerHandler {
 					AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
 
 					changeCode.name = 'LNF';
-					//changeCode.memoText = lastChangeCode.Bulletin_Information__c;
-					changeCode.reasonCode = lastChangeCode.Reason_Code__c;
-					changeCode.reasonDesc = lastChangeCode.Reason_Description__c;
 					changeCode.status = AMS_Utils.getIATANumericStatus(accounts.get(oscar.Account__c).Status__c);
+
+					// lastChangeCode can be null so,
+					changeCode.reasonCode = lastChangeCode == null? '' : lastChangeCode.Reason_Code__c;
+					changeCode.reasonDesc = lastChangeCode == null? '' : lastChangeCode.Reason_Description__c;   
+					//changeCode.memoText = lastChangeCode == null? '' : lastChangeCode.Bulletin_Information__c;
 
 					System.debug(loggingLevel.ERROR, '____ [cls AMS_OSCARTriggerHandler - processAgencyChanges] changeCode - ' + changeCode);
 
