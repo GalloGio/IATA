@@ -22,6 +22,10 @@
                 <behavior>Edit</behavior>
                 <field>Employee_Number_PPD__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ContactKaviId__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -39,6 +43,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Comments__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Is_Kavi_Internal_User__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -237,6 +245,9 @@
         <layoutColumns>
             <layoutItems>
                 <customLink>APXTConga4__Conga_Mail_Merge</customLink>
+            </layoutItems>
+            <layoutItems>
+                <customLink>Provision_Kavi_Access</customLink>
             </layoutItems>
         </layoutColumns>
         <layoutColumns/>
