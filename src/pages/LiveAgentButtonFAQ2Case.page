@@ -53,7 +53,7 @@
                         liveagent.addCustomDetail('Case Subject', 'Chat with IATA Customer Service '+(date.getMonth() + 1) + '/' + date.getDate() + '/' +  date.getFullYear());
                         liveagent.addCustomDetail('#Topic', '{!topicLabel}');
                         liveagent.addCustomDetail('#Subtopic', '{!subTopicLabel}');
-                        liveagent.addCustomDetail('Case Status', 'New');
+                        liveagent.addCustomDetail('Case Status', 'Open');
                         liveagent.addCustomDetail('Case Origin', 'Chat');
                         liveagent.addCustomDetail('userContactId', '{!contactId}');
                         liveagent.addCustomDetail('userAccountId', '{!accountId}');

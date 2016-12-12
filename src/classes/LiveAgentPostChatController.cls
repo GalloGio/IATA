@@ -7,9 +7,9 @@ public without sharing class LiveAgentPostChatController {
 	public Boolean isResubmission {get; set;}
 	public User agent {
 		get{
-			if (agent == null){
-				if (relatedCase != null){
-					if (relatedCase.OwnerId != null && relatedCase.LastModifiedById != null){
+			if (agent == null) {
+				if (relatedCase != null) {
+					if (relatedCase.OwnerId != null && relatedCase.LastModifiedById != null) {
 						Integer countUser = [SELECT COUNT() FROM User WHERE Id =:relatedCase.OwnerId];
 						String id;
 						if (countUser > 0){
@@ -37,7 +37,7 @@ public without sharing class LiveAgentPostChatController {
 		}
 		set;
 	}
-	public String caseId{
+	public String caseId {
 		get{
 			if (caseId == null){
 				try{
@@ -50,9 +50,9 @@ public without sharing class LiveAgentPostChatController {
 		}
 		set;
 	}
-	public String lang{
+	public String lang {
 		get{
-			if (lang == null){
+			if (lang == null) {
 				try{
 					String jsn = ApexPages.currentPage().getParameters().get('chatDetails');
 					WrapperDetailsChatDetails details = new WrapperDetailsChatDetails();
@@ -65,14 +65,14 @@ public without sharing class LiveAgentPostChatController {
 							break;
 						}
 					}
-				}catch(Exception e){
+				}catch(Exception e) {
 				}
 			}
 			return lang;
 		}
 		set;
 	}
-	public Case relatedCase{
+	public Case relatedCase {
 		get{
 			if (relatedCase == null){
 				if (caseId != null && caseID != ''){
@@ -83,25 +83,6 @@ public without sharing class LiveAgentPostChatController {
 		}
 		set;
 	}
-	// public User getAgent(){
-	// 	if (agent == null){
-	// 		if (relatedCase != null){
-	// 			if (relatedCase.OwnerId != null && relatedCase.LastModifiedById != null){
-	// 				Integer countUser = [SELECT COUNT() FROM User WHERE Id =:relatedCase.OwnerId];
-	// 				String id;
-	// 				if (countUser > 0){
-	// 					id = relatedCase.OwnerId;
-	// 				}else{
-	// 					//Owner is a Queue. We will get LastModifiedById
-	// 					id = relatedCase.LastModifiedById;
-	// 				}
-	// 				agent = [SELECT Id, Name, FirstName, LastName FROM User WHERE Id = :id LIMIT 1][0];
-	// 			}
-	// 		}
-	// 		agent = null;
-	// 	}
-	// 	return agent;
-	// }
 	public void setChannelAnswer(String answer) {
 		channelAnswer = answer;
 	}
@@ -117,14 +98,12 @@ public without sharing class LiveAgentPostChatController {
 		return fetchOptions(fieldResult);
 	}
 
-	public void submit(){
+	public void submit() {
 		if (relatedCase != null){
-			if (relatedCase.Subject != null && relatedCase.OwnerId != null){
-				System.debug('## agentExperienceAnswer: '+agentExperienceAnswer);
+			if (relatedCase.Subject != null && relatedCase.OwnerId != null) {
 				if (channelAnswer != null && channelAnswer != '' && agentExperienceAnswer != null && agentExperienceAnswer != ''){
 					Integer countSurvey = [SELECT COUNT() FROM Instant_Surveys__c WHERE Relationship_to_Case__c =:relatedCase.Id];
 					if(countSurvey < 1){
-						System.debug('cenas: '+agent);
 						Instant_Surveys__c survey = new Instant_Surveys__c();
 						survey.Chat_Agent__c = agent.Id;
 						survey.Name = 'Chat - ' + relatedCase.Subject;
@@ -133,7 +112,6 @@ public without sharing class LiveAgentPostChatController {
 						survey.Chat_Comment__c = commentAnswer;
 						survey.Chat_Agent_Experience__c = agentExperienceAnswer;
 						survey.RecordTypeId  = Schema.SObjectType.Instant_Surveys__c.getRecordTypeInfosByName().get('Live Agent Chat').getRecordTypeId();
-						System.debug('## survey: '+survey);
 						try{
 							insert survey;
 							isSuccess = true;
@@ -160,7 +138,7 @@ public without sharing class LiveAgentPostChatController {
 		}
 	}
 
-	private List<SelectOption> fetchOptions (Schema.DescribeFieldResult fieldResult){
+	private List<SelectOption> fetchOptions (Schema.DescribeFieldResult fieldResult) {
 		List<Schema.PicklistEntry> entries = fieldResult.getPicklistValues();
 		List<SelectOption> options = new List<SelectOption>();
 		for (Schema.PicklistEntry entry : entries){
@@ -168,10 +146,6 @@ public without sharing class LiveAgentPostChatController {
 		}
 		return options;
 	}
-
-	// private void setAgent(){
-	//
-	// }
 
 	public Class WrapperDetailsChatDetails {
 		public List<String> prechatDetails;
