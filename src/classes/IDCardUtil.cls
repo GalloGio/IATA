@@ -132,8 +132,8 @@ global with sharing class IDCardUtil {
 @RemoteAction
     public static final string ISFOC = 'FreeOfCharge';  
     
-    private static final String CREDENTIAL_NAME = 'IdCard';
-    private static final String FOLDER_NAME = 'a0W';
+    public static final String CREDENTIAL_NAME = 'IdCard';
+    public static final String FOLDER_NAME = 'a0W';
 
 @RemoteAction
     public static Id IDCardContactRecordTypeID = clsContactTypeIDSingleton.getInstance().RecordTypes.get('Standard'); 
@@ -849,6 +849,8 @@ global with sharing class IDCardUtil {
            mapCinTemplatePerIdCardId.put(idCard.Id, CIN);
            mapIncDigitsPerCinTemplate.put(CIN, idCard.Gender__c == 'Male' ? 0 : 50);
            setCinTemplates.add(CIN.substring(1)); // add to the set without the prefix, to correctly match in the DB
+
+           system.debug('CIN template: ' + CIN.substring(1));
         }
 
         // Get current max for the increment digits for each template
@@ -856,9 +858,13 @@ global with sharing class IDCardUtil {
         list<ID_Card__c> lstRelatedIdCards = [SELECT Id, CIN__c, LastName__c, Gender__c FROM ID_Card__c WHERE CIN__c <> null AND CIN__c LIKE :setCinTemplates];
 
         for (ID_Card__c idcard : lstRelatedIdCards) {
+            system.debug('Found related CIN: ' + idcard.CIN__c);
+
             // for Last Names shorter than 3 chars
             Integer LNamelength = idCard.LastName__c.left(3).length();
             Integer incDigitsStartPosition = LNamelength + 7; // 10 normally
+
+            system.debug('incDigitsStartPosition: ' + incDigitsStartPosition);
 
             Integer incDigits = Integer.valueOf(idcard.CIN__c.mid(incDigitsStartPosition, 2));
             
@@ -887,6 +893,8 @@ global with sharing class IDCardUtil {
             strCIN = strCIN.substring(1);
 
             idCard.CIN__c = strCIN;
+
+            system.debug('New CIN assigned: ' + strCIN);
         }
 
 
@@ -2036,4 +2044,24 @@ global with sharing class IDCardUtil {
          else return 'ERROR';   
     }
     
+    public static String AWSImageAuthorizationLink (String strPhotoName) {
+        String authorizationLink;
+
+        if (strPhotoName != null && strPhotoName != '') {
+            AmazonCredentials credential = AmazonCredentials.getCredentials(CREDENTIAL_NAME);   
+
+            Long timestamp = System.now().getTime()/1000 + 300;
+            String filename = '/' + credential.Bucket + '/' + FOLDER_NAME + '/' + strPhotoName;
+
+            String canonical = 'GET\n\n\n' + timestamp + '\n' + filename; 
+            Blob bsig = Crypto.generateMac('HmacSHA1', Blob.valueOf(canonical), Blob.valueOf(credential.Secret));          
+            String signature = EncodingUtil.base64Encode(bsig); 
+
+            authorizationLink = credential.EndpointBaseURL + filename.removeStart('/') + '?AWSAccessKeyId=' + credential.AWSAccessKeyId + '&Expires=' + timestamp + '&Signature=' + EncodingUtil.urlEncode(signature,'UTF-8');
+        } else {
+            return null;
+        }
+
+        return authorizationLink;
+    }
 }
