@@ -6190,7 +6190,7 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
                 <default>false</default>
             </values>
             <values>
-                <fullName>Closed_Not Accepted</fullName>
+                <fullName>Closed_ Not Accepted</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -8026,7 +8026,7 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
                 <default>false</default>
             </values>
             <values>
-                <fullName>Closed_Not Accepted</fullName>
+                <fullName>Closed_ Not Accepted</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -9778,7 +9778,7 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
                 <default>false</default>
             </values>
             <values>
-                <fullName>Closed_Not Accepted</fullName>
+                <fullName>Closed_ Not Accepted</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -11497,7 +11497,7 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
                 <default>false</default>
             </values>
             <values>
-                <fullName>Closed_Not Accepted</fullName>
+                <fullName>Closed_ Not Accepted</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -13234,7 +13234,7 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
                 <default>false</default>
             </values>
             <values>
-                <fullName>Closed_Not Accepted</fullName>
+                <fullName>Closed_ Not Accepted</fullName>
                 <default>false</default>
             </values>
             <values>
