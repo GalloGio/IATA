@@ -1167,7 +1167,8 @@ public class AMS_OSCARTriggerHandler {
 		if(!oscarsToProcess.isEmpty()){
 			List<AMS_OSCAR__c> oscarsToValidate = new List<AMS_OSCAR__c>();					
 			for(AMS_OSCAR__c oscar : oscarsToProcess){
-
+				
+				// bypass validation for CNS if Custom Setting is not enabled
 				if(!oscarAux.get(oscar.Id).Account__r.CNS_Agency__c || (oscarAux.get(oscar.Id).Account__r.CNS_Agency__c && CNS_Settings__c.getInstance().DGR_Validate_Certificates__c))
 					oscarsToValidate.add(oscar);
 			}
