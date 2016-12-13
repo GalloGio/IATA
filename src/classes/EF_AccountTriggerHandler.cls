@@ -24,11 +24,12 @@ public class EF_AccountTriggerHandler {
 		// Check if account has child accounts
 		// The child account will be inactivated too.
 		//
-		Map <Id, Account> childAccsMap = new Map <Id, Account> ([Select Id, EF_Status__c, ParentId from Account where ParentId in: inactiveAccsSet]);
+		Map <Id, Account> childAccsMap = new Map <Id, Account> ([Select Id, EF_Status__c, ParentId, Parent.EF_SubStatus__c from Account where ParentId in: inactiveAccsSet]);
 		
 		if(!childAccsMap.isEmpty() && run){
 			for(Account a: childAccsMap.values()){
-				a.EF_Status__c='Inactive';				
+				a.EF_Status__c='Inactive';	
+				a.EF_SubStatus__c = a.Parent.EF_SubStatus__c;
 				inactiveAccsSet.add(a.Id);
                 childAccsList.add(a); //we'll update at the end, when all the other records have been updated.
                              
