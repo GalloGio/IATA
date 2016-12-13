@@ -75,17 +75,5 @@
 			$A.enqueueAction(action);
 		}
 
-	},
-    getCanEdit: function(component) {
-        var action;
-
-        action = component.get("c.getCanEdit");
-        //Set up the callback
-        var self = this;
-        action.setCallback(this, function(actionResult) {
-            // console.log(JSON.stringify(actionResult.getReturnValue()));
-            component.set("v.canEdit", actionResult.getReturnValue());
-        });
-        $A.enqueueAction(action);
 	}
 })

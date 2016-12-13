@@ -888,7 +888,7 @@
     ISBLANK( ActivityDate ) 
   ) 
 )</errorConditionFormula>
-        <errorMessage>Please fill in the Milestone and the End Date fields</errorMessage>
+        <errorMessage>Please fill in the Milestone and the Deadline fields</errorMessage>
     </validationRules>
     <webLinks>
         <fullName>Close_Task</fullName>

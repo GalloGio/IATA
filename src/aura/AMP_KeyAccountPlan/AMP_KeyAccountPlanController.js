@@ -3,7 +3,6 @@
 
         helper.filterView(component);
         helper.getTasks(component);
-        helper.getCanEdit(component);
 
     },
     setActivityId : function(component, event, helper) {

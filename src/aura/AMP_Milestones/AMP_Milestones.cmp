@@ -4,7 +4,6 @@
     <aura:attribute name="activityId" type="String" />
     <aura:attribute name="activity" type="Objective__c" />
     <aura:attribute name="milestones" type="Task[]" />
-    <aura:attribute name="canEdit" type="Boolean" default="false" />
     <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
     
     <aura:handler name="deleteMilestone" event="c:AMP_UpdateOrDeleteTask" action="c.handleDeleteMilestone" />
@@ -34,9 +33,7 @@
             
             <div class="slds-no-flex">
                 <div class="slds-button-group" role="group">
-                    <aura:if isTrue="{!v.canEdit}">
                     <button class="slds-button slds-button--neutral slds-col--bump-left" onclick="{!c.addMilestone}">New</button>
-                    </aura:if>
                 </div>
             </div>                
         </div>
@@ -56,18 +53,16 @@
                         <th scope="col" class="milestoneWideColumn"><span class="slds-truncate">Comments</span></th>
                     </tr>
                 </thead>
-
+                
                 <tbody>
                     <aura:iteration items="{!v.milestones}" var="milestone" indexVar="index">
                         <tr>
-                            <aura:if isTrue="{!v.canEdit}">
-                                <c:AMP_Milestone milestone="{!milestone}" index="{!index}" canEdit="{!v.canEdit}"/>
-                            </aura:if>
+                            <c:AMP_Milestone milestone="{!milestone}" index="{!index}"/>
                         </tr>
                     </aura:iteration>
                 </tbody>
             </table>
         </div>
-
+        
     </div>
 </aura:component>

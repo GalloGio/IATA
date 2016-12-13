@@ -32,7 +32,7 @@ console.log(JSON.stringify(account));
 					for(var j = 0; j < groups.length; j++) {
 						var found = false;
 						for(var i = 0; i < participants.length; i++) {
-							 if(participants[i].Local_Governance__c === groups[j].Id) {
+							 if(participants[i].Local_Governance__r.Name === groupNames[j]) {
 								found = true;
 								var pWrapper = {
 									GroupId : participants[i].Local_Governance__c,

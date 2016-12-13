@@ -1,7 +1,6 @@
 ({
     doInit: function(component, event, helper) {
         helper.fetchIssues(component);
-        helper.getCanEdit(component);
     },
     refreshIssues : function(component, event, helper) {
         helper.refreshIssues(component);
