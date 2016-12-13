@@ -300,7 +300,7 @@
         }catch(DmlException e){ /*validation on queues*/ }
                      
         try{
-            oscar.Status__c = 'Closed_Not Accepted'; 
+            oscar.Status__c = 'Closed_ Not Accepted'; 
             update oscar;
         }     catch(DmlException e){ /*validation on queues*/ }               
 
@@ -403,7 +403,7 @@
         
         oscar = [SELECT id, status__c from AMS_OSCAR__C LIMIT 1];
         
-        oscar.status__c = 'Closed_Not Accepted';
+        oscar.status__c = 'Closed_ Not Accepted';
          
         try{
             update oscar;   
