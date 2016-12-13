@@ -279,6 +279,14 @@ private class AMS_InspectionHelperTest {
             		System.assertEquals('Approved', i.Account__r.Status__c);
             }
     
+            Boolean isFalse = AMS_InspectionHelper.compareAmsInspectionRecords_IgnoringLastSyncDate(ins1,ins1);
+
+            System.assertEquals(isFalse,false);
+
+            Boolean isTrue = AMS_InspectionHelper.compareAmsInspectionRecords_IgnoringLastSyncDate(ins1,ins2);
+
+            System.assertEquals(isTrue,true);
+            
             Test.stopTest();
 	}
 	
