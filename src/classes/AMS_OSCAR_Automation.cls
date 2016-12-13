@@ -19,11 +19,12 @@ public with sharing class AMS_OSCAR_Automation
 
                 if(oscar != null){
                     oscar.Sanity_check_received__c = Date.today();
-                    oscar.Sanity_check_deadline__c = oscar.Sanity_check_received__c + 15;
+                    oscar.Process_Start_Date__c = Date.today();
                     oscar.Sanity_check_results__c = AMS_Utils.PASSED;
+                
                     res = True;
-                    
                 }
+                    
             }catch(Exception e){
                 res = False;
             }
@@ -44,8 +45,21 @@ public with sharing class AMS_OSCAR_Automation
 
                 if(oscar != null){
                     oscar.Sanity_check_received__c = Date.today();
-                    oscar.Sanity_check_deadline__c = oscar.Sanity_check_received__c + 15;
-                    oscar.Sanity_check_results__c = 'Failed';
+                    if(oscar.Process__c == AMS_Utils.new_TIDS)
+                        oscar.Sanity_check_deadline__c = Date.today()+3;
+                    else if(oscar.Process__c != AMS_Utils.CERTIFICATION)
+                        oscar.Sanity_check_deadline__c = oscar.Sanity_check_received__c + 15;
+                    else{
+                        List<Account> oscarAccount = new List<Account>([select Location_Class__c from Account where id =: oscar.Account__c]);
+                        if(oscar.Process__c == AMS_Utils.new_HO && (oscarAccount.get(0).Location_Class__c == 'C' || oscarAccount.get(0).Location_Class__c == 'I' || oscarAccount.get(0).Location_Class__c == 'P' || oscarAccount.get(0).Location_Class__c == 'Q')){                    
+                            oscar.Sanity_check_deadline__c = Date.today() + 15;
+                        }
+                        else if(oscar.Process__c == AMS_Utils.new_BR || oscar.Process__c == AMS_Utils.new_BR_ABROAD || oscar.Process__c == AMS_Utils.new_SA || oscarAccount.get(0).Location_Class__c == 'R'){
+                            oscar.Sanity_check_deadline__c = Date.today() + 14;
+                        }
+                    }
+
+                    oscar.Sanity_check_results__c = AMS_Utils.FAILED;
                     res = True;
                 }
             }catch(Exception e){
@@ -553,7 +567,11 @@ public with sharing class AMS_OSCAR_Automation
 
                 if(oscar != null){
                     oscar.Agreement_requested__c = Date.today();
-                    oscar.Agreement_deadline__c = Date.today()+10;
+                    if(oscar.Process__c==AMS_Utils.new_GSA_BSP || oscar.Process__c==AMS_Utils.new_AHA_BSP || oscar.Process__c==AMS_Utils.new_GSSA)
+                        oscar.Agreement_deadline__c = Date.today();
+                    else
+                        oscar.Agreement_deadline__c = Date.today()+10;
+
                     res = True;
                 }
             }catch(Exception e){
@@ -596,7 +614,7 @@ public with sharing class AMS_OSCAR_Automation
             try{
                 if(oscar != null){
                     oscar.AIMS_updated__c = DateTime.now();
-                    oscar.Process_Start_Date__c = Date.today();
+                    oscar.Invoice_Requested__c = Date.today();
                     res = True;
                 }
             }catch(Exception e){
@@ -708,7 +726,7 @@ public with sharing class AMS_OSCAR_Automation
         }
     }
 
-    public class AMS_OSCAR_Step25_notApplicable implements IClassFactory
+    /*public class AMS_OSCAR_Step25_notApplicable implements IClassFactory
     {
         public Boolean processWork(AMS_OSCAR_Event__c lce, AMS_OSCAR__c oscar)
         {
@@ -724,7 +742,7 @@ public with sharing class AMS_OSCAR_Automation
             }
             return res;
         }
-    }
+    }*/
 
     //OK
     public class AMS_OSCAR_Step2_succeeded implements IClassFactory
@@ -1227,6 +1245,134 @@ public with sharing class AMS_OSCAR_Automation
                 res = False;
             }
             return res;
+        }
+    }
+
+    public class AMS_OSCAR_Step29_succeeded implements IClassFactory
+    {
+        public Boolean processWork(AMS_OSCAR_Event__c lce, AMS_OSCAR__c oscar)
+        {
+            try{
+                if(oscar != null && !oscar.Apply_Penalty_Fee__c){
+                    //oscar.Apply_Penalty_Fee__c = true;
+                    return true; 
+                }
+            }catch(Exception e){
+                system.debug('ERROR: '+e);
+            }
+            return false;
+        }
+    }
+    
+    public class AMS_OSCAR_Step30_failed implements IClassFactory
+    {
+        public Boolean processWork(AMS_OSCAR_Event__c lce, AMS_OSCAR__c oscar)
+        {
+            try{
+                if(oscar != null){
+                    oscar.Suspension_result__c = 'Failed';
+                    return true; 
+                }
+            }catch(Exception e){
+                system.debug('ERROR: '+e);
+            }
+            return false;
+        }
+    }
+
+    public class AMS_OSCAR_Step30_succeeded implements IClassFactory
+    {
+        public Boolean processWork(AMS_OSCAR_Event__c lce, AMS_OSCAR__c oscar)
+        {
+            try{
+                if(oscar != null){
+                    oscar.Suspension_result__c = 'Passed';
+                    return true; 
+                }
+            }catch(Exception e){
+                system.debug('ERROR: '+e);
+            }
+            return false;
+        }
+    }
+
+    public class AMS_OSCAR_Step31_failed implements IClassFactory
+    {
+        public Boolean processWork(AMS_OSCAR_Event__c lce, AMS_OSCAR__c oscar)
+        {
+            try{
+                if(oscar != null){
+                    oscar.Termination_result__c = 'Failed';
+                    return true; 
+                }
+            }catch(Exception e){
+                system.debug('ERROR: '+e);
+            }
+            return false;
+        }
+    }
+
+    public class AMS_OSCAR_Step31_succeeded implements IClassFactory
+    {
+        public Boolean processWork(AMS_OSCAR_Event__c lce, AMS_OSCAR__c oscar)
+        {
+            try{
+                if(oscar != null){
+                    oscar.Termination_result__c = 'Passed';
+                    return true; 
+                }
+            }catch(Exception e){
+                system.debug('ERROR: '+e);
+            }
+            return false;
+        }
+    }
+
+    public class AMS_OSCAR_Step32_failed implements IClassFactory
+    {
+        public Boolean processWork(AMS_OSCAR_Event__c lce, AMS_OSCAR__c oscar)
+        {
+            try{
+                if(oscar != null){
+                    oscar.Withdrawal_result__c = 'Failed';
+                    return true; 
+                }
+            }catch(Exception e){
+                system.debug('ERROR: '+e);
+            }
+            return false;
+        }
+    }
+
+    public class AMS_OSCAR_Step32_succeeded implements IClassFactory
+    {
+        public Boolean processWork(AMS_OSCAR_Event__c lce, AMS_OSCAR__c oscar)
+        {
+            try{
+                if(oscar != null){
+                    oscar.Withdrawal_result__c = 'Passed';
+                    return true; 
+                }
+            }catch(Exception e){
+                system.debug('ERROR: '+e);
+            }
+            return false;
+        }
+    }
+
+    public class AMS_OSCAR_Step32_notApplicable implements IClassFactory
+    {
+        public Boolean processWork(AMS_OSCAR_Event__c lce, AMS_OSCAR__c oscar)
+        {
+            try{
+                if(oscar != null){
+                    oscar.Withdrawal_result__c = 'N/A';
+                    return true; 
+                }
+            }catch(Exception e){
+                system.debug('ERROR: '+e);
+            }
+            return false;
         }
     }
     

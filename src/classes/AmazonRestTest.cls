@@ -1,109 +1,83 @@
 @isTest
-private class AmazonRestTest {
+public class AmazonRestTest {
 
-	static testMethod void getFileTest(){
+  static testMethod void getFileTest(){     
+    CaseChildHelper.noValidationsOnTrgCAseIFAP = true; /* later I switch it to false to fully emulate production envinroment */
 
-                
-                
-               CaseChildHelper.noValidationsOnTrgCAseIFAP = true; /* later I switch it to false to fully emulate production envinroment */
-        
-        
-        Amazon_Cred__c Amazon_Cred =  new Amazon_Cred__c(name = 'IFAP', Prod_Configuration__c = 'aprodconf' , Dev_Configuration__c = 'adevconf');
-         insert Amazon_Cred;
-         
-         list<AWSKey__c> AWS_KEYs = new list<AWSKey__c>{new AWSKey__c(name = 'aprodconf',
-                                                                      Key__c = 'asd', 
-                                                                      Secret__c = 'asd',  
-                                                                      IAS_configuration_name__c = 'asdas', 
-                                                                      IAS_Access_Point__c = 'asd',
-                                                                      Bucket__c = 'asd',
-                                                                       AWS_ENDPOINT_URL__c = 'asd'),
-                                                         new AWSKey__c(name = 'adevconf' ,
-                                                                      Key__c = 'asd', 
-                                                                      Secret__c = 'asd',  
-                                                                      IAS_configuration_name__c = 'asdas', 
-                                                                      IAS_Access_Point__c = 'asd',
-                                                                      Bucket__c = 'asd',
-                                                                      AWS_ENDPOINT_URL__c = 'asd')
-                                                                       };  
-        
-         insert AWS_KEYs;   
-                String FileNmae = 'IFAP/afile';
-		
-		AmazonRest.getFile('Test File Name', AmazonCredentials.getCredentials('IFAP'));
-	}
+    createCredentials('IFAP');
 
-         static testMethod void listBucketTest(){
-                
-                
-               CaseChildHelper.noValidationsOnTrgCAseIFAP = true; /* later I switch it to false to fully emulate production envinroment */
-        
-        
-        Amazon_Cred__c Amazon_Cred =  new Amazon_Cred__c(name = 'IFAP', Prod_Configuration__c = 'aprodconf' , Dev_Configuration__c = 'adevconf');
-         insert Amazon_Cred;
-         
-         list<AWSKey__c> AWS_KEYs = new list<AWSKey__c>{new AWSKey__c(name = 'aprodconf',
-                                                                      Key__c = 'asd', 
-                                                                      Secret__c = 'asd',  
-                                                                      IAS_configuration_name__c = 'asdas', 
-                                                                      IAS_Access_Point__c = 'asd',
-                                                                      Bucket__c = 'asd',
-                                                                       AWS_ENDPOINT_URL__c = 'asd'),
-                                                         new AWSKey__c(name = 'adevconf' ,
-                                                                      Key__c = 'asd', 
-                                                                      Secret__c = 'asd',  
-                                                                      IAS_configuration_name__c = 'asdas', 
-                                                                      IAS_Access_Point__c = 'asd',
-                                                                      Bucket__c = 'asd',
-                                                                      AWS_ENDPOINT_URL__c = 'asd')
-                                                                       };  
-        
-         insert AWS_KEYs;   
-                String FileNmae = 'IFAP/afile';
-                list<AmazonRest.S3File> res = AmazonRest.getListFiles(FileNmae,AmazonCredentials.getCredentials('IFAP') );
-            boolean resIsFull = res <> null;        
-            system.assert(resIsFull,true);
-            
-            boolean check = AmazonRest.checkFile( FileNmae,AmazonCredentials.getCredentials('IFAP'));
-            system.assertEquals(check,false);
+    AmazonRest.getFile('Test File Name', AmazonCredentials.getCredentials('IFAP'));
+  }
 
+  static testMethod void listBucketTest(){
+    CaseChildHelper.noValidationsOnTrgCAseIFAP = true; /* later I switch it to false to fully emulate production envinroment */
+    
+    createCredentials('IFAP');
+ 
+    String Filename = 'IFAP/afile';
+    List<AmazonRest.S3File> res = AmazonRest.getListFiles(Filename,AmazonCredentials.getCredentials('IFAP') );
+    Boolean resIsFull = res <> null;        
+    System.assert(resIsFull,true);
 
-            // AmazonRest.getFile(FileNmae,AmazonCredentials.getCredentials('IFAP'));
-            AmazonRest.make_sig('',AmazonCredentials.getCredentials('IFAP'));
-            AmazonRest.genPublicExpiringAWSLink('', AmazonCredentials.getCredentials('IFAP'), 10 );
-            //AmazonRest.copyFile(AmazonCredentials sourceCredentials, String sourceFilename, AmazonCredentials destCredentials, string destFilename)
+    Boolean check = AmazonRest.checkFile( Filename,AmazonCredentials.getCredentials('IFAP'));
+    System.assertEquals(check,false);
 
-         }
-         
-          static testMethod void deleteTest(){
-            CaseChildHelper.noValidationsOnTrgCAseIFAP = true; /* later I switch it to false to fully emulate production envinroment */
-        
-        
-         Amazon_Cred__c Amazon_Cred =  new Amazon_Cred__c(name = 'IFAP', Prod_Configuration__c = 'aprodconf' , Dev_Configuration__c = 'adevconf');
-         insert Amazon_Cred;
-         
-         list<AWSKey__c> AWS_KEYs = new list<AWSKey__c>{new AWSKey__c(name = 'aprodconf',
-                                                                      Key__c = 'asd', 
-                                                                      Secret__c = 'asd',  
-                                                                      IAS_configuration_name__c = 'asdas', 
-                                                                      IAS_Access_Point__c = 'asd',
-                                                                      Bucket__c = 'asd',
-                                                                       AWS_ENDPOINT_URL__c = 'asd'),
-                                                         new AWSKey__c(name = 'adevconf' ,
-                                                                      Key__c = 'asd', 
-                                                                      Secret__c = 'asd',  
-                                                                      IAS_configuration_name__c = 'asdas', 
-                                                                      IAS_Access_Point__c = 'asd',
-                                                                      Bucket__c = 'asd',
-                                                                      AWS_ENDPOINT_URL__c = 'asd')
-                                                                       };  
-        
-         insert AWS_KEYs;   
-            
-            String FileNmae = 'IFAP/afile'; 
-                boolean done = AmazonRest.deleteFile(FileNmae,AmazonCredentials.getCredentials('IFAP') );
-          
-            system.assert(done,true);
-          }
+    // AmazonRest.getFile(Filename,AmazonCredentials.getCredentials('IFAP'));
+    AmazonRest.make_sig('',AmazonCredentials.getCredentials('IFAP'));
+    AmazonRest.genPublicExpiringAWSLink('', AmazonCredentials.getCredentials('IFAP'), 10 );
+    //AmazonRest.copyFile(AmazonCredentials sourceCredentials, String sourceFilename, AmazonCredentials destCredentials, string destFilename)
+  }
 
+  static testMethod void deleteTest(){
+    CaseChildHelper.noValidationsOnTrgCAseIFAP = true; /* later I switch it to false to fully emulate production envinroment */
+    
+    createCredentials('IFAP');
+
+    String Filename = 'IFAP/afile'; 
+    Boolean done = AmazonRest.deleteFile(Filename,AmazonCredentials.getCredentials('IFAP') );
+    
+    System.assert(done,true);
+  }
+
+  static testMethod void uploadFile() {
+    createCredentials('GenericAttach');
+    createCredentials('RecycleBin');
+
+    Blob pdfArchive = Blob.valueOf('Test');
+    Long size = pdfArchive.size();
+
+    //get amazon info
+    String fileName = 'Certificate.pdf';
+    String contentType = 'application/pdf';
+    String folder = WrapperAttach.getAmazonFolder(UserInfo.getOrganizationId());
+
+    UploadMultipleFileToAmazonButtonCtrl.UploadFile upF = UploadMultipleFileToAmazonButtonCtrl.createUploadFile('TestFolder', fileName, contentType, size, folder,  WrapperAttach.CREDENTIAL_NAME);
+
+    Test.startTest();
+    System.assert(AmazonRest.uploadFile(upF, pdfArchive));
+    Test.stopTest();
+  }
+
+  public static void createCredentials(String credentialName){
+    Amazon_Cred__c Amazon_Cred =  new Amazon_Cred__c(name = credentialName, Prod_Configuration__c = credentialName+'aprodconf' , Dev_Configuration__c = credentialName+'adevconf');
+    insert Amazon_Cred;
+
+    List<AWSKey__c> AWS_KEYs = new List<AWSKey__c>{new AWSKey__c(name = credentialName+'aprodconf',
+                                  Key__c = 'asd', 
+                                  Secret__c = 'asd',  
+                                  IAS_configuration_name__c = 'asdas', 
+                                  IAS_Access_Point__c = 'asd',
+                                  Bucket__c = 'asd',
+                                  AWS_ENDPOINT_URL__c = 'asd'),
+                            new AWSKey__c(name = credentialName+'adevconf' ,
+                                  Key__c = 'asd', 
+                                  Secret__c = 'asd',  
+                                  IAS_configuration_name__c = 'asdas', 
+                                  IAS_Access_Point__c = 'asd',
+                                  Bucket__c = 'asd',
+                                  AWS_ENDPOINT_URL__c = 'asd')
+    };  
+
+    insert AWS_KEYs;
+  }
 }

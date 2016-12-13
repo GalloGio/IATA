@@ -1511,11 +1511,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Contract__c.Contract_Name__c</field>
-            <table>Product2.EF_Material_Line_Items__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>Contract__c.EF_Comments__c</field>
             <table>Product2.EF_Material_Line_Items__r</table>
         </columns>

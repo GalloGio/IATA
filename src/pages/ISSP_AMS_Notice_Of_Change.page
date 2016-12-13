@@ -647,7 +647,7 @@
 			<apex:actionFunction name="createAgencyContact" action="{!createAgencyContact}" oncomplete="if ({!contactSaved==true}){closeModalByCommandButton(); cancelAgentUpdate();} $j('[id$=submitBut]').removeAttr('disabled');" status="WaitingStatus" reRender="currContactList,currOwnerSummaryList,theMessages" >
 				<apex:param value="" name="contype" assignTo="{!contactType}" />
 			</apex:actionFunction>
-			<apex:actionFunction name="createAgencyCompany" action="{!createAgencyContact}" oncomplete="if ({!contactSaved==true}){closeModal2(); cancelCompanyUpdate();} $j('[id$=companySubmitBut]').removeAttr('disabled');" status="WaitingStatus" reRender="companyList,currCompanyList,currOwnerSummaryList,ownerList" >
+			<apex:actionFunction name="createAgencyCompany" action="{!createAgencyContact}" oncomplete="if ({!contactSaved==true}){closeModal2(); cancelCompanyUpdate();} $j('[id$=companySubmitBut]').removeAttr('disabled');" status="WaitingStatus" reRender="companyList,currCompanyList,currOwnerSummaryList,ownerList,companyMessages" >
 				<apex:param value="" name="contype" assignTo="{!contactType}" />
 			</apex:actionFunction>
 			<apex:actionFunction name="deleteContact" action="{!deleteAgencyContact}" rerender="currContactList,updated-company-owners,currOwnerSummaryList"> 
@@ -1005,7 +1005,9 @@
 								<apex:column headerValue="{!$Label.ISSP_Owner}" value="{!owner.Name}"/>
 								<apex:column footerClass="tbFooter" footerValue="TOTAL" headerValue="{!$Label.LAQ_Type}" value="{!$Label.ISSP_AMS_NoC_Prev_Company_Owner}" rendered="{!owner.RecordType.DeveloperName=='Current_Company_Owner'}"/>
 								<apex:column footerClass="tbFooter" footerValue="TOTAL" headerValue="{!$Label.LAQ_Type}" value="{!$Label.ISSP_AMS_NoC_Previous_Owner}" rendered="{!owner.RecordType.DeveloperName!='Current_Company_Owner'}"/>
-								<apex:column footerValue="{!ROUND(Curr_Ownership_Total, 2)}%" value="{!owner.Financial_interest__c}"/>
+								<apex:column footerValue="{!ROUND(Curr_Ownership_Total, 2)}%" value="{!owner.Financial_interest__c}">
+                                	<apex:facet name="header"><apex:outputText escape="false" value="{!$Label.ISSP_AMS_Financial_Interest}"/></apex:facet>
+								</apex:column>
 							</apex:pageBlockTable> 
                     </apex:outputPanel>
                     
@@ -1063,7 +1065,9 @@
 								<apex:column id="roleTitle" value="{!agencycon.Agency_role__c}" >
 									<apex:facet name="header"><apex:outputText escape="false" value="{!CASE(roleLabelTypeAfterChange, 'director', $Label.ISSP_AMS_Director, $Label.ISSP_AMS_Manager)}"/></apex:facet>
 								</apex:column>
-                                <apex:column headerValue="{!$ObjectType.AMS_Accreditation_Contact__c.fields.Financial_interest__c.Label}" value="{!agencycon.Financial_interest__c}"/>
+                                <apex:column value="{!agencycon.Financial_interest__c}">
+                                	<apex:facet name="header"><apex:outputText escape="false" value="{!$Label.ISSP_AMS_Financial_Interest}"/></apex:facet>
+								</apex:column>
 									
 								<apex:column >
 									<apex:actionStatus id="actEditCurrOwner" >
@@ -1406,9 +1410,12 @@
 		<button type="button" class="close" onclick="cancelCompanyUpdate(); return false;"	data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 		<h4 class="modal-title" id="myModalLabel">{!$Label.ISSP_AMS_Add_Company}</h4>
 		</div>
+
+		<apex:pageMessages id="companyMessages" />
+
 		<div class="modal-body">
 			<apex:pageBlock >
-			<apex:pageMessages id="companyMessages" />
+			
 		
 		<apex:pageBlockSection id="companySection" columns="1">
 				<apex:pageBlockSectionItem >
@@ -1447,8 +1454,7 @@
 		<div class="modal-footer">
 			<apex:commandButton action="{!NULL}" status="WaitingStatus" id="companySubmitBut" styleClass="btn btn-default" value="{!$Label.ISSP_Submit}" 
 			oncomplete="createAgencyCompany(companyOwnerRecType);"
-			onclick="this.disabled='disabled';" reRender="companyMessages"
-			>
+			onclick="this.disabled='disabled';" >
 			</apex:commandButton>&nbsp;
 		<button type="button" class="btn btn-default" onclick="cancelCompanyUpdate(); return false;" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">{!$Label.ISSP_Cancel}</span></button>
 		</div>

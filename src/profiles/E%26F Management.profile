@@ -41611,10 +41611,6 @@
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
-        <apexPage>EF_UpdateBillingAgreement</apexPage>
-        <enabled>true</enabled>
-    </pageAccesses>
-    <pageAccesses>
         <apexPage>EF_Mass_Update_Billing_Agreements</apexPage>
 		<enabled>true</enabled>
     </pageAccesses>

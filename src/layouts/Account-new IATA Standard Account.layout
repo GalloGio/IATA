@@ -48,10 +48,6 @@
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Type</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Key_Customer__c</field>
             </layoutItems>
@@ -197,15 +193,15 @@
         <label>E&amp;F Information</label>
         <layoutColumns>
             <layoutItems>
-                <behavior>Required</behavior>
+                <behavior>Edit</behavior>
                 <field>EF_Type__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Required</behavior>
+                <behavior>Edit</behavior>
                 <field>EF_Status__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Required</behavior>
+                <behavior>Edit</behavior>
                 <field>EF_SubStatus__c</field>
             </layoutItems>
             <layoutItems>
@@ -219,7 +215,7 @@
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
-                <behavior>Required</behavior>
+                <behavior>Edit</behavior>
                 <field>EF_Effective_Date__c</field>
             </layoutItems>
             <layoutItems>
@@ -346,6 +342,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>LastModifiedById</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ACLI_SAP_Id__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -489,7 +489,7 @@
         <fields>Release_Date__c</fields>
         <relatedList>Financial_Security__c.Account__c</relatedList>
         <sortField>NAME</sortField>
-        <sortOrder>Asc</sortOrder>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <customButtons>Mass_Update_Contracts</customButtons>

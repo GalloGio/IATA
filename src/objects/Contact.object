@@ -5683,6 +5683,17 @@ Formula field that copies the E&amp;F Type.</description>
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>EF_Client_Services_Specialist_Email__c</fullName>
+        <externalId>false</externalId>
+        <formula>Account.EF_Client_Services_Specialist_Email__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>E&amp;F Client Services Specialist Email</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>EF_Role__c</fullName>
         <externalId>false</externalId>
         <globalPicklist>EF_Role</globalPicklist>
@@ -27209,9 +27220,10 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
         <fullName>Change_id_card_holder_cont_name</fullName>
         <active>true</active>
         <errorConditionFormula>AND(
-ISPICKVAL($User.UserType,&quot;Standard&quot;), 
+ISPICKVAL($User.UserType,&quot;Standard&quot;),
 ID_Card_Holder__c=true,
-ISCHANGED(ISSP_Contact_Name__c )
+ISCHANGED(LastName),
+UPPER(PRIORVALUE(LastName)) &lt;&gt; UPPER(LastName)
 )</errorConditionFormula>
         <errorMessage>This contact is an ID Card holder. To change name, please raise an internal case to ID Card team</errorMessage>
     </validationRules>
@@ -27929,7 +27941,7 @@ myuser={!User.Id}</url>
 ?sessionId={!API.Session_ID}
 &amp;serverUrl={!API.Partner_Server_URL_290}
 &amp;id={!Contact.Id}
-&amp;templateId=a7v8E00000004ng
+&amp;templateId=a87w00000009Nkg
 &amp;AC0=0
 &amp;DS7=3</url>
     </webLinks>
@@ -27955,7 +27967,7 @@ myuser={!User.Id}</url>
 ?sessionId={!API.Session_ID}
 &amp;serverUrl={!API.Partner_Server_URL_290}
 &amp;id={!Contact.Id}
-&amp;templateId=a7v8E00000004nl
+&amp;templateId=a87w00000009Nkl
 &amp;AC0=0
 &amp;DS7=3</url>
     </webLinks>

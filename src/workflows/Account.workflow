@@ -43,6 +43,39 @@
         <template>Airline_Coding/AUTO_Expiry_of_AOC_approaching2</template>
     </alerts>
     <alerts>
+        <fullName>FDS_Coding_AOC_Expiry_date_alert_10_Days_before2</fullName>
+        <ccEmails>airlinecoding@iata.org</ccEmails>
+        <description>FDS Coding AOC Expiry date alert 10 Days before</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>alvarengam@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>farrella@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>jeffrey@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>kalajil@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>pacificoa@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>szajkod@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <senderAddress>noreply@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>Airline_Coding/AUTO_Expiry_of_AOC_approaching</template>
+    </alerts>
+    <alerts>
         <fullName>Irregularity_Thresold_Met</fullName>
         <description>Irregularity Thresold Met</description>
         <protected>false</protected>
@@ -80,6 +113,26 @@
         <name>AccountIATAAirlineSetName</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Account_Category_IATAN_Passenger_agent</fullName>
+        <description>to cater the fact that IATAN accounts do not have a category</description>
+        <field>Category__c</field>
+        <literalValue>IATAN Passenger Agent</literalValue>
+        <name>Account Category = IATAN Passenger agent</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Account_Sector_Travel_Agent</fullName>
+        <description>to cater the fact that IATAN accounts do not have a sector</description>
+        <field>Sector__c</field>
+        <literalValue>Travel Agent</literalValue>
+        <name>Account Sector= Travel Agent</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
@@ -310,7 +363,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <criteriaItems>
             <field>Account.RecordTypeId</field>
             <operation>equals</operation>
-            <value>IATA Standard Account,Standard Account</value>
+            <value>Standard Account</value>
         </criteriaItems>
         <description>AIMS Accounts record type Assignment rule</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
@@ -375,6 +428,34 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
+        <fullName>AMS Webstar set sector and category</fullName>
+        <actions>
+            <name>Account_Category_IATAN_Passenger_agent</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Account_Sector_Travel_Agent</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Account.Source_System__c</field>
+            <operation>equals</operation>
+            <value>webstar</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Agency</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.Category__c</field>
+            <operation>equals</operation>
+        </criteriaItems>
+        <description>to fix the fact that webstar accounts do not have sector and category</description>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
         <fullName>Account incomplete</fullName>
         <active>true</active>
         <criteriaItems>
@@ -436,8 +517,42 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
-        <fullName>FDS Coding AOC Expiry date alert 3 months before</fullName>
+        <fullName>FDS Coding AOC Expiry date alert 10 Days before</fullName>
         <active>true</active>
+        <criteriaItems>
+            <field>Account.ACLI_Status__c</field>
+            <operation>equals</operation>
+            <value>Active Company</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.AOC_Expiry_Date__c</field>
+            <operation>greaterThan</operation>
+            <value>TODAY</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Airline Headquarters</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.ACLI_SAP_Id__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <description>An update to start receiving notification and case 10 days before AOC expiry as a reminder.</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <workflowTimeTriggers>
+            <actions>
+                <name>FDS_Coding_AOC_Expiry_date_alert_10_Days_before2</name>
+                <type>Alert</type>
+            </actions>
+            <offsetFromField>Account.AOC_Expiry_Date__c</offsetFromField>
+            <timeLength>-10</timeLength>
+            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+    </rules>
+    <rules>
+        <fullName>FDS Coding AOC Expiry date alert 3 months before</fullName>
+        <active>false</active>
         <criteriaItems>
             <field>Account.ACLI_Status__c</field>
             <operation>equals</operation>

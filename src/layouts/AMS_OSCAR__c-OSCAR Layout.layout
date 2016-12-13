@@ -71,6 +71,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Process_Start_Date__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Sanity_check_deadline__c</field>
             </layoutItems>
         </layoutColumns>
@@ -111,7 +115,7 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Process_Start_Date__c</field>
+                <field>Invoice_Requested__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -541,11 +545,10 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
-        <fields>Accreditation_Endorsement_organisation__c</fields>
         <fields>Accreditation_Endorsement_Status_code__c</fields>
-        <fields>Account__c</fields>
+        <fields>Airline__c</fields>
+        <fields>Airline_Code__c</fields>
         <fields>CREATEDBY_USER</fields>
-        <fields>CREATED_DATE</fields>
         <relatedList>AMS_Inspection__c.OSCAR__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>

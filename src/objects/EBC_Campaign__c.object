@@ -480,7 +480,7 @@ The value is determined by ExactTarget, and this is is only populated once a cam
         <fullName>Is_Step5_Writable__c</fullName>
         <description>Is Step5 is writable based on other fields values</description>
         <externalId>false</externalId>
-        <formula>TEXT(Status__c) == &apos;DRAFT&apos; || TEXT(Status__c) == &apos;APPROVED&apos; ||  Billing_Account__r.eBroadcast_Trusted_Sender__c</formula>
+        <formula>TEXT(Status__c) == &apos;DRAFT&apos; || TEXT(Status__c) == &apos;APPROVED&apos; ||  (Billing_Account__r.eBroadcast_Trusted_Sender__c &amp;&amp; TEXT(Status__c) == &apos;PENDING_APPROVAL&apos;)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <inlineHelpText>Is Step5 is writable based on other fields values</inlineHelpText>
         <label>Is Step5 Writable</label>
@@ -958,7 +958,15 @@ The value is determined by ExactTarget, and this is is only populated once a cam
         <label>All</label>
         <language>en_US</language>
     </listViews>
-    
+    <listViews>
+        <fullName>EBC_Approvers_EBC_Campaign</fullName>
+        <filterScope>Queue</filterScope>
+        <label>eBroadcast Approvers</label>
+        <queue>EBC_Approvers</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
     <nameField>
         <label>eBroadcast Campaign Name</label>
         <trackHistory>false</trackHistory>

@@ -3,6 +3,7 @@
 **/
 public with sharing class SidraLiteHelperForOSCAR {
 
+    public static final set<String> VALID_REASONS = new set<String>{'CHO / CHS – Change of Ownership / Legal Status','CHC – Change of Shareholding','CHN - Change of Name','CHL - Change of Location'};
 
     /**
         Create a new sidra lite case from an OSCAR case
@@ -18,8 +19,7 @@ public with sharing class SidraLiteHelperForOSCAR {
             if (cse.Reason1__c == null) {
                 throw new WSSidraLite.SidraLiteException('You cannot create a SIDRA Lite under no reason');
             }
-            set<String> setValidReason = new set<String>{'CHO / CHS – Change of Ownership / Legal Status','CHC – Change of Shareholding','CHN - Change of Name','CHL - Change of Location'};
-            if (!setValidReason.contains(cse.Reason1__c)) {
+            if (!VALID_REASONS.contains(cse.Reason1__c)) {
                 throw new WSSidraLite.SidraLiteException('You cannot create a SIDRA Lite under reason "' + cse.Reason1__c + '"');
             }
             Case newCase = new Case();
@@ -30,16 +30,29 @@ public with sharing class SidraLiteHelperForOSCAR {
             newCase.ContactId = cse.ContactId;
             newCase.Region__c = cse.Region__c;
             newCase.BSPCountry__c = cse.BSPCountry__c;
-            newCase.SIDRA_Lite_Reason__c = 'Late/Absence of Notification of Change';
-            newCase.SIDRA_Lite_Default_Date__c = Date.Today();
-            newCase.Reason_for_Default__c = 'Disapproval of Change';
-            newCase.Termination_date_manual_entry__c = SidraLiteUtil.lastMonthDay(Date.today().addMonths(1));
-            newCase.Total_Irregularities__c = String.ValueOf(cse.account.Accumulated_Irregularities__c);
             newCase.BSP_CASS__c = SidraLiteUtil.getBSPCASS(cse.account);
+            newCase.SIDRA_Lite_Reason__c = getOSCARReason(cse.OSCAR__r);
+
+            if (SidraLiteUtil.isAccountActive(cse.account)) {
+                newCase.SIDRA_Lite_Default_Date__c = Date.Today();
+                newCase.Reason_for_Default__c = 'Disapproval of Change';
+                newCase.Termination_date_manual_entry__c = SidraLiteUtil.lastMonthDay(Date.today().addMonths(1));
+                newCase.Total_Irregularities__c = String.ValueOf(cse.account.Accumulated_Irregularities__c);
+            } else {
+                newCase.IRR_Withdrawal_Reason__c = 'Default Prev';
+                newCase.Termination_date_manual_entry__c = WSSidraLite.getTerminationDateFromRelatedCase(cse.account);
+            }
             return newCase;
 
         } catch(Exception e) {
             throw new WSSidraLite.SidraLiteException(e.getMessage());
         }
+    }
+
+    private static String getOSCARReason(AMS_OSCAR__c oscar) {
+        if (oscar.Step11__c == 'Failed' || oscar.Step12__c == 'Failed' || oscar.Step13__c == 'Failed' || oscar.Step14__c == 'Failed') {
+            return 'Non submission of supporting documents';
+        }
+        return 'Change deficiency';
     }
 }

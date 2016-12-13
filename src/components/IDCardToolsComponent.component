@@ -158,7 +158,9 @@
                 var if_url = 'http://localhost/';
         
                 //$.receiveMessage(receiveFilenameFromIFrame, if_url);
-                $.receiveMessage(receiveFilenameFromIFrame);
+                // no longer exists. new function is receiveFilenameFromCropperTool
+                //$.receiveMessage(receiveFilenameFromIFrame);
+                
        
             });
 
