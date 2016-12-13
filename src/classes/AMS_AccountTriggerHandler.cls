@@ -9,7 +9,8 @@ public class AMS_AccountTriggerHandler {
                 'manager_first_name__c',
                 'manager_last_name__c',
                 'tradename__c',
-                'Solicitation_Flag__c'
+                'solicitation_flag__c',
+                'location_category__c'
                 
             };
     public static Set<String> minorchangesRestrictedForCNS = new Set<String>{'tradename__c'};
