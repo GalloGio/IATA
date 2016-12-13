@@ -413,6 +413,7 @@
 <classAccesses><apexClass>EF_AccountTriggerHandlerTest</apexClass><enabled>true</enabled></classAccesses>
 <classAccesses><apexClass>EF_AttachmentListController</apexClass><enabled>true</enabled></classAccesses>
 <classAccesses><apexClass>EF_AttachmentListControllerTest</apexClass><enabled>true</enabled></classAccesses>
+<classAccesses><apexClass>EF_AttachmentTriggerHandler</apexClass><enabled>true</enabled></classAccesses>
 <classAccesses><apexClass>EF_BaContractApprovalHelper</apexClass><enabled>true</enabled></classAccesses>
 <classAccesses><apexClass>EF_BaContractApprovalHelperTest</apexClass><enabled>true</enabled></classAccesses>
 <classAccesses><apexClass>EF_BaHistoryController</apexClass><enabled>true</enabled></classAccesses>
@@ -423,6 +424,8 @@
 <classAccesses><apexClass>EF_ContractHandler</apexClass><enabled>true</enabled></classAccesses>
 <classAccesses><apexClass>EF_ContractHandlerTest</apexClass><enabled>true</enabled></classAccesses>
 <classAccesses><apexClass>EF_ContractHistoryController</apexClass><enabled>true</enabled></classAccesses>
+<classAccesses><apexClass>EF_DocumentLogHelper</apexClass><enabled>true</enabled></classAccesses>
+<classAccesses><apexClass>EF_DocumentLogHelperTest</apexClass><enabled>true</enabled></classAccesses>
 <classAccesses><apexClass>EF_HistoryControllersTest</apexClass><enabled>true</enabled></classAccesses>
 <classAccesses><apexClass>EF_LocationCodeHandler</apexClass><enabled>true</enabled></classAccesses>
 <classAccesses><apexClass>EF_LocationCodeHandlerTest</apexClass><enabled>true</enabled></classAccesses>

@@ -320,6 +320,11 @@ E&amp;F CRM Project</description>
                 <fullName>005</fullName>
                 <default>false</default>
             </picklistValues>
+            <picklistValues>
+                <fullName>0005</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+            </picklistValues>
             <restrictedPicklist>true</restrictedPicklist>
             <sorted>false</sorted>
         </picklist>
