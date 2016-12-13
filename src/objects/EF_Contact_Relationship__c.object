@@ -57,6 +57,18 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
+        <fullName>Billing_Agreement_Name__c</fullName>
+        <externalId>false</externalId>
+        <formula>EF_Airline_Billing_Agreement__r.BillingAgreement_Name__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Billing Agreement Name</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Contact_Account__c</fullName>
         <externalId>false</externalId>
         <formula>Contact__r.Account.Name</formula>
@@ -139,7 +151,7 @@
     <label>E&amp;F Contact Billing Agreement</label>
     <nameField>
         <displayFormat>E&amp;F CR-{0000}{MM}{YY}</displayFormat>
-        <label>E&amp;F Contact Relationship Number</label>
+        <label>E&amp;F Contact Billing Agreement Number</label>
         <trackHistory>false</trackHistory>
         <type>AutoNumber</type>
     </nameField>
