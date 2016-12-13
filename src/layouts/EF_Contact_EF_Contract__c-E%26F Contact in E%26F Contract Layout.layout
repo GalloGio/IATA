@@ -26,7 +26,7 @@
                 <field>EF_Status__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Required</behavior>
+                <behavior>Edit</behavior>
                 <field>Role__c</field>
             </layoutItems>
             <layoutItems>
