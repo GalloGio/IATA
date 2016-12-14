@@ -151,7 +151,6 @@ jQuery(document).ready(function($) {
         self.parents('li').addClass(className.active).siblings().removeClass(className.active);
         parent.find(targetPane).addClass(className.open).siblings().removeClass(className.open);
         activateEllipsisTooltip();
-        stickyFooter();
         if ($('.sub-container.payment-confirmation').length) {
             var targetStickyElement = parent.find(targetPane + ' .sub-container.payment-confirmation');
             stickyElementContainerWidth = targetStickyElement.width();
@@ -248,7 +247,6 @@ jQuery(document).ready(function($) {
     /* ---------------------------------------- */
     $(document).on('click', '.js-radio-list .user-input.radio', function() {
         $(this).parents('li').addClass(className.selected).siblings().removeClass(className.selected);
-        stickyFooter();
     }).on('change', '.js-radio-list .user-input:checked', function() {
         var value = $(this).val();
         if (value === 'audience-option-3') {
@@ -303,29 +301,12 @@ jQuery(document).ready(function($) {
         footerHeight,
         appHeight;
 
-    var stickyFooter = function() {
-        pageFooter.attr('data-is-sticky', 'false');
-        bodyHeight = body.height();
-        footerHeight = pageFooter.outerHeight();
-        appHeight = $('.app-container').outerHeight();
-        // if ((bodyHeight - footerHeight) > appHeight) {
-        if (bodyHeight > appHeight) {
-            pageFooter.attr('data-is-sticky', 'true');
-        } else {
-            pageFooter.attr('data-is-sticky', 'false');
-        }
-    };
-
-    stickyFooter();
-
     $(document).on('click', '.js-accordion .accordion-title', function() {
         
         if ($(this).is('.is-disabled')) {
         } else {
             $(this).toggleClass(className.open).next().toggleClass(className.open);
         }
-
-        stickyFooter();
     });
     
     $(document).on('click', '.js-toggle-type-sort', function(event) {
@@ -511,12 +492,6 @@ jQuery(document).ready(function($) {
         stickyContainer();
     });
 
-    /* ---------------------------------------- */
-    /*  Resize                                  */
-    /* ---------------------------------------- */
-    $(window).resize(function() {
-        stickyFooter();
-    });
     
 });
 

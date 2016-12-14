@@ -102,17 +102,27 @@ figure {
     }
 }
 
+.app-container {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+.main-content {
+    flex: 1;
+}
+
 .page-footer {
     color: #fff;
     background: #2a3940;
     margin-top: 50px;
 
-    &[data-is-sticky='true'] {
+    /*&[data-is-sticky='true'] {
         position: fixed;
         bottom: 0;
         width: 100%;
     }
-
+*/
     .inner-wrapper {
         padding: 40px 0 40px 120px;
     }
