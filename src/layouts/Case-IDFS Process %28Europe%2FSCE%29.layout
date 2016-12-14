@@ -386,6 +386,10 @@
                 <behavior>Edit</behavior>
                 <field>Rejection_Withdrawal_remarks__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Reason_for_change_of_Financial_result__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
