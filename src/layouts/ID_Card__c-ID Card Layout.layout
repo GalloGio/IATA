@@ -31,6 +31,10 @@
                 <behavior>Edit</behavior>
                 <field>Profit_Center__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>CIN__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -291,6 +295,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>MustSyncWithAIMS__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Missing_Information__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
