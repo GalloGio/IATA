@@ -126,6 +126,18 @@
 																						<p>{!prpOption.tooltipDescription}</p>
 																					</div>
 																				</div>
+                                                                                <script>
+                                                                                
+                                                                                jQuery( ".checkbox-box" )
+                                                                                  .mouseout(function() {
+                                                                                    jQuery(".tooltip-container", this ).removeClass("is-open");
+                                                                                    jQuery(".tooltip-container", this ).addClass("is-closed");
+                                                                                    
+                                                                                  });
+                                                                                 
+                                                                               
+                                                                                </script>
+																				
 																			</div>
 																			
 																			<div class="package-credits">
@@ -150,14 +162,25 @@
 																					<span class="input-state selected">Selected</span>
 																				</label>
 																				
-																				<apex:outputPanel rendered="{!prpOption.isDisabled}"> 
+																				<!--<apex:outputPanel>-->
 																					<a href="#" class="tooltip-icon js-tooltip"><i class="fa fa-exclamation-triangle"></i></a>
 																					<div class="tooltip-container">
 																						<div class="tooltip-description">
 																							<p>{!prpOption.tooltipDescription}</p>
 																						</div>
 																					</div>
-																				</apex:outputPanel>
+                                                                                <script>
+                                                                                
+                                                                                jQuery( ".checkbox-box" )
+                                                                                  .mouseout(function() {
+                                                                                    jQuery(".tooltip-container", this ).removeClass("is-open");
+                                                                                    jQuery(".tooltip-container", this ).addClass("is-closed");
+                                                                                    
+                                                                                  });
+                                                                                 
+                                                                               
+                                                                                </script>
+																				<!--</apex:outputPanel>-->
 																			</div>
 																			
 																			<div class="package-credits">
@@ -185,14 +208,23 @@
 																					<span class="input-state selected">Selected</span>
 																				</label>
 																					
-																				<apex:outputPanel rendered="{!prpOption.isDisabled}"> 
+																				<!-- <apex:outputPanel rendered="{!prpOption.isDisabled}">-->
 																					<a href="#" class="tooltip-icon js-tooltip"><i class="fa fa-exclamation-triangle"></i></a>
 																					<div class="tooltip-container">
 																						<div class="tooltip-description">
 																							<p>{!prpOption.tooltipDescription}</p>
 																						</div>
 																					</div>
-																				</apex:outputPanel>
+                                                                                <script>
+                                                                                jQuery( ".checkbox-box" )
+                                                                                  .mouseout(function() {
+                                                                                    jQuery(".tooltip-container", this ).removeClass("is-open");
+                                                                                    jQuery(".tooltip-container", this ).addClass("is-closed");
+                                                                                    
+                                                                                  });
+                                                                                 </script>
+																				
+																				<!--</apex:outputPanel>-->
 																			</div>
 																			
 																			<div class="package-credits">
