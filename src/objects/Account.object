@@ -3040,6 +3040,15 @@
         <trackHistory>true</trackHistory>
     </fields>
     <fields>
+        <fullName>Annual_Renewal_Certificates__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Annual Renewal of Certificates</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Anti_Money_Laundering_Compliance_Date__c</fullName>
         <externalId>false</externalId>
         <label>Anti-Money Laundering Compliance Date</label>
@@ -4448,10 +4457,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
     <fields>
         <fullName>Billing_Address_formated__c</fullName>
         <externalId>false</externalId>
-        <formula>if(LEN(BillingStreet)&gt;0, BillingStreet&amp; &quot; &quot; , &quot;&quot; ) &amp; BR() &amp;
-if(LEN(BillingCity)&gt;0, BillingCity&amp; &quot;, &quot; , &quot;&quot; )&amp;
-if(LEN(BillingPostalCode)&gt;0, BillingPostalCode&amp; &quot; &quot; , &quot;&quot; )&amp; BR() &amp;
-if(LEN(BillingState)&gt;0, BillingState,&quot;&quot;) &amp;
+        <formula>if(LEN(BillingStreet)&gt;0, BillingStreet&amp; &quot; &quot; , &quot;&quot; ) &amp; BR() &amp; 
+if(LEN(BillingCity)&gt;0, BillingCity&amp; &quot;, &quot; , &quot;&quot; )&amp; 
+if(LEN(BillingPostalCode)&gt;0, BillingPostalCode&amp; &quot; &quot; , &quot;&quot; )&amp; BR() &amp; 
+if(LEN(BillingState)&gt;0, BillingState,&quot;&quot;) &amp; 
 If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Billing Address formated</label>
@@ -4840,6 +4849,10 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                 <controllingFieldValues>Travel Agent</controllingFieldValues>
             </picklistValues>
             <picklistValues>
+                <fullName>IATAN Passenger Agent</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>IATA Passenger Sales Agent</fullName>
                 <default>false</default>
                 <controllingFieldValues>Travel Agent</controllingFieldValues>
@@ -5035,6 +5048,15 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Certificate_Generated_Current_Year__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Certificate Generated for Current Year</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>Check_Digit__c</fullName>
@@ -7371,8 +7393,8 @@ V - Co-operative</inlineHelpText>
     </fields>
     <fields>
         <fullName>EF_Liquidator_Administrator__c</fullName>
-        <description>E&amp;F CRM Project
-(EF-864) Add airline status details.
+        <description>E&amp;F CRM Project 
+(EF-864) Add airline status details. 
 when E&amp;F Status gets inactive, this field becomes mandatory.</description>
         <externalId>false</externalId>
         <label>Liquidator/Administrator</label>
@@ -7441,8 +7463,8 @@ Val. Rule to check format.</description>
     </fields>
     <fields>
         <fullName>EF_Status_Additional_Information__c</fullName>
-        <description>E&amp;F CRM Project
-(EF-864) Add airline status details.
+        <description>E&amp;F CRM Project 
+(EF-864) Add airline status details. 
 when E&amp;F Status gets inactive, this field can hold information about why the account got innactive</description>
         <externalId>false</externalId>
         <label>E&amp;F Status Additional Information</label>
@@ -7497,12 +7519,6 @@ Controlling picklist of E&amp;F Sub-Status Account</description>
                 <controllingFieldValues>Inactive</controllingFieldValues>
             </picklistValues>
             <picklistValues>
-                <fullName>Chapter 7</fullName>
-                <default>false</default>
-                <controllingFieldValues>Active</controllingFieldValues>
-                <controllingFieldValues>Inactive</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
                 <fullName>Liquidated</fullName>
                 <default>false</default>
                 <controllingFieldValues>Inactive</controllingFieldValues>
@@ -7523,9 +7539,14 @@ Controlling picklist of E&amp;F Sub-Status Account</description>
                 <controllingFieldValues>Inactive</controllingFieldValues>
             </picklistValues>
             <picklistValues>
+                <fullName>Chapter 7</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+            </picklistValues>
+            <picklistValues>
                 <fullName>None</fullName>
                 <default>false</default>
-                <controllingFieldValues>Active</controllingFieldValues>
+                <isActive>false</isActive>
             </picklistValues>
             <restrictedPicklist>true</restrictedPicklist>
             <sorted>false</sorted>
@@ -8088,7 +8109,7 @@ WSPN-Worldspan</inlineHelpText>
         <fullName>IATACode__c</fullName>
         <externalId>false</externalId>
         <label>IATA Code</label>
-        <length>14</length>
+        <length>17</length>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
@@ -8955,6 +8976,31 @@ Approval: Key Contact can see pending request approve it one by one</inlineHelpT
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Link_agent_code__c</fullName>
+        <externalId>false</externalId>
+        <formula>Link_agent_name__r.IATACode__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Link agent code</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Link_agent_name__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>field used for domestic agencies</description>
+        <externalId>false</externalId>
+        <label>Link agent name</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Accounts (Link agent name)</relationshipLabel>
+        <relationshipName>Accounts1</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>Location_Category__c</fullName>
         <description>AL=STP AT APPROVED LOCATION
 AR=TRUE (USA only)
@@ -9171,7 +9217,7 @@ O-SATO
 P-Passenger
 S-SSI
 T-TIDS
-V-Travel Service Intermediaries-TSI (USA Only)
+V-Travel Service Intermediaries-TSI (USA Only) 
 X-Handling Agents and Shipping Lines
 J-Joint Vent</inlineHelpText>
         <label>Location Class</label>
@@ -10260,6 +10306,73 @@ J-Joint Vent</inlineHelpText>
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>PreviousStatus__c</fullName>
+        <externalId>false</externalId>
+        <label>PreviousStatus</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Approved</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Cash basis/no commission</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Cash basis/with commission</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Changes processed</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Listed</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>New application pending</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Not accreditated</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Not in operation</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Terminated</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Under review</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>No longer a customer</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Previous_Reason__c</fullName>
+        <externalId>false</externalId>
+        <label>Previous Reason</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Price_Group__c</fullName>
         <description>IEC - SAP price group granted to customer</description>
         <externalId>false</externalId>
@@ -10349,6 +10462,18 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Reason__c</fullName>
+        <description>Contains the reason from AMS</description>
+        <externalId>false</externalId>
+        <label>Reason</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Reason_for_creation__c</fullName>
@@ -10526,7 +10651,7 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
     <fields>
         <fullName>SAP_BW_report_with_sales_figures__c</fullName>
         <externalId>false</externalId>
-        <formula>HYPERLINK(&quot;https://sap.iata.org/irj/servlet/prt/portal/prtroot/pcd!3aportal_content!2fcom.sap.pct!2fplatform_add_ons!2fcom.sap.ip.bi!2fiViews!2fcom.sap.ip.bi.bex?QUERY=ZVSD_M07_Q010&amp;VARIABLE_SCREENX&amp;DUMMY=1&amp;BI_COMMAND_1-BI_COMMAND_TYPE=SET_VARIABLES_STATE&amp;BI_COMMAND_1-VARIABLE_VALUES-VARIABLE_VALUE_1-VARIABLE_TYPE=VARIABLE_INPUT_STRING&amp;BI_COMMAND_1-VARIABLE_VALUES-VARIABLE_VALUE_1-VARIABLE=UMI_CUSTOMER_001&amp;BI_COMMAND_1-VARIABLE_VALUES-VARIABLE_VALUE_1-VARIABLE_TYPE-VARIABLE_INPUT_STRING=&quot; &amp; TEXT( Higher_Level_Customer__c ) , &quot; SAP/BW report with sales figures &quot;)</formula>
+        <formula>IF(ISBLANK(Higher_Level_Customer__c) || Higher_Level_Customer__c = 0,&quot;&quot;, HYPERLINK(&quot;https://sap.iata.org/irj/servlet/prt/portal/prtroot/pcd!3aportal_content!2fcom.sap.pct!2fplatform_add_ons!2fcom.sap.ip.bi!2fiViews!2fcom.sap.ip.bi.bex?QUERY=ZVSD_M07_Q010&amp;VARIABLE_SCREENX&amp;DUMMY=1&amp;BI_COMMAND_1-BI_COMMAND_TYPE=SET_VARIABLES_STATE&amp;BI_COMMAND_1-VARIABLE_VALUES-VARIABLE_VALUE_1-VARIABLE_TYPE=VARIABLE_INPUT_STRING&amp;BI_COMMAND_1-VARIABLE_VALUES-VARIABLE_VALUE_1-VARIABLE=UMI_CUSTOMER_001&amp;BI_COMMAND_1-VARIABLE_VALUES-VARIABLE_VALUE_1-VARIABLE_TYPE-VARIABLE_INPUT_STRING=&quot; &amp; TEXT( Higher_Level_Customer__c ) , &quot; SAP/BW report with sales figures &quot;))</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Main Products Purchased</label>
         <required>false</required>
@@ -10537,7 +10662,7 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
     <fields>
         <fullName>SAP_BW_report_without_sales_figures__c</fullName>
         <externalId>false</externalId>
-        <formula>HYPERLINK(&quot;https://sap.iata.org/irj/servlet/prt/portal/prtroot/pcd!3aportal_content!2fcom.sap.pct!2fplatform_add_ons!2fcom.sap.ip.bi!2fiViews!2fcom.sap.ip.bi.bex?QUERY=ZVSD_M07_Q011&amp;VARIABLE_SCREENX&amp;DUMMY=1&amp;BI_COMMAND_1-BI_COMMAND_TYPE=SET_VARIABLES_STATE&amp;BI_COMMAND_1-VARIABLE_VALUES-VARIABLE_VALUE_1-VARIABLE_TYPE=VARIABLE_INPUT_STRING&amp;BI_COMMAND_1-VARIABLE_VALUES-VARIABLE_VALUE_1-VARIABLE=UMI_CUSTOMER_001&amp;BI_COMMAND_1-VARIABLE_VALUES-VARIABLE_VALUE_1-VARIABLE_TYPE-VARIABLE_INPUT_STRING=&quot; &amp; TEXT( Higher_Level_Customer__c ) , &quot; SAP/BW report without sales figures &quot;)</formula>
+        <formula>IF(ISBLANK(Higher_Level_Customer__c) || Higher_Level_Customer__c = 0,&quot;&quot;, HYPERLINK(&quot;https://sap.iata.org/irj/servlet/prt/portal/prtroot/pcd!3aportal_content!2fcom.sap.pct!2fplatform_add_ons!2fcom.sap.ip.bi!2fiViews!2fcom.sap.ip.bi.bex?QUERY=ZVSD_M07_Q011&amp;VARIABLE_SCREENX&amp;DUMMY=1&amp;BI_COMMAND_1-BI_COMMAND_TYPE=SET_VARIABLES_STATE&amp;BI_COMMAND_1-VARIABLE_VALUES-VARIABLE_VALUE_1-VARIABLE_TYPE=VARIABLE_INPUT_STRING&amp;BI_COMMAND_1-VARIABLE_VALUES-VARIABLE_VALUE_1-VARIABLE=UMI_CUSTOMER_001&amp;BI_COMMAND_1-VARIABLE_VALUES-VARIABLE_VALUE_1-VARIABLE_TYPE-VARIABLE_INPUT_STRING=&quot; &amp; TEXT( Higher_Level_Customer__c ) , &quot; SAP/BW report without sales figures &quot;))</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Main Products Purchased</label>
         <required>false</required>
@@ -12975,9 +13100,9 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <fullName>Total_BSP_CASS_Participations__c</fullName>
         <description>The total number of active CASS and BSP participations for the airline.</description>
         <externalId>false</externalId>
-        <formula>IF (
-  ISBLANK( ParentId ),
-  Airline_BSP_Participations__c + Airline_CASS_Participations__c,
+        <formula>IF ( 
+  ISBLANK( ParentId ), 
+  Airline_BSP_Participations__c + Airline_CASS_Participations__c, 
   IF (
     ParentId &lt;&gt; null,
     Parent.Airline_BSP_Participations__c + Parent.Airline_CASS_Participations__c,
@@ -13355,18 +13480,18 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <externalId>false</externalId>
         <formula>CASE (
   TEXT(Type_of__c),
-  &apos;A&apos;, &apos;Scheduled Passenger&apos;,
-  &apos;B&apos;, &apos;Non-Scheduled Passenger&apos;,
-  &apos;C&apos;, &apos;Scheduled Cargo&apos;,
-  &apos;D&apos;, &apos;Non-Scheduled Cargo&apos;,
-  &apos;G&apos;, &apos;ULD&apos;,
-  &apos;H&apos;, &apos;CRS&apos;,
-  &apos;K&apos;, &apos;Bus Company&apos;,
-  &apos;I&apos;, &apos;Scheduled Passenger and Cargo&apos;,
-  &apos;J&apos;, &apos;Non-Scheduled Passenger and Cargo&apos;,
-  &apos;S&apos;, &apos;Miscellaneous/Others&apos;,
-  &apos;F&apos;, &apos;Ferry Company&apos;,
-  &apos;E&apos;, &apos;Railway Company&apos;,
+  &apos;A&apos;, &apos;Scheduled Passenger&apos;, 
+  &apos;B&apos;, &apos;Non-Scheduled Passenger&apos;, 
+  &apos;C&apos;, &apos;Scheduled Cargo&apos;, 
+  &apos;D&apos;, &apos;Non-Scheduled Cargo&apos;, 
+  &apos;G&apos;, &apos;ULD&apos;, 
+  &apos;H&apos;, &apos;CRS&apos;, 
+  &apos;K&apos;, &apos;Bus Company&apos;, 
+  &apos;I&apos;, &apos;Scheduled Passenger and Cargo&apos;, 
+  &apos;J&apos;, &apos;Non-Scheduled Passenger and Cargo&apos;, 
+  &apos;S&apos;, &apos;Miscellaneous/Others&apos;, 
+  &apos;F&apos;, &apos;Ferry Company&apos;, 
+  &apos;E&apos;, &apos;Railway Company&apos;, 
   &apos;Z&apos;, &apos;Inactive&apos;,
   &apos;&apos;
 )</formula>
@@ -19772,6 +19897,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <columns>ACCOUNT.PHONE1</columns>
         <columns>ACCOUNT.RATING</columns>
         <columns>CORE.USERS.ALIAS</columns>
+        <columns>Key_Customer__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>ACCOUNT.TYPE</field>
@@ -21044,6 +21170,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <columns>ACCOUNT.LAST_UPDATE</columns>
         <columns>ACCOUNT.TYPE</columns>
         <columns>CORE.USERS.ALIAS</columns>
+        <columns>Key_Customer__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>ACCOUNT.ADDRESS1_COUNTRY</field>
@@ -23895,10 +24022,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Chapter 7</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Liquidated</fullName>
                 <default>false</default>
             </values>
@@ -23908,10 +24031,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>No Longer Client</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>None</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -26611,10 +26730,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Chapter 7</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Liquidated</fullName>
                 <default>false</default>
             </values>
@@ -26624,10 +26739,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>No Longer Client</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>None</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -29378,10 +29489,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Chapter 7</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Liquidated</fullName>
                 <default>false</default>
             </values>
@@ -29391,10 +29498,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>No Longer Client</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>None</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -31504,6 +31607,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
+                <fullName>IATAN Passenger Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Import Agent</fullName>
                 <default>false</default>
             </values>
@@ -31724,10 +31831,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Chapter 7</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Liquidated</fullName>
                 <default>false</default>
             </values>
@@ -31737,10 +31840,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>No Longer Client</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>None</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -35017,10 +35116,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Chapter 7</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Liquidated</fullName>
                 <default>false</default>
             </values>
@@ -35030,10 +35125,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>No Longer Client</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>None</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -37916,10 +38007,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Chapter 7</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Liquidated</fullName>
                 <default>false</default>
             </values>
@@ -37929,10 +38016,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>No Longer Client</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>None</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -42291,10 +42374,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Chapter 7</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Liquidated</fullName>
                 <default>false</default>
             </values>
@@ -42304,10 +42383,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>No Longer Client</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>None</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -44790,10 +44865,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Chapter 7</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Liquidated</fullName>
                 <default>false</default>
             </values>
@@ -44803,10 +44874,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>No Longer Client</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>None</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -48901,10 +48968,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Chapter 7</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Liquidated</fullName>
                 <default>false</default>
             </values>
@@ -48914,10 +48977,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>No Longer Client</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>None</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -53025,10 +53084,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Chapter 7</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Liquidated</fullName>
                 <default>false</default>
             </values>
@@ -53038,10 +53093,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>No Longer Client</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>None</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -55292,10 +55343,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Chapter 7</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Liquidated</fullName>
                 <default>false</default>
             </values>
@@ -55305,10 +55352,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>No Longer Client</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>None</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -57494,10 +57537,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Chapter 7</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Liquidated</fullName>
                 <default>false</default>
             </values>
@@ -57507,10 +57546,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>No Longer Client</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>None</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -59843,10 +59878,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Chapter 7</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Liquidated</fullName>
                 <default>false</default>
             </values>
@@ -59856,10 +59887,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>No Longer Client</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>None</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -64525,10 +64552,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Chapter 7</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Liquidated</fullName>
                 <default>false</default>
             </values>
@@ -64538,10 +64561,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>No Longer Client</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>None</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -70182,21 +70201,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>EF_Allow_Billing_Agreements</picklist>
-            <values>
-                <fullName>Allowed</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Allowed with Approval</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Not Allowed</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>EF_Level__c</picklist>
             <values>
                 <fullName>1</fullName>
@@ -70237,10 +70241,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Chapter 7</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Liquidated</fullName>
                 <default>false</default>
             </values>
@@ -70250,10 +70250,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>No Longer Client</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>None</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -74392,10 +74388,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Chapter 7</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Liquidated</fullName>
                 <default>false</default>
             </values>
@@ -74405,10 +74397,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>No Longer Client</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>None</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -76850,7 +76838,7 @@ CONTAINS(Name,&quot;Intl&quot;))</errorConditionFormula>
         <fullName>Billing_Address</fullName>
         <active>false</active>
         <description>To prevent null values in billing city &amp; country field</description>
-        <errorConditionFormula>AND(
+        <errorConditionFormula>AND( 
 $Profile.Name &lt;&gt; &apos;MACS - Administrator&apos;,
  OR(LEN(BillingCity)&lt;3,LEN( BillingCountry)&lt;3),
 PRIORVALUE( Value_Opportunities__c ) = Value_Opportunities__c ,
@@ -76896,7 +76884,7 @@ Category_Other_Value__c = &quot;&quot;
         <active>true</active>
         <description>Airline head office accounts can be created only by administrator, please contact your administrator</description>
         <errorConditionFormula>AND(
-ISNEW(), ISPICKVAL( Field_Head_Office__c , &quot;Headquarter&quot;),
+ISNEW(), ISPICKVAL( Field_Head_Office__c , &quot;Headquarter&quot;), 
 ISPICKVAL( Industry, &quot;Airline&quot;),
 NOT(CONTAINS($Profile.Name, &quot;Administrator&quot;)),
 NOT(CONTAINS($Profile.Name, &quot;Developer&quot;))
@@ -76907,8 +76895,8 @@ NOT(CONTAINS($Profile.Name, &quot;Developer&quot;))
         <fullName>EF_AS_Specialist_Prevent_Client_Edit</fullName>
         <active>true</active>
         <description>If User is Airline Service Specialist prevent editing Client Accounts</description>
-        <errorConditionFormula>AND(
-ISPICKVAL($User.EF_User_Role__c, &apos;Airline Services Specialists&apos;),
+        <errorConditionFormula>AND( 
+ISPICKVAL($User.EF_User_Role__c, &apos;Airline Services Specialists&apos;), 
 RecordType.Name=&apos;Others&apos; )</errorConditionFormula>
         <errorMessage>You don&apos;t have the right level of access to edit Client Accounts</errorMessage>
     </validationRules>
@@ -76929,10 +76917,10 @@ RecordType.Name=&apos;Others&apos;
         <active>true</active>
         <description>E&amp;F Status on Customers can be reactivated if the user has the correct setting on his user</description>
         <errorConditionFormula>AND(
-NOT($User.EF_Customer_Reactivation__c),
+NOT($User.EF_Customer_Reactivation__c),  
 OR(ISPICKVAL(EF_Status__c, &apos;Active&apos;), ISPICKVAL(EF_Status__c, &apos;&apos;) ),
 TEXT(PRIORVALUE(EF_Status__c))=&apos;Inactive&apos;,
-OR(RecordType.Name=&apos;Operator&apos;, RecordType.Name=&apos;Airline Branch&apos;, RecordType.Name=&apos;Airline Headquarters&apos;)
+OR(RecordType.Name=&apos;Operator&apos;, RecordType.Name=&apos;Airline Branch&apos;, RecordType.Name=&apos;Airline Headquarters&apos;) 
 )</errorConditionFormula>
         <errorMessage>You are not allowed to reactivate Customer accounts for E&amp;F.</errorMessage>
     </validationRules>
@@ -76943,7 +76931,7 @@ OR(RecordType.Name=&apos;Operator&apos;, RecordType.Name=&apos;Airline Branch&ap
         <errorConditionFormula>AND(
   OR($User.Profile_Name__c == &apos;E&amp;F staff&apos;, $User.Profile_Name__c == &apos;E&amp;F Management&apos;),
   OR(RecordType.DeveloperName=&apos;Operator&apos;, RecordType.DeveloperName=&apos;Others&apos;),
-  EF_SIS_Code_Verified__c=false
+  EF_SIS_Code_Verified__c=false 
 )</errorConditionFormula>
         <errorDisplayField>EF_SIS_Code_Verified__c</errorDisplayField>
         <errorMessage>SIS Verified can&apos;t be unchecked if Record Type is Operator</errorMessage>
@@ -76954,7 +76942,7 @@ OR(RecordType.Name=&apos;Operator&apos;, RecordType.Name=&apos;Airline Branch&ap
         <errorConditionFormula>AND(
    EF_SIS_Code_Verified__c=true,
    OR(ISBLANK(EF_SIS_Code__c), ISBLANK(EF_SIS_Designator__c))
-
+   
 )</errorConditionFormula>
         <errorDisplayField>EF_SIS_Code_Verified__c</errorDisplayField>
         <errorMessage>SIS Verified can&apos;t be checked if SIS Accounting Code or SIS Designator are empty</errorMessage>
@@ -76963,12 +76951,12 @@ OR(RecordType.Name=&apos;Operator&apos;, RecordType.Name=&apos;Airline Branch&ap
         <fullName>EF_MandatoryFields</fullName>
         <active>true</active>
         <description>Sets the mandatory fields for E&amp;F Profiles. (E&amp;F Type, E&amp;F Status, E&amp;F Sub-status, E&amp;F Status DAte Change)</description>
-        <errorConditionFormula>AND(
- CONTAINS($User.Profile_Name__c, &apos;E&amp;F&apos;),
-OR(RecordType.DeveloperName=&apos;Standard_Account&apos;, RecordType.DeveloperName=&apos;Others&apos;, RecordType.DeveloperName=&apos;Operator&apos;,
+        <errorConditionFormula>AND( 
+ CONTAINS($User.Profile_Name__c, &apos;E&amp;F&apos;),   
+OR(RecordType.DeveloperName=&apos;Standard_Account&apos;, RecordType.DeveloperName=&apos;Others&apos;, RecordType.DeveloperName=&apos;Operator&apos;, 
 RecordType.DeveloperName=&apos;IATA_Airline_BR&apos;,
 RecordType.DeveloperName=&apos;IATA_Airline&apos;),
-OR(ISPICKVAL(EF_Type__c,&quot;&quot;), ISPICKVAL( EF_Status__c, &quot;&quot;), ISPICKVAL( EF_SubStatus__c ,&quot;&quot;), ISNULL(EF_Effective_Date__c) )
+OR(ISPICKVAL(EF_Type__c,&quot;&quot;), ISPICKVAL( EF_Status__c, &quot;&quot;), AND(ISPICKVAL( EF_Status__c, &quot;Inactive&quot;), ISPICKVAL( EF_SubStatus__c ,&quot;&quot;)), ISNULL(EF_Effective_Date__c) )
 )</errorConditionFormula>
         <errorMessage>Please fill in E&amp;F Type, E&amp;F Status, E&amp;F Sub-Status, E&amp;F Status Date Change</errorMessage>
     </validationRules>
@@ -76977,14 +76965,14 @@ OR(ISPICKVAL(EF_Type__c,&quot;&quot;), ISPICKVAL( EF_Status__c, &quot;&quot;), I
         <active>true</active>
         <description>E&amp;F SIS Location ID just can take values 1 to 99 and Main.</description>
         <errorConditionFormula>AND(
-       NOT(ISBLANK(EF_SIS_Location_ID__c)),
+       NOT(ISBLANK(EF_SIS_Location_ID__c)), 
        AND( EF_SIS_Location_ID__c &lt;&gt;&quot;Main&quot;,
                NOT(
                OR(
                    REGEX(EF_SIS_Location_ID__c, &quot;[0-9]{1}&quot;),
                    AND(LEN(EF_SIS_Location_ID__c)=2, REGEX(EF_SIS_Location_ID__c, &quot;[2-9]{2}&quot;)),
                    AND(LEN(EF_SIS_Location_ID__c)=2, EF_SIS_Location_ID__c=&quot;10&quot;)
-
+                   
                    )
                )
        )
@@ -76996,15 +76984,15 @@ OR(ISPICKVAL(EF_Type__c,&quot;&quot;), ISPICKVAL( EF_Status__c, &quot;&quot;), I
         <fullName>Edit_Head_office</fullName>
         <active>false</active>
         <description>It is to avoid end user editing head office account information.</description>
-        <errorConditionFormula>AND(
-NOT( $User.ProfileId = &quot;00e20000000ncPi&quot;),
-NOT(ISNEW()),
-ISPICKVAL( Field_Head_Office__c , &quot;Headquarter&quot;),
-ISPICKVAL( Industry, &quot;Airline&quot;),
-NOT(CONTAINS($Profile.Name, &quot;Administrator&quot;)),
-PRIORVALUE( Value_Opportunities__c ) = Value_Opportunities__c ,
+        <errorConditionFormula>AND( 
+NOT( $User.ProfileId = &quot;00e20000000ncPi&quot;), 
+NOT(ISNEW()), 
+ISPICKVAL( Field_Head_Office__c , &quot;Headquarter&quot;), 
+ISPICKVAL( Industry, &quot;Airline&quot;), 
+NOT(CONTAINS($Profile.Name, &quot;Administrator&quot;)), 
+PRIORVALUE( Value_Opportunities__c ) = Value_Opportunities__c , 
 PRIORVALUE( Total_Value_Won_Opportunities__c ) = Total_Value_Won_Opportunities__c,
-Source_System__c &lt;&gt;&apos;AIMS&apos;
+Source_System__c &lt;&gt;&apos;AIMS&apos; 
 )</errorConditionFormula>
         <errorMessage>Head office account can be edited only by administrator, please contact your administrator</errorMessage>
     </validationRules>
@@ -77013,10 +77001,10 @@ Source_System__c &lt;&gt;&apos;AIMS&apos;
         <active>false</active>
         <description>If Industry = Airline, then Field/Head Office must be filled</description>
         <errorConditionFormula>AND(
-ISPICKVAL(Industry,&quot;Airline&quot;),
+ISPICKVAL(Industry,&quot;Airline&quot;), 
 ISPICKVAL(Field_Head_Office__c,&quot;&quot;),
-PRIORVALUE( Value_Opportunities__c ) = Value_Opportunities__c ,
-PRIORVALUE( Total_Value_Won_Opportunities__c ) = Total_Value_Won_Opportunities__c
+PRIORVALUE( Value_Opportunities__c ) = Value_Opportunities__c ,  
+PRIORVALUE( Total_Value_Won_Opportunities__c ) = Total_Value_Won_Opportunities__c 
 )</errorConditionFormula>
         <errorDisplayField>Field_Head_Office__c</errorDisplayField>
         <errorMessage>The Field/Head Office is mandatory for airlines</errorMessage>
@@ -77025,7 +77013,7 @@ PRIORVALUE( Total_Value_Won_Opportunities__c ) = Total_Value_Won_Opportunities__
         <fullName>General_Public_Admin_only</fullName>
         <active>true</active>
         <description>Only administrators can edit General Public accounts</description>
-        <errorConditionFormula>IF((CONTAINS(Name, &quot;General Public&quot;) || CONTAINS(Name, &quot;general public&quot;) || CONTAINS(Name, &quot;GENERAL PUBLIC&quot;) ||  CONTAINS(Name, &quot;General public&quot;) || TEXT(Sector__c) = &quot;General Public&quot;) &amp;&amp; NOT(CONTAINS($User.Profile_Name__c, &quot;System Administrator&quot;) || CONTAINS($User.Profile_Name__c, &quot;System administrator&quot;)), TRUE, FALSE)</errorConditionFormula>
+        <errorConditionFormula>IF((CONTAINS(Name, &quot;General Public&quot;) || CONTAINS(Name, &quot;general public&quot;) || CONTAINS(Name, &quot;GENERAL PUBLIC&quot;) || CONTAINS(Name, &quot;General public&quot;) || TEXT(Sector__c) = &quot;General Public&quot; || ISPICKVAL(PRIORVALUE(Sector__c),&quot;General Public&quot;)) &amp;&amp; NOT(CONTAINS($User.Profile_Name__c, &quot;System Administrator&quot;) || CONTAINS($User.Profile_Name__c, &quot;System administrator&quot;)), TRUE, FALSE)</errorConditionFormula>
         <errorMessage>Please contact an administrator if you wish to create or modify a general public account</errorMessage>
     </validationRules>
     <validationRules>
@@ -77035,7 +77023,7 @@ PRIORVALUE( Total_Value_Won_Opportunities__c ) = Total_Value_Won_Opportunities__
         <errorConditionFormula>AND(
 OR(
  RecordType.DeveloperName = &apos;IATA_Airline_BR&apos;,
- RecordType.DeveloperName = &apos;IATA_Airline&apos;),
+ RecordType.DeveloperName = &apos;IATA_Airline&apos;), 
 OR( ISBLANK(IATACode__c),ISNULL(IATACode__c))  )</errorConditionFormula>
         <errorMessage>IATA Code is mandatory</errorMessage>
     </validationRules>
@@ -77073,7 +77061,7 @@ ID_Card_Key_Account_Discount__c &gt; 1))</errorConditionFormula>
         NOT($User.Profile_Name__c =&apos;MER Membership&apos;),
         NOT($User.Profile_Name__c =&apos;System administrator - Stakeholders&apos;),
         NOT($User.Profile_Name__c =&apos;System Administrator - automated processes&apos;),
-        NOT($User.Profile_Name__c =&apos;Developer&apos;)),
+        NOT($User.Profile_Name__c =&apos;Developer&apos;)),       
         TRUE ,FALSE)</errorConditionFormula>
         <errorMessage>The airline is a member and the name or the billing address cannot be edited. Only MER is allowed.</errorMessage>
     </validationRules>
@@ -77119,11 +77107,11 @@ Source_System__c  &lt;&gt; &apos;AIMS&apos;
         <active>false</active>
         <description>If Industry = Airline, then Field/Head Office must be filled</description>
         <errorConditionFormula>AND(
-ISPICKVAL(Industry,&quot;Airline&quot;),
+ISPICKVAL(Industry,&quot;Airline&quot;), 
 NOT(ISPICKVAL(Field_Head_Office__c,&quot;Headquarter&quot;)),
 OR( LEN(ParentId)=0, LEN(Airline_designator__c)=0),
 PRIORVALUE( Value_Opportunities__c ) = Value_Opportunities__c,
-PRIORVALUE( Total_Value_Won_Opportunities__c ) = Total_Value_Won_Opportunities__c
+PRIORVALUE( Total_Value_Won_Opportunities__c ) = Total_Value_Won_Opportunities__c 
 )</errorConditionFormula>
         <errorMessage>If Industry = Airline, and Field Head Office not = Headquarter, then Parent Account must be filled and Airline Designator must be filled</errorMessage>
     </validationRules>
@@ -77302,14 +77290,14 @@ COPY THE URL FROM THIS BUTTON and paste it into your own custom button or link. 
         <masterLabel>FormFactory Account Link</masterLabel>
         <openType>sidebar</openType>
         <protected>false</protected>
-        <url>https://www.dreamfactory.net/sforce/formfactory/formfactory.html?
-sforce_session_id={!API.Session_ID}&amp;
-sforce_server_url={!API.Partner_Server_URL_120}&amp;
-sforce_user_name={!User.Username}&amp;
-sforce_full_name={!User.Name}&amp;
-sforce_user_id={!User.Id}&amp;
-custom_link_name=FormFactory Form Name&amp;
-myaccount={!Account.Id}&amp;
+        <url>https://www.dreamfactory.net/sforce/formfactory/formfactory.html? 
+sforce_session_id={!API.Session_ID}&amp; 
+sforce_server_url={!API.Partner_Server_URL_120}&amp; 
+sforce_user_name={!User.Username}&amp; 
+sforce_full_name={!User.Name}&amp; 
+sforce_user_id={!User.Id}&amp; 
+custom_link_name=FormFactory Form Name&amp; 
+myaccount={!Account.Id}&amp; 
 myuser={!User.Id}</url>
     </webLinks>
     <webLinks>
@@ -77364,20 +77352,84 @@ myuser={!User.Id}</url>
         <protected>false</protected>
         <showsLocation>false</showsLocation>
         <showsStatus>false</showsStatus>
-        <url>/001/e?retURL=%2F{!Account.Id}
+        <url>/001/e?retURL=%2F{!Account.Id} 
 &amp;RecordType=012200000004TQC
-&amp;cancelURL=%2F{!Account.Id}
-&amp;acc3={!Account.Name}
-&amp;acc2={!Account.Name}
-&amp;acc3_lkid={!Account.Id}
+&amp;cancelURL=%2F{!Account.Id} 
+&amp;acc3={!Account.Name} 
+&amp;acc2={!Account.Name} 
+&amp;acc3_lkid={!Account.Id} 
 &amp;acc6={!Account.Type}
-&amp;ent=Account
-&amp;00N20000000pA4m={!Account.Legal_name__c}
-&amp;00N20000000pA4h={!Account.Airline_designator__c}
-&amp;00N20000000hrzo={!Account.IATA_Member__c}
+&amp;ent=Account 
+&amp;00N20000000pA4m={!Account.Legal_name__c} 
+&amp;00N20000000pA4h={!Account.Airline_designator__c} 
+&amp;00N20000000hrzo={!Account.IATA_Member__c} 
 &amp;00N20000000mApw=Branch
 &amp;00N20000000pA4w={!Account.Membership_status__c}
 &amp;acc7={!Account.Industry}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Create_GSA_agency</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Create GSA agency</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/22.0/connection.js&quot;)} 
+{!REQUIRESCRIPT(&quot;/soap/ajax/22.0/apex.js&quot; )} 
+
+var connection = sforce.connection; 
+
+var recType = sforce.connection.query(&quot;SELECT Id, Name FROM RecordType WHERE developername = &apos;Standard_Account&apos; LIMIT 1&quot;); 
+
+var newgsaagency= new sforce.SObject(&quot;Account&quot;); 
+
+newgsaagency.RecordTypeId = recType.Id; 
+newgsaagency.Name = &apos;{!Account.Name}&apos;;
+newgsaagency.Sector__c = &quot;Travel Agent&quot;;
+newgsaagency.Category__c = &quot;GSA General Sales Agent&quot;;
+newgsaagency.Location_Class__c = &quot;G&quot;;
+newgsaagency.Location_Type__c = &quot;HO&quot;;
+newgsaagency.Reason_for_creation__c = &quot;New Agent&quot;;
+
+result = sforce.connection.create([newgsaagency]); 
+var accId = result[0].id;
+
+var airlineId = &apos;{!Account.Id}&apos;; 
+
+javascript:srcUp(&apos;/apex/AMS_AccountOSCARWizardPage?accountId=&apos;+accId+&apos;&amp;process=x&amp;Type_of_OSCAR_process_man=NEW.GSA.1.0&amp;airlineId=&apos;+airlineId);</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Create_MSO_agency</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Create MSO agency</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/22.0/connection.js&quot;)}
+{!REQUIRESCRIPT(&quot;/soap/ajax/22.0/apex.js&quot; )}
+
+var connection = sforce.connection;
+
+var recType = sforce.connection.query(&quot;SELECT Id, Name FROM RecordType WHERE developername = &apos;Standard_Account&apos; LIMIT 1&quot;);
+
+var newmsoagency= new sforce.SObject(&quot;Account&quot;);
+
+newmsoagency.RecordTypeId = recType.Id;
+newmsoagency.Name = &apos;{!Account.Name}&apos;;
+newmsoagency.Sector__c = &quot;Travel Agent&quot;;
+newmsoagency.Category__c = &quot;MSO Member Sales Office&quot;;
+newmsoagency.Location_Class__c = &quot;M&quot;;
+newmsoagency.Location_Type__c = &quot;HO&quot;;
+newmsoagency.Reason_for_creation__c = &quot;New Agent&quot;;
+
+result = sforce.connection.create([newmsoagency]);
+var accId = result[0].id;
+
+var airlineId = &apos;{!Account.Id}&apos;;
+
+javascript:srcUp(&apos;/apex/AMS_AccountOSCARWizardPage?accountId=&apos;+accId+&apos;&amp;process=x&amp;Type_of_OSCAR_process_man=NEW.MSO.1.0&amp;airlineId=&apos;+airlineId);</url>
     </webLinks>
     <webLinks>
         <fullName>DSE__DS_AccountHierarchyButton</fullName>
@@ -77552,7 +77604,7 @@ myuser={!User.Id}</url>
         <displayType>button</displayType>
         <encodingKey>UTF-8</encodingKey>
         <linkType>url</linkType>
-        <masterLabel>Account Plan</masterLabel>
+        <masterLabel>Key Account Plan</masterLabel>
         <openType>replace</openType>
         <protected>false</protected>
         <url>/apex/AMP_KeyAccountPlan?accountId={!Account.Id}</url>
