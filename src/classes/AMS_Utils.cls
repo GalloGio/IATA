@@ -91,7 +91,7 @@ public without sharing class AMS_Utils {
     public static final String MAJ_SHAREHOLDING = 'Major Shareholding';
     public static final String MIN_SHAREHOLDING = 'Minor Shareholding';
     public static final String NAME = 'Name';
-    public static final String LEGAL_STATUS = 'Legal Status';
+    public static final String LEGAL_STATUS = 'Legal status';
     public static final String VFMR = 'VMFR';
 
 
