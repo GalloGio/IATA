@@ -6561,6 +6561,7 @@ public without sharing class ISSP_AMS_Accreditation {
                 child.ParentId = newCase.Id;
                 child.Status = 'Open';
                 child.Origin = 'Portal';
+                child.Product_Category_ID__c = '-'; //Set Product Id so picked up by case assign to AM Regional queue
 
                 //FM 31-10-2016 - Set IATA Country to 'All Countries' so auto-response doesn't get sent for child cases
                 auxId = child.ContactId;
