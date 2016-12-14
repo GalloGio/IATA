@@ -32,6 +32,7 @@ public class AMS_OscarCase_RiskMgmt {
     private static map<id, Account> mapAccntToUpdate = new map<id, account>();	//Stores account to be updated (Status and reason code)
 	private static set<id> setAccntIdIRRToClear = new set<id>();	//Account IDs for which a clear of irregularities is needed
 	private static map<id, list<Agency_Applied_Change_code__c>> mapExistingChangeCodes = new map<id, list<Agency_Applied_Change_code__c>>();
+	private static map<string, operational_Calendar__c> mapOperationalCalendar = new map<string, operational_Calendar__c>();
     
     //Main Method
 	public static void CreateRiskChangeCode(map<id, case> mapTrgOld, map<id, case> mapTrgNew){
@@ -144,14 +145,19 @@ public class AMS_OscarCase_RiskMgmt {
 								  Notify_Agreement_Approval_to_AG__c, Reason_for_Default__c, REI_ApprovalRejectin__c, Repayment_Schedule_Approval__c, SIDRA_Lite_Reason__c, TER_Approval_Rejection__c, Current_Outstanding_Amount_USD__c, Type_of_REI_WD__c, 
 								  Termination_Reason__c, Ticketing_Authority_Re_assigned__c, Update_AIMS_DEF__c, Update_AIMS_IRR__c, Update_AIMS_IRRWITH__c, Update_AIMS_REI_DEFWITH__c, 
 								  Update_AIMS_Repayment_agreed__c, Update_AIMS_TER__c, Parent.OSCAR__r.Type_of_change__c, Parent.OSCAR__c, IRR_Approval_Rejection_Date__c, IRR_Type__c,
-								  Termination_date__c, Outstanding_Amount__c, Reason_of_REI_WD__c, 
+								  Termination_date__c, Outstanding_Amount__c, Reason_of_REI_WD__c, External_ID__c, 
 								  Account.Location_Class__c, AccountId, Account.Status__c, Account.PreviousStatus__c, Account.Previous_Reason__c, Account.Reason__c, Account.Accumulated_Irregularities__c
 								  , Account.IATA_ISO_Country__r.Enable_Risk_Change_Codes__c, Account.AIMS_ID__c, Account.WebStar_ID__c, Account.IATACode__c
 								  //DTULLO UNCOMMENT FOR CNS, COMMENT/DELETE SIMILAR LINES AFTER
 								  //, Account.CNS_Agency__c
 								  from case where id in:mapTrgNew.keySet()]);
 			
+			set<string> setOperationCalendarExtID = new set<string>();
+			
 			for(Case c: mapCases.values()){
+				string sExtId = GetOpCalendarExtId(c.External_ID__c);
+				if(sExtId!='')	setOperationCalendarExtID.add(sExtId);
+				
 				//Pilot countries only!
 				if(!c.Account.IATA_ISO_Country__r.Enable_Risk_Change_Codes__c)
 					continue;
@@ -216,6 +222,14 @@ public class AMS_OscarCase_RiskMgmt {
 					}
 				}
 			}
+			
+			system.debug(logginglevel.error, 'DTULLO 226 setOperationCalendarExtID --> ' + setOperationCalendarExtID);
+			if(!setOperationCalendarExtID.isEmpty()){
+				for(operational_Calendar__c oc:[select Operation_Period_code__c, First_Day__c, Last_Day__c from operational_Calendar__c where Operation_Period_code__c in:setOperationCalendarExtID])
+					mapOperationalCalendar.put(oc.Operation_Period_code__c, oc);
+			}
+			
+			system.debug(logginglevel.error, 'DTULLO 232 mapOperationalCalendar --> ' + mapOperationalCalendar.keySet());
 			
 			//Create the change codes!
 			if(!mapChangeCodeToCreate.isEmpty()){
@@ -341,6 +355,18 @@ public class AMS_OscarCase_RiskMgmt {
 			}
 			else{
 				accnt.Status__c = AMS_Utils.getIATAReadableStatus(cc.Account_status_change__c);
+			}
+		}
+		
+		//Set the billing period
+		if(!mapOperationalCalendar.isEmpty() && mapCases.get(idCase).External_ID__c != null && mapCases.get(idCase).External_ID__c != ''){
+			string sExtId = GetOpCalendarExtId(mapCases.get(idCase).External_ID__c);
+			system.debug(logginglevel.error, 'DTULLO 364 --> ' + sextid);
+			if(sExtId!=''){
+				if(mapOperationalCalendar.ContainsKey(sExtId)){
+					AACC.Start_Date__c = mapOperationalCalendar.get(sExtId).First_Day__c;
+					AACC.End_Date__c = mapOperationalCalendar.get(sExtId).Last_Day__c;
+				}
 			}
 		}
 		
@@ -611,6 +637,18 @@ public class AMS_OscarCase_RiskMgmt {
 			}
 		}
 		return sMemoText;
+	}
+	
+	
+	private static string GetOpCalendarExtId(string sExtId){
+		string sRet = '';
+		if(sExtId != '' && sExtId!=null){
+			if(sExtId.lastIndexOf(' ')>=0){
+				sRet = sExtId.substring(0, sExtId.lastIndexOf(' '));
+				sRet = sRet.replace(' ', '_');
+			}
+		}
+		return sRet;
 	}
 	
 	
