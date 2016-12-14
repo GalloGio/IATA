@@ -1,53 +1,26 @@
-public class AMS_AgencyRegulationTriggerHandler {
+global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObject> {
 
-    public static void handleBeforeInsert() {
-        
+	public List<AMS_Agency_Regulation__c> agencyRegulations;
+	public Map<Id, List<Contact>> keyContactsPerAccount;
+
+	public AMS_AgencyRegulationAutoRenewal(List<AMS_Agency_Regulation__c> agencyRegulations, Map<Id, List<Contact>> keyContactsPerAccount){
+		this.agencyRegulations = agencyRegulations;
+		this.keyContactsPerAccount = keyContactsPerAccount;
+	}
+
+    global Iterable<sObject> start(Database.BatchableContext bc) {
+        return agencyRegulations;
     }
 
-    public static void handleBeforeUpdate() {
-
-        processPostNotifSentActions((List<AMS_Agency_Regulation__c>)Trigger.New, (Map<Id,AMS_Agency_Regulation__c>)Trigger.oldMap);
-        
+    global void execute(Database.BatchableContext BC, List<AMS_Agency_Regulation__c> scope) {
+        validateCandidatesForRenewal(scope, keyContactsPerAccount);
     }
 
-    //Create renewals and send notifications for expiring DGRs
-    public static void processPostNotifSentActions(List<AMS_Agency_Regulation__c> agencyRegulations, Map<Id,AMS_Agency_Regulation__c> oldAgRegulationValues){
-
-        List<AMS_Agency_Regulation__c> dgrRegulationsExpiringIn90Days = new List<AMS_Agency_Regulation__c>();
-
-        Set<Id> accountIds = new Set<Id>();
-
-        for(AMS_Agency_Regulation__c agReg: agencyRegulations){
-            accountIds.add(agReg.Account__c);
-
-            if(!oldAgRegulationValues.get(agReg.Id).Notification_Sent__c && agReg.Notification_Sent__c && (agReg.Type_of_Certificate__c == AMS_Utils.CERT_DGR || agReg.Type_of_Certificate__c == AMS_Utils.CERT_CATA) && agReg.Handling_Account__c)
-                dgrRegulationsExpiringIn90Days.add(agReg);
-        }
-
-        if(!dgrRegulationsExpiringIn90Days.isEmpty()){
-
-            //contacts that will receive notifications for DGR certificates renewal
-            Map<Id, List<Contact>> keyContactsPerAccount = new Map<Id, List<Contact>>();
-
-            List<Contact> allContacts = new List<Contact>([SELECT Id, Email, AccountId, Preferred_Language__c, User_Portal_Status__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c FROM Contact WHERE AccountId IN :accountIds AND (BSP_CASS_Payment_contact__c = TRUE OR Financial_Assessment_Contact__c = TRUE OR User_Portal_Status__c = 'Approved Admin')]);
-
-            for(Contact c: allContacts){
-                if(!keyContactsPerAccount.containsKey(c.AccountId))
-                    keyContactsPerAccount.put(c.AccountId, new List<Contact>());
-
-                keyContactsPerAccount.get(c.AccountId).add(c);
-            }
-
-            AMS_AgencyRegulationAutoRenewal b = new AMS_AgencyRegulationAutoRenewal(dgrRegulationsExpiringIn90Days, keyContactsPerAccount); 
-            //Parameters of ExecuteBatch(context,BatchSize)
-            database.executebatch(b,1);
-
-            //validateCandidatesForRenewal(dgrRegulationsExpiringIn90Days, keyContactsPerAccount);
-        }
+    global void finish(Database.BatchableContext BC) {
 
     }
 
-    /*public static void validateCandidatesForRenewal(List<AMS_Agency_Regulation__c> regulationsRequiringRenewal, Map<Id, List<Contact>> keyContactsPerAccount){
+    public static void validateCandidatesForRenewal(List<AMS_Agency_Regulation__c> regulationsRequiringRenewal, Map<Id, List<Contact>> keyContactsPerAccount){
 
         Set<Id> accts = new Set<Id>();
         Set<Id> isoCountries = new Set<Id>();
@@ -65,10 +38,17 @@ public class AMS_AgencyRegulationTriggerHandler {
                 DGRToRenewPerAccount.put(agReg.Account__c, new List<AMS_Agency_Regulation__c>());
             DGRToRenewPerAccount.get(agReg.Account__c).add(agReg);
 
+            //all the agregs in context should be put in this list as they should not be expired
+            if(!allNonExpiredDGRPerAccount.containsKey(agReg.Account__c))
+                allNonExpiredDGRPerAccount.put(agReg.Account__c, new List<AMS_Agency_Regulation__c>());
+            allNonExpiredDGRPerAccount.get(agReg.Account__c).add(agReg);
+
             accts.add(agReg.Account__c);
         }
 
         Map<Id, AMS_Agency_Regulation__c> allDGR = new Map<Id, AMS_Agency_Regulation__c>([SELECT Id, Account__c, First_Name__c, Last_Name__c, Position__c, Type_of_Certificate__c, Account__r.IATA_ISO_Country__c, Account__r.Location_Class__c, Expired__c, Notification_Sent__c FROM AMS_Agency_Regulation__c WHERE Account__c IN :accts AND Type_of_Certificate__c = 'DGR']);
+
+        system.debug('allDGR ' + allDGR);
 
         for(AMS_Agency_Regulation__c agReg : allDGR.values()){
             if(!agReg.Expired__c && !agReg.Notification_Sent__c){
@@ -78,6 +58,7 @@ public class AMS_AgencyRegulationTriggerHandler {
             }
         }
 
+        system.debug('allNonExpiredDGRPerAccount ' + allNonExpiredDGRPerAccount);
         Map<Id, Account> accountData = new Map<Id, Account>([SELECT Abbreviated_address__c, Abbreviated_name__c, Name, BillingState, BillingCity, IATA_ISO_Country__c, 
                                                                    Email__c, Fax, Phone, BillingPostalCode, BillingStreet, CASS_Number__c, IATACode__c, Iso_State__c, 
                                                                    License_Number__c, VAT_Number__c, Is_your_firm_handling_Dangerous_Goods__c, Location_Class__c, 
@@ -109,36 +90,60 @@ public class AMS_AgencyRegulationTriggerHandler {
         }
 
         Map<String, Id> countryTemplates = DGRemailTemplates();
-
-        //call 
+        OrgWideEmailAddress[] owea = [select Id from OrgWideEmailAddress where Address = 'agencyriskmgmt@iata.org'];
 
         for(AMS_Agency_Regulation__c agReg: regulationsRequiringRenewal){
-            //only create renewal if account is going below DGR/DGA requirements
-            String key = allDGR.get(agReg.Id).Account__r.IATA_ISO_Country__c + allDGR.get(agReg.Id).Account__r.Location_Class__c;
-            system.debug('key value ' + key);
-            Integer minDgrHO = minimumHODgrRequirements.get(key) == null ? 0 : minimumHODgrRequirements.get(key);
-            system.debug('minDgrHO ' + minDgrHO);
-            Integer minDgrBR = minimumBRDgrRequirements.get(key) == null ? 0 : minimumBRDgrRequirements.get(key);
-            system.debug('minDgrBR ' + minDgrBR);
 
+            Contact comCasecontact;
 
-            Integer numberOfRemainingDGRInAccountToExpire = allNonExpiredDGRPerAccount.get(agReg.Account__c).size()-DGRToRenewPerAccount.get(agReg.Account__c).size();
+            if(keyContactsPerAccount!=null && keyContactsPerAccount.get(agReg.Account__c)!= null && !keyContactsPerAccount.get(agReg.Account__c).isEmpty()){
+                system.debug('keyContactsPerAccount ' + keyContactsPerAccount);
+                //find portal admin
+                for(Contact c: keyContactsPerAccount.get(agReg.Account__c)){
+                    if(c.User_Portal_Status__c == 'Approved Admin')
+                        comCasecontact = c;
+                }
 
-            system.debug('creating renewal for DGR ' + numberOfRemainingDGRInAccountToExpire);
-            if(isCountBelowThreshold(accountData.get(agReg.Account__c), numberOfRemainingDGRInAccountToExpire, minDgrHO, minDgrBR)){
-                
-                system.debug('creating renewal for DGR');
-                AMS_OSCAR__c oscar = createStagingArea(agReg, accountData.get(agReg.Account__c), DGRToRenewPerAccount.get(agReg.Account__c));
-
-                sendEmailAlert(keyContactsPerAccount.get(agReg.Account__c), oscar.Id, countryTemplates, oscar.Oscar_Communication_Case_Id__c);
+                system.debug('CHECK comcasecontact' + keyContactsPerAccount.get(agReg.Account__c).get(0));
+                //if no admin is found just use one of the existing keyContacts
+                if(comCasecontact == null)
+                    comCasecontact = keyContactsPerAccount.get(agReg.Account__c).get(0);
             }
+
+        	if(agReg.Type_Of_Certificate__c == AMS_Utils.CERT_DGR){
+	            //only create renewal if account is going below DGR requirements
+	            String key = allDGR.get(agReg.Id).Account__r.IATA_ISO_Country__c + allDGR.get(agReg.Id).Account__r.Location_Class__c;
+	            system.debug('key value ' + key);
+	            Integer minDgrHO = minimumHODgrRequirements.get(key) == null ? 0 : minimumHODgrRequirements.get(key);
+	            system.debug('minDgrHO ' + minDgrHO);
+	            Integer minDgrBR = minimumBRDgrRequirements.get(key) == null ? 0 : minimumBRDgrRequirements.get(key);
+	            system.debug('minDgrBR ' + minDgrBR);
+
+	            Integer activeDGRInAccount = allNonExpiredDGRPerAccount.get(agReg.Account__c).size();
+	            Integer dgrToRenewInAccount = DGRToRenewPerAccount.get(agReg.Account__c).size();
+	            Integer numberOfRemainingDGRInAccountToExpire = activeDGRInAccount-dgrToRenewInAccount;
+
+	            system.debug('creating renewal for DGR ' + numberOfRemainingDGRInAccountToExpire);
+	            if(isCountBelowThreshold(accountData.get(agReg.Account__c), numberOfRemainingDGRInAccountToExpire, minDgrHO, minDgrBR)){
+	                
+	                system.debug('creating renewal for DGR');
+	                AMS_OSCAR__c oscar = createStagingArea(agReg, accountData.get(agReg.Account__c), DGRToRenewPerAccount.get(agReg.Account__c), comCasecontact);
+
+	                sendEmailAlert(keyContactsPerAccount.get(agReg.Account__c), oscar.Id, countryTemplates, oscar.Oscar_Communication_Case_Id__c, owea[0]);
+	            }
+        	}
+        	else if(agReg.Type_Of_Certificate__c == AMS_Utils.CERT_CATA){
+        		system.debug('creating renewal for CATA');
+
+	            AMS_OSCAR__c oscar = createStagingArea(agReg, accountData.get(agReg.Account__c), DGRToRenewPerAccount.get(agReg.Account__c), comCasecontact);
+        	}
         }
 
     }
 
     private static Boolean isCountBelowThreshold(Account accountData, Integer numberOfActiveDGR, Integer minimumHODgrRequirements, Integer minimumBRDgrRequirements){
 
-        if(accountData.Is_your_firm_handling_Dangerous_Goods__c == 'Yes'){
+        if(accountData.Is_your_firm_handling_Dangerous_Goods__c != 'No'){
             if(accountData.IATA_ISO_Country__r.ISO_Code__c == 'CN' && accountData.Location_Class__c == 'C' && numberOfActiveDGR < 3){
                 return true;
             }else if(accountData.IATA_ISO_Country__r.ISO_Code__c == 'IN' && accountData.Location_Class__c == 'C' && accountData.Location_Type__c == AMS_Utils.BR && accountData.CASS_Number__c != null && Integer.valueOf(accountData.CASS_Number__c) >= 900 && Integer.valueOf(accountData.CASS_Number__c) <= 999){
@@ -162,7 +167,7 @@ public class AMS_AgencyRegulationTriggerHandler {
         return false;
     }
 
-    public static AMS_OSCAR__c createStagingArea(AMS_Agency_Regulation__c agReg, Account accountData, List<AMS_Agency_Regulation__c> regulations){
+    public static AMS_OSCAR__c createStagingArea(AMS_Agency_Regulation__c agReg, Account accountData, List<AMS_Agency_Regulation__c> regulations, Contact communicationCaseContact){
 
         AMS_OSCAR__c theOscar = new AMS_OSCAR__c(RecordTypeId = AMS_Utils.RECTYPE_CERT, Account__c = agReg.Account__c, 
                                     Process__c = AMS_Utils.CERTIFICATION, Status__c='Accepted_Future Date', Change_effective_as_of__c = regulations[0].Expiry_Date__c);
@@ -176,8 +181,10 @@ public class AMS_AgencyRegulationTriggerHandler {
         theCommunicationCase.AccountId = agReg.Account__c;
         theCommunicationCase.Account_Concerned__c = agReg.Account__c;
         theCommunicationCase.BSPCountry__c = accountData.BillingCountry;
-        theCommunicationCase.Reason1__c = 'Certificate DGR';
+        theCommunicationCase.Reason1__c = 'Certificate ' + agReg.Type_of_certificate__c;
         theCommunicationCase.Region__c = accountData.Region_formula__c;
+        if(communicationCaseContact != null)
+            theCommunicationCase.ContactId = communicationCaseContact.Id;
         //theCommunicationCase.Subject = 'DGR renewal - ' + accountData.Name + ' - ' + accountData.IATACode__c;
 
         insert theCommunicationCase;
@@ -268,12 +275,9 @@ public class AMS_AgencyRegulationTriggerHandler {
 
     }
 
-    public static void sendEmailAlert(List<Contact> recipents, Id oscarId, Map<String, Id> countryTemplates, String oscarCommCaseId) {
+    public static void sendEmailAlert(List<Contact> recipents, Id oscarId, Map<String, Id> countryTemplates, String oscarCommCaseId, OrgWideEmailAddress owea) {
         
         Id templateId;
-        ///TEST MOVE THIS BLOCK OUT OF THE FOR
-        OrgWideEmailAddress[] owea = [select Id from OrgWideEmailAddress where Address = 'agencyriskmgmt@iata.org'];
-        ///END TEST
 
         if(recipents != null){
         
@@ -285,15 +289,18 @@ public class AMS_AgencyRegulationTriggerHandler {
 
             for(Contact recipient: recipents){
 
-                Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-                mail.saveAsActivity = true;
-                mail.setToAddresses(new List<String>{recipient.Email});
-                mail.setTemplateId(getSpecificLangTemplate(recipient.Preferred_Language__c, countryTemplates));
-                mail.setTargetObjectId(recipient.Id);
-                mail.setWhatId(oscarId);
-                mail.setOrgWideEmailAddressId(owea.get(0).Id);
+                if(recipient.BSP_CASS_Payment_contact__c || recipient.Financial_Assessment_Contact__c){
 
-                mailsToSend.add(mail);
+                    Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+                    mail.saveAsActivity = true;
+                    mail.setToAddresses(new List<String>{recipient.Email});
+                    mail.setTemplateId(getSpecificLangTemplate(recipient.Preferred_Language__c, countryTemplates));
+                    mail.setTargetObjectId(recipient.Id);
+                    mail.setWhatId(oscarId);
+                    mail.setOrgWideEmailAddressId(owea.Id);
+
+                    mailsToSend.add(mail);
+                }
             
             }
 
@@ -356,6 +363,6 @@ public class AMS_AgencyRegulationTriggerHandler {
             return availableTemplates.get(lang);
         else 
             return availableTemplates.get('English');
-    }*/
+    }
 
 }

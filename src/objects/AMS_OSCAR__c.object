@@ -1571,6 +1571,18 @@ IF(Bank_Guarantee_received__c - Bank_Guarantee_requested__c =6, TEXT(4), TEXT((B
         <type>Date</type>
     </fields>
     <fields>
+        <fullName>Emails_reference_Id__c</fullName>
+        <externalId>false</externalId>
+        <label>Emails reference Id</label>
+        <length>50</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Fees_refund_requested__c</fullName>
         <externalId>false</externalId>
         <label>Fees refund requested</label>
@@ -2301,6 +2313,18 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Oscar_Communication_Case_Id__c</fullName>
+        <externalId>false</externalId>
+        <label>Oscar Communication Case Id</label>
+        <length>100</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Out_of_deadline_SAAM__c</fullName>
@@ -15070,16 +15094,18 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
     </validationRules>
     <validationRules>
         <fullName>Form_Date_Courier_Cargo</fullName>
-        <active>true</active>
-        <errorConditionFormula>NOT(ISBLANK(Form_Effective_Date__c))
+        <active>false</active>
+        <errorConditionFormula>RecordType.DeveloperName = &quot;VOLUNTARY_RELINQUISHMENT&quot;
+&amp;&amp; NOT(ISBLANK(Form_Effective_Date__c))
 &amp;&amp; ISPICKVAL(Account__r.Location_Class__c, &apos;C&apos;)
 &amp;&amp; (Form_Effective_Date__c - Dossier_Reception_Date__c &lt; 90)</errorConditionFormula>
         <errorMessage>Form Effective Date must be at least 90 days from the Dossier Reception Date</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Form_Date_Courier_Cass_Associates</fullName>
-        <active>true</active>
-        <errorConditionFormula>NOT(ISBLANK(Form_Effective_Date__c))
+        <active>false</active>
+        <errorConditionFormula>RecordType.DeveloperName = &quot;VOLUNTARY_RELINQUISHMENT&quot;
+&amp;&amp; NOT(ISBLANK(Form_Effective_Date__c))
 &amp;&amp; OR(ISPICKVAL(Account__r.Category__c, &apos;Courier&apos;), ISPICKVAL(Account__r.Category__c, &apos;Cass Associate&apos;))
 &amp;&amp; (Form_Effective_Date__c - Dossier_Reception_Date__c &lt; 30)</errorConditionFormula>
         <errorMessage>Form Effective Date must be at least 30 days from the Dossier Reception Date</errorMessage>

@@ -3253,7 +3253,6 @@
           }],
           "Automations": [],
           "DisplayFields": [
-            "Form_Effective_Date__c",
             "Certificate_Quantity__c",
             "Confirm_Payment_if_applicable__c",
             "Send_Confirmation__c",
