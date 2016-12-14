@@ -8,8 +8,8 @@
         <label>Information</label>
         <layoutColumns>
             <layoutItems>
-                <behavior>Required</behavior>
-                <field>Billing_Agreement_Name__c</field>
+                <behavior>Readonly</behavior>
+                <field>BillingAgreement_Name__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -217,6 +217,7 @@
     <relatedLists>
         <customButtons>Mass_Update_Contact_Billing_Agreement</customButtons>
         <fields>NAME</fields>
+        <fields>Billing_Agreement_Name__c</fields>
         <fields>Contact__c</fields>
         <fields>Contact_Account__c</fields>
         <fields>Status__c</fields>

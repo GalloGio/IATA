@@ -96,7 +96,7 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 
             Contact comCasecontact;
 
-            if(!keyContactsPerAccount.get(agReg.Account__c).isEmpty()){
+            if(keyContactsPerAccount!=null && keyContactsPerAccount.get(agReg.Account__c)!= null && !keyContactsPerAccount.get(agReg.Account__c).isEmpty()){
                 system.debug('keyContactsPerAccount ' + keyContactsPerAccount);
                 //find portal admin
                 for(Contact c: keyContactsPerAccount.get(agReg.Account__c)){
