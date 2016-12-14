@@ -3,6 +3,7 @@ global class AMS_EBulletinBatch implements Database.Batchable<sObject> {
 	String query;
 	public final String typeEBulletin;	
 	public String networkComponent = '';
+	EmailTemplate emailTemplate; 
 
 	global AMS_EBulletinBatch(String typeEBulletin) {
 		this.typeEBulletin = typeEBulletin;
@@ -14,7 +15,7 @@ global class AMS_EBulletinBatch implements Database.Batchable<sObject> {
 		//this.query = 'select ' + fieldsToRecover + ' from AMS_eBulletin_Profile__c ' + filters;
 		
 
-		this.query = AMS_QueryUtils.getAllFieldQuery('AMS_eBulletin_Profile__c',new List<String>{'User__r.email'},
+		this.query = AMS_QueryUtils.getAllFieldQuery('AMS_eBulletin_Profile__c',new List<String>{'User__r.email','User__r.name'},
 										'recordType.name = :typeEBulletin and Opt_out_Bulletin__c = FALSE and Opt_in__c = TRUE', 
 										FALSE);
 
@@ -26,6 +27,11 @@ global class AMS_EBulletinBatch implements Database.Batchable<sObject> {
 		if(myCommunity.size() > 0) this.networkComponent = Network.getLoginUrl(myCommunity[0].id).substringBeforeLast('/') + '/ISSP_AMS_EBulletin';
     
 		System.debug(networkComponent);
+
+		String developerName = 'AMS_EBulletin_'+this.typeEBulletin+'_Notification';
+
+		this.emailTemplate = [Select id, Body, HtmlValue, Encoding, Subject from EmailTemplate where DeveloperName = :developerName];
+
 	}
 	
 	global Database.QueryLocator start(Database.BatchableContext BC) {
@@ -84,7 +90,7 @@ global class AMS_EBulletinBatch implements Database.Batchable<sObject> {
 
 			system.debug('Change Codes count: ' + count);
 
-			if(count > 0) mailsToSend.add(setEmailContents(eBprof.User__r.email));
+			if(count > 0) mailsToSend.add(setEmailContents(eBprof));
 		}
 
 		if(!Test.isRunningTest())  Messaging.sendEmail(mailsToSend);
@@ -96,25 +102,29 @@ global class AMS_EBulletinBatch implements Database.Batchable<sObject> {
 		//FINISH
 	}
 
-	private Messaging.SingleEmailMessage setEmailContents(String email)
+	private Messaging.SingleEmailMessage setEmailContents(AMS_eBulletin_Profile__c eBprof)
 	{
+
 		//TODO Create an Email template
 		//
 		Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-    	mail.saveAsActivity = false;
-    	//email = 'diogo.roxo@b-i.com';
-    	mail.setToAddresses(new List<String>{email});
+    	mail.setToAddresses(new List<String>{eBprof.User__r.email});
     	
-    	// Step 3: Set who the email is sent from
-		mail.setReplyTo('amsDiogo@Salesforce.com');
-	    mail.setSenderDisplayName('EBulletin');
+        mail.setSenderDisplayName('IATA Customer Service');
 
-	    
-	    // Step 4. Set email contents - you can use variables!
-	    mail.setSubject('EBulletin Notification');
-	    String body = 'Dear Mr / Mrs , there has been an occurrence within your selection criteria. Please access the IATA Portal ' + networkComponent +' for further details.';
-	    mail.setHtmlBody(body);
+	    String bodyHTML = emailTemplate.HtmlValue;
+        String bodyText = emailTemplate.Body;
 
+        bodyHTML = bodyHTML.replace('##USERNAME##',eBprof.User__r.name);
+        bodyHTML = bodyHTML.replace('##URL##',networkComponent);
+
+       	mail.setHtmlBody(bodyHTML);
+        mail.setPlainTextBody(bodyText);
+
+        mail.setCharset(emailTemplate.Encoding);
+        mail.setSubject(emailTemplate.Subject);
+       	mail.saveAsActivity = false;
+    	
 		return mail;
 	}
 	
