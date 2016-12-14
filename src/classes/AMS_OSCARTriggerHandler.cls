@@ -513,9 +513,8 @@ public class AMS_OSCARTriggerHandler {
 						if(accounts.get(oscar.Account__c).Due_Diligence_Status__c == AMS_Utils.IN_PROGRESS) oscar.STEP17__c = AMS_Utils.IN_PROGRESS;
 						else{
 							String dlResult = AMS_OSCAR_Webservice.createAMLCaseWithNoOscarUpdate(oscar);
-							if (dlResult.startsWith('ERROR')) {
-								oscar.addError(dlResult);
-							}
+							if (dlResult.startsWith('ERROR')) oscar.addError(dlResult);
+							else accounts.get(oscar.Account__c).Due_Diligence_Status__c = AMS_Utils.IN_PROGRESS;
 						}
 					}					
 
