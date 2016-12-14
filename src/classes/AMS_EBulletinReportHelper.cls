@@ -897,6 +897,7 @@ public without sharing class AMS_EBulletinReportHelper {
 	/** 
 		 Process Field Maps
 	*/
+	/*
 	private List<wrapperLabel> processFieldMaps(List<wrapperLabel> wLList, Set<String> uniqueObj)
 	{
 		Map<String,Map<String, Schema.SObjectField>> usedFieldMaps = new Map<String,Map<String, Schema.SObjectField>> ();
@@ -916,6 +917,7 @@ public without sharing class AMS_EBulletinReportHelper {
 		return wLList;
 	}
 
+	*/
 
 	/** 
 	 Wrapper Object for representing the fiels that will not be queried or showed
@@ -971,6 +973,7 @@ public without sharing class AMS_EBulletinReportHelper {
         	return new List <String> {value1AN,value2AN};
         }
 
+        /*
         private String getCountryOrState(){
         	
         	String countryOrState = '';
@@ -983,7 +986,7 @@ public without sharing class AMS_EBulletinReportHelper {
         	}
         	return countryOrState;
         }
-
+		*/
 	}
 
 	/** 
@@ -991,6 +994,7 @@ public without sharing class AMS_EBulletinReportHelper {
 	 Example : change_code__r.Account__r.name 
 
 	*/
+	/*
 	private class wrapperLabel {
 		
 		private String sObjName{get;set;}
@@ -1025,7 +1029,7 @@ public without sharing class AMS_EBulletinReportHelper {
         }
 
 	}
-
+	*/
 	/** 
 		 Get Date Value from current field beeing extracted
 	*/
