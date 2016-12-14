@@ -1,5 +1,4 @@
 public class vfIECEBC_ResourceList extends vfIECEBC_Abstract_List {
-    public static Integer ITEMS_PER_PAGE = 200;
     public Decimal STORAGE_CAPACITY=1; //in mg
     public Decimal FILE_SIZE_MAX=1; //in meg
     private boolean firsttimepageload=true;

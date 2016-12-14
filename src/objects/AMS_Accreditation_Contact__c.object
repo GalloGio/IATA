@@ -229,6 +229,20 @@
         <type>Picklist</type>
     </fields>
     <fields>
+        <fullName>AgencyRegulation__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>link to the agency regulation that was converted into accreditation contact</description>
+        <externalId>false</externalId>
+        <label>AMS Agency Regulation</label>
+        <referenceTo>AMS_Agency_Regulation__c</referenceTo>
+        <relationshipLabel>AMS Accreditation Contacts</relationshipLabel>
+        <relationshipName>AMS_Accreditation_Contacts</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>Agency_owner__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
@@ -291,6 +305,58 @@
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Certificate_Issued_on__c</fullName>
+        <externalId>false</externalId>
+        <label>Certificate Issued on</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Certificate_Issuer__c</fullName>
+        <externalId>false</externalId>
+        <label>Certificate Issuer</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Certificate_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Certificate Name</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Certificate_Validity__c</fullName>
+        <externalId>false</externalId>
+        <label>Certificate Validity</label>
+        <picklist>
+            <picklistValues>
+                <fullName>1 year</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>2 years</fullName>
+                <default>false</default>
+            </picklistValues>
+            <restrictedPicklist>true</restrictedPicklist>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
     </fields>
     <fields>
         <fullName>Company_Name_Local__c</fullName>
@@ -835,6 +901,43 @@
         <type>Picklist</type>
     </fields>
     <fields>
+        <fullName>Type_Of_Certificate__c</fullName>
+        <externalId>false</externalId>
+        <label>Type Of Certificate</label>
+        <picklist>
+            <picklistValues>
+                <fullName>DGR</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>DGA</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>BCH</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>TSA</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Experience</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </picklistValues>
+            <restrictedPicklist>true</restrictedPicklist>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
         <fullName>Valid_until__c</fullName>
         <description>* Valid until</description>
         <externalId>false</externalId>
@@ -878,6 +981,17 @@
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Certificate_Validity__c</picklist>
+            <values>
+                <fullName>1 year</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2 years</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Salutation__c</picklist>
             <values>
                 <fullName>Miss</fullName>
@@ -893,6 +1007,29 @@
             </values>
             <values>
                 <fullName>Ms%2E</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type_Of_Certificate__c</picklist>
+            <values>
+                <fullName>BCH</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DGA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DGR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Experience</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TSA</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -917,6 +1054,17 @@
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Certificate_Validity__c</picklist>
+            <values>
+                <fullName>1 year</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2 years</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Salutation__c</picklist>
             <values>
                 <fullName>Miss</fullName>
@@ -943,6 +1091,29 @@
             </values>
             <values>
                 <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type_Of_Certificate__c</picklist>
+            <values>
+                <fullName>BCH</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DGA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DGR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Experience</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TSA</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -967,6 +1138,17 @@
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Certificate_Validity__c</picklist>
+            <values>
+                <fullName>1 year</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2 years</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Salutation__c</picklist>
             <values>
                 <fullName>Miss</fullName>
@@ -993,6 +1175,29 @@
             </values>
             <values>
                 <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type_Of_Certificate__c</picklist>
+            <values>
+                <fullName>BCH</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DGA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DGR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Experience</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TSA</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1017,6 +1222,17 @@
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Certificate_Validity__c</picklist>
+            <values>
+                <fullName>1 year</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2 years</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Salutation__c</picklist>
             <values>
                 <fullName>Miss</fullName>
@@ -1043,6 +1259,29 @@
             </values>
             <values>
                 <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type_Of_Certificate__c</picklist>
+            <values>
+                <fullName>BCH</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DGA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DGR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Experience</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TSA</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1067,6 +1306,17 @@
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Certificate_Validity__c</picklist>
+            <values>
+                <fullName>1 year</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2 years</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Salutation__c</picklist>
             <values>
                 <fullName>Miss</fullName>
@@ -1093,6 +1343,29 @@
             </values>
             <values>
                 <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type_Of_Certificate__c</picklist>
+            <values>
+                <fullName>BCH</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DGA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DGR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Experience</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TSA</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1117,6 +1390,17 @@
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Certificate_Validity__c</picklist>
+            <values>
+                <fullName>1 year</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2 years</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Salutation__c</picklist>
             <values>
                 <fullName>Miss</fullName>
@@ -1143,6 +1427,29 @@
             </values>
             <values>
                 <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type_Of_Certificate__c</picklist>
+            <values>
+                <fullName>BCH</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DGA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DGR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Experience</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TSA</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1168,6 +1475,17 @@
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Certificate_Validity__c</picklist>
+            <values>
+                <fullName>1 year</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2 years</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Salutation__c</picklist>
             <values>
                 <fullName>Miss</fullName>
@@ -1194,6 +1512,33 @@
             </values>
             <values>
                 <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type_Of_Certificate__c</picklist>
+            <values>
+                <fullName>BCH</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DGA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DGR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Experience</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TSA</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

@@ -29,6 +29,7 @@ public with sharing class ISSP_PersonalInformation {
     public boolean bBlockTradeNameChangeBR {get; set;}
 
     public boolean isHOAccredited {get;set;}
+    public boolean isTerminatedAgent {get; set;}
     private Id vHQAccountId;
     
 	//Global Variables
@@ -74,6 +75,7 @@ public with sharing class ISSP_PersonalInformation {
         bIsMinorChangeEnabledBR = false;
         bBlockTradeNameChangeBR = false;
         isIATAAgencyAcctBR = false;
+        isTerminatedAgent = false;
         
     	String confirmParameter = ApexPages.currentPage().getParameters().get('confirm');
     	system.debug('confirmParameter: ' + confirmParameter);
@@ -101,6 +103,9 @@ public with sharing class ISSP_PersonalInformation {
         //Is this user's account accredited
         if(con.Account.IATACode__c!=null && con.Account.RecordType.DeveloperName=='IATA_Agency' && con.Account.Status__c != 'Terminated' && con.Account.Status__c != 'Not accredited' && con.Account.Status__c != 'New application pending' && con.Account.Status__c != 'No longer a customer')
         	isHOAccredited = true; //This is an accredited Agency Account    
+
+        if(con.Account.Status__c == 'Terminated')
+            isTerminatedAgent = true;
         
         OpenDebts = string.valueof(con.Account.Overdue_Invoices_Indicator__c );
         
