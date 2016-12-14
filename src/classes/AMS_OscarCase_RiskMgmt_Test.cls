@@ -215,8 +215,14 @@ private class AMS_OscarCase_RiskMgmt_Test {
     static testMethod void TestBulletinMemoText(){
     	Account a = [select id, Name, IATA_ISO_Country__r.Enable_Risk_Change_Codes__c from Account where name='Accnt2'];
     	Financial_Institution__c FI = new Financial_Institution__c(Name = 'FI1', INSTITUTION_TYPE__C='Bank');
-    	insert FI; 
-    	Financial_Security__c FS = new Financial_Security__c(CURRENCYISOCODE='USD', Account__c=a.Id, AMOUNT__C=3000, EXPIRY_DATE__C=system.Today().AddDays(100), FINANCIAL_INSTITUTION__c=FI.Id, SECURITY_STATUS__C='Active', Security_Type__c='Bank Guarantee');
+    	insert FI;
+        
+        // create a reception case
+        Case c = new Case(Subject = 'rception case', AccountId = a.Id, Status = 'Open', 
+                RecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('InternalCasesEuropeSCE') );
+        insert c;
+        
+    	Financial_Security__c FS = new Financial_Security__c(Reception_Case__c = c.Id , Region__c = 'Europe', Reasonforrequest__c = 'New Application', Reception_Date__c = System.today(), CURRENCYISOCODE='USD', Account__c=a.Id, AMOUNT__C=3000, EXPIRY_DATE__C=system.Today().AddDays(100), FINANCIAL_INSTITUTION__c=FI.Id, SECURITY_STATUS__C='Active', Security_Type__c='Bank Guarantee');
     	insert FS;
     	
     	list<Agency_applied_change_code__c> lsCC = new list<Agency_applied_change_code__c>();
@@ -236,7 +242,9 @@ private class AMS_OscarCase_RiskMgmt_Test {
 	    	SidraLiteCase4.AccountId = a.Id;
 			SidraLiteCase4.recordtypeId = SIDRALiteRTId;
 	    	SidraLiteCase4.Update_AIMS_DEF__c = system.Now();
-	    	SidraLiteCase4.DEF_Withdrawal_Approval_Rejection__c = 'Approved';
+			SidraLiteCase4.CS_Rep_Acc_DEF__c = Userinfo.getuserid();
+        	SidraLiteCase4.CS_Rep_Acc_REI__c = Userinfo.getuserid();
+        	SidraLiteCase4.DEF_Withdrawal_Approval_Rejection__c = 'Approved';
 	    	SidraLiteCase4.Update_AIMS_REI_DEFWITH__c = system.now();
 	    	SidraLiteCase4.CS_Rep_Acc_IRR_DEF__c = userinfo.getUserId();
 	    	SidraLiteCase4.Termination_date_manual_entry__c = system.today();

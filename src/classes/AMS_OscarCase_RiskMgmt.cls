@@ -104,10 +104,9 @@ public class AMS_OscarCase_RiskMgmt {
 			}
 			
 			//Get all financial securities related with accounts in the trigger. Used for generating bulletin memo text
-			for(Financial_Security__c fs:[select id, Unlimited_Security__c, Account__c, Amount__c, CurrencyIsoCode, Expiry_Date__c 
+			for(Financial_Security__c fs:[select id, Account__c, Amount__c, CurrencyIsoCode 
 										  from Financial_Security__c 
-										  where Account__c in:setAllAccntsHiearchy and Security_Status__c in:setFSStatus
-										  order by Unlimited_Security__c, Expiry_Date__c desc]){
+										  where Account__c in:setAllAccntsHiearchy and Security_Status__c in:setFSStatus]){
 				list<Financial_Security__c> lsFS;
 				if(mapFinancialSecurity.keyset().contains(fs.Account__c))
 					lsFS = mapFinancialSecurity.get(fs.Account__c);
@@ -248,8 +247,6 @@ public class AMS_OscarCase_RiskMgmt {
 				if(!lsAACC.isEmpty())
 					insert lsAACC;
 				
-				system.debug(Logginglevel.ERROR, 'DTULLO 251 --> mapAccntToUpdate.isEmpty(): ' + mapAccntToUpdate.isEmpty());
-				
 				if(!mapAccntToUpdate.isEmpty())
 					update mapAccntToUpdate.values();
 					
@@ -312,7 +309,15 @@ public class AMS_OscarCase_RiskMgmt {
 		}
 		
 		AACC.SIDRA_Case__c = idCase;
-		AACC.To_Publish_in_e_Bulletin__c = cc.Published_in_bulletin__c;
+		if(cc.Apply_to_hierarchy__c){
+			if(cc.Publish_HO_Only__c){
+				if(mapAllHOs.keyset().contains(AccountId))
+					AACC.To_Publish_in_e_Bulletin__c = cc.Published_in_bulletin__c;
+			}else
+				AACC.To_Publish_in_e_Bulletin__c = cc.Published_in_bulletin__c;
+		}else
+			AACC.To_Publish_in_e_Bulletin__c = cc.Published_in_bulletin__c;
+	
 		AACC.Applied_Configuration__c = cc.id;
 		AACC.OSCAR__c = mapCases.get(idCase).Parent.OSCAR__c;
 		
@@ -362,10 +367,6 @@ public class AMS_OscarCase_RiskMgmt {
 		if(cc.Clear_Irregularities__c)
 			setAccntIdIRRToClear.add(AccountId);
 		
-		system.debug(Logginglevel.ERROR, 'DTULLO 361 --> AccountId: ' + AccountId);
-		system.debug(Logginglevel.ERROR, 'DTULLO 362 --> bAccntToUpd: ' + bAccntToUpd);
-		system.debug(Logginglevel.ERROR, 'DTULLO 363 --> accnt: ' + accnt);
-		
 		if(bAccntToUpd)
 			mapAccntToUpdate.put(AccountId, accnt);
 			
@@ -389,33 +390,14 @@ public class AMS_OscarCase_RiskMgmt {
 	}
 	
 	
-	/*private static set<id> GetAllAccntIdInHierarchy(set<id> setAccntId){
-		set<id> setAccntToReturn = new set<id>();
-		if(setAccntId.isEmpty())
-			return null;
-		else{
-			list<Account> lsAccnt = [select Id, ParentId, Parent.ParentId from Account where id=:setAccntId or parentid=:setAccntId or parent.parentid =:setAccntId];
-			
-			for(Account a:lsAccnt){
-				setAccntToReturn.add(a.Id);
-				if(a.ParentId!=null)
-					setAccntToReturn.add(a.Parentid);
-				if(a.Parent.ParentId!=null)
-					setAccntToReturn.add(a.Parent.Parentid);
-			}
-			
-			return setAccntToReturn;
-		}
-	}*/
-	
-	
 	/**********************************************************************************************************************
 		Method return true if condition is verified.
 		Most of the times, a simple text value need to be checked. However, there are some expections such as:
 		- NOT Blank
 		- Blank
 		- Not equal to <value>
-		- TODAY
+		- Equal to TODAY
+		- Greater than TODAY
 		- EXISTS <ChangeCodeToCheck>
 		
 		for above values, different check need to be done.
@@ -444,7 +426,13 @@ public class AMS_OscarCase_RiskMgmt {
 			else return false;
 		}
 		
-		if(condition.equalsIgnoreCase('TODAY')){
+		if(condition.equalsIgnoreCase('GREATER THAN TODAY')){
+			if((date)NewCaseValues.get(sFieldToCheck)>system.today())
+				return true;
+			else return false;
+		}
+		
+		if(condition.equalsIgnoreCase('EQUAL TO TODAY')){
 			if((date)NewCaseValues.get(sFieldToCheck)==system.today())
 				return true;
 			else return false;
@@ -501,7 +489,7 @@ public class AMS_OscarCase_RiskMgmt {
 		return [select id, Billable__c, Change_Code__c, Published_in_bulletin__c, Reason_Code__c, Reason_Code_Description__c, Record_Type__c, Risk_ChangeCode__c, 
 			    Field1__c, Field1Values__c, Field2__c, Field2Values__c, Field3__c, Field3Values__c, Field4__c, Field4Values__c, Field5__c, Field5Values__c, Field6__c, Field6Values__c, 
 			    Account_status_change__c, Class_Type__c, Bulletin_Memo_Text__c, Bulletin_Memo_Text2__c, Bulletin_Memo_Text3__c, Apply_to_hierarchy__c, Clear_Irregularities__c, Integration_RecId__c,
-			    Used_By_CNS__c, CNS_Bulletin_Memo_Text__c, CNS_Bulletin_Memo_Text2__c, CNS_Bulletin_Memo_Text3__c
+			    Used_By_CNS__c, CNS_Bulletin_Memo_Text__c, CNS_Bulletin_Memo_Text2__c, CNS_Bulletin_Memo_Text3__c, Publish_HO_Only__c
 			    from AMS_ChangeCodes__c where Risk_ChangeCode__c=true];
 	}
 	
@@ -527,9 +515,18 @@ public class AMS_OscarCase_RiskMgmt {
 				sTmpVal = '';
 				if(lsFS==null)	sTmpVal = 'Nil';
 				else{
+					map<string, double> mapFSperCurr = new map<string, double>();
 					for(Financial_Security__c fs:lsFS){
-						sTmpVal = sTmpVal + FS.Amount__c + ', valid till ' + (fs.Unlimited_Security__c?'Unlimited':GenerateDateForBulletin(FS.Expiry_Date__c)) + '; ';
+						double dAmount = FS.Amount__c;
+						if(mapFSperCurr.containsKey(FS.CurrencyIsoCode))
+							dAmount = dAmount + mapFSperCurr.get(FS.CurrencyIsoCode);					
+						
+						mapFSperCurr.put(FS.CurrencyIsoCode, dAmount);
+						//sTmpVal = sTmpVal + FS.Amount__c + ', valid till ' + (fs.Unlimited_Security__c?'Unlimited':GenerateDateForBulletin(FS.Expiry_Date__c)) + '; ';
 					}
+					
+					for(string sCur:mapFSperCurr.keySet())
+						sTmpVal = sTmpVal + ' ' + mapFSperCurr.get(sCur) + ' ' + sCur + ';';
 				}
 				
 				sMemoText = sMemoText.replace('<Financial Securities>', sTmpVal);

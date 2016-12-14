@@ -10,10 +10,14 @@ global class AMS_VouchersCalculationBatch implements Database.Batchable<sObject>
 
 	public Map<IATA_ISO_Country__c,Decimal> averageMetrics;
 
+	public String yearToProcess;
+
 	// this batch is responsible for calculating the average sales for each country.
 	// this consists on 
 	global AMS_VouchersCalculationBatch(Set<Id> countriesToProcess,AMS_Voucher_Process_Run__c process, String yearToProcess) {
 		
+		this.yearToProcess = yearToProcess;
+
 		this.process = process;
 
 		this.countriesToProcess = countriesToProcess;
@@ -51,7 +55,7 @@ global class AMS_VouchersCalculationBatch implements Database.Batchable<sObject>
 
 		averageMetrics = AMS_VoucherCalculationHelper.calculateAverageCountries(allVouchersInfo);
 
-		AMS_VouchersCreationBatch creationBatch = new AMS_VouchersCreationBatch(averageMetrics,process);
+		AMS_VouchersCreationBatch creationBatch = new AMS_VouchersCreationBatch(averageMetrics,process,yearToProcess);
 
 		Integer scopeRun = calculateMaxRunScope(allVouchersInfo);
 

@@ -6,8 +6,8 @@
     <customButtons>Reset_New_interactions</customButtons>
     <customButtons>Escalate_within_IATA</customButtons>
     <customButtons>Create_SAAM_Case</customButtons>
-	<customButtons>Deactivate_BSPLink</customButtons>
-	<customButtons>Reactivate_BSPLink</customButtons>
+    <customButtons>Deactivate_BSPLink</customButtons>
+    <customButtons>Reactivate_BSPLink</customButtons>
     <emailDefault>false</emailDefault>
     <excludeButtons>Clone</excludeButtons>
     <excludeButtons>Delete</excludeButtons>
@@ -157,6 +157,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Total_Irregularities__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Accumulated_Irregularities__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -469,6 +473,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Type_of_REI_WD__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Update_AIMS_REI_DEFWITH__c</field>
             </layoutItems>
             <layoutItems>
@@ -488,6 +496,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Open_TKT_System__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Reason_of_REI_WD__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -514,6 +526,10 @@
                 <behavior>Edit</behavior>
                 <field>NOT_Date__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>NOT_Approval__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -529,6 +545,10 @@
         <editHeading>true</editHeading>
         <label>Termination</label>
         <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Total_Outstanding_Amounts_Bankruptcy_del__c</field>
+            </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Propose_Default__c</field>
@@ -709,6 +729,13 @@
                 <showScrollbars>false</showScrollbars>
                 <width>100%</width>
             </layoutItems>
+            <layoutItems>
+                <height>1</height>
+                <page>AMS_Case_AccIrr_Popup</page>
+                <showLabel>false</showLabel>
+                <showScrollbars>false</showScrollbars>
+                <width>1</width>
+            </layoutItems>
         </layoutColumns>
         <style>OneColumn</style>
     </layoutSections>
@@ -793,7 +820,7 @@
     <showRunAssignmentRulesCheckbox>true</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>true</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00hw000000hfUzF</masterLabel>
+        <masterLabel>00h5E000000ERkA</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>1</sizeY>
         <summaryLayoutItems>

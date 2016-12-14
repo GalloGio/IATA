@@ -70,6 +70,17 @@
         <writeRequiresMasterRead>false</writeRequiresMasterRead>
     </fields>
     <fields>
+        <fullName>FIR_Code_Name__c</fullName>
+        <externalId>false</externalId>
+        <formula>FIR_Code__r.FIR_Code_Name__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>FIR Code Name</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>FIR_Code__c</fullName>
         <description>E&amp;F Project. The FIR Code stored in E&amp;F Related Object under Record Type FIR Code</description>
         <externalId>false</externalId>

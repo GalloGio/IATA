@@ -3509,11 +3509,11 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>shalbakf@iata.org</recipient>
+            <recipient>parkyr@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>zhangxl@iata.org</recipient>
+            <recipient>shalbakf@iata.org</recipient>
             <type>user</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
@@ -12276,10 +12276,6 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <name>FDS_Set_Status_Pending_customer</name>
             <type>FieldUpdate</type>
         </actions>
-        <actions>
-            <name>ASP_Case_created_Status_to_be_updated_in_MDM</name>
-            <type>Task</type>
-        </actions>
         <active>true</active>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
@@ -12303,10 +12299,6 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <actions>
             <name>FDS_Set_Status_Pending_customer</name>
             <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>ASP_Case_created_Status_to_be_updated_in_MDM</name>
-            <type>Task</type>
         </actions>
         <active>true</active>
         <criteriaItems>
@@ -14667,7 +14659,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <criteriaItems>
             <field>Case.Reason1__c</field>
             <operation>notEqual</operation>
-            <value>CHC – Change of Shareholding,CHG – Data Maintenance,CHL - Change of Location,CHN - Change of Name,CHO / CHS – Change of Ownership / Legal Status,CLO - Closure,Direct Debit Setup/Update,IRIS Bank Detail Update,New BR / IP,New BR Abroad</value>
+            <value>CHC – Change of Shareholding,CHG – Data Maintenance,CHL - Change of Location,CHN - Change of Name,CHO / CHS – Change of Ownership / Legal Status,CLO - Closure,Direct Debit Setup/Update,IRIS Bank Detail Update,New BR / IP,New BR Abroad,Certificate DGR</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Reason1__c</field>

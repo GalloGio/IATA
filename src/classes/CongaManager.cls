@@ -6,6 +6,9 @@ public with sharing class CongaManager {
 	public static final String CONGA8_URL = 'https://composer.congamerge.com/composer8/index.html'; // version 8
 	public static final String SOAP_URL_290 = URL.getSalesforceBaseUrl().toExternalForm() + '/services/Soap/u/29.0/' + UserInfo.getOrganizationId();
 
+    // dummy variable to test HTTP response
+    public static System.HttpResponse TEST_RESPONSE;
+
     public static void sendMail(String sessionId, Id caseId, Id contactId, Id congaTemplate, Id emailTemplateId) {
         // create Conga merge URL
         PageReference pageref = new PageReference(CONGA7_URL);
@@ -85,7 +88,7 @@ public with sharing class CongaManager {
             req.setEndpoint(url);
             req.setMethod('GET');
             req.setTimeout(120000);
-            System.HttpResponse result = new Http().send(req);
+            System.HttpResponse result = Test.isRunningTest()? TEST_RESPONSE: new Http().send(req);
             System.debug('CongaMerge result: ' + result);
             if (result.getStatusCode()!=200) {
                 throw new CongaMergeException(result.toString());
