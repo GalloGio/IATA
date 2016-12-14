@@ -129,7 +129,7 @@
                                             <th>Contact Name</th>
                                             <td >
                                                 <apex:outputField rendered="{!!editMode}" value="{!billingAccount.Contact__r.Name}" />                                               
-                                                <apex:inputField rendered="{!editMode}" value="{!oPaymentBillingContact.FirstName}" styleClass="user-input text" html-placeholder="First name" />                                                
+                                                <apex:inputField rendered="{!editMode}" value="{!oPaymentBillingContact.FirstName}" styleClass="user-input text" html-placeholder="First name" />
                                                 <apex:inputField rendered="{!editMode}" value="{!oPaymentBillingContact.LastName}" styleClass="user-input text" html-placeholder="Last name"/>
                                             </td>
                                         </tr>
@@ -165,8 +165,8 @@
                                                     {!oBillingAddress.Street__c} <br/>
                                                     {!oBillingAddress.City__c} <br/>
                                                     {!oBillingAddress.ISO_State_Name__c} <br/>
-                                                    {!oBillingAddress.ZipCode__c} <br/>
-                                                    {!oBillingAddress.ISO_Country_Name__c} 
+                                                    {!oBillingAddress.ISO_Country_Name__c} <br/>
+                                                    {!oBillingAddress.ZipCode__c} 
                                                 </apex:outputText>
                                                 
                                                 <apex:outputPanel rendered="{!editMode}">
@@ -180,19 +180,12 @@
                                                     
                                                     <div class="field-group text inline">
                                                         <label>
-                                                            <span class="input-label">Postal code</span>
-                                                            <apex:inputField value="{!oBillingAddress.ZipCode__c}" styleClass="user-input text" />
-                                                            
-                                                        </label>
-                                                    </div>
-                                                    
-                                                    <div class="field-group text inline">
-                                                        <label>
                                                             <span class="input-label">City</span>
                                                             <apex:inputField value="{!oBillingAddress.City__c}" styleClass="user-input text"/>
                                                             
                                                         </label>
                                                     </div>
+                                                    
                                                     
                                                     <div class="field-group select inline">
                                                         <span class="input-label">Country</span>
@@ -225,7 +218,13 @@
                                                             </apex:outputPanel>
                                                         </apex:outputPanel>
                                                     </div>
-                                                    
+                                                    <div class="field-group text inline">
+                                                        <label>
+                                                            <span class="input-label">Postal code</span>
+                                                            <apex:inputField value="{!oBillingAddress.ZipCode__c}" styleClass="user-input text" />
+                                                            
+                                                        </label>
+                                                    </div>
                                                 </apex:outputPanel>
                                             </td>
                                           </tr>
