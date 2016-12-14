@@ -392,6 +392,7 @@
     <relatedLists>
         <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
+        <fields>BillingAgreement_Name__c</fields>
         <fields>Airline__c</fields>
         <fields>Contract__c</fields>
         <fields>EF_Status__c</fields>

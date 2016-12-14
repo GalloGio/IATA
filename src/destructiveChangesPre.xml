@@ -2,14 +2,13 @@
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
 
     <types>
-        <members>AMS_AgencyAirportTrigger</members>
-        <members>AMS_AgencyProfileTrigger</members>
+        <members>BtchEBCCountGdpAgencies</members>
+<members>BtchEBCFixIdCardAgencyLink</members>
+<members>SchdlEBCPeriodicQueryOnAgent</members>
+<!--<members>SchdlEBCFixIdCardAgencyLink</members> -->
+<members>SchdlEBCPeriodicQueryOnAgent_tst</members>
 
-        <members>AMS_AgencyAffiliationTrigger</members>
-
-        <members>AMS_AgencySegmentTrigger</members>
-
-        <name>ApexTrigger</name>
+        <name>ApexClass</name>
     </types>
 
 

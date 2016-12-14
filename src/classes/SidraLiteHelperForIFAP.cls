@@ -28,7 +28,6 @@ public with sharing class SidraLiteHelperForIFAP {
                     returnCase.Propose_Irregularity__c = DateTime.now();
                     returnCase.IRR_Approval_Rejection_Date__c = DateTime.now();
                     returnCase.IRR_Type__c =  'Double Irregularity';
-                    returnCase.SIDRA_Lite_Default_Date__c = Date.today();
                     returnCase.Reason_for_Default__c =  'Suspension - FS Non Compliance';
                 } else {
                     returnCase.IRR_Withdrawal_Reason__c  = 'Default Prev';
@@ -36,17 +35,9 @@ public with sharing class SidraLiteHelperForIFAP {
             }
             if ( SidraLiteUtil.isCargoCASS(parentCase.account) ) {
                 if (SidraLiteUtil.isAccountActive(parentCase.account)) {
-                    if (parentCase.Region__c == 'Americas') {
-                        returnCase.IRR_Withdrawal_Reason__c  = 'Cargo Reminder only';
-                        returnCase.IRR_Approval_Rejection__c = '';
-                        returnCase.IRR_Type__c = '';
-                    } else {
-                        returnCase.IRR_Withdrawal_Reason__c  = '';
-                        returnCase.IRR_Approval_Rejection__c = 'Approved';
-                        returnCase.Propose_Irregularity__c = DateTime.now();
-                        returnCase.IRR_Approval_Rejection_Date__c = DateTime.now();
-                        returnCase.IRR_Type__c = 'Single Irregularity';
-                    }
+                    returnCase.IRR_Withdrawal_Reason__c  = 'Cargo Reminder only';
+                    returnCase.IRR_Approval_Rejection__c = '';
+                    returnCase.IRR_Type__c = '';
                 } else {
                     returnCase.IRR_Withdrawal_Reason__c  = 'Default Prev';
                 }
@@ -116,7 +107,7 @@ public with sharing class SidraLiteHelperForIFAP {
         if (SidraLiteManager.isFS(parentCase)) {
             // First non-compliance, must be filled
             if (parentCase.firstFSnonComplianceDate__c == null ) {
-                throw new WSSidraLite.SidraLiteException('Cannot update a 1st FS non-compliance case. The 1st FS Deadline is ' + parentCase.FS_Deadline_Date__c.format());
+                throw new WSSidraLite.SidraLiteException('Cannot update a 1st FS non-compliance case. The 1st FS Non-Compliance Date is empty');
             }
             // Second non-compliance, allowed
             else if(parentCase.secondFSnonComplianceDate__c==null) {
@@ -162,7 +153,7 @@ public with sharing class SidraLiteHelperForIFAP {
         else {
             // First non-compliance, must be filled
             if (parentCase.firstFAnonComplianceDate__c == null ) {
-                throw new WSSidraLite.SidraLiteException('Cannot update a 1st FA non-compliance case. The 1st FA Deadline is ' + parentCase.Deadline_Date__c.format());
+                throw new WSSidraLite.SidraLiteException('Cannot update a 1st FA non-compliance case. The 1st FA Non-Compliance-Date is empty');
             }
             // Second non-compliance, allowed
             else if(parentCase.secondFAnonComplianceDate__c==null) {
