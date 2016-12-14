@@ -13,6 +13,7 @@ public with sharing class SIDRAliteMassApprovalController{
     // variables to handle rejection process
     public Boolean rejectCasesSection{get;set;}
     //public Boolean confirmRejection{get;set;}
+    public Boolean showProcessedSection{get;set;}
 
     /**
         Constructor
@@ -25,6 +26,7 @@ public with sharing class SIDRAliteMassApprovalController{
         // init variable to handle approval and rejection
         this.approveCasesSection = false;
         this.rejectCasesSection = false;
+        this.showProcessedSection = false;
         search();
     }
 
@@ -87,6 +89,8 @@ public with sharing class SIDRAliteMassApprovalController{
         for (Case cse: Database.query(query)) {
             this.listWrapperCase.add(new WrapperCase(cse));
         }
+        // hide processed section to show result section
+        this.showProcessedSection = false;
     }
 
     /**
@@ -139,7 +143,8 @@ public with sharing class SIDRAliteMassApprovalController{
     public PageReference massApproveUpdateCases() {
         this.approveCasesSection = false;
         updateCases(APPROVED);
-        search();
+        //search();
+        this.showProcessedSection = true;
         return null;
     }
 
@@ -166,7 +171,8 @@ public with sharing class SIDRAliteMassApprovalController{
     public PageReference massRejectUpdateCases() {
         this.rejectCasesSection = false;
         updateCases(REJECTED);
-        search();
+        //search();
+        this.showProcessedSection = true;
         return null;
     }
 
@@ -224,8 +230,21 @@ public with sharing class SIDRAliteMassApprovalController{
             if (listUpdateCase.isEmpty()) {
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.INFO,'No case selected'));
             } else {
-                update listUpdateCase;
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.CONFIRM, listUpdateCase.size() + ' cases updated'));
+                // make the update and store the results in a map
+                list<Database.SaveResult> listResult = Database.update(listUpdateCase, false);
+                map<Id,Database.SaveResult> mapResults = new map<Id,Database.SaveResult>();
+                for (Database.SaveResult result: listResult) {
+                    mapResults.put(result.getId(),result);
+                }
+
+                // refill wrapper list case with updated cases plus save results
+                this.listWrapperCase = new list<WrapperCase>();
+                for (Case cse: [Select id, CaseNumber from Case where id in :listUpdateCase]) {
+                    WrapperCase wrapper = new WrapperCase(cse);
+                    wrapper.addResult(mapResults.get(wrapper.cse.Id));
+                    this.listWrapperCase.add(wrapper);
+                }
+                this.showProcessedSection = true;
             }
         } catch (Exception e) {
             System.debug('updateCases ERROR: ' + e.getMessage());
@@ -263,10 +282,24 @@ public with sharing class SIDRAliteMassApprovalController{
     public class WrapperCase {
         public Boolean selected {get; set;}
         public Case cse {get; set;}
+        public list<String> listErrors {get; set;}
 
         public WrapperCase(Case cse) {
             this.cse = cse;
             this.selected = false;
+            this.listErrors = new list<String>();
+        }
+
+        public void addResult(Database.SaveResult result) {
+            if (result!=null && !result.isSuccess()) {
+                for ( Database.Error error: result.getErrors()) {
+                    this.listErrors.add(error.getMessage());
+                }
+            }
+        }
+
+        public Boolean getIsSuccess() {
+            return this.listErrors.isEmpty();
         }
     }
 

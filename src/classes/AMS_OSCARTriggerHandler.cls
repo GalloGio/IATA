@@ -1486,7 +1486,8 @@ public class AMS_OSCARTriggerHandler {
 			if (oldOSCAR.STEP30__c != AMS_Utils.PASSED && updatedOSCAR.STEP30__c == AMS_Utils.PASSED) {
 			    updatedOSCAR.Status__c = 'Accepted_Future Date';
 
-			    Date terminationDate = updatedOSCAR.Location_Class__c == 'P'? AMS_Utils.lastDayOfMonth(Date.today().addMonths(1)) : Date.today().addDays(15);
+			    Set<String> nextMonthLocations = new Set<String>{'P', 'D'};
+			    Date terminationDate = nextMonthLocations.contains(updatedOSCAR.Location_Class__c) ? AMS_Utils.lastDayOfMonth(Date.today().addMonths(1)) : Date.today().addDays(15);
 			    if (AMS_Utils.IsWeekendDay(terminationDate, updatedOSCAR.Region__c)) {
 			        terminationDate = AMS_Utils.AddBusinessDays(terminationDate, 1, updatedOSCAR.Region__c);
 			    }
