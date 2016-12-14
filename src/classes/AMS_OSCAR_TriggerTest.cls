@@ -793,4 +793,62 @@
 
         Test.stopTest();
     }
+
+    @isTest static void testSTEP29() {
+
+        AMS_OSCAR__c oscar = [SELECT id, STEP29__c from AMS_OSCAR__c where Process__c = :AMS_Utils.new_HO limit 1];
+        
+        Test.startTest();
+
+        oscar.Process__c = AMS_Utils.AGENCYCHANGES;
+        oscar.STEP29__c = AMS_Utils.PASSED;
+
+        update oscar;
+
+        Test.stopTest();
+    }
+
+    @isTest static void testSTEP30_31_32() {
+
+        AMS_OSCAR__c oscar = [SELECT id, STEP30__c, STEP31__c, STEP32__c from AMS_OSCAR__c where Process__c = :AMS_Utils.new_HO limit 1];
+        
+        Test.startTest();
+
+        oscar.Process__c = AMS_Utils.VOLRELINQUISH;
+        oscar.STEP30__c = AMS_Utils.PASSED;
+        oscar.STEP31__c = AMS_Utils.PASSED;
+        oscar.STEP32__c = AMS_Utils.PASSED;
+
+        update oscar;
+
+        oscar = [SELECT id, Suspension_result__c, Termination_result__c, Withdrawal_result__c FROM AMS_OSCAR__c where Process__c = :AMS_Utils.VOLRELINQUISH limit 1];
+
+        system.assertEquals(oscar.Suspension_result__c, AMS_Utils.PASSED);
+        system.assertEquals(oscar.Termination_result__c, AMS_Utils.PASSED);
+        system.assertEquals(oscar.Withdrawal_result__c, AMS_Utils.PASSED);
+
+        oscar.STEP30__c = AMS_Utils.FAILED;
+        oscar.STEP31__c = AMS_Utils.FAILED;
+        oscar.STEP32__c = AMS_Utils.FAILED;
+
+        update oscar;
+
+        oscar = [SELECT id, Suspension_result__c, Termination_result__c, Withdrawal_result__c FROM AMS_OSCAR__c where Process__c = :AMS_Utils.VOLRELINQUISH limit 1];
+
+        system.assertEquals(oscar.Suspension_result__c, AMS_Utils.FAILED);
+        system.assertEquals(oscar.Termination_result__c, AMS_Utils.FAILED);
+        system.assertEquals(oscar.Withdrawal_result__c, AMS_Utils.FAILED);
+
+        oscar.STEP32__c = AMS_Utils.NOT_APPLICABLE;
+
+        update oscar;
+
+        oscar = [SELECT id, Suspension_result__c, Termination_result__c, Withdrawal_result__c FROM AMS_OSCAR__c where Process__c = :AMS_Utils.VOLRELINQUISH limit 1];
+
+        system.assertEquals(oscar.Withdrawal_result__c, 'N/A');
+
+        Test.stopTest();
+    }
+
+
 }
