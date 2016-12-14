@@ -20,7 +20,7 @@
 				<div class="inner-wrapper">
 					<h1 class="page-title">Account Details</h1>
 					 
-					<div class="tab-container js-tabs">
+					<div class="tab-container">
 						<ul class="nav tabs">
 							<li><a href="{!URLFOR($Page.IECEBC_AccountManage)}">Overview</a></li>
 							<li><a href="{!URLFOR($Page.IECEBC_AccountRatePlan)}">Rate plan</a></li>
