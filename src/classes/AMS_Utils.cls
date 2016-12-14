@@ -78,6 +78,7 @@ public without sharing class AMS_Utils {
 
     public static final String PASSED = 'Passed';
     public static final String FAILED = 'Failed';
+    public static final String IN_PROGRESS = 'In Progress';
     public static final String NOT_APPLICABLE = 'Not Applicable';
 
     public static final String AUTH_APPROVAL = 'Authorize Approval';
