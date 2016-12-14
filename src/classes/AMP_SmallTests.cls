@@ -13,6 +13,20 @@ private class AMP_SmallTests {
 
 		AMP_AccountNewsFeedExtension controller = new AMP_AccountNewsFeedExtension(stdController);
 
+		Service__c testService = new Service__c();
+		testService.name = 'test';
+		testService.Service_Publication__c = 'Services';
+		insert testService;
+
+		Account_Service__c ac = new Account_Service__c();
+		ac.Account__c = a.Id;
+		ac.Service__c = testService.Id;
+		ac.Active__c = true;
+		insert ac;
+
+		AMP_ProductsController pcontroller = new AMP_ProductsController(stdController);
+		Boolean canView = AMP_ProductsController.canViewSalesfigures();
+
 		Account b = AMP_AccountManagementController.getAccount(a.Id);
 		System.assertEquals(a.Name, b.Name, 'Accounts should be the same');
 
