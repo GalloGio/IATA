@@ -4,7 +4,6 @@
         <alignment>right</alignment>
         <customApplicationComponent>Console.BuiltInComponent.mostRecentlyUsed</customApplicationComponent>
         <customApplicationComponent>Console.BuiltInComponent.knowledgeOne</customApplicationComponent>
-        <customApplicationComponent>LiveAgentConsoleToolkit</customApplicationComponent>
     </customApplicationComponents>
     <defaultLandingTab>standard-home</defaultLandingTab>
     <description>Service Console for FDS&apos;s customer service representatives</description>
@@ -211,15 +210,6 @@
             <objectName>Case</objectName>
         </pushNotification>
     </pushNotifications>
-    <liveAgentConfig>
-        <enableLiveChat>true</enableLiveChat>
-        <openNewAccountSubtab>false</openNewAccountSubtab>
-        <openNewCaseSubtab>false</openNewCaseSubtab>
-        <openNewContactSubtab>false</openNewContactSubtab>
-        <openNewLeadSubtab>false</openNewLeadSubtab>
-        <openNewVFPageSubtab>false</openNewVFPageSubtab>
-        <showKnowledgeArticles>true</showKnowledgeArticles>
-    </liveAgentConfig>
     <saveUserSessions>true</saveUserSessions>
     <tab>standard-Chatter</tab>
     <tab>My_Status</tab>
@@ -230,11 +220,6 @@
     <tab>standard-Contact</tab>
     <tab>standard-report</tab>
     <tab>Operational_Improvements__c</tab>
-    <tab>standard-LiveChatTranscript</tab>
-    <tab>standard-LiveChatVisitor</tab>
-    <tab>standard-LiveAgentSupervisor</tab>
-    <tab>standard-LiveAgentSession</tab>
-    <tab>standard-Knowledge</tab>
     <workspaceMappings>
         <mapping>
             <tab>Agents__c</tab>
@@ -259,21 +244,6 @@
         </mapping>
         <mapping>
             <tab>standard-Dashboard</tab>
-        </mapping>
-        <mapping>
-            <tab>standard-Knowledge</tab>
-        </mapping>
-        <mapping>
-            <tab>standard-LiveAgentSession</tab>
-        </mapping>
-        <mapping>
-            <tab>standard-LiveAgentSupervisor</tab>
-        </mapping>
-        <mapping>
-            <tab>standard-LiveChatTranscript</tab>
-        </mapping>
-        <mapping>
-            <tab>standard-LiveChatVisitor</tab>
         </mapping>
         <mapping>
             <tab>standard-report</tab>
