@@ -12,5 +12,9 @@
         <members>*</members>
         <name>Group</name>
     </types>
+    <types>
+        <members>*</members>
+        <name>Skill</name>
+    </types>
     <version>37.0</version>
 </Package>
