@@ -14,6 +14,7 @@
 *   - 20160122-sl: refine the default delivery days
 *   - 20160229-sl: Calendar_New_Submission_Effective_Date__c  should be initialized to null
 *   - 20160719-ab: Avoid creating GSS or CACWEB line when Cancelled Subscription
+*   - 20161201-ab: Avoid to create inactive and Active record when CAC Subscription is Active
 */
 
 public with sharing class trgHndlrIECSubscriptionToDetail {
@@ -191,13 +192,14 @@ public with sharing class trgHndlrIECSubscriptionToDetail {
         Set<GDP_File_Description_To_Rate_Plan__c> singleFileDescRatePlanSet; // set of File Description to Rate Plan junction object for the same Rate Plan
         Set<GSS_Subscription_Detail__c> existingSubDetailSet; // related set of existing Subscription Detail with the same name as zSub.Name 
         Set<CAC_Subscription_Detail__c> CAC_existingSubDetailSet; // related set of existing Subscription Detail with the same name as zSub.Name 
-        
+        System.debug('zuoraSubscriptionList >>>'+zuoraSubscriptionList);
         for (Zuora__Subscription__c zSub : zuoraSubscriptionList)
         {
             // get rate plan id set
             prodRatePlanIdSet = zuoraSubIdToProductRatePlanSetMap.get(zSub.Id);
             if (prodRatePlanIdSet!=null) 
-            { // only process if there is related ProudctRatePlan   
+            { // only process if there is related ProudctRatePlan 
+                System.debug('prodRatePlanIdSet >>>'+prodRatePlanIdSet);
                 for (Id productRatePlanId : prodRatePlanIdSet)
                 {
                     // use list of File Description / GDP_File_Description_To_Rate_Plan
@@ -237,11 +239,12 @@ public with sharing class trgHndlrIECSubscriptionToDetail {
                             } else { // create and initialize new GSS_Subscription_Detail
                                 if (zSub.Zuora__Status__c!='Cancelled') relatedSubscriptionDetail = GSS_newSubscriptionDetail(fileDescRatePlanMatching,zSub);
                             }
-                            GSS_subscriptionDetailToUpsertList.add(relatedSubscriptionDetail);
+                            if (relatedSubscriptionDetail!=null) GSS_subscriptionDetailToUpsertList.add(relatedSubscriptionDetail);
                         }
                         if (ProductLevel==1)
                         {
                             CAC_existingSubDetailSet = CAC_subDetailNameToObjectSetMap.get( zSub.Name);
+                            System.debug('CAC_existingSubDetailSet >>>'+CAC_existingSubDetailSet);
                             if (CAC_existingSubDetailSet != null) 
                             { // only check on existing if there exist GSS_Subscription_Detail with same name as zSub.Name 
                                 for (CAC_Subscription_Detail__c CAC_existingSubDetail : CAC_existingSubDetailSet )
@@ -260,8 +263,9 @@ public with sharing class trgHndlrIECSubscriptionToDetail {
                                 CAC_relatedSubscriptionDetail.Subscription__c = zSub.Id;
                             } else { // create and initialize new CAC_Subscription_Detail
                                 if (zSub.Zuora__Status__c!='Cancelled') CAC_relatedSubscriptionDetail = CAC_newSubscriptionDetail(fileDescRatePlanMatching,zSub);
-                            }                      
-                            CAC_subscriptionDetailToUpsertList.add(CAC_relatedSubscriptionDetail);
+                            }
+                            System.debug('CAC_relatedSubscriptionDetail'+CAC_relatedSubscriptionDetail);
+                            if (CAC_relatedSubscriptionDetail!=null) CAC_subscriptionDetailToUpsertList.add(CAC_relatedSubscriptionDetail);
                         }
                         
                     } // end of for singleFileDescRatePlanSet
@@ -270,7 +274,7 @@ public with sharing class trgHndlrIECSubscriptionToDetail {
             
         } // end of for zuoraSubscriptionList
         if (GSS_subscriptionDetailToUpsertList.Size()>0) upsert GSS_subscriptionDetailToUpsertList;
-        
+        System.debug('CAC_subscriptionDetailToUpsertList >>>'+CAC_subscriptionDetailToUpsertList);
         if (CAC_subscriptionDetailToUpsertList.Size()>0) upsert CAC_subscriptionDetailToUpsertList;        
         
         //review the one that have not been processed by the above loop
@@ -282,7 +286,13 @@ public with sharing class trgHndlrIECSubscriptionToDetail {
            {
              if (o.Id== CAC_existingSubDet.Id) {cacfound=true; break;}
            }
-           if (!cacfound) { CAC_existingSubDet.Status__c='Inactive'; CAC_Inactive.add( CAC_existingSubDet);}         
+           if (!cacfound) { 
+              for (Zuora__Subscription__c zSub : zuoraSubscriptionList)
+              {
+                  if (zSub.Id==CAC_existingSubDet.Subscription__c && zSub.Zuora__Status__c.equals('Cancelled')) {CAC_existingSubDet.Status__c='Inactive'; break;}
+              }
+            CAC_Inactive.add( CAC_existingSubDet);
+           }
         } // end of for existingGSSSubscriptionDetailList
 
         
