@@ -178,6 +178,7 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 
         theCommunicationCase.RecordTypeId = AMS_Utils.RECTYPE_OSCARCOMM;
         theCommunicationCase.OSCAR__c = theOscar.Id;
+        theCommunicationCase.CaseArea__c = 'Accreditation Process';
         theCommunicationCase.AccountId = agReg.Account__c;
         theCommunicationCase.Account_Concerned__c = agReg.Account__c;
         theCommunicationCase.BSPCountry__c = accountData.BillingCountry;
