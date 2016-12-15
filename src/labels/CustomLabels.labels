@@ -11239,7 +11239,8 @@ Select at least one Authorized Signatory, and choose the Financial Assessment Co
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP Account Statements Disclaimer</shortDescription>
-        <value>NOTE: Kindly note that the balances are updated on the portal at least one business day after IATA&apos;s account has been credited</value>
+        <value>NOTE: Kindly note that these balances are updated on the portal at least one business day after IATA’s account has been credited.
+Also note that the data contained in ICE is provided to IATA by third parties at 24 hour intervals, and may not be current, accurate or complete</value>
     </labels>
     <labels>
         <fullName>ISSP_Account_Statements_Title</fullName>

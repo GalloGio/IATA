@@ -244,7 +244,7 @@
     <recordTypes>
         <fullName>Relationship_Line_Item</fullName>
         <active>true</active>
-        <label>Relationship Line Item</label>
+        <label>Billing Agreement Line Item</label>
         <picklistValues>
             <picklist>EF_Manager_Approval</picklist>
             <values>
