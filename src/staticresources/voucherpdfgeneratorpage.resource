@@ -11,55 +11,55 @@
 }
 
 .voucherYear1{
-	margin-top: 41.00mm;
+	margin-top: 43.05mm;
 	margin-left: 159.04mm; 
 	position: absolute;
 }
 
 .voucherYear2{
-	margin-top: 26.00mm;
+	margin-top: 43.70mm;
 	margin-left: 159.04mm; 
 	position: absolute;
 }
 
 .voucherYear3{
-	margin-top: 11.00mm;
+	margin-top: 43.00mm;
 	margin-left: 159.04mm; 
 	position: absolute;
 }
 
 .voucherName1{
-	margin-top: 51.00mm;
+	margin-top: 54.20mm;
 	margin-left: 151.21mm;
 	position: absolute;
 }
 
 .voucherName2{
-	margin-top: 34.00mm;
+	margin-top: 54.85mm;
 	margin-left: 151.21mm;
 	position: absolute;
 }
 
 .voucherName3{
-	margin-top: 21.00mm;
+	margin-top: 55.22mm;
 	margin-left: 151.21mm;
 	position: absolute;
 }
 
 .voucherNumber1{
-	margin-top: 62.00mm;
+	margin-top: 69.40mm;
 	margin-left: 151.21mm;
 	position: absolute;
 }
 
 .voucherNumber2{
-	margin-top: 48.00mm;
+	margin-top: 68.70mm;
 	margin-left: 151.21mm;
 	position: absolute;
 }
 
 .voucherNumber3{
-	margin-top: 34.00mm;
+	margin-top: 68.00mm;
 	margin-left: 151.21mm;
 	position: absolute;
 }
@@ -70,11 +70,11 @@
 }
 
 .street2{
-	margin-top: 29.00mm;
+	margin-top: 44.60mm;
 	margin-left: 32.79mm;
 }
 
 .street3{
-	margin-top: 15.00mm;
+	margin-top: 46.40mm;
 	margin-left: 32.79mm;
 }

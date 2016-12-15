@@ -22,7 +22,7 @@
 			<!-- <th scope="col"><span class="slds-truncate">Actions</span></th> -->
             <th scope="col"><span class="slds-truncate">Name</span></th>
             <th scope="col"><span class="slds-truncate">Type</span></th>
-            <th scope="col"><span class="slds-truncate">Job Function</span></th>
+            <th scope="col"><span class="slds-truncate">Primary for</span></th>
             <th scope="col"><span class="slds-truncate">Title</span></th>
             <th scope="col"><span class="slds-truncate">Phone</span></th>
             <th scope="col"><span class="slds-truncate">Mobile</span></th>
