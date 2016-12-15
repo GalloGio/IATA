@@ -62,8 +62,7 @@
                         liveagent.addCustomDetail('buttonlanguage','{!buttonLanguage}');
                         //map() parameters: .map(String FieldName, String DetailName, Boolean doFind, Boolean isExactMatch, Boolean doCreate)
                         liveagent.findOrCreate('Case').map('RecordTypeId','caseRTId',false, true, true).map('Origin','Case Origin', false, true, true)
-                            .map('Status','Case Status',false,true,true).map('Subject','Case Subject',false,true,true).map('Topic__c','#Topic', false, true, true)
-                            .map('Subtopic__c','#Subtopic',false,true,true).map('Country_concerned_by_the_query__c','caseCountryConcerned',false,true,true).showOnCreate().saveToTranscript('Case');
+                            .map('Status','Case Status',false,true,true).map('Subject','Case Subject',false,true,true).map('Country_concerned_by_the_query__c','caseCountryConcerned',false,true,true).showOnCreate().saveToTranscript('Case');
                         liveagent.findOrCreate('Contact').map('Id','userContactId', true, true, false).linkToEntity('Case','ContactId').saveToTranscript('Contact');
                         liveagent.findOrCreate('Account').map('Id','userAccountId', true, true, false).linkToEntity('Case','AccountId').saveToTranscript('Account');
                         liveagent.setChatWindowHeight(490);
