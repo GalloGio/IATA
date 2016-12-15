@@ -48,8 +48,7 @@ global without sharing class AMS_EBulletinReportWebservice {
 		*/
 
 
-		//Set the last run time
-	 	eBulletinProfile.Last_Run__c = system.now();
+
 
 		Attachment attachment = new Attachment();
 		//attachment.ContentType= 'text/csv;charset=ANSI';
@@ -70,7 +69,7 @@ global without sharing class AMS_EBulletinReportWebservice {
 	 	
 	 	insert attachment;
 
-	 	update eBulletinProfile;
+	 	updateEbulletinProfile(system.now(),eBulletinProfile.Id);
 
 		return attachment.id;
 	//}
@@ -176,6 +175,17 @@ global without sharing class AMS_EBulletinReportWebservice {
 
 	}
 
+  @future
+  static void updateEbulletinProfile(Datetime dateLastRun, ID ebProfileID) {
+
+	//Set the last run time
+	AMS_eBulletin_Profile__c ebProfile = [select Last_Run__c from AMS_eBulletin_Profile__c where id = :ebProfileID ];
+
+ 	ebProfile.Last_Run__c = dateLastRun;
+	
+	update ebProfile;
+
+  }
 
 
 }
