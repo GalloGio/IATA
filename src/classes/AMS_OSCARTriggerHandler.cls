@@ -508,7 +508,7 @@ public class AMS_OSCARTriggerHandler {
 
 					}
 				
-					if (accounts.get(oscar.Account__c).IATA_ISO_Country__r.Due_diligence_mandatory__c || oscar.STEP17__c != AMS_Utils.NOT_APPLICABLE) {
+					if (accounts.get(oscar.Account__c).IATA_ISO_Country__r.Due_diligence_mandatory__c && oscar.STEP17__c != AMS_Utils.NOT_APPLICABLE) {
 
 						if(accounts.get(oscar.Account__c).Due_Diligence_Status__c == AMS_Utils.IN_PROGRESS) oscar.STEP17__c = AMS_Utils.IN_PROGRESS;
 						else{
