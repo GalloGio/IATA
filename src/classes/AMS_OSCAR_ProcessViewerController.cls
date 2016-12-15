@@ -44,8 +44,14 @@ public class AMS_OSCAR_ProcessViewerController {
         get{
             return new Set<String>{
                 'STEP6__c',
+                'STEP8__c',
+                'STEP9__c',
                 'STEP10__c',
-                'STEP17__c'
+                'STEP17__c',
+                'STEP26__c',
+                'STEP27__c',
+                'STEP28__c',
+                'STEP29__c'
             };
         }
     } 
