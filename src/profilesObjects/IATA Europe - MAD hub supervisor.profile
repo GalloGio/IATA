@@ -645,6 +645,7 @@
 <fieldPermissions><editable>false</editable><field>AMS_OSCAR__c.Documentation_remarks__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AMS_OSCAR__c.Dossier_Reception_Date__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AMS_OSCAR__c.Dossier_Validation__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>AMS_OSCAR__c.Emails_reference_Id__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AMS_OSCAR__c.Fees_refund_requested__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AMS_OSCAR__c.Fees_refunds_requested_withdrawal__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AMS_OSCAR__c.Finalization_checklist__c</field><readable>false</readable></fieldPermissions>
@@ -700,6 +701,7 @@
 <fieldPermissions><editable>false</editable><field>AMS_OSCAR__c.OSCAR_Deadline__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AMS_OSCAR__c.Off_site_storage__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AMS_OSCAR__c.Operational_Systems_Updated__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>AMS_OSCAR__c.Oscar_Communication_Case_Id__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AMS_OSCAR__c.Out_of_deadline_SAAM__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AMS_OSCAR__c.PSAA_EACP_Agreement_received__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AMS_OSCAR__c.PSAA_signed_copy_sent__c</field><readable>false</readable></fieldPermissions>
@@ -1093,6 +1095,11 @@
 <fieldPermissions><editable>false</editable><field>AMS_Person__c.User__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AMS_Process_Detail__c.AMS_IATAcode__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AMS_Process_Detail__c.Account__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>AMS_SOQL_Query_Export__c.Limit__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>AMS_SOQL_Query_Export__c.Order_by__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>AMS_SOQL_Query_Export__c.fields__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>AMS_SOQL_Query_Export__c.object_name__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>AMS_SOQL_Query_Export__c.where_condition__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AMS_Segment_Country__c.Country__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AMS_Segment_Country__c.ISO_State__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AMS_Segment__c.CountryISOCode__c</field><readable>false</readable></fieldPermissions>
@@ -1440,6 +1447,7 @@
 <fieldPermissions><editable>false</editable><field>Account.DSE__Demo_Installed_Products__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Account.DSE__Domain__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Account.DSE__X_Internal__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>Account.DandbCompanyId</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Account.Data_quality_feedback__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Account.Data_quality_history__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Account.Date_of_most_recent_name_change__c</field><readable>true</readable></fieldPermissions>
@@ -1448,6 +1456,7 @@
 <fieldPermissions><editable>false</editable><field>Account.Document_Std_Instruction__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Account.Due_Diligence_Remarks__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Account.Due_Diligence_Status__c</field><readable>true</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>Account.DunsNumber</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Account.EF_Additional_SAP_Nr__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Account.EF_Airline_ID__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Account.EF_Allow_Billing_Agreements__c</field><readable>false</readable></fieldPermissions>
@@ -1567,6 +1576,8 @@
 <fieldPermissions><editable>true</editable><field>Account.MobileNational__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Account.Mobile__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Account.N_Code__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>Account.NaicsCode</field><readable>true</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>Account.NaicsDesc</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Account.Name_on_AOC__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Account.Next_Financial_security_Expiry_date__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Account.Non_Members_Sub_Category__c</field><readable>false</readable></fieldPermissions>
@@ -1658,6 +1669,7 @@
 <fieldPermissions><editable>false</editable><field>Account.Total_BSP_CASS_Participations__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Account.Total_Value_Won_Opportunities__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Account.TradeName__c</field><readable>true</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>Account.Tradestyle</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Account.Type</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Account.Type_of_Office__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Account.Type_of_Operations__c</field><readable>true</readable></fieldPermissions>
@@ -1672,6 +1684,7 @@
 <fieldPermissions><editable>false</editable><field>Account.Verification_Date__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Account.WebStar_ID__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Account.Website</field><readable>true</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>Account.YearStarted</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Account.Zuora_Temp_ID__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Account.Zuora__Active__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Account.Zuora__CustomerPriority__c</field><readable>false</readable></fieldPermissions>
@@ -1688,6 +1701,8 @@
 <fieldPermissions><editable>false</editable><field>Account_Category__c.Related_Account__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Account_Category__c.Related_GDP_Products_Account_View__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Account_Category__c.WebStar_ID__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>Account_Service__c.Active__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>Account_Service__c.Junction_Name__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Account_Statement__c.Amount_to_be_Paid__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Account_Statement__c.Balance__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Account_Statement__c.Billing_Adjustment__c</field><readable>false</readable></fieldPermissions>
@@ -5328,6 +5343,7 @@
 <fieldPermissions><editable>true</editable><field>Lead.Campaign_comments__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Lead.Class_number__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Lead.Code__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>Lead.CompanyDunsNumber</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Lead.Company_A__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Lead.Company_B__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Lead.Company_Type__c</field><readable>false</readable></fieldPermissions>
@@ -5349,6 +5365,7 @@
 <fieldPermissions><editable>false</editable><field>Lead.DSE__Demo_ID__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Lead.DSE__Domain__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Lead.DSE__VAT_ID__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>Lead.DandbCompanyId</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Lead.Day_requested__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Lead.Department__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Lead.Description</field><readable>true</readable></fieldPermissions>
@@ -5854,6 +5871,7 @@
 <fieldPermissions><editable>false</editable><field>Participant__c.Group_RecordType__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Participant__c.Head_Quartier__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Participant__c.Local_Group_Type__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>Participant__c.Main_Account__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Participant__c.Participant_Type__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Participant__c.Representing__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Participant__c.Title__c</field><readable>true</readable></fieldPermissions>
@@ -6276,6 +6294,7 @@
 <fieldPermissions><editable>true</editable><field>Quality__c.Hub_Leader__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Quality__c.IATA_Country__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Quality__c.Implementation_Plan__c</field><readable>true</readable></fieldPermissions>
+<fieldPermissions><editable>true</editable><field>Quality__c.In_BCP_Scope__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Quality__c.Input_CM__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Quality__c.Input_CQ__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Quality__c.Input_GPO__c</field><readable>true</readable></fieldPermissions>
@@ -6592,6 +6611,8 @@
 <fieldPermissions><editable>true</editable><field>Salesforce_Solution__kav.Key_Words__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Salesforce_Solution__kav.Potential_Resolution_Steps__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Salesforce_Solution__kav.Project__c</field><readable>true</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>Service__c.Order__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>Service__c.Service_Publication__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Services_Rendered__c.BSP_Country__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Services_Rendered__c.CASS_Country__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Services_Rendered__c.GSA_Type__c</field><readable>true</readable></fieldPermissions>
@@ -7387,6 +7408,7 @@
 <tabVisibilities><tab>EC2_Console</tab><visibility>Hidden</visibility></tabVisibilities>
 <tabVisibilities><tab>EC2_Images</tab><visibility>Hidden</visibility></tabVisibilities>
 <tabVisibilities><tab>EF_Billing_Agreement__c</tab><visibility>Hidden</visibility></tabVisibilities>
+<tabVisibilities><tab>EF_Document_Log__c</tab><visibility>Hidden</visibility></tabVisibilities>
 <tabVisibilities><tab>EF_Related_Records__c</tab><visibility>Hidden</visibility></tabVisibilities>
 <tabVisibilities><tab>E_F_Asset__c</tab><visibility>Hidden</visibility></tabVisibilities>
 <tabVisibilities><tab>Ecommerce_Site_Link__c</tab><visibility>DefaultOn</visibility></tabVisibilities>
@@ -7474,6 +7496,7 @@
 <tabVisibilities><tab>Product_Rate_Plan_Information__c</tab><visibility>Hidden</visibility></tabVisibilities>
 <tabVisibilities><tab>Product_Record_Type_Mapping__c</tab><visibility>Hidden</visibility></tabVisibilities>
 <tabVisibilities><tab>Promotion__c</tab><visibility>Hidden</visibility></tabVisibilities>
+<tabVisibilities><tab>Purge_IATA_Code_Process</tab><visibility>Hidden</visibility></tabVisibilities>
 <tabVisibilities><tab>Quality__c</tab><visibility>DefaultOff</visibility></tabVisibilities>
 <tabVisibilities><tab>Release_Task__c</tab><visibility>Hidden</visibility></tabVisibilities>
 <tabVisibilities><tab>Release__c</tab><visibility>Hidden</visibility></tabVisibilities>
