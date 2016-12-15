@@ -68,6 +68,17 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Contract_Name__c</fullName>
+        <externalId>false</externalId>
+        <formula>EF_Contract__r.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Contract Name</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>EF_Contact__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
