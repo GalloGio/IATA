@@ -250,7 +250,7 @@ public without sharing class AMS_EBulletinReportHelper {
 		String filter2 = ' and Published_on_EBulletin__c = TRUE'; 
 		String filter3 = ' and Account__r.IATA_ISO_Country__r.ISO_Code__c IN :countriesFilter';		
 		String filter4 = ' and Account__r.Location_Class__c IN :locClsList';
-		String filter5 = ' and CreatedDate >= :fromDate  and CreatedDate < :toDate';		
+		String filter5 = ' and Created_Date_To_Show__c >= :fromDate  and Created_Date_To_Show__c < :toDate';		
 		String orderByFilter = ' order by Account__r.IATA_ISO_Country__r.Name,createdDate';		
 
 		String filterCC  = filter1 + 
