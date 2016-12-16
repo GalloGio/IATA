@@ -10,9 +10,16 @@ global class ISSP_AccountStatementsSchedule implements Schedulable {
     ];
 
     public Integer elemsPerBatch;
+    public String region;
 
     public ISSP_AccountStatementsSchedule () {
         this.elemsPerBatch = 1;
+        this.region = '';
+    }
+
+    public ISSP_AccountStatementsSchedule (String region) {
+        this.elemsPerBatch = 1;
+        this.region = region;
     }
 
     global void execute(SchedulableContext ctx) {
@@ -40,6 +47,9 @@ global class ISSP_AccountStatementsSchedule implements Schedulable {
         + '   Where Right__c = \'Access Granted\''
         + '   And Portal_Application__r.Name =  \'' + ISSP_Ctrl_AccountStatements.APP_NAME + '\')';
         //+ '   And Terms_Acceptance__c = true'
+        if ( this.region != null && this.region != '' ) {
+        	bc.Query += '   And Account.Region_Formula__c =  \'' + this.region + '\'';
+        }
 
         bc.NotificationTemplate = NOTIFICATION_TEMPLATE;
         bc.MessagesByGroupMap = null;

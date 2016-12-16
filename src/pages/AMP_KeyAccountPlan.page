@@ -4,7 +4,7 @@
     <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 
     <head>
-      <title>Key Account Plan</title>
+      <title>Account Plan</title>
       <apex:stylesheet value="{!URLFOR($Resource.AMP_helper, 'css/general.css')}"/>
 
     </head>
@@ -12,7 +12,7 @@
     <body>
         <apex:form >
         <apex:outputLink value="/{!accountId}" >back to Account</apex:outputLink>
-        <apex:pageBlock id="theBlock" title="Key Account Plan for {!AccountName}">
+        <apex:pageBlock id="theBlock" title="Account Plan for {!AccountName}">
         <apex:image value="{!$Resource.AMP_logo}" />
             <apex:commandButton value="History" action="{!showPrevious}" reRender="theBlock" />
             <apex:commandButton value="Current" action="{!showThis}" reRender="theBlock" />
@@ -27,16 +27,22 @@
                 <apex:column styleClass="narrow-table-column" headerValue="Actions">
       						<apex:facet name="header"></apex:facet>
 
-                  <apex:commandLink value="Del" action="{!DeleteLine}" reRender="thisPanel" onclick="if(!confirm('Are you sure you want to delete this activity and all its milestones?')){return false};" oncomplete="enableShowMoreOrLess();" rendered="{!IF(AND(isEditMode, IdConcerned==objective.Id), false, true)}" >
+                  <apex:commandLink value="Del" action="{!DeleteLine}" reRender="thisPanel" onclick="if(!confirm('Are you sure you want to delete this activity and all its milestones?')){return false};" oncomplete="enableShowMoreOrLess();" rendered="{!IF(OR(AND(isEditMode, IdConcerned==objective.Id), NOT(canEdit)), false, true)}" status="actStatusId" >
                       <apex:param name="IdConcerned" value="{!objective.Id}" assignTo="{!IdConcerned}"/>
                   </apex:commandLink>
 
-                  <apex:commandLink value="Save" action="{!SaveLine}" reRender="thisPanel"  oncomplete="enableShowMoreOrLess();" rendered="{!IF(AND(isEditMode, IdConcerned==objective.Id), true, false)}">
+                  <apex:commandLink value="Save" action="{!SaveLine}" reRender="thisPanel"  oncomplete="enableShowMoreOrLess();" rendered="{!IF(AND(isEditMode, IdConcerned==objective.Id), true, false)}" status="actStatusId">
                       <apex:param name="IdConcerned" value="{!objective.Id}" assignTo="{!IdConcerned}"/>
                   </apex:commandLink>
+
+                  <apex:actionStatus id="actStatusId" >
+                      <apex:facet name="start" >
+                        <img src="/img/loading.gif" style="float: right;"/>
+                      </apex:facet>
+                  </apex:actionStatus>
 
                   &nbsp;|&nbsp;
-                  <apex:commandLink value="Edit" action="{!EditLine}" reRender="thisPanel" oncomplete="enableShowMoreOrLess();" rendered="{!IF(AND(isEditMode, IdConcerned==objective.Id), false, true)}" >
+                  <apex:commandLink value="Edit" action="{!EditLine}" reRender="thisPanel" oncomplete="enableShowMoreOrLess();" rendered="{!IF(OR(AND(isEditMode, IdConcerned==objective.Id), NOT(canEdit)), false, true)}" >
                       <apex:param name="IdConcerned" value="{!objective.Id}" assignTo="{!IdConcerned}"/>
                   </apex:commandLink>
 
@@ -92,9 +98,9 @@
                     </apex:outputPanel>
                 </apex:column>
 
-      					<apex:column headerValue="Deadline" styleClass="narrow-table-column">
+				<apex:column headerValue="End Date" styleClass="narrow-table-column">
                     <apex:outputField value="{!objective.Deadline__c}"  rendered="{!!AND(isEditMode, IdConcerned==objective.Id)}"/>
-                    <apex:inputField value="{!objective.Deadline__c}" rendered="{!AND(isEditMode, IdConcerned==objective.Id)}"  />
+                    <apex:inputField value="{!objective.Deadline__c}" rendered="{!AND(isEditMode, IdConcerned==objective.Id)}" required="true"/>
                 </apex:column>
 
               </apex:pageBlockTable>
@@ -104,7 +110,7 @@
           <!-- </apex:outputPanel> -->
           </apex:outputPanel>
 
-            <apex:commandButton action="{!newObjective}" value="New Planned Activity" rendered="{!visibleTab != 'previous'}" reRender="thisPanel"/>
+            <apex:commandButton action="{!newObjective}" value="New Planned Activity" rendered="{!AND(visibleTab != 'previous', canEdit)}" reRender="thisPanel"/>
             <!-- </apex:outputPanel> -->
 
         </apex:pageBlock>

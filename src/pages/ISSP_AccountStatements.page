@@ -151,7 +151,7 @@
               <tr class="{!IF(wrapper.showSeparation,'','hidden')}">
                 <td colspan="10" class="separation-row"><div>{!$Label.ISSP_Past_Periods}</div></td>
               </tr>
-              <tr class="accordion-toggle collapse in" data-toggle="collapse" data-target="#{!wrapper.parent.Period__c}-period" data-filter="{!wrapper.parent.CurrencyIsoCode}">
+              <tr class="accordion-toggle collapse in" data-toggle="collapse" data-target="#{!wrapper.parent.Period__c}-{!wrapper.parent.CurrencyISOCode}-period" data-filter="{!wrapper.parent.CurrencyIsoCode}">
                 <td class="hidden-xs">
                   <apex:image styleClass="plus-sign collapse" value="{!URLFOR($Resource.ISSP_AccountStatements,'img/plus_sign.png')}" width="13" height="13"/>
                   <apex:image styleClass="minus-sign collapse" value="{!URLFOR($Resource.ISSP_AccountStatements,'img/minus_sign.png')}" width="13" height="13"/>
@@ -200,7 +200,7 @@
                 </td>
               </tr>
               <!-- DETAIL TABLE-->
-              <tr class="accordion-body collapse" id="{!wrapper.parent.Period__c}-period">
+              <tr class="accordion-body collapse" id="{!wrapper.parent.Period__c}-{!wrapper.parent.CurrencyISOCode}-period">
                 <td colspan="1" class="hidden-xs"></td>
                 <td colspan="2"></td>
                 <td colspan="6">

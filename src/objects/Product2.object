@@ -1451,6 +1451,11 @@ SIS Charge Code Type.</description>
                 <fullName>UVI</fullName>
                 <default>false</default>
             </picklistValues>
+            <picklistValues>
+                <fullName>TG8</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+            </picklistValues>
             <restrictedPicklist>true</restrictedPicklist>
             <sorted>false</sorted>
         </picklist>
@@ -1861,6 +1866,10 @@ SIS Charge Code Type.</description>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>Cargo Handling Manual</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>Cargo Interchange Message Procedures (Cargo-IMP)</fullName>
                 <default>false</default>
             </picklistValues>
@@ -2022,6 +2031,10 @@ SIS Charge Code Type.</description>
             </picklistValues>
             <picklistValues>
                 <fullName>Passenger Agency Conference Resolutions Manual</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Passenger Data Exchange</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -4354,6 +4367,25 @@ The product will only appear on the Online Store when the date entered in this f
         <language>en_US</language>
     </listViews>
     <listViews>
+        <fullName>E_F_Products</fullName>
+        <columns>PRODUCT2.NAME</columns>
+        <columns>PRODUCT2.CUSTOMER_PRODUCT_ID</columns>
+        <columns>PRODUCT2.DESCRIPTION</columns>
+        <columns>PRODUCT2.FAMILY</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>PRODUCT2.FAMILY</field>
+            <operation>equals</operation>
+            <value>E&amp;F Services</value>
+        </filters>
+        <label>E&amp;F Products</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>EF_Document_Mass_Uploaders</group>
+            <group>IATAAdmins</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
         <fullName>FDS_ICCS_Products</fullName>
         <columns>PRODUCT2.NAME</columns>
         <columns>PRODUCT2.CUSTOMER_PRODUCT_ID</columns>
@@ -4473,6 +4505,7 @@ The product will only appear on the Online Store when the date entered in this f
         <fullName>GDP_CAC_WEB_for_Non_Members</fullName>
         <columns>PRODUCT2.NAME</columns>
         <columns>IEC_Product_Information__c</columns>
+        <columns>Display_to_ECommerce__c</columns>
         <columns>IEC_Parent_Product__c</columns>
         <columns>IEC_Product_Rate_Plan_Information__c</columns>
         <columns>SAP_Material_Number__c</columns>
@@ -6485,6 +6518,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Cargo Handling Manual</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Cargo Interchange Message Procedures %28Cargo-IMP%29</fullName>
                 <default>false</default>
             </values>
@@ -6642,6 +6679,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Passenger Agency Conference Resolutions Manual</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passenger Data Exchange</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -9444,6 +9485,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Cargo Handling Manual</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Cargo Interchange Message Procedures %28Cargo-IMP%29</fullName>
                 <default>false</default>
             </values>
@@ -9601,6 +9646,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Passenger Agency Conference Resolutions Manual</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passenger Data Exchange</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -12524,6 +12573,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Passenger Agency Conference Resolutions Manual</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passenger Data Exchange</fullName>
                 <default>false</default>
             </values>
             <values>

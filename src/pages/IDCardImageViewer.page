@@ -1,8 +1,13 @@
-<apex:page docType="html-4.01-strict" sidebar="false" showHeader="false" standardController="ID_Card__c">
+<apex:page docType="html-4.01-strict" sidebar="false" showHeader="false" standardController="ID_Card__c" extensions="IDCard_ImageViewerController">
+
     <div style="width:18%;float:left;">
         &nbsp;
     </div>
     <apex:outputPanel id="divIframe" layout="block" style="float:left;" rendered="{!ID_Card__c.Photo__c!=''}">
+    	<!--
         <iframe name="iframeImageViewer" src="{!$Label.IDCard_CroppingTool}DisplayImage.aspx?filename={!ID_Card__c.Photo__c}&sid={!$API.Session_ID}" frameborder="0" width="100%" height="280px">iFrames not supported</iframe>
+        -->
+
+        <img src="{!authorizationLink}&rnd={!NOW()}" style="height: 150px;" />
     </apex:outputPanel>
 </apex:page>

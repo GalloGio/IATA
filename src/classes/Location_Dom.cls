@@ -67,8 +67,13 @@ public without sharing class Location_Dom {
 	private void onAfterInsert() {
 	    getData(true, false);
 	    
-	    //Sync to SAP the location billTo and ShipTo
-	    Location_Svc.SendLocationToSAP(newList);
+		//Sync to SAP
+		List<Location__c> locationsToSync = new List<Location__c>();
+		for (Integer i = 0; i < newList.size(); i++)
+			if (newList[i].Active__c == true && String.isBlank(newList[i].SAP_Id__c))
+				locationsToSync.add(newList[i]);
+		if (locationsToSync.size() > 0)
+			Location_Svc.SendLocationToSAP(locationsToSync);
 	}
 	
 	private void onAfterUpdate() {
@@ -81,7 +86,7 @@ public without sharing class Location_Dom {
 	    Location_Svc.syncLocationsUpdateWithExternalSystems(newList, oldMap);
 	    
 	    // Sync location updates to Order object
-	    Location_Svc.syncLocationsUpdateWithNewOrders(newMap, oldMap);
+	    //Location_Svc.syncLocationsUpdateWithNewOrders(newMap, oldMap);
 
 	    //Sync to SAP the location billTo and ShipTo
         List<Location__c> locationsToSync = new List<Location__c>();
@@ -100,15 +105,12 @@ public without sharing class Location_Dom {
         	
         //}
         for (Integer i = 0; i < newList.size(); i++)
-            if (oldList[i].Address__c != newList[i].Address__c || oldList[i].Active__c != newList[i].Active__c || oldList[i].Email__c != newList[i].Email__c ||
-                oldList[i].Phone__c != newList[i].Phone__c || oldList[i].VAT_Number__c != newList[i].VAT_Number__c)
+            if (newList[i].Active__c == true &&
+                (oldList[i].Address__c != newList[i].Address__c || oldList[i].Email__c != newList[i].Email__c ||
+                 oldList[i].Phone__c != newList[i].Phone__c || oldList[i].VAT_Number__c != newList[i].VAT_Number__c))
                 locationsToSync.add(newList[i]);
-		
-		system.debug('locationsToSync in trigger ' + locationsToSync);
-		
-        if(locationsToSync.size() > 0){
-        	Location_Svc.SendLocationToSAP(locationsToSync);
-        }
+        if(locationsToSync.size() > 0)
+            Location_Svc.SendLocationToSAP(locationsToSync);
 	}
 
 	private void onBeforeDelete(){

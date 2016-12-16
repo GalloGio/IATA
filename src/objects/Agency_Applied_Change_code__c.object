@@ -131,6 +131,17 @@
         <type>Currency</type>
     </fields>
     <fields>
+        <fullName>Applied_Configuration__c</fullName>
+        <externalId>false</externalId>
+        <label>Applied Configuration</label>
+        <length>18</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Bulletin_Information__c</fullName>
         <externalId>false</externalId>
         <label>Bulletin Information</label>
@@ -254,6 +265,10 @@
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>IRS</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>IRW</fullName>
                 <default>false</default>
             </picklistValues>
@@ -321,6 +336,17 @@
         <type>Picklist</type>
     </fields>
     <fields>
+        <fullName>CreatedDate_User__c</fullName>
+        <externalId>false</externalId>
+        <label>HUB Effective Date</label>
+        <length>30</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Created_Date_To_Show__c</fullName>
         <externalId>false</externalId>
         <formula>BLANKVALUE( Date_time_of_change__c ,  CreatedDate )</formula>
@@ -329,6 +355,15 @@
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>DEF_Non_Payment__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>DEF Non-Payment</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>Date_Memo_Sent__c</fullName>
@@ -372,7 +407,7 @@
         <externalId>false</externalId>
         <formula>IF( ISNULL(Account__r.Last_Integration_Date__c), 
     true, 
-    IF( CreatedDate &gt; Account__r.Last_Integration_Date__c,
+    IF( Created_Date_To_Show__c &gt; Account__r.Last_Integration_Date__c,
         true,
         false
     )
@@ -459,6 +494,16 @@
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Published_on_EBulletin__c</fullName>
+        <externalId>false</externalId>
+        <formula>To_Publish_in_e_Bulletin__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Published on EBulletin</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>Reason_Code__c</fullName>
@@ -752,11 +797,17 @@
         <label>SIDRA Case</label>
         <lookupFilter>
             <active>true</active>
-            <errorMessage>You can only select SIDRA cases, make sure the selected case has the correct record type</errorMessage>
+            <booleanFilter>1 OR 2</booleanFilter>
+            <errorMessage>You can only select SIDRA or SIDRA Lite cases, make sure the selected case has the correct record type</errorMessage>
             <filterItems>
-                <field>Case.RecordType.Name</field>
+                <field>Case.RecordType.DeveloperName</field>
                 <operation>equals</operation>
                 <value>SIDRA</value>
+            </filterItems>
+            <filterItems>
+                <field>Case.RecordType.DeveloperName</field>
+                <operation>equals</operation>
+                <value>SIDRA_Lite</value>
             </filterItems>
             <isOptional>false</isOptional>
         </lookupFilter>
@@ -799,6 +850,16 @@
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>To_Publish_in_e_Bulletin__c</fullName>
+        <defaultValue>true</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Uncheck if the change code should not appear in the e-bulletin</inlineHelpText>
+        <label>To Publish in e-Bulletin</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>Updated_AIMS__c</fullName>
@@ -933,6 +994,10 @@
             </values>
             <values>
                 <fullName>IRR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IRS</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1341,6 +1406,10 @@
             </values>
             <values>
                 <fullName>IRR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IRS</fullName>
                 <default>false</default>
             </values>
             <values>

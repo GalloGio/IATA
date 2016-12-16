@@ -60,7 +60,7 @@ public with sharing class SidraLiteManager {
     public static list<Case> filterSidraLiteCases(list<Case> listCases) {
         list<Case> listSIDRALite = new list<Case>();
         for (Case cse: listCases) {
-            if (cse.RecordTypeId == RECORDTYPE_SIDRA_LITE && cse.Status != 'Closed') {
+            if (cse.RecordTypeId == RECORDTYPE_SIDRA_LITE) {
                 listSIDRALite.add(cse);
             }
         }
@@ -124,8 +124,12 @@ public with sharing class SidraLiteManager {
         }
         // get parent IFAP cases with their Sidra lite children
         map<Id,Case> mapParents = new map<Id,Case>(
-            [Select Id, RecordtypeId, Deadline_Date__c, FA_Letter_Sent__c, FA_Second_Deadline_Date__c, FirstFAnonComplianceDate__c, FirstFSnonComplianceDate__c, FS_Deadline_Date__c, FS_Second_Deadline_Date__c, Status, FS_Letter_Sent__c, secondFAnonComplianceDate__c, secondFSnonComplianceDate__c, FA_Third_Deadline_Date__c, FS_Third_Deadline_Date__c, Third_FA_non_Compliance_Date__c, Region__c, BSPCountry__c, BusinessHoursId, Reason1__c,
-            (Select Id, CaseNumber, SIDRA_lite_Reason__c, SIDRA_Lite_Default_Date__c from Cases where RecordtypeId = :RECORDTYPE_SIDRA_LITE )
+            [Select Id, RecordtypeId, Deadline_Date__c, FA_Letter_Sent__c, FA_Second_Deadline_Date__c, FirstFAnonComplianceDate__c,
+            FirstFSnonComplianceDate__c, FS_Deadline_Date__c, FS_Second_Deadline_Date__c, Status, FS_Letter_Sent__c, secondFAnonComplianceDate__c,
+            secondFSnonComplianceDate__c, FA_Third_Deadline_Date__c, FS_Third_Deadline_Date__c, Third_FA_non_Compliance_Date__c, Region__c,
+            BSPCountry__c, BusinessHoursId, Reason1__c, SAAM_Deadline_Date__c, New_IFAP_Deadline_date__c, Termination_date__c,
+            Documentation_Complete__c, Bank_Guarantee_received__c, Has_the_agent_paid_invoice__c, isClosed, Bank_Guarantee_deadline__c, Comments__c,
+            (Select Id, CaseNumber, SIDRA_lite_Reason__c, SIDRA_Lite_Default_Date__c,SAAM_Deadline_Date__c, New_IFAP_Deadline_date__c, Termination_date__c, Comments__c  from Cases where RecordtypeId = :RECORDTYPE_SIDRA_LITE )
             from Case
             where RecordtypeId in (:RECORDTYPE_IFAP,:RECORDTYPE_SMAP,:RECORDTYPE_SAAM,:RECORDTYPE_OSCAR,:RECORDTYPE_INVOICING)
             and id in :listParentId]);
@@ -246,43 +250,51 @@ public with sharing class SidraLiteManager {
     }
 
     private static void checkBussinessRulesSAAM(Case parentCase) {
-        set<String> listValidReasons1 = new set<String>{'Financial Security Renewal','Financial Security Request','Financial Security Update'};
-        set<String> listValidReasons2 = new set<String>{'Certificate DGR'};
-        set<String> listValidReasons3 = new set<String>{'Annual Fees'};
-        if (listValidReasons1.contains(parentCase.Reason1__c)) {
+        checkBussinessRulesSAAM(parentCase, parentCase.account);
+    }
+    private static void checkBussinessRulesSAAM(Case parentCase, Account account) {
+        // Financial Security
+        if (SidraLiteHelperForSAAM.VALID_REASONS1.contains(parentCase.Reason1__c)) {
             if ( parentCase.Bank_Guarantee_deadline__c == null ) {
                 throw new SidraLiteException('You cannot create a SIDRA Lite without Financial Security Deadline');
             }
             if ( parentCase.Bank_Guarantee_deadline__c >= Date.today() ) {
                 throw new SidraLiteException('You cannot create a SIDRA Lite for future Financial Security Deadline');
             }
-            if (!SidraLiteUtil.isAccountActive(parentCase.account)) {
-                throw new SidraLiteException('You cannot create a SIDRA Lite if related account is not active');
+            if (parentCase.Bank_Guarantee_received__c != null) {
+                throw new SidraLiteException('Non-Compliance action cannot be triggered because the case indicates that we received the Financial Security under the field Financial Security Received (' + parentCase.Bank_Guarantee_received__c.format() + ')');
             }
-
-        } else if (listValidReasons2.contains(parentCase.Reason1__c)) {
+        }
+        // Certificate DGR
+        else if (SidraLiteHelperForSAAM.VALID_REASONS2.contains(parentCase.Reason1__c)) {
             if ( parentCase.SAAM_Deadline_Date__c == null ) {
                 throw new SidraLiteException('You cannot create a SIDRA Lite without Deadline Date');
             }
             if ( parentCase.SAAM_Deadline_Date__c >= Date.today() ) {
                 throw new SidraLiteException('You cannot create a SIDRA Lite for future Deadline Date');
             }
-
-        } else if (listValidReasons3.contains(parentCase.Reason1__c)) {
+            if (parentCase.Documentation_Complete__c != null) {
+                throw new SidraLiteException('Non-Compliance action cannot be triggered because the case indicates that we received the DGR certificate under the field Documentation Complete (' +
+parentCase.Documentation_Complete__c.format() + ')');
+            }
+        }
+        // Annual Fees
+        else if (SidraLiteHelperForSAAM.VALID_REASONS3.contains(parentCase.Reason1__c)) {
             if ( parentCase.SAAM_Deadline_Date__c == null ) {
                 throw new SidraLiteException('You cannot create a SIDRA Lite without Deadline Date');
             }
             if ( parentCase.SAAM_Deadline_Date__c >= Date.today() ) {
                 throw new SidraLiteException('You cannot create a SIDRA Lite for future Deadline Date');
             }
-            if (!SidraLiteUtil.isPassenger(parentCase.account) && !SidraLiteUtil.isCargoCASS(parentCase.account) && !SidraLiteUtil.isAgent(parentCase.account)) {
+            if ( parentCase.isClosed ) {
+                throw new SidraLiteException('Non-Compliance action cannot be triggered because the case is closed');
+            }
+            if (!SidraLiteUtil.isPassenger(account) && !SidraLiteUtil.isCargoCASS(account) && !SidraLiteUtil.isAgent(account)) {
                 throw new SidraLiteException('You cannot create a SIDRA Lite for Annual Fees Reason for this account Category');
             }
 
         } else {
-            listValidReasons1.addAll(listValidReasons2);
-            listValidReasons1.addAll(listValidReasons3);
-            throw new SidraLiteException('SIDRA Lite reason must be one of these: ' + listValidReasons1);
+            throw new SidraLiteException('SIDRA Lite reason must be one of these: ' + SidraLiteHelperForSAAM.VALID_REASONS);
         }
     }
 
@@ -299,6 +311,9 @@ public with sharing class SidraLiteManager {
             if (!SidraLiteUtil.isPassenger(parentCase.account) && !SidraLiteUtil.isCargoCASS(parentCase.account) && !SidraLiteUtil.isAgent(parentCase.account)) {
                 throw new SidraLiteException('You cannot create a SIDRA Lite for Annual Fees Reason for this account Category');
             }
+            if (parentCase.Has_the_agent_paid_invoice__c == null || parentCase.Has_the_agent_paid_invoice__c != 'Not paid') {
+                throw new SidraLiteException('Non-compliance action can only be triggered when the field "Has the customer paid invoice?" equals to Not Paid.');
+            }
 
         } else {
             throw new SidraLiteException('SIDRA Lite reason must be one of these: ' + listValidReasons);
@@ -308,7 +323,8 @@ public with sharing class SidraLiteManager {
     public static void checkInsertBussinessRules(Case parentCase) {
         if (parentCase.RecordtypeId == RECORDTYPE_IFAP) {
             checkInsertBussinessRulesIFAP(parentCase);
-        //} else if (parentCase.RecordtypeId == RECORDTYPE_SAAM) {
+        } else if (parentCase.RecordtypeId == RECORDTYPE_SAAM) {
+            checkInsertBussinessRulesSAAM(parentCase);
         }
     }
 
@@ -353,6 +369,28 @@ public with sharing class SidraLiteManager {
     }
 
     /**
+        Bussines Rules checked only before inserting SIDRA lite Cases
+    **/
+    public static void checkInsertBussinessRulesSAAM(Case parentCase) {
+        // certificate DGR
+        if (SidraLiteHelperForSAAM.VALID_REASONS2.contains(parentCase.Reason1__c)) {
+            if ( parentCase.Termination_date__c != null ) {
+                throw new SidraLiteException('SIDRA Lite is only created for a First Non-Compliance');
+            }
+
+        }
+        // Annual Fees
+        else if (SidraLiteHelperForSAAM.VALID_REASONS3.contains(parentCase.Reason1__c)) {
+            if ( parentCase.New_IFAP_deadline_Date__c != null ) {
+                throw new SidraLiteException('SIDRA Lite is only created for a First Non-Compliance');
+            }
+            if ( parentCase.Termination_date__c != null ) {
+                throw new SidraLiteException('SIDRA Lite is only created for a First Non-Compliance');
+            }
+        }
+    }
+
+    /**
         All checks and actions performed when a Sidra lite case is inserted
         cse: current sidra lite case which is being inserted
         parentCase: parent sMAP case related to cse
@@ -365,11 +403,17 @@ public with sharing class SidraLiteManager {
         cse.BSPCountry__c = parentCase.BSPCountry__c;
         cse.SIDRA_Lite_Reason__c = 'Prejudiced Collection of Funds';
         cse.AccountId = account.Id;
-        cse.SIDRA_Lite_Default_Date__c = Date.Today();
-        cse.Confirmation_moneys_not_received__c = Date.Today();
-        cse.Termination_date_manual_entry__c = SidraLiteUtil.lastMonthDay(Date.today().addMonths(1));
-        cse.Total_Irregularities__c = String.ValueOf(account.Accumulated_Irregularities__c);
         cse.BSP_CASS__c = SidraLiteUtil.getBSPCASS(account);
+
+        if (SidraLiteUtil.isAccountActive(account)) {
+            cse.Reason_for_Default__c = 'Suspension - Prejudiced Collection of Funds';
+            cse.SIDRA_Lite_Default_Date__c = Date.Today();
+            cse.Confirmation_moneys_not_received__c = Date.today();
+            cse.Termination_date_manual_entry__c = SidraLiteUtil.lastMonthDay(Date.today().addMonths(1));
+            cse.Total_Irregularities__c = String.ValueOf(account.Accumulated_Irregularities__c);
+        } else {
+            cse.IRR_Withdrawal_Reason__c = 'Default Prev';
+        }
     }
 
     /**
@@ -387,14 +431,20 @@ public with sharing class SidraLiteManager {
         cse.SIDRA_Lite_Reason__c = 'Late/Absence of Notification of Change';
         cse.SIDRA_Lite_Default_Date__c = Date.Today();
         cse.Reason_for_Default__c = 'Disapproval of Change';
-        cse.Total_Irregularities__c = String.ValueOf(account.Accumulated_Irregularities__c);
-        if (parentCase.BusinessHoursId == null) {
-            cse.NOT_Date__c = DateTime.now().addDays(5).date();
-        } else {
-            cse.NOT_Date__c = BusinessDays.addNBusinessDays(DateTime.now(),5,parentCase.BusinessHoursId).date();
-        }
-        cse.Termination_date_manual_entry__c = SidraLiteUtil.lastMonthDay(cse.NOT_Date__c.addMonths(1));
         cse.BSP_CASS__c = SidraLiteUtil.getBSPCASS(account);
+
+        if (SidraLiteUtil.isAccountActive(account)) {
+            cse.Total_Irregularities__c = String.ValueOf(account.Accumulated_Irregularities__c);
+            if (parentCase.BusinessHoursId == null) {
+                cse.NOT_Date__c = DateTime.now().addDays(5).date();
+            } else {
+                cse.NOT_Date__c = BusinessDays.addNBusinessDays(DateTime.now(),5,parentCase.BusinessHoursId).date();
+            }
+            cse.Termination_date_manual_entry__c = SidraLiteUtil.lastMonthDay(cse.NOT_Date__c.addMonths(1));
+        } else {
+            cse.IRR_Withdrawal_Reason__c = 'Default Prev';
+            cse.Termination_date_manual_entry__c = WSSidraLite.getTerminationDateFromRelatedCase(account);
+        }
     }
 
     /**
@@ -405,6 +455,9 @@ public with sharing class SidraLiteManager {
         @return parent case modified and ready to be inserted
     **/
     public static Case checkInsertSingleSidraLiteSaamParentCase(Case cse, Case parentCase, Account account) {
+        checkBussinessRulesSAAM(parentCase, account);
+        checkInsertBussinessRulesSAAM(parentCase);
+
         cse.BSP_CASS__c = SidraLiteUtil.getBSPCASS(account);
         // For Certificates
         if (parentCase.Reason1__c == 'Certificate DGR') {
@@ -414,6 +467,8 @@ public with sharing class SidraLiteManager {
                 cse.SIDRA_Lite_Default_Date__c = Date.Today();
                 cse.Reason_for_Default__c = 'DGR Certificate';
                 cse.NOT_Date__c = Date.today();
+            } else {
+                cse.IRR_Withdrawal_Reason__c = 'Default Prev';
             }
             parentCase.Termination_date_manual_entry__c = cse.Termination_date_manual_entry__c;
 
@@ -421,14 +476,69 @@ public with sharing class SidraLiteManager {
         } else if (parentCase.Reason1__c == 'Annual Fees') {
             cse.SIDRA_Lite_Reason__c = 'Annual Fees';
             cse.Subject = 'SIDRA Lite – ' + cse.SIDRA_Lite_Reason__c;
+            if (SidraLiteUtil.isAccountActive(account)) {
+                if (SidraLiteUtil.isPassenger(account)) {
+                    cse.Propose_Irregularity__c = DateTime.now();
+                    cse.IRR_Approval_Rejection__c = 'Approved';
+                    cse.IRR_Approval_Rejection_Date__c = DateTime.now();
+                    cse.IRR_Type__c = 'Double Irregularity';
+                    cse.Total_Irregularities__c = String.ValueOf(account.Accumulated_Irregularities__c);
+                }
+                if (SidraLiteUtil.isAgent(account)) {
+                    cse.Propose_Default__c = DateTime.now();
+                    cse.Termination_Reason__c = 'Non payment of Annual Fee';
+                }
+                if (SidraLiteUtil.isCargoCASS(account)) {
+                    cse.SIDRA_Lite_Default_Date__c = Date.today();
+                    cse.Reason_for_Default__c = 'Annual Fees';
+                }
+            } else {
+                cse.IRR_Withdrawal_Reason__c = 'Default Prev';
+            }
 
+            if (SidraLiteUtil.isPassenger(account)) {
+                parentCase.New_IFAP_Deadline_date__c = Date.Today().addDays(30);
+            }
+            if (SidraLiteUtil.isCargoCASS(account)) {
+                parentCase.Termination_date_manual_entry__c = cse.Termination_date_manual_entry__c;
+            }
+
+        // For Financial Security
+        } else {
+            cse.Subject = 'SIDRA Lite – Financial Security Non-compliance';
+            cse.SIDRA_Lite_Reason__c = 'Financial Security Non-compliance';
+            if (SidraLiteUtil.isAccountActive(account)) {
+                cse.Propose_Irregularity__c = DateTime.now();
+                cse.IRR_Approval_Rejection__c = 'Approved';
+                cse.IRR_Approval_Rejection_Date__c = DateTime.now();
+                if (SidraLiteUtil.isPassenger(account)) {
+                    cse.IRR_Type__c = 'Double Irregularity';
+                } else {
+                    cse.IRR_Type__c = 'Single Irregularity';
+                }
+                cse.SIDRA_Lite_Default_Date__c = Date.Today();
+                cse.Reason_for_Default__c = 'Suspension - FS Non Compliance';
+            } else {
+                cse.IRR_Withdrawal_Reason__c = 'Default Prev';
+            }
+            parentCase.firstFSnonComplianceDate__c = Date.Today();
+            parentCase.FS_Second_Deadline_Date__c = Date.Today().addDays(30);
+        }
+        return parentCase;
+    }
+
+    public static Case checkInsertSingleSidraLiteInvoicingParentCase(Case cse, Case parentCase, Account account) {
+        cse.BSP_CASS__c = SidraLiteUtil.getBSPCASS(account);
+        cse.SIDRA_Lite_Reason__c = 'Annual Fees';
+        cse.Subject = 'SIDRA Lite – ' + cse.SIDRA_Lite_Reason__c;
+
+        if (SidraLiteUtil.isAccountActive(account)) {
             if (SidraLiteUtil.isPassenger(account)) {
                 cse.Propose_Irregularity__c = DateTime.now();
                 cse.IRR_Approval_Rejection__c = 'Approved';
                 cse.IRR_Approval_Rejection_Date__c = DateTime.now();
                 cse.IRR_Type__c = 'Double Irregularity';
                 cse.Total_Irregularities__c = String.ValueOf(account.Accumulated_Irregularities__c);
-                parentCase.New_IFAP_Deadline_date__c = Date.Today().addDays(30);
             }
             if (SidraLiteUtil.isAgent(account)) {
                 cse.Propose_Default__c = DateTime.now();
@@ -443,57 +553,14 @@ public with sharing class SidraLiteManager {
                 if (account.Category__c.startsWith('CASS Associate') ) {
                     cse.Termination_date_manual_entry__c = Date.today().addMonths(3);
                 }
-                parentCase.Termination_date_manual_entry__c = cse.Termination_date_manual_entry__c;
             }
-
-        // For Financial Security
         } else {
-            cse.SIDRA_Lite_Reason__c = 'Financial Security Non-compliance';
-            cse.Subject = 'SIDRA Lite – ' + cse.SIDRA_Lite_Reason__c;
-            cse.ParentId = parentCase.Id;
-            cse.Region__c = parentCase.Region__c;
-            cse.BSPCountry__c = parentCase.BSPCountry__c;
-            cse.AccountId = account.Id;
-            //cse.ContactId = parentCase.ContactId;
-            cse.IRR_Approval_Rejection__c = 'Approved';
-            cse.IRR_Type__c = 'Double Irregularity';
-            cse.Propose_Irregularity__c = DateTime.now();
-            cse.IRR_Approval_Rejection_Date__c = DateTime.now();
-            cse.SIDRA_Lite_Default_Date__c = Date.Today();
-            cse.Reason_for_Default__c = 'Suspension - FS Non Compliance';
-
-            parentCase.firstFSnonComplianceDate__c = Date.Today();
-            parentCase.FS_Second_Deadline_Date__c = Date.Today().addDays(30);
+            cse.IRR_Withdrawal_Reason__c = 'Default Prev';
         }
-        return parentCase;
-    }
-
-    public static Case checkInsertSingleSidraLiteInvoicingParentCase(Case cse, Case parentCase, Account account) {
-        cse.BSP_CASS__c = SidraLiteUtil.getBSPCASS(account);
-        cse.SIDRA_Lite_Reason__c = 'Annual Fees';
-        cse.Subject = 'SIDRA Lite – ' + cse.SIDRA_Lite_Reason__c;
-
         if (SidraLiteUtil.isPassenger(account)) {
-            cse.Propose_Irregularity__c = DateTime.now();
-            cse.IRR_Approval_Rejection__c = 'Approved';
-            cse.IRR_Approval_Rejection_Date__c = DateTime.now();
-            cse.IRR_Type__c = 'Double Irregularity';
-            cse.Total_Irregularities__c = String.ValueOf(account.Accumulated_Irregularities__c);
             parentCase.New_IFAP_Deadline_date__c = Date.Today().addDays(30);
         }
-        if (SidraLiteUtil.isAgent(account)) {
-            cse.Propose_Default__c = DateTime.now();
-            cse.Termination_Reason__c = 'Non payment of Annual Fee';
-        }
         if (SidraLiteUtil.isCargoCASS(account)) {
-            cse.SIDRA_Lite_Default_Date__c = Date.today();
-            cse.Reason_for_Default__c = 'Annual Fees';
-            if (account.Category__c == 'IATA Cargo Agent') {
-                cse.Termination_date_manual_entry__c = SidraLiteUtil.lastMonthDay(Date.today().addMonths(1));
-            }
-            if (account.Category__c.startsWith('CASS Associate') ) {
-                cse.Termination_date_manual_entry__c = Date.today().addMonths(3);
-            }
             parentCase.Termination_date_manual_entry__c = cse.Termination_date_manual_entry__c;
         }
 
@@ -546,9 +613,6 @@ public with sharing class SidraLiteManager {
             }
             if (SidraLiteUtil.isCargoCASS(account)) {
                 parentCase.FS_Second_Deadline_Date__c = parentCase.firstFSnonComplianceDate__c.addDays(30);
-                if (SidraLiteUtil.isAccountActive(account) && parentCase.Region__c != 'Americas') {
-                    cse.Propose_Irregularity__c = Date.today();
-                }
             }
         }
         // ACTIONS for FA
@@ -586,7 +650,7 @@ public with sharing class SidraLiteManager {
         Check input IFAP case (must have a list of related cases)
         and return a sidra lite case with same type: FS or FA, if it exists
     **/
-    private static Case getRelatedCaseForIFAP(Case parentCase) {
+    public static Case getRelatedCaseForIFAP(Case parentCase) {
         String validReason = SidraLiteManager.isFS(parentCase)? 'Financial Security Non-compliance': 'Financial Review Non-compliance';
         for (Case relatedCase: parentCase.Cases) {
             if (relatedCase.SIDRA_lite_Reason__c == validReason) {
