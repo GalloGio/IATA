@@ -50,7 +50,7 @@
 
 
 
-	<flow:interview name="OSCAR_Wizard_SIMPLEX" interview="{!myflow}"  buttonLocation="bottom"  rerender="myPageBlock" buttonStyle="color:black; background-color:#fed; border:1px solid;"   >
+	<flow:interview name="OSCAR_Wizard_SIMPLEX" interview="{!myflow}"  buttonLocation="bottom"  rerender="myPageBlock" buttonStyle="color:black; background-color:#fed; border:1px solid;"  finishLocation="/{!$CurrentPage.parameters.caseId}" >
 
 	</flow:interview>
     
