@@ -162,7 +162,7 @@ global class AMS_OSCAR_Webservice {
     }
 
     WebService static String createAMLCase(String oscarId){
-        List<AMS_OSCAR__c> oscar = [select Name, Account__c, Account__r.Name, Account__r.IATA_ISO_Country__r.Region__c, Account__r.IATA_ISO_Country__r.Name from AMS_OSCAR__c where Id =: oscarId];
+        List<AMS_OSCAR__c> oscar = [select Name, STEP17__c, Account__c, Account__r.Name, Account__r.IATA_ISO_Country__r.Region__c, Account__r.IATA_ISO_Country__r.Name from AMS_OSCAR__c where Id =: oscarId];
         if(oscar!=null && oscar.size()>0) {
             return execCreateAMLCase(oscar[0], true);
         }        
@@ -171,6 +171,8 @@ global class AMS_OSCAR_Webservice {
 
     private static String execCreateAMLCase(AMS_OSCAR__c oscar, Boolean updateOscar) {
         String result = '';
+
+        if(oscar.STEP17__c == AMS_Utils.IN_PROGRESS) return 'ERROR: Due Diligence already in progress';
 
         try{
 

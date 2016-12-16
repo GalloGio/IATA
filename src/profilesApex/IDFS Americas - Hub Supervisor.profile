@@ -413,6 +413,7 @@
 <classAccesses><apexClass>EF_AccountTriggerHandlerTest</apexClass><enabled>false</enabled></classAccesses>
 <classAccesses><apexClass>EF_AttachmentListController</apexClass><enabled>false</enabled></classAccesses>
 <classAccesses><apexClass>EF_AttachmentListControllerTest</apexClass><enabled>false</enabled></classAccesses>
+<classAccesses><apexClass>EF_AttachmentTriggerHandler</apexClass><enabled>false</enabled></classAccesses>
 <classAccesses><apexClass>EF_BaContractApprovalHelper</apexClass><enabled>false</enabled></classAccesses>
 <classAccesses><apexClass>EF_BaContractApprovalHelperTest</apexClass><enabled>false</enabled></classAccesses>
 <classAccesses><apexClass>EF_BaHistoryController</apexClass><enabled>false</enabled></classAccesses>
@@ -423,6 +424,8 @@
 <classAccesses><apexClass>EF_ContractHandler</apexClass><enabled>false</enabled></classAccesses>
 <classAccesses><apexClass>EF_ContractHandlerTest</apexClass><enabled>false</enabled></classAccesses>
 <classAccesses><apexClass>EF_ContractHistoryController</apexClass><enabled>false</enabled></classAccesses>
+<classAccesses><apexClass>EF_DocumentLogHelper</apexClass><enabled>false</enabled></classAccesses>
+<classAccesses><apexClass>EF_DocumentLogHelperTest</apexClass><enabled>false</enabled></classAccesses>
 <classAccesses><apexClass>EF_HistoryControllersTest</apexClass><enabled>false</enabled></classAccesses>
 <classAccesses><apexClass>EF_LocationCodeHandler</apexClass><enabled>false</enabled></classAccesses>
 <classAccesses><apexClass>EF_LocationCodeHandlerTest</apexClass><enabled>false</enabled></classAccesses>
@@ -1913,7 +1916,7 @@
 <pageAccesses><apexPage>ProductPrice</apexPage><enabled>false</enabled></pageAccesses>
 <pageAccesses><apexPage>RCRMOpportunityControlButtons</apexPage><enabled>true</enabled></pageAccesses>
 <pageAccesses><apexPage>RCRM_Contract_Revenue_Stream</apexPage><enabled>true</enabled></pageAccesses>
-<pageAccesses><apexPage>SIDRALiteMassAction</apexPage><enabled>false</enabled></pageAccesses>
+<pageAccesses><apexPage>SIDRALiteMassAction</apexPage><enabled>true</enabled></pageAccesses>
 <pageAccesses><apexPage>SIDRAOIActionPlans</apexPage><enabled>true</enabled></pageAccesses>
 <pageAccesses><apexPage>SIDRAliteMassApproval</apexPage><enabled>false</enabled></pageAccesses>
 <pageAccesses><apexPage>SiteLogin</apexPage><enabled>false</enabled></pageAccesses>
