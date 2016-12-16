@@ -585,6 +585,13 @@
         <value>There are still no Appointments created for this OSCAR Process</value>
     </labels>
     <labels>
+        <fullName>AMS_PERFORM_CORRECTION</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_PERFORM_CORRECTION</shortDescription>
+        <value>Perform Correction</value>
+    </labels>
+    <labels>
         <fullName>ANY</fullName>
         <language>en_US</language>
         <protected>false</protected>
