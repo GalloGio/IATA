@@ -420,7 +420,7 @@ global without sharing class AMS_RecordCreatorWebservice {
             oscarsToProcess.add(null);
         }
 
-        AMS_ChangeCodesHelper.createAAChangeCodes(changeCodesToProcess, oscarsToProcess, accountsToProcess, false);
+        AMS_Utils.createAAChangeCodes(changeCodesToProcess, oscarsToProcess, accountsToProcess, false);
 
         // for now we shouldn't sent any notification.
         //sendNotification(accountId,accountChanges);
