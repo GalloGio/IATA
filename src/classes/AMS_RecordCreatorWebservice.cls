@@ -420,8 +420,6 @@ global without sharing class AMS_RecordCreatorWebservice {
             oscarsToProcess.add(null);
         }
 
-        AMS_Utils.createAAChangeCodes(changeCodesToProcess, oscarsToProcess, accountsToProcess, false);
-
         List<AMS_ChangeCodesHelper.ObjectChangesStruct> objectChanges = AMS_ChangeCodesHelper.convertAccountToObjectChanges(accountChanges);
 
 
