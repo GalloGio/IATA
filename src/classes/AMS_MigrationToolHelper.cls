@@ -491,7 +491,7 @@ public with sharing class AMS_MigrationToolHelper {
 
 	}
 
-	private static List<AMS_Accreditation_Contact__c> createAccreditationContacts(AMS_Pax_Accreditation_Form__c accreditationObj, Id accountId, String typeOfProcess){
+	public static List<AMS_Accreditation_Contact__c> createAccreditationContacts(AMS_Pax_Accreditation_Form__c accreditationObj, Id accountId, String typeOfProcess){
 
 		// get all the owners and create accreditation contacts
 
