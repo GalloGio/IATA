@@ -15,7 +15,7 @@ public with sharing class TestDataGenerator
     public static String generateProductCode()
     {
         //Product format is 9999-99
-        String pCode = Utility.generateRandomDigit(4) + '-' + Utility.generateRandomDigit(2);
+        String pCode = '+' + Utility.generateRandomDigit(3) + '-' + Utility.generateRandomDigit(2);
 
         return pCode; 
     }
@@ -281,6 +281,20 @@ public with sharing class TestDataGenerator
         return new List<Zuora.zApi.SaveResult>{sr};
     }
 
+    public static List<Zuora.zApi.SaveResult> generatePaymentResultsWithError(){
+        Zuora.zApi.SaveResult sr = new Zuora.zApi.SaveResult();
+        sr.Success = false;
+        sr.Id = '2c92c0f850dca6710150dea56af04813';
+        sr.Errors = new List<Zuora.zObject>();
+        Zuora.zObject error = new Zuora.zObject('Error');
+        error.setValue('Code', 'Invalid card');
+        error.setValue('Field', 'ReferenceId');
+        error.setValue('Message', 'Invalid credit card');
+        sr.Errors.add(error);
+
+        return new List<Zuora.zApi.SaveResult>{sr};
+    }
+
 
     /****************************************************************************************************
         Created by CGI, Kevin Ky 2015-11-06
@@ -417,7 +431,7 @@ public with sharing class TestDataGenerator
     public static List<Contact> generateContacts(String accountId, Integer nb, Boolean doInsert){
         List<Contact> contacts = new List<Contact>();
         for(Integer i = 0; i < nb; i++){
-            contacts.add(new Contact(FirstName = 'firstName', LastName = 'LastName ' + i, Email = 'test'+i+'@z1x2y3.com', phone='(514) 111 2222',AccountId=accountId));
+            contacts.add(new Contact(FirstName = 'firstName', LastName = 'LastName ' + i, Email = 'test'+i+'@test.com', phone='(514) 111 2222',AccountId=accountId));
         }
         if(doInsert)
             insert contacts;
@@ -443,7 +457,7 @@ public with sharing class TestDataGenerator
         }
 
         if(doInsert)
-            database.insert(   zCustomerAccount,false);
+            insert zCustomerAccount;
 
         return zCustomerAccount;
     }
@@ -491,7 +505,7 @@ public with sharing class TestDataGenerator
         }
 
         if(doInsert)
-           database.insert(  paymentMethodes, false);
+            insert paymentMethodes;
 
         return paymentMethodes;
 
@@ -512,7 +526,7 @@ public with sharing class TestDataGenerator
         }
         
         if(doInsert)
-            database.insert(  pricebookEntry,false);
+            insert pricebookEntry;
 
         return pricebookEntry;
     }
@@ -551,7 +565,7 @@ public with sharing class TestDataGenerator
             ));
         }
         if(doInsert)
-            database.insert(orderItems,false);
+            insert orderItems;
 
         return orderItems;
     }
@@ -565,7 +579,7 @@ public with sharing class TestDataGenerator
         {
             pricebookEntries.addAll(generatePricebookEntry(Test.getStandardPricebookId(),prod.Id,1,false));
         }
-        database.insert(  pricebookEntries,false);
+        insert pricebookEntries;
     
         for(Integer i = 0; i < nb; i++)
         {
@@ -579,7 +593,7 @@ public with sharing class TestDataGenerator
             ));
         }
         if(doInsert)
-            database.insert(  orderItems,false);
+            insert orderItems;
 
         return orderItems;
     }
@@ -595,7 +609,7 @@ public with sharing class TestDataGenerator
         {
             pricebookEntries.addAll(generatePricebookEntry(Test.getStandardPricebookId(),prod.Id,1,false));
         }
-        database.insert(pricebookEntries,false);
+        insert pricebookEntries;
     
         for(Integer i = 0; i < products.size(); i++)
         {
@@ -609,7 +623,7 @@ public with sharing class TestDataGenerator
             ));
         }
         if(doInsert)
-            database.insert( orderItems,false);
+            insert orderItems;
 
         return orderItems;
     }
@@ -729,7 +743,10 @@ public with sharing class TestDataGenerator
             products[x].Post_to_Ecommerce_Date__c = System.today().addDays(-7);
             products[x].ZProduct__c = zProducts[x].Id;
         }
-        database.insert(products,false) ;
+        
+        //insert products;
+        upsert products SAP_Material_Number__c;
+
         System.debug('products generated::'+products);
 
         insert zRatePlans;
@@ -839,7 +856,8 @@ public with sharing class TestDataGenerator
         }
         insert zTiers;
         System.debug('zTiers::'+zTiers);
-                database.insert(products,false) ;
+        //database.insert(products,false) ;
+        upsert products SAP_Material_Number__c;
 
         
         //-- Create PriceBookEntries for each product       
@@ -865,6 +883,50 @@ public with sharing class TestDataGenerator
     public static List<Product2> generateProducts(Integer nb, Boolean doInsert)
     {
         List<Product2> products = new List<Product2>();
+        
+        for(Integer i=0; i < nb;  i++)
+        {   
+
+            String productCode = generateProductCode();
+            String activityCode = productCode.split('-')[0];
+            products.add(new Product2(
+                Name                            = 'Product '+i,
+                Short_Title__c                  = 'P '+i,
+                Short_Description__c            = 'This is a short Description for Product P'+i,
+                Family                          = Utility.getRandomPicklistValue('Product2','Family'),  
+                SAP_Material_Number__c          = productCode,
+                SAP_Status_Code__c              = 'A',
+                Is_Shippable__c                 = true,
+                Activity_Code__c                = activityCode,
+                Post_to_Ecommerce_Date__c       = Date.today().addDays(-1),
+                Effective_From__c               = DEFAULT_EFFECTIVE_START_DATE,
+                Effective_To__c                 = DEFAULT_EFFECTIVE_END_DATE,
+                Zuora_Id__c                     = generateZuoraFakeId(),
+                //Division__c                     = Utility.getRandomPicklistValue('Product2','Division__c'),
+                //Taxation_Country__c             = Utility.getRandomPicklistValue('Product2','Taxation_Country__c'),
+                Inventory_Status__c             = Utility.getRandomPicklistValue('Product2','Inventory_Status__c'),
+                Language__c                     = Utility.getRandomPicklistValue('Product2','Language__c'),
+                Line_of_Business__c             = Utility.getRandomPicklistValue('Product2','Line_of_Business__c'),
+                Product_Marketing_Manager__c    = Utility.getRandomPicklistValue('Product2','Product_Marketing_Manager__c'),
+                Media__c                        = Utility.getRandomPicklistValue('Product2','Media__c'),
+                Product_Manager__c              = Utility.getRandomPicklistValue('Product2','Product_Manager__c'),
+                Product_Type__c                 = Utility.getRandomPicklistValue('Product2','Product_Type__c'),
+                Product_Segment__c              = Utility.getRandomPicklistValue('Product2','Product_Segment__c'),
+                Sales_Channel__c                = Utility.getRandomPicklistValue('Product2','Sales_Channel__c'),
+                Status__c                       = Utility.getRandomPicklistValue('Product2','Status__c'),
+                Sales_Notification__c           = true
+            ));
+        }
+
+        if(doInsert)
+            upsert products SAP_Material_Number__c; //Validate uniqueness of SAP_Material_Number__c
+
+        return products;
+    }
+
+    public static List<Product2> generateProducts(String zId, Integer nb, Boolean doInsert)
+    {
+        List<Product2> products = new List<Product2>();
 
         
         for(Integer i=0; i < nb;  i++)
@@ -883,7 +945,7 @@ public with sharing class TestDataGenerator
                 Post_to_Ecommerce_Date__c       = Date.today().addDays(-1),
                 Effective_From__c               = DEFAULT_EFFECTIVE_START_DATE,
                 Effective_To__c                 = DEFAULT_EFFECTIVE_END_DATE,
-                Zuora_Id__c                     = generateZuoraFakeId(),
+                Zuora_Id__c                     = zId,
                 //Division__c                     = Utility.getRandomPicklistValue('Product2','Division__c'),
                 //Taxation_Country__c             = Utility.getRandomPicklistValue('Product2','Taxation_Country__c'),
                 Inventory_Status__c             = Utility.getRandomPicklistValue('Product2','Inventory_Status__c'),
