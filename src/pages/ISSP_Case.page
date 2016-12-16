@@ -268,7 +268,7 @@
                                 <apex:pageBlock mode="edit" id="amsCase">
                                     <apex:pagemessages /> 
                                     <apex:pageblockbuttons style="padding-top:10px" location="bottom">
-                                        <apex:commandbutton action="{!saveAttach}" value="{!$Label.ISSP_SubmitAttach}" styleclass="btn btn_iata_success" /> 
+                                        <apex:commandbutton action="{!saveAttach}" value="{!$Label.ISSP_Attach_File}" styleclass="btn btn_iata_success" /> 
                                         <apex:commandbutton action="{!cancel}" value="{!$Label.ISSP_Cancel}" immediate="true" styleclass="btn btn_iata btn-danger" />
                                     </apex:pageblockbuttons>
                                    
@@ -541,7 +541,7 @@
                                                 <apex:outputlink value="{!'/ISSP_AMS_PDF_NOC?caseId=' + newCase.Id+'&isNoticeOfChange=true&isBankAccountChange=true'}" target="_new" rendered="{!newCase.Reason1__c=='Bank Detail Update'}">
                                                     {!$Label.ISSP_AMS_Download_PDF_NOC}
                                                 </apex:outputlink>
-                                                <apex:outputlink value="{!'/ISSP_AMS_PDF_NOC?caseId=' + newCase.Id+'&isNoticeOfChange=true&isBankAccountChange=false'}"  target="_new" rendered="{!NOT(OR(BEGINS(newCase.Reason1__c, 'New'),newCase.Reason1__c=='Bank Detail Update'))}">
+                                                <apex:outputlink value="{!'/ISSP_AMS_PDF_NOC?caseId=' + newCase.Id+'&isNoticeOfChange=true&isBankAccountChange=false'}"  target="_new" rendered="{!OR(BEGINS(newCase.Reason1__c, 'CH'),BEGINS(newCase.Reason1__c, 'CL'),newCase.Reason1__c = 'Major Change')}">
                                                     {!$Label.ISSP_AMS_Download_PDF_NOC}
                                                 </apex:outputlink>
 												
@@ -887,7 +887,7 @@
                                         </apex:column>
                                     </apex:pageblocktable>
                                 </apex:pageblock>
-                                <apex:pageblock title="{!$Label.ISSP_Articles}" rendered="{!globalList != null && globalList.size>0}">
+                               <apex:pageblock title="{!$Label.ISSP_Articles}" rendered="{!globalList != null && globalList.size>0}">
                                     <apex:pageblocktable value="{!globalList}" var="article" styleclass="table-hover table table-condensed table-responsive">
                                         <apex:column >
                                             <apex:facet name="header">
