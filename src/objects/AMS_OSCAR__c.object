@@ -4507,6 +4507,60 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
             <allInternalUsers></allInternalUsers>
         </sharedTo>
     </listViews>
+    <listViews>
+        <fullName>RecycleBinAfricaMiddleEast_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Recycle Bin Africa &amp; Middle East</label>
+        <queue>RecycleBinAfricaMiddleEast</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>RecycleBinAmericas_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Recycle Bin Americas</label>
+        <queue>RecycleBinAmericas</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>RecycleBinAsiaPacific_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Recycle Bin Asia &amp; Pacific</label>
+        <queue>RecycleBinAsiaPacific</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>RecycleBinEurope_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Recycle Bin Europe</label>
+        <queue>RecycleBinEurope</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>RecycleBinOperationalManagementHO_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Recycle Bin Operational Management HO</label>
+        <queue>RecycleBinOperationalManagementHO</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>RecyclebinNorthAsia_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Recycle bin North Asia</label>
+        <queue>RecyclebinNorthAsia</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
     <nameField>
         <label>OSCAR Name</label>
         <trackFeedHistory>false</trackFeedHistory>
