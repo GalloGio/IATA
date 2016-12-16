@@ -1390,7 +1390,7 @@ public class AMS_OSCARTriggerHandler {
 		Map<Id, AMS_OSCAR__c> oldMap = (Map<Id,AMS_OSCAR__c>) Trigger.oldMap;
 
 		for(AMS_OSCAR__c oscar : (List<AMS_OSCAR__c>)Trigger.New){
-			if( AMS_Utils.oscarProcessesWithAppointments.contains(oscar.Process__c) ){
+			if( AMS_Utils.isProcessUsingAppointments(oscar) ){
 				oscarsToProcess.add(oscar);
 				oscarsToProcessIds.add(oscar.Id);
 			}

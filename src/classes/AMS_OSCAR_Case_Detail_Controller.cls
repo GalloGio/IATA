@@ -185,7 +185,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
                         Financial_Assessment_requested__c,Financial_Assessment_deadline__c,Bank_Guarantee_requested__c,Bank_Guarantee_deadline__c,
                         Bank_Guarantee_received__c,Bank_Guarantee_amount__c,Local_Inspection_requested__c,Local_Inspection_deadline__c,
                         Local_Inspection_received__c,Local_Inspection_compliant__c,PSAA_EACP_Agreement_received__c,Criteria_remarks__c,Bank_Guarantee_time__c,
-                        Out_of_deadline_SAAM__c,OSCAR_Deadline__c,Dossier_Reception_Date__c,OwnerId,
+                        Out_of_deadline_SAAM__c,OSCAR_Deadline__c,Dossier_Reception_Date__c,OwnerId,CNS_process__c ,
                         Owner.Phone,Owner.Email,Owner.Name,CreatedBy.Name,Owner.UserRole.Name,LastModifiedBy.Name,Contact_Name__c,Contact_Phone__c,Contact_Email__c,
                         createdDate,Date_Time_Closed__c,RecordTypeId,Account__r.IATA_ISO_Country__r.Region__c, Account__r.Sector__c,
                         Account__r.IATA_ISO_Country__r.Name,AMS_Online_Accreditation__c,Account__c,Account__r.Name,Process__c, Type_of_change__c from AMS_OSCAR__c where id = :idToSearch LIMIT 1];
@@ -203,7 +203,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
             return false;
             
         Id oscarId=  this.oscarObj.Id;
-        if (AMS_Utils.oscarProcessesWithAppointments.contains(this.oscarObj.Process__c) 
+        if (AMS_Utils.isProcessUsingAppointments(this.oscarObj)
                && 
             database.countQuery('select count() from AMS_Inspection__c where oscar__c = : oscarId') == 0 
             ) 
