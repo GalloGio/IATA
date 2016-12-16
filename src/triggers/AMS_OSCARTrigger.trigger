@@ -291,6 +291,19 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
                         Account acct = new Account(Id = updatedOscar.Account__c);
                         AMS_Utils.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {updatedOscar}, new List<Account> {acct}, true);
                     }
+                    if(updatedOscar.AMS_Correction_change_code__c == 'LET') {
+                        system.debug(LoggingLevel.ERROR,'applyChangeCodesWithDependencies() -> generate the change code');
+                        AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
+
+                        changeCode.name = 'LET';
+                        changeCode.reasonCode = '91';
+                        changeCode.memoText = '';
+                        changeCode.reasonDesc  = 'ACCREDITED–MEETS–STANDARDS';
+                        changeCode.status  = '9';
+
+                        Account acct = new Account(Id = updatedOscar.Account__c);
+                        AMS_Utils.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {updatedOscar}, new List<Account> {acct}, true);
+                    }
 
                 } catch (Exception ex) {
                     System.debug('Exception: ' + ex);

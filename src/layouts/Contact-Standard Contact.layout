@@ -766,6 +766,7 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Billing_Agreement_Name__c</fields>
         <fields>EF_Airline_Billing_Agreement__c</fields>
         <fields>Status__c</fields>
         <fields>EF_Role__c</fields>
@@ -773,6 +774,7 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Contract_Name__c</fields>
         <fields>EF_Contract__c</fields>
         <fields>EF_Status__c</fields>
         <fields>Role__c</fields>

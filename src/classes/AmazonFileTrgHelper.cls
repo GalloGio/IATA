@@ -205,7 +205,7 @@ public class AmazonFileTrgHelper {
 
             for (AmazonFile__c af : trgNewMap.values()) {
 
-                if (af.RecordTypeId == Schema.SObjectType.AmazonFile__c.getRecordTypeInfosByName().get('E&F File').getRecordTypeId()) {
+                if (af.RecordTypeId == AMS_Utils.getId('AmazonFile__c', 'EF_File')) {
 
                     efFiles.add(af);
                 }
