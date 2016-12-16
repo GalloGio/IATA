@@ -686,7 +686,7 @@ The length is the total of the original fields (Area, Country_Code, Legal_Name, 
         <fullName>IATA_Code__c</fullName>
         <externalId>true</externalId>
         <label>IATA Code</label>
-        <length>11</length>
+        <length>17</length>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>

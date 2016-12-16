@@ -21,7 +21,7 @@ private class EF_AccountTriggerHandlerTest {
                 Category__c = 'ANSP',
                 EF_type__c = 'E&F Client',
                 EF_Status__c = 'Active',
-                EF_SubStatus__c = 'Chapter 7',
+                EF_SubStatus__c = 'Chapter 11',
                 EF_Effective_Date__c = Date.today(),
                 Reason_for_creation__c = 'new client needed',
                 EF_Client_Services_Specialist__c = CSpecialist.Id
@@ -41,7 +41,7 @@ private class EF_AccountTriggerHandlerTest {
                 Category__c = 'ANSP',
                 EF_type__c = 'E&F Client',
                 EF_Status__c = 'Active',
-                EF_SubStatus__c = 'Chapter 7',
+                EF_SubStatus__c = 'Chapter 11',
                 EF_Effective_Date__c = Date.today(),
                 EF_SIS_Code__c = 'test',
                 EF_SIS_Designator__c = 'te',
@@ -58,7 +58,7 @@ private class EF_AccountTriggerHandlerTest {
                 Category__c = 'ANSP',
                 EF_type__c = 'E&F Operator',
                 EF_Status__c = 'Active',
-                EF_SubStatus__c = 'Chapter 7',
+                EF_SubStatus__c = 'Chapter 11',
                 EF_Effective_Date__c = Date.today(),
                 Reason_for_creation__c = 'new customer needed',
                 EF_Client_Services_Specialist__c = CSpecialist3.Id,
@@ -74,7 +74,7 @@ private class EF_AccountTriggerHandlerTest {
                 Category__c = 'ANSP',
                 EF_type__c = 'E&F Operator',
                 EF_Status__c = 'Active',
-                EF_SubStatus__c = 'Chapter 7',
+                EF_SubStatus__c = 'Chapter 11',
                 EF_Effective_Date__c = Date.today(),
                 Reason_for_creation__c = 'new customer needed',
                 EF_Client_Services_Specialist__c = CSpecialist.Id,
@@ -179,7 +179,7 @@ private class EF_AccountTriggerHandlerTest {
                 cc.Role__c='Operations';
                 cc.EF_Status__c='Active';
                 ccontactList.add(cc);                
-        	}
+            }
             
                try{//insert mliList;                   
                    insert ccontactList; 
@@ -225,16 +225,24 @@ private class EF_AccountTriggerHandlerTest {
                 
                 EF_Contact_Relationship__c rel1= new EF_Contact_Relationship__c();
                 rel1.Contact__c = customer1Contact.Id;
-                rel1.EF_Airline_Billing_Agreement__c = parentBillingAgreement.Id;
+                rel1.EF_Airline_Billing_Agreement__c = ba.Id;
                 rel1.Status__c = 'Active';
                 rel1.EF_Role__c ='Operations';
-            	contRel.add(rel1);
+                contRel.add(rel1);
                 
-        	}
+            }
             
-        	try{//insert mliListBA; 
+            try{
+                insert mliListBA;
                 //System.debug('#### materials for BA created? ' +mliListBA);
                 insert contRel;
+                
+                // once BA material line items have been created, we can activate the billing agreements
+                parentBillingAgreement.EF_Status__c = 'Active';
+                childBillingAgreement.EF_Status__c = 'Active';
+                
+                update billingAgreements;
+                
                }catch( Exception e){System.debug('#### what?? ' +e);}
      
            }
@@ -255,17 +263,12 @@ private class EF_AccountTriggerHandlerTest {
         for(Contract contract : contracts){
             System.assertEquals(contract.EF_Status__c, 'Inactive');
         }
-		
+        
         List<EF_Billing_Agreement__c> billingAgreements = [select Id, EF_Status__c from EF_Billing_Agreement__c];
         for(EF_Billing_Agreement__c billingAgreement : billingAgreements){
             System.assertEquals(billingAgreement.EF_Status__c, 'Inactive');
         }
-		
-        List<EF_Contact_Relationship__c> relationships = [select Id, Status__c from EF_Contact_Relationship__c];
-        for(EF_Contact_Relationship__c relationship : relationships){
-            System.assertEquals(relationship.Status__c, 'Inactive');
-        }
-
+        
         List<EF_Material_Line_Item__c> materialLineItems = [select Id, EF_Status__c from EF_Material_Line_Item__c ];
         for(EF_Material_Line_Item__c materialLineItem : materialLineItems){
             System.assertEquals(materialLineItem.EF_Status__c, 'Inactive');
@@ -281,7 +284,7 @@ private class EF_AccountTriggerHandlerTest {
         }
         
         Account child = [select Id, Name, EF_Status__c from Account where Name = 'Test Account Child Client'];
-        System.assertEquals(child.EF_Status__c, 'Inactive');	
+        System.assertEquals(child.EF_Status__c, 'Inactive');    
         
 
     }

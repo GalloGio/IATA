@@ -91,22 +91,25 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
             //ON INSERT
             //USED ON: HO,BR,TIDS,GSA,AHA,GSSA,MSO,SA
             oscar.Dossier_Reception_Date__c = Date.today();
-            
-			if(oscar.Process__c == AMS_Utils.new_HO || oscar.Process__c == AMS_Utils.new_BR_ABROAD || oscar.Process__c == AMS_Utils.new_BR || oscar.Process__c == AMS_Utils.new_SA){
-				oscar.Sanity_check_deadline__c = Date.today() + 30;
-				oscar.OSCAR_Deadline__c = Date.today() + 30;
-	        }else if(oscar.Process__c == AMS_Utils.new_TIDS){
-                oscar.Sanity_check_deadline__c = Date.today()+3;
-            	oscar.OSCAR_Deadline__c = Date.today() + 3;
-			}
-            else if(oscar.Process__c == AMS_Utils.new_GSA_BSP || oscar.Process__c == AMS_Utils.new_AHA_BSP || oscar.Process__c == AMS_Utils.new_GSSA){
-                oscar.Sanity_check_deadline__c = Date.today();
+
+            if(oscar.Process__c == AMS_Utils.new_HO || oscar.Process__c == AMS_Utils.new_BR_ABROAD || oscar.Process__c == AMS_Utils.new_BR || oscar.Process__c == AMS_Utils.new_SA){
+            	oscar.Sanity_check_deadline__c = Date.today() + 30;
+            	oscar.OSCAR_Deadline__c = Date.today() + 30;
             }
+            else if(oscar.Process__c == AMS_Utils.new_TIDS){
+                oscar.Sanity_check_deadline__c = Date.today()+3;
+                oscar.OSCAR_Deadline__c = Date.today() + 3;
+            }
+            else if(oscar.Process__c == AMS_Utils.new_GSA_BSP || oscar.Process__c == AMS_Utils.new_AHA_BSP || oscar.Process__c == AMS_Utils.new_GSSA)
+                oscar.Sanity_check_deadline__c = Date.today();
+
 
             if(oscar.Process__c == AMS_Utils.new_GSA_BSP || oscar.Process__c == AMS_Utils.new_AHA_BSP)
                 oscar.BSPLink_participation__c = true;
             //removed in issue AMS-1584
             //oscar.Sanity_check_deadline__c = Date.today() + 15;
+            if(oscar.Process__c == AMS_Utils.CERTIFICATION)
+                oscar.Sanity_check_deadline__c = Date.today()+90;
 
 
             oscars.add(oscar);
@@ -356,7 +359,14 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
             'Confirm_DGR_DGA__c'                        => 'DGR_DGA_confirmed__c',
             'Issue_rejection_notification_pack__c'      => 'Rejection_notification_sent__c',
             'Roll_back_account_data__c'                 => 'Account_data_rolled_back__c',
-            'Issue_billing_document__c'                 => 'Invoice_Requested__c'
+            'Issue_billing_document__c'                 => 'Invoice_Requested__c',
+            'Notify_Agent_Suspension__c'                => 'NOC_Requested__c',
+            'NOC_Received__c'                           => 'NOC_Received_Date__c',
+            'Suspend_in_BSPLINK_CASSLink__c'            => 'Suspended_in_BSPLINK_CASSLink__c',
+            'Release_FS_if_applicable__c'               => 'Financial_Security_released__c',
+            'Reactivate_Agent_in_BSPlink_CASSlink__c'   => 'Reactivated_Agent_in_BSPlink_CASSlink__c',
+            'Confirm_Payment_if_applicable__c'          => 'Proof_of_payment_received__c',
+            'Send_Confirmation__c'                      => 'Confirmation_Sent__c'
             };
            //Map to update Date related checkbox values
         for (String oscarDateFieldKey: oscarDateFieldsMap.keyset())
@@ -448,7 +458,45 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
 
         if (oldOSCAR.BSPLink_participation__c == true && updatedOscar.BSPLink_participation__c == false && oldOSCAR.Process__c == AMS_Utils.new_AHA_BSP)
             updatedOSCAR.Process__c = AMS_Utils.new_AHA;
+
+        if (oldOSCAR.Apply_Penalty_Fee__c == false && updatedOscar.Apply_Penalty_Fee__c == true) {
+
+            //late/absence of NOC - penalty fees can only be applied for some ToC (could add validation for dates)
+            Set<String> tocList = new Set<String>();
+            if(updatedOscar.Type_of_Change__c != null) tocList.addAll(updatedOscar.Type_of_change__c.split(';'));
+
+            System.debug(loggingLevel.Debug, '____ [trg AMS_OSCARTrigger - validateStep29] tocList - ' + tocList);
+            if(
+                !tocList.contains(AMS_Utils.OWNERSHIP_IATA)
+                && !tocList.contains(AMS_Utils.OWNERSHIP_NON_IATA)
+                && !tocList.contains(AMS_Utils.MAJ_SHAREHOLDING)
+                && !tocList.contains(AMS_Utils.NAME)
+                && !tocList.contains(AMS_Utils.LEGAL_STATUS)
+                && !tocList.contains(AMS_Utils.LOCATION)
+            ){
+                updatedOSCAR.addError('Penalty fees can only be applied for \n-'+AMS_Utils.OWNERSHIP_IATA+'\n-'+AMS_Utils.OWNERSHIP_NON_IATA+'\n-'+AMS_Utils.MAJ_SHAREHOLDING+'\n-'+AMS_Utils.NAME+'\n-'+AMS_Utils.LEGAL_STATUS+'\n-'+AMS_Utils.LOCATION);
+            }
+        }
+        if (oldOSCAR.Apply_Penalty_Fee__c == true && updatedOscar.Apply_Penalty_Fee__c == false) {
+            updatedOSCAR.addError('It\'s not possible to cancel the penalty fees that were applied');
+        }
+
+        if (oldOSCAR.Notify_Agent_Suspension__c == false && updatedOscar.Notify_Agent_Suspension__c == true) {
+            updatedOSCAR.NOC_Deadline__c = AMS_Utils.AddBusinessDays(System.today(), 5, 'Late NOC - '+updatedOSCAR.Region__c);
+        }
         
+        if (oldOSCAR.Notify_Agent_Termination__c == false && updatedOscar.Notify_Agent_Termination__c == true) {
+            updatedOSCAR.Termination_Date__c = AMS_Utils.lastDayOfMonth(System.today().addMonths(1));
+            System.debug(loggingLevel.Debug, '____ [trg AMS_OSCARTrigger - beforUpdate] updatedOSCAR.Termination_Date__c - ' + updatedOSCAR.Termination_Date__c);
+
+            if (AMS_Utils.IsWeekendDay(updatedOSCAR.Termination_Date__c, 'Late NOC - '+updatedOSCAR.Region__c)) {
+                updatedOSCAR.Termination_Date__c = AMS_Utils.AddBusinessDays(updatedOSCAR.Termination_Date__c, 1, 'Late NOC - '+updatedOSCAR.Region__c);
+            }
+        }
+
+        if (oldOSCAR.NOC_Received__c == false && updatedOscar.NOC_Received__c == true) {
+            updatedOSCAR.Termination_Date__c = null;
+        }
 
     }
 

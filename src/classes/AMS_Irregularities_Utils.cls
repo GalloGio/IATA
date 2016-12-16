@@ -40,7 +40,8 @@ public class AMS_Irregularities_Utils{
 				mapAccIRRperAgency.put(a, 0);
 			
 			if(!mapAccIRRperAgency.isEmpty()){
-			
+				//DTULLO UNCOMMENT FOR CNS, COMMENT/DELETE SIMILAR LINES AFTER
+				//Map<id, Account> mapAccCurrAccIRR = new Map<Id, Account>([select id, Accumulated_Irregularities__c, CNS_Agency__c from Account where id in :mapAccIRRperAgency.KeySet()]);
 				Map<id, Account> mapAccCurrAccIRR = new Map<Id, Account>([select id, Accumulated_Irregularities__c from Account where id in :mapAccIRRperAgency.KeySet()]);
 				
 				for(Agency_Applied_Change_code__c IRRS : [select ID, Account__c, Irregularities_Expired__c, Irregularities_Points__c, Operation__c, Created_Date_To_Show__c from Agency_Applied_Change_code__c 
@@ -55,6 +56,9 @@ public class AMS_Irregularities_Utils{
 				}
 				
 				for(id a:mapAccIRRperAgency.keyset()){
+					//DTULLO UNCOMMENT FOR CNS, COMMENT/DELETE SIMILAR LINES AFTER
+					//if(mapAccCurrAccIRR.get(a).CNS_Agency__c)	continue;
+					
 					decimal AccIrr = mapAccIRRperAgency.get(a);
 					decimal CurrAccIrr = mapAccCurrAccIRR.get(a).Accumulated_Irregularities__c == null ? 0 : mapAccCurrAccIRR.get(a).Accumulated_Irregularities__c;
 					

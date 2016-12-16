@@ -386,7 +386,7 @@ public class EF_BillingAgreementHandler
         
            for(String s: criticalFieldList){              
                 if(ba.get(s)!=oldBAMap.get(ba.Id).get(s)){
-                    emailBody = emailBody + '<tr><td border="1"><a href="'+baseUrl+'/'+ba.Id+'">'+ba.Billing_Agreement_Name__c+'</a></td><td border="1">'+s+'</td><td border="1">'+ba.get(s)+'</td><td border="1">'+oldBAMap.get(ba.Id).get(s)+'</td></tr>';
+                    emailBody = emailBody + '<tr><td border="1"><a href="'+baseUrl+'/'+ba.Id+'">'+ba.BillingAgreement_Name__c+'</a></td><td border="1">'+s+'</td><td border="1">'+ba.get(s)+'</td><td border="1">'+oldBAMap.get(ba.Id).get(s)+'</td></tr>';
                 }
            }
            emailBody = emailBody + '</table>';
@@ -437,5 +437,37 @@ public class EF_BillingAgreementHandler
             Messaging.sendEmail(mails);
         }            
               
+    }
+    
+    public static void deactivateBillingAgreement(List<EF_Billing_Agreement__c> agreementList){
+    	for(EF_Billing_Agreement__c ba : agreementList){
+    		ba.EF_Status__c = 'Inactive';
+    	}
+    }
+    
+	public static void checkIfBillingAgreementDeactivationRequired(Map<Id,EF_Billing_Agreement__c> agreementMap){
+		Set<Id> involvedBas = agreementMap.keySet();
+		
+		// Retrieve the list of Billing Agreement for which there is at least one active Material Line Item
+    	AggregateResult[] activableBAs = [Select EF_Relationship__c FROM EF_Material_Line_Item__c WHERE EF_Relationship__c IN :involvedBAs AND EF_Status__c = 'Active' GROUP BY EF_Relationship__c];
+
+		// For each involved Billing Agreement, check if it still has a Material Line Item
+		List<EF_Billing_Agreement__c> withoutItemBAs = new List<EF_Billing_Agreement__c>();
+		for(Id involvedBa : involvedBAs){
+			Boolean baHasItem = false;
+
+			for(AggregateResult activableBA : activableBAs){
+				if(activableBA.get('EF_Relationship__c') == involvedBa){
+					baHasItem = true;
+					break;
+				}
+			}
+			
+			if(!baHasItem){
+				withoutItemBAs.add(agreementMap.get(involvedBa));
+			}
+		}
+
+		deactivateBillingAgreement(withoutItemBAs);
     }
 }
