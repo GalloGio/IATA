@@ -95,7 +95,7 @@ private class AMS_MigrationToolHelperTest {
 
 		Boolean testvarhasError = cc.hasError;
 
-		cc = AMS_MigrationToolHelper.migratecases(cc,null);
+		cc = AMS_MigrationToolHelper.migratecases(cc);
 
 		if(cc.errorMessage != null)
 			System.assertEquals(null,cc.errorMessage);
@@ -182,7 +182,7 @@ private class AMS_MigrationToolHelperTest {
 
 		AMS_MigrationToolHelper.CaseContainer cc = new AMS_MigrationToolHelper.CaseContainer(c,false);
 
-		cc = AMS_MigrationToolHelper.migratecases(cc,null);
+		cc = AMS_MigrationToolHelper.migratecases(cc);
 
 		
 
@@ -202,7 +202,7 @@ private class AMS_MigrationToolHelperTest {
 
 		AMS_MigrationToolHelper.CaseContainer cc = new AMS_MigrationToolHelper.CaseContainer(c,true);
 
-		cc = AMS_MigrationToolHelper.migratecases(cc,null);
+		cc = AMS_MigrationToolHelper.migratecases(cc);
 
 		AMS_MigrationToolHelper.performValidations(c,'New HO');
 
