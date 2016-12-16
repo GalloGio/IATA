@@ -1,6 +1,9 @@
+<img src="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=01520000000ej3A&oid=00D2000000008TF&lastMod=1246550288000"/>
+<i>{!$Label.ISSP_Email_do_not_reply}</i><p />
+
 <p>Dear ##USERNAME##, </p>
 
-<p>This is to inform you that a Weekly Report is now available, please click <a href="##URL##">here</a> (link to the Portal Service) to review your criteria and generate the Bulletin.</p>
+<p>This is to inform you that a Weekly Report is now available, please click <a href="##URL##">here</a> to review your criteria and generate the Bulletin.</p>
 
 <p>Please, note that the User Guide can be downloaded from the <strong>AIRS/CAIRS Online Bulletin</strong> service on the on the Portal. </p>
 

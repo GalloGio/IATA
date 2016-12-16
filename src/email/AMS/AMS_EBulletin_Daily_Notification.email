@@ -1,8 +1,11 @@
+<img src="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=01520000000ej3A&oid=00D2000000008TF&lastMod=1246550288000"/>
+<i>{!$Label.ISSP_Email_do_not_reply}</i><p />
+
 <p>Dear ##USERNAME##, </p>
 
 <p>This is to inform you that occurrences were found based on your selected criteria.</p>
 
-<p>In order to generate a Daily Report containing these events/occurrences, please click <a href="##URL##">here</a> (link to the Portal Service).</p>
+<p>In order to generate a Daily Report containing these events, please click <a href="##URL##">here</a>.</p>
 
 <p>In case you already downloaded a report today, please note that you can select the option “Since last download today” to retrieve only the new events not yet downloaded. You can always generate the full Daily Bulletin by selecting “Full day”. </p>
 
