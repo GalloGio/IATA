@@ -4,42 +4,6 @@
     <description>Stores default setting values to communicate with MDM (SAP PI)</description>
     <enableFeeds>false</enableFeeds>
     <fields>
-        <fullName>AIMS1_CRON_EXP__c</fullName>
-        <defaultValue>&quot;0 0 * * * ?&quot;</defaultValue>
-        <description>Chrono setup for AIMS1 Countries</description>
-        <externalId>false</externalId>
-        <label>AIMS1_CRON_EXP</label>
-        <length>255</length>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>AIMS2_CRON_EXP__c</fullName>
-        <defaultValue>&quot;0 5 * * * ?&quot;</defaultValue>
-        <description>Chrono setup for AIMS2 Countries</description>
-        <externalId>false</externalId>
-        <label>AIMS2_CRON_EXP</label>
-        <length>255</length>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>AIMS3_CRON_EXP__c</fullName>
-        <defaultValue>&quot;0 10 * * * ?&quot;</defaultValue>
-        <description>Chrono setup for AIMS3 Countries</description>
-        <externalId>false</externalId>
-        <label>AIMS3_CRON_EXP</label>
-        <length>255</length>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
         <fullName>Active__c</fullName>
         <defaultValue>true</defaultValue>
         <description>enables or disables the integration&apos;s with SAP PI</description>
@@ -88,6 +52,66 @@
         <label>Encryption Key</label>
         <length>255</length>
         <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>REGION1_CRON_EXP__c</fullName>
+        <defaultValue>&quot;0 0 * * * ?&quot;</defaultValue>
+        <description>Chrono setup for a Region MIA</description>
+        <externalId>false</externalId>
+        <label>REGION1_CRON_EXP</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>REGION2_CRON_EXP__c</fullName>
+        <defaultValue>&quot;0 5 * * * ?&quot;</defaultValue>
+        <description>Chrono setup for a Region MAD</description>
+        <externalId>false</externalId>
+        <label>REGION2_CRON_EXP</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>REGION3_CRON_EXP__c</fullName>
+        <defaultValue>&quot;0 10 * * * ?&quot;</defaultValue>
+        <description>Chrono setup for a Region AMM</description>
+        <externalId>false</externalId>
+        <label>REGION3_CRON_EXP</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>REGION4_CRON_EXP__c</fullName>
+        <defaultValue>&quot;0 0 * * * ?&quot;</defaultValue>
+        <description>Chrono setup for a Region SIN</description>
+        <externalId>false</externalId>
+        <label>REGION4_CRON_EXP</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>REGION5_CRON_EXP__c</fullName>
+        <defaultValue>&quot;0 0 * * * ?&quot;</defaultValue>
+        <description>Chrono setup for a Region BJS</description>
+        <externalId>false</externalId>
+        <label>REGION5_CRON_EXP</label>
+        <length>255</length>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
