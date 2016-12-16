@@ -1434,7 +1434,9 @@
     <fields>
         <fullName>Current_VAT_Number__c</fullName>
         <externalId>false</externalId>
-        <formula>SAAM_Case__r.Account_Concerned__r.VAT_Number__c</formula>
+        <formula>IF(ISBLANK(SAAM_Case__r.Account_Concerned__c), 
+HO_Account__r.VAT_Number__c,
+SAAM_Case__r.Account_Concerned__r.VAT_Number__c)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Current VAT Number</label>
         <required>false</required>
@@ -3621,7 +3623,9 @@ $Label.ISSP_AMS_LS_Sole_Owner)</formula>
     <fields>
         <fullName>Previous_Email__c</fullName>
         <externalId>false</externalId>
-        <formula>SAAM_Case__r.Account_Concerned__r.Email__c</formula>
+        <formula>IF(ISBLANK(SAAM_Case__r.Account_Concerned__c), 
+HO_Account__r.Email__c,
+SAAM_Case__r.Account_Concerned__r.Email__c)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Current Office Email</label>
         <required>false</required>
@@ -3669,7 +3673,9 @@ $Label.ISSP_AMS_LS_Sole_Owner)</formula>
     <fields>
         <fullName>Previous_Mobile__c</fullName>
         <externalId>false</externalId>
-        <formula>SAAM_Case__r.Account_Concerned__r.Mobile__c</formula>
+        <formula>IF(ISBLANK(SAAM_Case__r.Account_Concerned__c), 
+HO_Account__r.Mobile__c,
+SAAM_Case__r.Account_Concerned__r.Mobile__c)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Current Mobile</label>
         <required>false</required>
@@ -3693,7 +3699,9 @@ $Label.ISSP_AMS_LS_Sole_Owner)</formula>
     <fields>
         <fullName>Previous_Phone__c</fullName>
         <externalId>false</externalId>
-        <formula>SAAM_Case__r.Account_Concerned__r.Phone</formula>
+        <formula>IF(ISBLANK(SAAM_Case__r.Account_Concerned__c), 
+HO_Account__r.Phone,
+SAAM_Case__r.Account_Concerned__r.Phone)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Current Office Phone</label>
         <required>false</required>
@@ -3705,7 +3713,9 @@ $Label.ISSP_AMS_LS_Sole_Owner)</formula>
     <fields>
         <fullName>Previous_Postal_code__c</fullName>
         <externalId>false</externalId>
-        <formula>SAAM_Case__r.Account_Concerned__r.BillingPostalCode</formula>
+        <formula>IF(ISBLANK(SAAM_Case__r.Account_Concerned__c), 
+HO_Account__r.BillingPostalCode,
+SAAM_Case__r.Account_Concerned__r.BillingPostalCode)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Current Postal code</label>
         <required>false</required>
@@ -3717,7 +3727,9 @@ $Label.ISSP_AMS_LS_Sole_Owner)</formula>
     <fields>
         <fullName>Previous_State_Province__c</fullName>
         <externalId>false</externalId>
-        <formula>SAAM_Case__r.Account_Concerned__r.BillingState</formula>
+        <formula>IF(ISBLANK(SAAM_Case__r.Account_Concerned__c), 
+HO_Account__r.BillingState,
+SAAM_Case__r.Account_Concerned__r.BillingState)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Current State/Province</label>
         <required>false</required>
@@ -3729,7 +3741,9 @@ $Label.ISSP_AMS_LS_Sole_Owner)</formula>
     <fields>
         <fullName>Previous_Street_Name_Number__c</fullName>
         <externalId>false</externalId>
-        <formula>SAAM_Case__r.Account_Concerned__r.BillingStreet</formula>
+        <formula>IF(ISBLANK(SAAM_Case__r.Account_Concerned__c),
+HO_Account__r.BillingStreet,
+SAAM_Case__r.Account_Concerned__r.BillingStreet)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Current Street Name &amp; Number</label>
         <required>false</required>
@@ -3741,7 +3755,9 @@ $Label.ISSP_AMS_LS_Sole_Owner)</formula>
     <fields>
         <fullName>Previous_Trade_Name__c</fullName>
         <externalId>false</externalId>
-        <formula>SAAM_Case__r.Account_Concerned__r.TradeName__c</formula>
+        <formula>IF(ISBLANK(SAAM_Case__r.Account_Concerned__c), 
+HO_Account__r.TradeName__c,
+SAAM_Case__r.Account_Concerned__r.TradeName__c)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Current Trade Name</label>
         <required>false</required>
