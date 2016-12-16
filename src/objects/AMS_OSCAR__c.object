@@ -1571,6 +1571,18 @@ IF(Bank_Guarantee_received__c - Bank_Guarantee_requested__c =6, TEXT(4), TEXT((B
         <type>Date</type>
     </fields>
     <fields>
+        <fullName>Emails_reference_Id__c</fullName>
+        <externalId>false</externalId>
+        <label>Emails reference Id</label>
+        <length>50</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Fees_refund_requested__c</fullName>
         <externalId>false</externalId>
         <label>Fees refund requested</label>
@@ -2301,6 +2313,18 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Oscar_Communication_Case_Id__c</fullName>
+        <externalId>false</externalId>
+        <label>Oscar Communication Case Id</label>
+        <length>100</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Out_of_deadline_SAAM__c</fullName>
@@ -3905,7 +3929,7 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Closed_Not Accepted</fullName>
+                <fullName>Closed_ Not Accepted</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -4479,6 +4503,60 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
         <filterScope>Queue</filterScope>
         <label>FDS Agency Managers</label>
         <queue>FDS_Agency_Managers</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>RecycleBinAfricaMiddleEast_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Recycle Bin Africa &amp; Middle East</label>
+        <queue>RecycleBinAfricaMiddleEast</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>RecycleBinAmericas_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Recycle Bin Americas</label>
+        <queue>RecycleBinAmericas</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>RecycleBinAsiaPacific_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Recycle Bin Asia &amp; Pacific</label>
+        <queue>RecycleBinAsiaPacific</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>RecycleBinEurope_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Recycle Bin Europe</label>
+        <queue>RecycleBinEurope</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>RecycleBinOperationalManagementHO_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Recycle Bin Operational Management HO</label>
+        <queue>RecycleBinOperationalManagementHO</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>RecyclebinNorthAsia_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Recycle bin North Asia</label>
+        <queue>RecyclebinNorthAsia</queue>
         <sharedTo>
             <allInternalUsers></allInternalUsers>
         </sharedTo>
@@ -6190,7 +6268,7 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
                 <default>false</default>
             </values>
             <values>
-                <fullName>Closed_Not Accepted</fullName>
+                <fullName>Closed_ Not Accepted</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -8026,7 +8104,7 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
                 <default>false</default>
             </values>
             <values>
-                <fullName>Closed_Not Accepted</fullName>
+                <fullName>Closed_ Not Accepted</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -9778,7 +9856,7 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
                 <default>false</default>
             </values>
             <values>
-                <fullName>Closed_Not Accepted</fullName>
+                <fullName>Closed_ Not Accepted</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -11497,7 +11575,7 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
                 <default>false</default>
             </values>
             <values>
-                <fullName>Closed_Not Accepted</fullName>
+                <fullName>Closed_ Not Accepted</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -13234,7 +13312,7 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
                 <default>false</default>
             </values>
             <values>
-                <fullName>Closed_Not Accepted</fullName>
+                <fullName>Closed_ Not Accepted</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -14935,7 +15013,7 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
                 <default>false</default>
             </values>
             <values>
-                <fullName>Closed_Not Accepted</fullName>
+                <fullName>Closed_ Not Accepted</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -15070,16 +15148,18 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
     </validationRules>
     <validationRules>
         <fullName>Form_Date_Courier_Cargo</fullName>
-        <active>true</active>
-        <errorConditionFormula>NOT(ISBLANK(Form_Effective_Date__c))
+        <active>false</active>
+        <errorConditionFormula>RecordType.DeveloperName = &quot;VOLUNTARY_RELINQUISHMENT&quot;
+&amp;&amp; NOT(ISBLANK(Form_Effective_Date__c))
 &amp;&amp; ISPICKVAL(Account__r.Location_Class__c, &apos;C&apos;)
 &amp;&amp; (Form_Effective_Date__c - Dossier_Reception_Date__c &lt; 90)</errorConditionFormula>
         <errorMessage>Form Effective Date must be at least 90 days from the Dossier Reception Date</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Form_Date_Courier_Cass_Associates</fullName>
-        <active>true</active>
-        <errorConditionFormula>NOT(ISBLANK(Form_Effective_Date__c))
+        <active>false</active>
+        <errorConditionFormula>RecordType.DeveloperName = &quot;VOLUNTARY_RELINQUISHMENT&quot;
+&amp;&amp; NOT(ISBLANK(Form_Effective_Date__c))
 &amp;&amp; OR(ISPICKVAL(Account__r.Category__c, &apos;Courier&apos;), ISPICKVAL(Account__r.Category__c, &apos;Cass Associate&apos;))
 &amp;&amp; (Form_Effective_Date__c - Dossier_Reception_Date__c &lt; 30)</errorConditionFormula>
         <errorMessage>Form Effective Date must be at least 30 days from the Dossier Reception Date</errorMessage>
