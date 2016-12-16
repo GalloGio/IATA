@@ -31,7 +31,7 @@ public with sharing class AMS_MigrationToolHelper {
     }
 
 
-	public static CaseContainer migratecases(CaseContainer cont){
+	public static CaseContainer migratecases(CaseContainer cont, String processType){
 
 		Savepoint sp = null;
 
@@ -42,7 +42,7 @@ public with sharing class AMS_MigrationToolHelper {
 			if(cont.fromPortal)
 					cont = processFromPortal(cont); //call portal method
 			else{
-					cont = processNotFromPortalNew(cont);
+					cont = processNotFromPortalNew(cont,processType);
 			}
 
 		} catch(Exception e) {
@@ -601,11 +601,11 @@ public with sharing class AMS_MigrationToolHelper {
 	}
 
 
-	private static CaseContainer processNotFromPortalNew(CaseContainer cont){
+	private static CaseContainer processNotFromPortalNew(CaseContainer cont, String processTypeInput){
 
 		Case caseToProcess = cont.c;
 
-		String processType = processTypeMap.get(caseToProcess.Reason1__c);
+		String processType = processTypeInput == null ? processTypeMap.get(caseToProcess.Reason1__c) : processTypeInput;
 
 		if(processType == null){
 
