@@ -77,7 +77,7 @@ global class AMS_EBulletinBatch implements Database.Batchable<sObject> {
 				String filtersPublished = 'and Published_on_EBulletin__c = TRUE ';
 				String filtersCountries = 'and Account__r.IATA_ISO_Country__r.ISO_Code__c IN :countriesToRecover ';
 				String filtersLC 		= 'and Account__r.Location_Class__c IN :programsToRecover ';
-				String filtersDates		= 'and Created_Date_To_Show__c > ' + filters.fromCCDate.format('yyyy-MM-dd\'T\'hh:mm:ss\'Z\'') + ' and Created_Date_To_Show__c < ' + filters.toCCDate.format('yyyy-MM-dd\'T\'hh:mm:ss\'Z\'');
+				String filtersDates		= 'and Created_Date_To_Show__c > ' + (filters.fromCCDate != null ? filters.fromCCDate.format('yyyy-MM-dd\'T\'hh:mm:ss\'Z\'') : filters.toCCDate.format('yyyy-MM-dd\'T\'hh:mm:ss\'Z\'')) + ' and Created_Date_To_Show__c < ' + filters.toCCDate.format('yyyy-MM-dd\'T\'hh:mm:ss\'Z\'');
 				
 				count = Database.countQuery(baseq + filtersCC + filtersPublished + filtersCountries + filtersLC + filtersDates) ;
 
