@@ -141,6 +141,19 @@ private class AMS_EBulletinReport_Test {
 		
 		insert aaccSet;
 
+
+
+		List<Agency_Applied_Change_code__c> aaCCToEBulletin = new List<Agency_Applied_Change_code__c>();
+
+		for(Agency_Applied_Change_code__c aacc : [select To_Publish_in_e_Bulletin__c from Agency_Applied_Change_code__c])
+		{
+			aacc.To_Publish_in_e_Bulletin__c = true;
+			aaCCToEBulletin.add(aacc);
+			
+		}
+
+		update aaCCToEBulletin;
+
 		/**
 		 4. AMS EBulletin Profiles
 		 */
