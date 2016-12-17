@@ -549,11 +549,14 @@
 
      @isTest static void changeCodeGenOnApprovalDisapproval() {
         
-        Test.startTest();
+        
         Account a = [SELECT id,Status__c from Account where Name = 'Test1 Agency' LIMIT 1];
 
         ID newRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
 
+        Test.startTest();
+        
+        Integer c = 0;
 
         for (AMS_OSCAR__c oscarT : [SELECT id, STEP1__c, STEP10__c, STEP11__c, STEP12__c, STEP13__c, STEP14__c, STEP15__c, STEP16__c, STEP17__c, STEP18__c, STEP19__c, STEP2__c,STEP20__c,
             STEP3__c, STEP4__c, STEP5__c, STEP6__c, STEP7__c, STEP8__c, STEP9__c, Status__c,OwnerId,RPM_Approval__c from AMS_OSCAR__c limit 2])
@@ -575,6 +578,8 @@
 
             update oscarT;
 
+            if( c== 0){           
+            
             oscarT.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
             update oscarT;
 
@@ -583,6 +588,9 @@
             System.assertEquals(AMS_Utils.PASSED,oscarT.STEP2__c);
             //TODO ASSERT: assert change code fin created
 
+            }
+            else{
+
             oscarT.RPM_Approval__c = AMS_Utils.AUTH_DISAPPROVAL;
             update oscarT;
 
@@ -590,6 +598,10 @@
 
             System.assertEquals(AMS_Utils.FAILED,oscarT.STEP2__c);
             //TODO ASSERT: assert change code dis created
+                
+            }
+            
+            c++;
         }
 
         Test.stopTest();
