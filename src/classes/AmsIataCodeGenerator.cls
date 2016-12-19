@@ -270,22 +270,27 @@ global class AmsIataCodeGenerator{
                         if(rangesToSearch.size() == 1)
                         {
                             accountQuery = 'select IATACode__c from Account where IATACode__c like \'' +rangesToSearch.get(0) +'%\' group by IATACode__c order by IATACode__c';
-                            accreditationFormQuery = 'select IATACode__c from AMS_Pax_Accreditation_Form__c where IATACode__c like \'' +rangesToSearch.get(0) +'%\' group by IATACode__c order by IATACode__c';
+                            accreditationFormQuery = 'select IATACode__c from AMS_Pax_Accreditation_Form__c where IATACode__c like \'' +rangesToSearch.get(0) +'%\' and (NOT SAAM_Case__r.OSCAR__r.Account__r.IATACode__c  like \'P%\') group by IATACode__c order by IATACode__c';
                         }
                         else if(rangesToSearch.size() > 1)
                         {
                             String queryPart1 = 'select IATACode__c from ';
-                            String queryPart2 = ' where (';
+                            String queryPart2Account = ' where (';
+                            String queryPart2PAX = ' where (';
                             for(String rangeToSearch : rangesToSearch)
                             {
-                                queryPart2 = queryPart2 + 'IATACode__c like \'' + rangeToSearch + '%\' or ';
+                                queryPart2Account = queryPart2Account + 'IATACode__c like \'' + rangeToSearch + '%\' or ';
+                                queryPart2PAX = queryPart2PAX + 'IATACode__c like \'' + rangeToSearch + '%\' or ';
                             }
                             
-                            queryPart2 = queryPart2.subString(0, queryPart2.length()-4);
-                            queryPart2 = queryPart2 + ') group by IATACode__c order by IATACode__c';
+                            queryPart2Account = queryPart2Account.subString(0, queryPart2Account.length()-4);
+                            queryPart2Account = queryPart2Account + '  ) group by IATACode__c order by IATACode__c';
                             
-                            accountQuery = queryPart1 + 'Account' + queryPart2;
-                            accreditationFormQuery = queryPart1 + 'AMS_Pax_Accreditation_Form__c' + queryPart2;
+                            queryPart2PAX = queryPart2PAX.subString(0, queryPart2PAX.length()-4);
+                            queryPart2PAX = queryPart2PAX + '  ) and (NOT SAAM_Case__r.OSCAR__r.Account__r.IATACode__c  like \'P%\') group by IATACode__c order by IATACode__c';
+
+                            accountQuery = queryPart1 + 'Account' + queryPart2Account;
+                            accreditationFormQuery = queryPart1 + 'AMS_Pax_Accreditation_Form__c' + queryPart2PAX;
                         }
                         
                         System.debug('*********************** Account query: '+accountQuery);
@@ -609,6 +614,6 @@ global class AmsIataCodeGenerator{
     }
 
     private static boolean isIATACodeGeneratedUnique(String iataCode){
-        return [SELECT ID from Account where IATACode__c =:iataCode LIMIT 1].isEmpty() && [SELECT ID from AMS_Pax_Accreditation_Form__c where IATACode__c =:iataCode LIMIT 1].isEmpty();
+        return [SELECT ID from Account where IATACode__c =:iataCode LIMIT 1].isEmpty() && [SELECT ID from AMS_Pax_Accreditation_Form__c where IATACode__c =:iataCode and (NOT SAAM_Case__r.OSCAR__r.Account__r.IATACode__c like 'P%') LIMIT 1].isEmpty();
     }
 }

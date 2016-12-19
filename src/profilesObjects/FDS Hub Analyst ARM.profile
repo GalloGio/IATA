@@ -646,7 +646,7 @@
 <fieldPermissions><editable>true</editable><field>AMS_OSCAR__c.Documentation_remarks__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>AMS_OSCAR__c.Dossier_Reception_Date__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>AMS_OSCAR__c.Dossier_Validation__c</field><readable>true</readable></fieldPermissions>
-<fieldPermissions><editable>false</editable><field>AMS_OSCAR__c.Emails_reference_Id__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>AMS_OSCAR__c.Emails_reference_Id__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>AMS_OSCAR__c.Fees_refund_requested__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>AMS_OSCAR__c.Fees_refunds_requested_withdrawal__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>AMS_OSCAR__c.Finalization_checklist__c</field><readable>true</readable></fieldPermissions>
@@ -702,7 +702,7 @@
 <fieldPermissions><editable>true</editable><field>AMS_OSCAR__c.OSCAR_Deadline__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>AMS_OSCAR__c.Off_site_storage__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>AMS_OSCAR__c.Operational_Systems_Updated__c</field><readable>true</readable></fieldPermissions>
-<fieldPermissions><editable>false</editable><field>AMS_OSCAR__c.Oscar_Communication_Case_Id__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>AMS_OSCAR__c.Oscar_Communication_Case_Id__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AMS_OSCAR__c.Out_of_deadline_SAAM__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>AMS_OSCAR__c.PSAA_EACP_Agreement_received__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>AMS_OSCAR__c.PSAA_signed_copy_sent__c</field><readable>true</readable></fieldPermissions>
@@ -7152,7 +7152,7 @@
 <recordTypeVisibilities><default>false</default><recordType>AMS_Facility__c.Office</recordType><visible>false</visible></recordTypeVisibilities>
 <recordTypeVisibilities><default>false</default><recordType>AMS_Facility__c.Warehouse</recordType><visible>false</visible></recordTypeVisibilities>
 <recordTypeVisibilities><default>false</default><recordType>AMS_OSCAR__c.CERTIFICATE</recordType><visible>true</visible></recordTypeVisibilities>
-<recordTypeVisibilities><default>false</default><recordType>AMS_OSCAR__c.CERTIFICATION</recordType><visible>false</visible></recordTypeVisibilities>
+<recordTypeVisibilities><default>false</default><recordType>AMS_OSCAR__c.CERTIFICATION</recordType><visible>true</visible></recordTypeVisibilities>
 <recordTypeVisibilities><default>true</default><personAccountDefault>true</personAccountDefault><recordType>AMS_OSCAR__c.CHANGE</recordType><visible>true</visible></recordTypeVisibilities>
 <recordTypeVisibilities><default>false</default><recordType>AMS_OSCAR__c.CORRECTION</recordType><visible>true</visible></recordTypeVisibilities>
 <recordTypeVisibilities><default>false</default><recordType>AMS_OSCAR__c.NEW</recordType><visible>true</visible></recordTypeVisibilities>

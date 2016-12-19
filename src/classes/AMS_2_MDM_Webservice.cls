@@ -104,7 +104,7 @@ global class AMS_2_MDM_Webservice {
                     STD_Code__c,VAT_Number__c,
                     TradeName__c,Unique_ID__c,Verification_Date__c,IATA_ISO_Country__c, IATA_ISO_Country__r.Name,
                     Short_Name__c,Sector__c,AIMS_ID__c,BSP_CASS_Code__c,
-                    Email__c,TTY__c,Website,
+                    Email__c,TTY__c,Website,Accreditation_date__c,
                     Abbreviated_name__c, Abbreviated_address__c,Status__c,
                     Top_Parent__c, Top_Parent__r.IATACode__c
                     FROM Account where id in :ids
@@ -323,7 +323,7 @@ global class AMS_2_MDM_Webservice {
                     STD_Code__c,VAT_Number__c,
                     TradeName__c,Unique_ID__c,Verification_Date__c,IATA_ISO_Country__c, IATA_ISO_Country__r.Name,
                     Short_Name__c,Sector__c,AIMS_ID__c,BSP_CASS_Code__c,
-                    Email__c,TTY__c,Website,
+                    Email__c,TTY__c,Website,Accreditation_date__c,
                     IATA_ISO_Country__r.Region__c,
                     Abbreviated_name__c, Abbreviated_address__c,Status__c,
                     Top_Parent__c, Top_Parent__r.IATACode__c

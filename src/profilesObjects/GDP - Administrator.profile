@@ -6001,7 +6001,7 @@
 <fieldPermissions><editable>false</editable><field>Product2.IATA_ORG_Group__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Product2.IEC_Cart_Option__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Product2.IEC_OrderBy__c</field><readable>false</readable></fieldPermissions>
-<fieldPermissions><editable>false</editable><field>Product2.IEC_Override_Profit_Center__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>true</editable><field>Product2.IEC_Override_Profit_Center__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Product2.IEC_Page_Areas_of_Activity__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Product2.IEC_Page_Content_Types__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Product2.IEC_Parent_Product__c</field><readable>false</readable></fieldPermissions>

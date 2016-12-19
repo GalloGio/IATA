@@ -116,7 +116,7 @@ public without sharing class Order_Sel extends Selector{
     {
         String qType = 'Quote';
         Set<String> qStatus2Clean = new Set<String>{'New'};
-        Date threeMonthsAgo = Date.today().addMonths(-3);
+        Date threeMonthsAgo = Date.today().addMonths(-1 * Utility.getIntegerSetting('Quote Cleanup Window'));
 
         String query = String.format(
             'SELECT {0}  ' + 
@@ -377,7 +377,8 @@ public without sharing class Order_Sel extends Selector{
                                       , Account.Payment_Term__c, Account.Sales_Office__c, SoldToAccount_Partner_Number__c
                                       , BillTo_Location__r.Street__c, BillTo_Location__r.City__c, BillTo_Location__r.ZipCode__c, BillTo_Location__r.ISO_State_Code_SAP__c
                                       , BillTo_Location__r.ISO_Country_Code__c, BillTo_Location__r.IEC_Valid_SAP_State__c, BillTo_Location__r.VAT_Number__c
-                                      , (select Id, Product__c, Quantity, UnitPrice, Effective_End_Date__c, SAP_Product_Number__c
+                                      , (select Id, Product__c, Quantity, UnitPrice, Setup_Fee__c, SubTotal__c, Discount__c, Effective_End_Date__c, SAP_Product_Number__c
+                                              , IEC_Override_Profit_Center__c, IEC_Contract_Start_Date__c, IEC_Contract_End_Date__c
                                          from OrderItems
                                          where Use_Contract_when_ordered__c = true and SAP_Contract_Number__c = null and Total__c != null and Total__c != 0
                                          order by PricebookEntry.Product2.SAP_Media_Code__c, PricebookEntry.Product2.SAP_SalesOrg__c, PricebookEntry.Product2.SAP_Sales_Channel_Code__c
@@ -750,7 +751,7 @@ public without sharing class Order_Sel extends Selector{
         String query = String.format(
             'SELECT {0}' + 
             ', (select Product_Name__c, Product_Number__c, Quantity, UnitPrice, Freight_Charge__c, Tax__c, Total__c, ' +
-            'Carrier_Tracking_Number__c,Carrier_Tracking_URL__c, Coupon__c, Invoice_Number__c, Discount__c ' + 
+            'Carrier_Tracking_Number__c,Carrier_Tracking_URL__c, Coupon__c, Invoice_Number__c, Discount__c, Setup_Fee__c ' + 
             ' from Orderitems) ' + 
             'FROM {1} ' +  
             'WHERE (Type = :type OR (Type=:cart_type AND IEC_Order_Previous_Type__c=:type AND Status=:new_status)) AND BillToContactId = :idContact ORDER BY EffectiveDate DESC, OrderNumber DESC ' , 

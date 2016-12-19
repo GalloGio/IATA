@@ -2427,7 +2427,7 @@
 <fieldPermissions><editable>false</editable><field>Case.CS_Rep_Acc_DEF__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Case.CS_Rep_Acc_IRR_DEF__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Case.CS_Rep_Acc_REI__c</field><readable>true</readable></fieldPermissions>
-<fieldPermissions><editable>false</editable><field>Case.CS_Rep_Contact_Customer__c</field><readable>true</readable></fieldPermissions>
+<fieldPermissions><editable>true</editable><field>Case.CS_Rep_Contact_Customer__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Case.CS_Rep_Reminder_Customer__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Case.CS_informed__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Case.CS_pending_actions__c</field><readable>true</readable></fieldPermissions>

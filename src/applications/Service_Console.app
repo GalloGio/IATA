@@ -4,6 +4,7 @@
         <alignment>right</alignment>
         <customApplicationComponent>Console.BuiltInComponent.mostRecentlyUsed</customApplicationComponent>
         <customApplicationComponent>Console.BuiltInComponent.knowledgeOne</customApplicationComponent>
+        <customApplicationComponent>LiveAgentConsoleComponent</customApplicationComponent>
     </customApplicationComponents>
     <defaultLandingTab>standard-home</defaultLandingTab>
     <description>Service Console for FDS&apos;s customer service representatives</description>
@@ -177,6 +178,15 @@
         <width>25</width>
     </listPlacement>
     <listRefreshMethod>refreshListRows</listRefreshMethod>
+    <liveAgentConfig>
+        <enableLiveChat>true</enableLiveChat>
+        <openNewAccountSubtab>false</openNewAccountSubtab>
+        <openNewCaseSubtab>false</openNewCaseSubtab>
+        <openNewContactSubtab>false</openNewContactSubtab>
+        <openNewLeadSubtab>false</openNewLeadSubtab>
+        <openNewVFPageSubtab>false</openNewVFPageSubtab>
+        <showKnowledgeArticles>false</showKnowledgeArticles>
+    </liveAgentConfig>
     <logo>Customer_Portal_Files/IATA_Logo_Cust_Portal.gif</logo>
     <primaryTabColor>#3B3D3D</primaryTabColor>
     <pushNotifications>

@@ -115,7 +115,6 @@ private void onAfterUpdate() {
 
     //Create PriceBookEntry for Phase 1 and 2 if not exist
     Product_Svc.createPriceBookEntry(newMap, oldMap, false);
-   
 }
 
 public static Map<Id, Product2> getProductsToSend(Map<Id, Product2> productsBefore, Map<Id, Product2> productsAfter)

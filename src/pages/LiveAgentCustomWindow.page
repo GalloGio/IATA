@@ -1,0 +1,218 @@
+<apex:page showHeader="false" controller="LiveAgentCustomWindowController" language="{!language}">
+
+    <link rel="shortcut icon" href="{!$Resource.IATAlogo}" type="image/x-icon"/>
+
+    <script   src="https://code.jquery.com/jquery-2.2.4.min.js"/>
+
+    <script>
+
+        $j = jQuery.noConflict();
+
+        $j('html, body').css({
+            'overflow-x': 'hidden',
+        });
+
+
+        $j(function(){
+          $j("#liveAgentChatInput").attr("placeholder","{!$Label.LiveAgentPlaceHolder}");
+
+        })
+
+        var interval;
+
+        $j(function() {
+            $j("span.liveAgentQueuePosition").hide();
+            interval = setInterval(function () {
+                setQueueText();
+            }, 1000);
+        })
+
+        var $queuePos = -1;
+        var $multiplier = parseInt("{!$setup.LiveAgentMinutesPerUserInQueue__c.Minutes__c}");
+
+        function setQueueText() {
+            // var $currentPos = parseInt($j("span.liveAgentQueuePosition").html());
+            var $currentPos = liveagent.chasitor.getQueuePosition();
+            var $waitTime = $currentPos*$multiplier;
+
+            var $chatStarted = $j("div#liveAgentChatLogText").has("span").length;
+
+            if($currentPos != $queuePos){
+                if($currentPos > 0){
+                    $j("div.waitingMessage").html("{!JSENCODE($Label.LiveAgentWaitingMessageChat)}".replace('<queuenumber>',$currentPos).replace('<queueminutes>',$waitTime));
+                }else if($currentPos != null){
+                    $j("div.waitingMessage").html('{!$Label.LiveAgentWaitingMessageReady}');
+                }
+
+
+                $queuePos = $currentPos;
+            }
+
+            if($chatStarted > 0){
+                clearInterval(interval);
+                $j("div.waitingMessage").hide();
+                $j("div.footer").html('{!$Label.LiveAgentFootNote}');
+            }
+        }
+
+    </script>
+
+    <style>
+        .liveAgentEndButton {
+            border: none;
+            color: white;
+            background: #d9534f;
+            margin: 5px;
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 50px;
+            height: 45px;
+        }
+        #liveAgentSaveButton {
+            border: none;
+            color: white;
+            background: #5cb85c;
+            margin: 5px;
+            position: absolute;
+            right: 55px;
+            top: 0;
+            width: 50px;
+            height: 45px;
+        }
+        .liveAgentCancelButton{
+            border: none;
+            color: white;
+            background: #d9534f;
+            margin: 5px;
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 50px;
+            height: 45px;
+        }
+
+        .liveAgentFileCancelButton{
+            border: none;
+            color: white;
+            background: #d9534f;
+            margin: 5px;
+            width: 50px;
+        }
+
+        .liveAgentFileSendButton{
+            border: none;
+            color: white;
+            background: rgb(66, 139, 202);
+            margin: 5px;
+            width: 50px;
+        }
+
+        .liveAgentSendButton {
+            border: none;
+            color: white;
+            background: rgb(66, 139, 202);
+            margin: 5px;
+            width: 50px;
+        }
+
+        .liveAgentChatInput {
+            width: calc(100% - 22px);
+            border-color: #337ab7;
+            border-radius: 4px;
+            margin: 5px;
+            padding: 6px;
+            font-size: 13px;
+        }
+
+        #liveAgentChatLogText {
+          font-size: 13px;
+        }
+
+        .waitingMessage{
+            height: 100%;
+            width:  100%;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        #liveAgentChatLog {
+            border-color: #337ab7;
+            border-radius: 4px;
+            margin: 5px;
+            width: calc(100% - 22px);
+            padding: 6px;
+            height: 240px;
+						overflow-y: auto;
+        }
+
+        #fileDragLabel {
+            border: 1px solid #337ab7;
+            border-radius: 4px;
+            margin:5px;
+            height: 50px;
+            display: inline-block;
+            width: calc(100% - 20px);
+            padding: 5px;
+        }
+
+        #fileDragLink {
+            margin:5px;
+        }
+
+        #fileDropLabel{
+            border: 1px solid #337ab7;
+            border-radius: 4px;
+            margin:5px;
+            height: 50px;
+            display: inline-block;
+            width: calc(100% - 20px);
+            padding: 5px;
+        }
+
+        #fileNameLabel{
+            margin:5px;
+        }
+
+        .iataLogo {
+            margin: 5px;
+        }
+
+        .liveAgentAlert {
+            margin: 5px;
+        }
+
+        .liveAgentAlert button{
+            border: none;
+            color: white;
+            background: #d9534f;
+            margin: 5px;
+            width: 50px;
+        }
+        .footer {
+            position: absolute;
+            bottom: 0px;
+            margin-bottom: 3px;
+            margin-left: 8px;
+            margin-right: 8px;
+            font-size: 9px;
+        }
+
+    </style>
+    <apex:image url="{!$Resource.IATAlogo}" width="65" height="40" styleClass="iataLogo"/>
+    <liveAgent:clientChat >
+				<liveAgent:clientChatSaveButton />
+        <liveAgent:clientChatEndButton />
+        <liveAgent:clientChatAlertMessage />
+        <liveAgent:clientChatStatusMessage />
+        <div class="waitingMessage"></div>
+        <liveAgent:clientChatLog />
+				<liveagent:clientChatCancelButton />
+        <liveagent:clientChatInput />
+        <liveAgent:clientChatSendButton />
+        <liveAgent:clientChatFileTransfer />
+        <liveAgent:clientChatQueuePosition />
+    </liveAgent:clientChat>
+    <div class="footer"></div>
+
+</apex:page>
