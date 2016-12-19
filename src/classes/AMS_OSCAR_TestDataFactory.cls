@@ -191,7 +191,8 @@ public with sharing class AMS_OSCAR_TestDataFactory
                 Location_Class__c = cargoHO.Location_Class__c,
                 Location_Type__c = cargoHO.Location_Type__c,
                 SAAM_Case__c = oscarCase.Id,
-                Is_your_firm_handling_Dangerous_Goods__c = 'Yes');
+                Is_your_firm_handling_Dangerous_Goods__c = 'Yes',
+                CASS_Number__c = '000');
 
         insert stagingArea;
 

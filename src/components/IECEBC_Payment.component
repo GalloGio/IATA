@@ -126,10 +126,10 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <th>Contact name</th>
+                                            <th>Contact Name</th>
                                             <td >
                                                 <apex:outputField rendered="{!!editMode}" value="{!billingAccount.Contact__r.Name}" />                                               
-                                                <apex:inputField rendered="{!editMode}" value="{!oPaymentBillingContact.FirstName}" styleClass="user-input text" html-placeholder="First name" />                                                
+                                                <apex:inputField rendered="{!editMode}" value="{!oPaymentBillingContact.FirstName}" styleClass="user-input text" html-placeholder="First name" />
                                                 <apex:inputField rendered="{!editMode}" value="{!oPaymentBillingContact.LastName}" styleClass="user-input text" html-placeholder="Last name"/>
                                             </td>
                                         </tr>
@@ -145,10 +145,8 @@
                                         <tr>
                                             <th>Phone</th>
                                             <td >
-                                                <apex:outputText rendered="{!!editMode}" value="{!oPaymentBillingContact.Phone}">
-                                                </apex:outputText>
-                                                <apex:inputText rendered="{!editMode}" value="{!oPaymentBillingContact.Phone}">
-                                                </apex:inputText>
+                                                <apex:outputText rendered="{!!editMode}" value="{!oPaymentBillingContact.Phone}" />
+                                                <apex:inputText rendered="{!editMode}" value="{!oPaymentBillingContact.Phone}" styleClass="user-input text" />
                                             </td>
                                         </tr>
                                         <tr>
@@ -167,8 +165,8 @@
                                                     {!oBillingAddress.Street__c} <br/>
                                                     {!oBillingAddress.City__c} <br/>
                                                     {!oBillingAddress.ISO_State_Name__c} <br/>
-                                                    {!oBillingAddress.ZipCode__c} <br/>
-                                                    {!oBillingAddress.ISO_Country_Name__c} 
+                                                    {!oBillingAddress.ISO_Country_Name__c} <br/>
+                                                    {!oBillingAddress.ZipCode__c} 
                                                 </apex:outputText>
                                                 
                                                 <apex:outputPanel rendered="{!editMode}">
@@ -182,19 +180,12 @@
                                                     
                                                     <div class="field-group text inline">
                                                         <label>
-                                                            <span class="input-label">Postal code</span>
-                                                            <apex:inputField value="{!oBillingAddress.ZipCode__c}" styleClass="user-input text" />
-                                                            
-                                                        </label>
-                                                    </div>
-                                                    
-                                                    <div class="field-group text inline">
-                                                        <label>
                                                             <span class="input-label">City</span>
                                                             <apex:inputField value="{!oBillingAddress.City__c}" styleClass="user-input text"/>
                                                             
                                                         </label>
                                                     </div>
+                                                    
                                                     
                                                     <div class="field-group select inline">
                                                         <span class="input-label">Country</span>
@@ -227,7 +218,13 @@
                                                             </apex:outputPanel>
                                                         </apex:outputPanel>
                                                     </div>
-                                                    
+                                                    <div class="field-group text inline">
+                                                        <label>
+                                                            <span class="input-label">Postal code</span>
+                                                            <apex:inputField value="{!oBillingAddress.ZipCode__c}" styleClass="user-input text" />
+                                                            
+                                                        </label>
+                                                    </div>
                                                 </apex:outputPanel>
                                             </td>
                                           </tr>
@@ -326,10 +323,7 @@
                                                 </div>
                                                 <label class="input-label" for="payment-method-bank">Bank transfer</label>
                                            </div>
-                                           
                                         </apex:outputPanel>
-                                                                                            
-                                            
                                     </div>
                                 </div>
                                 
@@ -401,7 +395,7 @@
                                 <div class="payment-method-container bank is-hidden">
                                     <div class="alert note">
                                         <div class="alert-message">
-                                            <p>if you want to pay by bank transfer,<Br/>please contact globaldata@iata.org.</p>
+                                            <p>If you want to pay by bank transfer,<Br/>please contact us at <a href="mailto:globaldata@iata.org">globaldata@iata.org</a>.</p>
                                             <div class="text-right sectionBankTransferActions">
                                                 <apex:outputText id="BankTransferText">
                                                     <li><apex:commandLink onclick="ShowWaitingStatus('.sectionBankTransferActions');redirectmail();" value="Back to account details" styleClass="button secondary" reRender="BankTransferText" oncomplete="sReturnToManageAccountPage();"/></li>
@@ -449,10 +443,7 @@
                             </div>
                         </dd>
                     </dl>
-                </div>
-                
-            
-                            
+                </div>      
         </section>
         
         <section class="columns sub-container payment-confirmation" id="paymentconfirmation">
@@ -486,7 +477,7 @@
                                                     <apex:outputText value="{0,number,###,###,##0} "><apex:param value="{!prpcw.numberOfEmails}"/></apex:outputText>
                                                 </strong>
                                                 emails at 
-                                                <apex:outputText value=" ${0,number,###,###,##0.00} cost/email"><apex:param value="{!prpcw.unitPrice}" /></apex:outputText>
+                                                <apex:outputText value=" ${0,number,###,###,##0.000} cost/email"><apex:param value="{!prpcw.unitPrice}" /></apex:outputText>
                                             </apex:outputPanel>
                                         </th>
                                         <td class="price">
@@ -592,7 +583,7 @@
                                         <a href="#" class="icon-close js-close-modal js-clear-form"><i class="fa fa-times"></i></a>
                                     </header>
                                     <div class="modal-body">
-                                        <p>Thank you. Your transaction was successfully processes.</p>
+                                        <p>Thank you. Your transaction was successfully processed.</p>
                                     </div>
                                     <footer class="modal-footer">
                                         <div class="footer-actions text-right">

@@ -84,8 +84,9 @@ public class ZuoraUtil
             billToContact.setValue('WorkEmail', billTo.BillTo_Location__r.Email__c);
             billToContact.setValue('WorkPhone', billTo.BillTo_Location__r.Phone__c);
 
-            billToContact.setValue('Country', billTo.BillTo_Location__r.ISO_Country_Name__c);
-            billToContact.setValue('State', billTo.BillTo_Location__r.ISO_State_Name__c);
+            //*** Thai (2016-11-10) use ISO country code and ISO state code instead of name to mitigate the reject from Zuora
+            billToContact.setValue('Country', (billTo.BillTo_Location__r.ISO_Country_Code__c == null ? billTo.BillTo_Location__r.ISO_Country_Name__c : billTo.BillTo_Location__r.ISO_Country_Code__c));
+            billToContact.setValue('State', (billTo.BillTo_Location__r.ISO_State_Code_SAP__c == null ? billTo.BillTo_Location__r.ISO_State_Name__c : billTo.BillTo_Location__r.ISO_State_Code_SAP__c));
             billToContact.setValue('City', billTo.BillTo_Location__r.City__c);
             billToContact.setValue('PostalCode', billTo.BillTo_Location__r.ZipCode__c);
             billToContact.setValue('Address1', billTo.BillTo_Location__r.Street__c);
@@ -97,17 +98,19 @@ public class ZuoraUtil
     //createZuoraSoldToContact
     public static Zuora.zObject createZuoraSoldToContact(Contact soldTo,Order order) {
 
+        //*** Thai (2016-11-10) change the source of information from sold to contact and use ISO country code and ISO state code instead of name to mitigate the reject from Zuora
         Zuora.zObject soldToContact = new Zuora.zObject('Contact');
         if(soldTo != null){
             soldToContact.setValue('FirstName', soldTo.FirstName);
             soldToContact.setValue('LastName', soldTo.LastName);
-            soldToContact.setValue('WorkEmail', order.ShipToContact_Email__c);
-            soldToContact.setValue('WorkPhone', order.ShipToContact_Phone__c);
-            soldToContact.setValue('Country', order.ShippingCountry);
-            soldToContact.setValue('State', order.ShippingState);
-            soldToContact.setValue('City', order.ShippingCity);
-            soldToContact.setValue('PostalCode', order.ShippingPostalCode);
-            soldToContact.setValue('Address1', order.ShippingStreet);
+            soldToContact.setValue('WorkEmail', soldTo.ShipTo_Location__r.Email__c);
+            soldToContact.setValue('WorkPhone', soldTo.ShipTo_Location__r.Phone__c);
+
+            soldToContact.setValue('Country', (soldTo.ShipTo_Location__r.ISO_Country_Code__c == null ? soldTo.ShipTo_Location__r.ISO_Country_Name__c : soldTo.ShipTo_Location__r.ISO_Country_Code__c));
+            soldToContact.setValue('State', (soldTo.ShipTo_Location__r.ISO_State_Code_SAP__c == null ? soldTo.ShipTo_Location__r.ISO_State_Name__c : soldTo.ShipTo_Location__r.ISO_State_Code_SAP__c));
+            soldToContact.setValue('City', soldTo.ShipTo_Location__r.City__c);
+            soldToContact.setValue('PostalCode', soldTo.ShipTo_Location__r.ZipCode__c);
+            soldToContact.setValue('Address1', soldTo.ShipTo_Location__r.Street__c);
         }
         return soldToContact;
     }

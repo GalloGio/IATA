@@ -42,6 +42,7 @@ public class IECEBC_Utility {
 		a.Activity_Type__c = 'Send';
 		a.Name = 'Cancel campaign: ' + c.Name;
 		a.Activity_Date_Time__c  = Datetime.now();
+		a.Reason__c='Cancelled by the customer';
 		insert a;
 	}
 	
