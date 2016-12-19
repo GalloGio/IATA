@@ -14,6 +14,9 @@ global without sharing class AMS_RecordCreatorWebservice {
     public static String NEWVR_PV = 'VR.1.0'; 
     public static String NEWVRCA_PV = 'VR.1.0.CA';
     public static String NEWCER_PV = 'CER.1.0';
+    public static String NEWGSA_PV = 'NEW.GSA.1.0';
+    public static String NEWAHA_PV = 'NEW.AHA.1.0';
+    public static String NEWMSO_PV = 'NEW.MSO.1.0';
 
     public static String EMPTYACCREDITATIONID = 'EMPTY';
 
@@ -175,7 +178,7 @@ global without sharing class AMS_RecordCreatorWebservice {
 
     private static String fetchOscarRecordType(String typeOfProcess){
 
-        if(typeOfProcess.equalsIgnoreCase(NEWBR_PV) || typeOfProcess.equalsIgnoreCase(NEWHO_PV) || typeOfProcess.equalsIgnoreCase(NEWBRABRD_PV) || typeOfProcess.equalsIgnoreCase(NEWTIDS_PV))
+        if(typeOfProcess.equalsIgnoreCase(NEWBR_PV) || typeOfProcess.equalsIgnoreCase(NEWHO_PV) || typeOfProcess.equalsIgnoreCase(NEWBRABRD_PV) || typeOfProcess.equalsIgnoreCase(NEWTIDS_PV) || typeOfProcess.equalsIgnoreCase(NEWGSA_PV) || typeOfProcess.equalsIgnoreCase(NEWAHA_PV) || typeOfProcess.equalsIgnoreCase(NEWMSO_PV))
             return oscarRT.get('NEW');
 
         if(typeOfProcess.equalsIgnoreCase(BANK_ACCOUNT_CHANGES_PV) || typeOfProcess.equalsIgnoreCase(MAJOR_CHANGES_PV) || typeOfProcess.equalsIgnoreCase(DGR_DGA_PV))
