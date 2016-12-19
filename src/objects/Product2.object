@@ -2150,6 +2150,15 @@ SIS Charge Code Type.</description>
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>IEC_Override_Profit_Center__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>IEC - true to use profit center in ISO country when create contract instead of profit center of product</description>
+        <externalId>false</externalId>
+        <label>Override Profit Center</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>IEC_Page_Areas_of_Activity__c</fullName>
         <externalId>false</externalId>
         <label>Page Areas of Activity</label>

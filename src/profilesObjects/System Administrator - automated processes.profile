@@ -769,7 +769,7 @@
 <fieldPermissions><editable>false</editable><field>AMS_OSCAR__c.Send_approval_letter__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AMS_OSCAR__c.Send_inspection_request__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AMS_OSCAR__c.Send_invoice__c</field><readable>false</readable></fieldPermissions>
-<fieldPermissions><editable>false</editable><field>AMS_OSCAR__c.Status__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>true</editable><field>AMS_OSCAR__c.Status__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AMS_OSCAR__c.Storage_performed__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AMS_OSCAR__c.Suspend_in_BSPLink_CASSLink__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AMS_OSCAR__c.Suspended_in_BSPLink_CASSLink__c</field><readable>false</readable></fieldPermissions>
@@ -2829,7 +2829,7 @@
 <fieldPermissions><editable>true</editable><field>Case.Number_of_agents__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Case.OPATB__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Case.OPTAT__c</field><readable>true</readable></fieldPermissions>
-<fieldPermissions><editable>false</editable><field>Case.OSCAR__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>true</editable><field>Case.OSCAR__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Case.Object_Set_Up_Affected__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Case.Official_Demand_Letter_sent__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Case.Old_AWB_only_until_17Mar08__c</field><readable>true</readable></fieldPermissions>
@@ -5232,6 +5232,10 @@
 <fieldPermissions><editable>false</editable><field>Instant_Surveys__c.CX_Satisfaction__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Instant_Surveys__c.Case_Area__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Instant_Surveys__c.Case_ID__c</field><readable>true</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>Instant_Surveys__c.Chat_Agent_Experience__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>Instant_Surveys__c.Chat_Agent__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>Instant_Surveys__c.Chat_Channel__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>Instant_Surveys__c.Chat_comment__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Instant_Surveys__c.Clarity_of_response__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Instant_Surveys__c.Contact__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Instant_Surveys__c.Courtesy_and_friendliness__c</field><readable>true</readable></fieldPermissions>
@@ -5997,6 +6001,7 @@
 <fieldPermissions><editable>false</editable><field>Product2.IATA_ORG_Group__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Product2.IEC_Cart_Option__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Product2.IEC_OrderBy__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>Product2.IEC_Override_Profit_Center__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Product2.IEC_Page_Areas_of_Activity__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Product2.IEC_Page_Content_Types__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Product2.IEC_Parent_Product__c</field><readable>false</readable></fieldPermissions>
@@ -7501,6 +7506,7 @@
 <recordTypeVisibilities><default>true</default><personAccountDefault>true</personAccountDefault><recordType>ID_Card__c.WebStar</recordType><visible>true</visible></recordTypeVisibilities>
 <recordTypeVisibilities><default>false</default><recordType>IEC_Event_Release__c.Event_released</recordType><visible>false</visible></recordTypeVisibilities>
 <recordTypeVisibilities><default>true</default><recordType>Instant_Surveys__c.Espiritu_IS_Record_Type</recordType><visible>true</visible></recordTypeVisibilities>
+<recordTypeVisibilities><default>false</default><recordType>Instant_Surveys__c.Live_Agent_Chat</recordType><visible>false</visible></recordTypeVisibilities>
 <recordTypeVisibilities><default>false</default><recordType>Instant_Surveys__c.SF_ACR_Survey</recordType><visible>false</visible></recordTypeVisibilities>
 <recordTypeVisibilities><default>true</default><personAccountDefault>true</personAccountDefault><recordType>Lead.CorpComLeads</recordType><visible>true</visible></recordTypeVisibilities>
 <recordTypeVisibilities><default>false</default><recordType>Lead.GDP</recordType><visible>true</visible></recordTypeVisibilities>

@@ -147,6 +147,14 @@
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>CNS__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>CNS</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>CountriesList__c</fullName>
         <description>Countries List</description>
         <externalId>false</externalId>
