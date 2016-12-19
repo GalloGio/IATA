@@ -11267,20 +11267,6 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
-        <fullName>DPC%3A Auto Close</fullName>
-        <actions>
-            <name>DPC_Auto_Close_DPC_Status</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>DPC_Auto_Close_Status</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <formula>AND(RecordType.DeveloperName =&quot;DPC_Service_Request&quot;,   ISPICKVAL(Status, &quot;4.0 Case Solved&quot;), NOT(ISBLANK(Case_Solved_Date__c)), Case_Solved_Date__c &lt;= now()- 1)</formula>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
         <fullName>DPC%3A Date %2F Time Completed</fullName>
         <actions>
             <name>DPC_Date_Time_Completed</name>
