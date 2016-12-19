@@ -44,7 +44,8 @@ public with sharing class DAL_ISSP {
                     Account.ICAO_designator__c, Account.IATA_ISO_Country__r.Name, Account.IATA_ISO_Country__r.Region__c, Account.IATA_ISO_Country__r.ISO_Code__c,Account.IATA_ISO_Country__r.OSCAR_enabled__c,
                		Account.Location_Type__c, Account.RecordType.DeveloperName, Account.Overdue_Invoices_Indicator__c ,Account.Top_Parent__r.IATACode__c,Account.IATA_ISO_Country__r.Prevent_Portal_Trade_Name_Change__c,
 					Account.Top_Parent__r.Location_Type__c , Account.Region_formula__c,PhoneNational__c,FAXNational__c,MobileNational__c,Account.IATA_ISO_Country__r.Enable_Minor_Changes_from_Portal__c,
-					ID_Card_Holder__c, Account.DDS_status__c, Account.DDS_Last_Update_Date__c,Account.PhoneNational__c,Account.FAXNational__c
+					ID_Card_Holder__c, Account.DDS_status__c, Account.DDS_Last_Update_Date__c,Account.PhoneNational__c,Account.FAXNational__c,
+                    Account.Location_Class__c
                     from Contact where Id=:contactId];
         if (contacts.size() > 0)
             return contacts[0];

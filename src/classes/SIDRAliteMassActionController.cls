@@ -437,6 +437,7 @@ public with sharing class SIDRAliteMassActionController {
         listCase1 = executeQuery(query1);
 
         String query2 = getBaseQuery(RECORDTYPE_INVOICING_ID);
+        query2 += ' AND Termination_date__c = null';
         query2 += ' AND (';
         query2 += ' (account.type IN :TYPE_ACCOUNT_PAX';
         query2 += ' AND New_IFAP_Deadline_date__c < TODAY)';
