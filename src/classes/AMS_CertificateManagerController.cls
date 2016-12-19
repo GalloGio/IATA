@@ -28,7 +28,8 @@ public class AMS_CertificateManagerController {
 				'If your file has the headers on the first line, make the the IATA Code header is "IATA Code"',
 				'If your file dosn\'t have headers, the IATA Code must be on the first column',
 				'The csv values must be separated by commas (,). Make sure your editor don\'t make the separation by semi-colons  (;)',
-				'Your file must contain only headers and records, remove any other information (Example: Copyright and confidentiality)'
+				'Your file must contain only headers and records, remove any other information (Example: Copyright and confidentiality)',
+				'Your file must NOT contain multi-line text field (rich text, text area or long text area)'
 			};
 		}
 	}
@@ -45,9 +46,9 @@ public class AMS_CertificateManagerController {
 		get{
 			if(years == null){
 				years = new List<SelectOption>();
-				Integer noOptions = 5;
-				Integer start = System.today().addYears(-noOptions).year();
-				for(Integer i = 1; i <= noOptions; i++){
+				Integer noOptions = 7;
+				Integer start = System.today().addYears(-2).year();
+				for(Integer i = 0; i <= noOptions; i++){
 					String y = String.valueOf(start+i);
 					years.add(new SelectOption(y, y));
 				}
@@ -125,7 +126,14 @@ public class AMS_CertificateManagerController {
 			return;
 		}
 
-		List<String> lines = fileBody.toString().split('\n');
+		String body = fileBody.toString();
+		String newLine = '\n';
+		if(body.indexOf('\r\n') > 0) newLine = '\r\n';
+		else if(body.indexOf('\r') > 0) newLine = '\r';
+
+		//System.debug(loggingLevel.Debug, '____ [cls AMS_CertificateManagerController - parseFile] body - ' + body);
+		System.debug(loggingLevel.Debug, '____ [cls AMS_CertificateManagerController - parseFile] newLine - ' + newLine.replace('\r', 'r').replace('\n','n'));
+		List<String> lines = body.split(newLine);
 
 		if(lines.isEmpty()){
 			ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, 'No content on the file'));
@@ -138,7 +146,7 @@ public class AMS_CertificateManagerController {
 
 		System.debug(loggingLevel.Debug, '____ [cls AMS_CertificateManagerController - parseFile] headers - ' + headers);
 		for(Integer i = 0; i < headers.size(); i++){
-			if(headers[i].removeEnd('"').removeStart('"').equalsIgnoreCase('IATA Code')){
+			if(headers[i].removeEnd('"').removeStart('"').trim().equalsIgnoreCase('IATA Code')){
 				iataCodeIndex = i;
 				hasHeaders = true;
 				break;
@@ -147,31 +155,31 @@ public class AMS_CertificateManagerController {
 
 		System.debug(loggingLevel.Debug, '____ [cls AMS_CertificateManagerController - parseFile] iataCodeIndex - ' + iataCodeIndex);
 
-		List<String> iataCodes = new List<String>();
+		Map<String, Boolean> iataCodes = new Map<String, Boolean>();
 		for(String line : lines){
 			if(hasHeaders) hasHeaders = false; //skips first line if is a header
 			else{
 				List<String> entries = line.split(',');
 
 				System.debug(loggingLevel.Debug, '____ [cls AMS_CertificateManagerController - parseFile] entries - ' + entries);
-				iataCodes.add(entries[iataCodeIndex].removeEnd('"').removeStart('"'));
+				iataCodes.put(entries[iataCodeIndex].removeEnd('"').removeStart('"').trim(), false);
 			}
 		}
 
 		System.debug(loggingLevel.Debug, '____ [cls AMS_CertificateManagerController - parseFile] iataCodes - ' + iataCodes);
 
-		List<Account> accounts = Database.query('SELECT Id, '+String.join(accountFieldList, ', ')+' FROM Account WHERE IataCode__c IN :iataCodes');
+		Set<String> iataCodesSet = iataCodes.keySet();
+		List<Account> accounts = Database.query('SELECT Id, '+String.join(accountFieldList, ', ')+' FROM Account WHERE IataCode__c IN :iataCodesSet');
 
-
-		if(lines.isEmpty()){
-			ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, 'No accounts found. Check the formating of the file'));
-			return;
-		}
 
 		List<Account> warnings = new List<Account>();
-		if(!accounts.isEmpty()){
+		if(accounts.isEmpty()){
+			ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, 'No accounts found. Check the formating of the file'));
+			return;
+		}else{
 			for(Account acc : accounts){
 				accountIds.add(acc.Id);
+				iataCodes.put(acc.IATACode__c, true);
 				if(acc.Certificate_Generated_Current_Year__c) warnings.add(acc);
 			}
 		}
@@ -183,6 +191,13 @@ public class AMS_CertificateManagerController {
 
 			ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.WARNING, warning));
 		}
+
+
+		String iataCodewarning = 'The following iata codes on the file were not found on the database: ';
+		String errorCodes = '';
+		for(String iataCode : iataCodes.keySet()) if(!iataCodes.get(iataCode)) errorCodes += '<br/>- '+iataCode;
+
+		if(String.isNotEmpty(errorCodes)) ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.WARNING, iataCodewarning+errorCodes));
 	}
 
 	public void generateCertificates() {

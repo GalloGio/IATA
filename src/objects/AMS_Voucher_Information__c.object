@@ -82,7 +82,7 @@
     <fields>
         <fullName>AmountLastYearSales__c</fullName>
         <externalId>false</externalId>
-        <label>Amount Last Year (Sales)</label>
+        <label>Sales</label>
         <precision>18</precision>
         <required>true</required>
         <scale>0</scale>
@@ -282,7 +282,7 @@ Submitted international sales of that year is zero or nil</inlineHelpText>
     <fields>
         <fullName>Year__c</fullName>
         <externalId>false</externalId>
-        <label>Current Year</label>
+        <label>Sales year</label>
         <length>4</length>
         <required>true</required>
         <trackHistory>false</trackHistory>
@@ -321,5 +321,12 @@ LEN ( Year__c ) =  4
 )</errorConditionFormula>
         <errorDisplayField>Year__c</errorDisplayField>
         <errorMessage>Please check the Year format YYYY (&gt; 1900)</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Voucher_Information_Only_for_Cargo</fullName>
+        <active>true</active>
+        <description>Voucher_Information_Only_for_Cargo</description>
+        <errorConditionFormula>NOT(ISPICKVAL(Account__r.Location_Class__c,&quot;C&quot;))</errorConditionFormula>
+        <errorMessage>Voucher Information is only applied to Cargo Agencies</errorMessage>
     </validationRules>
 </CustomObject>

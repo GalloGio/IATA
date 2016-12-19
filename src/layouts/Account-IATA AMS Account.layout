@@ -51,6 +51,9 @@
             </containers>
         </subtabComponents>
     </customConsoleComponents>
+    <excludeButtons>DataDotComAccountInsights</excludeButtons>
+    <excludeButtons>DataDotComClean</excludeButtons>
+    <excludeButtons>DataDotComCompanyHierarchy</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
         <customLabel>true</customLabel>
@@ -77,6 +80,14 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>IATACode__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>CASS_Number__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Check_Digit__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -110,19 +121,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>Identify_as_Key_Customer__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
                 <field>Site</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>CASS_Number__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Check_Digit__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -134,11 +133,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>Last_SIDRA_Date__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Number_of_open_Financial_Review_Cases__c</field>
+                <field>Identify_as_Key_Customer__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -324,11 +319,15 @@
                 <field>CCG_IRR_Distribution_list__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>CCG_Participant__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Number_of_open_Financial_Review_Cases__c</field>
+            </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Assessment_Performed_Date__c</field>
@@ -348,6 +347,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Fin_statements_submission_deadline__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Last_SIDRA_Date__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -540,11 +543,22 @@
         <fields>OSCAR__c</fields>
         <fields>Reason_Code__c</fields>
         <fields>Reason_Description__c</fields>
+        <fields>Created_Date_To_Show__c</fields>
         <fields>CREATEDBY_USER</fields>
         <fields>Source__c</fields>
-        <fields>Updated_AIMS__c</fields>
         <fields>AIMS_Updated_by__c</fields>
         <relatedList>Agency_Applied_Change_code__c.Account__c</relatedList>
+        <sortField>Created_Date_To_Show__c</sortField>
+        <sortOrder>Desc</sortOrder>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>RECORDTYPE</fields>
+        <fields>Authority__c</fields>
+        <fields>Status__c</fields>
+        <relatedList>Agency_Authorization__c.Account__c</relatedList>
+        <sortField>RECORDTYPE</sortField>
+        <sortOrder>Asc</sortOrder>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
@@ -557,6 +571,21 @@
         <fields>Remarks__c</fields>
         <relatedList>Financial_Security__c.Account__c</relatedList>
         <sortField>NAME</sortField>
+        <sortOrder>Desc</sortOrder>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Amount_to_be_Paid__c</fields>
+        <fields>Balance__c</fields>
+        <fields>Billing_Adjustment__c</fields>
+        <fields>Billing_Amount__c</fields>
+        <fields>CURRENCY_ISO_CODE</fields>
+        <fields>Group__c</fields>
+        <fields>Paid__c</fields>
+        <fields>Period__c</fields>
+        <fields>Remittance_Date__c</fields>
+        <relatedList>Account_Statement__c.Account__c</relatedList>
+        <sortField>Remittance_Date__c</sortField>
         <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
@@ -675,6 +704,16 @@
         <relatedList>AMS_Voucher_Information__c.Account__c</relatedList>
         <sortField>Year__c</sortField>
         <sortOrder>Asc</sortOrder>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Change_Code__c</fields>
+        <fields>Update_Type__c</fields>
+        <fields>CREATEDBY_USER</fields>
+        <fields>CREATED_DATE</fields>
+        <relatedList>AMS_Agency_Updates__c.Account__c</relatedList>
+        <sortField>CREATED_DATE</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedObjects>ParentId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>

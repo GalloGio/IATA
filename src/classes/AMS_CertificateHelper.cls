@@ -1,4 +1,6 @@
 public class AMS_CertificateHelper {
+	
+	public static final String CREDENTIAL_NAME = 'GenericAttach';
 
 	public static String createCertificate(AMS_Certificate_Request__c req) {
 
@@ -7,7 +9,7 @@ public class AMS_CertificateHelper {
 		//get content
 	    PageReference pdf = Page.AMSCertificateForPrint;
 		pdf.getParameters().put('AccountIds', req.AccountIds__c);
-	    Blob pdfArchive = pdf.getContent();
+	    Blob pdfArchive = Test.isRunningTest() ? Blob.valueOf('Test Content') : pdf.getContent();
 	    Long size = pdfArchive.size();
 
 	    //get amazon info
@@ -15,7 +17,7 @@ public class AMS_CertificateHelper {
 	    String contentType = 'application/pdf';
 	    String folder = WrapperAttach.getAmazonFolder(oscarCommCase.Id);
 
-	    UploadMultipleFileToAmazonButtonCtrl.UploadFile upF = UploadMultipleFileToAmazonButtonCtrl.createUploadFile(oscarCommCase.Id, fileName, contentType, size, folder,  WrapperAttach.CREDENTIAL_NAME);
+	    UploadMultipleFileToAmazonButtonCtrl.UploadFile upF = UploadMultipleFileToAmazonButtonCtrl.createUploadFile(oscarCommCase.Id, fileName, contentType, size, folder,  CREDENTIAL_NAME);
 
 	    if(!upf.isSuccess) return 'ERROR: '+upf.errorMessage;
 
@@ -58,7 +60,7 @@ public class AMS_CertificateHelper {
 	    		pdf.getParameters().put('Id', req.Id);
 	    		if(year != null) pdf.getParameters().put('year', year);
 	    	    
-	    	    Blob pdfArchive = pdf.getContent();
+	    	    Blob pdfArchive = Test.isRunningTest() ? Blob.valueOf('Test content') : pdf.getContent();
 
 	    	    Attachment att = new Attachment();
 	    	    att.Name = 'Certificates '+req.Name+'.pdf';

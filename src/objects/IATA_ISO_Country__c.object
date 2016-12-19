@@ -1632,6 +1632,16 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Due_diligence_mandatory__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Due diligence step mandatory?</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Due diligence step mandatory?</inlineHelpText>
+        <label>Due diligence mandatory</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>EACP_Country__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>

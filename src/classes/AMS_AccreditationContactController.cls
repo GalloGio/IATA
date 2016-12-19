@@ -238,6 +238,12 @@ public with sharing class AMS_AccreditationContactController {
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, 'Please make sure the Owners are not using the same email address: '+duplicatedContacts));
             return null;
         }
+
+        String errorMissingExpiryDate = validateMandatoryExpiryDate();
+        if(errorMissingExpiryDate != null){
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, errorMissingExpiryDate));
+            return null;
+        }
         
         // Verify that no emails entered for "new" contacts are found in the system
         Set<String> emailSetToConfirm = new Set<String>();
@@ -317,7 +323,7 @@ public with sharing class AMS_AccreditationContactController {
                     }
                     aw.accountAc.Agency_owner__c = true;
                 }
-                
+
                 if(accountInsertList.size() > 0)
                 {
                     insert accountInsertList;
@@ -385,6 +391,25 @@ public with sharing class AMS_AccreditationContactController {
         {
             return true;
         }
+    }
+
+    public String validateMandatoryExpiryDate(){
+
+        for(TrainedStaffWrapper tsw : trainedStaffWrapper)
+        {
+            
+            if(tsw.ac.Type_of_certificate__c == AMS_Utils.CERT_DGR && (tsw.validUntil == null || tsw.validUntil == '')){
+            
+                String tsFirstName = tsw.ac.First_Name__c == null ? '' : tsw.ac.First_Name__c;
+                String tsLastName = tsw.ac.Last_Name__c == null ? '' : tsw.ac.Last_Name__c;
+
+                return tsFirstName + ' ' + tsLastName + ' ' + tsw.ac.Type_of_certificate__c + ' Certificate needs to have the field Valid Until populated.';
+            }
+
+        }
+
+        return null;
+
     }
     
     public String verifyOwnerFlagIsSelectIfFinancialInterestAboveZero()
@@ -932,7 +957,7 @@ public with sharing class AMS_AccreditationContactController {
         public AMS_Accreditation_Contact__c ac {get; set;}
         public String certificateIssueDate {get; set;}
         public String validUntil {get; set;}
-        public String expiryDate {
+        /*public String expiryDate {
             get{
                 if(validUntil != null)
                     return validUntil;
@@ -948,8 +973,11 @@ public with sharing class AMS_AccreditationContactController {
                     
                 return null;
             }
-            set;
-        }
+            set{
+                validUntil = expiryDate;
+            }
+
+        }*/
         
         public TrainedStaffWrapper(AMS_Accreditation_Contact__c trainedStaffAc)
         {

@@ -63,7 +63,7 @@ public class AMS_ChangeCodesHelper {
 
             if(step == AMS_Utils.SANITYCHECK){
                 changeCode.name = 'VRR';
-                changeCode.memoText = 'Advance notification for voluntary relinquishment by Agent by '+oscar.Change_Effective_as_of__c;
+                changeCode.memoText = 'Advance notification for voluntary relinquishment by Agent by '+oscar.Change_Effective_as_of__c.format();
                 changeCode.status = AMS_Utils.getIATANumericStatus(acc.Status__c);
 
                 // lastChangeCode can be null so,
@@ -113,7 +113,7 @@ public class AMS_ChangeCodesHelper {
             }else if(step == AMS_Utils.WITHDRAWAL && oscar.Process__c == AMS_UTils.VOLRELINQUISH){
 
                 changeCode.name = 'VRW';
-                changeCode.memoText = 'Agent Terminated due to Voluntary Relinquishment';
+                changeCode.memoText = 'Voluntary Relinquishment Request withdrawn by Agent.';
                 changeCode.status = AMS_Utils.getIATANumericStatus(acc.Status__c);
 
                 // lastChangeCode can be null so,

@@ -3501,11 +3501,11 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>shalbakf@iata.org</recipient>
+            <recipient>parkyr@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>zhangxl@iata.org</recipient>
+            <recipient>shalbakf@iata.org</recipient>
             <type>user</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
@@ -14856,7 +14856,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <criteriaItems>
             <field>Case.Reason1__c</field>
             <operation>notEqual</operation>
-            <value>CHC – Change of Shareholding,CHG – Data Maintenance,CHL - Change of Location,CHN - Change of Name,CHO / CHS – Change of Ownership / Legal Status,CLO - Closure,Direct Debit Setup/Update,IRIS Bank Detail Update,New BR / IP,New BR Abroad</value>
+            <value>CHC – Change of Shareholding,CHG – Data Maintenance,CHL - Change of Location,CHN - Change of Name,CHO / CHS – Change of Ownership / Legal Status,CLO - Closure,Direct Debit Setup/Update,IRIS Bank Detail Update,New BR / IP,New BR Abroad,Certificate DGR</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Reason1__c</field>

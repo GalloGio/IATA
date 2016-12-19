@@ -8,11 +8,11 @@ private class AMS_VoucherInformationTriggerTest {
         IATA_ISO_Country__c italy = new IATA_ISO_Country__c(Name='Italy', ISO_Code__c='IT', Region__c='Europe', ISS_Office_Location__c='Italy');
         insert italy;
 
-        Account HO1 = new Account(RecordTypeId = rtAgency, Name = 'My Travels', IATA_ISO_Country__c = italy.id, Location_type__c = 'HO');
+        Account HO1 = new Account(RecordTypeId = rtAgency, Name = 'My Travels', IATA_ISO_Country__c = italy.id, Location_type__c = 'HO', Location_Class__c = 'C');
        
         insert HO1;
 
-		Account HO2 = new Account(RecordTypeId = rtAgency, Name = 'My Travels2', IATA_ISO_Country__c = italy.id, Location_type__c = 'HO');
+		Account HO2 = new Account(RecordTypeId = rtAgency, Name = 'My Travels2', IATA_ISO_Country__c = italy.id, Location_type__c = 'HO' , Location_Class__c = 'C');
        
         insert HO2;
 
@@ -22,13 +22,13 @@ private class AMS_VoucherInformationTriggerTest {
 
 		Test.startTest();
 
-		List<Account> accounts = [SELECT id, Location_type__c from Account];
+		List<Account> accounts = [SELECT id, Location_type__c, Location_Class__c from Account];
 
 		Account acct1 = accounts.get(0);
 		Account acct2 = accounts.get(1);
 
-		AMS_Voucher_Information__c voucher1 = new AMS_Voucher_Information__c(Account__c = acct1.Id , Amount_Currency__c = 'USD' ,AmountLastYearSales__c = 100000 , Year__c = '2016' );
-		AMS_Voucher_Information__c voucher2 = new AMS_Voucher_Information__c(Account__c = acct2.Id , Amount_Currency__c = 'USD' ,AmountLastYearSales__c = 100000 , Year__c = '2016' );
+		AMS_Voucher_Information__c voucher1 = new AMS_Voucher_Information__c(Account__c = acct1.Id , Amount_Currency__c = 'USD' ,AmountLastYearSales__c = 100000 , Exchange_Rate__c = 1, Year__c = '2016' );
+		AMS_Voucher_Information__c voucher2 = new AMS_Voucher_Information__c(Account__c = acct2.Id , Amount_Currency__c = 'USD' ,AmountLastYearSales__c = 100000 , Exchange_Rate__c = 1, Year__c = '2016' );
 
 		insert new List<AMS_Voucher_Information__c>{voucher1,voucher2};
 
@@ -44,15 +44,15 @@ private class AMS_VoucherInformationTriggerTest {
 
 		Test.startTest();
 
-		List<Account> accounts = [SELECT id, Location_type__c from Account];
+		List<Account> accounts = [SELECT id, Location_type__c,Location_Class__c from Account];
 
 		Account acct1 = accounts.get(0);
 
-		AMS_Voucher_Information__c voucher1 = new AMS_Voucher_Information__c(Account__c = acct1.Id , Amount_Currency__c = 'USD' ,AmountLastYearSales__c = 100000 , Year__c = '2016' );
+		AMS_Voucher_Information__c voucher1 = new AMS_Voucher_Information__c(Account__c = acct1.Id , Amount_Currency__c = 'USD' ,AmountLastYearSales__c = 100000 , Exchange_Rate__c = 1 , Year__c = '2016' );
 		
 		insert voucher1;
 
-		AMS_Voucher_Information__c voucher2 = new AMS_Voucher_Information__c(Account__c = acct1.Id , Amount_Currency__c = 'USD' ,AmountLastYearSales__c = 100000 , Year__c = '2016' );
+		AMS_Voucher_Information__c voucher2 = new AMS_Voucher_Information__c(Account__c = acct1.Id , Amount_Currency__c = 'USD' ,AmountLastYearSales__c = 100000 , Exchange_Rate__c = 1 , Year__c = '2016' );
 
 		try{
 			insert voucher2;
@@ -70,15 +70,15 @@ private class AMS_VoucherInformationTriggerTest {
 
 		Test.startTest();
 
-		List<Account> accounts = [SELECT id, Location_type__c from Account];
+		List<Account> accounts = [SELECT id, Location_type__c,Location_Class__c from Account];
 
 		Account acct1 = accounts.get(0);
 
-		AMS_Voucher_Information__c voucher1 = new AMS_Voucher_Information__c(Account__c = acct1.Id , Amount_Currency__c = 'USD' ,AmountLastYearSales__c = 100000 , Year__c = '2016' );
+		AMS_Voucher_Information__c voucher1 = new AMS_Voucher_Information__c(Account__c = acct1.Id , Amount_Currency__c = 'USD' ,AmountLastYearSales__c = 100000 , Exchange_Rate__c = 1, Year__c = '2016' );
 		
 		insert voucher1;
 
-		AMS_Voucher_Information__c voucher2 = new AMS_Voucher_Information__c(Account__c = acct1.Id , Amount_Currency__c = 'USD' ,AmountLastYearSales__c = 100000 , Year__c = '2017' );
+		AMS_Voucher_Information__c voucher2 = new AMS_Voucher_Information__c(Account__c = acct1.Id , Amount_Currency__c = 'USD' ,AmountLastYearSales__c = 100000 , Exchange_Rate__c = 1, Year__c = '2017' );
 
 		insert voucher2;
 
@@ -90,18 +90,18 @@ private class AMS_VoucherInformationTriggerTest {
 
 		Test.startTest();
 
-		List<Account> accounts = [SELECT id, Location_type__c from Account];
+		List<Account> accounts = [SELECT id, Location_type__c,Location_Class__c from Account];
 
 		Account acct1 = accounts.get(0);
 
-		AMS_Voucher_Information__c voucher1 = new AMS_Voucher_Information__c(Account__c = acct1.Id , Amount_Currency__c = 'USD' ,AmountLastYearSales__c = 100000 , Year__c = '2016' );
+		AMS_Voucher_Information__c voucher1 = new AMS_Voucher_Information__c(Account__c = acct1.Id , Amount_Currency__c = 'USD' ,AmountLastYearSales__c = 100000 ,Exchange_Rate__c = 1, Year__c = '2016' );
 		
 		insert voucher1;
 
 
 		delete voucher1;
 
-		AMS_Voucher_Information__c voucher2 = new AMS_Voucher_Information__c(Account__c = acct1.Id , Amount_Currency__c = 'USD' ,AmountLastYearSales__c = 100000 , Year__c = '2016' );
+		AMS_Voucher_Information__c voucher2 = new AMS_Voucher_Information__c(Account__c = acct1.Id , Amount_Currency__c = 'USD' ,AmountLastYearSales__c = 100000 ,Exchange_Rate__c = 1, Year__c = '2016' );
 
 		insert voucher2;
 
@@ -122,18 +122,18 @@ private class AMS_VoucherInformationTriggerTest {
 
 		Test.startTest();
 
-		List<Account> accounts = [SELECT id, Location_type__c from Account];
+		List<Account> accounts = [SELECT id, Location_type__c,Location_Class__c from Account];
 
 		Account acct1 = accounts.get(0);
 
-		AMS_Voucher_Information__c voucher1 = new AMS_Voucher_Information__c(Account__c = acct1.Id , Amount_Currency__c = 'USD' ,AmountLastYearSales__c = 100000 , Year__c = '2016' );
+		AMS_Voucher_Information__c voucher1 = new AMS_Voucher_Information__c(Account__c = acct1.Id , Amount_Currency__c = 'USD' ,AmountLastYearSales__c = 100000 , Exchange_Rate__c = 1 , Year__c = '2016' );
 		
 		insert voucher1;
 
 
 		delete voucher1;
 
-		AMS_Voucher_Information__c voucher2 = new AMS_Voucher_Information__c(Account__c = acct1.Id , Amount_Currency__c = 'USD' ,AmountLastYearSales__c = 100000 , Year__c = '2016' );
+		AMS_Voucher_Information__c voucher2 = new AMS_Voucher_Information__c(Account__c = acct1.Id , Amount_Currency__c = 'USD' ,AmountLastYearSales__c = 100000 , Exchange_Rate__c = 1 , Year__c = '2016' );
 
 		insert voucher2;
 

@@ -226,7 +226,7 @@
 				</apex:pageBlockSection>       
                        
         		</div>
-        		<div style="page-break-after:always;margin-top:30px;display:{!IF(AND(isocountry.Local_language_Agency_details_required__c, NOT(newform.Is_change_bank_account_details__c)), '','none')}">
+        		<div style="page-break-after:always;margin-top:30px;display:{!IF(AND(isocountry.Local_language_Agency_details_required__c, newForm.Notify_Change_Location__c, NOT(newform.Is_change_bank_account_details__c)), '','none')}">
         <apex:pageBlockSection columns="2" collapsible="false">
                 <apex:facet name="header">
                             <apex:outputpanel >
