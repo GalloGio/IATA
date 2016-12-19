@@ -14,7 +14,7 @@
     <enableListViewReskin>true</enableListViewReskin>
     <enableMultiMonitorComponents>true</enableMultiMonitorComponents>
     <enablePinTabs>true</enablePinTabs>
-    <enableTabHover>false</enableTabHover>
+    <enableTabHover>true</enableTabHover>
     <enableTabLimits>false</enableTabLimits>
     <footerColor>#099AD6</footerColor>
     <headerColor>#FFFFFF</headerColor>
@@ -185,7 +185,7 @@
         <openNewContactSubtab>false</openNewContactSubtab>
         <openNewLeadSubtab>false</openNewLeadSubtab>
         <openNewVFPageSubtab>false</openNewVFPageSubtab>
-        <showKnowledgeArticles>false</showKnowledgeArticles>
+        <showKnowledgeArticles>true</showKnowledgeArticles>
     </liveAgentConfig>
     <logo>Customer_Portal_Files/IATA_Logo_Cust_Portal.gif</logo>
     <primaryTabColor>#3B3D3D</primaryTabColor>
@@ -230,6 +230,10 @@
     <tab>standard-Contact</tab>
     <tab>standard-report</tab>
     <tab>Operational_Improvements__c</tab>
+    <tab>standard-LiveAgentSupervisor</tab>
+    <tab>standard-LiveChatTranscript</tab>
+    <tab>standard-LiveChatVisitor</tab>
+    <tab>standard-LiveAgentSession</tab>
     <workspaceMappings>
         <mapping>
             <tab>Agents__c</tab>
@@ -254,6 +258,18 @@
         </mapping>
         <mapping>
             <tab>standard-Dashboard</tab>
+        </mapping>
+        <mapping>
+            <tab>standard-LiveAgentSession</tab>
+        </mapping>
+        <mapping>
+            <tab>standard-LiveAgentSupervisor</tab>
+        </mapping>
+        <mapping>
+            <tab>standard-LiveChatTranscript</tab>
+        </mapping>
+        <mapping>
+            <tab>standard-LiveChatVisitor</tab>
         </mapping>
         <mapping>
             <tab>standard-report</tab>
