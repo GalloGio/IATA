@@ -349,6 +349,7 @@ public class AMS_OscarCase_RiskMgmt {
 		accnt.Id = AccountId;
 		if(cc.Account_status_change__c != null){
 			bAccntToUpd = true;
+			string sCurrStatus = mapCases.get(idCase).Account.Status__c;
 			if(cc.Account_status_change__c.toUpperCase()=='PREV'){
 				if( (acc==null?(mapCases.get(idCase).Account.PreviousStatus__c):acc.PreviousStatus__c) != null )
 					accnt.Status__c = mapCases.get(idCase).Account.PreviousStatus__c;
@@ -356,6 +357,7 @@ public class AMS_OscarCase_RiskMgmt {
 			else{
 				accnt.Status__c = AMS_Utils.getIATAReadableStatus(cc.Account_status_change__c);
 			}
+			accnt.PreviousStatus__c = sCurrStatus;
 		}
 		
 		//Set the billing period
@@ -373,6 +375,7 @@ public class AMS_OscarCase_RiskMgmt {
 		//Handles Reason code and description on both Account and Change Code
 		if(cc.Reason_Code__c!=null){
 			bAccntToUpd = true;
+			string sCurrReason = mapCases.get(idCase).Account.Reason__c;
 			if(cc.Reason_Code__c.toUpperCase()=='PREV'){
 				if(mapCases.get(idCase).Account.Previous_Reason__c!=null){
 					//list<string> lsReason = mapCases.get(idCase).Account.Previous_Reason__c.split('-');
@@ -389,6 +392,7 @@ public class AMS_OscarCase_RiskMgmt {
 				
 				accnt.Reason__c = AACC.Reason_Code__c + '-' + AACC.Reason_Description__c;
 			}
+			accnt.Previous_Reason__c = sCurrReason;
 		}
 		
 		if(cc.Clear_Irregularities__c)
@@ -466,8 +470,11 @@ public class AMS_OscarCase_RiskMgmt {
 		}
 		
 		if(condition.startsWithIgnoreCase('<=:')){
-			if((double)NewCaseValues.get(sFieldToCheck)<=double.valueOf(condition.right(condition.length()-'<=:'.length())))
-				return true;
+			if((double)NewCaseValues.get(sFieldToCheck)<=double.valueOf(condition.right(condition.length()-'<=:'.length()))){
+				if((double)NewCaseValues.get(sFieldToCheck)>0)
+					return true;
+				else return false;
+			}
 			else return false;
 		}
 		
@@ -555,9 +562,9 @@ public class AMS_OscarCase_RiskMgmt {
 				sTmpVal = '';
 				if(lsFS==null)	sTmpVal = 'Nil';
 				else{
-					map<string, double> mapFSperCurr = new map<string, double>();
+					map<string, decimal> mapFSperCurr = new map<string, decimal>();
 					for(Financial_Security__c fs:lsFS){
-						double dAmount = FS.Amount__c;
+						decimal dAmount = FS.Amount__c;
 						if(mapFSperCurr.containsKey(FS.CurrencyIsoCode))
 							dAmount = dAmount + mapFSperCurr.get(FS.CurrencyIsoCode);					
 						
@@ -566,7 +573,7 @@ public class AMS_OscarCase_RiskMgmt {
 					}
 					
 					for(string sCur:mapFSperCurr.keySet())
-						sTmpVal = sTmpVal + ' ' + mapFSperCurr.get(sCur) + ' ' + sCur + ';';
+						sTmpVal = sTmpVal + ' ' + sCur + ' ' + doFormatting(mapFSperCurr.get(sCur), ',', '.') + ';';
 				}
 				
 				sMemoText = sMemoText.replace('<Financial Securities>', sTmpVal);
@@ -663,5 +670,16 @@ public class AMS_OscarCase_RiskMgmt {
 		if(dValue==null) return '';
 		list<string> lsMonthName = new list<string>{'-','JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'};
 		return string.valueOf(dValue.day() + '-' + lsMonthName.get(dValue.month()) + '-' + dValue.year());
+	}
+	
+	public static String doFormatting(Decimal val, String osep, String nsep) {
+		String s, tmp;
+		Integer i = 6;
+		s = val.setScale(2).toPlainString().replace(osep, nsep); 
+		while(s.length() > i) { 
+			tmp = s.substring(0, s.length() - i) + osep + s.substring(s.length() - i); 
+			s = tmp; i += 4; 
+		} 
+		return s; 
 	}
 }

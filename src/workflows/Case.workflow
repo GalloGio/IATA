@@ -1279,10 +1279,6 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>lopezbaism@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
             <recipient>martinyuks@iata.org</recipient>
             <type>user</type>
         </recipients>
@@ -2539,10 +2535,6 @@
         <protected>false</protected>
         <recipients>
             <recipient>batagliaf@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>lopezbaism@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -4737,6 +4729,26 @@
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>DPC_Auto_Close_DPC_Status</fullName>
+        <description>If the case stays in status &quot;4.0 Case Solved&quot; for 48hour, the case will be closed automatically.</description>
+        <field>Escalated_Status_ACCA__c</field>
+        <literalValue>12.0 Closed Automatically</literalValue>
+        <name>DPC : Auto Close - DPC Status</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>DPC_Auto_Close_Status</fullName>
+        <description>If the case stays in status &quot;4.0 Case Solved&quot; for 48hour, the case will be closed automatically.</description>
+        <field>Status</field>
+        <literalValue>12.0 Closed automatically</literalValue>
+        <name>DPC : Auto Close - Status</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>DPC_Date_Time_Completed</fullName>
         <description>this is the time when the case is completed by DPC (it is automaticaly populated on the case status COMPLETED)</description>
         <field>DPC_Date_Time_Completed__c</field>
@@ -4792,6 +4804,16 @@
         <name>DPC - Update case reason</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>DPCtoAlexei</fullName>
+        <field>Product_Manager_ACR__c</field>
+        <lookupValue>kalasha@iata.org</lookupValue>
+        <lookupValueType>User</lookupValueType>
+        <name>DPCtoAlexei</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
@@ -5070,6 +5092,16 @@
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>ICCS_Create_Status_to_Complete</fullName>
+        <description>ICCS: Create Status to Complete</description>
+        <field>Status</field>
+        <literalValue>Completed</literalValue>
+        <name>ICCS: Create Status to Complete</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>ICCS_Set_Eligibility_Checkbox</fullName>
         <description>Set the &quot;Eligibility_Documents Checklist approved&quot; checkbox</description>
         <field>Eligibility_Documents_Checklist_approved__c</field>
@@ -5119,6 +5151,16 @@ IF(IsClosed, &quot;Closed&quot;, &quot;Open&quot;)</formula>
         <name>ICCS Unique Case - Open</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>ICCS_Update_Status_to_Complete</fullName>
+        <description>ICCS: Update Status to Complete</description>
+        <field>Status</field>
+        <literalValue>Completed</literalValue>
+        <name>ICCS: Update Status to Complete</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
@@ -7698,6 +7740,12 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         </criteriaItems>
         <description>the query is reopened and assigned to: Cases - Complaints AME</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>AMS - Remove OSCAR from related case</fullName>
+        <active>false</active>
+        <formula>AND( RecordType.DeveloperName = &apos;OSCAR_Communication&apos;, Parent.RecordType.DeveloperName = &apos;OSCAR_Communication&apos; )</formula>
+        <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
         <fullName>ASPMissingAlertOnNewJoiningCase</fullName>
@@ -11169,6 +11217,21 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
+        <fullName>DPC to Product Manager-Alexei</fullName>
+        <actions>
+            <name>DPCtoAlexei</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <criteriaItems>
+            <field>Case.DPC_Software__c</field>
+            <operation>equals</operation>
+            <value>BSPlink,BOMS,ASD,SNAP</value>
+        </criteriaItems>
+        <description>Designate the Product Manager ACR based on the DPC System - ASD or BSPlink to Alexei Kalashnikov</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
         <fullName>DPC to Product Manager-ByrneJ</fullName>
         <actions>
             <name>DPCtoByrneJ</name>
@@ -11241,6 +11304,20 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <value>Germany,Korea,Maestro</value>
         </criteriaItems>
         <description>Designate the Product Manager ACR based on the DPC System - Germany,Korea,Maestro to Ron Cole</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>DPC%3A Auto Close</fullName>
+        <actions>
+            <name>DPC_Auto_Close_DPC_Status</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>DPC_Auto_Close_Status</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <formula>AND(RecordType.DeveloperName =&quot;DPC_Service_Request&quot;,   ISPICKVAL(Status, &quot;4.0 Case Solved&quot;), NOT(ISBLANK(Case_Solved_Date__c)), Case_Solved_Date__c &lt;= now()- 1)</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -11502,7 +11579,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         </actions>
         <active>true</active>
         <description>Clear New interaction field when Query is closed. It is necessary when query  had another Record Type with New Interaction Info</description>
-        <formula>AND(OR ( RecordType.DeveloperName = &quot;OSCAR_Communication&quot;,  RecordType.DeveloperName = &quot;CasesAmericas&quot;, RecordType.DeveloperName = &quot;CasesEurope&quot;, RecordType.DeveloperName = &quot;InternalCasesEuropeSCE&quot; ,RecordType.DeveloperName = &quot;CasesMENA&quot; ,RecordType.DeveloperName = &quot;ExternalCasesIDFSglobal&quot;,  RecordType.DeveloperName = &quot;Cases_China_North_Asia&quot;,  RecordType.DeveloperName = &quot;ProcessEuropeSCE&quot;,  RecordType.DeveloperName = &quot;sMAP_sales_Monitoring_Alert_Process&quot;, RecordType.DeveloperName = &quot;ComplaintIDFS&quot;, RecordType.DeveloperName = &quot;IDFS_Airline_Participation_Process&quot;, RecordType.DeveloperName = &quot;CS_Process_IDFS_ISS&quot;,  RecordType.DeveloperName =&quot;IATA_Financial_Review&quot;,  RecordType.DeveloperName =&quot;ID_Card_Application&quot;) , OwnerId = LastModifiedById, ispickval(Status, &quot;Closed&quot;), not(ispickval(New_interaction__c, &quot;&quot;)))</formula>
+        <formula>AND(OR ( RecordType.DeveloperName = &quot;OSCAR_Communication&quot;,   RecordType.DeveloperName = &quot;CasesAmericas&quot;,  RecordType.DeveloperName = &quot;CasesEurope&quot;,  RecordType.DeveloperName = &quot;InternalCasesEuropeSCE&quot; , RecordType.DeveloperName = &quot;CasesMENA&quot; , RecordType.DeveloperName = &quot;ExternalCasesIDFSglobal&quot;,   RecordType.DeveloperName = &quot;Cases_China_North_Asia&quot;,   RecordType.DeveloperName = &quot;ProcessEuropeSCE&quot;,   RecordType.DeveloperName = &quot;sMAP_sales_Monitoring_Alert_Process&quot;,  RecordType.DeveloperName = &quot;ComplaintIDFS&quot;,  RecordType.DeveloperName = &quot;IDFS_Airline_Participation_Process&quot;,  RecordType.DeveloperName = &quot;CS_Process_IDFS_ISS&quot;,   RecordType.DeveloperName =&quot;IATA_Financial_Review&quot;,   RecordType.DeveloperName =&quot;ID_Card_Application&quot;) ,  OwnerId = LastModifiedById, contains(TEXT(Status),&quot;Closed&quot;), not(ispickval(New_interaction__c, &quot;&quot;)))</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -11772,7 +11849,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         </actions>
         <active>true</active>
         <description>Set the &quot;Eligibility_Documents Checklist approved&quot; checkbox when all the documents or actions in the Acceptance checklist have been processed (have been selected).</description>
-        <formula>AND (   RecordType.DeveloperName = &apos;FDS_ASP_Management&apos;,   OR (     AND (       ISPICKVAL( CaseArea__c , &apos;FDS - Create Authorized Signatories Package&apos;),       INCLUDES( Acceptance_checklist__c , &apos;ASP - Letter uploaded to MDM&apos;),       INCLUDES( Acceptance_checklist__c , &apos;ASP - ID Copies (2) &amp; Signatures checked&apos;),       INCLUDES( Acceptance_checklist__c , &apos;ASP - Complete Status set in MDM&apos;),       INCLUDES( Acceptance_checklist__c , &apos;ASP - Signatures Validated&apos;),       INCLUDES( Acceptance_checklist__c , &apos;ASP - Contacts Updated&apos;),       INCLUDES( Acceptance_checklist__c , &apos;ASP - Package uploaded to MDM&apos;),       INCLUDES( Acceptance_checklist__c , &apos;ASP - Banking Resolution applied&apos;),       OR (         INCLUDES( Acceptance_checklist__c , &apos;CitiDirect User Rights granted&apos;),         NOT (ISPICKVAL( Account.ICCS_Membership_Status__c, &apos;Member&apos; ))       )     ),     AND (       ISPICKVAL(CaseArea__c ,&apos;FDS - Update Authorized Signatories Package&apos;),        ISPICKVAL(Type_of_Change__c ,&apos;ASP - Signatory Addition&apos;),        INCLUDES( Acceptance_checklist__c , &apos;ASP - Letter uploaded to MDM&apos;),       INCLUDES( Acceptance_checklist__c , &apos;ASP - ID Copies (2) &amp; Signatures checked&apos;),       INCLUDES( Acceptance_checklist__c , &apos;ASP - Complete Status set in MDM&apos;),       INCLUDES( Acceptance_checklist__c , &apos;ASP - Signatures Validated&apos;)     ),     AND (       ISPICKVAL(CaseArea__c ,&apos;FDS - Update Authorized Signatories Package&apos;),        ISPICKVAL(Type_of_Change__c ,&apos;ASP - Signatory Replacement&apos;),        INCLUDES( Acceptance_checklist__c , &apos;ASP - Letter uploaded to MDM&apos;),       INCLUDES( Acceptance_checklist__c , &apos;ASP - ID Copies (2) &amp; Signatures checked&apos;),       INCLUDES( Acceptance_checklist__c , &apos;ASP - Complete Status set in MDM&apos;),       INCLUDES( Acceptance_checklist__c , &apos;ASP - Signatures Validated&apos;)     ),     AND (       ISPICKVAL(CaseArea__c ,&apos;FDS - Update Authorized Signatories Package&apos;),        ISPICKVAL(Type_of_Change__c ,&apos;ASP - Signatory Replacement for Exec. Officer specifically&apos;),        INCLUDES( Acceptance_checklist__c , &apos;ASP - Letter uploaded to MDM&apos;),       INCLUDES( Acceptance_checklist__c , &apos;ASP - ID Copies (2) &amp; Signatures checked&apos;),       INCLUDES( Acceptance_checklist__c , &apos;ASP - Complete Status set in MDM&apos;),       INCLUDES( Acceptance_checklist__c , &apos;ASP - Signatures Validated&apos;),       INCLUDES( Acceptance_checklist__c , &apos;ASP - Banking Resolution applied&apos;)     ),     AND (       ISPICKVAL(CaseArea__c ,&apos;FDS - Update Authorized Signatories Package&apos;),        ISPICKVAL(Type_of_Change__c ,&apos;ASP - Signatory Deletion&apos;),        INCLUDES( Acceptance_checklist__c , &apos;ASP - Letter uploaded to MDM&apos;),       INCLUDES( Acceptance_checklist__c , &apos;ASP - Complete Status set in MDM&apos;)     )   ) )</formula>
+        <formula>OR( AND(  RecordType.DeveloperName =&quot;FDS_ASP_Management&quot;,  ISPICKVAL( CaseArea__c , &quot;FDS - Create Authorized Signatories Package&quot;),  INCLUDES(Documentation_received__c, &quot;ASP - Request Letter&quot;),  INCLUDES(Documentation_received__c, &quot;ASP - ID Copies (2) &amp; Signatures&quot;),  INCLUDES(Documentation_received__c, &quot;ASP - List of Contacts (ICCS - AP)&quot;),  INCLUDES(Documentation_received__c, &quot;ASP - Banking Resolution&quot;),  INCLUDES(Acceptance_checklist__c ,&quot;ASP - ID Copies (2) &amp; Signatures checked&quot;),  INCLUDES(Acceptance_checklist__c ,&quot;ASP - Contacts Updated&quot;),  INCLUDES(Acceptance_checklist__c ,&quot;ASP - Signatures Validated&quot;),  INCLUDES(Acceptance_checklist__c ,&quot;ASP - Banking Resolution applied&quot;)  ) , AND(  RecordType.DeveloperName =&quot;FDS_ASP_Management&quot;,  ISPICKVAL( CaseArea__c , &quot;FDS - Update Authorized Signatories Package&quot;),  OR(  AND(ISPICKVAL(Type_of_Change__c, &quot;ASP - Signatory Replacement for Exec. Officer specifically&quot;),  INCLUDES(Documentation_received__c, &quot;ASP - Request Letter&quot;),  INCLUDES(Documentation_received__c, &quot;ASP - ID Copies (2) &amp; Signatures&quot;),  INCLUDES(Documentation_received__c, &quot;ASP - Banking Resolution&quot;),  INCLUDES(Acceptance_checklist__c ,&quot;ASP - Request Letter&quot;),  INCLUDES(Acceptance_checklist__c ,&quot;ASP - ID Copies (2) &amp; Signatures checked&quot;),  INCLUDES(Acceptance_checklist__c ,&quot;ASP - Banking Resolution applied&quot;)  ),   AND(ISPICKVAL(Type_of_Change__c, &quot;ASP - Signatory Replacement&quot;),  INCLUDES(Documentation_received__c, &quot;ASP - Request Letter&quot;),  INCLUDES(Documentation_received__c, &quot;ASP - ID Copies (2) &amp; Signatures&quot;),  INCLUDES(Acceptance_checklist__c ,&quot;ASP - Request Letter&quot;),  INCLUDES(Acceptance_checklist__c ,&quot;ASP - ID Copies (2) &amp; Signatures checked&quot;)  ),  AND(ISPICKVAL(Type_of_Change__c, &quot;ASP - Signatory Addition&quot;),  INCLUDES(Documentation_received__c, &quot;ASP - Request Letter&quot;),  INCLUDES(Documentation_received__c, &quot;ASP - ID Copies (2) &amp; Signatures&quot;),  INCLUDES(Acceptance_checklist__c ,&quot;ASP - Request Letter&quot;),  INCLUDES(Acceptance_checklist__c ,&quot;ASP - ID Copies (2) &amp; Signatures checked&quot;)  ),  AND(ISPICKVAL(Type_of_Change__c, &quot;ASP - Signatory Deletion&quot;),  INCLUDES(Documentation_received__c, &quot;ASP - Request Letter&quot;),  INCLUDES(Acceptance_checklist__c ,&quot;ASP - Request Letter&quot;)  )  )) )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -12276,10 +12353,6 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <name>FDS_Set_Status_Pending_customer</name>
             <type>FieldUpdate</type>
         </actions>
-        <actions>
-            <name>ASP_Case_created_Status_to_be_updated_in_MDM</name>
-            <type>Task</type>
-        </actions>
         <active>true</active>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
@@ -12303,10 +12376,6 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <actions>
             <name>FDS_Set_Status_Pending_customer</name>
             <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>ASP_Case_created_Status_to_be_updated_in_MDM</name>
-            <type>Task</type>
         </actions>
         <active>true</active>
         <criteriaItems>
@@ -12351,6 +12420,126 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <active>true</active>
         <description>Notify the Case Contact on ICCS CitiDirect AFRD cases that the steps 1 and 2 of the process are completed and the RefNB is filled in.</description>
         <formula>AND (   RecordType.DeveloperName = &apos;FDS_ICCS_CitiDirect&apos;,    ISPICKVAL( CaseArea__c , &apos;ICCS - Assign AFRD CitiDirect Rights&apos;),    INCLUDES( Acceptance_checklist__c , &apos;1. AFRD - Entitlement requested&apos;),    INCLUDES( Acceptance_checklist__c , &apos;2. AFRD - Delivery Option set up&apos;),    External_Reference_Number__c &lt;&gt; &apos;&apos; , Do_Not_Send_Notification__c = false )</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>ICCS_Create Status to Complete</fullName>
+        <actions>
+            <name>ICCS_Create_Status_to_Complete</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <booleanFilter>1 AND 2 AND (3 OR 4 OR 5) AND 6 AND 7</booleanFilter>
+        <criteriaItems>
+            <field>Case.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>FDS ASP Management</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.CaseArea__c</field>
+            <operation>equals</operation>
+            <value>FDS - Create Authorized Signatories Package</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Reason1__c</field>
+            <operation>equals</operation>
+            <value>Addition</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Reason1__c</field>
+            <operation>equals</operation>
+            <value>Airline joining</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Reason1__c</field>
+            <operation>equals</operation>
+            <value>Update Package</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Documentation_received__c</field>
+            <operation>includes</operation>
+            <value>ASP - Request Letter,ASP - ID Copies (2) &amp; Signatures,ASP - List of Contacts (ICCS - AP),ASP - Banking Resolution</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Acceptance_checklist__c</field>
+            <operation>includes</operation>
+            <value>ASP - Request Letter,ASP - ID Copies (2) &amp; Signatures checked,ASP - Signatures Validated,ASP - Banking Resolution applied</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>ICCS_Update Status to Complete</fullName>
+        <actions>
+            <name>ICCS_Update_Status_to_Complete</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <booleanFilter>1 AND 2 AND 3 AND ( (4 AND 5 AND 6) OR ((7 OR 8) AND 9 AND 10) OR (11 AND 12 AND 13))</booleanFilter>
+        <criteriaItems>
+            <field>Case.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>FDS ASP Management</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.CaseArea__c</field>
+            <operation>equals</operation>
+            <value>FDS - Update Authorized Signatories Package</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Reason1__c</field>
+            <operation>equals</operation>
+            <value>Change Request</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Type_of_Change__c</field>
+            <operation>equals</operation>
+            <value>ASP - Signatory Replacement for Exec. Officer specifically</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Acceptance_checklist__c</field>
+            <operation>includes</operation>
+            <value>ASP - Banking Resolution applied</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Documentation_received__c</field>
+            <operation>includes</operation>
+            <value>ASP - Banking Resolution</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Type_of_Change__c</field>
+            <operation>equals</operation>
+            <value>ASP - Signatory Addition</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Type_of_Change__c</field>
+            <operation>equals</operation>
+            <value>ASP - Signatory Replacement</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Documentation_received__c</field>
+            <operation>includes</operation>
+            <value>ASP - ID Copies (2) &amp; Signatures,ASP - Request Letter</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Acceptance_checklist__c</field>
+            <operation>includes</operation>
+            <value>ASP - ID Copies (2) &amp; Signatures checked,ASP - Request Letter</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Type_of_Change__c</field>
+            <operation>equals</operation>
+            <value>ASP - Signatory Deletion</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Documentation_received__c</field>
+            <operation>includes</operation>
+            <value>ASP - Request Letter</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Acceptance_checklist__c</field>
+            <operation>includes</operation>
+            <value>ASP - Request Letter</value>
+        </criteriaItems>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -13481,7 +13670,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         </actions>
         <active>true</active>
         <description>SIDRA</description>
-        <formula>AND( NOT(SIDRA_workflow_flag__c), RecordType.Name = &quot;SIDRA&quot;, OR(AND(ISPICKVAL(Total_Irregularities__c,&quot;4&quot;), Acc_IRR_leading_to_DEF__c = 4),  AND(ISPICKVAL(Total_Irregularities__c,&quot;6&quot;), Acc_IRR_leading_to_DEF__c = 6),  AND(ISPICKVAL(Total_Irregularities__c,&quot;8&quot;), Acc_IRR_leading_to_DEF__c = 8),  AND(ISPICKVAL(Total_Irregularities__c,&quot;10&quot;), Acc_IRR_leading_to_DEF__c = 10),  AND( REI_Previous_12_Months_CASS_only__c , ispickval( Region__c ,&quot;europe&quot;))))</formula>
+        <formula>AND( NOT(SIDRA_workflow_flag__c), 	 OR( 		RecordType.Name = &quot;SIDRA&quot;, 		RecordType.Name = &quot;SIDRA_Lite&quot; 		), 	 OR( 		AND( Account.Accumulated_Irregularities__c &gt;= Acc_IRR_leading_to_DEF__c),   		AND(REI_Previous_12_Months_CASS_only__c , ispickval( Region__c ,&quot;europe&quot;)) 	 ) )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -14708,7 +14897,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <criteriaItems>
             <field>Case.Origin</field>
             <operation>notEqual</operation>
-            <value>Internal Case,Phone</value>
+            <value>Internal Case,Phone,Chat</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.OwnerId</field>
