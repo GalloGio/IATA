@@ -21,7 +21,7 @@
 
                 <apex:pageBlockSection id="CSVArea" title="CSV File Download" collapsible="false" rendered="{!fullPurgeId != null}">
 
-                    <apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem >
 
                         <button onclick="window.open('/apex/AMS_SOQL_ExportPage?Id={!fullPurgeId}'); return false;">Download Results here</button>
 
@@ -53,7 +53,7 @@
 
                 <apex:pageBlockSection id="CSVArea" title="CSV File Download" collapsible="false" rendered="{!litePurgeId != null}">
 
-                    <apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem >
 
                         <button onclick="window.open('/apex/AMS_SOQL_ExportPage?Id={!litePurgeId}'); return false;">Download Results here</button>
 
@@ -71,7 +71,7 @@
 
         <apex:tab label="Purge Execution" name="tab3" id="tabThree">
 
-            <apex:form>
+            <apex:form >
 
                 <apex:pagemessages />
                 <apex:pageBlock mode="edit" id="pageBlock3">
@@ -167,7 +167,7 @@
                 </apex:pageBlock>
 
             </apex:form>
-            <apex:form>
+            <apex:form >
                 <apex:pageBlock id="pageBlock4"  mode="edit">
 
                     <apex:pageBlockSection columns="1" title="Process Status" rendered="{!batchStatusBool}">

@@ -646,7 +646,7 @@
 <fieldPermissions><editable>true</editable><field>AMS_OSCAR__c.Documentation_remarks__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>AMS_OSCAR__c.Dossier_Reception_Date__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>AMS_OSCAR__c.Dossier_Validation__c</field><readable>true</readable></fieldPermissions>
-<fieldPermissions><editable>false</editable><field>AMS_OSCAR__c.Emails_reference_Id__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>AMS_OSCAR__c.Emails_reference_Id__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>AMS_OSCAR__c.Fees_refund_requested__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>AMS_OSCAR__c.Fees_refunds_requested_withdrawal__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>AMS_OSCAR__c.Finalization_checklist__c</field><readable>true</readable></fieldPermissions>
@@ -702,7 +702,7 @@
 <fieldPermissions><editable>true</editable><field>AMS_OSCAR__c.OSCAR_Deadline__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>AMS_OSCAR__c.Off_site_storage__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>AMS_OSCAR__c.Operational_Systems_Updated__c</field><readable>true</readable></fieldPermissions>
-<fieldPermissions><editable>false</editable><field>AMS_OSCAR__c.Oscar_Communication_Case_Id__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>AMS_OSCAR__c.Oscar_Communication_Case_Id__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AMS_OSCAR__c.Out_of_deadline_SAAM__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>AMS_OSCAR__c.PSAA_EACP_Agreement_received__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>AMS_OSCAR__c.PSAA_signed_copy_sent__c</field><readable>true</readable></fieldPermissions>
@@ -5233,6 +5233,10 @@
 <fieldPermissions><editable>false</editable><field>Instant_Surveys__c.CX_Satisfaction__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Instant_Surveys__c.Case_Area__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Instant_Surveys__c.Case_ID__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>Instant_Surveys__c.Chat_Agent_Experience__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>Instant_Surveys__c.Chat_Agent__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>Instant_Surveys__c.Chat_Channel__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>Instant_Surveys__c.Chat_comment__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Instant_Surveys__c.Clarity_of_response__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Instant_Surveys__c.Contact__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Instant_Surveys__c.Courtesy_and_friendliness__c</field><readable>false</readable></fieldPermissions>
@@ -5998,6 +6002,7 @@
 <fieldPermissions><editable>false</editable><field>Product2.IATA_ORG_Group__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Product2.IEC_Cart_Option__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Product2.IEC_OrderBy__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>Product2.IEC_Override_Profit_Center__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Product2.IEC_Page_Areas_of_Activity__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Product2.IEC_Page_Content_Types__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Product2.IEC_Parent_Product__c</field><readable>false</readable></fieldPermissions>
@@ -7147,7 +7152,7 @@
 <recordTypeVisibilities><default>false</default><recordType>AMS_Facility__c.Office</recordType><visible>false</visible></recordTypeVisibilities>
 <recordTypeVisibilities><default>false</default><recordType>AMS_Facility__c.Warehouse</recordType><visible>false</visible></recordTypeVisibilities>
 <recordTypeVisibilities><default>false</default><recordType>AMS_OSCAR__c.CERTIFICATE</recordType><visible>true</visible></recordTypeVisibilities>
-<recordTypeVisibilities><default>false</default><recordType>AMS_OSCAR__c.CERTIFICATION</recordType><visible>false</visible></recordTypeVisibilities>
+<recordTypeVisibilities><default>false</default><recordType>AMS_OSCAR__c.CERTIFICATION</recordType><visible>true</visible></recordTypeVisibilities>
 <recordTypeVisibilities><default>true</default><personAccountDefault>true</personAccountDefault><recordType>AMS_OSCAR__c.CHANGE</recordType><visible>true</visible></recordTypeVisibilities>
 <recordTypeVisibilities><default>false</default><recordType>AMS_OSCAR__c.CORRECTION</recordType><visible>true</visible></recordTypeVisibilities>
 <recordTypeVisibilities><default>false</default><recordType>AMS_OSCAR__c.NEW</recordType><visible>true</visible></recordTypeVisibilities>
@@ -7319,6 +7324,7 @@
 <recordTypeVisibilities><default>false</default><recordType>ID_Card__c.WebStar</recordType><visible>false</visible></recordTypeVisibilities>
 <recordTypeVisibilities><default>false</default><recordType>IEC_Event_Release__c.Event_released</recordType><visible>false</visible></recordTypeVisibilities>
 <recordTypeVisibilities><default>true</default><personAccountDefault>true</personAccountDefault><recordType>Instant_Surveys__c.Espiritu_IS_Record_Type</recordType><visible>true</visible></recordTypeVisibilities>
+<recordTypeVisibilities><default>false</default><recordType>Instant_Surveys__c.Live_Agent_Chat</recordType><visible>false</visible></recordTypeVisibilities>
 <recordTypeVisibilities><default>false</default><recordType>Instant_Surveys__c.SF_ACR_Survey</recordType><visible>false</visible></recordTypeVisibilities>
 <recordTypeVisibilities><default>false</default><recordType>Lead.CorpComLeads</recordType><visible>false</visible></recordTypeVisibilities>
 <recordTypeVisibilities><default>false</default><recordType>Lead.GDP</recordType><visible>false</visible></recordTypeVisibilities>
