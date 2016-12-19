@@ -138,6 +138,10 @@
                 <fullName>COR</fullName>
                 <default>false</default>
             </picklistValues>
+            <picklistValues>
+                <fullName>LET</fullName>
+                <default>false</default>
+            </picklistValues>
             <sorted>false</sorted>
         </picklist>
         <required>false</required>
@@ -10026,6 +10030,10 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
             </values>
             <values>
                 <fullName>COR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LET</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
