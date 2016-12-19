@@ -38,7 +38,7 @@
                 </script>
 
 
-                <script type='text/javascript' src='https://c.{!$setup.LiveAgentMinutesPerUserInQueue__c.url__c}/content/g/js/37.0/deployment.js'></script>
+                <script type='text/javascript' src='https://c.la1-c2-lon.salesforceliveagent.com/content/g/js/37.0/deployment.js'></script>
 
                 <script type="text/javascript">
 
@@ -67,7 +67,7 @@
                         liveagent.findOrCreate('Account').map('Id','userAccountId', true, true, false).linkToEntity('Case','AccountId').saveToTranscript('Account');
                         liveagent.setChatWindowHeight(490);
                         liveagent.setChatWindowWidth(315);
-                        liveagent.init('https://d.{!$setup.LiveAgentMinutesPerUserInQueue__c.url__c}/chat', '{!liveAgentBtn.DeploymentId__c}','{!$Organization.Id}'.substring(0,15));
+                        liveagent.init('https://d.la1-c2-lon.salesforceliveagent.com/chat', '{!liveAgentBtn.DeploymentId__c}','{!$Organization.Id}'.substring(0,15));
                 </script>
 
             </apex:outputPanel>
