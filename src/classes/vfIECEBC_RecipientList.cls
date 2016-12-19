@@ -10,7 +10,7 @@ public class vfIECEBC_RecipientList extends vfIECEBC_Abstract_List {
         EBC_Master_Filter__c cloned = duplicate(selectedItem.Id, castedSelectedItem.Name);
         
         
-        PageReference pr = new PageReference('/iec/IECEBC_Recipient?id=' + cloned.Id);
+        PageReference pr = new PageReference('/apex/IECEBC_Recipient?id=' + cloned.Id);
         pr.setRedirect(true);
         return pr;
     }
