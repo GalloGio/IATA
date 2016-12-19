@@ -10670,6 +10670,14 @@ Select at least one Authorized Signatory, and choose the Financial Assessment Co
         <value>Agency Changes</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_eBulletin_AgencyChanges_HelpText</fullName>
+        <categories>ISSP, Portal, AMS, E-Bulletin</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS eBulletin AgencyChanges HelpText</shortDescription>
+        <value>Agency changes help text to go here...</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_eBulletin_AgencyInformation</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -10744,7 +10752,23 @@ Select at least one Authorized Signatory, and choose the Financial Assessment Co
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_eBulletin_DAILY_Bulletin</shortDescription>
+        <value>DAILY eBulletin</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_eBulletin_DAILY_Bulletin_Enable</fullName>
+        <categories>ISSP, Portal, AMS, E-Bulletin</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_eBulletin_DAILY_Bulletin_Enable</shortDescription>
         <value>Enable DAILY eBulletin</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_eBulletin_DAILY_Setup</fullName>
+        <categories>ISSP, Portal, AMS, E-Bulletin</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS eBulletin DAILY Setup</shortDescription>
+        <value>Setup DAILY eBulletin</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_eBulletin_DailyFrequency</fullName>
@@ -10759,6 +10783,14 @@ Select at least one Authorized Signatory, and choose the Financial Assessment Co
         <protected>false</protected>
         <shortDescription>ISSP_AMS_eBulletin_Defaults</shortDescription>
         <value>Defaults</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_eBulletin_Defaults_HelpText</fullName>
+        <categories>ISSP, Portal, AMS, E-Bulletin</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS eBulletin Defaults HelpText</shortDescription>
+        <value>Default Information, including Reinstatement after Default</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_eBulletin_Description</fullName>
@@ -10787,6 +10819,20 @@ Select at least one Authorized Signatory, and choose the Financial Assessment Co
         <protected>false</protected>
         <shortDescription>ISSP_AMS_eBulletin_Enabled</shortDescription>
         <value>Active</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_eBulletin_ErrorMsg_00</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_eBulletin_ErrorMsg_00</shortDescription>
+        <value>An error occurred! Please try again later.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_eBulletin_ErrorMsg_01</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_eBulletin_ErrorMsg_01</shortDescription>
+        <value>There are no Change Codes Information to extract for the specified period!</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_eBulletin_FilterOptionsDaily</fullName>
@@ -10831,11 +10877,27 @@ Select at least one Authorized Signatory, and choose the Financial Assessment Co
         <value>Irregularities</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_eBulletin_Irregularities_HelpText</fullName>
+        <categories>ISSP, Portal, AMS, E-Bulletin</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS eBulletin Irregularities HelpText</shortDescription>
+        <value>Irregularities info to go here...</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_eBulletin_NewApplicationProcesses</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_eBulletin_NewApplicationProcesses</shortDescription>
         <value>New Application Processes</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_eBulletin_NewApplications_HelpText</fullName>
+        <categories>ISSP, Portal, AMS, E-Bulletin</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS eBulletin NewApplications HelpText</shortDescription>
+        <value>New applications help text to go here...</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_eBulletin_OptOut_Daily_Notifications</fullName>
@@ -10892,6 +10954,14 @@ Select at least one Authorized Signatory, and choose the Financial Assessment Co
         <protected>false</protected>
         <shortDescription>ISSP_AMS_eBulletin_Reviews</shortDescription>
         <value>Reviews</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_eBulletin_Reviews_HelpText</fullName>
+        <categories>ISSP, Portal, AMS, E-Bulletin</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS eBulletin Reviews HelpText</shortDescription>
+        <value>It includes Notice of Termination</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_eBulletin_RunReport</fullName>
@@ -10964,6 +11034,14 @@ Select at least one Authorized Signatory, and choose the Financial Assessment Co
         <value>Termination &amp; Closures</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_eBulletin_Termination_HelpText</fullName>
+        <categories>ISSP, Portal, AMS, E-Bulletin</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS eBulletin Termination HelpText</shortDescription>
+        <value>It includes Reinstatement after Termination and Voluntary Relinquishment</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_eBulletin_TimeZone_Selection</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -10978,11 +11056,35 @@ Select at least one Authorized Signatory, and choose the Financial Assessment Co
         <value>AIRS / CAIRS Online Bulletin</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_eBulletin_Unavailable</fullName>
+        <categories>ISSP, Portal, AMS, E-Bulletin</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS eBulletin Unavailable</shortDescription>
+        <value>The AIRS / CAIRS Online bulletin is not yet available in your country. Please check back later.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_eBulletin_WEEKLY_Bulletin</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_eBulletin_WEEKLY_Bulletin</shortDescription>
+        <value>WEEKLY eBulletin</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_eBulletin_WEEKLY_Bulletin_Enable</fullName>
+        <categories>ISSP, Portal, AMS, E-Bulletin</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_eBulletin_WEEKLY_Bulletin Enable</shortDescription>
         <value>Enable WEEKLY eBulletin</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_eBulletin_WEEKLY_Setup</fullName>
+        <categories>ISSP, Portal, AMS, E-Bulletin</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS eBulletin WEEKLY Setup</shortDescription>
+        <value>Setup WEEKLY eBulletin</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_eBulletin_btn_DownloadDailyReport</fullName>
@@ -11867,6 +11969,22 @@ Can you please confirm which country you&apos;ve previously received support for
         <value>Company Information</value>
     </labels>
     <labels>
+        <fullName>ISSP_CompanyInformation_EMADOMVAL_AddBtn</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP CompanyInformation EMADOMVAL AddBtn</shortDescription>
+        <value>Manage Company email domains</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_CompanyInformation_EMADOMVAL_Title</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP CompanyInformation EMADOMVAL Title</shortDescription>
+        <value>Company valid email domains</value>
+    </labels>
+    <labels>
         <fullName>ISSP_CompanyLocation</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
@@ -12007,6 +12125,14 @@ Can you please confirm which country you&apos;ve previously received support for
         <protected>false</protected>
         <shortDescription>ISSP_Contact</shortDescription>
         <value>Contact</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ContactList_HoverPopup_Text</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP ContactList HoverPopup Text</shortDescription>
+        <value>This contact appears to have an email with a domain different from the validated ones from this company</value>
     </labels>
     <labels>
         <fullName>ISSP_ContactName</fullName>
@@ -12413,6 +12539,69 @@ Can you please confirm which country you&apos;ve previously received support for
         <protected>false</protected>
         <shortDescription>ISSP EBulletin Description</shortDescription>
         <value>Allows the generation of DAILY &amp; WEEKLy Reports for Agency related changes.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_EMADOMVAL_AddBtn</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP EMADOMVAL AddBtn</shortDescription>
+        <value>Add new domain</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_EMADOMVAL_BackBtn</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP EMADOMVAL BackBtn</shortDescription>
+        <value>Back to My company information</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_EMADOMVAL_ImportantInformation</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP EMADOMVAL ImportantInformation</shortDescription>
+        <value>By keeping updated the list of email domains of your company, you help us flagging contacts that may be located under your company and don&apos;t have a valid domain, also making it easier for you as an admin to locate them and take corrective actions if needed (deactivate them as contacts in the company). Please add here any valid domain for the company, worldwide (it may be different domains are valid in different locations).</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_EMADOMVAL_RemoveConfirmMsg</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP EMADOMVAL RemoveConfirmMsg</shortDescription>
+        <value>Are you sure that you want to delete this entry ? All linked contacts will be impacted !</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_EMADOMVAL_TableTitle_Action</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP EMADOMVAL TableTitle Action</shortDescription>
+        <value>Action</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_EMADOMVAL_TableTitle_AddedOn</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP EMADOMVAL TableTitle AddedOn</shortDescription>
+        <value>Added on</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_EMADOMVAL_TableTitle_EmailDomain</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP EMADOMVAL TableTitle EmailDomain</shortDescription>
+        <value>Email domain (without @)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_EMADOMVAL_Title</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP EMADOMVAL Title</shortDescription>
+        <value>Manage my company Email domains</value>
     </labels>
     <labels>
         <fullName>ISSP_Edit</fullName>
@@ -14311,6 +14500,14 @@ this is the tiess topic help</value>
         <protected>false</protected>
         <shortDescription>ISSP MIR Rates Link</shortDescription>
         <value>The exchange rate used to convert local currencies to US dollars for the Management Information Report is derived from the Five Day Rates (FDR) product. The FDR service is available for purchase and can be requested using this &lt;a href=&quot;https://www.iataonline.com/Store/Products/Product+Detail.htm?cs_id=7031%2D01&amp;cs_catalog=Publications&quot; target=&quot;_blank&quot;&gt;&lt;font color=&quot;0000EE&quot;&gt;link&lt;/font&gt;&lt;/a&gt;.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_MITA_Agreements_Service_Name</fullName>
+        <categories>ISSP, MITA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP MITA Agreements Service Name</shortDescription>
+        <value>MITA Agreements</value>
     </labels>
     <labels>
         <fullName>ISSP_MakeAdmin</fullName>
