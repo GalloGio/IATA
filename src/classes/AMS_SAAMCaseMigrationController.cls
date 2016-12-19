@@ -327,7 +327,7 @@ public class AMS_SAAMCaseMigrationController {
                     try{
                         container.processing = true;
                         if(!Test.isRunningTest())
-                            container = AMS_MigrationToolHelper.migratecases(container);
+                            container = AMS_MigrationToolHelper.migratecases(container,null);
                         
                     }catch(Exception e){
                         ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, e.getMessage()));      

@@ -198,20 +198,20 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
                 changeCode.status  = '9';
 
                 Account acct = new Account(Id = updatedOscar.Account__c);
-                AMS_Utils.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {updatedOscar}, new List<Account> {acct}, true);
+                AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {updatedOscar}, new List<Account> {acct}, true);
 
             } else if (oldOSCAR.STEP2__c != 'Failed' && updatedOscar.STEP2__c == 'Failed' && updatedOscar.RPM_Approval__c=='Authorize Disapproval') {
 
                 AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
 
                 changeCode.name = 'DIS';
-                changeCode.reasonCode = '00';
+                changeCode.reasonCode = '12';
                 changeCode.memoText = AMS_Utils.getChangeCodeMemoText(updatedOscar.Process__c,changeCode.name);
-                changeCode.reasonDesc  = 'NON COMPLIANCE TO CRITERIA';
-                changeCode.status  = '0';
+                changeCode.reasonDesc  = 'APPLICATION DISAPPROVED';
+                changeCode.status  = '1';
 
                 Account acct = new Account(Id = updatedOscar.Account__c);
-                AMS_Utils.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {updatedOscar}, new List<Account> {acct}, true);
+                AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {updatedOscar}, new List<Account> {acct}, true);
             }
         // Management of CORRECTION OSCARs
         }else if (updatedOscar.recordTypeID == corrRT){
@@ -269,7 +269,7 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
                         changeCode.status  = '9';
 
                         Account acct = new Account(Id = updatedOscar.Account__c);
-                        AMS_Utils.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {updatedOscar}, new List<Account> {acct}, true);
+                        AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {updatedOscar}, new List<Account> {acct}, true);
                     }
                     // If the picklist is set create a CAD change code.
                     if(updatedOscar.AMS_Correction_change_code__c == 'CAD') {
@@ -288,6 +288,19 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
                             changeCode.reasonCode = accountActiveChangeCode[0].Reason_Code__c;
                             changeCode.reasonDesc = accountActiveChangeCode[0].Reason_Description__c;
                         }
+                        Account acct = new Account(Id = updatedOscar.Account__c);
+                        AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {updatedOscar}, new List<Account> {acct}, true);
+                    }
+                    if(updatedOscar.AMS_Correction_change_code__c == 'LET') {
+                        system.debug(LoggingLevel.ERROR,'applyChangeCodesWithDependencies() -> generate the change code');
+                        AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
+
+                        changeCode.name = 'LET';
+                        changeCode.reasonCode = '91';
+                        changeCode.memoText = '';
+                        changeCode.reasonDesc  = 'ACCREDITED–MEETS–STANDARDS';
+                        changeCode.status  = '9';
+
                         Account acct = new Account(Id = updatedOscar.Account__c);
                         AMS_Utils.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {updatedOscar}, new List<Account> {acct}, true);
                     }
