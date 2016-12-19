@@ -3039,7 +3039,7 @@
     {
       "Name": "CORRECTION.1.0",
     "Flows": [{
-        "Name": "AMS_OSCAR_APPLICATIONRECEIPT",
+        "Name": "AMS_PERFORM_CORRECTION",
         "Steps": [{
           "Name": "STEP6",
           "Required": [],
