@@ -5725,6 +5725,10 @@ and
         <name>ISSP_AMS_eBulletin_AgencyChanges</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS eBulletin AgencyChanges HelpText --></label>
+        <name>ISSP_AMS_eBulletin_AgencyChanges_HelpText</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_eBulletin_AgencyInformation --></label>
         <name>ISSP_AMS_eBulletin_AgencyInformation</name>
     </customLabels>
@@ -5769,12 +5773,24 @@ and
         <name>ISSP_AMS_eBulletin_DAILY_Bulletin</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_eBulletin_DAILY_Bulletin_Enable --></label>
+        <name>ISSP_AMS_eBulletin_DAILY_Bulletin_Enable</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS eBulletin DAILY Setup --></label>
+        <name>ISSP_AMS_eBulletin_DAILY_Setup</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_eBulletin_DailyFrequency --></label>
         <name>ISSP_AMS_eBulletin_DailyFrequency</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_eBulletin_Defaults --></label>
         <name>ISSP_AMS_eBulletin_Defaults</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS eBulletin Defaults HelpText --></label>
+        <name>ISSP_AMS_eBulletin_Defaults_HelpText</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_eBulletin_Description --></label>
@@ -5791,6 +5807,14 @@ and
     <customLabels>
         <label><!-- ISSP_AMS_eBulletin_Enabled --></label>
         <name>ISSP_AMS_eBulletin_Enabled</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_eBulletin_ErrorMsg_00 --></label>
+        <name>ISSP_AMS_eBulletin_ErrorMsg_00</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_eBulletin_ErrorMsg_01 --></label>
+        <name>ISSP_AMS_eBulletin_ErrorMsg_01</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_eBulletin_FilterOptionsDaily --></label>
@@ -5817,8 +5841,16 @@ and
         <name>ISSP_AMS_eBulletin_Irregularities</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS eBulletin Irregularities HelpText --></label>
+        <name>ISSP_AMS_eBulletin_Irregularities_HelpText</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_eBulletin_NewApplicationProcesses --></label>
         <name>ISSP_AMS_eBulletin_NewApplicationProcesses</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS eBulletin NewApplications HelpText --></label>
+        <name>ISSP_AMS_eBulletin_NewApplications_HelpText</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_eBulletin_OptOut_Daily_Notifications --></label>
@@ -5851,6 +5883,10 @@ and
     <customLabels>
         <label><!-- ISSP_AMS_eBulletin_Reviews --></label>
         <name>ISSP_AMS_eBulletin_Reviews</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS eBulletin Reviews HelpText --></label>
+        <name>ISSP_AMS_eBulletin_Reviews_HelpText</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_eBulletin_RunReport --></label>
@@ -5893,6 +5929,10 @@ and
         <name>ISSP_AMS_eBulletin_Termination_Closures</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS eBulletin Termination HelpText --></label>
+        <name>ISSP_AMS_eBulletin_Termination_HelpText</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_eBulletin_TimeZone_Selection --></label>
         <name>ISSP_AMS_eBulletin_TimeZone_Selection</name>
     </customLabels>
@@ -5901,8 +5941,20 @@ and
         <name>ISSP_AMS_eBulletin_Title</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS eBulletin Unavailable --></label>
+        <name>ISSP_AMS_eBulletin_Unavailable</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_eBulletin_WEEKLY_Bulletin --></label>
         <name>ISSP_AMS_eBulletin_WEEKLY_Bulletin</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_eBulletin_WEEKLY_Bulletin Enable --></label>
+        <name>ISSP_AMS_eBulletin_WEEKLY_Bulletin_Enable</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS eBulletin WEEKLY Setup --></label>
+        <name>ISSP_AMS_eBulletin_WEEKLY_Setup</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_eBulletin_btn_DownloadDailyReport --></label>
@@ -6359,6 +6411,14 @@ and
         <name>ISSP_CompanyInformation</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP CompanyInformation EMADOMVAL AddBtn --></label>
+        <name>ISSP_CompanyInformation_EMADOMVAL_AddBtn</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP CompanyInformation EMADOMVAL Title --></label>
+        <name>ISSP_CompanyInformation_EMADOMVAL_Title</name>
+    </customLabels>
+    <customLabels>
         <label>موقع الشركة</label>
         <name>ISSP_CompanyLocation</name>
     </customLabels>
@@ -6429,6 +6489,10 @@ and
     <customLabels>
         <label>جهة اتصال</label>
         <name>ISSP_Contact</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP ContactList HoverPopup Text --></label>
+        <name>ISSP_ContactList_HoverPopup_Text</name>
     </customLabels>
     <customLabels>
         <label>اسم المستخدم</label>
@@ -6633,6 +6697,38 @@ and
     <customLabels>
         <label><!-- ISSP EBulletin Description --></label>
         <name>ISSP_EBulletin_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP EMADOMVAL AddBtn --></label>
+        <name>ISSP_EMADOMVAL_AddBtn</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP EMADOMVAL BackBtn --></label>
+        <name>ISSP_EMADOMVAL_BackBtn</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP EMADOMVAL ImportantInformation --></label>
+        <name>ISSP_EMADOMVAL_ImportantInformation</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP EMADOMVAL RemoveConfirmMsg --></label>
+        <name>ISSP_EMADOMVAL_RemoveConfirmMsg</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP EMADOMVAL TableTitle Action --></label>
+        <name>ISSP_EMADOMVAL_TableTitle_Action</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP EMADOMVAL TableTitle AddedOn --></label>
+        <name>ISSP_EMADOMVAL_TableTitle_AddedOn</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP EMADOMVAL TableTitle EmailDomain --></label>
+        <name>ISSP_EMADOMVAL_TableTitle_EmailDomain</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP EMADOMVAL Title --></label>
+        <name>ISSP_EMADOMVAL_Title</name>
     </customLabels>
     <customLabels>
         <label>تحرير</label>
@@ -7589,6 +7685,10 @@ and
     <customLabels>
         <label><!-- ISSP MIR Rates Link --></label>
         <name>ISSP_MIR_Rates_Link</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP MITA Agreements Service Name --></label>
+        <name>ISSP_MITA_Agreements_Service_Name</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_ContactList --></label>
@@ -10955,72 +11055,22 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>wire_transfer_payment_msg</name>
     </customLabels>
     <globalPicklists>
-        <name>EF_User_Role</name>
+        <name>EF_Invoice_Distribution</name>
         <picklistValues>
-            <masterLabel>Airline Services Specialists</masterLabel>
-            <translation><!-- Airline Services Specialists --></translation>
+            <masterLabel>Electronic Via Email</masterLabel>
+            <translation><!-- Electronic Via Email --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Client Services Specialists</masterLabel>
-            <translation><!-- Client Services Specialists --></translation>
+            <masterLabel>Electronic Via Platform</masterLabel>
+            <translation><!-- Electronic Via Platform --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>E&amp;F General Access</masterLabel>
-            <translation><!-- E&amp;F General Access --></translation>
+            <masterLabel>No Invoice</masterLabel>
+            <translation><!-- No Invoice --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Head, Client Services</masterLabel>
-            <translation><!-- Head, Client Services --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Manager, Airline Services &amp; Head, Business Delivery</masterLabel>
-            <translation><!-- Manager, Airline Services &amp; Head, Business Delivery --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Manager, Business Development</masterLabel>
-            <translation><!-- Manager, Business Development --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Manager, Invoicing &amp; Accounting &amp; Data Transformation</masterLabel>
-            <translation><!-- Manager, Invoicing &amp; Accounting &amp; Data Transformation --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
-        <name>EF_Allow_Billing_Agreements</name>
-        <picklistValues>
-            <masterLabel>Allowed</masterLabel>
-            <translation><!-- Allowed --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Allowed with Approval</masterLabel>
-            <translation><!-- Allowed with Approval --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Not Allowed</masterLabel>
-            <translation><!-- Not Allowed --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
-        <name>EF_Frequency</name>
-        <picklistValues>
-            <masterLabel>2x/Week</masterLabel>
-            <translation><!-- 2x/Week --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>4x/Month</masterLabel>
-            <translation><!-- 4x/Month --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Fortnightly</masterLabel>
-            <translation><!-- Fortnightly --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Monthly</masterLabel>
-            <translation><!-- Monthly --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Weekly</masterLabel>
-            <translation><!-- Weekly --></translation>
+            <masterLabel>Paper</masterLabel>
+            <translation><!-- Paper --></translation>
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
@@ -11035,30 +11085,62 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
-        <name>EF_Payment_Terms</name>
+        <name>EF_Role</name>
         <picklistValues>
-            <masterLabel>07 days after invoice date</masterLabel>
-            <translation><!-- 07 days after invoice date --></translation>
+            <masterLabel>Account Manager</masterLabel>
+            <translation><!-- Account Manager --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>10 days after invoice date</masterLabel>
-            <translation><!-- 10 days after invoice date --></translation>
+            <masterLabel>Accounts Payable</masterLabel>
+            <translation><!-- Accounts Payable --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>15 days after invoice date</masterLabel>
-            <translation><!-- 15 days after invoice date --></translation>
+            <masterLabel>Accounts Receivable</masterLabel>
+            <translation><!-- Accounts Receivable --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>20 days after invoice date</masterLabel>
-            <translation><!-- 20 days after invoice date --></translation>
+            <masterLabel>Debt Management</masterLabel>
+            <translation><!-- Debt Management --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>30 days after invoice date</masterLabel>
-            <translation><!-- 30 days after invoice date --></translation>
+            <masterLabel>Dispute Management</masterLabel>
+            <translation><!-- Dispute Management --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Payable immediately due net</masterLabel>
-            <translation><!-- Payable immediately due net --></translation>
+            <masterLabel>Finance (Other)</masterLabel>
+            <translation><!-- Finance (Other) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>General Management</masterLabel>
+            <translation><!-- General Management --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Invoicing</masterLabel>
+            <translation><!-- Invoicing --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Operations</masterLabel>
+            <translation><!-- Operations --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Other</masterLabel>
+            <translation><!-- Other --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Reporting</masterLabel>
+            <translation><!-- Reporting --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Revenue Accounting</masterLabel>
+            <translation><!-- Revenue Accounting --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sales &amp; Marketing</masterLabel>
+            <translation><!-- Sales &amp; Marketing --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Technical Support</masterLabel>
+            <translation><!-- Technical Support --></translation>
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
@@ -11848,6 +11930,64 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
+        <name>EF_Payment_Terms</name>
+        <picklistValues>
+            <masterLabel>07 days after invoice date</masterLabel>
+            <translation><!-- 07 days after invoice date --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>10 days after invoice date</masterLabel>
+            <translation><!-- 10 days after invoice date --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>15 days after invoice date</masterLabel>
+            <translation><!-- 15 days after invoice date --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>20 days after invoice date</masterLabel>
+            <translation><!-- 20 days after invoice date --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>30 days after invoice date</masterLabel>
+            <translation><!-- 30 days after invoice date --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Payable immediately due net</masterLabel>
+            <translation><!-- Payable immediately due net --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
+        <name>EF_Payment_Method</name>
+        <picklistValues>
+            <masterLabel>Bank transfer</masterLabel>
+            <translation><!-- Bank transfer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Credit Card</masterLabel>
+            <translation><!-- Credit Card --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ICCS payments</masterLabel>
+            <translation><!-- ICCS payments --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ICH</masterLabel>
+            <translation><!-- ICH --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IRIS</masterLabel>
+            <translation><!-- IRIS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SPCR / SPDR</masterLabel>
+            <translation><!-- SPCR / SPDR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Virtual Account Payment</masterLabel>
+            <translation><!-- Virtual Account Payment --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
         <name>Category</name>
         <picklistValues>
             <masterLabel>ANSP</masterLabel>
@@ -12119,6 +12259,44 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
+        <name>EF_Allow_Billing_Agreements</name>
+        <picklistValues>
+            <masterLabel>Allowed</masterLabel>
+            <translation><!-- Allowed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Allowed with Approval</masterLabel>
+            <translation><!-- Allowed with Approval --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not Allowed</masterLabel>
+            <translation><!-- Not Allowed --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
+        <name>EF_Frequency</name>
+        <picklistValues>
+            <masterLabel>2x/Week</masterLabel>
+            <translation><!-- 2x/Week --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>4x/Month</masterLabel>
+            <translation><!-- 4x/Month --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Fortnightly</masterLabel>
+            <translation><!-- Fortnightly --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Monthly</masterLabel>
+            <translation><!-- Monthly --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Weekly</masterLabel>
+            <translation><!-- Weekly --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
         <name>EF_Manager_Approval</name>
         <picklistValues>
             <masterLabel>Approved</masterLabel>
@@ -12142,112 +12320,34 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
-        <name>EF_Invoice_Distribution</name>
+        <name>EF_User_Role</name>
         <picklistValues>
-            <masterLabel>Electronic Via Email</masterLabel>
-            <translation><!-- Electronic Via Email --></translation>
+            <masterLabel>Airline Services Specialists</masterLabel>
+            <translation><!-- Airline Services Specialists --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Electronic Via Platform</masterLabel>
-            <translation><!-- Electronic Via Platform --></translation>
+            <masterLabel>Client Services Specialists</masterLabel>
+            <translation><!-- Client Services Specialists --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>No Invoice</masterLabel>
-            <translation><!-- No Invoice --></translation>
+            <masterLabel>E&amp;F General Access</masterLabel>
+            <translation><!-- E&amp;F General Access --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Paper</masterLabel>
-            <translation><!-- Paper --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
-        <name>EF_Payment_Method</name>
-        <picklistValues>
-            <masterLabel>Bank transfer</masterLabel>
-            <translation><!-- Bank transfer --></translation>
+            <masterLabel>Head, Client Services</masterLabel>
+            <translation><!-- Head, Client Services --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Credit Card</masterLabel>
-            <translation><!-- Credit Card --></translation>
+            <masterLabel>Manager, Airline Services &amp; Head, Business Delivery</masterLabel>
+            <translation><!-- Manager, Airline Services &amp; Head, Business Delivery --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>ICCS payments</masterLabel>
-            <translation><!-- ICCS payments --></translation>
+            <masterLabel>Manager, Business Development</masterLabel>
+            <translation><!-- Manager, Business Development --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>ICH</masterLabel>
-            <translation><!-- ICH --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>IRIS</masterLabel>
-            <translation><!-- IRIS --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>SPCR / SPDR</masterLabel>
-            <translation><!-- SPCR / SPDR --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Virtual Account Payment</masterLabel>
-            <translation><!-- Virtual Account Payment --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
-        <name>EF_Role</name>
-        <picklistValues>
-            <masterLabel>Account Manager</masterLabel>
-            <translation><!-- Account Manager --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Accounts Payable</masterLabel>
-            <translation><!-- Accounts Payable --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Accounts Receivable</masterLabel>
-            <translation><!-- Accounts Receivable --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Debt Management</masterLabel>
-            <translation><!-- Debt Management --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Dispute Management</masterLabel>
-            <translation><!-- Dispute Management --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Finance (Other)</masterLabel>
-            <translation><!-- Finance (Other) --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>General Management</masterLabel>
-            <translation><!-- General Management --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Invoicing</masterLabel>
-            <translation><!-- Invoicing --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Operations</masterLabel>
-            <translation><!-- Operations --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Other</masterLabel>
-            <translation><!-- Other --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Reporting</masterLabel>
-            <translation><!-- Reporting --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Revenue Accounting</masterLabel>
-            <translation><!-- Revenue Accounting --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Sales &amp; Marketing</masterLabel>
-            <translation><!-- Sales &amp; Marketing --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Technical Support</masterLabel>
-            <translation><!-- Technical Support --></translation>
+            <masterLabel>Manager, Invoicing &amp; Accounting &amp; Data Transformation</masterLabel>
+            <translation><!-- Manager, Invoicing &amp; Accounting &amp; Data Transformation --></translation>
         </picklistValues>
     </globalPicklists>
 </Translations>

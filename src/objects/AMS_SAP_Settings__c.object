@@ -93,6 +93,66 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>REGION1_CRON_EXP__c</fullName>
+        <defaultValue>&quot;0 0 * * * ?&quot;</defaultValue>
+        <description>Chrono setup for a Region MIA</description>
+        <externalId>false</externalId>
+        <label>REGION1_CRON_EXP</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>REGION2_CRON_EXP__c</fullName>
+        <defaultValue>&quot;0 5 * * * ?&quot;</defaultValue>
+        <description>Chrono setup for a Region MAD</description>
+        <externalId>false</externalId>
+        <label>REGION2_CRON_EXP</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>REGION3_CRON_EXP__c</fullName>
+        <defaultValue>&quot;0 10 * * * ?&quot;</defaultValue>
+        <description>Chrono setup for a Region AMM</description>
+        <externalId>false</externalId>
+        <label>REGION3_CRON_EXP</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>REGION4_CRON_EXP__c</fullName>
+        <defaultValue>&quot;0 0 * * * ?&quot;</defaultValue>
+        <description>Chrono setup for a Region SIN</description>
+        <externalId>false</externalId>
+        <label>REGION4_CRON_EXP</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>REGION5_CRON_EXP__c</fullName>
+        <defaultValue>&quot;0 0 * * * ?&quot;</defaultValue>
+        <description>Chrono setup for a Region BJS</description>
+        <externalId>false</externalId>
+        <label>REGION5_CRON_EXP</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Sales_Order_Batch_Size__c</fullName>
         <defaultValue>500</defaultValue>
         <description>Sales Order Batch Size</description>
