@@ -179,6 +179,8 @@ public with sharing class AMS_OSCAR_Automation
                 if(oscar != null){
                     oscar.Proof_of_payment_received__c = Date.today();
                     oscar.Invoice_status__c = 'Paid';
+                    if(oscar.STEP17__c=='Not Started' || oscar.STEP17__c=='Not Applicable' || oscar.STEP17__c=='Passed')
+                        oscar.Process_Start_Date__c = Date.today();
                     res = True;
                 }
             }catch(Exception e){
@@ -1138,6 +1140,8 @@ public with sharing class AMS_OSCAR_Automation
                 if(oscar != null){
                     oscar.AML_performed_date__c = Date.today();
                     oscar.AML_result__c = 'Passed';
+                    if(oscar.STEP9__c=='Passed')
+                        oscar.Process_Start_Date__c = Date.today();
                 }
             }catch(Exception e){
                 system.debug('ERROR: '+e);

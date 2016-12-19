@@ -68,7 +68,7 @@
     <fields>
         <fullName>AML_deadline__c</fullName>
         <externalId>false</externalId>
-        <label>AML deadline</label>
+        <label>Due diligence deadline</label>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
@@ -78,7 +78,7 @@
     <fields>
         <fullName>AML_performed_date__c</fullName>
         <externalId>false</externalId>
-        <label>AML performed date</label>
+        <label>Due diligence performed date</label>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
@@ -88,7 +88,7 @@
     <fields>
         <fullName>AML_requested__c</fullName>
         <externalId>false</externalId>
-        <label>AML requested</label>
+        <label>Due diligence requested</label>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
@@ -98,7 +98,7 @@
     <fields>
         <fullName>AML_result__c</fullName>
         <externalId>false</externalId>
-        <label>AML result</label>
+        <label>Due diligence result</label>
         <picklist>
             <picklistValues>
                 <fullName>Passed</fullName>
@@ -276,7 +276,7 @@
     <fields>
         <fullName>Anti_Money_Laundering_Complete__c</fullName>
         <externalId>false</externalId>
-        <label>Anti-Money Laundering Complete</label>
+        <label>Due Diligence Complete</label>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
