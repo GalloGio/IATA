@@ -13,6 +13,7 @@ global without sharing class AMS_RecordCreatorWebservice {
     private static String NEWDGR_PV = 'CERTIFICATION.1.0';
     public static String NEWVR_PV = 'VR.1.0'; 
     public static String NEWVRCA_PV = 'VR.1.0.CA';
+    public static String NEWCER_PV = 'CER.1.0';
 
     public static String EMPTYACCREDITATIONID = 'EMPTY';
 
@@ -189,6 +190,9 @@ global without sharing class AMS_RecordCreatorWebservice {
         if(typeOfProcess.equalsIgnoreCase(NEWVR_PV) || typeOfProcess.equalsIgnoreCase(NEWVRCA_PV))
             return oscarRT.get('VOLUNTARY_RELINQUISHMENT');
 
+        if(typeOfProcess.equalsIgnoreCase(NEWCER_PV))
+            return oscarRT.get('CERTIFICATE');
+
         return null;
     
     }
@@ -219,7 +223,7 @@ global without sharing class AMS_RecordCreatorWebservice {
         else
             oscar = new AMS_OSCAR__c(Account__c = accountId, Process__c = processType, RecordTypeId =recordTypeId, Status__c = oscarStatus, OwnerId = owner );
 
-        if(processType != NEWVR_PV && processType != NEWVRCA_PV){
+        if(processType != NEWVR_PV && processType != NEWVRCA_PV && processType != NEWCER_PV){
             oscar.AMS_Online_Accreditation__c = accreditationId;
         }
 
@@ -237,7 +241,7 @@ global without sharing class AMS_RecordCreatorWebservice {
         
         insert oscar;
 
-        if(processType.equalsIgnoreCase(MAJOR_CHANGES_PV) && processType != NEWVR_PV && processType != NEWVRCA_PV){
+        if(processType.equalsIgnoreCase(MAJOR_CHANGES_PV) && processType != NEWVR_PV && processType != NEWVRCA_PV && processType != NEWCER_PV){
             processOscarProcessDetail(oscar,accreditationObj,accountId);
         }
 
@@ -420,8 +424,9 @@ global without sharing class AMS_RecordCreatorWebservice {
             oscarsToProcess.add(null);
         }
 
-        AMS_ChangeCodesHelper.createAAChangeCodes(changeCodesToProcess, oscarsToProcess, accountsToProcess, false);
+        List<AMS_ChangeCodesHelper.ObjectChangesStruct> objectChanges = AMS_ChangeCodesHelper.convertAccountToObjectChanges(accountChanges);
 
+        AMS_ChangeCodesHelper.createAAChangeCodes( objectChanges, changeCodesToProcess, oscarsToProcess, accountsToProcess,false);
         // for now we shouldn't sent any notification.
         //sendNotification(accountId,accountChanges);
 
