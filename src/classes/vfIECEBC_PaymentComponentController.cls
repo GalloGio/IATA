@@ -241,20 +241,34 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
   // save billing detail: contact and address
   public void clickSaveBillingDetailButton()
   {
-    
+   String Step='';
+   try {
+    Step='Updating Billing Account...';
     if(doupdatecontact) update oPaymentBillingContact;
+   
     //Update SoldToContact
     //update oPaymentSoldToContact;
+     Step='Updating Address Details...';
     updateAddressDetail(); // update oBillingAddress, oOriginalBillingAddress, oBillingLocation
     
     // this is to reset the source, and make it reread
+    // 
+    Step='Reading Billing Account Details...';
     rereadBillingAccount();  
-    oPaymentBillingContact = null;
+    Step='Intializing Billing Account...';
+    //oPaymentBillingContact = null;
     //oBillingAddress = null;
     
     editMode = false;
     showTaxButtons=true;
-    if (IsLocationValid()) CalculateTaxNow();
+    Step='Tax Calculation...';
+    //if (IsLocationValid()) CalculateTaxNow();
+    }
+    catch (Exception ex) {
+      ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, ex.getMessage()+' During '+Step));
+      return;
+    } 
+    //
   } // clickUpdateBillingContactButton
     
   public void clickCancelBillingDetailButton()
@@ -1091,24 +1105,32 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
        //3:Renewal
        //4:Prepaid
        //5:Tax Calculation
-       
-     Decimal savedTaxAmount=TaxAmount;
-     Decimal savedsubTotalAmount=subTotalAmount;
+   Decimal savedTaxAmount=TaxAmount;
+   Decimal savedsubTotalAmount=subTotalAmount;
+   IECConstants.PaymentType PaymentMethodType = IECConstants.PaymentType.CREDIT_CARD;
+   String Step='';
+   try {
+     
      //Decimal savedtotalAmountDue=totalAmountDue;
-       
-        
+      
+     Step='System Debug';   
      System.debug('UseCasePricing >>>'+UseCasePricing);
      System.debug('paymentTarget >>>'+paymentTarget);
      System.debug('campaignPaymentOption >>>'+campaignPaymentOption);
+     Step='Setup Payment Method';
      if (UseCasePricing==-1) return false;
-     IECConstants.PaymentType PaymentMethodType = IECConstants.PaymentType.CREDIT_CARD;
-     if (selectedPaymentMethodType.equals('BANK_TRANSFER'))  PaymentMethodType = IECConstants.PaymentType.BANK_TRANSFER;
+     if (selectedPaymentMethodType==null) selectedPaymentMethodType='';
+     if (selectedPaymentMethodType.equals('BANK_TRANSFER') )  PaymentMethodType = IECConstants.PaymentType.BANK_TRANSFER;
      if (selectedPaymentMethodType.equals('ICH')) PaymentMethodType = IECConstants.PaymentType.ICH;
-    
+    }catch (Exception ex) {
+      
+      ErrorMessage=ex.getMessage() +' During '+Step;
+      return false;
+    }
      // selectedCreditCardPaymentId = '2c92c0f8574b2b8101574df5ec7a6009';
     try {
             //We need to perform an Add product to existing Subscription
-            
+            Step='Performing Add product...';
             if (UseCasePricing==2 || UseCasePricing==3){
                /////////////////////////////////////////////// 
                 // create second amendment to add a new product
@@ -1140,6 +1162,7 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
                     // set the RatePlanData of the product being added
                     if (UseCasePricing==2) 
                     {
+                        Step='Setting Rate Plan Data...';
                         Zuora.zObject addRatePlan = new Zuora.zObject('RatePlan');
                         addRatePlan.setValue('ProductRatePlanId', CartItem.prpcId);
                         Zuora.zObject addRatePlanData = new Zuora.zObject('RatePlanData');
@@ -1151,6 +1174,7 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
                 
                 
                  // create amendment request
+                Step='Setting the Zuora request...';
                 Zuora.zApi.AmendRequest amendRequest = new Zuora.zApi.AmendRequest();
                 
                 // Specify amendment options for generating invoice to determine total amount and taxes
@@ -1161,6 +1185,7 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
     
                 if (isPreview) {
                     // Specify preview options for to simulate the amendment without actually submitting it
+                    Step='Previewing the end result...';
                     Zuora.zApi.PreviewOptions previewOpt = new Zuora.zApi.PreviewOptions();
                     previewOpt.EnablePreviewMode = true;
                     previewOpt.NumberOfPeriods = 1;
@@ -1176,7 +1201,7 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
                 
                 amendRequest.Amendments = lstAmendments;
                                                 
-                  
+                Step='Zuora returning result...';
                 Zuora.zApi.AmendResult oresult =
                     (!Test.isRunningTest()
                         ? IECZuoraHelper.amendApiCall(amendRequest)
@@ -1198,6 +1223,7 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
                             // TODO:
                             List<Zuora.SyncResult> lstSyncResults = OnDemandSyncAccounts(new Set<String> {(String) loggedCustomer.RelatedZuoraAccount.getValue('Id')});
                         }
+                        Step='Processing Zuora result...';
                               //Handle with the invoice data returned by previewing subscriptions
                         if (oresult.InvoiceDatas != null && isPreview){ 
                                     TaxAmount=0;
@@ -1226,7 +1252,7 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
                     }
                     else
                     {
-                        ErrorMessage=ErrorMessage+'Error Processing your request';
+                        ErrorMessage=ErrorMessage+'Error Processing your request'+' During '+Step;
                     }
                    
                 
@@ -1235,6 +1261,7 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
 
             }
             //We need a New Subscription
+        Step='Adding Subscription...';
         if (UseCasePricing==0 || UseCasePricing==1 || UseCasePricing==4){
         List<Zuora.zApi.SubscribeRequest> listSubscribeRequests = new List<Zuora.zApi.SubscribeRequest>();
         List<Zuora.zApi.SubscribeResult> listSubscribeResults = null;
@@ -1259,7 +1286,7 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
         oSubsRequest.SubscribeOptions.GenerateInvoice = false;
         oSubsRequest.SubscribeOptions.ProcessPayments = false;
         }*/
-        
+        Step='Adding Subscription details...';
         // No Preview Options (preview is used for previewing the price)
         oSubsRequest.PreviewOptions = null;
         
@@ -1303,6 +1330,7 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
         //TODO:Abdellah Bring up here code of the subroutine
         // oSubsRequest.SubscriptionData.RatePlanData = IECShoppingCartHelper.createRatePlanDataObjectFromCartItem(cartItem);
         //
+        Step='Adding product and rate to subscription...';
         Boolean FirstPass=false;
         List<Zuora.zObject> listRatePlanData = new List<Zuora.zObject>();
         for (ProductRatePlanChargeWrapper cartItem : selectedProductRatePlanChargeWrapperList) {
@@ -1366,7 +1394,7 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
   
         ////////////
         // Account
-  
+        Step='Checking Account existence in Zuora...';
         // if account already exists in Zuora, only specify the ID
         if (loggedCustomer.AccountExistsInZuora) {
           oSubsRequest.ZAccount = new Zuora.zObject('Account');
@@ -1378,7 +1406,7 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
           if (((String)loggedCustomer.RelatedZuoraAccount.getValue('DefaultPaymentMethodId')) != ((String)oSubsRequest.ZAccount.getValue('DefaultPaymentMethodId')) && !Test.isRunningTest() && !IsPreview) {
             Zuora.zApi.SaveResult result = IECZuoraHelper.updateDefaultPaymentMethod((String)loggedCustomer.RelatedZuoraAccount.getValue('Id'), (String)oSubsRequest.ZAccount.getValue('DefaultPaymentMethodId'));
             if (!result.Success)
-                ErrorMessage=Label.IEC_Error_Cannot_update_default_payment_method;
+                ErrorMessage=Label.IEC_Error_Cannot_update_default_payment_method+' During '+Step;
             else
                 loggedCustomer.RelatedZuoraAccount.setValue('DefaultPaymentMethodId', oSubsRequest.ZAccount.getValue('DefaultPaymentMethodId'));
           }
@@ -1402,9 +1430,10 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
           if (String.isNotBlank(selectedCreditCardPaymentId))
              oSubsRequest.PaymentMethod.setValue('Id', selectedCreditCardPaymentId);
           else 
-             ErrorMessage='paymentMethodZId was not provided';
+             ErrorMessage='paymentMethodZId was not provided'+' During '+Step;
         }
         if (isPreview){ 
+          Step='Previewing add subscription...';
           Zuora.zApi.PreviewOptions previewOpt = new Zuora.zApi.PreviewOptions();
             previewOpt.EnablePreviewMode = true;
             previewOpt.NumberOfPeriods = 1;
@@ -1425,7 +1454,7 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
               TaxAmount=savedTaxAmount;
               subTotalAmount=savedsubTotalAmount;
               //totalAmountDue=savedtotalAmountDue;
-              
+              Step='Processing Zuora Subscription result...';
               for (Zuora.zApi.SubscribeResult result : listSubscribeResults) {
                 if (!result.Success) {ErrorMessage='Tax Calculation Failed, Try again!';return false;}
                 if (result.Success) {
@@ -1468,6 +1497,7 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
          */
   
         if (listSubscribeResults[0].Success && !isPreview){
+            Step='Sync Zuora and Salesforce....';
           OnDemandSyncAccounts(new Set<String> {listSubscribeResults[0].AccountId});
           
         }
@@ -1478,14 +1508,14 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
       return true;
     }
     catch (IECApplicationException ex) {
-      ErrorMessage='Could not subscribe: ' + ex.getMessage();
+      ErrorMessage='Could not subscribe: ' + ex.getMessage()+' During '+Step;
     }
     catch (Exception ex) {
       if (Zuora.zApi.currentLogger != null) {
         system.debug('SOAP Request >>> ' + Zuora.zApi.currentLogger.request );
         system.debug('SOAP Response >>> ' + Zuora.zApi.currentLogger.response );
       }
-      ErrorMessage='Could not subscribe: ' + ex.getMessage();
+      ErrorMessage='Could not subscribe: ' + ex.getMessage()+' During '+Step;
     }
     return false;
   } 
