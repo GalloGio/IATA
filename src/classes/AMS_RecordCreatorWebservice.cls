@@ -649,6 +649,7 @@ global without sharing class AMS_RecordCreatorWebservice {
         accreditationObj.Shipping_State__c = accountSA.ShippingState;
         accreditationObj.Shipping_Street__c = accountSA.ShippingStreet;
 
+        accreditationObj.Branch_Office_Country__c = accountSA.IATA_ISO_Country__c;
         accreditationObj.ISO_Country__c = accountSA.IATA_ISO_Country__c;
         accreditationObj.IATA_ISO_State__c = accountSA.Iso_State__c;
         accreditationObj.Billing_State__c = accountSA.BillingState;
