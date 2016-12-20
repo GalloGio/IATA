@@ -1186,6 +1186,14 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <value>Confirm purchase</value>
     </labels>
     <labels>
+        <fullName>Confirmation</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Confirmation</shortDescription>
+        <value>Confirmation</value>
+    </labels>
+    <labels>
         <fullName>ContactDirectSalesMessage</fullName>
         <categories>IEC</categories>
         <language>en_US</language>
@@ -6446,7 +6454,7 @@ In order to upload your financial documents, please, login to Customer Portal on
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Case PDF Download</shortDescription>
-        <value>Please download the PDF application form using the link below. Once completed submit to IATA using the &lt;strong&gt;Submit &amp; Add Attachment&lt;/strong&gt; button.&lt;br/&gt;(Note: You can come back to this page from the &lt;a href=&quot;/ISSP_AMSCases&quot;&gt;IATA Accreditation&lt;/a&gt; page at any time to complete the upload)</value>
+        <value>Please download the PDF application form using the link below. Once completed submit to IATA using the &lt;strong&gt;Attach File&lt;/strong&gt; button.&lt;br/&gt;(Note: You can come back to this page from the &lt;a href=&quot;/ISSP_AMSCases&quot;&gt;IATA Accreditation&lt;/a&gt; page at any time to complete the upload)</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_City</fullName>
@@ -8987,6 +8995,14 @@ You will be required to upload a scanned copy of this document in the next step 
         <value>Roles &amp; Responsibilities</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_SA_Office_Select</fullName>
+        <categories>ISSP, Portal, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS SA Office Select</shortDescription>
+        <value>Select the office under which this new SA is to come under:</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_STEP_3_1_Branch_Title</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -10611,7 +10627,7 @@ Select at least one Authorized Signatory, and choose the Financial Assessment Co
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS eBulletin DAILY Setup</shortDescription>
-        <value>Setup DAILY eBulletin</value>
+        <value>Save &amp; Setup DAILY</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_eBulletin_DailyFrequency</fullName>
@@ -10927,7 +10943,7 @@ Select at least one Authorized Signatory, and choose the Financial Assessment Co
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS eBulletin WEEKLY Setup</shortDescription>
-        <value>Setup WEEKLY eBulletin</value>
+        <value>Save &amp; Setup WEEKLY</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_eBulletin_btn_DownloadDailyReport</fullName>
