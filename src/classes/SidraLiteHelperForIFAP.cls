@@ -35,14 +35,9 @@ public with sharing class SidraLiteHelperForIFAP {
             }
             if ( SidraLiteUtil.isCargoCASS(parentCase.account) ) {
                 if (SidraLiteUtil.isAccountActive(parentCase.account)) {
-                    if (parentCase.Region__c == 'Americas') {
-                        returnCase.IRR_Withdrawal_Reason__c  = 'Cargo Reminder only';
-                        returnCase.IRR_Approval_Rejection__c = '';
-                        returnCase.IRR_Type__c = '';
-                    } else {
-                        returnCase.IRR_Withdrawal_Reason__c  = '';
-                        returnCase.SIDRA_Lite_Default_Date__c = Date.today();
-                    }
+                    returnCase.IRR_Withdrawal_Reason__c  = 'Cargo Reminder only';
+                    returnCase.IRR_Approval_Rejection__c = '';
+                    returnCase.IRR_Type__c = '';
                 } else {
                     returnCase.IRR_Withdrawal_Reason__c  = 'Default Prev';
                 }

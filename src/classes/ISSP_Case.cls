@@ -1,5 +1,6 @@
 public without sharing class ISSP_Case {
-
+    
+    private static String OSCAR_RECORD_TYPE_ID = Schema.SObjectType.Case.RecordTypeInfosByName.get('OSCAR Communication').RecordTypeId;
     //private static String AGENT_ACCREDITATION_PORTAL_SERVICE = 'Become an IATA Accredited Agent';
     //private static String AIRLINE_PARTICIPATION_PORTAL_SERVICE = 'Join BSP / CASS';
     private static String AGENT_ACCREDITATION_PORTAL_SERVICE = ISSP_Portal_Service_Ids__c.getInstance().AgencyAccreditation__c;
@@ -13,6 +14,7 @@ public without sharing class ISSP_Case {
     public boolean isPWCCase {get; set;}
     public boolean isAPCase {get; set;}
     public boolean isOSCARCase {get; set;}
+    public boolean isIFAPCase {get; set;}  //AS - 08.2016: Closed IFAP cases now to be displayed on Portal
     public boolean isOnlineOSCARCase {get; set;}
     public boolean isTravelAccreditation {get; set;}
     public boolean isPWCProfile {get; set;}
@@ -28,6 +30,8 @@ public without sharing class ISSP_Case {
     public String sisCaseArea {get; set;}
     public boolean isAccreditationUploadCase {get; set;} //Accreditation upload to case e.g. for TIDS, VR etc.
     public boolean isToShowSurveyBtn {get; set;} //INC260167
+    public boolean disableCaseComments;
+    private final static Integer CLOSE_COMMENTS_AFTER_DAYS = 7;
 
     public Id runningUserId {get; set;}
     public Contact con {get; set;}
@@ -87,6 +91,11 @@ public without sharing class ISSP_Case {
     public Decimal CaseStatusACR { get {return ISSP_Constant.caseStatusMap_ACR_Internal.get(newCase.Status);}    }
     public Decimal CaseDPCStatusACR { get {return ISSP_Constant.caseStatusMap_ACR_Portal.get(newCase.Escalated_Status_ACCA__c);}   }
 
+    //FOR VR process
+    public Map<String, String> mVR_LocationClassTypes 
+        {get { return new Map<String, String>{'P'=>'P','C'=>'C','R'=>'R','I'=>'I','Q'=>'Q','D'=>'D'}; }}
+
+
     public PageReference pageLoad() {
         if (ApexPages.currentPage().getParameters().containsKey('caseId')) {
             string caseId = ApexPages.currentPage().getParameters().get('caseId');
@@ -94,6 +103,16 @@ public without sharing class ISSP_Case {
             if (!newCase.Visible_on_ISS_Portal__c) {
                 PageReference pr = new PageReference('/ISSP_Homepage');
                 return pr;
+            }
+            
+            if(newCase.RecordType.name == 'IATA Financial Review') { //Open IFAP cases must be opened via the page used specifically for open IFAP cases (ISSP_IFAPCases) 
+                popContact();
+                Set<String> openIFAPStatuses = new Set<String>
+                    {'action needed', 'agent notified (email)', 'agent notified (mail)', 'sanity check failure'};
+                if(openIFAPStatuses.contains(newCase.Status.toLowerCase()) && con.Financial_Assessment_Contact__c) {
+                        PageReference pr = new PageReference('/ISSP_IFAPCases?id=' + caseId);
+                		return pr;
+                    }
             }
         }
         return null;
@@ -154,7 +173,7 @@ public without sharing class ISSP_Case {
                 newCase.Subject = 'New SA - ' + con.Account.Name;
                 newCase.CaseArea__c = 'Accreditation Process';
                 newCase.Reason1__c = 'New SA / CHV – New Code';
-                newCase.ownerid = getAMSRegionalQueue();
+                newCase.Product_Category_ID__c = '-'; //Set Product Id so picked up by case assign to AM Regional queue
                 isAccreditationUploadCase = true;
             } else if (paramTopic == 'TIDS') {
                 newCase.Subject = 'New TIDS - ' + con.Account.Name;
@@ -163,13 +182,13 @@ public without sharing class ISSP_Case {
                 isAccreditationUploadCase = true;
             } else if (paramTopic == 'VR') {
                 newCase.Subject = 'Closure - ' + con.Account.IATACode__c + ' - ' + con.Account.Name;
-                newCase.CaseArea__c = 'Accreditation Process';
-                newCase.Reason1__c = 'CLO - Closure';
-                newCase.ownerid = getAMSRegionalQueue();
-                isAccreditationUploadCase = true;
+               	newCase.CaseArea__c = 'Accreditation Process';
+               	newCase.Reason1__c = 'CLO - Closure';
+                newCase.Product_Category_ID__c = '-'; //Set Product Id so picked up by case assign to AM Regional queue
+               	isAccreditationUploadCase = true;
             }
         }
-
+       
 
         String origin = ApexPages.currentPage().getParameters().get('origin');
         if (recordTypeId == FDScaseRecordTypeID && origin == 'Portal')
@@ -180,13 +199,14 @@ public without sharing class ISSP_Case {
             newCase.RecordTypeId = recordTypeId;
         if (origin != '' && origin != null)
             newCase.Origin = origin;
-
+        
         //Set the Variables default values
         isISSPortalPwCCase = false;
         isNewCase = true;
         isSISCase = false;
         isPWCCase = false;
         isAPCase = false;
+        isIFAPCase = false;
         isPWCProfile = false;
         isKaleRole = false;
         isDPCUser = false;
@@ -195,6 +215,7 @@ public without sharing class ISSP_Case {
         isGSAOnly = false; //TF - SP9-C5
         isOnlineOSCARCase = false; //AS - AMS SP02
         isTravelAccreditation = false; //AS - AMS SP07
+        disableCaseComments = false;
         runningUserId = UserInfo.getUserId();
         //Verify User Profile
         Id profileId = userinfo.getProfileId();
@@ -240,13 +261,14 @@ public without sharing class ISSP_Case {
                 mySurveyCompletedVariable = true ;
             }
 
-
-            //Content Related ListHandle
-            isDisplay_ContentTL = false ;
-            ContentDistribution_List = new List<ContentDistribution>([SELECT ContentDocumentId, ContentVersionId
-                    FROM ContentDistribution
-                    WHERE RelatedRecordId = : newCase.Id]);
-            System.debug('xx2 ContentDistribution_List ' + ContentDistribution_List);
+			
+						//Content Related ListHandle
+						isDisplay_ContentTL = false ;
+		    		ContentDistribution_List = new List<ContentDistribution>([SELECT ContentDocumentId, ContentVersionId
+																	  FROM ContentDistribution
+																	  WHERE RelatedRecordId =: newCase.Id]);
+						System.debug('xx2 ContentDistribution_List '+ContentDistribution_List);
+          
             if (ContentDistribution_List != null && ContentDistribution_List.size() > 0) {
                 isDisplay_ContentTL = true ;
                 Set<Id> cdIds_set = new Set<Id>();
@@ -406,6 +428,11 @@ public without sharing class ISSP_Case {
             //Verify if the case is an SIS case
             if (newCase.RecordType.name == 'Cases - SIS Help Desk') {
                 isSISCase = true;
+            }
+            
+            //Verify if the case is an IFAP case
+            if (newCase.RecordType.name == 'IATA Financial Review') {
+                isIFAPCase = true;
             }
 
             /*06/08/2014 Merge of 2 RTs ISS Portal PwC Edit + ISS Portal PwC => ISS Portal PwC - Gavriel
@@ -656,6 +683,8 @@ public without sharing class ISSP_Case {
     }
 
     public Pagereference saveAttach() {
+
+        system.debug('saveAttach AccountId: ' + accountId);
         //TF - SP9-C5
         if (!isGSAOnly && (newCase.IATAcode__c == '' || newCase.IATAcode__c == null) && isGSAUser && !isFDSRecordType) {
             ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.Error, System.Label.ISSP_Select_Airline);
@@ -1138,5 +1167,23 @@ public without sharing class ISSP_Case {
 
         return options;
     }
-
+    
+    public boolean getDisableCaseComments() {
+        if(newCase != null) {
+            if(newCase.Status == 'Draft') {
+                return true;
+            }
+            
+            if(isIFAPCase) {
+                 DateTime closedDate = newCase.ClosedDate;
+            	if(closedDate==null) { //IFAP Case not yet closed
+                	return false;
+            	} else {
+                    //Disable Case Comments for Closed IFAP cases after x days
+            		return closedDate.addDays(CLOSE_COMMENTS_AFTER_DAYS) < Date.today();
+            	}
+      		}
+  		}
+         return false;
+    }
 }

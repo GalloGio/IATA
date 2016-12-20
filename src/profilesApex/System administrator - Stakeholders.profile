@@ -26,6 +26,8 @@
 <classAccesses><apexClass>AMP_MockHttpResponseGenerator</apexClass><enabled>false</enabled></classAccesses>
 <classAccesses><apexClass>AMP_OwnershipController</apexClass><enabled>false</enabled></classAccesses>
 <classAccesses><apexClass>AMP_OwnershipControllerTest</apexClass><enabled>false</enabled></classAccesses>
+<classAccesses><apexClass>AMP_ProductsController</apexClass><enabled>false</enabled></classAccesses>
+<classAccesses><apexClass>AMP_ServicesExtension</apexClass><enabled>false</enabled></classAccesses>
 <classAccesses><apexClass>AMP_SmallTests</apexClass><enabled>false</enabled></classAccesses>
 <classAccesses><apexClass>AMSAgencyKPIController</apexClass><enabled>true</enabled></classAccesses>
 <classAccesses><apexClass>AMSAgencyKPIControllerTest</apexClass><enabled>true</enabled></classAccesses>
@@ -72,6 +74,7 @@
 <classAccesses><apexClass>AMS_AgencyContactsControllerTest</apexClass><enabled>true</enabled></classAccesses>
 <classAccesses><apexClass>AMS_AgencyHelper</apexClass><enabled>true</enabled></classAccesses>
 <classAccesses><apexClass>AMS_AgencyHelperTest</apexClass><enabled>true</enabled></classAccesses>
+<classAccesses><apexClass>AMS_AgencyRegulationAutoRenewal</apexClass><enabled>false</enabled></classAccesses>
 <classAccesses><apexClass>AMS_AgencyRegulationTriggerHandler</apexClass><enabled>false</enabled></classAccesses>
 <classAccesses><apexClass>AMS_AgencyRelationshipTriggerHandler</apexClass><enabled>true</enabled></classAccesses>
 <classAccesses><apexClass>AMS_AgencyUpdateHelper</apexClass><enabled>true</enabled></classAccesses>
@@ -81,6 +84,7 @@
 <classAccesses><apexClass>AMS_BSPLinkIntegration</apexClass><enabled>false</enabled></classAccesses>
 <classAccesses><apexClass>AMS_BSPLinkIntegration_Batch</apexClass><enabled>false</enabled></classAccesses>
 <classAccesses><apexClass>AMS_BSPLinkIntegration_Scheduler</apexClass><enabled>false</enabled></classAccesses>
+<classAccesses><apexClass>AMS_BSPLinkIntegration_Test</apexClass><enabled>false</enabled></classAccesses>
 <classAccesses><apexClass>AMS_CaseListTest</apexClass><enabled>true</enabled></classAccesses>
 <classAccesses><apexClass>AMS_CertificateForPrintController</apexClass><enabled>false</enabled></classAccesses>
 <classAccesses><apexClass>AMS_CertificateHelper</apexClass><enabled>false</enabled></classAccesses>
@@ -89,10 +93,17 @@
 <classAccesses><apexClass>AMS_ChangeCodesConfigHelper</apexClass><enabled>true</enabled></classAccesses>
 <classAccesses><apexClass>AMS_ChangeCodesHelper</apexClass><enabled>true</enabled></classAccesses>
 <classAccesses><apexClass>AMS_ChangeCodesHelperTest</apexClass><enabled>false</enabled></classAccesses>
+<classAccesses><apexClass>AMS_CustomSettingsUtils</apexClass><enabled>false</enabled></classAccesses>
 <classAccesses><apexClass>AMS_DataMigration</apexClass><enabled>true</enabled></classAccesses>
 <classAccesses><apexClass>AMS_DataMigrationTest</apexClass><enabled>true</enabled></classAccesses>
 <classAccesses><apexClass>AMS_DemoCaseList</apexClass><enabled>true</enabled></classAccesses>
 <classAccesses><apexClass>AMS_DemoTreeview</apexClass><enabled>true</enabled></classAccesses>
+<classAccesses><apexClass>AMS_EBulletinBatch</apexClass><enabled>false</enabled></classAccesses>
+<classAccesses><apexClass>AMS_EBulletinDailySchedule</apexClass><enabled>false</enabled></classAccesses>
+<classAccesses><apexClass>AMS_EBulletinReportHelper</apexClass><enabled>false</enabled></classAccesses>
+<classAccesses><apexClass>AMS_EBulletinReportWebservice</apexClass><enabled>false</enabled></classAccesses>
+<classAccesses><apexClass>AMS_EBulletinReport_Test</apexClass><enabled>false</enabled></classAccesses>
+<classAccesses><apexClass>AMS_EBulletinWeeklySchedule</apexClass><enabled>false</enabled></classAccesses>
 <classAccesses><apexClass>AMS_EmployeeHelper</apexClass><enabled>true</enabled></classAccesses>
 <classAccesses><apexClass>AMS_EmployeeHelperTest</apexClass><enabled>true</enabled></classAccesses>
 <classAccesses><apexClass>AMS_FillAMSAccreditationGDS</apexClass><enabled>true</enabled></classAccesses>
@@ -166,10 +177,16 @@
 <classAccesses><apexClass>AMS_PersonCasesControllerTest</apexClass><enabled>true</enabled></classAccesses>
 <classAccesses><apexClass>AMS_PersonHelper</apexClass><enabled>true</enabled></classAccesses>
 <classAccesses><apexClass>AMS_PersonHelperTest</apexClass><enabled>true</enabled></classAccesses>
+<classAccesses><apexClass>AMS_PurgeAccountBatch</apexClass><enabled>false</enabled></classAccesses>
+<classAccesses><apexClass>AMS_PurgeGDPIATACodeBatch</apexClass><enabled>false</enabled></classAccesses>
+<classAccesses><apexClass>AMS_PurgeIATACodeController</apexClass><enabled>false</enabled></classAccesses>
+<classAccesses><apexClass>AMS_PurgeIATACodeTest</apexClass><enabled>false</enabled></classAccesses>
+<classAccesses><apexClass>AMS_QueryUtils</apexClass><enabled>false</enabled></classAccesses>
 <classAccesses><apexClass>AMS_RecordCreatorWebservice</apexClass><enabled>true</enabled></classAccesses>
 <classAccesses><apexClass>AMS_RecordCreatorWebserviceTest</apexClass><enabled>true</enabled></classAccesses>
 <classAccesses><apexClass>AMS_SAAMCaseMigrationController</apexClass><enabled>true</enabled></classAccesses>
 <classAccesses><apexClass>AMS_SAAMCaseMigrationControllerTest</apexClass><enabled>false</enabled></classAccesses>
+<classAccesses><apexClass>AMS_SOQL_Export</apexClass><enabled>false</enabled></classAccesses>
 <classAccesses><apexClass>AMS_SearchAccountByUserData</apexClass><enabled>true</enabled></classAccesses>
 <classAccesses><apexClass>AMS_SearchAccountByUserDataTest</apexClass><enabled>true</enabled></classAccesses>
 <classAccesses><apexClass>AMS_SettlementsAndOperationLoaderCtrl</apexClass><enabled>true</enabled></classAccesses>
@@ -180,6 +197,7 @@
 <classAccesses><apexClass>AMS_UpdateAccountStateTest</apexClass><enabled>true</enabled></classAccesses>
 <classAccesses><apexClass>AMS_UpdateCertificateCampaign</apexClass><enabled>false</enabled></classAccesses>
 <classAccesses><apexClass>AMS_UpdateExpiryDate</apexClass><enabled>true</enabled></classAccesses>
+<classAccesses><apexClass>AMS_UpdateExpiryDateTest</apexClass><enabled>false</enabled></classAccesses>
 <classAccesses><apexClass>AMS_UpdateStates</apexClass><enabled>true</enabled></classAccesses>
 <classAccesses><apexClass>AMS_UpdateStatesTest</apexClass><enabled>true</enabled></classAccesses>
 <classAccesses><apexClass>AMS_Utils</apexClass><enabled>true</enabled></classAccesses>
@@ -735,6 +753,8 @@
 <classAccesses><apexClass>ISSP_2FA_Reset</apexClass><enabled>true</enabled></classAccesses>
 <classAccesses><apexClass>ISSP_AMS_Accreditation</apexClass><enabled>false</enabled></classAccesses>
 <classAccesses><apexClass>ISSP_AMS_Accreditation_Test</apexClass><enabled>false</enabled></classAccesses>
+<classAccesses><apexClass>ISSP_AMS_EBulletin</apexClass><enabled>false</enabled></classAccesses>
+<classAccesses><apexClass>ISSP_AMS_EBulletin_Test</apexClass><enabled>false</enabled></classAccesses>
 <classAccesses><apexClass>ISSP_AMS_RecordCreator_Class</apexClass><enabled>false</enabled></classAccesses>
 <classAccesses><apexClass>ISSP_AMS_RecordCreator_Class_Test</apexClass><enabled>false</enabled></classAccesses>
 <classAccesses><apexClass>ISSP_APProcess</apexClass><enabled>true</enabled></classAccesses>
@@ -904,6 +924,12 @@
 <classAccesses><apexClass>InstantSurveyTriggerHelper</apexClass><enabled>false</enabled></classAccesses>
 <classAccesses><apexClass>InstantSurveyTriggerHelperTest</apexClass><enabled>false</enabled></classAccesses>
 <classAccesses><apexClass>IsoSingleton</apexClass><enabled>true</enabled></classAccesses>
+<classAccesses><apexClass>LiveAgentButtonFAQ2CaseController</apexClass><enabled>false</enabled></classAccesses>
+<classAccesses><apexClass>LiveAgentButtonFAQ2CaseControllerTest</apexClass><enabled>false</enabled></classAccesses>
+<classAccesses><apexClass>LiveAgentCustomWindowController</apexClass><enabled>false</enabled></classAccesses>
+<classAccesses><apexClass>LiveAgentCustomWindowControllerTest</apexClass><enabled>false</enabled></classAccesses>
+<classAccesses><apexClass>LiveAgentPostChatController</apexClass><enabled>false</enabled></classAccesses>
+<classAccesses><apexClass>LiveAgentPostChatControllerTest</apexClass><enabled>false</enabled></classAccesses>
 <classAccesses><apexClass>Location_Batch</apexClass><enabled>false</enabled></classAccesses>
 <classAccesses><apexClass>Location_Dom</apexClass><enabled>false</enabled></classAccesses>
 <classAccesses><apexClass>Location_Dom_Test</apexClass><enabled>false</enabled></classAccesses>
@@ -1503,6 +1529,7 @@
 <pageAccesses><apexPage>AMP_KeyAccountPlanPrintable</apexPage><enabled>false</enabled></pageAccesses>
 <pageAccesses><apexPage>AMP_KeyContacts</apexPage><enabled>false</enabled></pageAccesses>
 <pageAccesses><apexPage>AMP_NewIATAGroup</apexPage><enabled>false</enabled></pageAccesses>
+<pageAccesses><apexPage>AMP_Services</apexPage><enabled>false</enabled></pageAccesses>
 <pageAccesses><apexPage>AMSAccreditationContact</apexPage><enabled>true</enabled></pageAccesses>
 <pageAccesses><apexPage>AMSAccreditationContactLookup</apexPage><enabled>true</enabled></pageAccesses>
 <pageAccesses><apexPage>AMSAgencyKPI</apexPage><enabled>true</enabled></pageAccesses>
@@ -1530,7 +1557,9 @@
 <pageAccesses><apexPage>AMS_OSCAR_SupportPanel</apexPage><enabled>true</enabled></pageAccesses>
 <pageAccesses><apexPage>AMS_PersonCases</apexPage><enabled>true</enabled></pageAccesses>
 <pageAccesses><apexPage>AMS_PersonalDataViewer</apexPage><enabled>true</enabled></pageAccesses>
+<pageAccesses><apexPage>AMS_PurgeIATACodePage</apexPage><enabled>false</enabled></pageAccesses>
 <pageAccesses><apexPage>AMS_SAAMCaseMigration</apexPage><enabled>true</enabled></pageAccesses>
+<pageAccesses><apexPage>AMS_SOQL_ExportPage</apexPage><enabled>false</enabled></pageAccesses>
 <pageAccesses><apexPage>AMS_Settlements_Operations_Loader</apexPage><enabled>true</enabled></pageAccesses>
 <pageAccesses><apexPage>AMS_Template</apexPage><enabled>true</enabled></pageAccesses>
 <pageAccesses><apexPage>AMS_Translation_Account_Page</apexPage><enabled>true</enabled></pageAccesses>
@@ -1800,6 +1829,7 @@
 <pageAccesses><apexPage>ISSP_AMS_CGO_ReadOnly</apexPage><enabled>false</enabled></pageAccesses>
 <pageAccesses><apexPage>ISSP_AMS_Cargo_Branch_Form</apexPage><enabled>false</enabled></pageAccesses>
 <pageAccesses><apexPage>ISSP_AMS_Cargo_Form</apexPage><enabled>false</enabled></pageAccesses>
+<pageAccesses><apexPage>ISSP_AMS_EBulletin</apexPage><enabled>false</enabled></pageAccesses>
 <pageAccesses><apexPage>ISSP_AMS_Facilities</apexPage><enabled>false</enabled></pageAccesses>
 <pageAccesses><apexPage>ISSP_AMS_NoC_ReadOnly</apexPage><enabled>false</enabled></pageAccesses>
 <pageAccesses><apexPage>ISSP_AMS_Notice_Of_Change</apexPage><enabled>false</enabled></pageAccesses>
@@ -1844,6 +1874,7 @@
 <pageAccesses><apexPage>ISSP_Country_Requirements</apexPage><enabled>false</enabled></pageAccesses>
 <pageAccesses><apexPage>ISSP_CreateAccount</apexPage><enabled>true</enabled></pageAccesses>
 <pageAccesses><apexPage>ISSP_CreateContact</apexPage><enabled>true</enabled></pageAccesses>
+<pageAccesses><apexPage>ISSP_EBulletin_Home</apexPage><enabled>false</enabled></pageAccesses>
 <pageAccesses><apexPage>ISSP_EditContact</apexPage><enabled>false</enabled></pageAccesses>
 <pageAccesses><apexPage>ISSP_EditPortalServiceAccess</apexPage><enabled>false</enabled></pageAccesses>
 <pageAccesses><apexPage>ISSP_EditPortalService_InlinePage</apexPage><enabled>true</enabled></pageAccesses>
@@ -1890,6 +1921,10 @@
 <pageAccesses><apexPage>IdeasHome</apexPage><enabled>false</enabled></pageAccesses>
 <pageAccesses><apexPage>ImportantContacts</apexPage><enabled>true</enabled></pageAccesses>
 <pageAccesses><apexPage>InMaintenance</apexPage><enabled>false</enabled></pageAccesses>
+<pageAccesses><apexPage>LiveAgentButtonFAQ2Case</apexPage><enabled>false</enabled></pageAccesses>
+<pageAccesses><apexPage>LiveAgentConsoleToolkit</apexPage><enabled>false</enabled></pageAccesses>
+<pageAccesses><apexPage>LiveAgentCustomWindow</apexPage><enabled>false</enabled></pageAccesses>
+<pageAccesses><apexPage>LiveAgentPostChatSurvey</apexPage><enabled>false</enabled></pageAccesses>
 <pageAccesses><apexPage>LogPhoneCase</apexPage><enabled>true</enabled></pageAccesses>
 <pageAccesses><apexPage>MITA_Agreements</apexPage><enabled>false</enabled></pageAccesses>
 <pageAccesses><apexPage>MITA_MemoConcurrences</apexPage><enabled>false</enabled></pageAccesses>
@@ -1921,6 +1956,7 @@
 <pageAccesses><apexPage>SIDRALiteMassAction</apexPage><enabled>true</enabled></pageAccesses>
 <pageAccesses><apexPage>SIDRAOIActionPlans</apexPage><enabled>true</enabled></pageAccesses>
 <pageAccesses><apexPage>SIDRAliteMassApproval</apexPage><enabled>true</enabled></pageAccesses>
+<pageAccesses><apexPage>SidraLiteSendEmail</apexPage><enabled>false</enabled></pageAccesses>
 <pageAccesses><apexPage>SiteLogin</apexPage><enabled>false</enabled></pageAccesses>
 <pageAccesses><apexPage>SiteRegister</apexPage><enabled>false</enabled></pageAccesses>
 <pageAccesses><apexPage>SiteRegisterConfirm</apexPage><enabled>false</enabled></pageAccesses>
