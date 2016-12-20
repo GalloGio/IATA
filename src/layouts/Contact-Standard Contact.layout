@@ -479,11 +479,12 @@
         <fields>Title</fields>
         <fields>AccountId</fields>
         <fields>Phone</fields>
-        <fields>Fax</fields>
         <fields>Email</fields>
         <fields>User_Portal_Status__c</fields>
         <relatedLists>
             <fields>CASES.CASE_NUMBER</fields>
+            <fields>CASES.SUBJECT</fields>
+            <fields>CASES.STATUS</fields>
             <relatedList>RelatedCaseList</relatedList>
         </relatedLists>
     </miniLayout>
