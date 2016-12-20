@@ -14,6 +14,9 @@ global without sharing class AMS_RecordCreatorWebservice {
     public static String NEWVR_PV = 'VR.1.0'; 
     public static String NEWVRCA_PV = 'VR.1.0.CA';
     public static String NEWCER_PV = 'CER.1.0';
+    public static String NEWGSA_PV = 'NEW.GSA.1.0';
+    public static String NEWAHA_PV = 'NEW.AHA.1.0';
+    public static String NEWMSO_PV = 'NEW.MSO.1.0';
 
     public static String EMPTYACCREDITATIONID = 'EMPTY';
 
@@ -175,7 +178,7 @@ global without sharing class AMS_RecordCreatorWebservice {
 
     private static String fetchOscarRecordType(String typeOfProcess){
 
-        if(typeOfProcess.equalsIgnoreCase(NEWBR_PV) || typeOfProcess.equalsIgnoreCase(NEWHO_PV) || typeOfProcess.equalsIgnoreCase(NEWBRABRD_PV) || typeOfProcess.equalsIgnoreCase(NEWTIDS_PV))
+        if(typeOfProcess.equalsIgnoreCase(NEWBR_PV) || typeOfProcess.equalsIgnoreCase(NEWHO_PV) || typeOfProcess.equalsIgnoreCase(NEWBRABRD_PV) || typeOfProcess.equalsIgnoreCase(NEWTIDS_PV) || typeOfProcess.equalsIgnoreCase(NEWGSA_PV) || typeOfProcess.equalsIgnoreCase(NEWAHA_PV) || typeOfProcess.equalsIgnoreCase(NEWMSO_PV))
             return oscarRT.get('NEW');
 
         if(typeOfProcess.equalsIgnoreCase(BANK_ACCOUNT_CHANGES_PV) || typeOfProcess.equalsIgnoreCase(MAJOR_CHANGES_PV) || typeOfProcess.equalsIgnoreCase(DGR_DGA_PV))
@@ -424,7 +427,9 @@ global without sharing class AMS_RecordCreatorWebservice {
             oscarsToProcess.add(null);
         }
 
-        AMS_Utils.createAAChangeCodes(changeCodesToProcess, oscarsToProcess, accountsToProcess, false);
+        List<AMS_ChangeCodesHelper.ObjectChangesStruct> objectChanges = AMS_ChangeCodesHelper.convertAccountToObjectChanges(accountChanges);
+
+        AMS_ChangeCodesHelper.createAAChangeCodes( objectChanges, changeCodesToProcess, oscarsToProcess, accountsToProcess,false);
         // for now we shouldn't sent any notification.
         //sendNotification(accountId,accountChanges);
 
@@ -573,7 +578,7 @@ global without sharing class AMS_RecordCreatorWebservice {
 
             //Create a new Account for the SA, with the values reported in the below table 
             
-            Account parentAccount = [SELECT Id,Name,Short_Name__c,Abbreviated_name__c,TradeName__c,Company_Type__c,ShippingCity,ShippingCountry,ShippingPostalCode,ShippingState,ShippingStreet,BillingCity,BillingCountry,BillingPostalCode,BillingState,BillingStreet,IATA_ISO_Country__c,Iso_State__c,Abbreviated_address__c,Website,Phone,Fax,Email__c,ShippingAddress,BillingAddress from Account where Id = :caseObj.Account_Concerned__c LIMIT 1];
+            Account parentAccount = [SELECT Id,Name,Short_Name__c,Abbreviated_name__c,TradeName__c,Company_Type__c,ShippingCity,ShippingCountry,ShippingPostalCode,ShippingState,ShippingStreet,BillingCity,BillingCountry,BillingPostalCode,BillingState,BillingStreet,IATA_ISO_Country__c,Iso_State__c,Abbreviated_address__c,Website,Phone,Fax,Email__c from Account where Id = :caseObj.Account_Concerned__c LIMIT 1];
 
             Account newSAAccount = createSAAccount(parentAccount);
 
@@ -644,6 +649,7 @@ global without sharing class AMS_RecordCreatorWebservice {
         accreditationObj.Shipping_State__c = accountSA.ShippingState;
         accreditationObj.Shipping_Street__c = accountSA.ShippingStreet;
 
+        accreditationObj.Branch_Office_Country__c = accountSA.IATA_ISO_Country__c;
         accreditationObj.ISO_Country__c = accountSA.IATA_ISO_Country__c;
         accreditationObj.IATA_ISO_State__c = accountSA.Iso_State__c;
         accreditationObj.Billing_State__c = accountSA.BillingState;
@@ -654,6 +660,10 @@ global without sharing class AMS_RecordCreatorWebservice {
         accreditationObj.Branch_Office_FAX__c = accountSA.Fax;
         accreditationObj.Location_Type__c = 'SA';
         accreditationObj.Location_Class__c = 'P';
+        accreditationObj.Branch_Office_Street_name_number__c = accountSA.BillingStreet;
+        accreditationObj.Branch_Office_Postal_code__c = accountSA.BillingPostalCode;
+        accreditationObj.Branch_Office_City__c = accountSA.BillingCity;
+        
 
         insert accreditationObj;
 
@@ -695,6 +705,7 @@ global without sharing class AMS_RecordCreatorWebservice {
         acctSA.Sector__c = 'Travel Agent';
         acctSA.Category__c = 'Non-IATA Travel Agent';
         acctSA.ParentId = parentAccount.Id;
+        acctSA.REASON_FOR_CREATION__C = 'Created by customer';
 
         insert acctSA;
 
