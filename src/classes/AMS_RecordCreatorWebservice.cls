@@ -660,6 +660,10 @@ global without sharing class AMS_RecordCreatorWebservice {
         accreditationObj.Branch_Office_FAX__c = accountSA.Fax;
         accreditationObj.Location_Type__c = 'SA';
         accreditationObj.Location_Class__c = 'P';
+        accreditationObj.Branch_Office_Street_name_number__c = accountSA.BillingStreet;
+        accreditationObj.Branch_Office_Postal_code__c = accountSA.BillingPostalCode;
+        accreditationObj.Branch_Office_City__c = accountSA.BillingCity;
+        
 
         insert accreditationObj;
 
