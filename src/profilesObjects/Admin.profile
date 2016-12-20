@@ -1723,6 +1723,7 @@
 <fieldPermissions><editable>true</editable><field>Account.Zuora__UpsellOpportunity__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Account.duplicate_flag_indicato__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Account.number_of_Opportunities__c</field><readable>true</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>Account.state_numeric_code__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Account_Category__c.AIMS_ID__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Account_Category__c.Category_Code__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Account_Category__c.Category_ID__c</field><readable>true</readable></fieldPermissions>
@@ -4539,6 +4540,7 @@
 <fieldPermissions><editable>true</editable><field>IATA_ISO_Country__c.Country_Manager__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>IATA_ISO_Country__c.DDS_Enabled__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>IATA_ISO_Country__c.Disable_non_IATA_Cargo_Agents__c</field><readable>true</readable></fieldPermissions>
+<fieldPermissions><editable>true</editable><field>IATA_ISO_Country__c.Due_diligence_mandatory__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>IATA_ISO_Country__c.EACP_Country__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>IATA_ISO_Country__c.EBulletin_enabled__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>IATA_ISO_Country__c.EU_Country__c</field><readable>true</readable></fieldPermissions>
@@ -4587,6 +4589,7 @@
 <fieldPermissions><editable>true</editable><field>IATA_ISO_State__c.ISO_CODE_STANDARD__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>IATA_ISO_State__c.Informatica_Value__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>IATA_ISO_State__c.Local_Language__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>IATA_ISO_State__c.numeric_code__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>ICCS_BankAccount_To_Case__c.Amount__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>ICCS_BankAccount_To_Case__c.CaseStatus__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>ICCS_BankAccount_To_Case__c.Notice_of_Assignment__c</field><readable>true</readable></fieldPermissions>

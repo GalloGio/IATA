@@ -22,6 +22,13 @@
         <value>Conga Merge</value>
     </labels>
     <labels>
+        <fullName>AMS_Due_Diligence_Lock</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS Due Diligence Lock</shortDescription>
+        <value>Only available after Due Diligence is completed</value>
+    </labels>
+    <labels>
         <fullName>AMS_Duplicate_Username</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -42,7 +49,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS_OSCAR_ANTIMONEYLAUNDERING</shortDescription>
-        <value>Anti Money Laundering</value>
+        <value>Due Diligence</value>
     </labels>
     <labels>
         <fullName>AMS_OSCAR_APPLICATIONPROCESSING</fullName>
@@ -147,7 +154,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS_OSCAR_Action4</shortDescription>
-        <value>Perform AML</value>
+        <value>Perform Due Diligence</value>
     </labels>
     <labels>
         <fullName>AMS_OSCAR_Action5</fullName>
@@ -399,7 +406,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS OSCAR STEP17</shortDescription>
-        <value>Anti Money Laundering</value>
+        <value>Due Diligence</value>
     </labels>
     <labels>
         <fullName>AMS_OSCAR_STEP18</fullName>
@@ -583,6 +590,13 @@
         <protected>false</protected>
         <shortDescription>AMS_OSCAR_Warning_1</shortDescription>
         <value>There are still no Appointments created for this OSCAR Process</value>
+    </labels>
+    <labels>
+        <fullName>AMS_PERFORM_CORRECTION</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_PERFORM_CORRECTION</shortDescription>
+        <value>Perform Correction</value>
     </labels>
     <labels>
         <fullName>ANY</fullName>
@@ -1341,6 +1355,14 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <protected>false</protected>
         <shortDescription>Confirm purchase</shortDescription>
         <value>Confirm purchase</value>
+    </labels>
+    <labels>
+        <fullName>Confirmation</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Confirmation</shortDescription>
+        <value>Confirmation</value>
     </labels>
     <labels>
         <fullName>ContactDirectSalesMessage</fullName>
@@ -6603,7 +6625,7 @@ In order to upload your financial documents, please, login to Customer Portal on
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Case PDF Download</shortDescription>
-        <value>Please download the PDF application form using the link below. Once completed submit to IATA using the &lt;strong&gt;Submit &amp; Add Attachment&lt;/strong&gt; button.&lt;br/&gt;(Note: You can come back to this page from the &lt;a href=&quot;/ISSP_AMSCases&quot;&gt;IATA Accreditation&lt;/a&gt; page at any time to complete the upload)</value>
+        <value>Please download the PDF application form using the link below. Once completed submit to IATA using the &lt;strong&gt;Attach File&lt;/strong&gt; button.&lt;br/&gt;(Note: You can come back to this page from the &lt;a href=&quot;/ISSP_AMSCases&quot;&gt;IATA Accreditation&lt;/a&gt; page at any time to complete the upload)</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_City</fullName>
@@ -9144,6 +9166,14 @@ You will be required to upload a scanned copy of this document in the next step 
         <value>Roles &amp; Responsibilities</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_SA_Office_Select</fullName>
+        <categories>ISSP, Portal, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS SA Office Select</shortDescription>
+        <value>Select the office under which this new SA is to come under:</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_STEP_3_1_Branch_Title</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -10768,7 +10798,7 @@ Select at least one Authorized Signatory, and choose the Financial Assessment Co
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS eBulletin DAILY Setup</shortDescription>
-        <value>Setup DAILY eBulletin</value>
+        <value>Save &amp; Setup DAILY</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_eBulletin_DailyFrequency</fullName>
@@ -11084,7 +11114,7 @@ Select at least one Authorized Signatory, and choose the Financial Assessment Co
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS eBulletin WEEKLY Setup</shortDescription>
-        <value>Setup WEEKLY eBulletin</value>
+        <value>Save &amp; Setup WEEKLY</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_eBulletin_btn_DownloadDailyReport</fullName>
