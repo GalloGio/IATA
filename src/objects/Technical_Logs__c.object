@@ -141,7 +141,7 @@
         <filters>
             <field>Record__c</field>
             <operation>contains</operation>
-            <value>001w000001YiNuMAAV</value>
+            <value>001w000001Tnmod</value>
         </filters>
         <label>AMS - 1 record</label>
         <language>en_US</language>

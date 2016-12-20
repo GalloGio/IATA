@@ -745,8 +745,29 @@ public with sharing class AMS_AccountRoleCreatorTest {
         oscar.AMS_Online_Accreditation__c = aoaList.get(0).Id;
         oscar.Type_of_change__c = AMS_Utils.COR;
         oscar.STEP6__c = 'Passed';
+        oscar.AMS_Correction_change_code__c = 'COR';
 
         update oscar;
+
+        Test.stopTest();
+    }
+
+    @isTest static void test_CADCCCorrectionProcess(){
+        Test.startTest();
+        Id correctionOSCARRecTypeId = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('CORRECTION').getRecordTypeId();
+
+        AMS_OSCAR__c oscar = [select AMS_Online_Accreditation__c from AMS_OSCAR__c limit 1];
+
+        List<AMS_Pax_Accreditation_Form__c> aoaList = [select id from AMS_Pax_Accreditation_Form__c limit 1];
+
+        oscar.RecordTypeId = correctionOSCARRecTypeId;
+        oscar.AMS_Online_Accreditation__c = aoaList.get(0).Id;
+        oscar.Type_of_change__c = AMS_Utils.COR;
+        oscar.STEP6__c = 'Passed';
+        oscar.AMS_Correction_change_code__c = 'CAD';
+
+        update oscar;
+
         Test.stopTest();
     }
 }
