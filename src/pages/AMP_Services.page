@@ -12,7 +12,7 @@
 			</tr>
 		</thead>
 
-		<apex:form>
+		<apex:form >
 		<apex:repeat value="{!lsServiceWrappers}" var="sWrapper">
 
 			<tr>

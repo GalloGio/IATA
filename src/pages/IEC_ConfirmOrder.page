@@ -295,10 +295,22 @@
 						                        		</td>
 						                        		<td class="price total-price">
 						                        			<apex:outputText value="{0, number, currency}">
-				                                                <apex:param value="{!item.subTotal}"/>
+				                                                <apex:param value="{!IF(AND(item.setupFee != null, item.setupFee > 0),item.subTotal - item.setupFee,item.subTotal)}"/>
 				                                            </apex:outputText>
 						                        		</td>
 							                        </tr>
+							                        <apex:variable value="0" var="setup" rendered="{!AND(item.setupFee != null, item.setupFee > 0)}"> 
+													<tr class="promotion">
+														<td class="product-name" colspan="3"><i>Flat fee</i></td>
+														<td class="quantity"></td>
+														<td class="price item-price"></td>
+														<td class="price total-price">
+															<apex:outputText value="{0, number, currency}">
+				                                                <apex:param value="{!item.setupFee}" />
+				                                            </apex:outputText>
+														</td>
+													</tr>
+								                	</apex:variable>
 							                        <apex:variable value="1" var="hasDiscounts" rendered="{!AND(item.charges!=null, item.charges.size>0)}">
 								                        <tr class="promotion">
 								                        	<td class="product-name">

@@ -6,27 +6,6 @@
     <customButtons>Log_Phone_Case</customButtons>
     <customButtons>Change_Routing</customButtons>
     <customButtons>Move_to_Recycle_Bin</customButtons>
-    <customConsoleComponents>
-        <subtabComponents>
-            <containers>
-                <isContainerAutoSizeEnabled>true</isContainerAutoSizeEnabled>
-                <region>Left</region>
-                <sidebarComponents>
-                    <componentType>Lookup</componentType>
-                    <lookup>Contact</lookup>
-                    <unit>Percentage</unit>
-                </sidebarComponents>
-                <sidebarComponents>
-                    <componentType>Lookup</componentType>
-                    <lookup>Account</lookup>
-                    <unit>Percentage</unit>
-                </sidebarComponents>
-                <style>Stack</style>
-                <unit>Percentage</unit>
-                <width>38</width>
-            </containers>
-        </subtabComponents>
-    </customConsoleComponents>
     <emailDefault>false</emailDefault>
     <excludeButtons>Delete</excludeButtons>
     <excludeButtons>Share</excludeButtons>
@@ -172,10 +151,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Subtopic__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Country_concerned_by_the_query__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -425,17 +400,6 @@
     </relatedContent>
     <relatedLists>
         <relatedList>RelatedCommentsList</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>Name</fields>
-        <fields>Owner</fields>
-        <fields>StartTime</fields>
-        <fields>EndTime</fields>
-        <fields>Status</fields>
-        <relatedList>RelatedLiveChatTranscriptList</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <relatedList>RelatedAttachmentList</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>TASK.SUBJECT</fields>

@@ -1866,6 +1866,10 @@ SIS Charge Code Type.</description>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>Cargo Handling Manual</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>Cargo Interchange Message Procedures (Cargo-IMP)</fullName>
                 <default>false</default>
             </picklistValues>
@@ -2144,6 +2148,15 @@ SIS Charge Code Type.</description>
         <trackHistory>false</trackHistory>
         <type>Number</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>IEC_Override_Profit_Center__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>IEC - true to use profit center in ISO country when create contract instead of profit center of product</description>
+        <externalId>false</externalId>
+        <label>Override Profit Center</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>IEC_Page_Areas_of_Activity__c</fullName>
@@ -6514,6 +6527,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Cargo Handling Manual</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Cargo Interchange Message Procedures %28Cargo-IMP%29</fullName>
                 <default>false</default>
             </values>
@@ -9474,6 +9491,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Cargo Claims and Loss Prevention Handbook</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cargo Handling Manual</fullName>
                 <default>false</default>
             </values>
             <values>

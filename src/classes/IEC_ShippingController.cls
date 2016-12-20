@@ -60,6 +60,8 @@ global class IEC_ShippingController extends IEC_PageController
     Boolean forceShipToCustomerToSAP;   //*** indicate customer needs to be sent to SAP immediately
     public Boolean recalculateFreightTax;
 
+    public Boolean taxFreightCalculateWithError {get;set;}
+
     public String getExtraParamString(){
         String extraParam = ''; 
         Map<String, String> extraParameters = getExtraParameters(); 
@@ -86,6 +88,7 @@ global class IEC_ShippingController extends IEC_PageController
 
     public IEC_ShippingController() 
     {
+        taxFreightCalculateWithError = false;
         labels = Utility.buildMapFromString(Label.LabelsVF_Order + '\n' + Label.LabelsVF_Order2, '\n', ':');
         discountLabels = Utility.buildMapFromString(Label.Labels_IECDiscountType, '\n', ':');
         recreateZuoraAccount=false;//Used to force zAccount recreation for unit test purpose
@@ -106,6 +109,7 @@ global class IEC_ShippingController extends IEC_PageController
         
         if(tx != null && tx.startsWith('Error')){
         	addErrorMessage('Error found in Freight & Taxes calculation ' + tx);
+            taxFreightCalculateWithError = true;
         }
         
         sfOrder = IECOrder_Svc.getPenddingOrder(sfOrder.Id);
@@ -732,9 +736,11 @@ global class IEC_ShippingController extends IEC_PageController
                         String taxShi = Order_Svc.getSAP_Freight_Tax_for_DTO(sfOrder.Type, sfOrder.Source__c, sfOrder.Order_Channel__c, sfOrder.SoldToAccount_Partner_Number__c, 
                             sfOrder.BillToContact_Partner_Number__c, sfOrder.ShipToContact_Partner_Number__c, vfOrder.orderItems);
                         
+                        taxFreightCalculateWithError = false;
                         if(taxShi != null)
                         {
                             addErrorMessage(labels.get('errTax') + taxShi);  
+                            taxFreightCalculateWithError = true;
                         }
 
                         //Save in SFDC
@@ -807,9 +813,11 @@ global class IEC_ShippingController extends IEC_PageController
                     String taxShi = Order_Svc.getSAP_Freight_Tax_for_DTO(sfOrder.Type, sfOrder.Source__c, sfOrder.Order_Channel__c, sfOrder.SoldToAccount_Partner_Number__c, 
                         sfOrder.BillToContact_Partner_Number__c, sfOrder.ShipToContact_Partner_Number__c, vfOrder.orderItems);
 
+                    taxFreightCalculateWithError = false;
                     if(taxShi != null)
                     {
                         addErrorMessage(labels.get('errTax') + taxShi);  
+                        taxFreightCalculateWithError = true;
                     }
 
                     //Save in SFDC
@@ -958,15 +966,35 @@ global class IEC_ShippingController extends IEC_PageController
         }   
     }
 
+
+    public void activeButton(){
+        hasError = false;
+    }
+
     public PageReference processPayment()
     {
-         
+        
         if(String.isBlank(orderPaymentType))
         { 
           addErrorMessage('You must select a Payment method');
           return null;
         }
-    
+
+        //Verified that the shipping instruction mandatory field are filled in
+        Boolean shipInstructionMandatoryField = true;
+        if(String.isBlank(vfOrder.shipToContact.accountName) || String.isBlank(vfOrder.shipToContact.contactName) || 
+            String.isBlank(vfOrder.shipToContact.phone) || String.isBlank(vfOrder.shipToContact.email)){
+            shipInstructionMandatoryField = false;
+        }
+        if(!shipInstructionMandatoryField){
+            addErrorMessage('Make sure all shipping instruction mandatory fields are filled in');
+            return null;
+        }
+        //Verified if the shipToContact email is a valid email.
+        if(!isEmailValid(vfOrder.shipToContact.email)){
+            addErrorMessage('Please enter a valid email address');
+            return null;
+        }
         //-- Update sfOrder(SFDC) from vfOrder(DTO)
         sfOrder.Payment_Type__c = orderPaymentType;
 
@@ -1096,6 +1124,7 @@ global class IEC_ShippingController extends IEC_PageController
     public void changeShipToAddress()
     {
         Location__c locationShipTo;
+        hasError = false;
         
         if (!String.isBlank(String.valueOf(sfOrder.ShipTo_Location__c)))
         {
@@ -1262,8 +1291,11 @@ global class IEC_ShippingController extends IEC_PageController
         //*** update tax and shipping 
         String returnMsg = Order_Svc.getSAP_Freight_Tax_for_DTO(sfOrder.Type, sfOrder.Source__c, sfOrder.Order_Channel__c, sfOrder.SoldToAccount_Partner_Number__c, sfOrder.BillToContact_Partner_Number__c
                                                               , (String.isBlank(currentShipToPartner) ? sfOrder.ShipToContact_Partner_Number__c : currentShipToPartner) , vfOrder.orderItems);
-        if(returnMsg != null)
+        taxFreightCalculateWithError = false;
+        if(returnMsg != null){
             addErrorMessage(labels.get('errTax') + returnMsg);
+            taxFreightCalculateWithError = true;
+        }
 
         //*** save to database
         List<OrderItem> orderItemToUpdate = new List<OrderItem>();

@@ -42,6 +42,7 @@ public with sharing class AMS_OSCAR_TestDataFactory
         //create oscar history custom setting
         List<AMS_OSCAR_HistoryFields__c> customsettings = new List<AMS_OSCAR_HistoryFields__c>();
 		customsettings.add(new AMS_OSCAR_HistoryFields__c(Name = 'Welcome_Pack_Sent__c', HasExternalLabel__c = false, FieldName__c ='Welcome Pack Sent'));
+		customsettings.add(new AMS_OSCAR_HistoryFields__c(Name = 'STEP1__c', HasExternalLabel__c = true, FieldName__c ='STEP1'));
 
 		insert customsettings;
 
@@ -119,7 +120,7 @@ public with sharing class AMS_OSCAR_TestDataFactory
         //create oscar history custom setting
         List<AMS_OSCAR_HistoryFields__c> customsettings = new List<AMS_OSCAR_HistoryFields__c>();
 		customsettings.add(new AMS_OSCAR_HistoryFields__c(Name = 'Welcome_Pack_Sent__c', HasExternalLabel__c = false, FieldName__c ='Welcome Pack Sent'));
-
+		customsettings.add(new AMS_OSCAR_HistoryFields__c(Name = 'STEP11__c', HasExternalLabel__c = true, FieldName__c ='STEP11'));
 		insert customsettings;
 
 		//Create Inspections connected to OSCAR
@@ -191,7 +192,8 @@ public with sharing class AMS_OSCAR_TestDataFactory
                 Location_Class__c = cargoHO.Location_Class__c,
                 Location_Type__c = cargoHO.Location_Type__c,
                 SAAM_Case__c = oscarCase.Id,
-                Is_your_firm_handling_Dangerous_Goods__c = 'Yes');
+                Is_your_firm_handling_Dangerous_Goods__c = 'Yes',
+                CASS_Number__c = '000');
 
         insert stagingArea;
 

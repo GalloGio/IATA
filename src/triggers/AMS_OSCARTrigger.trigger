@@ -108,6 +108,8 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
                 oscar.BSPLink_participation__c = true;
             //removed in issue AMS-1584
             //oscar.Sanity_check_deadline__c = Date.today() + 15;
+            if(oscar.Process__c == AMS_Utils.CERTIFICATION)
+                oscar.Sanity_check_deadline__c = Date.today()+90;
 
 
             oscars.add(oscar);
@@ -202,7 +204,7 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
                 changeCode.status  = '9';
 
                 Account acct = new Account(Id = updatedOscar.Account__c);
-                AMS_Utils.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {updatedOscar}, new List<Account> {acct}, true);
+                AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {updatedOscar}, new List<Account> {acct}, true);
 
             } else if (oldOSCAR.STEP2__c != 'Failed' && updatedOscar.STEP2__c == 'Failed' && updatedOscar.RPM_Approval__c=='Authorize Disapproval') {
 
@@ -215,7 +217,7 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
                 changeCode.status  = '0';
 
                 Account acct = new Account(Id = updatedOscar.Account__c);
-                AMS_Utils.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {updatedOscar}, new List<Account> {acct}, true);
+                AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {updatedOscar}, new List<Account> {acct}, true);
             }
         // Management of CORRECTION OSCARs
         }else if (updatedOscar.recordTypeID == corrRT){
@@ -273,7 +275,7 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
                         changeCode.status  = '9';
 
                         Account acct = new Account(Id = updatedOscar.Account__c);
-                        AMS_Utils.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {updatedOscar}, new List<Account> {acct}, true);
+                        AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {updatedOscar}, new List<Account> {acct}, true);
                     }
                     // If the picklist is set create a CAD change code.
                     if(updatedOscar.AMS_Correction_change_code__c == 'CAD') {
@@ -293,7 +295,7 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
                             changeCode.reasonDesc = accountActiveChangeCode[0].Reason_Description__c;
                         }
                         Account acct = new Account(Id = updatedOscar.Account__c);
-                        AMS_Utils.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {updatedOscar}, new List<Account> {acct}, true);
+                        AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {updatedOscar}, new List<Account> {acct}, true);
                     }
 
                 } catch (Exception ex) {

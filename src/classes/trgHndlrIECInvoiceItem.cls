@@ -22,7 +22,8 @@ public with sharing class trgHndlrIECInvoiceItem {
 		if (lstNonZeroInvoiceItems.size() > 0)
 			CreateSAPInvoiceItems(setZInvoiceItemNumber, lstNonZeroInvoiceItems);
 		*/
-		IEC_Invoice_Item_Svc.CreateSalesOrder(newRecordsMap.keySet());
+		//*** (Thai 2016-11-01) should do from a job because missing subscription
+		//IEC_Invoice_Item_Svc.CreateSalesOrder(newRecordsMap.keySet());
 	}
 	
 	/**
