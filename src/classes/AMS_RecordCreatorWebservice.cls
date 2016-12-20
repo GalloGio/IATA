@@ -700,6 +700,7 @@ global without sharing class AMS_RecordCreatorWebservice {
         acctSA.Sector__c = 'Travel Agent';
         acctSA.Category__c = 'Non-IATA Travel Agent';
         acctSA.ParentId = parentAccount.Id;
+        acctSA.REASON_FOR_CREATION__C = 'Created by customer';
 
         insert acctSA;
 
