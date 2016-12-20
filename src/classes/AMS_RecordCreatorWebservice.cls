@@ -578,7 +578,7 @@ global without sharing class AMS_RecordCreatorWebservice {
 
             //Create a new Account for the SA, with the values reported in the below table 
             
-            Account parentAccount = [SELECT Id,Name,Short_Name__c,Abbreviated_name__c,TradeName__c,Company_Type__c,ShippingCity,ShippingCountry,ShippingPostalCode,ShippingState,ShippingStreet,BillingCity,BillingCountry,BillingPostalCode,BillingState,BillingStreet,IATA_ISO_Country__c,Iso_State__c,Abbreviated_address__c,Website,Phone,Fax,Email__c,ShippingAddress,BillingAddress from Account where Id = :caseObj.Account_Concerned__c LIMIT 1];
+            Account parentAccount = [SELECT Id,Name,Short_Name__c,Abbreviated_name__c,TradeName__c,Company_Type__c,ShippingCity,ShippingCountry,ShippingPostalCode,ShippingState,ShippingStreet,BillingCity,BillingCountry,BillingPostalCode,BillingState,BillingStreet,IATA_ISO_Country__c,Iso_State__c,Abbreviated_address__c,Website,Phone,Fax,Email__c from Account where Id = :caseObj.Account_Concerned__c LIMIT 1];
 
             Account newSAAccount = createSAAccount(parentAccount);
 
@@ -649,6 +649,7 @@ global without sharing class AMS_RecordCreatorWebservice {
         accreditationObj.Shipping_State__c = accountSA.ShippingState;
         accreditationObj.Shipping_Street__c = accountSA.ShippingStreet;
 
+        accreditationObj.Branch_Office_Country__c = accountSA.IATA_ISO_Country__c;
         accreditationObj.ISO_Country__c = accountSA.IATA_ISO_Country__c;
         accreditationObj.IATA_ISO_State__c = accountSA.Iso_State__c;
         accreditationObj.Billing_State__c = accountSA.BillingState;
@@ -700,6 +701,7 @@ global without sharing class AMS_RecordCreatorWebservice {
         acctSA.Sector__c = 'Travel Agent';
         acctSA.Category__c = 'Non-IATA Travel Agent';
         acctSA.ParentId = parentAccount.Id;
+        acctSA.REASON_FOR_CREATION__C = 'Created by customer';
 
         insert acctSA;
 
