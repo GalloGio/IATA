@@ -91,7 +91,6 @@
     </layoutSections>
     <relatedLists>
         <fields>NAME</fields>
-<<<<<<< HEAD
         <fields>Object_API_Name__c</fields>
         <fields>Field_API_Name__c</fields>
         <fields>Field_New_Value__c</fields>
@@ -99,8 +98,6 @@
         <fields>Field_Old_Value__c</fields>
         <fields>Field_Lookup_Old_Value__c</fields>
         <fields>CREATEDBY_USER</fields>
-=======
->>>>>>> master
         <relatedList>AMS_Agency_A_Change_code_History__c.Agency_Applied_Change_Code__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
