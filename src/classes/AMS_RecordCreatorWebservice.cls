@@ -578,7 +578,7 @@ global without sharing class AMS_RecordCreatorWebservice {
 
             //Create a new Account for the SA, with the values reported in the below table 
             
-            Account parentAccount = [SELECT Id,Name,Short_Name__c,Abbreviated_name__c,TradeName__c,Company_Type__c,ShippingCity,ShippingCountry,ShippingPostalCode,ShippingState,ShippingStreet,BillingCity,BillingCountry,BillingPostalCode,BillingState,BillingStreet,IATA_ISO_Country__c,Iso_State__c,Abbreviated_address__c,Website,Phone,Fax,Email__c,ShippingAddress,BillingAddress from Account where Id = :caseObj.Account_Concerned__c LIMIT 1];
+            Account parentAccount = [SELECT Id,Name,Short_Name__c,Abbreviated_name__c,TradeName__c,Company_Type__c,ShippingCity,ShippingCountry,ShippingPostalCode,ShippingState,ShippingStreet,BillingCity,BillingCountry,BillingPostalCode,BillingState,BillingStreet,IATA_ISO_Country__c,Iso_State__c,Abbreviated_address__c,Website,Phone,Fax,Email__c from Account where Id = :caseObj.Account_Concerned__c LIMIT 1];
 
             Account newSAAccount = createSAAccount(parentAccount);
 
