@@ -349,10 +349,10 @@
 <fieldPermissions><editable>true</editable><field>AMS_Agencies_relationhip__c.Parent_Account__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>AMS_Agencies_relationhip__c.Parent_agency__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>AMS_Agencies_relationhip__c.Relationship_details__c</field><readable>true</readable></fieldPermissions>
-<fieldPermissions><editable>false</editable><field>AMS_Agency_A_Change_code_History__c.Field_Lookup_New_Value__c</field><readable>false</readable></fieldPermissions>
-<fieldPermissions><editable>false</editable><field>AMS_Agency_A_Change_code_History__c.Field_Lookup_Old_Value__c</field><readable>false</readable></fieldPermissions>
-<fieldPermissions><editable>false</editable><field>AMS_Agency_A_Change_code_History__c.Field_New_Value__c</field><readable>false</readable></fieldPermissions>
-<fieldPermissions><editable>false</editable><field>AMS_Agency_A_Change_code_History__c.Field_Old_Value__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>true</editable><field>AMS_Agency_A_Change_code_History__c.Field_Lookup_New_Value__c</field><readable>true</readable></fieldPermissions>
+<fieldPermissions><editable>true</editable><field>AMS_Agency_A_Change_code_History__c.Field_Lookup_Old_Value__c</field><readable>true</readable></fieldPermissions>
+<fieldPermissions><editable>true</editable><field>AMS_Agency_A_Change_code_History__c.Field_New_Value__c</field><readable>true</readable></fieldPermissions>
+<fieldPermissions><editable>true</editable><field>AMS_Agency_A_Change_code_History__c.Field_Old_Value__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>AMS_Agency_Affiliation__c.Account__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>AMS_Agency_Affiliation__c.Agency__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AMS_Agency_Affiliation__c.Last_synchronization__c</field><readable>false</readable></fieldPermissions>
@@ -1780,7 +1780,7 @@
 <fieldPermissions><editable>false</editable><field>Agency_Applied_Change_code__c.Irregularity_Type__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Agency_Applied_Change_code__c.OSCAR__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Agency_Applied_Change_code__c.Operation__c</field><readable>true</readable></fieldPermissions>
-<fieldPermissions><editable>false</editable><field>Agency_Applied_Change_code__c.Published_on_EBulletin__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>Agency_Applied_Change_code__c.Published_on_EBulletin__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Agency_Applied_Change_code__c.Reason_Code__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Agency_Applied_Change_code__c.Reason_Description__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Agency_Applied_Change_code__c.Related_Irregularity__c</field><readable>true</readable></fieldPermissions>
@@ -1789,7 +1789,7 @@
 <fieldPermissions><editable>true</editable><field>Agency_Applied_Change_code__c.Sent_to_external_system__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Agency_Applied_Change_code__c.Source__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Agency_Applied_Change_code__c.Start_Date__c</field><readable>true</readable></fieldPermissions>
-<fieldPermissions><editable>false</editable><field>Agency_Applied_Change_code__c.To_Publish_in_e_Bulletin__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>true</editable><field>Agency_Applied_Change_code__c.To_Publish_in_e_Bulletin__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Agency_Applied_Change_code__c.Updated_AIMS__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Agency_Authorization__c.Authority__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Agency_Authorization__c.IATACode__c</field><readable>false</readable></fieldPermissions>
@@ -7061,6 +7061,7 @@
 <objectPermissions><allowCreate>true</allowCreate><allowDelete>false</allowDelete><allowEdit>true</allowEdit><allowRead>true</allowRead><modifyAllRecords>false</modifyAllRecords><object>AMS_Address__c</object><viewAllRecords>true</viewAllRecords></objectPermissions>
 <objectPermissions><allowCreate>true</allowCreate><allowDelete>false</allowDelete><allowEdit>true</allowEdit><allowRead>true</allowRead><modifyAllRecords>false</modifyAllRecords><object>AMS_Agencies_Hierarchy__c</object><viewAllRecords>false</viewAllRecords></objectPermissions>
 <objectPermissions><allowCreate>true</allowCreate><allowDelete>false</allowDelete><allowEdit>true</allowEdit><allowRead>true</allowRead><modifyAllRecords>false</modifyAllRecords><object>AMS_Agencies_relationhip__c</object><viewAllRecords>false</viewAllRecords></objectPermissions>
+<objectPermissions><allowCreate>true</allowCreate><allowDelete>false</allowDelete><allowEdit>true</allowEdit><allowRead>true</allowRead><modifyAllRecords>false</modifyAllRecords><object>AMS_Agency_A_Change_code_History__c</object><viewAllRecords>true</viewAllRecords></objectPermissions>
 <objectPermissions><allowCreate>true</allowCreate><allowDelete>false</allowDelete><allowEdit>true</allowEdit><allowRead>true</allowRead><modifyAllRecords>false</modifyAllRecords><object>AMS_Agency_Regulation__c</object><viewAllRecords>false</viewAllRecords></objectPermissions>
 <objectPermissions><allowCreate>true</allowCreate><allowDelete>false</allowDelete><allowEdit>false</allowEdit><allowRead>true</allowRead><modifyAllRecords>false</modifyAllRecords><object>AMS_Certificate_Request__c</object><viewAllRecords>false</viewAllRecords></objectPermissions>
 <objectPermissions><allowCreate>false</allowCreate><allowDelete>false</allowDelete><allowEdit>false</allowEdit><allowRead>true</allowRead><modifyAllRecords>false</modifyAllRecords><object>AMS_Facility__c</object><viewAllRecords>false</viewAllRecords></objectPermissions>

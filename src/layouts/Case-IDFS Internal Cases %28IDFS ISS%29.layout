@@ -216,6 +216,13 @@
                 <behavior>Readonly</behavior>
                 <field>KPI_Prod__c</field>
             </layoutItems>
+            <layoutItems>
+                <height>30</height>
+                <page>AirlineSuspensionCsTemplateMerge</page>
+                <showLabel>false</showLabel>
+                <showScrollbars>false</showScrollbars>
+                <width>100%</width>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
