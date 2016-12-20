@@ -4591,6 +4591,17 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>CNS_Agency__c</fullName>
+        <externalId>false</externalId>
+        <formula>AND( 
+   IATA_ISO_Country__r.CNS_country__c=true, 
+   OR(ISPICKVAL(Location_Class__c,&quot;C&quot;),ISPICKVAL(Location_Class__c,&quot;R&quot;))
+ )</formula>
+        <label>CNS Agency</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>C_Code__c</fullName>
         <externalId>false</externalId>
         <label>C Code</label>
@@ -7541,12 +7552,10 @@ Controlling picklist of E&amp;F Sub-Status Account</description>
             <picklistValues>
                 <fullName>Chapter 7</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
             </picklistValues>
             <picklistValues>
                 <fullName>None</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
             </picklistValues>
             <restrictedPicklist>true</restrictedPicklist>
             <sorted>false</sorted>
@@ -13856,6 +13865,17 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <summaryOperation>count</summaryOperation>
         <trackHistory>false</trackHistory>
         <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>state_numeric_code__c</fullName>
+        <externalId>false</externalId>
+        <formula>Iso_State__r.numeric_code__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>state numeric code</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <listViews>
         <fullName>AOC_Expiry_dates_Airline_Coding</fullName>
@@ -24625,6 +24645,53 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>PreviousStatus__c</picklist>
+            <values>
+                <fullName>Approved</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cash basis%2Fno commission</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cash basis%2Fwith commission</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Changes processed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Listed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>New application pending</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No longer a customer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not accreditated</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not in operation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Terminated</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Under review</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Rating</picklist>
             <values>
                 <fullName>Basic</fullName>
@@ -27420,6 +27487,53 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>PreviousStatus__c</picklist>
+            <values>
+                <fullName>Approved</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cash basis%2Fno commission</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cash basis%2Fwith commission</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Changes processed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Listed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>New application pending</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No longer a customer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not accreditated</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not in operation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Terminated</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Under review</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Rating</picklist>
             <values>
                 <fullName>Basic</fullName>
@@ -29721,6 +29835,53 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Partnership</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>PreviousStatus__c</picklist>
+            <values>
+                <fullName>Approved</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cash basis%2Fno commission</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cash basis%2Fwith commission</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Changes processed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Listed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>New application pending</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No longer a customer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not accreditated</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not in operation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Terminated</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Under review</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -32276,6 +32437,53 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Pax</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>PreviousStatus__c</picklist>
+            <values>
+                <fullName>Approved</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cash basis%2Fno commission</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cash basis%2Fwith commission</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Changes processed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Listed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>New application pending</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No longer a customer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not accreditated</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not in operation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Terminated</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Under review</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -35332,6 +35540,53 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Partnership</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>PreviousStatus__c</picklist>
+            <values>
+                <fullName>Approved</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cash basis%2Fno commission</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cash basis%2Fwith commission</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Changes processed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Listed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>New application pending</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No longer a customer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not accreditated</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not in operation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Terminated</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Under review</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -38616,6 +38871,53 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Pax</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>PreviousStatus__c</picklist>
+            <values>
+                <fullName>Approved</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cash basis%2Fno commission</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cash basis%2Fwith commission</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Changes processed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Listed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>New application pending</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No longer a customer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not accreditated</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not in operation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Terminated</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Under review</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -42845,6 +43147,53 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>PreviousStatus__c</picklist>
+            <values>
+                <fullName>Approved</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cash basis%2Fno commission</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cash basis%2Fwith commission</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Changes processed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Listed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>New application pending</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No longer a customer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not accreditated</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not in operation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Terminated</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Under review</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Rating</picklist>
             <values>
                 <fullName>Basic</fullName>
@@ -45173,6 +45522,53 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Pax</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>PreviousStatus__c</picklist>
+            <values>
+                <fullName>Approved</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cash basis%2Fno commission</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cash basis%2Fwith commission</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Changes processed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Listed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>New application pending</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No longer a customer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not accreditated</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not in operation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Terminated</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Under review</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -49299,6 +49695,53 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Pax</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>PreviousStatus__c</picklist>
+            <values>
+                <fullName>Approved</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cash basis%2Fno commission</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cash basis%2Fwith commission</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Changes processed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Listed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>New application pending</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No longer a customer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not accreditated</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not in operation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Terminated</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Under review</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -53484,6 +53927,53 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>PreviousStatus__c</picklist>
+            <values>
+                <fullName>Approved</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cash basis%2Fno commission</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cash basis%2Fwith commission</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Changes processed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Listed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>New application pending</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No longer a customer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not accreditated</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not in operation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Terminated</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Under review</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Rating</picklist>
             <values>
                 <fullName>Basic</fullName>
@@ -55743,6 +56233,53 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>PreviousStatus__c</picklist>
+            <values>
+                <fullName>Approved</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cash basis%2Fno commission</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cash basis%2Fwith commission</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Changes processed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Listed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>New application pending</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No longer a customer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not accreditated</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not in operation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Terminated</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Under review</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Rating</picklist>
             <values>
                 <fullName>Basic</fullName>
@@ -57933,6 +58470,53 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Partnership</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>PreviousStatus__c</picklist>
+            <values>
+                <fullName>Approved</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cash basis%2Fno commission</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cash basis%2Fwith commission</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Changes processed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Listed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>New application pending</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No longer a customer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not accreditated</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not in operation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Terminated</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Under review</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -60477,6 +61061,53 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Partnership</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>PreviousStatus__c</picklist>
+            <values>
+                <fullName>Approved</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cash basis%2Fno commission</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cash basis%2Fwith commission</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Changes processed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Listed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>New application pending</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No longer a customer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not accreditated</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not in operation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Terminated</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Under review</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -65783,6 +66414,53 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>PreviousStatus__c</picklist>
+            <values>
+                <fullName>Approved</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cash basis%2Fno commission</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cash basis%2Fwith commission</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Changes processed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Listed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>New application pending</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No longer a customer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not accreditated</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not in operation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Terminated</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Under review</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Profit_Center__c</picklist>
             <values>
                 <fullName>DBP003</fullName>
@@ -70888,6 +71566,53 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>PreviousStatus__c</picklist>
+            <values>
+                <fullName>Approved</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cash basis%2Fno commission</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cash basis%2Fwith commission</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Changes processed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Listed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>New application pending</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No longer a customer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not accreditated</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not in operation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Terminated</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Under review</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Rating</picklist>
             <values>
                 <fullName>Basic</fullName>
@@ -75168,6 +75893,53 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Pax</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>PreviousStatus__c</picklist>
+            <values>
+                <fullName>Approved</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cash basis%2Fno commission</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cash basis%2Fwith commission</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Changes processed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Listed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>New application pending</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No longer a customer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not accreditated</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not in operation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Terminated</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Under review</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
