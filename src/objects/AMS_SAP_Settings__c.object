@@ -4,42 +4,6 @@
     <description>Stores default setting values to communicate with MDM (SAP PI)</description>
     <enableFeeds>false</enableFeeds>
     <fields>
-        <fullName>AIMS1_CRON_EXP__c</fullName>
-        <defaultValue>&quot;0 0 * * * ?&quot;</defaultValue>
-        <description>Chrono setup for AIMS1 Countries</description>
-        <externalId>false</externalId>
-        <label>AIMS1_CRON_EXP</label>
-        <length>255</length>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>AIMS2_CRON_EXP__c</fullName>
-        <defaultValue>&quot;0 5 * * * ?&quot;</defaultValue>
-        <description>Chrono setup for AIMS2 Countries</description>
-        <externalId>false</externalId>
-        <label>AIMS2_CRON_EXP</label>
-        <length>255</length>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>AIMS3_CRON_EXP__c</fullName>
-        <defaultValue>&quot;0 10 * * * ?&quot;</defaultValue>
-        <description>Chrono setup for AIMS3 Countries</description>
-        <externalId>false</externalId>
-        <label>AIMS3_CRON_EXP</label>
-        <length>255</length>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
         <fullName>Active__c</fullName>
         <defaultValue>true</defaultValue>
         <description>enables or disables the integration&apos;s with SAP PI</description>
