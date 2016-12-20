@@ -13888,6 +13888,17 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <trackHistory>false</trackHistory>
         <type>Summary</type>
     </fields>
+    <fields>
+        <fullName>state_numeric_code__c</fullName>
+        <externalId>false</externalId>
+        <formula>Iso_State__r.numeric_code__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>state numeric code</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
     <listViews>
         <fullName>AOC_Expiry_dates_Airline_Coding</fullName>
         <columns>ACCOUNT.NAME</columns>
