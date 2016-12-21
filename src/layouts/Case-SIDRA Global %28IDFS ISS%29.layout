@@ -5,7 +5,7 @@
     <customButtons>R_S_feedback_complete</customButtons>
     <customButtons>CS_actions_complete</customButtons>
     <customButtons>Reset_New_interactions</customButtons>
-	<customButtons>Deactivate_BSPLink</customButtons>
+    <customButtons>Deactivate_BSPLink</customButtons>
     <customButtons>Undo_Deactivation_BSPLink</customButtons>
     <customButtons>Reactivate_BSPLink</customButtons>
     <emailDefault>false</emailDefault>
@@ -1184,7 +1184,7 @@
                 <showScrollbars>true</showScrollbars>
                 <width>100%</width>
             </layoutItems>
-			<layoutItems>
+            <layoutItems>
                 <height>1</height>
                 <page>AMS_Case_AccIrr_Popup</page>
                 <showLabel>false</showLabel>
