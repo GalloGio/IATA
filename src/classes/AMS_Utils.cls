@@ -78,6 +78,7 @@ public without sharing class AMS_Utils {
 
     public static final String PASSED = 'Passed';
     public static final String FAILED = 'Failed';
+    public static final String IN_PROGRESS = 'In Progress';
     public static final String NOT_APPLICABLE = 'Not Applicable';
 
     public static final String AUTH_APPROVAL = 'Authorize Approval';
@@ -90,7 +91,7 @@ public without sharing class AMS_Utils {
     public static final String MAJ_SHAREHOLDING = 'Major Shareholding';
     public static final String MIN_SHAREHOLDING = 'Minor Shareholding';
     public static final String NAME = 'Name';
-    public static final String LEGAL_STATUS = 'Legal Status';
+    public static final String LEGAL_STATUS = 'Legal status';
     public static final String VFMR = 'VMFR';
 
 

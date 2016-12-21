@@ -157,45 +157,55 @@ global class AMS_OSCAR_Webservice {
         
     }
 
-    WebService static String createAMLCase(String oscarId){
+    WebService static String createAMLCaseWithNoOscarUpdate(AMS_OSCAR__c oscar) {
+        return execCreateAMLCase(oscar, false);
+    }
 
+    WebService static String createAMLCase(String oscarId){
+        List<AMS_OSCAR__c> oscar = [select Name, STEP17__c, Account__c, Account__r.Name, Account__r.IATA_ISO_Country__r.Region__c, Account__r.IATA_ISO_Country__r.Name from AMS_OSCAR__c where Id =: oscarId];
+        if(oscar!=null && oscar.size()>0) {
+            return execCreateAMLCase(oscar[0], true);
+        }        
+        return 'ERROR: OSCAR not found.';
+    }
+
+    private static String execCreateAMLCase(AMS_OSCAR__c oscar, Boolean updateOscar) {
         String result = '';
+
+        if(oscar.STEP17__c == AMS_Utils.IN_PROGRESS) return 'ERROR: Due Diligence already in progress';
 
         try{
 
             ID InternalCaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('Internal Cases (IDFS ISS)');
 
-            List<AMS_OSCAR__c> oscar = [select Name, Account__c, Account__r.Name, Account__r.IATA_ISO_Country__r.Region__c, Account__r.IATA_ISO_Country__r.Name from AMS_OSCAR__c where Id =: oscarId];
-            if(oscar!=null && oscar.size()>0){
-
-                Case oscarCommCase = [select Id from Case where OSCAR__c =: oscar[0].Id AND ( ParentId = null or Parent.RecordType.Name != 'OSCAR Communication' ) limit 1];
-                
-                if(oscarCommCase == null){
-                    result = 'Could not find a the Oscar Communication case related to this OSCAR.';
-                    return 'ERROR: ' + result;
-                }
-
-                Case issCase = new Case(RecordTypeId = InternalCaseRecordTypeID, Reason1__c = 'New Accredited Agent', CaseArea__c = 'Corporate Compliance',
-                                    ParentId = oscarCommCase.Id, AccountId = oscar[0].Account__c, Subject = 'Anti Money Laundering – ' + oscar[0].Account__r.Name,
-                                    OSCAR__c = oscar[0].Id, Region__c = oscar[0].Account__r.IATA_ISO_Country__r.Region__c, BSPCountry__c = oscar[0].Account__r.IATA_ISO_Country__r.Name);
-
-                insert issCase;
-
-                oscar[0].STEP17__c = 'In Progress';
-                oscar[0].AML_requested__c = Date.today();
-                oscar[0].AML_deadline__c = Date.today()+3;
-                update oscar;
-
-                return issCase.Id;
-
+            Case oscarCommCase = [select Id from Case where OSCAR__c =: oscar.Id AND ( ParentId = null or Parent.RecordType.Name != 'OSCAR Communication' ) limit 1];
+            
+            if(oscarCommCase == null){
+                result = 'Could not find a the Oscar Communication case related to this OSCAR.';
+                return 'ERROR: ' + result;
             }
 
-            return 'ERROR: OSCAR not found.';
+            Case issCase = new Case(RecordTypeId = InternalCaseRecordTypeID, Reason1__c = 'New Accredited Agent', CaseArea__c = 'Corporate Compliance',
+                                ParentId = oscarCommCase.Id, AccountId = oscar.Account__c, Subject = 'Due Diligence – ' + oscar.Account__r.Name,
+                                OSCAR__c = oscar.Id, Region__c = oscar.Account__r.IATA_ISO_Country__r.Region__c, BSPCountry__c = oscar.Account__r.IATA_ISO_Country__r.Name);
+
+            insert issCase;
+            
+            oscar.STEP17__c = 'In Progress';
+            oscar.AML_requested__c = Date.today();
+            oscar.AML_deadline__c = Date.today()+3;
+
+            if(updateOscar) {                    
+                update oscar;
+            }
+
+            update new Account(Id=oscar.Account__c, Due_Diligence_Status__c = 'In Progress');
+
+            return issCase.Id;            
 
         }catch(Exception ex){
             return AMS_Utils.errorMessageBeautifyer(ex);
         }
-        
     }
 
     WebService static String copyDataToAccount(String oscarId){

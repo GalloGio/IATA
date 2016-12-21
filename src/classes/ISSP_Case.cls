@@ -91,11 +91,6 @@ public without sharing class ISSP_Case {
     public Decimal CaseStatusACR { get {return ISSP_Constant.caseStatusMap_ACR_Internal.get(newCase.Status);}    }
     public Decimal CaseDPCStatusACR { get {return ISSP_Constant.caseStatusMap_ACR_Portal.get(newCase.Escalated_Status_ACCA__c);}   }
 
-    //FOR VR process
-    public Map<String, String> mVR_LocationClassTypes 
-        {get { return new Map<String, String>{'P'=>'P','C'=>'C','R'=>'R','I'=>'I','Q'=>'Q','D'=>'D'}; }}
-
-
     public PageReference pageLoad() {
         if (ApexPages.currentPage().getParameters().containsKey('caseId')) {
             string caseId = ApexPages.currentPage().getParameters().get('caseId');
@@ -173,17 +168,20 @@ public without sharing class ISSP_Case {
                 newCase.Subject = 'New SA - ' + con.Account.Name;
                 newCase.CaseArea__c = 'Accreditation Process';
                 newCase.Reason1__c = 'New SA / CHV – New Code';
+                newCase.Status = 'Draft';
                 newCase.Product_Category_ID__c = '-'; //Set Product Id so picked up by case assign to AM Regional queue
                 isAccreditationUploadCase = true;
             } else if (paramTopic == 'TIDS') {
                 newCase.Subject = 'New TIDS - ' + con.Account.Name;
                 newCase.CaseArea__c = 'Accreditation Products';
                 newCase.Reason1__c = 'TIDS';
+                newCase.Status = 'Draft';
                 isAccreditationUploadCase = true;
             } else if (paramTopic == 'VR') {
                 newCase.Subject = 'Closure - ' + con.Account.IATACode__c + ' - ' + con.Account.Name;
                	newCase.CaseArea__c = 'Accreditation Process';
                	newCase.Reason1__c = 'CLO - Closure';
+                newCase.Status = 'Draft';
                 newCase.Product_Category_ID__c = '-'; //Set Product Id so picked up by case assign to AM Regional queue
                	isAccreditationUploadCase = true;
             }
@@ -671,6 +669,31 @@ public without sharing class ISSP_Case {
 
                 }
                 upsert newCase;
+                
+                /**
+                popContact();
+                String typeOfProcess = '';
+                if (paramTopic == 'VR'){
+                    //P,C,R,I,Q,D -> VR.1.0
+                    //outros -> VR.1.0.CA
+                    //Map<String, String> mLocationClassTypes = new Map<String, String>{'P'=>'P','C'=>'C','R'=>'R','I'=>'I','Q'=>'Q','D'=>'D'};
+
+                    if(mVR_LocationClassTypes.containsKey(con.Account.Location_Class__c)   ){
+                        typeOfProcess = AMS_RecordCreatorWebservice.NEWVR_PV;
+                    }else{
+                        typeOfProcess = AMS_RecordCreatorWebservice.NEWVRCA_PV;
+                    }
+                }
+
+                System.debug('con.Account.Location_Class__c: ' + con.Account.Location_Class__c);
+                System.debug('typeOfProcess: ' + typeOfProcess);
+
+
+                if (newCase.RecordTypeId == OSCAR_RECORD_TYPE_ID && paramTopic == 'VR'){
+                    AMS_RecordCreatorWebservice.createAccreditation(con.AccountId, AMS_RecordCreatorWebservice.EMPTYACCREDITATIONID, typeOfProcess, newCase.Id);
+                }
+				**/
+
                 //PageReference pr = new Pagereference('/ISSP_Case?caseId='+newCase.Id);
                 //pr.setRedirect(true);
                 //return pr;
@@ -710,6 +733,29 @@ public without sharing class ISSP_Case {
             try {
                 upsert newCase;
                 SYSTEM.DEBUG('ATTACHING file');
+
+                /**
+                popContact();
+                String typeOfProcess = '';
+                if (paramTopic == 'VR'){
+                    //P,C,R,I,Q,D -> VR.1.0
+                    //outros -> VR.1.0.CA
+                    
+                    if(mVR_LocationClassTypes.containsKey(con.Account.Location_Class__c)   ){
+                        typeOfProcess = AMS_RecordCreatorWebservice.NEWVR_PV;
+                    }else{
+                        typeOfProcess = AMS_RecordCreatorWebservice.NEWVRCA_PV;
+                    }
+                }
+
+                System.debug('con.Account.Location_Class__c: ' + con.Account.Location_Class__c);
+                System.debug('typeOfProcess: ' + typeOfProcess);
+
+                if (newCase.RecordTypeId == OSCAR_RECORD_TYPE_ID && paramTopic == 'VR'){
+                   AMS_RecordCreatorWebservice.createAccreditation(con.AccountId, AMS_RecordCreatorWebservice.EMPTYACCREDITATIONID, typeOfProcess, newCase.Id);
+                }
+				**/
+
                 //return new Pagereference('/p/attach/NoteAttach?pid' + newCase.Id + '&retURL=%2FISSP_Case?caseId='+ newCase.Id);
                 return new Pagereference('/ISSP_AddAttachment?caseid=' + newCase.Id);
             } catch (DmlException ex) {
