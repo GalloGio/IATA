@@ -1120,10 +1120,10 @@
 <fieldPermissions><editable>false</editable><field>AMS_Settlement_System__c.Last_synchronization__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AMS_Settlement_System__c.Legacy_External_ID__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AMS_Settlement_System__c.Legacy_System__c</field><readable>false</readable></fieldPermissions>
-<fieldPermissions><editable>false</editable><field>AMS_Territory__c.Comments__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>AMS_Territory__c.Comments__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AMS_Territory__c.ISO_Country__c</field><readable>false</readable></fieldPermissions>
-<fieldPermissions><editable>false</editable><field>AMS_Territory__c.ISO_State__c</field><readable>false</readable></fieldPermissions>
-<fieldPermissions><editable>false</editable><field>AMS_Territory__c.Legacy_Id__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>AMS_Territory__c.ISO_State__c</field><readable>true</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>AMS_Territory__c.Legacy_Id__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AMS_Voucher_Information__c.IsAgencyEligibleForCountryAverage__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AMS_Voucher_Information__c.IsAgencyEligible__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AMS_Voucher_Information__c.Number_Of_Vouchers__c</field><readable>false</readable></fieldPermissions>
@@ -7063,6 +7063,7 @@
 <objectPermissions><allowCreate>false</allowCreate><allowDelete>false</allowDelete><allowEdit>false</allowEdit><allowRead>true</allowRead><modifyAllRecords>false</modifyAllRecords><object>AMS_Agency__c</object><viewAllRecords>true</viewAllRecords></objectPermissions>
 <objectPermissions><allowCreate>false</allowCreate><allowDelete>false</allowDelete><allowEdit>false</allowEdit><allowRead>true</allowRead><modifyAllRecords>false</modifyAllRecords><object>AMS_Inspection__c</object><viewAllRecords>false</viewAllRecords></objectPermissions>
 <objectPermissions><allowCreate>false</allowCreate><allowDelete>false</allowDelete><allowEdit>false</allowEdit><allowRead>true</allowRead><modifyAllRecords>false</modifyAllRecords><object>AMS_Owner__c</object><viewAllRecords>false</viewAllRecords></objectPermissions>
+<objectPermissions><allowCreate>false</allowCreate><allowDelete>false</allowDelete><allowEdit>false</allowEdit><allowRead>true</allowRead><modifyAllRecords>false</modifyAllRecords><object>AMS_Territory__c</object><viewAllRecords>false</viewAllRecords></objectPermissions>
 <objectPermissions><allowCreate>true</allowCreate><allowDelete>true</allowDelete><allowEdit>true</allowEdit><allowRead>true</allowRead><modifyAllRecords>false</modifyAllRecords><object>Account</object><viewAllRecords>true</viewAllRecords></objectPermissions>
 <objectPermissions><allowCreate>true</allowCreate><allowDelete>true</allowDelete><allowEdit>true</allowEdit><allowRead>true</allowRead><modifyAllRecords>true</modifyAllRecords><object>Agents__c</object><viewAllRecords>true</viewAllRecords></objectPermissions>
 <objectPermissions><allowCreate>false</allowCreate><allowDelete>false</allowDelete><allowEdit>false</allowEdit><allowRead>true</allowRead><modifyAllRecords>false</modifyAllRecords><object>AmazonFile__c</object><viewAllRecords>true</viewAllRecords></objectPermissions>
