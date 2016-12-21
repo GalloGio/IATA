@@ -241,10 +241,10 @@
             <tab>IATA_Code_Loader</tab>
         </mapping>
         <mapping>
-            <tab>SIDRA_Lite_Mass_Approval</tab>
+            <tab>Purge_IATA_Code_Process</tab>
         </mapping>
         <mapping>
-            <tab>Purge_IATA_Code_Process</tab>
+            <tab>SIDRA_Lite_Mass_Approval</tab>
         </mapping>
         <mapping>
             <tab>Voucher_Management</tab>
