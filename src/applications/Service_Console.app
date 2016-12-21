@@ -32,33 +32,33 @@
         </defaultShortcut>
         <defaultShortcut>
             <action>FOCUS_DETAIL_VIEW</action>
-            <active>true</active>
+            <active>false</active>
             <keyCommand>SHIFT+S</keyCommand>
         </defaultShortcut>
         <defaultShortcut>
             <action>FOCUS_PRIMARY_TAB_PANEL</action>
-            <active>true</active>
+            <active>false</active>
             <keyCommand>P</keyCommand>
         </defaultShortcut>
         <defaultShortcut>
             <action>FOCUS_SUBTAB_PANEL</action>
-            <active>true</active>
+            <active>false</active>
             <keyCommand>S</keyCommand>
         </defaultShortcut>
         <defaultShortcut>
             <action>FOCUS_LIST_VIEW</action>
-            <active>true</active>
+            <active>false</active>
             <keyCommand>N</keyCommand>
         </defaultShortcut>
         <defaultShortcut>
             <action>FOCUS_FIRST_LIST_VIEW</action>
-            <active>true</active>
+            <active>false</active>
             <keyCommand>SHIFT+F</keyCommand>
         </defaultShortcut>
         <defaultShortcut>
             <action>FOCUS_SEARCH_INPUT</action>
             <active>true</active>
-            <keyCommand>R</keyCommand>
+            <keyCommand>CTRL+Q</keyCommand>
         </defaultShortcut>
         <defaultShortcut>
             <action>MOVE_LEFT</action>
@@ -82,7 +82,7 @@
         </defaultShortcut>
         <defaultShortcut>
             <action>OPEN_TAB_SCROLLER_MENU</action>
-            <active>true</active>
+            <active>false</active>
             <keyCommand>D</keyCommand>
         </defaultShortcut>
         <defaultShortcut>
@@ -93,11 +93,11 @@
         <defaultShortcut>
             <action>CLOSE_TAB</action>
             <active>true</active>
-            <keyCommand>C</keyCommand>
+            <keyCommand>CTRL+Y</keyCommand>
         </defaultShortcut>
         <defaultShortcut>
             <action>REFRESH_TAB</action>
-            <active>false</active>
+            <active>true</active>
             <keyCommand>SHIFT+R</keyCommand>
         </defaultShortcut>
         <defaultShortcut>
@@ -108,12 +108,12 @@
         <defaultShortcut>
             <action>EDIT</action>
             <active>true</active>
-            <keyCommand>E</keyCommand>
+            <keyCommand>F2</keyCommand>
         </defaultShortcut>
         <defaultShortcut>
             <action>SAVE</action>
             <active>true</active>
-            <keyCommand>CTRL+S</keyCommand>
+            <keyCommand>F4</keyCommand>
         </defaultShortcut>
         <defaultShortcut>
             <action>CONSOLE_LINK_DIALOG</action>
@@ -122,7 +122,7 @@
         </defaultShortcut>
         <defaultShortcut>
             <action>HOTKEYS_PANEL</action>
-            <active>false</active>
+            <active>true</active>
             <keyCommand>SHIFT+K</keyCommand>
         </defaultShortcut>
         <defaultShortcut>
@@ -167,7 +167,7 @@
         </defaultShortcut>
         <defaultShortcut>
             <action>REOPEN_LAST_TAB</action>
-            <active>false</active>
+            <active>true</active>
             <keyCommand>SHIFT+C</keyCommand>
         </defaultShortcut>
     </keyboardShortcuts>

@@ -16815,6 +16815,58 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         </sharedTo>
     </listViews>
     <listViews>
+        <fullName>E_F_Clients_Public</fullName>
+        <columns>ACCOUNT.NAME</columns>
+        <columns>EF_Type__c</columns>
+        <columns>Sector__c</columns>
+        <columns>Category__c</columns>
+        <columns>ACCOUNT.ADDRESS1_COUNTRY</columns>
+        <columns>EF_SIS_Code__c</columns>
+        <columns>EF_SIS_Designator__c</columns>
+        <columns>EF_Status__c</columns>
+        <columns>EF_Client_Services_Specialist__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>EF_Type__c</field>
+            <operation>equals</operation>
+            <value>E&amp;F Client</value>
+        </filters>
+        <filters>
+            <field>EF_Status__c</field>
+            <operation>equals</operation>
+            <value>Active</value>
+        </filters>
+        <label>E&amp;F Clients</label>
+        <language>en_US</language>
+        <sharedTo>
+            <roleAndSubordinatesInternal>IDFSEFServices</roleAndSubordinatesInternal>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>E_F_Operators_Public</fullName>
+        <columns>ACCOUNT.NAME</columns>
+        <columns>EF_Type__c</columns>
+        <columns>EF_SIS_Code__c</columns>
+        <columns>EF_SIS_Designator__c</columns>
+        <columns>EF_Legacy_Code__c</columns>
+        <columns>ACCOUNT.ADDRESS1_STATE</columns>
+        <columns>ACCOUNT.ADDRESS1_CITY</columns>
+        <columns>ACCOUNT.ADDRESS1_COUNTRY</columns>
+        <columns>EF_Status__c</columns>
+        <columns>EF_SubStatus__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>EF_Type__c</field>
+            <operation>equals</operation>
+            <value>E&amp;F Operator</value>
+        </filters>
+        <label>E&amp;F Operators</label>
+        <language>en_US</language>
+        <sharedTo>
+            <roleAndSubordinatesInternal>IDFSEFServices</roleAndSubordinatesInternal>
+        </sharedTo>
+    </listViews>
+    <listViews>
         <fullName>E_F_Services_Accounts</fullName>
         <columns>ACCOUNT.NAME</columns>
         <columns>ACCOUNT.INDUSTRY</columns>
@@ -21906,6 +21958,26 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <sharedTo>
             <roleAndSubordinates>IDFSEuropeRegionalOffice</roleAndSubordinates>
         </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>To_clean_Billing_State_in_Americas</fullName>
+        <columns>ACCOUNT.NAME</columns>
+        <columns>IATACode__c</columns>
+        <columns>ACCOUNT.ADDRESS1_STATE</columns>
+        <columns>IATA_ISO_Country__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>ACCOUNT.ADDRESS1_STATE</field>
+            <operation>equals</operation>
+            <value>BR57,MX86</value>
+        </filters>
+        <filters>
+            <field>ACCOUNT.RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>Account.IATA_Agency</value>
+        </filters>
+        <label>To clean - Billing State in Americas</label>
+        <language>en_US</language>
     </listViews>
     <listViews>
         <fullName>TongaTravelAgents</fullName>
