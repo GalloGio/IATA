@@ -291,8 +291,8 @@ public with sharing class AMS_AccountRoleCreator
         return arUpdateList;
     }
 
-    public static void runRoleCreatorForOnlineAccreditations(Map<Id,Set<Id>> aoMap){
-        runRoleCreatorForOnlineAccreditations(aoMap, false);
+    public static Map<Id,OldAndNewOwners> runRoleCreatorForOnlineAccreditations(Map<Id,Set<Id>> aoMap){
+        return runRoleCreatorForOnlineAccreditations(aoMap, false);
     }
 
 
@@ -304,7 +304,7 @@ public with sharing class AMS_AccountRoleCreator
 
     The aoMap parameter has a map between the Accreditation Area and the Agencies (accounts) involved in the process.
     */
-    public static void runRoleCreatorForOnlineAccreditations(Map<Id,Set<Id>> aoMap, boolean isCorrectionProcess){
+    public static Map<Id,OldAndNewOwners> runRoleCreatorForOnlineAccreditations(Map<Id,Set<Id>> aoMap, boolean isCorrectionProcess){
 
         System.debug('Starting to ajust the Owners in the selected hierarchies.');
         
@@ -326,6 +326,8 @@ public with sharing class AMS_AccountRoleCreator
             oscarProcess = oscar.Process__c;
         }
 
+        //Map by accreditation Id
+        Map<Id,OldAndNewOwners> oldAndNewOwnersMap = new Map<Id,OldAndNewOwners>();
 
         for(Id accreditationId : accreditationAreaIdsLst){
 
@@ -359,6 +361,10 @@ public with sharing class AMS_AccountRoleCreator
             //get all the roles
             List<AMS_Account_Role__c> allAccountRoles = new List<AMS_Account_Role__c>();
             allAccountRoles = [SELECT Id, RecordTypeId, Termination_Date__c, Duty__c, Hours__c, IsManager__c, Percentage__c, Position__c, Account__c, Owner_Account__c, Contact__c, Person__c, Person__r.Contact__c, Legacy_External_ID__c, Legacy_System__c, Owner_Name__c from AMS_Account_role__c where Account__c in: accounts and Active__c = true];
+
+            //Register New and Old Owners for EBulletion Report purposes
+
+            oldAndNewOwnersMap.put(accreditationId,getNewAndOldOwnersForChangeCodeCreation(allAccountRoles,accreditationContactsToProcess,accounts));
 
             // just to further ahead in the process have a way to link Accreditation Contacts and AMS Account Roles
             Map<Id,AMS_Account_Role__c> rolesMap = new Map<Id,AMS_Account_Role__c>();
@@ -504,6 +510,8 @@ public with sharing class AMS_AccountRoleCreator
 
 
         }
+
+        return oldAndNewOwnersMap;
 
     }
 
@@ -1067,6 +1075,181 @@ public with sharing class AMS_AccountRoleCreator
 
         }
 
+    }
+
+/**
+ Used for AMS EBulletin:
+
+ Gets the new and old Owners values and saves it in a structure.
+
+*/
+    public static OldAndNewOwners getNewAndOldOwnersForChangeCodeCreation( List<AMS_Account_Role__c> allAccountRoles , List<AMS_Accreditation_Contact__c> accreditationContactsToProcess , Set<Id> accounts){
+
+        List<OwnersByAccountWrapper> oldOwnersWrapperList = new List<OwnersByAccountWrapper>();
+
+        List<OwnersByAccountWrapper> newOwnersWrapperList = new List<OwnersByAccountWrapper>();
+
+        for(Id acctId : accounts)
+        {
+
+            //****process allAccountRoles (Old Owners recovered from Account)
+       
+            List<OwnerFieldsEntity> oldOwnersList = new List <OwnerFieldsEntity>();
+
+            for (AMS_Account_Role__c acctRole : allAccountRoles)
+            {
+                if(acctId == acctRole.Account__c)
+                    oldOwnersList.add(new OwnerFieldsEntity (acctRole.Owner_Name__c, String.valueOf(acctRole.Percentage__c)));            
+            }
+            
+            OwnersByAccountWrapper oldOwnersWrapper = new OwnersByAccountWrapper(acctId , oldOwnersList);
+
+            system.debug('oldOwnersWrapper: ' + oldOwnersWrapper);
+
+            oldOwnersWrapperList.add(oldOwnersWrapper);
+
+            
+
+            //****process accreditationContactsToProcess (new Owners Recovered from Staging Area)
+            
+
+            List<OwnerFieldsEntity> newOwnersList = new List <OwnerFieldsEntity>();
+
+            for (AMS_Accreditation_Contact__c accrtContact : accreditationContactsToProcess)
+            {
+                if(accrtContact.Agency_owner__c) 
+                    newOwnersList.add(new OwnerFieldsEntity (accrtContact.Name, String.valueOf(accrtContact.Financial_interest__c)));
+            }
+            
+            OwnersByAccountWrapper newOwnersWrapper = new OwnersByAccountWrapper(acctId , newOwnersList);
+
+            system.debug('newOwnersWrapper: ' + newOwnersWrapper.allOwnersCSV);
+
+            newOwnersWrapperList.add(newOwnersWrapper);
+            
+        }
+
+
+        return new OldAndNewOwners(oldOwnersWrapperList,newOwnersWrapperList);
+                
+
+    }
+
+/**
+
+Object used to store the shareholding Information regarding the Ownership
+
+The info of the New and Old Owners is then used in the Change Codes History objects
+
+ */
+    public class OldAndNewOwners {
+        
+        public List<OwnersByAccountWrapper> oldOwnersWrapperList;
+        public List<OwnersByAccountWrapper> newOwnersWrapperList;
+
+        public OldAndNewOwners(List<OwnersByAccountWrapper> oldOwnersWrapperList, List<OwnersByAccountWrapper> newOwnersWrapperList){
+            this.oldOwnersWrapperList = oldOwnersWrapperList;
+            this.newOwnersWrapperList = newOwnersWrapperList;
+        }
+
+        public OwnersByAccountWrapper getNewOwnersByAccountId(Id acctId)
+        {
+            return getOwnersByAccountId( acctId, this.newOwnersWrapperList);
+        }
+
+        public OwnersByAccountWrapper getOldOwnersByAccountId(Id acctId)
+        {
+            return getOwnersByAccountId( acctId, this.oldOwnersWrapperList);
+        }
+
+        private OwnersByAccountWrapper getOwnersByAccountId(Id acctId, List<OwnersByAccountWrapper> ownersWrapperList)
+        {
+             if(ownersWrapperList != null && !ownersWrapperList.isEmpty())
+            {
+                for(OwnersByAccountWrapper newOwners: ownersWrapperList)
+                {
+                    if(newOwners.acctId == acctId)
+                        return newOwners;
+
+                }
+            }
+            return null;
+        }
+        
+    }
+
+/**
+Groups the Owners by account (in the accont the owners are in the object AMS_Account_Role__c)
+ */
+
+    public class OwnersByAccountWrapper {
+        
+        public Id acctId;
+        public List<OwnerFieldsEntity> owners;
+        public String allOwnersCSV; 
+
+        public OwnersByAccountWrapper(Id acctId, List<OwnerFieldsEntity> owners){
+            this.acctId = acctId;
+            this.owners = owners;
+            this.allOwnersCSV = processCSVfromOwners();
+        }
+        public String processCSVfromOwners ()
+        {
+            String toCSV = 'Name,Percentage\n';
+
+
+            for(OwnerFieldsEntity owner : this.owners)
+                toCSV = toCSV + owner.convertToCSV(',') + '\n';
+
+            return toCSV;
+
+
+        }
+        
+    }
+
+/**
+ Object to store the Shareholding information of an Owner (Owner Name, Percentage of Ownership)
+ */
+   
+    public class OwnerFieldsEntity implements Comparable {
+        
+        public String name;
+        public String financialInterest;
+        
+        public OwnerFieldsEntity(){}
+
+        public OwnerFieldsEntity( String name, String financialInterest){
+            this.name = name;
+            this.financialInterest = financialInterest;
+        }
+
+        public String convertToCSV (String csvFormat)
+        {
+            return name + csvFormat + financialInterest;
+
+        }
+
+        public void decodeFromCSV (String row)
+        {
+            List<String> onwerValues = row.split(',');
+
+            this.name = onwerValues.get(0);
+            this.financialInterest = onwerValues.get(1);
+        
+        }
+        public Integer compareTo(Object compareTo) {
+       
+            OwnerFieldsEntity compareToOE = (OwnerFieldsEntity)compareTo;
+             
+            Double order = double.valueOf(financialInterest);
+            Double orderCompareTo =  double.valueOf(compareToOE.financialInterest);
+
+            if (order == orderCompareTo) return 0;
+            if (order > orderCompareTo) return -1;
+            return 1;        
+        }
+    
     }
     
 }

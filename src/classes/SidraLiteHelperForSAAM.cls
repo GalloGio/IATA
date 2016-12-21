@@ -205,7 +205,7 @@ public with sharing class SidraLiteHelperForSAAM {
         else {
             // First non-compliance, must be filled
             if (parentCase.firstFSnonComplianceDate__c == null ) {
-                throw new WsSidraLite.SidraLiteException('Cannot update a 1st FS non-compliance case. The 1st FS Deadline is ' + parentCase.FS_Deadline_Date__c.format());
+                throw new WsSidraLite.SidraLiteException('Cannot update a 1st FS non-compliance case. The 1st FS Deadline is empty');
             }
             // Second non-compliance, allowed
             else if(parentCase.FS_Third_Deadline_Date__c==null) {

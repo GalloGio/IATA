@@ -78,6 +78,7 @@
         <fields>KPI_Value__c</fields>
         <fields>Not_Available__c</fields>
         <fields>Date_Value__c</fields>
+        <fields>Scope__c</fields>
         <relatedList>KPI_Value__c.FDS_KPI_Reporting__c</relatedList>
         <sortField>Date_Value__c</sortField>
         <sortOrder>Desc</sortOrder>

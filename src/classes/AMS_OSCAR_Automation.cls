@@ -47,8 +47,8 @@ public with sharing class AMS_OSCAR_Automation
                     oscar.Sanity_check_received__c = Date.today();
                     if(oscar.Process__c == AMS_Utils.new_TIDS)
                         oscar.Sanity_check_deadline__c = Date.today()+3;
-                    else if(oscar.Process__c != AMS_Utils.CERTIFICATION)
-                        oscar.Sanity_check_deadline__c = oscar.Sanity_check_received__c + 15;
+                    //else if(oscar.Process__c != AMS_Utils.CERTIFICATION)
+                    //    oscar.Sanity_check_deadline__c = oscar.Sanity_check_received__c + 15;
                     else{
                         List<Account> oscarAccount = new List<Account>([select Location_Class__c from Account where id =: oscar.Account__c]);
                         if(oscar.Process__c == AMS_Utils.new_HO && (oscarAccount.get(0).Location_Class__c == 'C' || oscarAccount.get(0).Location_Class__c == 'I' || oscarAccount.get(0).Location_Class__c == 'P' || oscarAccount.get(0).Location_Class__c == 'Q')){                    

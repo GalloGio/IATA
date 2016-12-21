@@ -16,7 +16,6 @@ var dyn_functions = {
                     
 					var argList = args.split(", ");
 
-
                     // Query the database to check if the flags for :IATACODE, Copy Data to Account and send Data to SAP ECC 
                     var resultOscarData = sforce.connection.query("SELECT Flag_Data_to_Account__c,Flag_Data_to_SAPECC__c,ID, STEP10__c,STEP8__c,Process_Start_Date__c,recordTypeID,Process__c, Account__r.Due_Diligence_Status__c, Account__r.IATA_ISO_Country__r.Due_diligence_mandatory__c FROM AMS_OSCAR__C WHERE Id ='" + argList[2] + "'");
                     var records = resultOscarData.getArray("records");
@@ -151,11 +150,11 @@ var dyn_functions = {
                 var records = queryResult.getArray('records');
 
                 if(result == ''){
-                	records[0].STEP8__c = 'In Progress';
-                	alert('Executed with success.');
+                    records[0].STEP8__c = 'In Progress';
+                    alert('Executed with success.');
                 }
                 else{
-                	records[0].STEP8__c = 'Failed';
+                    records[0].STEP8__c = 'Failed';
                     alert('XML generated successfully but unable to send it to SAP due to connectivity issues.');
                 }
                 sforce.connection.update(records);

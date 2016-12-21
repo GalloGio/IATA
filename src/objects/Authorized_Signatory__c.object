@@ -110,6 +110,15 @@
         <deleteConstraint>Restrict</deleteConstraint>
         <externalId>false</externalId>
         <label>Contact</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>Contact.Account.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Airline Headquarters, Airline Branch</value>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
         <referenceTo>Contact</referenceTo>
         <relationshipLabel>Authorized Signatories</relationshipLabel>
         <relationshipName>Authorized_Signatories</relationshipName>

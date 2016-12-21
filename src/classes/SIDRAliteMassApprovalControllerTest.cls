@@ -10,7 +10,6 @@ private class SIDRAliteMassApprovalControllerTest {
         SIDRAliteMassApprovalController controller = new SIDRAliteMassApprovalController();
         System.AssertEquals(true, controller.listWrapperCase.isEmpty());
 
-        controller.filter.getActionTypeList();
         controller.getApprovalButtonLabel();
         controller.getRejectionButtonLabel();
         controller.confirmMassApproveCases();
@@ -45,9 +44,7 @@ private class SIDRAliteMassApprovalControllerTest {
         System.AssertEquals(1,controller.listWrapperCase.size());
 
         //mark case and approve it
-        controller.SelectAllCheckbox = true;
-        controller.SelectAll();
-        System.AssertEquals(1, controller.getNumSelected());
+        controller.selectedIds = cse.Id;
         //controller.confirmApproval = true;
         controller.confirmMassApproveCases();
         controller.massApproveUpdateCases();
@@ -84,8 +81,7 @@ private class SIDRAliteMassApprovalControllerTest {
         System.AssertEquals(1,controller.listWrapperCase.size());
 
         //mark case and reject it
-        controller.SelectAllCheckbox = true;
-        controller.SelectAll();
+        controller.selectedIds = cse.Id;
         //controller.confirmRejection = true;
         controller.confirmMassRejectCases();
         controller.massRejectUpdateCases();
@@ -123,8 +119,7 @@ private class SIDRAliteMassApprovalControllerTest {
         System.AssertEquals(1,controller.listWrapperCase.size());
 
         //mark case and approve it
-        controller.SelectAllCheckbox = true;
-        controller.SelectAll();
+        controller.selectedIds = cse.Id;
         //controller.confirmApproval = true;
         controller.confirmMassApproveCases();
         controller.massApproveUpdateCases();
@@ -161,8 +156,7 @@ private class SIDRAliteMassApprovalControllerTest {
         System.AssertEquals(1,controller.listWrapperCase.size());
 
         //mark case and reject it
-        controller.SelectAllCheckbox = true;
-        controller.SelectAll();
+        controller.selectedIds = cse.Id;
         controller.confirmMassRejectCases();
         //controller.confirmRejection = true;
         controller.massRejectUpdateCases();
@@ -197,8 +191,7 @@ private class SIDRAliteMassApprovalControllerTest {
         System.AssertEquals(1,controller.listWrapperCase.size());
 
         //mark case and approve it
-        controller.SelectAllCheckbox = true;
-        controller.SelectAll();
+        controller.selectedIds = cse.Id;
         controller.confirmMassApproveCases();
         //controller.confirmApproval = true;
         controller.confirmMassApproveCases();
@@ -234,8 +227,7 @@ private class SIDRAliteMassApprovalControllerTest {
         System.AssertEquals(1,controller.listWrapperCase.size());
 
         //mark case and reject it
-        controller.SelectAllCheckbox = true;
-        controller.SelectAll();
+        controller.selectedIds = cse.Id;
         controller.confirmMassRejectCases();
         //controller.confirmRejection = true;
         controller.massRejectUpdateCases();
@@ -273,8 +265,7 @@ private class SIDRAliteMassApprovalControllerTest {
         System.AssertEquals(1,controller.listWrapperCase.size());
 
         //mark case and approve it
-        controller.SelectAllCheckbox = true;
-        controller.SelectAll();
+        controller.selectedIds = cse.Id;
         controller.confirmMassApproveCases();
         //controller.confirmApproval = true;
         controller.confirmMassApproveCases();
@@ -311,8 +302,7 @@ private class SIDRAliteMassApprovalControllerTest {
         System.AssertEquals(1,controller.listWrapperCase.size());
 
         //mark case and reject it
-        controller.SelectAllCheckbox = true;
-        controller.SelectAll();
+        controller.selectedIds = cse.Id;
         controller.confirmMassRejectCases();
         //controller.confirmRejection = true;
         controller.massRejectUpdateCases();
@@ -350,8 +340,7 @@ private class SIDRAliteMassApprovalControllerTest {
         System.AssertEquals(1,controller.listWrapperCase.size());
 
         //mark case and approve it
-        controller.SelectAllCheckbox = true;
-        controller.SelectAll();
+        controller.selectedIds = cse.Id;
         controller.confirmMassApproveCases();
         //controller.confirmApproval = true;
         cse = controller.listWrapperCase[0].cse;
@@ -364,8 +353,8 @@ private class SIDRAliteMassApprovalControllerTest {
 
         //check taht case was approved
         cse = [Select Id, REI_ApprovalRejectin__c, REI_Approval_Rejection_remarks__c from Case where Id = :cse.Id];
-   //     System.AssertEquals(APPROVED, cse.REI_ApprovalRejectin__c);
-  //      System.AssertEquals('comment', cse.REI_Approval_Rejection_remarks__c);
+        System.AssertEquals(APPROVED, cse.REI_ApprovalRejectin__c);
+        System.AssertEquals('comment', cse.REI_Approval_Rejection_remarks__c);
     }
 
     @isTest
@@ -394,8 +383,7 @@ private class SIDRAliteMassApprovalControllerTest {
         System.AssertEquals(1,controller.listWrapperCase.size());
 
         //mark case and reject it
-        controller.SelectAllCheckbox = true;
-        controller.SelectAll();
+        controller.selectedIds = cse.Id;
         controller.confirmMassRejectCases();
         //controller.confirmRejection = true;
         controller.massRejectUpdateCases();
@@ -432,8 +420,7 @@ private class SIDRAliteMassApprovalControllerTest {
         System.AssertEquals(1,controller.listWrapperCase.size());
 
         //mark case and approve it
-        controller.SelectAllCheckbox = true;
-        controller.SelectAll();
+        controller.selectedIds = cse.Id;
         controller.confirmMassApproveCases();
         //controller.confirmApproval = true;
         controller.confirmMassApproveCases();
@@ -470,8 +457,7 @@ private class SIDRAliteMassApprovalControllerTest {
         System.AssertEquals(1,controller.listWrapperCase.size());
 
         //mark case and reject it
-        controller.SelectAllCheckbox = true;
-        controller.SelectAll();
+        controller.selectedIds = cse.Id;
         controller.confirmMassRejectCases();
         //controller.confirmRejection = true;
         controller.massRejectUpdateCases();

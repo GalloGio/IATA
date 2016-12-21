@@ -23,7 +23,7 @@ global class AmazonFinancialCtrl {
       Case thiscse = [Select id, Status from Case where id = :cse.id];
       return (thiscse.Status.equals('Agent Notified (Mail)') ||
       thiscse.Status.equals('Agent Notified (Email)') ||
-
+	  thiscse.Status.equals('Action Needed') ||
       thiscse.Status.equals('Sanity Check Failure'));
     }
     set;
@@ -58,6 +58,7 @@ global class AmazonFinancialCtrl {
   private String caseFolder;
   public Case cse {get; private set;}
   private Account acc {get; set;}
+    
   public AmazonFinancialCtrl(ISSP_IFAPCases controller) {
     //Apexpages.currentPage().getHeaders().put('X-UA-Compatible', 'IE=EmulateIE9');
     try {
@@ -111,6 +112,55 @@ global class AmazonFinancialCtrl {
 
     }
   }
+    
+    
+  public AmazonFinancialCtrl(ISSP_Case controller) {
+    //Apexpages.currentPage().getHeaders().put('X-UA-Compatible', 'IE=EmulateIE9');
+    try {
+      techinicalProb = false;
+      this.id = ApexPages.currentPage().getParameters().get('caseId');
+      AMAZONURL  =
+        AmazonCredentials.getCredentials(IfapToolManager.IFAPCONFIGARATIONNAME).EndpointBaseURL
+        +  AmazonCredentials.getCredentials(IfapToolManager.IFAPCONFIGARATIONNAME).Bucket;
+      this.cse = DAL_ISSP.getCase(this.id);
+      
+      if (this.cse<> null) { // throw new transformationException('Empty constructor not allowed!');
+
+        this.Archived = cse.ArchivedDate__c <> null;
+        if (Archived) {
+
+
+          docs = [Select id, Name from ENZ__FTPAttachment__c where Case__c  = :cse.id];
+
+        } else {
+
+          this.casefolder = FOLDER + cse.CaseNumber;
+          //  if(cse.IFAP_Agent_Code__c == null || cse.IFAP_Agent_Code__c.length() < 7  )
+          //      throw new transformationException(' Please check the Agent\'s Code ');
+
+          this.refreshListDoc();
+          this.acc = [select Id , Country_ISO_Code__c, Type from Account where Id  = :cse.AccountId];
+
+          this.message = initMessage(cse);
+
+        }
+      }
+    } catch (AmazonRest.AmazonRestException ex) {
+      techinicalProb = true;
+      apexpages.addmessage(new apexpages.message(apexpages.severity.Error, 'Technical problem: we are fixing it, please try again later'));
+
+      TransformationHelper.sendEmailSupport('FATAL: AmazonFinancialCtrl constructor portal AmazonRestException ' , '   STACKTRACE   ' + ex.getStackTraceString()  + '  '  + ex.getMessage());
+    } catch (Exception ex) {
+      techinicalProb = true;
+      apexpages.addmessage(new apexpages.message(apexpages.severity.Error, 'Technical problem: we are fixing it, please try again later'));
+
+      TransformationHelper.sendEmailSupport('FATAL: AmazonFinancialCtrl constructor portal  ' , '   STACKTRACE   ' + ex.getStackTraceString()  + '  '  + ex.getMessage());
+
+      apexpages.addmessage(new apexpages.message(apexpages.severity.Error, ex.getMessage()));
+
+
+    }
+  }  
 
   public AmazonFinancialCtrl( ApexPages.StandardController controller) {
     try {

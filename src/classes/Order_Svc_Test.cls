@@ -204,7 +204,11 @@ private class Order_Svc_Test
         insert orders;
         
         List<OrderItem> orderItems1 = TestDataGenerator.generateOrderItem(orders[0].Id, 3,true);// 3 lineItems for Order1
-        List<OrderItem> orderItems2 = TestDataGenerator.generateOrderItem(orders[1].Id,2,true);// 2 lineItems for Order2
+        List<OrderItem> orderItems2 = TestDataGenerator.generateOrderItem(orders[1].Id, 2,true);// 2 lineItems for Order2
+        List<Order_Item_Charge__c> lstDiscount = new List<Order_Item_Charge__c>();
+        lstDiscount.add(new Order_Item_Charge__c(Order_Item__c=orderItems2[0].Id, Discount_Type__c='discount', Discount_Amount__c=1));
+        lstDiscount.add(new Order_Item_Charge__c(Order_Item__c=orderItems2[1].Id, Discount_Type__c='discount', Discount_Percentage__c=1));
+        insert lstDiscount;
         
         System.assertEquals(3,orderItems1.size());
         System.assertEquals(2,orderItems2.size());
@@ -230,84 +234,72 @@ private class Order_Svc_Test
         List<Account> lstAccount = TestDataGenerator.generateAccounts(1, true);
         List<Contact> lstContact = TestDataGenerator.generateContacts(lstAccount[0].Id, 1, true);
         List<User> lstUser = new List<User> {TestDataGenerator.generatePortalUser('ISS Portal', lstContact[0].Id, true)};
-        
-        //*** generate order and order item
+        List<IECAddress__c> lstAddress = TestDataGenerator.generateAddresses(1, true);
+        update new IATA_ISO_Country__c(Id=lstAddress[0].ISO_Country__c, Profit_Center__c='abc');
+        Location__c loc = TestDataGenerator.generateLocations('Bill To', lstAddress[0].Id, lstAccount[0].Id, lstContact[0].Id);
+
+        //*** generate order
         List<Order> lstOrder = TestDataGenerator.generateOrder(1, lstAccount[0].Id, lstContact[0].Id, lstContact[0].Id, false);
         lstOrder[0].Payment_Type__c = 'Credit Card';
+        lstOrder[0].BillTo_Location__c = loc.Id;
         insert lstOrder;
+        Set<Id> setOrderId = new Set<Id>{lstOrder[0].Id};
 
-        List<OrderItem> lstOrderItem = TestDataGenerator.generateOrderItem(lstOrder[0].Id, 3, true);
-        List<Order_Item_Charge__c> lstDiscount = new List<Order_Item_Charge__c>();
-        //Get set of product ids
-        set<Id> productIds = new set<Id>();
-
-        system.debug('lstOrderItem ' + lstOrderItem);
-
+        //*** generate order item
+        List<OrderItem> lstOrderItem = TestDataGenerator.generateOrderItem(lstOrder[0].Id, 4, false);
+        lstOrderItem[lstOrderItem.size() - 1].Setup_Fee__c = 10;   //*** to cover setup fee and manual discount scenario
+        lstOrderItem[lstOrderItem.size() - 1].Discount__c = 10;
+        insert lstOrderItem;
         set<Id> oiIds = new set<Id>();
         for (OrderItem oi : lstOrderItem){
             oiIds.add(oi.Id);
         }
+        lstOrderItem = [select Id, Product__c, PricebookEntryId, OrderId, Quantity, UnitPrice, Charge_Shipping__c, ServiceDate from OrderItem where Id = :oiIds];
 
-        lstOrderItem = [select id,Product__c,PricebookEntryId, OrderId, Quantity, UnitPrice, Charge_Shipping__c,ServiceDate 
-                         from OrderItem where id =:oiIds];
-
-        system.debug('lstOrderItem after queries ' + lstOrderItem);
-
-        for (OrderItem oi : lstOrderItem){
-            lstDiscount.add(new Order_Item_Charge__c(Order_Item__c=oi.Id, Discount_Type__c='discount', Discount_Amount__c=1));
-            productIds.add(oi.Product__c);
-        }
+        //*** generate discount
+        List<Order_Item_Charge__c> lstDiscount = new List<Order_Item_Charge__c>();
+        lstDiscount.add(new Order_Item_Charge__c(Order_Item__c=lstOrderItem[0].Id, Discount_Type__c='discount', Discount_Amount__c=1));
+        lstDiscount.add(new Order_Item_Charge__c(Order_Item__c=lstOrderItem[1].Id, Discount_Type__c='discount', Discount_Percentage__c=1));
         insert lstDiscount;
-        Set<Id> setOrderId = new Set<Id>{lstOrder[0].Id};
 
-        system.debug('setOrderId ' + setOrderId);
-        system.debug('productIds ' + productIds);
-        //*** get product generated for order items for manipulation
-        List<Product2> lstProduct = [select Id from Product2 where id in :productIds];
+        //*** get products generated for order items for manipulation
+        set<Id> productIds = new set<Id>();
+        for (OrderItem oi : lstOrderItem)
+            productIds.add(oi.Product__c);
+        List<Product2> lstProduct = [select Id from Product2 where Id in :productIds];
+
         Integer i1;
 
-        system.debug('lstProduct.size() ' + lstProduct.size());
         //*** cover case where no contract is needed
         for (i1 = 0; i1 < lstProduct.size(); i1++){
             lstProduct[i1].Is_Shippable__c = true;
             lstProduct[i1].Effective_From__c = Date.today();
             lstProduct[i1].Effective_To__c = Date.today().addDays(5);
         }
-            
-
         update lstProduct;
         Order_Svc.createSAPContracts(setOrderId);
-        //system.assert(0 != [select count() from OrderItem where SAP_Contract_Number__c != null], 'Contract should be created');
+        system.assert(0 == [select count() from OrderItem where Id in :oiIds and SAP_Contract_Number__c != null], 'No contract should be created');
 
-        //*** cover case of having contract created -> product 0 will not have contract
+        //*** ensure products in order are to send via contract -> must match with field "Use_Contract_when_ordered__c"
         for (i1 = 0; i1 < lstProduct.size(); i1++)
         {
             lstProduct[i1].Is_Shippable__c = false;
-            lstProduct[i1].SAP_SalesOrg__c = 'YMQ1';
-            lstProduct[i1].SAP_Sales_Channel_Code__c = '03';
-            lstProduct[i1].SAP_Division_Code__c = '01';
-            lstProduct[i1].Number_of_months_of_subscription__c = 12;
+            lstProduct[i1].SAP_Media_Code__c = '030';
+            lstProduct[i1].Number_of_months_of_subscription__c = i1;   //*** for sorting later
         }
-        lstProduct[0].SAP_Media_Code__c = '030';   //*** product 0 will be in 1 contract
-        lstProduct[1].SAP_Media_Code__c = '031';   //*** products 1 and 2 will be in 1 contract
-        lstProduct[2].SAP_Media_Code__c = '031';
-        //lstProduct[3].SAP_Media_Code__c = '032';   //*** product 3 will be arranged to have error
+        lstProduct[0].SAP_Material_Number__c = '999999999999';
+        lstProduct[0].IEC_Override_Profit_Center__c = true;
         update lstProduct;
         Test.startTest();
             Test.setMock(WebServiceMock.class, new SAP_Contract_Mock());
-            //*** 111 assigned to product 1, 222 assigned to products 1 and 2, null to product 3 (error) because of sorting of SAP_Media_Code__c
-            SAP_Contract_Mock.lstContractNumber = new List<String>{'111', '222', null};
+            //*** 111 assigned to product 1, 222 assigned to product 2, null to product 3 (error), 333 to product 4
+            SAP_Contract_Mock.lstContractNumber = new List<String>{'111', '222', null, '333'};
             Order_Svc.createSAPContractsFuture(setOrderId);
-
-            List<OrderItem> lstOrderItems = [select SAP_Contract_Number__c from OrderItem where SAP_Contract_Number__c = '111'];
-            for(OrderItem oi : lstOrderItems){
-                system.debug('oi ' + oi.SAP_Contract_Number__c);
-            }
-            /*system.assert(1 == [select count() from OrderItem where SAP_Contract_Number__c = '111'], 'Wrong contract for product 0');
-            system.assert(2 == [select count() from OrderItem where SAP_Contract_Number__c = '222'], 'Wrong contract for products 1, 2');
-            system.assert(1 == [select count() from OrderItem where SAP_Contract_Number__c = null], 'Wrong contract for product 3');*/
         Test.stopTest();
+        List<OrderItem> lstOrderItems = [select SAP_Product_Number__c, SAP_Contract_Number__c from OrderItem where Id in :oiIds order by PricebookEntry.Product2.Number_of_months_of_subscription__c];
+        system.assert(3 == [select count() from OrderItem where Id in :oiIds and SAP_Contract_Number__c != null], '3 contracts should be created');
     } //*** end of "test_createSAPContracts"
+
 
     @isTest (seeAllData=true) 
     static void test_zuoraSubscribe(){
@@ -1132,5 +1124,37 @@ private class Order_Svc_Test
         system.assert(2 ==[select count() from OrderItem where OrderId = :lstOrder[0].Id and IEC_Is_Paid__c = true], 'Order Item should be paid');
     } //*** end of "test_setOrderItemToPaid"
 
+
+    @isTest (seeAllData=true)
+    static void test_ParsePaymentResult(){
+        //Create Orders
+        List<Account> lstAccount = TestDataGenerator.generateAccounts(1, true);
+        List<Contact> lstContact = TestDataGenerator.generateContacts(lstAccount[0].Id, 1, true);
+        List<Order> lstOrder = TestDataGenerator.generateOrder(2, lstAccount[0].Id, lstContact[0].Id, lstContact[0].Id, true);
+        List<OrderItem> lstOrderItem = TestDataGenerator.generateOrderItem(lstOrder[0].Id, 2, true);
+        List<OrderItem> lstOrderItem2 = TestDataGenerator.generateOrderItem(lstOrder[1].Id, 2, true);
+        
+        Map<Id,Zuora.zApi.SaveResult> resultsByOrderId = new Map<Id,Zuora.zApi.SaveResult>();
+        //Payment result without Error
+        List<Zuora.zApi.SaveResult> lstSaveResult = TestDataGenerator.generatePaymentResults();
+        resultsByOrderId.put(lstOrder[0].Id,lstSaveResult[0]);
+        
+        //Payment result with Error
+        List<Zuora.zApi.SaveResult> lstSaveResultErrors = TestDataGenerator.generatePaymentResultsWithError();
+        resultsByOrderId.put(lstOrder[1].Id,lstSaveResultErrors[0]);
+        Order_svc.parsePaymentResult(resultsByOrderId);
+
+        //
+        Map<Id,Order> orderMap = new Map<Id,Order>(lstOrder);
+        Order_Svc.getZuoraPayments(new set<String>{'2c92c0f850dca6710150dea56af04812'}, orderMap);
+
+        //Cover preventDeletion
+        try{
+            Order_Svc.preventDeletion(lstOrder);
+        }catch(Exception ex){
+
+        }
+        
+    }
 
 }
