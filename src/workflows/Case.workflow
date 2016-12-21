@@ -1287,7 +1287,15 @@
             <type>user</type>
         </recipients>
         <recipients>
+            <recipient>ogandoi@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>paredesc@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>sanchezc@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -2917,6 +2925,33 @@
         <template>SCESIDRACases/DEF_DEFWITH01_DefaultWithdrawalProposedbyCM</template>
     </alerts>
     <alerts>
+        <fullName>SIDRA_IRIS_CLIENT_BALANCE</fullName>
+        <description>SIDRA_IRIS_CLIENT_BALANCE</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>SIDRA ACC &amp; Risk</recipient>
+            <type>caseTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>SIDRA ACC &amp; Risk &amp; LO</recipient>
+            <type>caseTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>SIDRA Approvals &amp; ACC &amp; Risk</recipient>
+            <type>caseTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>SIDRA LO &amp; RISK</recipient>
+            <type>caseTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>SIDRA RISK</recipient>
+            <type>caseTeam</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>unfiled$public/IRIS_Client_Balance</template>
+    </alerts>
+    <alerts>
         <fullName>SIDRA_IRRDEF02_IrregularityDefaultapprovedby2hoursMailtoRSESPTCY</fullName>
         <description>SIDRA_IRR/DEF02_Irregularity/Default approved by 2 hours - Mail to R&amp;S - ES - PT - CY</description>
         <protected>false</protected>
@@ -3474,11 +3509,11 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>shalbakf@iata.org</recipient>
+            <recipient>parkyr@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>zhangxl@iata.org</recipient>
+            <recipient>shalbakf@iata.org</recipient>
             <type>user</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
@@ -11467,7 +11502,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         </actions>
         <active>true</active>
         <description>Clear New interaction field when Query is closed. It is necessary when query  had another Record Type with New Interaction Info</description>
-        <formula>AND(OR ( RecordType.DeveloperName = &quot;OSCAR_Communication&quot;,  RecordType.DeveloperName = &quot;CasesAmericas&quot;, RecordType.DeveloperName = &quot;CasesEurope&quot;, RecordType.DeveloperName = &quot;InternalCasesEuropeSCE&quot; ,RecordType.DeveloperName = &quot;CasesMENA&quot; ,RecordType.DeveloperName = &quot;ExternalCasesIDFSglobal&quot;,  RecordType.DeveloperName = &quot;Cases_China_North_Asia&quot;,  RecordType.DeveloperName = &quot;ProcessEuropeSCE&quot;,  RecordType.DeveloperName = &quot;sMAP_sales_Monitoring_Alert_Process&quot;, RecordType.DeveloperName = &quot;ComplaintIDFS&quot;, RecordType.DeveloperName = &quot;IDFS_Airline_Participation_Process&quot;, RecordType.DeveloperName = &quot;CS_Process_IDFS_ISS&quot;,  RecordType.DeveloperName =&quot;IATA_Financial_Review&quot;,  RecordType.DeveloperName =&quot;ID_Card_Application&quot;) , OwnerId = LastModifiedById, ispickval(Status, &quot;Closed&quot;), not(ispickval(New_interaction__c, &quot;&quot;)))</formula>
+        <formula>AND(OR ( RecordType.DeveloperName = &quot;OSCAR_Communication&quot;,   RecordType.DeveloperName = &quot;CasesAmericas&quot;,  RecordType.DeveloperName = &quot;CasesEurope&quot;,  RecordType.DeveloperName = &quot;InternalCasesEuropeSCE&quot; , RecordType.DeveloperName = &quot;CasesMENA&quot; , RecordType.DeveloperName = &quot;ExternalCasesIDFSglobal&quot;,   RecordType.DeveloperName = &quot;Cases_China_North_Asia&quot;,   RecordType.DeveloperName = &quot;ProcessEuropeSCE&quot;,   RecordType.DeveloperName = &quot;sMAP_sales_Monitoring_Alert_Process&quot;,  RecordType.DeveloperName = &quot;ComplaintIDFS&quot;,  RecordType.DeveloperName = &quot;IDFS_Airline_Participation_Process&quot;,  RecordType.DeveloperName = &quot;CS_Process_IDFS_ISS&quot;,   RecordType.DeveloperName =&quot;IATA_Financial_Review&quot;,   RecordType.DeveloperName =&quot;ID_Card_Application&quot;) ,  OwnerId = LastModifiedById, contains(TEXT(Status),&quot;Closed&quot;), not(ispickval(New_interaction__c, &quot;&quot;)))</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -11737,7 +11772,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         </actions>
         <active>true</active>
         <description>Set the &quot;Eligibility_Documents Checklist approved&quot; checkbox when all the documents or actions in the Acceptance checklist have been processed (have been selected).</description>
-        <formula>AND (   RecordType.DeveloperName = &apos;FDS_ASP_Management&apos;,   OR (     AND (       ISPICKVAL( CaseArea__c , &apos;FDS - Create Authorized Signatories Package&apos;),       INCLUDES( Acceptance_checklist__c , &apos;ASP - Letter uploaded to MDM&apos;),       INCLUDES( Acceptance_checklist__c , &apos;ASP - ID Copies (2) &amp; Signatures checked&apos;),       INCLUDES( Acceptance_checklist__c , &apos;ASP - Complete Status set in MDM&apos;),       INCLUDES( Acceptance_checklist__c , &apos;ASP - Signatures Validated&apos;),       INCLUDES( Acceptance_checklist__c , &apos;ASP - Contacts Updated&apos;),       INCLUDES( Acceptance_checklist__c , &apos;ASP - Package uploaded to MDM&apos;),       INCLUDES( Acceptance_checklist__c , &apos;ASP - Banking Resolution applied&apos;),       OR (         INCLUDES( Acceptance_checklist__c , &apos;CitiDirect User Rights granted&apos;),         NOT (ISPICKVAL( Account.ICCS_Membership_Status__c, &apos;Member&apos; ))       )     ),     AND (       ISPICKVAL(CaseArea__c ,&apos;FDS - Update Authorized Signatories Package&apos;),        ISPICKVAL(Type_of_Change__c ,&apos;ASP - Signatory Addition&apos;),        INCLUDES( Acceptance_checklist__c , &apos;ASP - Letter uploaded to MDM&apos;),       INCLUDES( Acceptance_checklist__c , &apos;ASP - ID Copies (2) &amp; Signatures checked&apos;),       INCLUDES( Acceptance_checklist__c , &apos;ASP - Complete Status set in MDM&apos;),       INCLUDES( Acceptance_checklist__c , &apos;ASP - Signatures Validated&apos;)     ),     AND (       ISPICKVAL(CaseArea__c ,&apos;FDS - Update Authorized Signatories Package&apos;),        ISPICKVAL(Type_of_Change__c ,&apos;ASP - Signatory Replacement&apos;),        INCLUDES( Acceptance_checklist__c , &apos;ASP - Letter uploaded to MDM&apos;),       INCLUDES( Acceptance_checklist__c , &apos;ASP - ID Copies (2) &amp; Signatures checked&apos;),       INCLUDES( Acceptance_checklist__c , &apos;ASP - Complete Status set in MDM&apos;),       INCLUDES( Acceptance_checklist__c , &apos;ASP - Signatures Validated&apos;)     ),     AND (       ISPICKVAL(CaseArea__c ,&apos;FDS - Update Authorized Signatories Package&apos;),        ISPICKVAL(Type_of_Change__c ,&apos;ASP - Signatory Replacement for Exec. Officer specifically&apos;),        INCLUDES( Acceptance_checklist__c , &apos;ASP - Letter uploaded to MDM&apos;),       INCLUDES( Acceptance_checklist__c , &apos;ASP - ID Copies (2) &amp; Signatures checked&apos;),       INCLUDES( Acceptance_checklist__c , &apos;ASP - Complete Status set in MDM&apos;),       INCLUDES( Acceptance_checklist__c , &apos;ASP - Signatures Validated&apos;),       INCLUDES( Acceptance_checklist__c , &apos;ASP - Banking Resolution applied&apos;)     ),     AND (       ISPICKVAL(CaseArea__c ,&apos;FDS - Update Authorized Signatories Package&apos;),        ISPICKVAL(Type_of_Change__c ,&apos;ASP - Signatory Deletion&apos;),        INCLUDES( Acceptance_checklist__c , &apos;ASP - Letter uploaded to MDM&apos;),       INCLUDES( Acceptance_checklist__c , &apos;ASP - Complete Status set in MDM&apos;)     )   ) )</formula>
+        <formula>OR( AND(  RecordType.DeveloperName =&quot;FDS_ASP_Management&quot;,  ISPICKVAL( CaseArea__c , &quot;FDS - Create Authorized Signatories Package&quot;),  INCLUDES(Documentation_received__c, &quot;ASP - Request Letter&quot;),  INCLUDES(Documentation_received__c, &quot;ASP - ID Copies (2) &amp; Signatures&quot;),  INCLUDES(Documentation_received__c, &quot;ASP - List of Contacts (ICCS - AP)&quot;),  INCLUDES(Documentation_received__c, &quot;ASP - Banking Resolution&quot;),  INCLUDES(Acceptance_checklist__c ,&quot;ASP - ID Copies (2) &amp; Signatures checked&quot;),  INCLUDES(Acceptance_checklist__c ,&quot;ASP - Contacts Updated&quot;),  INCLUDES(Acceptance_checklist__c ,&quot;ASP - Signatures Validated&quot;),  INCLUDES(Acceptance_checklist__c ,&quot;ASP - Banking Resolution applied&quot;)  ) , AND(  RecordType.DeveloperName =&quot;FDS_ASP_Management&quot;,  ISPICKVAL( CaseArea__c , &quot;FDS - Update Authorized Signatories Package&quot;),  OR(  AND(ISPICKVAL(Type_of_Change__c, &quot;ASP - Signatory Replacement for Exec. Officer specifically&quot;),  INCLUDES(Documentation_received__c, &quot;ASP - Request Letter&quot;),  INCLUDES(Documentation_received__c, &quot;ASP - ID Copies (2) &amp; Signatures&quot;),  INCLUDES(Documentation_received__c, &quot;ASP - Banking Resolution&quot;),  INCLUDES(Acceptance_checklist__c ,&quot;ASP - Request Letter&quot;),  INCLUDES(Acceptance_checklist__c ,&quot;ASP - ID Copies (2) &amp; Signatures checked&quot;),  INCLUDES(Acceptance_checklist__c ,&quot;ASP - Banking Resolution applied&quot;)  ),   AND(ISPICKVAL(Type_of_Change__c, &quot;ASP - Signatory Replacement&quot;),  INCLUDES(Documentation_received__c, &quot;ASP - Request Letter&quot;),  INCLUDES(Documentation_received__c, &quot;ASP - ID Copies (2) &amp; Signatures&quot;),  INCLUDES(Acceptance_checklist__c ,&quot;ASP - Request Letter&quot;),  INCLUDES(Acceptance_checklist__c ,&quot;ASP - ID Copies (2) &amp; Signatures checked&quot;)  ),  AND(ISPICKVAL(Type_of_Change__c, &quot;ASP - Signatory Addition&quot;),  INCLUDES(Documentation_received__c, &quot;ASP - Request Letter&quot;),  INCLUDES(Documentation_received__c, &quot;ASP - ID Copies (2) &amp; Signatures&quot;),  INCLUDES(Acceptance_checklist__c ,&quot;ASP - Request Letter&quot;),  INCLUDES(Acceptance_checklist__c ,&quot;ASP - ID Copies (2) &amp; Signatures checked&quot;)  ),  AND(ISPICKVAL(Type_of_Change__c, &quot;ASP - Signatory Deletion&quot;),  INCLUDES(Documentation_received__c, &quot;ASP - Request Letter&quot;),  INCLUDES(Acceptance_checklist__c ,&quot;ASP - Request Letter&quot;)  )  )) )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -12241,10 +12276,6 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <name>FDS_Set_Status_Pending_customer</name>
             <type>FieldUpdate</type>
         </actions>
-        <actions>
-            <name>ASP_Case_created_Status_to_be_updated_in_MDM</name>
-            <type>Task</type>
-        </actions>
         <active>true</active>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
@@ -12268,10 +12299,6 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <actions>
             <name>FDS_Set_Status_Pending_customer</name>
             <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>ASP_Case_created_Status_to_be_updated_in_MDM</name>
-            <type>Task</type>
         </actions>
         <active>true</active>
         <criteriaItems>
@@ -12825,7 +12852,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         </actions>
         <active>true</active>
         <description>SCE</description>
-        <formula>AND(RecordTypeId = &quot;012200000000DD9&quot;, ISCHANGED(DEF_Approval_Rejection__c))</formula>
+        <formula>AND(OR(RecordType.DeveloperName=&apos;SIDRA_Lite&apos;,RecordType.DeveloperName=&apos;SIDRA&apos;),ISCHANGED(DEF_Approval_Rejection__c))</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
@@ -13010,7 +13037,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
-            <value>SIDRA</value>
+            <value>SIDRA,SIDRA Lite</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Deactivate_Agent_in_Systems__c</field>
@@ -13019,7 +13046,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.BSP_CASS__c</field>
             <operation>equals</operation>
-            <value>BSP</value>
+            <value>BSP,CASS</value>
         </criteriaItems>
         <description>SIDRA</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
@@ -14632,7 +14659,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <criteriaItems>
             <field>Case.Reason1__c</field>
             <operation>notEqual</operation>
-            <value>CHC – Change of Shareholding,CHG – Data Maintenance,CHL - Change of Location,CHN - Change of Name,CHO / CHS – Change of Ownership / Legal Status,CLO - Closure,Direct Debit Setup/Update,IRIS Bank Detail Update,New BR / IP,New BR Abroad</value>
+            <value>CHC – Change of Shareholding,CHG – Data Maintenance,CHL - Change of Location,CHN - Change of Name,CHO / CHS – Change of Ownership / Legal Status,CLO - Closure,Direct Debit Setup/Update,IRIS Bank Detail Update,New BR / IP,New BR Abroad,Certificate DGR</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Reason1__c</field>
@@ -14673,7 +14700,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <criteriaItems>
             <field>Case.Origin</field>
             <operation>notEqual</operation>
-            <value>Internal Case,Phone</value>
+            <value>Internal Case,Phone,Chat</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.OwnerId</field>
@@ -15005,14 +15032,6 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
         <workflowTimeTriggers>
             <actions>
-                <name>ISSP_Send_expiration_Reminder</name>
-                <type>Alert</type>
-            </actions>
-            <timeLength>13</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-        <workflowTimeTriggers>
-            <actions>
                 <name>ISS_Portal_Make_case_invisible</name>
                 <type>FieldUpdate</type>
             </actions>
@@ -15025,6 +15044,14 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
                 <type>FieldUpdate</type>
             </actions>
             <timeLength>15</timeLength>
+            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+        <workflowTimeTriggers>
+            <actions>
+                <name>ISSP_Send_expiration_Reminder</name>
+                <type>Alert</type>
+            </actions>
+            <timeLength>13</timeLength>
             <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
         </workflowTimeTriggers>
     </rules>
@@ -17024,6 +17051,17 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
+        <fullName>SIDRA_IRIS_Client_Balance</fullName>
+        <actions>
+            <name>SIDRA_IRIS_CLIENT_BALANCE</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <description>Sending notifications to ARM when R&amp;S update the IRIS Client balance</description>
+        <formula>AND ((RecordType.Name = &quot;SIDRA&quot;), AND(NOT(ISBLANK(IRIS_Client_Balance__c))))</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
         <fullName>SIDRA_IRR_Automate Date%2FTime IRR Approval%2FRejection</fullName>
         <actions>
             <name>SIDRA_UpdateDateTimeIRRApproval</name>
@@ -17033,7 +17071,7 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
-            <value>SIDRA</value>
+            <value>SIDRA,SIDRA Lite</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.IRR_Approval_Rejection__c</field>

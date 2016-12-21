@@ -13,10 +13,60 @@ public class AMS_OSCAR_ProcessViewerController {
  
     public Map<String,String> statusIcons {get;set;}
     public Map<String,String> statusLabel {get;set;}
+    public Map<String,Boolean> ddBlock {get;set;}
     public Map<String,StepFieldsDataWrapper> stepFieldsData {get;set;}
     
     public static Map<String, Schema.SObjectField> fieldMap = Schema.getGlobalDescribe().get('AMS_OSCAR__c').getDescribe().fields.getMap();
+
+    public Boolean showRequiredOverlay{
+        get{
+            return (
+                oscar != null
+                && oscar.Process__c != AMS_Utils.VOLRELINQUISH
+                && oscar.Process__c != AMS_Utils.VOLRELINQUISH_CA
+                && oscar.Process__c != AMS_Utils.CERTIFICATION
+                && oscar.Process__c != AMS_Utils.CERTIFICATE
+                && !oscar.AMS_Online_Accreditation__r.Ready_for_Accreditation__c
+            );
+        }
+    }
+
+    private Boolean dueDiligenceBlocked {
+        get{
+            return (
+                oscar != null
+                && oscar.STEP17__c == AMS_Utils.IN_PROGRESS
+            );
+        }
+    }
+
+    private Set<String> alwaysOnSteps{
+        get{
+            return new Set<String>{
+                'STEP6__c',
+                'STEP8__c',
+                'STEP9__c',
+                'STEP10__c',
+                'STEP17__c',
+                'STEP26__c',
+                'STEP27__c',
+                'STEP28__c',
+                'STEP29__c'
+            };
+        }
+    } 
+
+    private Boolean isStepBlocked(String stepApiName){
+        return alwaysOnSteps.contains(stepApiName) ? false : dueDiligenceBlocked;
+    }
     
+    public String getEffectiveDate(){
+        return oscar.Change_effective_as_of__c.format();
+    }
+    public boolean getIsAgencyChange(){
+        return oscar.RecordType.DeveloperName == 'CHANGE';
+    }
+
     public AMS_OSCAR_ProcessViewerController() {
         
         
@@ -111,6 +161,7 @@ public class AMS_OSCAR_ProcessViewerController {
     
                 statusIcons.put(step.name,iconFileName);
                 statusLabel.put(step.name, stepValue);
+                ddBlock.put(flow.name, isStepBlocked(stepApiName));
             }
     }
     
@@ -212,7 +263,7 @@ public class AMS_OSCAR_ProcessViewerController {
         }
         fields = fields.substring(0,fields.lastIndexOf(','));
         
-        return 'SELECT ' + fields + ', AMS_Online_Accreditation__r.Ready_for_Accreditation__c FROM AMS_OSCAR__c where Id =: oscarId LIMIT 1';
+        return 'SELECT ' + fields + ', AMS_Online_Accreditation__r.Ready_for_Accreditation__c , RecordType.Name, RecordType.DeveloperName  FROM AMS_OSCAR__c where Id =: oscarId LIMIT 1';
     }
 
     private AMS_OSCAR__c fetchOscarFields(ID oscarId){
@@ -235,7 +286,7 @@ public class AMS_OSCAR_ProcessViewerController {
                     AMS_Online_Accreditation__r.Ready_for_Accreditation__c, Validation_Status__c, Issue_billing_document__c, AMS_Generate_COR_change_code__c,
                     Country_Specifics_Approval__c,Update_AIMS_Approval__c,Update_AIMS_Disapproval__c,Close_IFAP_Disapproval__c,Cancel_Inspection_Requests_Disapproval__c,
                     Update_AIMS_Rejection__c,Close_IFAP_Rejection__c,Cancel_Inspection_Requests_Rejection__c,Country_Specifics_Disapproval__c,Country_Specifics_Rejection__c,
-                    Roll_back_account_data__c  
+                    Roll_back_account_data__c , RecordType.Name, RecordType.DeveloperName 
                     from AMS_OSCAR__c where Id =: oscarId LIMIT 1];*/
         oscars = Database.query(getAllFieldQuery());
 
@@ -272,6 +323,7 @@ public class AMS_OSCAR_ProcessViewerController {
 
         statusIcons = new Map<String,String>();
         statusLabel = new Map<String,String>();
+        ddBlock = new Map<String,Boolean>();
 
         for(AMS_OSCAR_JSON.Process p: pr){
             process.put(p.Name, p);

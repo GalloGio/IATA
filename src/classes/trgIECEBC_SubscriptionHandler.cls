@@ -117,11 +117,28 @@ public with sharing class trgIECEBC_SubscriptionHandler {
 				&& (subs.Zuora__SubscriptionEndDate__c >= Date.today())
 				)
 			{ 
-				// add new EBC_Activity
-				EBC_Activity__c ebcAct = newEbcActivity( subs, billingAccountIdToEmailBalanceMap.get(subs.Zuora__CustomerAccount__c));
-				newEbcActivityList.add(ebcAct);
-				billingAccountIdToEmailBalanceMap.put( subs.Zuora__CustomerAccount__c, Integer.valueOf(ebcAct.New_Balance__c));
+                //is there a new to create an activity or is it handle by the
+                //EBC_order__c object
+                
+                Integer numberemail= integer.valueOf(subs.Product_Rate_Plan_Information__r.Product_Rate_Plan__r.EBC_PrePaid_Emails__c);
+                if (numberemail==null) numberemail=0;
+                List<EBC_Order__c> orderlist=new List<EBC_Order__c>();
+                orderlist=[Select id 
+                            From EBC_Order__c
+                            Where Billing_Account__c=:subs.Zuora__CustomerAccount__c
+                               and Email_Credit__c =: numberemail
+                               and eBroadcast_Payment_Target__c='rateplan'
+                               and createddate=TODAY
+                              Order By Name Desc
+                            Limit 1];
+                //add new EBC_Activity
+                if (orderlist.size()==0){
 				
+			    //if (iecebc_process.isebcpaymentinprogress==false){
+						EBC_Activity__c ebcAct = newEbcActivity( subs, billingAccountIdToEmailBalanceMap.get(subs.Zuora__CustomerAccount__c));
+					newEbcActivityList.add(ebcAct);
+					billingAccountIdToEmailBalanceMap.put( subs.Zuora__CustomerAccount__c, Integer.valueOf(ebcAct.New_Balance__c));
+                }
 				// update Billing Account: set eBroadcast Product Access flag 
 				Zuora__CustomerAccount__c billingAcct = new Zuora__CustomerAccount__c (Id = subs.Zuora__CustomerAccount__c
 					, eBroadcast_Product_Access__c = true
@@ -197,7 +214,7 @@ public with sharing class trgIECEBC_SubscriptionHandler {
 			if (ebcPrefList.size() == 0) 
 			{ // only insert and initialize for non existing ebc preference
 				EBC_Preference__c ebcPref = new EBC_Preference__c( Billing_Account__c = billingAcct.Id
-					, Default_From_Name__c =  billingAcct.Contact__r.Name
+					, Default_From_Name__c = 'International Air Transport Association'// billingAcct.Contact__r.Name
 					, Name = billingAcct.Contact__r.Name
 					, PrimaryContact_Address__c = billingAcct.Zuora__BillToAddress1__c
 					, PrimaryContact_Company__c = billingAcct.Zuora__Account__r.Name

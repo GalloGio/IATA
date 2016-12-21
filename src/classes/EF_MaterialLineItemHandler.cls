@@ -30,7 +30,7 @@ public class EF_MaterialLineItemHandler
         Map<Id, EF_Material_Line_Item__c> relevantMaterials  = new Map<Id, EF_Material_Line_Item__c>();
         for(EF_Material_Line_Item__c mat : newMap.values())
         {
-            if(mat.EF_Relationship__c != null)
+            if(mat.EF_Relationship__c != null && mat.EF_Status__c == 'Active')
             {
                 relevantMaterials.put(mat.Id, mat);
             }
@@ -230,7 +230,7 @@ public class EF_MaterialLineItemHandler
         }
     }
 
-
+    /* Commented out due to approval processing doing this and additional actions for now....
     public static void emailIfMaterialChanges(List<EF_Material_Line_Item__c> materialLineItemList, Map<Id,EF_Material_Line_Item__c> materialLineItemOldMap)
     {
         List<EF_Material_Line_Item__c> toApproveList = new List<EF_Material_Line_Item__c>();
@@ -407,7 +407,7 @@ public class EF_MaterialLineItemHandler
             htmlRow = '<tr><td border="1"><a href="'+baseUrl+'/'+line.Id+'">'+line.Name+'</a></td><td border="1">--</td><td border="1">'+newValue.Name+'</td></tr>';
         return htmlRow;
     }
-
+    */
 
     //
     // Check is the material Item that is in the BillingAgreement exists in the contract.
@@ -531,6 +531,44 @@ public class EF_MaterialLineItemHandler
                 }
             }
         }
+    }
+    
+    public static void checkIfBillingAgreementDeactivationRequired(Map<Id,EF_Material_Line_Item__c> materialLineItemOldMap){
+    	
+    	// Retrieve the list of Billing Agreements to be checked
+    	List<Id> involvedBAs = new List<Id>();
+    	for(EF_Material_Line_Item__c mat : materialLineItemOldMap.values()){
+    		if(mat.EF_Relationship__c != null){
+    			involvedBAs.add(mat.EF_Relationship__c);
+    		}
+    	}
+    	
+		// Retrieve the list of Billing Agreement for which there is at least one active Material Line Item
+    	AggregateResult[] activableBAs = [Select EF_Relationship__c FROM EF_Material_Line_Item__c WHERE EF_Relationship__c IN :involvedBAs AND EF_Status__c = 'Active' GROUP BY EF_Relationship__c];
+
+		// For each involved Billing Agreement, check if it still has a Material Line Item
+		List<Id> withoutItemBAs = new List<Id>();
+		for(Id involvedBa : involvedBAs){
+			Boolean baHasItem = false;
+
+			for(AggregateResult activableBA : activableBAs){
+				if(activableBA.get('EF_Relationship__c') == involvedBa){
+					baHasItem = true;
+					break;
+				}
+			}
+			
+			if(!baHasItem){
+				withoutItemBAs.add(involvedBa);
+			}
+		}
+
+		// Retrieve and update the billing agreements that need to be updated
+		List<EF_Billing_Agreement__c> billingAgreementsToUpdate = [SELECT Status__c FROM EF_Billing_Agreement__c WHERE Id IN :withoutItemBAs];
+		for(EF_Billing_Agreement__c ba : billingAgreementsToUpdate){
+			ba.EF_Status__c = 'Inactive';
+		}
+		update billingAgreementsToUpdate;
     }
 
     public static boolean runOnce()

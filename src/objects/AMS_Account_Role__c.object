@@ -618,6 +618,21 @@
         <label>AMS Account Roles</label>
         <language>en_US</language>
     </listViews>
+    <listViews>
+        <fullName>TD</fullName>
+        <columns>NAME</columns>
+        <columns>Termination_Date__c</columns>
+        <columns>Active__c</columns>
+        <columns>RECORDTYPE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Account__c</field>
+            <operation>equals</operation>
+            <value>SENZER INTERNATIONAL TRAVEL</value>
+        </filters>
+        <label>TD</label>
+        <language>en_US</language>
+    </listViews>
     <nameField>
         <displayFormat>AAR-{00000000}</displayFormat>
         <label>AMS Account Role Name</label>

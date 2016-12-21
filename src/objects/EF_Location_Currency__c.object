@@ -53,7 +53,7 @@ It contains a currency to make the correspondance between contract + location + 
     <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
-    <enableReports>false</enableReports>
+    <enableReports>true</enableReports>
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
@@ -106,6 +106,7 @@ It contains a currency to make the correspondance between contract + location + 
         <externalId>false</externalId>
         <globalPicklist>EF_Status</globalPicklist>
         <label>E&amp;F Status</label>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -158,6 +159,7 @@ It contains a currency to make the correspondance between contract + location + 
         <externalId>false</externalId>
         <globalPicklist>EF_Manager_Approval</globalPicklist>
         <label>Manager Approval</label>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -180,7 +182,7 @@ It contains a currency to make the correspondance between contract + location + 
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
-	<fields>
+    <fields>
         <fullName>Skip_Validation__c</fullName>
         <defaultValue>false</defaultValue>
         <description>Helper fields for mass-updating values from Contract to be rolled down to Billing Agreements without starting an approval process.</description>

@@ -55,6 +55,10 @@
                 <behavior>Edit</behavior>
                 <field>RecordTypeId</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>First_Step_Completed__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -86,6 +90,10 @@
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Process_Start_Date__c</field>
+            </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Sanity_check_deadline__c</field>
@@ -482,6 +490,19 @@
         <fields>CREATEDBY_USER</fields>
         <fields>UPDATEDBY_USER</fields>
         <relatedList>AMS_Inspection__c.OSCAR__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>Active__c</fields>
+        <fields>Change_Code__c</fields>
+        <fields>NAME</fields>
+        <fields>Bulletin_Information__c</fields>
+        <fields>Account__c</fields>
+        <fields>Reason_Code__c</fields>
+        <fields>CREATEDBY_USER</fields>
+        <fields>Source__c</fields>
+        <fields>Updated_AIMS__c</fields>
+        <fields>AIMS_Updated_by__c</fields>
+        <relatedList>Agency_Applied_Change_code__c.OSCAR__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>

@@ -1,7 +1,7 @@
 @isTest
 private class EF_AttachmentListControllerTest {
 
-    @testSetup
+    /*@testSetup
     public static void setupTest() {
 
         //     Case cse = new Case();
@@ -14,7 +14,26 @@ private class EF_AttachmentListControllerTest {
         //         ParentId = cse.id;
         //     );
         //     insert att;
-
+        //Create public group
+        
+        Group efPrivateGroup = null;
+        List<Group> efPrivateGroups = [select Name, DeveloperName from Group where DeveloperName = 'EF_Private_Document_Access' limit 1];
+        if(efPrivateGroups.size() == 0)
+        {
+            efPrivateGroup = new Group();
+            efPrivateGroup.Name='EF Private Document Access';
+            efPrivateGroup.DeveloperName='EF_Private_Document_Access';
+            insert efPrivateGroup;
+        } else
+        {
+           efPrivateGroup = efPrivateGroups.get(0);
+        }
+        
+        GroupMember efGM = new GroupMember();
+        efGM.UserOrGroupId = UserInfo.getUserId();
+        efGM.GroupId= efPrivateGroup.Id;
+        //insert efGM;
+        
         List<Amazon_Cred__c> listAmazonCred =  new List<Amazon_Cred__c>{
             new Amazon_Cred__c(
                 name = 'GenericAttach',
@@ -148,8 +167,8 @@ private class EF_AttachmentListControllerTest {
         EF_AttachmentListController.UploadFile u = EF_AttachmentListController.createUploadFile('0018E00000Gfake', 'filenameupload',  'contentType', 1000000, '001', credentialName);
 
         boolean c = EF_AttachmentListController.createAmazonFileObject('String amazonKey', 10000000, 'String parentId', 'String recordType',
-        												'String efCategory', 'String efSubCategory', 'String efExpiryDate', false, 'String efSapNumber',
-    													'String additionalInformation', false);
+                                                        'String efCategory', 'String efSubCategory', 'String efExpiryDate', false, 'String efSapNumber',
+                                                        'String additionalInformation', false);
     }
 
     static testMethod void testRemoteActions() {
@@ -187,6 +206,11 @@ private class EF_AttachmentListControllerTest {
         EF_AttachmentListController.deleteAttachment(String.valueOf(att.Id), null);
         EF_AttachmentListController.deleteAttachment(String.valueOf(arch.Id), null);
         EF_AttachmentListController.deleteAttachment(String.valueOf(aFile.Id), 'asd');
+    }*/
+    
+    static testMethod void removeThis() {
+
+        EF_AttachmentListController.removeThis();
     }
     
 }

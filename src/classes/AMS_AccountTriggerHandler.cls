@@ -31,11 +31,11 @@ public class AMS_AccountTriggerHandler {
         disallowedSources.add('WebStar');
         disallowedSources.add('DataLoader');
         for(Account ag : accs){
-    if(!disallowedSources.contains(ag.Source_System__c))
-        {
-        if(ag.Sector__c == AMS_Utils.SECTOR_PASSENGER || ag.Sector__c == AMS_Utils.SECTOR_CARGO){
+	if(!disallowedSources.contains(ag.Source_System__c))
+       	{
+		if(ag.Sector__c == AMS_Utils.SECTOR_PASSENGER || ag.Sector__c == AMS_Utils.SECTOR_CARGO){
 
-            setCassNumberOnHO(ag);
+			setCassNumberOnHO(ag);
 
                     if(ag.Cass_Number__c!=null && ag.Cass_number__c.isNumeric()){
                         ag.Cass_Number__c = AMS_AgencyHelper.resizeNumericString(ag.Cass_Number__c,3);
@@ -93,6 +93,7 @@ public class AMS_AccountTriggerHandler {
     public static void handleAfterUpdate(List<Account> accs, Map<Id,Account> oldMap){
         
         handleAgenciesOperations(accs,oldMap);
+        handleDDUpdates(accs, oldMap);
 
     }
 
@@ -135,7 +136,7 @@ public class AMS_AccountTriggerHandler {
 
     public static void handleManualMinorChanges(List<Account> accs, Map<Id,Account> oldMap){
 
-        accs = filterByAgencyRecordType(accs);
+        accs = filterValidAgencies(accs);
 
         Map<String, Schema.SObjectField> accountFields = AMS_Utils.getObjectFields('Account');
 
@@ -177,7 +178,7 @@ public class AMS_AccountTriggerHandler {
                             String accountNewValue = String.valueOf(acct.get(fieldName));
                             String accountOldValue = String.valueOf(oldMap.get(acct.Id).get(fieldName));
 
-                            AMS_RecordCreatorWebservice.AccountChanges acctChange = new AMS_RecordCreatorWebservice.AccountChanges(accountFieldName,accountNewValue,accountOldValue);
+                            AMS_RecordCreatorWebservice.AccountChanges acctChange = new AMS_RecordCreatorWebservice.AccountChanges(accountFieldName,accountOldValue,accountNewValue);
 
                             accountChanges.add(acctChange);
                         }
@@ -196,7 +197,7 @@ public class AMS_AccountTriggerHandler {
 
     }
 
-    private static List<Account> filterByAgencyRecordType(List<Account> accts){
+    private static List<Account> filterValidAgencies(List<Account> accts){
 
         ID standardRT = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency') ;
 
@@ -204,11 +205,11 @@ public class AMS_AccountTriggerHandler {
 
         for(Account acct: accts){
 
-            if(acct.recordTypeId == standardRT)
+            //only accredited agencies can generate minor change codes
+            if(acct.recordTypeId == standardRT && acct.Accreditation_date__c != null)
                 toReturn.add(acct);
 
         }
-
 
         return toReturn;
     }
@@ -233,10 +234,16 @@ public class AMS_AccountTriggerHandler {
 
             Account account = actChange.acct;
 
+            List<Agency_Applied_Change_code__c> accountActiveChangeCode = [SELECT Reason_Code__c, Reason_Description__c FROM Agency_Applied_Change_code__c WHERE Account__c =: account.Id AND Active__c = TRUE];
 
             if(AMS_RecordCreatorWebservice.containsTradeName(actChange.changes)){
 
                 changeCodeTN = AMS_RecordCreatorWebservice.generateChangeCodeTN(null, account.Status__c == 'Approved' );
+
+                if(accountActiveChangeCode.size() > 0){
+                    changeCodeTN.reasonCode = accountActiveChangeCode[0].Reason_Code__c;
+                    changeCodeTN.reasonDesc = accountActiveChangeCode[0].Reason_Description__c;
+                }
 
                 accountsToProcess.add(account);
                 changeCodesToProcess.add(changeCodeTN);
@@ -250,6 +257,11 @@ public class AMS_AccountTriggerHandler {
 
                 changeCode = AMS_RecordCreatorWebservice.generateChangeCode(null);
             
+                if(accountActiveChangeCode.size() > 0){
+                    changeCode.reasonCode = accountActiveChangeCode[0].Reason_Code__c;
+                    changeCode.reasonDesc = accountActiveChangeCode[0].Reason_Description__c;
+                }
+
                 accountsToProcess.add(account);
                 changeCodesToProcess.add(changeCode);
                 oscarsToProcess.add(null);
@@ -257,14 +269,17 @@ public class AMS_AccountTriggerHandler {
 
         }
 
-        AMS_Utils.createAAChangeCodes(changeCodesToProcess, oscarsToProcess, accountsToProcess,false);
+        List<AMS_ChangeCodesHelper.ObjectChangesStruct> objectChanges = AMS_ChangeCodesHelper.convertAccountToObjectChanges(accountChanges);
+
+
+        AMS_ChangeCodesHelper.createAAChangeCodes( objectChanges, changeCodesToProcess, oscarsToProcess, accountsToProcess,false);
 
     }
 
     public class AccountChangesStruct {
 
-        private List<AMS_RecordCreatorWebservice.AccountChanges> changes{get;set;}
-        private Account acct{get;set;}
+        public List<AMS_RecordCreatorWebservice.AccountChanges> changes{get;set;}
+        public Account acct{get;set;}
 
         public AccountChangesStruct(List<AMS_RecordCreatorWebservice.AccountChanges> changes, Account acct){
 
@@ -394,7 +409,7 @@ public class AMS_AccountTriggerHandler {
     }
     
     
-    
+	
     /** This method is called to verify if the Account field changes should create a new record into AMS Agency Updates table. The scenarios are:
      *  1) Status__c changes => Create a new record
      *  2) Status__c DOES NOT change && another field value changes => Create a new record
@@ -433,5 +448,46 @@ public class AMS_AccountTriggerHandler {
             return true;
         }
         return false;
+    }
+
+    //This method applies the Due Diligence status from the account on all open Oscars
+    public static void handleDDUpdates(List<Account> accs, Map<Id,Account> oldMap){
+
+        Set<Id> accountsToCheck = new Set<Id>();
+        accountsToCheck.add(AMS_Utils.getId('Account', 'Standard_Account'));
+        accountsToCheck.add(AMS_Utils.getId('Account', 'IATA_Agency'));
+
+
+        Set<String> closedStatus = new Set<String>{
+            'Closed', 'Closed_Not Accepted', 'Closed_Rejected', 'Closed_Withdrawn'
+        };
+
+        Map<String, String> ddStatus = new Map<String, String>{
+            'Cleared' => 'Passed',
+            'Sanctioned. Please contact compliance' => 'Failed'
+        };
+
+        Map<Id,Account> ddAccounts = new Map<Id,Account>();
+        for(Account acc : accs){
+            if(acc.Due_Diligence_Status__c != oldMap.get(acc.Id).Due_Diligence_Status__c
+                && ddStatus.containsKey(acc.Due_Diligence_Status__c)
+                && accountsToCheck.contains(acc.RecordTypeId)){
+
+                ddAccounts.put(acc.Id, acc);
+            }
+        }
+
+        if(ddAccounts.isEmpty()) return;
+
+        System.debug(loggingLevel.FINE, '____ [cls AMS_AccountTriggerHandler - handleDDUpdates] ddAccounts - ' + ddAccounts.keySet());
+
+        List<AMS_OSCAR__c> oscars = [SELECT Id, Account__c  FROM AMS_OSCAR__c WHERE Account__c IN :ddAccounts.keySet() AND Status__c NOT IN :closedStatus];
+        for(AMS_OSCAR__c oscar : oscars){
+            Account acc = ddAccounts.get(oscar.Account__c);
+
+            oscar.STEP17__c = ddStatus.get(acc.Due_Diligence_Status__c);
+        }
+
+        if(!oscars.isEmpty()) update oscars;
     }
 }

@@ -123,9 +123,8 @@
                     </tr>   
                 </table>
             </div>
-
             <!-- ************************* section 2 for HO or section 1 for branch ************************* -->
-            <div style="page-break-after:always;">
+            <div style="page-break-after:always;display:{!IF(AND(NOT(isTerminatedAgent), NOT(isNewHOforAccredAgent)),'','none')}">
                 <table class="aptable">
                     <tr>
                         <td colspan="3" class="bluebg">
@@ -243,13 +242,14 @@
             
 
             <!-- ************************* section 2 for branch ************************* -->
-            <div style="display:{!IF(amsOfficeType == 'HO','none','')}; page-break-after:always;">                
+            <div style="display:{!IF(AND(amsOfficeType == 'HO', NOT(isTerminatedAgent), NOT(isNewHOforAccredAgent)),'none','')}; page-break-after:always;">                
                 <table class="aptable" >
                     <tr>
                         <td colspan="3" class="bluebg">
                             <p class="whitetext">{!$Label.ISSP_AMS_STEP_3_2_Title}</p>
                         </td>
                     </tr>
+                    <apex:outputPanel rendered="{!AND(NOT(isTerminatedAgent), NOT(isNewHOforAccredAgent))}">
                     <tr><td colspan="3" class="bg-info"><strong>{!$Label.ISSP_AMS_Section_2_SubSection_1}</strong></td></tr>
                     <tr>
                         <td class="label">{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Legal_Status__c.Label}</td>
@@ -303,8 +303,9 @@
                         <td colspan="2">{!newForm.ISSP_AMS_Principal_business_Org__c}</td>
                     </tr>
                     </apex:outputPanel>
+                    </apex:outputPanel>
                     <tr>
-                        <td class="label" colspan="3" style="font-weight: bold">{!$Label.ISSP_AMS_Branch_Office_address_details}</td>
+                        <td class="label" colspan="3" style="font-weight: bold">{!IF(OR(isTerminatedAgent, isNewHOforAccredAgent), $Label.ISSP_AMS_New_HO_details, $Label.ISSP_AMS_Branch_Office_address_details)}</td>
                     </tr>   
                     <tr>
                         <td class="label">{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Branch_Office_Street_name_number__c.Label}</td>

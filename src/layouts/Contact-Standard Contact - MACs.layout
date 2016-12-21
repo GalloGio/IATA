@@ -96,6 +96,10 @@
                 <behavior>Edit</behavior>
                 <field>Membership_Main_Contact__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Kavi_User__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -491,6 +495,14 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Product__c</fields>
+        <fields>Product_Number__c</fields>
+        <fields>Quantity__c</fields>
+        <fields>Active__c</fields>
+        <relatedList>IEC_Event_Subscription__c.Subscriber__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
         <fields>Application_Name__c</fields>
         <fields>Application_icon_del__c</fields>
         <fields>Right__c</fields>
@@ -701,6 +713,8 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Authorized_Signatories_Package__c</fields>
+        <fields>CREATED_DATE</fields>
         <relatedList>Authorized_Signatory__c.Contact__c</relatedList>
     </relatedLists>
     <relatedLists>

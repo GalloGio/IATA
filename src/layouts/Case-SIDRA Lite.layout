@@ -6,6 +6,8 @@
     <customButtons>Reset_New_interactions</customButtons>
     <customButtons>Escalate_within_IATA</customButtons>
     <customButtons>Create_SAAM_Case</customButtons>
+    <customButtons>Deactivate_BSPLink</customButtons>
+    <customButtons>Reactivate_BSPLink</customButtons>
     <emailDefault>false</emailDefault>
     <excludeButtons>Clone</excludeButtons>
     <excludeButtons>Delete</excludeButtons>
@@ -155,6 +157,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Total_Irregularities__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Accumulated_Irregularities__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -444,6 +450,10 @@
                 <behavior>Edit</behavior>
                 <field>Additional_Financial_Security_Remarks__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Payment_Remarks__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
@@ -460,6 +470,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>REI_Approval_Status__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Type_of_REI_WD__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -482,6 +496,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Open_TKT_System__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Reason_of_REI_WD__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -508,6 +526,10 @@
                 <behavior>Edit</behavior>
                 <field>NOT_Date__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>NOT_Approval__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -523,6 +545,10 @@
         <editHeading>true</editHeading>
         <label>Termination</label>
         <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Total_Outstanding_Amounts_Bankruptcy_del__c</field>
+            </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Propose_Default__c</field>

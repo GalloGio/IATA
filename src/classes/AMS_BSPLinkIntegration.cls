@@ -10,11 +10,12 @@ Input:
 		- Deactivation
 		- DeactivationUndoOrReactivation  (Based on the status of the Authorization, proper webservice will be invoked)
 		If is not one of the above, returns an error.
-	2) list of account IDs to remove. In case removing the whole hierarchy, a single ID is needed. Could be either the HO or any BR.
-	   In case the need is to not remove the whole hierarchy, the list of account id to remove has to be passed.
+	2) list of account/oscars IDs to remove. In case removing the whole hierarchy, a single ID is needed. Could be either the HO or any BR.
+	   In case the need is to not remove the whole hierarchy, the list of account id to remove has to be passed. To remove accounts involved, use a list of oscars.
 	3) sTypeOfRemoval (string): indicates if the whole hierarchy or not has to be removed. Can be either one of the following
-		- Hierarchy -> if need to remove the whole hierarchy
-		- Single    -> if no need to remove the whole hierarchy
+		- Hierarchy        -> if need to remove the whole hierarchy
+		- Single           -> if no need to remove the whole hierarchy
+		- AccountsInvolved -> The accounts selected for the oscars on the list
 
 Output:
 	It returns a list of custom class (AMS_BSPLinkIntegration.Response).
@@ -35,10 +36,10 @@ In case there are no available resource, batch will be self-rescheduling through
 
 global class AMS_BSPLinkIntegration {
 	//MAIN METHOD
-	webservice static list<Response> ProcessBSPLink(string sProcess,list<id> AccountIds, string sTypeOfRemoval){
+	webservice static list<Response> ProcessBSPLink(String sProcess, List<Id> objectIds, string sTypeOfRemoval){
 		list<response> oReturn = new list<Response>();
 		
-		list<Agency_Authorization__c> lsToRemove = RetrieveBSPLinkAuthToRemove(AccountIds.clone(), sTypeOfRemoval);
+		list<Agency_Authorization__c> lsToRemove = RetrieveBSPLinkAuthToRemove(objectIds.clone(), sTypeOfRemoval);
 		
 		if(lsToRemove.isEmpty()){
 			response r = new response();
@@ -47,7 +48,7 @@ global class AMS_BSPLinkIntegration {
 			oReturn.Add(r);
 		}
 		
-		set<id> setAccntId = new set<id>();
+		Set<Id> setAccntId = new Set<Id>();
 		
 		//CHeck Account Sector
 		for(Agency_Authorization__c a:lsToRemove){
@@ -62,7 +63,7 @@ global class AMS_BSPLinkIntegration {
 			setAccntId.add(a.Account__c);
 		}
 		
-		if(lsToRemove.size()<=100){
+		if(lsToRemove.size()<80){
 			AMS_BSPLink_Integration__c BSPLinkParameter = AMS_BSPLink_Integration__c.getInstance();
 			
 	    	if(string.isEmpty(BSPLinkParameter.EndpointToken__c) || string.isEmpty(BSPLinkParameter.Password__c) || string.isEmpty(BSPLinkParameter.Username__c) || string.isEmpty(BSPLinkParameter.GrantType__c)){
@@ -84,32 +85,43 @@ global class AMS_BSPLinkIntegration {
 				Response GenerateToken = GrantToken(BSPLinkParameter.EndpointToken__c, BSPLinkParameter.Username__c, BSPLinkParameter.Password__c, BSPLinkParameter.GrantType__c);
 				//Token generation has to be invoked from the class that will invoke the webservice (batch or realtime)
 				if(GenerateToken.result=='Ok'){
-					if(sProcess == 'Deactivation')
-						for(Agency_Authorization__c AA:lsToRemove)
-							oReturn.add(AgentDeactivation(GenerateToken.description, AA, BSPLinkParameter));
-					
-					if(sProcess == 'DeactivationUndoOrReactivation')
-						for(Agency_Authorization__c AA:lsToRemove){
-							if(AA.Status__c == 'Deactivation in process')
-								oReturn.add(AgentDeactivationUndo(GenerateToken.description, AA, BSPLinkParameter, mapBPEEmails.get(AA.Account__c)));
+
+					for(Agency_Authorization__c AA:lsToRemove){
+						Response resp;
+						if(sProcess == 'Deactivation') resp = AgentDeactivation(GenerateToken.description, AA, BSPLinkParameter);
+						
+						else if(sProcess == 'DeactivationUndoOrReactivation'){
+							if(AA.Status__c == 'Deactivation in process') resp = AgentDeactivationUndo(GenerateToken.description, AA, BSPLinkParameter, mapBPEEmails.get(AA.Account__c));
 							
-							if(AA.Status__c == 'Non-Active')
-								oReturn.add(AgentReactivation(GenerateToken.description, AA, BSPLinkParameter, mapBPEEmails.get(AA.Account__c)));
+							if(AA.Status__c == 'Non-Active') resp = AgentReactivation(GenerateToken.description, AA, BSPLinkParameter, mapBPEEmails.get(AA.Account__c));
 						}
-				}else
+
+				    	if(resp.result == 'Ok')	AA.Status__c = 'Deactivation in process';
+					    else 					AA.Last_Request_Result__c = resp.description;
+
+						oReturn.add(resp);
+					}
+
+					update lsToRemove;
+				}else{
 					oReturn.add(GenerateToken);
+				}
 			}else{
 				response r = new response();
 				r.result = 'Error';
 				r.description = 'Please, specify a valid process';
 				oReturn.Add(r);
 			}
+
 		}else{
-			//RUN BATCH
+			AMS_BSPLinkIntegration_Scheduler bspSc = new AMS_BSPLinkIntegration_Scheduler(UserInfo.getUserEmail(), lsToRemove, sTypeOfRemoval);
+			Datetime dt = Datetime.now().addSeconds(30);
+			String timeForScheduler = dt.format('s m H d M \'?\' yyyy');
+			Id schedId = System.Schedule(sTypeOfRemoval+' '+timeForScheduler,timeForScheduler,bspSc);
 			
 			response r = new response();
 			r.result = 'Ok';
-			r.description = 'More than 100 agencies will be deactivated. You\'ll receive an email when process is finished';
+			r.description = 'More than 80 agencies will be deactivated. You\'ll receive an email when process is finished';
 			oReturn.Add(r);
 		}
 
@@ -184,6 +196,7 @@ global class AMS_BSPLinkIntegration {
     		oReturn.result = 'Error';
 	    	oReturn.description = e.getMessage();
     	}
+
     	return oReturn;
     }
     
@@ -223,6 +236,7 @@ global class AMS_BSPLinkIntegration {
     		oReturn.result = 'Error';
 	    	oReturn.description = e.getMessage();
     	}
+
     	return oReturn;
     }
     
@@ -261,9 +275,9 @@ global class AMS_BSPLinkIntegration {
     		oReturn.result = 'Error';
 	    	oReturn.description = e.getMessage();
     	}
+
     	return oReturn;
     }
-    
     
     /***********************************
     ********** HELPER METHODS **********
@@ -285,21 +299,25 @@ global class AMS_BSPLinkIntegration {
     
     //Given a list of Account IDS (in case need is to remove single agencies) or HO ID (In case need to remove the whole hierarchy), it return the list of all existing authorization
     //In case an agency is without authorization because of errors in creating them previously, it creates it (status: not-set)
-    static list<Agency_Authorization__c> RetrieveBSPLinkAuthToRemove(list<id> AccountIdss, string sType){
-		set<id> setAccntToRemove = new set<id>();
+    static list<Agency_Authorization__c> RetrieveBSPLinkAuthToRemove(list<id> objectIds, string sType){
+		Set<Id> setAccntToRemove = new Set<Id>();
 		if(sType == 'Hierarchy'){
-			if(AccountIdss.size()==1){
-				id theHOId = AMS_BSPLinkIntegration.RetrieveHOId(AccountIdss.get(0));
+			if(objectIds.size()==1){
+				setAccntToRemove.add(objectIds.get(0));
+				id theHOId = AMS_BSPLinkIntegration.RetrieveHOId(objectIds.get(0));
 				
 				if(theHOId!=null){
 					//get up to 3 level of hierarhcy (should not be more than 2....)
 					for(Account acc:[Select id from Account where id=:theHOId OR ParentID=:theHOId or parent.parentId=:theHOId or parent.parent.parentId=:theHOId])
-						AccountIdss.add(acc.Id);
+						setAccntToRemove.add(acc.Id);
 				}
 			}
+		}else if (sType.equalsIgnoreCase('AccountsInvolved')) {
+			for(AMS_Oscar__c oscar : [SELECT Id, Account__c, (SELECT Id, Account__c FROM AMS_Process_Detail__r) FROM AMS_Oscar__c WHERE Id IN :objectIds]){
+				setAccntToRemove.add(oscar.Account__c);
+				for(AMS_Process_Detail__c pd : oscar.AMS_Process_Detail__r) setAccntToRemove.add(pd.Account__c);
+			}
 		}
-
-		setAccntToRemove.addAll(AccountIdss);
 		
 		list<Agency_Authorization__c> lsToReturn = [select Id, Account__c, Account__r.Sector__c, Status__c, IATACode__c, ISO_Country__c
 													from Agency_Authorization__c where Authority__c='BSPLink' and Account__c in:setAccntToRemove];
@@ -307,7 +325,7 @@ global class AMS_BSPLinkIntegration {
 		/* Future enhancements? if they do not exists, create. Will encounter error "You have uncommitted..."
 		
 		list<Agency_Authorization__c> authTocreate = new list<Agency_Authorization__c>();
-		set<id> setAccntFound = new set<id>();
+		Set<Id> setAccntFound = new Set<Id>();
 		for(Agency_Authorization__c aa:lsToReturn)
 			setAccntFound.add(aa.Account__c);
 		

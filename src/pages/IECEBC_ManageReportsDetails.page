@@ -9,7 +9,7 @@
     <apex:composition template="IECEBC_Layout">
         <apex:define name="pageHeadAdditions">
             <!-- Start of Page <head> -->
-            <title>eBroadcast Overview</title>
+            <title>eBroadcast Report Details</title>
             
             <!-- End of Page </head> -->
         </apex:define>
@@ -188,7 +188,7 @@
 </script>
 -->
             <!-- Start of Page Content -->
-            <main class="main-content manage-account">
+            <main class="main-content">
                 <div class="inner-wrapper">
                     <h1 class="page-title"><a href="{!URLFOR($Page.IECEBC_CampaignPreview, null, [id=EBC_Campaign__c.EBC_Design__c])}" onclick="window.open(this.href); return false;">{!EBC_Campaign__c.Name}</a></h1>
                     

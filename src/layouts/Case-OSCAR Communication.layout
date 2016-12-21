@@ -4,6 +4,7 @@
     <customButtons>Conga_Merge_JS</customButtons>
     <customButtons>Reset_New_interactions</customButtons>
     <customButtons>Create_SIDRA_lite</customButtons>
+    <customButtons>Move_to_Recycle_Bin</customButtons>
     <customConsoleComponents>
         <primaryTabComponents>
             <containers>
@@ -73,8 +74,7 @@
                 <field>Case_Remarks__c</field>
             </layoutItems>
         </layoutColumns>
-        <layoutColumns/>
-        <style>TwoColumnsLeftToRight</style>
+        <style>OneColumn</style>
     </layoutSections>
     <layoutSections>
         <customLabel>false</customLabel>
@@ -97,6 +97,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Region__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>BSPCountry__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
@@ -139,6 +143,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Key_Customer_Case__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>IATA_Code__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -198,12 +206,8 @@
                 <field>Process_Age__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Local_Inspection_compliant__c</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>KPI_Prod__c</field>
+                <field>Case_Thread_ID__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -216,11 +220,19 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
+                <field>Local_Inspection_time__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>Bank_Guarantee_time__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>KPI_NewApp__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>KPI_Prod__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -294,14 +306,6 @@
         <fields>CASES.STATUS</fields>
         <fields>OWNER_NAME</fields>
         <relatedList>RelatedChildCaseList</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <fields>Complaint_Opened_Date__c</fields>
-        <fields>Complaint_Priority__c</fields>
-        <fields>Complaint_Status__c</fields>
-        <fields>Owner__c</fields>
-        <relatedList>Complaint__c.Related_Case_Number__c</relatedList>
     </relatedLists>
     <relatedLists>
         <relatedList>RelatedTeamMemberList</relatedList>

@@ -8,8 +8,8 @@
         <label>Information</label>
         <layoutColumns>
             <layoutItems>
-                <behavior>Required</behavior>
-                <field>Billing_Agreement_Name__c</field>
+                <behavior>Readonly</behavior>
+                <field>BillingAgreement_Name__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -211,12 +211,13 @@
         <customButtons>Edit_All</customButtons>
         <fields>NAME</fields>
         <fields>EF_Material__c</fields>
-		<fields>EF_Status__c</fields>
+        <fields>EF_Status__c</fields>
         <relatedList>EF_Material_Line_Item__c.EF_Relationship__c</relatedList>
     </relatedLists>
     <relatedLists>
         <customButtons>Mass_Update_Contact_Billing_Agreement</customButtons>
         <fields>NAME</fields>
+        <fields>Billing_Agreement_Name__c</fields>
         <fields>Contact__c</fields>
         <fields>Contact_Account__c</fields>
         <fields>Status__c</fields>
@@ -282,7 +283,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h8E000000JTxJ</masterLabel>
+        <masterLabel>00hw000000hfUh2</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>
