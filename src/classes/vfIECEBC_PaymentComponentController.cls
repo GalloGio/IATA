@@ -1692,39 +1692,4 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
     update billingAccountOrder;
     rereadBillingAccount();
   } // end of purchaseFulfillment
-  
-  
-  
-  // ========================================================================
-  // create a new EBC_Activity for this newly paid Product Rate Plan
-  //   productRatePlanEmailCredit  = paidProductRatePlan.EBC_Email_Credit_Current_Offering__c or  paidProductRatePlan.EBC_Prepaid_Email__c
-  // the following variables should be provided by the class
-  //   billingAccount.eBroadcast_Email_Balance__c
-  //   subscription.Name
-  /*
-  private EBC_Activity__c newEbcActivity( String productRatePlanEmailCredit)
-  {
-    //Integer emailCredits = (paidProductRatePlan.EBC_Email_Credit_Current_Offering__c == null ) ? 0 : Integer.valueOf(paidProductRatePlan.EBC_Email_Credit_Current_Offering__c);
-    Integer emailCredits = (productRatePlanEmailCredit == null ) ? 0 : Integer.valueOf(productRatePlanEmailCredit);
-    Integer newBalance = (billingAccount.eBroadcast_Email_Balance__c == null) ? 0 : Integer.valueOf(billingAccount.eBroadcast_Email_Balance__c);
-    newBalance += emailCredits;
-    
-    String actName =  subscription.Name + ' - ' + paidProductRatePlan.Name;
-    actName = actName.substring(0, Math.min(actName.length(),80));
-    EBC_Activity__c ebcAct = new EBC_Activity__c(
-      Related_Billing_Account__c = billingAccount.Id
-      , Name = actName
-      //,EBC_Campaign__c = null
-      , Total_Count__c = emailCredits
-      , New_Balance__c = newBalance
-      , Activity_Type__c = 'Credit'
-      , Activity_Date_Time__c  = DateTime.now()
-      );
-      
-    return ebcAct; 
-  } // addEbcActivity
-    
-  */
-  
-  
 } // end of class vfIECEBC_PaymentComponentController
