@@ -1120,10 +1120,10 @@
 <fieldPermissions><editable>false</editable><field>AMS_Settlement_System__c.Last_synchronization__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AMS_Settlement_System__c.Legacy_External_ID__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AMS_Settlement_System__c.Legacy_System__c</field><readable>false</readable></fieldPermissions>
-<fieldPermissions><editable>false</editable><field>AMS_Territory__c.Comments__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>AMS_Territory__c.Comments__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AMS_Territory__c.ISO_Country__c</field><readable>false</readable></fieldPermissions>
-<fieldPermissions><editable>false</editable><field>AMS_Territory__c.ISO_State__c</field><readable>false</readable></fieldPermissions>
-<fieldPermissions><editable>false</editable><field>AMS_Territory__c.Legacy_Id__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>AMS_Territory__c.ISO_State__c</field><readable>true</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>AMS_Territory__c.Legacy_Id__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AMS_Voucher_Information__c.IsAgencyEligibleForCountryAverage__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AMS_Voucher_Information__c.IsAgencyEligible__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AMS_Voucher_Information__c.Number_Of_Vouchers__c</field><readable>false</readable></fieldPermissions>
@@ -1723,6 +1723,7 @@
 <fieldPermissions><editable>false</editable><field>Account.Zuora__UpsellOpportunity__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Account.duplicate_flag_indicato__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Account.number_of_Opportunities__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>Account.state_numeric_code__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Account_Category__c.AIMS_ID__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Account_Category__c.Category_Code__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Account_Category__c.Category_ID__c</field><readable>false</readable></fieldPermissions>
@@ -4539,8 +4540,9 @@
 <fieldPermissions><editable>false</editable><field>IATA_ISO_Country__c.Country_Manager__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>IATA_ISO_Country__c.DDS_Enabled__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>IATA_ISO_Country__c.Disable_non_IATA_Cargo_Agents__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>IATA_ISO_Country__c.Due_diligence_mandatory__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>IATA_ISO_Country__c.EACP_Country__c</field><readable>false</readable></fieldPermissions>
-<fieldPermissions><editable>true</editable><field>IATA_ISO_Country__c.EBulletin_enabled__c</field><readable>true</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>IATA_ISO_Country__c.EBulletin_enabled__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>IATA_ISO_Country__c.EU_Country__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>IATA_ISO_Country__c.Enable_Minor_Changes_from_Portal__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>IATA_ISO_Country__c.Enable_Notice_of_Change__c</field><readable>false</readable></fieldPermissions>
@@ -4587,6 +4589,7 @@
 <fieldPermissions><editable>false</editable><field>IATA_ISO_State__c.ISO_CODE_STANDARD__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>IATA_ISO_State__c.Informatica_Value__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>IATA_ISO_State__c.Local_Language__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>IATA_ISO_State__c.numeric_code__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>ICCS_BankAccount_To_Case__c.Amount__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>ICCS_BankAccount_To_Case__c.CaseStatus__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>ICCS_BankAccount_To_Case__c.Notice_of_Assignment__c</field><readable>true</readable></fieldPermissions>
@@ -7060,6 +7063,7 @@
 <objectPermissions><allowCreate>false</allowCreate><allowDelete>false</allowDelete><allowEdit>false</allowEdit><allowRead>true</allowRead><modifyAllRecords>false</modifyAllRecords><object>AMS_Agency__c</object><viewAllRecords>true</viewAllRecords></objectPermissions>
 <objectPermissions><allowCreate>false</allowCreate><allowDelete>false</allowDelete><allowEdit>false</allowEdit><allowRead>true</allowRead><modifyAllRecords>false</modifyAllRecords><object>AMS_Inspection__c</object><viewAllRecords>false</viewAllRecords></objectPermissions>
 <objectPermissions><allowCreate>false</allowCreate><allowDelete>false</allowDelete><allowEdit>false</allowEdit><allowRead>true</allowRead><modifyAllRecords>false</modifyAllRecords><object>AMS_Owner__c</object><viewAllRecords>false</viewAllRecords></objectPermissions>
+<objectPermissions><allowCreate>false</allowCreate><allowDelete>false</allowDelete><allowEdit>false</allowEdit><allowRead>true</allowRead><modifyAllRecords>false</modifyAllRecords><object>AMS_Territory__c</object><viewAllRecords>false</viewAllRecords></objectPermissions>
 <objectPermissions><allowCreate>true</allowCreate><allowDelete>true</allowDelete><allowEdit>true</allowEdit><allowRead>true</allowRead><modifyAllRecords>false</modifyAllRecords><object>Account</object><viewAllRecords>true</viewAllRecords></objectPermissions>
 <objectPermissions><allowCreate>true</allowCreate><allowDelete>true</allowDelete><allowEdit>true</allowEdit><allowRead>true</allowRead><modifyAllRecords>true</modifyAllRecords><object>Agents__c</object><viewAllRecords>true</viewAllRecords></objectPermissions>
 <objectPermissions><allowCreate>false</allowCreate><allowDelete>false</allowDelete><allowEdit>false</allowEdit><allowRead>true</allowRead><modifyAllRecords>false</modifyAllRecords><object>AmazonFile__c</object><viewAllRecords>true</viewAllRecords></objectPermissions>

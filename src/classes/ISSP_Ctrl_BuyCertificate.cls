@@ -316,7 +316,8 @@ public class ISSP_Ctrl_BuyCertificate {
         try 
         {      
             //Assign RecordType
-            Id CaseSAAMId = Schema.SObjectType.Case.getRecordTypeInfosByName().get('SAAM').getRecordTypeId();
+            //Id CaseSAAMId = Schema.SObjectType.Case.getRecordTypeInfosByName().get('SAAM').getRecordTypeId();
+            Id CaseSAAMId = Schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
             newCase.RecordTypeId = CaseSAAMId ;
 
             //Assign Account_Concerned__c
@@ -356,6 +357,10 @@ public class ISSP_Ctrl_BuyCertificate {
             //newCase.ProductSubcategory__c = SubCategory ;
             system.debug('XXX newCase: ' + newCase);
             insert newCase ;
+            
+            //Call OSCAR integration WS
+            AMS_RecordCreatorWebservice.createAccreditation(con.AccountId, AMS_RecordCreatorWebservice.EMPTYACCREDITATIONID, 'CER.1.0', newCase.Id);
+            
             PageReference p = new PageReference('/ISSP_Case?caseId='+newCase.Id);
             p.setRedirect(true);
             return p;
