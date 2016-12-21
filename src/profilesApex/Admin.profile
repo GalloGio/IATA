@@ -86,6 +86,8 @@
 <classAccesses><apexClass>AMS_BSPLinkIntegration_Scheduler</apexClass><enabled>true</enabled></classAccesses>
 <classAccesses><apexClass>AMS_BSPLinkIntegration_Test</apexClass><enabled>true</enabled></classAccesses>
 <classAccesses><apexClass>AMS_CaseListTest</apexClass><enabled>true</enabled></classAccesses>
+<classAccesses><apexClass>AMS_CaseOscarWizardController</apexClass><enabled>true</enabled></classAccesses>
+<classAccesses><apexClass>AMS_CaseWizzardFlowControllerTest</apexClass><enabled>true</enabled></classAccesses>
 <classAccesses><apexClass>AMS_CertificateForPrintController</apexClass><enabled>true</enabled></classAccesses>
 <classAccesses><apexClass>AMS_CertificateHelper</apexClass><enabled>true</enabled></classAccesses>
 <classAccesses><apexClass>AMS_CertificateManagerController</apexClass><enabled>true</enabled></classAccesses>
@@ -173,6 +175,8 @@
 <classAccesses><apexClass>AMS_OscarCaseTriggerHelper</apexClass><enabled>true</enabled></classAccesses>
 <classAccesses><apexClass>AMS_OscarCase_RiskMgmt</apexClass><enabled>true</enabled></classAccesses>
 <classAccesses><apexClass>AMS_OscarCase_RiskMgmt_Test</apexClass><enabled>true</enabled></classAccesses>
+<classAccesses><apexClass>AMS_OscarMigrationFromCase</apexClass><enabled>true</enabled></classAccesses>
+<classAccesses><apexClass>AMS_OscarMigrationFromCaseTest</apexClass><enabled>true</enabled></classAccesses>
 <classAccesses><apexClass>AMS_PersonCasesController</apexClass><enabled>true</enabled></classAccesses>
 <classAccesses><apexClass>AMS_PersonCasesControllerTest</apexClass><enabled>true</enabled></classAccesses>
 <classAccesses><apexClass>AMS_PersonHelper</apexClass><enabled>true</enabled></classAccesses>
@@ -1541,6 +1545,7 @@
 <pageAccesses><apexPage>AMS_Attachment_List_Page</apexPage><enabled>true</enabled></pageAccesses>
 <pageAccesses><apexPage>AMS_BlankPage</apexPage><enabled>true</enabled></pageAccesses>
 <pageAccesses><apexPage>AMS_CaseOscarDetail</apexPage><enabled>true</enabled></pageAccesses>
+<pageAccesses><apexPage>AMS_CaseOscarWizardPage</apexPage><enabled>true</enabled></pageAccesses>
 <pageAccesses><apexPage>AMS_CertificateManager</apexPage><enabled>true</enabled></pageAccesses>
 <pageAccesses><apexPage>AMS_DataMigration</apexPage><enabled>true</enabled></pageAccesses>
 <pageAccesses><apexPage>AMS_DemoCaseListPage</apexPage><enabled>true</enabled></pageAccesses>
