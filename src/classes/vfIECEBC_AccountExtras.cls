@@ -71,7 +71,22 @@ public with sharing class vfIECEBC_AccountExtras extends vfIECEBC_Controller
 		}
 	}
 
-	
+	//
+	//
+    public boolean getisAllAddonSold() {
+        if (productRatePlanWrapperAddonCurrentList.size()>0 &&
+            productRatePlanWrapperAddonOptionList.size()==0) return true;
+        return false;
+    }
+    public boolean getisOneAddonLeftToBeSold(){
+        if (productRatePlanWrapperAddonOptionList.size()>0) return true;
+        return false;
+    }
+    public boolean getisNoneAddonSold(){
+        if (productRatePlanWrapperAddonCurrentList.size()==0 &&
+            productRatePlanWrapperAddonOptionList.size()>0) return true;
+        return false;
+    }
 	// ========================================================================
 	// Product Rate Plan Add On selection web interface
 	public Integer selectedRatePlanIndex {get;set;} // used as parameter for calling selectRatePlanAddon
