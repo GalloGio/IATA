@@ -62,7 +62,7 @@
         <externalId>false</externalId>
         <label>Airline</label>
         <referenceTo>Account</referenceTo>
-        <relationshipName>EF_Approval_Temp_Storages</relationshipName>
+        <relationshipName>EF_Approvals_Airline</relationshipName>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -95,11 +95,21 @@
         <externalId>false</externalId>
         <label>Contract</label>
         <referenceTo>Contract</referenceTo>
-        <relationshipName>EF_Approval_Temp_Storages</relationshipName>
+        <relationshipName>EF_Approvals_Contract</relationshipName>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
+    </fields>
+	<fields>
+        <fullName>Data_Currency__c</fullName>
+        <externalId>false</externalId>
+        <globalPicklist>EF_Currency</globalPicklist>
+        <label>Data Currency</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
     </fields>
     <fields>
         <fullName>EF_Admin_Fee__c</fullName>
@@ -118,11 +128,20 @@
         <externalId>false</externalId>
         <label>Airline Billing Agreement</label>
         <referenceTo>EF_Billing_Agreement__c</referenceTo>
-        <relationshipName>EF_Approval_Temp_Storages</relationshipName>
+        <relationshipName>EF_Approvals_BA</relationshipName>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>EF_Billing_Currency__c</fullName>
+        <externalId>false</externalId>
+        <globalPicklist>EF_Currency</globalPicklist>
+        <label>Billing Currency</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
     </fields>
     <fields>
         <fullName>EF_Billing_Frequency__c</fullName>
@@ -146,12 +165,51 @@
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>EF_Location_ID__c</fullName>
+        <fullName>EF_Location_Currency__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
-        <label>E&amp;F Location ID</label>
-        <referenceTo>EF_Related_Records__c</referenceTo>
-        <relationshipName>EF_Approval_Temp_Storages</relationshipName>
+        <label>E&amp;F Location Currency</label>
+        <referenceTo>EF_Location_Currency__c</referenceTo>
+        <relationshipLabel>E&amp;F Approval Storages (E&amp;F Location Currency)</relationshipLabel>
+        <relationshipName>EF_Approvals</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>EF_Material_Line_Item__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>E&amp;F Material Line Item</label>
+        <referenceTo>EF_Material_Line_Item__c</referenceTo>
+        <relationshipLabel>E&amp;F Approval Storages</relationshipLabel>
+        <relationshipName>EF_Approval_Storages</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>EF_Material_Name__c</fullName>
+        <externalId>false</externalId>
+        <formula>EF_Material_Line_Item__r.EF_Material__r.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>E&amp;F Material Name</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>EF_Material__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>E&amp;F Material</label>
+        <referenceTo>Product2</referenceTo>
+        <relationshipLabel>E&amp;F Approval Storages</relationshipLabel>
+        <relationshipName>EF_Approval_Storages</relationshipName>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -162,7 +220,14 @@
         <externalId>false</externalId>
         <globalPicklist>EF_Payment_Terms</globalPicklist>
         <label>Payment Terms</label>
-        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>EF_Status__c</fullName>
+        <externalId>false</externalId>
+        <globalPicklist>EF_Status</globalPicklist>
+        <label>Status</label>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -184,7 +249,20 @@
         <externalId>false</externalId>
         <label>Location Currency</label>
         <referenceTo>EF_Location_Currency__c</referenceTo>
-        <relationshipName>EF_Approval_Temp_Storages</relationshipName>
+        <relationshipName>EF_Approvals_Location_Currency</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Location_ID__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>E&amp;F Location ID</label>
+        <referenceTo>EF_Related_Records__c</referenceTo>
+        <relationshipLabel>E&amp;F Approval Storages</relationshipLabel>
+        <relationshipName>EF_Approvals_Location_Id</relationshipName>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -220,16 +298,6 @@
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>Status__c</fullName>
-        <externalId>false</externalId>
-        <globalPicklist>EF_Status</globalPicklist>
-        <label>Status</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Picklist</type>
     </fields>
     <label>E&amp;F Approval Storage</label>
     <listViews>
