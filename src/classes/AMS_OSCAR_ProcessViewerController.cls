@@ -13,6 +13,7 @@ public class AMS_OSCAR_ProcessViewerController {
  
     public Map<String,String> statusIcons {get;set;}
     public Map<String,String> statusLabel {get;set;}
+    public Map<String,Boolean> ddBlock {get;set;}
     public Map<String,StepFieldsDataWrapper> stepFieldsData {get;set;}
     
     public static Map<String, Schema.SObjectField> fieldMap = Schema.getGlobalDescribe().get('AMS_OSCAR__c').getDescribe().fields.getMap();
@@ -28,6 +29,35 @@ public class AMS_OSCAR_ProcessViewerController {
                 && !oscar.AMS_Online_Accreditation__r.Ready_for_Accreditation__c
             );
         }
+    }
+
+    private Boolean dueDiligenceBlocked {
+        get{
+            return (
+                oscar != null
+                && oscar.STEP17__c == AMS_Utils.IN_PROGRESS
+            );
+        }
+    }
+
+    private Set<String> alwaysOnSteps{
+        get{
+            return new Set<String>{
+                'STEP6__c',
+                'STEP8__c',
+                'STEP9__c',
+                'STEP10__c',
+                'STEP17__c',
+                'STEP26__c',
+                'STEP27__c',
+                'STEP28__c',
+                'STEP29__c'
+            };
+        }
+    } 
+
+    private Boolean isStepBlocked(String stepApiName){
+        return alwaysOnSteps.contains(stepApiName) ? false : dueDiligenceBlocked;
     }
     
     public String getEffectiveDate(){
@@ -131,6 +161,7 @@ public class AMS_OSCAR_ProcessViewerController {
     
                 statusIcons.put(step.name,iconFileName);
                 statusLabel.put(step.name, stepValue);
+                ddBlock.put(flow.name, isStepBlocked(stepApiName));
             }
     }
     
@@ -292,6 +323,7 @@ public class AMS_OSCAR_ProcessViewerController {
 
         statusIcons = new Map<String,String>();
         statusLabel = new Map<String,String>();
+        ddBlock = new Map<String,Boolean>();
 
         for(AMS_OSCAR_JSON.Process p: pr){
             process.put(p.Name, p);
