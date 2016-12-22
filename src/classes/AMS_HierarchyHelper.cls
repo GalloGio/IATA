@@ -459,9 +459,6 @@ global class AMS_HierarchyHelper {
 
 	// return null if the incomplete migration is valid, a string with the error message otherwise
 	public static Boolean isAllHierarchySelected(Set<Id> agenciesSelected, List<AMS_Agencies_relationhip__c> hierarchyRelationships, Map<Id, Account> accounts) {
-		return isAllHierarchySelected(agenciesSelected, hierarchyRelationships, accounts, false);
-	}
-	public static Boolean isAllHierarchySelected(Set<Id> agenciesSelected, List<AMS_Agencies_relationhip__c> hierarchyRelationships, Map<Id, Account> accounts, boolean bypassBranchesAbroad) {
 
 		for (AMS_Agencies_relationhip__c rel : hierarchyRelationships) {
 			Id parentId = rel.Parent_Account__c;
@@ -470,11 +467,8 @@ global class AMS_HierarchyHelper {
 			//only active hierarchy agencies are to be considered
 			Account parent = accounts.get(parentId);
 			Account child = accounts.get(childId);
-
-			if(!bypassBranchesAbroad || parent.Is_Branch_Abroad__c!='Yes')
 			if (parent.Status__c != AMS_Utils.ACC_S0_TERMINATED && parent.Status__c != AMS_Utils.ACC_S1_NOTACCREDITED && !agenciesSelected.contains(parentId))
 				return false;
-			if(!bypassBranchesAbroad || child.Is_Branch_Abroad__c!='Yes')
 			if (child.Status__c != AMS_Utils.ACC_S0_TERMINATED && child.Status__c != AMS_Utils.ACC_S1_NOTACCREDITED && !agenciesSelected.contains(childId))
 				return false;
 		}

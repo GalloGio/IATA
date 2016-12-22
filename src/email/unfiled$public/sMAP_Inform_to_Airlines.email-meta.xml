@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <name>sMAP - Inform_to_Airlines</name>
+    <style>none</style>
+    <subject>IATA - Sales Monitoring Alert Process [{!Airline_Input__c.Agent_Name__c}] [{!Airline_Input__c.IATA_Code__c}] - [{!Airline_Input__c.Country__c}]</subject>
+    <type>text</type>
+</EmailTemplate>

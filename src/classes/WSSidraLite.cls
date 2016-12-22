@@ -198,8 +198,8 @@ global class WSSidraLite {
                     from Cases
                     where RecordtypeId in (:SidraLiteManager.RECORDTYPE_SIDRA_LITE,:SidraLiteManager.RECORDTYPE_SIDRA)
                     and DEF_Approval_Rejection__c = 'Approved'
+                    and DEF_Withdrawal_Approval_Rejection__c != 'Approved'
                     and Update_AIMS_DEF__c != null
-                    and Id not in :listCases
                     order by Update_AIMS_DEF__c desc
                     limit 1)
                 From Account
