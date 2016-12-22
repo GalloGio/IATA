@@ -1,5 +1,6 @@
 <aura:component controller="AMP_IssuesAndPrioritiesExtension">
     <aura:attribute name="accountId" type="String" />
+    <aura:attribute name="canEdit" type="Boolean" default="false" />
     <!-- 'sobjectType': 'Objective__c',-->
     <aura:attribute name="sortOrder" type="String" />
     <aura:attribute name="issues" type="Objective__c[]" />
@@ -40,7 +41,9 @@
             </div>
 
             <div class="slds-no-flex">
+                <aura:if isTrue="{!v.canEdit}">
                 <button class="slds-button slds-button--neutral slds-col--bump-left" onclick="{!c.addIssue}">New</button>
+                </aura:if>
                 <!--<ui:button label="New" press="{!c.addIssue}"/>-->
             </div>
         </header>
@@ -190,7 +193,7 @@
                 <tbody>
                     <aura:iteration items="{!v.issues}" var="issue" indexVar="index">
                         <tr>
-                            <c:AMP_IssueOrPriority issue="{!issue}" index="{!index}"/>
+                            <c:AMP_IssueOrPriority issue="{!issue}" index="{!index}" canEdit="{!v.canEdit}"/>
                         </tr>
                     </aura:iteration>
                 </tbody>

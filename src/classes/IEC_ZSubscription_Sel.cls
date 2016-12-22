@@ -26,7 +26,7 @@ public without sharing class IEC_ZSubscription_Sel extends Selector {
     public Map<String, Zuora__Subscription__c> getSubscriptionByZId(Set<String> setSubscriptionZId)
     {
     	String query = String.format(
-            'SELECT {0}  ' + 
+            'SELECT {0}, Zuora__SubscriptionStartDate__c ' + 
             'FROM {1} ' + 
             ' WHERE Zuora__External_Id__c in :setSubscriptionZId', 
             new List<String>{

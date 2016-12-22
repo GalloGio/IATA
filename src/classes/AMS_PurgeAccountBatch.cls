@@ -40,7 +40,7 @@ global class AMS_PurgeAccountBatch implements Database.Batchable<sObject>,  Data
 
 			act.IATACode__c = transformIATACodeintoPurged(act.IATACode__c);
 			act.Site = transformIATACodeintoPurged(act.site);
-			act.Purge_Flag__c = false;
+			act.Purge_Flag__c = true;
 			//act.Name = act.Name + 'Ltd';
 
 			accountsToUpdate.add(act);

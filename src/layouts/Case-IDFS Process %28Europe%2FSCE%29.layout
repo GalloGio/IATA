@@ -8,6 +8,7 @@
     <customButtons>Create_IFAP_case</customButtons>
     <customButtons>EasyUpload</customButtons>
     <customButtons>SIDRA_Lite_Action</customButtons>
+    <customButtons>Migrate_SAAM_Case</customButtons>
     <emailDefault>false</emailDefault>
     <excludeButtons>Delete</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
