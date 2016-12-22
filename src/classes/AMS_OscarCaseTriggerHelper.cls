@@ -250,11 +250,11 @@ public class AMS_OscarCaseTriggerHelper {
 
     public static void checkIrregularityThreshold() {
         List<Case> triggerNew = (List<Case>)Trigger.new;
-		
+
 		system.debug(logginglevel.error, 'DTULLO 254 --> ' + triggerNew.size());
         Id sidraRecTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('SIDRA');
         Id sidraLiteRecTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('SIDRA_Lite');
-		
+
 		system.debug(logginglevel.error, 'DTULLO 258 --> ' + sidraRecTypeId + ' - ' + sidraLiteRecTypeId);
         List<Case> newSidraCases = new List<Case>();
         Map<Id, Account> accounts = new Map<Id, Account>();
@@ -274,7 +274,7 @@ public class AMS_OscarCaseTriggerHelper {
             accounts.put(a.Id, a);
             isoCountries.add(a.IATA_ISO_Country__c);
         }
-        
+
         Map<String, Decimal> thresholds = new Map<String, Decimal>();
         for(IATA_ISO_Country__c country : [SELECT
                                                         Id
@@ -426,7 +426,7 @@ public class AMS_OscarCaseTriggerHelper {
 			if(c.reason1__c != null)
 				newCaseSubject = c.reason1__c + ' - ' + oscars.get(c.Oscar__c).Account__r.Name;
 
-            if(newCaseSubject != null && c.Subject != newCaseSubject)
+            if(newCaseSubject != null && c.Subject != newCaseSubject && AMS_OscarMigrationFromCase.changeSubject)
                 c.Subject = newCaseSubject;
         }
     }

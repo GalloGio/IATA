@@ -4,7 +4,7 @@ public class AMS_AccountHierarchySelectionController {
 	// ******* private variables *********
 	// ***********************************
 
-	private final Id ANALYST_PROFILE_ID = [SELECT Id, Name FROM Profile WHERE Name = 'FDS Hub Analyst ARM'].Id;
+	//private final Id ANALYST_PROFILE_ID = [SELECT Id, Name FROM Profile WHERE Name = 'FDS Hub Analyst ARM'].Id;
 
 	@TestVisible
 	private Account mainAccount{
@@ -54,6 +54,7 @@ public class AMS_AccountHierarchySelectionController {
 				accountFields = new Set<String>{
 					'Name'
 					, 'Location_Type__c'
+					, 'Is_Branch_Abroad__c'
 					, 'IATACode__c'
 					, 'Status__c'
 					, 'BillingCity'
@@ -80,7 +81,7 @@ public class AMS_AccountHierarchySelectionController {
 				if(tocList.contains(AMS_Utils.OWNERSHIP_IATA)) notes.add('Change of ownership to IATA will move all the agencies selected under the target agency');
 				if(tocList.contains(AMS_Utils.OWNERSHIP_NON_IATA)) notes.add('Change of ownership to non IATA will transform the main agency into the new HO. All the other agencies will keep their location type and will be put under the new HO');
 				if(tocList.contains(AMS_Utils.MAJ_SHAREHOLDING) || tocList.contains(AMS_Utils.MIN_SHAREHOLDING)) notes.add('Change of shareholding must be applied to all the hierarchy');
-				if(tocList.contains(AMS_Utils.VFMR)) notes.add('Change of remittance frequency must be applied to all the hierarchy');
+				if(tocList.contains(AMS_Utils.VFMR)) notes.add('Change of remittance frequency must be applied to all the hierarchy (except for branches abroad)');
 			}
 			return notes;
 		}
@@ -203,7 +204,8 @@ public class AMS_AccountHierarchySelectionController {
 
 	public Boolean editable {
 		get{
-			return (UserInfo.getProfileId() != ANALYST_PROFILE_ID || oscar.STEP6__c != AMS_Utils.PASSED);
+			//return (UserInfo.getProfileId() != ANALYST_PROFILE_ID || oscar.STEP6__c != AMS_Utils.PASSED);
+			return (oscar.STEP6__c != AMS_Utils.PASSED);
 		}
 		set;
 	}
@@ -363,7 +365,8 @@ public class AMS_AccountHierarchySelectionController {
 				errorChecks.put(AMS_Utils.MIN_SHAREHOLDING, true);
 			}
 
-			if(tocList.contains(AMS_Utils.VFMR) && !hi.selected && !hi.main){
+			
+			if(tocList.contains(AMS_Utils.VFMR) && !hi.selected && !hi.main && hi.acc.Is_Branch_Abroad__c!='Yes'){
 				errorChecks.put(AMS_Utils.VFMR, true);
 			}
 

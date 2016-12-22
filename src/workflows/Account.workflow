@@ -116,6 +116,26 @@
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>Account_Category_IATAN_Passenger_agent</fullName>
+        <description>to cater the fact that IATAN accounts do not have a category</description>
+        <field>Category__c</field>
+        <literalValue>IATAN Passenger Agent</literalValue>
+        <name>Account Category = IATAN Passenger agent</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Account_Sector_Travel_Agent</fullName>
+        <description>to cater the fact that IATAN accounts do not have a sector</description>
+        <field>Sector__c</field>
+        <literalValue>Travel Agent</literalValue>
+        <name>Account Sector= Travel Agent</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>Accountsiteupdate</fullName>
         <field>Site</field>
         <formula>if(
@@ -405,6 +425,34 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <value>System Integrations</value>
         </criteriaItems>
         <description>Rule that updates the field Last Modified by Source with the date/time the record was last updated with master data from the source.</description>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>AMS Webstar set sector and category</fullName>
+        <actions>
+            <name>Account_Category_IATAN_Passenger_agent</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Account_Sector_Travel_Agent</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Account.Source_System__c</field>
+            <operation>equals</operation>
+            <value>webstar</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Agency</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.Category__c</field>
+            <operation>equals</operation>
+        </criteriaItems>
+        <description>to fix the fact that webstar accounts do not have sector and category</description>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>

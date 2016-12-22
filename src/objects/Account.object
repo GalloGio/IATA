@@ -4849,6 +4849,10 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                 <controllingFieldValues>Travel Agent</controllingFieldValues>
             </picklistValues>
             <picklistValues>
+                <fullName>IATAN Passenger Agent</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>IATA Passenger Sales Agent</fullName>
                 <default>false</default>
                 <controllingFieldValues>Travel Agent</controllingFieldValues>
@@ -7515,12 +7519,6 @@ Controlling picklist of E&amp;F Sub-Status Account</description>
                 <controllingFieldValues>Inactive</controllingFieldValues>
             </picklistValues>
             <picklistValues>
-                <fullName>Chapter 7</fullName>
-                <default>false</default>
-                <controllingFieldValues>Active</controllingFieldValues>
-                <controllingFieldValues>Inactive</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
                 <fullName>Liquidated</fullName>
                 <default>false</default>
                 <controllingFieldValues>Inactive</controllingFieldValues>
@@ -7541,9 +7539,14 @@ Controlling picklist of E&amp;F Sub-Status Account</description>
                 <controllingFieldValues>Inactive</controllingFieldValues>
             </picklistValues>
             <picklistValues>
+                <fullName>Chapter 7</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+            </picklistValues>
+            <picklistValues>
                 <fullName>None</fullName>
                 <default>false</default>
-                <controllingFieldValues>Active</controllingFieldValues>
+                <isActive>false</isActive>
             </picklistValues>
             <restrictedPicklist>true</restrictedPicklist>
             <sorted>false</sorted>
@@ -10358,7 +10361,7 @@ J-Joint Vent</inlineHelpText>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
-	<fields>
+    <fields>
         <fullName>Previous_Reason__c</fullName>
         <externalId>false</externalId>
         <label>Previous Reason</label>
@@ -19894,6 +19897,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <columns>ACCOUNT.PHONE1</columns>
         <columns>ACCOUNT.RATING</columns>
         <columns>CORE.USERS.ALIAS</columns>
+        <columns>Key_Customer__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>ACCOUNT.TYPE</field>
@@ -21166,6 +21170,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <columns>ACCOUNT.LAST_UPDATE</columns>
         <columns>ACCOUNT.TYPE</columns>
         <columns>CORE.USERS.ALIAS</columns>
+        <columns>Key_Customer__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>ACCOUNT.ADDRESS1_COUNTRY</field>
@@ -24017,10 +24022,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Chapter 7</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Liquidated</fullName>
                 <default>false</default>
             </values>
@@ -24030,10 +24031,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>No Longer Client</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>None</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -26733,10 +26730,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Chapter 7</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Liquidated</fullName>
                 <default>false</default>
             </values>
@@ -26746,10 +26739,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>No Longer Client</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>None</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -29500,10 +29489,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Chapter 7</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Liquidated</fullName>
                 <default>false</default>
             </values>
@@ -29513,10 +29498,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>No Longer Client</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>None</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -31626,6 +31607,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
+                <fullName>IATAN Passenger Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Import Agent</fullName>
                 <default>false</default>
             </values>
@@ -31846,10 +31831,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Chapter 7</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Liquidated</fullName>
                 <default>false</default>
             </values>
@@ -31859,10 +31840,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>No Longer Client</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>None</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -35139,10 +35116,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Chapter 7</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Liquidated</fullName>
                 <default>false</default>
             </values>
@@ -35152,10 +35125,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>No Longer Client</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>None</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -38038,10 +38007,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Chapter 7</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Liquidated</fullName>
                 <default>false</default>
             </values>
@@ -38051,10 +38016,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>No Longer Client</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>None</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -42413,10 +42374,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Chapter 7</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Liquidated</fullName>
                 <default>false</default>
             </values>
@@ -42426,10 +42383,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>No Longer Client</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>None</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -44912,10 +44865,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Chapter 7</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Liquidated</fullName>
                 <default>false</default>
             </values>
@@ -44925,10 +44874,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>No Longer Client</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>None</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -49023,10 +48968,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Chapter 7</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Liquidated</fullName>
                 <default>false</default>
             </values>
@@ -49036,10 +48977,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>No Longer Client</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>None</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -53147,10 +53084,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Chapter 7</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Liquidated</fullName>
                 <default>false</default>
             </values>
@@ -53160,10 +53093,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>No Longer Client</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>None</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -55414,10 +55343,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Chapter 7</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Liquidated</fullName>
                 <default>false</default>
             </values>
@@ -55427,10 +55352,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>No Longer Client</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>None</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -57616,10 +57537,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Chapter 7</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Liquidated</fullName>
                 <default>false</default>
             </values>
@@ -57629,10 +57546,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>No Longer Client</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>None</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -59965,10 +59878,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Chapter 7</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Liquidated</fullName>
                 <default>false</default>
             </values>
@@ -59978,10 +59887,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>No Longer Client</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>None</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -64647,10 +64552,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Chapter 7</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Liquidated</fullName>
                 <default>false</default>
             </values>
@@ -64660,10 +64561,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>No Longer Client</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>None</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -70344,10 +70241,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Chapter 7</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Liquidated</fullName>
                 <default>false</default>
             </values>
@@ -70357,10 +70250,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>No Longer Client</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>None</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -74499,10 +74388,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Chapter 7</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Liquidated</fullName>
                 <default>false</default>
             </values>
@@ -74512,10 +74397,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>No Longer Client</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>None</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -77075,7 +76956,7 @@ OR(RecordType.Name=&apos;Operator&apos;, RecordType.Name=&apos;Airline Branch&ap
 OR(RecordType.DeveloperName=&apos;Standard_Account&apos;, RecordType.DeveloperName=&apos;Others&apos;, RecordType.DeveloperName=&apos;Operator&apos;, 
 RecordType.DeveloperName=&apos;IATA_Airline_BR&apos;,
 RecordType.DeveloperName=&apos;IATA_Airline&apos;),
-OR(ISPICKVAL(EF_Type__c,&quot;&quot;), ISPICKVAL( EF_Status__c, &quot;&quot;), ISPICKVAL( EF_SubStatus__c ,&quot;&quot;), ISNULL(EF_Effective_Date__c) )
+OR(ISPICKVAL(EF_Type__c,&quot;&quot;), ISPICKVAL( EF_Status__c, &quot;&quot;), AND(ISPICKVAL( EF_Status__c, &quot;Inactive&quot;), ISPICKVAL( EF_SubStatus__c ,&quot;&quot;)), ISNULL(EF_Effective_Date__c) )
 )</errorConditionFormula>
         <errorMessage>Please fill in E&amp;F Type, E&amp;F Status, E&amp;F Sub-Status, E&amp;F Status Date Change</errorMessage>
     </validationRules>

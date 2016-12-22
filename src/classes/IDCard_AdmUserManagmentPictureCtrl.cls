@@ -503,7 +503,8 @@ public with sharing class IDCard_AdmUserManagmentPictureCtrl extends IDCardAbstr
                 upsert IDCardApplicationNR;
 				system.debug('---------------------------- TEST IDCardApplicationNR-> Id = '+IDCardApplicationNR.id+' -  photo = '+IDCardApplicationNR.photo__c);
 
-				IDCardUtil.renameIDCardPhotoOfContact(IDCardApplicationNR.ID, IDCardApplicationNR.UIR__c,Userinfo.getSessionId());   // rename photo to its old name
+				// Constantin - 12.12.2016 - removed, no longer needed; the new cropping tool keeps the existing filename (UIR.jpg)
+				//IDCardUtil.renameIDCardPhotoOfContact(IDCardApplicationNR.ID, IDCardApplicationNR.UIR__c,Userinfo.getSessionId());   // rename photo to its old name
 
                 if(isLoggedUser!=true){
                     operationCompleted = true;

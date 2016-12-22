@@ -26,7 +26,7 @@
                 </div>
                 <div id="voucherInfo">
                     <div class="{!IF(MOD(rowNum, 3) == 0,'voucherYear1', IF(MOD(rowNum, 3) == 1,'voucherYear2', 'voucherYear3'))}">
-                        <apex:outputText value="{!voucher.Voucher_Information__r.Year__c + 1}"/>
+                        <apex:outputText value="{!VALUE(voucher.Voucher_Information__r.Year__c)+2} "/>
                     </div>
                     <div class="{!IF(MOD(rowNum, 3) == 0,'voucherName1', IF(MOD(rowNum, 3) == 1,'voucherName2', 'voucherName3'))}">
                         <apex:outputText value="{!voucher.Name}"/>

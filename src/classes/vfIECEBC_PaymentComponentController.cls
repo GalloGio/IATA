@@ -11,6 +11,7 @@
   * History: 
   *  - 20160920-sl: initial version, covering payment for Campaign, Account Manage, Renewal
   *  - 20160926-ab: initial integration with credit card functionality
+  *  - 20161130-ab: Is Location Valid to proceed Tax Cal and on Cancel to retrieve old info
   *
   */
 
@@ -218,6 +219,7 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
   
   public void clickEditButton()
   {
+    
     editMode = true;
   } // clickEditButton
   
@@ -226,10 +228,20 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
   public void LoadPaymentBillingContact(Id UserId){
      doupdatecontact=false;
   }
+    
+   private boolean IsLocationValid(){
+    boolean mustreturntopreviouspage=false;
+    if (String.isBlank(oBillingAddress.City__c)) mustreturntopreviouspage=true;
+    if (String.isBlank(oBillingAddress.Street__c)) mustreturntopreviouspage=true;
+    if (String.isBlank(oBillingAddress.ISO_Country__c)) mustreturntopreviouspage=true;
+    if (String.isBlank(oBillingAddress.ISO_State__c) && bStateAvailable) mustreturntopreviouspage=true;  
+    return !mustreturntopreviouspage; 
+    }  
   // ========================================================================
   // save billing detail: contact and address
   public void clickSaveBillingDetailButton()
   {
+    
     if(doupdatecontact) update oPaymentBillingContact;
     //Update SoldToContact
     //update oPaymentSoldToContact;
@@ -242,9 +254,7 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
     
     editMode = false;
     showTaxButtons=true;
-    if (oBillingAddress.ISO_Country__c!=null) {
-        if (lstStateProvince.Size()>1  && oBillingAddress.ISO_State__c!=null) CalculateTaxNow();
-        }
+    if (IsLocationValid()) CalculateTaxNow();
   } // clickUpdateBillingContactButton
     
   public void clickCancelBillingDetailButton()
@@ -252,6 +262,8 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
     
     // this is to reset the source, and make it reread
     rereadBillingAccount();  
+    getAddressDetail();
+    if (!IsLocationValid()) return;
     oPaymentBillingContact = null;
         
     editMode = false;
@@ -1235,7 +1247,8 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
         oSubsRequest.SubscribeOptions = new Zuora.zApi.SubscribeOptions();
         //if (i == listCartItems.size() - 1) {
         oSubsRequest.SubscribeOptions.GenerateInvoice = true;
-        oSubsRequest.SubscribeOptions.ProcessPayments = (PaymentMethodType == IECConstants.PaymentType.CREDIT_CARD); // can only set ProcessPayments=true for electronic payments (credit card)
+        oSubsRequest.SubscribeOptions.ProcessPayments = false;
+        if (!IsPreview) oSubsRequest.SubscribeOptions.ProcessPayments = (PaymentMethodType == IECConstants.PaymentType.CREDIT_CARD); // can only set ProcessPayments=true for electronic payments (credit card)
         
         oSubsRequest.SubscribeOptions.SubscribeInvoiceProcessingOptions = new Zuora.zApi.SubscribeInvoiceProcessingOptions();
         //oSubsRequest.SubscribeOptions.SubscribeInvoiceProcessingOptions.InvoiceProcessingScope = 'Account';
@@ -1358,7 +1371,7 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
         if (loggedCustomer.AccountExistsInZuora) {
           oSubsRequest.ZAccount = new Zuora.zObject('Account');
           oSubsRequest.ZAccount.setValue('Id', (String)loggedCustomer.RelatedZuoraAccount.getValue('Id'));
-          oSubsRequest.ZAccount.setValue('DefaultPaymentMethodId', selectedCreditCardPaymentId);
+          if (!IsPreview) oSubsRequest.ZAccount.setValue('DefaultPaymentMethodId', selectedCreditCardPaymentId);
           if(PaymentMethodType == IECConstants.PaymentType.BANK_TRANSFER)  oSubsRequest.ZAccount.setValue('DefaultPaymentMethodId', IECConstants.PaymentMethod_BankTransfer_ZuoraID);
           if(PaymentMethodType == IECConstants.PaymentType.ICH)  oSubsRequest.ZAccount.setValue('DefaultPaymentMethodId', IECConstants.PaymentMethod_ICH_ZuoraID);
           // if the default payment method has changed, update the Default Payment Method, AutoPay flag and Invoice Template Id 
@@ -1392,7 +1405,7 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
              ErrorMessage='paymentMethodZId was not provided';
         }
         if (isPreview){ 
-        	Zuora.zApi.PreviewOptions previewOpt = new Zuora.zApi.PreviewOptions();
+          Zuora.zApi.PreviewOptions previewOpt = new Zuora.zApi.PreviewOptions();
             previewOpt.EnablePreviewMode = true;
             previewOpt.NumberOfPeriods = 1;
             oSubsRequest.PreviewOptions=previewOpt;
@@ -1500,8 +1513,14 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
     //Tax calculation from SAP
     //And Error Message
     public PageReference CalculateTaxNow(){
+        
         ErrorMessage='';
-        boolean result=EBCSubscribe(true);
+        boolean result=false;
+        if (!IsLocationValid()){
+            ErrorMessage='Some of the Billing information is missing to calculate Taxes.';
+        }
+        else
+         result=EBCSubscribe(true);
         
         //TaxAmount=getSAP_Freight_Tax();
         showTaxButtons=false;

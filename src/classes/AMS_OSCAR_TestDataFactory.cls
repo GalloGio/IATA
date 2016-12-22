@@ -145,5 +145,67 @@ public with sharing class AMS_OSCAR_TestDataFactory
 		
 		insert	agencyInspectionList;
 
-	}    
+	}
+
+	public static void createCargoAgencyOSCARtestData()
+	{
+
+		IATA_ISO_Country__c ctry1 = new IATA_ISO_Country__c (Name='FR',ISO_Code__c='FR');
+		IATA_ISO_Country__c ctry2 = new IATA_ISO_Country__c (Name='AR',ISO_Code__c='AR');
+		insert new List<IATA_ISO_Country__c>{ctry1, ctry2};
+
+        AMS_Country_Specific_Attribute__c csa = new AMS_Country_Specific_Attribute__c(RecordTypeId = AMS_Utils.getId('AMS_Country_Specific_Attribute__c', 'DGR_Minimum_Requirements'), Location_Class__c='R', Minimum_DGR_BR__c=1, Minimum_DGR_HO__c=1, IATA_ISO_Country__c=ctry2.Id);
+        insert csa;
+
+        IATA_ISO_State__c stt = new IATA_ISO_State__c(Name= 'Test', ISO_Code__c = 'FR20', IATA_ISO_Country__c = ctry1.Id);
+        insert stt;
+		
+		Id accountRT = AMS_Utils.getId('Account', 'Standard_Account');
+		
+		Account cargoHO = new Account(IATA_ISO_Country__c = ctry1.id, RecordTypeId = accountRT, IATACode__c='12345670001',
+									Name='Test Cargo HO',Short_Name__c='Test Cargo', Sector__c = 'Cargo Agent', 
+									Location_Class__c = 'C', Location_type__c = 'HO', Reason_for_creation__c = 'none',
+									Is_your_firm_handling_Dangerous_Goods__c='Yes');
+
+		insert cargoHO;
+
+		Account cargoBR = new Account(IATA_ISO_Country__c = ctry1.id, RecordTypeId = accountRT, IATACode__c='12345670001',
+									Name='Test Cargo BR',Short_Name__c='Test Cargo', Sector__c = 'Cargo Agent', 
+									Location_Class__c = 'C', Location_type__c = 'BR', Reason_for_creation__c = 'none', ParentId = cargoHO.Id);
+        insert cargoBR;
+
+		AMS_OSCAR__c OSCAR = new AMS_OSCAR__c(Account__c = cargoHO.id, RecordTypeId = AMS_Utils.RECTYPE_NEW, Process__c =AMS_Utils.new_HO);
+		insert OSCAR;
+		
+		Contact co1 = new Contact(AccountId = cargoHO.id, Firstname = 'teste1', Lastname='test1', Phone = '911111111', MobilePhone = '911111111', Email = 'test@test.com', BSP_CASS_Payment_contact__c = true);
+		insert co1;
+		Case oscarCase = new Case(Oscar__c = oscar.Id, RecordTypeId = AMS_Utils.getId('Case', 'OSCAR_Communication'));
+        oscarCase.AccountId = cargoHO.Id;
+        oscarCase.ContactId = co1.Id;
+        insert oscarCase;
+
+         // Create the Staging area for the Account
+        AMS_Pax_Accreditation_Form__c stagingArea = new  AMS_Pax_Accreditation_Form__c(Account_Name__c = cargoHO.Name,
+                IATAcode__c = cargoHO.IATAcode__c,
+                Branch_Office_Country__c = cargoHO.IATA_ISO_Country__c,
+                Location_Class__c = cargoHO.Location_Class__c,
+                Location_Type__c = cargoHO.Location_Type__c,
+                SAAM_Case__c = oscarCase.Id,
+                Is_your_firm_handling_Dangerous_Goods__c = 'Yes',
+                CASS_Number__c = '000');
+
+        insert stagingArea;
+
+        OSCAR.AMS_Online_Accreditation__c = stagingArea.Id;
+        update oscar;
+
+        Id trainedStaff = AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Trained_Staff');
+
+		AMS_Accreditation_Contact__c acontact1 = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = stagingArea.Id, First_name__c='Bugs', Last_name__c='Bunny', Valid_until__c = Date.today().addYears(2), Type_Of_Certificate__c = AMS_Utils.CERT_DGR, RecordTypeId=trainedStaff);
+
+		AMS_Accreditation_Contact__c acontact2 = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = stagingArea.Id, First_name__c='Greg', Last_name__c='Plitt', Valid_until__c = Date.today().addYears(2), Type_Of_Certificate__c = AMS_Utils.CERT_DGA, RecordTypeId=trainedStaff);
+
+		insert new List<AMS_Accreditation_Contact__c>{acontact1,acontact2};
+
+	}
 }

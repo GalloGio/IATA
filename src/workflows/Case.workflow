@@ -3501,11 +3501,11 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>shalbakf@iata.org</recipient>
+            <recipient>parkyr@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>zhangxl@iata.org</recipient>
+            <recipient>shalbakf@iata.org</recipient>
             <type>user</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
@@ -4729,26 +4729,6 @@
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
-        <fullName>DPC_Auto_Close_DPC_Status</fullName>
-        <description>If the case stays in status &quot;4.0 Case Solved&quot; for 48hour, the case will be closed automatically.</description>
-        <field>Escalated_Status_ACCA__c</field>
-        <literalValue>12.0 Closed Automatically</literalValue>
-        <name>DPC : Auto Close - DPC Status</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>DPC_Auto_Close_Status</fullName>
-        <description>If the case stays in status &quot;4.0 Case Solved&quot; for 48hour, the case will be closed automatically.</description>
-        <field>Status</field>
-        <literalValue>12.0 Closed automatically</literalValue>
-        <name>DPC : Auto Close - Status</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
         <fullName>DPC_Date_Time_Completed</fullName>
         <description>this is the time when the case is completed by DPC (it is automaticaly populated on the case status COMPLETED)</description>
         <field>DPC_Date_Time_Completed__c</field>
@@ -5092,16 +5072,6 @@
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
-        <fullName>ICCS_Create_Status_to_Complete</fullName>
-        <description>ICCS: Create Status to Complete</description>
-        <field>Status</field>
-        <literalValue>Completed</literalValue>
-        <name>ICCS: Create Status to Complete</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
         <fullName>ICCS_Set_Eligibility_Checkbox</fullName>
         <description>Set the &quot;Eligibility_Documents Checklist approved&quot; checkbox</description>
         <field>Eligibility_Documents_Checklist_approved__c</field>
@@ -5151,16 +5121,6 @@ IF(IsClosed, &quot;Closed&quot;, &quot;Open&quot;)</formula>
         <name>ICCS Unique Case - Open</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>ICCS_Update_Status_to_Complete</fullName>
-        <description>ICCS: Update Status to Complete</description>
-        <field>Status</field>
-        <literalValue>Completed</literalValue>
-        <name>ICCS: Update Status to Complete</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
@@ -11307,20 +11267,6 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
-        <fullName>DPC%3A Auto Close</fullName>
-        <actions>
-            <name>DPC_Auto_Close_DPC_Status</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>DPC_Auto_Close_Status</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <formula>AND(RecordType.DeveloperName =&quot;DPC_Service_Request&quot;,   ISPICKVAL(Status, &quot;4.0 Case Solved&quot;), NOT(ISBLANK(Case_Solved_Date__c)), Case_Solved_Date__c &lt;= now()- 1)</formula>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
         <fullName>DPC%3A Date %2F Time Completed</fullName>
         <actions>
             <name>DPC_Date_Time_Completed</name>
@@ -12420,126 +12366,6 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <active>true</active>
         <description>Notify the Case Contact on ICCS CitiDirect AFRD cases that the steps 1 and 2 of the process are completed and the RefNB is filled in.</description>
         <formula>AND (   RecordType.DeveloperName = &apos;FDS_ICCS_CitiDirect&apos;,    ISPICKVAL( CaseArea__c , &apos;ICCS - Assign AFRD CitiDirect Rights&apos;),    INCLUDES( Acceptance_checklist__c , &apos;1. AFRD - Entitlement requested&apos;),    INCLUDES( Acceptance_checklist__c , &apos;2. AFRD - Delivery Option set up&apos;),    External_Reference_Number__c &lt;&gt; &apos;&apos; , Do_Not_Send_Notification__c = false )</formula>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>ICCS_Create Status to Complete</fullName>
-        <actions>
-            <name>ICCS_Create_Status_to_Complete</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <booleanFilter>1 AND 2 AND (3 OR 4 OR 5) AND 6 AND 7</booleanFilter>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>FDS ASP Management</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.CaseArea__c</field>
-            <operation>equals</operation>
-            <value>FDS - Create Authorized Signatories Package</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Reason1__c</field>
-            <operation>equals</operation>
-            <value>Addition</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Reason1__c</field>
-            <operation>equals</operation>
-            <value>Airline joining</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Reason1__c</field>
-            <operation>equals</operation>
-            <value>Update Package</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Documentation_received__c</field>
-            <operation>includes</operation>
-            <value>ASP - Request Letter,ASP - ID Copies (2) &amp; Signatures,ASP - List of Contacts (ICCS - AP),ASP - Banking Resolution</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Acceptance_checklist__c</field>
-            <operation>includes</operation>
-            <value>ASP - Request Letter,ASP - ID Copies (2) &amp; Signatures checked,ASP - Signatures Validated,ASP - Banking Resolution applied</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>ICCS_Update Status to Complete</fullName>
-        <actions>
-            <name>ICCS_Update_Status_to_Complete</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <booleanFilter>1 AND 2 AND 3 AND ( (4 AND 5 AND 6) OR ((7 OR 8) AND 9 AND 10) OR (11 AND 12 AND 13))</booleanFilter>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>FDS ASP Management</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.CaseArea__c</field>
-            <operation>equals</operation>
-            <value>FDS - Update Authorized Signatories Package</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Reason1__c</field>
-            <operation>equals</operation>
-            <value>Change Request</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Type_of_Change__c</field>
-            <operation>equals</operation>
-            <value>ASP - Signatory Replacement for Exec. Officer specifically</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Acceptance_checklist__c</field>
-            <operation>includes</operation>
-            <value>ASP - Banking Resolution applied</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Documentation_received__c</field>
-            <operation>includes</operation>
-            <value>ASP - Banking Resolution</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Type_of_Change__c</field>
-            <operation>equals</operation>
-            <value>ASP - Signatory Addition</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Type_of_Change__c</field>
-            <operation>equals</operation>
-            <value>ASP - Signatory Replacement</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Documentation_received__c</field>
-            <operation>includes</operation>
-            <value>ASP - ID Copies (2) &amp; Signatures,ASP - Request Letter</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Acceptance_checklist__c</field>
-            <operation>includes</operation>
-            <value>ASP - ID Copies (2) &amp; Signatures checked,ASP - Request Letter</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Type_of_Change__c</field>
-            <operation>equals</operation>
-            <value>ASP - Signatory Deletion</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Documentation_received__c</field>
-            <operation>includes</operation>
-            <value>ASP - Request Letter</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Acceptance_checklist__c</field>
-            <operation>includes</operation>
-            <value>ASP - Request Letter</value>
-        </criteriaItems>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -14856,7 +14682,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <criteriaItems>
             <field>Case.Reason1__c</field>
             <operation>notEqual</operation>
-            <value>CHC – Change of Shareholding,CHG – Data Maintenance,CHL - Change of Location,CHN - Change of Name,CHO / CHS – Change of Ownership / Legal Status,CLO - Closure,Direct Debit Setup/Update,IRIS Bank Detail Update,New BR / IP,New BR Abroad</value>
+            <value>CHC – Change of Shareholding,CHG – Data Maintenance,CHL - Change of Location,CHN - Change of Name,CHO / CHS – Change of Ownership / Legal Status,CLO - Closure,Direct Debit Setup/Update,IRIS Bank Detail Update,New BR / IP,New BR Abroad,Certificate DGR</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Reason1__c</field>
