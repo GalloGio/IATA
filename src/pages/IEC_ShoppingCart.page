@@ -199,7 +199,7 @@
 							                	</tr>
 							                	<apex:variable value="0" var="setup" rendered="{!AND(item.setupFee != null, item.setupFee > 0)}"> 
 												<tr class="promotion">
-													<td class="product-name" colspan="3"><i>Setup fee</i></td>
+													<td class="product-name" colspan="3"><i>Flat fee</i></td>
 													<td class="quantity"></td>
 													<td class="price item-price"></td>
 													<td class="price total-price">

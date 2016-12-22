@@ -412,6 +412,8 @@ public without sharing class ISSP_AMS_Accreditation {
                     sectorValue = newForm.Operation_Type__c;
                     amsLocationType = newCase.Reason1__c + ' - ' + newForm.Agent_Type__c;
                 }
+                
+                SYSTEM.DEBUG('sectorValue init: ' + sectorValue);
 
                 if (sectorValue != null) {
                     sector = sectorValue.replace('_', ' ');
@@ -1278,6 +1280,21 @@ public without sharing class ISSP_AMS_Accreditation {
             
             if (String.isBlank(String.ValueOf(newForm.SAAM_Case__c))) {
                 newForm.SAAM_Case__c = newCase.Id;
+            }
+            
+            if(sector.equalsIgnoreCase('Travel Agent'))
+            	newForm.Operation_Type__c = 'Travel_Agent';
+            else
+                newForm.Operation_Type__c = 'Cargo_Agent';
+            
+            if (newCase.IFAP_Country_ISO__c == 'CN' && sector.equalsIgnoreCase('Travel Agent')) {
+                    if (con.Account.Category__c == 'Domestic Agent') {
+                        newForm.Operation_Type__c = 'Travel_Agent - Domestic';
+                        newForm.Local_Agent_Type__c = 'Domestic';
+                    } else {
+                        newForm.Operation_Type__c = 'Travel_Agent - International';
+                        newForm.Local_Agent_Type__c = 'International';
+                    }
             }
             
             upsert newForm;
@@ -6544,6 +6561,7 @@ public without sharing class ISSP_AMS_Accreditation {
                 child.ParentId = newCase.Id;
                 child.Status = 'Open';
                 child.Origin = 'Portal';
+                child.Product_Category_ID__c = '-'; //Set Product Id so picked up by case assign to AM Regional queue
 
                 //FM 31-10-2016 - Set IATA Country to 'All Countries' so auto-response doesn't get sent for child cases
                 auxId = child.ContactId;

@@ -251,22 +251,17 @@ public class AMS_OscarCaseTriggerHelper {
     public static void checkIrregularityThreshold() {
         List<Case> triggerNew = (List<Case>)Trigger.new;
 
-		system.debug(logginglevel.error, 'DTULLO 254 --> ' + triggerNew.size());
-        Id sidraRecTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('SIDRA');
-        Id sidraLiteRecTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('SIDRA_Lite');
+        Id sidraRecTypeId = Schema.Case.sObjectType.getDescribe().getRecordTypeInfosByName().get('SIDRA').getRecordTypeId();
 
-		system.debug(logginglevel.error, 'DTULLO 258 --> ' + sidraRecTypeId + ' - ' + sidraLiteRecTypeId);
         List<Case> newSidraCases = new List<Case>();
         Map<Id, Account> accounts = new Map<Id, Account>();
         for(Case c : triggerNew){
-        	system.debug(logginglevel.error, 'DTULLO 262 --> ' + c.RecordTypeId);
-            if(c.RecordTypeId == sidraRecTypeId || c.RecordTypeId == sidraLiteRecTypeId){
+            if(c.RecordTypeId == sidraRecTypeId){
                 newSidraCases.add(c);
                 accounts.put(c.AccountId, null);
             }
         }
 
-		system.debug(logginglevel.error, 'DTULLO 267 --> ' + newSidraCases.isEmpty());
         if(newSidraCases.isEmpty()) return;
 
         Set<Id> isoCountries = new Set<Id>();
@@ -283,7 +278,7 @@ public class AMS_OscarCaseTriggerHelper {
                                                                 , Threshold__c
                                                                 , Location_Class__c
                                                             FROM AMS_Country_Specific_Attributes__r
-                                                            WHERE RecordType.DeveloperName = 'Irregularity_Threshold'
+                                                            WHERE RecordType.Name = 'Irregularity Threshold'
                                                             AND Threshold__c != null
                                                             AND Location_Class__c != null)
                                                     FROM IATA_ISO_Country__c
@@ -293,15 +288,11 @@ public class AMS_OscarCaseTriggerHelper {
                 thresholds.put(''+country.Id+att.Location_Class__c, att.Threshold__c);
             }
         }
-        system.debug(logginglevel.error, 'DTULLO 294 --> ' + thresholds.size() + ' - ' + thresholds);
-        //System.debug(loggingLevel.Debug, '____ [trg AMS_OscarCaseTriggerHelper - checkIrregularityThresold] thresholds - ' + thresholds);
+        System.debug(loggingLevel.Debug, '____ [trg AMS_OscarCaseTriggerHelper - checkIrregularityThresold] thresholds - ' + thresholds);
 
         for(Case c : newSidraCases){
             Account a = accounts.get(c.AccountId);
-            if(a != null){
-            	 c.Acc_IRR_leading_to_DEF__c = thresholds.get(''+a.IATA_ISO_Country__c+a.Location_Class__c);
-            	 system.debug(logginglevel.error, 'DTULLO 301 --> ' +  thresholds.get(''+a.IATA_ISO_Country__c+a.Location_Class__c));
-            }
+            if(a != null) c.Acc_IRR_leading_to_DEF__c = thresholds.get(''+a.IATA_ISO_Country__c+a.Location_Class__c);
         }
     }
     

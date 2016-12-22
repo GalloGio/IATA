@@ -692,7 +692,7 @@
                                                 </tbody>
                                                 <thead>
                                                     <tr>
-                                                        <th class="slds-text-heading--label slds-size--1-of-5" scope="col">{!$ObjectType.AMS_Accreditation_Contact__c.Fields.Type_of_Certificate__c.Label}</th>
+                                                        <th class="slds-text-heading--label slds-size--1-of-5" scope="col">{!$ObjectType.AMS_Accreditation_Contact__c.Fields.Type_Of_Certificate__c.Label}</th>
                                                         <th class="slds-text-heading--label slds-size--1-of-5" scope="col">{!$ObjectType.AMS_Accreditation_Contact__c.Fields.Certificate_Issued_on__c.Label}</th>
                                                         <th class="slds-text-heading--label slds-size--1-of-5" scope="col">{!$ObjectType.AMS_Accreditation_Contact__c.Fields.Certificate_Validity__c.Label}</th>
                                                         <th class="slds-text-heading--label slds-size--1-of-5" scope="col">{!$ObjectType.AMS_Accreditation_Contact__c.Fields.Valid_until__c.Label}</th>
@@ -702,7 +702,7 @@
                                                 <tbody>
                                                         <tr>
                                                             <td class="slds-size--1-of-5" data-label="{ObjectType.AMS_Accreditation_Contact__c.Fields.Type_of_Certificate__c.Label}">
-                                                                <apex:inputField html-class="slds-input inputPointer" value="{!tsw.ac.Type_of_Certificate__c}"/>
+                                                                <apex:inputField html-class="slds-input inputPointer" value="{!tsw.ac.Type_Of_Certificate__c}"/>
                                                             </td>
 
                                                             <td class="slds-size--1-of-5" data-label="{ObjectType.AMS_Accreditation_Contact__c.Fields.Certificate_Issued_on__c.Label}">

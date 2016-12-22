@@ -35,17 +35,19 @@
                                     <label class="custom-radio" for="resubscribe-no"><i class="icon"></i></label>
                                 </div>
                                 <label class="input-label" for="resubscribe-no">
-                                    No, now that I understand why I received this email, I want to remain a subscriber
+                                    I changed my mind and would like to remain a subscriber.
+                                    <!-- UB-266 No, now that I understand why I received this email, I want to remain a subscriber -->
                                 </label>
                             </div>
                             <div class="toggle-container show-hide-toggle space">
-                                <div class="group-title">Phew! that was close. You scare us.</div>
+                                <div class="group-title">Phew! That was close.<!-- UB-266  You scare us. --></div>
                                 <div class="row">
                                     <div class="columns small-8">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Totam iste officia accusamus, ad similique non consectetur aut beatae, voluptatem quo mollitia repudiandae illum nostrum neque error nulla quaerat quas eius?</p>
+                                        <p>Staying subscribed to eBroadcast can help you and your business stay connected to the industry. <BR/>IATA takes every effort to vet all messages sent and ensure relevant content.
+                                            <!-- UB-266 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Totam iste officia accusamus, ad similique non consectetur aut beatae, voluptatem quo mollitia repudiandae illum nostrum neque error nulla quaerat quas eius? --></p>
                                     </div>
                                     <div class="columns small-4">
-                                        <a class="text-link view-details" href="#"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i> View details</a>
+                                        <a class="text-link view-details" href="http://www.iata.org/about/pages/priorities.aspx" target="_new"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i> View details</a>
                                     </div>
                                 </div>
                             </div>
@@ -57,7 +59,7 @@
                                     <label class="custom-radio" for="resubscribe-yes"><i class="icon"></i></label>
                                 </div>
                                 <label class="input-label" for="resubscribe-yes">
-                                    Yes, please change my preferences. We aren’t made for each other.
+                                    Yes, please change my email preferences.<!-- UB-266 Yes, please change my preferences. We aren’t made for each other. -->
                                 </label>
                             </div>
                             <div class="toggle-container show-hide-toggle">
@@ -76,20 +78,20 @@
                                                 <input class="user-input radio" type="radio" name="stop-receiving" id="stop-receiving-2" value="all" onchange="document.getElementById('{!$Component.sender}').value = this.value;" />
                                                 <label class="custom-radio" for="stop-receiving-2"><i class="icon"></i></label>
                                             </div>
-                                            <label class="input-label" for="stop-receiving-2">Unsubscribe from all emails</label>
+                                            <label class="input-label" for="stop-receiving-2">Unsubscribe from all <!-- UB-266 Unsubscribe from all emails--></label>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="group-container feedback small-8">
-                                    <div class="group-title">Help us improve our feedback</div>
+                                    <div class="group-title">Help us improve our service and tell us why<!-- UB-266 Help us improve our feedback--></div>
                                     <div class="field-group checkbox-light">
-                                        <apex:repeat var="r" value="{!reasons}">
+                                        <apex:repeat value="{!reasonslist}" var="s" id="idrepeat">
                                             <div class="checkbox-box">
                                                 <div class="custom-user-input checkbox">
-                                                    <apex:inputCheckbox value="{!reasons[r]}" id="checkbox" label="test" styleClass="user-input checkbox" />
+                                                    <apex:inputCheckbox value="{!reasons[s]}" id="checkbox" label="{!s}" styleClass="user-input checkbox" />
                                                     <label class="custom-checkbox" for="{!$Component.checkbox}"><i class="icon"></i></label>
                                                 </div>
-                                                <label class="input-label" for="{!$Component.checkbox}">{!r}</label>
+                                                <label class="input-label" for="{!$Component.checkbox}">{!s}</label>
                                             </div>
                                         </apex:repeat>
                                     </div>
