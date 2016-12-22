@@ -407,7 +407,7 @@
         <externalId>false</externalId>
         <formula>IF( ISNULL(Account__r.Last_Integration_Date__c), 
     true, 
-    IF( CreatedDate &gt; Account__r.Last_Integration_Date__c,
+    IF( Created_Date_To_Show__c &gt; Account__r.Last_Integration_Date__c,
         true,
         false
     )

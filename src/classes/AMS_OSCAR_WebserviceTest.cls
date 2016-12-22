@@ -59,15 +59,15 @@ System.debug('******* oscar: ' + oscar);
 System.debug('******* 2 oscar: ' + oscar);        
         AMS_OSCAR__c oscar1 = [SELECT Id, Status__c, Billing_Document_Number__c FROM AMS_OSCAR__c where id = :oscar.Id limit 1];
         
-        List<String> fieldApiName = new List<String>{'Status__c', 'Billing_Document_Number__c'};
-        List<String> fieldValue = new List<String>{'Open', '12345'};
+        List<String> fieldApiName = new List<String>{'Status__c', 'Billing_Document_Number__c', 'Invoice_number__c', 'Bank_Guarantee_amount__c', 'Send_agreement__c'};
+        List<String> fieldValue = new List<String>{'Open', '12345', '', '50,2', 'true'};
         
         
         String result = AMS_OSCAR_Webservice.updateFormFields(fieldApiName, fieldValue, oscar1.Id);
         System.debug('****************** result: '+result);
         
         
-        oscar = [SELECT Id, Status__c, Billing_Document_Number__c FROM AMS_OSCAR__c WHERE Id = :oscar1.Id limit 1];
+        oscar = [SELECT Id, Status__c, Billing_Document_Number__c, Account__c FROM AMS_OSCAR__c WHERE Id = :oscar1.Id limit 1];
         Test.startTest();
         
          System.assertEquals(oscar.Billing_Document_Number__c, '12345');
@@ -88,6 +88,9 @@ System.debug('******* 2 oscar: ' + oscar);
         String resultcreateAMLCase4 = AMS_OSCAR_Webservice.createAMLCase(oscar4.Id);
         String resultcopyDataToAccount = AMS_OSCAR_Webservice.copyDataToAccount(oscar.Id);
         String resultcreateChangeCodeNEW = AMS_OSCAR_Webservice.createChangeCodeNEW(oscar.Id);
+        String resultcreateSIDRALite = AMS_OSCAR_Webservice.createSIDRALite(oscar.Id);
+        String resultcreateCommissionerCase = AMS_OSCAR_Webservice.createCommissionerCase(oscar.Id);
+        String resultgenerateCertificates = AMS_OSCAR_Webservice.generateCertificates(oscar.Id, oscar.Account__c);
 
         Test.stopTest();
     }

@@ -16,6 +16,7 @@ public without sharing class vfISSP_FAQ2Case
     public list<SelectOption> lst_selectsubTopics {get;set;}
     public String topic { get; set; }
     public String subtopic { get; set; }
+    public String concernedCountry { get; set; }
     public String selectedCountry { get; set; }
     public clsDataCategoryContainer DataCategoryContainer {get;set;}
     public list<ArticleViewLine> articleViewLines { get; set; }
@@ -64,7 +65,7 @@ public without sharing class vfISSP_FAQ2Case
     public String CreateButtonURL {get;set;}  
 
     //Sector field of the Account
-    public string Sector ;
+    public string Sector {get; set;}
     public String labelSubTopic = '';
     public  boolean isComplain1 = false;
     public  boolean isCompliment1 = false;
@@ -173,7 +174,84 @@ public without sharing class vfISSP_FAQ2Case
         }
         set; 
     }
-     
+
+    public String encTopicLbl{
+        get{
+            for (SelectOption option :lst_selectTopics){
+                if (option.getValue() == topic){
+                    return EncodingUtil.urlEncode(option.getLabel(), 'UTF-8');
+                }
+            }
+            return null;
+        }
+    }
+
+    public String encSubtopicLbl{
+        get{
+            for (SelectOption option :lst_selectsubTopics){
+                if (option.getValue() == subtopic){
+                    return EncodingUtil.urlEncode(option.getLabel(), 'UTF-8');
+                }
+            }
+            return null;
+        }
+    }
+
+    public String encIsoCountry{
+        get{
+            for (SelectOption option : countryList){
+                if (option.getValue() == newCase.IFAP_Country_ISO__c){
+                    return EncodingUtil.urlEncode(option.getLabel(), 'UTF-8');
+                }
+            }
+            return null;
+        }
+    }
+    public String region{
+        get{
+            for (IATA_ISO_Country__c country : countries){
+                if (country.ISO_Code__c == newCase.IFAP_Country_ISO__c){
+                    return country.Region__c;
+                }
+            }
+           return null;
+        }
+    }
+    public Set<String>topicsToShowButton {
+        get{
+            if (topicsToShowButton == null){
+                List<ISSP_FAQ2CaseLiveAgentTopics__c> topics = [SELECT name, value__c FROM ISSP_FAQ2CaseLiveAgentTopics__c];
+                topicsToShowButton = new Set<String>();
+                for (ISSP_FAQ2CaseLiveAgentTopics__c topic :topics){
+                    topicsToShowButton.add(topic.value__c);
+                }
+            }
+            return topicsToShowButton;
+        }
+        set;
+    }
+    public Boolean showButton {
+        get{
+            if(topicsToShowButton.contains(subtopic)){
+                return true;
+            }
+            return false;
+        }
+        set;
+    }
+    private List<IATA_ISO_Country__c> countries{
+        get{
+            if (countries == null){
+                countries = [SELECT Id, Name, ISO_Code__c, Region__c
+                            FROM IATA_ISO_Country__c
+                            WHERE Case_BSP_Country__c != null AND Case_BSP_Country__c != ''
+                            LIMIT 10000 ];
+            }
+            return countries;
+        }
+        set;
+    }
+
     private void resetCase() {
         this.newCase = new Case();
         this.newCase1 = new Case();

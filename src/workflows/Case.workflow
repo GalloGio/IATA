@@ -1279,6 +1279,10 @@
             <type>user</type>
         </recipients>
         <recipients>
+            <recipient>lopezbaism@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>martinyuks@iata.org</recipient>
             <type>user</type>
         </recipients>
@@ -2535,6 +2539,10 @@
         <protected>false</protected>
         <recipients>
             <recipient>batagliaf@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>lopezbaism@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -4784,16 +4792,6 @@
         <name>DPC - Update case reason</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Literal</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>DPCtoAlexei</fullName>
-        <field>Product_Manager_ACR__c</field>
-        <lookupValue>kalasha@iata.org</lookupValue>
-        <lookupValueType>User</lookupValueType>
-        <name>DPCtoAlexei</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>LookupValue</operation>
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
@@ -7700,12 +7698,6 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         </criteriaItems>
         <description>the query is reopened and assigned to: Cases - Complaints AME</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>AMS - Remove OSCAR from related case</fullName>
-        <active>false</active>
-        <formula>AND( RecordType.DeveloperName = &apos;OSCAR_Communication&apos;, Parent.RecordType.DeveloperName = &apos;OSCAR_Communication&apos; )</formula>
-        <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
         <fullName>ASPMissingAlertOnNewJoiningCase</fullName>
@@ -11177,21 +11169,6 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
-        <fullName>DPC to Product Manager-Alexei</fullName>
-        <actions>
-            <name>DPCtoAlexei</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Case.DPC_Software__c</field>
-            <operation>equals</operation>
-            <value>BSPlink,BOMS,ASD,SNAP</value>
-        </criteriaItems>
-        <description>Designate the Product Manager ACR based on the DPC System - ASD or BSPlink to Alexei Kalashnikov</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
         <fullName>DPC to Product Manager-ByrneJ</fullName>
         <actions>
             <name>DPCtoByrneJ</name>
@@ -13496,7 +13473,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         </actions>
         <active>true</active>
         <description>SIDRA</description>
-        <formula>AND( NOT(SIDRA_workflow_flag__c), 	 OR( 		RecordType.Name = &quot;SIDRA&quot;, 		RecordType.Name = &quot;SIDRA_Lite&quot; 		), 	 OR( 		AND( Account.Accumulated_Irregularities__c &gt;= Acc_IRR_leading_to_DEF__c),   		AND(REI_Previous_12_Months_CASS_only__c , ispickval( Region__c ,&quot;europe&quot;)) 	 ) )</formula>
+        <formula>AND( NOT(SIDRA_workflow_flag__c), RecordType.Name = &quot;SIDRA&quot;, OR(AND(ISPICKVAL(Total_Irregularities__c,&quot;4&quot;), Acc_IRR_leading_to_DEF__c = 4),  AND(ISPICKVAL(Total_Irregularities__c,&quot;6&quot;), Acc_IRR_leading_to_DEF__c = 6),  AND(ISPICKVAL(Total_Irregularities__c,&quot;8&quot;), Acc_IRR_leading_to_DEF__c = 8),  AND(ISPICKVAL(Total_Irregularities__c,&quot;10&quot;), Acc_IRR_leading_to_DEF__c = 10),  AND( REI_Previous_12_Months_CASS_only__c , ispickval( Region__c ,&quot;europe&quot;))))</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>

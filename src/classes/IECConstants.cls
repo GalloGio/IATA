@@ -386,7 +386,7 @@ global class IECConstants {
   public static String parsePaymentMethodTypeToTypeWithSpaces(String sPaymentType) {
     if (sPaymentType == 'CreditCard') return PaymentThresholdType_CreditCard;
     else if (sPaymentType == 'BankTransfer') return PaymentThresholdType_BankTransfer;
-    else if (sPaymentType == 'ACH') return PaymentThresholdType_ICH;
+    else if (sPaymentType == 'ACH' || sPaymentType == 'Other') return PaymentThresholdType_ICH;
     else return null;
   }
   

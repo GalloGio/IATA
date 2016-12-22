@@ -229,8 +229,48 @@
                                                 <div class="col-md-8"><apex:outputField value="{!vfOrder.Sales_Order_Remark__c}" /></div>
                                             </div>
                                             <div class="row">
+                                                <div class="col-md-4"><apex:outputLabel value="{!$ObjectType.Order.Fields.SubTotal_Amount__c.Label}" /></div>
+                                                <div class="col-md-2 text-right">
+                                                    <apex:outputText styleClass="price" value="{0, number, currency}">
+                                                        <apex:param value="{!vfOrder.SubTotal_Amount__c}" />
+                                                    </apex:outputText>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-4"><apex:outputLabel value="{!$ObjectType.Order.Fields.Discount_Amount__c.Label}" /></div>
+                                                <div class="col-md-2 text-right">
+                                                    <apex:outputText styleClass="price" value="{0, number, currency}">
+                                                        <apex:param value="{!vfOrder.Discount_Amount__c}" />
+                                                    </apex:outputText>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-4"><apex:outputLabel value="{!$ObjectType.Order.Fields.Total_handling_charges__c.Label}" /></div>
+                                                <div class="col-md-2 text-right">
+                                                    <apex:outputText styleClass="price" value="{0, number, currency}">
+                                                        <apex:param value="{!vfOrder.Total_handling_charges__c}" />
+                                                    </apex:outputText>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-4"><apex:outputLabel value="{!$ObjectType.Order.Fields.Total_Freight_Charge__c.Label}" /></div>
+                                                <div class="col-md-2 text-right">
+                                                    <apex:outputText styleClass="price" value="{0, number, currency}">
+                                                        <apex:param value="{!vfOrder.Total_Freight_Charge__c}" />
+                                                    </apex:outputText>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-4"><apex:outputLabel value="{!$ObjectType.Order.Fields.Taxes__c.Label}" /></div>
+                                                <div class="col-md-2 text-right">
+                                                    <apex:outputText styleClass="price" value="{0, number, currency}">
+                                                        <apex:param value="{!vfOrder.Taxes__c}" />
+                                                    </apex:outputText>
+                                                </div>
+                                            </div>
+                                            <div class="row">
                                                 <div class="col-md-4"><apex:outputLabel value="{!$ObjectType.Order.Fields.Total_Amount__c.Label}" /></div>
-                                                <div class="col-md-8">
+                                                <div class="col-md-2 text-right">
                                                     <apex:outputText styleClass="price" value="{0, number, currency}">
                                                         <apex:param value="{!vfOrder.Total_Amount__c}" />
                                                     </apex:outputText>
@@ -742,7 +782,7 @@
                                                 
                                                 <div class="row">
                                                     <div class="col-md-5"><apex:outputLabel value="{! labels['lblPhone']}" /></div>
-                                                    <div class="col-md-7"><apex:inputField value="{!billToLocation.Phone__c}" /></div>
+                                                    <div class="col-md-7"><div class="requiredBlock"></div><apex:inputField value="{!billToLocation.Phone__c}" /></div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-5"><apex:outputLabel value="{! labels['lblEmail']}" /></div>
@@ -906,26 +946,26 @@
                                                 <apex:outputPanel layout="block" styleClass="row">
                                                     <div class="col-md-5"><apex:outputLabel value="{! labels['lblCompany']}" /></div>
                                                     <!-- <div class="col-md-7"><apex:outputField value="{!shipToLocation.Account_Name__c}" styleClass="MaxColumnWidth" /></div> -->
-                                                    <div class="col-md-7"><apex:inputField value="{!vfOrder.ShipToAccount_Name__c}" styleClass="MaxColumnWidth" /></div>
+                                                    <div class="col-md-7"><div class="requiredBlock"></div><apex:inputField value="{!vfOrder.ShipToAccount_Name__c}" styleClass="MaxColumnWidth" /></div>
                                                 </apex:outputPanel>
                                                 <!-- <apex:outputPanel layout="block" styleClass="row" rendered="{! vfOrder.ShipTo_same_BillTo__c != true}"> -->
                                                 <apex:outputPanel layout="block" styleClass="row">
                                                     <div class="col-md-5"><apex:outputLabel value="{! labels['lblAttention']}" /></div>
                                                     <!-- <div class="col-md-7"><apex:outputField value="{!shipToLocation.Contact_First_Name__c}" styleClass="MaxColumnWidth" />&nbsp;<apex:outputField value="{!shipToLocation.Contact_Last_Name__c}" styleClass="MaxColumnWidth" /></div> -->
-                                                    <div class="col-md-7"><apex:inputField value="{!vfOrder.ShipToContact_Name__c}" styleClass="MaxColumnWidth" /></div>
+                                                    <div class="col-md-7"><div class="requiredBlock"></div><apex:inputField value="{!vfOrder.ShipToContact_Name__c}" styleClass="MaxColumnWidth" /></div>
                                                 </apex:outputPanel>
 
                                                 <!-- <apex:outputPanel layout="block" styleClass="row" rendered="{! vfOrder.ShipTo_same_BillTo__c != true}"> -->
                                                 <apex:outputPanel layout="block" styleClass="row">
                                                     <div class="col-md-5"><apex:outputLabel value="{! labels['lblPhone']}" /></div>
                                                     <!-- <div class="col-md-7"><apex:outputField value="{!shipToLocation.Phone__c}" styleClass="MaxColumnWidth" /></div> -->
-                                                    <div class="col-md-7"><apex:inputField value="{!vfOrder.ShipToContact_Phone__c}" styleClass="MaxColumnWidth" /></div>
+                                                    <div class="col-md-7"><div class="requiredBlock"></div><apex:inputField value="{!vfOrder.ShipToContact_Phone__c}" styleClass="MaxColumnWidth" /></div>
                                                 </apex:outputPanel>
                                                 <!-- <apex:outputPanel layout="block" styleClass="row" rendered="{! vfOrder.ShipTo_same_BillTo__c != true}"> -->
                                                 <apex:outputPanel layout="block" styleClass="row">
                                                     <div class="col-md-5"><apex:outputLabel value="{! labels['lblEmail']}" /></div>
                                                     <!-- <div class="col-md-7"><apex:outputField value="{!shipToLocation.Email__c}" styleClass="MaxColumnWidth" /></div> -->
-                                                    <div class="col-md-7"><apex:inputField value="{!vfOrder.ShipToContact_Email__c}" styleClass="MaxColumnWidth" /></div>
+                                                    <div class="col-md-7"><div class="requiredBlock"></div><apex:inputField value="{!vfOrder.ShipToContact_Email__c}" styleClass="MaxColumnWidth" /></div>
                                                 </apex:outputPanel>
 
                                                 <apex:outputPanel layout="block" styleClass="row" rendered="{! vfOrder.ShipTo_same_BillTo__c != true}">
@@ -976,7 +1016,7 @@
                                                     </apex:outputPanel>
                                                     <apex:outputPanel layout="block" styleClass="row">
                                                         <div class="col-md-5"><apex:outputLabel value="{! labels['lblAttention']}" /></div>
-                                                        <div class="col-md-7"><apex:inputField value="{!vfOrder.ShipToContact_Name__c}" styleClass="MaxColumnWidth" /></div>
+                                                        <div class="col-md-7"><div class="requiredBlock"></div><apex:inputField value="{!vfOrder.ShipToContact_Name__c}" styleClass="MaxColumnWidth" /></div>
                                                     </apex:outputPanel>
 
                                                     <apex:actionFunction name="completeShipAddress" action="{!autoCompleteShipToAddresses}" rerender="shipTo" status="autoCompShipToLoading">
@@ -985,7 +1025,7 @@
                                                     
                                                     <apex:outputPanel layout="block" styleClass="row" rendered="{! vfOrder.ShipTo_same_BillTo__c != true}">
                                                         <div class="col-md-5"><apex:outputLabel value="{! labels['lblPhone']}" /></div>
-                                                        <div class="col-md-7"><apex:inputField value="{!vfOrder.ShipToContact_Phone__c}" styleClass="MaxColumnWidth" /></div>
+                                                        <div class="col-md-7"><div class="requiredBlock"></div><apex:inputField value="{!vfOrder.ShipToContact_Phone__c}" styleClass="MaxColumnWidth" /></div>
                                                     </apex:outputPanel>
                                                     <apex:outputPanel layout="block" styleClass="row" rendered="{! vfOrder.ShipTo_same_BillTo__c != true}">
                                                         <div class="col-md-5"><apex:outputLabel value="{! labels['lblEmail']}" /></div>
@@ -1429,7 +1469,7 @@
                                     </apex:column>
 
                                     <apex:column styleClass="align_center" headerClass="align_center">
-                                        <apex:facet name="header">{!$ObjectType.OrderItem.fields.Setup_Fee__c.Label}</apex:facet>
+                                        <apex:facet name="header">Flat Fee</apex:facet>
                                         <apex:outputText value="{0, number, currency}">
                                             <apex:param value="{!item.setupFee}"/>
                                         </apex:outputText>
