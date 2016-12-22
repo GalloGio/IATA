@@ -459,6 +459,31 @@
         <unique>false</unique>
     </fields>
     <fields>
+	    <fullName>Irregularity_Type_Description__c</fullName>
+	        <externalId>false</externalId>
+	        <formula>IF(ISBLANK( Irregularity_Type__c ), &quot;&quot;, 
+	  CASE( Irregularity_Type__c , 
+	    &quot;1PT&quot;,&quot;CARGO NON COMPLIANCE&quot;,
+	    &quot;2PT&quot;,&quot;NON-COMPLIANCE TO CRITERIA&quot;,
+	    &quot;FC1&quot;,&quot;NON SUBMIS. DOCS-FIN. RVW&quot;,
+	    &quot;FC2&quot;,&quot;NON SUBMIS. DOCS-FIN. RVW&quot;,
+	    &quot;NPA&quot;,&quot;NON-PAYMENT OF ANNUAL FEE&quot;,
+	    &quot;OV1&quot;,&quot;OVERDUE REMITTANCE&quot;,
+	    &quot;OV2&quot;,&quot;OVERDUE REMITTANCE&quot;,
+	    &quot;SC1&quot;,&quot;INCOMPLETE DOCS-FIN. RVW&quot;,
+	    &quot;SC2&quot;,&quot;INCOMPLETE DOCS-FIN. RVW&quot;,
+	    &quot;WD1&quot;,&quot;WITHDRAWN&quot;,
+	    &quot;WD2&quot;,&quot;WITHDRAWN&quot;,
+	  &quot;&quot;)
+	)</formula>
+	        <label>Irregularity Type Description</label>
+	        <required>false</required>
+	        <trackHistory>false</trackHistory>
+	        <trackTrending>false</trackTrending>
+	        <type>Text</type>
+	        <unique>false</unique>
+	</fields>
+	<fields>
         <fullName>Irregularity_Type__c</fullName>
         <externalId>false</externalId>
         <label>Irregularity Type</label>
