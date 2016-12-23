@@ -1989,37 +1989,7 @@ public static String fetchTypeOfCustomer (String locationType , String category)
          );
     }
 
-	/** 
-        Process Parent Objects fields (up to 5 Parents?)
-    */
-    public static String processParentDependecies(String field , sObject sObj)
-    {
-
-            if(field.contains('.'))
-            {
-                //Get the Object directly related to the field
-                wrapperData wDObj = new wrapperData(sObj,field);
-                
-                return
-                    String.valueOf(
-                        (
-                            wDObj.sObj == null || wDObj.sObj.get(wDObj.fieldName) == null ) ? '' :wDObj.sObj.get(wDObj.fieldName)
-                        )
-                    ;
-            }
-
-            else
-                return
-                    String.valueOf(
-                        (
-                            sObj.get(field) == null) ? '' : sObj.get(field)
-                        )
-                    ;
-    }
-
-    
-
-
+	
     public static boolean isProcessUsingAppointments(AMS_OSCAR__c oscar){
         Set<String> oscarProcessesWithAppointments = new Set <String>{new_GSA,new_GSA_BSP,new_AHA,new_AHA_BSP,new_GSSA,new_MSO};
         Set<String> oscarCNSProcessesWithAppointments = new Set <String>{new_HO,new_BR,new_BR_ABROAD};
