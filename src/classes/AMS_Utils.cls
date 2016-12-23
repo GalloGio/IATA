@@ -2017,36 +2017,7 @@ public static String fetchTypeOfCustomer (String locationType , String category)
                     ;
     }
 
-    /** 
-     Wrapper Object for Mapping the Entity for Field 
-     Example : change_code__r.Account__r.name 
-
-    */
-    private class wrapperData {
-        
-        private sObject sObj{get;set;}
-        private String fieldName{get;set;}
-    /** 
-         Get Object for the Field  (up to 5 Parents?)
-    */
-        private wrapperData(SObject sObjParent, String field){
-
-            List <String> strList = field.split('\\.');
-            integer lastPos = strList.size() -1;
-        
-            sObject sObj = sObjParent;
-
-            for(integer i = 0 ; i < lastPos ; i++) //avoid last element
-            {               
-                sObj = sObj.getSObject(strList.get(i));
-            }
-
-            this.sObj   = sObj;
-            this.fieldName = strList.get(lastPos); 
-
-        }
-
-    }
+    
 
 
     public static boolean isProcessUsingAppointments(AMS_OSCAR__c oscar){
