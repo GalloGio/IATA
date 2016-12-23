@@ -318,12 +318,24 @@ public class AMS_ChangeCodesHelper {
 
         if( aacNEW.Change_Code__c == 'FIN'){
                 
-                oscarAgency.Is_AIMS_Account__c = true;
+            oscarAgency.Is_AIMS_Account__c = true;
 
-                oscarAgency.Accreditation_Date__c = Date.Today();            
+            oscarAgency.Accreditation_Date__c = Date.Today();            
 
-                toReturn = oscarAgency;
-            }
+            toReturn = oscarAgency;
+        }
+
+        if( aacNEW.Change_Code__c == 'CLO' ){
+            
+            oscarAgency.Expiry_Date__c = Date.Today();            
+            toReturn = oscarAgency;
+        }
+
+        if( aacNEW.Change_Code__c == 'REI' ){
+            
+            oscarAgency.Expiry_Date__c = null;            
+            toReturn = oscarAgency;
+        }
         
         return new ChangeCodeStruct(aacNEW, toReturn,changeCodeFielsHistory);
     }
