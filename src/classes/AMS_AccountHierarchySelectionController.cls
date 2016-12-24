@@ -54,6 +54,7 @@ public class AMS_AccountHierarchySelectionController {
 				accountFields = new Set<String>{
 					'Name'
 					, 'Location_Type__c'
+					, 'Is_Branch_Abroad__c'
 					, 'IATACode__c'
 					, 'Status__c'
 					, 'BillingCity'
@@ -80,7 +81,8 @@ public class AMS_AccountHierarchySelectionController {
 				if(tocList.contains(AMS_Utils.OWNERSHIP_IATA)) notes.add('Change of ownership to IATA will move all the agencies selected under the target agency');
 				if(tocList.contains(AMS_Utils.OWNERSHIP_NON_IATA)) notes.add('Change of ownership to non IATA will transform the main agency into the new HO. All the other agencies will keep their location type and will be put under the new HO');
 				if(tocList.contains(AMS_Utils.MAJ_SHAREHOLDING) || tocList.contains(AMS_Utils.MIN_SHAREHOLDING)) notes.add('Change of shareholding must be applied to all the hierarchy');
-				if(tocList.contains(AMS_Utils.VFMR)) notes.add('Change of remittance frequency must be applied to all the hierarchy');
+				if(tocList.contains(AMS_Utils.VFMR)) notes.add('Change of remittance frequency must be applied to all the hierarchy (except for branches abroad)');
+				if(tocList.contains(AMS_Utils.REMOVALTRADENAME)) notes.add('The removal of trade name can be used only for CNS Agencies.');
 			}
 			return notes;
 		}
@@ -132,6 +134,10 @@ public class AMS_AccountHierarchySelectionController {
 				errorMessages.put(
 					'Partial VR selection',
 					'For Voluntary Relinquishment, the analyst cannot select a parent account without its children'
+				);
+				errorMessages.put(
+					AMS_Utils.REMOVALTRADENAME,
+					'The removal of trade name can be used only for CNS Agencies.'
 				);
 			}
 			return errorMessages;
@@ -288,7 +294,7 @@ public class AMS_AccountHierarchySelectionController {
 					if(r.Child_Account__r.Status__c != AMS_Utils.ACC_S0_TERMINATED) childAccounts.get(r.Parent_Account__c).add(r.Child_Account__c);
 				}
 
-				for(Account a : Database.query('SELECT Id, '+String.join(accountFieldList, ',')+' FROM Account WHERE Id IN :accountIds AND Status__c != \''+AMS_Utils.ACC_S0_TERMINATED+'\'')){
+				for(Account a : Database.query('SELECT Id, '+String.join(accountFieldList, ',')+', CNS_Agency__c FROM Account WHERE Id IN :accountIds AND Status__c != \''+AMS_Utils.ACC_S0_TERMINATED+'\'')){
 					Boolean main = (a.Id == oscar.Account__c);
 					hierarchy.put(a.Id, new HierarchyItem(a, main, processDetails.containsKey(a.Id), childAccounts.get(a.Id)));
 				}
@@ -365,7 +371,8 @@ public class AMS_AccountHierarchySelectionController {
 				errorChecks.put(AMS_Utils.MIN_SHAREHOLDING, true);
 			}
 
-			if(tocList.contains(AMS_Utils.VFMR) && !hi.selected && !hi.main){
+			
+			if(tocList.contains(AMS_Utils.VFMR) && !hi.selected && !hi.main && hi.acc.Is_Branch_Abroad__c!='Yes'){
 				errorChecks.put(AMS_Utils.VFMR, true);
 			}
 
@@ -375,6 +382,11 @@ public class AMS_AccountHierarchySelectionController {
 			}
 
 			if(isVoluntaryRelinquishment && isPartialHierarchy(hi)) errorChecks.put('Partial VR selection', true);
+			
+			if(tocList.contains(AMS_Utils.REMOVALTRADENAME)){
+				if(hi.acc.CNS_Agency__c!=true)
+					errorChecks.put(AMS_Utils.REMOVALTRADENAME, true);				
+			}
 			
 		}
 

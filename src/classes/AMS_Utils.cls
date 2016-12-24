@@ -93,6 +93,7 @@ public without sharing class AMS_Utils {
     public static final String NAME = 'Name';
     public static final String LEGAL_STATUS = 'Legal status';
     public static final String VFMR = 'VMFR';
+    public static final String REMOVALTRADENAME = 'CNS - Removal of trade name';
 
 
     public static final String OSCAR_CLOSED = 'Closed (Closed)';
@@ -130,6 +131,7 @@ public without sharing class AMS_Utils {
     public static final String CERT_DGR         = 'DGR';
     public static final String CERT_DGA         = 'DGA';
     public static final String CERT_CATA        = 'CATA';
+    public static final String CERT_TSA         = 'TSA';
 
     //Record Types
     public static final String RECTYPE_NEW      = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('NEW').getRecordTypeId();
@@ -138,9 +140,6 @@ public without sharing class AMS_Utils {
     public static final String RECTYPE_OSCARCOMM= Schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
 
     public static final Set<String> oscarAMSProcesses = new Set <String>{new_HO,new_BR,new_BR_ABROAD,new_TIDS,new_MSO,new_GSA,new_GSA_BSP,new_GSSA,new_AHA,new_AHA_BSP,new_SA, COR};
-
-
-    public static final Set<String> oscarProcessesWithAppointments = new Set <String>{new_GSA,new_GSA_BSP,new_AHA,new_AHA_BSP,new_GSSA,new_MSO};
 
     public static final String ACC_S0_TERMINATED = 'Terminated';
     public static final String ACC_S1_NOTACCREDITED = 'Not accreditated';
@@ -1988,5 +1987,13 @@ public static String fetchTypeOfCustomer (String locationType , String category)
                    shortenedCaseId
               }
          );
+    }
+
+	
+    public static boolean isProcessUsingAppointments(AMS_OSCAR__c oscar){
+        Set<String> oscarProcessesWithAppointments = new Set <String>{new_GSA,new_GSA_BSP,new_AHA,new_AHA_BSP,new_GSSA,new_MSO};
+        Set<String> oscarCNSProcessesWithAppointments = new Set <String>{new_HO,new_BR,new_BR_ABROAD};
+
+        return oscarProcessesWithAppointments.contains(oscar.Process__c) || (oscarCNSProcessesWithAppointments.contains(oscar.Process__c) && oscar.CNS_Process__c);
     }
 }

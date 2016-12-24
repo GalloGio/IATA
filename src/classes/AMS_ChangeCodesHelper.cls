@@ -314,6 +314,20 @@ public class AMS_ChangeCodesHelper {
             if( oscar.RecordTypeId == AMS_Utils.RECTYPE_CHANGE && !oscar.First_Step_Completed__c && String.isNotEmpty(aacNEW.Bulletin_Information__c)){
                 for(String status : AMS_Utils.AACC_FINALS) if(aacNEW.Bulletin_Information__c.endsWith(status)) oscar.addError('Approval/Disapproval can only be made after the initial change code was created');
             }
+                
+
+            if(aacNEW.Change_Code__c == 'FIN' && new Set<String>{'C','P'}.contains(oscar.Location_Class__c)){
+                oscarAgency.Annual_Renewal_Certificates__c = true;
+                toReturn = oscarAgency;
+            }
+                   
+
+        }
+
+      if(aacNew.Change_Code__c == 'CER'){
+            oscarAgency.Annual_Renewal_Certificates__c = true;
+            oscarAgency.Certificate_Generated_Current_Year__c = true;
+            toReturn = oscarAgency;
         }        
 
         if( aacNEW.Change_Code__c == 'FIN'){
@@ -468,7 +482,7 @@ public class AMS_ChangeCodesHelper {
             }else if(step == AMS_Utils.WITHDRAWAL && oscar.Process__c == AMS_UTils.VOLRELINQUISH){
 
                 changeCode.name = 'VRW';
-                changeCode.memoText = 'Voluntary Relinquishment Request withdrawn by Agent.';
+                changeCode.memoText = 'Agent Terminated due to Voluntary Relinquishment';
                 changeCode.status = AMS_Utils.getIATANumericStatus(acc.Status__c);
 
                 // lastChangeCode can be null so,

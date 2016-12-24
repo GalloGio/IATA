@@ -6,20 +6,18 @@ public class AMS_AccountTriggerHandler {
                 'email__c',
                 'website',
                 'mobile__c',
-                'shippingaddress',
                 'manager_first_name__c',
                 'manager_last_name__c',
                 'tradename__c',
-                'shippingstreet',
-                'shippingcity',
-                'shippingcountry',
-                'shippingstate',
-                'shippingpostalcode',
-                'VAT_number__c',
-                'VAT_number_2__c'
+                'solicitation_flag__c',
+                'location_category__c'
+                
             };
+    public static Set<String> minorchangesRestrictedForCNS = new Set<String>{'tradename__c'};
 
     public static boolean processMinorChangesValidationFlag = true;
+    public static boolean minorChangesComingFromOSCAR = false;
+    public static boolean comingFromOSCARforRemoveTradeName = false;
 
     public static Integer runningVCU = 0;
 
@@ -30,12 +28,21 @@ public class AMS_AccountTriggerHandler {
         disallowedSources.add('AIMS3');
         disallowedSources.add('WebStar');
         disallowedSources.add('DataLoader');
-        for(Account ag : accs){
-	if(!disallowedSources.contains(ag.Source_System__c))
-       	{
-		if(ag.Sector__c == AMS_Utils.SECTOR_PASSENGER || ag.Sector__c == AMS_Utils.SECTOR_CARGO){
 
-			setCassNumberOnHO(ag);
+        Set<Id> countries = new Set<Id>();
+        for(Account ag : accs)
+            countries.add(ag.IATA_ISO_Country__c);
+
+        Map<Id, boolean> countryToIsCNS = new Map<Id, boolean>();
+        for(IATA_ISO_Country__c iic : [SELECT Id, CNS_Country__c FROM IATA_ISO_Country__c WHERE Id IN :countries]){
+            countryToIsCNS.put(iic.Id, iic.CNS_Country__c);
+        }
+
+
+        for(Account ag : accs){
+            if(!disallowedSources.contains(ag.Source_System__c)){
+                if(ag.Sector__c == AMS_Utils.SECTOR_PASSENGER || ag.Sector__c == AMS_Utils.SECTOR_CARGO){
+                    setCassNumberOnHO(ag, (ag.IATA_ISO_Country__c ==null ? null :  countryToIsCNS.get(ag.IATA_ISO_Country__c)));
 
                     if(ag.Cass_Number__c!=null && ag.Cass_number__c.isNumeric()){
                         ag.Cass_Number__c = AMS_AgencyHelper.resizeNumericString(ag.Cass_Number__c,3);
@@ -148,14 +155,14 @@ public class AMS_AccountTriggerHandler {
         for(Account acct : accs)
             if(acct.IATA_ISO_Country__c!=null)
                 countries.add(acct.IATA_ISO_Country__c);
+
         if(countries.size()>0)
             for(IATA_ISO_Country__c iic : [SELECT Name, OSCAR_enabled__c FROM IATA_ISO_Country__c WHERE ID IN :countries])
                 countryIdToMinorChangeEnabled.put(iic.Id, iic.OSCAR_enabled__c);
         //LF: end change
-        
-        
+ 
+        Map<String, Schema.SobjectField> accountDescription =Account.getSObjectType().getDescribe().fields.getMap();
         for(Account acct : accs){
-            
             //LF: enable minor changes only if the ISO Country has the flag OSCAR_enabled__c enabled
             if(countryIdToMinorChangeEnabled.get(acct.IATA_ISO_Country__c)!=true)
                 continue;
@@ -170,7 +177,14 @@ public class AMS_AccountTriggerHandler {
 
                 if(minorChangesAccountFields.contains(fieldToSearch.toLowerCase())){
 
+
+
                         if(acct.get(fieldName) <> oldMap.get(acct.Id).get(fieldName)){
+                            if(acct.CNS_Agency__c == true && !minorChangesComingFromOSCAR && minorchangesRestrictedForCNS.contains(fieldName)){
+                                acct.addError('Change of '+accountDescription.get(fieldName).getDescribe().getLabel()+' is not allowed for CNS agencies directly on account level: a new  OSCAR is required to modify this information.');
+                                
+                                continue;
+                            }
 
                             System.debug('Account being changed for the field ' + fieldName + ' so lets create AACC.');
 
@@ -178,7 +192,7 @@ public class AMS_AccountTriggerHandler {
                             String accountNewValue = String.valueOf(acct.get(fieldName));
                             String accountOldValue = String.valueOf(oldMap.get(acct.Id).get(fieldName));
 
-                            AMS_RecordCreatorWebservice.AccountChanges acctChange = new AMS_RecordCreatorWebservice.AccountChanges(accountFieldName,accountOldValue,accountNewValue);
+                            AMS_RecordCreatorWebservice.AccountChanges acctChange = new AMS_RecordCreatorWebservice.AccountChanges(accountFieldName,accountNewValue,accountOldValue);
 
                             accountChanges.add(acctChange);
                         }
@@ -216,7 +230,6 @@ public class AMS_AccountTriggerHandler {
 
 
     private static void createMinorChangesChangeCode(List<AccountChangesStruct> accountChanges){
-
         // get the Account and creates a change code (Agency_Applied_Change_code__c)
         // Notify the Agent via email using predefined email template
         Boolean processedTN = false;
@@ -233,10 +246,10 @@ public class AMS_AccountTriggerHandler {
             AMS_OSCAR_JSON.ChangeCode changeCode = null;
 
             Account account = actChange.acct;
-
+            system.debug(LoggingLevel.ERROR, 'LF: createMinorChangesChangeCode() check change! Is CNS ? '+actChange.isCNS());
             List<Agency_Applied_Change_code__c> accountActiveChangeCode = [SELECT Reason_Code__c, Reason_Description__c FROM Agency_Applied_Change_code__c WHERE Account__c =: account.Id AND Active__c = TRUE];
 
-            if(AMS_RecordCreatorWebservice.containsTradeName(actChange.changes)){
+            if(!comingFromOSCARforRemoveTradeName && AMS_RecordCreatorWebservice.containsTradeName(actChange.changes) ){
 
                 changeCodeTN = AMS_RecordCreatorWebservice.generateChangeCodeTN(null, account.Status__c == 'Approved' );
 
@@ -250,10 +263,12 @@ public class AMS_AccountTriggerHandler {
                 oscarsToProcess.add(null);
 
                 processedTN = true;
-            }
 
 
-            if(actChange.changes.size() > 1 ||  ( actChange.changes.size() == 1 && !processedTN)){
+            }else 
+
+
+            if(!comingFromOSCARforRemoveTradeName && (actChange.changes.size() > 1 ||  ( actChange.changes.size() == 1 && !processedTN))){
 
                 changeCode = AMS_RecordCreatorWebservice.generateChangeCode(null);
             
@@ -288,11 +303,19 @@ public class AMS_AccountTriggerHandler {
 
         }
 
+        public boolean isCNS(){
+            return acct.CNS_Agency__c == true;
+        }
+
     }
 
-    public static void setCassNumberOnHO(Account ag){
+    public static void setCassNumberOnHO(Account ag, boolean isCNS){
         if(ag.Sector__c == 'Cargo Agent'  && ag.Location_Type__c=='HO' && ag.CASS_Number__c==null){
-            ag.CASS_Number__c ='000';
+            // Salvatore don't hate me for this if==true, but it may be null!
+            if(isCNS == true)
+                ag.CASS_Number__c ='001';
+            else
+                ag.CASS_Number__c ='000';
         }
     }
 
