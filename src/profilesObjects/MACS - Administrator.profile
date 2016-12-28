@@ -5802,7 +5802,7 @@
 <fieldPermissions><editable>true</editable><field>Opportunity.Artwork_Provided__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Opportunity.Bill_To_Confirmation__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Opportunity.Billing_Date__c</field><readable>true</readable></fieldPermissions>
-<fieldPermissions><editable>false</editable><field>Opportunity.Block_alerts_on_updates__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>true</editable><field>Opportunity.Block_alerts_on_updates__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Opportunity.Booth_Number__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Opportunity.CampaignId</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Opportunity.Campaign__c</field><readable>true</readable></fieldPermissions>
