@@ -4947,6 +4947,8 @@ The product will only appear on the Online Store when the date entered in this f
         <columns>SAP_Material_Number__c</columns>
         <columns>Display_to_ECommerce__c</columns>
         <columns>Sell_through_eCommerce__c</columns>
+        <columns>Product_Section__c</columns>
+        <columns>IEC_Override_Profit_Center__c</columns>
         <columns>IEC_Cart_Option__c</columns>
         <columns>Mega_Menu__c</columns>
         <columns>Display_Ecom_Topic__c</columns>

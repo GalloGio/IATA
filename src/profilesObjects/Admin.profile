@@ -5801,7 +5801,7 @@
 <fieldPermissions><editable>true</editable><field>Opportunity.Artwork_Provided__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Opportunity.Bill_To_Confirmation__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Opportunity.Billing_Date__c</field><readable>true</readable></fieldPermissions>
-<fieldPermissions><editable>false</editable><field>Opportunity.Block_alerts_on_updates__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>true</editable><field>Opportunity.Block_alerts_on_updates__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Opportunity.Booth_Number__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Opportunity.CampaignId</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Opportunity.Campaign__c</field><readable>true</readable></fieldPermissions>
@@ -7627,7 +7627,7 @@
 <recordTypeVisibilities><default>false</default><recordType>Objective__c.Region</recordType><visible>false</visible></recordTypeVisibilities>
 <recordTypeVisibilities><default>false</default><recordType>Operational_Improvements__c.Operational_Improvements</recordType><visible>false</visible></recordTypeVisibilities>
 <recordTypeVisibilities><default>false</default><recordType>Opportunity.FieldSales</recordType><visible>true</visible></recordTypeVisibilities>
-<recordTypeVisibilities><default>true</default><recordType>Opportunity.GDP_Opportunities</recordType><visible>true</visible></recordTypeVisibilities>
+<recordTypeVisibilities><default>true</default><personAccountDefault>true</personAccountDefault><recordType>Opportunity.GDP_Opportunities</recordType><visible>true</visible></recordTypeVisibilities>
 <recordTypeVisibilities><default>false</default><recordType>Opportunity.RCRM_Opportunity</recordType><visible>true</visible></recordTypeVisibilities>
 <recordTypeVisibilities><default>false</default><recordType>Opportunity.SalesOrder</recordType><visible>true</visible></recordTypeVisibilities>
 <recordTypeVisibilities><default>false</default><recordType>Portal_Application_Right__c.Application_access_request</recordType><visible>false</visible></recordTypeVisibilities>

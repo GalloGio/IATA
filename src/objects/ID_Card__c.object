@@ -1343,6 +1343,11 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
             <field>Sent_to_AIMS_on__c</field>
             <operation>equals</operation>
         </filters>
+        <filters>
+            <field>Card_Status__c</field>
+            <operation>notEqual</operation>
+            <value>Cancelled</value>
+        </filters>
         <label>Must Sync</label>
         <language>en_US</language>
     </listViews>
