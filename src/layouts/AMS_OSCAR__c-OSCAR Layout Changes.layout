@@ -501,8 +501,10 @@
         <fields>CREATEDBY_USER</fields>
         <fields>Source__c</fields>
         <fields>Updated_AIMS__c</fields>
-        <fields>AIMS_Updated_by__c</fields>
+        <fields>Created_Date_To_Show__c</fields>
         <relatedList>Agency_Applied_Change_code__c.OSCAR__c</relatedList>
+        <sortField>Created_Date_To_Show__c</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <fields>TASK.SUBJECT</fields>
