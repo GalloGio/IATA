@@ -4470,7 +4470,13 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
         <columns>Date_Time_Closed__c</columns>
         <columns>CREATED_DATE</columns>
         <filterScope>Queue</filterScope>
+        <filters>
+            <field>Status__c</field>
+            <operation>notEqual</operation>
+            <value>Closed,Closed_ Not Accepted,Closed_Rejected,Closed_Withdrawn,Closed (Closed)</value>
+        </filters>
         <label>Agency Management - Europe</label>
+        <language>en_US</language>
         <queue>CasesACCEuropeOffOnshore</queue>
         <sharedTo>
             <allInternalUsers></allInternalUsers>
