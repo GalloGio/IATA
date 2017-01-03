@@ -58,7 +58,7 @@
 	      	<th valign="left" width="15%">{!$ObjectType.OrderItem.fields.Product_Name__c.Label}</th>
 	      	<th align="right" width="10%">{!$ObjectType.OrderItem.fields.UnitPrice.Label}</th>
 	      	<th align="right" width="5%">{!$ObjectType.OrderItem.fields.Quantity.Label}</th>
-	      	<th align="right" width="10%">{!$ObjectType.OrderItem.fields.Setup_Fee__c.Label}</th>
+	      	<th align="right" width="10%">Flat fee</th>
 	      	<th align="right" width="10%">{!$ObjectType.OrderItem.fields.SubTotal__c.Label}</th>
 	      	<th align="right" width="10%">Discount</th>
 	      	<th align="right" width="10%">Shipping</th>

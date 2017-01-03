@@ -280,12 +280,12 @@
                         </li>
                          <apex:outputPanel rendered="{!isCompliment}"><!-- compliment message -->
                            <apex:outputText escape="false" value="{!$Label.ISSP_CaseComplimentMessage}"  style="color:#3174AF;font-style: italic;"/><br /><br />
-                             
+
                          </apex:outputPanel>
-                       
-                        
+
+
                             <apex:outputpanel id="countryPnl">
-                                <li style=" display:{!IF(currentButtonsToShow == 'CancelAndSubmit','block','none')}">
+                                <!-- <li style=" display:{!IF(currentButtonsToShow == 'CancelAndSubmit','block','none')}"> --><!-- will show always as it is requested for chat -->
                                     <!-- Country -->
                                     <div class="row form-group">
                                         <label class="col-lg-5 control-label" for="exampleInputEmail1"> {!$ObjectType.Case.Fields.Country_concerned_by_the_query__c.Label}</label>
@@ -302,14 +302,14 @@
                                                     <apex:selectoptions value="{!countryList}" />
                                                 </apex:selectlist>
                                             </div>
-                                             
-                 
+
+
                                             <div class="hiddenerror" style="display: none;">
                                                 <p class="errormsg" style="line-height: 26px;">ERROR</p>
                                             </div>
                                         </div>
                                     </div>
-                                </li>
+                                <!-- </li> -->
                             </apex:outputpanel>
 
                             <apex:outputpanel id="AirlinesPnl" rendered="{!AND(isAgencyUser, currentButtonsToShow == 'CancelAndSubmit')}">
@@ -465,104 +465,109 @@
                                 </div>
                             </li>
 
-</ul>  
+</ul>
                     <!--------------------------------- BUTTONS  SECTION -------------------------------------------->
                     <apex:outputPanel id="OPpbButton">
-                            <apex:outputPanel layout="none" rendered="{!IF(currentButtonsToShow = 'OnlyCancel', true, false)}">
+                            <apex:outputPanel layout="none" rendered="{!OR(IF(currentButtonsToShow = 'OnlyCancel', true, false),AND(IF(currentButtonsToShow = 'CancelAndCreateACase', true, false),newCase.IFAP_Country_ISO__c = null))}">
                                 <div class="col-md-6">
                                     <apex:commandButton styleclass="btn btn_iata_cancel  btn-block" immediate="true" action="{!back}" value="{!$Label.ISSP_Cancel}" id="back" />
                                 </div>
                             </apex:outputPanel>
 
-                             
 
-                            <apex:outputPanel layout="none" rendered="{!IF(currentButtonsToShow = 'CancelAndCreateACase', true, false)}">
+
+                            <apex:outputPanel layout="none" rendered="{!AND(IF(currentButtonsToShow = 'CancelAndCreateACase', true, false),newCase.IFAP_Country_ISO__c != null)}">
                               <div class="row">
                                   <div class="col-md-6">
                                       <apex:commandbutton styleclass="btn_iata_success btn btn-block" action="{!create}" value="{!$Label.ISSP_F2CCreate}" rerender="FieldsRep,RightPanel,TopicsAndArticlesForm,countryPnl,AirlinesPnl,OPpbButton,op_subtopic_helptext,op_topic_helptext" />
-                                      
+
                                   </div>
                                   <div class="col-md-6">
                                        <apex:commandButton styleclass="btn btn_iata_cancel  btn-block " immediate="true" action="{!back}" value="{!$Label.ISSP_Cancel}"  />
                                   </div>
-                              </div>    
+                              </div>
                             </apex:outputPanel>
 
-                             
+
                             <apex:outputPanel layout="none" rendered="{!IF(currentButtonsToShow = 'CancelAndSubmit', true, false)}">
                               <div class="row">
                                 <div class="col-md-3">
-                                    <apex:commandbutton styleclass="btn btn-block btn_iata_success" action="{!save}" value="{!$Label.ISSP_Submit}"             rerender="RightPanel,TopicsAndArticlesForm,OPpbButton,err,loadStatusSpinner" status="loadStatusSpinner" /> 
+                                    <apex:commandbutton styleclass="btn btn-block btn_iata_success" action="{!save}" value="{!$Label.ISSP_Submit}"             rerender="RightPanel,TopicsAndArticlesForm,OPpbButton,err,loadStatusSpinner" status="loadStatusSpinner" />
                                 </div>
-                                <div class="col-md-6">    
-                                    <apex:commandbutton styleclass="btn btn-block btn_iata_success" action="{!saveAttach}" value="{!$Label.ISSP_SubmitAttach}" rerender="RightPanel,TopicsAndArticlesForm,OPpbButton,err,loadStatusSpinner" status="loadStatusSpinner" /> 
+                                <div class="col-md-6">
+                                    <apex:commandbutton styleclass="btn btn-block btn_iata_success" action="{!saveAttach}" value="{!$Label.ISSP_SubmitAttach}" rerender="RightPanel,TopicsAndArticlesForm,OPpbButton,err,loadStatusSpinner" status="loadStatusSpinner" />
                                 </div>
-                                <div class="col-md-3">    
+                                <div class="col-md-3">
                                     <apex:commandButton styleclass="btn  btn-block btn_iata_cancel"  action="{!back}" value="{!$Label.ISSP_Cancel}"  />
                                 </div>
                               </div>
                             </apex:outputPanel>
-                    </apex:outputPanel> 
-            
-                
-           
+
+                        <apex:outputPanel id="chatButtonsPnl">
+              							<div id="liveAgentIframes" class="row">
+              							    <apex:iframe id="iframeLiveAgentEng" src="/LiveAgentButtonFAQ2Case?selTopics={!topic}.{!subtopic}&topiclbl={!encTopicLbl}&subtopiclbl={!encSubtopiclbl}&concernedCountry={!encIsoCountry}&csButton=AirlineEnglish" width="100%" height="38px" scrolling="false" rendered="{!AND(newCase.IFAP_Country_ISO__c = 'GB', Sector='Airline',showButton)}"/>
+              						</div>
+                      </apex:outputPanel>
+
+                  </apex:outputPanel>
+
                   <!-- provisional zone for topic and subtopic help text - sprint 6 -->
                   <div class="row" >
                     <apex:outputPanel id="op_topic_helptext"   ><!-- rendered="{!ISSP_TopicHelptext != null}" -->
                      <div id="topic_help_text" class="col-md-12 help-text" style=" display:{!IF(currentButtonsToShow != 'CancelAndSubmit','block','none')}">
                          <i>{!$Label[ISSP_TopicHelptext.HelpText_Label_API__c]}</i>
-                     </div>    
+                     </div>
                     </apex:outputPanel>
                      <apex:outputPanel id="op_subtopic_helptext">
                      <div id="subtopic_help_text" class="col-md-12 help-text" style=" display:{!IF(currentButtonsToShow != 'CancelAndSubmit','block','none')}">
                          <i>{!$Label[ISSP_SubTopicHelptext.HelpText_Label_API__c]}</i>
                      </div>
                     </apex:outputPanel>
-                  </div><!-- end row --> 
+                  </div><!-- end row -->
                   <!-- provisional zone for topic and subtopic help text - sprint 6 -->
                     <!--------------------------------- ACTIONFUNCTION SECTION -------------------------------------------->
                             <apex:actionFunction name="CheckNewCaseRecordType" action="{!CheckNewCaseRecordType}" rerender="MainPnl,MainTitle" >
                                 <apex:param name="myRecordType" value=""/>
                             </apex:actionFunction>
-                     <apex:actionfunction name="ComplaintMethod" action="{!IwishtoComplain}" rerender="MainPnl,MainTitle,err" />   
-                     <apex:actionfunction name="GeneralQueueMethod" action="{!GeneralQueueMethod}" rerender="MainPnl,MainTitle,FieldsRep,RightPanel,TopicsAndArticlesForm,countryPnl,AirlinesPnl,OPpbButton,err" /> 
+                     <apex:actionfunction name="ComplaintMethod" action="{!IwishtoComplain}" rerender="MainPnl,MainTitle,err" />
+                     <apex:actionfunction name="GeneralQueueMethod" action="{!GeneralQueueMethod}" rerender="MainPnl,MainTitle,FieldsRep,RightPanel,TopicsAndArticlesForm,countryPnl,AirlinesPnl,OPpbButton,err" />
                 <!-- compliment ed-->
-                     <apex:actionfunction name="ComplimentGeneralQueueMethod" action="{!ComplimentGeneralQueueMethod}" rerender="MainPnl,MainTitle,FieldsRep,RightPanel,TopicsAndArticlesForm,countryPnl,AirlinesPnl,OPpbButton,err" /> 
-                 <!-- end compliment ed-->           
-                			<apex:actionFunction name="getSelectArtical" action="{!getSelectArtical}" 
-                                                 reRender="theSelectedAtricalAnswer, theSelectedAtricalTitle" 
-                                                 oncomplete="showArticle()"> 
+                     <apex:actionfunction name="ComplimentGeneralQueueMethod" action="{!ComplimentGeneralQueueMethod}" rerender="MainPnl,MainTitle,FieldsRep,RightPanel,TopicsAndArticlesForm,countryPnl,AirlinesPnl,OPpbButton,err" />
+                 <!-- end compliment ed-->
+                			<apex:actionFunction name="getSelectArtical" action="{!getSelectArtical}"
+                                                 reRender="theSelectedAtricalAnswer, theSelectedAtricalTitle"
+                                                 oncomplete="showArticle()">
                                 <apex:param name="artid" value=""/>
                             </apex:actionFunction>
-                            
-                            <apex:actionFunction name="refreshTopicPickList" action="{!refreshTopicPickList}" oncomplete="GenerateTopicHelpText();" reRender="countryPnl,AirlinesPnl,subtopPnl_Val,RightPanel,OPpbButton, modalWindowId" 
+
+                            <apex:actionFunction name="refreshTopicPickList" action="{!refreshTopicPickList}" oncomplete="GenerateTopicHelpText();" reRender="countryPnl,AirlinesPnl,subtopPnl_Val,RightPanel,OPpbButton, modalWindowId"
                                 status="actStatusId"/>
 
-                            <apex:actionFunction name="refreshSubTopicPickList" action="{!refreshSubTopicPickList}" oncomplete="GenerateSubTopicHelpText();" reRender="actStatusId,subtopPnl_Val,RightPanel,OPpbButton, modalWindowId" 
-                                immediate="{!CASE(currentButtonsToShow, 'OnlyCancel', 'false', 
+                            <apex:actionFunction name="refreshSubTopicPickList" action="{!refreshSubTopicPickList}" oncomplete="GenerateSubTopicHelpText();" reRender="chatButtonsPnl,countryPnl,actStatusId,subtopPnl_Val,RightPanel,OPpbButton, modalWindowId"
+                                immediate="{!CASE(currentButtonsToShow, 'OnlyCancel', 'false',
                                                                       'CancelAndCreateACase', 'false',
                                                                       'CancelAndSubmit','true', 'false')}" status="actStatusId" />
 
                      <apex:actionfunction name="refreshMainPbAndCreateCase" action="{!create1}" rerender="FieldsRep,countryPnl,AirlinesPnl,actStatusId,subtopPnl_Val,RightPanel,OPpbButton, modalWindowId" />
-                            
+
                             <!-- Calls the createSatisfiedRecord function that create an Satisfied Article Statistics record  -->
                             <apex:actionFunction name="createStatRecord" action="{!createSatisfiedRecord}" reRender="mainHolder,OPpbButton" immediate="true"/>
 
                              <apex:actionFunction name="GenerateFieldsBySettings" action="{!GenerateFieldsBySettings}" reRender="mainHolder,OPpbButton" immediate="true"/>
-                     <apex:actionfunction name="refreshAirlineList" action="{!refreshAirlineList}" rerender="FieldsRep,countryPnl,AirlinesPnl,OPpbButton" status="actStatusId2" />
-                     <apex:actionfunction name="refreshAirlineList1" action="{!copyCountryISO}" rerender="SLonchange,OPpbButton" />
+                     <apex:actionfunction name="refreshAirlineList" action="{!refreshAirlineList}" rerender="chatButtonsPnl,FieldsRep,countryPnl,AirlinesPnl,OPpbButton" status="actStatusId2" />
+                     <apex:actionfunction name="refreshAirlineList1" action="{!copyCountryISO}" rerender="chatButtonsPnl,SLonchange,OPpbButton" />
 
 
-                            <!-- ACtion Functions About HelpText  --> 
-                            <apex:actionFunction name="GenerateTopicHelpText" action="{!GenerateTopicHelpText}" oncomplete="GenerateSubTopicHelpText();" reRender="op_topic_helptext , op_subtopic_helptext" 
+                            <!-- ACtion Functions About HelpText  -->
+                            <apex:actionFunction name="GenerateTopicHelpText" action="{!GenerateTopicHelpText}" oncomplete="GenerateSubTopicHelpText();" reRender="op_topic_helptext , op_subtopic_helptext"
                                 status="actStatusId"/>
 
                             <apex:actionFunction name="GenerateSubTopicHelpText" action="{!GenerateSubTopicHelpText}" reRender="op_subtopic_helptext"
                                 status="actStatusId"/>
                             </apex:outputPanel>
-                        </apex:form> 
+                        </apex:form>
 
-                           
+
                      <!---------------------------------------------------------------------------->
                     </div>
                 </div>

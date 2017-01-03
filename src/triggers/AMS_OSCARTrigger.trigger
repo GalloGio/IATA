@@ -92,8 +92,14 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
             //USED ON: HO,BR,TIDS,GSA,AHA,GSSA,MSO,SA
             oscar.Dossier_Reception_Date__c = Date.today();
 
-            if(oscar.Process__c == AMS_Utils.new_TIDS)
+            if(oscar.Process__c == AMS_Utils.new_HO || oscar.Process__c == AMS_Utils.new_BR_ABROAD || oscar.Process__c == AMS_Utils.new_BR || oscar.Process__c == AMS_Utils.new_SA){
+            	oscar.Sanity_check_deadline__c = Date.today() + 30;
+            	oscar.OSCAR_Deadline__c = Date.today() + 30;
+            }
+            else if(oscar.Process__c == AMS_Utils.new_TIDS){
                 oscar.Sanity_check_deadline__c = Date.today()+3;
+                oscar.OSCAR_Deadline__c = Date.today() + 3;
+            }
             else if(oscar.Process__c == AMS_Utils.new_GSA_BSP || oscar.Process__c == AMS_Utils.new_AHA_BSP || oscar.Process__c == AMS_Utils.new_GSSA)
                 oscar.Sanity_check_deadline__c = Date.today();
 
@@ -198,20 +204,20 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
                 changeCode.status  = '9';
 
                 Account acct = new Account(Id = updatedOscar.Account__c);
-                AMS_Utils.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {updatedOscar}, new List<Account> {acct}, true);
+                AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {updatedOscar}, new List<Account> {acct}, true);
 
             } else if (oldOSCAR.STEP2__c != 'Failed' && updatedOscar.STEP2__c == 'Failed' && updatedOscar.RPM_Approval__c=='Authorize Disapproval') {
 
                 AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
 
                 changeCode.name = 'DIS';
-                changeCode.reasonCode = '00';
+                changeCode.reasonCode = '12';
                 changeCode.memoText = AMS_Utils.getChangeCodeMemoText(updatedOscar.Process__c,changeCode.name);
-                changeCode.reasonDesc  = 'NON COMPLIANCE TO CRITERIA';
-                changeCode.status  = '0';
+                changeCode.reasonDesc  = 'APPLICATION DISAPPROVED';
+                changeCode.status  = '1';
 
                 Account acct = new Account(Id = updatedOscar.Account__c);
-                AMS_Utils.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {updatedOscar}, new List<Account> {acct}, true);
+                AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {updatedOscar}, new List<Account> {acct}, true);
             }
         // Management of CORRECTION OSCARs
         }else if (updatedOscar.recordTypeID == corrRT){
@@ -269,7 +275,7 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
                         changeCode.status  = '9';
 
                         Account acct = new Account(Id = updatedOscar.Account__c);
-                        AMS_Utils.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {updatedOscar}, new List<Account> {acct}, true);
+                        AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {updatedOscar}, new List<Account> {acct}, true);
                     }
                     // If the picklist is set create a CAD change code.
                     if(updatedOscar.AMS_Correction_change_code__c == 'CAD') {
@@ -289,7 +295,20 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
                             changeCode.reasonDesc = accountActiveChangeCode[0].Reason_Description__c;
                         }
                         Account acct = new Account(Id = updatedOscar.Account__c);
-                        AMS_Utils.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {updatedOscar}, new List<Account> {acct}, true);
+                        AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {updatedOscar}, new List<Account> {acct}, true);
+                    }
+                    if(updatedOscar.AMS_Correction_change_code__c == 'LET') {
+                        system.debug(LoggingLevel.ERROR,'applyChangeCodesWithDependencies() -> generate the change code');
+                        AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
+
+                        changeCode.name = 'LET';
+                        changeCode.reasonCode = '91';
+                        changeCode.memoText = '';
+                        changeCode.reasonDesc  = 'ACCREDITED–MEETS–STANDARDS';
+                        changeCode.status  = '9';
+
+                        Account acct = new Account(Id = updatedOscar.Account__c);
+                        AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {updatedOscar}, new List<Account> {acct}, true);
                     }
 
                 } catch (Exception ex) {
@@ -353,7 +372,7 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
             'Confirm_DGR_DGA__c'                        => 'DGR_DGA_confirmed__c',
             'Issue_rejection_notification_pack__c'      => 'Rejection_notification_sent__c',
             'Roll_back_account_data__c'                 => 'Account_data_rolled_back__c',
-            'Issue_billing_document__c'                 => 'Process_Start_Date__c',
+            'Issue_billing_document__c'                 => 'Invoice_Requested__c',
             'Notify_Agent_Suspension__c'                => 'NOC_Requested__c',
             'NOC_Received__c'                           => 'NOC_Received_Date__c',
             'Suspend_in_BSPLINK_CASSLink__c'            => 'Suspended_in_BSPLINK_CASSLink__c',

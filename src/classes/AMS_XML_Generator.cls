@@ -15,6 +15,7 @@ public with sharing class AMS_XML_Generator {
     public Map<Id, String> mAg_VS_ChangeCode;
     public Map<Id, Agency_Applied_Change_code__c> mAg_VS_AgChangeCode;
     public Map<Id, Agency_Applied_Change_code__c> mAg_VS_AgChangeCodeFIN;
+    public Map<Id, Agency_Applied_Change_code__c> mAg_VS_AgChangeCodeDEF;
     public Map<Id, String> mAg_VS_AgArea;
     public Map<Id, String> mAg_VS_AgSiteType;
     public Map<Id, Id> mAg_VS_ParentAg;
@@ -73,6 +74,7 @@ public with sharing class AMS_XML_Generator {
     public List<AMS_Fields_Translation__c> lFieldsTranslation;
     public List<AMS_Agency_Segment__c> lAgSegment;
     public List<Agency_Applied_Change_code__c> lAgAppChangeCode;
+    public List<Agency_Applied_Change_code__c> lAgAppChangeCodeDEF;
     
 
     public List<String> orderedAgencyIds;
@@ -290,6 +292,7 @@ public with sharing class AMS_XML_Generator {
         mAg_VS_ChangeCode = new Map<Id, String>(); 
         mAg_VS_AgChangeCode = new Map<Id, Agency_Applied_Change_code__c>();
         mAg_VS_AgChangeCodeFIN = new Map<Id, Agency_Applied_Change_code__c>();
+        mAg_VS_AgChangeCodeDEF = new Map<Id, Agency_Applied_Change_code__c>();
         mAg_VS_AgArea = new Map<Id, String>();
         mAg_VS_AgSiteType = new Map<Id, String>();
         mAg_VS_ParentAg = new Map<Id, Id>();
@@ -381,7 +384,7 @@ public with sharing class AMS_XML_Generator {
         }
         
 
-        lAgencyChangeCode = [SELECT Account__c,Active__c,Change_Code__c, CreatedDate 
+        lAgencyChangeCode = [SELECT Account__c,Active__c,Change_Code__c, CreatedDate, Created_Date_To_Show__c 
                                 FROM Agency_Applied_Change_code__c 
                                 WHERE Change_Code__c != null 
                                 AND Active__c = true 
@@ -752,12 +755,10 @@ public with sharing class AMS_XML_Generator {
                              WHERE Id in :setContactKeys];
 
         //R3.1 - For inspections/appointments/Endorsments "Org1Adate" field (<original_approval_date>string</original_approval_date>)
-        lAgAppChangeCode = [SELECT Account__c,Change_Code__c,CreatedDate,Id FROM Agency_Applied_Change_code__c 
+        lAgAppChangeCode = [SELECT Account__c,Change_Code__c,CreatedDate,Id,Created_Date_To_Show__c FROM Agency_Applied_Change_code__c 
                                 where Change_Code__c = 'FIN'
                                 and Account__c in :setAgencyKeys
                                 order by Account__c,CreatedDate desc];
-
-        //System.debug('lAgAppChangeCode: ' + lAgAppChangeCode);
 
         for(Agency_Applied_Change_code__c agAppChangeCode : lAgAppChangeCode){
             if(!mAg_VS_AgChangeCodeFIN.containsKey(agAppChangeCode.Account__c)){
@@ -765,7 +766,18 @@ public with sharing class AMS_XML_Generator {
             }
         }
         //R3.1 - END                         
-          
+         
+        lAgAppChangeCodeDEF = [SELECT Account__c,Change_Code__c,CreatedDate,Id,Created_Date_To_Show__c FROM Agency_Applied_Change_code__c 
+                                where Change_Code__c = 'DEF'
+                                and Account__c in :setAgencyKeys
+                                order by Account__c,CreatedDate desc];
+
+        for(Agency_Applied_Change_code__c agAppChangeCode : lAgAppChangeCodeDEF){
+            if(!mAg_VS_AgChangeCodeDEF.containsKey(agAppChangeCode.Account__c)){
+                mAg_VS_AgChangeCodeDEF.put(agAppChangeCode.Account__c,agAppChangeCode);
+            }
+        }
+
         //MAIN
         lFieldsTranslation = [SELECT Address__c,Agency_Hierarchy__c,Account__c,AMSAirport__c,AMSEmployee__c,AMSOwner__c,
                                     AMSPerson__c,Contact__c,Field_name__c,IATA_ISO_Country__c,
@@ -1303,6 +1315,7 @@ public with sharing class AMS_XML_Generator {
                     //    }
                     //}
                  
+
                     //R3.1 - If we don't have inspections we still need to send the agency status 
                     if(!bHaveInspections){
                         Dom.Xmlnode agEndorsementNode = inspectionNode.addChildElement('endorsement', null, null);
@@ -1310,7 +1323,7 @@ public with sharing class AMS_XML_Generator {
 
                         //Set the "Date_Organisation_Status_attained" value to the created date of the active change code
                         if(auxAgAppChangeCode != null){
-                            Datetime dtOrgStatusAttained = Datetime.newInstance(auxAgAppChangeCode.CreatedDate.year(), auxAgAppChangeCode.CreatedDate.month(),auxAgAppChangeCode.CreatedDate.day());
+                            Datetime dtOrgStatusAttained = Datetime.newInstance(auxAgAppChangeCode.Created_Date_To_Show__c.year(), auxAgAppChangeCode.Created_Date_To_Show__c.month(),auxAgAppChangeCode.Created_Date_To_Show__c.day());
                             getElementNode(agEndorsementNode, 'date_organisation_status_attained', dtOrgStatusAttained == Null ? Null : String.valueOf(dtOrgStatusAttained.format('yyyyMMdd')));
                         }
 
@@ -1320,16 +1333,62 @@ public with sharing class AMS_XML_Generator {
 
                         //Set the "original_approval_date" value to the created date of the "FIN" change code
                         Agency_Applied_Change_code__c auxAgAppChangeCodeFIN = mAg_VS_AgChangeCodeFIN.get(ag.Id);
-                        if(auxAgAppChangeCodeFIN != null){
-                            Datetime dtOriginal_Approval_DAte = Datetime.newInstance(auxAgAppChangeCodeFIN.CreatedDate.year(), auxAgAppChangeCodeFIN.CreatedDate.month(),auxAgAppChangeCodeFIN.CreatedDate.day());
-                            getElementNode(agEndorsementNode, 'original_approval_date', dtOriginal_Approval_DAte == Null ? Null : String.valueOf(dtOriginal_Approval_DAte.format('yyyyMMdd')));
-                        }else{
+                        
+                        if(ag.Accreditation_date__c != null){
+                            Datetime dtAccreditation_date = Datetime.newInstance(ag.Accreditation_date__c.year(), ag.Accreditation_date__c.month(),ag.Accreditation_date__c.day());
+                            getElementNode(agEndorsementNode, 'original_approval_date', dtAccreditation_date == Null ? Null : String.valueOf(dtAccreditation_date.format('yyyyMMdd')));
+                        }else if(ag.Original_Approval_DAte__c != null){
                             Datetime dtOriginal_Approval_DAte = ag.Original_Approval_DAte__c == Null ? Null : Datetime.newInstance(ag.Original_Approval_DAte__c.year(), ag.Original_Approval_DAte__c.month(),ag.Original_Approval_DAte__c.day());
                             getElementNode(agEndorsementNode, 'original_approval_date', dtOriginal_Approval_DAte == Null ? Null : String.valueOf(dtOriginal_Approval_DAte.format('yyyyMMdd')));
+                        }else if(auxAgAppChangeCodeFIN != null){
+                            Datetime dtOriginal_Approval_DAte = Datetime.newInstance(auxAgAppChangeCodeFIN.Created_Date_To_Show__c.year(), auxAgAppChangeCodeFIN.Created_Date_To_Show__c.month(),auxAgAppChangeCodeFIN.Created_Date_To_Show__c.day());
+                            getElementNode(agEndorsementNode, 'original_approval_date', dtOriginal_Approval_DAte == Null ? Null : String.valueOf(dtOriginal_Approval_DAte.format('yyyyMMdd')));
+                        }else{
+                            //If none of the options above is valid no value is sent!
+                            getElementNode(agEndorsementNode, 'original_approval_date',  Null);
                         }
+                            
 
                         Datetime dtOrganization_Last_Change_Date = ag.Organization_Last_Change_Date__c == Null ? Null : Datetime.newInstance(ag.Organization_Last_Change_Date__c.year(), ag.Organization_Last_Change_Date__c.month(),ag.Organization_Last_Change_Date__c.day());
                         getElementNode(agEndorsementNode, 'organization_last_change_date', dtOrganization_Last_Change_Date == Null ? Null : String.valueOf(dtOrganization_Last_Change_Date.format('yyyyMMdd')));
+                    
+                        //FM 24-11-2016
+                        
+                        //Get Record with "Default" (DEF) change code information
+                        Agency_Applied_Change_code__c auxAgAppChangeCodeDEF = mAg_VS_AgChangeCodeDEF.get(ag.Id);
+                        String sIATANumericStatus = AMS_Utils.getIATANumericStatus(ag.Status__c);
+
+                        //If Terminated need to insert another Endorsement entry with the default information, but only if this exist
+                        // the default status code is set to '5' - "Cash basis/no commission"
+                        if((sIATANumericStatus == '0' || sIATANumericStatus == '6') && auxAgAppChangeCodeDEF != null){
+
+                            Dom.Xmlnode agEndorsementNodeDEF = inspectionNode.addChildElement('endorsement', null, null);
+                            getElementNode(agEndorsementNodeDEF, 'accreditation_endorsement_status_code',  '5' );
+
+                            //Set the "Date_Organisation_Status_attained" value to the created date of the "DEF" change code
+                            Datetime dtOrgStatusAttained = Datetime.newInstance(auxAgAppChangeCodeDEF.Created_Date_To_Show__c.year(), auxAgAppChangeCodeDEF.Created_Date_To_Show__c.month(),auxAgAppChangeCodeDEF.Created_Date_To_Show__c.day());
+                            getElementNode(agEndorsementNodeDEF, 'date_organisation_status_attained', dtOrgStatusAttained == Null ? Null : String.valueOf(dtOrgStatusAttained.format('yyyyMMdd')));
+                            
+                            getElementNode(agEndorsementNodeDEF, 'last_inspection_date', dtLast_Inspection_Date == Null ? Null : String.valueOf(dtLast_Inspection_Date.format('yyyyMMdd')));
+                    
+                            if(ag.Accreditation_date__c != null){
+                                Datetime dtAccreditation_date = Datetime.newInstance(ag.Accreditation_date__c.year(), ag.Accreditation_date__c.month(),ag.Accreditation_date__c.day());
+                                getElementNode(agEndorsementNodeDEF, 'original_approval_date', dtAccreditation_date == Null ? Null : String.valueOf(dtAccreditation_date.format('yyyyMMdd')));
+                            }else if(ag.Original_Approval_DAte__c != null){
+                                Datetime dtOriginal_Approval_DAte = ag.Original_Approval_DAte__c == Null ? Null : Datetime.newInstance(ag.Original_Approval_DAte__c.year(), ag.Original_Approval_DAte__c.month(),ag.Original_Approval_DAte__c.day());
+                                getElementNode(agEndorsementNodeDEF, 'original_approval_date', dtOriginal_Approval_DAte == Null ? Null : String.valueOf(dtOriginal_Approval_DAte.format('yyyyMMdd')));
+                            }else if(auxAgAppChangeCodeFIN != null){
+                                Datetime dtOriginal_Approval_DAte = Datetime.newInstance(auxAgAppChangeCodeFIN.Created_Date_To_Show__c.year(), auxAgAppChangeCodeFIN.Created_Date_To_Show__c.month(),auxAgAppChangeCodeFIN.Created_Date_To_Show__c.day());
+                                getElementNode(agEndorsementNodeDEF, 'original_approval_date', dtOriginal_Approval_DAte == Null ? Null : String.valueOf(dtOriginal_Approval_DAte.format('yyyyMMdd')));
+                            }else{
+                                //If none of the options above is valid no value is sent!
+                                getElementNode(agEndorsementNodeDEF, 'original_approval_date',  Null);
+                            }
+
+                            getElementNode(agEndorsementNodeDEF, 'organization_last_change_date', dtOrganization_Last_Change_Date == Null ? Null : String.valueOf(dtOrganization_Last_Change_Date.format('yyyyMMdd')));
+                    
+                        }
+
                     }
                     
                    
@@ -1351,7 +1410,7 @@ public with sharing class AMS_XML_Generator {
                     //}else{
                     //    agRelationshipsNode.addTextNode('Missing');
                     }
-				
+                
                     if(!bHier || bHierChild){
                         //AMS_Agency__c parentAg = (AMS_Agency__c)msObject.get(mAg_VS_ParentAg.get(ag.Id)); - #AMSFTS    
                         Account parentAg = (Account)msObject.get(mAg_VS_ParentAg.get(ag.Id));
@@ -1366,8 +1425,7 @@ public with sharing class AMS_XML_Generator {
                    
                     if( (!bHier && !bHierChild) || (bHier && !bHierChild)){
                         //For HO agencies - put the HO own data on the relationship 
-                        //if(ag.Location_Type__c.equalsIgnoreCase('HO')){
-                        if(AMS_Utils.LocationTypeAllHOTypes.contains(ag.Location_Type__c)){
+                        if(AMS_Utils.LocationTypeAllHOTypes.contains(ag.Location_Type__c) ){
                             Dom.Xmlnode agRelationshipNode = agRelationshipsNode.addChildElement('agencies_relationship', null, null);
                             Dom.Xmlnode auxAgencyNode = agRelationshipNode.addChildElement('parent_agency', null, null);
                             getAgencyNode(auxAgencyNode, ag,False, True);

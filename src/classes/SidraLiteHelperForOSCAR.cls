@@ -13,8 +13,16 @@ public with sharing class SidraLiteHelperForOSCAR {
             if (cse.Cases != null && ! cse.Cases.isEmpty()) {
                 throw new WSSidraLite.SidraLiteException('SIDRA Lite case already created, cannot create another one');
             }
-            if (cse.OSCAR__r==null || cse.OSCAR__r.RPM_Approval__c != 'Authorize Disapproval') {
-                throw new WSSidraLite.SidraLiteException('You cannot create a SIDRA Lite case if the Change Disapproval is not Authorized');
+            if (cse.OSCAR__r==null ||
+                    !(
+                        cse.OSCAR__r.RPM_Approval__c == 'Authorize Disapproval' ||
+                        cse.OSCAR__r.Step11__c == 'Failed' ||
+                        cse.OSCAR__r.Step12__c == 'Failed' ||
+                        cse.OSCAR__r.Step13__c == 'Failed' ||
+                        cse.OSCAR__r.Step14__c == 'Failed'
+                    )
+            ) {
+                throw new WSSidraLite.SidraLiteException('You cannot create a SIDRA Lite case if the Change Disapproval is not Authorized or the Sanity Check Failure is not Failed');
             }
             if (cse.Reason1__c == null) {
                 throw new WSSidraLite.SidraLiteException('You cannot create a SIDRA Lite under no reason');

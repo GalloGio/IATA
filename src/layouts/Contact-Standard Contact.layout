@@ -6,12 +6,12 @@
     <customButtons>Log_Phone_Case</customButtons>
     <customButtons>SAP_Airline_Request</customButtons>
     <customButtons>SIS_Airline_Request</customButtons>
+    <excludeButtons>DataDotComClean</excludeButtons>
     <excludeButtons>DisableCustomerPortal</excludeButtons>
     <excludeButtons>DisablePartnerPortal</excludeButtons>
     <excludeButtons>EnableCustomerPortal</excludeButtons>
     <excludeButtons>EnablePartnerPortalUser</excludeButtons>
     <excludeButtons>EnableSelfService</excludeButtons>
-    <excludeButtons>RequestUseSfdc</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <excludeButtons>ViewSelfService</excludeButtons>
     <layoutSections>
@@ -479,11 +479,12 @@
         <fields>Title</fields>
         <fields>AccountId</fields>
         <fields>Phone</fields>
-        <fields>Fax</fields>
         <fields>Email</fields>
         <fields>User_Portal_Status__c</fields>
         <relatedLists>
             <fields>CASES.CASE_NUMBER</fields>
+            <fields>CASES.SUBJECT</fields>
+            <fields>CASES.STATUS</fields>
             <relatedList>RelatedCaseList</relatedList>
         </relatedLists>
     </miniLayout>
@@ -742,6 +743,8 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Authorized_Signatories_Package__c</fields>
+        <fields>CREATED_DATE</fields>
         <relatedList>Authorized_Signatory__c.Contact__c</relatedList>
     </relatedLists>
     <relatedLists>

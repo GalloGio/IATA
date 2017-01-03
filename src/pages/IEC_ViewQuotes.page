@@ -330,6 +330,19 @@
 											                        </apex:outputText>
 															    </td>
 															</tr>
+															<apex:variable value="0" var="setup" rendered="{!AND(item.Setup_Fee__c != null, item.Setup_Fee__c > 0)}"> 
+															<tr class="promotion">
+																<td class="product-name"><i>Flat fee</i></td>
+																<td class="product-number"></td>
+																<td class="quantity"></td>
+																<td class="price item-price"></td>
+																<td class="price total-price">
+																	<apex:outputText value="{0, number, currency}">
+																		<apex:param value="{!item.Setup_Fee__c}" />
+																	</apex:outputText>
+																</td>
+															</tr>
+															</apex:variable>
 															<apex:outputPanel rendered="{!item.Discount__c != null && item.Discount__c > 0}">
 															<tr class="promotion">
 															    <td class="product-name">
