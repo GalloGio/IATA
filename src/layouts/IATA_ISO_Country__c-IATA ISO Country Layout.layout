@@ -210,6 +210,10 @@
                 <behavior>Edit</behavior>
                 <field>Enable_Minor_Changes_from_Portal__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Due_diligence_mandatory__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>

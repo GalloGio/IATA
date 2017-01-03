@@ -119,6 +119,17 @@
         <type>Text</type>
         <unique>false</unique>
     </fields>
+    <fields>
+        <fullName>numeric_code__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Used by GDP</inlineHelpText>
+        <label>numeric code</label>
+        <length>10</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
     <label>IATA ISO State</label>
     <listViews>
         <fullName>All</fullName>

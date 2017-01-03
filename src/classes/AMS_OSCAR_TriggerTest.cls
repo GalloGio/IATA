@@ -300,7 +300,7 @@
         }catch(DmlException e){ /*validation on queues*/ }
                      
         try{
-            oscar.Status__c = 'Closed_Not Accepted'; 
+            oscar.Status__c = 'Closed_ Not Accepted'; 
             update oscar;
         }     catch(DmlException e){ /*validation on queues*/ }               
 
@@ -403,7 +403,7 @@
         
         oscar = [SELECT id, status__c from AMS_OSCAR__C LIMIT 1];
         
-        oscar.status__c = 'Closed_Not Accepted';
+        oscar.status__c = 'Closed_ Not Accepted';
          
         try{
             update oscar;   
@@ -549,21 +549,37 @@
 
      @isTest static void changeCodeGenOnApprovalDisapproval() {
         
-        Test.startTest();
-        Account a = [SELECT id from Account where Name = 'Test1 Agency' LIMIT 1];
+        
+        Account a = [SELECT id,Status__c from Account where Name = 'Test1 Agency' LIMIT 1];
 
         ID newRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
 
+        Test.startTest();
+        
+        Integer c = 0;
 
         for (AMS_OSCAR__c oscarT : [SELECT id, STEP1__c, STEP10__c, STEP11__c, STEP12__c, STEP13__c, STEP14__c, STEP15__c, STEP16__c, STEP17__c, STEP18__c, STEP19__c, STEP2__c,STEP20__c,
             STEP3__c, STEP4__c, STEP5__c, STEP6__c, STEP7__c, STEP8__c, STEP9__c, Status__c,OwnerId,RPM_Approval__c from AMS_OSCAR__c limit 2])
         {
+
+            AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
+
+            changeCode.name = 'NEW';
+            changeCode.reasonCode = '21';
+
+            changeCode.memoText = 'New application in progress';
+            changeCode.reasonDesc  = 'NEW APPLICATION';
+            changeCode.status  = '2';
+
+            AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode>{changeCode}, new List<AMS_OSCAR__c>{oscarT}, new List<Account> {a}, true); 
 
             oscarT.recordTypeID = newRT;
             oscarT.STEP2__c = 'Not Started';
 
             update oscarT;
 
+            if( c== 0){           
+            
             oscarT.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
             update oscarT;
 
@@ -572,6 +588,9 @@
             System.assertEquals(AMS_Utils.PASSED,oscarT.STEP2__c);
             //TODO ASSERT: assert change code fin created
 
+            }
+            else{
+
             oscarT.RPM_Approval__c = AMS_Utils.AUTH_DISAPPROVAL;
             update oscarT;
 
@@ -579,6 +598,10 @@
 
             System.assertEquals(AMS_Utils.FAILED,oscarT.STEP2__c);
             //TODO ASSERT: assert change code dis created
+                
+            }
+            
+            c++;
         }
 
         Test.stopTest();
@@ -793,4 +816,62 @@
 
         Test.stopTest();
     }
+
+    @isTest static void testSTEP29() {
+
+        AMS_OSCAR__c oscar = [SELECT id, STEP29__c from AMS_OSCAR__c where Process__c = :AMS_Utils.new_HO limit 1];
+        
+        Test.startTest();
+
+        oscar.Process__c = AMS_Utils.AGENCYCHANGES;
+        oscar.STEP29__c = AMS_Utils.PASSED;
+
+        update oscar;
+
+        Test.stopTest();
+    }
+
+    @isTest static void testSTEP30_31_32() {
+
+        AMS_OSCAR__c oscar = [SELECT id, STEP30__c, STEP31__c, STEP32__c from AMS_OSCAR__c where Process__c = :AMS_Utils.new_HO limit 1];
+        
+        Test.startTest();
+
+        oscar.Process__c = AMS_Utils.VOLRELINQUISH;
+        oscar.STEP30__c = AMS_Utils.PASSED;
+        oscar.STEP31__c = AMS_Utils.PASSED;
+        oscar.STEP32__c = AMS_Utils.PASSED;
+
+        update oscar;
+
+        oscar = [SELECT id, Suspension_result__c, Termination_result__c, Withdrawal_result__c FROM AMS_OSCAR__c where Process__c = :AMS_Utils.VOLRELINQUISH limit 1];
+
+        system.assertEquals(oscar.Suspension_result__c, AMS_Utils.PASSED);
+        system.assertEquals(oscar.Termination_result__c, AMS_Utils.PASSED);
+        system.assertEquals(oscar.Withdrawal_result__c, AMS_Utils.PASSED);
+
+        oscar.STEP30__c = AMS_Utils.FAILED;
+        oscar.STEP31__c = AMS_Utils.FAILED;
+        oscar.STEP32__c = AMS_Utils.FAILED;
+
+        update oscar;
+
+        oscar = [SELECT id, Suspension_result__c, Termination_result__c, Withdrawal_result__c FROM AMS_OSCAR__c where Process__c = :AMS_Utils.VOLRELINQUISH limit 1];
+
+        system.assertEquals(oscar.Suspension_result__c, AMS_Utils.FAILED);
+        system.assertEquals(oscar.Termination_result__c, AMS_Utils.FAILED);
+        system.assertEquals(oscar.Withdrawal_result__c, AMS_Utils.FAILED);
+
+        oscar.STEP32__c = AMS_Utils.NOT_APPLICABLE;
+
+        update oscar;
+
+        oscar = [SELECT id, Suspension_result__c, Termination_result__c, Withdrawal_result__c FROM AMS_OSCAR__c where Process__c = :AMS_Utils.VOLRELINQUISH limit 1];
+
+        system.assertEquals(oscar.Withdrawal_result__c, 'N/A');
+
+        Test.stopTest();
+    }
+
+
 }

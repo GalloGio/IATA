@@ -124,7 +124,7 @@ global class Order_Ext
     ****************************************************************************************************/
     public Order_Ext(ApexPages.StandardController controller) {
         
-        labels = Utility.buildMapFromString(Label.LabelsVF_Order + '\n' + Label.LabelsVF_Order2, '\n', ':');
+        labels = Utility.buildMapFromString(Label.LabelsVF_Order + '\n' + Label.LabelsVF_Order2 + '\n' + Label.LabelsVF_Order3, '\n', ':');
         
         //*** get order's record
         vfOrder = (Order) controller.getRecord();
@@ -948,19 +948,14 @@ public void saveAddressOrderReadOnly(){
     }
 
     Boolean error= false;
-    if(selectedCountryIsoCode == null || selectedCountryIsoCode == ''){ ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.Country_cannot_be_empty)); error = true; }
 
-    //Validate State
-    if(listBillingState != null && listBillingState.size() > 0 && selectedStateIsoCode == null){ ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.State_cannot_be_empty)); error = true; }
-
-    if(street == null || street == ''){ ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, label.Street_cannot_be_empty)); error = true; }
-    
-    if(city == null || city == ''){ ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.City_cannot_be_empty)); error = true; }
-
-    if(billToZipCodeRequired && (zipCode == null || zipCode == '')){ ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.Zip_code_cannot_be_empty)); error = true; }
-
-    if(billToLocation.Email__c == null || billToLocation.Email__c == ''){ ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.Email_cannot_be_empty)); error = true; }
-    
+    if(String.isBlank(billToLocation.Phone__c)) { ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, labels.get('errMissPhone'))); error = true; }
+    if(String.isBlank(billToLocation.Email__c)) { ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.Email_cannot_be_empty)); error = true; }
+    if(String.isBlank(street))                  { ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, label.Street_cannot_be_empty)); error = true; }
+    if(String.isBlank(city))                    { ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.City_cannot_be_empty)); error = true; }
+    if(String.isBlank(selectedCountryIsoCode))  { ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.Country_cannot_be_empty)); error = true; }
+    if(listBillingState != null && listBillingState.size() > 0 && String.isBlank(selectedStateIsoCode)) { ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.State_cannot_be_empty)); error = true; }
+    if(billToZipCodeRequired && String.isBlank(zipCode)) { ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.Zip_code_cannot_be_empty)); error = true; }
 
     if(error){ editMod = true; return; }
 
@@ -1182,19 +1177,15 @@ public void saveAddressOrder(){
         if(resp != 'true'){ ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, resp)); errors = true; }
     }
 
-    if(selectedShipCountryIsoCode == null || selectedShipCountryIsoCode == ''){ ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.Country_cannot_be_empty)); errors = true; }
-    
-    if(shipStreet == null || shipStreet == ''){ ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, label.Street_cannot_be_empty)); errors = true; }
-    
-    if(shipCity == null || shipCity == ''){ ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.City_cannot_be_empty)); errors = true; }
-
-    if(shipToZipCodeRequired && (shipZipCode == null || shipZipCode == '')){ ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.Zip_code_cannot_be_empty)); errors = true; }
-    
-    if(vfOrder.ShipToContact_Email__c == null || vfOrder.ShipToContact_Email__c == ''){ ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.Email_cannot_be_empty)); errors = true; }
-
-    if(vfOrder.ShipToAccount_Name__c == null || vfOrder.ShipToAccount_Name__c == ''){ ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Company name cannot be empty')); errors = true; }
-    
-    if(vfOrder.ShipToContact_Name__c == null || vfOrder.ShipToContact_Name__c == ''){ ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Attention field cannot be empty')); errors = true; }
+    //if(String.isBlank(vfOrder.ShipToAccount_Name__c)) { ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, labels.get('errMissCompany'))); errors = true; }
+    if(String.isBlank(vfOrder.ShipToContact_Name__c)) { ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, labels.get('errMissAttn'))); errors = true; }
+    if(String.isBlank(vfOrder.ShipToContact_Phone__c)){ ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, labels.get('errMissPhone'))); errors = true; }
+    if(String.isBlank(vfOrder.ShipToContact_Email__c)){ ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.Email_cannot_be_empty)); errors = true; }
+    if(String.isBlank(shipStreet))                    { ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, label.Street_cannot_be_empty)); errors = true; }
+    if(String.isBlank(shipCity))                      { ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.City_cannot_be_empty)); errors = true; }
+    if(String.isBlank(selectedShipCountryIsoCode))    { ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.Country_cannot_be_empty)); errors = true; }
+    if(listShippingState != null && listShippingState.size() > 0 && String.isBlank(selectedShipStateIsoCode)) { ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.State_cannot_be_empty)); errors = true; }
+    if(shipToZipCodeRequired && String.isBlank(shipZipCode)) { ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.Zip_code_cannot_be_empty)); errors = true; }
 
     if(errors){ return; }
 
@@ -1758,6 +1749,18 @@ public PageReference saveOrder() {
             errorMsg += '<br> Invalid Shipping Address';
         }
     }
+
+    //*** validate other required shipping information
+    if (vfOrder.ShipTo_same_BillTo__c){
+        if(String.isBlank(vfOrder.ShipToAccount_Name__c))  vfOrder.ShipToAccount_Name__c  = vfOrder.BillToAccount_Name__c;
+        if(String.isBlank(vfOrder.ShipToContact_Name__c))  vfOrder.ShipToContact_Name__c  = vfOrder.BillToContact_Name__c;
+        if(String.isBlank(vfOrder.ShipToContact_Phone__c)) vfOrder.ShipToContact_Phone__c = vfOrder.BillToContact_Phone__c;
+        if(String.isBlank(vfOrder.ShipToContact_Email__c)) vfOrder.ShipToContact_Email__c = vfOrder.BillToContact_Email__c;
+    }
+    if(String.isBlank(vfOrder.ShipToAccount_Name__c))  errorMsg += '<br> ' + labels.get('errMissCompany');
+    if(String.isBlank(vfOrder.ShipToContact_Name__c))  errorMsg += '<br> ' + labels.get('errMissAttn');
+    if(String.isBlank(vfOrder.ShipToContact_Phone__c)) errorMsg += '<br> ' + labels.get('errMissPhone');
+    if(String.isBlank(vfOrder.ShipToContact_Email__c)) errorMsg += '<br> ' + Label.Email_cannot_be_empty;
     
     //*** display error if any
     if (errorMsg != '') { ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, errorMsg.substring(5))); return null; }
@@ -1855,6 +1858,7 @@ public PageReference saveOrder() {
     //Refresh Shipping information
     refreshShippingInfo(shipToLocation, false);
 
+    //*** copy billing information to shipping if Ship To is same as Bill To
     if (vfOrder.ShipTo_same_BillTo__c){
         //Map the Phone and Email
         if(vfOrder.ShipToContact_Phone__c == null || vfOrder.ShipToContact_Phone__c == '')
@@ -1877,9 +1881,7 @@ public PageReference saveOrder() {
         vfOrder.ShippingPostalCode      =   vfOrder.BillingPostalCode;
         
         vfOrder.ShipToContact_VAT_Number__c = vfOrder.BillToContact_VAT_Number__c;
-        
     }
-
 
     //Add the sold to location in the Order
     if(vfOrder.AccountId != null){
