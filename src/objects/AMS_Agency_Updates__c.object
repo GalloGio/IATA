@@ -242,7 +242,7 @@
         <filters>
             <field>Account__c</field>
             <operation>equals</operation>
-            <value>WUHAN XIANGSHENG AIR SERVICE CO.,LTD</value>
+            <value>&quot;SHENZHEN JUNYUE INTERNATIONAL TRAVEL SERVICES CO., LTD.&quot;</value>
         </filters>
         <label>AMS 1 agency</label>
         <language>en_US</language>
