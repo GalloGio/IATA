@@ -305,6 +305,46 @@ public class AMS_AccountHierarchySelectionController {
 		}
 	}
 
+	private Integer rowsPerPage = 100;
+
+    public Integer currentPage{
+        get{
+            if(currentPage == null){
+                currentPage = 0;
+            }
+            return currentPage;
+        }
+        set;
+    }
+    
+	public Integer totalPages{
+        get{
+            return hierarchyValuesForDisplay.size();
+        }
+    }
+    
+    public List<List<HierarchyItem>> hierarchyValuesForDisplay{
+        get{
+            if(hierarchyValuesForDisplay == null){
+                hierarchyValuesForDisplay = new List<List<HierarchyItem>>();
+
+                // create as many sub-lists as necessary
+                for(Integer i = 0; i <= (hierarchy.values().size()-1)/rowsPerPage; i++){
+                    hierarchyValuesForDisplay.add(new List<HierarchyItem>());
+                }
+
+                // fill HierarchyItems in the sub-lists
+                Integer itemNumber = 0;
+                for(HierarchyItem item : hierarchy.values()){
+                    hierarchyValuesForDisplay.get(itemNumber++/rowsPerPage).add(item);
+                }
+            }
+            System.debug(loggingLevel.Info, '[cls AMS_AccountHierarchySelectionController] hierarchy items lists - ' + hierarchyValuesForDisplay);
+            return hierarchyValuesForDisplay;
+        }
+        set;
+    }
+    
 	// ***********************************
 	// ********** constructor ************
 	// ***********************************
@@ -441,6 +481,15 @@ public class AMS_AccountHierarchySelectionController {
 		return false;
 	}
 
+	public Boolean getDisablePrevious() { 
+		//this will disable the previous and beginning buttons
+		return (currentPage <= 0);
+	}
+
+	public Boolean getDisableNext() { //this will disable the next and end buttons
+		return (currentPage >= hierarchyValuesForDisplay.size()-1);
+	}
+
 
 	// ***********************************
 	// ********* action methods **********
@@ -453,6 +502,26 @@ public class AMS_AccountHierarchySelectionController {
 				oscar.Account__c = hi.acc.Id;
 			}
 		}
+	}
+
+    public PageReference Beginning() { //user clicked beginning
+		currentPage = 0;
+		return null;
+	}
+
+	public PageReference Previous() { //user clicked previous button
+		currentPage--;
+		return null;
+	}
+
+	public PageReference Next() { //user clicked next button
+		currentPage++;
+		return null;
+	}
+
+	public PageReference End() { //user clicked end
+		currentPage = hierarchyValuesForDisplay.size()-1;
+		return null;
 	}
 
 	public void save(){
