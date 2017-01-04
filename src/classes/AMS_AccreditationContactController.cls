@@ -122,8 +122,11 @@ public with sharing class AMS_AccreditationContactController {
         if(aoa.SAAM_Case__r.OSCAR__r.Type_of_change__c != null && aoa.SAAM_Case__r.OSCAR__r.Type_of_change__c.contains(AMS_Utils.OWNERSHIP_IATA))
             typeOfChangeContainsOwnershipToIATA = true;
 
-        blockOwnershipEdit = (aoa.SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c != AMS_Utils.HO && 
-                             aoa.SAAM_Case__r.OSCAR__r.Process__c != AMS_Utils.COR && aoa.SAAM_Case__r.OSCAR__r.Process__c != AMS_Utils.AGENCYCHANGES) || typeOfChangeContainsOwnershipToIATA;
+        blockOwnershipEdit = (aoa.SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c != AMS_Utils.HO
+                                && aoa.SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c != AMS_Utils.AO
+                                && aoa.SAAM_Case__r.OSCAR__r.Process__c != AMS_Utils.COR
+                                && aoa.SAAM_Case__r.OSCAR__r.Process__c != AMS_Utils.AGENCYCHANGES)
+                            || typeOfChangeContainsOwnershipToIATA;
 
         isCorrection = aoa.SAAM_Case__r.OSCAR__r.Process__c == AMS_Utils.COR;
         isCargoAgency = aoa.SAAM_Case__r.OSCAR__r.Account__r.Sector__c == AMS_Utils.SECTOR_CARGO;
