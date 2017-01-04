@@ -249,12 +249,12 @@ private class AMS_EBulletinReport_Test {
 		
 		Test.startTest();
 		
-		String sch1 = '0 0 5,9,11,15,21,23 ? * *';
-		String sch2 = '0 30 1,7,13,19 ? * *';
+		String sch1 = '0 0 6 ? * *';
+		String sch2 = '0 30 20 ? * *';
 
-		String jobID = system.schedule('AMS EBulletin Daily hours', sch1, new AMS_EBulletinDailySchedule());
+		String jobID = system.schedule('AMS EBulletin Daily hours Test', sch1, new AMS_EBulletinDailySchedule());
 
-		String job2ID = system.schedule('AMS EBulletin Daily half hours', sch2, new AMS_EBulletinDailySchedule());
+		String job2ID = system.schedule('AMS EBulletin Daily half hours Test', sch2, new AMS_EBulletinDailySchedule());
 
 		Test.stopTest();
 
@@ -264,9 +264,9 @@ private class AMS_EBulletinReport_Test {
 
 		Test.startTest();
 
-		String sch3 = '0 0 9 ? * MON';
+		String sch3 = '0 0 8 ? * MON';
 
-		String jobID3 = system.schedule('AMS EBulletin Weekly', sch3, new AMS_EBulletinWeeklySchedule());
+		String jobID3 = system.schedule('AMS EBulletin Weekly Test', sch3, new AMS_EBulletinWeeklySchedule());
 
 		Test.stopTest();
 

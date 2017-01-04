@@ -12694,7 +12694,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <booleanFilter>1 AND (2 OR 3 OR 4) and 5</booleanFilter>
+        <booleanFilter>1 AND (2 OR 3 OR 4 OR 6) and 5</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
@@ -12708,7 +12708,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.BSPCountry__c</field>
             <operation>equals</operation>
-            <value>Albania,Austria,Azerbaijan,Belgium &amp; Luxembourg,Bosnia and Herzegovina,Bulgaria,Croatia,Cyprus,Czech Republic,Czech Republic &amp; Slovakia,Finland,France,Georgia,Germany,Greece,Hungary,Ireland,Israel,Italy,Kazakhstan,Kosovo,Macedonia,Malta,Montenegro</value>
+            <value>Albania,Austria,Azerbaijan,Belgium &amp; Luxembourg,Bosnia and Herzegovina,Bulgaria,Croatia,Cyprus,Czech Republic,Czech Republic &amp; Slovakia,Finland,France,Georgia,Germany,Greece,Hungary,Ireland,Israel,Italy,Kazakhstan,Kosovo,Malta,Montenegro</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.BSPCountry__c</field>
@@ -12719,6 +12719,11 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
             <value>12/20/2013</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.BSPCountry__c</field>
+            <operation>equals</operation>
+            <value>&quot;Macedonia, the former Yugoslav Republic of&quot;</value>
         </criteriaItems>
         <description>SIDRA</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
