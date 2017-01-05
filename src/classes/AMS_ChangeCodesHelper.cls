@@ -324,6 +324,26 @@ public class AMS_ChangeCodesHelper {
 
                 toReturn = oscarAgency;
             }
+
+        if(aacNew.Change_Code__c == 'CER'){
+            
+            oscarAgency.Annual_Renewal_Certificates__c = true;
+            
+            oscarAgency.Certificate_Generated_Current_Year__c = true;
+            toReturn = oscarAgency;
+        }  
+ 
+       if( aacNEW.Change_Code__c == 'CLO' ){
+            
+            oscarAgency.Expiry_Date__c = Date.Today();            
+            toReturn = oscarAgency;
+        }
+
+        if( aacNEW.Change_Code__c == 'REI' ){
+            
+            oscarAgency.Expiry_Date__c = null;            
+            toReturn = oscarAgency;
+        }
         
         return new ChangeCodeStruct(aacNEW, toReturn,changeCodeFielsHistory);
     }
