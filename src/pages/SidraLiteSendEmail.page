@@ -1,14 +1,15 @@
-<apex:page controller="SidraLiteSendEmailController" >
+<apex:page standardController="Case" extensions="SidraLiteSendEmailController" >
 
   <apex:form id="mainForm">
-    <apex:actionFunction name="updateSection2" action="{!findTemplates}" rerender="mainForm" status="Loading"/>
+    <apex:actionFunction name="updateSection" action="{!findTemplates}" rerender="mainForm" status="Loading"/>
 
     <c:Loading />
 
     <apex:pageMessages id="errors" />
 
-    <apex:pageBlock id="filters" title="SIDRA Lite Send Single Email" mode="edit" rendered="{!cse!=null}">
+    <apex:sectionHeader title="SIDRA Lite Send Single Email" subtitle="{!cse.CaseNumber}"/>
 
+    <apex:pageBlock id="filters" mode="edit" rendered="{!cse!=null}">
       <apex:pageBlockButtons location="bottom">
           <apex:commandButton value="Cancel" action="{!returnToCase}" immediate="true" />
           <apex:commandButton value="Continue" action="{!goToCongaSendEmail}" rerender="mainForm" status="Loading"
@@ -28,7 +29,7 @@
       <apex:pageBlockSection id="step2" columns="1" showHeader="true" title="Select Action Type">
         <apex:pageBlockSectionItem >
           <apex:outputLabel value="Select Action Type"/>
-          <apex:selectList title="title" value="{!selectedType}" size="1" onchange="updateSection2();" >
+          <apex:selectList title="title" value="{!selectedType}" size="1" onchange="updateSection();" >
             <!--<apex:actionSupport event="onchange" rerender="mainForm" status="Loading"/>-->
             <apex:selectOption itemValue="" itemLabel="--Select--"/>
             <apex:selectOption itemValue="IRR" itemLabel="Irregularity"/>
