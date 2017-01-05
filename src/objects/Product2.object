@@ -1454,7 +1454,6 @@ SIS Charge Code Type.</description>
             <picklistValues>
                 <fullName>TG8</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
             </picklistValues>
             <restrictedPicklist>true</restrictedPicklist>
             <sorted>false</sorted>

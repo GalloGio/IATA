@@ -1774,7 +1774,7 @@ if (sentToAIMSon != null &amp;&amp; cardStatus == &apos;Printed/Delivered&apos;)
      card.id =&quot;{!ID_Card__c.Id}&quot;;
      card.Card_Status__c = &apos;Cancelled&apos;;
      card.Cancellation_Date__c = new Date();
-     card.MustSyncWithAIMS__c = &apos;True&apos;;
+     card.MustSyncWithAIMS__c = &apos;False&apos;;
      cardToUpdate.push(card);
      result = sforce.connection.update(cardToUpdate); 
 
