@@ -1653,7 +1653,7 @@
 <fieldPermissions><editable>true</editable><field>Account.Reinstated_date__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Account.Remittance_frequency__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Account.SAP_BW_report_with_sales_figures__c</field><readable>true</readable></fieldPermissions>
-<fieldPermissions><editable>false</editable><field>Account.SAP_BW_report_without_sales_figures__c</field><readable>true</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>Account.SAP_BW_report_without_sales_figures__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Account.SAP_Number__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Account.SIDRA_cases__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Account.SIS_Member_Code__c</field><readable>true</readable></fieldPermissions>
@@ -7423,12 +7423,12 @@
 <recordTypeVisibilities><default>true</default><personAccountDefault>true</personAccountDefault><recordType>AMS_Account_Role__c.Employee</recordType><visible>true</visible></recordTypeVisibilities>
 <recordTypeVisibilities><default>false</default><recordType>AMS_Account_Role__c.Ownership</recordType><visible>true</visible></recordTypeVisibilities>
 <recordTypeVisibilities><default>false</default><recordType>AMS_Accreditation_Contact__c.Company</recordType><visible>true</visible></recordTypeVisibilities>
-<recordTypeVisibilities><default>false</default><recordType>AMS_Accreditation_Contact__c.Current_Company_Owner</recordType><visible>false</visible></recordTypeVisibilities>
-<recordTypeVisibilities><default>false</default><recordType>AMS_Accreditation_Contact__c.Current_Owner</recordType><visible>false</visible></recordTypeVisibilities>
+<recordTypeVisibilities><default>false</default><recordType>AMS_Accreditation_Contact__c.Current_Company_Owner</recordType><visible>true</visible></recordTypeVisibilities>
+<recordTypeVisibilities><default>false</default><recordType>AMS_Accreditation_Contact__c.Current_Owner</recordType><visible>true</visible></recordTypeVisibilities>
 <recordTypeVisibilities><default>true</default><personAccountDefault>true</personAccountDefault><recordType>AMS_Accreditation_Contact__c.Person</recordType><visible>true</visible></recordTypeVisibilities>
-<recordTypeVisibilities><default>false</default><recordType>AMS_Accreditation_Contact__c.Previous_Company_Owner</recordType><visible>false</visible></recordTypeVisibilities>
-<recordTypeVisibilities><default>false</default><recordType>AMS_Accreditation_Contact__c.Previous_Owner</recordType><visible>false</visible></recordTypeVisibilities>
-<recordTypeVisibilities><default>false</default><recordType>AMS_Accreditation_Contact__c.Trained_Staff</recordType><visible>false</visible></recordTypeVisibilities>
+<recordTypeVisibilities><default>false</default><recordType>AMS_Accreditation_Contact__c.Previous_Company_Owner</recordType><visible>true</visible></recordTypeVisibilities>
+<recordTypeVisibilities><default>false</default><recordType>AMS_Accreditation_Contact__c.Previous_Owner</recordType><visible>true</visible></recordTypeVisibilities>
+<recordTypeVisibilities><default>false</default><recordType>AMS_Accreditation_Contact__c.Trained_Staff</recordType><visible>true</visible></recordTypeVisibilities>
 <recordTypeVisibilities><default>true</default><personAccountDefault>true</personAccountDefault><recordType>AMS_Accreditation_Requirement__c.Cargo_Agent</recordType><visible>true</visible></recordTypeVisibilities>
 <recordTypeVisibilities><default>false</default><recordType>AMS_Accreditation_Requirement__c.Change</recordType><visible>true</visible></recordTypeVisibilities>
 <recordTypeVisibilities><default>false</default><recordType>AMS_Accreditation_Requirement__c.Travel_Agent</recordType><visible>true</visible></recordTypeVisibilities>
