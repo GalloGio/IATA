@@ -7226,7 +7226,7 @@
 <recordTypeVisibilities><default>false</default><recordType>Case.Application_Change_Request_DPC_Systems_locked</recordType><visible>false</visible></recordTypeVisibilities>
 <recordTypeVisibilities><default>false</default><recordType>Case.Application_Change_Request_Salesforce</recordType><visible>true</visible></recordTypeVisibilities>
 <recordTypeVisibilities><default>false</default><recordType>Case.BSPlink_Customer_Service_Requests_CSR</recordType><visible>true</visible></recordTypeVisibilities>
-<recordTypeVisibilities><default>false</default><recordType>Case.CS_Process_IDFS_ISS</recordType><visible>false</visible></recordTypeVisibilities>
+<recordTypeVisibilities><default>false</default><recordType>Case.CS_Process_IDFS_ISS</recordType><visible>true</visible></recordTypeVisibilities>
 <recordTypeVisibilities><default>false</default><recordType>Case.Case_Operational_Management_Head_Office</recordType><visible>false</visible></recordTypeVisibilities>
 <recordTypeVisibilities><default>false</default><recordType>Case.CasesAmericas</recordType><visible>false</visible></recordTypeVisibilities>
 <recordTypeVisibilities><default>false</default><recordType>Case.CasesEurope</recordType><visible>false</visible></recordTypeVisibilities>
