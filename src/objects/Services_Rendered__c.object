@@ -255,10 +255,6 @@
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>CASS Participation</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
                 <fullName>CASS via GSSA</fullName>
                 <default>false</default>
             </picklistValues>
