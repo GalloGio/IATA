@@ -181,7 +181,7 @@
 <fieldPermissions><editable>true</editable><field>ACCA_Service_Request__c.other_c__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>ACCA_Service_Request__c.prefix_from_1__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AMS_Account_Role__c.Account__c</field><readable>false</readable></fieldPermissions>
-<fieldPermissions><editable>false</editable><field>AMS_Account_Role__c.Active__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>AMS_Account_Role__c.Active__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AMS_Account_Role__c.Contact_Email__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AMS_Account_Role__c.Contact_Phone__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>AMS_Account_Role__c.Contact_Title__c</field><readable>false</readable></fieldPermissions>
@@ -1653,7 +1653,7 @@
 <fieldPermissions><editable>true</editable><field>Account.Reinstated_date__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Account.Remittance_frequency__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Account.SAP_BW_report_with_sales_figures__c</field><readable>true</readable></fieldPermissions>
-<fieldPermissions><editable>false</editable><field>Account.SAP_BW_report_without_sales_figures__c</field><readable>true</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>Account.SAP_BW_report_without_sales_figures__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Account.SAP_Number__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Account.SIDRA_cases__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Account.SIS_Member_Code__c</field><readable>true</readable></fieldPermissions>
@@ -1946,7 +1946,7 @@
 <fieldPermissions><editable>false</editable><field>Assoc_Affiliation_Membership__c.AIMS_ID__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Assoc_Affiliation_Membership__c.Assoc_Affiliation_Code__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Assoc_Affiliation_Membership__c.Assoc_Affiliation_ID__c</field><readable>false</readable></fieldPermissions>
-<fieldPermissions><editable>false</editable><field>Assoc_Affiliation_Membership__c.Related_Account__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>true</editable><field>Assoc_Affiliation_Membership__c.Related_Account__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Assoc_Affiliation_Membership__c.Related_GDP_Products_Account_View__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Assoc_Affiliation_Membership__c.WebStar_ID__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Authorized_Signatories_Package__c.ASP_Effective_Date__c</field><readable>true</readable></fieldPermissions>
