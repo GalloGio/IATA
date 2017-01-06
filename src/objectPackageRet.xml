@@ -2,7 +2,7 @@
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
         <members>*</members>
-        <name>CustomApplication</name>
+        <name>ApprovalProcess</name>
     </types>
     <types>
         <members>*</members>
@@ -35,19 +35,7 @@
     </types>
     <types>
         <members>*</members>
-        <name>CustomTab</name>
-    </types>
-    <types>
-        <members>*</members>
-        <name>PermissionSet</name>
-    </types>
-    <types>
-        <members>*</members>
-        <name>Profile</name>
-    </types>
-    <types>
-        <members>*</members>
-        <name>Queue</name>
+        <name>Workflow</name>
     </types>
     <version>37.0</version>
 </Package>
