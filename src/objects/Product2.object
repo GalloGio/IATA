@@ -9635,6 +9635,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Load Control XML Messaging Toolkit</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Maintenance Program Optimization Guidelines</fullName>
                 <default>false</default>
             </values>
