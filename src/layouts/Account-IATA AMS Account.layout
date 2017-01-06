@@ -52,7 +52,6 @@
         </subtabComponents>
     </customConsoleComponents>
     <excludeButtons>DataDotComAccountInsights</excludeButtons>
-    <excludeButtons>DataDotComClean</excludeButtons>
     <excludeButtons>DataDotComCompanyHierarchy</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
@@ -301,10 +300,6 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Accumulated_Irregularities__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Count_Accumulated_Irregularities__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
