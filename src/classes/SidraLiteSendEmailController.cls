@@ -47,7 +47,7 @@ public with sharing class SidraLiteSendEmailController {
         if (this.cse.ParentId==null) {
             this.selectedToCase = 'current';
         }
-        this.dummyCase = new Case();
+        this.dummyCase = this.cse.clone();
     }
 
     public void findTemplates() {
@@ -78,6 +78,7 @@ public with sharing class SidraLiteSendEmailController {
         if (this.selectedType=='IRRWD') {
             this.cse.Confirm_IRR_Withdrawal_to_AG__c = this.dummyCase.Confirm_IRR_Withdrawal_to_AG__c;
             this.cse.Update_AIMS_IRRWITH__c = this.dummyCase.Update_AIMS_IRRWITH__c;
+            this.cse.IRR_Withdrawal_Reason__c = this.dummyCase.IRR_Withdrawal_Reason__c;
         }
         if (this.selectedType=='DEF') {
             this.cse.Update_AIMS_DEF__c = this.dummyCase.Update_AIMS_DEF__c;
@@ -87,7 +88,15 @@ public with sharing class SidraLiteSendEmailController {
             this.cse.Shut_Down_TKT_System_GDS_and_BSPlink__c = this.dummyCase.Shut_Down_TKT_System_GDS_and_BSPlink__c;
             this.cse.Deactivate_Agent_in_Systems__c = this.dummyCase.Deactivate_Agent_in_Systems__c;
         }
-        if (this.selectedType=='DEFWD' || this.selectedType=='REI') {
+        if (this.selectedType=='DEFWD') {
+            this.cse.Confirm_Reinstatement_to_AG__c = this.dummyCase.Confirm_Reinstatement_to_AG__c;
+            this.cse.Activate_Agent_in_Systems__c = this.dummyCase.Activate_Agent_in_Systems__c;
+            this.cse.Open_TKT_System__c = this.dummyCase.Open_TKT_System__c;
+            this.cse.Inform_Airlines_REI_DEFWD__c = this.dummyCase.Inform_Airlines_REI_DEFWD__c;
+            this.cse.Ticketing_Authority_Re_assigned__c = this.dummyCase.Ticketing_Authority_Re_assigned__c;
+            this.cse.DEF_Withdrawal_Reason__c = this.dummyCase.DEF_Withdrawal_Reason__c;
+        }
+        if (this.selectedType=='REI') {
             this.cse.Confirm_Reinstatement_to_AG__c = this.dummyCase.Confirm_Reinstatement_to_AG__c;
             this.cse.Activate_Agent_in_Systems__c = this.dummyCase.Activate_Agent_in_Systems__c;
             this.cse.Open_TKT_System__c = this.dummyCase.Open_TKT_System__c;
@@ -159,10 +168,10 @@ public with sharing class SidraLiteSendEmailController {
         // return conga url
         if (this.selectedCustomize == 'true') {
             // cutomize template version
-            return CongaManager.goToSendEmailConga(this.apiSessionId, this.apiServerURL, this.cse.Id, selectedCase.Id, selectedCase.ContactId, listadd[0].id, listQueries);
+            return CongaManager.goToSendEmailConga(this.apiSessionId, this.apiServerURL, this.cse.Id, selectedCase.Id, this.cse.ContactId, listadd[0].id, listQueries);
         } else {
             // automated version with given templates
-            return CongaManager.sendEmailURL(this.apiSessionId, this.apiServerURL, this.cse.Id, selectedCase.Id, selectedCase.ContactId, this.mergeTemplate.Id, this.emailTemplate.Id, listadd[0].id, listQueries);
+            return CongaManager.sendEmailURL(this.apiSessionId, this.apiServerURL, this.cse.Id, selectedCase.Id, this.cse.ContactId, this.mergeTemplate.Id, this.emailTemplate.Id, listadd[0].id, listQueries);
         }
     }
 
