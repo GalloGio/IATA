@@ -240,9 +240,9 @@
         <columns>CREATED_DATE</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>Account__c</field>
+            <field>IATACode__c</field>
             <operation>equals</operation>
-            <value>&quot;SHENZHEN JUNYUE INTERNATIONAL TRAVEL SERVICES CO., LTD.&quot;</value>
+            <value>14350530025</value>
         </filters>
         <label>AMS 1 agency</label>
         <language>en_US</language>
