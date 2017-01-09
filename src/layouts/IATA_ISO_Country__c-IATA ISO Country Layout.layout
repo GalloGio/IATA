@@ -180,6 +180,10 @@
                 <behavior>Edit</behavior>
                 <field>Local_language_Agency_details_required__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>CNS_Country__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
