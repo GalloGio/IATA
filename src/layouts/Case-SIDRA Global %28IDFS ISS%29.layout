@@ -5,6 +5,9 @@
     <customButtons>R_S_feedback_complete</customButtons>
     <customButtons>CS_actions_complete</customButtons>
     <customButtons>Reset_New_interactions</customButtons>
+	<customButtons>Deactivate_BSPLink</customButtons>
+    <customButtons>Undo_Deactivation_BSPLink</customButtons>
+    <customButtons>Reactivate_BSPLink</customButtons>
     <emailDefault>false</emailDefault>
     <excludeButtons>Clone</excludeButtons>
     <excludeButtons>Delete</excludeButtons>
