@@ -239,12 +239,7 @@ public with sharing class AMS_PurgeIATACodeController {
 
     	for(PurgeFileContent pfc : purgeFileContentList){
 
-            System.debug('Starting to process record with ID ' + pfc.Identifier);
-            System.debug('Field ToNOTPurgeSFDC is :' + pfc.ToNOTPurgeSFDC + ':');
-            System.debug('Field ToNOTPurgeExternal is :' + pfc.ToNOTPurgeExternal + ':');
-
     		if(isFieldXorNull(pfc.ToNOTPurgeSFDC) || isFieldXorNull(pfc.ToNOTPurgeExternal) || pfc.Identifier == null || pfc.Identifier == '' ){
-                System.debug('Skipping this record ...');
     			continue;
 			}
 
