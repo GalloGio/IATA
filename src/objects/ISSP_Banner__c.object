@@ -2360,10 +2360,10 @@ _blank = new window</description>
         <columns>OBJECT_ID</columns>
         <columns>NAME</columns>
         <columns>Status__c</columns>
-        <columns>Publication_end_date__c</columns>
         <columns>Country__c</columns>
         <columns>Sector__c</columns>
         <columns>Publication_start_date__c</columns>
+        <columns>Publication_end_date__c</columns>
         <columns>Zone_1_text_hyperlink__c</columns>
         <filterScope>Everything</filterScope>
         <filters>

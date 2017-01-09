@@ -53,7 +53,7 @@
         <description>Share the Divisional, Regional, Area and Account objectives to the account managers in read-only mode, for the needs of the Account Management project.</description>
         <label>Share Objectives to Account Managers</label>
         <sharedTo>
-            <group>Account_Managers</group>
+            <allInternalUsers></allInternalUsers>
         </sharedTo>
         <criteriaItems>
             <field>RecordTypeId</field>
