@@ -19884,7 +19884,7 @@ Also, the package has changed the setting to prevent the creation of Contacts an
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>SF Base URL</shortDescription>
-        <value>https://iata.my.salesforce.com</value>
+        <value>https://iata--preprod.cs81.my.salesforce.com</value>
     </labels>
     <labels>
         <fullName>SIS</fullName>
