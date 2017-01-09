@@ -62,18 +62,18 @@ global class ams2gdp_Batch_Update implements Database.Batchable<sObject>
         {
             query = 'SELECT Id FROM AMS2GDP_Log__c  ';
         }
-        else if(job == 'clearBatchGeneratedData')
+        /*else if(job == 'clearBatchGeneratedData')
         {
             query = 'SELECT Id FROM '+jobParams+' WHERE CreatedById IN(\'0057E000000vCiP\',\'0057E000001F9va\')';
-        }   
+        }   */
         else if(job == 'clearLiveRecords')
         {
             query = 'SELECT Id FROM '+jobParams+' WHERE RecordType.DeveloperName = \'Live\' ';
         }
-        else if(job == 'clearKeyValues')
+        /*else if(job == 'clearKeyValues')
         {
             query = 'SELECT Id FROM '+jobParams+' WHERE AMS_GDP_Key__c != null ';
-        }       
+        }     */  
     }
     
     global Database.QueryLocator start(Database.BatchableContext BC) 
@@ -92,89 +92,41 @@ global class ams2gdp_Batch_Update implements Database.Batchable<sObject>
         
         totalRecords += scope.size();
 
-        if(job == 'updateGDPProductsAccountView')
-        {
-            updateGDPProductsAccountView((List<GDP_Products_Account_View__c>) scope);
-        }
-        else if(job == 'updateGDS')
-        {
-            updateGDS((List<GDS__c>) scope);
-        }
-        else if(job == 'updateAccountCategory')
-        {
-            updateAccountCategory((List<Account_Category__c>) scope);
-        }
-        else if(job == 'updateAccreditation')
-        {
-            updateAccreditation((List<Accreditation__c>) scope);
-        }
-        else if(job == 'updateGDPPhone')
-        {
-            updateGDPPhone((List<GDP_Phone__c>) scope);
-        }
-        else if(job == 'updateGDPAddress')
-        {
-            updateGDPAddress((List<GDP_Address__c>) scope);
-        }
-        else if(job == 'updateAgencyOwner')
-        {
-            updateAgencyOwner((List<Agency_Owner__c>) scope);
-        }
-        else if(job == 'updateAssocAffiliationMembership')
-        {
-            updateAssocAffiliationMembership((List<Assoc_Affiliation_Membership__c>) scope);
-        }
-        else if(job == 'updateAdjacentAirport')
-        {
-            updateAdjacentAirport((List<Adjacent_Airport__c>) scope);
-        }
-        else if(job == 'updateAgencyProfileSpecialization')
-        {
-            updateAgencyProfileSpecialization((List<GDP_Agency_Profile_Specialization__c>) scope);
-        }
-        else if(job == 'updateGSATerritory')
-        {
-            updateGSATerritory((List<GSA_Territory__c>) scope);
-        }
-        else if(job =='clearLogs')
-        {
-            clearLogs((List<AMS2GDP_Log__c>) scope);
-        }
-        else if(job =='clearBatchGeneratedData')
-        {
-            clearBatchGeneratedData(scope);
-        }
-        else if (job == 'clearKeyValues')
-        {
-            clearKeyValues(scope);
-        }
+        if(job == 'updateGDPProductsAccountView') updateGDPProductsAccountView((List<GDP_Products_Account_View__c>) scope);
+        else if(job == 'updateGDS') updateGDS((List<GDS__c>) scope);
+        else if(job == 'updateAccountCategory') updateAccountCategory((List<Account_Category__c>) scope);
+        else if(job == 'updateAccreditation') updateAccreditation((List<Accreditation__c>) scope);
+        else if(job == 'updateGDPPhone') updateGDPPhone((List<GDP_Phone__c>) scope);
+        else if(job == 'updateGDPAddress') updateGDPAddress((List<GDP_Address__c>) scope);
+        else if(job == 'updateAgencyOwner') updateAgencyOwner((List<Agency_Owner__c>) scope);
+        else if(job == 'updateAssocAffiliationMembership') updateAssocAffiliationMembership((List<Assoc_Affiliation_Membership__c>) scope);
+        else if(job == 'updateAdjacentAirport') updateAdjacentAirport((List<Adjacent_Airport__c>) scope);
+        else if(job == 'updateAgencyProfileSpecialization') updateAgencyProfileSpecialization((List<GDP_Agency_Profile_Specialization__c>) scope);
+        else if(job == 'updateGSATerritory') updateGSATerritory((List<GSA_Territory__c>) scope);
+        else if(job =='clearLogs') clearData(scope);
+        //else if(job =='clearBatchGeneratedData') clearData(scope);
+        else if(job == 'clearLiveRecords') clearData(scope);
+        //else if (job == 'clearKeyValues') clearKeyValues(scope);        
     }
     
     global void finish(Database.BatchableContext BC) 
     {
         //--Send completion notification 
-        ams2gdp_Utils.notifyBatchOutput(job, totalRecords, null, null); 
-
-       
+        ams2gdp_Utils.notifyBatchOutput(job, totalRecords, null, null);
     }
 
-    public static void clearLogs(List<AMS2GDP_Log__c> logs)
-    {
-        delete logs; 
-    }
-    
-    public static void clearBatchGeneratedData(List<sObject> data)
+    public static void clearData(List<sObject> data)
     {
         delete data; 
     }
 
-    public static void clearKeyValues(List<sObject> data)
+    /*public static void clearKeyValues(List<sObject> data)
     {
         for(sObject o : data)
             o.put('AMS_GDP_Key__c', null);
 
         update data; 
-    }
+    }*/
 
     public static void updateGDPProductsAccountView(List<GDP_Products_Account_View__c> gdp_products_account_views)
     {
@@ -229,14 +181,8 @@ global class ams2gdp_Batch_Update implements Database.Batchable<sObject>
 
         for(GDS__c item : lst)
         {
-            if(String.isNotBlank(item.AIMS_Id__c) && accountsByLegacyId.containsKey(item.AIMS_ID__c.removeEnd(item.GDS_ID__c+'GDP')))
-            {
-                item.AMS_GDP_Key__c = accountsByLegacyId.get(item.AIMS_ID__c.removeEnd(item.GDS_ID__c+'GDP')) + '-' + item.Computer_Reservation_System__r.Code__c;
-            }
-            else if(String.isNotBlank(item.Webstar_Id__c) && accountsByLegacyId.containsKey(item.Webstar_Id__c.removeEnd(item.GDS_ID__c+'GDP')))
-            {
-                item.AMS_GDP_Key__c = accountsByLegacyId.get(item.Webstar_Id__c.removeEnd(item.GDS_ID__c+'GDP')) + '-' + item.Computer_Reservation_System__r.Code__c;
-            }
+            if(String.isNotBlank(item.AIMS_Id__c) && accountsByLegacyId.containsKey(item.AIMS_ID__c.removeEnd(item.GDS_ID__c+'GDP'))) item.AMS_GDP_Key__c = accountsByLegacyId.get(item.AIMS_ID__c.removeEnd(item.GDS_ID__c+'GDP')) + '-' + item.Computer_Reservation_System__r.Code__c;
+            else if(String.isNotBlank(item.Webstar_Id__c) && accountsByLegacyId.containsKey(item.Webstar_Id__c.removeEnd(item.GDS_ID__c+'GDP'))) item.AMS_GDP_Key__c = accountsByLegacyId.get(item.Webstar_Id__c.removeEnd(item.GDS_ID__c+'GDP')) + '-' + item.Computer_Reservation_System__r.Code__c;            
         }
 
         update lst;
@@ -262,18 +208,10 @@ global class ams2gdp_Batch_Update implements Database.Batchable<sObject>
 
         for(Account_Category__c item : lst)
         {
-            if(String.isNotBlank(item.AIMS_Id__c) && accountsByLegacyId.containsKey(item.AIMS_ID__c.removeEnd(item.Category_ID__c+'GDP')))
-            {
-                item.AMS_GDP_Key__c = accountsByLegacyId.get(item.AIMS_ID__c.removeEnd(item.Category_ID__c+'GDP')) + '-' + item.Category_Code__r.Code__c;
-            }
-            else if(String.isNotBlank(item.Webstar_Id__c) && accountsByLegacyId.containsKey(item.Webstar_Id__c.removeEnd(item.Category_ID__c+'GDP')))
-            {
-                item.AMS_GDP_Key__c = accountsByLegacyId.get(item.Webstar_Id__c.removeEnd(item.Category_ID__c+'GDP')) + '-' + item.Category_Code__r.Code__c;
-            }
+            if(String.isNotBlank(item.AIMS_Id__c) && accountsByLegacyId.containsKey(item.AIMS_ID__c.removeEnd(item.Category_ID__c+'GDP'))) item.AMS_GDP_Key__c = accountsByLegacyId.get(item.AIMS_ID__c.removeEnd(item.Category_ID__c+'GDP')) + '-' + item.Category_Code__r.Code__c;
+            else if(String.isNotBlank(item.Webstar_Id__c) && accountsByLegacyId.containsKey(item.Webstar_Id__c.removeEnd(item.Category_ID__c+'GDP'))) item.AMS_GDP_Key__c = accountsByLegacyId.get(item.Webstar_Id__c.removeEnd(item.Category_ID__c+'GDP')) + '-' + item.Category_Code__r.Code__c;
             
-            System.debug( item.AMS_GDP_Key__c);
         }
-
         update lst;
     }
 
@@ -302,10 +240,8 @@ global class ams2gdp_Batch_Update implements Database.Batchable<sObject>
         Map<String, String> inspectionsByLegacyId = new Map<String, String>(); 
         for(AMS_Inspection__c ins: [SELECT Id, Legacy_External_Id__c, Legacy_System__c FROM AMS_Inspection__c WHERE Legacy_External_Id__c IN :legacy_ids])
         {
-            if(String.isNotBlank(ins.Legacy_External_Id__c))
-            {
-                inspectionsByLegacyId.put(ins.Legacy_External_Id__c, ins.Id);           
-            }               
+            if(String.isNotBlank(ins.Legacy_External_Id__c)) inspectionsByLegacyId.put(ins.Legacy_External_Id__c, ins.Id);   
+                         
         }
 
         for(Accreditation__c acc : accreditations)
@@ -315,20 +251,15 @@ global class ams2gdp_Batch_Update implements Database.Batchable<sObject>
                 String aims_key = acc.AIMS_Id__c.removeEnd('ACC'+acc.Accreditation_ID__c+'GDP');
                     aims_key = aims_key+acc.Endorsed_Accredited_By__r.Code__c;
 
-                if(inspectionsByLegacyId.containsKey(aims_key))
-                {
-                    acc.AMS_GDP_Key__c = inspectionsByLegacyId.get(aims_key)+'GDP';
-                }
+                if(inspectionsByLegacyId.containsKey(aims_key)) acc.AMS_GDP_Key__c = inspectionsByLegacyId.get(aims_key)+'GDP';
+                
             }
             else if(String.isNotBlank(acc.Webstar_Id__c))
             {
                 String webstar_key = acc.Webstar_Id__c.removeEnd('ACC'+acc.Accreditation_ID__c+'GDP');
                     webstar_key = webstar_key+acc.Endorsed_Accredited_By__r.Code__c;
 
-                if(inspectionsByLegacyId.containsKey(webstar_key)){
-
-                   acc.AMS_GDP_Key__c = inspectionsByLegacyId.get(webstar_key)+'GDP';                    
-                }
+                if(inspectionsByLegacyId.containsKey(webstar_key)) acc.AMS_GDP_Key__c = inspectionsByLegacyId.get(webstar_key)+'GDP'; 
             }
         }
 
@@ -369,10 +300,7 @@ global class ams2gdp_Batch_Update implements Database.Batchable<sObject>
             
             if(String.isNotBlank(adr.Legacy_External_Id__c))
             {
-                if(adr.Legacy_System__c == 'Webstar')
-                {
-                    addressesByLegacyId.put(adr.Legacy_External_Id__c, adr.Id);
-                }
+                if(adr.Legacy_System__c == 'Webstar') addressesByLegacyId.put(adr.Legacy_External_Id__c, adr.Id);
                 else
                 {
                     String key = adr.Legacy_External_Id__c.removeStart('AGT-');
@@ -459,24 +387,14 @@ global class ams2gdp_Batch_Update implements Database.Batchable<sObject>
         {
             String adType;
            
-           if(!String.isBlank(adr.Address_Type__c)){
-                if(adr.Address_Type__c=='Primary')
-                {
-                    adType='LOC';
-                 } 
-                 else if(adr.Address_Type__c=='Mailing')
-                {   
-                    adType= 'MAI';
-                }
+            if(!String.isBlank(adr.Address_Type__c)){
+                if(adr.Address_Type__c=='Primary') adType='LOC';
+                else if(adr.Address_Type__c=='Mailing') adType= 'MAI';
             }
 
             if(String.isNotBlank(adr.Legacy_External_Id__c))
             {
-                if(adr.Legacy_System__c == 'Webstar')
-                {
-
-                    addressesByLegacyId.put(adr.Legacy_External_Id__c+adType, adr.Id);
-                }
+                if(adr.Legacy_System__c == 'Webstar') addressesByLegacyId.put(adr.Legacy_External_Id__c+adType, adr.Id);
                 else
                 {
                     String key = adr.Legacy_External_Id__c.removeStart('AGT-');
@@ -494,21 +412,14 @@ global class ams2gdp_Batch_Update implements Database.Batchable<sObject>
                     //String aims_id = address.AIMS_Id__c.removeEnd('MAI');
                     //aims_id =aims_id.removeEnd('LOC');                                        
                 
-                if(addressesByLegacyId.containsKey(aims_id))
-                {
-                   address.AMS_GDP_Key__c = addressesByLegacyId.get(aims_id)+'GDP';
-                }       
-                  
+                if(addressesByLegacyId.containsKey(aims_id)) address.AMS_GDP_Key__c = addressesByLegacyId.get(aims_id)+'GDP';
+               
             }
             else if(String.isNotBlank(address.Webstar_Id__c))
             {
                 
-               String webstar_id = address.Webstar_Id__c.removeEnd('GDP');
-                    //webstar_id = webstar_id.removeEnd('LOCGDP');
-                
-                if(addressesByLegacyId.containsKey(webstar_id)){
-                    address.AMS_GDP_Key__c = addressesByLegacyId.get(webstar_id)+'GDP';
-                }
+                String webstar_id = address.Webstar_Id__c.removeEnd('GDP');
+                if(addressesByLegacyId.containsKey(webstar_id))  address.AMS_GDP_Key__c = addressesByLegacyId.get(webstar_id)+'GDP';
                 
             }
         }
@@ -530,15 +441,9 @@ global class ams2gdp_Batch_Update implements Database.Batchable<sObject>
 
         Map<String, String> accountRoleMap = new Map<String, String>(); 
 
-        for(AMS_Account_Role__c aRole: [
-            SELECT Id, Legacy_External_Id__c 
-            FROM AMS_Account_Role__c 
-            WHERE Legacy_External_Id__c IN :GDPcommonKeys])
+        for(AMS_Account_Role__c aRole: [SELECT Id, Legacy_External_Id__c FROM AMS_Account_Role__c WHERE Legacy_External_Id__c IN : GDPcommonKeys])
         {
-            if(String.isNotBlank(aRole.Legacy_External_Id__c))
-            {
-                accountRoleMap.put(aRole.Legacy_External_Id__c, aRole.Id);          
-            }               
+            if(String.isNotBlank(aRole.Legacy_External_Id__c)) accountRoleMap.put(aRole.Legacy_External_Id__c, aRole.Id); 
         }
 
 
@@ -547,11 +452,8 @@ global class ams2gdp_Batch_Update implements Database.Batchable<sObject>
             for(Agency_Owner__c ag : agency_owner)
             {
 
-                if(ag.RecordType.DeveloperName == 'GDP') {
-                         ag.AMS_GDP_Key__c =accountRoleMap.get(ag.AIMS_ID__c)+'GDP';}
-                    else{
-                         ag.AMS_GDP_Key__c =accountRoleMap.get(ag.AIMS_ID__c) ;}
-                
+                if(ag.RecordType.DeveloperName == 'GDP') ag.AMS_GDP_Key__c =accountRoleMap.get(ag.AIMS_ID__c)+'GDP';
+                else ag.AMS_GDP_Key__c =accountRoleMap.get(ag.AIMS_ID__c) ;
             }
             update agency_owner; 
         }
@@ -592,10 +494,8 @@ global class ams2gdp_Batch_Update implements Database.Batchable<sObject>
             for(Adjacent_Airport__c air : adjacent_airport)
             {
                 
-                if(air.RecordType.DeveloperName == 'GDP' && String.isNotBlank(air.Related_GDP_Products_Account_View__r.AMS_GDP_Key__c))  {
-                         air.AMS_GDP_Key__c =agencyAirportkeysMap.get(air.Related_GDP_Products_Account_View__r.AMS_GDP_Key__c.left(15)+'-'+air.AirportCode__r.Code__c)+'GDP';}
-                    else{
-                         air.AMS_GDP_Key__c =agencyAirportkeysMap.get(air.AMS_GDP_Formula_Key__c) ;}
+                if(air.RecordType.DeveloperName == 'GDP' && String.isNotBlank(air.Related_GDP_Products_Account_View__r.AMS_GDP_Key__c)) air.AMS_GDP_Key__c =agencyAirportkeysMap.get(air.Related_GDP_Products_Account_View__r.AMS_GDP_Key__c.left(15)+'-'+air.AirportCode__r.Code__c)+'GDP';
+                else air.AMS_GDP_Key__c =agencyAirportkeysMap.get(air.AMS_GDP_Formula_Key__c) ;
             }
             update adjacent_airport; 
         }
@@ -630,15 +530,16 @@ global class ams2gdp_Batch_Update implements Database.Batchable<sObject>
         {
             for(Assoc_Affiliation_Membership__c af : affil_member)
             {
-                    if(af.RecordType.DeveloperName == 'GDP' && String.isNotBlank(af.Related_GDP_Products_Account_View__r.AMS_GDP_Key__c)) {
+                if(af.RecordType.DeveloperName == 'GDP' && String.isNotBlank(af.Related_GDP_Products_Account_View__r.AMS_GDP_Key__c)) 
+                {
 
-                        if(String.isNotBlank(agencyAffiliationMap.get(af.Related_GDP_Products_Account_View__r.AMS_GDP_Key__c.left(15)+af.Assoc_Affiliation_Code__r.Code__c))){
-                         af.AMS_GDP_Key__c =agencyAffiliationMap.get(af.Related_GDP_Products_Account_View__r.AMS_GDP_Key__c.left(15)+af.Assoc_Affiliation_Code__r.Code__c)+'GDP';
-                            }
-                        else af.AMS_GDP_Key__c=null;
-                        }
-                    else{
-                        af.AMS_GDP_Key__c =agencyAffiliationMap.get(af.AMS_GDP_Mapping_Key__c) ;}
+                    if(String.isNotBlank(agencyAffiliationMap.get(af.Related_GDP_Products_Account_View__r.AMS_GDP_Key__c.left(15)+af.Assoc_Affiliation_Code__r.Code__c)))
+                    {
+                        af.AMS_GDP_Key__c =agencyAffiliationMap.get(af.Related_GDP_Products_Account_View__r.AMS_GDP_Key__c.left(15)+af.Assoc_Affiliation_Code__r.Code__c)+'GDP';
+                    }
+                    else af.AMS_GDP_Key__c=null;
+                }
+                else{af.AMS_GDP_Key__c =agencyAffiliationMap.get(af.AMS_GDP_Mapping_Key__c) ;}
             }
             update affil_member; 
         }
@@ -664,14 +565,8 @@ global class ams2gdp_Batch_Update implements Database.Batchable<sObject>
 
         for(GDP_Agency_Profile_Specialization__c gdp : lst)
         {
-            if(String.isNotBlank(gdp.AIMS_Id__c) && accountsByLegacyId.containsKey(gdp.AIMS_ID__c.removeEnd('GDP')))
-            {
-                gdp.AMS_GDP_Key__c = accountsByLegacyId.get(gdp.AIMS_ID__c.removeEnd('GDP'));
-            }
-            else if(String.isNotBlank(gdp.Webstar_Id__c) && accountsByLegacyId.containsKey(gdp.Webstar_Id__c.removeEnd('GDP')))
-            {
-                gdp.AMS_GDP_Key__c = accountsByLegacyId.get(gdp.Webstar_Id__c.removeEnd('GDP'));
-            }
+            if(String.isNotBlank(gdp.AIMS_Id__c) && accountsByLegacyId.containsKey(gdp.AIMS_ID__c.removeEnd('GDP'))) gdp.AMS_GDP_Key__c = accountsByLegacyId.get(gdp.AIMS_ID__c.removeEnd('GDP'));
+            else if(String.isNotBlank(gdp.Webstar_Id__c) && accountsByLegacyId.containsKey(gdp.Webstar_Id__c.removeEnd('GDP'))) gdp.AMS_GDP_Key__c = accountsByLegacyId.get(gdp.Webstar_Id__c.removeEnd('GDP'));
         }
 
         update lst; 
@@ -695,12 +590,9 @@ global class ams2gdp_Batch_Update implements Database.Batchable<sObject>
         for(GSA_Territory__c gsa: lst)
         {
             String key = gsa.AIMS_Id__c+gsa.Airline_Code__c+gsa.Territory_ISO_Country__c+gsa.Territory_IATA_Numeric_Country_Code__c;
-            if(territoryByLegacyId.containsKey(key))
-                gsa.AMS_GDP_Key__c = territoryByLegacyId.get(key)+'GDP';
+            if(territoryByLegacyId.containsKey(key)) gsa.AMS_GDP_Key__c = territoryByLegacyId.get(key)+'GDP';
         }
 
         update lst; 
     }
-
-
 }

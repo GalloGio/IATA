@@ -57,12 +57,23 @@ private class ams2gdp_Batch_Update_Test {
 			, Table__c = 'ASSC'
 		));
 
+		List<GDP_Reference_Table__c> airportTables = new List<GDP_Reference_Table__c>();
+		airportTables.add(new GDP_Reference_Table__c(Name = 'ABIDJAN'
+			, Code__c = 'ABJ'
+			, Definition__c = 'ABIDJAN'
+			, Table__c = 'AIRPORT'
+		));
+
+		
+
+
 		insert gdsTables; 
 		insert catTables; 
 		insert classTables; 
 		insert airCodeTables; 
 		insert statusTables;
 		insert assocTables;
+		insert airportTables;
 
 		
 		//AMS Accounts
@@ -179,28 +190,18 @@ private class ams2gdp_Batch_Update_Test {
 			, RecordTypeID = assocRecordTypes.get('GDP')
 		));
 		insert assocAffiliations;
+
+		//Adjacent Airports
+		List<Adjacent_Airport__c> adjacentAirports = new List<Adjacent_Airport__c>(); 
+		Map<String, String> airportRecordTypes = ams2gdp_Utils.getRecordTypeIdByName('Adjacent_Airport__c'); 
+		adjacentAirports.add(new Adjacent_Airport__c(AIMS_ID__c = 'AIMS001GDP'
+			, AirportCode__c = airportTables[0].Id
+			, Airport_ID__c = 1
+			, Related_Account__c = accounts[0].Id
+			, Related_GDP_Products_Account_View__c = gdpProducts[0].Id 
+			, RecordTypeID = airportRecordTypes.get('GDP')
+		));
  
-		//ams2gdp_TestDataGenerator testGenerator =  new ams2gdp_TestDataGenerator();
-		//
-		
-		//ams2gdp_TestDataGenerator.generateAMS_Agency_Affiliations(nb, true);
-		//ams2gdp_TestDataGenerator.generateAccreditationEndorsementOrganisations(nb, true);
-		//ams2gdp_TestDataGenerator.generateAMS_Addresses(nb, true);
-		//ams2gdp_TestDataGenerator.generateAMS_AgencyAirports(nb, true);
-		//ams2gdp_TestDataGenerator.generateAMS_AgencyProfiles(nb, true);
-		//ams2gdp_TestDataGenerator.generateAMS_AccountRoles(nb, true);
-		//ams2gdp_TestDataGenerator.generateReferenceTables(nb, true);
-		//ams2gdp_TestDataGenerator.generateAdjacentAirports(nb,true);
-		//ams2gdp_TestDataGenerator.generateGDP_Addresses(nb,true);
-		//ams2gdp_TestDataGenerator.generateGDP_Phones(nb,true);		
-		//ams2gdp_TestDataGenerator.generateAgencyOwners(nb,true);
-		//ams2gdp_TestDataGenerator.generateAccreditations(nb,true);
-		//ams2gdp_TestDataGenerator.generateAssocAffiliation(nb,true);
-		//ams2gdp_TestDataGenerator.generateGDPProductsView(nb,true);
-		//ams2gdp_TestDataGenerator.generateAMS_InspectionsOneTime(nb,true);
-		//ams2gdp_TestDataGenerator.generateAccountsOnetime(nb, true);
-
-
 	}
 	
 
@@ -265,11 +266,11 @@ private class ams2gdp_Batch_Update_Test {
 		Test.stopTest();		
 	}
 
-	@isTest static void test_method_12() {
+	/*@isTest static void test_method_12() {
 		Test.startTest();
 			Database.executeBatch(new ams2gdp_Batch_Update('clearBatchGeneratedData', 'GDS__c'));
 		Test.stopTest();		
-	}
+	}*/
 
 	@isTest static void test_method_13() {
 		Test.startTest();
@@ -277,11 +278,11 @@ private class ams2gdp_Batch_Update_Test {
 		Test.stopTest();		
 	}
 
-	@isTest static void test_method_14() {
+	/*@isTest static void test_method_14() {
 		Test.startTest();
 			Database.executeBatch(new ams2gdp_Batch_Update('clearKeyValues', 'GDS__c'));
 		Test.stopTest();		
-	}
+	}*/
 	
 	@isTest static void test_method_15() {
 		Test.startTest();
