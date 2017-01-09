@@ -21963,7 +21963,9 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <fullName>To_clean_Billing_State_in_Americas</fullName>
         <columns>ACCOUNT.NAME</columns>
         <columns>IATACode__c</columns>
+        <columns>Location_Class__c</columns>
         <columns>ACCOUNT.ADDRESS1_STATE</columns>
+        <columns>ACCOUNT.ADDRESS2_STATE</columns>
         <columns>IATA_ISO_Country__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
@@ -21977,6 +21979,27 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <value>Account.IATA_Agency</value>
         </filters>
         <label>To clean - Billing State in Americas</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>To_clean_Shipping_State_in_Americas</fullName>
+        <columns>ACCOUNT.NAME</columns>
+        <columns>IATACode__c</columns>
+        <columns>Location_Class__c</columns>
+        <columns>ACCOUNT.ADDRESS2_STATE</columns>
+        <columns>IATA_ISO_Country__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>ACCOUNT.ADDRESS2_STATE</field>
+            <operation>equals</operation>
+            <value>BR57,MX86</value>
+        </filters>
+        <filters>
+            <field>ACCOUNT.RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>Account.IATA_Agency</value>
+        </filters>
+        <label>To clean - Shipping State in Americas</label>
         <language>en_US</language>
     </listViews>
     <listViews>
