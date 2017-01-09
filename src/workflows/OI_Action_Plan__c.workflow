@@ -75,8 +75,8 @@
         </criteriaItems>
         <criteriaItems>
             <field>Operational_Improvements__c.Status__c</field>
-            <operation>notEqual</operation>
-            <value>Closed effective,Closed error,Closed effectiveness pending,Closed not effective</value>
+            <operation>notContain</operation>
+            <value>Closed</value>
         </criteriaItems>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
         <workflowTimeTriggers>

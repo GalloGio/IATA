@@ -1343,6 +1343,11 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
             <field>Sent_to_AIMS_on__c</field>
             <operation>equals</operation>
         </filters>
+        <filters>
+            <field>Card_Status__c</field>
+            <operation>notEqual</operation>
+            <value>Cancelled</value>
+        </filters>
         <label>Must Sync</label>
         <language>en_US</language>
     </listViews>
@@ -1769,7 +1774,7 @@ if (sentToAIMSon != null &amp;&amp; cardStatus == &apos;Printed/Delivered&apos;)
      card.id =&quot;{!ID_Card__c.Id}&quot;;
      card.Card_Status__c = &apos;Cancelled&apos;;
      card.Cancellation_Date__c = new Date();
-     card.MustSyncWithAIMS__c = &apos;True&apos;;
+     card.MustSyncWithAIMS__c = &apos;False&apos;;
      cardToUpdate.push(card);
      result = sforce.connection.update(cardToUpdate); 
 

@@ -7071,6 +7071,7 @@
 <objectPermissions><allowCreate>true</allowCreate><allowDelete>true</allowDelete><allowEdit>true</allowEdit><allowRead>true</allowRead><modifyAllRecords>false</modifyAllRecords><object>EBC_Resource__c</object><viewAllRecords>true</viewAllRecords></objectPermissions>
 <objectPermissions><allowCreate>true</allowCreate><allowDelete>true</allowDelete><allowEdit>true</allowEdit><allowRead>true</allowRead><modifyAllRecords>true</modifyAllRecords><object>EBC_Setup__c</object><viewAllRecords>true</viewAllRecords></objectPermissions>
 <objectPermissions><allowCreate>true</allowCreate><allowDelete>true</allowDelete><allowEdit>true</allowEdit><allowRead>true</allowRead><modifyAllRecords>true</modifyAllRecords><object>EBC_Statistic__c</object><viewAllRecords>true</viewAllRecords></objectPermissions>
+<objectPermissions><allowCreate>true</allowCreate><allowDelete>true</allowDelete><allowEdit>true</allowEdit><allowRead>true</allowRead><modifyAllRecords>true</modifyAllRecords><object>EBC_Sub_Continent__c</object><viewAllRecords>true</viewAllRecords></objectPermissions>
 <objectPermissions><allowCreate>true</allowCreate><allowDelete>true</allowDelete><allowEdit>true</allowEdit><allowRead>true</allowRead><modifyAllRecords>true</modifyAllRecords><object>EBC_Template_Resource__c</object><viewAllRecords>true</viewAllRecords></objectPermissions>
 <objectPermissions><allowCreate>true</allowCreate><allowDelete>true</allowDelete><allowEdit>true</allowEdit><allowRead>true</allowRead><modifyAllRecords>true</modifyAllRecords><object>EBC_Template_Test__c</object><viewAllRecords>true</viewAllRecords></objectPermissions>
 <objectPermissions><allowCreate>true</allowCreate><allowDelete>true</allowDelete><allowEdit>true</allowEdit><allowRead>true</allowRead><modifyAllRecords>true</modifyAllRecords><object>EBC_Template__c</object><viewAllRecords>true</viewAllRecords></objectPermissions>
@@ -7397,6 +7398,7 @@
 <tabSettings><tab>EBC_Master_Filter__c</tab><visibility>Visible</visibility></tabSettings>
 <tabSettings><tab>EBC_Resource__c</tab><visibility>None</visibility></tabSettings>
 <tabSettings><tab>EBC_Setup__c</tab><visibility>Visible</visibility></tabSettings>
+<tabSettings><tab>EBC_Sub_Continent__c</tab><visibility>Visible</visibility></tabSettings>
 <tabSettings><tab>EBC_Template__c</tab><visibility>Visible</visibility></tabSettings>
 <tabSettings><tab>EC2_Console</tab><visibility>None</visibility></tabSettings>
 <tabSettings><tab>EC2_Images</tab><visibility>None</visibility></tabSettings>
