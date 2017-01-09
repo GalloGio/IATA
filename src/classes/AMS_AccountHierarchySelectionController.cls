@@ -106,7 +106,7 @@ public class AMS_AccountHierarchySelectionController {
 
 				errorMessages.put(
 					AMS_Utils.OWNERSHIP_IATA,
-					'For change of ownership to IATA, a target agency must be filled. It must contain an agency with location type HO which cannot be part of this hierarchy'
+					'For change of ownership to IATA, a target agency must be filled. It must contain an agency with location type HO or AO which cannot be part of this hierarchy'
 				);
 
 				errorMessages.put(
@@ -409,7 +409,7 @@ public class AMS_AccountHierarchySelectionController {
 			}
 
 			if(tocList.contains(AMS_Utils.OWNERSHIP_NON_IATA) || tocList.contains(AMS_Utils.OWNERSHIP_IATA)){
-				if((hi.main || hi.selected) && hi.acc.Location_Type__c == AMS_Utils.HO) ownershipMainHO = true;
+				if((hi.main || hi.selected) && (hi.acc.Location_Type__c == AMS_Utils.HO || hi.acc.Location_Type__c == AMS_Utils.AO)) ownershipMainHO = true;
 				if(!hi.selected && !hi.main) ownershipAgenciesNotSelected = true;
 			}
 
@@ -421,7 +421,7 @@ public class AMS_AccountHierarchySelectionController {
 			if(oscar.AMS_Target_Agency__c == null) errorChecks.put(AMS_Utils.OWNERSHIP_IATA, true);
 			else{
 				String targetLocationType = [SELECT Id, Location_Type__c FROM Account WHERE Id = :oscar.AMS_Target_Agency__c].Location_Type__c;
-				if(targetLocationType != AMS_Utils.HO) errorChecks.put(AMS_Utils.OWNERSHIP_IATA, true);
+				if(targetLocationType != AMS_Utils.HO && targetLocationType != AMS_Utils.AO) errorChecks.put(AMS_Utils.OWNERSHIP_IATA, true);
 			}
 		}
 
