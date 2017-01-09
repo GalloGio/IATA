@@ -1394,7 +1394,7 @@
 <fieldPermissions><editable>true</editable><field>Account.Accounting_Code__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Account.Accreditation_date__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Account.Accumulated_Irregularities__c</field><readable>true</readable></fieldPermissions>
-<fieldPermissions><editable>false</editable><field>Account.Active_Guarantees__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>Account.Active_Guarantees__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Account.Admission_Date__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Account.Agent_Global_HQ__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Account.Agent_Type_Code__c</field><readable>true</readable></fieldPermissions>
@@ -1518,7 +1518,7 @@
 <fieldPermissions><editable>false</editable><field>Account.GDS__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Account.GSA_Type__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Account.GSSA_Code_Cargo__c</field><readable>true</readable></fieldPermissions>
-<fieldPermissions><editable>false</editable><field>Account.Guaranteed_amount__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>Account.Guaranteed_amount__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Account.HQ_ASP_Effective_Date__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Account.HQ_Due_Dilingence_Status__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Account.Has_Activities__c</field><readable>false</readable></fieldPermissions>
@@ -7194,7 +7194,7 @@
 <recordTypeVisibilities><default>false</default><recordType>Account.MACSSalesAccount</recordType><visible>false</visible></recordTypeVisibilities>
 <recordTypeVisibilities><default>false</default><recordType>Account.Operator</recordType><visible>false</visible></recordTypeVisibilities>
 <recordTypeVisibilities><default>false</default><recordType>Account.Others</recordType><visible>false</visible></recordTypeVisibilities>
-<recordTypeVisibilities><default>true</default><recordType>Account.Standard_Account</recordType><visible>true</visible></recordTypeVisibilities>
+<recordTypeVisibilities><default>true</default><personAccountDefault>true</personAccountDefault><recordType>Account.Standard_Account</recordType><visible>true</visible></recordTypeVisibilities>
 <recordTypeVisibilities><default>false</default><recordType>Account_Category__c.GDP</recordType><visible>false</visible></recordTypeVisibilities>
 <recordTypeVisibilities><default>false</default><recordType>Account_Category__c.Live</recordType><visible>false</visible></recordTypeVisibilities>
 <recordTypeVisibilities><default>false</default><recordType>Accreditation__c.GDP</recordType><visible>false</visible></recordTypeVisibilities>
@@ -7437,6 +7437,7 @@
 <tabVisibilities><tab>EBC_Master_Filter__c</tab><visibility>Hidden</visibility></tabVisibilities>
 <tabVisibilities><tab>EBC_Resource__c</tab><visibility>Hidden</visibility></tabVisibilities>
 <tabVisibilities><tab>EBC_Setup__c</tab><visibility>Hidden</visibility></tabVisibilities>
+<tabVisibilities><tab>EBC_Sub_Continent__c</tab><visibility>Hidden</visibility></tabVisibilities>
 <tabVisibilities><tab>EBC_Template__c</tab><visibility>Hidden</visibility></tabVisibilities>
 <tabVisibilities><tab>EC2_Console</tab><visibility>Hidden</visibility></tabVisibilities>
 <tabVisibilities><tab>EC2_Images</tab><visibility>Hidden</visibility></tabVisibilities>

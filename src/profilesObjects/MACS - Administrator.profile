@@ -5802,7 +5802,7 @@
 <fieldPermissions><editable>true</editable><field>Opportunity.Artwork_Provided__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Opportunity.Bill_To_Confirmation__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Opportunity.Billing_Date__c</field><readable>true</readable></fieldPermissions>
-<fieldPermissions><editable>false</editable><field>Opportunity.Block_alerts_on_updates__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>true</editable><field>Opportunity.Block_alerts_on_updates__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Opportunity.Booth_Number__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Opportunity.CampaignId</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>true</editable><field>Opportunity.Campaign__c</field><readable>true</readable></fieldPermissions>
@@ -7447,6 +7447,7 @@
 <tabVisibilities><tab>EBC_Master_Filter__c</tab><visibility>Hidden</visibility></tabVisibilities>
 <tabVisibilities><tab>EBC_Resource__c</tab><visibility>Hidden</visibility></tabVisibilities>
 <tabVisibilities><tab>EBC_Setup__c</tab><visibility>Hidden</visibility></tabVisibilities>
+<tabVisibilities><tab>EBC_Sub_Continent__c</tab><visibility>Hidden</visibility></tabVisibilities>
 <tabVisibilities><tab>EBC_Template__c</tab><visibility>Hidden</visibility></tabVisibilities>
 <tabVisibilities><tab>EC2_Console</tab><visibility>Hidden</visibility></tabVisibilities>
 <tabVisibilities><tab>EC2_Images</tab><visibility>Hidden</visibility></tabVisibilities>
