@@ -177,19 +177,21 @@ public with sharing class AMS_PurgeIATACodeController {
 
                     AMS_PurgeIATACodeController.PurgeFileContent pfc = new AMS_PurgeIATACodeController.PurgeFileContent();
 
-                    pfc.Identifier = inputvalues[0];
-                    pfc.IATACode = inputvalues[1];       
-                    pfc.C_Code = inputvalues[2];
-                    pfc.A_Code = inputvalues[3];
-                    pfc.N_Code = inputvalues[4];
-                    pfc.Site = inputvalues[5];
-        			pfc.Name = inputvalues[6];
-        			pfc.LocationType = inputvalues[7];
-        			pfc.LocationClass = inputvalues[8];
-        			pfc.ExpiryDate = inputvalues[9];
-        			pfc.AccreditationDate = inputvalues[10];
-        			pfc.ToNOTPurgeSFDC = inputvalues[11];
-        			pfc.ToNOTPurgeExternal = inputvalues[12];
+                    pfc.Identifier = inputvalues[0].replace('"','');
+                    pfc.Name = inputvalues[1].replace('"','');
+                    pfc.IATACode = inputvalues[2].replace('"','');       
+                    pfc.C_Code = inputvalues[3].replace('"','');
+                    pfc.A_Code = inputvalues[4].replace('"','');
+                    pfc.N_Code = inputvalues[5].replace('"','');
+                    pfc.Site = inputvalues[6].replace('"','');
+                    pfc.ISOCountry = inputvalues[7].replace('"','');
+                    pfc.Region = inputvalues[8].replace('"','');
+        			pfc.LocationType = inputvalues[9].replace('"','');
+        			pfc.LocationClass = inputvalues[10].replace('"','');
+        			pfc.ExpiryDate = inputvalues[11].replace('"','');
+        			pfc.AccreditationDate = inputvalues[12].replace('"','');
+        			pfc.ToNOTPurgeSFDC = inputvalues[13].replace('"','');
+        			pfc.ToNOTPurgeExternal = inputvalues[14].replace('"','');
 
                     purgeFileContentList.add(pfc);
                 }
@@ -237,7 +239,12 @@ public with sharing class AMS_PurgeIATACodeController {
 
     	for(PurgeFileContent pfc : purgeFileContentList){
 
+            System.debug('Starting to process record with ID ' + pfc.Identifier);
+            System.debug('Field ToNOTPurgeSFDC is :' + pfc.ToNOTPurgeSFDC + ':');
+            System.debug('Field ToNOTPurgeExternal is :' + pfc.ToNOTPurgeExternal + ':');
+
     		if(isFieldXorNull(pfc.ToNOTPurgeSFDC) || isFieldXorNull(pfc.ToNOTPurgeExternal) || pfc.Identifier == null || pfc.Identifier == '' ){
+                System.debug('Skipping this record ...');
     			continue;
 			}
 
@@ -262,7 +269,7 @@ public with sharing class AMS_PurgeIATACodeController {
 
     public boolean isFieldXorNull(String field){
 
-    	return field == 'X' || field == 'x';
+    	return field == 'X' || field == 'x' || field.startsWith('X') || field.startsWith('x');
     }
 
     public class PurgeFileContent{
@@ -274,6 +281,8 @@ public with sharing class AMS_PurgeIATACodeController {
 		public String N_Code{get;set;}
 		public String Site{get;set;}
 		public String Name{get;set;}
+        public String Region{get;set;}
+        public String ISOCountry{get;set;}
 		public String LocationType{get;set;}
 		public String LocationClass{get;set;}
 		public String ExpiryDate{get;set;}
