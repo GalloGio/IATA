@@ -482,7 +482,7 @@ public class AMS_ChangeCodesHelper {
             }else if(step == AMS_Utils.WITHDRAWAL && oscar.Process__c == AMS_UTils.VOLRELINQUISH){
 
                 changeCode.name = 'VRW';
-                changeCode.memoText = 'Agent Terminated due to Voluntary Relinquishment';
+                changeCode.memoText = 'Voluntary Relinquishment Request withdrawn by Agent.';
                 changeCode.status = AMS_Utils.getIATANumericStatus(acc.Status__c);
 
                 // lastChangeCode can be null so,
