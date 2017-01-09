@@ -7145,6 +7145,12 @@ V - Co-operative</inlineHelpText>
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>DandbCompanyId</fullName>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>Data_quality_feedback__c</fullName>
         <externalId>false</externalId>
         <label>Data Quality Feedback</label>
@@ -7266,6 +7272,11 @@ V - Co-operative</inlineHelpText>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>DunsNumber</fullName>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
     </fields>
     <fields>
         <fullName>EF_Additional_SAP_Nr__c</fullName>
@@ -9663,6 +9674,16 @@ J-Joint Vent</inlineHelpText>
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>NaicsCode</fullName>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+    </fields>
+    <fields>
+        <fullName>NaicsDesc</fullName>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+    </fields>
+    <fields>
         <fullName>Name</fullName>
         <trackFeedHistory>true</trackFeedHistory>
         <trackHistory>true</trackHistory>
@@ -10651,7 +10672,7 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
     <fields>
         <fullName>SAP_BW_report_with_sales_figures__c</fullName>
         <externalId>false</externalId>
-        <formula>IF(ISBLANK(Higher_Level_Customer__c) || Higher_Level_Customer__c = 0,&quot;&quot;, HYPERLINK(&quot;https://sap.iata.org/irj/servlet/prt/portal/prtroot/pcd!3aportal_content!2fcom.sap.pct!2fplatform_add_ons!2fcom.sap.ip.bi!2fiViews!2fcom.sap.ip.bi.bex?QUERY=ZVSD_M07_Q010&amp;VARIABLE_SCREENX&amp;DUMMY=1&amp;BI_COMMAND_1-BI_COMMAND_TYPE=SET_VARIABLES_STATE&amp;BI_COMMAND_1-VARIABLE_VALUES-VARIABLE_VALUE_1-VARIABLE_TYPE=VARIABLE_INPUT_STRING&amp;BI_COMMAND_1-VARIABLE_VALUES-VARIABLE_VALUE_1-VARIABLE=UMI_CUSTOMER_001&amp;BI_COMMAND_1-VARIABLE_VALUES-VARIABLE_VALUE_1-VARIABLE_TYPE-VARIABLE_INPUT_STRING=&quot; &amp; TEXT( Higher_Level_Customer__c ) , &quot; SAP/BW report with sales figures &quot;))</formula>
+        <formula>IF(ISBLANK(Higher_Level_Customer__c) || Higher_Level_Customer__c = 0,&quot;&quot;, HYPERLINK(&quot;https://sap.iata.org/irj/servlet/prt/portal/prtroot/com.sap.ip.bi.designstudio.nw.portal.ds?APPLICATION=ZACCMGT_KF%26X_SOLDTO=&quot; &amp; TEXT( Higher_Level_Customer__c ) , &quot; SAP/BW report with sales figures &quot;))</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Main Products Purchased</label>
         <required>false</required>
@@ -13147,6 +13168,11 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Tradestyle</fullName>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+    </fields>
+    <fields>
         <fullName>Type</fullName>
         <picklist>
             <picklistValues>
@@ -13692,6 +13718,11 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <trackHistory>true</trackHistory>
     </fields>
     <fields>
+        <fullName>YearStarted</fullName>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+    </fields>
+    <fields>
         <fullName>Zuora_Temp_ID__c</fullName>
         <description>Temporary field to contain Zuora Id (Temp field that should be deleted after the first sucessful synchronization with Zuora)</description>
         <externalId>false</externalId>
@@ -13856,6 +13887,17 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <summaryOperation>count</summaryOperation>
         <trackHistory>false</trackHistory>
         <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>state_numeric_code__c</fullName>
+        <externalId>false</externalId>
+        <formula>Iso_State__r.numeric_code__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>state numeric code</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <listViews>
         <fullName>AOC_Expiry_dates_Airline_Coding</fullName>
@@ -16770,6 +16812,58 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <language>en_US</language>
         <sharedTo>
             <group>MACSDirectSalesAll</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>E_F_Clients_Public</fullName>
+        <columns>ACCOUNT.NAME</columns>
+        <columns>EF_Type__c</columns>
+        <columns>Sector__c</columns>
+        <columns>Category__c</columns>
+        <columns>ACCOUNT.ADDRESS1_COUNTRY</columns>
+        <columns>EF_SIS_Code__c</columns>
+        <columns>EF_SIS_Designator__c</columns>
+        <columns>EF_Status__c</columns>
+        <columns>EF_Client_Services_Specialist__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>EF_Type__c</field>
+            <operation>equals</operation>
+            <value>E&amp;F Client</value>
+        </filters>
+        <filters>
+            <field>EF_Status__c</field>
+            <operation>equals</operation>
+            <value>Active</value>
+        </filters>
+        <label>E&amp;F Clients</label>
+        <language>en_US</language>
+        <sharedTo>
+            <roleAndSubordinatesInternal>IDFSEFServices</roleAndSubordinatesInternal>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>E_F_Operators_Public</fullName>
+        <columns>ACCOUNT.NAME</columns>
+        <columns>EF_Type__c</columns>
+        <columns>EF_SIS_Code__c</columns>
+        <columns>EF_SIS_Designator__c</columns>
+        <columns>EF_Legacy_Code__c</columns>
+        <columns>ACCOUNT.ADDRESS1_STATE</columns>
+        <columns>ACCOUNT.ADDRESS1_CITY</columns>
+        <columns>ACCOUNT.ADDRESS1_COUNTRY</columns>
+        <columns>EF_Status__c</columns>
+        <columns>EF_SubStatus__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>EF_Type__c</field>
+            <operation>equals</operation>
+            <value>E&amp;F Operator</value>
+        </filters>
+        <label>E&amp;F Operators</label>
+        <language>en_US</language>
+        <sharedTo>
+            <roleAndSubordinatesInternal>IDFSEFServices</roleAndSubordinatesInternal>
         </sharedTo>
     </listViews>
     <listViews>
@@ -21864,6 +21958,49 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <sharedTo>
             <roleAndSubordinates>IDFSEuropeRegionalOffice</roleAndSubordinates>
         </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>To_clean_Billing_State_in_Americas</fullName>
+        <columns>ACCOUNT.NAME</columns>
+        <columns>IATACode__c</columns>
+        <columns>Location_Class__c</columns>
+        <columns>ACCOUNT.ADDRESS1_STATE</columns>
+        <columns>ACCOUNT.ADDRESS2_STATE</columns>
+        <columns>IATA_ISO_Country__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>ACCOUNT.ADDRESS1_STATE</field>
+            <operation>equals</operation>
+            <value>BR57,MX86</value>
+        </filters>
+        <filters>
+            <field>ACCOUNT.RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>Account.IATA_Agency</value>
+        </filters>
+        <label>To clean - Billing State in Americas</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>To_clean_Shipping_State_in_Americas</fullName>
+        <columns>ACCOUNT.NAME</columns>
+        <columns>IATACode__c</columns>
+        <columns>Location_Class__c</columns>
+        <columns>ACCOUNT.ADDRESS2_STATE</columns>
+        <columns>IATA_ISO_Country__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>ACCOUNT.ADDRESS2_STATE</field>
+            <operation>equals</operation>
+            <value>BR57,MX86</value>
+        </filters>
+        <filters>
+            <field>ACCOUNT.RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>Account.IATA_Agency</value>
+        </filters>
+        <label>To clean - Shipping State in Americas</label>
+        <language>en_US</language>
     </listViews>
     <listViews>
         <fullName>TongaTravelAgents</fullName>
@@ -77604,7 +77741,7 @@ javascript:srcUp(&apos;/apex/AMS_AccountOSCARWizardPage?accountId=&apos;+accId+&
         <displayType>button</displayType>
         <encodingKey>UTF-8</encodingKey>
         <linkType>url</linkType>
-        <masterLabel>Key Account Plan</masterLabel>
+        <masterLabel>Account Plan</masterLabel>
         <openType>replace</openType>
         <protected>false</protected>
         <url>/apex/AMP_KeyAccountPlan?accountId={!Account.Id}</url>

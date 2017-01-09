@@ -2514,10 +2514,11 @@ if (records.length &gt; 0) {
 				var cid = caseId.substring(0,15);
 				
 				if (records[0].ContactId != null)				
-					contactId = (records[0].ContactId).substring(0,15);	
-					
-				parent.location.href = &quot;/_ui/core/email/author/EmailAuthor?retURL=%2F&quot;+cid+&quot;&amp;p3_lkid=&quot; + cid + &quot;&amp;rtype=003&amp;p2_lkid=&quot; + contactId; 
+					contactId = (records[0].ContactId).substring(0,15);
+                 			
+				
 			}
+                     
 		}
 	}
 }

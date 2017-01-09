@@ -94,6 +94,12 @@ global class AMS_OSCAR_Attachments {
         return link;
     }
 
+    webService static string getExpiringLinkWS(string fileName ) {
+        Integer secondsValid = 300;
+        String link = AmazonRest.genPublicExpiringAWSLink( fileName, WrapperAttach.CREDENTIAL, secondsValid);
+        return link;
+    }
+
     /*
         Delete an attachment archived attachment or Amazon Attachment
     */

@@ -2674,6 +2674,7 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
 		,&quot;NEW.SA.1.0&quot;, &quot;New SA&quot;
 		,&quot;CORRECTION.1.0&quot;, &quot;Corrections&quot;
 		,&quot;&quot;
+
 	  )
 	,IF(RecordType.DeveloperName=&quot;CHANGE&quot;, 
 		IF(INCLUDES(Type_of_change__c, &quot;Location type&quot;), &quot;New HO&quot;
@@ -3933,7 +3934,7 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Closed_Not Accepted</fullName>
+                <fullName>Closed_ Not Accepted</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -4469,7 +4470,13 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
         <columns>Date_Time_Closed__c</columns>
         <columns>CREATED_DATE</columns>
         <filterScope>Queue</filterScope>
+        <filters>
+            <field>Status__c</field>
+            <operation>notEqual</operation>
+            <value>Closed,Closed_ Not Accepted,Closed_Rejected,Closed_Withdrawn,Closed (Closed)</value>
+        </filters>
         <label>Agency Management - Europe</label>
+        <language>en_US</language>
         <queue>CasesACCEuropeOffOnshore</queue>
         <sharedTo>
             <allInternalUsers></allInternalUsers>
@@ -4507,6 +4514,72 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
         <filterScope>Queue</filterScope>
         <label>FDS Agency Managers</label>
         <queue>FDS_Agency_Managers</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>ISSP_Queue_for_failed_assignation_AMS_OSCAR</fullName>
+        <columns>NAME</columns>
+        <columns>Region__c</columns>
+        <filterScope>Queue</filterScope>
+        <label>ISSP - Assignation queue</label>
+        <language>en_US</language>
+        <queue>ISSP_Queue_for_failed_assignation</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>RecycleBinAfricaMiddleEast_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Recycle Bin Africa &amp; Middle East</label>
+        <queue>RecycleBinAfricaMiddleEast</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>RecycleBinAmericas_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Recycle Bin Americas</label>
+        <queue>RecycleBinAmericas</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>RecycleBinAsiaPacific_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Recycle Bin Asia &amp; Pacific</label>
+        <queue>RecycleBinAsiaPacific</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>RecycleBinEurope_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Recycle Bin Europe</label>
+        <queue>RecycleBinEurope</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>RecycleBinOperationalManagementHO_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Recycle Bin Operational Management HO</label>
+        <queue>RecycleBinOperationalManagementHO</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>RecyclebinNorthAsia_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Recycle bin North Asia</label>
+        <queue>RecyclebinNorthAsia</queue>
         <sharedTo>
             <allInternalUsers></allInternalUsers>
         </sharedTo>
@@ -6218,7 +6291,7 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
                 <default>false</default>
             </values>
             <values>
-                <fullName>Closed_Not Accepted</fullName>
+                <fullName>Closed_ Not Accepted</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -6239,6 +6312,10 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
             </values>
             <values>
                 <fullName>Open</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Open - EDMC</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -8054,7 +8131,7 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
                 <default>false</default>
             </values>
             <values>
-                <fullName>Closed_Not Accepted</fullName>
+                <fullName>Closed_ Not Accepted</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -8071,6 +8148,10 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
             </values>
             <values>
                 <fullName>Open</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Open - EDMC</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -9806,7 +9887,7 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
                 <default>false</default>
             </values>
             <values>
-                <fullName>Closed_Not Accepted</fullName>
+                <fullName>Closed_ Not Accepted</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -9827,6 +9908,10 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
             </values>
             <values>
                 <fullName>Open</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Open - EDMC</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -11529,7 +11614,7 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
                 <default>false</default>
             </values>
             <values>
-                <fullName>Closed_Not Accepted</fullName>
+                <fullName>Closed_ Not Accepted</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -11550,6 +11635,10 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
             </values>
             <values>
                 <fullName>Open</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Open - EDMC</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -13266,7 +13355,7 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
                 <default>false</default>
             </values>
             <values>
-                <fullName>Closed_Not Accepted</fullName>
+                <fullName>Closed_ Not Accepted</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -13287,6 +13376,10 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
             </values>
             <values>
                 <fullName>Open</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Open - EDMC</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -14967,7 +15060,7 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
                 <default>false</default>
             </values>
             <values>
-                <fullName>Closed_Not Accepted</fullName>
+                <fullName>Closed_ Not Accepted</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -14988,6 +15081,10 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
             </values>
             <values>
                 <fullName>Open</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Open - EDMC</fullName>
                 <default>false</default>
             </values>
             <values>

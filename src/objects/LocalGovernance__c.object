@@ -1002,7 +1002,7 @@ Record Type + Group Type + ISO_Country_Name</description>
             <operation>notEqual</operation>
             <value>Annual General Meeting of IATA Members,Director General</value>
         </filters>
-        <label>Reg / Div Groups</label>
+        <label>All Reg / Div Groups</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -1927,7 +1927,7 @@ Record Type + Group Type + ISO_Country_Name</description>
         <excludedStandardButtons>Forward</excludedStandardButtons>
         <excludedStandardButtons>ChangeOwner</excludedStandardButtons>
     </searchLayouts>
-    <sharingModel>ReadWrite</sharingModel>
+    <sharingModel>Private</sharingModel>
     <validationRules>
         <fullName>Cannot_change_if_inactive_group</fullName>
         <active>true</active>
@@ -1962,8 +1962,11 @@ Record Type + Group Type + ISO_Country_Name</description>
         <active>true</active>
         <description>Name of the group cannot be modified after being approved</description>
         <errorConditionFormula>AND(
+  NOT( $User.Profile_Name__c =&quot;System Administrator&quot;), 
+  AND(
   RecordType.DeveloperName = &quot;Reg_Div_Groups&quot;,
   ISCHANGED(Name)
+)
 )</errorConditionFormula>
         <errorMessage>Name of the group cannot be modified after being approved</errorMessage>
     </validationRules>

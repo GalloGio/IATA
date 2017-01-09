@@ -109,7 +109,7 @@ global class AMS_OscarMigrationFromCase  implements Process.Plugin{
 
 		System.debug('Starting SAAM case migration for case ' + caseToMigrate.Id + ' with comingFromPortal=' + isFromPortal);
 
-		container = AMS_MigrationToolHelper.migratecases(container);
+		container = AMS_MigrationToolHelper.migratecases(container,processType);
 
 		changeSubject = true;
 
