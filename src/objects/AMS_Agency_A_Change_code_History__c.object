@@ -103,7 +103,9 @@
         <label>Field New Value</label>
         <required>false</required>
         <trackTrending>false</trackTrending>
-        <type>TextArea</type>
+        <type>LongTextArea</type>
+        <length>32000</length>        
+        <visibleLines>3</visibleLines>
     </fields>
     <fields>
         <fullName>Field_Old_Value__c</fullName>
@@ -111,7 +113,9 @@
         <label>Field Old Value</label>
         <required>false</required>
         <trackTrending>false</trackTrending>
-        <type>TextArea</type>
+        <type>LongTextArea</type>
+        <length>32000</length>
+        <visibleLines>3</visibleLines>
     </fields>
     <fields>
         <fullName>Object_API_Name__c</fullName>
