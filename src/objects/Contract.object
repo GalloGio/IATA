@@ -253,7 +253,7 @@ E&amp;F CRM Project</description>
     </fields>
     <fields>
         <fullName>Current_Cycle_End_Date__c</fullName>
-        <description>This field represents the end date of the contract’s current cycle.</description>
+        <description>This field represents the end date of the contract's current cycle.</description>
         <externalId>false</externalId>
         <label>Current Cycle End Date</label>
         <required>false</required>
@@ -262,7 +262,7 @@ E&amp;F CRM Project</description>
     </fields>
     <fields>
         <fullName>Current_Cycle_Start_Date__c</fullName>
-        <description>This field represents the starting date of the contract’s current cycle.</description>
+        <description>This field represents the starting date of the contract's current cycle.</description>
         <externalId>false</externalId>
         <label>Current Cycle Start Date</label>
         <required>false</required>
