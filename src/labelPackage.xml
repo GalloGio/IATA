@@ -8,10 +8,10 @@
         <members>*</members>
         <name>Group</name>
     </types> 
-     <types>
+    <!-- <types>
         <members>*</members>
         <name>StaticResource</name>
-    </types> 
+    </types> -->
         <types>
         <members>*</members>
         <name>GlobalPicklist</name>
