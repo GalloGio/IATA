@@ -5379,7 +5379,7 @@ IF(IsClosed, &quot;Closed&quot;, &quot;Open&quot;)</formula>
         <description>SIDRA</description>
         <field>Acc_IRR_leading_to_DEF__c</field>
         <formula>CASE( Region__c , 
-&quot;Europe&quot;, IF(AND(OR(ISPICKVAL( BSPCountry__c, &quot;Hungary&quot; ),ISPICKVAL( BSPCountry__c, &quot;Switzerland &amp; Liechtenstein&quot; ),ISPICKVAL( BSPCountry__c, &quot;Poland&quot; )),ISPICKVAL( BSP_CASS__c ,&quot;BSP&quot;)),6,4), &quot;Africa &amp; middle east&quot;,4, &quot;Asia &amp; pacific&quot;, IF(OR(ISPICKVAL( BSPCountry__c , &quot;Nepal&quot;), AND(ISPICKVAL( BSPCountry__c , &quot;India&quot;),ISPICKVAL( BSP_CASS__c ,&quot;BSP&quot;))), 6,4),&quot;China &amp; North Asia&quot;, IF(AND(ISPICKVAL( BSPCountry__c , &quot;People&apos;s republic of China&quot;),ISPICKVAL( BSP_CASS__c ,&quot;BSP&quot;)),10,4),&quot;Americas&quot;, 
+&quot;Europe&quot;, IF(AND(OR(ISPICKVAL( BSPCountry__c, &quot;Hungary&quot; ),ISPICKVAL( BSPCountry__c, &quot;Switzerland &amp; Liechtenstein&quot; ),ISPICKVAL( BSPCountry__c, &quot;Poland&quot; )),ISPICKVAL( BSP_CASS__c ,&quot;BSP&quot;)),6,4), &quot;Africa &amp; middle east&quot;,4, &quot;Asia &amp; pacific&quot;, IF(OR(ISPICKVAL( BSPCountry__c , &quot;Nepal&quot;), AND(OR(ISPICKVAL( BSPCountry__c , &quot;India&quot;),(ISPICKVAL( BSPCountry__c , &quot;Pakistan&quot;))),ISPICKVAL( BSP_CASS__c ,&quot;BSP&quot;))), 6,4),&quot;China &amp; North Asia&quot;, IF(AND(ISPICKVAL( BSPCountry__c , &quot;People&apos;s republic of China&quot;),ISPICKVAL( BSP_CASS__c ,&quot;BSP&quot;)),10,4),&quot;Americas&quot;, 
 
 IF(ISPICKVAL( BSP_CASS__c ,&quot;CASS&quot;), 4, IF(OR(ISPICKVAL( BSPCountry__c , &quot;Argentina&quot;),ISPICKVAL( BSPCountry__c , &quot;Uruguay&quot;),ISPICKVAL( BSPCountry__c , &quot;Paraguay&quot;)),8,6)),-1 
 )</formula>
@@ -5664,6 +5664,17 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <notifyAssignee>false</notifyAssignee>
         <operation>Literal</operation>
         <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Manager_ACR</fullName>
+        <field>Product_Manager_ACR__c</field>
+        <lookupValue>byrnej@iata.org</lookupValue>
+        <lookupValueType>User</lookupValueType>
+        <name>Manager ACR</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
     </fieldUpdates>
     <fieldUpdates>
         <fullName>Move_to_Recycle_Bin_Europe</fullName>
@@ -11166,6 +11177,21 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <value>6.0 UAT Approval - DD - s/holder comm</value>
         </criteriaItems>
         <description>Create a communication task for the case owner (to inform about stakeholder impact communication) when the case status changes to 6.0 UAT Approval - DD - s/holder comm</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>DPC System Picklist</fullName>
+        <actions>
+            <name>Manager_ACR</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <criteriaItems>
+            <field>Case.DPC_Software__c</field>
+            <operation>equals</operation>
+            <value>Germany-D,Korea-D,Maestro-D</value>
+        </criteriaItems>
+        <description>Update ACR Manger when picklist Maestro-D / Korea-D /Germany-D</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
