@@ -37,9 +37,13 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
         }
         set;
     }
+  public Boolean isEnhancedReporting {get;set;}
+  public Boolean isRenewal {get;set;}
+  public Boolean isSubscriptionDescriptionVisible{get;set;}
+    
   
   // input passed from the caller using billingAccount fields
-  private String paymentTarget {get;set;}
+  public String paymentTarget {get;set;}
   private String campaignPaymentOption {get;set;}
   private String selectedRatePlanId {get;set;}
   private String selectedEbcSubscriptionId {get;private set;}
@@ -101,7 +105,7 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
             if (lstStateProvince.Size()>1  && oBillingAddress.ISO_State__c==null) editMode=true;
         }
     
-    paymentTarget = billingAccountOrder.eBroadcast_Payment_Target__c;
+    //paymentTarget = billingAccountOrder.eBroadcast_Payment_Target__c;
     campaignPaymentOption = billingAccountOrder.eBroadcast_Payment_Campaign_Option__c;
     paymentTarget = billingAccountOrder.eBroadcast_Payment_Target__c;
     campaignPaymentOption = billingAccountOrder.eBroadcast_Payment_Campaign_Option__c;
@@ -112,6 +116,13 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
     selectedEbcSubscriptionId = billingAccountOrder.eBroadcast_Payment_Subscription__c;
     emailCreditPurchased = Integer.valueOf(billingAccountOrder.eBroadcast_Payment_Email_Credit_Amount__c);
     ebcCampaignId = billingAccountOrder.eBroadcast_Payment_Campaign__c;
+      
+       
+   isEnhancedReporting = (paymentTarget == EBC_PAYMENT_TARGET_ACCOUNT_ADD_ON_REPORT);       
+   isRenewal = (paymentTarget == EBC_PAYMENT_TARGET_RENEWAL);
+   isSubscriptionDescriptionVisible = (isRenewal || payNewRatePlan);
+     
+  
   } // end of initialization
     public  EBC_Order__c billingAccountOrder {
         get {
@@ -549,19 +560,9 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
     }
   }
     
-  public Boolean isRenewal{
-    get{
-      Boolean result = (paymentTarget == EBC_PAYMENT_TARGET_RENEWAL);
-      return result;
-    }
-  }
+   
+    
   
-  public Boolean isSubscriptionDescriptionVisible{
-    get{
-      Boolean result = (isRenewal || payNewRatePlan);
-      return result;
-    }
-  }
   
   
   // ========================================================================
@@ -1557,6 +1558,7 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
         //return null;
         ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.ERROR,ErrorMessage);
         if (!result) {showTaxButtons=true; TaxAmount=0;ApexPages.addMessage(myMsg);}
+        
         return null;
     }
     /*
