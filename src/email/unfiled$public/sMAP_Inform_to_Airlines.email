@@ -1,0 +1,20 @@
+Dear {!Airline_Input__c.Airline__c},
+
+We have identified an unusual increase in sales for the Agent,  [{!Airline_Input__c.Agent_Name__c}] [{!Airline_Input__c.IATA_Code__c}]  and we would like to know if you consider that these sales could indicate a possible credit risk.
+
+In light of this unusual increase, you may wish to verify internally whether you have any concerns related to the sales of this Agent and advise us accordingly of the results of your investigation by replying to this email.
+
+Particularly, if you believe that you will not be able to collect money from this Agent, we would be grateful if you would inform us so that we can further investigate whether any mitigating actions would be appropriate in light of IATA’s mandate under the Resolutions.
+
+Please allow me to emphasize that the intention of this communication is to provide you with the maximum available information for your own risk management decision making and by no means is IATA suggesting that action is required.
+
+Should you require additional information from our end, please do not hesitate to contact us. Looking forward to receiving your feedback as soon as possible.
+Thank you for cooperation.
+
+Best regards, 
+{!Airline_Input__c.Country_Manager_del__c}
+
+
+International Air Transport Association
+
+{!Case.Case_Thread_ID__c}

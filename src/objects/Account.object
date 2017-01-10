@@ -2444,6 +2444,62 @@
         <unique>true</unique>
     </fields>
     <fields>
+        <fullName>AMS_PWC_INT_DEFNONPAY__c</fullName>
+        <externalId>false</externalId>
+        <label>AMS PWC INT DEFNONPAY</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AMS_PWC_INT_DEF__c</fullName>
+        <externalId>false</externalId>
+        <label>AMS PWC INT DEF</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AMS_PWC_INT_IRRS__c</fullName>
+        <externalId>false</externalId>
+        <label>AMS PWC INT IRRS</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AMS_PWC_INT_OWNSHA_CHANGE__c</fullName>
+        <externalId>false</externalId>
+        <label>AMS PWC INT OWNSHA CHANGE</label>
+        <length>1</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AMS_PWC_INT_OWNSHA_LASTDATE__c</fullName>
+        <externalId>false</externalId>
+        <label>AMS PWC INT OWNSHA LASTDATE</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>DateTime</type>
+    </fields>
+    <fields>
         <fullName>AM_Account_Manager__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <description>This link to the user playing the role of Account Manager for the account. Used to define the account managers for Airline Headquarters for the Account Management project.</description>
@@ -4587,6 +4643,18 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
         <externalId>false</externalId>
         <label>CCG Participant / KAM</label>
         <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>CNS_Agency__c</fullName>
+        <externalId>false</externalId>
+        <formula>AND( 
+   IATA_ISO_Country__r.CNS_Country__c=true, 
+   OR(ISPICKVAL(Location_Class__c,&quot;C&quot;),ISPICKVAL(Location_Class__c,&quot;R&quot;))
+ )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>CNS Agency</label>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
     </fields>
@@ -8827,7 +8895,14 @@ Approval: Key Contact can see pending request approve it one by one</inlineHelpT
         <fullName>Is_Branch_Abroad__c</fullName>
         <description>FDS AGM checks if the branch account is in a different country to the parent&apos;s.</description>
         <externalId>false</externalId>
-        <formula>if(AND(RecordType.Name = &quot;Agency&quot; , ispickval(Location_Type__c, &quot;BR&quot;)),IF(Parent.IATA_ISO_Country__c &lt;&gt; IATA_ISO_Country__c,&quot;Yes&quot;,&quot;No&quot;),&quot;&quot;)</formula>
+        <formula>IF(
+ AND(RecordType.Name = &quot;Agency&quot; , ispickval(Location_Type__c, &quot;BR&quot;)),
+ IF(AND(Parent.IATA_ISO_Country__c &lt;&gt; IATA_ISO_Country__c, NOT(CNS_Agency__c)),
+  &quot;Yes&quot;,
+  &quot;No&quot;
+ ),
+ &quot;&quot;
+)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Is Branch Abroad</label>
         <required>false</required>
@@ -10672,7 +10747,7 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
     <fields>
         <fullName>SAP_BW_report_with_sales_figures__c</fullName>
         <externalId>false</externalId>
-        <formula>IF(ISBLANK(Higher_Level_Customer__c) || Higher_Level_Customer__c = 0,&quot;&quot;, HYPERLINK(&quot;https://sap.iata.org/irj/servlet/prt/portal/prtroot/com.sap.ip.bi.designstudio.nw.portal.ds?APPLICATION=ZACCMGT_KF&amp;X_SOLDTO=&quot; &amp; TEXT( Higher_Level_Customer__c ) , &quot; SAP/BW report with sales figures &quot;))</formula>
+        <formula>IF(ISBLANK(Higher_Level_Customer__c) || Higher_Level_Customer__c = 0,&quot;&quot;, HYPERLINK(&quot;https://sap.iata.org/irj/servlet/prt/portal/prtroot/com.sap.ip.bi.designstudio.nw.portal.ds?APPLICATION=ZACCMGT_KF%26X_SOLDTO=&quot; &amp; TEXT( Higher_Level_Customer__c ) , &quot; SAP/BW report with sales figures &quot;))</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Main Products Purchased</label>
         <required>false</required>
@@ -21963,7 +22038,9 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <fullName>To_clean_Billing_State_in_Americas</fullName>
         <columns>ACCOUNT.NAME</columns>
         <columns>IATACode__c</columns>
+        <columns>Location_Class__c</columns>
         <columns>ACCOUNT.ADDRESS1_STATE</columns>
+        <columns>ACCOUNT.ADDRESS2_STATE</columns>
         <columns>IATA_ISO_Country__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
@@ -21977,6 +22054,27 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <value>Account.IATA_Agency</value>
         </filters>
         <label>To clean - Billing State in Americas</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>To_clean_Shipping_State_in_Americas</fullName>
+        <columns>ACCOUNT.NAME</columns>
+        <columns>IATACode__c</columns>
+        <columns>Location_Class__c</columns>
+        <columns>ACCOUNT.ADDRESS2_STATE</columns>
+        <columns>IATA_ISO_Country__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>ACCOUNT.ADDRESS2_STATE</field>
+            <operation>equals</operation>
+            <value>BR57,MX86</value>
+        </filters>
+        <filters>
+            <field>ACCOUNT.RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>Account.IATA_Agency</value>
+        </filters>
+        <label>To clean - Shipping State in Americas</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -27206,6 +27304,17 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Is_your_firm_handling_Dangerous_Goods__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Location_Type__c</picklist>
             <values>
                 <fullName>BR</fullName>
@@ -32182,6 +32291,17 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         </picklistValues>
         <picklistValues>
             <picklist>IsIATATrainingAirline__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Is_your_firm_handling_Dangerous_Goods__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
@@ -77718,7 +77838,7 @@ javascript:srcUp(&apos;/apex/AMS_AccountOSCARWizardPage?accountId=&apos;+accId+&
         <displayType>button</displayType>
         <encodingKey>UTF-8</encodingKey>
         <linkType>url</linkType>
-        <masterLabel>Account Plan</masterLabel>
+        <masterLabel>Key Account Plan</masterLabel>
         <openType>replace</openType>
         <protected>false</protected>
         <url>/apex/AMP_KeyAccountPlan?accountId={!Account.Id}</url>
