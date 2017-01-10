@@ -512,8 +512,11 @@ public class AMS_OscarCase_RiskMgmt {
 		}
 		
 		if(condition.startsWithIgnoreCase('<=:')){
-			if((double)NewCaseValues.get(sFieldToCheck)<=double.valueOf(condition.right(condition.length()-'<=:'.length())))
-				return true;
+			if((double)NewCaseValues.get(sFieldToCheck)<=double.valueOf(condition.right(condition.length()-'<=:'.length()))){
+                if((double)NewCaseValues.get(sFieldToCheck)>0)
+                    return true;
+                else return false;
+            }
 			else return false;
 		}
 		
