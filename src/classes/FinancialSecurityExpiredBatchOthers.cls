@@ -26,17 +26,14 @@ global class FinancialSecurityExpiredBatchOthers implements Database.Batchable<s
 		// Send an email to the Apex job's submitter notifying of job completion.
 		Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
 		List<String> toAddresses = new String[] {a.CreatedBy.Email};
-		List<FSBatch_Alert__c> fsb = [SELECT Email__c from FSBatch_Alert__c];
-		if (toAddresses.size() > 0) {
-			for (FSBatch_Alert__c fs : fsb)
-				toAddresses.add(fs.Email__c);
-		}
-
-		//toAddresses.add(a.CreatedBy.Email);
-		//String[] toAddresses = new String[] {a.CreatedBy.Email};
+		List<FSBatch_Alert__c> fsb = [SELECT Email__c from FSBatch_Alert__c];		
+		
+		for (FSBatch_Alert__c fs : fsb){
+				//toAddresses.add(fs.Email__c);
+				}
 
 		mail.setToAddresses(toAddresses);
-		mail.setSubject('FinancialSecurityExpiredBatch ' + a.Status);
+		mail.setSubject('FinancialSecurityExpiredBatchOthers ' + a.Status);
 		mail.setPlainTextBody('The batch Apex job processed ' + a.TotalJobItems + ' batches with ' + a.NumberOfErrors + ' failures.');
 
 		Messaging.sendEmail(new Messaging.SingleEmailMessage[] { mail });
