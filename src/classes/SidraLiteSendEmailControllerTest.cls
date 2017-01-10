@@ -21,14 +21,6 @@ public class SidraLiteSendEmailControllerTest {
     }
 
     @isTest
-    static void checkQueries() {
-        list<APXTConga4__Conga_Merge_Query__c> listQuery1 = [SELECT Id FROM APXTConga4__Conga_Merge_Query__c where APXTConga4__Name__c = 'Parent Case - SIDRA Lite'];
-        System.assert(listQuery1.size()==1,'Conga Query "Parent Case - SIDRA Lite" not found');
-        list<APXTConga4__Conga_Merge_Query__c> listQuery2 = [SELECT Id FROM APXTConga4__Conga_Merge_Query__c where APXTConga4__Name__c = 'IRR letter gen. Conga 2010 - CS'];
-        System.assert(listQuery2.size()==1,'Conga Query "IRR letter gen. Conga 2010 - CS" not found');
-    }
-
-    @isTest
     static void controller_ErrorNoCaseId() {
         Account acc = new Account(Name='test');
         insert acc;
