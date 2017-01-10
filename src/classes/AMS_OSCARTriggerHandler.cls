@@ -1072,7 +1072,7 @@ public class AMS_OSCARTriggerHandler {
 		if (tocList.contains(AMS_Utils.VFMR) ) {
 			System.debug('Agencies Affected: ' + agenciesToMigrate);
 			System.debug('Hierarchy Agencies: ' + accountHierarchyRelationships.get(oscar.Account__c));
-			if(!AMS_HierarchyHelper.isAllHierarchySelected(agenciesToMigrate, accountHierarchyRelationships.get(oscar.Account__c), accounts, true)){
+			if(!AMS_HierarchyHelper.isAllHierarchySelected(agenciesToMigrate, accountHierarchyRelationships.get(oscar.Account__c), accounts)){
 				oscar.addError('When performing a change of remittance frequency (VMFR) all the active agencies in the hierarchy must be selected. Only branches abroad can be excluded');
 				validationsPassed=false;
 			}
