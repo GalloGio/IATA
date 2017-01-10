@@ -191,6 +191,7 @@ global class AMS_OSCAR_Webservice {
 
             Database.DMLOptions dmo = new Database.DMLOptions();
             dmo.assignmentRuleHeader.useDefaultRule = true;
+            
             issCase.setOptions(dmo);           
 
             insert issCase;
