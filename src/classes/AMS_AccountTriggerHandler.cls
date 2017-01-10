@@ -143,7 +143,8 @@ public class AMS_AccountTriggerHandler {
 
     public static void handleManualMinorChanges(List<Account> accs, Map<Id,Account> oldMap){
 
-        accs = filterValidAgencies(accs);
+        accs = filterByAgencyRecordType(accs);
+        system.debug(LoggingLevel.ERROR, 'LF: handleManualMinorChanges()' + accs.size());
 
         Map<String, Schema.SObjectField> accountFields = AMS_Utils.getObjectFields('Account');
 
@@ -163,6 +164,7 @@ public class AMS_AccountTriggerHandler {
  
         Map<String, Schema.SobjectField> accountDescription =Account.getSObjectType().getDescribe().fields.getMap();
         for(Account acct : accs){
+
             //LF: enable minor changes only if the ISO Country has the flag OSCAR_enabled__c enabled
             if(countryIdToMinorChangeEnabled.get(acct.IATA_ISO_Country__c)!=true)
                 continue;
@@ -177,8 +179,6 @@ public class AMS_AccountTriggerHandler {
 
                 if(minorChangesAccountFields.contains(fieldToSearch.toLowerCase())){
 
-
-
                         if(acct.get(fieldName) <> oldMap.get(acct.Id).get(fieldName)){
                             if(acct.CNS_Agency__c == true && !minorChangesComingFromOSCAR && minorchangesRestrictedForCNS.contains(fieldName)){
                                 acct.addError('Change of '+accountDescription.get(fieldName).getDescribe().getLabel()+' is not allowed for CNS agencies directly on account level: a new  OSCAR is required to modify this information.');
@@ -192,7 +192,7 @@ public class AMS_AccountTriggerHandler {
                             String accountNewValue = String.valueOf(acct.get(fieldName));
                             String accountOldValue = String.valueOf(oldMap.get(acct.Id).get(fieldName));
 
-                            AMS_RecordCreatorWebservice.AccountChanges acctChange = new AMS_RecordCreatorWebservice.AccountChanges(accountFieldName,accountNewValue,accountOldValue);
+                            AMS_RecordCreatorWebservice.AccountChanges acctChange = new AMS_RecordCreatorWebservice.AccountChanges(accountFieldName,accountOldValue,accountNewValue);
 
                             accountChanges.add(acctChange);
                         }
@@ -203,6 +203,8 @@ public class AMS_AccountTriggerHandler {
             AccountChangesStruct struct = new AccountChangesStruct(accountChanges,acct);
             accountChangesList.add(struct);
         }
+
+        system.debug(LoggingLevel.ERROR, 'LF: handleManualMinorChanges() For cycle finished' );            
 
          if(!accountChangesList.isEmpty()){
                 System.debug('Number of accounts to be created AACC:' + accountChangesList.size());
@@ -230,6 +232,7 @@ public class AMS_AccountTriggerHandler {
 
 
     private static void createMinorChangesChangeCode(List<AccountChangesStruct> accountChanges){
+
         // get the Account and creates a change code (Agency_Applied_Change_code__c)
         // Notify the Agent via email using predefined email template
         Boolean processedTN = false;
@@ -246,6 +249,7 @@ public class AMS_AccountTriggerHandler {
             AMS_OSCAR_JSON.ChangeCode changeCode = null;
 
             Account account = actChange.acct;
+
             system.debug(LoggingLevel.ERROR, 'LF: createMinorChangesChangeCode() check change! Is CNS ? '+actChange.isCNS());
             List<Agency_Applied_Change_code__c> accountActiveChangeCode = [SELECT Reason_Code__c, Reason_Description__c FROM Agency_Applied_Change_code__c WHERE Account__c =: account.Id AND Active__c = TRUE];
 
@@ -263,7 +267,6 @@ public class AMS_AccountTriggerHandler {
                 oscarsToProcess.add(null);
 
                 processedTN = true;
-
 
             }else 
 
@@ -288,7 +291,6 @@ public class AMS_AccountTriggerHandler {
 
 
         AMS_ChangeCodesHelper.createAAChangeCodes( objectChanges, changeCodesToProcess, oscarsToProcess, accountsToProcess,false);
-
     }
 
     public class AccountChangesStruct {
@@ -430,9 +432,7 @@ public class AMS_AccountTriggerHandler {
         }
 
     }
-    
-    
-	
+
     /** This method is called to verify if the Account field changes should create a new record into AMS Agency Updates table. The scenarios are:
      *  1) Status__c changes => Create a new record
      *  2) Status__c DOES NOT change && another field value changes => Create a new record
@@ -513,4 +513,22 @@ public class AMS_AccountTriggerHandler {
 
         if(!oscars.isEmpty()) update oscars;
     }
+    
+    private static List<Account> filterByAgencyRecordType(List<Account> accts){
+
+        ID standardRT = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency') ;
+
+        List<Account> toReturn = new List<Account>();
+
+        for(Account acct: accts){
+
+            if(acct.recordTypeId == standardRT)
+                toReturn.add(acct);
+
+        }
+
+
+        return toReturn;
+    }
+
 }
