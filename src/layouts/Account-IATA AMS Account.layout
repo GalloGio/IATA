@@ -52,6 +52,7 @@
         </subtabComponents>
     </customConsoleComponents>
     <excludeButtons>DataDotComAccountInsights</excludeButtons>
+    <excludeButtons>DataDotComClean</excludeButtons>
     <excludeButtons>DataDotComCompanyHierarchy</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
@@ -701,6 +702,7 @@
         <fields>Update_Type__c</fields>
         <fields>CREATEDBY_USER</fields>
         <fields>CREATED_DATE</fields>
+        <fields>UPDATEDBY_USER</fields>
         <relatedList>AMS_Agency_Updates__c.Account__c</relatedList>
         <sortField>CREATED_DATE</sortField>
         <sortOrder>Desc</sortOrder>
