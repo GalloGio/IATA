@@ -237,7 +237,19 @@ public class AMS_AccountTriggerHandler {
         List<Account> accountsToProcess = new List<Account>();
         List<AMS_OSCAR_JSON.ChangeCode> changeCodesToProcess = new List<AMS_OSCAR_JSON.ChangeCode>();
         List<AMS_OSCAR__c> oscarsToProcess = new List<AMS_OSCAR__c>();
-
+		
+		map<id, list<Agency_Applied_Change_code__c>> mapAccntCC = new map<id, list<Agency_Applied_Change_code__c>>();
+        set<id> setAccntId = new set<id>();
+        for(AccountChangesStruct actChange: accountChanges)
+        	setAccntId.add(actChange.acct.Id);
+		
+		for(Agency_Applied_Change_code__c aacc: [SELECT Reason_Code__c, Reason_Description__c, Account__c FROM Agency_Applied_Change_code__c WHERE Account__c in :setAccntId AND Active__c = TRUE]){
+			if(mapAccntCC.containsKey(aacc.Account__c))
+				mapAccntCC.get(aacc.Account__c).add(aacc);
+			else
+				mapAccntCC.put(aacc.Account__c, new Agency_Applied_Change_code__c[]{aacc});
+		}
+		
         for(AccountChangesStruct actChange: accountChanges){
             
             processedTN = false;
@@ -246,8 +258,12 @@ public class AMS_AccountTriggerHandler {
             AMS_OSCAR_JSON.ChangeCode changeCode = null;
 
             Account account = actChange.acct;
+            //DTULLO: Dunno who did this below... keep it for the future: NEVER Put a SOQL Query inside a loop!
+            //List<Agency_Applied_Change_code__c> accountActiveChangeCode = [SELECT Reason_Code__c, Reason_Description__c FROM Agency_Applied_Change_code__c WHERE Account__c =: account.Id AND Active__c = TRUE];
+			List<Agency_Applied_Change_code__c> accountActiveChangeCode = new List<Agency_Applied_Change_code__c>();
+			if(mapAccntCC.containsKey(account.Id))
+				accountActiveChangeCode = mapAccntCC.get(account.Id);
             system.debug(LoggingLevel.ERROR, 'LF: createMinorChangesChangeCode() check change! Is CNS ? '+actChange.isCNS());
-            List<Agency_Applied_Change_code__c> accountActiveChangeCode = [SELECT Reason_Code__c, Reason_Description__c FROM Agency_Applied_Change_code__c WHERE Account__c =: account.Id AND Active__c = TRUE];
 
             if(!comingFromOSCARforRemoveTradeName && AMS_RecordCreatorWebservice.containsTradeName(actChange.changes) ){
 
