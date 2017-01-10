@@ -289,9 +289,9 @@ public class AMS_ChangeCodesHelper {
         String newVal = AMS_Utils.getIATAReadableStatus(changeCode.status);
 
 
-        System.debug(loggingLevel.ERROR, 'Change code status is ' + changeCode.status);
-        System.debug(loggingLevel.ERROR, 'Account status is ' + oscarAgency.Status__c);
-        System.debug(loggingLevel.ERROR, 'New val is ' + newVal);
+        System.debug('Change code status is ' + changeCode.status);
+        System.debug('Account status is ' + oscarAgency.Status__c);
+        System.debug('New val is ' + newVal);
 
 
         if (newVal <> oscarAgency.Status__c && newVal != null) {

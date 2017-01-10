@@ -177,8 +177,6 @@ public class AMS_AccountTriggerHandler {
 
                 if(minorChangesAccountFields.contains(fieldToSearch.toLowerCase())){
 
-
-
                         if(acct.get(fieldName) <> oldMap.get(acct.Id).get(fieldName)){
                             if(acct.CNS_Agency__c == true && !minorChangesComingFromOSCAR && minorchangesRestrictedForCNS.contains(fieldName)){
                                 acct.addError('Change of '+accountDescription.get(fieldName).getDescribe().getLabel()+' is not allowed for CNS agencies directly on account level: a new  OSCAR is required to modify this information.');
@@ -192,7 +190,7 @@ public class AMS_AccountTriggerHandler {
                             String accountNewValue = String.valueOf(acct.get(fieldName));
                             String accountOldValue = String.valueOf(oldMap.get(acct.Id).get(fieldName));
 
-                            AMS_RecordCreatorWebservice.AccountChanges acctChange = new AMS_RecordCreatorWebservice.AccountChanges(accountFieldName,accountNewValue,accountOldValue);
+                            AMS_RecordCreatorWebservice.AccountChanges acctChange = new AMS_RecordCreatorWebservice.AccountChanges(accountFieldName,accountOldValue,accountNewValue);
 
                             accountChanges.add(acctChange);
                         }
@@ -230,6 +228,7 @@ public class AMS_AccountTriggerHandler {
 
 
     private static void createMinorChangesChangeCode(List<AccountChangesStruct> accountChanges){
+
         // get the Account and creates a change code (Agency_Applied_Change_code__c)
         // Notify the Agent via email using predefined email template
         Boolean processedTN = false;
@@ -279,7 +278,6 @@ public class AMS_AccountTriggerHandler {
                 oscarsToProcess.add(null);
 
                 processedTN = true;
-
 
             }else 
 
