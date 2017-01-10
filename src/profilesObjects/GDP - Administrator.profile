@@ -4411,8 +4411,8 @@
 <fieldPermissions><editable>false</editable><field>GDP_Products_Account_View__c.GSS_MDP_Sort_Key_Formula__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>GDP_Products_Account_View__c.IATA_Code__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>GDP_Products_Account_View__c.Incorporation_Type__c</field><readable>false</readable></fieldPermissions>
-<fieldPermissions><editable>false</editable><field>GDP_Products_Account_View__c.Json_WS_Complex__c</field><readable>false</readable></fieldPermissions>
-<fieldPermissions><editable>false</editable><field>GDP_Products_Account_View__c.Json_WS_Simple__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>GDP_Products_Account_View__c.Json_WS_Complex__c</field><readable>true</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>GDP_Products_Account_View__c.Json_WS_Simple__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>GDP_Products_Account_View__c.Last_Date_of_Update__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>GDP_Products_Account_View__c.Legal_Name_1__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>GDP_Products_Account_View__c.Legal_Name_2__c</field><readable>false</readable></fieldPermissions>
@@ -4738,9 +4738,9 @@
 <fieldPermissions><editable>false</editable><field>ID_Card__c.ID_Card_Application__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>ID_Card__c.Is_Active_Card__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>ID_Card__c.Is_Expedite__c</field><readable>true</readable></fieldPermissions>
-<fieldPermissions><editable>false</editable><field>ID_Card__c.JSON_WS_Complex__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>ID_Card__c.JSON_WS_Complex__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>ID_Card__c.Json_Is_Active__c</field><readable>false</readable></fieldPermissions>
-<fieldPermissions><editable>false</editable><field>ID_Card__c.Json_WS_Simple__c</field><readable>false</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>ID_Card__c.Json_WS_Simple__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>ID_Card__c.LastName__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>ID_Card__c.Middle_Initial__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>ID_Card__c.Missing_Information__c</field><readable>true</readable></fieldPermissions>
@@ -7489,6 +7489,7 @@
 <tabVisibilities><tab>EBC_Master_Filter__c</tab><visibility>DefaultOn</visibility></tabVisibilities>
 <tabVisibilities><tab>EBC_Resource__c</tab><visibility>DefaultOn</visibility></tabVisibilities>
 <tabVisibilities><tab>EBC_Setup__c</tab><visibility>DefaultOn</visibility></tabVisibilities>
+<tabVisibilities><tab>EBC_Sub_Continent__c</tab><visibility>Hidden</visibility></tabVisibilities>
 <tabVisibilities><tab>EBC_Template__c</tab><visibility>DefaultOn</visibility></tabVisibilities>
 <tabVisibilities><tab>EC2_Console</tab><visibility>Hidden</visibility></tabVisibilities>
 <tabVisibilities><tab>EC2_Images</tab><visibility>Hidden</visibility></tabVisibilities>

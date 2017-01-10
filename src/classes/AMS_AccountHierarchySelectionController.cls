@@ -108,7 +108,7 @@ public class AMS_AccountHierarchySelectionController {
 
 				errorMessages.put(
 					AMS_Utils.OWNERSHIP_IATA,
-					'For change of ownership to IATA, a target agency must be filled. It must contain an agency with location type HO which cannot be part of this hierarchy'
+					'For change of ownership to IATA, a target agency must be filled. It must contain an agency with location type HO or AO which cannot be part of this hierarchy'
 				);
 
 				errorMessages.put(
@@ -311,6 +311,46 @@ public class AMS_AccountHierarchySelectionController {
 		}
 	}
 
+	private Integer rowsPerPage = 100;
+
+    public Integer currentPage{
+        get{
+            if(currentPage == null){
+                currentPage = 0;
+            }
+            return currentPage;
+        }
+        set;
+    }
+    
+	public Integer totalPages{
+        get{
+            return hierarchyValuesForDisplay.size();
+        }
+    }
+    
+    public List<List<HierarchyItem>> hierarchyValuesForDisplay{
+        get{
+            if(hierarchyValuesForDisplay == null){
+                hierarchyValuesForDisplay = new List<List<HierarchyItem>>();
+
+                // create as many sub-lists as necessary
+                for(Integer i = 0; i <= (hierarchy.values().size()-1)/rowsPerPage; i++){
+                    hierarchyValuesForDisplay.add(new List<HierarchyItem>());
+                }
+
+                // fill HierarchyItems in the sub-lists
+                Integer itemNumber = 0;
+                for(HierarchyItem item : hierarchy.values()){
+                    hierarchyValuesForDisplay.get(itemNumber++/rowsPerPage).add(item);
+                }
+            }
+            System.debug(loggingLevel.Info, '[cls AMS_AccountHierarchySelectionController] hierarchy items lists - ' + hierarchyValuesForDisplay);
+            return hierarchyValuesForDisplay;
+        }
+        set;
+    }
+    
 	// ***********************************
 	// ********** constructor ************
 	// ***********************************
@@ -347,7 +387,8 @@ public class AMS_AccountHierarchySelectionController {
 			ownershipAgenciesNotSelected = false;
 		}
 
-		if(oscar.AMS_Target_Agency__c != null && (tocList.contains(AMS_Utils.LOCATION) || tocList.contains(AMS_Utils.LOCATION_INSPECTION))) errorChecks.put(AMS_Utils.LOCATION, true);
+		if(oscar.AMS_Target_Agency__c != null && ((tocList.contains(AMS_Utils.LOCATION) && !(tocList.contains(AMS_Utils.OWNERSHIP_IATA) || tocList.contains(AMS_Utils.OWNERSHIP_NON_IATA)))  || (tocList.contains(AMS_Utils.LOCATION_INSPECTION) && !(tocList.contains(AMS_Utils.OWNERSHIP_IATA) || tocList.contains(AMS_Utils.OWNERSHIP_NON_IATA)))))
+			errorChecks.put(AMS_Utils.LOCATION, true);
 
 		for(HierarchyItem hi : hierarchyValues){
 			
@@ -376,7 +417,7 @@ public class AMS_AccountHierarchySelectionController {
 			}
 
 			if(tocList.contains(AMS_Utils.OWNERSHIP_NON_IATA) || tocList.contains(AMS_Utils.OWNERSHIP_IATA)){
-				if((hi.main || hi.selected) && hi.acc.Location_Type__c == AMS_Utils.HO) ownershipMainHO = true;
+				if((hi.main || hi.selected) && (hi.acc.Location_Type__c == AMS_Utils.HO || hi.acc.Location_Type__c == AMS_Utils.AO)) ownershipMainHO = true;
 				if(!hi.selected && !hi.main) ownershipAgenciesNotSelected = true;
 			}
 
@@ -393,7 +434,7 @@ public class AMS_AccountHierarchySelectionController {
 			if(oscar.AMS_Target_Agency__c == null) errorChecks.put(AMS_Utils.OWNERSHIP_IATA, true);
 			else{
 				String targetLocationType = [SELECT Id, Location_Type__c FROM Account WHERE Id = :oscar.AMS_Target_Agency__c].Location_Type__c;
-				if(targetLocationType != AMS_Utils.HO) errorChecks.put(AMS_Utils.OWNERSHIP_IATA, true);
+				if(targetLocationType != AMS_Utils.HO && targetLocationType != AMS_Utils.AO) errorChecks.put(AMS_Utils.OWNERSHIP_IATA, true);
 			}
 		}
 
@@ -453,6 +494,15 @@ public class AMS_AccountHierarchySelectionController {
 		return false;
 	}
 
+	public Boolean getDisablePrevious() { 
+		//this will disable the previous and beginning buttons
+		return (currentPage <= 0);
+	}
+
+	public Boolean getDisableNext() { //this will disable the next and end buttons
+		return (currentPage >= hierarchyValuesForDisplay.size()-1);
+	}
+
 
 	// ***********************************
 	// ********* action methods **********
@@ -467,6 +517,26 @@ public class AMS_AccountHierarchySelectionController {
 		}
 	}
 
+    public PageReference Beginning() { //user clicked beginning
+		currentPage = 0;
+		return null;
+	}
+
+	public PageReference Previous() { //user clicked previous button
+		currentPage--;
+		return null;
+	}
+
+	public PageReference Next() { //user clicked next button
+		currentPage++;
+		return null;
+	}
+
+	public PageReference End() { //user clicked end
+		currentPage = hierarchyValuesForDisplay.size()-1;
+		return null;
+	}
+
 	public void save(){
 		if(performValidations()){
 
@@ -478,7 +548,9 @@ public class AMS_AccountHierarchySelectionController {
 				if(updateRelatedRecords()) closeTab = true;
 			} catch(Exception e) {
 				Database.rollback(sp);
-				ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, 'Couldn\'t save changes '+ e.getMessage()));
+				//DML Exceptions are sometimes displayed on the page
+				if(e.getTypeName() != 'System.DmlException' || !ApexPages.hasMessages()) ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, 'Couldn\'t save changes '+ e.getMessage()));
+				System.debug(loggingLevel.ERROR, '____ [cls AMS_AccountHierarchySelectionController - save] error - ' + e.getMessage());
 			}
 		}
 	}

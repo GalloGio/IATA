@@ -189,6 +189,11 @@ global class AMS_OSCAR_Webservice {
                                 ParentId = oscarCommCase.Id, AccountId = oscar.Account__c, Subject = 'Due Diligence – ' + oscar.Account__r.Name,
                                 OSCAR__c = oscar.Id, Region__c = oscar.Account__r.IATA_ISO_Country__r.Region__c, BSPCountry__c = oscar.Account__r.IATA_ISO_Country__r.Name);
 
+            Database.DMLOptions dmo = new Database.DMLOptions();
+            dmo.assignmentRuleHeader.useDefaultRule = true;
+            
+            issCase.setOptions(dmo);           
+
             insert issCase;
             
             oscar.STEP17__c = 'In Progress';

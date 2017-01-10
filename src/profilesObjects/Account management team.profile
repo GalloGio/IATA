@@ -1653,7 +1653,7 @@
 <fieldPermissions><editable>true</editable><field>Account.Reinstated_date__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Account.Remittance_frequency__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Account.SAP_BW_report_with_sales_figures__c</field><readable>true</readable></fieldPermissions>
-<fieldPermissions><editable>false</editable><field>Account.SAP_BW_report_without_sales_figures__c</field><readable>true</readable></fieldPermissions>
+<fieldPermissions><editable>false</editable><field>Account.SAP_BW_report_without_sales_figures__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Account.SAP_Number__c</field><readable>false</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Account.SIDRA_cases__c</field><readable>true</readable></fieldPermissions>
 <fieldPermissions><editable>false</editable><field>Account.SIS_Member_Code__c</field><readable>true</readable></fieldPermissions>
@@ -7751,6 +7751,7 @@
 <tabVisibilities><tab>EBC_Master_Filter__c</tab><visibility>Hidden</visibility></tabVisibilities>
 <tabVisibilities><tab>EBC_Resource__c</tab><visibility>Hidden</visibility></tabVisibilities>
 <tabVisibilities><tab>EBC_Setup__c</tab><visibility>Hidden</visibility></tabVisibilities>
+<tabVisibilities><tab>EBC_Sub_Continent__c</tab><visibility>Hidden</visibility></tabVisibilities>
 <tabVisibilities><tab>EBC_Template__c</tab><visibility>Hidden</visibility></tabVisibilities>
 <tabVisibilities><tab>EC2_Console</tab><visibility>Hidden</visibility></tabVisibilities>
 <tabVisibilities><tab>EC2_Images</tab><visibility>Hidden</visibility></tabVisibilities>
