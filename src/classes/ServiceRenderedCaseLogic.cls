@@ -390,7 +390,7 @@ public class ServiceRenderedCaseLogic {
                 a.Airline_CASS_Participations__c = 0;
             }
             
-            set<String> setCASSParticipationNames = new set<String>{'CASS Participation', 'CASS Representation', 'CASS via GSSA'};
+            set<String> setCASSParticipationNames = new set<String>{'CASS Participation', 'CASS Representation', 'CASS via GSSA', 'CASS Export Direct Participation', 'CASS Import Direct Participation', 'CASS Export via GSSA', 'CASS Import via GHA'};
             set<String> setBSPParticipationNames = new set<String>{'BSP Participation', 'BSP via IBCS'};
             
             // count the participations by type
