@@ -7393,6 +7393,7 @@
 <tabVisibilities><tab>EBC_Master_Filter__c</tab><visibility>Hidden</visibility></tabVisibilities>
 <tabVisibilities><tab>EBC_Resource__c</tab><visibility>Hidden</visibility></tabVisibilities>
 <tabVisibilities><tab>EBC_Setup__c</tab><visibility>Hidden</visibility></tabVisibilities>
+<tabVisibilities><tab>EBC_Sub_Continent__c</tab><visibility>Hidden</visibility></tabVisibilities>
 <tabVisibilities><tab>EBC_Template__c</tab><visibility>Hidden</visibility></tabVisibilities>
 <tabVisibilities><tab>EC2_Console</tab><visibility>Hidden</visibility></tabVisibilities>
 <tabVisibilities><tab>EC2_Images</tab><visibility>Hidden</visibility></tabVisibilities>

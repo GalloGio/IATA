@@ -414,10 +414,10 @@
                                 <div class="panel-heading">{! labels['lblShipTo']}</div>
                                 <div class="panel-body address-panel">
                                     
-                                    <apex:outputPanel layout="block" styleClass="row">
+                                   <!-- <apex:outputPanel layout="block" styleClass="row">
                                         <div class="col-md-5"><apex:outputLabel value="{!$ObjectType.Order.Fields.ShipTo_same_BillTo__c.Label}" /></div>
                                         <div class="col-md-7"><apex:outputField value="{!vfOrder.ShipTo_same_BillTo__c}" /></div>
-                                    </apex:outputPanel>
+                                    </apex:outputPanel>-->
                                     <apex:outputPanel layout="block" styleClass="row" rendered="{!vfOrder.ShipTo_same_BillTo__c != true}">
                                         <div class="col-md-5"><apex:outputLabel value="{! labels['lblContact']}" /></div>
                                         <div class="col-md-7"><apex:outputField value="{!vfOrder.ShipToContactId}" /></div>
@@ -900,14 +900,14 @@
                                         <apex:actionRegion immediate="true" >
                                             <apex:outputPanel id="sectionShipTo" layout="block">
                                                 
-                                                <apex:outputPanel layout="block" styleClass="row">
+                                               <!-- <apex:outputPanel layout="block" styleClass="row">
                                                     <div class="col-md-5"><apex:outputLabel value="{!$ObjectType.Order.Fields.ShipTo_same_BillTo__c.Label}" /></div>
                                                     <div class="col-md-7">
                                                         <apex:inputField value="{!vfOrder.ShipTo_same_BillTo__c}">
                                                             <apex:actionSupport event="onchange" reRender="sectionShipTo" />
                                                         </apex:inputField>
                                                     </div>
-                                                </apex:outputPanel>
+                                                </apex:outputPanel>-->
                                                 <apex:outputPanel layout="block" styleClass="row" rendered="{!vfOrder.ShipTo_same_BillTo__c != true}">
                                                     <div class="col-md-5"><apex:outputLabel value="{! labels['lblContact']}" /></div>
                                                     <div class="col-md-7"><div class="requiredBlock"></div>
