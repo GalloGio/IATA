@@ -384,6 +384,7 @@ public class AMS_OSCARTriggerHandler {
 
 				Set<Id> SAsInvolved = new Set<Id>();
 				Set<Id> SAsNotInvolved = new Set<Id>();
+				Set<Id> allSAs = new Set<Id>();
 
 				if(changeContainsLocation && agencyToSAs.get(oscar.Account__c)!=null){
 					config3 = AMS_AgencyChangesConfigHelper.getTypeOfChangeCombinationConfig(changeOfLocation, oscar, configs);
@@ -481,8 +482,11 @@ public class AMS_OSCARTriggerHandler {
 						// in case of location (for the moment is 100% but only God knows what will happen in the future)
 						// I'll apply the change and generate a CHL also to the SAs
 						if(changeContainsLocation  && agencyToSAs.get(oscar.Account__c)!=null){
-							changesContainer.add(AMS_ChangeCodesHelper.generateChangeCodes(oscar, config, accounts, accountsChangeCode, AMS_Utils.SANITYCHECK, SAsNotInvolved));
-							accountsToUpdate.putAll(AMS_Utils.copyDataToAccountForAgencyChanges(oscar, SAsNotInvolved, changeOfLocation, accounts, oscarOnlineAccreditation));
+							//We'll apply CHL to all dependent SAs either involved or not involved
+							allSAs.addAll(SAsInvolved);
+							allSAs.addAll(SAsNotInvolved);
+							changesContainer.add(AMS_ChangeCodesHelper.generateChangeCodes(oscar, config, accounts, accountsChangeCode, AMS_Utils.SANITYCHECK, allSAs));
+							accountsToUpdate.putAll(AMS_Utils.copyDataToAccountForAgencyChanges(oscar, allSAs, changeOfLocation, accounts, oscarOnlineAccreditation));
 						}
 
 					} else if (nonCascadingTOCs.length() == 0 && cascadingTOCs.length() > 0) {
@@ -598,8 +602,11 @@ public class AMS_OSCARTriggerHandler {
 						// in case of location (for the moment is 100% but only God knows what will happen in the future)
 						// I'll apply the change and generate a CHL also to the SAs
 						if(changeContainsLocation  && agencyToSAs.get(oscar.Account__c)!=null){
-							changesContainer.add(AMS_ChangeCodesHelper.generateChangeCodes(oscar, config, accounts, accountsChangeCode, AMS_Utils.APPROVAL, SAsNotInvolved));
-							accountsToUpdate.putAll(AMS_Utils.copyDataToAccountForAgencyChanges(oscar, SAsNotInvolved, changeOfLocation, accounts, oscarOnlineAccreditation));
+							//We'll apply CHL to all dependent SAs either involved or not involved
+							allSAs.addAll(SAsInvolved);
+							allSAs.addAll(SAsNotInvolved);
+							changesContainer.add(AMS_ChangeCodesHelper.generateChangeCodes(oscar, config, accounts, accountsChangeCode, AMS_Utils.APPROVAL, allSAs));
+							accountsToUpdate.putAll(AMS_Utils.copyDataToAccountForAgencyChanges(oscar, allSAs, changeOfLocation, accounts, oscarOnlineAccreditation));
 						}
 
 					} else if (nonCascadingTOCs.length() == 0 && cascadingTOCs.length() > 0) {
