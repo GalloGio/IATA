@@ -1454,7 +1454,6 @@ SIS Charge Code Type.</description>
             <picklistValues>
                 <fullName>TG8</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
             </picklistValues>
             <restrictedPicklist>true</restrictedPicklist>
             <sorted>false</sorted>
@@ -2002,6 +2001,10 @@ SIS Charge Code Type.</description>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>Load Control XML Messaging Toolkit</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>Maintenance Program Optimization Guidelines</fullName>
                 <default>false</default>
             </picklistValues>
@@ -2148,6 +2151,15 @@ SIS Charge Code Type.</description>
         <trackHistory>false</trackHistory>
         <type>Number</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>IEC_Override_Profit_Center__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>IEC - true to use profit center in ISO country when create contract instead of profit center of product</description>
+        <externalId>false</externalId>
+        <label>Override Profit Center</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>IEC_Page_Areas_of_Activity__c</fullName>
@@ -4938,6 +4950,8 @@ The product will only appear on the Online Store when the date entered in this f
         <columns>SAP_Material_Number__c</columns>
         <columns>Display_to_ECommerce__c</columns>
         <columns>Sell_through_eCommerce__c</columns>
+        <columns>Product_Section__c</columns>
+        <columns>IEC_Override_Profit_Center__c</columns>
         <columns>IEC_Cart_Option__c</columns>
         <columns>Mega_Menu__c</columns>
         <columns>Display_Ecom_Topic__c</columns>
@@ -6647,6 +6661,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Live Animals Regulation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Load Control XML Messaging Toolkit</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -9614,6 +9632,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Live Animals Regulation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Load Control XML Messaging Toolkit</fullName>
                 <default>false</default>
             </values>
             <values>

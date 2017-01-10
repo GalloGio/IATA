@@ -27,6 +27,8 @@ private class AMS_OscarCase_RiskMgmt_Test {
 		list<AMS_ChangeCodes__c> lsConf = new list<AMS_ChangeCodes__c>();
 		lsConf.add(new AMS_ChangeCodes__c(Name='RRC', CHANGE_CODE__C='RRC', REASON_CODE__C='PREV', REASON_CODE_DESCRIPTION__C='PREV', RECORD_TYPE__C='SIDRA', FIELD1__C='REI_ApprovalRejectin__c', FIELD1VALUES__C='VALUES:Approved', FIELD2__C='Update_AIMS_REI_DEFWITH__c', FIELD2VALUES__C='not blank', FIELD3__C=null, FIELD3VALUES__C=null, FIELD4__C=null, FIELD4VALUES__C=null, FIELD5__C=null, FIELD5VALUES__C=null, FIELD6__C=null, FIELD6VALUES__C=null, ACCOUNT_STATUS_CHANGE__C=null, CLASS_TYPE__C='P;D;R', BULLETIN_MEMO_TEXT__C=null, BULLETIN_MEMO_TEXT2__C=null, BULLETIN_MEMO_TEXT3__C=null, INTEGRATION_RECID__C='C', BILLABLE__C=TRUE, PUBLISHED_IN_BULLETIN__C=FALSE, RISK_CHANGECODE__C=TRUE, APPLY_TO_HIERARCHY__C=FALSE, CLEAR_IRREGULARITIES__C=FALSE, USED_BY_CNS__C=FALSE));
 		lsConf.add(new AMS_ChangeCodes__c(Name='TER', CHANGE_CODE__C='TER', REASON_CODE__C='1', REASON_CODE_DESCRIPTION__C='DEFAULT NON SETTLEMENT', RECORD_TYPE__C='SIDRA', FIELD1__C='TER_Approval_Rejection__c', FIELD1VALUES__C='VALUES:Approved', FIELD2__C='Update_AIMS_TER__c', FIELD2VALUES__C='NOT Blank', FIELD3__C='Termination_Reason__c', FIELD3VALUES__C='VALUES:Non Payment;Financial criteria not met;Voluntary relinquishment', FIELD4__C=null, FIELD4VALUES__C=null, FIELD5__C=null, FIELD5VALUES__C=null, FIELD6__C=null, FIELD6VALUES__C=null, ACCOUNT_STATUS_CHANGE__C='0', CLASS_TYPE__C='P;D;C;R;Q;I', BULLETIN_MEMO_TEXT__C='Agent Terminated due to <Termination Reason>', BULLETIN_MEMO_TEXT2__C=null, BULLETIN_MEMO_TEXT3__C=null, INTEGRATION_RECID__C='D', BILLABLE__C=FALSE, PUBLISHED_IN_BULLETIN__C=TRUE, RISK_CHANGECODE__C=TRUE, APPLY_TO_HIERARCHY__C=FALSE, CLEAR_IRREGULARITIES__C=FALSE, USED_BY_CNS__C=FALSE));
+		lsConf.add(new AMS_ChangeCodes__c(Name='FPY', CHANGE_CODE__C='FPY', REASON_CODE__C='1', REASON_CODE_DESCRIPTION__C='DEFAULT NON SETTLEMENT', RECORD_TYPE__C='SIDRA_Lite', FIELD1__C='IRR_Approval_Rejection__c', FIELD1VALUES__C='VALUES:Approved', FIELD2__C='Update_AIMS_IRR__c', FIELD2VALUES__C='NOT Blank', FIELD3__C='DEF_Approval_Rejection__c', FIELD3VALUES__C='NOT EQUAL TO:Approved', FIELD4__C='End_of_Grace_Period_Date__c', FIELD4VALUES__C='NOT Blank', FIELD5__C='Current_Outstanding_Amount_USD__c', FIELD5VALUES__C='<=:50', FIELD6__C='Current_Outstanding_Amount_USD__c', FIELD6VALUES__C='>:0', ACCOUNT_STATUS_CHANGE__C='0', CLASS_TYPE__C='P;D;C;R;Q;I', BULLETIN_MEMO_TEXT__C='Further to Irregularity served, no further action taken since the Agent has remitted full payment <PLS NOTE CHANGE ALSO APPLIES TO ALL BR LOCATIONS>', BULLETIN_MEMO_TEXT2__C=null, BULLETIN_MEMO_TEXT3__C=null, INTEGRATION_RECID__C='D', BILLABLE__C=FALSE, PUBLISHED_IN_BULLETIN__C=TRUE, RISK_CHANGECODE__C=TRUE, APPLY_TO_HIERARCHY__C=FALSE, CLEAR_IRREGULARITIES__C=FALSE, USED_BY_CNS__C=FALSE));
+		lsConf.add(new AMS_ChangeCodes__c(Name='FPL', CHANGE_CODE__C='FPL', REASON_CODE__C='1', REASON_CODE_DESCRIPTION__C='DEFAULT NON SETTLEMENT', RECORD_TYPE__C='SIDRA_Lite', FIELD1__C='IRR_Approval_Rejection__c', FIELD1VALUES__C='VALUES:Approved', FIELD2__C='Update_AIMS_IRR__c', FIELD2VALUES__C='NOT Blank', FIELD3__C='DEF_Approval_Rejection__c', FIELD3VALUES__C='NOT EQUAL TO:Approved', FIELD4__C='End_of_Grace_Period_Date__c', FIELD4VALUES__C='NOT Blank', FIELD5__C='Current_Outstanding_Amount_USD__c', FIELD5VALUES__C='>=:50', FIELD6__C='Current_Outstanding_Amount_USD__c', FIELD6VALUES__C='<:100', ACCOUNT_STATUS_CHANGE__C='0', CLASS_TYPE__C='P;D;C;R;Q;I', BULLETIN_MEMO_TEXT__C='Further to Irregularity served, no further action taken since the Agent has remitted full payment <PLS NOTE CHANGE ALSO APPLIES TO ALL BR LOCATIONS>', BULLETIN_MEMO_TEXT2__C=null, BULLETIN_MEMO_TEXT3__C=null, INTEGRATION_RECID__C='D', BILLABLE__C=FALSE, PUBLISHED_IN_BULLETIN__C=TRUE, RISK_CHANGECODE__C=TRUE, APPLY_TO_HIERARCHY__C=FALSE, CLEAR_IRREGULARITIES__C=FALSE, USED_BY_CNS__C=FALSE));
 		lsConf.add(new AMS_ChangeCodes__c(Name='RWD', CHANGE_CODE__C='RWD', REASON_CODE__C='60', REASON_CODE_DESCRIPTION__C='NON COMPLIANCE TO ACCREDITATION CRITERIA', RECORD_TYPE__C='SIDRA_Lite', FIELD1__C='DEF_Withdrawal_Approval_Rejection__c', FIELD1VALUES__C='VALUES:Approved', FIELD2__C='DEF_Withdrawal_Reason__c', FIELD2VALUES__C='VALUES:Internal IATA error;No change evidence received;Other', FIELD3__C='ChangeCode', FIELD3VALUES__C='EXISTS:SRM', FIELD4__C='Update_AIMS_REI_DEFWITH__c', FIELD4VALUES__C='not blank', FIELD5__C=null, FIELD5VALUES__C=null, FIELD6__C=null, FIELD6VALUES__C=null, ACCOUNT_STATUS_CHANGE__C='PREV', CLASS_TYPE__C='P;D;C;R', BULLETIN_MEMO_TEXT__C='Agency complies with the accreditation criteria. Agent is reinstated and review status is withdrawn', BULLETIN_MEMO_TEXT2__C=null, BULLETIN_MEMO_TEXT3__C=null, INTEGRATION_RECID__C='C', BILLABLE__C=FALSE, PUBLISHED_IN_BULLETIN__C=TRUE, RISK_CHANGECODE__C=TRUE, APPLY_TO_HIERARCHY__C=FALSE, CLEAR_IRREGULARITIES__C=FALSE, USED_BY_CNS__C=FALSE));
 		lsConf.add(new AMS_ChangeCodes__c(Name='RCR', CHANGE_CODE__C='RCR', REASON_CODE__C='91', REASON_CODE_DESCRIPTION__C='MEETS CRITERIA', RECORD_TYPE__C='SIDRA_Lite', FIELD1__C='Update_AIMS_DEF__c', FIELD1VALUES__C='NOT BLANK', FIELD2__C='DEF_Withdrawal_Approval_Rejection__c', FIELD2VALUES__C='VALUES:Approved', FIELD3__C='Update_AIMS_REI_DEFWITH__c', FIELD3VALUES__C='NOT BLANK', FIELD4__C=null, FIELD4VALUES__C=null, FIELD5__C=null, FIELD5VALUES__C=null, FIELD6__C=null, FIELD6VALUES__C=null, ACCOUNT_STATUS_CHANGE__C='9', CLASS_TYPE__C='P;D;C;R;Q;I', BULLETIN_MEMO_TEXT__C='Agent reinstated after default following: <SIDRA Lite Reason>',	BULLETIN_MEMO_TEXT2__C=null, BULLETIN_MEMO_TEXT3__C=null, INTEGRATION_RECID__C='C', BILLABLE__C=TRUE, PUBLISHED_IN_BULLETIN__C=TRUE, RISK_CHANGECODE__C=TRUE, APPLY_TO_HIERARCHY__C=FALSE, CLEAR_IRREGULARITIES__C=TRUE, USED_BY_CNS__C=FALSE));
 		lsConf.add(new AMS_ChangeCodes__c(Name='DEF', CHANGE_CODE__C='DEF', REASON_CODE__C='53', REASON_CODE_DESCRIPTION__C='DEFAULT ACCUM. IRREGULARITIES - NON COMPLIANCE', RECORD_TYPE__C='SIDRA_Lite', FIELD1__C='SIDRA_Lite_Reason__c', FIELD1VALUES__C='VALUES:Financial Review Non-compliance;Financial Security Non-compliance;Annual fees', FIELD2__C='DEF_Approval_Rejection__c', FIELD2VALUES__C='VALUES:Approved', FIELD3__C='Reason_for_Default__c', FIELD3VALUES__C='VALUES:Technical Default', FIELD4__C='Update_AIMS_DEF__c', FIELD4VALUES__C='NOT Blank', FIELD5__C=null, FIELD5VALUES__C=null, FIELD6__C=null, FIELD6VALUES__C=null, ACCOUNT_STATUS_CHANGE__C='5', CLASS_TYPE__C='P;D', BULLETIN_MEMO_TEXT__C='Agent is placed under Default due to <SIDRA Lite Reason>.  <IRRS Sequence> Agent is served Notice of Termination by <Termination Date>.  ISS Management is withdrawing ticketing authoirty and will demand an immediate accounting and settlement of',	BULLETIN_MEMO_TEXT2__C='amounts owing up to date of default. Financial Security furnished by Agent<Financial Securities>.', BULLETIN_MEMO_TEXT3__C=null, INTEGRATION_RECID__C='C', BILLABLE__C=FALSE, PUBLISHED_IN_BULLETIN__C=TRUE, RISK_CHANGECODE__C=TRUE, APPLY_TO_HIERARCHY__C=TRUE, CLEAR_IRREGULARITIES__C=FALSE, USED_BY_CNS__C=FALSE));
@@ -148,6 +150,44 @@ private class AMS_OscarCase_RiskMgmt_Test {
     	
     }
     
+    static testMethod void TestAll6Conditions(){
+    	test.StartTest();
+    	
+    	Account a = [select id, Name, IATA_ISO_Country__r.Enable_Risk_Change_Codes__c from Account where name='Accnt2'];
+
+    	Case SidraLiteCase = new Case();
+			SidraLiteCase.AccountId = a.Id;
+			SidraLiteCase.recordtypeId = SIDRALiteRTId;
+	    	SidraLiteCase.IRR_Approval_Rejection__c = 'Approved';
+	    	SidraLiteCase.Update_AIMS_IRR__c = system.Now();
+	    	SidraLiteCase.DEF_Approval_Rejection__c = 'Rejected';
+	    	SidraLiteCase.End_of_Grace_Period_Date__c = system.today();
+	    	SidraLiteCase.Outstanding_Amount__c  = 75;
+    	insert SidraLiteCase;
+    	   	
+    	test.StopTest();
+    	
+    }
+    
+    static testMethod void TestAll6Conditions2(){
+    	test.StartTest();
+    	
+    	Account a = [select id, Name, IATA_ISO_Country__r.Enable_Risk_Change_Codes__c from Account where name='Accnt2'];
+
+    	Case SidraLiteCase = new Case();
+			SidraLiteCase.AccountId = a.Id;
+			SidraLiteCase.recordtypeId = SIDRALiteRTId;
+	    	SidraLiteCase.IRR_Approval_Rejection__c = 'Approved';
+	    	SidraLiteCase.Update_AIMS_IRR__c = system.Now();
+	    	SidraLiteCase.DEF_Approval_Rejection__c = 'Rejected';
+	    	SidraLiteCase.End_of_Grace_Period_Date__c = system.today();
+	    	SidraLiteCase.Outstanding_Amount__c  = 40;
+    	insert SidraLiteCase;
+    	   	
+    	test.StopTest();
+    	
+    }
+    
     static testMethod void TestIrregularityWithdrawn(){
     	Account a = [select id, Name, IATA_ISO_Country__r.Enable_Risk_Change_Codes__c from Account where name='Accnt2'];
 		
@@ -214,15 +254,11 @@ private class AMS_OscarCase_RiskMgmt_Test {
     
     static testMethod void TestBulletinMemoText(){
     	Account a = [select id, Name, IATA_ISO_Country__r.Enable_Risk_Change_Codes__c from Account where name='Accnt2'];
+    	case cc = new case(AccountId = a.Id);
+    	insert cc;
     	Financial_Institution__c FI = new Financial_Institution__c(Name = 'FI1', INSTITUTION_TYPE__C='Bank');
-    	insert FI;
-        
-        // create a reception case
-        Case c = new Case(Subject = 'rception case', AccountId = a.Id, Status = 'Open', 
-                RecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('InternalCasesEuropeSCE') );
-        insert c;
-        
-    	Financial_Security__c FS = new Financial_Security__c(Reception_Case__c = c.Id , Region__c = 'Europe', Reasonforrequest__c = 'New Application', Reception_Date__c = System.today(), CURRENCYISOCODE='USD', Account__c=a.Id, AMOUNT__C=3000, EXPIRY_DATE__C=system.Today().AddDays(100), FINANCIAL_INSTITUTION__c=FI.Id, SECURITY_STATUS__C='Active', Security_Type__c='Bank Guarantee');
+    	insert FI; 
+    	Financial_Security__c FS = new Financial_Security__c(CURRENCYISOCODE='USD', Account__c=a.Id, AMOUNT__C=3000, EXPIRY_DATE__C=system.Today().AddDays(100), FINANCIAL_INSTITUTION__c=FI.Id, SECURITY_STATUS__C='Active', Security_Type__c='Bank Guarantee', Region__c ='Europe', Reception_Date__c=system.today(), Reasonforrequest__c='New Application', Reception_Case__c=cc.Id);
     	insert FS;
     	
     	list<Agency_applied_change_code__c> lsCC = new list<Agency_applied_change_code__c>();
@@ -242,9 +278,7 @@ private class AMS_OscarCase_RiskMgmt_Test {
 	    	SidraLiteCase4.AccountId = a.Id;
 			SidraLiteCase4.recordtypeId = SIDRALiteRTId;
 	    	SidraLiteCase4.Update_AIMS_DEF__c = system.Now();
-			SidraLiteCase4.CS_Rep_Acc_DEF__c = Userinfo.getuserid();
-        	SidraLiteCase4.CS_Rep_Acc_REI__c = Userinfo.getuserid();
-        	SidraLiteCase4.DEF_Withdrawal_Approval_Rejection__c = 'Approved';
+	    	SidraLiteCase4.DEF_Withdrawal_Approval_Rejection__c = 'Approved';
 	    	SidraLiteCase4.Update_AIMS_REI_DEFWITH__c = system.now();
 	    	SidraLiteCase4.CS_Rep_Acc_IRR_DEF__c = userinfo.getUserId();
 	    	SidraLiteCase4.Termination_date_manual_entry__c = system.today();
@@ -257,6 +291,8 @@ private class AMS_OscarCase_RiskMgmt_Test {
 	    	SidraLiteCase4.Reason_for_Default__c = 'Annual Fees';
 	    	SidraLiteCase4.Reason_of_REI_WD__c = 'IATA Error';
 	    	SidraLiteCase4.Shut_Down_TKT_System_GDS_and_BSPlink__c = system.now();
+	    	SidraLiteCase4.CS_Rep_Acc_DEF__c = userinfo.getUserId();
+	    	SidraLiteCase4.CS_Rep_Acc_REI__c = userinfo.getUserId();
 		insert SidraLiteCase4;
 		
 		system.debug(Logginglevel.ERROR, 'DTULLO AMS OscarCase Risk Mgmt TEST 3 --> Query issued: ' + Limits.getQueries()); 

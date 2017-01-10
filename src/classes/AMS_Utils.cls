@@ -78,6 +78,7 @@ public without sharing class AMS_Utils {
 
     public static final String PASSED = 'Passed';
     public static final String FAILED = 'Failed';
+    public static final String IN_PROGRESS = 'In Progress';
     public static final String NOT_APPLICABLE = 'Not Applicable';
 
     public static final String AUTH_APPROVAL = 'Authorize Approval';
@@ -90,7 +91,7 @@ public without sharing class AMS_Utils {
     public static final String MAJ_SHAREHOLDING = 'Major Shareholding';
     public static final String MIN_SHAREHOLDING = 'Minor Shareholding';
     public static final String NAME = 'Name';
-    public static final String LEGAL_STATUS = 'Legal Status';
+    public static final String LEGAL_STATUS = 'Legal status';
     public static final String VFMR = 'VMFR';
 
 
@@ -151,6 +152,12 @@ public without sharing class AMS_Utils {
     public static final String ACC_S7_UNDERREVIEW = 'Under review';
     public static final String ACC_S8_CHANGESPROCESSED = 'Changes processed';
     public static final String ACC_S9_APPROVED = 'Approved';
+     
+    public static final String AACC_INPROGRESS = 'in progress';
+    public static final String AACC_FINALIZED = 'finalized';
+    public static final String AACC_WITHDRAWAL = 'withdrawn';
+    public static final String AACC_DISAPPROVED = 'disapproved';
+    public static final Set<String> AACC_FINALS = new Set<String>{AACC_FINALIZED, AACC_DISAPPROVED, AACC_WITHDRAWAL};
      
     public static final String CHLOCTYPEBEHAVIOR_NOSWAP = 'Don’t change the parent';        
     public static final String CHLOCTYPEBEHAVIOR_SWAP = 'Swap with the parent';
@@ -357,12 +364,12 @@ public without sharing class AMS_Utils {
         String sRes = '';
 
         if (sChangeCode.equalsIgnoreCase('NEW')) {
-            sRes = 'in progress';
+            sRes = AACC_INPROGRESS;
         } else if (sChangeCode.equalsIgnoreCase('FIN')) {
-            sRes = 'finalized';
+            sRes = AACC_FINALIZED;
         }
         else if (sChangeCode.equalsIgnoreCase('DIS')) {
-            sRes = 'disapproved';
+            sRes = AACC_DISAPPROVED;
         }
         
         return sRes;
@@ -614,7 +621,7 @@ public without sharing class AMS_Utils {
         return res;
     }
 
-
+/* DESCOUTINUED - TO BE REMOVED AFTER TESTING
 
     public static List<Account> createAAChangeCodes(List<AMS_OSCAR_JSON.ChangeCode> changeCodes, List<AMS_OSCAR__c> oscars, List<Account> oscarAgencies, Boolean isToUpdateAccounts) {
 
@@ -708,6 +715,18 @@ public without sharing class AMS_Utils {
         }
 
         if(oscar != null){
+
+       		if( aacNEW.Change_Code__c == 'NEW' ){
+            	oscar.First_Step_Completed__c = true;
+
+                if(!Trigger.isExecuting || Trigger.isAfter) update oscar; //used on the creation of the NEW via webservice
+        	}
+
+        	if( aacNEW.Change_Code__c == 'FIN' && !oscar.Flag_IATACode_Formula__c) oscar.addError('Please, make sure the IATA Code has been generated');
+        	if( oscar.RecordTypeId == RECTYPE_NEW && (aacNEW.Change_Code__c == 'FIN' || aacNEW.Change_Code__c == 'DIS') && !oscar.First_Step_Completed__c) oscar.addError('Approval/Disapproval can only be made after the NEW change code was created');
+        	if( oscar.RecordTypeId == RECTYPE_CHANGE && !oscar.First_Step_Completed__c){
+        	    for(String status : AACC_FINALS) if(aacNEW.Bulletin_Information__c.endsWith(status)) oscar.addError('Approval/Disapproval can only be made after the initial change code was created');
+        	}
             if(aacNEW.Change_Code__c == 'FIN' && new Set<String>{'C','P'}.contains(oscar.Location_Class__c)){
                 oscarAgency.Annual_Renewal_Certificates__c = true;
                 toReturn = oscarAgency;
@@ -741,6 +760,7 @@ public without sharing class AMS_Utils {
 
         return new ChangeCodeStruct(aacNEW, toReturn);
     }
+    */
 
     public static String getIATAReadableStatus(String endorsmentCode) {
 
@@ -873,17 +893,15 @@ public without sharing class AMS_Utils {
     }
 
 
-    public static void copyDataToAccount(List<AMS_OSCAR__c> oscars) {
-        copyDataToAccount(oscars, true);
+    public static List<AMS_ChangeCodesHelper.ObjectChangesStruct> copyDataToAccount(List<AMS_OSCAR__c> oscars) {
+        return copyDataToAccount(oscars, true);
     }
 
 
     //Map data from staging area (AMS Online Accreditation) to account
-    public static void copyDataToAccount(List<AMS_OSCAR__c> oscars, Boolean runOwnershipMigration) {
+    public static List<AMS_ChangeCodesHelper.ObjectChangesStruct> copyDataToAccount(List<AMS_OSCAR__c> oscars, Boolean runOwnershipMigration) {
 
         AMS_AccountTriggerHandler.processMinorChangesValidationFlag = false;
-
-        ID changeRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('CHANGE').getRecordTypeId();
 
         System.debug('Copying Data from Staging to Account');
 
@@ -958,6 +976,8 @@ public without sharing class AMS_Utils {
 
         List<Map<String, String>> configs = AMS_AgencyChangesConfigHelper.getAgencyChangesConfigData();
 
+        List<Ams_ChangeCodesHelper.ObjectChangesStruct> changes = new List<Ams_ChangeCodesHelper.ObjectChangesStruct>();
+
         for (AMS_OSCAR__c oscar : oscars) {
 
             Account acc = accounts.get(oscar.Account__c);
@@ -968,10 +988,31 @@ public without sharing class AMS_Utils {
 
             if (acc != null && onlineAcc != null) {
 
-                for (String key : fieldsMapping.keySet()) {
-                    String value = fieldsMapping.get(key);
-                    acc.put(key, onlineAcc.get(value));
-                    System.debug(key + ':' + onlineAcc.get(value));
+                List<AMS_ChangeCodesHelper.ObjectChange> accChanges = new List<AMS_ChangeCodesHelper.ObjectChange>();
+
+                for (String accfield : fieldsMapping.keySet()) {
+                    String onlineAccField = fieldsMapping.get(accfield);
+                    Object newValue = onlineAcc.get(onlineAccField);
+
+                    if( acc.get(accfield) != newValue ){
+                        
+                        if(AMS_AccountTriggerHandler.minorChangesAccountFields.contains(accfield.toLowerCase())){
+                            accChanges.add(new AMS_ChangeCodesHelper.ObjectChange('Account', accfield, String.valueOf(acc.get(accfield)), String.valueOf(newValue)));
+                        }
+
+                        acc.put(accfield, newValue);
+                    }
+                    
+                    System.debug(accfield + ':' + newValue);
+                }
+
+                if(acc.ShippingState != onlineAcc.Shipping_ISO_State__r.Name){
+                    accChanges.add(new AMS_ChangeCodesHelper.ObjectChange('Account', 'ShippingState', acc.ShippingState, onlineAcc.Shipping_ISO_State__r.Name));
+                    acc.ShippingState = onlineAcc.Shipping_ISO_State__r.Name;
+                }
+                if(acc.ShippingCountry != onlineAcc.Shipping_ISO_Country__r.Name){
+                    accChanges.add(new AMS_ChangeCodesHelper.ObjectChange('Account', 'ShippingCountry', acc.ShippingCountry, onlineAcc.Shipping_ISO_Country__r.Name));
+                    acc.ShippingCountry = onlineAcc.Shipping_ISO_Country__r.Name;
                 }
 
                 acc.In_a_Airport__c = (onlineAcc.ISSP_AMS_Premises_located_at_airport__c == 'Yes') ? true : false;
@@ -986,6 +1027,8 @@ public without sharing class AMS_Utils {
                 accountsToUpdate.add(acc);
                 stagingToAccount.put(onlineAcc.Id, new Set<Id>{oscar.Account__c});
 
+
+                changes.add(new Ams_ChangeCodesHelper.ObjectChangesStruct(accChanges));
             }
 
         }
@@ -1000,11 +1043,15 @@ public without sharing class AMS_Utils {
             if(!stagingToAccount.isEmpty() && runOwnershipMigration)
                 AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(stagingToAccount, true);
 
+            return changes;
+
         } catch (Exception ex) {
             System.debug('Exception: ' + ex);
             Database.rollback(sp);
             throw ex;
         }
+        
+        return null;
         
     }
 
@@ -1035,15 +1082,20 @@ public without sharing class AMS_Utils {
     }
 
     //Map data from staging area (AMS Online Accreditation) to account
-    public static List<Account> copyDataToAccountForAgencyChanges(AMS_OSCAR__c oscar, Set<Id> accountsAffected, String typesOfChange, Map<Id, Account> accounts, AMS_Pax_Accreditation_Form__c oscarOnlineAccreditation) {
+    public static Map<Account,AMS_ChangeCodesHelper.ObjectChangesStruct> copyDataToAccountForAgencyChanges(AMS_OSCAR__c oscar, Set<Id> accountsAffected, String typesOfChange, Map<Id, Account> accounts, AMS_Pax_Accreditation_Form__c oscarOnlineAccreditation) {
+
+        System.debug('AGENCY CHANGES: Types of Change (' + typesOfChange + ') ');
 
         Set<String> fieldsToMigrate = AMS_AgencyChangesConfigHelper.getFieldsToMigrate(typesOfChange);
 
         System.debug('AGENCY CHANGES: fields to migrate (' + fieldsToMigrate + ') for accounts: ' + accountsAffected);
 
-        List<Account> accountsToUpdate = new List<Account>();
+        Map<Account,AMS_ChangeCodesHelper.ObjectChangesStruct> accountsToUpdate = new  Map<Account,AMS_ChangeCodesHelper.ObjectChangesStruct>();
+        
+        Map<String, Schema.SObjectField>  acctFieldsMap= Schema.SObjectType.Account.fields.getMap();
         
         //DT: Reindented and added 3 fields for addresses
+        // Account Fields => AMS Pax Accreditation Fields (Staging area)
         Map<String, String> fieldsMapping = new Map<String, String> {'Name' => 'Account_Name__c'
                                                                     ,'IATACode__c' => 'IATACode__c'
                                                                     ,'Short_Name__c' => 'Short_Name__c'
@@ -1112,12 +1164,47 @@ public without sharing class AMS_Utils {
                     //AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(new List<AMS_Pax_Accreditation_Form__c>{onlineAcc}, accountsAffected);
 
                 for(Id accId: accountsAffected){
+
+                    List<AMS_ChangeCodesHelper.ObjectChange> objectChangesList = new List <AMS_ChangeCodesHelper.ObjectChange>();
+
                     Account acc = accounts.get(accId);
 
                     for(String accFieldApiName: accountFieldNewValue.keySet())
-                        acc.put(accFieldApiName, accountFieldNewValue.get(accFieldApiName));
+                    {
+                        
+                        Schema.SObjectField field = acctFieldsMap.get(accFieldApiName);
+                        Schema.DisplayType fldType = field.getDescribe().getType();
+                        
+                        system.debug('Field value to migrate to account: ' + accFieldApiName);
+                        system.debug('Field Type to migrate to account: ' + fldType);
 
-                    accountsToUpdate.add(acc);
+                        //Add Account Changes to be used when generating the Change Codes History Entities
+                        
+                        String newValue,oldValue,oldValueLookupID,newValueLookupID;
+                        if (String.valueOf(fldType) == 'REFERENCE'){
+
+                            oldValue = String.valueOf(processParentDependecies(accFieldApiName.replace('__c','__r.Name'),acc));
+                            newValue = String.valueOf(processParentDependecies(fieldsMapping.get(accFieldApiName).replace('__c','__r.Name'),oscarOnlineAccreditation)); 
+                            oldValueLookupID = String.valueOf(acc.get(accFieldApiName));
+                            newValueLookupID = String.valueOf(accountFieldNewValue.get(accFieldApiName));
+                            
+                        }
+                        else{
+                       
+                            oldValue = String.valueOf(acc.get(accFieldApiName));
+                            newValue = String.valueOf(accountFieldNewValue.get(accFieldApiName));
+                       }
+                        
+                        if (oldValue != newValue)
+                            objectChangesList.add(new AMS_ChangeCodesHelper.ObjectChange('Account',accFieldApiName,oldValue,newValue,oldValueLookupID,newValueLookupID));
+                            
+
+                        acc.put(accFieldApiName, accountFieldNewValue.get(accFieldApiName));
+                    }
+
+                    AMS_ChangeCodesHelper.ObjectChangesStruct acctChangesStruct = new AMS_ChangeCodesHelper.ObjectChangesStruct(objectChangesList);
+
+                    accountsToUpdate.put(acc,acctChangesStruct);
                 }
 
         }
@@ -1786,7 +1873,55 @@ public static String fetchTypeOfCustomer (String locationType , String category)
         return dateField.addMonths(1).toStartOfMonth().addDays(-1);
     }
 
- 
+
+    /** 
+        Process Parent Objects fields (up to 5 Parents?)
+    */
+    public static Object processParentDependecies(String field , sObject sObj)
+    {
+
+            if(field.contains('.'))
+            {
+                //Get the Object directly related to the field
+                wrapperData wDObj = new wrapperData(sObj,field);
+                
+                return (wDObj.sObj == null || wDObj.sObj.get(wDObj.fieldName) == null ) ? '' :wDObj.sObj.get(wDObj.fieldName);
+            }
+
+            else
+                return (sObj.get(field) == null) ? '' : sObj.get(field);
+    }
+
+    /** 
+     Wrapper Object for Mapping the Entity for Field 
+     Example : change_code__r.Account__r.name 
+
+    */
+    private class wrapperData {
+        
+        private sObject sObj{get;set;}
+        private String fieldName{get;set;}
+    /** 
+         Get Object for the Field  (up to 5 Parents?)
+    */
+        private wrapperData(SObject sObjParent, String field){
+
+            List <String> strList = field.split('\\.');
+            integer lastPos = strList.size() -1;
+        
+            sObject sObj = sObjParent;
+
+            for(integer i = 0 ; i < lastPos ; i++) //avoid last element
+            {               
+                sObj = sObj.getSObject(strList.get(i));
+            }
+
+            this.sObj   = sObj;
+            this.fieldName = strList.get(lastPos); 
+
+        }
+
+    }
  	public static Integer findGapInRange(Integer minRange, Integer maxRange, List<Integer> orderedSlotsOccupied){
 	    //invalid range
 	    if(maxRange-minRange < 0)

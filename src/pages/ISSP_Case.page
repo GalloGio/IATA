@@ -9,7 +9,6 @@
 
     <body>
         <script type="text/javascript">
-
         window.onload = function toggleButtons() {
             window.document.getElementsByName('newComment')[0].style.display = 'none';
         }
@@ -245,6 +244,28 @@
                     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
                 }
             }
+
+            .lookupInput a{
+                display: block;
+                position: absolute;
+                top: 0px;
+                //width: 875px;
+            }
+
+            .lookupInput img{
+                float: right;
+            }
+
+            span.lookupInput{
+                position: relative;
+                display: inherit;
+            }
+
+            .lookupInput a, .lookupInput a{
+                border: none !important;
+                background: none !important;
+            }
+
         </style>
         <!--  **************** New Case ********************** -->
         <div class="container">
@@ -349,6 +370,7 @@
                                         <apex:inputfield styleclass="form-control" value="{!newCase.Type_of_customer__c}" required="true" rendered="{!NOT(isDPCUser)}" />
                                         <apex:inputfield styleclass="form-control" value="{!newCase.Priority}" required="true" rendered="{!AND(isPWCProfile,NOT(isDPCUser))}" />
                                         <apex:inputfield styleclass="form-control" value="{!newCase.Reason}" required="true" rendered="{!NOT(isDPCUser)}" />
+                                        <apex:inputfield styleclass="form-control" value="{!newCase.ParentId}" rendered="{!AND(isPWCProfile)}"/>
                                         <!-- Fields for DPC user -->
                                         <!--
                                         <apex:inputField value="{!newCase.Type}" required="true" rendered="{!OR(isDPCUser, isSISCase)}"  styleClass="form-control" />
@@ -464,6 +486,7 @@
                                         <apex:outputfield rendered="{!isPWCCase}" value="{!newCase.Type_of_customer__c}" />
                                         <apex:outputfield rendered="{!isPWCCase}" value="{!newCase.Priority}" />
                                         <apex:outputfield rendered="{!isPWCCase}" value="{!newCase.Reason}" />
+                                        <apex:outputfield rendered="{!isPWCCase}" value="{!newCase.ParentId}" />                                        
                                         
                                         <apex:outputfield value="{!newCase.ContactId}" rendered="{!OR(caseType == 'PWC', caseType =='ACR', caseType =='DPCSR')}" />
                                         

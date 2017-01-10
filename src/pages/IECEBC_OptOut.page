@@ -85,7 +85,7 @@
                                 <div class="group-container feedback small-8">
                                     <div class="group-title">Help us improve our service and tell us why<!-- UB-266 Help us improve our feedback--></div>
                                     <div class="field-group checkbox-light">
-                                        <apex:repeat  value="{!reasonslist}" var="s" id="idrepeat">
+                                        <apex:repeat value="{!reasonslist}" var="s" id="idrepeat">
                                             <div class="checkbox-box">
                                                 <div class="custom-user-input checkbox">
                                                     <apex:inputCheckbox value="{!reasons[s]}" id="checkbox" label="{!s}" styleClass="user-input checkbox" />

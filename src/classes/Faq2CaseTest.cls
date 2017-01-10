@@ -640,7 +640,15 @@ private class Faq2CaseTest {
         insert child;
         System.debug('child Id: ' + child.Id);
         Contact con = ISSP_ObjectFactory.createNewContact();
- 
+
+		IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'test', ISO_Code__c = 't1', Case_BSP_Country__c = 'test1', Region__c = 'test');
+		insert country;
+
+		String recordTypeId = [SELECT Id FROM RecordType WHERE Name = 'DPC Service Request'].Id;
+
+		Case c=new Case(Subject='test 1',Status='Open', AccountId=parent.id, ContactId=con.id,Region__c = 'Europe', IFAP_Country_ISO__c ='t1' , RecordTypeId = recordTypeId);
+		insert c;
+
         con.AccountId= child.Id;
 		con.Email = 'Test@test11.com';
         insert con;
@@ -674,6 +682,17 @@ private class Faq2CaseTest {
 		  controller.CheckNewCaseRecordType();
 		  //controller.GenerateTopicHelpText();
 		  //controller.GeneratesubTopicHelpText();
+
+		  controller.topic = '0';
+		  controller.subtopic = 'CGO_Bank_Guarantees__c';
+		  String test;
+		  test = controller.encTopicLbl;
+		  test = controller.encSubtopicLbl;
+		  test = controller.encIsoCountry;
+		  test = controller.region;
+		  ISSP_FAQ2CaseLiveAgentTopics__c topicsSetting = new ISSP_FAQ2CaseLiveAgentTopics__c(name = '1', value__c = '0.CGO_Bank_Guarantees__c');
+		  insert topicsSetting;
+		//  System.assert(controller.showButton);
 		}
 		Test.stopTest();
     }
