@@ -1,12 +1,12 @@
 global class ams2gdp_Batch_Update implements Database.Batchable<sObject> 
 {
-    global String query;
-    global String job;  
-    global String jobParams;
+    public String query;
+    public String job;  
+    public String jobParams;
     
-    global Integer errorsCount;
-    global Integer totalRecords;
-    global List<String> failed_records;
+    public Integer errorsCount;
+    public Integer totalRecords;
+    public List<String> failed_records;
 
     
     global ams2gdp_Batch_Update(String j, String p) 
@@ -157,8 +157,9 @@ global class ams2gdp_Batch_Update implements Database.Batchable<sObject>
                 prod.AMS_GDP_Key__c = accountsByLegacyId.get(prod.Webstar_Id__c.removeEnd('GDP'));
             }
         }
-
-        update gdp_products_account_views;
+        
+        Database.update(gdp_products_account_views, false);
+        
     }
 
     public static void updateGDS(List<GDS__c> lst)
@@ -168,8 +169,9 @@ global class ams2gdp_Batch_Update implements Database.Batchable<sObject>
 
         for(GDS__c item : lst)
         {
-            if(String.isNotBlank(item.AIMS_Id__c)) aims_ids.add(item.AIMS_Id__c.removeEnd(item.GDS_ID__c+'GDP'));
-            if(String.isNotBlank(item.Webstar_Id__c)) webstar_ids.add(item.Webstar_Id__c.removeEnd(item.GDS_ID__c+'GDP'));          
+            Integer gds_id = Integer.valueOf(item.GDS_ID__c);
+            if(String.isNotBlank(item.AIMS_Id__c)) aims_ids.add(item.AIMS_Id__c.removeEnd(gds_id+'GDP'));
+            if(String.isNotBlank(item.Webstar_Id__c)) webstar_ids.add(item.Webstar_Id__c.removeEnd(gds_id+'GDP'));          
         }
 
         Map<String, String> accountsByLegacyId = new Map<String, String>(); 
@@ -181,11 +183,11 @@ global class ams2gdp_Batch_Update implements Database.Batchable<sObject>
 
         for(GDS__c item : lst)
         {
-            if(String.isNotBlank(item.AIMS_Id__c) && accountsByLegacyId.containsKey(item.AIMS_ID__c.removeEnd(item.GDS_ID__c+'GDP'))) item.AMS_GDP_Key__c = accountsByLegacyId.get(item.AIMS_ID__c.removeEnd(item.GDS_ID__c+'GDP')) + '-' + item.Computer_Reservation_System__r.Code__c;
-            else if(String.isNotBlank(item.Webstar_Id__c) && accountsByLegacyId.containsKey(item.Webstar_Id__c.removeEnd(item.GDS_ID__c+'GDP'))) item.AMS_GDP_Key__c = accountsByLegacyId.get(item.Webstar_Id__c.removeEnd(item.GDS_ID__c+'GDP')) + '-' + item.Computer_Reservation_System__r.Code__c;            
+            Integer gds_id = Integer.valueOf(item.GDS_ID__c);
+            if(String.isNotBlank(item.AIMS_Id__c) && accountsByLegacyId.containsKey(item.AIMS_ID__c.removeEnd(gds_id+'GDP'))) item.AMS_GDP_Key__c = accountsByLegacyId.get(item.AIMS_ID__c.removeEnd(gds_id+'GDP')) + '-' + item.Computer_Reservation_System__r.Code__c;
+            else if(String.isNotBlank(item.Webstar_Id__c) && accountsByLegacyId.containsKey(item.Webstar_Id__c.removeEnd(gds_id+'GDP'))) item.AMS_GDP_Key__c = accountsByLegacyId.get(item.Webstar_Id__c.removeEnd(gds_id+'GDP')) + '-' + item.Computer_Reservation_System__r.Code__c;           
         }
-
-        update lst;
+        Database.update(lst,false);
     }
     
     public static void updateAccountCategory(List<Account_Category__c> lst)
@@ -195,8 +197,9 @@ global class ams2gdp_Batch_Update implements Database.Batchable<sObject>
 
         for(Account_Category__c item : lst)
         {
-            if(String.isNotBlank(item.AIMS_Id__c)) aims_ids.add(item.AIMS_Id__c.removeEnd(item.Category_ID__c+'GDP'));
-            if(String.isNotBlank(item.Webstar_Id__c)) webstar_ids.add(item.Webstar_Id__c.removeEnd(item.Category_ID__c+'GDP'));
+            Integer cat_id = Integer.valueOf(item.Category_ID__c);
+            if(String.isNotBlank(item.AIMS_Id__c)) aims_ids.add(item.AIMS_Id__c.removeEnd(cat_id+'GDP'));
+            if(String.isNotBlank(item.Webstar_Id__c)) webstar_ids.add(item.Webstar_Id__c.removeEnd(cat_id+'GDP'));
         }
 
         Map<String, String> accountsByLegacyId = new Map<String, String>(); 
@@ -208,11 +211,12 @@ global class ams2gdp_Batch_Update implements Database.Batchable<sObject>
 
         for(Account_Category__c item : lst)
         {
-            if(String.isNotBlank(item.AIMS_Id__c) && accountsByLegacyId.containsKey(item.AIMS_ID__c.removeEnd(item.Category_ID__c+'GDP'))) item.AMS_GDP_Key__c = accountsByLegacyId.get(item.AIMS_ID__c.removeEnd(item.Category_ID__c+'GDP')) + '-' + item.Category_Code__r.Code__c;
-            else if(String.isNotBlank(item.Webstar_Id__c) && accountsByLegacyId.containsKey(item.Webstar_Id__c.removeEnd(item.Category_ID__c+'GDP'))) item.AMS_GDP_Key__c = accountsByLegacyId.get(item.Webstar_Id__c.removeEnd(item.Category_ID__c+'GDP')) + '-' + item.Category_Code__r.Code__c;
+            Integer cat_id = Integer.valueOf(item.Category_ID__c);
+            if(String.isNotBlank(item.AIMS_Id__c) && accountsByLegacyId.containsKey(item.AIMS_ID__c.removeEnd(cat_id+'GDP'))) item.AMS_GDP_Key__c = accountsByLegacyId.get(item.AIMS_ID__c.removeEnd(cat_id+'GDP')) + '-' + item.Category_Code__r.Code__c;
+            else if(String.isNotBlank(item.Webstar_Id__c) && accountsByLegacyId.containsKey(item.Webstar_Id__c.removeEnd(cat_id+'GDP'))) item.AMS_GDP_Key__c = accountsByLegacyId.get(item.Webstar_Id__c.removeEnd(cat_id+'GDP')) + '-' + item.Category_Code__r.Code__c;
             
         }
-        update lst;
+        Database.update(lst,false);
     }
 
     public static void updateAccreditation(List<Accreditation__c> accreditations)
@@ -221,17 +225,18 @@ global class ams2gdp_Batch_Update implements Database.Batchable<sObject>
         Set<String> legacy_ids = new Set<String>(); 
         for(Accreditation__c acc : accreditations)
         {
+            Integer acc_id = Integer.valueOf(acc.Accreditation_ID__c);
             //{EXTERNAL_ID}ACC{ACCREDITATION_ID}[GDP]
             if(String.isNotBlank(acc.AIMS_Id__c))
             {
-                String aims_id = acc.AIMS_Id__c.removeEnd('ACC'+acc.Accreditation_ID__c+'GDP');     
+                String aims_id = acc.AIMS_Id__c.removeEnd('ACC'+acc_id+'GDP');     
                 legacy_ids.add(aims_id+acc.Endorsed_Accredited_By__r.Code__c);
             }
 
             //{EXTERNAL_ID}{PHONE_TYPE}[GDP]
             if(String.isNotBlank(acc.Webstar_Id__c))
             {
-                String webstar_id = acc.Webstar_Id__c.removeEnd('ACC'+acc.Accreditation_ID__c+'GDP');   
+                String webstar_id = acc.Webstar_Id__c.removeEnd('ACC'+acc_id+'GDP');   
                 legacy_ids.add(webstar_id+acc.Endorsed_Accredited_By__r.Code__c);
             }
         }
@@ -246,9 +251,10 @@ global class ams2gdp_Batch_Update implements Database.Batchable<sObject>
 
         for(Accreditation__c acc : accreditations)
         {
+            Integer acc_id = Integer.valueOf(acc.Accreditation_ID__c);
             if(String.isNotBlank(acc.AIMS_Id__c))
             {
-                String aims_key = acc.AIMS_Id__c.removeEnd('ACC'+acc.Accreditation_ID__c+'GDP');
+                String aims_key = acc.AIMS_Id__c.removeEnd('ACC'+acc_id+'GDP');
                     aims_key = aims_key+acc.Endorsed_Accredited_By__r.Code__c;
 
                 if(inspectionsByLegacyId.containsKey(aims_key)) acc.AMS_GDP_Key__c = inspectionsByLegacyId.get(aims_key)+'GDP';
@@ -256,7 +262,7 @@ global class ams2gdp_Batch_Update implements Database.Batchable<sObject>
             }
             else if(String.isNotBlank(acc.Webstar_Id__c))
             {
-                String webstar_key = acc.Webstar_Id__c.removeEnd('ACC'+acc.Accreditation_ID__c+'GDP');
+                String webstar_key = acc.Webstar_Id__c.removeEnd('ACC'+acc_id+'GDP');
                     webstar_key = webstar_key+acc.Endorsed_Accredited_By__r.Code__c;
 
                 if(inspectionsByLegacyId.containsKey(webstar_key)) acc.AMS_GDP_Key__c = inspectionsByLegacyId.get(webstar_key)+'GDP'; 
@@ -264,7 +270,7 @@ global class ams2gdp_Batch_Update implements Database.Batchable<sObject>
         }
 
         //DML 1
-        update accreditations;              
+        Database.update(accreditations,false);              
     }
 
     public static void updateGDPPhone(List<GDP_Phone__c> gdp_phones)
@@ -350,7 +356,7 @@ global class ams2gdp_Batch_Update implements Database.Batchable<sObject>
         }
 
         //DML 1
-        update gdp_phones;      
+        Database.update(gdp_phones, false);      
     }
 
     public static void updateGDPAddress(List<GDP_Address__c> gdp_address)
@@ -425,7 +431,7 @@ global class ams2gdp_Batch_Update implements Database.Batchable<sObject>
         }
 
         //DML 1
-        update gdp_Address;
+        Database.update(gdp_Address,false);
     }
 
     public static void updateAgencyOwner(List<Agency_Owner__c> agency_owner)
@@ -455,7 +461,7 @@ global class ams2gdp_Batch_Update implements Database.Batchable<sObject>
                 if(ag.RecordType.DeveloperName == 'GDP') ag.AMS_GDP_Key__c =accountRoleMap.get(ag.AIMS_ID__c)+'GDP';
                 else ag.AMS_GDP_Key__c =accountRoleMap.get(ag.AIMS_ID__c) ;
             }
-            update agency_owner; 
+            Database.update(agency_owner,false); 
         }
     }
 
@@ -497,7 +503,7 @@ global class ams2gdp_Batch_Update implements Database.Batchable<sObject>
                 if(air.RecordType.DeveloperName == 'GDP' && String.isNotBlank(air.Related_GDP_Products_Account_View__r.AMS_GDP_Key__c)) air.AMS_GDP_Key__c =agencyAirportkeysMap.get(air.Related_GDP_Products_Account_View__r.AMS_GDP_Key__c.left(15)+'-'+air.AirportCode__r.Code__c)+'GDP';
                 else air.AMS_GDP_Key__c =agencyAirportkeysMap.get(air.AMS_GDP_Formula_Key__c) ;
             }
-            update adjacent_airport; 
+            Database.update(adjacent_airport, false); 
         }
     }
 
@@ -541,7 +547,7 @@ global class ams2gdp_Batch_Update implements Database.Batchable<sObject>
                 }
                 else{af.AMS_GDP_Key__c =agencyAffiliationMap.get(af.AMS_GDP_Mapping_Key__c) ;}
             }
-            update affil_member; 
+            Database.update(affil_member,false); 
         }
     }
 
@@ -569,7 +575,7 @@ global class ams2gdp_Batch_Update implements Database.Batchable<sObject>
             else if(String.isNotBlank(gdp.Webstar_Id__c) && accountsByLegacyId.containsKey(gdp.Webstar_Id__c.removeEnd('GDP'))) gdp.AMS_GDP_Key__c = accountsByLegacyId.get(gdp.Webstar_Id__c.removeEnd('GDP'));
         }
 
-        update lst; 
+        Database.update(lst,false); 
     }
 
     public static void updateGSATerritory(List<GSA_Territory__c> lst)
@@ -593,6 +599,6 @@ global class ams2gdp_Batch_Update implements Database.Batchable<sObject>
             if(territoryByLegacyId.containsKey(key)) gsa.AMS_GDP_Key__c = territoryByLegacyId.get(key)+'GDP';
         }
 
-        update lst; 
+        Database.update(lst,false); 
     }
 }
