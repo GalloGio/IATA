@@ -730,7 +730,7 @@
                 <showScrollbars>false</showScrollbars>
                 <width>100%</width>
             </layoutItems>
-			<layoutItems>
+            <layoutItems>
                 <height>1</height>
                 <page>AMS_Case_AccIrr_Popup</page>
                 <showLabel>false</showLabel>
