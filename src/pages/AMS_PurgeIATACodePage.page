@@ -110,6 +110,9 @@
                             <apex:column headerValue="Account Id">
                                 <apex:outputLink value="/{!pfc.Identifier}" target="_blank">{!pfc.Identifier}</apex:outputLink>
                             </apex:column>
+                            <apex:column headerValue="Account Name">
+                                <apex:outputText value="{!pfc.Name}" />
+                            </apex:column>
                             <apex:column headerValue="Full IATA Code">
                                 <apex:outputText value="{!pfc.IATACode}" />
                             </apex:column>
@@ -125,8 +128,11 @@
                             <apex:column headerValue="Site">
                                 <apex:outputText value="{!pfc.Site}" />
                             </apex:column>
-                            <apex:column headerValue="Account Name">
-                                <apex:outputText value="{!pfc.Name}" />
+                            <apex:column headerValue="Country">
+                                <apex:outputText value="{!pfc.ISOCountry}" />
+                            </apex:column>
+                            <apex:column headerValue="Region">
+                                <apex:outputText value="{!pfc.Region}" />
                             </apex:column>
                             <apex:column headerValue="Location Type">
                                 <apex:outputText value="{!pfc.LocationType}" />

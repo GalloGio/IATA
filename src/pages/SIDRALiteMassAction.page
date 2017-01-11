@@ -78,6 +78,7 @@ function selectedCases() {
     .successMessage {color: #4F8A10;}
     .selectbutton {margin: 5px;}
     .hidden {visibility: hidden;}
+    .filterBox {width: 240px;}
   </style>
 
   <apex:actionFunction name="search" action="{!search}" rerender="mainForm" status="Loading"/>
@@ -127,13 +128,21 @@ function selectedCases() {
             <apex:selectOptions value="{!filter.ListReasons}" />
           </apex:selectList>
           <!--  Filter for Account Category  -->
-          <apex:selectList value="{!filter.category}" label="Account Category" multiselect="false" size="1" onchange="search();">
+          <apex:selectList value="{!filter.category}" label="Account Category" multiselect="false" size="1" styleclass="filterBox" onchange="search();">
             <apex:selectOption itemValue="" itemLabel="-- None --" />
             <apex:selectOption itemValue="IATA Passenger Sales Agent" itemLabel="IATA Passenger Sales Agent" />
             <apex:selectOption itemValue="Domestic Agent" itemLabel="Domestic Agent" />
             <apex:selectOption itemValue="IATA Cargo Agent" itemLabel="IATA Cargo Agent" />
             <apex:selectOption itemValue="CASS Associate" itemLabel="CASS Associate" />
             <apex:selectOption itemValue="TIDS Agent" itemLabel="TIDS Agent" />
+          </apex:selectList>
+
+          <!--  Filter for Action Date  -->
+          <apex:selectList value="{!filter.dateFilter}" label="Action Date Filter" multiselect="false" size="1" styleclass="filterBox" onchange="search();">
+            <apex:selectOption itemValue="" itemLabel="-- None --" />
+            <apex:selectOption itemValue="LAST_N_DAYS:7" itemLabel="Last 7 days" />
+            <apex:selectOption itemValue="LAST_N_DAYS:14" itemLabel="Last 14 days" />
+            <apex:selectOption itemValue="LAST_N_DAYS:30" itemLabel="Last 30 days" />
           </apex:selectList>
 
         </apex:pageBlockSection>
@@ -150,15 +159,15 @@ function selectedCases() {
         <!--<apex:commandButton value="Trigger Sidra Lite Action" action="{!confirmTriggerSidraLiteAction}" rerender="mainForm" status="Loading" />-->
       </apex:pageBlockButtons>
 
-      <apex:pageMessage summary="No cases found" severity="info" strength="3" rendered="{!listWrapperCase.size=0}"/>
+      <apex:pageMessage summary="No cases found" severity="info" strength="3" rendered="{!OR(listWrapperCase==null,listWrapperCase.size==0)}"/>
 
-      <apex:outputPanel rendered="{!listWrapperCase.size>0}" style="float: left;margin: 3px;" >
+      <apex:outputPanel rendered="{!AND(listWrapperCase!=null,listWrapperCase.size>0)}" style="float: left;margin: 3px;" >
         <input id="selectAllButton" class="selectbutton btn" value="Select All" onclick="selectCheckboxes(true);" type="button"/>
         <input id="deselectAllButton" class="selectbutton btn" value="Deselect All" onclick="selectCheckboxes(false);" type="button"/>
         <div id="info-selection" style="float: right;padding: 3px 20px;"></div>
       </apex:outputPanel>
 
-      <apex:pageBlockTable value="{!listWrapperCase}" styleclass="result-table" var="wrapper" id="cases" rendered="{!listWrapperCase.size>0}">
+      <apex:pageBlockTable value="{!listWrapperCase}" styleclass="result-table" var="wrapper" id="cases" rendered="{!AND(listWrapperCase!=null,listWrapperCase.size>0)}">
 
         <apex:column styleclass="id-value hidden" headerClass="hidden">
           {!wrapper.cse.Id}
@@ -199,7 +208,7 @@ function selectedCases() {
     <!-- List Cases Section -->
     <apex:pageBlock title="Processed results" mode="edit" id="processed" rendered="{!showResultSection}">
 
-      <apex:pageBlockTable value="{!listWrapperCase}" styleclass="result-table" var="wrapper" id="results" rendered="{!listWrapperCase.size>0}">
+      <apex:pageBlockTable value="{!listWrapperCase}" styleclass="result-table" var="wrapper" id="results" rendered="{!AND(listWrapperCase!=null,listWrapperCase.size>0)}">
 
         <apex:column >
           <apex:facet name="header">{!filter.shortName} Case</apex:facet>
