@@ -30,10 +30,6 @@
         <type>user</type>
     </allowedSubmitters>
     <allowedSubmitters>
-        <submitter>payned@iata.org</submitter>
-        <type>user</type>
-    </allowedSubmitters>
-    <allowedSubmitters>
         <submitter>ponsa@iata.org</submitter>
         <type>user</type>
     </allowedSubmitters>
