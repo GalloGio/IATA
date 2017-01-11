@@ -347,7 +347,8 @@ public class AMS_OscarCase_RiskMgmt {
   					}
   				}
   			}
-			AACC.Irregularity_Type__c = '';
+  			//(mortacci mia)
+			//AACC.Irregularity_Type__c = '';
 			AACC.Effective_Date__c = date.ValueOf(mapCases.get(idCase).IRR_Approval_Rejection_Date__c);
 		}
 					
