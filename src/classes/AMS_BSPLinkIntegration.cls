@@ -204,7 +204,7 @@ global class AMS_BSPLinkIntegration {
 	    		oReturn.result = 'Ok';
 	    		oReturn.description = Resp200.access_token;
 	    	}else
-	    		oReturn = FormatErrorOutput(resp);
+	    		oReturn = FormatErrorOutput(resp, '');
     	}
     	catch(exception e){
     		oReturn.IATACode='';
@@ -243,7 +243,7 @@ global class AMS_BSPLinkIntegration {
 	    		oReturn.result = 'Ok';
 	    		oReturn.description = '';
 	    	}else
-	    		oReturn = FormatErrorOutput(resp);
+	    		oReturn = FormatErrorOutput(resp, AA.IATACode__c);
     	}
     	catch(exception e){
     		oReturn.IATACode = AA.IATACode__c;
@@ -284,7 +284,7 @@ global class AMS_BSPLinkIntegration {
 	    		oReturn.result = 'Ok';
 	    		oReturn.description = '';
 	    	}else
-	    		oReturn = FormatErrorOutput(resp);
+	    		oReturn = FormatErrorOutput(resp, AA.IATACode__c);
     	}
     	catch(exception e){
     		oReturn.IATACode=AA.IATACode__c;
@@ -324,7 +324,7 @@ global class AMS_BSPLinkIntegration {
 	    		oReturn.result = 'Ok';
 	    		oReturn.description = '';
 	    	}else
-	    		oReturn = FormatErrorOutput(resp);
+	    		oReturn = FormatErrorOutput(resp, AA.IATACode__c);
     	}
     	catch(exception e){
     		oReturn.IATACode = AA.IATACode__c;
@@ -456,7 +456,7 @@ global class AMS_BSPLinkIntegration {
     }
     
     //Generic method to format the error output
-    static response FormatErrorOutput(HTTPResponse resp){
+    static response FormatErrorOutput(HTTPResponse resp, string sIATACode){
     	Response oReturn = new Response();
     	if(resp.getStatusCode()==400){ //Managed Error
     		ErrorResponse Resp400 = (ErrorResponse)JSON.Deserialize(resp.getBody(), ErrorResponse.class);
@@ -466,6 +466,7 @@ global class AMS_BSPLinkIntegration {
     		oReturn.result = 'Error';
     		oReturn.description = resp.getStatusCode() + ' - ' + resp.getStatus();
     	}
+    	oReturn.IATACode = sIATACode;
     	return oReturn;
     }
 }
