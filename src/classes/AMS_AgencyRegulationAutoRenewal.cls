@@ -90,7 +90,7 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 		}
 
 		Map<String, Id> countryTemplates = DGRemailTemplates();
-        OrgWideEmailAddress[] owea = [select Id from OrgWideEmailAddress where Address = 'agencyriskmgmt@iata.org'];
+        OrgWideEmailAddress[] owea = [select Id from OrgWideEmailAddress where Address = 'agencymanagement@iata.org'];
 
 		for(AMS_Agency_Regulation__c agReg: regulationsRequiringRenewal){
 
