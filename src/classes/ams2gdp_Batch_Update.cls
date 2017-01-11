@@ -1,4 +1,4 @@
-global class ams2gdp_Batch_Update implements Database.Batchable<sObject> 
+global class ams2gdp_Batch_Update implements Database.Batchable<sObject> , Database.Stateful 
 {
     public String query;
     public String job;  
@@ -16,7 +16,7 @@ global class ams2gdp_Batch_Update implements Database.Batchable<sObject>
 
         if(job == 'updateGDPProductsAccountView')
         {
-            query = 'SELECT AMS_GDP_Key__c, AIMS_Id__c, Webstar_Id__c FROM GDP_Products_Account_View__c WHERE AMS_GDP_Key__c = null AND (AIMS_Id__c != null OR Webstar_Id__c!=null) ';
+            query = 'SELECT AMS_GDP_Key__c, AIMS_Id__c, Webstar_Id__c,IATA_Code__c, CASS_Number__c, Check_Digit__c FROM GDP_Products_Account_View__c WHERE AMS_GDP_Key__c = null AND (AIMS_Id__c != null OR Webstar_Id__c!=null) ';
         }
         else if(job == 'updateGDS')
         {
@@ -132,22 +132,30 @@ global class ams2gdp_Batch_Update implements Database.Batchable<sObject>
     {
         Set<String> aims_ids = new Set<String>();           
         Set<String> webstar_ids = new Set<String>();
+        Set<String> iata_uniq_codes = new Set<String>();
 
         for(GDP_Products_Account_View__c prod : gdp_products_account_views)
         {
             if(String.isNotBlank(prod.AIMS_Id__c)) aims_ids.add(prod.AIMS_Id__c.removeEnd('GDP'));
             if(String.isNotBlank(prod.Webstar_Id__c)) webstar_ids.add(prod.Webstar_Id__c.removeEnd('GDP'));
+
+            iata_uniq_codes.add(prod.IATA_Code__c+prod.CASS_Number__c+prod.Check_Digit__c);
         }
 
         Map<String, String> accountsByLegacyId = new Map<String, String>(); 
-        for(Account acc: [SELECT Id, AIMS_Id__c, Webstar_Id__c FROM Account WHERE AIMS_Id__c IN :aims_ids OR Webstar_Id__c IN:webstar_ids])
+        for(Account acc: [SELECT Id, AIMS_Id__c, Webstar_Id__c,IATACode__c FROM Account WHERE AIMS_Id__c IN :aims_ids OR Webstar_Id__c IN:webstar_ids OR IATACode__c IN :iata_uniq_codes])
         {
             if(String.isNotBlank(acc.AIMS_Id__c)) accountsByLegacyId.put(acc.AIMS_Id__c, acc.Id);
             if(String.isNotBlank(acc.Webstar_Id__c)) accountsByLegacyId.put(acc.Webstar_Id__c, acc.Id);
+            if(String.isNotBlank(acc.IATACode__c)) accountsByLegacyId.put(acc.IATACode__c, acc.Id);
         }
 
         for(GDP_Products_Account_View__c prod : gdp_products_account_views)
         {
+            String iata_code = prod.IATA_Code__c; 
+            if(String.isNotBlank(prod.CASS_Number__c)) iata_code += prod.CASS_Number__c; 
+            iata_code += prod.Check_Digit__c;
+
             if(String.isNotBlank(prod.AIMS_Id__c) && accountsByLegacyId.containsKey(prod.AIMS_ID__c.removeEnd('GDP')))
             {
                 prod.AMS_GDP_Key__c = accountsByLegacyId.get(prod.AIMS_ID__c.removeEnd('GDP'));
@@ -155,6 +163,10 @@ global class ams2gdp_Batch_Update implements Database.Batchable<sObject>
             else if(String.isNotBlank(prod.Webstar_Id__c) && accountsByLegacyId.containsKey(prod.Webstar_Id__c.removeEnd('GDP')))
             {
                 prod.AMS_GDP_Key__c = accountsByLegacyId.get(prod.Webstar_Id__c.removeEnd('GDP'));
+            }
+            else if(accountsByLegacyId.containsKey(iata_code))
+            {
+                prod.AMS_GDP_Key__c = accountsByLegacyId.get(iata_code);
             }
         }
         
