@@ -33,11 +33,13 @@ public class AMS_OscarCase_RiskMgmt {
 	private static set<id> setAccntIdIRRToClear = new set<id>();	//Account IDs for which a clear of irregularities is needed
 	private static map<id, list<Agency_Applied_Change_code__c>> mapExistingChangeCodes = new map<id, list<Agency_Applied_Change_code__c>>();
 	private static map<string, operational_Calendar__c> mapOperationalCalendar = new map<string, operational_Calendar__c>();
+    private static set<string> setIRRCC = new set<string>{'IRR', 'IRS', 'IRW'};		//Irregularities change code
+    private static set<string> setTERCC = new set<string>{'TER'};		//Termination change codes: set expiry date on account
+    private static set<string> setREICC = new set<string>{'SDR', 'RCR', 'STR', 'RTR', 'RTE', 'REI'};		//Termination change codes: clear expiry date on account
     
     //Main Method
 	public static void CreateRiskChangeCode(map<id, case> mapTrgOld, map<id, case> mapTrgNew){
 		map<id, list<AMS_ChangeCodes__c>> mapChangeCodeToCreate = new map<id, list<AMS_ChangeCodes__c>>(); //index is the Id of the case
-		set<string> setIRRCC = new set<string>{'IRR', 'IRS', 'IRW'};		//Irregularities change code
 		set<string> setFSStatus = new set<string>{'Close to Expiry Date', 'Active', 'Encashed', 'Encashment in progress'};	//Financial Security status to be included in the memo text
 		//map<id, Case> mapCasePerAccount = new map<id, case>();
 		
@@ -306,7 +308,8 @@ public class AMS_OscarCase_RiskMgmt {
 														, mapIRRS.get(AccountId), mapFinancialSecurity.get(AccountId)).toUpperCase();
 		AACC.Change_Code__c = cc.Change_Code__c;
 		//AACC.Effective_Date__c = ; //get the effective date from the oscar attached to the 
-		if(cc.Change_Code__c == 'IRR' || cc.Change_Code__c == 'IRS' || cc.Change_Code__c == 'IRW'){
+		//if(cc.Change_Code__c == 'IRR' || cc.Change_Code__c == 'IRS' || cc.Change_Code__c == 'IRW'){
+		if(setIRRCC.contains(cc.Change_Code__c)){
   			if(mapCases.get(idCase).IRR_Type__c == 'Single Irregularity'){
   				AACC.Irregularities_Points__c = 1;
   				if(cc.Change_Code__c == 'IRW'){
@@ -401,6 +404,16 @@ public class AMS_OscarCase_RiskMgmt {
 				accnt.Status__c = AMS_Utils.getIATAReadableStatus(cc.Account_status_change__c);
 			}
 			accnt.PreviousStatus__c = sCurrStatus;
+		}
+		
+		if(setTERCC.contains(cc.Change_Code__c)){
+			accnt.Expiry_Date__c = Date.Today();
+			bAccntToUpd = true;
+		}
+		
+		if(setREICC.contains(cc.Change_Code__c)){
+			accnt.Expiry_Date__c = null;
+			bAccntToUpd = true;
 		}
 		
 		//Set the billing period
