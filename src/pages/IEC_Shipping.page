@@ -493,13 +493,13 @@
                                                     <h2 class="group-title">Shipping address</h2>
                                                     
                                                     <div class="field-group radio inline">
-                                                        <div class="radio-box">
+                                                       <!-- <div class="radio-box">
                                                             <div class="custom-user-input radio">
                                                                 <input class="user-input radio validate[required]" type="radio" name="shipping-address" onclick="same_address_selected();" id="shipping-address-same" />
                                                                 <label class="custom-radio" for="shipping-address-same"><i class="icon"></i></label>
                                                             </div>
                                                             <label class="input-label" for="shipping-address-same">Same as billing address</label>
-                                                        </div>
+                                                        </div>-->
                                                         <div class="radio-box">
                                                             <div class="custom-user-input radio">
                                                                 <input class="user-input radio validate[required]" type="radio" name="shipping-address" onclick="different_shipping_address();" id="shipping-address-different"/>
