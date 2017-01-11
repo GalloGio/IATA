@@ -2,7 +2,6 @@
 <Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
     <alerts>
         <fullName>ALWG_LCAG_C_send_notification_to_meeting_owner_that_Legal_has_signed_off_agenda</fullName>
-        <ccEmails>belislep@iata.org</ccEmails>
         <description>ALWG/LCAG-C - send notification to meeting owner that Legal has signed off agenda</description>
         <protected>false</protected>
         <recipients>

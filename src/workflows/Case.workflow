@@ -6479,7 +6479,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
     <fieldUpdates>
         <fullName>SIS_Change_Case_Owner_to_L2_Customer_S</fullName>
         <field>OwnerId</field>
-        <lookupValue>SISHelpDeskIATASISCustomerSupport</lookupValue>
+        <lookupValue>SISHelpDesk</lookupValue>
         <lookupValueType>Queue</lookupValueType>
         <name>SIS - Change Case Owner to L2 Customer S</name>
         <notifyAssignee>false</notifyAssignee>
@@ -6489,7 +6489,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
     <fieldUpdates>
         <fullName>SIS_Change_Case_Owner_to_SIS_Ops</fullName>
         <field>OwnerId</field>
-        <lookupValue>SISHelpDeskSISOperations</lookupValue>
+        <lookupValue>SISHelpDesk</lookupValue>
         <lookupValueType>Queue</lookupValueType>
         <name>SIS - Change Case Owner to SIS Ops</name>
         <notifyAssignee>false</notifyAssignee>
