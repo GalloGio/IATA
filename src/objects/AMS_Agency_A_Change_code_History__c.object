@@ -101,20 +101,18 @@
         <fullName>Field_New_Value__c</fullName>
         <externalId>false</externalId>
         <label>Field New Value</label>
-        <required>false</required>
+        <length>32000</length>
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
-        <length>32000</length>        
         <visibleLines>3</visibleLines>
     </fields>
     <fields>
         <fullName>Field_Old_Value__c</fullName>
         <externalId>false</externalId>
         <label>Field Old Value</label>
-        <required>false</required>
+        <length>32000</length>
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
-        <length>32000</length>
         <visibleLines>3</visibleLines>
     </fields>
     <fields>
