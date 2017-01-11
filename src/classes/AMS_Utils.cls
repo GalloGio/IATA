@@ -142,7 +142,7 @@ public without sharing class AMS_Utils {
     public static final Set<String> oscarAMSProcesses = new Set <String>{new_HO,new_BR,new_BR_ABROAD,new_TIDS,new_MSO,new_GSA,new_GSA_BSP,new_GSSA,new_AHA,new_AHA_BSP,new_SA, COR};
 
 
-    public static final Set<String> oscarProcessesWithAppointments = new Set <String>{new_GSA,new_GSA_BSP,new_AHA,new_AHA_BSP,new_GSSA,new_MSO, new_HO,new_BR,new_BR_ABROAD};
+    //public static final Set<String> oscarProcessesWithAppointments = new Set <String>{new_GSA,new_GSA_BSP,new_AHA,new_AHA_BSP,new_GSSA,new_MSO, new_HO,new_BR,new_BR_ABROAD};
 
     public static final String ACC_S0_TERMINATED = 'Terminated';
     public static final String ACC_S1_NOTACCREDITED = 'Not accreditated';
@@ -718,17 +718,17 @@ public without sharing class AMS_Utils {
 
         if(oscar != null){
 
-       		if( aacNEW.Change_Code__c == 'NEW' ){
-            	oscar.First_Step_Completed__c = true;
+            if( aacNEW.Change_Code__c == 'NEW' ){
+                oscar.First_Step_Completed__c = true;
 
                 if(!Trigger.isExecuting || Trigger.isAfter) update oscar; //used on the creation of the NEW via webservice
-        	}
+            }
 
-        	if( aacNEW.Change_Code__c == 'FIN' && !oscar.Flag_IATACode_Formula__c) oscar.addError('Please, make sure the IATA Code has been generated');
-        	if( oscar.RecordTypeId == RECTYPE_NEW && (aacNEW.Change_Code__c == 'FIN' || aacNEW.Change_Code__c == 'DIS') && !oscar.First_Step_Completed__c) oscar.addError('Approval/Disapproval can only be made after the NEW change code was created');
-        	if( oscar.RecordTypeId == RECTYPE_CHANGE && !oscar.First_Step_Completed__c){
-        	    for(String status : AACC_FINALS) if(aacNEW.Bulletin_Information__c.endsWith(status)) oscar.addError('Approval/Disapproval can only be made after the initial change code was created');
-        	}
+            if( aacNEW.Change_Code__c == 'FIN' && !oscar.Flag_IATACode_Formula__c) oscar.addError('Please, make sure the IATA Code has been generated');
+            if( oscar.RecordTypeId == RECTYPE_NEW && (aacNEW.Change_Code__c == 'FIN' || aacNEW.Change_Code__c == 'DIS') && !oscar.First_Step_Completed__c) oscar.addError('Approval/Disapproval can only be made after the NEW change code was created');
+            if( oscar.RecordTypeId == RECTYPE_CHANGE && !oscar.First_Step_Completed__c){
+                for(String status : AACC_FINALS) if(aacNEW.Bulletin_Information__c.endsWith(status)) oscar.addError('Approval/Disapproval can only be made after the initial change code was created');
+            }
             if(aacNEW.Change_Code__c == 'FIN' && new Set<String>{'C','P'}.contains(oscar.Location_Class__c)){
                 oscarAgency.Annual_Renewal_Certificates__c = true;
                 toReturn = oscarAgency;
@@ -1924,30 +1924,30 @@ public static String fetchTypeOfCustomer (String locationType , String category)
         }
 
     }
- 	public static Integer findGapInRange(Integer minRange, Integer maxRange, List<Integer> orderedSlotsOccupied){
-	    //invalid range
-	    if(maxRange-minRange < 0)
-	        return -1;
-	
-	    Integer candidate = minRange;
-	    
-		for(Integer occupiedSlot : orderedSlotsOccupied){
-			if(occupiedSlot > candidate){
-				System.debug('Candidate found : ' + candidate);
-				return candidate;
-			}
-			else if(occupiedSlot == candidate){
-				candidate++;
-				if(candidate > maxRange){
-					return -1;
-				}
-			}
-		}
-		
-		return candidate;
-	}
-	
-	public static String CASE_REF_FORMAT = 'ref:{0}.{1}:ref';
+    public static Integer findGapInRange(Integer minRange, Integer maxRange, List<Integer> orderedSlotsOccupied){
+        //invalid range
+        if(maxRange-minRange < 0)
+            return -1;
+    
+        Integer candidate = minRange;
+        
+        for(Integer occupiedSlot : orderedSlotsOccupied){
+            if(occupiedSlot > candidate){
+                System.debug('Candidate found : ' + candidate);
+                return candidate;
+            }
+            else if(occupiedSlot == candidate){
+                candidate++;
+                if(candidate > maxRange){
+                    return -1;
+                }
+            }
+        }
+        
+        return candidate;
+    }
+    
+    public static String CASE_REF_FORMAT = 'ref:{0}.{1}:ref';
 
     @testVisible
     private static String shortenOrgId(String id) {
@@ -1992,11 +1992,11 @@ public static String fetchTypeOfCustomer (String locationType , String category)
          );
     }
 
-/*	
+
     public static boolean isProcessUsingAppointments(AMS_OSCAR__c oscar){
         Set<String> oscarProcessesWithAppointments = new Set <String>{new_GSA,new_GSA_BSP,new_AHA,new_AHA_BSP,new_GSSA,new_MSO};
         Set<String> oscarCNSProcessesWithAppointments = new Set <String>{new_HO,new_BR,new_BR_ABROAD};
 
         return oscarProcessesWithAppointments.contains(oscar.Process__c) || (oscarCNSProcessesWithAppointments.contains(oscar.Process__c) && oscar.CNS_Process__c);
-    }*/
+    }
 }
