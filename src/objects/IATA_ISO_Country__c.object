@@ -907,6 +907,16 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
         <type>Picklist</type>
     </fields>
     <fields>
+        <fullName>CNS_Country__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>This flag is used to mark the CNS countries</description>
+        <externalId>false</externalId>
+        <inlineHelpText>This flag is used to mark the CNS countries</inlineHelpText>
+        <label>CNS country</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Cargo_Agency_Accreditation__c</fullName>
         <externalId>false</externalId>
         <label>Cargo Agency Accreditation</label>
