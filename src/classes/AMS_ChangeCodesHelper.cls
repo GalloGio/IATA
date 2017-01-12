@@ -289,9 +289,9 @@ public class AMS_ChangeCodesHelper {
         String newVal = AMS_Utils.getIATAReadableStatus(changeCode.status);
 
 
-        System.debug(loggingLevel.ERROR, 'Change code status is ' + changeCode.status);
-        System.debug(loggingLevel.ERROR, 'Account status is ' + oscarAgency.Status__c);
-        System.debug(loggingLevel.ERROR, 'New val is ' + newVal);
+        System.debug('Change code status is ' + changeCode.status);
+        System.debug('Account status is ' + oscarAgency.Status__c);
+        System.debug('New val is ' + newVal);
 
 
         if (newVal <> oscarAgency.Status__c && newVal != null) {
@@ -314,16 +314,42 @@ public class AMS_ChangeCodesHelper {
             if( oscar.RecordTypeId == AMS_Utils.RECTYPE_CHANGE && !oscar.First_Step_Completed__c && String.isNotEmpty(aacNEW.Bulletin_Information__c)){
                 for(String status : AMS_Utils.AACC_FINALS) if(aacNEW.Bulletin_Information__c.endsWith(status)) oscar.addError('Approval/Disapproval can only be made after the initial change code was created');
             }
+                
+
+            if(aacNEW.Change_Code__c == 'FIN' && new Set<String>{'C','P'}.contains(oscar.Location_Class__c)){
+                oscarAgency.Annual_Renewal_Certificates__c = true;
+                toReturn = oscarAgency;
+            }
+                   
+
+        }
+
+      if(aacNew.Change_Code__c == 'CER'){
+            oscarAgency.Annual_Renewal_Certificates__c = true;
+            oscarAgency.Certificate_Generated_Current_Year__c = true;
+            toReturn = oscarAgency;
         }        
 
         if( aacNEW.Change_Code__c == 'FIN'){
                 
-                oscarAgency.Is_AIMS_Account__c = true;
+            oscarAgency.Is_AIMS_Account__c = true;
 
-                oscarAgency.Accreditation_Date__c = Date.Today();            
+            oscarAgency.Accreditation_Date__c = Date.Today();            
 
-                toReturn = oscarAgency;
-            }
+            toReturn = oscarAgency;
+        }
+
+        if( aacNEW.Change_Code__c == 'CLO' ){
+            
+            oscarAgency.Expiry_Date__c = Date.Today();            
+            toReturn = oscarAgency;
+        }
+
+        if( aacNEW.Change_Code__c == 'REI' ){
+            
+            oscarAgency.Expiry_Date__c = null;            
+            toReturn = oscarAgency;
+        }
         
         return new ChangeCodeStruct(aacNEW, toReturn,changeCodeFielsHistory);
     }

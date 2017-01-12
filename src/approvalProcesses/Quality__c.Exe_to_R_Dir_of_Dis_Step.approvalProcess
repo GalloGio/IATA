@@ -18,15 +18,15 @@
         <type>user</type>
     </allowedSubmitters>
     <allowedSubmitters>
+        <submitter>kalatsidie@iata.org</submitter>
+        <type>user</type>
+    </allowedSubmitters>
+    <allowedSubmitters>
         <submitter>malika@iata.org</submitter>
         <type>user</type>
     </allowedSubmitters>
     <allowedSubmitters>
         <submitter>naouriy@iata.org</submitter>
-        <type>user</type>
-    </allowedSubmitters>
-    <allowedSubmitters>
-        <submitter>payned@iata.org</submitter>
         <type>user</type>
     </allowedSubmitters>
     <allowedSubmitters>

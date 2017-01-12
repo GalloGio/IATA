@@ -414,9 +414,16 @@ global without sharing class AMS_RecordCreatorWebservice {
         if(account == null)
             throw new CalloutException('Account could not be found.');
 
+		List<Agency_Applied_Change_code__c> accountActiveChangeCode = [SELECT Reason_Code__c, Reason_Description__c FROM Agency_Applied_Change_code__c WHERE Account__c =: accountId AND Active__c = TRUE];
+
         if(containsTradeName(accountChanges)){
                   
             changeCodeTN = generateChangeCodeTN(accountChanges, account.Status__c == 'Approved');
+
+			if(accountActiveChangeCode.size() > 0){
+					changeCodeTN.reasonCode = accountActiveChangeCode[0].Reason_Code__c;
+					changeCodeTN.reasonDesc = accountActiveChangeCode[0].Reason_Description__c;
+			}
 
             accountsToProcess.add(account);
             changeCodesToProcess.add(changeCodeTN);
@@ -428,6 +435,11 @@ global without sharing class AMS_RecordCreatorWebservice {
         if(accountChanges.size() > 1 ||  ( accountChanges.size() == 1 && !processedTN)){
 
             changeCode = generateChangeCode(accountChanges);
+            
+			if(accountActiveChangeCode.size() > 0){
+					changeCode.reasonCode = accountActiveChangeCode[0].Reason_Code__c;
+					changeCode.reasonDesc = accountActiveChangeCode[0].Reason_Description__c;
+			}
             
             accountsToProcess.add(account);
             changeCodesToProcess.add(changeCode);
@@ -506,9 +518,7 @@ global without sharing class AMS_RecordCreatorWebservice {
         AMS_OSCAR_JSON.ChangeCode toReturn = new AMS_OSCAR_JSON.ChangeCode();
 
         toReturn.name = 'CAD';
-        toReturn.reasonCode = 'Change data';
         toReturn.memoText = 'Minor Changes';//createMemoText(accountChanges);
-        toReturn.reasonDesc  = 'Accredited-Meets Criteria.';
         toReturn.status  = null;
 
         return toReturn;
@@ -519,12 +529,8 @@ global without sharing class AMS_RecordCreatorWebservice {
         AMS_OSCAR_JSON.ChangeCode toReturn = new AMS_OSCAR_JSON.ChangeCode();
 
         toReturn.name = 'CTA';
-        toReturn.reasonCode = 'Change data';
         toReturn.memoText = 'Change of trade name';//createMemoText(accountChanges);
-        toReturn.reasonDesc  = 'Accredited-Meets Criteria.';
-        
-        if(isToChangeStatus)
-            toReturn.status  = '8'; // Accredited
+        toReturn.status  = null;
 
         return toReturn;
     }
