@@ -159,15 +159,41 @@ global without sharing class AMS_RecordCreatorWebservice {
 
         AMS_Agencies_Hierarchy__c hierarchy = null;
 
-        if(existingRelations.isEmpty()){ // create a new hierarchy
+        if(existingRelations.isEmpty()){ // create a new hierarchy if not SA. If so we need to check something first ...
 
-            System.debug('Did not find any hierarchy, creating new one.');
-
-            hierarchy = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Hierarchy');
+            // we need to check if the parent is a BR, in that case, he is not parent in any relationship but a child.
+            if(typeOfProcess.equalsIgnoreCase(NEWSA_PV)){
+    
+               existingRelations = [SELECT Id, Hierarchy__c from AMS_Agencies_relationhip__c where Child_Account__c =:parentAccount.Id LIMIT 1];
             
-            insert hierarchy;
+               if(existingRelations.isEmpty()){
+
+                    System.debug('Did not find any hierarchy, creating new one.');
+
+                    hierarchy = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Hierarchy');
+            
+                    insert hierarchy;
+
+               }else{
+
+                System.debug('Already has an hierarchy with id:' + existingRelations.get(0).Id );
+
+                hierarchy = new AMS_Agencies_Hierarchy__c(Id = existingRelations.get(0).Hierarchy__c); 
+
+               }
+
+
+            }else{
+
+                    System.debug('Did not find any hierarchy, creating new one.');
+
+                    hierarchy = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Hierarchy');
+            
+                    insert hierarchy;
+            }
 
         }else{
+
             System.debug('Already has an hierarchy with id:' + existingRelations.get(0).Id );
 
             hierarchy = new AMS_Agencies_Hierarchy__c(Id = existingRelations.get(0).Hierarchy__c); 
