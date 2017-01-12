@@ -3,7 +3,7 @@
     <fieldUpdates>
         <fullName>Set_Agency_Code_Uniqueness_Key</fullName>
         <field>Agency_Code_Uniqueness_Validation__c</field>
-        <formula>Agency_Code__c</formula>
+        <formula>RecordTypeId + Agency_Code__c</formula>
         <name>Set Agency Code Uniqueness Key</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>

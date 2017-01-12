@@ -139,7 +139,11 @@ global class ams2gdp_Batch_Update implements Database.Batchable<sObject> , Datab
             if(String.isNotBlank(prod.AIMS_Id__c)) aims_ids.add(prod.AIMS_Id__c.removeEnd('GDP'));
             if(String.isNotBlank(prod.Webstar_Id__c)) webstar_ids.add(prod.Webstar_Id__c.removeEnd('GDP'));
 
-            iata_uniq_codes.add(prod.IATA_Code__c+prod.CASS_Number__c+prod.Check_Digit__c);
+            String iata_code = prod.IATA_Code__c; 
+            if(String.isNotBlank(prod.CASS_Number__c)) iata_code += prod.CASS_Number__c; 
+            iata_code += prod.Check_Digit__c;
+            
+            iata_uniq_codes.add(iata_code);
         }
 
         Map<String, String> accountsByLegacyId = new Map<String, String>(); 

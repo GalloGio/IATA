@@ -96,6 +96,13 @@ public class ams2gdp_Utils
     	String email = AMS_2_GDP_Settings__c.getOrgDefaults().Notification_Email__c;
     	List<Messaging.SingleEmailMessage> messages = new List<Messaging.SingleEmailMessage>();
 
+    	Messaging.SingleEmailMessage message = new Messaging.SingleEmailMessage();
+    		message.toAddresses = new String[]{email};
+			message.subject = 'WARNING - Duplicate founded on '+errorLogs[0].jobName; 
+
+		String body = ''; 
+
+
     	for(ams2gdp_Error err : errorLogs)
     	{
     		logs.add(new AMS2GDP_Log__c(Job_Name__c= err.jobName
@@ -107,19 +114,20 @@ public class ams2gdp_Utils
 			//Notify GDP Admin if errors are due to duplicates founded
 			if(String.isNotBlank(err.message) && err.message.containsIgnoreCase('Duplicate')) 
 			{
-				Messaging.SingleEmailMessage msg = new Messaging.SingleEmailMessage();
+				/*Messaging.SingleEmailMessage msg = new Messaging.SingleEmailMessage();
 					msg.toAddresses = new String[]{email};
-					msg.subject = 'WARNING - Duplicate founded on '+err.jobName; 
-					msg.plainTextBody = err.message;
+					msg.subject = 'WARNING - Duplicate founded on '+err.jobName; */
+					body +=  err.message + '\n';
 
-				messages.add(msg);
+				//messages.add(msg);
 			}
     	}
 
     	if(logs.size() > 0) insert logs;
-    	if(messages.size() > 0)
+    	if(body != '')
     	{
-    		try{Messaging.sendEmail(messages);}
+    		message.plainTextBody = body;
+    		try{Messaging.sendEmail(new List<Messaging.SingleEmailMessage>{message});}
     		catch(Exception ex){}		
     	}
     }
