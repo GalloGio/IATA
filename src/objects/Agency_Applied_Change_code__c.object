@@ -459,9 +459,9 @@
         <unique>false</unique>
     </fields>
     <fields>
-	    <fullName>Irregularity_Type_Description__c</fullName>
-	        <externalId>false</externalId>
-	        <formula>IF(ISBLANK( Irregularity_Type__c ), &quot;&quot;, 
+        <fullName>Irregularity_Type_Description__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(ISBLANK( Irregularity_Type__c ), &quot;&quot;, 
 	  CASE( Irregularity_Type__c , 
 	    &quot;1PT&quot;,&quot;CARGO NON COMPLIANCE&quot;,
 	    &quot;2PT&quot;,&quot;NON-COMPLIANCE TO CRITERIA&quot;,
@@ -476,14 +476,14 @@
 	    &quot;WD2&quot;,&quot;WITHDRAWN&quot;,
 	  &quot;&quot;)
 	)</formula>
-	        <label>Irregularity Type Description</label>
-	        <required>false</required>
-	        <trackHistory>false</trackHistory>
-	        <trackTrending>false</trackTrending>
-	        <type>Text</type>
-	        <unique>false</unique>
-	</fields>
-	<fields>
+        <label>Irregularity Type Description</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Irregularity_Type__c</fullName>
         <externalId>false</externalId>
         <label>Irregularity Type</label>

@@ -1927,7 +1927,7 @@ Record Type + Group Type + ISO_Country_Name</description>
         <excludedStandardButtons>Forward</excludedStandardButtons>
         <excludedStandardButtons>ChangeOwner</excludedStandardButtons>
     </searchLayouts>
-    <sharingModel>ReadWrite</sharingModel>
+    <sharingModel>Private</sharingModel>
     <validationRules>
         <fullName>Cannot_change_if_inactive_group</fullName>
         <active>true</active>
