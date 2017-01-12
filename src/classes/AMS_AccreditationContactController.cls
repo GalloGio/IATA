@@ -52,7 +52,8 @@ public with sharing class AMS_AccreditationContactController {
             //String acCompanyRtId = AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Company');
             
             List<AMS_Pax_Accreditation_Form__c> aoaList = [select id, Name, Account_Name__c, IATACode__c, Type_of_Operation__c, Shipping_Street__c, Shipping_Postal_Code__c, 
-                            Shipping_City__c, Shipping_State__c, Shipping_Country__c, SAAM_Case__r.AccountId, SAAM_Case__r.OSCAR__r.Account__c,
+                            Shipping_City__c, Shipping_State__c, Shipping_Country__c, SAAM_Case__r.AccountId, SAAM_Case__r.OSCAR__r.Account__c, 
+                            SAAM_Case__r.OSCAR__r.Account__r.Location_class__c, SAAM_Case__r.OSCAR__r.Account__r.CNS_Agency__c, 
                             SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c, SAAM_Case__r.OSCAR__r.Process__c, SAAM_Case__r.OSCAR__r.Type_of_change__c,
                             SAAM_Case__r.OSCAR__r.Account__r.Sector__c
                             from AMS_Pax_Accreditation_Form__c where Id =: stdController.getRecord().id];
@@ -78,7 +79,7 @@ public with sharing class AMS_AccreditationContactController {
                 {
                     accList = new Map<Id, Account>([select Id, Email__c, Name, Legal_Name__c, IATACode__c, Phone_Number__c from Account where Id in :accountsToLoadSet]);
                 }
-
+                
                 AccreditationContactWrapper wrapper;
                 AccountWrapper accWrapper;
                 for(AMS_Accreditation_Contact__c ac : acList)
@@ -109,7 +110,12 @@ public with sharing class AMS_AccreditationContactController {
                 
             }
         }
-        
+        if(aoa.SAAM_Case__r.OSCAR__r.Account__r.CNS_Agency__c && aoa.SAAM_Case__r.OSCAR__r.Account__r.Location_Class__c == 'R')
+        {
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, 'The ownership information is not needed for CASS Associates in CNS.'));
+         
+        }
+
         AcPersonRt = AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Person');
         AcCompanyRt = AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Company');
         AcCurrentCompanyRt = AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Current_Company_Owner');
@@ -205,6 +211,12 @@ public with sharing class AMS_AccreditationContactController {
     
     public PageReference onSave()
     {
+        if(aoa.SAAM_Case__r.OSCAR__r.Account__r.CNS_Agency__c && aoa.SAAM_Case__r.OSCAR__r.Account__r.Location_Class__c == 'R')
+        {
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, 'The ownership information is not needed for CASS Associates in CNS.'));
+            return null;
+        }
+
         if(!calculateTotalOwnership() && !isCertificationOSCAR)
         {
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, 'Total ownershiprate for all inserted contacts is ' + ownership + '%. Please set it to 100% before saving.'));
@@ -384,7 +396,7 @@ public with sharing class AMS_AccreditationContactController {
             ownership = ownership + aWrapped.financialInterest;
         }
         
-        if(ownership != 100)
+        if(aoa.SAAM_Case__r.OSCAR__r.Account__r.CNS_Agency__c == false && ownership != 100)
         {
             return false;
         } else

@@ -40,6 +40,10 @@
                 <behavior>Edit</behavior>
                 <field>Company_Type__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>CNS_Agency__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -187,7 +191,7 @@
                 <field>Abbreviated_name__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>Location_Category__c</field>
             </layoutItems>
         </layoutColumns>
