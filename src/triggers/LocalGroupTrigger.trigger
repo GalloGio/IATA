@@ -1,7 +1,7 @@
 trigger LocalGroupTrigger on LocalGovernance__c (before insert, before update, before delete) {
 
     List<Profile> sysAdminId = [SELECT Id FROM Profile WHERE  Name = 'System Administrator' LIMIT 1];
-    List<Profile> accManagmTeam = [SELECT Id FROM Profile WHERE  Name = 'Account management team' LIMIT 1]; //INC298981
+    List<Profile> accManagmTeam = [SELECT Id FROM Profile WHERE  Name = 'Account management team' LIMIT 1]; //INC298981    
     RecordType draftRecordType = [SELECT Id, DeveloperName FROM RecordType
     WHERE SObjectType = 'LocalGovernance__c' AND DeveloperName = 'Draft_Reg_Div_Group'];
 
@@ -103,7 +103,7 @@ trigger LocalGroupTrigger on LocalGovernance__c (before insert, before update, b
     if( Trigger.isDelete ){
 
         for(LocalGovernance__c g : trigger.Old){
-            if( (UserInfo.getProfileId() == sysAdminId[0].Id || UserInfo.getProfileId() == accManagmTeam[0].Id) || g.RecordTypeId == draftRecordType.Id){
+            if( UserInfo.getProfileId() == sysAdminId[0].Id  || g.RecordTypeId == draftRecordType.Id || UserInfo.getProfileId() == accManagmTeam[0].Id){
                 system.debug('[LocalGroupTrigger] delete industry group:  ' + g.Id);
             }
             else {
