@@ -692,7 +692,14 @@ private class Faq2CaseTest {
 		  test = controller.region;
 		  ISSP_FAQ2CaseLiveAgentTopics__c topicsSetting = new ISSP_FAQ2CaseLiveAgentTopics__c(name = '1', value__c = '0.CGO_Bank_Guarantees__c');
 		  insert topicsSetting;
-		//  System.assert(controller.showButton);
+		  //   ISSP_FAQ2CaseLiveAgentTopics__c topicsSetting = new ISSP_FAQ2CaseLiveAgentTopics__c(name = '1', value__c = '0.CGO_Bank_Guarantees__c');
+		  //   insert topicsSetting;
+		  //   LiveAgentButtonSettings__c sectorSetting = new LiveAgentButtonSettings__c(name = 'AirlineEnglish',sectors__c='Airline');
+		  //   insert sectorSetting;
+		  //   LiveAgent_Countries_Per_Button__c codeSetting = new LiveAgent_Countries_Per_Button__c(Button_Name__c = 'AirlineEnglish', Iso_Code__c = 'GB');
+		  //   insert codeSetting;
+		  controller.newCase.IFAP_Country_ISO__c = 'GB';
+		  System.assert(controller.showButton);
 		}
 		Test.stopTest();
     }

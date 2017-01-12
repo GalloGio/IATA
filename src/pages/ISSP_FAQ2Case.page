@@ -505,7 +505,10 @@
 
                         <apex:outputPanel id="chatButtonsPnl">
               							<div id="liveAgentIframes" class="row">
-              							    <apex:iframe id="iframeLiveAgentEng" src="/LiveAgentButtonFAQ2Case?selTopics={!topic}.{!subtopic}&topiclbl={!encTopicLbl}&subtopiclbl={!encSubtopiclbl}&concernedCountry={!encIsoCountry}&csButton=AirlineEnglish" width="100%" height="38px" scrolling="false" rendered="{!AND(newCase.IFAP_Country_ISO__c = 'GB', Sector='Airline',showButton)}"/>
+                                <apex:outputPanel rendered="{!showButton}">
+                                  <label class=" lbl col-lg-10 control-label" for="exampleInputEmail1" style="line-height:3;"><font color="#d9534f"><apex:outputtext value="{!$Label.LiveAgentNEW}" escape="false"/></font>{!$Label.LiveAgentCheckingAvailableAgents}</label>
+              							    <apex:iframe id="iframeLiveAgentEng" src="/LiveAgentButtonFAQ2Case?selTopics={!topic}.{!subtopic}&topiclbl={!encTopicLbl}&subtopiclbl={!encSubtopiclbl}&concernedCountry={!encIsoCountry}&csButton=AirlineEnglish" width="100%" height="38px" scrolling="false"/>
+                              </apex:outputPanel>
               						</div>
                       </apex:outputPanel>
 
