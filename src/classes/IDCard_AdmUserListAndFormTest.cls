@@ -582,7 +582,7 @@ private class IDCard_AdmUserListAndFormTest {
 	        system.assertEquals(1,cards.size());
 	        system.assertEquals('Cancelled', cards[0].Card_status__c);
 	        system.assertEquals(date.today(), cards[0].Cancellation_date__c);
-	        system.assertEquals(true, cards[0].MustSyncWithAIMS__c);
+	        system.assertEquals(false, cards[0].MustSyncWithAIMS__c);
 	        
  	   }
  	   

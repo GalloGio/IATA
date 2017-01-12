@@ -63,6 +63,8 @@ public class AMS_ChangeCodesConfigHelper {
 			else if(action == AMS_Utils.WITHDRAWAL)
 				changeCode.memoText += ' '+AMS_Utils.AACC_WITHDRAWAL;
 
+			if(changeCodeConfig.Bulletin_Memo_Text__c != null && changeCodeConfig.Bulletin_Memo_Text__c!= '')
+				changeCode.memoText = changeCodeConfig.Bulletin_Memo_Text__c;
 		}
 
 		System.debug('Change Code generated: ' + changeCode);

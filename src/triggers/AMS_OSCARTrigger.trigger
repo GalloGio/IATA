@@ -263,32 +263,29 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
                     if(allHierarchyAccountIds.size()>0 && !AMS_HierarchyHelper.checkHierarchyIntegrity(new Map<Id, Set<Id>>{updatedOscar.Id => allHierarchyAccountIds}))
                         throw new AMS_ApplicationException('This operation cannot be performed because the ownership in this hierarchy is not aligned. It is advised to perform a change of ownership to align the owners in this hierarchy.');
 
-                    // If the picklist is set create a COR change code.
-                    if(updatedOscar.AMS_Correction_change_code__c == 'COR') {
+					if(updatedOscar.AMS_Correction_change_code__c == 'COR' || updatedOscar.AMS_Correction_change_code__c == 'CAD' || updatedOscar.AMS_Correction_change_code__c == 'LET'){
                         system.debug(LoggingLevel.ERROR,'applyChangeCodesWithDependencies() -> generate the change code');
                         AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
 
+						changeCode.status  = null;
+	
+	                    // If the picklist is set create a COR change code.
+	                    if(updatedOscar.AMS_Correction_change_code__c == 'COR') {
                         changeCode.name = 'COR';
-                        changeCode.reasonCode = '91';
                         changeCode.memoText = 'Correction';
-                        changeCode.reasonDesc  = 'ACCREDITED–MEETS–STANDARDS';
-                        changeCode.status  = '9';
-
-                        Account acct = new Account(Id = updatedOscar.Account__c);
-                        AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {updatedOscar}, new List<Account> {acct}, true);
                     }
                     // If the picklist is set create a CAD change code.
-                    if(updatedOscar.AMS_Correction_change_code__c == 'CAD') {
-                        system.debug(LoggingLevel.ERROR,'applyChangeCodesWithDependencies() -> generate the change code');
-                        AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
-
-                        List<Agency_Applied_Change_code__c> accountActiveChangeCode = [SELECT Reason_Code__c, Reason_Description__c FROM Agency_Applied_Change_code__c WHERE Account__c =: updatedOscar.Account__c AND Active__c = TRUE];
-
+	                    else if(updatedOscar.AMS_Correction_change_code__c == 'CAD'){
                         changeCode.name = 'CAD';
-                        changeCode.reasonCode = 'Change data';
                         changeCode.memoText = 'Minor Changes';
-                        changeCode.reasonDesc  = 'Accredited-Meets Criteria.';
-                        changeCode.status  = null;
+                    	}
+						// If the picklist is set create a LET change code.
+	                    else if(updatedOscar.AMS_Correction_change_code__c == 'LET'){
+	                        changeCode.name = 'LET';
+	                        changeCode.memoText = '';
+                    	}
+
+						List<Agency_Applied_Change_code__c> accountActiveChangeCode = [SELECT Reason_Code__c, Reason_Description__c FROM Agency_Applied_Change_code__c WHERE Account__c =: updatedOscar.Account__c AND Active__c = TRUE];                    
 
                         if(accountActiveChangeCode.size() > 0){
                             changeCode.reasonCode = accountActiveChangeCode[0].Reason_Code__c;
