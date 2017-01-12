@@ -245,35 +245,19 @@
         <label>Participant Role</label>
         <picklist>
             <picklistValues>
-                <fullName>1 Chair</fullName>
+                <fullName>Chair</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>1 Co-Chair</fullName>
+                <fullName>Vice-Chair</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>2 Vice-Chair</fullName>
+                <fullName>Member</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>3 Accredited Representative</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>4 Accredited Alternate</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>5 Representative</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>6 Alternate</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>7 Observer</fullName>
+                <fullName>Observer</fullName>
                 <default>false</default>
             </picklistValues>
             <sorted>false</sorted>
