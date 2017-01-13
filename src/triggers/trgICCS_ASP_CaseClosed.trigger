@@ -1,17 +1,17 @@
 /*
  * @author: Constantin BUZDUGA, blue-infinity
  * @description: This trigger only handles ICCS Cases with the "FDS ASP Management" record type and is used to update the fields Authorized Signatories, Ongoing Request for Documents
- *      and Collection Case Indicator at Account level when the case is closed.
+ *      and Collection Case Indicator at Account level when the case is closed. 
  */
-
+ 
 trigger trgICCS_ASP_CaseClosed on Case (after insert, after update) {
     List<Account> lstAccountsToUpdate = new List<Account>();
-
+    
     Id RT_ICCS_ASP_Id = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('FDS ASP Management') ;
     Id RT_ICC_Id = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('Invoicing Collection Cases') ;
-
+    
     Set <Id> accountNotificationIdSet = new Set <Id>(); //TF
-
+    
     for (Case c : Trigger.new) {
     	if (c.AccountId != null){
 	        // If the Case has just been closed
@@ -19,14 +19,14 @@ trigger trgICCS_ASP_CaseClosed on Case (after insert, after update) {
 	            Account a = new Account(Id = c.AccountId, Document_Std_Instruction__c = c.Process_Approved__c, Ongoing_Request_for_Documents__c = false);
 	            lstAccountsToUpdate.add( a );
 	        }
-
+	        
 	        // If the case has just been created and is open, check the Ongoing Request for Documents box at account level
 	        if ( c.RecordTypeId == RT_ICCS_ASP_Id && !c.isClosed && Trigger.isInsert) {
 	            Account a = new Account(Id = c.AccountId, Ongoing_Request_for_Documents__c = true);
 	            lstAccountsToUpdate.add( a );
 	        }
-
-
+    	
+        
 	        // Set / unset the Collection Case Indicator
 	        if (c.RecordTypeId == RT_ICC_Id && c.CaseArea__c == 'Collection' && c.Reason1__c == 'Debt Recovery') {
 	        	
@@ -46,8 +46,8 @@ trigger trgICCS_ASP_CaseClosed on Case (after insert, after update) {
 	                	}
 	        		}
 	        	}
-
-	            if (c.IsClosed && c.Has_the_agent_paid_invoice__c != null && c.Has_the_agent_paid_invoice__c != 'Not paid' ) {
+	        	
+	            if (c.IsClosed && c.Has_the_agent_paid_invoice__c != null && c.Has_the_agent_paid_invoice__c != 'Not paid') {
 	                    Account a = new Account(Id = c.AccountId, Collection_Case_Indicator__c = '');
 	                    lstAccountsToUpdate.add( a );
 	            } else {
@@ -57,17 +57,17 @@ trigger trgICCS_ASP_CaseClosed on Case (after insert, after update) {
 	        }
     	}
     }
-
+    
     if (!lstAccountsToUpdate.isEmpty()) {
         update lstAccountsToUpdate;
-
+        
         //+++TF
         if (!accountNotificationIdSet.isEmpty()) {
         	ISSP_UserTriggerHandler.preventOtherTrigger = true;
         	system.debug('accountNotificationIdSet: ' + accountNotificationIdSet);
         	List <Contact> contactNotificationList =
         									[SELECT Id FROM Contact
-        									WHERE User_Portal_Status__c = 'Approved Admin'
+        									WHERE User_Portal_Status__c = 'Approved Admin' 
         									AND (AccountId IN :accountNotificationIdSet
         									OR Account.Top_Parent__c IN :accountNotificationIdSet)];
 			if (!contactNotificationList.isEmpty()){
@@ -75,12 +75,12 @@ trigger trgICCS_ASP_CaseClosed on Case (after insert, after update) {
 					String templateId = ISSP_Notifications_Trigger__c.getValues('Outstanding invoice').Notification_Template_Id__c;
 					system.debug('templateId: ' + templateId);
 					if (templateId != '' && templateId != null){
-						List<Notification_template__c> lstNotificationTemplate = [SELECT Name, Message__c, Admins_Users__c,
-																				  Alert_Contact_By_Email__c, CriticalNotification__c,
-																				  Due_date__c, Expire_in_days__c, Language__c,
-																				  Master_Notification_template__c, Notification_color__c,
-																				  Subject__c, Type__c
-				                                    							  FROM Notification_template__c
+						List<Notification_template__c> lstNotificationTemplate = [SELECT Name, Message__c, Admins_Users__c, 
+																				  Alert_Contact_By_Email__c, CriticalNotification__c, 
+																				  Due_date__c, Expire_in_days__c, Language__c, 
+																				  Master_Notification_template__c, Notification_color__c, 
+																				  Subject__c, Type__c 
+				                                    							  FROM Notification_template__c 
 				                                    							  WHERE Id = :templateId];
 						if (!lstNotificationTemplate.isEmpty())
 						{
@@ -104,7 +104,7 @@ trigger trgICCS_ASP_CaseClosed on Case (after insert, after update) {
 
 
 		for (Case c : Trigger.new) {
-
+	        
 			Id CaseSAAMId = Schema.SObjectType.Case.getRecordTypeInfosByName().get('SAAM').getRecordTypeId();
 			//If the case is Closed and Matches the following cretiria
 	        if ( c.RecordTypeId == CaseSAAMId  &&
@@ -132,8 +132,8 @@ trigger trgICCS_ASP_CaseClosed on Case (after insert, after update) {
                                       FROM  Product_Category__c
                                      WHERE ID =: c.Product_Category_ID__c
                                      ORDER BY Name
-                                     ];
-
+                                     ]; 
+									 
 				IEC_SubHistory.Purchased_Product_Category__c = ProductCategorytList != null ? ProductCategorytList[0].Id : '' ;
 				IEC_SubHistory.Purchased_Product_SKU__c		 = ProductCategorytList != null ? ProductCategorytList[0].Short_Description__c : '' ;
 				system.debug('XOXO IEC_SubHistory ===>>>' + IEC_SubHistory);
@@ -147,7 +147,7 @@ trigger trgICCS_ASP_CaseClosed on Case (after insert, after update) {
 					CaseToUpdate_Lst.add(cc);
 				}
 	        }
-	    }
+	    } 
 		//Insert IEC_Subscription_History
 		if(IEC_SubHistory_Lst_ToInsert != null && !IEC_SubHistory_Lst_ToInsert.isEmpty()){
 			insert IEC_SubHistory_Lst_ToInsert ;
