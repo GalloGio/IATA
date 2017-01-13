@@ -495,16 +495,13 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
         }
 
         if (oldOSCAR.Notify_Agent_Suspension__c == false && updatedOscar.Notify_Agent_Suspension__c == true) {
-            updatedOSCAR.NOC_Deadline__c = AMS_Utils.AddBusinessDays(System.today(), 5, 'Late NOC - '+updatedOSCAR.Region__c);
+            updatedOSCAR.NOC_Deadline__c = BusinessDays.addNBusinessDays(System.now(), 5, updatedOSCAR.BusinessHours__c).date();
         }
         
         if (oldOSCAR.Notify_Agent_Termination__c == false && updatedOscar.Notify_Agent_Termination__c == true) {
-            updatedOSCAR.Termination_Date__c = AMS_Utils.lastDayOfMonth(System.today().addMonths(1));
+            DateTime nextMonthEnd = DateTime.newInstance(AMS_Utils.lastDayOfMonth(System.today().addMonths(1)), DateTime.now().time());
+            updatedOSCAR.Termination_Date__c = BusinessHours.nextStartDate(updatedOSCAR.BusinessHours__c, nextMonthEnd).date();
             System.debug(loggingLevel.Debug, '____ [trg AMS_OSCARTrigger - beforUpdate] updatedOSCAR.Termination_Date__c - ' + updatedOSCAR.Termination_Date__c);
-
-            if (AMS_Utils.IsWeekendDay(updatedOSCAR.Termination_Date__c, 'Late NOC - '+updatedOSCAR.Region__c)) {
-                updatedOSCAR.Termination_Date__c = AMS_Utils.AddBusinessDays(updatedOSCAR.Termination_Date__c, 1, 'Late NOC - '+updatedOSCAR.Region__c);
-            }
         }
 
         if (oldOSCAR.NOC_Received__c == false && updatedOscar.NOC_Received__c == true) {
