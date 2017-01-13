@@ -1080,6 +1080,16 @@ IF(Bank_Guarantee_received__c - Bank_Guarantee_requested__c =6, TEXT(4), TEXT((B
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>CNS_process__c</fullName>
+        <externalId>false</externalId>
+        <formula>Account__r.CNS_Agency__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>CNS process</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Cancel_Inspection_Req_Disapproval_Date__c</fullName>
         <externalId>false</externalId>
         <label>Cancel Inspection Requests</label>
@@ -1311,6 +1321,30 @@ IF(Bank_Guarantee_received__c - Bank_Guarantee_requested__c =6, TEXT(4), TEXT((B
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Confirm_second_payment_received__c</fullName>
+        <description>Used by CNS only</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Used by CNS only</inlineHelpText>
+        <label>Confirm second payment received</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Confirm_third_payment_received__c</fullName>
+        <description>Used by CNS only</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Used by CNS only</inlineHelpText>
+        <label>Confirm third payment received</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
     </fields>
     <fields>
         <fullName>Confirmation_Sent__c</fullName>
@@ -2671,34 +2705,34 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
         <description>This field calculate the value to push to CASE REASON1__C field in order to calculate the KPIs correctly</description>
         <externalId>false</externalId>
         <formula>IF(RecordType.DeveloperName =&quot;NEW&quot;
-	,CASE(TEXT(Process__c)
-		,&quot;NEW.HO.1.0&quot;, &quot;New HO&quot;
-		,&quot;NEW.BR&quot;, &quot;New BR / IP&quot;
-		,&quot;NEW.1.1&quot;, &quot;New HO&quot;
-		,&quot;TERMINATED.1.0&quot;, &quot;Termination&quot;
-		,&quot;NEW.BR.ABROAD&quot;, &quot;New BR Abroad&quot;
-		,&quot;NEW.AHA.1.0&quot;, &quot;New AHA&quot;
+    ,CASE(TEXT(Process__c)
+        ,&quot;NEW.HO.1.0&quot;, &quot;New HO&quot;
+        ,&quot;NEW.BR&quot;, &quot;New BR / IP&quot;
+        ,&quot;NEW.1.1&quot;, &quot;New HO&quot;
+        ,&quot;TERMINATED.1.0&quot;, &quot;Termination&quot;
+        ,&quot;NEW.BR.ABROAD&quot;, &quot;New BR Abroad&quot;
+        ,&quot;NEW.AHA.1.0&quot;, &quot;New AHA&quot;
     ,&quot;NEW.AHA.1.0.BSP&quot;, &quot;New AHA&quot;
-		,&quot;NEW.GSSA.1.0&quot;, &quot;New GSSA&quot;
-		,&quot;NEW.TIDS.1.0&quot;, &quot;New TIDS&quot;
-		,&quot;NEW.GSA.1.0&quot;, &quot;New GSA&quot;		
+        ,&quot;NEW.GSSA.1.0&quot;, &quot;New GSSA&quot;
+        ,&quot;NEW.TIDS.1.0&quot;, &quot;New TIDS&quot;
+        ,&quot;NEW.GSA.1.0&quot;, &quot;New GSA&quot;       
     ,&quot;NEW.GSA.1.0.BSP&quot;, &quot;New GSA&quot;    
-		,&quot;NEW.MSO.1.0&quot;, &quot;New MSO&quot;
-		,&quot;NEW.SA.1.0&quot;, &quot;New SA&quot;
-		,&quot;CORRECTION.1.0&quot;, &quot;Corrections&quot;
-		,&quot;&quot;
+        ,&quot;NEW.MSO.1.0&quot;, &quot;New MSO&quot;
+        ,&quot;NEW.SA.1.0&quot;, &quot;New SA&quot;
+        ,&quot;CORRECTION.1.0&quot;, &quot;Corrections&quot;
+        ,&quot;&quot;
 
-	  )
-	,IF(RecordType.DeveloperName=&quot;CHANGE&quot;, 
-		IF(INCLUDES(Type_of_change__c, &quot;Location type&quot;), &quot;New HO&quot;
-		,IF(OR(INCLUDES(Type_of_change__c, &quot;Ownership to non-IATA Agent&quot;), INCLUDES(Type_of_change__c, &quot;Ownership to IATA Agent&quot;), INCLUDES(Type_of_change__c, &quot;Legal status&quot;)), &quot;CHO / CHS – Change of Ownership / Legal Status&quot;
-		,IF(INCLUDES(Type_of_change__c, &quot;Major Shareholding&quot;),&quot;CHC – Change of Shareholding&quot;
-		,IF(INCLUDES(Type_of_change__c, &quot;Name&quot;),&quot;CHN - Change of Name&quot;
-		,IF(OR(INCLUDES(Type_of_change__c, &quot;Location&quot;), INCLUDES(Type_of_change__c, &quot;Location with inspection&quot;)),&quot;CHL - Change of Location&quot;
-		,IF(INCLUDES(Type_of_change__c, &quot;VMFR&quot;),&quot;VMFR Setup/Update&quot;
-		,IF(INCLUDES(Type_of_change__c, &quot;Minor Shareholding&quot;),&quot;CHG – Data Maintenance&quot;
-		,&quot;&quot;  )))))))
-	, &quot;&quot;)
+      )
+    ,IF(RecordType.DeveloperName=&quot;CHANGE&quot;, 
+        IF(INCLUDES(Type_of_change__c, &quot;Location type&quot;), &quot;New HO&quot;
+        ,IF(OR(INCLUDES(Type_of_change__c, &quot;Ownership to non-IATA Agent&quot;), INCLUDES(Type_of_change__c, &quot;Ownership to IATA Agent&quot;), INCLUDES(Type_of_change__c, &quot;Legal status&quot;)), &quot;CHO / CHS – Change of Ownership / Legal Status&quot;
+        ,IF(INCLUDES(Type_of_change__c, &quot;Major Shareholding&quot;),&quot;CHC – Change of Shareholding&quot;
+        ,IF(INCLUDES(Type_of_change__c, &quot;Name&quot;),&quot;CHN - Change of Name&quot;
+        ,IF(OR(INCLUDES(Type_of_change__c, &quot;Location&quot;), INCLUDES(Type_of_change__c, &quot;Location with inspection&quot;)),&quot;CHL - Change of Location&quot;
+        ,IF(INCLUDES(Type_of_change__c, &quot;VMFR&quot;),&quot;VMFR Setup/Update&quot;
+        ,IF(INCLUDES(Type_of_change__c, &quot;Minor Shareholding&quot;),&quot;CHG – Data Maintenance&quot;
+        ,&quot;&quot;  )))))))
+    , &quot;&quot;)
    )</formula>
         <label>Reason For KPI</label>
         <required>false</required>
@@ -4124,6 +4158,10 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
             </picklistValues>
             <picklistValues>
                 <fullName>Minor Shareholding</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>CNS - Removal of trade name</fullName>
                 <default>false</default>
             </picklistValues>
             <sorted>false</sorted>
@@ -9942,6 +9980,10 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
         </picklistValues>
         <picklistValues>
             <picklist>Type_of_change__c</picklist>
+            <values>
+                <fullName>CNS - Removal of trade name</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>Legal status</fullName>
                 <default>false</default>

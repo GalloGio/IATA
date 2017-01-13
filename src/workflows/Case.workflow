@@ -2166,10 +2166,6 @@
             <recipient>jimenezm@iata.org</recipient>
             <type>user</type>
         </recipients>
-        <recipients>
-            <recipient>wana@iata.org</recipient>
-            <type>user</type>
-        </recipients>
         <senderType>CurrentUser</senderType>
         <template>unfiled$public/EUR_CaseassignmentITSCE</template>
     </alerts>
@@ -6479,7 +6475,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
     <fieldUpdates>
         <fullName>SIS_Change_Case_Owner_to_L2_Customer_S</fullName>
         <field>OwnerId</field>
-        <lookupValue>SISHelpDeskIATASISCustomerSupport</lookupValue>
+        <lookupValue>SISHelpDesk</lookupValue>
         <lookupValueType>Queue</lookupValueType>
         <name>SIS - Change Case Owner to L2 Customer S</name>
         <notifyAssignee>false</notifyAssignee>
@@ -6489,7 +6485,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
     <fieldUpdates>
         <fullName>SIS_Change_Case_Owner_to_SIS_Ops</fullName>
         <field>OwnerId</field>
-        <lookupValue>SISHelpDeskSISOperations</lookupValue>
+        <lookupValue>SISHelpDesk</lookupValue>
         <lookupValueType>Queue</lookupValueType>
         <name>SIS - Change Case Owner to SIS Ops</name>
         <notifyAssignee>false</notifyAssignee>
@@ -14766,7 +14762,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <criteriaItems>
             <field>Case.Reason1__c</field>
             <operation>equals</operation>
-            <value>,New EAA - Application process for European Accredited Agent,New HO,New SA / CHV – New Code,Reconsideration,VMFR Setup/Update,PAX/CARGO Certificate,Certificate DGR</value>
+            <value>,New EAA - Application process for European Accredited Agent,New HO,New SA / CHV – New Code,Reconsideration,VMFR Setup/Update,PAX/CARGO Certificate,Certificate DGR,TIDS</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.RecordType__c</field>

@@ -57,6 +57,21 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fieldSets>
+        <fullName>AMS_cnsremovaloftradename</fullName>
+        <description>fields to be migrated when we have a removal of trade name process (CNS)</description>
+        <displayedFields>
+            <field>TradeName__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Trade_Name__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>RemovalOfTradeName</label>
+    </fieldSets>
+    <fieldSets>
         <fullName>AMS_legalstatus</fullName>
         <description>fields to be migrated when we have a change of legal status process</description>
         <displayedFields>

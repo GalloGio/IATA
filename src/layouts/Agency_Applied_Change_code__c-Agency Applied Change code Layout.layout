@@ -49,6 +49,10 @@
                 <behavior>Readonly</behavior>
                 <field>For_Integration__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Sent_to_external_system__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
