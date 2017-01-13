@@ -432,15 +432,14 @@ public class AMS_OscarCase_RiskMgmt {
 		if(cc.Reason_Code__c!=null){
 			bAccntToUpd = true;
 			string sCurrReason = mapCases.get(idCase).Account.Reason__c;
-			if(cc.Reason_Code__c.toUpperCase()=='PREV'){
+			if(cc.Reason_Code__c.toUpperCase()=='PREV' || cc.Reason_Code__c.toUpperCase()=='CURRENT'){
 				if(mapCases.get(idCase).Account.Previous_Reason__c!=null){
-					//list<string> lsReason = mapCases.get(idCase).Account.Previous_Reason__c.split('-');
 					list<string> lsReason = (acc==null?(mapCases.get(idCase).Account.Previous_Reason__c):Acc.Previous_Reason__c).split('-');
 					AACC.Reason_Code__c = lsReason.get(0);
 					AACC.Reason_Description__c = lsReason.get(1);
 					
-					//accnt.Reason__c = mapCases.get(idCase).Account.Previous_Reason__c;
-					accnt.Reason__c = acc==null?(mapCases.get(idCase).Account.Previous_Reason__c):Acc.Previous_Reason__c;
+					if(cc.Reason_Code__c.toUpperCase()=='PREV')
+						accnt.Reason__c = acc==null?(mapCases.get(idCase).Account.Previous_Reason__c):Acc.Previous_Reason__c;
 				}
 			}else{
 				AACC.Reason_Code__c = cc.Reason_Code__c;
@@ -448,7 +447,9 @@ public class AMS_OscarCase_RiskMgmt {
 				
 				accnt.Reason__c = AACC.Reason_Code__c + '-' + AACC.Reason_Description__c;
 			}
-			accnt.Previous_Reason__c = sCurrReason;
+			
+			if(cc.Reason_Code__c.toUpperCase()!='CURRENT')
+				accnt.Previous_Reason__c = sCurrReason;
 		}
 		
 		if(cc.Clear_Irregularities__c)
