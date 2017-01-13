@@ -1588,7 +1588,7 @@ public class AMS_OSCARTriggerHandler {
 			if (fieldApiName.startsWithIgnoreCase('STEP'))
 				oscarSteps.add(fieldApiName);
 
-&nbsp;		}
+		}
 
 		return oscarSteps;
 	}
