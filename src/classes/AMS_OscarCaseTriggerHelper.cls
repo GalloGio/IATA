@@ -124,7 +124,7 @@ public class AMS_OscarCaseTriggerHelper {
         if(oscarCases.isEmpty()) return;
 
         List<AMS_OSCAR__c> oscarsToUpdate = new List<AMS_OSCAR__c>();
-        Map<Id, AMS_OSCAR__c> oscars = new Map<Id, AMS_OSCAR__c> ([SELECT Id,Name FROM AMS_OSCAR__c where Id = :oscarIds]);
+        Map<Id, AMS_OSCAR__c> oscars = new Map<Id, AMS_OSCAR__c> ([SELECT Id,Name,BusinessHours__c FROM AMS_OSCAR__c where Id = :oscarIds]);
 
         for(Case c : oscarCases){
             if(!oscars.containsKey(c.Oscar__c)) continue;
