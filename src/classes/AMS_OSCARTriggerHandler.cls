@@ -1530,7 +1530,7 @@ public class AMS_OSCARTriggerHandler {
 
 			    Set<String> nextMonthLocations = new Set<String>{'P', 'D'};
 			    Date terminationDate = nextMonthLocations.contains(updatedOSCAR.Location_Class__c) ? AMS_Utils.lastDayOfMonth(Date.today().addMonths(1)) : Date.today().addDays(15);
-			    updatedOSCAR.Termination_date__c = BusinessHours.nextStartDate(updatedOSCAR.BusinessHours__c, DateTime.newInstance(terminationDate, System.now().time()).date();
+			    updatedOSCAR.Termination_date__c = BusinessHours.nextStartDate(updatedOSCAR.BusinessHours__c, DateTime.newInstance(terminationDate, System.now().time())).date();
 
 			    if(updatedOSCAR.Process__c == AMS_Utils.VOLRELINQUISH) changesContainer.add(AMS_ChangeCodesHelper.generateVRChangeCode(AMS_Utils.SUSPENSION, updatedOSCAR, accountsInvolved.get(updatedOSCAR.Id), accounts, accountsChangeCode));
 			}
@@ -1588,7 +1588,7 @@ public class AMS_OSCARTriggerHandler {
 			if (fieldApiName.startsWithIgnoreCase('STEP'))
 				oscarSteps.add(fieldApiName);
 
-		}
+&nbsp;		}
 
 		return oscarSteps;
 	}
