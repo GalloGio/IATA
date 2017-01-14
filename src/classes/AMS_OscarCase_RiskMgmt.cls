@@ -579,9 +579,17 @@ public class AMS_OscarCase_RiskMgmt {
 		}
 		
 		if(condition.startsWithIgnoreCase('VALUES:')){
-			if((string)NewCaseValues.get(sFieldToCheck) == null) return false;
+			string sValue = null;
+			if(sFieldToCheck=='Parent.Status')
+				sValue = NewCaseValues.Parent.Status;
+			else
+				sValue = (string)NewCaseValues.get(sFieldToCheck);
+			
+			//if((string)NewCaseValues.get(sFieldToCheck) == null) return false;
+			if(sValue==null)	 return false;
 			setValues.addAll((condition.right(condition.length()-'VALUES:'.length())).split(';'));
-			if(setValues.contains(((string)NewCaseValues.get(sFieldToCheck)).toUpperCase()))
+			//if(setValues.contains(((string)NewCaseValues.get(sFieldToCheck)).toUpperCase()))
+			if(setValues.contains(sValue.toUpperCase()))
 				return true;
 			else return false;
 		}
