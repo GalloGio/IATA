@@ -48,30 +48,32 @@ public class AMS_AgencyAChangeCodeHandler {
     public static void updateAccountReason(list<Agency_Applied_Change_code__c> lsAACC){
     	set<id> setAccntId = new set<id>();
     	map<id, string> mapNewReason = new map<id, string>();
+    	map<id, account> mapAccntToUpdate = new map<id, account>();
     	
     	for(Agency_Applied_Change_code__c aacc:lsAACC){
     		if(aacc.Reason_Code__c != null && aacc.Reason_Code__c != ''){
     			setAccntId.add(aacc.Account__c);
-    			mapNewReason.put(aacc.Account__c, aacc.Reason_Code__c+ '-' - aacc.Reason_Description__c);
+    			mapNewReason.put(aacc.Account__c, aacc.Reason_Code__c + '-' + aacc.Reason_Description__c);
     		}
     	}
-    	map<id, account> mapAccnt = [select id, reason__c, Previous_Reason__c from account where id in:setAccntId];
+    	map<id, account> mapAccnt = new Map<ID, Account>([select id, reason__c, Previous_Reason__c from account where id in:setAccntId]);
     	
-    	list<Account> lsAccntToUpdate = new list<Account>();
     	for(Agency_Applied_Change_code__c aacc:lsAACC){
-    		string sReason = aacc.Reason_Code__c+ '-' - aacc.Reason_Description__c;
+    		string sReason = aacc.Reason_Code__c+ '-' + aacc.Reason_Description__c;
     		if(sReason != '-'){
-    			string sAccntReason = mapAccnt.get(aacc.Account__c).reason__c;
-    			if(sReason != sAccntReason){
-    				lsAccntToUpdate.add(new Account(id = aacc.Account__c
-    									,reason__c = sReason
-    									,Previous_Reason__c = sAccntReason));
+    			if(mapAccnt.containsKey(aacc.Account__c)){
+	    			string sAccntReason = mapAccnt.get(aacc.Account__c).reason__c;
+	    			if(sReason != sAccntReason){
+	    				mapAccntToUpdate.put(aacc.Account__c,new Account(id = aacc.Account__c
+	    									,reason__c = sReason
+	    									,Previous_Reason__c = sAccntReason));
+	    			}
     			}
     		}
     	}
     	
-    	if(!lsAccntToupdate.isEmpty())
-    		update lsAccntToUpdate;
+    	if(!mapAccntToUpdate.isEmpty())
+    		update mapAccntToUpdate.values();
     }
     
     //DTULLO: NEED to bulkify it. Now change codes are bring via dataloader from aims. batch size = 50.
