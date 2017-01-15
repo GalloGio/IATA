@@ -111,7 +111,10 @@ public class AMS_OscarCase_RiskMgmt {
 			
 			//get latest reason code/description from latest change code or, in case is missing, from account
 			mapReasonAndStatus = new map<id, account>([select id, Status__c, Reason__c,Previous_Reason__c, PreviousStatus__c,
-													 	(select id, change_code__c, AccountNewStatus__c, AccountPreviousStatus__c, PreviousReason__c, Reason_Code__c, Reason_Description__c, createddate from Agencies_Applied_Change_codes__r order by createddate desc limit 1)
+													 	(select id, change_code__c, AccountNewStatus__c, AccountPreviousStatus__c, PreviousReason__c, Reason_Code__c, Reason_Description__c, createddate, Created_Date_To_Show__c 
+													 	 from Agencies_Applied_Change_codes__r 
+													 	 where SIDRA_Case__c in:mapTrgNew.keyset() 
+													 	 order by Created_Date_To_Show__c desc limit 1)
 													  from account
 													  where Id in:setAllAccntsHiearchy]);
 			
