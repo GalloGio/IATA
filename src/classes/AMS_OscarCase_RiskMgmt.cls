@@ -502,8 +502,10 @@ public class AMS_OscarCase_RiskMgmt {
 		}
 		
 		if(cc.Reason_Code__c == null || cc.Reason_Code__c.toUpperCase()=='CURRENT'){
-			AACC.Reason_Code__c = mapReasonAndStatus.get(AccountId).Agencies_Applied_Change_codes__r.get(0).Reason_Code__c;
-			AACC.Reason_Description__c = mapReasonAndStatus.get(AccountId).Agencies_Applied_Change_codes__r.get(0).Reason_Description__c;
+			if(sCurrReason!=null && sCurrReason!='-'){
+				AACC.Reason_Code__c = sCurrReason.split('-').get(0);
+				AACC.Reason_Description__c = sCurrReason.split('-').get(1);
+			}
 			AACC.PreviousReason__c = sPrevReason;
 		}else if(cc.Reason_Code__c.toUpperCase()=='PREV'){
 			if(sPrevReason != null && sPrevReason!=''){
