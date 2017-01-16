@@ -11,13 +11,28 @@ global   class  ArchiveAttachmentListController {
     private String aCaseId ;
     private String  aMessageId;
     public  boolean  aStandardRedirect  {get; set;}
-    public Case relatedCase {get; set;}
     public list<Archived_Attachment__c> archivedAttachments;
     public list<Attachment> sfdcAttachments {get; set;}
     public map<String,AWSKey__c> awsBucketUrl {get; set;}
     public boolean hasAttachment{get; set;} 
     public Boolean fullAttachmentAccess {get; set;}
     public List<attachWrapper> sfdcAttachmentList {get; set;} //TF - SP8-US196
+
+    public Boolean hasOscar{
+        get{
+            if(hasOscar == null) hasOscar = false;
+            return hasOscar;
+        }
+        private set;
+    }
+
+    public Case relatedCase {
+        get; 
+        set{
+            relatedCase = value;
+            hasOscar = String.isNotEmpty(relatedCase.OSCAR__c);
+        }
+    }
     
     public ArchiveAttachmentListController() {
        awsBucketUrl = new Map<String,AWSKey__c >();
@@ -38,7 +53,7 @@ global   class  ArchiveAttachmentListController {
     
     @TestVisible
     private void loadAttachmentFromCaseId(){
-            this.relatedCase = [Select  CaseNumber, Id from Case where Id = :aCaseId];
+            this.relatedCase = [Select  CaseNumber, Id, OSCAR__c from Case where Id = :aCaseId];
              system.debug('loadAttachmentFromCaseId '+aCaseId );
             this.sfdcAttachments = [SELECT IsPrivate, Id, ParentId, OwnerId, Name, CreatedById, CreatedBy.Name, LastModifiedDate, BodyLength, 
                         LastModifiedById, CreatedDate, Description, ContentType
@@ -103,7 +118,7 @@ global   class  ArchiveAttachmentListController {
                     loadAWSCrendtial(a.Bucket__c);
                     system.debug('add to map new bucket '+a.Bucket__c);
             }
-            this.relatedCase = [Select  CaseNumber, Id from Case where Id in (select Case__c from Archived_Message__c where Id = :aMessageId) limit 1];
+            this.relatedCase = [Select  CaseNumber, Id, OSCAR__c from Case where Id in (select Case__c from Archived_Message__c where Id = :aMessageId) limit 1];
             this.sfdcAttachments = new List<Attachment>();
             this.hasAttachment =  this.archivedAttachments.size()>0;
     

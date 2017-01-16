@@ -178,15 +178,16 @@ global class AMS_OSCAR_Webservice {
 
             ID InternalCaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('Internal Cases (IDFS ISS)');
 
-            Case oscarCommCase = [select Id from Case where OSCAR__c =: oscar.Id AND ( ParentId = null or Parent.RecordType.Name != 'OSCAR Communication' ) limit 1];
-            
+            Case oscarCommCase = [select Id, Account.Name from Case where OSCAR__c =: oscar.Id AND ( ParentId = null or Parent.RecordType.Name != 'OSCAR Communication' ) limit 1];
+                        
             if(oscarCommCase == null){
                 result = 'Could not find a the Oscar Communication case related to this OSCAR.';
                 return 'ERROR: ' + result;
             }
 
-            Case issCase = new Case(RecordTypeId = InternalCaseRecordTypeID, Reason1__c = 'New Accredited Agent', CaseArea__c = 'Corporate Compliance',
-                                ParentId = oscarCommCase.Id, AccountId = oscar.Account__c, Subject = 'Due Diligence – ' + oscar.Account__r.Name,
+            Case issCase = new Case(RecordTypeId = InternalCaseRecordTypeID, CaseArea__c = 'Corporate Compliance',
+                                Reason1__c = (oscar.Process__c == AMS_Utils.AGENCYCHANGES ? 'Agent Change of Ownership' : 'New Accredited Agent'),
+                                ParentId = oscarCommCase.Id, AccountId = oscar.Account__c, Subject = 'Due Diligence – ' + oscarCommCase.Account.Name,
                                 OSCAR__c = oscar.Id, Region__c = oscar.Account__r.IATA_ISO_Country__r.Region__c, BSPCountry__c = oscar.Account__r.IATA_ISO_Country__r.Name);
 
             //TO BE REVERTED DUE DILLIGENCE FIX
