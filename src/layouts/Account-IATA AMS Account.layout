@@ -423,6 +423,10 @@
                 <behavior>Readonly</behavior>
                 <field>Source_System__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Is_AIMS_Account__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
