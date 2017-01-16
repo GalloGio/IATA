@@ -4557,7 +4557,7 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
         <summaryFilterItems>
             <field>Services_Rendered__c.Services_Rendered_Type__c</field>
             <operation>equals</operation>
-            <value>CASS Participation, CASS Participation, CASS Representation, CASS via GSSA</value>
+            <value>CASS Export via GSSA, CASS Export Direct Participation, CASS Import Direct Participation, CASS Import via GHA, CASS Participation, CASS via GSSA</value>
         </summaryFilterItems>
         <summaryFilterItems>
             <field>Services_Rendered__c.Services_Rendered_Status__c</field>
@@ -4587,6 +4587,18 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
         <externalId>false</externalId>
         <label>CCG Participant / KAM</label>
         <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>CNS_Agency__c</fullName>
+        <externalId>false</externalId>
+        <formula>AND( 
+   IATA_ISO_Country__r.CNS_Country__c=true, 
+   OR(ISPICKVAL(Location_Class__c,&quot;C&quot;),ISPICKVAL(Location_Class__c,&quot;R&quot;))
+ )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>CNS Agency</label>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
     </fields>
@@ -8827,7 +8839,14 @@ Approval: Key Contact can see pending request approve it one by one</inlineHelpT
         <fullName>Is_Branch_Abroad__c</fullName>
         <description>FDS AGM checks if the branch account is in a different country to the parent&apos;s.</description>
         <externalId>false</externalId>
-        <formula>if(AND(RecordType.Name = &quot;Agency&quot; , ispickval(Location_Type__c, &quot;BR&quot;)),IF(Parent.IATA_ISO_Country__c &lt;&gt; IATA_ISO_Country__c,&quot;Yes&quot;,&quot;No&quot;),&quot;&quot;)</formula>
+        <formula>IF(
+ AND(RecordType.Name = &quot;Agency&quot; , ispickval(Location_Type__c, &quot;BR&quot;)),
+ IF(AND(Parent.IATA_ISO_Country__c &lt;&gt; IATA_ISO_Country__c, NOT(CNS_Agency__c)),
+  &quot;Yes&quot;,
+  &quot;No&quot;
+ ),
+ &quot;&quot;
+)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Is Branch Abroad</label>
         <required>false</required>
@@ -27229,6 +27248,17 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Is_your_firm_handling_Dangerous_Goods__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Location_Type__c</picklist>
             <values>
                 <fullName>BR</fullName>
@@ -32205,6 +32235,17 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         </picklistValues>
         <picklistValues>
             <picklist>IsIATATrainingAirline__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Is_your_firm_handling_Dangerous_Goods__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
@@ -76945,11 +76986,11 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <searchFilterFields>ICCS_Membership_Status__c</searchFilterFields>
         <searchResultsAdditionalFields>ACCOUNT.NAME</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Quality__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Category__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>ACCOUNT.INDUSTRY</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>ACCOUNT.SITE</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Field_Head_Office__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>ACCOUNT.ADDRESS1_COUNTRY</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>ACCOUNT.ADDRESS1_CITY</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Location_Type__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Status__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>CORE.USERS.LAST_NAME</searchResultsAdditionalFields>

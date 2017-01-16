@@ -150,7 +150,10 @@ public class AMS_OSCARTriggerHandler {
 
 		//do Not run minor changes on agency changes trigger????
 		AMS_AccountTriggerHandler.processMinorChangesValidationFlag = false;
-
+		AMS_AccountTriggerHandler.minorChangesComingFromOSCAR = true;
+		for(AMS_OSCAR__c oscar : oscars)
+			if(oscar.Type_of_change__c!=null && oscar.Type_of_change__c.contains(AMS_Utils.REMOVALTRADENAME))
+				AMS_AccountTriggerHandler.comingFromOSCARforRemoveTradeName = true;
 		Id changeRT = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('CHANGE').getRecordTypeId();
 		List<AMS_OSCAR__c> oscarsToValidate = filterOSCARbyRT(changeRT, oscars);
 
@@ -323,6 +326,7 @@ public class AMS_OSCARTriggerHandler {
 		}
 
 
+
 		Map<Id, Account> accounts = getAccounts(accountIds);
 		Map<Id, AMS_Pax_Accreditation_Form__c> onlineAccreditations = getAccreditations(oscarOnlineAccredIds);
 
@@ -336,6 +340,22 @@ public class AMS_OSCARTriggerHandler {
 		AMS_Utils.AgChangesConfig config3;
 
 		system.debug('processAgencyChanges() --> oscars = ' + oscars);
+
+		boolean needValidationsOnStagingArea = false;
+		Set<ID> stagingAreaIDs = new Set<ID>();
+		Map<ID,AMS_Pax_Accreditation_Form__c> stagingAreas = new Map<ID,AMS_Pax_Accreditation_Form__c>();
+		for (AMS_OSCAR__c oscar : oscars){
+			if(oscar.AMS_Online_Accreditation__c!=null)
+				stagingAreaIDs.add(oscar.AMS_Online_Accreditation__c);
+			if(oscar.Type_of_change__c!=null && oscar.Type_of_change__c.contains(AMS_Utils.REMOVALTRADENAME))
+				needValidationsOnStagingArea = true;
+		}
+
+		if(needValidationsOnStagingArea){
+			stagingAreas = new Map<ID,AMS_Pax_Accreditation_Form__c>([SELECT Id, Trade_Name__c FROM AMS_Pax_Accreditation_Form__c WHERE ID IN :stagingAreaIDs]);
+		}
+
+
 		for (AMS_OSCAR__c oscar : oscars) {
 
 			AMS_OSCAR__c oldOSCAR = oldMap.get(oscar.Id);
@@ -384,6 +404,7 @@ public class AMS_OSCARTriggerHandler {
 
 				Set<Id> SAsInvolved = new Set<Id>();
 				Set<Id> SAsNotInvolved = new Set<Id>();
+				Set<Id> allSAs = new Set<Id>();
 
 				if(changeContainsLocation && agencyToSAs.get(oscar.Account__c)!=null){
 					config3 = AMS_AgencyChangesConfigHelper.getTypeOfChangeCombinationConfig(changeOfLocation, oscar, configs);
@@ -407,7 +428,7 @@ public class AMS_OSCARTriggerHandler {
 
 					isSanityCheck = true;
 
-					if(!performOscarValidations(toclist, agenciesAffected, oscar, accounts, accountHierarchyRelationships))
+					if(!performOscarValidations(toclist, agenciesAffected, oscar, accounts, accountHierarchyRelationships, stagingAreas))
 						return;
 					oscar.First_Step_Completed__c = true;
 
@@ -481,8 +502,11 @@ public class AMS_OSCARTriggerHandler {
 						// in case of location (for the moment is 100% but only God knows what will happen in the future)
 						// I'll apply the change and generate a CHL also to the SAs
 						if(changeContainsLocation  && agencyToSAs.get(oscar.Account__c)!=null){
-							changesContainer.add(AMS_ChangeCodesHelper.generateChangeCodes(oscar, config, accounts, accountsChangeCode, AMS_Utils.SANITYCHECK, SAsNotInvolved));
-							accountsToUpdate.putAll(AMS_Utils.copyDataToAccountForAgencyChanges(oscar, SAsNotInvolved, changeOfLocation, accounts, oscarOnlineAccreditation));
+							//We'll apply CHL to all dependent SAs either involved or not involved
+							allSAs.addAll(SAsInvolved);
+							allSAs.addAll(SAsNotInvolved);
+							changesContainer.add(AMS_ChangeCodesHelper.generateChangeCodes(oscar, config, accounts, accountsChangeCode, AMS_Utils.SANITYCHECK, allSAs));
+							accountsToUpdate.putAll(AMS_Utils.copyDataToAccountForAgencyChanges(oscar, allSAs, changeOfLocation, accounts, oscarOnlineAccreditation));
 						}
 
 					} else if (nonCascadingTOCs.length() == 0 && cascadingTOCs.length() > 0) {
@@ -520,7 +544,7 @@ public class AMS_OSCARTriggerHandler {
 
 					}
 
-					if (accounts.get(oscar.Account__c).IATA_ISO_Country__r.Due_diligence_mandatory__c && oscar.STEP17__c != AMS_Utils.NOT_APPLICABLE) {
+					if (onlineAccreditations.get(oscar.AMS_Online_Accreditation__c).Branch_Office_Country__r.Due_diligence_mandatory__c && oscar.STEP17__c != AMS_Utils.NOT_APPLICABLE) {
 
 						if(accounts.get(oscar.Account__c).Due_Diligence_Status__c == AMS_Utils.IN_PROGRESS) oscar.STEP17__c = AMS_Utils.IN_PROGRESS;
 						else{
@@ -598,8 +622,11 @@ public class AMS_OSCARTriggerHandler {
 						// in case of location (for the moment is 100% but only God knows what will happen in the future)
 						// I'll apply the change and generate a CHL also to the SAs
 						if(changeContainsLocation  && agencyToSAs.get(oscar.Account__c)!=null){
-							changesContainer.add(AMS_ChangeCodesHelper.generateChangeCodes(oscar, config, accounts, accountsChangeCode, AMS_Utils.APPROVAL, SAsNotInvolved));
-							accountsToUpdate.putAll(AMS_Utils.copyDataToAccountForAgencyChanges(oscar, SAsNotInvolved, changeOfLocation, accounts, oscarOnlineAccreditation));
+							//We'll apply CHL to all dependent SAs either involved or not involved
+							allSAs.addAll(SAsInvolved);
+							allSAs.addAll(SAsNotInvolved);
+							changesContainer.add(AMS_ChangeCodesHelper.generateChangeCodes(oscar, config, accounts, accountsChangeCode, AMS_Utils.APPROVAL, allSAs));
+							accountsToUpdate.putAll(AMS_Utils.copyDataToAccountForAgencyChanges(oscar, allSAs, changeOfLocation, accounts, oscarOnlineAccreditation));
 						}
 
 					} else if (nonCascadingTOCs.length() == 0 && cascadingTOCs.length() > 0) {
@@ -938,7 +965,7 @@ public class AMS_OSCARTriggerHandler {
 
 	}
 
-	public static boolean performOscarValidations(Set<String> toclist, Set<Id> agenciesAffected, AMS_OSCAR__c oscar, Map<Id, Account> accounts, Map<Id, List<AMS_Agencies_relationhip__c>> accountHierarchyRelationships) {
+	public static boolean performOscarValidations(Set<String> toclist, Set<Id> agenciesAffected, AMS_OSCAR__c oscar, Map<Id, Account> accounts, Map<Id, List<AMS_Agencies_relationhip__c>> accountHierarchyRelationships, Map<ID,AMS_Pax_Accreditation_Form__c> stagingAreas) {
 
 		boolean validationsPassed = true;
 		Set<Id> agenciesToMigrate = new Set<Id>(agenciesAffected);
@@ -958,6 +985,11 @@ public class AMS_OSCARTriggerHandler {
 
 		if (tocList.contains(AMS_Utils.OWNERSHIP_IATA) && oscar.AMS_Target_Agency__c == null){
 			oscar.AMS_Target_Agency__c.addError('The field "Target Agency" is mandatory when a change of ownership to IATA agent is being performed.');
+			validationsPassed= false;
+		}
+
+		if(tocList.contains(AMS_Utils.REMOVALTRADENAME) && (stagingAreas.get(oscar.AMS_Online_Accreditation__c)==null || !String.isBlank(stagingAreas.get(oscar.AMS_Online_Accreditation__c).Trade_Name__c))){
+			oscar.AMS_Target_Agency__c.addError('If the type of change includes "'+AMS_Utils.REMOVALTRADENAME+'" the field Trade Name must be empty.');
 			validationsPassed= false;
 		}
 
@@ -1032,6 +1064,26 @@ public class AMS_OSCARTriggerHandler {
 				oscar.addError('When performing a change of shareholding all the active agencies in the hierarchy must be selected.');
 				validationsPassed=false;
 			}
+		}
+		//When performing change of shareholding all active hierarchy agencies must be selected
+		if (tocList.contains(AMS_Utils.MAJ_SHAREHOLDING) || tocList.contains(AMS_Utils.MIN_SHAREHOLDING) ) {
+			System.debug('Agencies Affected: ' + agenciesToMigrate);
+			System.debug('Hierarchy Agencies: ' + accountHierarchyRelationships.get(oscar.Account__c));
+			if(!AMS_HierarchyHelper.isAllHierarchySelected(agenciesToMigrate, accountHierarchyRelationships.get(oscar.Account__c), accounts)){
+				oscar.addError('When performing a change of shareholding all the active agencies in the hierarchy must be selected.');
+				validationsPassed=false;
+			}
+		}
+
+		//When performing change of remittance frequency (VMFR) all active hierarchy agencies (except for BRs abroad) must be selected
+		if (tocList.contains(AMS_Utils.VFMR) ) {
+			System.debug('Agencies Affected: ' + agenciesToMigrate);
+			System.debug('Hierarchy Agencies: ' + accountHierarchyRelationships.get(oscar.Account__c));
+			if(!AMS_HierarchyHelper.isAllHierarchySelected(agenciesToMigrate, accountHierarchyRelationships.get(oscar.Account__c), accounts)){
+				oscar.addError('When performing a change of remittance frequency (VMFR) all the active agencies in the hierarchy must be selected. Only branches abroad can be excluded');
+				validationsPassed=false;
+			}
+
 		}
 
 		return validationsPassed;
@@ -1171,23 +1223,31 @@ public class AMS_OSCARTriggerHandler {
 
 		Map<Id, AMS_OSCAR__c> oldMap = (Map<Id,AMS_OSCAR__c>) Trigger.oldMap;
 
-		Map<Id,AMS_OSCAR__c> oscarAux = new Map<Id, AMS_OSCAR__c>([SELECT Id, Account__r.Sector__c FROM AMS_OSCAR__c WHERE Id IN :Trigger.New]);
+		Map<Id,AMS_OSCAR__c> oscarAux = new Map<Id, AMS_OSCAR__c>([SELECT Id, Account__r.Sector__c, Account__r.CNS_Agency__c FROM AMS_OSCAR__c WHERE Id IN :Trigger.New]);
 
 		//check which oscars are related to Cargo Agencies and have passed sanity check
 		//for(AMS_OSCAR__c oscar:[SELECT Id, Account__r.Sector__c FROM AMS_OSCAR__c WHERE Id IN :Trigger.New]){
 		for(AMS_OSCAR__c oscar:(List<AMS_OSCAR__c>)Trigger.New){
 			if ((oscar.RecordTypeId == AMS_Utils.RECTYPE_NEW || oscar.RecordTypeId == AMS_Utils.RECTYPE_CERT) && oldMap.get(oscar.Id).STEP6__c <> AMS_Utils.PASSED && oscar.STEP6__c == AMS_Utils.PASSED){
+
 				if(oscarAux.get(oscar.Id).Account__r.Sector__c == AMS_Utils.SECTOR_CARGO)
 					oscarsToProcess.add(oscar);
 			}
 		}
-
+		
 		if(!oscarsToProcess.isEmpty()){
-
-			validateCertificates(oscarsToProcess);
+			List<AMS_OSCAR__c> oscarsToValidate = new List<AMS_OSCAR__c>();					
+			for(AMS_OSCAR__c oscar : oscarsToProcess){
+				
+				// bypass validation for CNS if Custom Setting is not enabled
+				if(!oscarAux.get(oscar.Id).Account__r.CNS_Agency__c || (oscarAux.get(oscar.Id).Account__r.CNS_Agency__c && CNS_Settings__c.getInstance().DGR_Validate_Certificates__c))
+					oscarsToValidate.add(oscar);
+			}
+			
+			if(oscarsToValidate.isEmpty() == false)
+				validateCertificates(oscarsToValidate);
 
 			createCargoAgencyRegulations(oscarsToProcess);
-
 		}
 
 	}
@@ -1401,7 +1461,7 @@ public class AMS_OSCARTriggerHandler {
 		Map<Id, AMS_OSCAR__c> oldMap = (Map<Id,AMS_OSCAR__c>) Trigger.oldMap;
 
 		for(AMS_OSCAR__c oscar : (List<AMS_OSCAR__c>)Trigger.New){
-			if( AMS_Utils.oscarProcessesWithAppointments.contains(oscar.Process__c) ){
+			if( AMS_Utils.isProcessUsingAppointments(oscar) ){
 				oscarsToProcess.add(oscar);
 				oscarsToProcessIds.add(oscar.Id);
 			}
@@ -1530,10 +1590,7 @@ public class AMS_OSCARTriggerHandler {
 
 			    Set<String> nextMonthLocations = new Set<String>{'P', 'D'};
 			    Date terminationDate = nextMonthLocations.contains(updatedOSCAR.Location_Class__c) ? AMS_Utils.lastDayOfMonth(Date.today().addMonths(1)) : Date.today().addDays(15);
-			    if (AMS_Utils.IsWeekendDay(terminationDate, updatedOSCAR.Region__c)) {
-			        terminationDate = AMS_Utils.AddBusinessDays(terminationDate, 1, updatedOSCAR.Region__c);
-			    }
-			    updatedOSCAR.Termination_date__c = terminationDate;
+			    updatedOSCAR.Termination_date__c = BusinessHours.nextStartDate(updatedOSCAR.BusinessHours__c, DateTime.newInstance(terminationDate, System.now().time())).date();
 
 			    if(updatedOSCAR.Process__c == AMS_Utils.VOLRELINQUISH) changesContainer.add(AMS_ChangeCodesHelper.generateVRChangeCode(AMS_Utils.SUSPENSION, updatedOSCAR, accountsInvolved.get(updatedOSCAR.Id), accounts, accountsChangeCode));
 			}
@@ -1598,20 +1655,20 @@ public class AMS_OSCARTriggerHandler {
 
 	private static Map<Id, Account> getAccounts(Set<Id> accountIds) {
 		return new Map<Id, Account>([SELECT Id, ParentId, Parent.Location_Type__c, Status__c, Name, IATACode__c, Company_Type__c, Short_Name__c, TradeName__c, License_Number__c, VAT_Number__c, GDS__c, Operation__c,
-		        BillingCountry, BillingStreet, BillingPostalCode, BillingState, BillingCity, IATA_ISO_Country__c, Iso_State__c, ShippingCountry,
+		        BillingCountry, BillingStreet, BillingPostalCode, BillingState, BillingCity, IATA_ISO_Country__c, Iso_State__c, ShippingCountry, Is_Branch_Abroad__c,
 		        ShippingStreet, ShippingPostalCode, ShippingState, ShippingCity, Email__c, Website, Phone, Fax, In_a_Airport__c, Abbreviated_name__c, Abbreviated_address__c,
 		        Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Is_your_firm_handling_Dangerous_Goods__c,
-		        IATA_ISO_Country__r.Due_diligence_mandatory__c, Due_Diligence_Status__c, IATA_ISO_Shipping_State__r.Name, ISO_State__r.Name,IATA_ISO_Country__r.Name
+		        Due_Diligence_Status__c, IATA_ISO_Shipping_State__r.Name, ISO_State__r.Name,IATA_ISO_Country__r.Name
 		         FROM Account WHERE Id IN :accountIds]);
 	}
 
 	private static Map<Id, AMS_Pax_Accreditation_Form__c> getAccreditations(Set<Id> oscarOnlineAccredIds){
 		return new Map<Id, AMS_Pax_Accreditation_Form__c>([SELECT Account_Name__c, IATACode__c, ISSP_AMS_Legal_Status__c, Short_Name__c, Trade_Name__c, ISSP_AMS_License_No__c, ISSP_AMS_VAT_number__c,
-		        ISSP_AMS_GDS_with_signed_contract__c, Operation__c, Branch_Office_Country__r.Name, Branch_Office_Street_name_number__c, Branch_Office_Postal_code__c,
+		        ISSP_AMS_GDS_with_signed_contract__c, Operation__c, Branch_Office_Country__r.Name, Branch_Office_Country__r.Due_diligence_mandatory__c, Branch_Office_Street_name_number__c, Branch_Office_Postal_code__c,
 		        Billing_State__c, Branch_Office_City__c, ISO_Country__c, IATA_ISO_State__c, Shipping_Country__c, Shipping_Street__c, Shipping_Postal_Code__c,
 		        Shipping_State__c, Shipping_City__c, Branch_Office_Email__c, Website__c, Branch_Office_Phone__c, Branch_Office_FAX__c, ISSP_AMS_Premises_located_at_airport__c,
 		        Abbreviated_name__c, Abbreviated_address__c, Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Is_your_firm_handling_Dangerous_Goods__c,
-		        Shipping_ISO_Country__c, Shipping_ISO_State__c, Shipping_ISO_Country__r.Name, Shipping_ISO_State__r.Name, IATA_ISO_State__r.Name
+		        Shipping_ISO_Country__c, Shipping_ISO_State__c, Shipping_ISO_Country__r.Name, Shipping_ISO_State__r.Name, IATA_ISO_State__r.Name 
 		        FROM AMS_Pax_Accreditation_Form__c
 		        WHERE Id IN :oscarOnlineAccredIds]);
 	}
