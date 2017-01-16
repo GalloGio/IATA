@@ -1,6 +1,7 @@
 @isTest
 public class AMS_OSCAR_SA_AgencyChangesTest {
 
+	private static id rtAgencyInvolved = Schema.SObjectType.AMS_Process_Detail__c.getRecordTypeInfosByName().get('Agency Involved').getRecordTypeId();
     private static String SECTORPAX = 'Travel Agent';
     private static String CATEGORYPAX = 'IATA Passenger Sales Agent';
     private static String LOCCLASSPAX = 'P';
@@ -776,7 +777,8 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
         //add the SA2 on the list of agencies to migrate.
         //In this situation upon migration of the account to a new hierarchy SA would be left without a parent.
         List<AMS_Process_Detail__c> pds = new List<AMS_Process_Detail__c>();
-        pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = SA2.Id));
+        //DTULLO: Added Record Type
+        pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = SA2.Id,  RecordTypeId = rtAgencyInvolved));
 
         insert pds;
 
@@ -807,12 +809,13 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
 
         //Adding all agencies to migration list
         List<AMS_Process_Detail__c> pds = new List<AMS_Process_Detail__c>();
-        pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = BR1.Id));
-        pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = BR2.Id));
-        pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = SA1.Id));
-        pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = SA2.Id));
-        pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = SA3.Id));
-        pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = SA4.Id));
+        //DTULLO: Added Record Type
+        pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = BR1.Id,  RecordTypeId = rtAgencyInvolved));
+        pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = BR2.Id,  RecordTypeId = rtAgencyInvolved));
+        pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = SA1.Id,  RecordTypeId = rtAgencyInvolved));
+        pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = SA2.Id,  RecordTypeId = rtAgencyInvolved));
+        pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = SA3.Id,  RecordTypeId = rtAgencyInvolved));
+        pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = SA4.Id,  RecordTypeId = rtAgencyInvolved));
 
         insert pds;
 
@@ -897,8 +900,9 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
 
         //Adding the SAs which have BR1 as parent
         List<AMS_Process_Detail__c> pds = new List<AMS_Process_Detail__c>();
-        pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = SA2.Id));
-        pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = SA3.Id));
+        //DTULLO: Added Record Type
+        pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = SA2.Id,  RecordTypeId = rtAgencyInvolved));
+        pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = SA3.Id,  RecordTypeId = rtAgencyInvolved));
 
         insert pds;
 
@@ -989,7 +993,8 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
         AMS_OSCAR__c oscar = createOSCAR(SA1, 'Ownership to IATA Agent', null, HO2);
 
         List<AMS_Process_Detail__c> pds = new List<AMS_Process_Detail__c>();
-        pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = SA2.Id));
+        //DTULLO: Added Record Type
+        pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = SA2.Id,  RecordTypeId = rtAgencyInvolved));
 
         insert pds;
 
@@ -1082,8 +1087,9 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
 
         //Adding the SAs which have BR1 as parent
         List<AMS_Process_Detail__c> pds = new List<AMS_Process_Detail__c>();
-        pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = SA2.Id));
-        pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = SA3.Id));
+        //DTULLO: Added Record Type
+        pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = SA2.Id,  RecordTypeId = rtAgencyInvolved));
+        pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = SA3.Id,  RecordTypeId = rtAgencyInvolved));
 
         insert pds;
 
@@ -1184,12 +1190,13 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
 
         //Adding all agencies to migration list
         List<AMS_Process_Detail__c> pds = new List<AMS_Process_Detail__c>();
-        pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = BR1.Id));
-        pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = BR2.Id));
-        pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = SA1.Id));
-        pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = SA2.Id));
-        pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = SA3.Id));
-        pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = SA4.Id));
+        //DTULLO: Added Record Type
+        pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = BR1.Id,  RecordTypeId = rtAgencyInvolved));
+        pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = BR2.Id,  RecordTypeId = rtAgencyInvolved));
+        pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = SA1.Id,  RecordTypeId = rtAgencyInvolved));
+        pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = SA2.Id,  RecordTypeId = rtAgencyInvolved));
+        pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = SA3.Id,  RecordTypeId = rtAgencyInvolved));
+        pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = SA4.Id,  RecordTypeId = rtAgencyInvolved));
 
         insert pds;
 
@@ -1268,12 +1275,13 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
 
         //Adding all agencies to migration list
         List<AMS_Process_Detail__c> pds = new List<AMS_Process_Detail__c>();
-        pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = HO1.Id));
-        pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = BR2.Id));
-        pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = SA1.Id));
-        pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = SA2.Id));
-        pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = SA3.Id));
-        pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = SA4.Id));
+        //DTULLO: Added Record Type
+        pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = HO1.Id,  RecordTypeId = rtAgencyInvolved));
+        pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = BR2.Id,  RecordTypeId = rtAgencyInvolved));
+        pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = SA1.Id,  RecordTypeId = rtAgencyInvolved));
+        pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = SA2.Id,  RecordTypeId = rtAgencyInvolved));
+        pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = SA3.Id,  RecordTypeId = rtAgencyInvolved));
+        pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = SA4.Id,  RecordTypeId = rtAgencyInvolved));
 
         insert pds;
 
@@ -1352,9 +1360,10 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
 
         //Adding all agencies to migration list
         List<AMS_Process_Detail__c> pds = new List<AMS_Process_Detail__c>();
-        pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = SA1.Id));
-        pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = SA2.Id));
-        pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = SA3.Id));
+        //DTULLO: Added Record Type
+        pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = SA1.Id,  RecordTypeId = rtAgencyInvolved));
+        pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = SA2.Id,  RecordTypeId = rtAgencyInvolved));
+        pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = SA3.Id,  RecordTypeId = rtAgencyInvolved));
 
         insert pds;
 
@@ -1576,8 +1585,9 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
 
         //Adding agencies to migration list
         List<AMS_Process_Detail__c> pds = new List<AMS_Process_Detail__c>();
-        pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = BR1.Id));
-        pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = SA3.Id));
+        //DTULLO: Added Record Type
+        pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = BR1.Id,  RecordTypeId = rtAgencyInvolved));
+        pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = SA3.Id,  RecordTypeId = rtAgencyInvolved));
 
         insert pds;
 
@@ -1671,8 +1681,9 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
 
         //Adding agencies to migration list
         List<AMS_Process_Detail__c> pds = new List<AMS_Process_Detail__c>();
-        pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = SA2.Id));
-        pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = SA3.Id));
+        //DTULLO: Added Record Type
+        pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = SA2.Id,  RecordTypeId = rtAgencyInvolved));
+        pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = SA3.Id,  RecordTypeId = rtAgencyInvolved));
 
         insert pds;
 
@@ -1792,12 +1803,13 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
 
             //Adding all agencies to migration list
             List<AMS_Process_Detail__c> pds = new List<AMS_Process_Detail__c>();
-            pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = HO1.Id));
-            //pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = BR2.Id));
-            pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = BR1.Id));
-            pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = SA2.Id));
-            pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = SA3.Id));
-            pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = SA4.Id));
+            //DTULLO: Added Record Type
+            pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = HO1.Id,  RecordTypeId = rtAgencyInvolved));
+            //pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = BR2.Id,  RecordTypeId = rtAgencyInvolved));
+            pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = BR1.Id,  RecordTypeId = rtAgencyInvolved));
+            pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = SA2.Id,  RecordTypeId = rtAgencyInvolved));
+            pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = SA3.Id,  RecordTypeId = rtAgencyInvolved));
+            pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = SA4.Id,  RecordTypeId = rtAgencyInvolved));
 
             insert pds;
 
@@ -1834,8 +1846,9 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
         AMS_OSCAR__c oscar = createOSCAR(HO1, AMS_Utils.OWNERSHIP_IATA, null, null);
 
         List<AMS_Process_Detail__c> pds = new List<AMS_Process_Detail__c>();
-        pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = BR1.Id));
-        pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = SA4.Id));
+        //DTULLO: Added Record Type
+        pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = BR1.Id,  RecordTypeId = rtAgencyInvolved));
+        pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = SA4.Id,  RecordTypeId = rtAgencyInvolved));
 
         insert pds;
 

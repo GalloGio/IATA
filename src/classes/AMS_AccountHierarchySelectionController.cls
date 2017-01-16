@@ -153,7 +153,9 @@ public class AMS_AccountHierarchySelectionController {
 		get{
 			if(processDetails == null){
 				processDetails = new Map<Id, AMS_Process_Detail__c>();
-				for(AMS_Process_Detail__c pd : [SELECT Id, Account__c FROM AMS_Process_Detail__c WHERE Oscar__c = :oscarId]){
+				//DTULLO: Added check on recordtype
+				//for(AMS_Process_Detail__c pd : [SELECT Id, Account__c FROM AMS_Process_Detail__c WHERE Oscar__c = :oscarId]){
+				for(AMS_Process_Detail__c pd : [SELECT Id, Account__c FROM AMS_Process_Detail__c WHERE Oscar__c = :oscarId and recordtype.developername='Agency_Involved']){
 					processDetails.put(pd.Account__c, pd);
 				}
 			}
@@ -449,11 +451,13 @@ public class AMS_AccountHierarchySelectionController {
 	}
 
 	private Boolean updateRelatedRecords() {
-
+		//DTULLO: Added Record Type
+		ID rtAgencyInvolved = Schema.SObjectType.AMS_Process_Detail__c.getRecordTypeInfosByName().get('Agency Involved').getRecordTypeId();
 		List<AMS_Process_Detail__c> newProcessHierarchy = new List<AMS_Process_Detail__c>();
 		for(HierarchyItem hi : hierarchyValues){
 			if(hi.selected && !hi.main){
-				newProcessHierarchy.add(new AMS_Process_Detail__c(Oscar__c = oscarId, Account__c = hi.acc.Id));
+				//DTULLO: Added Record Type
+				newProcessHierarchy.add(new AMS_Process_Detail__c(Oscar__c = oscarId, Account__c = hi.acc.Id, recordtypeid = rtAgencyInvolved));
 			}
 		}
 
