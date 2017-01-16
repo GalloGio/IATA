@@ -2522,10 +2522,6 @@
             <recipient>jimenezm@iata.org</recipient>
             <type>user</type>
         </recipients>
-        <recipients>
-            <recipient>wana@iata.org</recipient>
-            <type>user</type>
-        </recipients>
         <senderType>CurrentUser</senderType>
         <template>unfiled$public/EUR_CaseassignmentITSCE_NumberAllocation</template>
     </alerts>
