@@ -71,7 +71,22 @@ public with sharing class vfIECEBC_AccountExtras extends vfIECEBC_Controller
 		}
 	}
 
-	
+	//
+	//
+    public boolean getisAllAddonSold() {
+        if (productRatePlanWrapperAddonCurrentList.size()>0 &&
+            productRatePlanWrapperAddonOptionList.size()==0) return true;
+        return false;
+    }
+    public boolean getisOneAddonLeftToBeSold(){
+        if (productRatePlanWrapperAddonOptionList.size()>0) return true;
+        return false;
+    }
+    public boolean getisNoneAddonSold(){
+        if (productRatePlanWrapperAddonCurrentList.size()==0 &&
+            productRatePlanWrapperAddonOptionList.size()>0) return true;
+        return false;
+    }
 	// ========================================================================
 	// Product Rate Plan Add On selection web interface
 	public Integer selectedRatePlanIndex {get;set;} // used as parameter for calling selectRatePlanAddon
@@ -236,13 +251,12 @@ public with sharing class vfIECEBC_AccountExtras extends vfIECEBC_Controller
 			//for (zqu__ProductRatePlanCharge__c prpc : prp.zqu__ProductRatePlanCharge__r)
 			for (zqu__ProductRatePlanCharge__c prpc : prp.zqu__R00N40000001mFVKEA2__r)
 			{
+				if (prpc.zqu__Type__c!=null) billingPeriod = prpc.zqu__Type__c;
 				if ( prpc.zqu__Type__c == RATE_PLAN_CHARGE_TYPE_ONE_TIME) {
-					amountOneTime += prpc.zqu__ListPrice__c;
+					amountOneTime += prpc.zqu__ListPrice__c;    
 				} else if ( prpc.zqu__Type__c == RATE_PLAN_CHARGE_TYPE_RECURRING ) {
 					amountRecurring += prpc.zqu__ListPrice__c; 
-                    if (prpc.zqu__RecurringPeriod__c != null) {
-                    	billingPeriod = prpc.zqu__RecurringPeriod__c;
-                    }
+                    //if (prpc.zqu__RecurringPeriod__c != null) billingPeriod = prpc.zqu__RecurringPeriod__c;
 				} 
 				//description += '(prpc: ' + prp.zqu__Description__c + ' )';
 				productRatePlanCharge = prpc;
