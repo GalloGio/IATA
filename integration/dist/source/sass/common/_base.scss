@@ -102,27 +102,33 @@ figure {
     }
 }
 
-.app-container {
-    display: flex;
-    min-height: 100vh;
-    flex-direction: column;
+html,
+body {
+    height: 100%;
 }
 
-.main-content {
-    flex: 1;
+.app-container {
+    display: table;
+    height: 100%;
+    width: 100%;
+}
+
+.page-header,
+.main-content,
+.page-footer {
+    display: table-row;
+}
+
+.page-header {
+    height: 62px;
 }
 
 .page-footer {
     color: #fff;
     background: #2a3940;
     margin-top: 50px;
+    height: 110px;
 
-    /*&[data-is-sticky='true'] {
-        position: fixed;
-        bottom: 0;
-        width: 100%;
-    }
-*/
     .inner-wrapper {
         padding: 40px 0 40px 120px;
     }
