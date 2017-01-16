@@ -6,6 +6,7 @@
     <customButtons>Send_Email</customButtons>
     <customButtons>Send_Email_with_Attachment</customButtons>
     <customButtons>Escalate_within_IATA</customButtons>
+    <customButtons>Send_Email_with_Attachment</customButtons>
     <customButtons>Create_SAAM_Case</customButtons>
     <customButtons>Deactivate_BSPLink</customButtons>
     <customButtons>Undo_Deactivation_BSPLink</customButtons>

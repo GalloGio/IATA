@@ -8,13 +8,29 @@ public with sharing class SidraLiteSendEmailController {
     public EmailTemplate emailTemplate {get;set;}
     public MailmergeTemplate mergeTemplate {get;set;}
 
+    public String apiSessionId {get;set;}
+    public String apiServerURL {get;set;}
 
-    public SidraLiteSendEmailController() {
+    public static final APXTConga4__Conga_Merge_Query__c QUERY_PARENT_CASE = [SELECT Id FROM APXTConga4__Conga_Merge_Query__c where APXTConga4__Name__c = 'Parent Case'];
+    public static final APXTConga4__Conga_Merge_Query__c QUERY_ACCOUNT = [SELECT Id FROM APXTConga4__Conga_Merge_Query__c where APXTConga4__Name__c = 'Parent Account'];
+
+    public SidraLiteSendEmailController(ApexPages.StandardController controller) {
         Id caseId = ApexPages.currentPage().getParameters().get('id');
         if (caseId == null) {
             ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR, 'Parameter case ID required'));
             return;
         }
+        this.apiSessionId = ApexPages.currentPage().getParameters().get('sessionid');
+        if (this.apiSessionId == null) {
+            ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR, 'Parameter sessionID required'));
+            return;
+        }
+        this.apiServerURL = ApexPages.currentPage().getParameters().get('serverUrl');
+        if (this.apiServerURL == null) {
+            ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR, 'Parameter serverURL required'));
+            return;
+        }
+
         list<Case> listCase = [Select Id, CaseNumber, Parent.CaseNumber, Subject, Parent.Subject, Contact.Id, Contact.Name, Parent.Id, Parent.Contact.Id, Parent.Contact.Name, Recordtype.Name, BSPCountry__c,
             Activate_Agent_in_Systems__c, Confirm_IRR_Withdrawal_to_AG__c, Confirm_Reinstatement_to_AG__c, Deactivate_Agent_in_Systems__c,
             Inform_Agent_DEF__c, Inform_Airlines_Locally_Default__c, Inform_Airlines_REI_DEFWD__c, Issue_Declaration_of_Default_to_Agent__c,
@@ -31,7 +47,7 @@ public with sharing class SidraLiteSendEmailController {
         if (this.cse.ParentId==null) {
             this.selectedToCase = 'current';
         }
-        this.dummyCase = new Case();
+        this.dummyCase = this.cse.clone();
     }
 
     public void findTemplates() {
@@ -62,6 +78,7 @@ public with sharing class SidraLiteSendEmailController {
         if (this.selectedType=='IRRWD') {
             this.cse.Confirm_IRR_Withdrawal_to_AG__c = this.dummyCase.Confirm_IRR_Withdrawal_to_AG__c;
             this.cse.Update_AIMS_IRRWITH__c = this.dummyCase.Update_AIMS_IRRWITH__c;
+            this.cse.IRR_Withdrawal_Reason__c = this.dummyCase.IRR_Withdrawal_Reason__c;
         }
         if (this.selectedType=='DEF') {
             this.cse.Update_AIMS_DEF__c = this.dummyCase.Update_AIMS_DEF__c;
@@ -71,7 +88,15 @@ public with sharing class SidraLiteSendEmailController {
             this.cse.Shut_Down_TKT_System_GDS_and_BSPlink__c = this.dummyCase.Shut_Down_TKT_System_GDS_and_BSPlink__c;
             this.cse.Deactivate_Agent_in_Systems__c = this.dummyCase.Deactivate_Agent_in_Systems__c;
         }
-        if (this.selectedType=='DEFWD' || this.selectedType=='REI') {
+        if (this.selectedType=='DEFWD') {
+            this.cse.Confirm_Reinstatement_to_AG__c = this.dummyCase.Confirm_Reinstatement_to_AG__c;
+            this.cse.Activate_Agent_in_Systems__c = this.dummyCase.Activate_Agent_in_Systems__c;
+            this.cse.Open_TKT_System__c = this.dummyCase.Open_TKT_System__c;
+            this.cse.Inform_Airlines_REI_DEFWD__c = this.dummyCase.Inform_Airlines_REI_DEFWD__c;
+            this.cse.Ticketing_Authority_Re_assigned__c = this.dummyCase.Ticketing_Authority_Re_assigned__c;
+            this.cse.DEF_Withdrawal_Reason__c = this.dummyCase.DEF_Withdrawal_Reason__c;
+        }
+        if (this.selectedType=='REI') {
             this.cse.Confirm_Reinstatement_to_AG__c = this.dummyCase.Confirm_Reinstatement_to_AG__c;
             this.cse.Activate_Agent_in_Systems__c = this.dummyCase.Activate_Agent_in_Systems__c;
             this.cse.Open_TKT_System__c = this.dummyCase.Open_TKT_System__c;
@@ -87,6 +112,7 @@ public with sharing class SidraLiteSendEmailController {
         }
 
         try {
+            //ApexPages.addMessage(new ApexPages.message(ApexPages.severity.INFO, getURLCongaMerge()));
             update this.cse;
             return new PageReference(getURLCongaMerge());
 
@@ -116,8 +142,6 @@ public with sharing class SidraLiteSendEmailController {
     public class SendEmailException extends Exception{}
 
     private String getURLCongaMerge() {
-        //Select id,
-
         // get 'From Email' using predefined custom setting 'RecordTypeEmail'
         String fromEmail = IDFS_Util.getRecordTypeEmail(cse.Recordtype.Name, cse.BSPCountry__c);
         list<OrgWideEmailAddress> listadd = [
@@ -137,13 +161,17 @@ public with sharing class SidraLiteSendEmailController {
             selectedCase = this.cse.Parent;
         }
 
+        list<String> listQueries = new list<String>();
+        listQueries.add('[PARENTACCOUNT]' + formatID15(QUERY_ACCOUNT.id) + '?pv0=' + formatID15(this.cse.AccountId));
+        listQueries.add('[PARENTCASE]' + formatID15(QUERY_PARENT_CASE.id) + '?pv0=' + formatID15(this.cse.Parent.Id));
+
         // return conga url
         if (this.selectedCustomize == 'true') {
             // cutomize template version
-            return CongaManager.goToSendEmailConga(UserInfo.getSessionId(), selectedCase.Id, selectedCase.ContactId, listadd[0].id);
+            return CongaManager.goToSendEmailConga(this.apiSessionId, this.apiServerURL, this.cse.Id, selectedCase.Id, this.cse.ContactId, listadd[0].id, listQueries);
         } else {
             // automated version with given templates
-            return CongaManager.sendEmailURL(UserInfo.getSessionId(), selectedCase.Id, selectedCase.ContactId, this.mergeTemplate.Id, this.emailTemplate.Id, listadd[0].id);
+            return CongaManager.sendEmailURL(this.apiSessionId, this.apiServerURL, this.cse.Id, selectedCase.Id, this.cse.ContactId, this.mergeTemplate.Id, this.emailTemplate.Id, listadd[0].id, listQueries);
         }
     }
 
@@ -153,6 +181,11 @@ public with sharing class SidraLiteSendEmailController {
         } else {
             return new PageReference('/');
         }
+    }
+
+    private static String formatID15(Id idvalue) {
+        if(idvalue==null) return '';
+        return String.valueOf(idvalue).left(15);
     }
 
 }

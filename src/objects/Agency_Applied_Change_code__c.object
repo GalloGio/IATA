@@ -361,6 +361,10 @@
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>DOM</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>DWD</fullName>
                 <default>false</default>
             </picklistValues>
@@ -1726,6 +1730,10 @@
             </values>
             <values>
                 <fullName>DIS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DOM</fullName>
                 <default>false</default>
             </values>
             <values>
