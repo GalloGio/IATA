@@ -12,11 +12,7 @@
     <allowedSubmitters>
         <submitter>gilj@iata.org</submitter>
         <type>user</type>
-    </allowedSubmitters>
-    <allowedSubmitters>
-        <submitter>hattinghc@iata.org</submitter>
-        <type>user</type>
-    </allowedSubmitters>
+    </allowedSubmitters>    
     <allowedSubmitters>
         <submitter>kalatsidie@iata.org</submitter>
         <type>user</type>
