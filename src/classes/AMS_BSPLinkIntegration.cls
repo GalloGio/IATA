@@ -369,7 +369,9 @@ global class AMS_BSPLinkIntegration {
 				}
 			}
 		}else if (sType.equalsIgnoreCase('AccountsInvolved')) {
-			for(AMS_Oscar__c oscar : [SELECT Id, Account__c, (SELECT Id, Account__c FROM AMS_Process_Detail__r) FROM AMS_Oscar__c WHERE Id IN :objectIds]){
+			//DTULLO: added check on the record-type
+			//for(AMS_Oscar__c oscar : [SELECT Id, Account__c, (SELECT Id, Account__c FROM AMS_Process_Detail__r) FROM AMS_Oscar__c WHERE Id IN :objectIds]){
+			for(AMS_Oscar__c oscar : [SELECT Id, Account__c, (SELECT Id, Account__c FROM AMS_Process_Detail__r where recordtype.developername='Agency_Involved') FROM AMS_Oscar__c WHERE Id IN :objectIds]){
 				setAccntToRemove.add(oscar.Account__c);
 				for(AMS_Process_Detail__c pd : oscar.AMS_Process_Detail__r) setAccntToRemove.add(pd.Account__c);
 			}
