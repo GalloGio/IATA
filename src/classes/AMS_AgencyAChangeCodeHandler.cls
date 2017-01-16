@@ -9,10 +9,12 @@ public class AMS_AgencyAChangeCodeHandler {
      
     public static void handleAfterInsert(List<Agency_Applied_Change_code__c> aacc) {
         verifyActiveAACCuniqueness(aacc);
+        set<id> setIdAACC = new set<id>();
         Id irregRtId = AMS_Utils.getId('Agency_Applied_Change_code__c', 'Irregularities');
         List<Agency_Applied_Change_code__c> aaccToBeProcessed = new List<Agency_Applied_Change_code__c>();
         for(Agency_Applied_Change_Code__c aaccRecord : aacc)
         {
+        	setIdAACC.add(aaccRecord.id);
             if(aaccRecord.RecordTypeId == irregRtId)
             {
                 aaccToBeProcessed.add(aaccRecord);
@@ -20,7 +22,7 @@ public class AMS_AgencyAChangeCodeHandler {
         }
         AMS_Irregularities_Utils.CalculateAccumulatedIrregularitiesFromChangeCode(aaccToBeProcessed);
 		
-		updateAccountReason(aacc);
+		updateAccountReason(setIdAACC);
 		
         //FM 22-09-2016 - Create "Agency Update" records
         AMS_AgencyUpdateHelper.agencyUpdate( (List<SObject>) aacc);
@@ -44,8 +46,12 @@ public class AMS_AgencyAChangeCodeHandler {
         migrateFieldsFromStagingToAccount(aacc);
     }
     
-    
-    public static void updateAccountReason(list<Agency_Applied_Change_code__c> lsAACC){
+    //DTULLO: marked as future because some change codes are generated from account changes (minor changes)
+    //thus, we try to re-update the same account again
+    //public static void updateAccountReason(list<Agency_Applied_Change_code__c> lsAACC){
+	@future
+    public static void updateAccountReason(set<id> setAACC){
+    	list<Agency_Applied_Change_code__c> lsAACC = [select id, Reason_Code__c, Reason_Description__c, Account__c  from Agency_Applied_Change_code__c where id in:setAACC];
     	set<id> setAccntId = new set<id>();
     	map<id, string> mapNewReason = new map<id, string>();
     	map<id, account> mapAccntToUpdate = new map<id, account>();
