@@ -1348,7 +1348,40 @@ public without sharing class AMS_Utils {
     }
 
 
+/**
+    Method to help the transformation between Company Type (Acccount) and Specify Legal Status (AMS Online Accreditation) 
+    */
+public static String transformLegalStatus(String companyType) {
 
+    if (companyType == null)
+        return null;
+
+    if (companyType.equalsIgnoreCase('A'))
+        return 'Association';
+    if (companyType.equalsIgnoreCase('C'))
+        return 'Corporation';
+    if (companyType.equalsIgnoreCase('E'))
+        return 'State Owned Enterprise';
+    if (companyType.equalsIgnoreCase('J'))
+        return 'Joint Venture';
+    if (companyType.equalsIgnoreCase('L'))
+        return 'Limited Company';
+    if (companyType.equalsIgnoreCase('O'))
+        return 'Other';
+    if (companyType.equalsIgnoreCase('P'))
+        return 'Partnership';
+    if (companyType.equalsIgnoreCase('R'))
+        return 'Limited Partnership';
+    if (companyType.equalsIgnoreCase('S'))
+        return 'Sole Proprietorship';
+    if (companyType.equalsIgnoreCase('T'))
+        return 'Trust Company';
+    if (companyType.equalsIgnoreCase('V'))
+        return 'Co-operative';
+
+    return '';
+
+}
 
 /**
     Method to help the transformation between Specify Legal Status (AMS Online Accreditation) and Company Type (Acccount)

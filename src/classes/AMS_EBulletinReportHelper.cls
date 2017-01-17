@@ -23,28 +23,35 @@ public without sharing class AMS_EBulletinReportHelper {
 
 	public static final String SECTION			= 	'0-Section';
 
-	public static final String STATE  	        = 	'9-Country or State';
-	public static final String COUNTRY  	    =	'10-Country or State';
+	public static final String IATACODE			= 	'3-Agency Code';
+	public static final String LEGALSTATUS		= 	'6-Legal Status';
+	
+	public static final String STATUS			= 	'17-Status';
+		
+	public static final String STATE  	        = 	'10-Country or State';
+	public static final String COUNTRY  	    =	'11-Country or State';
 	public static final String CHANGECODE       = 	'1-Change Code';
 	public static final String CHANGECODEREASON = 	'2-Change Code';
 
-	public static final String OWNERS 	   		=	'23-Owner1';
+	public static final String OWNERS 	   		=	'24-Owner1';
 	public static final String OWNERAPINAME 	=	'Account__r.Owners';
+	public static final String OWNERSTOTALAPINAME  =	'OwnersTotal';
 
 	// position in the owner name, example: 22-Owner1 will be recovering the value 1
 	public static final Integer OWNERPOS 			=	8;
 	public static final Integer NEWOWNERPOS 		=	12;
 
-	public static final String NEWSTATE 	    =	'44-New Country or State';
-	public static final String NEWCOUNTRY 		= 	'45-New Country or State';
+	public static final String NEWSTATE 	    =	'46-New Country or State';
+	public static final String NEWCOUNTRY 		= 	'47-New Country or State';
 
-	public static final String IRRREASON 		=	'68-IRR: Reason';
-	public static final String IRRPERIODSD 		= 	'69-IRR: Period';
-	public static final String IRRPERIODED		= 	'70-IRR: Period';
+	public static final String IRRREASON 		=	'71-IRR: Reason';
+	public static final String IRRPERIODSD 		= 	'72-IRR: Period';
+	public static final String IRRPERIODED		= 	'73-IRR: Period';
 
 	public static final String IRRCHANGECODE = 'IRR';
+	public static final String NEWCHANGECODE = 'NEW';
 
-
+	private static Double ownersTotalPercentage = 0;
 
 	public static String fieldsQuery;
 	public static String filterCCQuery = '';
@@ -251,7 +258,7 @@ public without sharing class AMS_EBulletinReportHelper {
 		String filter3 		 = ' and Account__r.IATA_ISO_Country__r.ISO_Code__c IN :countriesFilter';		
 		String filter4 		 = ' and Account__r.Location_Class__c IN :locClsList';
 		String filter5 		 = ' and Created_Date_To_Show__c >= :fromDate  and Created_Date_To_Show__c < :toDate';		
-		String orderByFilter = ' order by Account__r.IATA_ISO_Country__r.Name,createdDate';		
+		String orderByFilter = ' order by Account__r.IATA_ISO_Country__r.Name,Created_Date_To_Show__c';		
 
 		String filterCC  = filter1 + 
 						   filter2 + 
@@ -640,8 +647,17 @@ public without sharing class AMS_EBulletinReportHelper {
 			else if(cc.change_code__c != IRRCHANGECODE && irrSet.contains(fieldsList.get(position - customFieldsCounter))){
 				recordsList.add('');
 			}
+			else if(cc.change_code__c == NEWCHANGECODE && fieldsList.get(position - customFieldsCounter).equalsignorecase(nameApiNameMap.get(IATACODE))){
+				recordsList.add('');
+			}
 			else {
 				String strVal = checkForDateValue(AMS_Utils.processParentDependecies(fieldsList.get(position - customFieldsCounter),cc));
+
+				if(strVal == null || strVal == '') strVal = '';
+				
+				else if(fieldsList.get(position - customFieldsCounter).equalsignorecase(nameApiNameMap.get(LEGALSTATUS))) strVal = AMS_Utils.transformLegalStatus(strVal);
+				
+				else if(fieldsList.get(position - customFieldsCounter).equalsignorecase(nameApiNameMap.get(STATUS))) strVal = AMS_Utils.getIATANumericStatus(strVal) + '/' + strVal;
 
 				recordsList.add(strVal);
 			}
@@ -710,6 +726,12 @@ public without sharing class AMS_EBulletinReportHelper {
 				
 
 			}
+			else if(apiNameUpper.equalsignorecase(OWNERSTOTALAPINAME))
+			{
+				recordValue = String.valueOf(ownersTotalPercentage);
+				ownersTotalPercentage = 0;
+			
+			}
 			else if(!headerVal.IRR_field__c || (headerVal.IRR_field__c && cc.change_code__c == IRRCHANGECODE))
 			{
 				recordValue = headerVal.is_Field_New__c ? objVal.newValue : objVal.oldValue;
@@ -719,7 +741,7 @@ public without sharing class AMS_EBulletinReportHelper {
 		{
 			recordValue = processCustomHeader(headerVal,cc);
 		}
-
+		
 		return recordValue == null ? '' : recordValue;
 	}
 
@@ -818,6 +840,16 @@ public without sharing class AMS_EBulletinReportHelper {
 		{	
 			return processOwners( headerVal, customFields.ownersMap.get(cc.Account__c),OWNERPOS);
 		}
+		else if(headerVal.Api_Name__c.equalsignorecase(OWNERSTOTALAPINAME) && !headerVal.is_Field_New__c){
+			
+			if(ownersTotalPercentage == 0) return '';
+
+			String recordValue = String.valueOf(ownersTotalPercentage);
+			
+			ownersTotalPercentage = 0;
+
+			return	recordValue;
+		}
 		else if (headerVal.name.equals(CHANGECODE)) {
 
 			List<String> values =  customFields.getAPIPairFieldValuesForCC(CHANGECODE,CHANGECODEREASON);
@@ -856,12 +888,18 @@ public without sharing class AMS_EBulletinReportHelper {
 	*/
 	private String processOwners(AMSEBulletinSettings__c headerVal , List<AMS_AccountRoleCreator.OwnerFieldsEntity> ownersList, Integer pos)
 	{
-			
+
 		if(ownersList == null || integer.valueof(headerVal.name.substring(pos,pos + 1)) > ownersList.size() )
 			return '';
 		//Percentage of Ownership
 		else if (headerVal.name.indexOf('%') > -1)
-			return ownersList.get(integer.valueof(headerVal.name.substring(pos , pos + 1)) - 1).financialInterest;
+		{
+			String financialInterest = ownersList.get(integer.valueof(headerVal.name.substring(pos , pos + 1)) - 1).financialInterest;
+			
+			ownersTotalPercentage = ownersTotalPercentage + Double.valueOf(financialInterest);
+
+			return financialInterest;
+		}
 		//Name of the Owner
 		else
 			return ownersList.get(integer.valueof(headerVal.name.substring(pos , pos + 1)) - 1).name;

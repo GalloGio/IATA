@@ -297,8 +297,12 @@ public class AMS_ChangeCodesHelper {
         if (newVal <> oscarAgency.Status__c && newVal != null) {
 
             oscarAgency.Status__c = newVal;
-            toReturn = oscarAgency;
+            toReturn = oscarAgency; 
         }
+
+        //Save current account status in the change code
+        
+        aacNEW.AccountNewStatus__c = oscarAgency.Status__c;
         
         if(oscar != null){
 
