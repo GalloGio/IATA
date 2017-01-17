@@ -16,6 +16,7 @@ public with sharing class AMS_AccreditationContactController {
     public boolean isCorrection {get; set;}
     public boolean isCertificationOSCAR {get; set;}
     public boolean isCargoAgency {get; set;}
+    public boolean isCASSAssociate {get; set;}
     private Id AcPersonRt;
     private Id AcCompanyRt;
     private Id AcCurrentCompanyRt;
@@ -55,7 +56,7 @@ public with sharing class AMS_AccreditationContactController {
                             Shipping_City__c, Shipping_State__c, Shipping_Country__c, SAAM_Case__r.AccountId, SAAM_Case__r.OSCAR__r.Account__c, 
                             SAAM_Case__r.OSCAR__r.Account__r.Location_class__c, SAAM_Case__r.OSCAR__r.Account__r.CNS_Agency__c, 
                             SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c, SAAM_Case__r.OSCAR__r.Process__c, SAAM_Case__r.OSCAR__r.Type_of_change__c,
-                            SAAM_Case__r.OSCAR__r.Account__r.Sector__c
+                            SAAM_Case__r.OSCAR__r.Account__r.Sector__c, SAAM_Case__r.OSCAR__r.Account__r.Category__c
                             from AMS_Pax_Accreditation_Form__c where Id =: stdController.getRecord().id];
             this.aoa = aoaList.get(0);
             String commaSeparatedFields = AMS_AccreditationContactHelper.loadFieldsDynamically('AMS_Accreditation_Contact__c');
@@ -133,6 +134,7 @@ public with sharing class AMS_AccreditationContactController {
 
         isCorrection = aoa.SAAM_Case__r.OSCAR__r.Process__c == AMS_Utils.COR;
         isCargoAgency = aoa.SAAM_Case__r.OSCAR__r.Account__r.Sector__c == AMS_Utils.SECTOR_CARGO;
+        isCASSAssociate = aoa.SAAM_Case__r.OSCAR__r.Account__r.Category__c == AMS_Utils.CATEGORY_CASSASSOCIATE;
 
         isCertificationOSCAR = aoa.SAAM_Case__r.OSCAR__r.Process__c == AMS_Utils.CERTIFICATION ? true : false;
 
