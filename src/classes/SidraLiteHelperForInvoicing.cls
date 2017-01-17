@@ -3,6 +3,8 @@
 **/
 public with sharing class SidraLiteHelperForInvoicing {
 
+    public static final set<String> VALID_REASONS = new set<String>{'Annual Fees'};
+
     /**
         Create a dummy case to set the default values for first non compliance date
     **/
@@ -20,29 +22,31 @@ public with sharing class SidraLiteHelperForInvoicing {
           newCase.SIDRA_Lite_Reason__c = 'Annual Fees';
           newCase.Subject = 'SIDRA Lite – ' + newCase.SIDRA_Lite_Reason__c;
 
-          if (!SidraLiteUtil.isAccountActive(parentCase.account)) {
+          if (SidraLiteUtil.isAccountActive(parentCase.account)) {
+              if (SidraLiteUtil.isPassenger(parentCase.account)) {
+                  newCase.Propose_Irregularity__c = DateTime.now();
+                  newCase.IRR_Approval_Rejection__c = 'Approved';
+                  newCase.IRR_Approval_Rejection_Date__c = DateTime.now();
+                  newCase.IRR_Type__c = 'Double Irregularity';
+                  newCase.Total_Irregularities__c = String.ValueOf(parentCase.account.Accumulated_Irregularities__c);
+
+              } else if (SidraLiteUtil.isAgent(parentCase.account)) {
+                  newCase.Propose_Default__c = DateTime.now();
+                  newCase.Termination_Reason__c = 'Non payment of Annual Fee';
+
+              } else if (SidraLiteUtil.isCargoCASS(parentCase.account)) {
+                  newCase.SIDRA_Lite_Default_Date__c = Date.today();
+                  newCase.Reason_for_Default__c = 'Annual Fees';
+                  if (parentCase.Account.Category__c == 'IATA Cargo Agent') {
+                      newCase.Termination_date_manual_entry__c = SidraLiteUtil.lastMonthDay(Date.today().addMonths(1));
+                  }
+                  if (parentCase.Account.Category__c.startsWith('CASS Associate')) {
+                      newCase.Termination_date_manual_entry__c = Date.today().addMonths(3);
+                  }
+              }
+          } else {
+              newCase.IRR_Withdrawal_Reason__c = 'Default Prev';
               newCase.Termination_date_manual_entry__c = WSSidraLite.getTerminationDateFromRelatedCase(parentCase.account);
-
-          } else if (SidraLiteUtil.isPassenger(parentCase.account)) {
-              newCase.Propose_Irregularity__c = DateTime.now();
-              newCase.IRR_Approval_Rejection__c = 'Approved';
-              newCase.IRR_Approval_Rejection_Date__c = DateTime.now();
-              newCase.IRR_Type__c = 'Double Irregularity';
-              newCase.Total_Irregularities__c = String.ValueOf(parentCase.account.Accumulated_Irregularities__c);
-
-          } else if (SidraLiteUtil.isAgent(parentCase.account)) {
-              newCase.Propose_Default__c = DateTime.now();
-              newCase.Termination_Reason__c = 'Non payment of Annual Fee';
-
-          } else if (SidraLiteUtil.isCargoCASS(parentCase.account)) {
-              newCase.SIDRA_Lite_Default_Date__c = Date.today();
-              newCase.Reason_for_Default__c = 'Annual Fees';
-              if (parentCase.Account.Category__c == 'IATA Cargo Agent') {
-                  newCase.Termination_date_manual_entry__c = SidraLiteUtil.lastMonthDay(Date.today().addMonths(1));
-              }
-              if (parentCase.Account.Category__c.startsWith('CASS Associate')) {
-                  newCase.Termination_date_manual_entry__c = Date.today().addMonths(3);
-              }
           }
           return newCase;
       }
@@ -78,10 +82,14 @@ public with sharing class SidraLiteHelperForInvoicing {
                   if (parentCase.New_IFAP_Deadline_date__c >= Date.today() ) {
                       throw new WSSidraLite.SidraLiteException('Cannot update if New Deadline Date is future');
                   }
-                  childCase.SIDRA_Lite_Default_Date__c = Date.today();
-                  childCase.Reason_for_Default__c = 'Annual Fees';
-                  childCase.Termination_date_manual_entry__c = SidraLiteUtil.lastMonthDay(Date.today().addMonths(1));
-                  childCase.Status = 'Re-opened';
+                  if (SidraLiteUtil.isAccountActive(parentCase.account)) {
+                      childCase.SIDRA_Lite_Default_Date__c = Date.today();
+                      childCase.Reason_for_Default__c = 'Annual Fees';
+                      childCase.Termination_date_manual_entry__c = SidraLiteUtil.lastMonthDay(Date.today().addMonths(1));
+                      childCase.Status = 'Re-opened';
+                  } else {
+                      childCase.IRR_Withdrawal_Reason__c = 'Default Prev';
+                  }
                   parentCase.Termination_date_manual_entry__c = SidraLiteUtil.lastMonthDay(Date.today().addMonths(1));
               }
               // 3th non compliance
@@ -92,8 +100,12 @@ public with sharing class SidraLiteHelperForInvoicing {
                   if (childCase.Propose_Default__c != null ) {
                       throw new WSSidraLite.SidraLiteException('Cannot create a 4th FS non-compliance case');
                   }
-                  childCase.Propose_Default__c = Date.today();
-                  childCase.Termination_Reason__c = 'Non payment of Annual Fee';
+                  if (SidraLiteUtil.isAccountActive(parentCase.account)) {
+                      childCase.Propose_Default__c = Date.today();
+                      childCase.Termination_Reason__c = 'Non payment of Annual Fee';
+                  } else {
+                      childCase.IRR_Withdrawal_Reason__c = 'Default Prev';
+                  }
               }
           }
           // If agent no 2nd non compliance allowed
@@ -111,9 +123,13 @@ public with sharing class SidraLiteHelperForInvoicing {
               if (childCase.Propose_Default__c != null) {
                   throw new WSSidraLite.SidraLiteException('Cannot create a 3th FS non-compliance case');
               }
-              childCase.Propose_Default__c = Date.today();
-              childCase.Termination_Reason__c = 'Non payment of Annual Fee';
-              childCase.Status = 'Re-opened';
+              if (SidraLiteUtil.isAccountActive(parentCase.account)) {
+                  childCase.Propose_Default__c = Date.today();
+                  childCase.Termination_Reason__c = 'Non payment of Annual Fee';
+                  childCase.Status = 'Re-opened';
+              } else {
+                  childCase.IRR_Withdrawal_Reason__c = 'Default Prev';
+              }
           }
 
           list<Case> listUpdate = new list<Case>();

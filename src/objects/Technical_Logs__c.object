@@ -141,7 +141,7 @@
         <filters>
             <field>Record__c</field>
             <operation>contains</operation>
-            <value>80480514</value>
+            <value>0012000000Imbg5</value>
         </filters>
         <label>AMS - 1 record</label>
         <language>en_US</language>
@@ -179,7 +179,30 @@
             <operation>equals</operation>
             <value>Error</value>
         </filters>
+        <filters>
+            <field>start_date__c</field>
+            <operation>equals</operation>
+            <value>11/14/2016 12:00 AM</value>
+        </filters>
         <label>AMS Errors</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>AMS_Invalid</fullName>
+        <columns>NAME</columns>
+        <columns>Log__c</columns>
+        <columns>Operation__c</columns>
+        <columns>Record__c</columns>
+        <columns>Status__c</columns>
+        <columns>start_date__c</columns>
+        <columns>End_Date__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>Invalid</value>
+        </filters>
+        <label>AMS Invalid</label>
         <language>en_US</language>
     </listViews>
     <listViews>

@@ -57,6 +57,21 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fieldSets>
+        <fullName>AMS_cnsremovaloftradename</fullName>
+        <description>fields to be migrated when we have a removal of trade name process (CNS)</description>
+        <displayedFields>
+            <field>TradeName__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Trade_Name__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>RemovalOfTradeName</label>
+    </fieldSets>
+    <fieldSets>
         <fullName>AMS_legalstatus</fullName>
         <description>fields to be migrated when we have a change of legal status process</description>
         <displayedFields>
@@ -1434,7 +1449,9 @@
     <fields>
         <fullName>Current_VAT_Number__c</fullName>
         <externalId>false</externalId>
-        <formula>SAAM_Case__r.Account_Concerned__r.VAT_Number__c</formula>
+        <formula>IF(ISBLANK(SAAM_Case__r.Account_Concerned__c), 
+HO_Account__r.VAT_Number__c,
+SAAM_Case__r.Account_Concerned__r.VAT_Number__c)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Current VAT Number</label>
         <required>false</required>
@@ -2994,6 +3011,19 @@ If(LEN( SAAM_Case__r.Account.ShippingCountry) &gt;0, SAAM_Case__r.Account.Shippi
         <type>Currency</type>
     </fields>
     <fields>
+        <fullName>Link_agent_name__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Link agent name</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>AMS Online Accreditations (Link agent name)</relationshipLabel>
+        <relationshipName>AMS_Online_Accreditations1</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>List_carriers__c</fullName>
         <description>List carrier(s)</description>
         <externalId>false</externalId>
@@ -3608,7 +3638,9 @@ $Label.ISSP_AMS_LS_Sole_Owner)</formula>
     <fields>
         <fullName>Previous_Email__c</fullName>
         <externalId>false</externalId>
-        <formula>SAAM_Case__r.Account_Concerned__r.Email__c</formula>
+        <formula>IF(ISBLANK(SAAM_Case__r.Account_Concerned__c), 
+HO_Account__r.Email__c,
+SAAM_Case__r.Account_Concerned__r.Email__c)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Current Office Email</label>
         <required>false</required>
@@ -3656,7 +3688,9 @@ $Label.ISSP_AMS_LS_Sole_Owner)</formula>
     <fields>
         <fullName>Previous_Mobile__c</fullName>
         <externalId>false</externalId>
-        <formula>SAAM_Case__r.Account_Concerned__r.Mobile__c</formula>
+        <formula>IF(ISBLANK(SAAM_Case__r.Account_Concerned__c), 
+HO_Account__r.Mobile__c,
+SAAM_Case__r.Account_Concerned__r.Mobile__c)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Current Mobile</label>
         <required>false</required>
@@ -3680,7 +3714,9 @@ $Label.ISSP_AMS_LS_Sole_Owner)</formula>
     <fields>
         <fullName>Previous_Phone__c</fullName>
         <externalId>false</externalId>
-        <formula>SAAM_Case__r.Account_Concerned__r.Phone</formula>
+        <formula>IF(ISBLANK(SAAM_Case__r.Account_Concerned__c), 
+HO_Account__r.Phone,
+SAAM_Case__r.Account_Concerned__r.Phone)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Current Office Phone</label>
         <required>false</required>
@@ -3692,7 +3728,9 @@ $Label.ISSP_AMS_LS_Sole_Owner)</formula>
     <fields>
         <fullName>Previous_Postal_code__c</fullName>
         <externalId>false</externalId>
-        <formula>SAAM_Case__r.Account_Concerned__r.BillingPostalCode</formula>
+        <formula>IF(ISBLANK(SAAM_Case__r.Account_Concerned__c), 
+HO_Account__r.BillingPostalCode,
+SAAM_Case__r.Account_Concerned__r.BillingPostalCode)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Current Postal code</label>
         <required>false</required>
@@ -3704,7 +3742,9 @@ $Label.ISSP_AMS_LS_Sole_Owner)</formula>
     <fields>
         <fullName>Previous_State_Province__c</fullName>
         <externalId>false</externalId>
-        <formula>SAAM_Case__r.Account_Concerned__r.BillingState</formula>
+        <formula>IF(ISBLANK(SAAM_Case__r.Account_Concerned__c), 
+HO_Account__r.BillingState,
+SAAM_Case__r.Account_Concerned__r.BillingState)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Current State/Province</label>
         <required>false</required>
@@ -3716,7 +3756,9 @@ $Label.ISSP_AMS_LS_Sole_Owner)</formula>
     <fields>
         <fullName>Previous_Street_Name_Number__c</fullName>
         <externalId>false</externalId>
-        <formula>SAAM_Case__r.Account_Concerned__r.BillingStreet</formula>
+        <formula>IF(ISBLANK(SAAM_Case__r.Account_Concerned__c),
+HO_Account__r.BillingStreet,
+SAAM_Case__r.Account_Concerned__r.BillingStreet)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Current Street Name &amp; Number</label>
         <required>false</required>
@@ -3728,7 +3770,9 @@ $Label.ISSP_AMS_LS_Sole_Owner)</formula>
     <fields>
         <fullName>Previous_Trade_Name__c</fullName>
         <externalId>false</externalId>
-        <formula>SAAM_Case__r.Account_Concerned__r.TradeName__c</formula>
+        <formula>IF(ISBLANK(SAAM_Case__r.Account_Concerned__c), 
+HO_Account__r.TradeName__c,
+SAAM_Case__r.Account_Concerned__r.TradeName__c)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Current Trade Name</label>
         <required>false</required>
@@ -3782,7 +3826,8 @@ $Label.ISSP_AMS_LS_Sole_Owner)</formula>
     <fields>
         <fullName>Ready_for_Accreditation__c</fullName>
         <externalId>false</externalId>
-        <formula>Account_Name__c != null  &amp;&amp;  TEXT(ISSP_AMS_Legal_Status__c) != null &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp;  TEXT(Location_Type__c) != null  &amp;&amp; Branch_Office_Country__c != null &amp;&amp;  Branch_Office_Street_name_number__c != null &amp;&amp; Branch_Office_City__c != null &amp;&amp; Branch_Office_Email__c != null &amp;&amp;  Branch_Office_Phone__c != null</formula>
+        <formula>OR (Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp;  TEXT(Location_Type__c) != null  &amp;&amp; Branch_Office_Country__c != null &amp;&amp;  Branch_Office_Street_name_number__c != null &amp;&amp; Branch_Office_City__c != null  &amp;&amp;  TEXT(ISSP_AMS_Legal_Status__c) != null  &amp;&amp; Branch_Office_Email__c != null &amp;&amp;  Branch_Office_Phone__c != null &amp;&amp; !ISPICKVAL(Location_Class__c, &quot;M&quot;),ISPICKVAL(Location_Class__c,&quot;M&quot;) &amp;&amp; 
+Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp;  TEXT(Location_Type__c) != null  &amp;&amp; Branch_Office_Country__c != null &amp;&amp;  Branch_Office_Street_name_number__c != null &amp;&amp; Branch_Office_City__c != null  &amp;&amp;  ISPICKVAL( Location_Class__c, &quot;M&quot;))</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Ready for Accreditation</label>
         <trackHistory>false</trackHistory>
@@ -5049,6 +5094,17 @@ $Label.ISSP_AMS_LS_Sole_Owner)</formula>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Is_your_firm_handling_Dangerous_Goods__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Is_your_firm_insured_to_cover__c</picklist>
             <values>
                 <fullName>No</fullName>
@@ -5747,6 +5803,17 @@ $Label.ISSP_AMS_LS_Sole_Owner)</formula>
         </picklistValues>
         <picklistValues>
             <picklist>Is_your_firm_an_approved_IATA_Passenger__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Is_your_firm_handling_Dangerous_Goods__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
@@ -6465,6 +6532,17 @@ $Label.ISSP_AMS_LS_Sole_Owner)</formula>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Is_your_firm_handling_Dangerous_Goods__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Is_your_firm_insured_to_cover__c</picklist>
             <values>
                 <fullName>No</fullName>
@@ -7163,6 +7241,17 @@ $Label.ISSP_AMS_LS_Sole_Owner)</formula>
         </picklistValues>
         <picklistValues>
             <picklist>Is_your_firm_an_approved_IATA_Passenger__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Is_your_firm_handling_Dangerous_Goods__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
@@ -7882,6 +7971,17 @@ $Label.ISSP_AMS_LS_Sole_Owner)</formula>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Is_your_firm_handling_Dangerous_Goods__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Is_your_firm_insured_to_cover__c</picklist>
             <values>
                 <fullName>No</fullName>
@@ -8581,6 +8681,17 @@ $Label.ISSP_AMS_LS_Sole_Owner)</formula>
         </picklistValues>
         <picklistValues>
             <picklist>Is_your_firm_an_approved_IATA_Passenger__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Is_your_firm_handling_Dangerous_Goods__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
@@ -9300,6 +9411,17 @@ $Label.ISSP_AMS_LS_Sole_Owner)</formula>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Is_your_firm_handling_Dangerous_Goods__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Is_your_firm_insured_to_cover__c</picklist>
             <values>
                 <fullName>No</fullName>
@@ -9999,6 +10121,17 @@ $Label.ISSP_AMS_LS_Sole_Owner)</formula>
         </picklistValues>
         <picklistValues>
             <picklist>Is_your_firm_an_approved_IATA_Passenger__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Is_your_firm_handling_Dangerous_Goods__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
@@ -11551,6 +11684,17 @@ $Label.ISSP_AMS_LS_Sole_Owner)</formula>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Is_your_firm_handling_Dangerous_Goods__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Is_your_firm_insured_to_cover__c</picklist>
             <values>
                 <fullName>No</fullName>
@@ -12249,6 +12393,17 @@ $Label.ISSP_AMS_LS_Sole_Owner)</formula>
         </picklistValues>
         <picklistValues>
             <picklist>Is_your_firm_an_approved_IATA_Passenger__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Is_your_firm_handling_Dangerous_Goods__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
@@ -14414,6 +14569,17 @@ $Label.ISSP_AMS_LS_Sole_Owner)</formula>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Is_your_firm_handling_Dangerous_Goods__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Location_Class__c</picklist>
             <values>
                 <fullName>A</fullName>
@@ -15024,6 +15190,17 @@ $Label.ISSP_AMS_LS_Sole_Owner)</formula>
         </picklistValues>
         <picklistValues>
             <picklist>Is_your_firm_an_approved_IATA_Passenger__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Is_your_firm_handling_Dangerous_Goods__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
@@ -16562,6 +16739,17 @@ $Label.ISSP_AMS_LS_Sole_Owner)</formula>
         </picklistValues>
         <picklistValues>
             <picklist>Is_your_firm_an_approved_IATA_Passenger__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Is_your_firm_handling_Dangerous_Goods__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>

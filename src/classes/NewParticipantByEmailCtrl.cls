@@ -109,10 +109,12 @@ public with sharing class NewParticipantByEmailCtrl {
     
  		if(c.Account.RecordTypeId==rtHQ)
  			return c.AccountId;
-    	if(c.Account.RecordTypeId==rtBr)
+    	else if(c.Account.RecordTypeId==rtBr)
  			return c.Account.Top_Parent__c;
-    	if(c.Account.RecordTypeId==rtAg)
+    	else if(c.Account.RecordTypeId==rtAg)
     		return c.Account.ParentId==null ? c.AccountId : c.Account.ParentId;
+        else
+            return c.AccountId;
     	
     	return null;
     }

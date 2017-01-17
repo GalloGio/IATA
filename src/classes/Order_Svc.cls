@@ -548,6 +548,7 @@ public without sharing class Order_Svc
         List<OrderItem> lstOrderItemToUpdate = new List<OrderItem>();
         Boolean isContractCreated;
         String strContractNumber;
+        Map<String, String> mapCountry_ProfitCenter = new Map<String, String>();
 
         //*** get orders to send to contract interface
         List<Order> lstOrder = Order_Sel.getOrderForContract(orderIds);
@@ -563,9 +564,15 @@ public without sharing class Order_Svc
                 {
                     setProductId.add(oi.Product__c);
                     setOrderItemId.add(oi.Id);
+                    if (oi.IEC_Override_Profit_Center__c == true && lstOrder[i1].BillTo_Location__r.ISO_Country_Code__c != null)
+                        mapCountry_ProfitCenter.put(lstOrder[i1].BillTo_Location__r.ISO_Country_Code__c, null);
                 }
         if (lstOrder.size() == 0)
             return;
+
+        if (mapCountry_ProfitCenter.size() > 0)
+            for (IATA_ISO_Country__c c : [select Profit_Center__c, ISO_Code__c from IATA_ISO_Country__c where ISO_Code__c in :mapCountry_ProfitCenter.keySet()])
+                mapCountry_ProfitCenter.put(c.ISO_Code__c, c.Profit_Center__c);
 
         //*** get product information and discount for order items sending to interface
         Map<Id, Product2> mapProductId_Info = productSelector.getProductById(setProductId);
@@ -574,7 +581,7 @@ public without sharing class Order_Svc
         //*** build list of contracts to send
         List<iataComXiSalesforceOtcWid5600Sales3.Contract_element> lstContract = new List<iataComXiSalesforceOtcWid5600Sales3.Contract_element>();
         for (Order ord : lstOrder)
-            exe.prepareSAPContracts(lstContract, mapContractIdx_OrderItemId, ord, mapProductId_Info, mapOrderItemId_Discount);
+            exe.prepareSAPContracts(lstContract, mapContractIdx_OrderItemId, ord, mapProductId_Info, mapOrderItemId_Discount, mapCountry_ProfitCenter.get(ord.BillTo_Location__r.ISO_Country_Code__c));
 //system.debug('lstContract: ' + lstContract);
         //*** send contracts to SAP if applicable
         if (lstContract.size() > 0)
@@ -636,7 +643,7 @@ public without sharing class Order_Svc
 
     //Create the SAP Contract for interface
     void prepareSAPContracts(List<iataComXiSalesforceOtcWid5600Sales3.Contract_element> lstContract, Map<Integer, List<Id>> mapContractIdx_OrderItemId
-                           , Order ord, Map<Id, Product2> mapProductId_Info, Map<Id, List<Order_Item_Charge__c>> mapOrderItemId_Discount)
+                           , Order ord, Map<Id, Product2> mapProductId_Info, Map<Id, List<Order_Item_Charge__c>> mapOrderItemId_Discount, String strRegionalProfitCenter)
     {
         iataComXiSalesforceOtcWid5600Sales3.Contract_element contract = null;
         iataComXiSalesforceOtcWid5600Sales3.Header_element contractHeader;
@@ -677,8 +684,8 @@ public without sharing class Order_Svc
             contractHeader.PODate         = ord.EffectiveDate;
             contractHeader.Name           = ord.BillToContact_Name__c;
             contractHeader.CustomerPO     = ord.PoNumber;
-            contractHeader.ContractStart  = ord.EffectiveDate;
-            contractHeader.ContractEnd    = ordItem.Effective_End_Date__c;
+            contractHeader.ContractStart  = (ordItem.IEC_Contract_Start_Date__c != null && ordItem.IEC_Contract_End_Date__c != null ? ordItem.IEC_Contract_Start_Date__c : ord.EffectiveDate);
+            contractHeader.ContractEnd    = (ordItem.IEC_Contract_Start_Date__c != null && ordItem.IEC_Contract_End_Date__c != null ? ordItem.IEC_Contract_End_Date__c : ordItem.Effective_End_Date__c);
             contractHeader.DocCurr        = ord.CurrencyIsoCode;
             contractHeader.PayMethod      = getSAPPaymentType(ord.Payment_Type__c);
             contractHeader.PayTerms       = ord.Account.Payment_Term__c;
@@ -716,31 +723,48 @@ public without sharing class Order_Svc
             contractItem = new iataComXiSalesforceOtcWid5600Sales3.Item_element();
             contract.Item.add(contractItem);
             if (ordItem.SAP_Product_Number__c != null && ordItem.SAP_Product_Number__c.isNumeric())
-                contractItem.Material = '0'.repeat(18 - ordItem.SAP_Product_Number__c.length()) + ordItem.SAP_Product_Number__c;
+                contractItem.Material  = '0'.repeat(18 - ordItem.SAP_Product_Number__c.length()) + ordItem.SAP_Product_Number__c;
             else
-                contractItem.Material = ordItem.SAP_Product_Number__c;
+                contractItem.Material  = ordItem.SAP_Product_Number__c;
             contractItem.MatDesc       = product.Name;
-            contractItem.PrftCtr       = product.IEC_SAP_ProfitCenter__c;
-            contractItem.Quantity      = String.valueOf(ordItem.Quantity);
-            contractItem.UnitPrice     = String.valueOf(ordItem.UnitPrice);
+            contractItem.PrftCtr       = ((ordItem.IEC_Override_Profit_Center__c == true && strRegionalProfitCenter != null) ? strRegionalProfitCenter : product.IEC_SAP_ProfitCenter__c);
+            if (ordItem.Setup_Fee__c != null && ordItem.Setup_Fee__c != 0)
+            {
+                contractItem.Quantity  = '1';
+                contractItem.UnitPrice = String.valueOf(ordItem.SubTotal__c);
+            }
+            else
+            {
+                contractItem.Quantity  = String.valueOf(ordItem.Quantity);
+                contractItem.UnitPrice = String.valueOf(ordItem.UnitPrice);
+            }
             contractItem.UnitPriceCurr = ord.CurrencyIsoCode;
-            contractItem.DateFrom      = ord.EffectiveDate;
-            contractItem.DateTo        = ordItem.Effective_End_Date__c;
+            contractItem.DateFrom      = (ordItem.IEC_Contract_Start_Date__c != null && ordItem.IEC_Contract_End_Date__c != null ? ordItem.IEC_Contract_Start_Date__c : ord.EffectiveDate);
+            contractItem.DateTo        = (ordItem.IEC_Contract_Start_Date__c != null && ordItem.IEC_Contract_End_Date__c != null ? ordItem.IEC_Contract_End_Date__c : ordItem.Effective_End_Date__c);
 
+            contractItem.Discounts = new List<iataComXiSalesforceOtcWid5600Sales3.Discounts_element>();
             if (mapOrderItemId_Discount.containsKey(ordItem.Id))
             {
-                contractItem.Discounts = new List<iataComXiSalesforceOtcWid5600Sales3.Discounts_element>();
+                //*** for orders created from portal
                 for (Order_Item_Charge__c discount : mapOrderItemId_Discount.get(ordItem.Id))
                 {
                     itemDiscount = new iataComXiSalesforceOtcWid5600Sales3.Discounts_element();
-                    itemDiscount.DiscountType = discount.Discount_Type__c + 'discount_' + ((discount.Discount_Amount__c != null) ? 'dollars' : 'percentage');
-                    itemDiscount.DiscountValue = (discount.Discount_Amount__c != null) ? (discount.Discount_Amount__c / ordItem.Quantity) : discount.Discount_Percentage__c;
+                    itemDiscount.DiscountType = discount.Discount_Type__c + 'Discount_' + ((discount.Discount_Amount__c != null) ? 'dollars' : 'percentage');
+                    itemDiscount.DiscountValue = (discount.Discount_Amount__c != null) ? (Math.abs(discount.Discount_Amount__c) / ordItem.Quantity) : discount.Discount_Percentage__c;
                     if (itemDiscount.DiscountValue != null && itemDiscount.DiscountValue > 0)
                         contractItem.Discounts.add(itemDiscount);
                 }
-                if (contractItem.Discounts.size() == 0)
-                    contractItem.Discounts = null;
             }
+            else if (ordItem.Discount__c != null && ordItem.Discount__c != 0)
+            {
+                //*** for orders created from Zuora invoices
+                itemDiscount = new iataComXiSalesforceOtcWid5600Sales3.Discounts_element();
+                itemDiscount.DiscountType = 'Discount_dollars';
+                itemDiscount.DiscountValue = Math.abs(ordItem.Discount__c) / ((ordItem.Setup_Fee__c != null && ordItem.Setup_Fee__c != 0) ? 1 : ordItem.Quantity);
+                contractItem.Discounts.add(itemDiscount);
+            }
+            if (contractItem.Discounts.size() == 0)
+                contractItem.Discounts = null;
         } //*** end of FOR
     } //*** end of "prepareSAPContracts"
 
@@ -2479,27 +2503,40 @@ public without sharing class Order_Svc
         Zuora.zObject rpcd = new Zuora.zObject('RatePlanChargeData');
         rpcd.setValue('RatePlanCharge', rpc);
         ratePlanCharge.add(rpcd);
- 
+
+        //add the setup fee if applicable
+        if (orderItem.Zuora_Setup_Fee_Charge_Id__c != null)
+        {
+            rpc = new Zuora.zObject('RatePlanCharge');
+            rpc.setValue('ProductRatePlanChargeId', orderItem.Zuora_Setup_Fee_Charge_Id__c);
+            rpc.setValue('Price', orderItem.Setup_Fee__c);
+            rpcd = new Zuora.zObject('RatePlanChargeData');
+            rpcd.setValue('RatePlanCharge', rpc);
+            ratePlanCharge.add(rpcd);
+        }
+
         //Set to zero the orther charges
         list<zqu__ProductRatePlanCharge__c> setValuesToZero = ProductRatePlanCharge_Sel.getChargesToSetToZero(orderItem.Zuora_Rate_Plan_Id__c,orderItem.Zuora_Rate_Plan_Charge_Id__c);
-        for(zqu__ProductRatePlanCharge__c prpcZ : setValuesToZero){
-            
-            Zuora.zObject rpcz = new Zuora.zObject('RatePlanCharge');
-            rpcz.setValue('ProductRatePlanChargeId', prpcz.zqu__ZuoraId__c);
-            rpcz.setValue('Quantity', 0.00);
-            
-            if(prpcZ.zqu__Model__c != null && prpcZ.zqu__Model__c.contains(ZuoraUtil.ZCHARGE_MODEL_DISCOUNT_PERCENTAGE)){
-                rpcz.setValue('DiscountPercentage', 0.00);
-            }else if(prpcZ.zqu__Model__c != null && prpcZ.zqu__Model__c.contains(ZuoraUtil.ZCHARGE_MODEL_DISCOUNT_FIXED_AMOUNT)){
-                rpcz.setValue('DiscountAmount', 0.00);
-            }else{
-                rpcz.setValue('Price', 0.00);
+        for(zqu__ProductRatePlanCharge__c prpcZ : setValuesToZero)
+            if (prpcZ.zqu__Model__c != null && (prpcZ.zqu__Model__c.contains(ZuoraUtil.ZCHARGE_MODEL_DISCOUNT_PERCENTAGE) ||
+                                                prpcZ.zqu__Model__c.contains(ZuoraUtil.ZCHARGE_MODEL_DISCOUNT_FIXED_AMOUNT)))
+            {
+                Zuora.zObject rpcz = new Zuora.zObject('RatePlanCharge');
+                rpcz.setValue('ProductRatePlanChargeId', prpcz.zqu__ZuoraId__c);
+                rpcz.setValue('Quantity', 0.00);
+                
+                if(prpcZ.zqu__Model__c != null && prpcZ.zqu__Model__c.contains(ZuoraUtil.ZCHARGE_MODEL_DISCOUNT_PERCENTAGE)){
+                    rpcz.setValue('DiscountPercentage', 0.00);
+                }else if(prpcZ.zqu__Model__c != null && prpcZ.zqu__Model__c.contains(ZuoraUtil.ZCHARGE_MODEL_DISCOUNT_FIXED_AMOUNT)){
+                    rpcz.setValue('DiscountAmount', 0.00);
+                }else{
+                    rpcz.setValue('Price', 0.00);
+                }
+                
+                Zuora.zObject rpcdz = new Zuora.zObject('RatePlanChargeData');
+                rpcdz.setValue('RatePlanCharge', rpcz);
+                ratePlanCharge.add(rpcdz);
             }
-            
-            Zuora.zObject rpcdz = new Zuora.zObject('RatePlanChargeData');
-            rpcdz.setValue('RatePlanCharge', rpcz);
-            ratePlanCharge.add(rpcdz);
-        }
         
         Zuora.zObject rp = new Zuora.zObject('RatePlan');
         rp.setValue('ProductRatePlanId', orderItem.Zuora_Rate_Plan_Id__c);
@@ -3064,7 +3101,7 @@ public without sharing class Order_Svc
             exe.setDiscountFromPlan(oi, price.standardPrice, 'Discount', lstZDiscountCharge, null, false);
             
             //-- Setup Fee : search first in customer price then in standard
-            if (!donotChargeFlatFee)
+            if (!donotChargeFlatFee && oi.UnitPrice == null)
             {
                 exe.setFlatFeeFromPlan(oi, price.standardPrice, null);
                 exe.setFlatFeeFromPlan(oi, price.customerPrice, customerType);
@@ -3177,7 +3214,15 @@ public without sharing class Order_Svc
             }
             
             if (item.UnitPrice != null)
+            {
+                if (!String.isBlank(price.setupFeeChargeId) && price.setupFee != null && price.setupFee > 0)
+                {
+                    item.Setup_Fee__c = price.setupFee;
+                    item.Zuora_Setup_Fee_Plan_Id__c = price.setupFeePlanId;
+                    item.Zuora_Setup_Fee_Charge_Id__c = price.setupFeeChargeId;
+                }
                 break;
+            }
         }
     } //*** end of "setUnitPriceFromPlan"
     
@@ -3328,8 +3373,8 @@ public without sharing class Order_Svc
             if (UnitPrice == null) UnitPrice = exe.getUnitPriceFromPlan(price.standardPrice, quantity, null, false);
             
             //*** try to get unit price from flat fee
-            if (UnitPrice == null) UnitPrice = exe.getUnitPriceFromFlatFee(price.customerPrice);
-            if (UnitPrice == null) UnitPrice = exe.getUnitPriceFromFlatFee(price.standardPrice);
+            if (UnitPrice == null) UnitPrice = exe.getUnitPriceFromFlatFee(price.customerPrice, customerType, true);
+            if (UnitPrice == null) UnitPrice = exe.getUnitPriceFromFlatFee(price.standardPrice, null, false);
         }
         return UnitPrice;
     } 
@@ -3360,7 +3405,7 @@ public without sharing class Order_Svc
         if (price != null)
         {
             UnitPrice = srv.getUnitPriceFromPlan(price.standardPrice, quantity, null, false); 
-            if (UnitPrice == null) UnitPrice = srv.getUnitPriceFromFlatFee(price.standardPrice);   //*** try to get unit price from flat fee
+            if (UnitPrice == null) UnitPrice = srv.getUnitPriceFromFlatFee(price.standardPrice, null, false);   //*** try to get unit price from flat fee
         }
         return UnitPrice;
         //return (price != null)? srv.getUnitPriceFromPlan(price.standardPrice, quantity, null, false) : null;
@@ -3374,7 +3419,7 @@ public without sharing class Order_Svc
         if (price != null)
         {
             UnitPrice = srv.getUnitPriceFromPlan(price.customerPrice, quantity, customerType, true); 
-            if (UnitPrice == null) UnitPrice = srv.getUnitPriceFromFlatFee(price.customerPrice);   //*** try to get unit price from flat fee
+            if (UnitPrice == null) UnitPrice = srv.getUnitPriceFromFlatFee(price.customerPrice, customerType, true);   //*** try to get unit price from flat fee
         }
         return UnitPrice;
         //return (price != null)? srv.getUnitPriceFromPlan(price.customerPrice, quantity,customerType, true): null; 
@@ -3426,7 +3471,7 @@ public without sharing class Order_Svc
         Created by Thai 2016-03-29
             Get unit price from flat fee plan
     ****************************************************************************************************/
-    Decimal getUnitPriceFromFlatFee(List<PriceDetail_DTO> lstPrice)
+    Decimal getUnitPriceFromFlatFee(List<PriceDetail_DTO> lstPrice, String strDiscountName, Boolean shouldCheckDiscountName)
     {
         //*** safety check
         if (lstPrice == null || lstPrice.size() == 0)
@@ -3434,8 +3479,9 @@ public without sharing class Order_Svc
         
         for (PriceDetail_DTO price : lstPrice)
         {
-            if (price.setupFee != null)
-                return price.setupFee;
+            if (!shouldCheckDiscountName || (shouldCheckDiscountName && price.discountName != null && strDiscountName != null && price.discountName.equalsIgnoreCase(strDiscountName)))
+                if (price.setupFee != null)
+                    return price.setupFee;
         }
 
         //*** no unit price found

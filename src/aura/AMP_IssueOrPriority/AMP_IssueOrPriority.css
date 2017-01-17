@@ -4,3 +4,9 @@
 .THIS .fillFullWidth {
   width: 100%;
 }
+.THIS .required {
+    border-left: 0.3em solid red !important;
+}
+.THIS .slds-popover {
+    width: auto !important;
+}

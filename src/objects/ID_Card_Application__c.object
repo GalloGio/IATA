@@ -1209,27 +1209,6 @@ Completed: Process is complete</inlineHelpText>
     </fields>
     <label>ID Card Application</label>
     <listViews>
-        <fullName>All</fullName>
-        <columns>NAME</columns>
-        <columns>Start_Date_Agency_Month__c</columns>
-        <columns>Start_Date_Agency_Year__c</columns>
-        <columns>Start_Date_Industry__c</columns>
-        <columns>Applicable_Fee__c</columns>
-        <columns>Approving_Manager_s_Email__c</columns>
-        <columns>Displayed_Name__c</columns>
-        <columns>IATA_Code__c</columns>
-        <columns>Type_of_application__c</columns>
-        <columns>CREATED_DATE</columns>
-        <columns>UIR__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>VER_Number__c</field>
-            <operation>equals</operation>
-        </filters>
-        <label>All</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
         <fullName>Completed_Paid_ID_Card_Applications</fullName>
         <booleanFilter>1 OR 2 OR 3</booleanFilter>
         <columns>NAME</columns>
@@ -1296,7 +1275,7 @@ Completed: Process is complete</inlineHelpText>
         <filters>
             <field>VER_Number__c</field>
             <operation>equals</operation>
-            <value>5036044374</value>
+            <value>5990038761</value>
         </filters>
         <label>For specific VER</label>
         <language>en_US</language>
@@ -1328,6 +1307,52 @@ Completed: Process is complete</inlineHelpText>
         <language>en_US</language>
     </listViews>
     <listViews>
+        <fullName>Incomplete_Unpaid_ID_Card_Applications</fullName>
+        <booleanFilter>1</booleanFilter>
+        <columns>NAME</columns>
+        <columns>Application_Status__c</columns>
+        <columns>First_Name__c</columns>
+        <columns>Last_Name__c</columns>
+        <columns>Email_admin__c</columns>
+        <columns>CREATED_DATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>VER_Number__c</field>
+            <operation>equals</operation>
+            <value>5990038761</value>
+        </filters>
+        <label>Incomplete/Unpaid ID Card Applications</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>IDCardManager</group>
+            <group>IDCard_ReadOnly</group>
+            <group>IDCard_Standard</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Incomplete_Unpaid_ID_Card_Applications1</fullName>
+        <booleanFilter>1</booleanFilter>
+        <columns>NAME</columns>
+        <columns>Application_Status__c</columns>
+        <columns>First_Name__c</columns>
+        <columns>Last_Name__c</columns>
+        <columns>Email_admin__c</columns>
+        <columns>CREATED_DATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>VER_Number__c</field>
+            <operation>equals</operation>
+            <value>5990037587</value>
+        </filters>
+        <label>Incomplete/Unpaid ID Card Applications</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>IDCardManager</group>
+            <group>IDCard_ReadOnly</group>
+            <group>IDCard_Standard</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
         <fullName>Uncomplete_IDCard_Application</fullName>
         <booleanFilter>1</booleanFilter>
         <columns>NAME</columns>
@@ -1340,7 +1365,7 @@ Completed: Process is complete</inlineHelpText>
         <filters>
             <field>VER_Number__c</field>
             <operation>equals</operation>
-            <value>5990029464</value>
+            <value>5990038761</value>
         </filters>
         <label>Incomplete/Unpaid ID Card Applications</label>
         <language>en_US</language>
@@ -2497,14 +2522,14 @@ if (records.length &gt; 0) {
 			}
 			else 
 			{			
-				conf = confirm(&quot;You are redirecting to Email Sending Page. Do you want to send email to the agent ?&quot;);
+				conf = confirm(&quot;Please contact the applicant for information that you require&quot;);
 			}
 		}
 		if(conf == true){
 			
 			var caseId = sforce.apex.execute(&quot;IDCardUtil&quot;,&quot;setPendingAdditionalInfo&quot;, {applicationId:&quot;{!ID_Card_Application__c.Id}&quot;});
 			var contactId = &quot;&quot;;
-
+                        parent.location.href = &quot;/&quot;+caseId; 
 			if(caseId == &quot;&quot;) 
 			{ 
 				alert(&quot;Error!&quot;); 
@@ -2514,10 +2539,11 @@ if (records.length &gt; 0) {
 				var cid = caseId.substring(0,15);
 				
 				if (records[0].ContactId != null)				
-					contactId = (records[0].ContactId).substring(0,15);	
-					
-				parent.location.href = &quot;/_ui/core/email/author/EmailAuthor?retURL=%2F&quot;+cid+&quot;&amp;p3_lkid=&quot; + cid + &quot;&amp;rtype=003&amp;p2_lkid=&quot; + contactId; 
+					contactId = (records[0].ContactId).substring(0,15);
+                 			
+				
 			}
+                     
 		}
 	}
 }
@@ -2637,6 +2663,83 @@ alert(err);
 }</url>
     </webLinks>
     <webLinks>
+        <fullName>To_Be_Approved</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>To Be Approved</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/24.0/connection.js&quot;)} 
+{!REQUIRESCRIPT(&quot;/soap/ajax/24.0/apex.js&quot;)} 
+
+sforce.connection.sessionId = &quot;{!$Api.Session_ID}&quot;;
+
+var IDCardAppID = &apos;{!ID_Card_Application__c.Id}&apos;; 
+var caseNumber = sforce.apex.execute(&quot;IDCardUtil&quot;,&quot;getIDCardApplicationCase&quot;, {IDCardApplicationID:IDCardAppID}); 
+
+var query = &apos;Select c.ContactId, c.ID_Card_Status__c, c.OwnerId From Case c where CaseNumber = \&apos;&apos;+caseNumber+&apos;\&apos;&apos;; 
+var queryresult = sforce.connection.query(query);
+var records = queryresult.getArray(&apos;records&apos;);
+var record = records[0];	
+var currentUser = &apos;{!User.Id}&apos;;
+var valid = true;
+
+if (records.length &gt; 0) {	
+
+if(valid == true &amp;&amp; record.ID_Card_Status__c == &apos;Pending Manager Approval&apos;)
+{
+alert(&quot;The status of this Application/Case is currently submitted for Manager Approval&quot;);
+valid = false;
+}
+// If Current user is not the owner of the case
+if (valid == true &amp;&amp; !((record.OwnerId).indexOf(currentUser) != -1)) 
+{
+alert(&quot;Please, you have to accept the case before.&quot;); 
+valid = false;	
+}	
+if(valid == true)
+{
+var conf;	
+if(record.ID_Card_Status__c == &apos;Approved&apos;)
+{	
+alert(&quot;You can not use this button when the case is already Approved. To send an email to the Contact please navigate back to the related case and send an email from there. Thanks.&quot;);
+conf = false;	
+}
+else
+{	
+if(record.ID_Card_Status__c == &apos;Rejected&apos;)
+{	
+conf = confirm(&quot;The status of this Application/Case is currently Rejected and Closed.\nContinuing with this will result in opening the Case again.&quot;);	
+}
+else 
+{	
+conf = confirm(&quot;This ID Card will be &apos;To Be Approved&apos;&quot;);
+}
+}
+if(conf == true){
+
+var caseId = sforce.apex.execute(&quot;IDCardUtil&quot;,&quot;setTobeapproved&quot;, {applicationId:&quot;{!ID_Card_Application__c.Id}&quot;});
+var contactId = &quot;&quot;;
+
+
+if(caseId == &quot;&quot;) 
+{ 
+alert(&quot;Error!&quot;); 
+} 
+else 
+{	var caseId = caseId+&quot;&quot;;
+var cid = caseId.substring(0,15);
+ document.location.reload(true)
+}
+}
+}
+}
+else {
+alert(&quot;No Case is available for this ID Card Application&quot;);
+}</url>
+    </webLinks>
+    <webLinks>
         <fullName>Upload_IDCard_Application_Picture</fullName>
         <availability>online</availability>
         <displayType>link</displayType>
@@ -2660,16 +2763,17 @@ function guid() {
 }
 
 
-var fileName= &apos;{!ID_Card_Application__c.UIR__c}&apos;;
+var fileName; //#= &apos;{!ID_Card_Application__c.UIR__c}&apos;;
 var currentPic = &apos;{!ID_Card_Application__c.Photo__c}&apos;;
-if(fileName == null || fileName ==&apos;&apos;)
-{
+//#if(fileName == null || fileName ==&apos;&apos;)
+//#{
 	
 	if (currentPic != null &amp;&amp; currentPic != &apos;&apos;)
 		fileName = currentPic;
 	else	
 		fileName = guid();
-}
+//#}
+
 //Rename photo field	
 if (currentPic == null || currentPic == &apos;&apos;)
 {
@@ -2679,8 +2783,9 @@ if (currentPic == null || currentPic == &apos;&apos;)
 	sforce.connection.update([idcardApp]); 
 }
 
-var url = &apos;{!$Label.IDCard_CroppingTool}Crop.aspx?filename=&apos;+fileName+&apos;&amp;sid={!$Api.Session_ID}&amp;lang={!ID_Card_Application__c.Selected_Preferred_Language__c}&apos;;
-var win = window.open(url,&apos;&apos;,&apos;width=935,height=614&apos;);
+//var url = &apos;{!$Label.IDCard_CroppingTool}Crop.aspx?filename=&apos;+fileName+&apos;&amp;sid={!$Api.Session_ID}&amp;lang={!ID_Card_Application__c.Selected_Preferred_Language__c}&apos;;
+var url = &apos;/apex/IDCard_ImageUpload?filename=&apos;+fileName+&apos;&amp;sid={!$Api.Session_ID}&amp;lang={!ID_Card_Application__c.Selected_Preferred_Language__c}&apos;;
+var win = window.open(url,&apos;&apos;,&apos;width=935,height=650&apos;);
 
 
 //refresh page when window is closed

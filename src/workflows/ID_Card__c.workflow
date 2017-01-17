@@ -9,6 +9,29 @@
         <operation>Formula</operation>
         <protected>false</protected>
     </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Missing_Information</fullName>
+        <description>Clear Missing Information field</description>
+        <field>Missing_Information__c</field>
+        <name>Missing Information</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Null</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <rules>
+        <fullName>Clear Missing Information</fullName>
+        <actions>
+            <name>Missing_Information</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>ID_Card__c.Card_Status__c</field>
+            <operation>equals</operation>
+            <value>Printed/Delivered</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
     <rules>
         <fullName>ID Card Cancellation date</fullName>
         <actions>

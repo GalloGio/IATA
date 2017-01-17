@@ -3,7 +3,6 @@
     <customButtons>Zuora__Sync_Data_from_ZBilling</customButtons>
     <customButtons>Start_Oscar_Wizard</customButtons>
     <excludeButtons>DataDotComAccountInsights</excludeButtons>
-    <excludeButtons>DataDotComClean</excludeButtons>
     <excludeButtons>DataDotComCompanyHierarchy</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
@@ -39,6 +38,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Company_Type__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>CNS_Agency__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -187,7 +190,7 @@
                 <field>Abbreviated_name__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>Location_Category__c</field>
             </layoutItems>
         </layoutColumns>
@@ -333,6 +336,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Comments_Reason_for_creation__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Source_System__c</field>
             </layoutItems>
         </layoutColumns>
@@ -459,11 +466,13 @@
         <fields>OSCAR__c</fields>
         <fields>Reason_Code__c</fields>
         <fields>Reason_Description__c</fields>
+        <fields>Created_Date_To_Show__c</fields>
         <fields>CREATEDBY_USER</fields>
         <fields>Source__c</fields>
-        <fields>Updated_AIMS__c</fields>
         <fields>AIMS_Updated_by__c</fields>
         <relatedList>Agency_Applied_Change_code__c.Account__c</relatedList>
+        <sortField>Created_Date_To_Show__c</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>

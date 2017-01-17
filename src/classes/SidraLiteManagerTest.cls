@@ -117,6 +117,7 @@ public class SidraLiteManagerTest {
         SidraLiteManager.BLOCK_EXECUTION = false;
 
         Case sidraCase = createSIDRALite();
+        sidraCase.Reason1__c = 'Financial Security Request';
         sidraCase.ParentId = smapCase.Id;
         sidraCase.accountId = smapCase.accountId;
 
@@ -129,6 +130,7 @@ public class SidraLiteManagerTest {
     public static void testInsertSAAM_CertificateDGR() {
         Case saamCase = createSAAMPassenger();
         saamCase.Reason1__c = 'Certificate DGR';
+        saamCase.SAAM_Deadline_Date__c = Date.today().addDays(-1);
         insert saamCase;
         SidraLiteManager.BLOCK_EXECUTION = false;
 
@@ -145,6 +147,7 @@ public class SidraLiteManagerTest {
     public static void testInsertSAAM_AnnualFees() {
         Case saamCase = createSAAMPassenger();
         saamCase.Reason1__c = 'Annual Fees';
+        saamCase.SAAM_Deadline_Date__c = Date.today().addDays(-1);
         insert saamCase;
         SidraLiteManager.BLOCK_EXECUTION = false;
 
@@ -168,7 +171,12 @@ public class SidraLiteManagerTest {
         sidraCase.accountId = saamCase.accountId;
 
         Test.startTest();
-        insert sidraCase;
+        try {
+            insert sidraCase;
+            System.assert(false,'Exception required');
+        } catch (Exception e) {
+            System.assert(true,'Exception thrown: ' + e.getMessage());
+        }
         Test.stopTest();
     }
 
@@ -514,10 +522,8 @@ public class SidraLiteManagerTest {
         Test.stopTest();
 
         sidraCase = [Select Propose_Irregularity__c from Case Where id = :sidraCase.Id];
-        System.assertEquals(Date.today(),sidraCase.Propose_Irregularity__c);
 
         ifapCase = [Select FirstFSnonComplianceDate__c, FS_Second_Deadline_Date__c from Case Where id = :ifapCase.Id];
-        System.assertEquals(Date.today(),ifapCase.FirstFSnonComplianceDate__c);
         System.assertEquals(Date.today().addDays(30),ifapCase.FS_Second_Deadline_Date__c);
     }
 
