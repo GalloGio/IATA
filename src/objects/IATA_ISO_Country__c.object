@@ -51,7 +51,7 @@
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
-    <enableHistory>false</enableHistory>
+    <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
@@ -64,6 +64,7 @@
         <label>AIMS Area ID</label>
         <length>1</length>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -74,6 +75,7 @@
         <label>AIMS Country Name</label>
         <length>60</length>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -85,6 +87,7 @@
         <label>AIMS Region</label>
         <length>4</length>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>true</unique>
@@ -99,6 +102,7 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
         <label>AMS Default State</label>
         <length>10</length>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -111,6 +115,7 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
         <precision>18</precision>
         <required>false</required>
         <scale>0</scale>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Number</type>
         <unique>false</unique>
@@ -120,6 +125,7 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>AMS Pilot Country</label>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -132,6 +138,7 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
         <relationshipLabel>IATA ISO Countries (CASS Settlement System)</relationshipLabel>
         <relationshipName>CASS_COUNTRIES</relationshipName>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -144,6 +151,7 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
         <relationshipLabel>IATA ISO Countries</relationshipLabel>
         <relationshipName>IATA_ISO_Countries</relationshipName>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -155,6 +163,7 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
         <precision>18</precision>
         <required>false</required>
         <scale>3</scale>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Number</type>
         <unique>false</unique>
@@ -167,6 +176,7 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
         <label>Acli Country</label>
         <length>255</length>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -177,6 +187,7 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
         <label>BSP Billing</label>
         <length>255</length>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -197,6 +208,7 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
             <sorted>false</sorted>
         </picklist>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -216,6 +228,7 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
             <sorted>false</sorted>
         </picklist>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -827,6 +840,7 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
             <sorted>false</sorted>
         </picklist>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -836,6 +850,7 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
         <externalId>false</externalId>
         <inlineHelpText>Users will be asked to self-register their Agency for the selected country on STEP A of the Online accreditation process if this country does not allow Branches Abroad.</inlineHelpText>
         <label>Branches abroad not allowed</label>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -845,6 +860,7 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
         <label>CASS Name</label>
         <length>255</length>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -865,6 +881,7 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
             <sorted>false</sorted>
         </picklist>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -884,6 +901,7 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
             <sorted>false</sorted>
         </picklist>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -903,6 +921,7 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
             <sorted>false</sorted>
         </picklist>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -913,6 +932,7 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
         <externalId>false</externalId>
         <inlineHelpText>This flag is used to mark the CNS countries</inlineHelpText>
         <label>CNS country</label>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -932,6 +952,7 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
             <sorted>false</sorted>
         </picklist>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -941,6 +962,7 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
         <externalId>false</externalId>
         <inlineHelpText>Enable Cargo Branch online accreditation applications for this country.</inlineHelpText>
         <label>Cargo Branch Country</label>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -950,6 +972,7 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
         <externalId>false</externalId>
         <inlineHelpText>Enable Cargo HO online accreditation applications for this country.</inlineHelpText>
         <label>Cargo HO Country</label>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -1609,6 +1632,7 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
             <sorted>true</sorted>
         </picklist>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -1620,6 +1644,7 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
         <referenceTo>User</referenceTo>
         <relationshipName>IATA_ISO_Countries</relationshipName>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -1629,6 +1654,7 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
         <description>if true, account needs to explicit opt-in/out</description>
         <externalId>false</externalId>
         <label>Country under EU Agent Consent</label>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -1638,6 +1664,7 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
         <externalId>false</externalId>
         <inlineHelpText>If enabled then option to apply for CASS Associate, Import &amp; Courier accreditation is hidden on STEP A of online accreditation process.</inlineHelpText>
         <label>Disable non-IATA Cargo Agents</label>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -1648,6 +1675,7 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
         <externalId>false</externalId>
         <inlineHelpText>Due diligence step mandatory?</inlineHelpText>
         <label>Due diligence mandatory</label>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -1656,6 +1684,7 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>EACP Country</label>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -1664,6 +1693,7 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>E-Bulletin enabled</label>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -1672,6 +1702,7 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>EU Country</label>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -1681,6 +1712,7 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
         <externalId>false</externalId>
         <inlineHelpText>Enable change code generation and account update when portal users make minor changes to their Agency account information - Phone, FAX, Trade Name etc. (For OSCAR Enabled countries)</inlineHelpText>
         <label>Enable Minor Changes from Portal</label>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -1690,6 +1722,7 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
         <externalId>false</externalId>
         <inlineHelpText>Allow accredited agents in this country to apply online for a Notice of Change (Change of Bank details, Location, Legal Name or Ownership / Legal Status)</inlineHelpText>
         <label>Enable Notice of Change</label>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -1700,6 +1733,7 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
         <externalId>false</externalId>
         <inlineHelpText>Used to enable a country to use risk change code, generated from SIDRA or SIDRA Lite</inlineHelpText>
         <label>Enable Risk Change Codes</label>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -1709,6 +1743,7 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
         <externalId>false</externalId>
         <inlineHelpText>Checking this box will hide this field for online (portal) forms where the Tax number is not required for the country concerned.</inlineHelpText>
         <label>Hide Tax Number / VAT field</label>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -1718,6 +1753,7 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
         <label>IATA COUNTRY EN</label>
         <length>255</length>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -1728,6 +1764,7 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
         <label>IATA Contry KR</label>
         <length>255</length>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -1738,6 +1775,7 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
         <label>IATA Country FR</label>
         <length>255</length>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -1748,6 +1786,7 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
         <label>IATA Country IT</label>
         <length>255</length>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -1758,6 +1797,7 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
         <label>IATA Country JP</label>
         <length>255</length>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -1768,6 +1808,7 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
         <label>IATA Country PT</label>
         <length>255</length>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -1778,6 +1819,7 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
         <label>IATA Country SP</label>
         <length>255</length>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -1788,6 +1830,7 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
         <label>IATA Country ZH</label>
         <length>255</length>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -1824,6 +1867,7 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
             <sorted>false</sorted>
         </picklist>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -1833,6 +1877,7 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
         <description>IEC - true means zip/postal code is required for an address</description>
         <externalId>false</externalId>
         <label>Zip/Postal Code required</label>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -1843,6 +1888,7 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
         <precision>3</precision>
         <required>false</required>
         <scale>0</scale>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Number</type>
         <unique>true</unique>
@@ -1856,6 +1902,7 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
         <label>ISO Code</label>
         <length>2</length>
         <required>true</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>true</unique>
@@ -1866,6 +1913,7 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
         <label>ISS Office Location</label>
         <length>80</length>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -1876,6 +1924,7 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
         <label>International dialing code ISD</label>
         <length>10</length>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -1886,6 +1935,7 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
         <description>IEC - Indicate if country is non-compliant with the IEC products displayed on the portal</description>
         <externalId>false</externalId>
         <label>Is Non Compliant</label>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -1895,6 +1945,7 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
         <externalId>false</externalId>
         <inlineHelpText>Agency details (Legal Name, Physical &amp; Correspondence Address) need to be captured in the local language for Agents applying online for accreditation and notice of changes.</inlineHelpText>
         <label>Local language Agency details required</label>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -1905,6 +1956,7 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
         <externalId>false</externalId>
         <inlineHelpText>AMS SFDC to MDM SAP Integration - when checked the agencies of the country will be integrated with MDM</inlineHelpText>
         <label>MDM Integration</label>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -1915,6 +1967,7 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
         <inlineHelpText>Enabled: Online accreditation &amp; change applications create OSCAR Communication case, linked to OSCAR on submitting to IATA.
 Disabled: SAAM case created, no link to OSCAR.</inlineHelpText>
         <label>OSCAR enabled</label>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -1934,6 +1987,7 @@ Disabled: SAAM case created, no link to OSCAR.</inlineHelpText>
             <sorted>false</sorted>
         </picklist>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -1944,6 +1998,7 @@ Disabled: SAAM case created, no link to OSCAR.</inlineHelpText>
         <externalId>false</externalId>
         <inlineHelpText>If a pilot country (ISO country), you can activate the country here.</inlineHelpText>
         <label>Pilot Country</label>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -1953,6 +2008,7 @@ Disabled: SAAM case created, no link to OSCAR.</inlineHelpText>
         <externalId>false</externalId>
         <inlineHelpText>Certain countries are not allowed to change their Trade Name as a minor change. Enabling this option prevents it from being editable from Company Information page on the portal</inlineHelpText>
         <label>Prevent Trade Name change from Portal</label>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -1962,6 +2018,7 @@ Disabled: SAAM case created, no link to OSCAR.</inlineHelpText>
         <label>Profit Center</label>
         <length>60</length>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -1994,6 +2051,7 @@ Disabled: SAAM case created, no link to OSCAR.</inlineHelpText>
             <sorted>false</sorted>
         </picklist>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -2003,6 +2061,7 @@ Disabled: SAAM case created, no link to OSCAR.</inlineHelpText>
         <externalId>false</externalId>
         <inlineHelpText>For OSCAR enabled countries accepting Cargo HO and Branch online accreditation applications, enabling this option means that CASS Associate, Import &amp; Courier applications will continue to create SAAM cases.</inlineHelpText>
         <label>SAAM enable non-IATA Cargo Agents</label>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -2012,6 +2071,7 @@ Disabled: SAAM case created, no link to OSCAR.</inlineHelpText>
         <label>SAP Sales Org</label>
         <length>64</length>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -2042,6 +2102,7 @@ Disabled: SAAM case created, no link to OSCAR.</inlineHelpText>
             <sorted>false</sorted>
         </picklist>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -2050,6 +2111,7 @@ Disabled: SAAM case created, no link to OSCAR.</inlineHelpText>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Sanctioned Country</label>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -2089,6 +2151,7 @@ Disabled: SAAM case created, no link to OSCAR.</inlineHelpText>
             <sorted>false</sorted>
         </picklist>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -2099,6 +2162,7 @@ Disabled: SAAM case created, no link to OSCAR.</inlineHelpText>
         <label>Tax 1 Label</label>
         <length>20</length>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -2110,6 +2174,7 @@ Disabled: SAAM case created, no link to OSCAR.</inlineHelpText>
         <label>Tax 2 Label</label>
         <length>20</length>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -2119,6 +2184,7 @@ Disabled: SAAM case created, no link to OSCAR.</inlineHelpText>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Tax ID Mandatory?</label>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -2129,6 +2195,7 @@ Disabled: SAAM case created, no link to OSCAR.</inlineHelpText>
         <label>Tax Number label</label>
         <length>80</length>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -2140,6 +2207,7 @@ Disabled: SAAM case created, no link to OSCAR.</inlineHelpText>
         <label>Tax Number Format</label>
         <length>50</length>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -2150,6 +2218,7 @@ Disabled: SAAM case created, no link to OSCAR.</inlineHelpText>
         <inlineHelpText>This will display as additional help text on web based forms requiring customer input of their tax numbers</inlineHelpText>
         <label>Tax Number Help Text</label>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>TextArea</type>
     </fields>
@@ -2159,6 +2228,7 @@ Disabled: SAAM case created, no link to OSCAR.</inlineHelpText>
         <externalId>false</externalId>
         <inlineHelpText>Enable Travel Branch online accreditation applications for this country.</inlineHelpText>
         <label>Travel Branch Country</label>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -2168,6 +2238,7 @@ Disabled: SAAM case created, no link to OSCAR.</inlineHelpText>
         <externalId>false</externalId>
         <inlineHelpText>Enable Travel HO online accreditation applications for this country.</inlineHelpText>
         <label>Travel HO Country</label>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -2176,6 +2247,7 @@ Disabled: SAAM case created, no link to OSCAR.</inlineHelpText>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>VAT Validation Required?</label>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -2186,6 +2258,7 @@ Disabled: SAAM case created, no link to OSCAR.</inlineHelpText>
         <inlineHelpText>Disabled: Original bank details document with signatures need to be sent back to IATA (Regional Hub Address is displayed at STEPs C &amp; E of online form).
 Enabled: Sufficient for Agents to simply upload scanned copy to online application.</inlineHelpText>
         <label>Original bank details not required</label>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -2327,6 +2400,7 @@ Enabled: Sufficient for Agents to simply upload scanned copy to online applicati
     </listViews>
     <nameField>
         <label>ISO Country Name</label>
+        <trackHistory>true</trackHistory>
         <type>Text</type>
     </nameField>
     <pluralLabel>IATA ISO Countries</pluralLabel>

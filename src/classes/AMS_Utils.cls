@@ -178,6 +178,7 @@ public without sharing class AMS_Utils {
 
     public static final Set<String> LocationClassIFAPAllowed = new Set<String>{'P','C','R'};
     public static final Set<String> LocationClassCARGO = new Set<String>{'C','I','Q','R'};
+    public static final Set<String> LocationClassDGR = new Set<String>{'C','R'};
     public static final Set<String> LocationClassPASSENGER = new Set<String>{'P','T','M','X'};
     public static final Set<String> LocationTypeAllHOTypes = new Set<String>{'EP','AO','SP','AA','HO'};
 
@@ -1812,7 +1813,8 @@ public static String fetchTypeOfCustomer (String locationType , String category)
     return categoryCustomerMap.get(category);
 
 }
-
+    
+    /*
     public static final Date knownSunday = date.newInstance(2012, 7, 1);
     
     private static Map<String, Set<Integer>> weekendDaysPerBusinessHours{
@@ -1903,7 +1905,7 @@ public static String fetchTypeOfCustomer (String locationType , String category)
         System.debug(loggingLevel.Debug, '____ [cls AMS_Utils - AddBusinessDays] finalDate - ' + finalDate);
         return finalDate;
     } 
-
+    */
     public static Date lastDayOfMonth(Date dateField) {
         return dateField.addMonths(1).toStartOfMonth().addDays(-1);
     }
