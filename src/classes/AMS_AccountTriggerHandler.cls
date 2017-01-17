@@ -109,7 +109,7 @@ public class AMS_AccountTriggerHandler {
         //Operations assignment update:
         //we want to set all operation to a dedicated Operation based on their Countries
         List<Account> operationHelpercandidate = new List<Account>();
-        List<Account> agencies = new List<Account>();
+        //List<Account> agencies = new List<Account>();
         /*
             //cannot be working on creation because need to have a primary address linked
         */
@@ -117,10 +117,13 @@ public class AMS_AccountTriggerHandler {
         for(Account ag:accs){
             if(ag.Sector__c == 'Travel Agent' || ag.Sector__c == 'Cargo Agent')
             {
+                // DNG - This is not used anymore since that agencies object is not used ...
+                /*
                 if(verifyFieldChanges(ag, oldMap.get(ag.Id)))    
                 {
                     agencies.add(ag);
                 }
+                */
                 //consider agency with iata code with NEW primary Address  OR agencies with Address with new iata code
                 if((ag.IATA_ISO_Country__c!= oldMap.get(ag.Id).IATA_ISO_Country__c && ag.IATACode__c!=null) || (ag.IATA_ISO_Country__c!=null && ag.IATACode__c!=null && oldMap.get(ag.Id).IATACode__c != ag.IATACode__c)){
                     system.debug('[AMS_AgencyTrigger] updated Primary Address for Agency '+ag.Id);
