@@ -82,7 +82,7 @@
                                         <h4 class="blueback">
                     {!viewItem.objectLabel}
                  </h4>
-                                        <table id="{!viewItem.objectName}" class="result-table table">
+                                        <table id="{!viewItem.objectName}" class="table">
                                             <thead>
                                                 <tr>
                                                     <th>
@@ -127,8 +127,8 @@
                         </apex:form>
                     </div>
                 </div>
+                <c:ISSP_CustomFooter />
             </div>
-            <c:ISSP_CustomFooter />
         </body>
     </html>
 </apex:page>

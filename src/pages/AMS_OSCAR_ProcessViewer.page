@@ -226,7 +226,7 @@ h1{
 }
 
 .overlay p, ul, li {
-    padding: 8px;
+    padding: 0 0 8px 0;
     text-decoration: none;
     font-size: 22px;
     color: #818181;
@@ -239,7 +239,6 @@ h1{
     color: #818181;
     text-align: left;
     display: block; /* Display block instead of inline */
-    line-height: 30%;
 }
 
 /* Start by setting display:none to make this hidden.
