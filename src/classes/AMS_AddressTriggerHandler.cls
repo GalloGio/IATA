@@ -79,6 +79,9 @@ public with sharing class AMS_AddressTriggerHandler {
 
 		for(AMS_Address__C addr: addressListOfAccount){
 
+			if(addr.Address_Type__c == null)// no need to check it.
+				continue;
+
 			String[] types = addr.Address_Type__c.split(';');
 
 			for(String typeAdd: types){
@@ -91,8 +94,9 @@ public with sharing class AMS_AddressTriggerHandler {
 						addr.addError('The type ' + typeAdd + ' in the Address to insert/update is duplicated in the Account Addresses');
 
 				}else{
-
-					allTypesOfAddress.add(typeAdd);
+					// as we have other specific validation for primary addressses , we will skipp this type for validation.
+					if(typeAdd != 'Primary')
+						allTypesOfAddress.add(typeAdd);
 				}
 			}
 		}
