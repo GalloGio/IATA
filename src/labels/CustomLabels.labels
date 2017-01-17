@@ -17823,7 +17823,14 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>LiveAgentButtonLanguage</shortDescription>
-        <value>Start a Chat</value>
+        <value>Chat with us!</value>
+    </labels>
+    <labels>
+        <fullName>LiveAgentCheckingAvailableAgents</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LiveAgentCheckingAvailableAgents</shortDescription>
+        <value>Chat Support - checking for available agents:</value>
     </labels>
     <labels>
         <fullName>LiveAgentCustomSettingNotFound</fullName>
@@ -17840,11 +17847,19 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <value>Please notice that you can save the transcript of this chat session via the “Save chat” button in the Top of the screen</value>
     </labels>
     <labels>
+        <fullName>LiveAgentNEW</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LiveAgentNEW</shortDescription>
+        <value>NEW!&amp;nbsp
+&lt;!--&lt;span&gt;&lt;/span&gt;--&gt;</value>
+    </labels>
+    <labels>
         <fullName>LiveAgentOfflineButton</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>LiveAgentOfflineButton</shortDescription>
-        <value>offline</value>
+        <value>Sorry - No agents available</value>
     </labels>
     <labels>
         <fullName>LiveAgentPlaceHolder</fullName>
