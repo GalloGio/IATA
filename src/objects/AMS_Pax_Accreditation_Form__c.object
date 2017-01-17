@@ -5094,6 +5094,17 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Is_your_firm_handling_Dangerous_Goods__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Is_your_firm_insured_to_cover__c</picklist>
             <values>
                 <fullName>No</fullName>
@@ -5792,6 +5803,17 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         </picklistValues>
         <picklistValues>
             <picklist>Is_your_firm_an_approved_IATA_Passenger__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Is_your_firm_handling_Dangerous_Goods__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
@@ -6510,6 +6532,17 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Is_your_firm_handling_Dangerous_Goods__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Is_your_firm_insured_to_cover__c</picklist>
             <values>
                 <fullName>No</fullName>
@@ -7208,6 +7241,17 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         </picklistValues>
         <picklistValues>
             <picklist>Is_your_firm_an_approved_IATA_Passenger__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Is_your_firm_handling_Dangerous_Goods__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
@@ -9367,6 +9411,17 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Is_your_firm_handling_Dangerous_Goods__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Is_your_firm_insured_to_cover__c</picklist>
             <values>
                 <fullName>No</fullName>
@@ -10066,6 +10121,17 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         </picklistValues>
         <picklistValues>
             <picklist>Is_your_firm_an_approved_IATA_Passenger__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Is_your_firm_handling_Dangerous_Goods__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
@@ -11618,6 +11684,17 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Is_your_firm_handling_Dangerous_Goods__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Is_your_firm_insured_to_cover__c</picklist>
             <values>
                 <fullName>No</fullName>
@@ -12316,6 +12393,17 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         </picklistValues>
         <picklistValues>
             <picklist>Is_your_firm_an_approved_IATA_Passenger__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Is_your_firm_handling_Dangerous_Goods__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
@@ -14481,6 +14569,17 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Is_your_firm_handling_Dangerous_Goods__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Location_Class__c</picklist>
             <values>
                 <fullName>A</fullName>
@@ -15091,6 +15190,17 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         </picklistValues>
         <picklistValues>
             <picklist>Is_your_firm_an_approved_IATA_Passenger__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Is_your_firm_handling_Dangerous_Goods__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
@@ -16629,6 +16739,17 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         </picklistValues>
         <picklistValues>
             <picklist>Is_your_firm_an_approved_IATA_Passenger__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Is_your_firm_handling_Dangerous_Goods__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
