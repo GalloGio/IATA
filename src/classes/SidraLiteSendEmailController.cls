@@ -7,6 +7,7 @@ public with sharing class SidraLiteSendEmailController {
     public String selectedType {get;set;}
     public EmailTemplate emailTemplate {get;set;}
     public MailmergeTemplate mergeTemplate {get;set;}
+    public APXTConga4__Conga_Template__c congaTemplate {get;set;}
 
     public String apiSessionId {get;set;}
     public String apiServerURL {get;set;}
@@ -59,8 +60,16 @@ public with sharing class SidraLiteSendEmailController {
             this.selectedCustomize = 'true';
         }
         try {
-            String templateId = SidraLiteUtil.getMergeTemplate(this.cse, this.selectedType);
-            this.mergeTemplate = [Select Id, Name from MailmergeTemplate where id = :templateId];
+            Id templateId = SidraLiteUtil.getMergeTemplate(this.cse, this.selectedType);
+            if (templateId.getSObjectType().getDescribe().getName() == 'APXTConga4__Conga_Template__c') {
+                this.mergeTemplate = null;
+                this.congaTemplate = [Select Id, Name from APXTConga4__Conga_Template__c where id = :templateId];
+            }
+            if (templateId.getSObjectType().getDescribe().getName() == 'MailmergeTemplate') {
+                this.mergeTemplate = [Select Id, Name from MailmergeTemplate where id = :templateId];
+                this.congaTemplate = null;
+            }
+
         } catch (Exception e) {
             //ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR, e.getMessage()));
             this.selectedCustomize = 'true';
@@ -170,8 +179,14 @@ public with sharing class SidraLiteSendEmailController {
             // cutomize template version
             return CongaManager.goToSendEmailConga(this.apiSessionId, this.apiServerURL, this.cse.Id, selectedCase.Id, this.cse.ContactId, listadd[0].id, listQueries);
         } else {
+            Id attachmentTemplateId = null;
+            if (this.mergeTemplate!=null) {
+                attachmentTemplateId = this.mergeTemplate.id;
+            } else if (this.congaTemplate!=null) {
+                attachmentTemplateId = this.congaTemplate.id;
+            }
             // automated version with given templates
-            return CongaManager.sendEmailURL(this.apiSessionId, this.apiServerURL, this.cse.Id, selectedCase.Id, this.cse.ContactId, this.mergeTemplate.Id, this.emailTemplate.Id, listadd[0].id, listQueries);
+            return CongaManager.sendEmailURL(this.apiSessionId, this.apiServerURL, this.cse.Id, selectedCase.Id, this.cse.ContactId, attachmentTemplateId, this.emailTemplate.Id, listadd[0].id, listQueries);
         }
     }
 
