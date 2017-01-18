@@ -259,7 +259,7 @@ global class AMS_OSCAR_Webservice {
 
             ID sidraLiteRecType = Schema.Case.sObjectType.getDescribe().getRecordTypeInfosByName().get('SIDRA Lite').getRecordTypeId();
 
-            List<AMS_OSCAR__c> oscar = [select Name, Account__c, Account__r.Name, Account__r.IATA_ISO_Country__r.Region__c, Account__r.IATA_ISO_Country__r.Name from AMS_OSCAR__c where Id =: oscarId];
+            List<AMS_OSCAR__c> oscar = [select Name, Account__c, Account__r.Name, Account__r.IATA_ISO_Country__r.Region__c, Account__r.IATA_ISO_Country__r.Name, BusinessHours__c from AMS_OSCAR__c where Id =: oscarId];
             if(oscar!=null && oscar.size()>0){
 
                 Case oscarCommCase = [SELECT Id, AccountId, Account.Type, ContactId, Region__c, Reason1__c, BSPCountry__c, Account.Accumulated_Irregularities__c from Case where OSCAR__c = :oscar[0].Id AND ( ParentId = null or Parent.RecordType.Name != 'OSCAR Communication' ) limit 1];
@@ -284,11 +284,8 @@ global class AMS_OSCAR_Webservice {
                 sidraCase.Reason_for_Default__c = 'Disapproval of Change';
                 sidraCase.Total_Irregularities__c = String.ValueOf(oscarCommCase.account.Accumulated_Irregularities__c);
 
-                Date lastDayOfNextMonth = AMS_Utils.lastDayOfMonth(Date.today().addMonths(1));
-                if (AMS_Utils.IsWeekendDay(lastDayOfNextMonth, 'Late NOC - '+oscarCommCase.Region__c)) {
-                    lastDayOfNextMonth = AMS_Utils.AddBusinessDays(lastDayOfNextMonth, 1, 'Late NOC - '+oscarCommCase.Region__c);
-                }
-                sidraCase.Termination_date_manual_entry__c = lastDayOfNextMonth;
+                DateTime nextMonthEnd = DateTime.newInstance(AMS_Utils.lastDayOfMonth(System.today().addMonths(1)), DateTime.now().time());
+                sidraCase.Termination_date_manual_entry__c = BusinessHours.nextStartDate(oscar[0].BusinessHours__c, nextMonthEnd).date();
 
                 if ( oscarCommCase.account.Type=='IATA Passenger Sales Agent' || oscarCommCase.account.Type=='Domestic Agent' ) {
                     sidraCase.BSP_CASS__c = 'BSP';
