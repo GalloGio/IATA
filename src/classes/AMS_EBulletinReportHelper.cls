@@ -727,7 +727,7 @@ public without sharing class AMS_EBulletinReportHelper {
 					recordValue = processOwners(headerVal , oldOwners , OWNERPOS);
 
 				
-				ccHistChangesPerAPIValMap.put(OWNERSTOTALAPINAME,null);				
+				ccHistChangesPerAPIValMap.put(OWNERSTOTALAPINAME.touppercase(),null);				
 
 			}
 			else if(apiNameUpper.equalsignorecase(OWNERSTOTALAPINAME))
@@ -840,11 +840,11 @@ public without sharing class AMS_EBulletinReportHelper {
 	*/
 	private String processCustomHeader(AMSEBulletinSettings__c headerVal,Agency_Applied_Change_code__c cc)
 	{
-		if(headerVal.Api_Name__c.equalsignorecase(OWNERAPINAME) && !headerVal.is_Field_New__c) 
+		if(oldOwners.isempty() && headerVal.Api_Name__c.equalsignorecase(OWNERAPINAME) && !headerVal.is_Field_New__c) 
 		{	
 			return processOwners( headerVal, customFields.ownersMap.get(cc.Account__c),OWNERPOS);
 		}
-		else if(headerVal.Api_Name__c.equalsignorecase(OWNERSTOTALAPINAME) && !headerVal.is_Field_New__c){
+		else if(oldOwners.isempty() && headerVal.Api_Name__c.equalsignorecase(OWNERSTOTALAPINAME) && !headerVal.is_Field_New__c){
 			
 			if(ownersTotalPercentage == 0) return '';
 
