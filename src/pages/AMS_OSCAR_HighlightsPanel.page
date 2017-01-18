@@ -117,6 +117,9 @@
 
 
     <apex:pageBlock rendered="{!IF(oscarID != null, true, false)}">
+        
+        <apex:pageMessages/>
+
         <apex:pageBlockButtons location="bottom">
             <apex:commandButton value="Save" action="{!saveStatus}" id="saveButton" style="display: none;"/><!--RefreshPrimaryTab('{!theOscar.Id}')-->
             <apex:commandButton value="Cancel" action="{!cancelStatus}" id="cancelButton" style="display: none;"/>

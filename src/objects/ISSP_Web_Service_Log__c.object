@@ -269,8 +269,9 @@
             <value>SIS</value>
         </filters>
         <filters>
-            <field>Error_Code__c</field>
-            <operation>notEqual</operation>
+            <field>CREATED_DATE</field>
+            <operation>equals</operation>
+            <value>LAST_N_MONTHS:4</value>
         </filters>
         <label>SIS</label>
         <language>en_US</language>
