@@ -1,5 +1,5 @@
 <img src="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=01520000000ej3A&oid=00D2000000008TF&lastMod=1246550288000"/>
-<i>{!$Label.ISSP_Email_do_not_reply}</i><p />
+<i>##ISSPLABEL##</i><p />
 
 <p>Dear ##USERNAME##, </p>
 
