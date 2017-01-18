@@ -10544,6 +10544,13 @@ Select at least one Authorized Signatory, and choose the Financial Assessment Co
         <value>Agency Information</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_eBulletin_AgencyInformation_disclaimer</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_eBulletin_AgencyInformation_disclaimer</shortDescription>
+        <value>Pilot Phase: please note that only Changes and New processes related codes are currently available everywhere. The rest of Agency Information is only available for the following Countries:…</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_eBulletin_Area1</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -12396,7 +12403,7 @@ Can you please confirm which country you&apos;ve previously received support for
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP EBulletin Description</shortDescription>
-        <value>Allows the generation of DAILY &amp; WEEKLy Reports for Agency related changes.</value>
+        <value>Allows the generation of DAILY &amp; WEEKLy Reports for Agency related changes.&lt;br/&gt;&lt;b&gt;The service is under a Pilot Phase:&lt;/b&gt; please note that Agency Information is not currently available worldwide.</value>
     </labels>
     <labels>
         <fullName>ISSP_EMADOMVAL_AddBtn</fullName>
