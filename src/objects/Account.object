@@ -2444,6 +2444,62 @@
         <unique>true</unique>
     </fields>
     <fields>
+        <fullName>AMS_PWC_INT_DEFNONPAY__c</fullName>
+        <externalId>false</externalId>
+        <label>AMS PWC INT DEFNONPAY</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AMS_PWC_INT_DEF__c</fullName>
+        <externalId>false</externalId>
+        <label>AMS PWC INT DEF</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AMS_PWC_INT_IRRS__c</fullName>
+        <externalId>false</externalId>
+        <label>AMS PWC INT IRRS</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AMS_PWC_INT_OWNSHA_CHANGE__c</fullName>
+        <externalId>false</externalId>
+        <label>AMS PWC INT OWNSHA CHANGE</label>
+        <length>1</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AMS_PWC_INT_OWNSHA_LASTDATE__c</fullName>
+        <externalId>false</externalId>
+        <label>AMS PWC INT OWNSHA LASTDATE</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>DateTime</type>
+    </fields>
+    <fields>
         <fullName>AM_Account_Manager__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <description>This link to the user playing the role of Account Manager for the account. Used to define the account managers for Airline Headquarters for the Account Management project.</description>
@@ -6020,6 +6076,25 @@ V - Co-operative</inlineHelpText>
         <type>Picklist</type>
     </fields>
     <fields>
+        <fullName>DEBUG__c</fullName>
+        <externalId>false</externalId>
+        <formula>&quot;ISO COUNTRY IS CNS = &quot;+IF(IATA_ISO_Country__r.CNS_Country__c, &quot;true&quot;, &quot;false&quot;)+
+&quot; - LOCATION CLASS IS CNS = &quot;+IF(OR(ISPICKVAL(Location_Class__c,&quot;C&quot;),ISPICKVAL(Location_Class__c,&quot;R&quot;)),&quot;true&quot;,&quot;false&quot;) +
+&quot; - FINAL RESULT = &quot;+
+IF(
+AND( 
+   IATA_ISO_Country__r.CNS_Country__c=true, 
+   OR(ISPICKVAL(Location_Class__c,&quot;C&quot;),ISPICKVAL(Location_Class__c,&quot;R&quot;))
+ )
+,&quot;true&quot;,&quot;false&quot;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>DEBUG</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>DSE__DS_Country_ISO_Code__c</fullName>
         <deprecated>false</deprecated>
         <externalId>false</externalId>
@@ -7564,12 +7639,10 @@ Controlling picklist of E&amp;F Sub-Status Account</description>
             <picklistValues>
                 <fullName>Chapter 7</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
             </picklistValues>
             <picklistValues>
                 <fullName>None</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
             </picklistValues>
             <restrictedPicklist>true</restrictedPicklist>
             <sorted>false</sorted>
@@ -33405,6 +33478,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
+                <fullName>Cash basis%2Fwith commission</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Changes processed</fullName>
                 <default>false</default>
             </values>
@@ -33413,7 +33490,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>No longer a customer</fullName>
+                <fullName>Not accreditated</fullName>
                 <default>false</default>
             </values>
             <values>
