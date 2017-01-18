@@ -249,6 +249,7 @@ public class AMS_ChangeCodesHelper {
             , Reason_Code__c = changeCode.reasonCode
             , Reason_Description__c = changeCode.reasonDesc
             , Source__c = source
+            , To_Publish_in_e_Bulletin__c = true
         );
 
         System.debug(loggingLevel.ERROR, 'Creating a new Agency Applied Change Code ('+aacNEW.Change_Code__c +') for Account ' + oscarAgency.Id + ' with flag active set to ' + aacNEW.Active__c);

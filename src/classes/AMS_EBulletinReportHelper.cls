@@ -896,7 +896,7 @@ public without sharing class AMS_EBulletinReportHelper {
 		{
 			String financialInterest = ownersList.get(integer.valueof(headerVal.name.substring(pos , pos + 1)) - 1).financialInterest;
 			
-			ownersTotalPercentage = ownersTotalPercentage + Double.valueOf(financialInterest);
+			if (financialInterest != null && financialInterest.isNumeric()) ownersTotalPercentage = ownersTotalPercentage + Double.valueOf(financialInterest);
 
 			return financialInterest;
 		}
