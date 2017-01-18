@@ -35,8 +35,9 @@ public class AMS_OscarCase_RiskMgmt {
 	private static map<string, operational_Calendar__c> mapOperationalCalendar = new map<string, operational_Calendar__c>();
     private static set<string> setIRRCC = new set<string>{'IRR', 'IRS', 'IRW'};		//Irregularities change code
     private static set<string> setTERCC = new set<string>{'TER'};		//Termination change codes: set expiry date on account
-    private static set<string> setREICC = new set<string>{'SDR', 'RCR', 'STR', 'RTR', 'RTE', 'REI'};		//Termination change codes: clear expiry date on account
+    private static set<string> setREICC = new set<string>{'SDR', 'RCR', 'STR', 'RTR', 'RTE', 'REI'};		//Reinstatement change codes: clear expiry date on account
     private static map<id, account> mapReasonAndStatus = new map<id, account>();	//map containing latest reason and status
+    private static set<string> setTidsChangeCode = new set<string>{'REI','TER'};
     
     //Main Method
 	public static void CreateRiskChangeCode(map<id, case> mapTrgOld, map<id, case> mapTrgNew){
@@ -47,7 +48,10 @@ public class AMS_OscarCase_RiskMgmt {
 		list<AMS_ChangeCodes__c> lsConf = ReadConfiguration();
 		
 		if(!lsConf.isEmpty()){
-			map<id, Account> mapAccnt = new map<id, Account>();
+			for(AMS_Process_Detail__c apd:[select id, HOId__c, Case__c, Account__c from AMS_Process_Detail__c where case__c in:mapTrgNew.keyset()])
+				mapAllHOs.put(apd.Account__c, apd.HOId__c);
+			
+			/*map<id, Account> mapAccnt = new map<id, Account>();
 			
 			//I'm getting all account IDs associated with the Cases in the trigger
 			for(ID i:mapTrgNew.keyset())
@@ -63,7 +67,7 @@ public class AMS_OscarCase_RiskMgmt {
 					mapAllHOs.put(a.id, a.ParentId);
 				else	//I'm the HO!
 					mapAllHOs.put(a.id, a.id);
-			}
+			}*/
 			
 			//Get all Agencies IDs involved. Get all items in the hierarchy
 			//for(Account a:[select id from Account where id in:mapAllHOs.values() or parentId in:mapAllHOs.values()  or parent.parentId in:mapAllHOs.values()])
@@ -72,7 +76,7 @@ public class AMS_OscarCase_RiskMgmt {
 			//For each HO, get its children
 			//DTULLO UNCOMMENT FOR CNS, COMMENT/DELETE SIMILAR LINES AFTER
 			//for(Account a:[select id, Status__c, CNS_Agency__c, PreviousStatus__c, Reason__c, Previous_Reason__c, Accumulated_Irregularities__c, ParentId, Parent.ParentId from Account where id in:mapAllHOs.values() or ParentId in:mapAllHOs.values() or parent.parentId in:mapAllHOs.values()]){
-			for(Account a:[select id, Status__c, PreviousStatus__c, Reason__c, Previous_Reason__c, Accumulated_Irregularities__c, ParentId, Parent.ParentId from Account where id in:mapAllHOs.values() or ParentId in:mapAllHOs.values() or parent.parentId in:mapAllHOs.values()]){
+			for(Account a:[select id, Status__c, PreviousStatus__c, Reason__c,Location_class__c, Previous_Reason__c, Accumulated_Irregularities__c, ParentId, Parent.ParentId from Account where id in:mapAllHOs.values() or ParentId in:mapAllHOs.values() or parent.parentId in:mapAllHOs.values()]){
 				setAllAccntsHiearchy.add(a.Id);
 				id HOID;
 				list<Account> lsAccnt = new list<Account>();
@@ -260,11 +264,13 @@ public class AMS_OscarCase_RiskMgmt {
 							id CurrAccntHOID = mapAllHOs.get(CurrAccntId);
 							for(Account HIERAccnt:mapAccntValues.get(CurrAccntHOID)){
 								if(HierAccnt.id!=CurrAccntId){
-									//DTULLO UNCOMMENT FOR CNS, COMMENT/DELETE SIMILAR LINES AFTER
-									//Agency_Applied_Change_code__c AACCHier = CreateChangeCode(mapCases, idCase, cc, HIERAccnt, HierAccnt.CNS_Agency__c);
-									Agency_Applied_Change_code__c AACCHier = CreateChangeCode(mapCases, idCase, cc, HIERAccnt);
-									if(AACCHier!=null)
-										lsAACC.add(AACCHier);
+									if(HIERAccnt.Location_Class__c != 'T' || (HIERAccnt.Location_Class__c == 'T' && setTidsChangeCode.contains(cc.Change_Code__c))){
+										//DTULLO UNCOMMENT FOR CNS, COMMENT/DELETE SIMILAR LINES AFTER
+										//Agency_Applied_Change_code__c AACCHier = CreateChangeCode(mapCases, idCase, cc, HIERAccnt, HierAccnt.CNS_Agency__c);
+										Agency_Applied_Change_code__c AACCHier = CreateChangeCode(mapCases, idCase, cc, HIERAccnt);
+										if(AACCHier!=null)
+											lsAACC.add(AACCHier);
+									}
 								}
 							}
 						}
@@ -589,13 +595,15 @@ public class AMS_OscarCase_RiskMgmt {
 		}
 		
 		if(condition.equalsIgnoreCase('GREATER THAN TODAY')){
-			if((date)NewCaseValues.get(sFieldToCheck)>system.today())
+			//if((date)NewCaseValues.get(sFieldToCheck)>system.today())
+			if(date.valueOf(NewCaseValues.get(sFieldToCheck))>system.today())
 				return true;
 			else return false;
 		}
 		
 		if(condition.equalsIgnoreCase('EQUAL TO TODAY')){
-			if((date)NewCaseValues.get(sFieldToCheck)==system.today())
+			//if((date)NewCaseValues.get(sFieldToCheck)==system.today())
+			if(date.valueOf(NewCaseValues.get(sFieldToCheck))==system.today())
 				return true;
 			else return false;
 		}
