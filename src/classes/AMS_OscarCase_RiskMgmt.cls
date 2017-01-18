@@ -48,6 +48,16 @@ public class AMS_OscarCase_RiskMgmt {
 		list<AMS_ChangeCodes__c> lsConf = ReadConfiguration();
 		
 		if(!lsConf.isEmpty()){
+			list<case> lsAPDToCreate = new list<case>();
+			for(case c:[select id, AccountId, (select id from Hierarchy_Account_Selections__r) from Case where id in:mapTrgNew.keyset()]){
+				if(c.Hierarchy_Account_Selections__r.isEmpty())
+					lsAPDToCreate.add(c);
+			}
+			
+			if(!lsAPDToCreate.isempty()){
+				AMS_CaseTriggerHandler.SelectAgencyOnSidraCase(lsAPDToCreate);
+			}
+			
 			for(AMS_Process_Detail__c apd:[select id, HOId__c, Case__c, Account__c from AMS_Process_Detail__c where case__c in:mapTrgNew.keyset()])
 				mapAllHOs.put(apd.Account__c, apd.HOId__c);
 			
