@@ -33,6 +33,15 @@
         <type>Text</type>
         <unique>false</unique>
     </fields>
+    <fields>
+        <fullName>Sectors__c</fullName>
+        <description>CSV with the Account Sectors allowed to show the chat button</description>
+        <externalId>false</externalId>
+        <label>Sectors</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
     <label>LiveAgentButtonSettings</label>
     <visibility>Public</visibility>
 </CustomObject>

@@ -119,9 +119,19 @@ public without sharing class IEC_LoginController extends IEC_PageController {
                 throw new IECApplicationException('The Username field is required.');   
             }       
             
-            list<User> users =  Comm_User_Helper.getUserListByNameOrEmail(resetPasswordEmail );
+            //list<User> users =  Comm_User_Helper.getUserListByNameOrEmail(resetPasswordEmail );
+            list<User> users =  Comm_User_Helper.getUserListByNameOrEmail2(resetPasswordEmail );
             if(users  == null || users.size() == 0 )
                  throw new IECApplicationException('No eligible user found. Please check you typed the username correctly.');
+
+                    //EM: Need to reactivate the user 
+            else if (users.size() == 1 && users[0].Portal_User_Frozen_Checkbox__c == true) {
+                Pagereference pr = Page.IEC_Home;
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_Frozen_User_Alert_Message)); 
+                IECUserManager.reactivateUser(users[0].UserName);
+                hasError = true;
+                return null;
+            }     
                  
               if (users[0].contactid == null  ) { throw new IECApplicationException('Your password could not be reseted. Please contact support. No contact Found'); }       
             
