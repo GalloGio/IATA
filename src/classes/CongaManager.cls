@@ -58,7 +58,7 @@ global class CongaManager {
         //String url = CONGA8_URL;
         String url = CONGA8_URL + '?sessionId=' + apiSessionId;
         url += '&serverUrl=' + apiServerURL;
-        url += '?id=' + caseId;
+        url += '&id=' + caseId;
         url += '&TemplateId=' + congaTemplate;
         url += '&DefaultPDF=1';
         //url +='OFN=[file name]';
