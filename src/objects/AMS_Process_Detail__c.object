@@ -90,6 +90,18 @@
         <type>Lookup</type>
     </fields>
     <fields>
+        <fullName>HOId__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(NOT(ISBLANK(Account__r.Parent.ParentId)), Account__r.Parent.ParentId,
+IF(NOT(ISBLANK(Account__r.ParentId)),Account__r.ParentId,
+Account__c))</formula>
+        <label>HOId</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>OSCAR__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
