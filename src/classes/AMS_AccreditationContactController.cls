@@ -216,8 +216,16 @@ public with sharing class AMS_AccreditationContactController {
     {
         if(aoa.SAAM_Case__r.OSCAR__r.Account__r.CNS_Agency__c && aoa.SAAM_Case__r.OSCAR__r.Account__r.Location_Class__c == 'R')
         {
-            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, 'The ownership information is not needed for CASS Associates in CNS.'));
-            return null;
+
+            for(AccreditationContactWrapper ac : acWrapper)
+            {
+                if(ac.ac.Agency_owner__c == true)
+                {
+                    ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, 'The ownership information is not needed for CASS Associates in CNS.'));
+                    return null;
+                }
+            }
+            
         }
 
         if(!calculateTotalOwnership() && !isCertificationOSCAR)
