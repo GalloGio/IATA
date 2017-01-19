@@ -34,8 +34,8 @@ public without sharing class AMS_EBulletinReportHelper {
 	public static final String CHANGECODE       = 	'1-Change Code';
 	public static final String CHANGECODEREASON = 	'2-Change Code';
 
-	public static final String OWNERS 	   		=	'25-Owner1';
-	public static final String OWNERAPINAME 	=	'Account__r.Owners';
+	public static final String OWNERS 	   	 	   =	'25-Owner1';
+	public static final String OWNERAPINAME 	   =	'Account__r.Owners';
 	public static final String OWNERSTOTALAPINAME  =	'OwnersTotal';
 
 	// position in the owner name, example: 22-Owner1 will be recovering the value 1
@@ -629,7 +629,7 @@ public without sharing class AMS_EBulletinReportHelper {
 
 		for (Integer position = 0 ; position < positionMax ; position++)
 		{
-			//Fields recovered without queryng
+			//Fields recovered without querying
 			if(customFields.headersCustomMap.containsKey(position))
 			{
 				AMSEBulletinSettings__c headerVal = customFields.headersCustomMap.get(position).eBulletinSetting;
@@ -645,10 +645,10 @@ public without sharing class AMS_EBulletinReportHelper {
 			else if(ccHistChangesPerAPIValMap.containsKey(fieldsList.get(position - customFieldsCounter))){
 				recordsList.add(getRecordFromFieldsList(cc , fieldsList.get(position - customFieldsCounter), ccHistChangesPerAPIValMap));
 			}
-			else if(cc.change_code__c != IRRCHANGECODE && irrSet.contains(fieldsList.get(position - customFieldsCounter))){
+			else if(cc.change_code__c == NEWCHANGECODE && fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(IATACODE)){
 				recordsList.add('');
 			}
-			else if(cc.change_code__c == NEWCHANGECODE && fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(IATACODE)){
+			else if(cc.change_code__c != IRRCHANGECODE && irrSet.contains(fieldsList.get(position - customFieldsCounter))){
 				recordsList.add('');
 			}
 			else {
