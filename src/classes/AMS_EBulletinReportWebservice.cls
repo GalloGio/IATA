@@ -19,7 +19,7 @@ global without sharing class AMS_EBulletinReportWebservice {
 	webservice static ID generateEBulletinReport( AMS_eBulletin_Profile__c eBulletinProfile,Datetime startDate, Datetime endDate, String period){
 
 
-		if(period.equalsIgnoreCase('Last') && eBulletinProfile.Last_Run__c != null && eBulletinProfile.Last_Run__c > startDate)
+		if(period == 'last' && eBulletinProfile.Last_Run__c != null && eBulletinProfile.Last_Run__c > startDate)
 			startDate = eBulletinProfile.Last_Run__c;
 
 
