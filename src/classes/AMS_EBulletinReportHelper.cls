@@ -28,7 +28,8 @@ public without sharing class AMS_EBulletinReportHelper {
 	public static final String LOCATIONCLASS	= 	'7-Program';
 	
 	public static final String STATUS			= 	'18-Status';
-		
+	public static final String REASON			= 	'22-Reason';
+
 	public static final String STATE  	        = 	'11-Country or State';
 	public static final String COUNTRY  	    =	'12-Country or State';
 	public static final String CHANGECODE       = 	'1-Change Code';
@@ -66,6 +67,11 @@ public without sharing class AMS_EBulletinReportHelper {
 		}
 		set;}	
 
+	public static List<String> nameFieldsList{
+		get{ 
+			if(nameFieldsList == null) nameFieldsList = new List<String>();return nameFieldsList;
+		}
+		set;}
 	//Contains the label headers for the CSV
 	//
 	public static List<String> headersList{
@@ -163,7 +169,10 @@ public without sharing class AMS_EBulletinReportHelper {
 					irrSet.add(eBulletinSettingG.eBulletinSetting.API_Name__c.touppercase());
 
 				if(!eBulletinSettingG.eBulletinSetting.Do_not_query__c) 
+				{
 					fieldsList.add(eBulletinSettingG.eBulletinSetting.API_Name__c.touppercase());
+					nameFieldsList.add(eBulletinSettingG.eBulletinSetting.Name);
+				}
 				else
 					customFields.setWrapperCustomField(position,eBulletinSettingG);					
 
@@ -648,7 +657,7 @@ public without sharing class AMS_EBulletinReportHelper {
 			else if(cc.change_code__c == NEWCHANGECODE && fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(IATACODE)){
 				recordsList.add('');
 			}
-			else if(cc.change_code__c != IRRCHANGECODE && irrSet.contains(fieldsList.get(position - customFieldsCounter))){
+			else if(cc.change_code__c != IRRCHANGECODE && irrSet.contains(fieldsList.get(position - customFieldsCounter)) && nameFieldsList.get(position - customFieldsCounter) != REASON){
 				recordsList.add('');
 			}
 			else {
