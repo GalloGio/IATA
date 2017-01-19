@@ -1170,12 +1170,12 @@ public with sharing class IECZuoraHelper {
     	Map<Id, Zuora__CustomerAccount__c> mapContactIdToBillingAccount = new Map<Id, Zuora__CustomerAccount__c>();
     	for (Zuora__CustomerAccount__c zAcc :
     		[SELECT CRMContactID__c
-+                , Contact__c
-+                , Zuora__BillToId__c
-+                , Zuora__SoldToId__c
-+                , eBroadcast_Product_Access__c
-+    			, Zuora__Zuora_Id__c
-+                , Id
+                , Contact__c
+                , Zuora__BillToId__c
+                , Zuora__SoldToId__c
+                , eBroadcast_Product_Access__c
+    			, Zuora__Zuora_Id__c
+                , Id
      		FROM Zuora__CustomerAccount__c
      		WHERE CRMContactID__c IN :setContactId]) {
 			
