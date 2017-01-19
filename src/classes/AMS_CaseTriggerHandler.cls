@@ -17,18 +17,19 @@ public class AMS_CaseTriggerHandler {
     public static void SelectAgencyOnSidraCase(list<case> Cases){
     	map<id, id> AccntFromCases = new map<id, id>();
     	
-    	for(case c:cases)
+    	for(case c:cases){
     		AccntFromCases.put(c.AccountId, c.id);
+    	}
 		
 		//get all HOId, up to 3 levels of hierarchy
     	map<id, id> mapAccntHO = new map<id, id>();
     	for(Account a:[select id, ParentId, Parent.ParentId, parent.parent.parentId from Account where id in:AccntFromCases.Keyset() order by ParentId, Parent.ParentId, parent.parent.parentId NULLS LAST]){
-    		if(a.Parent.Parent.ParentId==null && AccntFromCases.containsKey(a.Id)){
+    		if(a.Parent.Parent.ParentId==null && a.Parent.ParentId != null && AccntFromCases.containsKey(a.Id)){
     			mapAccntHO.put(a.Parent.ParentId, AccntFromCases.get(a.Id));
     			continue;
     		}
     		
-    		if(a.Parent.ParentId==null && AccntFromCases.containsKey(a.Id)){
+    		if(a.Parent.ParentId==null && a.ParentId != null && AccntFromCases.containsKey(a.Id)){
     			mapAccntHO.put(a.ParentId, AccntFromCases.get(a.Id));
     			continue;
     		}
