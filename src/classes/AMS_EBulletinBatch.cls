@@ -115,6 +115,7 @@ global class AMS_EBulletinBatch implements Database.Batchable<sObject> {
 	    String bodyHTML = emailTemplate.HtmlValue;
         String bodyText = emailTemplate.Body;
 
+        bodyHTML = bodyHTML.replace('##ISSPLABEL##',Label.ISSP_Email_do_not_reply);
         bodyHTML = bodyHTML.replace('##USERNAME##',eBprof.User__r.name);
         bodyHTML = bodyHTML.replace('##URL##',networkComponent);
 

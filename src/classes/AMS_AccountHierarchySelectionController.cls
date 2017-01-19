@@ -551,7 +551,9 @@ public class AMS_AccountHierarchySelectionController {
 				if(updateRelatedRecords()) closeTab = true;
 			} catch(Exception e) {
 				Database.rollback(sp);
-				ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, 'Couldn\'t save changes '+ e.getMessage()));
+				//DML Exceptions are sometimes displayed on the page
+				if(e.getTypeName() != 'System.DmlException' || !ApexPages.hasMessages()) ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, 'Couldn\'t save changes '+ e.getMessage()));
+				System.debug(loggingLevel.ERROR, '____ [cls AMS_AccountHierarchySelectionController - save] error - ' + e.getMessage());
 			}
 		}
 	}
