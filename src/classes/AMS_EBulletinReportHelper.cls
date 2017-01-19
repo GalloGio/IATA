@@ -52,7 +52,7 @@ public without sharing class AMS_EBulletinReportHelper {
 	public static final String IRRCHANGECODE = 'IRR';
 	public static final String NEWCHANGECODE = 'NEW';
 
-	private static Double ownersTotalPercentage = 0;
+	private static Decimal ownersTotalPercentage = 0;
 
 	public static String fieldsQuery;
 	public static String filterCCQuery = '';
@@ -133,7 +133,7 @@ public without sharing class AMS_EBulletinReportHelper {
 		
 		String typeEBulletinField = TYPEEBULLETINMAP.get(filters.typeEBulletin);
 
-		system.debug('filters.typeEBulletin: ' + filters.typeEBulletin);
+		//system.debug('filters.typeEBulletin: ' + filters.typeEBulletin);
 		getEBulletinSettings(typeEBulletinField);
 
 		/****** INI1 Alternative method to recover directly the field labels to use has columns headers ****
@@ -202,7 +202,7 @@ public without sharing class AMS_EBulletinReportHelper {
 		fieldsQuery = convertToCSV(fieldsList, ',');
 		headerCSV   = convertToCSV(headersList, csvFormat);
 
-		system.debug('headerCSV: ' + headerCSV);
+		//system.debug('headerCSV: ' + headerCSV);
 
 
 		//Filter query with values from change set AMSEBulletinCCExtration__c
@@ -243,7 +243,7 @@ public without sharing class AMS_EBulletinReportHelper {
 				}
 		}
 		
-		system.debug('ccFieldToReturn:' + ccFieldToReturn);
+		//system.debug('ccFieldToReturn:' + ccFieldToReturn);
 						
 
 		//*********************************************************************************************************************
@@ -268,7 +268,7 @@ public without sharing class AMS_EBulletinReportHelper {
 						   filter5 + 
 						   orderByFilter;
 
-		system.debug('filterCC: ' + filterCC);
+		//system.debug('filterCC: ' + filterCC);
 
 
 		List <Agency_Applied_Change_code__c> ccList = 
@@ -902,11 +902,11 @@ public without sharing class AMS_EBulletinReportHelper {
 			
 			
 			try {
-  				ownersTotalPercentage = ownersTotalPercentage + Double.valueOf(financialInterest);
+  				ownersTotalPercentage = ownersTotalPercentage + Decimal.valueOf(financialInterest);
 			}
 			catch (exception e) {
  			 	// it's not an Dounble, try something else
- 			 	system.debug('Exception: This owner financialInterest is not convertble to string.' );
+ 			 	system.debug('Exception: This owner financialInterest is not convertible to String.' );
 			}
 			
 
