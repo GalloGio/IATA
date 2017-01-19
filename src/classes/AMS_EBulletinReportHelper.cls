@@ -321,7 +321,7 @@ public without sharing class AMS_EBulletinReportHelper {
 			String apiNameToRecover = 
 					ccHist.Object_API_Name__c.replace('__c','__r.') + ccHist.Field_API_Name__c.replace('__c','__r.Name');
 			
-			if(nameApiNameMap.containsKey(COUNTRY) && nameApiNameMap.get(COUNTRY).split(',').get(0).equalsignorecase(apiNameToRecover))
+			if(nameApiNameMap.containsKey(COUNTRY) && nameApiNameMap.get(COUNTRY).split(',').get(0) == apiNameToRecover)
 			{
 				countrySetIDs.add(ccHist.Field_Lookup_Old_Value__c);
 				countrySetIDs.add(ccHist.Field_Lookup_New_Value__c);
@@ -648,7 +648,7 @@ public without sharing class AMS_EBulletinReportHelper {
 			else if(cc.change_code__c != IRRCHANGECODE && irrSet.contains(fieldsList.get(position - customFieldsCounter))){
 				recordsList.add('');
 			}
-			else if(cc.change_code__c == NEWCHANGECODE && fieldsList.get(position - customFieldsCounter).equalsignorecase(nameApiNameMap.get(IATACODE))){
+			else if(cc.change_code__c == NEWCHANGECODE && fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(IATACODE)){
 				recordsList.add('');
 			}
 			else {
@@ -656,11 +656,11 @@ public without sharing class AMS_EBulletinReportHelper {
 
 				if(strVal == null || strVal == '') strVal = '';
 				
-				else if(fieldsList.get(position - customFieldsCounter).equalsignorecase(nameApiNameMap.get(LEGALSTATUS))) strVal = AMS_Utils.transformLegalStatus(strVal);
+				else if(fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(LEGALSTATUS)) strVal = AMS_Utils.transformLegalStatus(strVal);
 				
-				else if(fieldsList.get(position - customFieldsCounter).equalsignorecase(nameApiNameMap.get(LOCATIONCLASS))) strVal = AMS_Utils.getLocationClassDescr(strVal);
+				else if(fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(LOCATIONCLASS)) strVal = AMS_Utils.getLocationClassDescr(strVal);
 				
-				else if(fieldsList.get(position - customFieldsCounter).equalsignorecase(nameApiNameMap.get(STATUS))) strVal = AMS_Utils.getIATANumericStatus(strVal) + '/' + strVal;
+				else if(fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(STATUS)) strVal = AMS_Utils.getIATANumericStatus(strVal) + '/' + strVal;
 
 				recordsList.add(strVal);
 			}
@@ -679,27 +679,26 @@ public without sharing class AMS_EBulletinReportHelper {
 		String recordValue;	
 		String apiNameUpper = (headerVal.API_Name__c).split(',').get(0).touppercase();
 		
-		//SPECIAL CONDITIONS
-		//
-		if(headerVal.Name.equals(STATE) || headerVal.Name.equals(NEWSTATE)) apiNameUpper.replace('__R.NAME','__C');
-
+		
 
 		//system.debug('headerVal.API_Name__c : ' + headerVal.API_Name__c );
 		
 		//system.debug('ccHistChangesPerAPIValMap: ' + ccHistChangesPerAPIValMap);
 
 		//system.debug(cc.change_code__c + ': ' + apiNameUpper +  ' ccHistChangesPerAPIValMap.containsKey(apiNameUpper) : ' + ccHistChangesPerAPIValMap.containsKey(apiNameUpper.split(',').get(0)));
+		
+		//SPECIAL CONDITIONS
+		//
+		if(headerVal.Name == STATE || headerVal.Name == NEWSTATE) apiNameUpper.replace('__R.NAME','__C');
 
-		if(headerVal.Name.equals(SECTION))
-		{
-			recordValue = ccRecordSection;
-		}
+		if(headerVal.Name == SECTION) recordValue = ccRecordSection;
+		
 		// for OLD vs NEW fields
 		else if(ccHistChangesPerAPIValMap.containsKey(apiNameUpper))	
 		{
 			AMS_ChangeCodesHelper.ObjectChange objVal = ccHistChangesPerAPIValMap.get(apiNameUpper);
 
-			if(headerVal.Name.equals(STATE) || headerVal.Name.equals(NEWSTATE))
+			if(headerVal.Name == STATE || headerVal.Name == NEWSTATE)
 			{	
 				List<String> countryStateList =  customFields.getAPIPairFieldValuesForCC(COUNTRY,STATE);
 		
@@ -710,11 +709,11 @@ public without sharing class AMS_EBulletinReportHelper {
 				
 			}			
 			
-			else if(apiNameUpper.equalsignorecase(OWNERAPINAME))
+			else if(apiNameUpper == OWNERAPINAME)
 			{
 				//Recover Owner Info
 				//
-				if(headerVal.Name.equals(OWNERS)) {
+				if(headerVal.Name == OWNERS) {
 
 					newOwners = decodeOwnersInfo(objVal.newValue.split('\n'));
 					oldOwners = decodeOwnersInfo(objVal.oldValue.split('\n'));
@@ -727,16 +726,16 @@ public without sharing class AMS_EBulletinReportHelper {
 					recordValue = processOwners(headerVal , oldOwners , OWNERPOS);
 
 				
-				ccHistChangesPerAPIValMap.put(OWNERSTOTALAPINAME.touppercase(),null);				
+				ccHistChangesPerAPIValMap.put(OWNERSTOTALAPINAME,null);				
 
 			}
-			else if(apiNameUpper.equalsignorecase(OWNERSTOTALAPINAME))
+			else if(apiNameUpper == OWNERSTOTALAPINAME)
 			{
 				recordValue = String.valueOf(ownersTotalPercentage);
 				ownersTotalPercentage = 0;
 			
 			}
-			else if(!headerVal.IRR_field__c || (headerVal.IRR_field__c && cc.change_code__c == IRRCHANGECODE))
+			else
 			{
 				recordValue = headerVal.is_Field_New__c ? objVal.newValue : objVal.oldValue;
 			}
@@ -840,11 +839,11 @@ public without sharing class AMS_EBulletinReportHelper {
 	*/
 	private String processCustomHeader(AMSEBulletinSettings__c headerVal,Agency_Applied_Change_code__c cc)
 	{
-		if(oldOwners.isempty() && headerVal.Api_Name__c.equalsignorecase(OWNERAPINAME) && !headerVal.is_Field_New__c) 
+		if(oldOwners.isempty() && headerVal.Api_Name__c == OWNERAPINAME && !headerVal.is_Field_New__c) 
 		{	
 			return processOwners( headerVal, customFields.ownersMap.get(cc.Account__c),OWNERPOS);
 		}
-		else if(oldOwners.isempty() && headerVal.Api_Name__c.equalsignorecase(OWNERSTOTALAPINAME) && !headerVal.is_Field_New__c){
+		else if(oldOwners.isempty() && headerVal.Api_Name__c == OWNERSTOTALAPINAME && !headerVal.is_Field_New__c){
 			
 			if(ownersTotalPercentage == 0) return '';
 
@@ -854,7 +853,7 @@ public without sharing class AMS_EBulletinReportHelper {
 
 			return	recordValue;
 		}
-		else if (headerVal.name.equals(CHANGECODE)) {
+		else if (headerVal.name == CHANGECODE) {
 
 			List<String> values =  customFields.getAPIPairFieldValuesForCC(CHANGECODE,CHANGECODEREASON);
 
@@ -863,12 +862,12 @@ public without sharing class AMS_EBulletinReportHelper {
 
 			return convertToCSV(new List<String>{ccVal,ccReasonVal}, ' - ');
 		}
-		else if (headerVal.name.equals(STATE)){
+		else if (headerVal.name == STATE){
 			List<String> values =  customFields.getAPIPairFieldValuesForCC(COUNTRY,STATE);
 			return processCountryOrState(cc,values);
 
 		}
-		else if (headerVal.name.equals(IRRPERIODSD)){
+		else if (headerVal.name == IRRPERIODSD){
 			List<String> values =  customFields.getAPIPairFieldValuesForCC(IRRPERIODSD,IRRPERIODED);
 			String startDate = cc.get(values.get(0)) == null ? '': String.valueOf(cc.get(values.get(0)));
 			String endDate   = cc.get(values.get(1)) == null ? '': String.valueOf(cc.get(values.get(1)));
@@ -876,7 +875,7 @@ public without sharing class AMS_EBulletinReportHelper {
 			return (startDate == null && endDate == null) ? '' : convertToCSV(new List<String>{ startDate, endDate}, ' : ');
 
 		}
-		else if (headerVal.name.equals(IRRREASON)){
+		else if (headerVal.name == IRRREASON){
 			String ccReasonVal =cc.get(nameApiNameMap.get(IRRREASON)) == null ? '': String.valueOf(cc.get(nameApiNameMap.get(IRRREASON)));
 
 			return ccReasonVal;
@@ -987,7 +986,7 @@ public without sharing class AMS_EBulletinReportHelper {
         private Boolean isHeaderCustomField(String customField){
 
         	for (AMS_CustomSettingsUtils.AMS_EBulletinSetting ebSetting : headersCustomMap.values()){
-        		if(ebSetting.eBulletinSetting.name.equals(customField)) return true;
+        		if(ebSetting.eBulletinSetting.name == customField) return true;
         	}
 
         	return false;
@@ -996,7 +995,7 @@ public without sharing class AMS_EBulletinReportHelper {
         private String getAPIFieldValue(String customField){
 
         	for (AMS_CustomSettingsUtils.AMS_EBulletinSetting ebSetting : headersCustomMap.values()){
-        		if(ebSetting.eBulletinSetting.name.equals(customField)) return ebSetting.eBulletinSetting.API_Name__c;
+        		if(ebSetting.eBulletinSetting.name == customField) return ebSetting.eBulletinSetting.API_Name__c;
         	}
 
         	return null;
@@ -1007,10 +1006,10 @@ public without sharing class AMS_EBulletinReportHelper {
 
         	for (AMS_CustomSettingsUtils.AMS_EBulletinSetting ebSetting : headersCustomMap.values()){
 
-        		if(ebSetting.eBulletinSetting.name.equals(value1))
+        		if(ebSetting.eBulletinSetting.name == value1)
         			 value1AN = ebSetting.eBulletinSetting.API_Name__c;
 
-        		else if(ebSetting.eBulletinSetting.name.equals(value2)) 
+        		else if(ebSetting.eBulletinSetting.name == value2) 
         			value2AN = ebSetting.eBulletinSetting.API_Name__c;
         	}
 
