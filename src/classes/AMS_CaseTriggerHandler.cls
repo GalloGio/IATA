@@ -2,6 +2,16 @@ public class AMS_CaseTriggerHandler {
     private static id SIDRALiteRTId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('SIDRA_Lite');
 	private static id SIDRARTId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('SIDRA');
     
+    private static boolean run = true;
+	public static boolean runOnce(){
+	    if(run){
+			run=false;
+			return true;
+		}else{
+			return run;
+	    }
+    }
+    
     public static void handleAfterInsert(List<Case> Cases){
         list<case> lsSidraLiteCases = new list<case>();
         
@@ -24,22 +34,23 @@ public class AMS_CaseTriggerHandler {
 		//get all HOId, up to 3 levels of hierarchy
     	map<id, id> mapAccntHO = new map<id, id>();
     	for(Account a:[select id, ParentId, Parent.ParentId, parent.parent.parentId from Account where id in:AccntFromCases.Keyset() order by ParentId, Parent.ParentId, parent.parent.parentId NULLS LAST]){
-    		if(a.Parent.Parent.ParentId==null && a.Parent.ParentId != null && AccntFromCases.containsKey(a.Id)){
-    			mapAccntHO.put(a.Parent.ParentId, AccntFromCases.get(a.Id));
+    		if(a.ParentId==null){	//HO
+    			mapAccntHO.put(a.Id, AccntFromCases.get(a.Id));
     			continue;
     		}
     		
-    		if(a.Parent.ParentId==null && a.ParentId != null && AccntFromCases.containsKey(a.Id)){
+    		if(a.ParentId!=null && a.Parent.ParentId==null){	//BR
     			mapAccntHO.put(a.ParentId, AccntFromCases.get(a.Id));
     			continue;
     		}
     		
-    		if(a.ParentId==null && AccntFromCases.containsKey(a.Id)){
-    			mapAccntHO.put(a.Id, AccntFromCases.get(a.Id));
+    		if(a.ParentId!=null && a.Parent.ParentId!=null){	//BR
+    			mapAccntHO.put(a.Parent.ParentId, AccntFromCases.get(a.Id));
     			continue;
     		}
     	}
     	
+    	system.debug('DTULLO 57 --> ' + mapAccntHO.keyset());
     	set<string> setStatusToInclude = new set<string>{'Approved','Cash basis/no commission','Cash basis/with commission','Changes processed','Listed','Under review'};
     	
     	if(!mapAccntHO.isEmpty()){
@@ -53,18 +64,19 @@ public class AMS_CaseTriggerHandler {
     					   or parentid in :mapAccntHO.keyset()
     					   or parent.parentId in:mapAccntHO.keyset())
     					   and status__c in:setStatusToInclude]){
-    			if(a.Parent.ParentId != null && mapAccntHO.containsKey(a.Parent.ParentId)){
-    				lsToInsert.add(new AMS_Process_Detail__c(Case__c = mapAccntHO.get(a.Parent.ParentId), Account__c = a.id, RecordTypeId = RTId));
-    				continue;
-    			}
-    			
-    			if(a.ParentId != null && mapAccntHO.containsKey(a.ParentId)){
-    				lsToInsert.add(new AMS_Process_Detail__c(Case__c = mapAccntHO.get(a.ParentId), Account__c = a.id, RecordTypeId = RTId));
-    				continue;
-    			}
-    			
-    			if(mapAccntHO.containsKey(a.Id)){
+    			system.debug('DTULLO 81 --> ' + a.ID + ' - ' + a.Status__c + '; ' + a.ParentId + ' - ' + a.Parent.Status__c + '; ' + a.Parent.ParentId + ' - ' + a.Parent.Parent.Status__c + '; ');
+    			if(a.ParentId==null && mapAccntHO.containsKey(a.Id)){ //HO
     				lsToInsert.add(new AMS_Process_Detail__c(Case__c = mapAccntHO.get(a.Id), Account__c = a.Id, RecordTypeId = RTId));
+    				continue;
+    			}
+    			
+    			if(a.ParentId!=null && a.Parent.ParentId==null && mapAccntHO.containsKey(a.ParentId)){ //BR
+    				lsToInsert.add(new AMS_Process_Detail__c(Case__c = mapAccntHO.get(a.ParentId), Account__c = a.Id, RecordTypeId = RTId));
+    				continue;
+    			}
+    			
+    			if(a.ParentId!=null && a.Parent.ParentId!=null && mapAccntHO.containsKey(a.Parent.ParentId)){ //SA
+    				lsToInsert.add(new AMS_Process_Detail__c(Case__c = mapAccntHO.get(a.Parent.ParentId), Account__c = a.Id, RecordTypeId = RTId));
     				continue;
     			}
 	    	}
