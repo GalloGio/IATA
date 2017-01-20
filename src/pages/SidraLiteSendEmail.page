@@ -89,15 +89,18 @@
         <apex:pageBlockSectionItem >
           <apex:outputLabel value="Merge Template"/>
           <apex:pageBlockSectionItem >
-            <apex:outputLink value="/{!mergeTemplate.Id}" rendered="{!mergeTemplate!=null}">{!mergeTemplate.Name}</apex:outputLink>
-            <apex:outputLabel value="Not found" rendered="{!mergeTemplate==null}"/>
+            <apex:pageBlockSectionItem >
+              <apex:outputLink value="/{!mergeTemplate.Id}" rendered="{!mergeTemplate!=null}">{!mergeTemplate.Name}</apex:outputLink>
+              <apex:outputLink value="/{!congaTemplate.Id}" rendered="{!congaTemplate!=null}">{!congaTemplate.Name}</apex:outputLink>
+            </apex:pageBlockSectionItem>
+            <apex:outputLabel value="Not found" rendered="{!AND(mergeTemplate==null,congaTemplate==null)}"/>
           </apex:pageBlockSectionItem>
         </apex:pageBlockSectionItem>
 
         <apex:pageBlockSectionItem >
           <apex:outputLabel value=""/>
           <apex:selectRadio title="title" value="{!selectedCustomize}" >
-              <apex:selectOption itemValue="false" itemLabel="Use Templates" itemDisabled="{!mergeTemplate==null||emailtemplate==null}"/>
+              <apex:selectOption itemValue="false" itemLabel="Use Templates" itemDisabled="{!AND(congaTemplate==null,mergeTemplate==null)||emailtemplate==null}"/>
               <apex:selectOption itemValue="true" itemLabel="Select Manually"/>
           </apex:selectRadio>
         </apex:pageBlockSectionItem>
