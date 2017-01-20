@@ -37,7 +37,8 @@ public class AMS_OscarCase_RiskMgmt {
     private static set<string> setTERCC = new set<string>{'TER'};		//Termination change codes: set expiry date on account
     private static set<string> setREICC = new set<string>{'SDR', 'RCR', 'STR', 'RTR', 'RTE', 'REI'};		//Reinstatement change codes: clear expiry date on account
     private static map<id, account> mapReasonAndStatus = new map<id, account>();	//map containing latest reason and status
-    private static set<string> setTidsChangeCode = new set<string>{'REI','TER'};
+    private static set<string> setTidsChangeCode = new set<string>{'REI','TER','RTE'};
+    
     
     //Main Method
 	public static void CreateRiskChangeCode(map<id, case> mapTrgOld, map<id, case> mapTrgNew){
@@ -45,6 +46,7 @@ public class AMS_OscarCase_RiskMgmt {
 		set<string> setFSStatus = new set<string>{'Close to Expiry Date', 'Active', 'Encashed', 'Encashment in progress'};	//Financial Security status to be included in the memo text
 		//map<id, Case> mapCasePerAccount = new map<id, case>();
 		
+		set<id> setAccntIdCase = new set<id>();
 		list<AMS_ChangeCodes__c> lsConf = ReadConfiguration();
 		
 		if(!lsConf.isEmpty()){
@@ -86,8 +88,8 @@ public class AMS_OscarCase_RiskMgmt {
 			//For each HO, get its children
 			//DTULLO UNCOMMENT FOR CNS, COMMENT/DELETE SIMILAR LINES AFTER
 			//for(Account a:[select id, Status__c, CNS_Agency__c, PreviousStatus__c, Reason__c, Previous_Reason__c, Accumulated_Irregularities__c, ParentId, Parent.ParentId from Account where id in:mapAllHOs.values() or ParentId in:mapAllHOs.values() or parent.parentId in:mapAllHOs.values()]){
-			for(Account a:[select id, Status__c, PreviousStatus__c, Reason__c,Location_class__c, Previous_Reason__c, Accumulated_Irregularities__c, ParentId, Parent.ParentId from Account where id in:mapAllHOs.values() or ParentId in:mapAllHOs.values() or parent.parentId in:mapAllHOs.values()]){
-				setAllAccntsHiearchy.add(a.Id);
+			/*for(Account a:[select id, Status__c, PreviousStatus__c, Reason__c,Location_class__c, Previous_Reason__c, Accumulated_Irregularities__c, ParentId, Parent.ParentId from Account where id in:mapAllHOs.values() or ParentId in:mapAllHOs.values() or parent.parentId in:mapAllHOs.values()]){
+				//setAllAccntsHiearchy.add(a.Id);
 				id HOID;
 				list<Account> lsAccnt = new list<Account>();
 				//First Check: Parent.ParentID. I'm a BR of a BR
@@ -108,6 +110,26 @@ public class AMS_OscarCase_RiskMgmt {
 					mapAccntValues.put(HOID, lsAccnt);
 				}
 			}
+			*/
+			
+			for(Account a:[select id, Status__c, PreviousStatus__c, Reason__c,Location_class__c, Previous_Reason__c, Accumulated_Irregularities__c, ParentId, Parent.ParentId 
+							from Account 
+							where id in:mapAllHOs.keyset()]){
+				//setAllAccntsHiearchy.add(a.Id);
+				id HOID = mapAllHOs.get(a.ID);
+				list<Account> lsAccnt = new list<Account>();
+				//First Check: Parent.ParentID. I'm a BR of a BR
+				
+				if(HOID!=null){
+					if(mapAccntValues.containsKey(HOID))
+						lsAccnt = mapAccntValues.get(HOID);
+					
+					lsAccnt.add(a);
+					mapAccntValues.put(HOID, lsAccnt);
+				}
+			}
+			
+			setAllAccntsHiearchy = mapAllHOs.keyset();
 			
 			//Get all previously generated change code from same sidra/sidra lite
 			list<Agency_Applied_Change_code__c> lsAACC = new list<Agency_applied_change_code__c>();
@@ -181,6 +203,7 @@ public class AMS_OscarCase_RiskMgmt {
 			set<string> setOperationCalendarExtID = new set<string>();
 			
 			for(Case c: mapCases.values()){
+				setAccntIdCase.add(c.AccountId);
 				string sExtId = GetOpCalendarExtId(c.External_ID__c);
 				if(sExtId!='')	setOperationCalendarExtID.add(sExtId);
 				
@@ -488,7 +511,11 @@ public class AMS_OscarCase_RiskMgmt {
 		string sCurrStatus='';
 		string sPrevStatus='';
 		
-		if(mapReasonAndStatus.get(AccountId).Agencies_Applied_Change_codes__r.isEmpty()){
+		system.debug('DTULLO --> 491: ' + AccountId);
+		system.debug('DTULLO --> 492: ' + mapReasonAndStatus.get(AccountId));
+		system.debug('DTULLO --> 493: ' + mapReasonAndStatus.keyset());
+		
+		if(mapReasonAndStatus.get(AccountId).Agencies_Applied_Change_codes__r == null || mapReasonAndStatus.get(AccountId).Agencies_Applied_Change_codes__r.isEmpty()){
 			sCurrReason = mapReasonAndStatus.get(AccountId).Reason__c;
 			sPrevReason = mapReasonAndStatus.get(AccountId).Previous_Reason__c;
 			sCurrStatus = mapReasonAndStatus.get(AccountId).Status__c;
