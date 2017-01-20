@@ -331,6 +331,15 @@
         <type>DateTime</type>
     </fields>
     <fields>
+        <fullName>DEF_Non_Payment__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>DEF Non Payment</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Date_Memo_Sent__c</fullName>
         <externalId>false</externalId>
         <label>Date Memo Sent</label>
