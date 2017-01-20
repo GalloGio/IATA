@@ -69,7 +69,7 @@ global without sharing class AMS_EBulletinReportWebservice {
 	 	
 	 	insert attachment;
 
-	 	updateEbulletinProfile(system.now(),eBulletinProfile.Id);
+	 	updateEbulletinProfile(system.now(),eBulletinProfile.Id,attachment.id);
 
 		return attachment.id;
 	//}
@@ -176,15 +176,16 @@ global without sharing class AMS_EBulletinReportWebservice {
 	}
 
   @future
-  static void updateEbulletinProfile(Datetime dateLastRun, ID ebProfileID) {
+  static void updateEbulletinProfile(Datetime dateLastRun, ID ebProfileID, ID attachmentID) {
 
 	//Set the last run time
 	AMS_eBulletin_Profile__c ebProfile = [select Last_Run__c from AMS_eBulletin_Profile__c where id = :ebProfileID ];
 
  	ebProfile.Last_Run__c = dateLastRun;
-	
+
 	update ebProfile;
 
+	delete [select id from attachment where id = :attachmentID];
   }
 
 
