@@ -53,7 +53,8 @@
                          first=url.split(domain);
                         
                          var redir = first[0] + domain + '{!urlredirect}'; 
-                         if (redir.indexOf("iec/IEC_Login")!=-1 && domain == ".org/")
+                         //if (redir.indexOf("iec/IEC_Login")!=-1 && domain == ".org/")
+                         if (redir.indexOf("IEC_Login")!=-1 && domain == ".com/")
                             redir = "IEC_Login";
                          location.href = redir;
                          },

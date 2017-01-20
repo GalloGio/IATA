@@ -77,7 +77,7 @@
         <referenceTo>User</referenceTo>
         <relationshipName>Agencies_Applied_Change_codes</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -157,7 +157,7 @@
         <externalId>false</externalId>
         <inlineHelpText>Checked if this code is Active. Agency can only have one Active code in same time.</inlineHelpText>
         <label>Active</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -391,7 +391,7 @@
             <sorted>true</sorted>
         </picklist>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -501,7 +501,7 @@
         <description>If true, irregularities points are not summed in the account. It expires 12 months after the Effective_Date__c</description>
         <externalId>false</externalId>
         <label>Irregularities_Expired</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -513,7 +513,7 @@
         <precision>5</precision>
         <required>false</required>
         <scale>2</scale>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Number</type>
         <unique>false</unique>
@@ -549,7 +549,7 @@
         <label>Irregularity Type</label>
         <length>10</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -910,7 +910,7 @@
         <description>Sent to external system</description>
         <externalId>false</externalId>
         <label>Sent to external system</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -953,7 +953,7 @@
         <externalId>false</externalId>
         <inlineHelpText>Flag for Analyst to check if the Minor Change has been carried out to AIMS</inlineHelpText>
         <label>Updated AIMS</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>

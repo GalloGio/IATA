@@ -215,7 +215,8 @@ public class EmailWrapper  implements Comparable {
             }
             // if account is IATA Financial Review, only Region has to be Europe
             Id financialReviewRt = Schema.SObjectType.Case.getRecordTypeInfosByName().get('IATA Financial Review').getRecordTypeId();
-            if (cse.RecordTypeId == financialReviewRt) {
+            Id process = Schema.SObjectType.Case.getRecordTypeInfosByName().get('Process').getRecordTypeId();
+            if (cse.RecordTypeId == financialReviewRt || cse.RecordTypeId == process) {
                 return cse.Region__c == 'Europe';
             }
         } catch (Exception e) {

@@ -293,6 +293,7 @@ public class vfIECEBC_CampaignConfirm extends vfIECEBC_Controller
         a.New_Balance__c = newEmailBalance;
         a.Related_Billing_Account__c = billingAccount.Id;
         a.Total_Count__c = -1 * Integer.valueOf(ebcCampaign.Number_of_Recipients__c);
+        a.Name = 'Campaign Send';
         
         insert a;
         
