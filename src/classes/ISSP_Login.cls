@@ -63,6 +63,7 @@ public without sharing class ISSP_Login {
                 system.debug('NO BRWOSER LANG: ' + t);
             }
         }
+		if(this.communityName == 'CNS') t = 'en_US';
         return t;
     }set;}
 
