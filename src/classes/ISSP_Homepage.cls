@@ -36,6 +36,9 @@ public with sharing class ISSP_Homepage {
 
     public string UserLanguage {get; set;}
     public boolean iataCertificatesVisible {get; set;}
+
+    //CNS
+    public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
          
     public ISSP_Homepage(){
         if(!Userinfo.getUserType().contains('Guest')){
