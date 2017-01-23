@@ -5,6 +5,8 @@ public class AMS_OSCARTriggerHandler {
 	//*************************************
 
 	class AMSException extends Exception {}
+	
+	private static ID rtAgencyInvolved = Schema.SObjectType.AMS_Process_Detail__c.getRecordTypeInfosByName().get('Agency Involved').getRecordTypeId();
 
 	//used to identify situations where the LocationType of an SA Agency should not be changed
 	public static Boolean keepSALocationTypeFlag = false;
@@ -259,7 +261,8 @@ public class AMS_OSCARTriggerHandler {
 		}
 
 		//query the the Process Detail object for all the agencies that are being bought
-		List<AMS_Process_Detail__c> allProcessDetails = new List<AMS_Process_Detail__c>([SELECT Id, Account__c, OSCAR__c, Account__r.Status__c FROM AMS_Process_Detail__c WHERE OSCAR__c IN :oscarIds]);
+		//DTULLO: Added Check on Record Type
+		List<AMS_Process_Detail__c> allProcessDetails = new List<AMS_Process_Detail__c>([SELECT Id, Account__c, OSCAR__c, Account__r.Status__c, RecordType.Developername FROM AMS_Process_Detail__c WHERE OSCAR__c IN :oscarIds and RecordType.Developername = 'Agency_Involved']);
 
 		for (AMS_Process_Detail__c pd : allProcessDetails) {
 			//TERMINATED AGENCIES IGNORED
@@ -447,8 +450,9 @@ public class AMS_OSCARTriggerHandler {
                             //and we need to keep track of it for the approval process
                             if( pds!= null && pds.size() > 0)
                                 throw new AMSException('Change of Location Type processes should not have any account selected in the Hierarchy Account Selection');
-
-                            AMS_Process_Detail__c parentAccount = new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = oscarAccountParent);
+							
+							//DTULLO: Added Record Type
+                            AMS_Process_Detail__c parentAccount = new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = oscarAccountParent,  RecordTypeId = rtAgencyInvolved);
                             insert parentAccount;
 
                         }
@@ -1527,7 +1531,8 @@ public class AMS_OSCARTriggerHandler {
 		}
 
 		//find all agencies involved
-		for (AMS_Process_Detail__c pd : [SELECT Id, Account__c, OSCAR__c FROM AMS_Process_Detail__c WHERE OSCAR__c IN :oscars AND Account__c != '']) {
+		//DTULLO: Added Record Type
+		for (AMS_Process_Detail__c pd : [SELECT Id, Account__c, OSCAR__c FROM AMS_Process_Detail__c WHERE OSCAR__c IN :oscars AND Account__c != '' and RecordType.Developername = 'Agency_Involved']) {
 
 			accountsInvolved.get(pd.OSCAR__c).add(pd.Account__c);
 		}
