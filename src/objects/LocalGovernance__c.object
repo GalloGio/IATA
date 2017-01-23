@@ -437,11 +437,6 @@
                 <controllingFieldValues>Cargo</controllingFieldValues>
             </picklistValues>
             <picklistValues>
-                <fullName>EACP JC</fullName>
-                <default>false</default>
-                <controllingFieldValues>Cargo</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
                 <fullName>ICAP</fullName>
                 <default>false</default>
                 <controllingFieldValues>Cargo</controllingFieldValues>
@@ -1128,10 +1123,6 @@ Record Type + Group Type + ISO_Country_Name</description>
                 <default>false</default>
             </values>
             <values>
-                <fullName>EACP JC</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>ICAP</fullName>
                 <default>false</default>
             </values>
@@ -1420,10 +1411,6 @@ Record Type + Group Type + ISO_Country_Name</description>
             </values>
             <values>
                 <fullName>CGA</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>EACP JC</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1720,10 +1707,6 @@ Record Type + Group Type + ISO_Country_Name</description>
             </values>
             <values>
                 <fullName>CGA</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>EACP JC</fullName>
                 <default>false</default>
             </values>
             <values>
