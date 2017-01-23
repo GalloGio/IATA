@@ -746,7 +746,7 @@
                                             |&nbsp;
                                             <a href="#" onClick="addEmptyCompanyRow();return false;">Add a Company<span class="slds-assistive-text">entity type</span></a>
                                         </apex:outputPanel>
-                                        <apex:outputPanel rendered="{!AND(OR(isNewProcess,isCertificationOSCAR),isCargoAgency)}">
+                                        <apex:outputPanel rendered="{!AND(OR(isNewProcess,isCertificationOSCAR),OR(isCargoAgency,isCASSAssociate))}">
                                             |&nbsp;
                                             <a href="#" onClick="addEmptyTrainedStaffRow();return false;">Add Trained Staff<span class="slds-assistive-text">entity type</span></a>
                                         </apex:outputPanel>
