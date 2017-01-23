@@ -1272,7 +1272,7 @@ public without sharing class ISSP_Registration {
     public List<SelectOption> getCargoTravelOptions(){
         List<SelectOption> agencyType = new List<SelectOption>();
         agencyType.add(new SelectOption('Cargo',Label.ISSP_Cargo));
-        agencyType.add(new SelectOption('Travel',Label.ISSP_Travel));
+        if(communityName != 'CNS') agencyType.add(new SelectOption('Travel',Label.ISSP_Travel));
         return agencyType;
     }
 
