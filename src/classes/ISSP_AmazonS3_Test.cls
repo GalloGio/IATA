@@ -92,6 +92,8 @@ private class ISSP_AmazonS3_Test {
             key.Name = UserInfo.getOrganizationId().substring(0,15) == '00D2000000008TF'  ? cred.Prod_Configuration__c : cred.Dev_Configuration__c ;
             key.Secret__c = 'test';
             insert key;
+
+            ISSP_AmazonS3_Ctrl ctrlId = new ISSP_AmazonS3_Ctrl();
             
             ApexPages.currentPage().getParameters().put('caseId',testCase.Id);
             
@@ -109,24 +111,64 @@ private class ISSP_AmazonS3_Test {
             //ISSP_AmazonS3_Ctrl.createUploadFile(c.Id, 'test.pdf', 'pdf', 'test', '10');
             String testExpiringLink = ISSP_AmazonS3_Ctrl.getExpiringLinkIfap('test.pdf');
 
+            Amazon_Cred__c Amazon_Cred =  new Amazon_Cred__c(name = 'IFAP', Prod_Configuration__c = 'adevconf' , Dev_Configuration__c = 'adevconf');
+            Amazon_Cred__c GenericAttach =  new Amazon_Cred__c(name = 'GenericAttach', Prod_Configuration__c = 'adevconf' , Dev_Configuration__c = 'adevconf');
+            Amazon_Cred__c recycleBin =  new Amazon_Cred__c(name = 'RecycleBin', Prod_Configuration__c = 'adevconf' , Dev_Configuration__c = 'adevconf');
+            List<Amazon_Cred__c> creds = new List<Amazon_Cred__c>();
+            creds.add(Amazon_Cred);
+            creds.add(GenericAttach);
+            creds.add(recycleBin);
+            insert creds;
+
+
+            list<AWSKey__c> AWS_KEYs = new list<AWSKey__c>{
+                new AWSKey__c(
+                    name = 'adevconf',
+                    Key__c = 'asd', 
+                    Secret__c = 'asd',  
+                    IAS_configuration_name__c = 'asdas', 
+                    IAS_Access_Point__c = 'asd',
+                    Bucket__c = 'asd',
+                    AWS_ENDPOINT_URL__c = 'asd')
+            };
+            insert AWS_KEYs;
+
+            AmazonFile__c aFile = new AmazonFile__c(
+            Full_Name_Unique__c = 'test name',
+            Case__c = testCase.Id,
+            isPublic__c = true,
+            File_Identifier__c = 'Test uploadedFileIdentifier',
+            Review_Status__c = 'Rejected'
+            );
+            insert aFile;
+
             ctrl.createAmazonFileObject();
 
             String caseStatus = ctrl.getCaseStatus();
-            
+
+            ISSP_AmazonS3_Ctrl.AmazonFileAMS afAMS = new ISSP_AmazonS3_Ctrl.AmazonFileAMS(aFile);
+
+            String test = afAMS.getName();
+            test = afAMS.getFullName();
+            test = afAMS.getStatus();
+
             ctrl.currentFileName = 'test';
+
+            String testUnique = ctrl.getUniqueFileNames();
+
+            map<String, List<ISSP_AmazonS3_Ctrl.AmazonFileAMS>> mapTest = ctrl.refreshAmazonFileMap();
+
             ctrl.deleteThisFile();
 
             ctrl.refreshAfterDelete();
             
             ISSP_AmazonS3_Ctrl ctrl2 = new ISSP_AmazonS3_Ctrl(new Apexpages.Standardcontroller(testCase));
 
-
             ISSP_AMS_Accreditation amsCtrl = new ISSP_AMS_Accreditation();
             amsCtrl.newCase = testCase;
 
             ISSP_AmazonS3_Ctrl ctrl3 = new ISSP_AmazonS3_Ctrl(amsCtrl);
 
-            Apexpages.currentPage().getParameters().put('Caseid', testCase.Id);
             ISSP_AddAttachment attCtrl = new ISSP_AddAttachment();
 
             ISSP_AmazonS3_Ctrl ctrl4 = new ISSP_AmazonS3_Ctrl(attCtrl);
@@ -135,6 +177,5 @@ private class ISSP_AmazonS3_Test {
 
         Test.stopTest();
 
-        //ISSP_AmazonS3_Ctrl ctrl3 = new ISSP_AmazonS3_Ctrl(new ISSP_AMS_Accreditation());
     }
 }
