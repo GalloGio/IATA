@@ -1493,6 +1493,10 @@ Treasury Dashboard Set-up Fee (800964) : 3500</inlineHelpText>
                 <default>false</default>
                 <controllingFieldValues>MITA annual fee - 701909</controllingFieldValues>
             </picklistValues>
+            <picklistValues>
+                <fullName>7400.00</fullName>
+                <default>false</default>
+            </picklistValues>
             <sorted>false</sorted>
         </picklist>
         <required>false</required>
