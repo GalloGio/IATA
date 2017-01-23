@@ -1600,6 +1600,11 @@ public class AMS_OSCARTriggerHandler {
 			}
 
 			if (oldOSCAR.STEP32__c != AMS_Utils.PASSED && updatedOSCAR.STEP32__c == AMS_Utils.PASSED) {
+				if(
+					(updatedOSCAR.Process__c == AMS_UTils.VOLRELINQUISH && updatedOscar.STEP6__c != AMS_Utils.PASSED) || 
+					(updatedOSCAR.Process__c == AMS_UTils.VOLRELINQUISH_CA && updatedOSCAR.STEP31__c != AMS_Utils.PASSED)
+				) updatedOSCAR.addError('Process can only be withdrawn after the process started');
+				
 				changesContainer.add(AMS_ChangeCodesHelper.generateVRChangeCode(AMS_Utils.WITHDRAWAL, updatedOSCAR, accountsInvolved.get(updatedOSCAR.Id), accounts, accountsChangeCode));
 			}
 		}
