@@ -2,6 +2,7 @@
                  language="{!selectedLanguage}"
                 >
 <apex:attribute name="communityName" type="string" description="communityName" />
+
 <apex:form id="Mainfrm">
 <apex:actionFunction action="{!redirectChangePassword}" name="checkRedirectChangePassword" />
 <apex:actionFunction action="{!redirectTC_Accept}" name="checkRedirectTC_Accept" />
@@ -571,22 +572,22 @@ background-color:#428bca;
         <span class="icon-bar"></span>
 
       </button>
-        <a href="/ISSP_Homepage?mid=M0S1&CommunityName={!communityName}">
-      <img class="navbar-brand" height="70px"  src="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000002pjCr&oid=00D2000000008TF&lastMod=1434447102000" style="padding-top: 5px; padding-bottom: 5px;margin-left: -25px;display:{!if(communityName=='ISSP','','none')};"></img>
+        <a href="/ISSP_Homepage?mid=M0S1{!if(communityName=='CNS','&CommunityName='+communityName,'')}">
+      <img class="navbar-brand" height="70px"  src="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000002pjCr&oid=00D2000000008TF&lastMod=1434447102000" style="padding-top: 5px; padding-bottom: 5px;margin-left: -25px;display:{!if(communityName== null,'','none')};"></img>
        <img class="navbar-brand" height="70px" src="https://iata--cnslaura.cs86.my.salesforce.com/servlet/servlet.ImageServer?id=0157E0000006IOw&oid=00D7E0000000mLr&lastMod=1434447102000" style="padding-top: 5px; padding-bottom: 5px;margin-left: -25px; display:{!if(communityName=='CNS','','none')};"></img>
      </a>
       
      
  
     <div  class="navbar-brand brandtext">
-       <a href="/ISSP_Homepage?mid=M0S1&CommunityName={!communityName}"> {!$Label.IFAP_Home_Page_Title_4}</a>
+       <a href="/ISSP_Homepage?mid=M0S1{!if(communityName=='CNS','&CommunityName='+communityName,'')}"> {!$Label.IFAP_Home_Page_Title_4}</a>
     </div>
 </div><!--421 -->
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-right">
         <li class="topmenu">
-          <a  href="/ISSP_Homepage?mid=M0S1" data-target="#zero"  id="M0"><span class="glyphicon glyphicon-home"  aria-hidden="true"></span> {!$Label.ISSP_Home}</a>
+          <a  href="/ISSP_Homepage?mid=M0S1{!if(communityName=='CNS','&CommunityName='+communityName,'')}" data-target="#zero"  id="M0"><span class="glyphicon glyphicon-home"  aria-hidden="true"></span> {!$Label.ISSP_Home}</a>
 
          </li>
             <li class="topmenu" id="MainNav1">
@@ -625,7 +626,7 @@ background-color:#428bca;
               <option value="ar">Arabic</option>
       </select>
       -->
-      <apex:form id="LselectLanguage">
+      <apex:form id="LselectLanguage" rendered="{!communityName!='CNS'}">
       	<apex:selectList id="LanguageLocaleKeySelect" value="{!selectedLanguage}" size="1" onchange="changeLanguageLocaleKey(this);"> 
               <apex:selectOption itemValue="-- Language --" itemLabel="Language"/>
               <apex:selectOptions value="{!languages}"/>

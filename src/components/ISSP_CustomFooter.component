@@ -44,13 +44,13 @@ font-size:85%;
 
 <div> 
 <div class="topborder">
-    <div id="footerImg" style="display:{!if(communityName=='ISSP','','none')}">
+    <div id="footerImg" style="display:{!if(communityName==null,'','none')}">
       <span class="footerbig" >Our mission is to represent, lead and serve the airline industry. </span><img src="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000002q77c&oid=00D2000000008TF&lastMod=1434982567000" height="30px"/><br/>
       <span  class="footersml">&#169; International Air Transport Association (IATA) 2015. All rights reserved.</span>
     </div>
 
     <div id="footerImg" style="display:{!if(communityName=='CNS','','none')}">
-      <span class="footerbig" >Our mission is to represent, lead and serve the airline industry. </span><img src="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000002q77c&oid=00D2000000008TF&lastMod=1434982567000" height="30px"/><br/>
+      <span class="footerbig" >Relevant. Committed. Connected </span><img src="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000002q77c&oid=00D2000000008TF&lastMod=1434982567000" height="30px"/><br/>
       <span  class="footersml">&#169; Cargo Network Services Corp., An IATA Company. All rights reserved.</span>
     </div>
 
