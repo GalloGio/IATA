@@ -53,8 +53,11 @@
 <!-- START NEW LOGIN AREA     -->
 <div id="main-container">
   <div id="loginContent">
-    <div id="loginText">{!$Label.ISSP_Airlines_fly_3_billion}<br />
-      <strong>{!$Label.ISSP_Flying_connects}</strong></div>
+      <div id="loginText">
+          <apex:outputText value="{!IF(communityName=='CNS',$Label.ISSP_CNS_quote, $Label.ISSP_Airlines_fly_3_billion)}" />
+          <br />
+          <strong><apex:outputText value="{!IF(communityName=='CNS',$Label.ISSP_CNS_quote2, $Label.ISSP_Flying_connects)}" /></strong>
+      </div>
     <div id="login-form-table">
      <apex:form styleClass=" form-horizontal" id="loginForm" forceSSL="true">
             <apex:pageMessages id="error"/>

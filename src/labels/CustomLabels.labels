@@ -11708,6 +11708,21 @@ Also note that the data contained in ICE is provided to IATA by third parties at
         <value>CASSLink Import</value>
     </labels>
     <labels>
+        <fullName>ISSP_CNS_quote</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_CNS_quote</shortDescription>
+        <value>To deliver a safe, secure and sustainable US air cargo industry that drives economic growth, connects and enriches the world.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_CNS_quote2</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_CNS_quote2</shortDescription>
+        <value>Relevant. Committed. Connected.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_CampaignNotification_Confirm</fullName>
         <categories>ISSP, ISSP_CampaignNotification</categories>
         <language>en_US</language>
