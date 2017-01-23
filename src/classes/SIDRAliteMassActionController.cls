@@ -177,7 +177,7 @@ public with sharing class SIDRAliteMassActionController {
         returns the Result
     **/
     private list<Case> executeQuery(String query) {
-        query += ' limit 1000';
+        query += ' limit 1001';
         list<Case> listCase = (list<Case>)Database.query(query);
         //ApexPages.addMessage(new ApexPages.message(ApexPages.severity.WARNING,query));
         //list<String> listCaseNumbers = new list<String>();
