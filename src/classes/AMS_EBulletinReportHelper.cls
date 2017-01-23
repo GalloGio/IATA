@@ -652,7 +652,14 @@ public without sharing class AMS_EBulletinReportHelper {
 			}
 			//Fields recovered from the Change Code query
 			else if(ccHistChangesPerAPIValMap.containsKey(fieldsList.get(position - customFieldsCounter))){
-				recordsList.add(getRecordFromFieldsList(cc , fieldsList.get(position - customFieldsCounter), ccHistChangesPerAPIValMap));
+
+				String strVal = getRecordFromFieldsList(cc , fieldsList.get(position - customFieldsCounter), ccHistChangesPerAPIValMap);
+				
+				if(fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(LEGALSTATUS)) strVal = AMS_Utils.transformLegalStatus(strVal);
+				
+				else if(fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(LOCATIONCLASS)) strVal = AMS_Utils.getLocationClassDescr(strVal);
+
+				recordsList.add(strVal);
 			}
 			else if(cc.change_code__c == NEWCHANGECODE && fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(IATACODE)){
 				recordsList.add('');
@@ -786,8 +793,8 @@ public without sharing class AMS_EBulletinReportHelper {
 		 Get Record Value from header using directly API Value
 	*/
 	private String getRecordFromFieldsList( Agency_Applied_Change_code__c cc, String headerVal, Map<String,AMS_ChangeCodesHelper.ObjectChange> ccHistChangesPerAPIValMap)
-	{
-		
+	{	
+
 		AMS_ChangeCodesHelper.ObjectChange objVal = ccHistChangesPerAPIValMap.get(headerVal.split(',').get(0).touppercase());
 		return objVal.oldValue == null ? '' : objVal.oldValue;
 		
