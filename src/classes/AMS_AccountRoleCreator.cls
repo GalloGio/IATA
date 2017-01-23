@@ -556,6 +556,9 @@ public with sharing class AMS_AccountRoleCreator
 
          for(AMS_Account_Role__c role: allRoles){
 
+            if(!role.Active__c)
+                continue;
+                
             if(rolesInAccounts.containsKey(role.Account__c)){
 
                 rolesInAccounts.get(role.Account__c).add(role);
