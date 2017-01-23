@@ -33,7 +33,7 @@ public without sharing class AMS_EBulletinReportHelper {
 	public static final String STATE  	        = 	'11-Country or State';
 	public static final String COUNTRY  	    =	'12-Country or State';
 	public static final String CHANGECODE       = 	'1-Change Code';
-	public static final String CHANGECODEREASON = 	'2-Change Code';
+	//public static final String CHANGECODEREASON = 	'2-Change Code';
 
 	public static final String OWNERS 	   	 	   =	'25-Owner1';
 	public static final String OWNERAPINAME 	   =	'Account__r.Owners';
@@ -245,7 +245,7 @@ public without sharing class AMS_EBulletinReportHelper {
 
 		List<String> ccFieldToReturn = new List <String>();
 		//FIX TO QUERY THESE EXTRA FIELDS CHANGECODE,STATE,COUNTRY
-		for(String header : new List<String> {CHANGECODE,STATE,COUNTRY,IRRPERIODSD,IRRPERIODED})
+		for(String header : new List<String> {STATE,COUNTRY,IRRPERIODSD,IRRPERIODED})
 		{
 			if(customFields.isHeaderCustomField(header)){
 				ccFieldToReturn.add(customFields.getAPIFieldValue(header));
@@ -366,7 +366,8 @@ public without sharing class AMS_EBulletinReportHelper {
 
 		for (Agency_Applied_Change_code__c ccRecord : ccList) 
 		{
-			String ccRecordSection = AMS_CustomSettingsUtils.ccNameSectionMap.get((String) ccRecord.get(ccFieldToReturn.get(0)));
+
+			String ccRecordSection = AMS_CustomSettingsUtils.ccNameSectionMap.get((String) ccRecord.get(nameApiNameMap.get(CHANGECODE)));
 			//system.debug('ccRecordSection: ' + ccRecordSection);
 
 			//if(trackChangePerSectionMap.containsKey(ccRecordSection))
@@ -672,6 +673,8 @@ public without sharing class AMS_EBulletinReportHelper {
 
 				if(strVal == null || strVal == '') strVal = '';
 				
+				else if(fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(CHANGECODE)) strVal = getChangeCodeDescr(strVal);
+
 				else if(fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(LEGALSTATUS)) strVal = AMS_Utils.transformLegalStatus(strVal);
 				
 				else if(fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(LOCATIONCLASS)) strVal = AMS_Utils.getLocationClassDescr(strVal);
@@ -869,15 +872,6 @@ public without sharing class AMS_EBulletinReportHelper {
 
 			return	recordValue;
 		}
-		else if (headerVal.name == CHANGECODE) {
-
-			List<String> values =  customFields.getAPIPairFieldValuesForCC(CHANGECODE,CHANGECODEREASON);
-
-			String ccVal = cc.get(values.get(0)) == null ? '': String.valueOf(cc.get(values.get(0)));
-			String ccReasonVal =cc.get(values.get(1)) == null ? '': String.valueOf(cc.get(values.get(1)));
-
-			return convertToCSV(new List<String>{ccVal,ccReasonVal}, ' - ');
-		}
 		else if (headerVal.name == STATE){
 			List<String> values =  customFields.getAPIPairFieldValuesForCC(COUNTRY,STATE);
 			return processCountryOrState(cc,values);
@@ -900,6 +894,19 @@ public without sharing class AMS_EBulletinReportHelper {
 
 		return '';
 	}		
+
+	/** 
+		 Process Change code Description
+	*/
+	private String getChangeCodeDescr(String ccVal)
+	{
+
+		String ccReasonVal = AMS_CustomSettingsUtils.ccNameDescrMap.containsKey(ccVal) ? AMS_CustomSettingsUtils.ccNameDescrMap.get(ccVal) : '';
+
+		return ccVal + ' - ' + ccReasonVal;
+
+	}
+
 
 	/** 
 		 Process Owners
