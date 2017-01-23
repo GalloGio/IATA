@@ -249,6 +249,7 @@ public without sharing class ISSP_AMS_Accreditation {
         } else { //Get Id for HQ Account when user's Account is a branch office
             vHQAccountId = con.Account.Top_Parent__c;
             fetchHQAccountDetails();
+
             if (con.Account.IATACode__c != null && con.Account.RecordType.DeveloperName == 'IATA_Agency' && con.Account.Status__c != 'Terminated' && con.Account.Status__c != 'Not accreditated' && con.Account.Status__c != 'New application pending' && con.Account.Status__c != 'No longer a customer')
                 isUserAccAccredited = true;
             
@@ -334,12 +335,23 @@ public without sharing class ISSP_AMS_Accreditation {
         if (ApexPages.currentPage().getParameters().containsKey('isBankAccountChange'))
             isBankAccountChange = Boolean.valueOf(ApexPages.currentPage().getParameters().get('isBankAccountChange'));
         
+        //AS - NoC V2.0 - Now Other Change will always be for 3 types of changes
+        if(isBankAccountChange) {
+            newForm.Is_change_bank_account_details__c = true;
+        } else {
+            newForm.Scope_of_Change__c = 'HO Only'; //Set default
+            newForm.Is_change_legal_name__c = true;
+            newForm.Is_change_location__c = true;
+            newForm.Is_change_ownership_or_shareholding__c = true;
+        }
+        
         //Verify to which step the user should go
         //and retrieve information linked to the step
         if (stepNumber == '1' || stepNumber == '') {
             isStep1 = true;
         }
         
+        newForm.Scope_of_Change__c = 'HO Only'; //Set default
        
         if (ApexPages.currentPage().getParameters().containsKey('caseId')) {
 
@@ -380,7 +392,6 @@ public without sharing class ISSP_AMS_Accreditation {
                     amsOfficeType = 'Branch';
                 }
                 
-                
                 if(amsOfficeType == 'HO' && isHOAccredited && newCase.Reason1__c != 'New BR Abroad')
                     isNewHOforAccredAgent = true; //Accrediedt Agent applying for HO of different Program e.g. Accred PAX applyiong for CGO HO
 
@@ -406,7 +417,6 @@ public without sharing class ISSP_AMS_Accreditation {
         	if(isBankAccountChange) {
             	newForm.Is_change_bank_account_details__c = true;
         	} else {
-            	newForm.Scope_of_Change__c = 'HO Only'; //Set default
             	newForm.Is_change_legal_name__c = true;
             	newForm.Is_change_location__c = true;
             	newForm.Is_change_ownership_or_shareholding__c = true;
@@ -457,7 +467,6 @@ public without sharing class ISSP_AMS_Accreditation {
                     setContextualHelp(userInfo.getLanguage());
                 } else if (stepNumber == '2') {
                     isStep2 = true;
-
                 } else if (stepNumber == '3') {
                     isStep3 = true;
                     System.Debug('SAAM Case Id: ' + newCase.Id);
