@@ -1046,6 +1046,7 @@ system.debug('iDays: ' + iDays);
         Id res;
         try{
             res = callGenerateEBulletinReportWS( newFormDaily, startDate, startDate.addDays(1), period);
+            fetchAMSProcessForm();
         }catch(Exception e){
             System.debug('dailyFileDownload Exception - ' + e);
             System.debug('dailyFileDownload Exception - ' + e.getTypeName());
