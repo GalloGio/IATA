@@ -100,7 +100,7 @@
                     <apex:param name="communityName" value="{!communityName}"/>
                 </apex:outputLink></a><br />
               <br />
-              <a href="#"><apex:outputLink value="{!$Page.ISSP_Registration}?lang={!lang}&communityName=ISS&sRefererCommunity=ISSP_Login" rendered="{!$Site.RegistrationEnabled}">{!$Label.site.new_user_q}</apex:outputLink></a></td>
+              <a href="#"><apex:outputLink value="{!$Page.ISSP_Registration}?country={!country}&lang={!lang}&communityName={!communityName}&sRefererCommunity=ISSP_Login" rendered="{!$Site.RegistrationEnabled}">{!$Label.site.new_user_q}</apex:outputLink></a></td>
           </tr>
           <tr>
             <td style="padding-top:33px"><a href="#"><apex:outputLink value="{!$Label.ISSP_PKB_URL}{!CASE(lang, 'ar', 'ar', 'fr', 'fr', 'it', 'it', 'de', 'de', 'es', 'es', 'pt_BR', 'pt_BR', 'ja', 'ja', 'ko', 'ko', 'in', 'in', 'th', 'th', 'vi', 'vi', 'zh_CN', 'zh_CN', 'en_US')}/How_To/Customer-Portal-Troubleshooting/?l={!CASE(lang, 'ar', 'ar', 'fr', 'fr', 'it', 'it', 'de', 'de', 'es', 'es', 'pt_BR', 'pt_BR', 'ja', 'ja', 'ko', 'ko', 'in', 'in', 'th', 'th', 'vi', 'vi', 'zh_CN', 'zh_CN', 'en_US')}" rendered="{!$Site.RegistrationEnabled}" target="_blank">{!$Label.ISSP_Troubleshooting}</apex:outputLink></a></td>
