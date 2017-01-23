@@ -4603,6 +4603,15 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>CNS_Country__c</fullName>
+        <externalId>false</externalId>
+        <formula>IATA_ISO_Country__r.CNS_Country__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>CNS Country</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>C_Code__c</fullName>
         <externalId>false</externalId>
         <label>C Code</label>
@@ -5895,6 +5904,15 @@ V - Co-operative</inlineHelpText>
         <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Country_OSCAR_Enabled__c</fullName>
+        <externalId>false</externalId>
+        <formula>IATA_ISO_Country__r.OSCAR_enabled__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Country OSCAR Enabled</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>CurrencyIsoCode</fullName>
