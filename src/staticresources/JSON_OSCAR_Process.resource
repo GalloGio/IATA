@@ -1113,7 +1113,7 @@
         }]
       },
       {
-        "Name": "AMS_OSCAR_REJECTION_FINALIZATION",
+        "Name": "AMS_OSCAR_CHANGE_REJECTION_FINALIZATION",
         "Steps": [{
           "Name": "STEP18",
           "Required": [],
