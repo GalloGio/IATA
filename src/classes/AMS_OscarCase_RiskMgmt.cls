@@ -295,14 +295,16 @@ public class AMS_OscarCase_RiskMgmt {
 						//Some change codes need to be created for the whole hierarchy...
 						if(cc.Apply_to_hierarchy__c){
 							id CurrAccntHOID = mapAllHOs.get(CurrAccntId);
-							for(Account HIERAccnt:mapAccntValues.get(CurrAccntHOID)){
-								if(HierAccnt.id!=CurrAccntId){
-									if(HIERAccnt.Location_Class__c != 'T' || (HIERAccnt.Location_Class__c == 'T' && setTidsChangeCode.contains(cc.Change_Code__c))){
-										//DTULLO UNCOMMENT FOR CNS, COMMENT/DELETE SIMILAR LINES AFTER
-										//Agency_Applied_Change_code__c AACCHier = CreateChangeCode(mapCases, idCase, cc, HIERAccnt, HierAccnt.CNS_Agency__c);
-										Agency_Applied_Change_code__c AACCHier = CreateChangeCode(mapCases, idCase, cc, HIERAccnt);
-										if(AACCHier!=null)
-											lsAACC.add(AACCHier);
+							if(mapAccntValues.containsKey(CurrAccntHOID)){
+								for(Account HIERAccnt:mapAccntValues.get(CurrAccntHOID)){
+									if(HierAccnt.id!=CurrAccntId){
+										if(HIERAccnt.Location_Class__c != 'T' || (HIERAccnt.Location_Class__c == 'T' && setTidsChangeCode.contains(cc.Change_Code__c))){
+											//DTULLO UNCOMMENT FOR CNS, COMMENT/DELETE SIMILAR LINES AFTER
+											//Agency_Applied_Change_code__c AACCHier = CreateChangeCode(mapCases, idCase, cc, HIERAccnt, HierAccnt.CNS_Agency__c);
+											Agency_Applied_Change_code__c AACCHier = CreateChangeCode(mapCases, idCase, cc, HIERAccnt);
+											if(AACCHier!=null)
+												lsAACC.add(AACCHier);
+										}
 									}
 								}
 							}
@@ -511,20 +513,22 @@ public class AMS_OscarCase_RiskMgmt {
 		string sCurrStatus='';
 		string sPrevStatus='';
 		
-		system.debug('DTULLO --> 491: ' + AccountId);
-		system.debug('DTULLO --> 492: ' + mapReasonAndStatus.get(AccountId));
-		system.debug('DTULLO --> 493: ' + mapReasonAndStatus.keyset());
+		system.debug(logginglevel.ERROR, 'DTULLO --> 491: ' + AccountId);
+		system.debug(logginglevel.ERROR, 'DTULLO --> 492: ' + mapReasonAndStatus.get(AccountId));
+		system.debug(logginglevel.ERROR, 'DTULLO --> 493: ' + mapReasonAndStatus.keyset());
 		
-		if(mapReasonAndStatus.get(AccountId).Agencies_Applied_Change_codes__r == null || mapReasonAndStatus.get(AccountId).Agencies_Applied_Change_codes__r.isEmpty()){
-			sCurrReason = mapReasonAndStatus.get(AccountId).Reason__c;
-			sPrevReason = mapReasonAndStatus.get(AccountId).Previous_Reason__c;
-			sCurrStatus = mapReasonAndStatus.get(AccountId).Status__c;
-			sPrevStatus = mapReasonAndStatus.get(AccountId).PreviousStatus__c;
-		}else{
-			sCurrReason = mapReasonAndStatus.get(AccountId).Agencies_Applied_Change_codes__r.get(0).Reason_Code__c + '-' + mapReasonAndStatus.get(AccountId).Agencies_Applied_Change_codes__r.get(0).Reason_Description__c;
-			sPrevReason = mapReasonAndStatus.get(AccountId).Agencies_Applied_Change_codes__r.get(0).PreviousReason__c;
-			sCurrStatus = mapReasonAndStatus.get(AccountId).Agencies_Applied_Change_codes__r.get(0).AccountNewStatus__c;
-			sPrevStatus = mapReasonAndStatus.get(AccountId).Agencies_Applied_Change_codes__r.get(0).AccountPreviousStatus__c;
+		if(mapReasonAndStatus.containsKey(AccountId)){
+			if(mapReasonAndStatus.get(AccountId).Agencies_Applied_Change_codes__r == null || mapReasonAndStatus.get(AccountId).Agencies_Applied_Change_codes__r.isEmpty()){
+				sCurrReason = mapReasonAndStatus.get(AccountId).Reason__c;
+				sPrevReason = mapReasonAndStatus.get(AccountId).Previous_Reason__c;
+				sCurrStatus = mapReasonAndStatus.get(AccountId).Status__c;
+				sPrevStatus = mapReasonAndStatus.get(AccountId).PreviousStatus__c;
+			}else{
+				sCurrReason = mapReasonAndStatus.get(AccountId).Agencies_Applied_Change_codes__r.get(0).Reason_Code__c + '-' + mapReasonAndStatus.get(AccountId).Agencies_Applied_Change_codes__r.get(0).Reason_Description__c;
+				sPrevReason = mapReasonAndStatus.get(AccountId).Agencies_Applied_Change_codes__r.get(0).PreviousReason__c;
+				sCurrStatus = mapReasonAndStatus.get(AccountId).Agencies_Applied_Change_codes__r.get(0).AccountNewStatus__c;
+				sPrevStatus = mapReasonAndStatus.get(AccountId).Agencies_Applied_Change_codes__r.get(0).AccountPreviousStatus__c;
+			}
 		}
 		
 		if(cc.Account_status_change__c == null || cc.Account_status_change__c.toUpperCase()=='CURRENT'){
