@@ -4,7 +4,11 @@ This trigger is in charge of setting the country state, according to the primary
 
 */
 
-trigger AMS_AddressTrigger on AMS_Address__c (after insert,   after update) {
+trigger AMS_AddressTrigger on AMS_Address__c (after insert,   after update, after delete) {
+
+    //Delete GDS, Account Category & GDP Products When Account is deleted
+  if(Trigger.isAfter && Trigger.isDelete) ams2gdp_TriggerHelper.crossDeleteGDPAddressAndPhones(Trigger.old);
+
          
     /*
     Map<String,AMS_Address__c > addressMapPerAgency = new Map<String,AMS_Address__c > ();
@@ -144,9 +148,8 @@ trigger AMS_AddressTrigger on AMS_Address__c (after insert,   after update) {
             addToBeReportedOldPrimary.add(oldPrimaryAddress);
           }     
         }
-        //FM - 22-09-2016 - stop creating "agency update" Records
-        //if(Trigger.isAfter )
-        //    AMS_AgencyUpdateHelper.agencyUpdate(Trigger.new);
+        if(Trigger.isAfter )
+            AMS_AgencyUpdateHelper.agencyUpdate(Trigger.new);
         
         
         

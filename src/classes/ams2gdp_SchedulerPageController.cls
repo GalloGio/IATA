@@ -66,6 +66,7 @@ public with sharing class ams2gdp_SchedulerPageController
         {
             //-- Process spectific records
             for(String s: recordIds.split(';')){
+            	s= s.trim();
                 if(s.length() >=15) specificRecordIds.add(s.left(15));
             }
         }
