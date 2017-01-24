@@ -155,14 +155,14 @@ public with sharing class AMS_OSCAR_TestDataFactory
 		insert	agencyInspectionList;
 
 		//Create hierarchy
-        AMS_Agencies_Hierarchy__c H1 = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Hierarchy 1');
+        /*AMS_Agencies_Hierarchy__c H1 = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Hierarchy 1');
         List<AMS_Agencies_Hierarchy__c> hs = new List<AMS_Agencies_Hierarchy__c> {H1};
         insert hs;
 
         List<AMS_Agencies_relationhip__c> rels = new List<AMS_Agencies_relationhip__c>();
         rels.add(new AMS_Agencies_relationhip__c(Hierarchy__c = H1.Id, Parent_Account__c = a1.Id, Child_Account__c = a2.Id));
 
-        insert rels;
+        insert rels;*/
 
 	}
 
