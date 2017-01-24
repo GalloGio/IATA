@@ -604,19 +604,16 @@ public class WSSidraLiteTest {
 
     @isTest
     public static void testCreateCaseOSCAR_OK1() {
-        AMS_Oscar__c oscar = new AMS_Oscar__c(
-            Step6__c = 'Failed',
-            Step9__c = '',
-            Step11__c = '',
-            Step12__c = '',
-            Step14__c = '',
-            RPM_Approval__c = '');
+        AMS_Oscar__c oscar = new AMS_Oscar__c();
         insert oscar;
 
         Case oscarCase = SidraLiteManagerTest.createOSCARPassenger();
         oscarCase.Reason1__c = OSCARValidReasons.get(0);
         oscarCase.OSCAR__c = oscar.Id;
         insert oscarCase;
+
+        oscar.Step6__c = 'Failed';
+        update oscar;
 
         Test.startTest();
         WSSidraLite.createCase(oscarCase.Id);
@@ -625,15 +622,16 @@ public class WSSidraLiteTest {
 
     @isTest
     public static void testCreateCaseOSCAR_OK2() {
-        AMS_Oscar__c oscar = new AMS_Oscar__c(
-            Step9__c = 'Failed',
-            RPM_Approval__c = '');
+        AMS_Oscar__c oscar = new AMS_Oscar__c();
         insert oscar;
 
         Case oscarCase = SidraLiteManagerTest.createOSCARPassenger();
         oscarCase.Reason1__c = OSCARValidReasons.get(0);
         oscarCase.OSCAR__c = oscar.Id;
         insert oscarCase;
+
+        oscar.Step9__c = 'Failed';
+        update oscar;
 
         Test.startTest();
         WSSidraLite.createCase(oscarCase.Id);
@@ -642,15 +640,16 @@ public class WSSidraLiteTest {
 
     @isTest
     public static void testCreateCaseOSCAR_OK3() {
-        AMS_Oscar__c oscar = new AMS_Oscar__c(
-            Step11__c = 'Failed',
-            RPM_Approval__c = '');
+        AMS_Oscar__c oscar = new AMS_Oscar__c();
         insert oscar;
 
         Case oscarCase = SidraLiteManagerTest.createOSCARPassenger();
         oscarCase.Reason1__c = OSCARValidReasons.get(0);
         oscarCase.OSCAR__c = oscar.Id;
         insert oscarCase;
+
+        oscar.Step11__c = 'Failed';
+        update oscar;
 
         Test.startTest();
         WSSidraLite.createCase(oscarCase.Id);
@@ -659,15 +658,16 @@ public class WSSidraLiteTest {
 
     @isTest
     public static void testCreateCaseOSCAR_OK4() {
-        AMS_Oscar__c oscar = new AMS_Oscar__c(
-            Step12__c = 'Failed',
-            RPM_Approval__c = '');
+        AMS_Oscar__c oscar = new AMS_Oscar__c();
         insert oscar;
 
         Case oscarCase = SidraLiteManagerTest.createOSCARPassenger();
         oscarCase.Reason1__c = OSCARValidReasons.get(0);
         oscarCase.OSCAR__c = oscar.Id;
         insert oscarCase;
+
+        oscar.Step12__c = 'Failed';
+        update oscar;
 
         Test.startTest();
         WSSidraLite.createCase(oscarCase.Id);
@@ -676,15 +676,16 @@ public class WSSidraLiteTest {
 
     @isTest
     public static void testCreateCaseOSCAR_OK5() {
-        AMS_Oscar__c oscar = new AMS_Oscar__c(
-            Step14__c = 'Failed',
-            RPM_Approval__c = '');
+        AMS_Oscar__c oscar = new AMS_Oscar__c();
         insert oscar;
 
         Case oscarCase = SidraLiteManagerTest.createOSCARPassenger();
         oscarCase.Reason1__c = OSCARValidReasons.get(0);
         oscarCase.OSCAR__c = oscar.Id;
         insert oscarCase;
+
+        oscar.Step14__c = 'Failed';
+        update oscar;
 
         Test.startTest();
         WSSidraLite.createCase(oscarCase.Id);
@@ -693,14 +694,16 @@ public class WSSidraLiteTest {
 
     @isTest
     public static void testCreateCaseOSCAR_OK6() {
-        AMS_Oscar__c oscar = new AMS_Oscar__c(
-            RPM_Approval__c = 'Authorize Disapproval');
+        AMS_Oscar__c oscar = new AMS_Oscar__c();
         insert oscar;
 
         Case oscarCase = SidraLiteManagerTest.createOSCARPassenger();
         oscarCase.Reason1__c = OSCARValidReasons.get(0);
         oscarCase.OSCAR__c = oscar.Id;
         insert oscarCase;
+
+        oscar.RPM_Approval__c = 'Authorize Disapproval';
+        update oscar;
 
         Test.startTest();
         WSSidraLite.createCase(oscarCase.Id);
