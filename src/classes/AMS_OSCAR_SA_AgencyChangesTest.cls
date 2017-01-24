@@ -184,6 +184,11 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
 
         //Agency changes configuration settings
         List<AMS_AgencyChangesConfig__c> customsettings = new List<AMS_AgencyChangesConfig__c>();
+        customsettings.add(new AMS_AgencyChangesConfig__c(Name = 'ChangeName', TC_Location_type__c = false,
+                           TC_Legal_status__c = false, TC_Location__c = false, TC_Location_with_inspection__c = false,
+                           TC_Minor_Shareholding__c = false, TC_Name__c = true, TC_Ownership_to_IATA_Agent__c = false,
+                           TC_Major_Shareholding__c = false, TC_Ownership_to_non_IATA_Agent__c = false, TC_VMFR__c = false,
+                           TCA_Sanity_check__c = 'CON', TCA_Application_withdrawal__c = 'CWD'));
         customsettings.add(new AMS_AgencyChangesConfig__c(Name = 'ChangeLocationType', TC_Location_type__c = true,
                            TC_Legal_status__c = false, TC_Location__c = false, TC_Location_with_inspection__c = false,
                            TC_Minor_Shareholding__c = false, TC_Name__c = false, TC_Ownership_to_IATA_Agent__c = false,
@@ -224,6 +229,12 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
                            TC_Minor_Shareholding__c = false, TC_Name__c = false, TC_Ownership_to_IATA_Agent__c = false,
                            TC_Major_Shareholding__c = true, TC_Ownership_to_non_IATA_Agent__c = false, TC_VMFR__c = false,
                            TCA_Sanity_check__c = 'CHC', TCA_Application_withdrawal__c = 'CWD'));
+
+        customsettings.add(new AMS_AgencyChangesConfig__c(Name = 'ChangeMix', TC_Location_type__c = false,
+                           TC_Legal_status__c = false, TC_Location__c = true, TC_Location_with_inspection__c = false,
+                           TC_Minor_Shareholding__c = false, TC_Name__c = true, TC_Ownership_to_IATA_Agent__c = false,
+                           TC_Major_Shareholding__c = false, TC_Ownership_to_non_IATA_Agent__c = false, TC_VMFR__c = false,
+                           TCA_Sanity_check__c = 'CNL', TCA_Application_withdrawal__c = 'CWD', TCA_Manager_approval__c = 'MCF'));
 
         insert customsettings;
 
@@ -1878,5 +1889,50 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
         con.save();
 
         Test.stopTest();
+    }
+
+     @isTest static void testManagerApprovalOnMixChange() {
+
+        getUpdatedAccountData();
+
+        AMS_OSCAR__c oscar = createOSCAR(HO1, 'Location;Name', null, null);
+
+        Test.startTest();
+
+        oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
+        update oscar;
+
+        Test.stopTest();
+
+    }
+
+    @isTest static void testManagerApprovalOnLocation() {
+
+        getUpdatedAccountData();
+
+        AMS_OSCAR__c oscar = createOSCAR(HO1, 'Location', null, null);
+
+        Test.startTest();
+
+        oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
+        update oscar;
+
+        Test.stopTest();
+
+    }
+
+     @isTest static void testSanityCheckOnMixChange() {
+
+        getUpdatedAccountData();
+
+        AMS_OSCAR__c oscar = createOSCAR(HO1, 'Location;Name', null, null);
+
+        Test.startTest();
+
+        oscar.STEP6__c = AMS_Utils.PASSED;
+        update oscar;
+
+        Test.stopTest();
+
     }
 }
