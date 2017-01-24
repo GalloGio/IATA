@@ -37,6 +37,8 @@ global without sharing class AMS_EBulletinReportWebservice {
 		//{
 		String csv = header + '\n' + body;
 
+		//if(!str.isAsciiPrintable) csv = csv.replaceall('[^\\x00-\\x7F]', '');
+
 		/*ContentVersion file = new ContentVersion(
 			  title = 'testChangeCodes_'+date.today()+'.csv',
 			  versionData = Blob.valueOf( csv ),
@@ -51,7 +53,7 @@ global without sharing class AMS_EBulletinReportWebservice {
 
 
 		Attachment attachment = new Attachment();
-		//attachment.ContentType= 'text/csv;charset=ANSI';
+		attachment.ContentType = 'text/csv; charset=UTF-8';
 		attachment.Body = Blob.valueOf( csv );
 		
 
