@@ -411,9 +411,9 @@ public class AMS_OscarCase_RiskMgmt {
 			sUniqueId = sUniqueId + '_A';
 		}
 		
-		if((cc.Change_Code__c == 'DEF' || cc.Change_Code__c == 'DWD') && mapCases.get(idCase).recordtype.developername=='SIDRA'){
-			AACC.DEF_Non_Payment__c = true;
-		}
+		//if((cc.Change_Code__c == 'DEF' || cc.Change_Code__c == 'DWD') && mapCases.get(idCase).recordtype.developername=='SIDRA'){
+		//	AACC.DEF_Non_Payment__c = true;
+		//}
 		
 		if(cc.Change_Code__c == 'IRW'){
 			AACC.Operation__c = 'W';
@@ -433,8 +433,8 @@ public class AMS_OscarCase_RiskMgmt {
 		AACC.Applied_Configuration__c = cc.id;
 		AACC.OSCAR__c = mapCases.get(idCase).Parent.OSCAR__c;
 		
-		if(mapCases.get(idCase).Recordtype.DeveloperName=='SIDRA')
-			AACC.DEF_Non_Payment__c = true;
+		//if(mapCases.get(idCase).Recordtype.DeveloperName=='SIDRA')
+		//	AACC.DEF_Non_Payment__c = true;
 		
 		AACC.CreatedDate_User__c = GenerateDateForBulletin(system.today());
 		

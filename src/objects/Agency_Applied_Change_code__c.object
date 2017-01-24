@@ -470,12 +470,40 @@
     </fields>
     <fields>
         <fullName>DEF_Non_Payment__c</fullName>
-        <defaultValue>false</defaultValue>
         <externalId>false</externalId>
+        <formula>IF(
+AND(
+ OR(TEXT(Change_Code__c) =&apos;DEF&apos;, TEXT(Change_Code__c) =&apos;DFE&apos;),
+ OR(Reason_Description__c = &apos;DEFAULT - IMM. REMITTANCE&apos;,
+    Reason_Description__c = &apos;DEFAULT - OVERDUE REMITTANCE&apos;,
+    Reason_Description__c = &apos;DEFAULT MONIES DUE&apos;,
+    Reason_Description__c = &apos;DEFAULT NON SETTLEMENT&apos;,
+    Reason_Description__c = &apos;DEFAULT NON-SETTLEMENT&apos;,
+    Reason_Description__c = &apos;DEFAULT-MONIES DUE&apos;,
+    Reason_Description__c = &apos;DEFAULT-OVERDUE REMITTANCE&apos;,
+    Reason_Description__c = &apos;NON-PAYMENT ANNUAL FEE&apos;,
+    Reason_Description__c = &apos;DEFAULT-NON PAYMENT&apos;,
+    Reason_Description__c = &apos;CROSS DEFAULT ACTION&apos;
+    )
+)
+,true
+,false)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>DEF Non-Payment</label>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>DateTime_GMT__c</fullName>
+        <externalId>false</externalId>
+        <label>DateTime GMT</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Date_Memo_Sent__c</fullName>
@@ -571,9 +599,9 @@
         <unique>false</unique>
     </fields>
     <fields>
-	    <fullName>Irregularity_Type_Description__c</fullName>
-	        <externalId>false</externalId>
-	        <formula>IF(ISBLANK( Irregularity_Type__c ), &quot;&quot;, 
+        <fullName>Irregularity_Type_Description__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(ISBLANK( Irregularity_Type__c ), &quot;&quot;, 
 	  CASE( Irregularity_Type__c , 
 	    &quot;1PT&quot;,&quot;CARGO NON COMPLIANCE&quot;,
 	    &quot;2PT&quot;,&quot;NON-COMPLIANCE TO CRITERIA&quot;,
@@ -588,14 +616,14 @@
 	    &quot;WD2&quot;,&quot;WITHDRAWN&quot;,
 	  &quot;&quot;)
 	)</formula>
-	        <label>Irregularity Type Description</label>
-	        <required>false</required>
-	        <trackHistory>false</trackHistory>
-	        <trackTrending>false</trackTrending>
-	        <type>Text</type>
-	        <unique>false</unique>
-	</fields>
-	<fields>
+        <label>Irregularity Type Description</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Irregularity_Type__c</fullName>
         <externalId>false</externalId>
         <label>Irregularity Type</label>
@@ -897,11 +925,12 @@
         <fullName>Reason_Description__c</fullName>
         <externalId>false</externalId>
         <label>Reason Description</label>
-        <length>500</length>
+        <length>255</length>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
-        <type>LongTextArea</type>
-        <visibleLines>3</visibleLines>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Related_Irregularity__c</fullName>
