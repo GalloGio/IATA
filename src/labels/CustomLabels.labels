@@ -346,6 +346,14 @@
         <value>Application Rejection</value>
     </labels>
     <labels>
+        <fullName>AMS_OSCAR_CHANGE_REJECTION_FINALIZATION</fullName>
+        <categories>LeftSidePanel, Headers</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_CHANGE_REJECTION_FINALIZATION</shortDescription>
+        <value>Change Rejection</value>
+    </labels>
+    <labels>
         <fullName>AMS_OSCAR_STEP1</fullName>
         <language>en_US</language>
         <protected>false</protected>
