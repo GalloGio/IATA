@@ -405,7 +405,7 @@ public list<String> errorMessage {get; set;}
     }
 
 
-    private void addDecsription() {
+    @TestVisible private void addDecsription() {
         
 
         String addDecsription ;

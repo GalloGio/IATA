@@ -389,7 +389,8 @@ public class AMS_AccountHierarchySelectionController {
 			ownershipAgenciesNotSelected = false;
 		}
 
-		if(oscar.AMS_Target_Agency__c != null && (tocList.contains(AMS_Utils.LOCATION) || tocList.contains(AMS_Utils.LOCATION_INSPECTION))) errorChecks.put(AMS_Utils.LOCATION, true);
+		if(oscar.AMS_Target_Agency__c != null && ((tocList.contains(AMS_Utils.LOCATION) && !(tocList.contains(AMS_Utils.OWNERSHIP_IATA) || tocList.contains(AMS_Utils.OWNERSHIP_NON_IATA)))  || (tocList.contains(AMS_Utils.LOCATION_INSPECTION) && !(tocList.contains(AMS_Utils.OWNERSHIP_IATA) || tocList.contains(AMS_Utils.OWNERSHIP_NON_IATA)))))
+			errorChecks.put(AMS_Utils.LOCATION, true);
 
 		for(HierarchyItem hi : hierarchyValues){
 			

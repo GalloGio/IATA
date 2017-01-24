@@ -344,14 +344,43 @@
         }
     }
     
+    function getWeeklyMaxDay(){
+        dayOfWeek = new Date().getDay();
+        dayOfMonth = new Date().getDate();
+        maxDay = dayOfMonth;
+        testDay = 0;
+
+        // alert('dayOfWeek: '+dayOfWeek);
+
+        if(dayOfWeek == 5){
+            maxDay = maxDay-1;
+        }else if(dayOfWeek > 5){
+            maxDay = maxDay-2;
+        }else if(dayOfWeek < 5){
+            while(testDay != 5){
+                dayOfMonth = dayOfMonth - 1;
+                testDate = new Date(new Date().getFullYear(), new Date().getMonth(), dayOfMonth );
+                testDay = testDate.getDay();
+            }
+            maxDay = dayOfMonth-1;
+        } 
+        // alert('maxDay: '+maxDay);
+        return maxDay;
+    }
+
     var reqOpt = {
         onSelect:onSelect,
         showOtherMonths: true,
         selectOtherMonths: true,
         firstDay: 5,
         minDate: new Date({!eBulletin_StartDate_year}, {!eBulletin_StartDate_month}-1, {!eBulletin_StartDate_day}),
-        maxDate: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() - new Date().getDay() - 3)
+        //maxDate: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() - new Date().getDay() - 3)
+        maxDate: new Date(new Date().getFullYear(), new Date().getMonth(), getWeeklyMaxDay() )
     };
+
+    // alert('new Date().getDate(): ' + new Date().getDate());
+    // alert('new Date().getDay(): ' + new Date().getDay());
+    // alert('new Date().getDate(): ' + (new Date().getDate()- new Date().getDay() - 3));
 
     var reqOptDaily = {
         onSelect:onSelectDaily,
@@ -725,8 +754,14 @@
                                                 <apex:outputpanel >
                                                     {!$Label.ISSP_AMS_eBulletin_AgencyInformation} 
                                                 </apex:outputpanel>
+                                                
                                             </apex:facet>
-                                                    
+                                            
+                                            <div class="alert alert-warning"  role="alert">
+                                                {!$Label.ISSP_AMS_eBulletin_AgencyInformation_disclaimer}
+                                            </div>
+
+
                                             <apex:pageBlockSection columns="1" rendered="{!IF(NOT(newFormDaily.Opt_in__c) ,'false','true')}">
                                                 <apex:pageBlockSectionItem labelStyle="width:5%">
                                                     <apex:inputCheckBox value="{!newFormDaily.Agency_Info_Irregularities__c}" id="DailyIrreg"/>
@@ -782,7 +817,7 @@
                                     <apex:outputPanel >
                                         <apex:commandButton action="{!goToStepHome}" value="{!$Label.ISSP_Cancel}" />
                                         &nbsp;&nbsp;
-                                        <apex:commandButton action="{!saveAMSFormAndGoSideways}" value="{!$Label.ISSP_AMS_eBulletin_WEEKLY_Setup}" />
+                                        <apex:commandButton action="{!saveAMSFormAndGoSideways}" value="{!$Label.ISSP_AMS_eBulletin_WEEKLY_Setup}"  rendered="{!newFormDaily.Opt_in__c}"/>
                                         &nbsp;&nbsp;
                                         <apex:commandButton action="{!saveAMSFormAndGoForward}" value="{!$Label.ISSP_AMS_eBulletin_btn_SaveGenerateReport}" rendered="{!newFormDaily.Opt_in__c}"/>
                                     </apex:outputPanel>
@@ -989,7 +1024,11 @@
                                                     {!$Label.ISSP_AMS_eBulletin_AgencyInformation}
                                                 </apex:outputpanel>
                                             </apex:facet>
-                       
+                                            
+                                            <div class="alert alert-warning"  role="alert">
+                                                {!$Label.ISSP_AMS_eBulletin_AgencyInformation_disclaimer}
+                                            </div>
+
                                             <apex:pageBlockSection columns="1" rendered="{!IF(NOT(newFormWeekly.Opt_in__c) ,'false','true')}">
                                                 <apex:pageBlockSectionItem labelStyle="width:5%">
                                                     <apex:inputCheckBox value="{!newFormWeekly.Agency_Info_Irregularities__c}" id="WeeklyIrreg"/>
@@ -1064,7 +1103,7 @@
                                     <apex:outputPanel >
                                         <apex:commandButton action="{!goToStepHome}" value="{!$Label.ISSP_Cancel}" />
                                         &nbsp;&nbsp;
-                                        <apex:commandButton action="{!saveAMSFormAndGoSideways}" value="{!$Label.ISSP_AMS_eBulletin_DAILY_Setup}" />
+                                        <apex:commandButton action="{!saveAMSFormAndGoSideways}" value="{!$Label.ISSP_AMS_eBulletin_DAILY_Setup}"  rendered="{!newFormWeekly.Opt_in__c}"/>
                                         &nbsp;&nbsp;
                                         <apex:commandButton action="{!saveAMSFormAndGoForward}" value="{!$Label.ISSP_AMS_eBulletin_btn_SaveGenerateReport}" rendered="{!newFormWeekly.Opt_in__c}"/>
                                     </apex:outputPanel>    
