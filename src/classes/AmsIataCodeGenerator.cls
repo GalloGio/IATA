@@ -310,6 +310,8 @@ global class AmsIataCodeGenerator{
 	                            String iatacode = (String) ag.get('IATACode__c');
 	                            try{
                                     usedValuesInRange.add(Integer.valueOf(iatacode.subString(3, 7)));
+                                }catch(TypeException te){
+                                    //In case the IATA code found is not numeric I don't need to do anything else because this class will assign only numeric IATA codes
                                 }catch(Exception e){
                                     returnedValues[0] = '77';
                                     returnedValues[1] = 'Shorter IATA code found in the system: '+iatacode;
@@ -324,6 +326,8 @@ global class AmsIataCodeGenerator{
 	                            String iatacode = (String) ag.get('IATACode__c');
 	                            try{
                                     usedValuesInRange.add(Integer.valueOf(iatacode.subString(3, 7)));
+                                }catch(TypeException te){
+                                    //In case the IATA code found is not numeric I don't need to do anything else because this class will assign only numeric IATA codes
                                 }catch(Exception e){
                                     returnedValues[0] = '77';
                                     returnedValues[1] = 'Shorter IATA code found in the system: '+iatacode;
