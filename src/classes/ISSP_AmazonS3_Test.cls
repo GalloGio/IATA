@@ -36,7 +36,7 @@ private class ISSP_AmazonS3_Test {
 
         Contact con = ISSP_ObjectFactory.createNewContact();
         con.AccountId= child.Id;
-        con.Email = 'Test@test1.com';
+        con.Email = 'ABCDEF123123@xyz.com';
         insert con;
 
         User newUser = ISSP_ObjectFactory.createPortalUser(con);
