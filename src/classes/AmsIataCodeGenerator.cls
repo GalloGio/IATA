@@ -269,7 +269,9 @@ global class AmsIataCodeGenerator{
                         String accreditationFormQuery;
                         if(rangesToSearch.size() == 1)
                         {
-                            accountQuery = 'select IATACode__c from Account where IATACode__c like \'' +rangesToSearch.get(0) +'%\' group by IATACode__c order by IATACode__c';
+                            accountQuery = 'select IATACode__c from Account where IATACode__c like \'' +rangesToSearch.get(0) +'%\' '+
+                                            'and (RecordType.DeveloperName = \'IATA_Agency\' OR RecordType.DeveloperName = \'Standard_Account\') '+
+                                            'group by IATACode__c order by IATACode__c';
                             accreditationFormQuery = 'select IATACode__c from AMS_Pax_Accreditation_Form__c where IATACode__c like \'' +rangesToSearch.get(0) +'%\' and (NOT SAAM_Case__r.OSCAR__r.Account__r.IATACode__c  like \'P%\') group by IATACode__c order by IATACode__c';
                         }
                         else if(rangesToSearch.size() > 1)
@@ -284,7 +286,9 @@ global class AmsIataCodeGenerator{
                             }
                             
                             queryPart2Account = queryPart2Account.subString(0, queryPart2Account.length()-4);
-                            queryPart2Account = queryPart2Account + '  ) group by IATACode__c order by IATACode__c';
+                            queryPart2Account = queryPart2Account + '  )  ' + 
+                                    'and (RecordType.DeveloperName = \'IATA_Agency\' OR RecordType.DeveloperName = \'Standard_Account\') '+
+                                    'group by IATACode__c order by IATACode__c';
                             
                             queryPart2PAX = queryPart2PAX.subString(0, queryPart2PAX.length()-4);
                             queryPart2PAX = queryPart2PAX + '  ) and (NOT SAAM_Case__r.OSCAR__r.Account__r.IATACode__c  like \'P%\') group by IATACode__c order by IATACode__c';
@@ -304,7 +308,13 @@ global class AmsIataCodeGenerator{
                         if(rangeAgenciesBeforeFilterAccount != null){
 	                        for(AggregateResult ag : rangeAgenciesBeforeFilterAccount){
 	                            String iatacode = (String) ag.get('IATACode__c');
-	                            usedValuesInRange.add(Integer.valueOf(iatacode.subString(3, 7)));
+	                            try{
+                                    usedValuesInRange.add(Integer.valueOf(iatacode.subString(3, 7)));
+                                }catch(Exception e){
+                                    returnedValues[0] = '77';
+                                    returnedValues[1] = 'Shorter IATA code found in the system: '+iatacode;
+                                    return returnedValues;
+                                }
 	                        }
                         }
                         system.debug('Used values in the defined range (accounts): '+ usedValuesInRange.size());
@@ -312,7 +322,13 @@ global class AmsIataCodeGenerator{
                         if(rangeAgenciesBeforeFilterAccreditationForm != null){
 	                        for(AggregateResult ag : rangeAgenciesBeforeFilterAccreditationForm){
 	                            String iatacode = (String) ag.get('IATACode__c');
-	                            usedValuesInRange.add(Integer.valueOf(iatacode.subString(3, 7)));
+	                            try{
+                                    usedValuesInRange.add(Integer.valueOf(iatacode.subString(3, 7)));
+                                }catch(Exception e){
+                                    returnedValues[0] = '77';
+                                    returnedValues[1] = 'Shorter IATA code found in the system: '+iatacode;
+                                    return returnedValues;
+                                }
 	                        }
                         }
                         system.debug('Used values in the defined range (accounts + accreditation forms): '+ usedValuesInRange.size());
