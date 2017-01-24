@@ -13,5 +13,9 @@ public with sharing class ISSP_LoginTestHttpCallout {
 		ISSP_Login ctrl = new ISSP_Login();
         //ctrl.ipAddress = '10.10.10.10';
         ctrl.findLocationCaller();
+
+		ISSP_Registration regCtrl = new ISSP_Registration();
+		regCtrl.findLocation();
+
 	}
 }
