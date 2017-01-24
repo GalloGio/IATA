@@ -50,7 +50,7 @@ global without sharing class AMS_EBulletinReportWebservice {
 		*/
 
 
-
+		if(!csv.isAsciiPrintable()) csv = csv.replaceall('[^\\x00-\\x7F]', '');
 
 		Attachment attachment = new Attachment();
 		attachment.ContentType = 'text/csv; charset=UTF-8';
