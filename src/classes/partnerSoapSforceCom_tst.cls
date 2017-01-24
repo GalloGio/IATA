@@ -234,8 +234,6 @@ private class partnerSoapSforceCom_tst {
        }
     }
 
-    private static String responseType;
-
     static testMethod void test_callouts() {
         
         partnerSoapSforceCom.Soap request = new partnerSoapSforceCom.Soap();
