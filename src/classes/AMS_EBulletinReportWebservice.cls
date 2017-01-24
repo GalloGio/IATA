@@ -187,7 +187,8 @@ global without sharing class AMS_EBulletinReportWebservice {
 
 	update ebProfile;
 
-	delete [select id from attachment where id = :attachmentID];
+    Datetime limitDate = system.now().addDays(-5);
+	delete [select id from attachment where parentid = :ebProfileID and id <> :attachmentID and createdDate < :limitDate ];
   }
 
 
