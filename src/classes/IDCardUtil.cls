@@ -1,5 +1,7 @@
 global with sharing class IDCardUtil {
   
+  //flag to determine if idcard contact trigger can run more than once per execution
+    public static Boolean isFirstTime = true;    
     @RemoteAction
     public static final String PARAM_APPLICATIONTYPE = 'atype';
     @RemoteAction
@@ -120,7 +122,11 @@ global with sharing class IDCardUtil {
 @RemoteAction
     public Static final string CASESTATUS_INPROGRESS = 'In progress';
 @RemoteAction
-    public static final string CASESTATUS_READYFORPRODUCTION= 'Ready for production';  
+    public static final string CASESTATUS_READYFORPRODUCTION= 'Ready for production';
+
+@RemoteAction
+    public static final string CASESTATUS_PENDING_TO_BE_APPROVED = 'To be Approved';
+
     
             
 @RemoteAction
@@ -130,6 +136,9 @@ global with sharing class IDCardUtil {
 @RemoteAction
     public static final string ISFOC = 'FreeOfCharge';  
     
+    public static final String CREDENTIAL_NAME = 'IdCard';
+    public static final String FOLDER_NAME = 'a0W';
+
 @RemoteAction
     public static Id IDCardContactRecordTypeID = clsContactTypeIDSingleton.getInstance().RecordTypes.get('Standard'); 
 @RemoteAction
@@ -669,7 +678,8 @@ global with sharing class IDCardUtil {
     @future(callout=true)
     public static void renameIDCardPhotoOfContact(ID CardApplicationID, String oldPhotoName, String sessionID) {
         system.debug('Picture web service '+CardApplicationID+ ' / '+oldPhotoName+ ' / '+sessionId);
-        String newFilename;
+        String newFilename;  
+        String existingFilename;  // the file already attached to the IdCard Application
         String extension;
         ID_Card_Application__c idCardApp;
          
@@ -677,10 +687,13 @@ global with sharing class IDCardUtil {
             // re-select ID Card Application object
             idCardApp = [Select Photo__c, Id, UIR__c From ID_Card_Application__c where Id = :CardApplicationID limit 1];
             
+            existingFilename = idCardApp.Photo__c;
+            system.debug('existingFilename :' + existingFilename);
+
             system.debug('renameIDCardPhotoOfContact - OldName:' + oldPhotoName);
             if (oldPhotoName == '')
             {
-                Integer indexOfDot = idCardApp.Photo__c.indexOf('.');
+                Integer indexOfDot = idCardApp.Photo__c.lastIndexOf('.'); //indexOf('.');
                 system.debug('Index of dot: ' + indexOfDot);
                 if (indexOfDot == -1){
                     system.debug('failed to retreive extension');
@@ -696,6 +709,8 @@ global with sharing class IDCardUtil {
                 newFilename = oldPhotoName;
             }
             system.debug('NewFileName :' + newFilename);
+            
+            /* WEB SERVICE CALL FOR THE OLD STORAGE ON THE IATA SERVER
             system.debug('WebService call');
                         
             system.debug('Session Id: ' + sessionID);
@@ -716,7 +731,44 @@ global with sharing class IDCardUtil {
             }
             else{
                 throw new IDCardApplicationException(results[1]);
+            }*/
+
+
+            // WEB SERVICE CALL FOR THE NEW STORAGE ON AMAZON S3 
+            if (newFilename != existingFilename) {
+
+                if (existingFilename != null) existingFilename = EncodingUtil.urlDecode(existingFilename, 'UTF-8');
+                
+                if (newFilename != null)  newFilename = EncodingUtil.urlDecode(newFilename, 'UTF-8');
+
+                Amazon_Cred__c Amazon_Cred = Amazon_Cred__c.getInstance(CREDENTIAL_NAME);
+                if(Amazon_Cred == null){
+                    TransformationHelper.sendEmailSupport('FATAL: AmazonCredentials ' + CREDENTIAL_NAME ,'AmazonCredentials   ' + CREDENTIAL_NAME );
+                    throw new transformationException('Error Credentials: no value found on the settings!');
+                }
+                
+                String configurationName = UserInfo.getOrganizationId().substring(0,15) == '00D2000000008TF'  ? Amazon_Cred.Prod_Configuration__c : Amazon_Cred.Dev_Configuration__c ;
+                AWSTools aws = AWSTools.getInstance(configurationName); 
+
+                AmazonCredentials credential = AmazonCredentials.getCredentials(CREDENTIAL_NAME);
+
+                Boolean success = aws.renameFileInS3(credential.Bucket, FOLDER_NAME + '/' + existingFilename, FOLDER_NAME + '/' + newFilename);
+
+                if (success) {
+                    // update ID Card application
+                    idCardApp.Photo__c = newFilename;
+                    update idCardApp;
+        
+                    // update ID Card
+                    ID_Card__c idCard = [Select Photo__c, Id From ID_Card__c where ID_Card_Application__c =: idCardApp.Id limit 1];
+                    idCard.Photo__c = newFilename;
+                    update idCard;
+                } else {
+                    throw new IDCardApplicationException('Error renaming the photo file on Amazon S3');
+                }
+
             }
+
             return;
         }
         catch (Exception ex) {
@@ -757,6 +809,120 @@ global with sharing class IDCardUtil {
 
         return returnValue;
     }
+
+
+    /**
+     * Generate the CIN/TCIN for newly created ID Card records
+     */
+    @future(callout=true)
+    public static void generateAndAssignCIN(set<ID> lstIdCardIds) {
+
+        list<ID_Card__c> lstIdCards = [SELECT Id, CIN__c, FirstName__c, LastName__c, Date_of_Birth__c, Position_Code__c, Duty_Code__c, HourWorkedCode__c, Gender__c, ID_Card_Application__r.UIR__c  FROM ID_Card__c WHERE Id IN :lstIdCardIds AND RecordType.DeveloperName = 'AIMS'];
+
+        map<Id, String> mapCinTemplatePerIdCardId = new map<Id, String>();
+        map<String, Integer> mapIncDigitsPerCinTemplate = new map<String, Integer>();
+        set<String> setCinTemplates = new set<String>();
+
+        for (ID_Card__c idCard : lstIdCards) {
+            String CIN = '';
+            try {
+                CIN += idCard.LastName__c.left(3);
+                CIN += Datetime.newInstanceGmt(idCard.Date_of_Birth__c.year(), idCard.Date_of_Birth__c.month(), idCard.Date_of_Birth__c.day()).format('yy','GMT');
+                CIN += idCard.FirstName__c.left(1);
+                CIN += Datetime.newInstanceGmt(idCard.Date_of_Birth__c.year(), idCard.Date_of_Birth__c.month(), idCard.Date_of_Birth__c.day()).format('MMdd','GMT');
+                CIN += '__'; // THE INCREMENT DIGITS
+                CIN += idCard.Position_Code__c != '' ? idCard.Position_Code__c : ' ';
+                CIN += idCard.Duty_Code__c != '' ? idCard.Duty_Code__c : ' ';
+                CIN += idCard.HourWorkedCode__c != '' ? idCard.HourWorkedCode__c : ' ';
+
+                if (idCard.ID_Card_Application__c != null && idCard.ID_Card_Application__r.UIR__c != null) {
+                    CIN += idCard.ID_Card_Application__r.UIR__c.left(2);
+                }
+            } catch (Exception e) {
+                // empty fields could lead to this
+                system.debug('Error generating CIN: ' + e.getMessage());
+            }
+        
+           // CIN += idCard.... ; // Industry Qualification
+
+           CIN = CIN.toUpperCase();
+
+           // add a temporary prefix for sex M/F, REMOVE IT BEFORE ASSIGNING to the ID Card
+           CIN = (idCard.Gender__c == 'Male' ? 'M' : 'F') + CIN;
+
+           mapCinTemplatePerIdCardId.put(idCard.Id, CIN);
+           mapIncDigitsPerCinTemplate.put(CIN, idCard.Gender__c == 'Male' ? 0 : 50);
+           setCinTemplates.add(CIN.substring(1)); // add to the set without the prefix, to correctly match in the DB
+
+           system.debug('CIN template: ' + CIN.substring(1));
+        }
+
+        // Get current max for the increment digits for each template
+
+        list<ID_Card__c> lstRelatedIdCards = [SELECT Id, CIN__c, LastName__c, Gender__c FROM ID_Card__c WHERE CIN__c <> null AND CIN__c LIKE :setCinTemplates];
+
+        for (ID_Card__c idcard : lstRelatedIdCards) {
+            system.debug('Found related CIN: ' + idcard.CIN__c);
+
+            // for Last Names shorter than 3 chars
+            Integer LNamelength = idCard.LastName__c.left(3).length();
+            Integer incDigitsStartPosition = LNamelength + 7; // 10 normally
+
+            system.debug('incDigitsStartPosition: ' + incDigitsStartPosition);
+
+            Integer incDigits = Integer.valueOf(idcard.CIN__c.mid(incDigitsStartPosition, 2));
+            
+            if ( incDigits > mapIncDigitsPerCinTemplate.get( (idcard.Gender__c == 'Male' ? 'M' : 'F') + idcard.CIN__c.left(incDigitsStartPosition) + '__' + idcard.CIN__c.substring(incDigitsStartPosition + 2) ) ) {
+                mapIncDigitsPerCinTemplate.put( (idcard.Gender__c == 'Male' ? 'M' : 'F') + idcard.CIN__c.left(incDigitsStartPosition) + '__' + idcard.CIN__c.substring(incDigitsStartPosition + 2), incDigits );
+            }
+        }
+
+
+        // Set the new inc digits into the CINs and assign them
+
+        for (ID_Card__c idCard : lstIdCards) {
+            // Get the increment digits
+            Integer incDigits = mapIncDigitsPerCinTemplate.get(mapCinTemplatePerIdCardId.get(idCard.Id));
+
+            //increase the digits for the new card
+            incDigits++;
+
+            // update the increased digits in the map
+            mapIncDigitsPerCinTemplate.put(mapCinTemplatePerIdCardId.get(idCard.Id), incDigits);
+
+            // insert the digits in the CIN template for the idcard
+            String strCIN = mapCinTemplatePerIdCardId.get(idCard.Id).replace('__', String.valueOf(incDigits).leftPad(2).replace(' ','0'));
+
+            // remove the temporary prefix (M/F)
+            strCIN = strCIN.substring(1);
+
+            idCard.CIN__c = strCIN;
+
+            system.debug('New CIN assigned: ' + strCIN);
+        }
+
+
+        Database.SaveResult[] srList = Database.update(lstIdCards, false);
+        
+
+        // Iterate through each returned result
+        for (Database.SaveResult sr : srList) {
+            if (sr.isSuccess()) {
+                // Operation was successful, so get the ID of the record that was processed
+                System.debug('Successfully updated idcard CIN. idcard ID: ' + sr.getId());
+            }
+            else {
+                // Operation failed, so get all errors                
+                for(Database.Error err : sr.getErrors()) {
+                    System.debug('The following error has occurred.');                    
+                    System.debug(err.getStatusCode() + ': ' + err.getMessage());
+                    System.debug('ID Card fields that affected this error: ' + err.getFields());
+                }
+            }
+        }
+
+    }
+
 
     private static String getCharAtIndex(String str, Integer index){
         if (str == null) 
@@ -1882,4 +2048,37 @@ global with sharing class IDCardUtil {
          else return 'ERROR';   
     }
     
+    public static String AWSImageAuthorizationLink (String strPhotoName) {
+        String authorizationLink;
+
+        if (strPhotoName != null && strPhotoName != '') {
+            AmazonCredentials credential = AmazonCredentials.getCredentials(CREDENTIAL_NAME);   
+
+            Long timestamp = System.now().getTime()/1000 + 300;
+            String filename = '/' + credential.Bucket + '/' + FOLDER_NAME + '/' + strPhotoName;
+
+            String canonical = 'GET\n\n\n' + timestamp + '\n' + filename; 
+            Blob bsig = Crypto.generateMac('HmacSHA1', Blob.valueOf(canonical), Blob.valueOf(credential.Secret));          
+            String signature = EncodingUtil.base64Encode(bsig); 
+
+            authorizationLink = credential.EndpointBaseURL + filename.removeStart('/') + '?AWSAccessKeyId=' + credential.AWSAccessKeyId + '&Expires=' + timestamp + '&Signature=' + EncodingUtil.urlEncode(signature,'UTF-8');
+        } else {
+            return null;
+        }
+
+        return authorizationLink;
+    }
+
+     //INC291433
+    @RemoteAction 
+     WebService static String setTobeapproved(String applicationIdParam) {
+        List<Case> c = [select id, ID_Card_Status__c from Case c where  c.Related_ID_Card_Application__c =: applicationIdParam and c.RecordTypeId =: IDCardcaseRecordTypeID  limit 1];
+        
+        if(!c.isEmpty() && c.size() > 0) {
+            c[0].Status = IDCardUtil.CASESTATUS_PENDING_TO_BE_APPROVED;
+            update c[0];            
+            return c[0].id;
+        }        
+        return '';
+    }
 }

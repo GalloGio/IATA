@@ -77,9 +77,121 @@
         <referenceTo>User</referenceTo>
         <relationshipName>Agencies_Applied_Change_codes</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>AccountNewStatus__c</fullName>
+        <externalId>false</externalId>
+        <label>AccountNewStatus</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Approved</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Cash basis/no commission</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Cash basis/with commission</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Changes processed</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Listed</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>New application pending</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>No longer a customer</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Not accreditated</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Not in operation</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Terminated</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Under review</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>true</sorted>
+        </picklist>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>AccountPreviousStatus__c</fullName>
+        <externalId>false</externalId>
+        <label>AccountPreviousStatus</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Approved</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Cash basis/no commission</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Cash basis/with commission</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Changes processed</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Listed</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>New application pending</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>No longer a customer</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Not accreditated</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Not in operation</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Terminated</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Under review</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>true</sorted>
+        </picklist>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
     </fields>
     <fields>
         <fullName>Account__c</fullName>
@@ -101,7 +213,7 @@
         <externalId>false</externalId>
         <inlineHelpText>Checked if this code is Active. Agency can only have one Active code in same time.</inlineHelpText>
         <label>Active</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -129,6 +241,17 @@
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Applied_Configuration__c</fullName>
+        <externalId>false</externalId>
+        <label>Applied Configuration</label>
+        <length>18</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Bulletin_Information__c</fullName>
@@ -238,6 +361,10 @@
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>DOM</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>DWD</fullName>
                 <default>false</default>
             </picklistValues>
@@ -251,6 +378,10 @@
             </picklistValues>
             <picklistValues>
                 <fullName>IRR</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>IRS</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -316,9 +447,20 @@
             <sorted>true</sorted>
         </picklist>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>CreatedDate_User__c</fullName>
+        <externalId>false</externalId>
+        <label>HUB Effective Date</label>
+        <length>30</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Created_Date_To_Show__c</fullName>
@@ -334,7 +476,7 @@
         <fullName>DEF_Non_Payment__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
-        <label>DEF Non Payment</label>
+        <label>DEF Non-Payment</label>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
@@ -381,7 +523,7 @@
         <externalId>false</externalId>
         <formula>IF( ISNULL(Account__r.Last_Integration_Date__c), 
     true, 
-    IF( CreatedDate &gt; Account__r.Last_Integration_Date__c,
+    IF( Created_Date_To_Show__c &gt; Account__r.Last_Integration_Date__c,
         true,
         false
     )
@@ -415,7 +557,7 @@
         <description>If true, irregularities points are not summed in the account. It expires 12 months after the Effective_Date__c</description>
         <externalId>false</externalId>
         <label>Irregularities_Expired</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -427,9 +569,34 @@
         <precision>5</precision>
         <required>false</required>
         <scale>2</scale>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Irregularity_Type_Description__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(ISBLANK( Irregularity_Type__c ), &quot;&quot;, 
+	  CASE( Irregularity_Type__c , 
+	    &quot;1PT&quot;,&quot;CARGO NON COMPLIANCE&quot;,
+	    &quot;2PT&quot;,&quot;NON-COMPLIANCE TO CRITERIA&quot;,
+	    &quot;FC1&quot;,&quot;NON SUBMIS. DOCS-FIN. RVW&quot;,
+	    &quot;FC2&quot;,&quot;NON SUBMIS. DOCS-FIN. RVW&quot;,
+	    &quot;NPA&quot;,&quot;NON-PAYMENT OF ANNUAL FEE&quot;,
+	    &quot;OV1&quot;,&quot;OVERDUE REMITTANCE&quot;,
+	    &quot;OV2&quot;,&quot;OVERDUE REMITTANCE&quot;,
+	    &quot;SC1&quot;,&quot;INCOMPLETE DOCS-FIN. RVW&quot;,
+	    &quot;SC2&quot;,&quot;INCOMPLETE DOCS-FIN. RVW&quot;,
+	    &quot;WD1&quot;,&quot;WITHDRAWN&quot;,
+	    &quot;WD2&quot;,&quot;WITHDRAWN&quot;,
+	  &quot;&quot;)
+	)</formula>
+        <label>Irregularity Type Description</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
         <unique>false</unique>
     </fields>
     <fields>
@@ -438,7 +605,7 @@
         <label>Irregularity Type</label>
         <length>10</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -468,6 +635,27 @@
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>PreviousReason__c</fullName>
+        <externalId>false</externalId>
+        <label>PreviousReason</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Published_on_EBulletin__c</fullName>
+        <externalId>false</externalId>
+        <formula>To_Publish_in_e_Bulletin__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Published on EBulletin</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>Reason_Code__c</fullName>
@@ -761,11 +949,17 @@
         <label>SIDRA Case</label>
         <lookupFilter>
             <active>true</active>
-            <errorMessage>You can only select SIDRA cases, make sure the selected case has the correct record type</errorMessage>
+            <booleanFilter>1 OR 2</booleanFilter>
+            <errorMessage>You can only select SIDRA or SIDRA Lite cases, make sure the selected case has the correct record type</errorMessage>
             <filterItems>
-                <field>Case.RecordType.Name</field>
+                <field>Case.RecordType.DeveloperName</field>
                 <operation>equals</operation>
                 <value>SIDRA</value>
+            </filterItems>
+            <filterItems>
+                <field>Case.RecordType.DeveloperName</field>
+                <operation>equals</operation>
+                <value>SIDRA_Lite</value>
             </filterItems>
             <isOptional>false</isOptional>
         </lookupFilter>
@@ -783,7 +977,7 @@
         <description>Sent to external system</description>
         <externalId>false</externalId>
         <label>Sent to external system</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -810,13 +1004,23 @@
         <type>Date</type>
     </fields>
     <fields>
+        <fullName>To_Publish_in_e_Bulletin__c</fullName>
+        <defaultValue>true</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Uncheck if the change code should not appear in the e-bulletin</inlineHelpText>
+        <label>To Publish in e-Bulletin</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Updated_AIMS__c</fullName>
         <defaultValue>false</defaultValue>
         <description>Flag for Analyst to check if the Minor Change has been carried out to AIMS</description>
         <externalId>false</externalId>
         <inlineHelpText>Flag for Analyst to check if the Minor Change has been carried out to AIMS</inlineHelpText>
         <label>Updated AIMS</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -834,6 +1038,100 @@
         <active>true</active>
         <description>Applied for irregularities only</description>
         <label>Irregularities</label>
+        <picklistValues>
+            <picklist>AccountNewStatus__c</picklist>
+            <values>
+                <fullName>Approved</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cash basis%2Fno commission</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cash basis%2Fwith commission</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Changes processed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Listed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>New application pending</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No longer a customer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not accreditated</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not in operation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Terminated</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Under review</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>AccountPreviousStatus__c</picklist>
+            <values>
+                <fullName>Approved</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cash basis%2Fno commission</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cash basis%2Fwith commission</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Changes processed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Listed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>New application pending</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No longer a customer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not accreditated</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not in operation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Terminated</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Under review</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
         <picklistValues>
             <picklist>Change_Code__c</picklist>
             <values>
@@ -942,6 +1240,10 @@
             </values>
             <values>
                 <fullName>IRR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IRS</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1243,6 +1545,100 @@
         <description>Used for non-irregularities</description>
         <label>Standard</label>
         <picklistValues>
+            <picklist>AccountNewStatus__c</picklist>
+            <values>
+                <fullName>Approved</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cash basis%2Fno commission</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cash basis%2Fwith commission</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Changes processed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Listed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>New application pending</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No longer a customer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not accreditated</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not in operation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Terminated</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Under review</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>AccountPreviousStatus__c</picklist>
+            <values>
+                <fullName>Approved</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cash basis%2Fno commission</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cash basis%2Fwith commission</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Changes processed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Listed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>New application pending</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No longer a customer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not accreditated</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not in operation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Terminated</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Under review</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Change_Code__c</picklist>
             <values>
                 <fullName>CAD</fullName>
@@ -1337,6 +1733,10 @@
                 <default>false</default>
             </values>
             <values>
+                <fullName>DOM</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>DWD</fullName>
                 <default>false</default>
             </values>
@@ -1350,6 +1750,10 @@
             </values>
             <values>
                 <fullName>IRR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IRS</fullName>
                 <default>false</default>
             </values>
             <values>

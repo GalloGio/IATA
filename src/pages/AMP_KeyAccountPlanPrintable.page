@@ -4,7 +4,7 @@
     <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 
     <head>
-      <title>Key Account Plan</title>
+      <title>Account Plan</title>
       <!-- <apex:stylesheet value="{!URLFOR($Resource.AMP_helper, 'css/general.css')}"/> -->
       <style>
         @page { size: A4 landscape; /* A4 landscape (297mm×210mm) */
@@ -21,7 +21,7 @@
     <body  onload="window.print()">
         <apex:form >
         <!-- <apex:outputLink value="/{!accountId}" >back to Account</apex:outputLink> -->
-        <apex:pageBlock id="theBlock" title="Key Account Plan for: {!AccountName}">
+        <apex:pageBlock id="theBlock" title="Account Plan for: {!AccountName}">
 
 
             <!-- <apex:commandButton action="{!newObjective}" value="New Planned Activity" rendered="{!visibleTab != 'previous'}" reRender="thisPanel"/> -->
@@ -36,7 +36,7 @@
                     <th>Overall Status</th>
                     <th>Account Issue or Priority</th>
                     <th>Benefits to the Account</th>
-                    <th>Deadline</th>
+                    <th>End Date</th>
                   </tr>
                   <tr class="dataRow {!IF(ticker==1, 'odd', 'even')}">
                   <td class="dataCell" ><apex:outputField value="{!objective.Name}"  /></td>
@@ -59,7 +59,7 @@
                         <th>Support</th>
                         <th class="narrowColumn">Status</th>
                         <th>Description</th>
-                        <th class="narrowColumn">Deadline</th>
+                        <th class="narrowColumn">End Date</th>
                       </tr>
                       <apex:repeat value="{!objective.Tasks}" var="task">
                       <tr class="dataRow">

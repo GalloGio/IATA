@@ -1,11 +1,118 @@
 public class EmailMessagesViewCon {
 
+     private void loadEmails(){
+   try {
+         
+          map<String,Archived_Message__c> archMessPerIdMessOrig = new map<String,Archived_Message__c>();
+
+        originalEmail = new Map<String,EmailMessage>();
+        //load records related to case
+        this.archivedMessages = [SELECT  Name,EmailMessage__c,  Case__c, CreatedById, CreatedDate, Id FROM Archived_Message__c where Case__c =:this.cse.Id ];
+
+        if(archivedMessages <> null && archivedMessages.size() > 0)
+        for(Archived_Message__c arch :archivedMessages)
+            archMessPerIdMessOrig.put(arch.EmailMessage__c, arch);
+
+        Map<String,Archived_Message__c> tmpArchivedMessages = new Map<String,Archived_Message__c>();
+        for(Archived_Message__c a:archivedMessages )
+            tmpArchivedMessages .put(a.EmailMessage__c,a);
+
+        //load tracked emails
+        this.trackedEmails = [SELECT ToContact__c, Html_Body__c, Subject__c, Status__c, CreatedById, CreatedDate, Id FROM Tracked_Email__c where Case__c =:this.cse.Id ];
+
+        //load Email activity status to print it in view  using a map: em.Activity --> Stirng
+        List<String> l = new List<String>();
+        this.emails = new List<EmailMessage>();
+
+        List<EmailMessage > tmpEmails = [SELECT ParentId, Status, Incoming, FromName, ActivityId,
+                                         BccAddress, CcAddress, CreatedById, CreatedDate, 
+                                         IsDeleted, Id, FromAddress, HtmlBody, HasAttachment, Headers,
+                                          LastModifiedById, LastModifiedDate, MessageDate, Subject,
+                                           SystemModstamp, TextBody, ToAddress 
+                                           FROM EmailMessage 
+                                         where ParentId = :cse.id order by CreatedDate desc ];
+
+        emailsTasksStatus = new Map<String,String>();
+        for(EmailMessage e:tmpEmails  ) {
+           if(!tmpArchivedMessages.containsKey(e.Id)){
+                emails.add(e);
+              UnifiedList.add(new EmailWrapper(e,false,null));
+              
+           }
+               
+           else{
+         // throw new transformationException('' + tmpArchivedMessages);
+               originalEmail.put(e.Id,e);
+               
+               UnifiedList.add(new EmailWrapper(e,true,archMessPerIdMessOrig.get(e.id)));
+
+               }
+
+        }
+         
+        //throw new transformationException('' + UnifiedList);
+      //  UnifiedList.sort();
+       try
+        {
+            EmailsAvailable  = (archivedMessages.size() + trackedEmails.size() + emails.size())>0;
+        }catch(Exception ex){
+            EmailsAvailable = true;
+        }
+        if(this.emails==null)
+            this.emails= new List<EmailMessage>();
+            
+            
+            
+          
+        }catch(Exception e){
+      ApexPages.Message   myMsg = new ApexPages.Message(ApexPages.Severity.ERROR,'Error: Invalid Input.' + e.getmessage());
+           ApexPages.addMessage(myMsg);
+        }    
+            
+    }
+
+
+
+public transient List<EmailWrapper> UnifiedList {get; set;}
+
+public class EmailWrapper  implements Comparable {
+
+    public boolean ArchivedEmail {get;set;}
+    public EmailMessage message {get;set;}
+    public Datetime emailCreation {get;set;}
+    public Id ArchEmailMessageID {get;set;}
+
+
+    public EmailWrapper(EmailMessage message, boolean archived,Archived_Message__c archMess) {
+
+            this.ArchivedEmail = archived;
+            this.message = message;
+            this.emailCreation = message.CreatedDate;
+            this.ArchEmailMessageID = archMess <> null ? archMess.id :null;
+           //  throw new transformationException('' + archMess);
+    }
+
+
+    public Integer compareTo(Object compareTo){
+
+        EmailWrapper compareToEmail = (EmailWrapper)compareTo;
+        if (emailCreation == compareToEmail.emailCreation) return 0;
+        if (emailCreation > compareToEmail.emailCreation) return 1;
+        return -1;
+
+
+    } 
+  
+}
+
+
     public transient List<EmailMessage> emails {get; set;}
+    public transient List<Archived_Message__c> archivedMessages {get; set;}
+
     public Case cse {get; set;}
     public Boolean EmailsAvailable{get;set;}
 
     //jfo
-    public transient List<Archived_Message__c> archivedMessages {get; set;}
     public transient List<Archived_Attachment__c> archivedAttachments {get; set;}
     public transient List<Attachment> sfdcAttachments {get; set;}
     public transient Map<String,String> emailsTasksStatus {get; set;}
@@ -16,8 +123,8 @@ public class EmailMessagesViewCon {
 
 
     public EmailMessagesViewCon (ApexPages.StandardController controller) {
-
-        EmailsAvailable = false;
+        UnifiedList = new List<EmailWrapper>(); 
+        //EmailsAvailable = true;
         try{
             if(!Test.isRunningTest()) {
                 controller.addFields(new List<String>{'id', 'Status', 'CaseNumber', 'BSPCountry__c', 'ContactId', 'RecordType.DeveloperName', 'Region__c', 'RecordTypeId', 'CaseArea__c' });
@@ -46,7 +153,7 @@ public class EmailMessagesViewCon {
         return this.cse.Id;
     }
 
-    private void loadEmails(){
+    private void loadEmails2(){
         originalEmail = new Map<String,EmailMessage>();
         //load records related to case
         this.archivedMessages = [SELECT  Name,EmailMessage__c,  Case__c, CreatedById, CreatedDate, Id FROM Archived_Message__c where Case__c =:this.cse.Id ];
@@ -62,7 +169,14 @@ public class EmailMessagesViewCon {
         List<String> l = new List<String>();
         this.emails = new List<EmailMessage>();
 
-        List<EmailMessage > tmpEmails = [SELECT ParentId, Status, Incoming, FromName, ActivityId, BccAddress, CcAddress, CreatedById, CreatedDate, IsDeleted, Id, FromAddress, HtmlBody, HasAttachment, Headers, LastModifiedById, LastModifiedDate, MessageDate, Subject, SystemModstamp, TextBody, ToAddress FROM EmailMessage where ParentId = :cse.id order by CreatedDate desc ];
+        List<EmailMessage > tmpEmails = [SELECT ParentId, Status, Incoming, FromName, ActivityId,
+                                         BccAddress, CcAddress, CreatedById, CreatedDate, 
+                                         IsDeleted, Id, FromAddress, HtmlBody, HasAttachment, Headers,
+                                          LastModifiedById, LastModifiedDate, MessageDate, Subject,
+                                           SystemModstamp, TextBody, ToAddress 
+                                           FROM EmailMessage 
+                                         where ParentId = :cse.id order by CreatedDate desc ];
+
         emailsTasksStatus = new Map<String,String>();
         for(EmailMessage e:tmpEmails  ) {
            if(!tmpArchivedMessages .containsKey(e.Id))
@@ -101,7 +215,8 @@ public class EmailMessagesViewCon {
             }
             // if account is IATA Financial Review, only Region has to be Europe
             Id financialReviewRt = Schema.SObjectType.Case.getRecordTypeInfosByName().get('IATA Financial Review').getRecordTypeId();
-            if (cse.RecordTypeId == financialReviewRt) {
+            Id process = Schema.SObjectType.Case.getRecordTypeInfosByName().get('Process').getRecordTypeId();
+            if (cse.RecordTypeId == financialReviewRt || cse.RecordTypeId == process) {
                 return cse.Region__c == 'Europe';
             }
         } catch (Exception e) {

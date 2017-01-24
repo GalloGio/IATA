@@ -92,7 +92,7 @@ private class AMS_AgencyAChangeCodeTest {
 
         List<AMS_Pax_Accreditation_Form__c> accreditationLst = [SELECT ID, Name, Short_Name__c, Trade_Name__c, Branch_Office_City__c, Branch_Office_Email__c from AMS_Pax_Accreditation_Form__c];
 
-        List<AMS_OSCAR__c> oscarLst = [SELECT ID, Account__c from AMS_OSCAR__c];
+        List<AMS_OSCAR__c> oscarLst = [SELECT ID, Account__c, Location_Class__c from AMS_OSCAR__c];
 
         List<Account> accountLst = [SELECT ID, Status__c from Account ];
 
@@ -120,7 +120,7 @@ private class AMS_AgencyAChangeCodeTest {
         changeCode.reasonDesc  = 'NEW APPLICATION';
         changeCode.status  = '2';
 
-        AMS_Utils.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode>{changeCode}, new List<AMS_OSCAR__c>{oscar}, new List<Account> {account}, true); 
+        AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode>{changeCode}, new List<AMS_OSCAR__c>{oscar}, new List<Account> {account}, true); 
 
         changeCode = new AMS_OSCAR_JSON.ChangeCode();
 
@@ -141,7 +141,7 @@ private class AMS_AgencyAChangeCodeTest {
         
         update accreditation;
 
-        AMS_Utils.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode>{changeCode}, new List<AMS_OSCAR__c>{oscar}, new List<Account> {account}, true); 
+        AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode>{changeCode}, new List<AMS_OSCAR__c>{oscar}, new List<Account> {account}, true); 
 
         accountLst = [SELECT ID, Name, Short_Name__c , TradeName__c, BillingCity , Email__c  from Account ];
 

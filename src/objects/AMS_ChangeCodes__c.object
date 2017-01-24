@@ -13,6 +13,14 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Apply_to_hierarchy__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Apply to hierarchy</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Billable__c</fullName>
         <defaultValue>false</defaultValue>
         <description>sets the change code to be sent for external systems for the emission of a sales order</description>
@@ -23,6 +31,28 @@
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Bulletin_Memo_Text2__c</fullName>
+        <description>Because of possible length of bulletin memo text, it is broke down into multiple fields</description>
+        <externalId>false</externalId>
+        <label>Bulletin Memo Text2</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Bulletin_Memo_Text3__c</fullName>
+        <description>Because of possible length of bulletin memo text, it is broke down into multiple fields</description>
+        <externalId>false</externalId>
+        <label>Bulletin Memo Text3</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Bulletin_Memo_Text__c</fullName>
         <externalId>false</externalId>
         <label>Bulletin Memo Text</label>
@@ -31,10 +61,189 @@
         <type>TextArea</type>
     </fields>
     <fields>
+        <fullName>CNS_Bulletin_Memo_Text2__c</fullName>
+        <externalId>false</externalId>
+        <label>CNS Bulletin Memo Text2</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>CNS_Bulletin_Memo_Text3__c</fullName>
+        <externalId>false</externalId>
+        <label>CNS Bulletin Memo Text3</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>CNS_Bulletin_Memo_Text__c</fullName>
+        <externalId>false</externalId>
+        <label>CNS Bulletin Memo Text</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Change_Code__c</fullName>
         <externalId>false</externalId>
         <label>Change Code</label>
         <length>3</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Class_Type__c</fullName>
+        <description>List of class type for which the change code has to be generated</description>
+        <externalId>false</externalId>
+        <label>Class Type</label>
+        <length>50</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Clear_Irregularities__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Clear Irregularities</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Field1Values__c</fullName>
+        <description>Values to check on the first field</description>
+        <externalId>false</externalId>
+        <label>Field1Values</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Field1__c</fullName>
+        <description>API Name of the first field to check</description>
+        <externalId>false</externalId>
+        <label>Field1</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Field2Values__c</fullName>
+        <description>Values to check on the second field</description>
+        <externalId>false</externalId>
+        <label>Field2Values</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Field2__c</fullName>
+        <description>Second field to check</description>
+        <externalId>false</externalId>
+        <label>Field2</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Field3Values__c</fullName>
+        <description>Values to check on the third field</description>
+        <externalId>false</externalId>
+        <label>Field3Values</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Field3__c</fullName>
+        <description>Third field to check</description>
+        <externalId>false</externalId>
+        <label>Field3</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Field4Values__c</fullName>
+        <description>Values to check on the fourth field</description>
+        <externalId>false</externalId>
+        <label>Field4Values</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Field4__c</fullName>
+        <description>Fourth field to check</description>
+        <externalId>false</externalId>
+        <label>Field4</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Field5Values__c</fullName>
+        <description>Values to check on the fifth field</description>
+        <externalId>false</externalId>
+        <label>Field5Values</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Field5__c</fullName>
+        <description>Fifth field to check</description>
+        <externalId>false</externalId>
+        <label>Field5</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Field6Values__c</fullName>
+        <externalId>false</externalId>
+        <label>Field6Values</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Field6__c</fullName>
+        <externalId>false</externalId>
+        <label>Field6</label>
+        <length>255</length>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
@@ -50,6 +259,24 @@
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Publish_HO_Only__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Used by change code applicable to the whole hierarchy. If true, only the HO will get the change code published, otherwise the whole hierarchy will.</inlineHelpText>
+        <label>Publish HO Only</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Published_in_bulletin__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Defines the default value on the change code when generated</description>
+        <externalId>false</externalId>
+        <label>Published in bulletin</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>Reason_Code_Description__c</fullName>
@@ -70,6 +297,36 @@
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Record_Type__c</fullName>
+        <description>Used to filter the action based on the recordtype of the case that is generating the change code.</description>
+        <externalId>false</externalId>
+        <label>Record Type</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Risk_ChangeCode__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>True if change code relates to risk management</description>
+        <externalId>false</externalId>
+        <label>Risk ChangeCode</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Used_By_CNS__c</fullName>
+        <defaultValue>true</defaultValue>
+        <description>If false, means the change code is not generated for CNS agencies</description>
+        <externalId>false</externalId>
+        <inlineHelpText>If false, means the change code is not generated for CNS agencies</inlineHelpText>
+        <label>Used By CNS</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
     </fields>
     <label>AMS Change Codes</label>
     <visibility>Protected</visibility>

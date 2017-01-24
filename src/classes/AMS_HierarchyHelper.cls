@@ -510,7 +510,7 @@ global class AMS_HierarchyHelper {
 	// This will create a process detail for this Oscar for each account in the hierarhcy (except for the main account related to the oscar)
 	// This method won't create any duplicate if there is already a process detail with the same OSCAR-Account
 	webservice static void createProcessDetailForFullHierarchy(ID theOscarId, ID theMainAccountId) {
-
+		ID rtAgencyInvolved = Schema.SObjectType.AMS_Process_Detail__c.getRecordTypeInfosByName().get('Agency Involved').getRecordTypeId();
 		Map<Id, List<AMS_Agencies_relationhip__c>> hierarchies = getAccountsHierarchies(new Set<Id> {theMainAccountId});
 
 		Set<Id> accountIdToBeAdded = new Set<Id>();
@@ -526,18 +526,75 @@ global class AMS_HierarchyHelper {
 
 
 		Set<Id> alreadyThere = new Set<Id>();
-		for (AMS_Process_Detail__c det : [SELECT Account__c FROM AMS_Process_Detail__c WHERE Oscar__c = :theOscarId ]) {
+		//DTULLO: Added check on the record type
+		//for (AMS_Process_Detail__c det : [SELECT Account__c FROM AMS_Process_Detail__c WHERE Oscar__c = :theOscarId ]) {
+		for (AMS_Process_Detail__c det : [SELECT Account__c FROM AMS_Process_Detail__c WHERE Oscar__c = :theOscarId and recordtype.developername='Agency_Involved']) {
 			alreadyThere.add(det.Account__c);
 		}
 
 		List<AMS_Process_Detail__c> pds = new List<AMS_Process_Detail__c>();
 		for (Id accountId : accountIdToBeAdded) {
 			if (accountId != theMainAccountId && !alreadyThere.contains(accountId))
-				pds.add(new AMS_Process_Detail__c(Account__c = accountId, OSCAR__c = theOscarId));
+				//DTULLO: Added Record Type
+				pds.add(new AMS_Process_Detail__c(Account__c = accountId, OSCAR__c = theOscarId, recordtypeid = rtAgencyInvolved));
 		}
 
 		insert pds;
 
+	}
+
+	//verifies if every account involved has all its children selected
+	public static Boolean isAllChildrenSelected(AMS_Oscar__c oscar) {
+		List<AMS_Oscar__c> oscars = new List<AMS_Oscar__c>{oscar};
+
+		//fetch all relationships for each account
+		Map<Id, List<AMS_Agencies_relationhip__c>> relationshipMap = getAccountsHierarchies(new Set<Id>{oscar.Account__c});
+
+
+		//gets selected accounts for each oscar
+		Map<Id, Set<Id>> accountsInvolved = new Map<Id, Set<Id>>{ oscar.Id => new Set<Id>{oscar.Account__c} };
+		//DTULLO: Added check on record-type
+		//for(AMS_Process_Detail__c pd : [SELECT Id, Account__c, OSCAR__c FROM AMS_Process_Detail__c WHERE Oscar__c = :accountsInvolved.keyset()]){
+		for(AMS_Process_Detail__c pd : [SELECT Id, Account__c, OSCAR__c FROM AMS_Process_Detail__c WHERE Oscar__c = :accountsInvolved.keyset() and recordtype.developername='Agency_Involved']){
+			accountsInvolved.get(pd.OSCAR__c).add(pd.Account__c);
+		}
+
+		return isAllChildrenSelected(oscars, relationshipMap, accountsInvolved).get(oscar.Id);
+	}
+
+	public static Map<Id, Boolean> isAllChildrenSelected(List<AMS_Oscar__c> oscars, Map<Id, List<AMS_Agencies_relationhip__c>> relationshipMap, Map<Id, Set<Id>> accountsInvolved) {
+
+		Map<Id, Boolean> results = new Map<Id, Boolean>();
+
+		//initialize map
+		for(AMS_Oscar__c oscar : oscars){
+			results.put(oscar.Id, true);
+		}
+
+		//create a map for the child accounts for every level on the hierarchy
+		Map<Id, Map<Id, Set<Id>>> childAccounts = new Map<Id, Map<Id, Set<Id>>>();
+		for(AMS_Oscar__c oscar : oscars){
+			childAccounts.put(oscar.Id, new Map<Id, Set<Id>>());
+			childAccounts.get(oscar.Id).put(oscar.Account__c, new Set<Id>());
+
+			for(AMS_Agencies_relationhip__c r : relationshipMap.get(oscar.Account__c)){
+
+				if(!childAccounts.get(oscar.Id).containsKey(r.Parent_Account__c)) childAccounts.get(oscar.Id).put(r.Parent_Account__c, new Set<Id>());
+				if(!childAccounts.get(oscar.Id).containsKey(r.Child_Account__c)) childAccounts.get(oscar.Id).put(r.Child_Account__c, new Set<Id>());
+
+				if(r.Child_Account__r.Status__c != AMS_Utils.ACC_S0_TERMINATED) childAccounts.get(oscar.Id).get(r.Parent_Account__c).add(r.Child_Account__c);
+			}
+		}
+
+		//check if all the selected account childrens are also selected
+		for(AMS_Oscar__c oscar : oscars){
+			for(Id accId : accountsInvolved.get(oscar.Id)){
+				for(Id childId : childAccounts.get(oscar.Id).get(accId)){
+					if(!accountsInvolved.get(oscar.Id).contains(childId)) results.put(oscar.Id, false);
+				}
+			}
+		}
+		return results;
 	}
 
 	//compares the owners between several accounts in the same hierarchy

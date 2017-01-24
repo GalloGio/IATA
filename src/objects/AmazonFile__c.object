@@ -179,6 +179,66 @@
         <type>Date</type>
     </fields>
     <fields>
+        <fullName>EF_Created_By__c</fullName>
+        <description>For storing names of non-Salesforce users who have originally provided the document to IATA.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>For storing names of non-Salesforce users who have originally provided the document to IATA.</inlineHelpText>
+        <label>E&amp;F Created By</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>EF_Created_On__c</fullName>
+        <description>For storing the original creation date of the document.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The original creation date of the document.</inlineHelpText>
+        <label>E&amp;F Created On</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>EF_Enterprise_Keywords__c</fullName>
+        <description>For storing keywords regarding a document and a related company.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>For storing keywords regarding a document and a related company.</inlineHelpText>
+        <label>E&amp;F Enterprise Keywords</label>
+        <length>32768</length>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>EF_Modified_By__c</fullName>
+        <description>For storing names of non-Salesforce users who have modified the related document.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>For storing names of non-Salesforce users who have modified the related document.</inlineHelpText>
+        <label>E&amp;F Modified By</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>EF_Modified_On__c</fullName>
+        <description>For storing the last modified date of the document.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The last modified date of the document.</inlineHelpText>
+        <label>E&amp;F Modified On</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
         <fullName>EF_Private__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
@@ -673,9 +733,15 @@
                 <default>false</default>
                 <controllingFieldValues>Communications</controllingFieldValues>
             </picklistValues>
+            <picklistValues>
+                <fullName>AML Forms</fullName>
+                <default>false</default>
+                <controllingFieldValues>Contractual</controllingFieldValues>
+            </picklistValues>
             <restrictedPicklist>true</restrictedPicklist>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -1917,4 +1983,23 @@
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
     <startsWith>Vowel</startsWith>
+    <webLinks>
+        <fullName>Download</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Download</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/31.0/connection.js&quot;)} 
+{!REQUIRESCRIPT(&quot;/soap/ajax/31.0/apex.js&quot;)} 
+
+var id = sforce.apex.execute(&quot;AMS_OSCAR_Attachments&quot;,&quot;getExpiringLinkWS&quot;, 
+{fileName:&apos;{!AmazonFile__c.Full_Name_Unique__c}&apos;}); 
+var result2= String(id).replace(&quot;&amp;amp;&quot;,&quot;&amp;&quot;); 
+var newWin = window.open(result2); 
+if(!newWin || newWin.closed || typeof newWin.closed==&apos;undefined&apos;){ 
+alert(&apos;{!$Label.Check_popup_settings}&apos;); 
+}</url>
+    </webLinks>
 </CustomObject>

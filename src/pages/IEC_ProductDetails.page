@@ -94,6 +94,18 @@
                                                     </tr>
                                                 </apex:variable>
 
+                                                <!-- Setup fee if exist -->
+                                                <apex:variable var="setupFee" value="1" rendered="{! AND(product.setupFee != null , product.setupFee > 0) }">
+                                                    <tr>
+                                                        <th scope="row"><i>Flat fee</i></th>
+                                                        <td>
+                                                            <apex:outputText styleClass="item-price regular-price" value="{0, number, currency}">
+                                                                <apex:param value="{!product.setupFee}" />
+                                                            </apex:outputText>
+                                                        </td>
+                                                    </tr>
+                                                </apex:variable>
+
                                                 <!-- Availability -->
                                                 <tr>
                                                     <th scope="row">{!$Label.Availability}</th>

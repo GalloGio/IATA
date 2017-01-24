@@ -356,5 +356,21 @@ static testMethod void migrateAccountsToExistingHierarchyTestScenario1() {
         
     }
 
+    static testMethod void childrenSelection() {
+        initHierarchy(1, 0);
+        ID rtAgencyInvolved = Schema.SObjectType.AMS_Process_Detail__c.getRecordTypeInfosByName().get('Agency Involved').getRecordTypeId();
+
+        AMS_OSCAR__c oscar = new AMS_Oscar__c(Process__c = AMS_Utils.VOLRELINQUISH, Account__c = HO.Id);
+        insert oscar;
+		//DTULLO: Added Record Type
+        insert new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = secondLevel[0].Id, RecordTypeId = rtAgencyInvolved);
+
+        Test.startTest();
+
+        System.assert(AMS_HierarchyHelper.isAllChildrenSelected(oscar), 'Children not selected');
+
+        Test.stopTest();
+
+    }
 
 }

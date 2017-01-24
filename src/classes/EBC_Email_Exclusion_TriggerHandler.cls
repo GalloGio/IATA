@@ -29,6 +29,7 @@ public class EBC_Email_Exclusion_TriggerHandler {
                 a = campaignActivity.get(ee.Source_Campaign__c);
             } else {
                 a = new EBC_Activity__c(
+                    name = ee.Type__c,
                     Activity_Date_Time__c = ee.Event_Date__c,
                     Activity_Type__c = 'Adjustment',
                     EBC_Campaign__c = ee.Source_Campaign__c,
