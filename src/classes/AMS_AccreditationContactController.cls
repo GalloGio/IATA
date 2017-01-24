@@ -7,7 +7,6 @@ public with sharing class AMS_AccreditationContactController {
     public Integer toNullify {get; set;}
     public boolean successfulSave {get; set;}
     public List<AMS_Accreditation_Contact__c> forDeletion {get; set;}
-    public Integer previousAgencies {get; set;}
     public String rowNumber {get; set;}
     public String linkedRecordId {get; set;}
     public List<AccountWrapper> accountWrapper {get; set;}
@@ -240,7 +239,7 @@ public with sharing class AMS_AccreditationContactController {
             return null;
         }
         
-        String firstErrorDate = verifyDateFormattingNew();
+        String firstErrorDate = verifyDateFormatting();
         if(firstErrorDate != null && firstErrorDate != '')
         {
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, 'Please make sure the date field format is "YYYY-MM-DD". First error with: '+firstErrorDate));
@@ -327,6 +326,7 @@ public with sharing class AMS_AccreditationContactController {
                 List<AMS_Accreditation_Contact__c> acUpsertList = new List<AMS_Accreditation_Contact__c>();
                 for(AccountWrapper aw : accountWrapper)
                 {
+                    System.debug('ACCOUNT WRAPPER : ' + aw);
                     aw.accountAc.Financial_interest__c = aw.financialInterest;
                     aw.accountAc.Registration_number__c = aw.registrationNumber;
 
@@ -334,6 +334,7 @@ public with sharing class AMS_AccreditationContactController {
                     {
                         aw.account.Name = aw.account.Legal_Name__c;
                         aw.account.RecordTypeId = standardAccountRtId;
+                        aw.account.Reason_for_creation__c = 'Account is missing';
                         accountInsertList.add(aw.account);
                     }
                     aw.accountAc.Agency_owner__c = true;
@@ -501,7 +502,7 @@ public with sharing class AMS_AccreditationContactController {
 
     }
 
-    public String verifyDateFormattingNew(){
+    public String verifyDateFormatting(){
 
         for(AccreditationContactWrapper wrapped : acWrapper)
         {
@@ -553,77 +554,6 @@ public with sharing class AMS_AccreditationContactController {
 
         return null;
 
-    }
-
-    public String verifyDateFormatting()
-    {
-        for(AccreditationContactWrapper wrapped : acWrapper)
-        {
-            
-            // TODO: change the apex:inputField into apex:inputText and add the Strings into the wrapper class
-            // First convert the value of the date field on load into YYYY-MM-DD and on save, validate the user input and convert back to Date and 
-            // set the value of the Date field onto the Date_joined_agency__c and other relevant fields
-
-            boolean returnError = false;
-            String fieldToCheck = '';
-            // make sure all fields are checked by looping through them
-            for(Integer i=0;i<5;i++)
-            {
-                if(i == 0)
-                    fieldToCheck = wrapped.dateJoined;
-                if(i == 1)
-                    fieldtoCheck = wrapped.prev1From;
-                if(i == 2)
-                    fieldtoCheck = wrapped.prev1To;
-                if(i == 3)
-                    fieldtoCheck = wrapped.prev2From;
-                if(i == 4)
-                    fieldtoCheck = wrapped.prev2To;
-
-                // if data is not filled, try the next field
-                if(fieldToCheck == '' || fieldToCheck == null)
-                {
-                    continue;
-                }
-                
-                if(!fieldToCheck.contains('-'))
-                {
-                    returnError = true;
-                    break;
-                }
-                
-                String numbersOnly = fieldToCheck.replace('-', '');
-                if(!numbersOnly.isNumeric())
-                {
-                    returnError = true;
-                    break;
-                }
-                
-                String[] fieldSplit = fieldToCheck.split('-');
-                if(fieldSplit.size() != 3)
-                {
-                    returnError = true;
-                    break;
-                }
-                if(fieldSplit[0].length() != 4 || fieldSplit[1].length() > 2 || fieldSplit[2].length() > 2)
-                {
-                    returnError = true;
-                    break;
-                }
-                if(Integer.valueOf(fieldSplit[0]) < 1950 || Integer.valueOf(fieldSplit[0]) > 2100 ||
-                   Integer.valueOf(fieldSplit[1]) < 1 || Integer.valueOf(fieldSplit[1]) > 12 ||
-                   Integer.valueOf(fieldSplit[2]) < 1 || Integer.valueOf(fieldSplit[2]) > 31)
-                {
-                    returnError = true;
-                    break;
-                }
-            }
-            if(returnError)
-            {
-                return wrapped.ac.First_Name__c + ' '+wrapped.ac.Last_Name__c + ' with date: ' +fieldToCheck;
-            }
-        }
-        return null;
     }
     
     public void setDateValuesForACs()
@@ -696,26 +626,20 @@ public with sharing class AMS_AccreditationContactController {
     
     public void linkACwithContactOrPersonSelection()
     {
-        try
+        rowNumber = rowNumber.replace('page:form:contactRepeat:', '');
+        Integer realRowNumber = Integer.valueOf(rowNumber.subString(0, 1));
+        System.debug('************ Contact realRowNumber: '+realRowNumber);
+        boolean isLinkedToContact = false;
+        List<Contact> conList = [select id, FirstName, LastName, Title, Membership_Main_Contact__c, OtherCountry, OtherState, OtherStreet, OtherCity, 
+                OtherPostalCode, Phone, MobilePhone, Fax, Birthdate, Email, ISO_Country__c, Financial_Assessment_Contact__c from Contact where Id = :linkedRecordId];
+        if(conList.size() > 0)
         {
-            rowNumber = rowNumber.replace('page:form:contactRepeat:', '');
-            Integer realRowNumber = Integer.valueOf(rowNumber.subString(0, 1));
-            System.debug('************ Contact realRowNumber: '+realRowNumber);
-            boolean isLinkedToContact = false;
-            List<Contact> conList = [select id, FirstName, LastName, Title, Membership_Main_Contact__c, OtherCountry, OtherState, OtherStreet, OtherCity, 
-                    OtherPostalCode, Phone, MobilePhone, Fax, Birthdate, Email, ISO_Country__c, Financial_Assessment_Contact__c from Contact where Id = :linkedRecordId];
-            if(conList.size() > 0)
-            {
-                isLinkedToContact = true;
-                copyValuesToAcIfMissing(conList.get(0), realRowNumber);
-            } else
-            {
-                List<AMS_Person__c> personList = [select Id, First_Name__c, Lastname__c, Phone__c, Mobile__c, Fax__c, DOB__c, Email__c from AMS_Person__c where Id = :linkedRecordId];
-                copyValuesToAcIfMissing(personList.get(0), realRowNumber);
-            }
-        } catch(Exception e)
+            isLinkedToContact = true;
+            copyValuesToAcIfMissing(conList.get(0), realRowNumber);
+        } else
         {
-            
+            List<AMS_Person__c> personList = [select Id, First_Name__c, Lastname__c, Phone__c, Mobile__c, Fax__c, DOB__c, Email__c from AMS_Person__c where Id = :linkedRecordId];
+            copyValuesToAcIfMissing(personList.get(0), realRowNumber);
         }
     }
     
@@ -904,7 +828,7 @@ public with sharing class AMS_AccreditationContactController {
             }
         }
         
-        public AccreditationContactWrapper(AMS_Accreditation_Contact__c acParam, String rId)
+        /*public AccreditationContactWrapper(AMS_Accreditation_Contact__c acParam, String rId)
         {
             this.ac = acParam;
             if(this.ac.Company__c == null)
@@ -912,14 +836,14 @@ public with sharing class AMS_AccreditationContactController {
                 this.ac.Company__c = acParam.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__c;
             }
             this.recordId = rId;
-        }
+        }*/
     }
     
     public class AccountWrapper
     {
         public Account account {get; set;}
         public Decimal financialInterest {get; set;}
-        public String legalName {get; set;}
+        //public String legalName {get; set;}
         public AMS_Accreditation_Contact__c accountAc {get; set;}
         public String registrationNumber {get; set;}
         public String recordId {get; set;}
@@ -943,56 +867,11 @@ public with sharing class AMS_AccreditationContactController {
         }
     }
 
-    /*private static Boolean validateDateFormat(String field){
-
-        if(!field.contains('-'))
-            return false;
-                    
-        String numbersOnly = field.replace('-', '');
-        if(!numbersOnly.isNumeric())
-            return false;
-                    
-        String[] fieldSplit = field.split('-');
-        if(fieldSplit.size() != 3)
-            return false;
-        
-        if(fieldSplit[0].length() != 4 || fieldSplit[1].length() > 2 || fieldSplit[2].length() > 2)
-            return false;
-
-        if(Integer.valueOf(fieldSplit[0]) < 1950 || Integer.valueOf(fieldSplit[0]) > 2100 ||
-            Integer.valueOf(fieldSplit[1]) < 1 || Integer.valueOf(fieldSplit[1]) > 12 ||
-            Integer.valueOf(fieldSplit[2]) < 1 || Integer.valueOf(fieldSplit[2]) > 31)
-            return false;
-        
-        return true;
-    }*/
-
     public class TrainedStaffWrapper
     {
         public AMS_Accreditation_Contact__c ac {get; set;}
         public String certificateIssueDate {get; set;}
         public String validUntil {get; set;}
-        /*public String expiryDate {
-            get{
-                if(validUntil != null)
-                    return validUntil;
-                else if(certificateIssueDate != null && ac.Certificate_Validity__c != null && dateFieldValidation(certificateIssueDate)){
-                
-                    Date issueDate = Date.valueOf(certificateIssueDate+' 00:00:00');
-                    Integer validityYears = Integer.valueOf(ac.Certificate_Validity__c.left(1));
-                    Date expiryDate = issueDate + validityYears * 365;
-
-                    return String.valueOf(expiryDate);
-
-                }  
-                    
-                return null;
-            }
-            set{
-                validUntil = expiryDate;
-            }
-
-        }*/
         
         public TrainedStaffWrapper(AMS_Accreditation_Contact__c trainedStaffAc)
         {
