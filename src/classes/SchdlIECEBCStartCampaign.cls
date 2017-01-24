@@ -158,6 +158,7 @@ global class SchdlIECEBCStartCampaign implements Database.Batchable<sObject>, Da
         
         if (c.Number_of_Recipients__c > numberOfRecipients) {
             EBC_Activity__c a = new EBC_Activity__c(
+                Name = 'Campaign Adjustment',
                 Activity_Date_Time__c = Datetime.now(),
                 Activity_Type__c = 'Adjustment',
                 EBC_Campaign__c = c.Id,

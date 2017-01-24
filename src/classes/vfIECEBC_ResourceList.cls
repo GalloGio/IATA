@@ -63,10 +63,8 @@ public class vfIECEBC_ResourceList extends vfIECEBC_Abstract_List {
         options.add(new SelectOption('Image_Type__c DESC','Image Type'));
         options.add(new SelectOption('Image_size__c DESC','Image Size'));    
         
-        options.add(new SelectOption('CreatedDate DESC','Upload Date - Descending')); 
         options.add(new SelectOption('CreatedDate ASC','Upload Date - Ascending'));
-
-
+        options.add(new SelectOption('CreatedDate DESC','Upload Date - Descending')); 
         return options;
        
     }
