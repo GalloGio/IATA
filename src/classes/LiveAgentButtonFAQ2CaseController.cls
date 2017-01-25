@@ -108,8 +108,14 @@ public with sharing class LiveAgentButtonFAQ2CaseController {
                 return 'CasesEurope';
             }else if(countryRegion == 'Americas'){
                 return 'CasesAmericas';
+            }else if(countryRegion == 'Africa & Middle East'){
+                return 'CasesMENA';
+            }else if(countryRegion == 'Asia & Pacific'){
+                return 'ExternalCasesIDFSglobal';
+            }else if(countryRegion == 'China & North Asia'){
+                return 'Cases_China_North_Asia';
             }
-            return null;// add more RT names if needed
+            return null;
         }
     }
 

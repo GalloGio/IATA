@@ -3830,7 +3830,7 @@ The product will only appear on the Online Store when the date entered in this f
         <externalId>false</externalId>
         <inlineHelpText>Indicates whether the product is included in the scope of the RCRM project.</inlineHelpText>
         <label>RCRM Product</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>Checkbox</type>
     </fields>
     <fields>
