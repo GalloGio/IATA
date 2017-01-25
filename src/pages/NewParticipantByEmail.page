@@ -12,7 +12,8 @@
     <apex:pageBlock title="New Participant" id="ThePageBlock" mode="edit">
         <apex:Pagemessages escape="false"/>
         <apex:pageBlockSection id="sectionNewParticipant" title="Information" >
-            <apex:inputField label="Contact Email" value="{!c.Email}" required="true"/>
+            <apex:inputField label="Contact Email" value="{!c.Email}" rendered="{!ISNULL(c.Email)}" required="true"/>
+            <apex:outputField value="{!c.Email}" rendered="{!NOT(ISNULL(c.Email))}" label="Contact Email"/>
             <apex:inputField value="{!p.Local_Governance__c}" rendered="{!ISNULL(p.Local_Governance__c)}" onchange="groupIdFromLookup();" label="Group" id="localGovernance">
                 <apex:actionFunction name="sendGroup" action="{!changeParticipantRecordType}" immediate="true">
                     <apex:actionSupport event="oncomplete" reRender="participantRole"/>

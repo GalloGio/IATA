@@ -21,9 +21,17 @@ public with sharing class NewParticipantByEmailCtrl {
         }catch(Exception e){
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'The local group specified was not found'));            
         }
-        
         chooseContact = false;
-        c = new Contact();
+        String idFromPageStr = ApexPages.currentPage().getParameters().get('retURL').split('/')[1];
+        Id idFromPage = (Id)idFromPageStr;
+        Schema.SObjectType oT = idFromPage.getSObjectType();
+        Schema.DescribeSObjectResult descOR = oT.getDescribe();
+        if(descOR.getName() == 'Contact')
+        {
+            c = [SELECT id, Email FROM Contact WHERE id = :idFromPage];
+        } else {
+            c = new Contact();
+        }
     }
     
     public PageReference MySave(){ 
