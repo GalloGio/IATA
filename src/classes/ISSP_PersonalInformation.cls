@@ -31,6 +31,9 @@ public with sharing class ISSP_PersonalInformation {
     public boolean isHOAccredited {get;set;}
     public boolean isTerminatedAgent {get; set;}
     private Id vHQAccountId;
+
+     //CNS
+    public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
     
 	//Global Variables
 	public String UserPortalStatus {get;set;}

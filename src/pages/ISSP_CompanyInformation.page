@@ -23,7 +23,7 @@
     </style>
 
     <div class="container">
-        <c:ISSP_CustomNavigation />
+        <c:ISSP_CustomNavigation communityName="{!communityName}"/>
         <div class="panel panel-primary">
             <div class="panel-heading head_panel_green">
                 <a name="form"></a>
@@ -685,7 +685,7 @@
         </apex:form>
         
         
-          <c:ISSP_CustomFooter />
+          <c:ISSP_CustomFooter communityName="{!communityName}"/>
     </div>
     <script>
       function validateCompanyProfile(){
