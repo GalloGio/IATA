@@ -74,6 +74,9 @@ public without sharing class pkb_Controller {
   
   public Integer viewCount {get; set;}//TF
   public Integer satisfiedCount {get; set;}//TF
+  
+  //CNS
+  public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
 
   public pkb_Controller() { }
 
@@ -399,7 +402,7 @@ system.debug('\n\n[DEBUG-PKB CONTROLLER] buildOrQuery  \n=========\n'+keywords);
         //if we are here means l parameter was not found on controller constructor
        String aux_lang = ApexPages.currentPage().getParameters().get('lang');
 
- 		system.debug('\n\n[resolveSelectedLanguage] selectedLanguage :'+selectedLanguage+
+    system.debug('\n\n[resolveSelectedLanguage] selectedLanguage :'+selectedLanguage+
               '\n l :'+ApexPages.currentPage().getParameters().get('l')+
               '\n aux_lang :'+aux_lang);
 
@@ -1013,8 +1016,8 @@ system.debug('\n\n===== sessionId :'+sessionId+'  contactId :'+contactId);
 
     // ctore that takes the ID of a KnowledgeArticle record and queries the KAV record from it
     public KnowledgeArticleData(Id i, String lang) {
-   	  system.debug('article id: ' + i);
-   	  
+      system.debug('article id: ' + i);
+      
       String q = '';
       String pub = pkb_Controller.DEFAULT_PUBLISH_STATUS;
       q += 'select ' +join(kavFields, ',')+ ' from KnowledgeArticleVersion';
@@ -1287,31 +1290,31 @@ system.debug('\n\n===== sessionId :'+sessionId+'  contactId :'+contactId);
     
     //TF
     public PageReference retrieveArticle() {
-    	
+      
         string myartid = ApexPages.currentPage().getParameters().get('artid');
         string myartType = ApexPages.currentPage().getParameters().get('artType');
         string myartURL = ApexPages.currentPage().getParameters().get('artURL');
         viewCount = 100;
         if (myartType == 'FAQ__kav'){
-			AggregateResult[] articleStatRecords = [SELECT URL_Name__c, Stat_Type__c, Count(Id) Counting 
+      AggregateResult[] articleStatRecords = [SELECT URL_Name__c, Stat_Type__c, Count(Id) Counting 
                                         FROM ArticleStatistics__c 
                                         WHERE URL_Name__c =: myartURL
                                         GROUP BY URL_Name__c, Stat_Type__c];
-			Integer artStatSize = Integer.valueOf(articleStatRecords.size());
+      Integer artStatSize = Integer.valueOf(articleStatRecords.size());
         
-			for (Integer i = 0; i < artStatSize; i++) {
-				String statType = String.valueOf(articleStatRecords[i].get('Stat_Type__c'));
-	            
-	            // If the satistic type of the group id 'View' --> will get the number of records in that group
-	            if (statType == ENV.ArticleStatType.View) {
-	                viewCount = Integer.valueOf(articleStatRecords[i].get('Counting'));
-	            }
-	            
-	            // The satistic type of the group id 'Satisfied'
-	            if (statType == ENV.ArticleStatType.Satisfied) {
-	                satisfiedCount = Integer.valueOf(articleStatRecords[i].get('Counting'));
-	            }
-			}
+      for (Integer i = 0; i < artStatSize; i++) {
+        String statType = String.valueOf(articleStatRecords[i].get('Stat_Type__c'));
+              
+              // If the satistic type of the group id 'View' --> will get the number of records in that group
+              if (statType == ENV.ArticleStatType.View) {
+                  viewCount = Integer.valueOf(articleStatRecords[i].get('Counting'));
+              }
+              
+              // The satistic type of the group id 'Satisfied'
+              if (statType == ENV.ArticleStatType.Satisfied) {
+                  satisfiedCount = Integer.valueOf(articleStatRecords[i].get('Counting'));
+              }
+      }
         }
         
         return null;

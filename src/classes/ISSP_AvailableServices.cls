@@ -20,6 +20,9 @@ public with sharing class ISSP_AvailableServices{
     public list<String> errorMessage {get; set;}
     public boolean accept {get; set;}
 
+    //CNS
+    public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
+
     public String sortExpression {
      get { return sortExp; }
      set {

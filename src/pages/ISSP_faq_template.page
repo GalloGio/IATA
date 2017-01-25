@@ -32,7 +32,7 @@
 	</script>  
     
      <div class="container">   
-         <c:ISSP_CustomNavigation />
+         <c:ISSP_CustomNavigation communityName="{!communityName}"/>
      <apex:outputText rendered="{!viewingArticle}">
         <apex:variable var="typeName" value="{!SUBSTITUTE(pkbCon.theKad.articleTypeName, pkbCon.kavExtension, '')}" />
         <apex:variable var="articleURL" value="{!pkbCon.currentSiteUrl}articles{!pkbCon.selectedLanguageURL}{!typeName}/{!pkbCon.theKad.urlName}" />
@@ -57,7 +57,7 @@
                                     <c:issp_pkb_narrow pkbCon="{!pkbCon}" />
                                     <div id="contactUs">
                                         {!$Label.PKB2_Contact_Us_Link_Prompt}<br/>
-                                        <apex:outputLink value="/ISSP_FAQ2Case?MainNav=Queries&subNav=MyQueries&mid=M1S1">
+                                        <apex:outputLink value="/ISSP_FAQ2Case?MainNav=Queries&subNav=MyQueries&mid=M1S1{!if(communityName=='CNS','&CommunityName='+communityName,'')}">
                                             {!$Label.PKB2_Contact_Us}</apex:outputLink>
                                         <br/><br/>
                                         Located in the United States?<br/>
@@ -105,7 +105,7 @@
                     </div>
                </div>
          </div><!-- end container-->
-      <c:ISSP_CustomFooter />
+      <c:ISSP_CustomFooter communityName="{!communityName}"/>
 
   </body>
     

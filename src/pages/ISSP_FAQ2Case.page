@@ -15,7 +15,7 @@
 
 
   <div class="container">
-   <c:ISSP_CustomNavigation />
+   <c:ISSP_CustomNavigation communityName="{!communityName}"/>
 
        
 <style type="text/css">
@@ -681,7 +681,7 @@
 <!---------------------------------------------------------------------------->
 <!---------------------------------------------------------------------------->
 <!---------------------------------------------------------------------------->
-  <c:ISSP_CustomFooter />
+  <c:ISSP_CustomFooter communityName="{!communityName}"/>
                   </div>
 </body>
 </html>

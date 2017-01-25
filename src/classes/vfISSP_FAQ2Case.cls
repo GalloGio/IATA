@@ -74,6 +74,9 @@ public without sharing class vfISSP_FAQ2Case
 
     public list<String> errorMessage {get; set;}
 
+    //CNS
+    public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
+
     public vfISSP_FAQ2Case() 
     {     
 
@@ -432,13 +435,17 @@ public without sharing class vfISSP_FAQ2Case
     public PageReference createSatisfiedRecord()
     {
         createArticleStatisticsRecords(SelectedArticleModalView.SelectedArticle, ENV.ArticleStatType.Satisfied);
-        return new Pagereference('/ISSP_Homepage?mid=M0S1');
+        String commParameter='';
+        if(communityName=='CNS'){commParameter = '&CommunityName='+communityName;}
+        return new Pagereference('/ISSP_Homepage?mid=M0S1'+commParameter);
     }
     
     public PageReference back()  
     {
         string retURL = ApexPages.currentPage().getParameters().get('retURL');
-        return new Pagereference(String.isNotBlank(retURL) ? retURL : '/ISSP_Homepage?mid=M0S1');
+        String commParameter='';
+        if(communityName=='CNS'){commParameter = '&CommunityName='+communityName;}
+        return new Pagereference(String.isNotBlank(retURL) ? retURL : '/ISSP_Homepage?mid=M0S1'+commParameter);
     }
     
     public PageReference save() 
