@@ -573,10 +573,26 @@ public with sharing class AMS_AccountRoleCreator
 
         List<AMS_Account_Role__c> rolesToInsert = new List<AMS_Account_role__c>();
 
+        List<AMS_Account_role__c> rolesToDeactivate = new List<AMS_Account_role__c>();
+
+        List<AMS_Account_role__c> oldRoles =  Database.query(AMS_QueryUtils.getAllFieldQuery('AMS_Account_role__c',null, + 'Account__c in:accounts', false) );
+
+        for(AMS_Account_Role__c role: oldRoles){
+            if(role.Active__c){
+                role.Termination_Date__c = Date.Today();
+                rolesToDeactivate.add(role);
+            }
+        }
+
         for(Account acct : accounts){
 
             rolesToInsert.addAll(assignOwners(acct.Id,rolesInAccounts.get(acct.Top_Parent__c)));
 
+        }
+
+        if(!rolesToDeactivate.isEmpty()){
+            System.debug('Roles to deactivate:'+rolesToDeactivate);
+            update rolestoDeactivate;
         }
 
         if(!rolesToInsert.isEmpty()){
