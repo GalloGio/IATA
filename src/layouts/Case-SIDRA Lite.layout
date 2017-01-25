@@ -3,7 +3,6 @@
     <customButtons>Approve_Default</customButtons>
     <customButtons>EasyUpload</customButtons>
     <customButtons>Reset_New_interactions</customButtons>
-    <customButtons>Send_Email</customButtons>
     <customButtons>Send_Email_with_Attachment</customButtons>
     <customButtons>Escalate_within_IATA</customButtons>
     <customButtons>Create_SAAM_Case</customButtons>
@@ -259,7 +258,7 @@
         <label>Default/Suspension</label>
         <layoutColumns>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>SIDRA_Lite_Default_Date__c</field>
             </layoutItems>
             <layoutItems>
@@ -685,11 +684,7 @@
         <editHeading>false</editHeading>
         <label>Web Links</label>
         <layoutColumns/>
-        <layoutColumns>
-            <layoutItems>
-                <customLink>Conga_Merge_Letters</customLink>
-            </layoutItems>
-        </layoutColumns>
+        <layoutColumns/>
         <layoutColumns/>
         <style>CustomLinks</style>
     </layoutSections>
