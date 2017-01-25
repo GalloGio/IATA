@@ -1,4 +1,4 @@
-trigger AMS_AgencyAffiliationTrigger on AMS_Agency_Affiliation__c (after update) {
+trigger AMS_AgencyAffiliationTrigger on AMS_Agency_Affiliation__c (after update, after delete) {
 	//Delete ASsoc Affiliations created by AMS Agency Affiliation
     if(Trigger.isAfter && Trigger.isDelete) ams2gdp_TriggerHelper.crossDeleteAssocAffiliations(Trigger.old);
 

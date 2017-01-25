@@ -1,4 +1,6 @@
-trigger AMS_AgencyAirportTrigger on AMS_Agency_Airport__c (after update) {
+trigger AMS_AgencyAirportTrigger on AMS_Agency_Airport__c (after update, after delete) {
+	//Cross delete Adjacent Airports
+  	if(Trigger.isAfter && Trigger.isDelete) ams2gdp_TriggerHelper.crossDeleteAdjacentAirports(Trigger.old);
 
 	//Delete Adjacent Airport created by AMS Agency Airport
     if(Trigger.isAfter && Trigger.isDelete) ams2gdp_TriggerHelper.crossDeleteAdjacentAirports(Trigger.old);
