@@ -4,7 +4,7 @@
 
 
 <head>
-
+    
 
  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -15,8 +15,8 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
 	<title>CNS</title>
-	<!-- <link rel="icon" type="image/png" href="https://www.iata.org/Style%20Library/IATA.org-v1/Core/Images/Icons/favicon.ico"/>
-	<link rel="shortcut icon" href="https://www.iata.org/Style%20Library/IATA.org-v1/Core/Images/Icons/favicon.ico"/> -->
+	<link rel="icon" type="image/png" href="http://www.cnsc.net/Style%20Library/cnsc-v1/Core/Images/Logos/CNSClogo.png"/>
+	<link rel="shortcut icon" href="http://www.cnsc.net/Style%20Library/cnsc-v1/Core/Images/Logos/CNSClogo.png"/>
 
 	<link rel="stylesheet" href="{!urlfor($Resource.IIS_Portal,'/css/style.css')}" type="text/css" />
     <!-- Latest compiled and minified CSS -->
@@ -25,11 +25,11 @@
 	<!-- jQuery -->
     <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
     <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-
+        
      <!-- Latest compiled and minified JavaScript -->
      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
      <link rel="stylesheet" href="{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/build/css/intlTelInput.css')}"/>
-
+    
 </head>
 
 <body>
@@ -37,7 +37,7 @@
 <!--****{!ISPICKVAL($User.UserType,'Guest')}***-->
 
 	<div class="container">
-
+	
 		<div class="row">   </div>
 	    <div class="row">
 	        <div class="logbox">
