@@ -24,11 +24,11 @@ private class soapSforceComSchemasClassAmsRecord_tst {
 		soapSforceComSchemasClassAmsRecord.CreateAddress_element elem20 = new soapSforceComSchemasClassAmsRecord.CreateAddress_element();
 	}
 
-	public class recrodCreatorMock implements WebServiceMock {
+	public class recordCreatorMock implements WebServiceMock {
 
 	    private String responseType = 'soapSforceComSchemasClassAmsRecord.';
 
-	    public recrodCreatorMock(String className){
+	    public recordCreatorMock(String className){
 	        this.responseType += className;
 	    }
 
@@ -52,27 +52,27 @@ private class soapSforceComSchemasClassAmsRecord_tst {
 
     	soapSforceComSchemasClassAmsRecord.AMS_RecordCreatorWebservice request = new soapSforceComSchemasClassAmsRecord.AMS_RecordCreatorWebservice();
 
-    	Test.setMock(WebServiceMock.class, new recrodCreatorMock('createEmployeeResponse_element'));
+    	Test.setMock(WebServiceMock.class, new recordCreatorMock('createEmployeeResponse_element'));
     	request.createEmployee('agencyId','fName','lName','phone','fax','email','address','mobile','position', System.today(),'contactId');
 
 
-    	Test.setMock(WebServiceMock.class, new recrodCreatorMock('createOwnerCompanyResponse_element'));
+    	Test.setMock(WebServiceMock.class, new recordCreatorMock('createOwnerCompanyResponse_element'));
     	request.createOwnerCompany('legalName','iataCode','agencyId', 0.0, 'ownershipId');
 
 
-    	Test.setMock(WebServiceMock.class, new recrodCreatorMock('createAddressResponse_element'));
+    	Test.setMock(WebServiceMock.class, new recordCreatorMock('createAddressResponse_element'));
     	request.createAddress('address','phone','fax','email','website','countryName','agencyId');
 
 
-    	Test.setMock(WebServiceMock.class, new recrodCreatorMock('createLifecycleRequestResponse_element'));
+    	Test.setMock(WebServiceMock.class, new recordCreatorMock('createLifecycleRequestResponse_element'));
     	request.createLifecycleRequest('agencyId');
 
 
-    	Test.setMock(WebServiceMock.class, new recrodCreatorMock('createAgencyResponse_element'));
+    	Test.setMock(WebServiceMock.class, new recordCreatorMock('createAgencyResponse_element'));
     	request.createAgency('countryName','accountId','recordType','typeOfLocation','companyType','legalName','tradingName','licenseNumber',new List<String>(),'language','site','numberVAT',false,'cargoIATACode');
 
 
-    	Test.setMock(WebServiceMock.class, new recrodCreatorMock('createOwnerPersonResponse_element'));
+    	Test.setMock(WebServiceMock.class, new recordCreatorMock('createOwnerPersonResponse_element'));
     	request.createOwnerPerson('agencyId','fName','lName','phone','fax','email','address','mobile','position', System.today(), 0.0,'ownershipId');
 
 
