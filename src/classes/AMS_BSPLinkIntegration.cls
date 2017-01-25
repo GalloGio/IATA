@@ -126,9 +126,9 @@ global class AMS_BSPLinkIntegration {
 			//Check sProcess variable 
 			if(sProcess=='Deactivation' || sProcess == 'DeactivationUndo' || sProcess == 'Reactivation'){
 				
-				map<id, string> mapBPEEmails = new map<id, string>();
-				for(Contact c: [select AccountId, Email from contact where Financial_Assessment_Contact__c=true and AccountId in :setAccntId])
-					mapBPEEmails.put(c.AccountId, c.Email);
+				//map<id, string> mapBPEEmails = new map<id, string>();
+				//for(Contact c: [select AccountId, Email from contact where Financial_Assessment_Contact__c=true and AccountId in :setAccntId])
+				//	mapBPEEmails.put(c.AccountId, c.Email);
 				
 				//DO Login
 				Response GenerateToken = GrantToken(BSPLinkParameter.EndpointToken__c, BSPLinkParameter.Username__c, BSPLinkParameter.Password__c, BSPLinkParameter.GrantType__c);
@@ -139,9 +139,9 @@ global class AMS_BSPLinkIntegration {
 						Response resp;
 						if(sProcess == 'Deactivation') 		resp = AgentDeactivation(GenerateToken.description, AA, BSPLinkParameter);
 						
-						if(sProcess == 'DeactivationUndo')	resp = AgentDeactivationUndo(GenerateToken.description, AA, BSPLinkParameter, mapBPEEmails.get(AA.Account__c));
+						if(sProcess == 'DeactivationUndo')	resp = AgentDeactivationUndo(GenerateToken.description, AA, BSPLinkParameter);
 						
-						if(sProcess == 'Reactivation')		resp = AgentReactivation(GenerateToken.description, AA, BSPLinkParameter, mapBPEEmails.get(AA.Account__c));
+						if(sProcess == 'Reactivation')		resp = AgentReactivation(GenerateToken.description, AA, BSPLinkParameter);
 
 
 				    	if(resp.result == 'Ok'){
@@ -256,7 +256,7 @@ global class AMS_BSPLinkIntegration {
     
     
     //Method to invoke the webservice exposed by BSPLink to undo a deactivation of an agency
-    global static Response AgentDeactivationUndo(string sToken, Agency_Authorization__c AA, AMS_BSPLink_Integration__c Param, string sEmail){
+    global static Response AgentDeactivationUndo(string sToken, Agency_Authorization__c AA, AMS_BSPLink_Integration__c Param){
     	Response oReturn = new Response();
     	
     	HttpRequest req = new HttpRequest();
@@ -271,7 +271,7 @@ global class AMS_BSPLinkIntegration {
     	BodyRequest.IsoCountryCode = AA.ISO_Country__c;	//Get Country Code of the Agency
     	BodyRequest.AgentCode = AA.IATACode__c;			//Get IATA COde
     	BodyRequest.SalesForceId = AA.Id;		//ID of the record created in the queue table
-    	BodyRequest.Bpe = sEmail;				//EmailAddress of the agent
+    	BodyRequest.Bpe = AA.Email_Used_for_BSP_Creation__c;				//EmailAddress of the agent
     	req.setBody(JSON.serialize(BodyRequest));
     	req.setTimeout(120000); 
     	
@@ -296,7 +296,7 @@ global class AMS_BSPLinkIntegration {
     }
     
     //Method to invoke the webservice exposed by BSPLink to reactivate an agency
-    global static Response AgentReactivation(string sToken, Agency_Authorization__c AA, AMS_BSPLink_Integration__c Param, string sEmail){
+    global static Response AgentReactivation(string sToken, Agency_Authorization__c AA, AMS_BSPLink_Integration__c Param){
     	Response oReturn = new Response();
     	
     	HttpRequest req = new HttpRequest();
@@ -311,7 +311,7 @@ global class AMS_BSPLinkIntegration {
     	BodyRequest.IsoCountryCode = AA.ISO_Country__c;	//Get Country Code of the Agency
     	BodyRequest.AgentCode = AA.IATACode__c;			//Get IATA COde
     	BodyRequest.SalesForceId = AA.Id;		//ID of the record created in the queue table
-    	BodyRequest.Bpe = sEmail;				//EmailAddress of the agent
+    	BodyRequest.Bpe = AA.Email_Used_for_BSP_Creation__c;				//EmailAddress of the agent
     	req.setBody(JSON.serialize(BodyRequest));
     	req.setTimeout(120000); 
     	
@@ -377,7 +377,7 @@ global class AMS_BSPLinkIntegration {
 			}
 		}
 		
-		list<Agency_Authorization__c> lsToReturn = [select Id, Account__c, Account__r.Sector__c, Status__c, IATACode__c, ISO_Country__c
+		list<Agency_Authorization__c> lsToReturn = [select Id, Account__c, Account__r.Sector__c, Status__c, IATACode__c, ISO_Country__c, Email_Used_for_BSP_Creation__c
 													from Agency_Authorization__c where Authority__c='BSPLink' and Account__c in:setAccntToRemove];
 		
 		/* Future enhancements? if they do not exists, create. Will encounter error "You have uncommitted..."
