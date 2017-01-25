@@ -95,21 +95,17 @@ private class AMS_HierarchyAnalyserBatchTest
 
 		Test.startTest();
 
-
-		AMS_HierarchyAnalyserBatch b = new AMS_HierarchyAnalyserBatch(AMS_HierarchyAnalyser.getParentHierarchyIds());
-		database.executebatch(b);
+		AMS_HierarchyAnalyser sch = new AMS_HierarchyAnalyser();
+		System.schedule('Test Job', System.now().addHours(1).format('ss mm HH dd MM ? yyyy'), sch);
+		sch.execute(null);
 
 		Test.stopTest();
 
-		Set <Id> hierarchiesSetIds = new Set <Id>();
+		Set<Id> hierarchiesSetIds = new Set<Id>();
 		
-		for(AMS_Agencies_relationhip__c rel : [select Id,Hierarchy__c,Child_Account__c from AMS_Agencies_relationhip__c where Parent_Account__c = :HO.id])
-		{
-			hierarchiesSetIds.add(rel.Hierarchy__c);
+		for(AMS_Agencies_relationhip__c rel : [select Id,Hierarchy__c,Child_Account__c from AMS_Agencies_relationhip__c where Parent_Account__c = :HO.id]) hierarchiesSetIds.add(rel.Hierarchy__c);
 
-		}
-
-		system.assertEquals(1,hierarchiesSetIds.size());
+		System.assertEquals(1,hierarchiesSetIds.size());
 
 	}
 }
