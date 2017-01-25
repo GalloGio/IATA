@@ -742,99 +742,99 @@ Please check for ICH membership under www.iata.org/ich.</inlineHelpText>
         <label>Period</label>
         <picklist>
             <picklistValues>
-                <fullName>201501</fullName>
+                <fullName>201701</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>201502</fullName>
+                <fullName>201702</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>201503</fullName>
+                <fullName>201703</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>201504</fullName>
+                <fullName>201704</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>201505</fullName>
+                <fullName>201705</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>201506</fullName>
+                <fullName>201706</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>201507</fullName>
+                <fullName>201707</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>201508</fullName>
+                <fullName>201708</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>201509</fullName>
+                <fullName>201709</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>201510</fullName>
+                <fullName>201710</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>201511</fullName>
+                <fullName>201711</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>201512</fullName>
+                <fullName>201712</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>201601</fullName>
+                <fullName>201801</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>201602</fullName>
+                <fullName>201802</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>201603</fullName>
+                <fullName>201803</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>201604</fullName>
+                <fullName>201804</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>201605</fullName>
+                <fullName>201805</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>201606</fullName>
+                <fullName>201806</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>201607</fullName>
+                <fullName>201807</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>201608</fullName>
+                <fullName>201808</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>201609</fullName>
+                <fullName>201809</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>201610</fullName>
+                <fullName>201810</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>201611</fullName>
+                <fullName>201811</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>201612</fullName>
+                <fullName>201812</fullName>
                 <default>false</default>
             </picklistValues>
             <sorted>false</sorted>
@@ -1492,6 +1492,10 @@ Treasury Dashboard Set-up Fee (800964) : 3500</inlineHelpText>
                 <fullName>22000.00</fullName>
                 <default>false</default>
                 <controllingFieldValues>MITA annual fee - 701909</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>7400.00</fullName>
+                <default>false</default>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>

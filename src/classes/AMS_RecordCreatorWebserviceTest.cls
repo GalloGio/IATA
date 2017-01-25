@@ -438,8 +438,8 @@ private class AMS_RecordCreatorWebserviceTest {
 		AMS_OSCAR__c oscar = oscarLst.get(0);
 
 		System.assertEquals(oscar.Type_of_change__c,'Ownership to non-IATA Agent');
-
-		List<AMS_Process_Detail__c> details = [SELECT Id from AMS_Process_Detail__c where OSCAR__c = :oscarId];
+//DTULLO: Added Record Type
+		List<AMS_Process_Detail__c> details = [SELECT Id from AMS_Process_Detail__c where OSCAR__c = :oscarId and RecordType.Developername = 'Agency_Involved'];
 
 		System.assertEquals(details.size(),2);
 

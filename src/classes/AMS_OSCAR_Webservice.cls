@@ -160,7 +160,7 @@ global class AMS_OSCAR_Webservice {
     }
 
     WebService static String createAMLCase(String oscarId){
-        List<AMS_OSCAR__c> oscar = [select Name, STEP17__c, Account__c, Account__r.Name, Account__r.IATA_ISO_Country__r.Region__c, Account__r.IATA_ISO_Country__r.Name from AMS_OSCAR__c where Id =: oscarId];
+        List<AMS_OSCAR__c> oscar = [select Name, STEP17__c, Account__c, Region__c, Process__c from AMS_OSCAR__c where Id =: oscarId];
         if(oscar!=null && oscar.size()>0) {
             return execCreateAMLCase(oscar[0], true);
         }        
@@ -176,7 +176,7 @@ global class AMS_OSCAR_Webservice {
 
             ID InternalCaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('Internal Cases (IDFS ISS)');
 
-            List<Case> cases = [select Id from Case where OSCAR__c =: oscar.Id AND ( ParentId = null or Parent.RecordType.Name != 'OSCAR Communication' ) limit 1];
+            List<Case> cases = [select Id, OSCAR__r.Account__r.IATA_ISO_Country__r.Name, OSCAR__r.AMS_Online_Accreditation__r.Account_Name__c from Case where OSCAR__c =: oscar.Id AND ( ParentId = null or Parent.RecordType.Name != 'OSCAR Communication' ) limit 1];
 
             if(cases == null || cases.isEmpty()){
                 result = 'Could not find a the Oscar Communication case related to this OSCAR.';
@@ -185,14 +185,14 @@ global class AMS_OSCAR_Webservice {
 
             Case oscarCommCase = cases[0];
 
-            Case issCase = new Case(RecordTypeId = InternalCaseRecordTypeID, Reason1__c = 'New Accredited Agent', CaseArea__c = 'Corporate Compliance',
-                                ParentId = oscarCommCase.Id, AccountId = oscar.Account__c, Subject = 'Due Diligence – ' + oscar.Account__r.Name,
-                                OSCAR__c = oscar.Id, Region__c = oscar.Account__r.IATA_ISO_Country__r.Region__c, BSPCountry__c = oscar.Account__r.IATA_ISO_Country__r.Name);
+            Case issCase = new Case(RecordTypeId = InternalCaseRecordTypeID, CaseArea__c = 'Corporate Compliance',
+                                Reason1__c = (oscar.Process__c == AMS_Utils.AGENCYCHANGES ? 'Agent Change of Ownership' : 'New Accredited Agent'),
+                                ParentId = oscarCommCase.Id, AccountId = oscar.Account__c, Subject = 'Due Diligence – ' + oscarCommCase.OSCAR__r.AMS_Online_Accreditation__r.Account_Name__c,
+                                OSCAR__c = oscar.Id, Region__c = oscar.Region__c, BSPCountry__c = oscarCommCase.OSCAR__r.Account__r.IATA_ISO_Country__r.Name);
 
-            //TO BE REVERTED DUE DILLIGENCE FIX
-            //Database.DMLOptions dmo = new Database.DMLOptions();
-            //dmo.assignmentRuleHeader.useDefaultRule = true;
-            //issCase.setOptions(dmo);           
+            Database.DMLOptions dmo = new Database.DMLOptions();
+            dmo.assignmentRuleHeader.useDefaultRule = true;
+            issCase.setOptions(dmo);           
 
             insert issCase;
             
