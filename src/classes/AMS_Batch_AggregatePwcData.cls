@@ -104,7 +104,7 @@ global class AMS_Batch_AggregatePwcData implements Database.Batchable<Account> {
 
         // Get agency applied change codes
         List<Agency_Applied_Change_code__c> agencyAppliedChangeCodes = [
-            SELECT Id, Change_Code__c, Created_Date_To_Show__c, Account__c, DEF_Non_Payment__c, Operation__c, Irregularities_Points__c, Account__r.Location_class__c, Irregularity_Type__c
+            SELECT Id, Change_Code__c, Created_Date_To_Show__c, Account__c, DEF_Non_Payment2__c, Operation__c, Irregularities_Points__c, Account__r.Location_class__c, Irregularity_Type__c
             FROM Agency_Applied_Change_code__c
             WHERE Account__c IN :accountIds];
 
@@ -133,7 +133,7 @@ global class AMS_Batch_AggregatePwcData implements Database.Batchable<Account> {
                 }
 
                 // For DEFNONPAY, only if this entry is in the right DEFNONPAY timeframe
-                if((agencyAppliedChangeCode.Change_Code__c.equals('DEF') && agencyAppliedChangeCode.DEF_Non_Payment__c == true) && (currentDate < agencyAppliedChangeCode.Created_Date_To_Show__c.addMonths(defNonPayDefaultTimeframe))) {
+                if((agencyAppliedChangeCode.Change_Code__c.equals('DEF') && agencyAppliedChangeCode.DEF_Non_Payment2__c == true) && (currentDate < agencyAppliedChangeCode.Created_Date_To_Show__c.addMonths(defNonPayDefaultTimeframe))) {
                     updateAggregatePwcData(agencyAppliedChangeCode.Account__c, 'DEFNONPAY', 1, null);
                 }
 
