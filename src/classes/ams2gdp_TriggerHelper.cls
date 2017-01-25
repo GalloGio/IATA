@@ -39,7 +39,7 @@ public with sharing class ams2gdp_TriggerHelper
 
 		for(Account a : accounts)
 		{
-			product_keys.add(a.Id+'GDP');
+			product_keys.add(a.Id);
 			agency_profile_keys.add(a.Id+'GDP');
 
 			if(String.isNotBlank(a.GDS__c))
