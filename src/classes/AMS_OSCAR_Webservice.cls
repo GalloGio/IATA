@@ -162,7 +162,7 @@ global class AMS_OSCAR_Webservice {
     }
 
     WebService static String createAMLCase(String oscarId){
-        List<AMS_OSCAR__c> oscar = [select Name, STEP17__c, Account__c, Region__c from AMS_OSCAR__c where Id =: oscarId];
+        List<AMS_OSCAR__c> oscar = [select Name, STEP17__c, Account__c, Region__c, Process__c from AMS_OSCAR__c where Id =: oscarId];
         if(oscar!=null && oscar.size()>0) {
             return execCreateAMLCase(oscar[0], true);
         }        
