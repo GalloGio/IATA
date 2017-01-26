@@ -38,7 +38,7 @@ global class AMS_BSPLinkIntegration {
 	//Webservice invoked from SIDRA Lite
 	webservice static list<Response> ProcessBSPLinkFromCase(String sProcess, List<Id> objectIds, string sTypeOfRemoval, id CaseId){
 		list<Response> lsToReturn = new list<Response>();
-		list<Case> lsCase = [select id, Shut_Down_TKT_System_GDS_and_BSPlink__c from case where id=:CaseId];
+		list<Case> lsCase = [select id, Shut_Down_TKT_System_GDS_and_BSPlink__c, Open_TKT_System__c from case where id=:CaseId];
 		response r = new response();
 		
 		if(lsCase.isEmpty()){
@@ -68,9 +68,14 @@ global class AMS_BSPLinkIntegration {
 			}
 		}
 		
-		if(bCaseToUpd){
-			for(case c:lsCase)
-				c.Shut_Down_TKT_System_GDS_and_BSPlink__c = system.now();
+		if(bCaseToUpd && (sProcess=='Deactivation' || sProcess=='Reactivation')){
+			for(case c:lsCase){
+				if(sProcess=='Deactivation')
+					c.Shut_Down_TKT_System_GDS_and_BSPlink__c = system.now();
+					
+				if(sProcess=='Reactivation')
+					c.Open_TKT_System__c = system.now();
+			}
 			update lsCase;
 		}
 		
