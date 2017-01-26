@@ -40,7 +40,16 @@ public with sharing class SidraLiteManager {
     **/
     public static void afterInsertSidraLiteCases(list<Case> listNewCases) {
         list<Case> listSidraLite = filterSidraLiteCases(listNewCases);
-        WSSidraLite.insertComments(listSidraLite);
+        if( !listSidraLite.isEmpty() ) {
+            // insert comment records to new created cases
+            WSSidraLite.insertComments(listSidraLite);
+
+            // set default case assignment rule
+            list<Case> listCase = [Select Id from Case where id in :listSidraLite];
+            Database.DMLOptions dmo = new Database.DMLOptions();
+            dmo.assignmentRuleHeader.useDefaultRule = true;
+            Database.update(listCase, dmo);
+        }
     }
 
     /**
@@ -140,12 +149,13 @@ public with sharing class SidraLiteManager {
             from Account
             where id in :listAccountId]);
         list<Case> listUpdateParent = new list<Case>();
+
         for (Case cse: listCases) {
             Case parentCase = mapParents.get(cse.ParentId);
             Account account = mapAccounts.get(cse.AccountId);
             //If there is a parent Ifap case then is a valid case to process
             if (parentCase == null) {
-                // TODO it's a SIDRA lite case without an IFAP Parent
+                // it's a SIDRA lite case without an IFAP Parent
                 //cse.addError('There is no valid parent case');
 
             // if parent case is SMAP
@@ -428,9 +438,8 @@ parentCase.Documentation_Complete__c.format() + ')');
         cse.AccountId = account.Id;
         cse.Region__c = parentCase.Region__c;
         cse.BSPCountry__c = parentCase.BSPCountry__c;
-        cse.SIDRA_Lite_Reason__c = 'Late/Absence of Notification of Change';
+        //cse.SIDRA_Lite_Reason__c = SidraLiteHelperForOSCAR.getOSCARReason(parentCase);
         cse.SIDRA_Lite_Default_Date__c = Date.Today();
-        cse.Reason_for_Default__c = 'Disapproval of Change';
         cse.BSP_CASS__c = SidraLiteUtil.getBSPCASS(account);
 
         if (SidraLiteUtil.isAccountActive(account)) {

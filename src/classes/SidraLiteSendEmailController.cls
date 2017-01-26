@@ -57,10 +57,12 @@ public with sharing class SidraLiteSendEmailController {
             this.emailTemplate = [Select Id, Name from EmailTemplate where id = :templateId];
         } catch (Exception e) {
             //ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR, e.getMessage()));
+            this.emailTemplate = null;
             this.selectedCustomize = 'true';
         }
         try {
             Id templateId = SidraLiteUtil.getMergeTemplate(this.cse, this.selectedType);
+
             if (templateId.getSObjectType().getDescribe().getName() == 'APXTConga4__Conga_Template__c') {
                 this.mergeTemplate = null;
                 this.congaTemplate = [Select Id, Name from APXTConga4__Conga_Template__c where id = :templateId];
@@ -73,6 +75,9 @@ public with sharing class SidraLiteSendEmailController {
         } catch (Exception e) {
             //ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR, e.getMessage()));
             this.selectedCustomize = 'true';
+            this.emailTemplate = null;
+            this.mergeTemplate = null;
+            this.congaTemplate = null;
         }
     }
 
@@ -87,7 +92,6 @@ public with sharing class SidraLiteSendEmailController {
         if (this.selectedType=='IRRWD') {
             this.cse.Confirm_IRR_Withdrawal_to_AG__c = this.dummyCase.Confirm_IRR_Withdrawal_to_AG__c;
             this.cse.Update_AIMS_IRRWITH__c = this.dummyCase.Update_AIMS_IRRWITH__c;
-            this.cse.IRR_Withdrawal_Reason__c = this.dummyCase.IRR_Withdrawal_Reason__c;
         }
         if (this.selectedType=='DEF') {
             this.cse.Update_AIMS_DEF__c = this.dummyCase.Update_AIMS_DEF__c;
@@ -103,7 +107,6 @@ public with sharing class SidraLiteSendEmailController {
             this.cse.Open_TKT_System__c = this.dummyCase.Open_TKT_System__c;
             this.cse.Inform_Airlines_REI_DEFWD__c = this.dummyCase.Inform_Airlines_REI_DEFWD__c;
             this.cse.Ticketing_Authority_Re_assigned__c = this.dummyCase.Ticketing_Authority_Re_assigned__c;
-            this.cse.DEF_Withdrawal_Reason__c = this.dummyCase.DEF_Withdrawal_Reason__c;
         }
         if (this.selectedType=='REI') {
             this.cse.Confirm_Reinstatement_to_AG__c = this.dummyCase.Confirm_Reinstatement_to_AG__c;
@@ -185,8 +188,11 @@ public with sharing class SidraLiteSendEmailController {
             } else if (this.congaTemplate!=null) {
                 attachmentTemplateId = this.congaTemplate.id;
             }
+
+            Id emailtemplate = this.emailTemplate == null? null: this.emailTemplate.Id;
+
             // automated version with given templates
-            return CongaManager.sendEmailURL(this.apiSessionId, this.apiServerURL, this.cse.Id, selectedCase.Id, this.cse.ContactId, attachmentTemplateId, this.emailTemplate.Id, listadd[0].id, listQueries);
+            return CongaManager.sendEmailURL(this.apiSessionId, this.apiServerURL, this.cse.Id, selectedCase.Id, this.cse.ContactId, attachmentTemplateId, emailTemplate, listadd[0].id, listQueries);
         }
     }
 

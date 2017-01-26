@@ -232,14 +232,6 @@
         <value>Change Reconsideration</value>
     </labels>
     <labels>
-        <fullName>AMS_OSCAR_CHANGE_REJECTION_FINALIZATION</fullName>
-        <categories>LeftSidePanel, Headers</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>AMS_OSCAR_CHANGE_REJECTION_FINALIZATION</shortDescription>
-        <value>Change Rejection</value>
-    </labels>
-    <labels>
         <fullName>AMS_OSCAR_CHANGE_WITHDRAWAL</fullName>
         <categories>LeftSidePanel, Headers</categories>
         <language>en_US</language>
@@ -352,6 +344,14 @@
         <protected>false</protected>
         <shortDescription>AMS_OSCAR_REJECTION_FINALIZATION</shortDescription>
         <value>Application Rejection</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_CHANGE_REJECTION_FINALIZATION</fullName>
+        <categories>LeftSidePanel, Headers</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_CHANGE_REJECTION_FINALIZATION</shortDescription>
+        <value>Change Rejection</value>
     </labels>
     <labels>
         <fullName>AMS_OSCAR_STEP1</fullName>
@@ -10727,7 +10727,7 @@ Select at least one Authorized Signatory, and choose the Financial Assessment Co
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_eBulletin_AgencyInformation_disclaimer</shortDescription>
-        <value>Pilot Phase: please note that only Changes and New processes related codes are currently available everywhere. The rest of Agency Information is only available for the following Countries:…</value>
+        <value>Pilot Phase: please note that only Changes and New processes related codes are currently available everywhere. The rest of Agency Information is only available for the following Countries: Brazil, Chile, Colombia, Hong Kong, Kenya, Indonesia, Philippines, Romania, Thailand, Turkey and Saudi Arabia</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_eBulletin_Area1</fullName>
