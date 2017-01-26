@@ -135,6 +135,9 @@ public class ISSP_Ctrl_Bannertestpage {
 		system.debug('SFIIcountry  UserPortalRegion '+UserPortalRegion);
         for(ISSP_Banner__c ban : unFilteredBanner_List ){
 		system.debug('SFIIcountry  ban.Country__c '+ban.Country__c);
+            
+            Boolean isCNS = [SELECT Id, Contact.Account.CNS_Agency__c FROM User WHERE Id =:UserInfo.getUserId()].Contact.Account.CNS_Agency__c;
+            
             if(ban.Country__c != null && ban.Country__c.contains(UserPortalCountry)){
                 tmpBanner_set.add(ban);
             }else{
@@ -145,6 +148,9 @@ public class ISSP_Ctrl_Bannertestpage {
 				{
 					tmpBanner_set.add(ban);
 				}
+            }
+            if(isCNS && ban.Country__c.contains('All - CNS')) {
+                tmpBanner_set.add(ban);
             }
         }system.debug('SFIIcountry tmpBanner_set '+tmpBanner_set);
         //Filters the List to display    
