@@ -9,17 +9,21 @@ public class AMS_AgencyAChangeCodeHandler {
      
     public static void handleAfterInsert(List<Agency_Applied_Change_code__c> aacc) {
         verifyActiveAACCuniqueness(aacc);
+        set<id> setIdAACC = new set<id>();
         Id irregRtId = AMS_Utils.getId('Agency_Applied_Change_code__c', 'Irregularities');
         List<Agency_Applied_Change_code__c> aaccToBeProcessed = new List<Agency_Applied_Change_code__c>();
         for(Agency_Applied_Change_Code__c aaccRecord : aacc)
         {
+        	setIdAACC.add(aaccRecord.id);
             if(aaccRecord.RecordTypeId == irregRtId)
             {
                 aaccToBeProcessed.add(aaccRecord);
             }
         }
         AMS_Irregularities_Utils.CalculateAccumulatedIrregularitiesFromChangeCode(aaccToBeProcessed);
-
+		
+		updateAccountReason(setIdAACC);
+		
         //FM 22-09-2016 - Create "Agency Update" records
         AMS_AgencyUpdateHelper.agencyUpdate( (List<SObject>) aacc);
     }
@@ -42,6 +46,41 @@ public class AMS_AgencyAChangeCodeHandler {
         migrateFieldsFromStagingToAccount(aacc);
     }
     
+    //DTULLO: marked as future because some change codes are generated from account changes (minor changes)
+    //thus, we try to re-update the same account again
+    //public static void updateAccountReason(list<Agency_Applied_Change_code__c> lsAACC){
+	@future
+    public static void updateAccountReason(set<id> setAACC){
+    	list<Agency_Applied_Change_code__c> lsAACC = [select id, Reason_Code__c, Reason_Description__c, Account__c  from Agency_Applied_Change_code__c where id in:setAACC];
+    	set<id> setAccntId = new set<id>();
+    	map<id, string> mapNewReason = new map<id, string>();
+    	map<id, account> mapAccntToUpdate = new map<id, account>();
+    	
+    	for(Agency_Applied_Change_code__c aacc:lsAACC){
+    		if(aacc.Reason_Code__c != null && aacc.Reason_Code__c != ''){
+    			setAccntId.add(aacc.Account__c);
+    			mapNewReason.put(aacc.Account__c, aacc.Reason_Code__c + '-' + aacc.Reason_Description__c);
+    		}
+    	}
+    	map<id, account> mapAccnt = new Map<ID, Account>([select id, reason__c, Previous_Reason__c from account where id in:setAccntId]);
+    	
+    	for(Agency_Applied_Change_code__c aacc:lsAACC){
+    		string sReason = aacc.Reason_Code__c+ '-' + aacc.Reason_Description__c;
+    		if(sReason != '-'){
+    			if(mapAccnt.containsKey(aacc.Account__c)){
+	    			string sAccntReason = mapAccnt.get(aacc.Account__c).reason__c;
+	    			if(sReason != sAccntReason){
+	    				mapAccntToUpdate.put(aacc.Account__c,new Account(id = aacc.Account__c
+	    									,reason__c = sReason
+	    									,Previous_Reason__c = sAccntReason));
+	    			}
+    			}
+    		}
+    	}
+    	
+    	if(!mapAccntToUpdate.isEmpty())
+    		update mapAccntToUpdate.values();
+    }
     
     //DTULLO: NEED to bulkify it. Now change codes are bring via dataloader from aims. batch size = 50.
     //because of a requirement, they are coming as active. so, if more than 1 is coming, we should check inside the trigger to set them to false

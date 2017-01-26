@@ -35,14 +35,61 @@ In case there are no available resource, batch will be self-rescheduling through
 ***********************************************/
 
 global class AMS_BSPLinkIntegration {
-	//MAIN METHOD
+	//Webservice invoked from SIDRA Lite
+	webservice static list<Response> ProcessBSPLinkFromCase(String sProcess, List<Id> objectIds, string sTypeOfRemoval, id CaseId){
+		list<Response> lsToReturn = new list<Response>();
+		list<Case> lsCase = [select id, Shut_Down_TKT_System_GDS_and_BSPlink__c from case where id=:CaseId];
+		response r = new response();
+		
+		if(lsCase.isEmpty()){
+			r.IATACode='-';
+			r.result = 'Error';
+			r.description = 'Wrong Case Received';
+			lsToReturn.Add(r);
+			return lsToReturn;
+		}
+		
+		if(sProcess=='DeactivationUndo'){
+			if(lsCase.get(0).Shut_Down_TKT_System_GDS_and_BSPlink__c<system.today().addDays(-10)){
+				r.IATACode='-';
+				r.result = 'Error';
+				r.description = 'Cannot undo deactivation if more than 10 days passed since deactivation';
+				lsToReturn.Add(r);
+				return lsToReturn;
+			}
+		}
+		
+		lsToReturn = ProcessRequest(sProcess, objectIds, sTypeOfRemoval, CaseId);
+		boolean bCaseToUpd = false;
+		for(Response res:lsToReturn){
+			if(res.result == 'Ok'){
+				bCaseToUpd = true;
+				break;
+			}
+		}
+		
+		if(bCaseToUpd){
+			for(case c:lsCase)
+				c.Shut_Down_TKT_System_GDS_and_BSPlink__c = system.now();
+			update lsCase;
+		}
+		
+		return lsToReturn;
+	}
+	
+	//Webservice invoked from Left Side Panel (Voluntary Relinquishment process mainly)
 	webservice static list<Response> ProcessBSPLink(String sProcess, List<Id> objectIds, string sTypeOfRemoval){
+		return ProcessRequest(sProcess, objectIds, sTypeOfRemoval, null);
+	}
+	
+	private static list<response> ProcessRequest(String sProcess, List<Id> objectIds, string sTypeOfRemoval, id CaseId){
 		list<response> oReturn = new list<Response>();
 		
 		list<Agency_Authorization__c> lsToRemove = RetrieveBSPLinkAuthToRemove(objectIds.clone(), sTypeOfRemoval);
 		
 		if(lsToRemove.isEmpty()){
 			response r = new response();
+			r.IATACode='-';
 			r.result = 'Error';
 			r.description = 'No authorization found for given agencies';
 			oReturn.Add(r);
@@ -54,6 +101,7 @@ global class AMS_BSPLinkIntegration {
 		for(Agency_Authorization__c a:lsToRemove){
 			if(a.Account__r.Sector__c == null || a.Account__r.Sector__c!='Travel Agent'){
 				response r = new response();
+				r.IATACode=a.IATACode__c;
 				r.result = 'Error';
 				r.description = 'BSPLink actions are available for passenger agencies only';
 				oReturn.Add(r);
@@ -68,6 +116,7 @@ global class AMS_BSPLinkIntegration {
 			
 	    	if(string.isEmpty(BSPLinkParameter.EndpointToken__c) || string.isEmpty(BSPLinkParameter.Password__c) || string.isEmpty(BSPLinkParameter.Username__c) || string.isEmpty(BSPLinkParameter.GrantType__c)){
 	    		response r = new response();
+	    		r.IATACode='-';
 				r.result = 'Error';
 				r.description = 'Integration Parameters not set. Please contact a system administrator';
 				oReturn.Add(r);
@@ -75,7 +124,7 @@ global class AMS_BSPLinkIntegration {
 	    	}
 	    	
 			//Check sProcess variable 
-			if(sProcess=='Deactivation' || sProcess == 'DeactivationUndoOrReactivation'){
+			if(sProcess=='Deactivation' || sProcess == 'DeactivationUndo' || sProcess == 'Reactivation'){
 				
 				map<id, string> mapBPEEmails = new map<id, string>();
 				for(Contact c: [select AccountId, Email from contact where Financial_Assessment_Contact__c=true and AccountId in :setAccntId])
@@ -88,15 +137,17 @@ global class AMS_BSPLinkIntegration {
 
 					for(Agency_Authorization__c AA:lsToRemove){
 						Response resp;
-						if(sProcess == 'Deactivation') resp = AgentDeactivation(GenerateToken.description, AA, BSPLinkParameter);
+						if(sProcess == 'Deactivation') 		resp = AgentDeactivation(GenerateToken.description, AA, BSPLinkParameter);
 						
-						else if(sProcess == 'DeactivationUndoOrReactivation'){
-							if(AA.Status__c == 'Deactivation in process') resp = AgentDeactivationUndo(GenerateToken.description, AA, BSPLinkParameter, mapBPEEmails.get(AA.Account__c));
-							
-							if(AA.Status__c == 'Non-Active') resp = AgentReactivation(GenerateToken.description, AA, BSPLinkParameter, mapBPEEmails.get(AA.Account__c));
-						}
+						if(sProcess == 'DeactivationUndo')	resp = AgentDeactivationUndo(GenerateToken.description, AA, BSPLinkParameter, mapBPEEmails.get(AA.Account__c));
+						
+						if(sProcess == 'Reactivation')		resp = AgentReactivation(GenerateToken.description, AA, BSPLinkParameter, mapBPEEmails.get(AA.Account__c));
 
-				    	if(resp.result == 'Ok')	AA.Status__c = 'Deactivation in process';
+
+				    	if(resp.result == 'Ok'){
+				    		if(sProcess == 'Deactivation') AA.Status__c = 'Deactivation in process';
+				    		AA.Last_Request_Result__c = sProcess + ' in process';	
+				    	}
 					    else 					AA.Last_Request_Result__c = resp.description;
 
 						oReturn.add(resp);
@@ -108,18 +159,20 @@ global class AMS_BSPLinkIntegration {
 				}
 			}else{
 				response r = new response();
+				r.IATACode='-';
 				r.result = 'Error';
 				r.description = 'Please, specify a valid process';
 				oReturn.Add(r);
 			}
 
 		}else{
-			AMS_BSPLinkIntegration_Scheduler bspSc = new AMS_BSPLinkIntegration_Scheduler(UserInfo.getUserEmail(), lsToRemove, sTypeOfRemoval);
+			AMS_BSPLinkIntegration_Scheduler bspSc = new AMS_BSPLinkIntegration_Scheduler(UserInfo.getUserEmail(), lsToRemove, sTypeOfRemoval, CaseId);
 			Datetime dt = Datetime.now().addSeconds(30);
 			String timeForScheduler = dt.format('s m H d M \'?\' yyyy');
 			Id schedId = System.Schedule(sTypeOfRemoval+' '+timeForScheduler,timeForScheduler,bspSc);
 			
 			response r = new response();
+			r.IATACode='-';
 			r.result = 'Ok';
 			r.description = 'More than 80 agencies will be deactivated. You\'ll receive an email when process is finished';
 			oReturn.Add(r);
@@ -186,13 +239,14 @@ global class AMS_BSPLinkIntegration {
 	    	//All good
 	    	if(resp.getStatusCode()==200){
 	    		agentDeactivationRequestResponse Resp200 = (agentDeactivationRequestResponse)JSON.Deserialize(resp.getBody(), agentDeactivationRequestResponse.class);
-	    		oReturn.IATACode = BodyRequest.AgentCode;
+	    		oReturn.IATACode = AA.IATACode__c;
 	    		oReturn.result = 'Ok';
 	    		oReturn.description = '';
 	    	}else
 	    		oReturn = FormatErrorOutput(resp);
     	}
     	catch(exception e){
+    		oReturn.IATACode = AA.IATACode__c;
     		oReturn.result = 'Error';
 	    	oReturn.description = e.getMessage();
     	}
@@ -226,13 +280,14 @@ global class AMS_BSPLinkIntegration {
 	    	//All good
 	    	if(resp.getStatusCode()==200){
 	    		agentDeactivationUndoRequestResponse Resp200 = (agentDeactivationUndoRequestResponse)JSON.Deserialize(resp.getBody(), agentDeactivationUndoRequestResponse.class);
-	    		oReturn.IATACode = BodyRequest.AgentCode;
+	    		oReturn.IATACode = AA.IATACode__c;
 	    		oReturn.result = 'Ok';
 	    		oReturn.description = '';
 	    	}else
 	    		oReturn = FormatErrorOutput(resp);
     	}
     	catch(exception e){
+    		oReturn.IATACode=AA.IATACode__c;
     		oReturn.result = 'Error';
 	    	oReturn.description = e.getMessage();
     	}
@@ -265,13 +320,14 @@ global class AMS_BSPLinkIntegration {
 	    	//All good
 	    	if(resp.getStatusCode()==200){
 	    		agentReactivationRequestResponse Resp200 = (agentReactivationRequestResponse)JSON.Deserialize(resp.getBody(), agentReactivationRequestResponse.class);
-	    		oReturn.IATACode = BodyRequest.AgentCode;
+	    		oReturn.IATACode = AA.IATACode__c;
 	    		oReturn.result = 'Ok';
 	    		oReturn.description = '';
 	    	}else
 	    		oReturn = FormatErrorOutput(resp);
     	}
     	catch(exception e){
+    		oReturn.IATACode = AA.IATACode__c;
     		oReturn.result = 'Error';
 	    	oReturn.description = e.getMessage();
     	}
@@ -313,7 +369,9 @@ global class AMS_BSPLinkIntegration {
 				}
 			}
 		}else if (sType.equalsIgnoreCase('AccountsInvolved')) {
-			for(AMS_Oscar__c oscar : [SELECT Id, Account__c, (SELECT Id, Account__c FROM AMS_Process_Detail__r) FROM AMS_Oscar__c WHERE Id IN :objectIds]){
+			//DTULLO: added check on the record-type
+			//for(AMS_Oscar__c oscar : [SELECT Id, Account__c, (SELECT Id, Account__c FROM AMS_Process_Detail__r) FROM AMS_Oscar__c WHERE Id IN :objectIds]){
+			for(AMS_Oscar__c oscar : [SELECT Id, Account__c, (SELECT Id, Account__c FROM AMS_Process_Detail__r where recordtype.developername='Agency_Involved') FROM AMS_Oscar__c WHERE Id IN :objectIds]){
 				setAccntToRemove.add(oscar.Account__c);
 				for(AMS_Process_Detail__c pd : oscar.AMS_Process_Detail__r) setAccntToRemove.add(pd.Account__c);
 			}
