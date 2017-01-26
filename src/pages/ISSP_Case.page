@@ -5,7 +5,7 @@
            applybodytag="false" applyhtmltag="false"
            action="{!pageLoad}">
     <html>
-    <c:ISSP_Header ></c:ISSP_Header>
+    <c:ISSP_Header communityName="{!communityName}"></c:ISSP_Header>
 
     <body>
         <script type="text/javascript">
