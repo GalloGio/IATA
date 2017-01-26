@@ -6,13 +6,13 @@
            applyBodyTag="false"
            applyHtmlTag="false" >
  <html>
- <c:ISSP_Header ></c:ISSP_Header>    
+ <c:ISSP_Header communityName="{!communityName}"></c:ISSP_Header>    
  <body>        
     <script src="{!URLFOR($Resource.jquery_file_upload, '/jQuery-File-Upload-9.11.2/js/jquery.iframe-transport.js')}" />
     <script src="{!URLFOR($Resource.jquery_file_upload, '/jQuery-File-Upload-9.11.2/js/jquery.fileupload.js')}" />
  
     <div class="container">
-    <c:ISSP_CustomNavigation />
+    <c:ISSP_CustomNavigation communityName="{!communityName}"/>
     
 <script type="text/javascript">
     function showArticle() {
@@ -336,7 +336,7 @@ margin-top:50px;
     <!-- EO PORTAL_DIRECT Upload -->
     </div><!-- end panel body -->
             </div><!-- end  div class="panel panel-primary"-->
-       <c:ISSP_CustomFooter />
+       <c:ISSP_CustomFooter communityName="{!communityName}"/>
     </div><!-- end container-->  
     </body>
     </html>
