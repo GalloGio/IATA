@@ -262,11 +262,12 @@ public class AMS_OscarCaseTriggerHelper {
         List<Case> triggerNew = (List<Case>)Trigger.new;
 
         Id sidraRecTypeId = Schema.Case.sObjectType.getDescribe().getRecordTypeInfosByName().get('SIDRA').getRecordTypeId();
+        Id sidraLiteRecTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('SIDRA_Lite');
 
         List<Case> newSidraCases = new List<Case>();
         Map<Id, Account> accounts = new Map<Id, Account>();
         for(Case c : triggerNew){
-            if(c.RecordTypeId == sidraRecTypeId){
+            if(c.RecordTypeId == sidraRecTypeId || c.RecordTypeId == sidraLiteRecTypeId){
                 newSidraCases.add(c);
                 accounts.put(c.AccountId, null);
             }
@@ -288,7 +289,7 @@ public class AMS_OscarCaseTriggerHelper {
                                                                 , Threshold__c
                                                                 , Location_Class__c
                                                             FROM AMS_Country_Specific_Attributes__r
-                                                            WHERE RecordType.Name = 'Irregularity Threshold'
+                                                            WHERE RecordType.DeveloperName = 'Irregularity_Threshold'
                                                             AND Threshold__c != null
                                                             AND Location_Class__c != null)
                                                     FROM IATA_ISO_Country__c
@@ -302,7 +303,10 @@ public class AMS_OscarCaseTriggerHelper {
 
         for(Case c : newSidraCases){
             Account a = accounts.get(c.AccountId);
-            if(a != null) c.Acc_IRR_leading_to_DEF__c = thresholds.get(''+a.IATA_ISO_Country__c+a.Location_Class__c);
+            if(a != null){
+                 c.Acc_IRR_leading_to_DEF__c = thresholds.get(''+a.IATA_ISO_Country__c+a.Location_Class__c);
+                 system.debug(logginglevel.error, 'DTULLO 301 --> ' +  thresholds.get(''+a.IATA_ISO_Country__c+a.Location_Class__c));
+            }
         }
     }
     

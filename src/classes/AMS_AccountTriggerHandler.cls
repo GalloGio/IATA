@@ -279,7 +279,7 @@ public class AMS_AccountTriggerHandler {
 
                 processedTN = true;
 
-            }else 
+            } 
 
 
             if(!comingFromOSCARforRemoveTradeName && (actChange.changes.size() > 1 ||  ( actChange.changes.size() == 1 && !processedTN))){
