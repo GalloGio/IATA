@@ -48,6 +48,10 @@
                 <behavior>Edit</behavior>
                 <field>Bulletin_Information__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>To_Publish_in_e_Bulletin__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
