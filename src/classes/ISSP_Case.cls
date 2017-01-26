@@ -93,7 +93,7 @@ public without sharing class ISSP_Case {
 
     //CNS
     public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
-    public String commParam { get { if(communityName=='CNS'){commParam='&CommunityName='+ communityName;} } set;}
+    public String commParam { get { if(communityName=='CNS'){ return '&CommunityName='+ communityName;} return ''; } set;}
 
     public PageReference pageLoad() {
         if (ApexPages.currentPage().getParameters().containsKey('caseId')) {
