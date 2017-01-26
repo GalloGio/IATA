@@ -139,6 +139,8 @@ global class AMS_BSPLinkIntegration {
 						Response resp;
 						if(sProcess == 'Deactivation') 		resp = AgentDeactivation(GenerateToken.description, AA, BSPLinkParameter);
 						
+						system.debug('DTULLO 142 --> ' + AA);
+						
 						if(sProcess == 'DeactivationUndo')	resp = AgentDeactivationUndo(GenerateToken.description, AA, BSPLinkParameter);
 						
 						if(sProcess == 'Reactivation')		resp = AgentReactivation(GenerateToken.description, AA, BSPLinkParameter);
@@ -274,7 +276,7 @@ global class AMS_BSPLinkIntegration {
     	BodyRequest.Bpe = AA.Email_Used_for_BSP_Creation__c;				//EmailAddress of the agent
     	req.setBody(JSON.serialize(BodyRequest));
     	req.setTimeout(120000); 
-    	
+    	system.debug('DTULLO 277 --> ' + AA.IATACode__c);
     	try{
 	    	HTTPResponse resp = http.send(req);
 	    	//All good
@@ -459,15 +461,18 @@ global class AMS_BSPLinkIntegration {
     
     //Generic method to format the error output
     static response FormatErrorOutput(HTTPResponse resp, string sIATACode){
+    	system.debug('DTULLO 462 --> ' + sIATACode);
     	Response oReturn = new Response();
     	if(resp.getStatusCode()==400){ //Managed Error
     		ErrorResponse Resp400 = (ErrorResponse)JSON.Deserialize(resp.getBody(), ErrorResponse.class);
+    		system.debug('DTULLO --> 465 ' + Resp400);
 			oReturn.result = 'Error';
 			oReturn.description = Resp400.error + ': ' + Resp400.error_description;
     	}else{ //Other Type Of Error
     		oReturn.result = 'Error';
     		oReturn.description = resp.getStatusCode() + ' - ' + resp.getStatus();
     	}
+    	
     	oReturn.IATACode = sIATACode;
     	return oReturn;
     }
