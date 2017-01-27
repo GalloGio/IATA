@@ -10,7 +10,7 @@
            >
     <html>
     
-    	<c:ISSP_Header ></c:ISSP_Header>    
+    	<c:ISSP_Header communityName="{!communityName}"></c:ISSP_Header>    
  		<body>
         <c:pkb_css />
     	<c:pkb_js pkbCon="{!pkbCon}" />    

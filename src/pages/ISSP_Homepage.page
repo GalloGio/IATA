@@ -78,7 +78,7 @@
       // Niv.g 24-10-2014 new redirect FAQ2Case
       function logAFaq2Case()
       {
-        window.location.replace('/ISSP_FAQ2Case?retURL=ISSP_homePage');
+        window.location.replace('/ISSP_FAQ2Case?retURL=ISSP_homePage{!if(communityName=='CNS','&CommunityName='+communityName,'')}' );
       }
       // Niv.g 24-10-2014 new redirect FAQ2Case
       
