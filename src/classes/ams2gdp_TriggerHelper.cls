@@ -89,23 +89,201 @@ public with sharing class ams2gdp_TriggerHelper
 		if(accreditations.size() > 0) delete accreditations;
 	}
 
-	public static void crossDeleteGDPAddressAndPhones(List<AMS_Address__c> addresses)
+	public static void updateAccountAddresses(Map<Id,AMS_Address__c> beforeAddresses, Map<Id,AMS_Address__c> afterAddresses)
 	{
-		Set<String> address_keys = new Set<String>();
-		Set<String> phone_keys = new Set<String>();
+		List<Account> accountsToUpdateBillingAddress = new List<Account>(); 
+		List<Account> accountsToUpdateShippingAddress = new List<Account>(); 
+		List<Account> accountsToClearBillingAddress = new List<Account>(); 
+		List<Account> accountsToClearShippingAddress = new List<Account>(); 
 
-		for(AMS_Address__c a:addresses)
+		Map<String,AMS_Address__c> accountIdToUpdateBillingAddress_Address = new Map<String,AMS_Address__c>();
+		Map<String,AMS_Address__c> accountIdToUpdateShippingAddress_Address = new Map<String,AMS_Address__c>();
+		
+		Set<String> accountIdsToClearBillingAddress = new Set<String>();
+		Set<String> accountIdsToClearShippingAddress = new Set<String>();
+
+		Set<String> countryIds = new Set<String>(); 
+		Set<String> stateIds = new Set<String>();
+
+		for(Id adrId :afterAddresses.keySet())
 		{
-			address_keys.add(a.Id+'GDP');
-			phone_keys.add(a.Id+'-P1GDP');
-			phone_keys.add(a.Id+'-P2GDP');
-			phone_keys.add(a.Id+'-FXGDP');
+			AMS_Address__c newAddress = afterAddresses.get(adrId);
+			AMS_Address__c oldAddress = (beforeAddresses != null) ? beforeAddresses.get(adrId) :null;
+
+			if(newAddress.Country__c != null) countryIds.add(newAddress.Country__c);
+			if(newAddress.State__c != null) stateIds.add(newAddress.State__c);
+
+			if(newAddress.Address_Type__c!= null && newAddress.Address_Type__c.contains('Billing'))
+			{
+				accountIdToUpdateBillingAddress_Address.put(newAddress.Account__c, newAddress);
+
+				//Account change ? clear oldAccount Address
+				if(oldAddress!=null && oldAddress.Account__c != newAddress.Account__c)  accountIdsToClearBillingAddress.add(oldAddress.Account__c);
+			}
+			else if(newAddress.Address_Type__c!= null && newAddress.Address_Type__c.contains('Shipping'))
+			{
+				accountIdToUpdateShippingAddress_Address.put(newAddress.Account__c, newAddress);
+
+				//Account change ? clear oldAccount Address
+				if(oldAddress!=null && oldAddress.Account__c != newAddress.Account__c)  accountIdsToClearShippingAddress.add(oldAddress.Account__c);
+			}
+
+			if(oldAddress != null && oldAddress.Address_Type__c != null)
+			{
+				//If old address was Billing and new on change then Clear Account Billing Address
+				if(oldAddress.Address_Type__c.contains('Billing') && !newAddress.Address_Type__c.contains('Billing')) 
+					accountIdsToClearBillingAddress.add(oldAddress.Account__c);
+
+				//If old address was Shpping and new on change then Clear Account Shipping Address
+				if(oldAddress.Address_Type__c.contains('Shipping') && !newAddress.Address_Type__c.contains('Shipping')) 
+					accountIdsToClearShippingAddress.add(oldAddress.Account__c);
+			}
 		}
 
-		List<GDP_Address__c> gdp_addresses = [SELECT Id FROM GDP_Address__c WHERE AMS_GDP_Key__c IN :address_keys];
-		if(gdp_addresses.size() > 0) delete gdp_addresses;
+		//Build Country & State Map 
+		Map<String, String> countryNameById = ams2gdp_Selector.getCountryNameById(countryIds); 
+		Map<String, String> stateNameById = ams2gdp_Selector.getStateNameById(stateIds);
 
-		List<GDP_Phone__c> gdp_phones = [SELECT id FROM GDP_Phone__c WHERE AMS_GDP_Key__c IN :phone_keys];
-		if(gdp_phones.size() > 0) delete gdp_phones;
+		if(!accountIdsToClearBillingAddress.isEmpty())
+		{	
+			for(String accId : accountIdsToClearBillingAddress)
+			{
+				accountsToClearBillingAddress.add(new Account(Id = accId
+					, BillingStreet = ''
+					, BillingCity = ''
+					, BillingCountry = ''
+					, IATA_ISO_Country__c = null
+					, BillingState =  ''
+					, IATA_ISO_Billing_State__c = null
+					, BillingPostalCode = ''
+					, Email__c = ''
+					, Website = ''
+					, Fax = ''
+					, Phone = ''
+					, TTY__c = ''
+				));
+			}
+
+			update accountsToClearBillingAddress; 
+		}
+
+		if(!accountIdsToClearShippingAddress.isEmpty())
+		{
+			for(String accId : accountIdsToClearShippingAddress)
+			{
+				accountsToClearShippingAddress.add(new Account(Id = accId
+					, ShippingStreet = ''
+					, ShippingCity = ''
+					, ShippingCountry = ''
+					, IATA_ISO_Shipping_Country__c = null
+					, ShippingState =  ''
+					, IATA_ISO_Shipping_State__c = null
+					, ShippingPostalCode = ''					
+				));
+			}
+
+			update accountsToClearShippingAddress; 
+		}
+
+
+
+		if(!accountIdToUpdateBillingAddress_Address.isEmpty())
+		{
+			for(String accId : accountIdToUpdateBillingAddress_Address.keySet())
+			{
+				AMS_Address__c adr = accountIdToUpdateBillingAddress_Address.get(accId);
+				String street = adr.Address_1__c; 
+                if(String.isNotBlank(adr.Address_2__c)) street += ' ' + adr.Address_2__c;
+                if(String.isNotBlank(adr.Address_3__c)) street += ' ' + adr.Address_3__c;
+
+                String phone = '';
+                if(String.isNotBlank(adr.Telephone_Int__c)) phone += adr.Telephone_Int__c + ' ';
+                if(String.isNotBlank(adr.Telephone_STD__c)) phone += adr.Telephone_STD__c + ' ';
+                if(String.isNotBlank(adr.Telephone__c)) phone += adr.Telephone__c + ' ';
+
+                String fax = ''; 
+                if(String.isNotBlank(adr.Fax_Int__c)) fax += adr.Fax_Int__c + ' ';
+                if(String.isNotBlank(adr.Fax_STD__c)) fax += adr.Fax_STD__c + ' ';
+                if(String.isNotBlank(adr.Fax__c)) fax += adr.Fax__c + ' ';
+
+				accountsToUpdateBillingAddress.add(new Account(Id = accId
+					, BillingStreet = street
+					, BillingCity = adr.City__c 
+					, BillingCountry = (adr.Country__c != null)? countryNameById.get(adr.Country__c) : ''
+					, IATA_ISO_Country__c = adr.Country__c
+					, BillingState = (adr.State__c != null)? stateNameById.get(adr.State__c) : ''
+					, IATA_ISO_Billing_State__c = adr.State__c
+					, BillingPostalCode = adr.AMS_ZipCode__c 
+					, Email__c = adr.Email__c
+					, Website = adr.Website__c
+					, Fax = fax
+					, Phone = phone
+					, TTY__c = adr.TTY__c
+				));
+			}
+
+			update accountsToUpdateBillingAddress; 
+		}
+
+		if(!accountIdToUpdateShippingAddress_Address.isEmpty())
+		{
+			for(String accId : accountIdToUpdateShippingAddress_Address.keySet())
+			{
+				AMS_Address__c adr = accountIdToUpdateShippingAddress_Address.get(accId);
+				String street = adr.Address_1__c; 
+                if(String.isNotBlank(adr.Address_2__c)) street += ' ' + adr.Address_2__c;
+                if(String.isNotBlank(adr.Address_3__c)) street += ' ' + adr.Address_3__c;
+
+				accountsToUpdateShippingAddress.add(new Account(Id = accId
+					, ShippingStreet = street
+					, ShippingCity = adr.City__c 
+					, ShippingCountry = (adr.Country__c != null)? countryNameById.get(adr.Country__c) : ''
+					, IATA_ISO_Shipping_Country__c = adr.Country__c
+					, ShippingState = (adr.State__c != null)? stateNameById.get(adr.State__c) : ''
+					, IATA_ISO_Shipping_State__c = adr.State__c
+					, ShippingPostalCode = adr.AMS_ZipCode__c 
+				));
+			}
+
+			update accountsToUpdateShippingAddress;
+		}
+	}
+
+	public static void clearAccountAddresses(List<AMS_Address__c> addresses)
+	{
+		List<Account> accountsToClearAddress = new List<Account>(); 
+	
+		for(AMS_Address__c adr : addresses)
+		{
+			if (adr.Account__c == null) continue; 
+
+			if(adr.Address_Type__c!= null && adr.Address_Type__c.contains('Billing'))
+			{
+				accountsToClearAddress.add(new Account(Id = adr.Account__c
+					, BillingStreet = ''
+					, BillingCity = ''
+					, BillingCountry = ''
+					, BillingState =  ''
+					, BillingPostalCode = ''
+					, Email__c = ''
+					, Website = ''
+					, Fax = ''
+					, Phone = ''
+					, TTY__c = ''
+				));
+			}
+			else if(adr.Address_Type__c!= null && adr.Address_Type__c.contains('Shipping'))
+			{
+				accountsToClearAddress.add(new Account(Id = adr.Account__c
+					, ShippingStreet = ''
+					, ShippingCity = ''
+					, ShippingCountry = ''
+					, ShippingState =  ''
+					, ShippingPostalCode = ''
+				));
+			}
+		}
+
+		if(accountsToClearAddress.size() > 0) update accountsToClearAddress;
 	}
 }

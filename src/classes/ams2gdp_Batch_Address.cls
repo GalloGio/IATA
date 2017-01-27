@@ -18,7 +18,57 @@ global class ams2gdp_Batch_Address implements Database.Batchable<sObject> , Data
 
 		Map<String, String> recordTypes = ams2gdp_Utils.getRecordTypeIdByName('Account');
 
-		String fields = 'Id, Name, Telephone_Int__c, Telephone_STD__c, Telephone__c, Address_1__c, Address_2__c, Address_3__c, City__c, AMS_ZipCode__c, Email__c, Website__c, TTY__c, Address_Type__c' 
+		//-- Fields used for Sync
+		String fields = ' Id, BillingStreet, BillingCity, BillingCountry, IATA_ISO_Country__c, BillingState, IATA_ISO_Billing_State__c, BillingPostalCode'
+			+	', ShippingStreet, ShippingCity, IATA_ISO_Shipping_Country__c, SHippingState, IATA_ISO_Shipping_State__c, ShippingPostalCode'
+			+	', Phone, Fax, IATA_ISO_Country__r.ISO_Code__c';
+
+		String idsCondition;
+		if(extraIds!=null && extraIds.size() > 0) {
+			idsCondition = 'Id IN (\''+String.join(extraIds,'\', \'')+'\')';
+		}else{
+			idsCondition = 'Id IN (SELECT Related_Account__c FROM Accreditation__c WHERE Endorsed_Accredited_By__r.Code__c IN (\'IATA\',\'IATAN\',\'DOM\') AND Status__r.Code__c IN (\'0\',\'4\',\'5\',\'6\',\'7\',\'8\',\'9\'))';
+
+			
+		}
+
+		//-- Query conditions 
+		List<String> conditions = new List<String>{'RecordTypeId= \''+recordTypes.get('Agency')+'\''
+			,	'IATACode__c != null'
+			,	idsCondition
+		}; 
+
+		AMS_GDP_Batch__c batchInfo = ams2gdp_Selector.getBatchInfo(batchName);
+		if(batchInfo != null && (extraIds==null || extraIds.size() == 0))
+		{
+			//Run only on the deltas 
+			String deltaConditions = String.format('LastModifiedDate >= {0}'
+				,new List<String>{batchInfo.Last_Sync_Start_Date__c.format('yyyy-MM-dd\'T\'hh:mm:ss\'Z\'')});
+
+			if(String.isNotBlank(batchInfo.Failed_Records__c))
+			{
+				// Reprocess failed records 
+				List<String> failedAccountRecordIds = new List<String>(); 
+				
+				for(String s: batchInfo.Failed_Records__c.split(';'))
+				{
+					if(s.length() >= 15) failedAccountRecordIds.add(s.left(15));
+				}
+				
+				if(failedAccountRecordIds.size() > 0) deltaConditions += ' OR Id IN (\'' + String.join(failedAccountRecordIds, '\' , \'') + '\') ';
+
+			}
+
+			conditions.add('('+deltaConditions+')');
+		}
+		
+		query = String.format('SELECT {0} '
+			+	'FROM Account '
+			+ 	'WHERE {1} ', 
+			new List<String>{fields,String.join(conditions, ' AND ')}
+		);
+
+		/*String fields = 'Id, Name, Telephone_Int__c, Telephone_STD__c, Telephone__c, Address_1__c, Address_2__c, Address_3__c, City__c, AMS_ZipCode__c, Email__c, Website__c, TTY__c, Address_Type__c' 
 			+	', Fax_Int__c, Fax_STD__c, Fax__c '
 			+	', Account__c, Account__r.Phone_Number__c, Account__r.Fax, Account__r.IATACode__c, '
 			+		'Account__r.Check_Digit__c, Account__r.CASS_Number__c, Account__r.Location_Type__c, Account__r.Airline_Code__c, Account__r.Short_Name__c, Account__r.TradeName__c, Account__r.PAX_Cargo__c'
@@ -89,7 +139,7 @@ global class ams2gdp_Batch_Address implements Database.Batchable<sObject> , Data
 			+ 	'WHERE {1} '
 			+	'ORDER BY Account__c ', 
 			new List<String>{fields,String.join(conditions, ' AND ')}
-		);
+		);*/
 	}
 
 	global ams2gdp_Batch_Address() 
@@ -118,10 +168,10 @@ global class ams2gdp_Batch_Address implements Database.Batchable<sObject> , Data
 		return Database.getQueryLocator(query);
 	}
 
-   	global void execute(Database.BatchableContext BC, List<AMS_Address__c> addresses) 
+   	global void execute(Database.BatchableContext BC, List<Account> accounts) 
    	{
    		//-- Total records to be processed
-   		totalRecords += addresses.size();
+   		totalRecords += accounts.size();
 
    		List<ams2gdp_Error> errors = new List<ams2gdp_Error>();	
 
@@ -129,7 +179,7 @@ global class ams2gdp_Batch_Address implements Database.Batchable<sObject> , Data
 		List<GDP_Phone__c> phones_to_save = new List<GDP_Phone__c>(); 
 		try
 		{
-			phones_to_save = ams2gdp_BusinessLogic.formatAddress2Phone(addresses); 
+			phones_to_save = ams2gdp_BusinessLogic.formatAccount2Phone(accounts); 
 
 			//-- Raise exception for Unit Tests
 			if(Test.isRunningTest() &&   throwException) insert new Account();	
@@ -143,7 +193,7 @@ global class ams2gdp_Batch_Address implements Database.Batchable<sObject> , Data
 		List<GDP_Address__c> addresses_to_save = new List<GDP_Address__c>();
 		try
 		{
-			addresses_to_save = ams2gdp_BusinessLogic.formatAddress2Address(addresses);
+			addresses_to_save = ams2gdp_BusinessLogic.formatAccount2Address(accounts);
 
 			//-- Raise exception for Unit Tests
 			if(Test.isRunningTest() &&   throwException) insert new Account();	
@@ -177,8 +227,8 @@ global class ams2gdp_Batch_Address implements Database.Batchable<sObject> , Data
 
 
 		// Process Errors 
-		errors.addAll(ams2gdp_Error.formatUpsertResult(phones_to_save, phones_save_results, 'Address (AMS) => GDP Phone', 'AMS_GDP_Key__c'));
-		errors.addAll(ams2gdp_Error.formatUpsertResult(addresses_to_save, addresses_save_results, 'Address (AMS) => GDP Address', 'AMS_GDP_Key__c'));
+		errors.addAll(ams2gdp_Error.formatUpsertResult(phones_to_save, phones_save_results, 'Job 5: Phone', 'AMS_GDP_Key__c'));
+		errors.addAll(ams2gdp_Error.formatUpsertResult(addresses_to_save, addresses_save_results, 'Job 5: Address', 'AMS_GDP_Key__c'));
 		
 		//Log the current Errors
 		if(!errors.isEmpty())

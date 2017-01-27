@@ -251,7 +251,95 @@ public class ams2gdp_BusinessLogic
 
 		return result;
 	}
+
+	/**
+	 * This function format a list of Account records into GDP Address (GDP_Address__c) records
+	 * @param  List<Account>
+	 * @return List<GDP_Address__c>
+	 * @author David Daboué <david.daboue@cgi.com> 
+	 */
+	public static List<GDP_Address__c> formatAccount2Address(List<Account> accounts)
+	{
+		List<GDP_Address__c> result = new List<GDP_Address__c>();
+		
+		Set<String> accountIds = new Set<String>();
+ 		Set<String> countryIds = new Set<String>();
+
+ 		Set<String> countryNames = new Set<String>(); 
+ 		Set<String> stateNames = new Set<String>(); 
+
+		for(Account acc : accounts)
+		{
+			accountIds.add(acc.Id);
+			
+			if(acc.IATA_ISO_Country__c != null) countryIds.add(acc.IATA_ISO_Country__c);
+			if(acc.IATA_ISO_Shipping_Country__c != null) countryIds.add(acc.IATA_ISO_Shipping_Country__c);
+
+			if(String.isNotBlank(acc.BillingCountry)) countryNames.add(acc.BillingCountry);
+			if(String.isNotBlank(acc.ShippingCountry)) countryNames.add(acc.ShippingCountry);
+
+			if(String.isNotBlank(acc.BillingState)) stateNames.add(acc.BillingState);
+			if(String.isNotBlank(acc.ShippingState)) stateNames.add(acc.ShippingState);
+		}
+
+		Map<String, String> recordTypes = ams2gdp_Utils.getRecordTypeIdByName('GDP_Address__c');
+		Map<String, String> geoDetailByCountry = ams2gdp_Selector.getGeoDetailsByCountry(countryIds);
+		Map<String, String> gdpProductIdByAccountId = ams2gdp_Selector.getGDP_Products_Account_View_By_Account(accountIds);
+
+		Map<String, String> countryIdByName = ams2gdp_Selector.getCountryIdByName(countryNames); 
+		Map<String, String> stateIdByName = ams2gdp_Selector.getStateIdByName(stateNames); 	
+
+		for(Account acc: accounts)
+		{
+			if(String.isNotBlank(acc.BillingStreet) && String.isNotBlank(acc.BillingCity) && String.isNotBlank(acc.BillingCountry))
+			{
+				//Generate Location Address
+				List<String> streetParts = ams2gdp_Utils.WrapText(acc.BillingStreet, 32);
+				String countryId = (acc.IATA_ISO_Country__c !=null)? acc.IATA_ISO_Country__c : countryIdByName.get(acc.BillingCountry);
+				result.add(new GDP_Address__c(AMS_GDP_Key__c = acc.Id+'LOCGDP'
+					, Address_Type__c = 'Location'
+					, Address_Line_1__c = (streetParts.size() > 0) ? streetParts.get(0) : '' 
+					, Address_Line_2__c = (streetParts.size() > 1) ? streetParts.get(1) : '' 
+					, Address_Line_3__c = (streetParts.size() > 2) ? streetParts.get(2) : '' 
+					, Address_City__c = acc.BillingCity.left(30)
+					, IATA_ISO_State__c = (acc.IATA_ISO_Billing_State__c !=null)? acc.IATA_ISO_Billing_State__c : stateIdByName.get(acc.BillingState)
+					, GDP_Geo_Detail__c = geoDetailByCountry.get(countryId)
+					, IATA_ISO_Country__c = countryId
+					, Address_Postal_Code__c = String.isNotBlank(acc.BillingPostalCode) ? acc.BillingPostalCode.left(10) : ''
+					, Related_Account__c = acc.Id 
+					, Related_GDP_Products_Account_View__c = gdpProductIdByAccountId.get(acc.Id)			
+					, RecordTypeId = recordTypes.get('GDP')
+				));
+			}
+
+			if(String.isNotBlank(acc.ShippingStreet) && String.isNotBlank(acc.ShippingCity) && String.isNotBlank(acc.ShippingCountry))
+			{
+				//Generate Mailing Address
+				List<String> streetParts = ams2gdp_Utils.WrapText(acc.ShippingStreet, 32);
+				String countryId = (acc.IATA_ISO_Shipping_Country__c !=null)? acc.IATA_ISO_Shipping_Country__c : countryIdByName.get(acc.ShippingCountry);
+				result.add(new GDP_Address__c(AMS_GDP_Key__c = acc.Id+'MAIGDP'
+					, Address_Type__c = 'Mailing'
+					, Address_Line_1__c = (streetParts.size() > 0) ? streetParts.get(0) : '' 
+					, Address_Line_2__c = (streetParts.size() > 1) ? streetParts.get(1) : '' 
+					, Address_Line_3__c = (streetParts.size() > 2) ? streetParts.get(2) : '' 
+					, Address_City__c = acc.ShippingCity.left(30)
+					, IATA_ISO_State__c = (acc.IATA_ISO_Shipping_State__c !=null)? acc.IATA_ISO_Shipping_State__c : stateIdByName.get(acc.ShippingState)
+					, GDP_Geo_Detail__c = geoDetailByCountry.get(countryId)
+					, IATA_ISO_Country__c = countryId
+					, Address_Postal_Code__c = String.isNotBlank(acc.ShippingPostalCode) ? acc.ShippingPostalCode.left(10) : ''
+					, Related_Account__c = acc.Id 
+					, Related_GDP_Products_Account_View__c = gdpProductIdByAccountId.get(acc.Id)			
+					, RecordTypeId = recordTypes.get('GDP')
+				));
+			}
+
+		}
+
+
+		return result;
+	}
  	
+
  	/**
 	 * This function format a list of AMS Address(AMS_Address__c) records into GDP Address (GDP_Address__c) records
 	 * @param  List<AMS_Address__c
@@ -308,6 +396,59 @@ public class ams2gdp_BusinessLogic
 
  		return result; 
  	}
+
+
+ 	public static List<GDP_Phone__c> formatAccount2Phone(List<Account> accounts)
+	{
+		List<GDP_Phone__c> result = new List<GDP_Phone__c>();
+
+		Set<String> accountIds = new Set<String>();
+		for(Account acc : accounts)
+		{
+			accountIds.add(acc.Id);
+		}
+
+		Map<String, String> gdpProductIdByAccountId = ams2gdp_Selector.getGDP_Products_Account_View_By_Account(accountIds);
+		Map<String, String> phoneCodesByCountry = ams2gdp_Selector.getPhoneCodesByCountry();
+		Map<String, String> recordTypes = ams2gdp_Utils.getRecordTypeIdByName('GDP_Phone__c');
+
+		for(Account acc : accounts)
+		{
+			String gdp_product = (gdpProductIdByAccountId.containsKey(acc.Id))? gdpProductIdByAccountId.get(acc.Id):null; 
+			if(String.isNotBlank(acc.Phone))
+			{
+				Map<String, String> phoneParts = ams2gdp_Utils.getPhoneNumberParts(acc.Phone, acc.IATA_ISO_Country__r.ISO_Code__c, phoneCodesByCountry);
+				result.add(new GDP_Phone__c(AMS_GDP_Key__c = acc.Id+'-P1GDP'
+					, Number__c = phoneParts.get('phone')
+					, ISD_Code__c 	= phoneParts.get('isd')
+					, STD_Code__c 	= phoneParts.get('std')
+					, Name = acc.Phone
+					, Phone_Type__c = 'Phone 1'
+					, Related_GDP_Products_Account_View__c = gdp_product
+					, Related_Account__c = acc.Id
+					, RecordTypeId = recordTypes.get('GDP')
+				));
+			}
+
+			if(String.isNotBlank(acc.Fax))
+			{
+				Map<String, String> faxParts = ams2gdp_Utils.getPhoneNumberParts(acc.Fax, acc.IATA_ISO_Country__r.ISO_Code__c, phoneCodesByCountry);
+				result.add(new GDP_Phone__c(AMS_GDP_Key__c = acc.Id+'-FXGDP'
+					, Number__c = faxParts.get('phone')
+					, ISD_Code__c 	= faxParts.get('isd')
+					, STD_Code__c 	= faxParts.get('std')
+					, Name = acc.Fax
+					, Phone_Type__c = 'Fax'
+					, Related_GDP_Products_Account_View__c = gdp_product
+					, Related_Account__c = acc.Id
+					, RecordTypeId = recordTypes.get('GDP')
+				));
+			}
+		}
+
+
+		return result; 
+	}
 
  	public static List<GDP_Phone__c> formatAddress2Phone(List<AMS_Address__c> addresses)
  	{
@@ -692,21 +833,32 @@ public class ams2gdp_BusinessLogic
  		Set<String> location_class_codes = new Set<String>();
  		Set<String> air_codes = new Set<String>();
  		Set<String> status_codes = new Set<String>();
+ 		
+ 		Set<String> iatan_status = new Set<String>();//Code 0-7
+ 		Set<String> iata_status = new Set<String>();//Code 0-9
+
  		Set<String> accountIds = new Set<String>();
 
 		for(AMS_Inspection__c inspection : inspections)
 		{
+			String air_code = inspection.Accreditation_Endorsement_organisation__r.Air_Code__c; 
+
 			location_class_codes.add(inspection.Account__r.Location_Class__c);
-			air_codes.add(inspection.Accreditation_Endorsement_organisation__r.Air_Code__c);
-			status_codes.add(inspection.Accreditation_Endorsement_Status_code__c);
+			air_codes.add(air_code);
+
+			if(air_code.equalsIgnoreCase('IATAN')) iatan_status.add(inspection.Account__r.Status__c);
+			else if(air_code.equalsIgnoreCase('IATA') || air_code.equalsIgnoreCase('DOM')) iata_status.add(inspection.Account__r.Status__c);
+			//status_codes.add(inspection.Accreditation_Endorsement_Status_code__c);
 
 			if(inspection.Account__c != null)
 				accountIds.add(inspection.Account__c);
 		}
 		
 		Map<String, GDP_Reference_Table__c> location_class_references 	= ams2gdp_Selector.getGDPReferenceTableByCodeAndTable(location_class_codes, 'ORGCLASS'); 
-		Map<String, GDP_Reference_Table__c> air_code_references 		= ams2gdp_Selector.getGDPReferenceTableByCodeAndTable(air_codes, 'ORGABB'); 
-		Map<String, GDP_Reference_Table__c> status_references 			= ams2gdp_Selector.getGDPReferenceTableByCodeAndTable(status_codes, 'STATUS');
+		Map<String, GDP_Reference_Table__c> air_code_references 		= ams2gdp_Selector.getGDPReferenceTableByCodeAndTable(air_codes, 'ORGABB'); 		
+		//Map<String, GDP_Reference_Table__c> status_references 			= ams2gdp_Selector.getGDPReferenceTableByCodeAndTable(status_codes, 'STATUS');
+		Map<String, GDP_Reference_Table__c> iatan_status_references 	= ams2gdp_Selector.getGDPReferenceTablebyDefinitionAndTable(iatan_status, 'STATUS', 'WebStar');
+		Map<String, GDP_Reference_Table__c> iata_status_references 		= ams2gdp_Selector.getGDPReferenceTablebyDefinitionAndTable(iata_status, 'STATUS', 'AIMS');
 		
 		Map<String, String> gdpProductIdByAccountId = ams2gdp_Selector.getGDP_Products_Account_View_By_Account(accountIds);
 		Map<String, Integer> rankByAccount = new Map<String, Integer>(); 
@@ -717,6 +869,7 @@ public class ams2gdp_BusinessLogic
 		{
 			//-- GDP External Key = {INSPECTION_ID} 1 Inspection generate 1 accreditation record
 			String key = inspection.Id;
+			String air_code = inspection.Accreditation_Endorsement_organisation__r.Air_Code__c; 
 
 			Integer rank = (rankByAccount.containsKey(inspection.Account__c)) ? rankByAccount.get(inspection.Account__c)+1 : 1;
 			rankByAccount.put(inspection.Account__c, rank);
@@ -735,7 +888,9 @@ public class ams2gdp_BusinessLogic
 			
 			if(air_code_references.containsKey(inspection.Accreditation_Endorsement_organisation__r.Air_Code__c)) accreditation.Endorsed_Accredited_By__c = air_code_references.get(inspection.Accreditation_Endorsement_organisation__r.Air_Code__c).Id;
 			
-			if(status_references.containsKey(inspection.Accreditation_Endorsement_Status_code__c)) accreditation.Status__c = status_references.get(inspection.Accreditation_Endorsement_Status_code__c).Id;
+			//if(status_references.containsKey(inspection.Accreditation_Endorsement_Status_code__c)) accreditation.Status__c = status_references.get(inspection.Accreditation_Endorsement_Status_code__c).Id;
+			if((air_code.equalsIgnoreCase('IATA') || air_code.equalsIgnoreCase('DOM')) && iata_status_references.containsKey(inspection.Account__r.Status__c)) accreditation.Status__c = iata_status_references.get(inspection.Account__r.Status__c).Id;
+			else if(air_code.equalsIgnoreCase('IATAN') && iatan_status_references.containsKey(inspection.Account__r.Status__c)) accreditation.Status__c = iatan_status_references.get(inspection.Account__r.Status__c).Id;
 			
 			//-- Set default record Type 			
 			if(recordTypes.containsKey('Live')) 
