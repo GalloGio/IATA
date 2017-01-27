@@ -49,6 +49,10 @@
                 <behavior>Readonly</behavior>
                 <field>For_Integration__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Sent_to_external_system__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -89,6 +93,17 @@
         <layoutColumns/>
         <style>CustomLinks</style>
     </layoutSections>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Object_API_Name__c</fields>
+        <fields>Field_API_Name__c</fields>
+        <fields>Field_New_Value__c</fields>
+        <fields>Field_Lookup_New_Value__c</fields>
+        <fields>Field_Old_Value__c</fields>
+        <fields>Field_Lookup_Old_Value__c</fields>
+        <fields>CREATEDBY_USER</fields>
+        <relatedList>AMS_Agency_A_Change_code_History__c.Agency_Applied_Change_Code__c</relatedList>
+    </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
     <showInteractionLogPanel>false</showInteractionLogPanel>

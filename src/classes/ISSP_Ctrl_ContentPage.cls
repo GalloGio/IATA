@@ -66,7 +66,7 @@ public class ISSP_Ctrl_ContentPage
   }
       
   //COUNTRY
-  UserPortalCountry = PortalContact.Account.IATA_ISO_Country__r.Name ;
+  UserPortalCountry = String.escapeSingleQuotes(PortalContact.Account.IATA_ISO_Country__r.Name);
   if (UserPortalCountry == null){
       UserPortalCountry = 'NoCountryValue';
   }

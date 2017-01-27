@@ -346,7 +346,7 @@
                           <div class="row">
                                 <apex:outputLabel styleClass="lbl col-xs-5" value="{!$ObjectType.Account.fields.Fin_statements_submission_deadline__c.Label}" />
                                 <div class="col-md-7">
-                                   {!FinSubmission}
+                                   <apex:outputField value="{!con.account.Fin_statements_submission_deadline__c}" />
                                 </div>
                              </div>
                           </apex:outputText> 

@@ -98,7 +98,17 @@ public class Product_Sel extends Selector
     ****************************************************************************************************/
     public List<Product2> selectById(Set<Id> productIds)
     {
-        return (List<Product2>) selectSObjectById(productIds);
+        String query = String.format(
+            'SELECT {0}, RecordType.DeveloperName ' +
+            'FROM {1} ' + 
+            'WHERE Id in :productIds ', 
+            new List<String>{
+                String.join(getDefaultFields(), ', '),
+                getSObjectType().getDescribe().getName()
+            }
+        );
+
+        return Database.query(query);
     }
 
     public List<Product2> selectAll()
@@ -212,7 +222,7 @@ public class Product_Sel extends Selector
         Map<String, Map<String, String>> mapPickList_Label = new Map<String, Map<String, String>>();
             mapPickList_Label.put('Category',   Utility.getPicklistValue_Label('Product2', 'Line_of_Business__c'));
             mapPickList_Label.put('Media',      Utility.getPicklistValue_Label('Product2', 'Media__c'));
-            mapPickList_Label.put('Language',   Utility.getPicklistValue_Label('Product2', 'Language__c'));
+            mapPickList_Label.put('Language',   Utility.getPicklistValue_Label('Product2', 'Language__c'));  //*** do not use Refinement_Language__c because less values
             mapPickList_Label.put('InvStatus',  Utility.getPicklistValue_Label('Product2', 'Inventory_Status__c'));
 
         for (Product2 p : products)
@@ -765,7 +775,7 @@ public class Product_Sel extends Selector
         Product_Sel exe = new Product_Sel();
         String SOQL = ' select Id, Name, IEC_Static_Cart_Quantity__c, Line_of_Business__c, Is_Electronic_Product__c, IsNewRelease__c, Short_Title__c, Keywords__c, Family, Charge_Shipping__c, SAP_Material_Number__c, Edition__c, Media__c, Language__c, Effective_From__c, Effective_To__c, Short_Description__c, Description'
                     + '      , Sell_through_eCommerce__c, Inventory_Status__c, Expected_Availability_Date__c, Product_Segment__c, Category_Group__c, SAP_Media_Code__c, Display_Price__c,Image__c'
-                    + '      , Hide_Effective_To_Date_in_eCommerce__c, Is_Quantity_Integer__c, Mega_Menu__c '
+                    + '      , Hide_Effective_To_Date_in_eCommerce__c, Is_Quantity_Integer__c, Mega_Menu__c, Refinement_Language__c '
                     + ((!includeBOM) ? '' : ', (select Related_Product__c, Related_Product__r.Name, Related_Product__r.Media__c, Related_Product__r.Edition__c' +
                                                     ', Related_Product__r.Effective_From__c, Related_Product__r.Effective_To__c, Related_Product__r.SAP_Material_Number__c, Related_Product__r.Short_Description__c' +
                                               ' from Product_BOM__r order by Related_Product__r.Name)')
@@ -847,7 +857,7 @@ system.debug('SOQL::'+SOQL);
         //*** get picklist translations
         mapPickList_Label.put('Category', Utility.getPicklistValue_Label('Product2', 'Line_of_Business__c'));
         mapPickList_Label.put('Media', Utility.getPicklistValue_Label('Product2', 'Media__c'));
-        mapPickList_Label.put('Language', Utility.getPicklistValue_Label('Product2', 'Language__c'));
+        mapPickList_Label.put('Language', Utility.getPicklistValue_Label('Product2', 'Language__c'));  //*** do not use Refinement_Language__c because less values
         mapPickList_Label.put('InvStatus', Utility.getPicklistValue_Label('Product2', 'Inventory_Status__c'));
         
         //*** build ECom products list

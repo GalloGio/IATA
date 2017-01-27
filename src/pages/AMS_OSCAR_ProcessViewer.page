@@ -226,7 +226,7 @@ h1{
 }
 
 .overlay p, ul, li {
-    padding: 8px;
+    padding: 0 0 8px 0;
     text-decoration: none;
     font-size: 22px;
     color: #818181;
@@ -239,7 +239,6 @@ h1{
     color: #818181;
     text-align: left;
     display: block; /* Display block instead of inline */
-    line-height: 30%;
 }
 
 /* Start by setting display:none to make this hidden.
@@ -274,6 +273,26 @@ body.loading {
    modal element will be visible */
 body.loading .modal {
     display: block;
+}
+
+/*Blocks specific steps*/
+.sectionWrapper{ position: relative; }
+.sectionBlocker{
+    position: absolute;
+    top: 0; 
+    bottom: 0; 
+    right: 0; 
+    left: 0; 
+    opacity: 0.85;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0, 0.85);
+    z-index: 95;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: white;
 }
 
 </style>
@@ -380,37 +399,44 @@ function buildFunctionCall(func, argList){
 
 <apex:form id="oscarForm" rendered="{!IF(oscar != null && oscar.Process__c!=null ,true, false)}">
     <apex:outputPanel id="theProcess">
-    <apex:pageBlock >
-        <apex:variable var="p" value="{!process[oscar.Process__c]}" />
+        <apex:pageBlock >
+            <apex:variable var="p" value="{!process[oscar.Process__c]}" />
             <apex:repeat value="{!p.flows}" var="flow">
-                <apex:pageBlockSection id="theSection" title="{!$Label[flow.name]}" collapsible="true" columns="3">
-                    <apex:repeat value="{!flow.steps}" var="step">
-                        <apex:pageBlockSectionItem dataStyle="width: 40px;">
-                            <apex:outputPanel >
-                                <a id="{!step.name}" class="lightbox" href="#inline{!step.name}" onclick="clicked(this)">
-                                    <apex:image value="{!IF((step.isDependent), URLFOR($Resource.AMS_Icons, 'dependent_wrench.jpg'), URLFOR($Resource.AMS_Icons, 'wrench.jpg'))}"/><br></br>
-                                </a>
-                            </apex:outputPanel>
-                        </apex:pageBlockSectionItem>
-                        <apex:pageBlockSectionItem dataStyle="width:100%; padding-bottom: 8px;">
-                            <apex:outputPanel >
-                                <div style="padding-top: {!IF((step.isDependent), '0px', '20px')}">
-                                    <a id="{!step.name}" class="lightbox" href="#inline{!step.name}" onclick="clicked(this)">
-                                        <apex:outputText value="{!$Label[step.label]}"/>
-                                    </a>
-                                </div>
-                            </apex:outputPanel>
-                        </apex:pageBlockSectionItem>
-                        <apex:pageBlockSectionItem >
-                            <apex:outputPanel >
-                                <apex:image value="{!URLFOR($Resource.AMS_Icons, statusIcons[step.name])}" styleClass="hasTooltip"/>
-                                <div class="hidden">
-                                    <p><b>{!statusLabel[step.name]}</b><br/>
-                                       <!--<i>Other info: TO BE DEFINED</i>!--></p> 
-                                </div>
+                <apex:pageBlockSection id="theSection" title="{!$Label[flow.name]}" collapsible="true" columns="1">
+                    <apex:outputPanel layout="block" styleClass="sectionWrapper">
+                        <apex:outputPanel layout="block" styleClass="sectionBlocker" rendered="{!ddBlock[flow.name]}">
+                            <p>{!$Label.AMS_Due_Diligence_Lock}</p>
                         </apex:outputPanel>
-                        </apex:pageBlockSectionItem>
-                    </apex:repeat>
+                        <apex:pageBlockSection columns="3">
+                            <apex:repeat value="{!flow.steps}" var="step">
+                                <apex:pageBlockSectionItem dataStyle="width: 40px;">
+                                    <apex:outputPanel >
+                                        <a id="{!step.name}" class="lightbox" href="#inline{!step.name}" onclick="clicked(this)">
+                                            <apex:image value="{!IF((step.isDependent), URLFOR($Resource.AMS_Icons, 'dependent_wrench.jpg'), URLFOR($Resource.AMS_Icons, 'wrench.jpg'))}"/><br></br>
+                                        </a>
+                                    </apex:outputPanel>
+                                </apex:pageBlockSectionItem>
+                                <apex:pageBlockSectionItem dataStyle="width:100%; padding-bottom: 8px;">
+                                    <apex:outputPanel >
+                                        <div style="padding-top: {!IF((step.isDependent), '0px', '20px')}">
+                                            <a id="{!step.name}" class="lightbox" href="#inline{!step.name}" onclick="clicked(this)">
+                                                <apex:outputText value="{!$Label[step.label]}"/>
+                                            </a>
+                                        </div>
+                                    </apex:outputPanel>
+                                </apex:pageBlockSectionItem>
+                                <apex:pageBlockSectionItem >
+                                    <apex:outputPanel >
+                                        <apex:image value="{!URLFOR($Resource.AMS_Icons, statusIcons[step.name])}" styleClass="hasTooltip"/>
+                                        <div class="hidden">
+                                            <p><b>{!statusLabel[step.name]}</b><br/>
+                                               <!--<i>Other info: TO BE DEFINED</i>!--></p> 
+                                        </div>
+                                    </apex:outputPanel>
+                                </apex:pageBlockSectionItem>
+                            </apex:repeat>
+                        </apex:pageBlockSection>
+                    </apex:outputPanel>
                 </apex:pageBlockSection>
             </apex:repeat>
         </apex:pageBlock>

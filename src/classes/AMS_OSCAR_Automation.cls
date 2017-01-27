@@ -19,8 +19,7 @@ public with sharing class AMS_OSCAR_Automation
 
                 if(oscar != null){
                     oscar.Sanity_check_received__c = Date.today();
-                    if(oscar.Process__c != AMS_Utils.new_TIDS && oscar.Process__c != AMS_Utils.new_GSA_BSP && oscar.Process__c != AMS_Utils.new_AHA_BSP && oscar.Process__c != AMS_Utils.CERTIFICATION)
-                        oscar.Sanity_check_deadline__c = oscar.Sanity_check_received__c + 15;
+                    oscar.Process_Start_Date__c = Date.today();
                     oscar.Sanity_check_results__c = AMS_Utils.PASSED;
                 
                     res = True;
@@ -48,9 +47,19 @@ public with sharing class AMS_OSCAR_Automation
                     oscar.Sanity_check_received__c = Date.today();
                     if(oscar.Process__c == AMS_Utils.new_TIDS)
                         oscar.Sanity_check_deadline__c = Date.today()+3;
-                    else if(oscar.Process__c != AMS_Utils.CERTIFICATION)
-                        oscar.Sanity_check_deadline__c = oscar.Sanity_check_received__c + 15;
-                    oscar.Sanity_check_results__c = 'Failed';
+                    //else if(oscar.Process__c != AMS_Utils.CERTIFICATION)
+                    //    oscar.Sanity_check_deadline__c = oscar.Sanity_check_received__c + 15;
+                    else{
+                        List<Account> oscarAccount = new List<Account>([select Location_Class__c from Account where id =: oscar.Account__c]);
+                        if(oscar.Process__c == AMS_Utils.new_HO && (oscarAccount.get(0).Location_Class__c == 'C' || oscarAccount.get(0).Location_Class__c == 'I' || oscarAccount.get(0).Location_Class__c == 'P' || oscarAccount.get(0).Location_Class__c == 'Q')){                    
+                            oscar.Sanity_check_deadline__c = Date.today() + 15;
+                        }
+                        else if(oscar.Process__c == AMS_Utils.new_BR || oscar.Process__c == AMS_Utils.new_BR_ABROAD || oscar.Process__c == AMS_Utils.new_SA || oscarAccount.get(0).Location_Class__c == 'R'){
+                            oscar.Sanity_check_deadline__c = Date.today() + 14;
+                        }
+                    }
+
+                    oscar.Sanity_check_results__c = AMS_Utils.FAILED;
                     res = True;
                 }
             }catch(Exception e){
@@ -170,6 +179,8 @@ public with sharing class AMS_OSCAR_Automation
                 if(oscar != null){
                     oscar.Proof_of_payment_received__c = Date.today();
                     oscar.Invoice_status__c = 'Paid';
+                    if(oscar.STEP17__c=='Not Started' || oscar.STEP17__c=='Not Applicable' || oscar.STEP17__c=='Passed')
+                        oscar.Process_Start_Date__c = Date.today();
                     res = True;
                 }
             }catch(Exception e){
@@ -605,7 +616,7 @@ public with sharing class AMS_OSCAR_Automation
             try{
                 if(oscar != null){
                     oscar.AIMS_updated__c = DateTime.now();
-                    oscar.Process_Start_Date__c = Date.today();
+                    oscar.Invoice_Requested__c = Date.today();
                     res = True;
                 }
             }catch(Exception e){
@@ -1129,6 +1140,8 @@ public with sharing class AMS_OSCAR_Automation
                 if(oscar != null){
                     oscar.AML_performed_date__c = Date.today();
                     oscar.AML_result__c = 'Passed';
+                    if(oscar.STEP9__c=='Passed')
+                        oscar.Process_Start_Date__c = Date.today();
                 }
             }catch(Exception e){
                 system.debug('ERROR: '+e);

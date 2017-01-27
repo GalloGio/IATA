@@ -52,7 +52,8 @@ public with sharing class AMS_AccreditationContactController {
             //String acCompanyRtId = AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Company');
             
             List<AMS_Pax_Accreditation_Form__c> aoaList = [select id, Name, Account_Name__c, IATACode__c, Type_of_Operation__c, Shipping_Street__c, Shipping_Postal_Code__c, 
-                            Shipping_City__c, Shipping_State__c, Shipping_Country__c, SAAM_Case__r.AccountId, SAAM_Case__r.OSCAR__r.Account__c,
+                            Shipping_City__c, Shipping_State__c, Shipping_Country__c, SAAM_Case__r.AccountId, SAAM_Case__r.OSCAR__r.Account__c, 
+                            SAAM_Case__r.OSCAR__r.Account__r.Location_class__c, SAAM_Case__r.OSCAR__r.Account__r.CNS_Agency__c, 
                             SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c, SAAM_Case__r.OSCAR__r.Process__c, SAAM_Case__r.OSCAR__r.Type_of_change__c,
                             SAAM_Case__r.OSCAR__r.Account__r.Sector__c
                             from AMS_Pax_Accreditation_Form__c where Id =: stdController.getRecord().id];
@@ -78,7 +79,7 @@ public with sharing class AMS_AccreditationContactController {
                 {
                     accList = new Map<Id, Account>([select Id, Email__c, Name, Legal_Name__c, IATACode__c, Phone_Number__c from Account where Id in :accountsToLoadSet]);
                 }
-
+                
                 AccreditationContactWrapper wrapper;
                 AccountWrapper accWrapper;
                 for(AMS_Accreditation_Contact__c ac : acList)
@@ -109,7 +110,12 @@ public with sharing class AMS_AccreditationContactController {
                 
             }
         }
-        
+        if(aoa.SAAM_Case__r.OSCAR__r.Account__r.CNS_Agency__c && aoa.SAAM_Case__r.OSCAR__r.Account__r.Location_Class__c == 'R')
+        {
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, 'The ownership information is not needed for CASS Associates in CNS.'));
+         
+        }
+
         AcPersonRt = AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Person');
         AcCompanyRt = AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Company');
         AcCurrentCompanyRt = AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Current_Company_Owner');
@@ -122,8 +128,11 @@ public with sharing class AMS_AccreditationContactController {
         if(aoa.SAAM_Case__r.OSCAR__r.Type_of_change__c != null && aoa.SAAM_Case__r.OSCAR__r.Type_of_change__c.contains(AMS_Utils.OWNERSHIP_IATA))
             typeOfChangeContainsOwnershipToIATA = true;
 
-        blockOwnershipEdit = (aoa.SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c != AMS_Utils.HO && 
-                             aoa.SAAM_Case__r.OSCAR__r.Process__c != AMS_Utils.COR && aoa.SAAM_Case__r.OSCAR__r.Process__c != AMS_Utils.AGENCYCHANGES) || typeOfChangeContainsOwnershipToIATA;
+        blockOwnershipEdit = (aoa.SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c != AMS_Utils.HO
+                                && aoa.SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c != AMS_Utils.AO
+                                && aoa.SAAM_Case__r.OSCAR__r.Process__c != AMS_Utils.COR
+                                && aoa.SAAM_Case__r.OSCAR__r.Process__c != AMS_Utils.AGENCYCHANGES)
+                            || typeOfChangeContainsOwnershipToIATA;
 
         isCorrection = aoa.SAAM_Case__r.OSCAR__r.Process__c == AMS_Utils.COR;
         isCargoAgency = aoa.SAAM_Case__r.OSCAR__r.Account__r.Sector__c == AMS_Utils.SECTOR_CARGO;
@@ -205,6 +214,12 @@ public with sharing class AMS_AccreditationContactController {
     
     public PageReference onSave()
     {
+        if(aoa.SAAM_Case__r.OSCAR__r.Account__r.CNS_Agency__c && aoa.SAAM_Case__r.OSCAR__r.Account__r.Location_Class__c == 'R')
+        {
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, 'The ownership information is not needed for CASS Associates in CNS.'));
+            return null;
+        }
+
         if(!calculateTotalOwnership() && !isCertificationOSCAR)
         {
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, 'Total ownershiprate for all inserted contacts is ' + ownership + '%. Please set it to 100% before saving.'));
@@ -236,6 +251,12 @@ public with sharing class AMS_AccreditationContactController {
         if(duplicatedContacts != null)
         {
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, 'Please make sure the Owners are not using the same email address: '+duplicatedContacts));
+            return null;
+        }
+
+        String errorMissingExpiryDate = validateMandatoryExpiryDate();
+        if(errorMissingExpiryDate != null){
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, errorMissingExpiryDate));
             return null;
         }
         
@@ -317,7 +338,7 @@ public with sharing class AMS_AccreditationContactController {
                     }
                     aw.accountAc.Agency_owner__c = true;
                 }
-                
+
                 if(accountInsertList.size() > 0)
                 {
                     insert accountInsertList;
@@ -378,13 +399,32 @@ public with sharing class AMS_AccreditationContactController {
             ownership = ownership + aWrapped.financialInterest;
         }
         
-        if(ownership != 100)
+        if(aoa.SAAM_Case__r.OSCAR__r.Account__r.CNS_Agency__c == false && ownership != 100)
         {
             return false;
         } else
         {
             return true;
         }
+    }
+
+    public String validateMandatoryExpiryDate(){
+
+        for(TrainedStaffWrapper tsw : trainedStaffWrapper)
+        {
+            
+            if(tsw.ac.Type_of_certificate__c == AMS_Utils.CERT_DGR && (tsw.validUntil == null || tsw.validUntil == '')){
+            
+                String tsFirstName = tsw.ac.First_Name__c == null ? '' : tsw.ac.First_Name__c;
+                String tsLastName = tsw.ac.Last_Name__c == null ? '' : tsw.ac.Last_Name__c;
+
+                return tsFirstName + ' ' + tsLastName + ' ' + tsw.ac.Type_of_certificate__c + ' Certificate needs to have the field Valid Until populated.';
+            }
+
+        }
+
+        return null;
+
     }
     
     public String verifyOwnerFlagIsSelectIfFinancialInterestAboveZero()
@@ -932,7 +972,7 @@ public with sharing class AMS_AccreditationContactController {
         public AMS_Accreditation_Contact__c ac {get; set;}
         public String certificateIssueDate {get; set;}
         public String validUntil {get; set;}
-        public String expiryDate {
+        /*public String expiryDate {
             get{
                 if(validUntil != null)
                     return validUntil;
@@ -948,8 +988,11 @@ public with sharing class AMS_AccreditationContactController {
                     
                 return null;
             }
-            set;
-        }
+            set{
+                validUntil = expiryDate;
+            }
+
+        }*/
         
         public TrainedStaffWrapper(AMS_Accreditation_Contact__c trainedStaffAc)
         {

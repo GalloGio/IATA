@@ -1,7 +1,7 @@
 global with sharing class IDCardUtil {
-	
-	//flag to determine if idcard contact trigger can run more than once per execution
-    public static Boolean isFirstTime = true;	  
+  
+  //flag to determine if idcard contact trigger can run more than once per execution
+    public static Boolean isFirstTime = true;    
     @RemoteAction
     public static final String PARAM_APPLICATIONTYPE = 'atype';
     @RemoteAction
@@ -122,7 +122,11 @@ global with sharing class IDCardUtil {
 @RemoteAction
     public Static final string CASESTATUS_INPROGRESS = 'In progress';
 @RemoteAction
-    public static final string CASESTATUS_READYFORPRODUCTION= 'Ready for production';  
+    public static final string CASESTATUS_READYFORPRODUCTION= 'Ready for production';
+
+@RemoteAction
+    public static final string CASESTATUS_PENDING_TO_BE_APPROVED = 'To be Approved';
+
     
             
 @RemoteAction
@@ -132,8 +136,8 @@ global with sharing class IDCardUtil {
 @RemoteAction
     public static final string ISFOC = 'FreeOfCharge';  
     
-    private static final String CREDENTIAL_NAME = 'IdCard';
-    private static final String FOLDER_NAME = 'a0W';
+    public static final String CREDENTIAL_NAME = 'IdCard';
+    public static final String FOLDER_NAME = 'a0W';
 
 @RemoteAction
     public static Id IDCardContactRecordTypeID = clsContactTypeIDSingleton.getInstance().RecordTypes.get('Standard'); 
@@ -849,17 +853,27 @@ global with sharing class IDCardUtil {
            mapCinTemplatePerIdCardId.put(idCard.Id, CIN);
            mapIncDigitsPerCinTemplate.put(CIN, idCard.Gender__c == 'Male' ? 0 : 50);
            setCinTemplates.add(CIN.substring(1)); // add to the set without the prefix, to correctly match in the DB
+
+           system.debug('CIN template: ' + CIN.substring(1));
         }
 
         // Get current max for the increment digits for each template
 
-        list<ID_Card__c> lstRelatedIdCards = [SELECT Id, CIN__c, Gender__c FROM ID_Card__c WHERE CIN__c <> null AND CIN__c LIKE :setCinTemplates];
+        list<ID_Card__c> lstRelatedIdCards = [SELECT Id, CIN__c, LastName__c, Gender__c FROM ID_Card__c WHERE CIN__c <> null AND CIN__c LIKE :setCinTemplates];
 
         for (ID_Card__c idcard : lstRelatedIdCards) {
-            Integer incDigits = Integer.valueOf(idcard.CIN__c.mid(10, 2));
+            system.debug('Found related CIN: ' + idcard.CIN__c);
+
+            // for Last Names shorter than 3 chars
+            Integer LNamelength = idCard.LastName__c.left(3).length();
+            Integer incDigitsStartPosition = LNamelength + 7; // 10 normally
+
+            system.debug('incDigitsStartPosition: ' + incDigitsStartPosition);
+
+            Integer incDigits = Integer.valueOf(idcard.CIN__c.mid(incDigitsStartPosition, 2));
             
-            if ( incDigits > mapIncDigitsPerCinTemplate.get( (idcard.Gender__c == 'Male' ? 'M' : 'F') + idcard.CIN__c.left(10) + '__' + idcard.CIN__c.substring(12) ) ) {
-                mapIncDigitsPerCinTemplate.put( (idcard.Gender__c == 'Male' ? 'M' : 'F') + idcard.CIN__c.left(10) + '__' + idcard.CIN__c.substring(12), incDigits );
+            if ( incDigits > mapIncDigitsPerCinTemplate.get( (idcard.Gender__c == 'Male' ? 'M' : 'F') + idcard.CIN__c.left(incDigitsStartPosition) + '__' + idcard.CIN__c.substring(incDigitsStartPosition + 2) ) ) {
+                mapIncDigitsPerCinTemplate.put( (idcard.Gender__c == 'Male' ? 'M' : 'F') + idcard.CIN__c.left(incDigitsStartPosition) + '__' + idcard.CIN__c.substring(incDigitsStartPosition + 2), incDigits );
             }
         }
 
@@ -883,6 +897,8 @@ global with sharing class IDCardUtil {
             strCIN = strCIN.substring(1);
 
             idCard.CIN__c = strCIN;
+
+            system.debug('New CIN assigned: ' + strCIN);
         }
 
 
@@ -2032,4 +2048,37 @@ global with sharing class IDCardUtil {
          else return 'ERROR';   
     }
     
+    public static String AWSImageAuthorizationLink (String strPhotoName) {
+        String authorizationLink;
+
+        if (strPhotoName != null && strPhotoName != '') {
+            AmazonCredentials credential = AmazonCredentials.getCredentials(CREDENTIAL_NAME);   
+
+            Long timestamp = System.now().getTime()/1000 + 300;
+            String filename = '/' + credential.Bucket + '/' + FOLDER_NAME + '/' + strPhotoName;
+
+            String canonical = 'GET\n\n\n' + timestamp + '\n' + filename; 
+            Blob bsig = Crypto.generateMac('HmacSHA1', Blob.valueOf(canonical), Blob.valueOf(credential.Secret));          
+            String signature = EncodingUtil.base64Encode(bsig); 
+
+            authorizationLink = credential.EndpointBaseURL + filename.removeStart('/') + '?AWSAccessKeyId=' + credential.AWSAccessKeyId + '&Expires=' + timestamp + '&Signature=' + EncodingUtil.urlEncode(signature,'UTF-8');
+        } else {
+            return null;
+        }
+
+        return authorizationLink;
+    }
+
+     //INC291433
+    @RemoteAction 
+     WebService static String setTobeapproved(String applicationIdParam) {
+        List<Case> c = [select id, ID_Card_Status__c from Case c where  c.Related_ID_Card_Application__c =: applicationIdParam and c.RecordTypeId =: IDCardcaseRecordTypeID  limit 1];
+        
+        if(!c.isEmpty() && c.size() > 0) {
+            c[0].Status = IDCardUtil.CASESTATUS_PENDING_TO_BE_APPROVED;
+            update c[0];            
+            return c[0].id;
+        }        
+        return '';
+    }
 }

@@ -55,10 +55,10 @@ global with sharing class GenericAttachmentListController {
         
         if (this.isForPortal) {
             this.showFileIdentifier = false;
-            cse = [Select Recordtype.DeveloperName, Status from Case where id = :this.id];
+            cse = [Select Recordtype.DeveloperName, Status, Reason1__c FROM Case where id = :this.id];
         } else {
             // check if case is in recordtypes SAAM (ProcessEuropeSCE) or Oscar Communication
-            cse = [Select Recordtype.DeveloperName, Status from Case where id = :this.id];
+            cse = [Select Recordtype.DeveloperName, Status, Reason1__c FROM Case where id = :this.id];
             set<String> setRecordTypes = new set<String>{'ProcessEuropeSCE','OSCAR_Communication'};
             this.showFileIdentifier = setRecordTypes.contains(cse.Recordtype.DeveloperName);
         }
@@ -221,7 +221,7 @@ global with sharing class GenericAttachmentListController {
 	
 	
 	public Boolean getCanAttachFilesToCase() {
-        if(cse.Status != 'Draft') {
+        if((cse.Status != 'Draft' && cse.Status != 'Open - EDMC') || ((cse.Reason1__c == 'New SA / CHV – New Code' || cse.Reason1__c == 'CLO - Closure') && cse.Status == 'Draft')) {
             return true;
         } else {
             return false;

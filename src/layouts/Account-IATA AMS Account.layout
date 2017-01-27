@@ -51,6 +51,9 @@
             </containers>
         </subtabComponents>
     </customConsoleComponents>
+    <excludeButtons>DataDotComAccountInsights</excludeButtons>
+    <excludeButtons>DataDotComClean</excludeButtons>
+    <excludeButtons>DataDotComCompanyHierarchy</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
         <customLabel>true</customLabel>
@@ -109,6 +112,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Link_agent_code__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>CNS_Agency__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -241,7 +248,7 @@
                 <field>Abbreviated_name__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>Location_Category__c</field>
             </layoutItems>
         </layoutColumns>
@@ -316,7 +323,7 @@
                 <field>CCG_IRR_Distribution_list__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>CCG_Participant__c</field>
             </layoutItems>
         </layoutColumns>
@@ -416,6 +423,10 @@
                 <behavior>Readonly</behavior>
                 <field>Source_System__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Is_AIMS_Account__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -447,7 +458,7 @@
                 <height>200</height>
                 <page>ImportantContacts</page>
                 <showLabel>false</showLabel>
-                <showScrollbars>false</showScrollbars>
+                <showScrollbars>true</showScrollbars>
                 <width>100%</width>
             </layoutItems>
         </layoutColumns>
@@ -536,6 +547,7 @@
     <relatedLists>
         <fields>Active__c</fields>
         <fields>Change_Code__c</fields>
+        <fields>NAME</fields>
         <fields>Bulletin_Information__c</fields>
         <fields>OSCAR__c</fields>
         <fields>Reason_Code__c</fields>
@@ -543,10 +555,18 @@
         <fields>Created_Date_To_Show__c</fields>
         <fields>CREATEDBY_USER</fields>
         <fields>Source__c</fields>
-        <fields>AIMS_Updated_by__c</fields>
         <relatedList>Agency_Applied_Change_code__c.Account__c</relatedList>
         <sortField>Created_Date_To_Show__c</sortField>
         <sortOrder>Desc</sortOrder>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>RECORDTYPE</fields>
+        <fields>Authority__c</fields>
+        <fields>Status__c</fields>
+        <relatedList>Agency_Authorization__c.Account__c</relatedList>
+        <sortField>RECORDTYPE</sortField>
+        <sortOrder>Asc</sortOrder>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
@@ -563,7 +583,18 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Amount_to_be_Paid__c</fields>
+        <fields>Balance__c</fields>
+        <fields>Billing_Adjustment__c</fields>
+        <fields>Billing_Amount__c</fields>
+        <fields>CURRENCY_ISO_CODE</fields>
+        <fields>Group__c</fields>
+        <fields>Paid__c</fields>
+        <fields>Period__c</fields>
+        <fields>Remittance_Date__c</fields>
         <relatedList>Account_Statement__c.Account__c</relatedList>
+        <sortField>Remittance_Date__c</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
@@ -681,6 +712,17 @@
         <relatedList>AMS_Voucher_Information__c.Account__c</relatedList>
         <sortField>Year__c</sortField>
         <sortOrder>Asc</sortOrder>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Change_Code__c</fields>
+        <fields>CREATEDBY_USER</fields>
+        <fields>Update_Type__c</fields>
+        <fields>UPDATEDBY_USER</fields>
+        <fields>LAST_UPDATE</fields>
+        <relatedList>AMS_Agency_Updates__c.Account__c</relatedList>
+        <sortField>LAST_UPDATE</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedObjects>ParentId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>

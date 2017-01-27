@@ -6,20 +6,18 @@ public class AMS_AccountTriggerHandler {
                 'email__c',
                 'website',
                 'mobile__c',
-                'shippingaddress',
                 'manager_first_name__c',
                 'manager_last_name__c',
                 'tradename__c',
-                'shippingstreet',
-                'shippingcity',
-                'shippingcountry',
-                'shippingstate',
-                'shippingpostalcode',
-                'VAT_number__c',
-                'VAT_number_2__c'
+                'solicitation_flag__c',
+                'location_category__c'
+                
             };
+    public static Set<String> minorchangesRestrictedForCNS = new Set<String>{'tradename__c'};
 
     public static boolean processMinorChangesValidationFlag = true;
+    public static boolean minorChangesComingFromOSCAR = false;
+    public static boolean comingFromOSCARforRemoveTradeName = false;
 
     public static Integer runningVCU = 0;
 
@@ -30,12 +28,21 @@ public class AMS_AccountTriggerHandler {
         disallowedSources.add('AIMS3');
         disallowedSources.add('WebStar');
         disallowedSources.add('DataLoader');
-        for(Account ag : accs){
-	if(!disallowedSources.contains(ag.Source_System__c))
-       	{
-		if(ag.Sector__c == AMS_Utils.SECTOR_PASSENGER || ag.Sector__c == AMS_Utils.SECTOR_CARGO){
 
-			setCassNumberOnHO(ag);
+        Set<Id> countries = new Set<Id>();
+        for(Account ag : accs)
+            countries.add(ag.IATA_ISO_Country__c);
+
+        Map<Id, boolean> countryToIsCNS = new Map<Id, boolean>();
+        for(IATA_ISO_Country__c iic : [SELECT Id, CNS_Country__c FROM IATA_ISO_Country__c WHERE Id IN :countries]){
+            countryToIsCNS.put(iic.Id, iic.CNS_Country__c);
+        }
+
+
+        for(Account ag : accs){
+            if(!disallowedSources.contains(ag.Source_System__c)){
+                if(ag.Sector__c == AMS_Utils.SECTOR_PASSENGER || ag.Sector__c == AMS_Utils.SECTOR_CARGO){
+                    setCassNumberOnHO(ag, (ag.IATA_ISO_Country__c ==null ? null :  countryToIsCNS.get(ag.IATA_ISO_Country__c)));
 
                     if(ag.Cass_Number__c!=null && ag.Cass_number__c.isNumeric()){
                         ag.Cass_Number__c = AMS_AgencyHelper.resizeNumericString(ag.Cass_Number__c,3);
@@ -93,6 +100,7 @@ public class AMS_AccountTriggerHandler {
     public static void handleAfterUpdate(List<Account> accs, Map<Id,Account> oldMap){
         
         handleAgenciesOperations(accs,oldMap);
+        handleDDUpdates(accs, oldMap);
 
     }
 
@@ -135,7 +143,7 @@ public class AMS_AccountTriggerHandler {
 
     public static void handleManualMinorChanges(List<Account> accs, Map<Id,Account> oldMap){
 
-        accs = filterByAgencyRecordType(accs);
+        accs = filterValidAgencies(accs);
 
         Map<String, Schema.SObjectField> accountFields = AMS_Utils.getObjectFields('Account');
 
@@ -147,14 +155,14 @@ public class AMS_AccountTriggerHandler {
         for(Account acct : accs)
             if(acct.IATA_ISO_Country__c!=null)
                 countries.add(acct.IATA_ISO_Country__c);
+
         if(countries.size()>0)
             for(IATA_ISO_Country__c iic : [SELECT Name, OSCAR_enabled__c FROM IATA_ISO_Country__c WHERE ID IN :countries])
                 countryIdToMinorChangeEnabled.put(iic.Id, iic.OSCAR_enabled__c);
         //LF: end change
-        
-        
+ 
+        Map<String, Schema.SobjectField> accountDescription =Account.getSObjectType().getDescribe().fields.getMap();
         for(Account acct : accs){
-            
             //LF: enable minor changes only if the ISO Country has the flag OSCAR_enabled__c enabled
             if(countryIdToMinorChangeEnabled.get(acct.IATA_ISO_Country__c)!=true)
                 continue;
@@ -170,6 +178,11 @@ public class AMS_AccountTriggerHandler {
                 if(minorChangesAccountFields.contains(fieldToSearch.toLowerCase())){
 
                         if(acct.get(fieldName) <> oldMap.get(acct.Id).get(fieldName)){
+                            if(acct.CNS_Agency__c == true && !minorChangesComingFromOSCAR && minorchangesRestrictedForCNS.contains(fieldName)){
+                                acct.addError('Change of '+accountDescription.get(fieldName).getDescribe().getLabel()+' is not allowed for CNS agencies directly on account level: a new  OSCAR is required to modify this information.');
+                                
+                                continue;
+                            }
 
                             System.debug('Account being changed for the field ' + fieldName + ' so lets create AACC.');
 
@@ -177,7 +190,7 @@ public class AMS_AccountTriggerHandler {
                             String accountNewValue = String.valueOf(acct.get(fieldName));
                             String accountOldValue = String.valueOf(oldMap.get(acct.Id).get(fieldName));
 
-                            AMS_RecordCreatorWebservice.AccountChanges acctChange = new AMS_RecordCreatorWebservice.AccountChanges(accountFieldName,accountNewValue,accountOldValue);
+                            AMS_RecordCreatorWebservice.AccountChanges acctChange = new AMS_RecordCreatorWebservice.AccountChanges(accountFieldName,accountOldValue,accountNewValue);
 
                             accountChanges.add(acctChange);
                         }
@@ -196,7 +209,7 @@ public class AMS_AccountTriggerHandler {
 
     }
 
-    private static List<Account> filterByAgencyRecordType(List<Account> accts){
+    private static List<Account> filterValidAgencies(List<Account> accts){
 
         ID standardRT = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency') ;
 
@@ -204,11 +217,11 @@ public class AMS_AccountTriggerHandler {
 
         for(Account acct: accts){
 
-            if(acct.recordTypeId == standardRT)
+            //only accredited agencies can generate minor change codes
+            if(acct.recordTypeId == standardRT && acct.Accreditation_date__c != null)
                 toReturn.add(acct);
 
         }
-
 
         return toReturn;
     }
@@ -223,7 +236,19 @@ public class AMS_AccountTriggerHandler {
         List<Account> accountsToProcess = new List<Account>();
         List<AMS_OSCAR_JSON.ChangeCode> changeCodesToProcess = new List<AMS_OSCAR_JSON.ChangeCode>();
         List<AMS_OSCAR__c> oscarsToProcess = new List<AMS_OSCAR__c>();
-
+		
+		map<id, list<Agency_Applied_Change_code__c>> mapAccntCC = new map<id, list<Agency_Applied_Change_code__c>>();
+        set<id> setAccntId = new set<id>();
+        for(AccountChangesStruct actChange: accountChanges)
+        	setAccntId.add(actChange.acct.Id);
+		
+		for(Agency_Applied_Change_code__c aacc: [SELECT Reason_Code__c, Reason_Description__c, Account__c FROM Agency_Applied_Change_code__c WHERE Account__c in :setAccntId AND Active__c = TRUE]){
+			if(mapAccntCC.containsKey(aacc.Account__c))
+				mapAccntCC.get(aacc.Account__c).add(aacc);
+			else
+				mapAccntCC.put(aacc.Account__c, new Agency_Applied_Change_code__c[]{aacc});
+		}
+		
         for(AccountChangesStruct actChange: accountChanges){
             
             processedTN = false;
@@ -232,10 +257,14 @@ public class AMS_AccountTriggerHandler {
             AMS_OSCAR_JSON.ChangeCode changeCode = null;
 
             Account account = actChange.acct;
+            //DTULLO: Dunno who did this below... keep it for the future: NEVER Put a SOQL Query inside a loop!
+            //List<Agency_Applied_Change_code__c> accountActiveChangeCode = [SELECT Reason_Code__c, Reason_Description__c FROM Agency_Applied_Change_code__c WHERE Account__c =: account.Id AND Active__c = TRUE];
+			List<Agency_Applied_Change_code__c> accountActiveChangeCode = new List<Agency_Applied_Change_code__c>();
+			if(mapAccntCC.containsKey(account.Id))
+				accountActiveChangeCode = mapAccntCC.get(account.Id);
+            system.debug(LoggingLevel.ERROR, 'LF: createMinorChangesChangeCode() check change! Is CNS ? '+actChange.isCNS());
 
-            List<Agency_Applied_Change_code__c> accountActiveChangeCode = [SELECT Reason_Code__c, Reason_Description__c FROM Agency_Applied_Change_code__c WHERE Account__c =: account.Id AND Active__c = TRUE];
-
-            if(AMS_RecordCreatorWebservice.containsTradeName(actChange.changes)){
+            if(!comingFromOSCARforRemoveTradeName && AMS_RecordCreatorWebservice.containsTradeName(actChange.changes) ){
 
                 changeCodeTN = AMS_RecordCreatorWebservice.generateChangeCodeTN(null, account.Status__c == 'Approved' );
 
@@ -249,10 +278,11 @@ public class AMS_AccountTriggerHandler {
                 oscarsToProcess.add(null);
 
                 processedTN = true;
-            }
+
+            } 
 
 
-            if(actChange.changes.size() > 1 ||  ( actChange.changes.size() == 1 && !processedTN)){
+            if(!comingFromOSCARforRemoveTradeName && (actChange.changes.size() > 1 ||  ( actChange.changes.size() == 1 && !processedTN))){
 
                 changeCode = AMS_RecordCreatorWebservice.generateChangeCode(null);
             
@@ -268,14 +298,17 @@ public class AMS_AccountTriggerHandler {
 
         }
 
-        AMS_Utils.createAAChangeCodes(changeCodesToProcess, oscarsToProcess, accountsToProcess,false);
+        List<AMS_ChangeCodesHelper.ObjectChangesStruct> objectChanges = AMS_ChangeCodesHelper.convertAccountToObjectChanges(accountChanges);
+
+
+        AMS_ChangeCodesHelper.createAAChangeCodes( objectChanges, changeCodesToProcess, oscarsToProcess, accountsToProcess,false);
 
     }
 
     public class AccountChangesStruct {
 
-        private List<AMS_RecordCreatorWebservice.AccountChanges> changes{get;set;}
-        private Account acct{get;set;}
+        public List<AMS_RecordCreatorWebservice.AccountChanges> changes{get;set;}
+        public Account acct{get;set;}
 
         public AccountChangesStruct(List<AMS_RecordCreatorWebservice.AccountChanges> changes, Account acct){
 
@@ -284,11 +317,19 @@ public class AMS_AccountTriggerHandler {
 
         }
 
+        public boolean isCNS(){
+            return acct.CNS_Agency__c == true;
+        }
+
     }
 
-    public static void setCassNumberOnHO(Account ag){
+    public static void setCassNumberOnHO(Account ag, boolean isCNS){
         if(ag.Sector__c == 'Cargo Agent'  && ag.Location_Type__c=='HO' && ag.CASS_Number__c==null){
-            ag.CASS_Number__c ='000';
+            // Salvatore don't hate me for this if==true, but it may be null!
+            if(isCNS == true)
+                ag.CASS_Number__c ='001';
+            else
+                ag.CASS_Number__c ='000';
         }
     }
 
@@ -444,5 +485,46 @@ public class AMS_AccountTriggerHandler {
             return true;
         }
         return false;
+    }
+
+    //This method applies the Due Diligence status from the account on all open Oscars
+    public static void handleDDUpdates(List<Account> accs, Map<Id,Account> oldMap){
+
+        Set<Id> accountsToCheck = new Set<Id>();
+        accountsToCheck.add(AMS_Utils.getId('Account', 'Standard_Account'));
+        accountsToCheck.add(AMS_Utils.getId('Account', 'IATA_Agency'));
+
+
+        Set<String> closedStatus = new Set<String>{
+            'Closed', 'Closed_Not Accepted', 'Closed_Rejected', 'Closed_Withdrawn'
+        };
+
+        Map<String, String> ddStatus = new Map<String, String>{
+            'Cleared' => 'Passed',
+            'Sanctioned. Please contact compliance' => 'Failed'
+        };
+
+        Map<Id,Account> ddAccounts = new Map<Id,Account>();
+        for(Account acc : accs){
+            if(acc.Due_Diligence_Status__c != oldMap.get(acc.Id).Due_Diligence_Status__c
+                && ddStatus.containsKey(acc.Due_Diligence_Status__c)
+                && accountsToCheck.contains(acc.RecordTypeId)){
+
+                ddAccounts.put(acc.Id, acc);
+            }
+        }
+
+        if(ddAccounts.isEmpty()) return;
+
+        System.debug(loggingLevel.FINE, '____ [cls AMS_AccountTriggerHandler - handleDDUpdates] ddAccounts - ' + ddAccounts.keySet());
+
+        List<AMS_OSCAR__c> oscars = [SELECT Id, Account__c  FROM AMS_OSCAR__c WHERE Account__c IN :ddAccounts.keySet() AND Status__c NOT IN :closedStatus];
+        for(AMS_OSCAR__c oscar : oscars){
+            Account acc = ddAccounts.get(oscar.Account__c);
+
+            oscar.STEP17__c = ddStatus.get(acc.Due_Diligence_Status__c);
+        }
+
+        if(!oscars.isEmpty()) update oscars;
     }
 }
