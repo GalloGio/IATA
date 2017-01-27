@@ -699,7 +699,7 @@ background-color:#428bca;
      <ul class="nav navbar-nav collapse" id="three">
 
       <li>
-    <a href="/ISSP_AvailableServices?MainNav=Services&subNav=Available&mid=M3S1" id="M3S1">
+    <a href="/ISSP_AvailableServices?MainNav=Services&subNav=Available&mid=M3S1{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M3S1">
                 {!$Label.ISSP_Available_services}
                 </a>
 </li>
@@ -722,7 +722,7 @@ background-color:#428bca;
                 </a>
 </li>
          <li>
-    <a href="/ISSP_AvailableServices?MainNav=Services&subNav=Available&mid=M4S5" id="M4S5" >
+    <a href="/ISSP_AvailableServices?MainNav=Services&subNav=Available&mid=M4S5{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M4S5" >
                {!$Label.ISSP_Manage_Services}
                 </a>
         </li>
