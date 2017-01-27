@@ -4,6 +4,10 @@ public with sharing class ISSP_PortalService{
     public Portal_Applications__c PortalService {get;set;}
     public List<Portal_Application_Right__c> appsGrantedList  {get;set;}
     public List<Contact> contactList {get;set;}
+
+    //CNS
+    public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
+    public String commParam { get { if(communityName=='CNS'){ return '&CommunityName='+ communityName;} return ''; } set;}
     
     public ISSP_PortalService(){
     
@@ -49,7 +53,7 @@ public with sharing class ISSP_PortalService{
     }
     
     public PageReference RedirectToServiceAccess(){ 
-        PageReference p = new PageReference ('/apex/ISSP_EditPortalServiceAccess?PSname=' +PortalService.Name + ' &PSid='+PortalService.Id); 
+        PageReference p = new PageReference ('/apex/ISSP_EditPortalServiceAccess?PSname=' +PortalService.Name + ' &PSid='+PortalService.Id + commParam); 
         p.setRedirect(true);
         return p;
     }
