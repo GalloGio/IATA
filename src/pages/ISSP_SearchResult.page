@@ -1,6 +1,6 @@
 <apex:page showHeader="false" sidebar="false" controller="ISSP_SearchResultCO" action="{!searchGet}"  standardStylesheets="false"  applyBodyTag="false" applyHtmlTag="false">
     <html>
-        <c:ISSP_Header ></c:ISSP_Header>
+        <c:ISSP_Header communityName="{!communityName}"></c:ISSP_Header>
         <body>
             <style>
     .search-title {
@@ -65,7 +65,7 @@
     } 
 </script>
             <div class="container">
-                <c:ISSP_CustomNavigation />
+                <c:ISSP_CustomNavigation communityName="{!communityName}"/>
                 <div class="panel panel-primary">
                     <div class="panel-heading head_panel_green">
                         <h3 class="panel-title">{!$Label.ISSP_Search_Result}</h3>
@@ -101,14 +101,14 @@
                                                 <apex:repeat value="{!viewItem.theObjectList}" var="objectItem" >
                                                     <tr>
                                                         <td>
-                                                            <apex:outputLink value="/ISSP_Case?caseId={!objectItem['Id']}" rendered="{!LEFT(objectItem['Id'],3) = '500'}" >{!objectItem[viewItem.theFieldName]}</apex:outputLink>
-                                                            <apex:outputLink value="/ISSP_Contact?id={!objectItem['Id']}" rendered="{!LEFT(objectItem['Id'],3) = '003'}" >{!objectItem[viewItem.theFieldName]}</apex:outputLink>
-                                                            <apex:outputLink value="/ISSP_Account?id={!objectItem['Id']}" rendered="{!LEFT(objectItem['Id'],3) = '001'}" >{!objectItem[viewItem.theFieldName]}</apex:outputLink>
+                                                            <apex:outputLink value="/ISSP_Case?caseId={!objectItem['Id']}{!if(communityName=='CNS','&CommunityName='+communityName,'')}" rendered="{!LEFT(objectItem['Id'],3) = '500'}" >{!objectItem[viewItem.theFieldName]}</apex:outputLink>
+                                                            <apex:outputLink value="/ISSP_Contact?id={!objectItem['Id']}{!if(communityName=='CNS','&CommunityName='+communityName,'')}" rendered="{!LEFT(objectItem['Id'],3) = '003'}{!if(communityName=='CNS','&CommunityName='+communityName,'')}" >{!objectItem[viewItem.theFieldName]}</apex:outputLink>
+                                                            <apex:outputLink value="/ISSP_Account?id={!objectItem['Id']}{!if(communityName=='CNS','&CommunityName='+communityName,'')}" rendered="{!LEFT(objectItem['Id'],3) = '001'}" >{!objectItem[viewItem.theFieldName]}</apex:outputLink>
                                                         </td>
                                                         <apex:repeat value="{!viewItem.fieldNameList}" var="fieldName"  >
                                                         	<apex:outputPanel rendered="{!fieldName.fieldPath = 'ContactId'}" layout="none" >
                                                                 <td>
-                                                                	<apex:outputLink value="/ISSP_Contact?id={!objectItem['ContactId']}" >{!objectItem['Contact.Name']}</apex:outputLink>
+                                                                	<apex:outputLink value="/ISSP_Contact?id={!objectItem['ContactId']}{!if(communityName=='CNS','&CommunityName='+communityName,'')}" >{!objectItem['Contact.Name']}</apex:outputLink>
                                                                 </td>
                                                             </apex:outputPanel>
                                                             <apex:outputPanel rendered="{!AND(fieldName.fieldPath != 'ContactId', fieldName.fieldPath != 'Id', UPPER(fieldName.fieldPath) != UPPER(viewItem.theFieldName), UPPER(fieldName.fieldPath) != 'ISSP_CONTACT_NAME__C')}" layout="none" >
@@ -128,7 +128,7 @@
                     </div>
                 </div>
             </div>
-            <c:ISSP_CustomFooter />
+            <c:ISSP_CustomFooter communityName="{!communityName}"/>
         </body>
     </html>
 </apex:page>

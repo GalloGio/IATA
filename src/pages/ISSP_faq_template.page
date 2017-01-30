@@ -60,7 +60,8 @@
                                         <apex:outputLink value="/ISSP_FAQ2Case?MainNav=Queries&subNav=MyQueries&mid=M1S1{!if(communityName=='CNS','&CommunityName='+communityName,'')}">
                                             {!$Label.PKB2_Contact_Us}</apex:outputLink>
                                         <br/><br/>
-                                        Located in the United States?<br/>
+                                        <apex:outputText value="{!if(communityName=='CNS','Travel Agent Located in the United States?','Located in the United States?')}"/>
+                                        <br/>
                                         Please Contact Us <a href="http://www.iatan.org/Pages/default.aspx">here</a>
                                         <br/><br/>
                                         
