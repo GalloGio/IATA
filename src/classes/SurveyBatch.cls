@@ -852,7 +852,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
         }
 
         //start INC292755 recordType = Airline Coding Application
-      }else if(c.RecordType.id == '012w0000000YbvuAAC' &&
+      }else if(c.RecordType.DeveloperName == 'Airline_Coding_Application' &&
                        c.Status == 'Closed' &&
                        !c.Contact.Email.contains('@iata.org') &&
                        !c.Contact.Email.contains('@salesforce.com')){
