@@ -7638,12 +7638,10 @@ Controlling picklist of E&amp;F Sub-Status Account</description>
             <picklistValues>
                 <fullName>Chapter 7</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
             </picklistValues>
             <picklistValues>
                 <fullName>None</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
             </picklistValues>
             <restrictedPicklist>true</restrictedPicklist>
             <sorted>false</sorted>
@@ -33479,6 +33477,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
+                <fullName>Cash basis%2Fwith commission</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Changes processed</fullName>
                 <default>false</default>
             </values>
@@ -33487,7 +33489,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>No longer a customer</fullName>
+                <fullName>Not accreditated</fullName>
                 <default>false</default>
             </values>
             <values>

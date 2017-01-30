@@ -1967,4 +1967,56 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
         Test.stopTest();
 
     }
+    
+    @isTest static void accountHierarchySelectionPageVMFR() {
+
+        getUpdatedAccountData();
+
+        AMS_OSCAR__c oscar = createOSCAR(HO1, AMS_Utils.VFMR, null, null);
+
+        List<AMS_Process_Detail__c> pds = new List<AMS_Process_Detail__c>();
+        pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = BR1.Id));
+        pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = SA4.Id));
+
+        insert pds;
+
+        PageReference pg = Page.AMS_AccountHierarchySelection;
+        pg.getParameters().put('Id', oscar.Id);
+
+        Test.startTest();
+
+        AMS_AccountHierarchySelectionController con = new AMS_AccountHierarchySelectionController(new ApexPages.StandardController(oscar));
+
+        System.assertEquals(HO1.Id, con.mainAccount.Id);
+        System.assertEquals(HO1.Id, con.oscar.Account__c);
+        System.assertEquals(7,con.hierarchyValues.size());
+        System.assertEquals('Change of remittance frequency must be applied to all the hierarchy (except for branches abroad)', con.noteList[0]);
+
+        System.assert(con.editable);
+        System.assert(con.showTopPanel);
+        System.assert(!con.showTargetAgency);
+        System.assert(!con.showLocationTypeBehavior);
+        System.assert(!con.oscarFieldList.isEmpty());
+
+        con.hierarchyValues[2].main = true;
+
+        //emulate js
+        con.hierarchyValues[2].selected  = true;
+        con.hierarchyValues[0].main = false;
+        // /emulate js
+
+        con.selectMain();
+        System.assertNotEquals(HO1.Id, con.oscar.Account__c);
+
+        con.save();
+        System.assert(!con.closeTab);
+        
+        con.oscar.AMS_Target_Agency__c = HO2.Id;
+        con.selectAll = true;
+        con.doSelectAll(); //simulates page actionSupport
+        System.assert(!con.isPartialHierarchy(con.hierarchyValues[2]));
+        
+
+        Test.stopTest();
+    }
 }

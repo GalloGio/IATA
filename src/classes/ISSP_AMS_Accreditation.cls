@@ -3254,7 +3254,7 @@ public without sharing class ISSP_AMS_Accreditation {
                 Phone__c, FAX__c, Financial_Assessment_Contact__c, Job_title__c, Mobile__c, Time_devoted_to_Agency_business__c, Agencies_prev_worked_for__c,
                 Prev_Job1_Position__c, Prev_Job1_From__c, Prev_Job1_IATA_accredited__c, Prev_Job1_IATA_code__c, Prev_Job1_Employer__c, Prev_Job1_Address__c,
                 Prev_Job2_Position__c, Prev_Job2_From__c, Prev_Job2_IATA_accredited__c, Prev_Job2_IATA_code__c, Prev_Job2_Employer__c, Prev_Job2_Address__c, Duplicate_contact_exists__c,
-                Portal_administrator__c, Contact_Id__c,Contact__c, AMS_OwnershipId__c, AMS_ContactId__c, Authorised_to_make_customs_declarations__c, Local_First_name__c, Local_Last_name__c
+                Portal_administrator__c, Contact__c, AMS_OwnershipId__c, AMS_ContactId__c, Authorised_to_make_customs_declarations__c, Local_First_name__c, Local_Last_name__c
                 FROM AMS_Accreditation_Contact__c
                 WHERE AMS_Pax_Accreditation_Form__r.Id = :newForm.Id AND  RecordType.DeveloperName = 'Person'
                 ORDER BY Agency_owner__c DESC, Name ASC
@@ -3270,7 +3270,7 @@ public without sharing class ISSP_AMS_Accreditation {
         get{
             List<AMS_Accreditation_Contact__c> prevOwner = [
                 SELECT AMS_Pax_Accreditation_Form__c, Name, First_name__c, Last_name__c, Salutation__c, Agency_owner__c, Agency_role__c, Email__c,Phone__c,
-                Financial_interest__c, Contact_Id__c, Contact__c, AMS_OwnershipId__c, AMS_ContactId__c, Local_First_name__c, Local_Last_name__c, Number_Of_Shares__c
+                Financial_interest__c, Contact__c, AMS_OwnershipId__c, AMS_ContactId__c, Local_First_name__c, Local_Last_name__c, Number_Of_Shares__c
                 FROM AMS_Accreditation_Contact__c
                 WHERE AMS_Pax_Accreditation_Form__r.Id = :newForm.Id AND  RecordType.DeveloperName = 'Previous_Owner'
                 ORDER BY Name ASC
@@ -3286,7 +3286,7 @@ public without sharing class ISSP_AMS_Accreditation {
         get{
             List<AMS_Accreditation_Contact__c> currOwner = [
                 SELECT AMS_Pax_Accreditation_Form__c, Name, First_name__c, Last_name__c, Salutation__c, Agency_owner__c, Agency_role__c, Email__c,Phone__c,
-                Financial_interest__c, Contact_Id__c, AMS_OwnershipId__c, AMS_ContactId__c, Local_First_name__c, Local_Last_name__c, Number_Of_Shares__c
+                Financial_interest__c, AMS_OwnershipId__c, AMS_ContactId__c, Local_First_name__c, Local_Last_name__c, Number_Of_Shares__c
                 FROM AMS_Accreditation_Contact__c
                 WHERE AMS_Pax_Accreditation_Form__r.Id = :newForm.Id AND  RecordType.DeveloperName = 'Current_Owner'
                 ORDER BY Name ASC
@@ -3994,8 +3994,8 @@ public without sharing class ISSP_AMS_Accreditation {
 
         List<AMS_Accreditation_Contact__c> amscontacts = [SELECT Name, Authorised_signatory__c, AddressCity__c, AddressCountry__c, AddressStreet__c,
                                            AddressPostcode__c, Agency_role__c, Email__c, FAX__c, Financial_Assessment_Contact__c, First_name__c,
-                                           Last_name__c, Mobile__c, Agency_Owner__c, Phone__c, Portal_administrator__c, Salutation__c, Contact_Id__c, Contact_Id__r.Salutation,
-                                           Contact_Id__r.FirstName, Contact_Id__r.LastName, Contact_Id__r.Phone, Contact_Id__r.MobilePhone, Contact_Id__r.FAX, Contact_Id__r.AccountId
+                                           Last_name__c, Mobile__c, Agency_Owner__c, Phone__c, Portal_administrator__c, Salutation__c, Contact__r.Salutation,
+                                           Contact__r.FirstName, Contact__r.LastName, Contact__r.Phone, Contact__r.MobilePhone, Contact__r.FAX, Contact__r.AccountId
                                            FROM AMS_Accreditation_Contact__c WHERE Email__c != null AND recordTypeId = :personRecordTypeId AND AMS_Pax_Accreditation_Form__c = :newForm.Id];
 
         List<String> amscontactsEmails = getAmscontactsEmails(amscontacts);
@@ -4148,7 +4148,7 @@ public without sharing class ISSP_AMS_Accreditation {
 
     }
     public Void updateContactByAmsContact(AMS_Accreditation_Contact__c amscon, Contact SFDCContact) {
-        if (amsOfficeType == 'HO' || (SFDCContact.Id != null && amscon.Contact_Id__r.AccountId == vHQAccountId))
+        if (amsOfficeType == 'HO' || (SFDCContact.Id != null && amscon.Contact__r.AccountId == vHQAccountId))
             SFDCContact.AccountId = vHQAccountId;
         else
             SFDCContact.AccountId = newform.ISSP_Branch_AccountId__c;
