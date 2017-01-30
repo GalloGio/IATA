@@ -101,7 +101,7 @@ public with sharing class ams2gdp_TriggerHelper
 		
 		Set<String> accountIdsToClearBillingAddress = new Set<String>();
 		Set<String> accountIdsToClearShippingAddress = new Set<String>();
-
+//Comme t2 
 		Set<String> countryIds = new Set<String>(); 
 		Set<String> stateIds = new Set<String>();
 
