@@ -33,6 +33,9 @@ public class ISSP_Ctrl_ContentPage
   public List<String> allDocumentCategoryList {get;set;}
   public List<String> allLanguagesList {get;set;}  
 
+  //CNS
+  public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
+
     
   //Consetructor
   public ISSP_Ctrl_ContentPage(){

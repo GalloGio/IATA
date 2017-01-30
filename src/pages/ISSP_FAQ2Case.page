@@ -1,6 +1,6 @@
 <apex:page controller="vfISSP_FAQ2Case" action="{!pageLoad}"  standardStylesheets="false" showHeader="false" sidebar="false"  applyBodyTag="false" applyHtmlTag="false">
 <html>
- <c:ISSP_Header ></c:ISSP_Header>
+ <c:ISSP_Header communityName="{!communityName}"></c:ISSP_Header>
  <body>
 
  <!--<script type="text/javascript" src="{!urlfor($Resource.IIS_Portal,'/js/jquery1-7-2.min.js')}" ></script>
@@ -15,7 +15,7 @@
 
 
   <div class="container">
-   <c:ISSP_CustomNavigation />
+   <c:ISSP_CustomNavigation communityName="{!communityName}"/>
 
        
 <style type="text/css">
@@ -190,7 +190,7 @@
                     <ul class="nav nav-pills ">
                      <li role="presentation" class="sidenav active" id="liGen"><a href="#" onclick="GeneralQueueMethod();selectGeneral();return false;" id="general" >{!$Label.ISSP_General_enquiries}</a></li> 
 
-                     <li role="presentation" class="sidenav" style=" display:{!IF(isSISHelpDesk,'block','none')}"><a href="/apex/ISSP_Case?recordTypeId=01220000000Q3F2&origin=Portal&ent=Case&cas11=portal%20for%20example" onclick="CheckNewCaseRecordType('Cases_SIS_Help_Desk');">{!$Label.ISSP_SIS_Help_Desk}</a>
+                     <li role="presentation" class="sidenav" style=" display:{!IF(isSISHelpDesk,'block','none')}"><a href="/apex/ISSP_Case?recordTypeId=01220000000Q3F2&origin=Portal&ent=Case&cas11=portal%20for%20example{!if(communityName=='CNS','&CommunityName='+communityName,'')}" onclick="CheckNewCaseRecordType('Cases_SIS_Help_Desk');">{!$Label.ISSP_SIS_Help_Desk}</a>
                      </li>
 
                      <li role="presentation" class="sidenav" style=" display:{!IF(isIATAServiceRequest,'block','none')}"><a href="#" onclick="CheckNewCaseRecordType('IATA_Service_Request');">{!$Label.Iata_service_request}</a>
@@ -681,7 +681,7 @@
 <!---------------------------------------------------------------------------->
 <!---------------------------------------------------------------------------->
 <!---------------------------------------------------------------------------->
-  <c:ISSP_CustomFooter />
+  <c:ISSP_CustomFooter communityName="{!communityName}"/>
                   </div>
 </body>
 </html>

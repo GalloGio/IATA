@@ -1,9 +1,9 @@
 <apex:page title="{!$Label.site.error2}" controller="vfExceptionPage" action="{!CreateCase}" showHeader="false" sidebar="false" standardStylesheets="false"  applyBodyTag="false" >  
  <html>
- <c:ISSP_Header ></c:ISSP_Header>    
+ <c:ISSP_Header communityName="{!communityName}"></c:ISSP_Header>    
  <body> 
      <div class="container">
-    <c:ISSP_CustomNavigation />
+    <c:ISSP_CustomNavigation communityName="{!communityName}"/>
       <center>
         <apex:panelGrid bgcolor="white" columns="1" style="align: center;"> 
           <br/>
@@ -44,7 +44,7 @@
 			<apex:param value="{!$Site.ErrorDescription}"/>
 		</apex:outputText>
       
-       <c:ISSP_CustomFooter />
+       <c:ISSP_CustomFooter communityName="{!communityName}"/>
     </div>
      </body>
     </html>

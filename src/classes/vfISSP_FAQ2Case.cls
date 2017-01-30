@@ -74,6 +74,10 @@ public without sharing class vfISSP_FAQ2Case
 
     public list<String> errorMessage {get; set;}
 
+    //CNS
+    public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
+    public String commParam { get { if(communityName=='CNS'){ return '&CommunityName='+ communityName;} return ''; } set;}
+
     public vfISSP_FAQ2Case() 
     {     
 
@@ -119,9 +123,9 @@ public without sharing class vfISSP_FAQ2Case
             PageReference pr;
             String retURL = ApexPages.currentPage().getParameters().get('retUrl');
             if(String.isNotBlank(retURL)) 
-                pr = new PageReference('/ISSP_Case?mid=M1S1&retUrl=' + retURL);
+                pr = new PageReference('/ISSP_Case?mid=M1S1&retUrl=' + retURL + commParam);
             else
-                pr = new PageReference('/ISSP_Case?mid=M1S1');
+                pr = new PageReference('/ISSP_Case?mid=M1S1' + commParam);
             return pr;
         }
         //set Sector Field according to Account.Sector__c
@@ -432,13 +436,13 @@ public without sharing class vfISSP_FAQ2Case
     public PageReference createSatisfiedRecord()
     {
         createArticleStatisticsRecords(SelectedArticleModalView.SelectedArticle, ENV.ArticleStatType.Satisfied);
-        return new Pagereference('/ISSP_Homepage?mid=M0S1');
+        return new Pagereference('/ISSP_Homepage?mid=M0S1'+commParam);
     }
     
     public PageReference back()  
     {
         string retURL = ApexPages.currentPage().getParameters().get('retURL');
-        return new Pagereference(String.isNotBlank(retURL) ? retURL : '/ISSP_Homepage?mid=M0S1');
+        return new Pagereference(String.isNotBlank(retURL) ? retURL : '/ISSP_Homepage?mid=M0S1'+commParam);
     }
     
     public PageReference save() 
@@ -491,12 +495,12 @@ public without sharing class vfISSP_FAQ2Case
             system.debug('wwe1 newCase: ' + newCase );
             Database.insert(newCase);
 
-            return new Pagereference('/ISSP_Case?caseId='+newCase.Id);
+            return new Pagereference('/ISSP_Case?caseId='+newCase.Id + commParam);
         }
         else{
             system.debug('wwe newCase2: ' + newCase );
             Database.insert(newCase);
-            return new Pagereference('/ISSP_Case?caseId='+newCase.Id);
+            return new Pagereference('/ISSP_Case?caseId='+newCase.Id + commParam);
         } 
     }
 
@@ -554,12 +558,12 @@ public without sharing class vfISSP_FAQ2Case
             newCase.Account_Concerned__c = accountId;
             Database.insert(newCase);
             //return new Pagereference('/p/attach/NoteAttach?pid=' + newCase.Id + '&retURL=%2FISSP_Case?caseId='+ newCase.Id);
-            return new Pagereference('/apex/ISSP_AddAttachment?caseid=' + newCase.Id);
+            return new Pagereference('/apex/ISSP_AddAttachment?caseid=' + newCase.Id + commParam);
         }
         else{
             Database.insert(newCase);
             //return new Pagereference('/p/attach/NoteAttach?pid=' + newCase.Id + '&retURL=%2FISSP_Case?caseId='+ newCase.Id);
-            return new Pagereference('/apex/ISSP_AddAttachment?caseid=' + newCase.Id);
+            return new Pagereference('/apex/ISSP_AddAttachment?caseid=' + newCase.Id + commParam);
         }
     }
 

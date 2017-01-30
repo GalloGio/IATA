@@ -6,7 +6,7 @@
      <apex:variable var="AdminOrNot" value="{!if($Profile.Name == 'ISS Portal Agency Delegated Admin User' || $Profile.Name == 'ISS Portal Airline Delegated Admin User' || $Profile.Name == 'ISS Portal Delegated Admin User'  || $Profile.Name == 'ISS Portal GSA Delegated Admin User','','none')}" />
     <!-- end elliot 19 juin -->
  <div class="container">
- <c:ISSP_CustomNavigation />
+ <c:ISSP_CustomNavigation communityName="{!communityName}"/>
 
     <!---------------------------------------------------------------------->
        <script type="text/javascript">
@@ -312,7 +312,7 @@
       </div>
     </div>
 </apex:form>
-    <c:ISSP_CustomFooter />
+    <c:ISSP_CustomFooter communityName="{!communityName}"/>
 </div><!-- end container-->
     </body>
     </html>

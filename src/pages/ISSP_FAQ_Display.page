@@ -9,7 +9,7 @@
     >
    <html>
     
-    	<c:ISSP_Header ></c:ISSP_Header>    
+    	<c:ISSP_Header communityName="{!communityName}"></c:ISSP_Header>    
  	<body>
  	<c:pkb_css />
     <style type="text/css">
@@ -83,7 +83,7 @@
  
 
     <div class="container">
-        <c:ISSP_CustomNavigation />
+        <c:ISSP_CustomNavigation communityName="{!communityName}"/>
       <div class="panel panel-primary">
             <div class="panel-heading head_panel_green">
                 <h3 class="panel-title">{!$Label.ISSP_Resources}</h3>
@@ -204,7 +204,7 @@
     </div>
         </div><!-- end row -->
        </div>
-        <c:ISSP_CustomFooter />
+        <c:ISSP_CustomFooter communityName="{!communityName}"/>
         </div><!-- end container-->
     
    
