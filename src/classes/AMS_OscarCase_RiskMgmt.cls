@@ -197,7 +197,7 @@ public class AMS_OscarCase_RiskMgmt {
 								  Account.Location_Class__c, AccountId, Account.Status__c, Account.PreviousStatus__c, Account.Previous_Reason__c, Account.Reason__c, Account.Accumulated_Irregularities__c
 								  , Account.IATA_ISO_Country__r.Enable_Risk_Change_Codes__c, Account.AIMS_ID__c, Account.WebStar_ID__c, Account.IATACode__c
 								  //DTULLO UNCOMMENT FOR CNS, COMMENT/DELETE SIMILAR LINES AFTER
-								  //, Account.CNS_Agency__c
+								  , Account.CNS_Agency__c
 								  from case where id in:mapTrgNew.keySet()]);
 			
 			set<string> setOperationCalendarExtID = new set<string>();
@@ -230,8 +230,8 @@ public class AMS_OscarCase_RiskMgmt {
 						continue;
 						
 					//DTULLO UNCOMMENT FOR CNS, COMMENT/DELETE SIMILAR LINES AFTER
-					//if(mapCases.get(c).Account.CNS_Agency__c && !conf.Used_By_CNS__c)
-					//	continue;
+					if(c.Account.CNS_Agency__c && !conf.Used_By_CNS__c)
+						continue;
 					
 					
 											  //Check that the same change code does not exists generated from the same SIDRA (Lite)
@@ -287,8 +287,8 @@ public class AMS_OscarCase_RiskMgmt {
 					for(AMS_ChangeCodes__c cc :mapChangeCodeToCreate.get(idCase)){
 						id CurrAccntId = mapCases.get(idCase).AccountId;
 						//DTULLO UNCOMMENT FOR CNS, COMMENT/DELETE SIMILAR LINES AFTER
-						//Agency_Applied_Change_code__c AACC = CreateChangeCode(mapCases, idCase, cc, null, mapCases.get(idCase).Account.CNS_Agency__c);
-						Agency_Applied_Change_code__c AACC = CreateChangeCode(mapCases, idCase, cc, null);
+						Agency_Applied_Change_code__c AACC = CreateChangeCode(mapCases, idCase, cc, null, mapCases.get(idCase).Account.CNS_Agency__c);
+						//Agency_Applied_Change_code__c AACC = CreateChangeCode(mapCases, idCase, cc, null);
 						if(AACC!=null)
 							lsAACC.add(AACC);
 						
@@ -300,8 +300,8 @@ public class AMS_OscarCase_RiskMgmt {
 									if(HierAccnt.id!=CurrAccntId){
 										if(HIERAccnt.Location_Class__c != 'T' || (HIERAccnt.Location_Class__c == 'T' && setTidsChangeCode.contains(cc.Change_Code__c))){
 											//DTULLO UNCOMMENT FOR CNS, COMMENT/DELETE SIMILAR LINES AFTER
-											//Agency_Applied_Change_code__c AACCHier = CreateChangeCode(mapCases, idCase, cc, HIERAccnt, HierAccnt.CNS_Agency__c);
-											Agency_Applied_Change_code__c AACCHier = CreateChangeCode(mapCases, idCase, cc, HIERAccnt);
+											Agency_Applied_Change_code__c AACCHier = CreateChangeCode(mapCases, idCase, cc, HIERAccnt, HierAccnt.CNS_Agency__c);
+											//Agency_Applied_Change_code__c AACCHier = CreateChangeCode(mapCases, idCase, cc, HIERAccnt);
 											if(AACCHier!=null)
 												lsAACC.add(AACCHier);
 										}
@@ -325,8 +325,8 @@ public class AMS_OscarCase_RiskMgmt {
 	}
 	
 	//DTULLO UNCOMMENT FOR CNS, COMMENT/DELETE SIMILAR LINES AFTER
-	//private static Agency_Applied_Change_code__c CreateChangeCode(map<id, case> mapCases, id idCase, AMS_ChangeCodes__c cc, Account acc, boolean bIsCNS){
-	private static Agency_Applied_Change_code__c CreateChangeCode(map<id, case> mapCases, id idCase, AMS_ChangeCodes__c cc, Account acc){
+	private static Agency_Applied_Change_code__c CreateChangeCode(map<id, case> mapCases, id idCase, AMS_ChangeCodes__c cc, Account acc, boolean bIsCNS){
+	//private static Agency_Applied_Change_code__c CreateChangeCode(map<id, case> mapCases, id idCase, AMS_ChangeCodes__c cc, Account acc){
 		datetime dt = system.now();
 		
 		Agency_Applied_Change_code__c AACC = new Agency_Applied_Change_code__c();
@@ -350,13 +350,13 @@ public class AMS_OscarCase_RiskMgmt {
 		sUniqueId = sUniqueId + '_' + cc.Change_Code__c + '_' + dt.year() + dt.month() + dt.day() + dt.hour() + dt.second();
 		
 		//DTULLO UNCOMMENT FOR CNS, COMMENT/DELETE SIMILAR LINES AFTER
-		//AACC.Bulletin_Information__c = GenerateMemoText(mapCases.get(idCase), null
-		//												, bIsCNS?cc.CNS_Bulletin_Memo_Text__c:cc.Bulletin_Memo_Text__c, bIsCNS?cc.CNS_Bulletin_Memo_Text2__c:cc.Bulletin_Memo_Text2__c, bIsCNS?cc.CNS_Bulletin_Memo_Text3__c:cc.Bulletin_Memo_Text3__c
-		//												, mapIRRS.get(AccountId), mapFinancialSecurity.get(AccountId)).toUpperCase();
-		
 		AACC.Bulletin_Information__c = GenerateMemoText(mapCases.get(idCase), null
-														, cc.Bulletin_Memo_Text__c, cc.Bulletin_Memo_Text2__c, cc.Bulletin_Memo_Text3__c
+														, bIsCNS?cc.CNS_Bulletin_Memo_Text__c:cc.Bulletin_Memo_Text__c, bIsCNS?cc.CNS_Bulletin_Memo_Text2__c:cc.Bulletin_Memo_Text2__c, bIsCNS?cc.CNS_Bulletin_Memo_Text3__c:cc.Bulletin_Memo_Text3__c
 														, mapIRRS.get(AccountId), mapFinancialSecurity.get(AccountId)).toUpperCase();
+		
+		//AACC.Bulletin_Information__c = GenerateMemoText(mapCases.get(idCase), null
+		//												, cc.Bulletin_Memo_Text__c, cc.Bulletin_Memo_Text2__c, cc.Bulletin_Memo_Text3__c
+		//												, mapIRRS.get(AccountId), mapFinancialSecurity.get(AccountId)).toUpperCase();
 		AACC.Change_Code__c = cc.Change_Code__c;
 		//AACC.Effective_Date__c = ; //get the effective date from the oscar attached to the 
 		//if(cc.Change_Code__c == 'IRR' || cc.Change_Code__c == 'IRS' || cc.Change_Code__c == 'IRW'){
