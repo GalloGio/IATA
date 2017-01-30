@@ -10,19 +10,8 @@ public with sharing class SidraLiteHelperForOSCAR {
     **/
     public static Case createCase(Case cse){
         try {
-            if (cse.Cases != null && ! cse.Cases.isEmpty()) {
-                throw new WSSidraLite.SidraLiteException('SIDRA Lite case already created, cannot create another one');
-            }
-            if (cse.OSCAR__r==null ||
-                    !(
-                        cse.OSCAR__r.RPM_Approval__c == 'Authorize Disapproval' ||
-                        cse.OSCAR__r.Step11__c == 'Failed' ||
-                        cse.OSCAR__r.Step12__c == 'Failed' ||
-                        cse.OSCAR__r.Step13__c == 'Failed' ||
-                        cse.OSCAR__r.Step14__c == 'Failed'
-                    )
-            ) {
-                throw new WSSidraLite.SidraLiteException('You cannot create a SIDRA Lite case if the Change Disapproval is not Authorized or the Sanity Check Failure is not Failed');
+            if (cse.OSCAR__r==null) {
+                throw new WSSidraLite.SidraLiteException('You cannot create a SIDRA Lite without an OSCAR record');
             }
             if (cse.Reason1__c == null) {
                 throw new WSSidraLite.SidraLiteException('You cannot create a SIDRA Lite under no reason');
@@ -39,7 +28,7 @@ public with sharing class SidraLiteHelperForOSCAR {
             newCase.Region__c = cse.Region__c;
             newCase.BSPCountry__c = cse.BSPCountry__c;
             newCase.BSP_CASS__c = SidraLiteUtil.getBSPCASS(cse.account);
-            newCase.SIDRA_Lite_Reason__c = getOSCARReason(cse.OSCAR__r);
+            newCase.SIDRA_Lite_Reason__c = getOSCARReason(cse);
 
             if (SidraLiteUtil.isAccountActive(cse.account)) {
                 newCase.SIDRA_Lite_Default_Date__c = Date.Today();
@@ -57,10 +46,52 @@ public with sharing class SidraLiteHelperForOSCAR {
         }
     }
 
-    private static String getOSCARReason(AMS_OSCAR__c oscar) {
-        if (oscar.Step11__c == 'Failed' || oscar.Step12__c == 'Failed' || oscar.Step13__c == 'Failed' || oscar.Step14__c == 'Failed') {
-            return 'Non submission of supporting documents';
+    public static String getOSCARReason(Case cse) {
+        // create a set with all reasons of the children
+        set<String> existentReasons = new set<String>();
+        for (Case child: cse.Cases) {
+            existentReasons.add(child.SIDRA_Lite_Reason__c);
         }
-        return 'Change deficiency';
+
+        AMS_OSCAR__c oscar = cse.OSCAR__r;
+
+        if (oscar.Step6__c == 'Failed') {
+            String reason = 'Non submission of supporting documents';
+            if (!existentReasons.contains(reason) ) {
+                return reason;
+            }
+        }
+        if (oscar.Step9__c == 'Failed') {
+            String reason = 'Non payment of change fees';
+            if (!existentReasons.contains(reason) ) {
+                return reason;
+            }
+        }
+        if (oscar.Step11__c == 'Failed') {
+            String reason = 'Financial Review Non-compliance (OSCAR Change)';
+            if (!existentReasons.contains(reason) ) {
+                return reason;
+            }
+        }
+        if (oscar.Step12__c == 'Failed') {
+            String reason = 'Financial Security Non-compliance (OSCAR Change)';
+            if (!existentReasons.contains(reason) ) {
+                return reason;
+            }
+        }
+        if (oscar.Step14__c == 'Failed') {
+            String reason = 'Non submission of PSAA';
+            if (!existentReasons.contains(reason) ) {
+                return reason;
+            }
+        }
+        if (oscar.RPM_Approval__c == 'Authorize Disapproval') {
+            String reason = 'Change Deficiency';
+            if (!existentReasons.contains(reason) ) {
+                return reason;
+            }
+        }
+        throw new WSSidraLite.SidraLiteException('Unable to identify a non-compliance scenario in this case');
     }
+
 }

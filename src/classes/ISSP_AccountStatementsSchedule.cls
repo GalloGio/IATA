@@ -11,15 +11,18 @@ global class ISSP_AccountStatementsSchedule implements Schedulable {
 
     public Integer elemsPerBatch;
     public String region;
+    public Integer daysToRemittance;
 
     public ISSP_AccountStatementsSchedule () {
         this.elemsPerBatch = 1;
         this.region = '';
+        this.daysToRemittance = 1;
     }
 
-    public ISSP_AccountStatementsSchedule (String region) {
+    public ISSP_AccountStatementsSchedule (String region, Integer daysToRemittance) {
         this.elemsPerBatch = 1;
         this.region = region;
+        this.daysToRemittance = daysToRemittance;
     }
 
     global void execute(SchedulableContext ctx) {
@@ -27,6 +30,10 @@ global class ISSP_AccountStatementsSchedule implements Schedulable {
     }
 
     public void launchBatch() {
+
+        // date to filter the remmitance date
+        // by default is today + 1 day (so TOMORROW) but it can be changed
+        DateTime remittanceDate = Date.today().addDays(this.daysToRemittance);
 
         /**
             Find all contacts related to accounts
@@ -40,7 +47,7 @@ global class ISSP_AccountStatementsSchedule implements Schedulable {
         + ' AND AccountId in ('
         + '   Select Account__c'
         + '   From Account_Statement__c'
-        + '   where Remittance_Date__c = TOMORROW)'
+        + '   where Remittance_Date__c = ' + remittanceDate.format('yyyy-MM-dd')  + ')'
         + ' And id in ('
         + '   Select contact__c'
         + '   From Portal_Application_Right__c'

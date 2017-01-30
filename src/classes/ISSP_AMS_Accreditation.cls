@@ -113,6 +113,7 @@ public without sharing class ISSP_AMS_Accreditation {
     public boolean isCASSCountry {get; set;}
     public boolean isCASSImport {get; set;}
     public boolean isHOAccredited {get; set;}
+    public boolean isUserAccAccredited {get; set;}
     public boolean isValError {get; set;}
     public boolean isNoticeOfChange {get; set;}
     public boolean bIsAdmin {get; set;}     //identify if a user is an administrator or not
@@ -202,6 +203,7 @@ public without sharing class ISSP_AMS_Accreditation {
         isStep5 = false;
         isFinalStep = false;
         isHOAccredited = false;
+        isUserAccAccredited = false;
         isEUcountry = false;
         isCASSCountry = false;
         isCASSImport = false;
@@ -240,13 +242,18 @@ public without sharing class ISSP_AMS_Accreditation {
         if (con.Account.Top_Parent__c == null) { //User is from HQ Account
             vHQAccountId = con.AccountId;
             fetchHQAccountDetails();
-            if (con.Account.IATACode__c != null && con.Account.RecordType.DeveloperName == 'IATA_Agency' && con.Account.Status__c != 'Terminated' && con.Account.Status__c != 'Not accredited' && con.Account.Status__c != 'New application pending' && con.Account.Status__c != 'No longer a customer')
+            if (con.Account.IATACode__c != null && con.Account.RecordType.DeveloperName == 'IATA_Agency' && con.Account.Status__c != 'Terminated' && con.Account.Status__c != 'Not accreditated' && con.Account.Status__c != 'New application pending' && con.Account.Status__c != 'No longer a customer'){
                 isHOAccredited = true; //This is an accredited  Agency Account
+                isUserAccAccredited = true;
+            }
         } else { //Get Id for HQ Account when user's Account is a branch office
             vHQAccountId = con.Account.Top_Parent__c;
             fetchHQAccountDetails();
+
+            if (con.Account.IATACode__c != null && con.Account.RecordType.DeveloperName == 'IATA_Agency' && con.Account.Status__c != 'Terminated' && con.Account.Status__c != 'Not accreditated' && con.Account.Status__c != 'New application pending' && con.Account.Status__c != 'No longer a customer')
+                isUserAccAccredited = true;
             
-            if (hqAccount.RecordType.DeveloperName == 'IATA_Agency' && hqAccount.Status__c != 'Terminated' && hqAccount.Status__c != 'Not accredited' && hqAccount.Status__c != 'No longer a customer' && hqAccount.Status__c != 'New application pending')
+            if (hqAccount.RecordType.DeveloperName == 'IATA_Agency' && hqAccount.Status__c != 'Terminated' && hqAccount.Status__c != 'Not accreditated' && hqAccount.Status__c != 'No longer a customer' && hqAccount.Status__c != 'New application pending')
                 isHOAccredited = true; //This is an accredited  Agency Account
         }
         
@@ -344,6 +351,7 @@ public without sharing class ISSP_AMS_Accreditation {
             isStep1 = true;
         }
         
+        newForm.Scope_of_Change__c = 'HO Only'; //Set default
        
         if (ApexPages.currentPage().getParameters().containsKey('caseId')) {
 
@@ -384,7 +392,6 @@ public without sharing class ISSP_AMS_Accreditation {
                     amsOfficeType = 'Branch';
                 }
                 
-                
                 if(amsOfficeType == 'HO' && isHOAccredited && newCase.Reason1__c != 'New BR Abroad')
                     isNewHOforAccredAgent = true; //Accrediedt Agent applying for HO of different Program e.g. Accred PAX applyiong for CGO HO
 
@@ -405,10 +412,20 @@ public without sharing class ISSP_AMS_Accreditation {
                 if (newForm.Agent_Type__c == null) {
                     newForm.Agent_Type__c = 'IATA Cargo Agent'; //Default Type of Agent to Cargo if case created internally - Open - EDMC - and online form not yet created
                 }
+                
+                 //AS - NoC V2.0 - Now Other Change will always be for 3 types of changes
+        	if(isBankAccountChange) {
+            	newForm.Is_change_bank_account_details__c = true;
+        	} else {
+            	newForm.Is_change_legal_name__c = true;
+            	newForm.Is_change_location__c = true;
+            	newForm.Is_change_ownership_or_shareholding__c = true;
+        	}
 
                 createNoCList();
 
                 if (newForm != null && newForm.Operation_Type__c != null) {
+                    newForm.HO_Account__c = vHQAccountId;
                     sectorValue = newForm.Operation_Type__c;
                     amsLocationType = newCase.Reason1__c + ' - ' + newForm.Agent_Type__c;
                 }
@@ -450,7 +467,6 @@ public without sharing class ISSP_AMS_Accreditation {
                     setContextualHelp(userInfo.getLanguage());
                 } else if (stepNumber == '2') {
                     isStep2 = true;
-
                 } else if (stepNumber == '3') {
                     isStep3 = true;
                     System.Debug('SAAM Case Id: ' + newCase.Id);
@@ -814,7 +830,7 @@ public without sharing class ISSP_AMS_Accreditation {
         
         return [SELECT Id, Name, IATA_ISO_Country__r.Name, Sector__c, IATACode__c,Location_Type__c, BillingCity, BillingState, BillingCountry
                                       FROM Account
-                                      WHERE Top_Parent__c = :vHQAccountId AND IATACode__c != null AND RecordType.DeveloperName IN ('IATA_Agency') AND (Status__c NOT IN ('Terminated','Not accredited', 'No longer a customer', 'New application pending')) AND (IATACode__c NOT IN : selectedBranchCodes)
+                                      WHERE Top_Parent__c = :vHQAccountId AND IATACode__c != null AND RecordType.DeveloperName IN ('IATA_Agency') AND (Status__c NOT IN ('Terminated','Not accreditated', 'No longer a customer', 'New application pending')) AND (IATACode__c NOT IN : selectedBranchCodes)
                                               ORDER BY Name, IATACode__c
                                      ];
     }
@@ -4694,6 +4710,8 @@ public without sharing class ISSP_AMS_Accreditation {
         System.debug('SFSF newCase.IFAP_Country_ISO__c' + newCase.IFAP_Country_ISO__c);
         System.debug('SFSF sector' + sector);
         System.debug('SFSF amsOfficeType' + amsOfficeType);
+         system.debug('noticeOfChangeList ' + noticeOfChangeList);
+        
         //Get distinct set of Languages for this country / operation requirements
         if (stepNumber != '5') {
             distinctReqmentLangs = [
@@ -6707,5 +6725,5 @@ public without sharing class ISSP_AMS_Accreditation {
         }
         return auxAccreditCont;
     }
-    
+   
 }

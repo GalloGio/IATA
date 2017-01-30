@@ -132,7 +132,10 @@ public class vfIECEBC_CampaignTracking extends vfIECEBC_Controller{
                     String extId = (String)ar.get('External_Id__c');
                     EBC_Click_Event__c ece = [Select URL__c From EBC_Click_Event__c Where External_Id__c = :extId LIMIT 1];
                     
-                    if (ece.URL__c == 'Unsubscribe') continue;
+                    if (ece.URL__c==null) continue;
+                    if (ece.URL__c == 'Unsubscribe') continue;                   
+                    if (ece.URL__c.ContainsIgnoreCase('iecebc_optout')) continue;
+                    
                     
                     cnt++;
                     
