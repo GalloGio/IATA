@@ -207,7 +207,7 @@ public class ISSP_AddAttachment {
 
         List <Account> branchList = [SELECT Id, Name, IATA_ISO_Country__r.Name, Sector__c, IATACode__c,Location_Type__c, BillingCity, BillingState, BillingCountry
                                       FROM Account
-                                      WHERE Top_Parent__c = :vHQAccountId AND RecordType.DeveloperName IN ('IATA_Agency') AND (Status__c NOT IN ('Terminated','Not accredited', 'No longer a customer', 'New application pending'))
+                                      WHERE Top_Parent__c = :vHQAccountId AND RecordType.DeveloperName IN ('IATA_Agency') AND (Status__c NOT IN ('Terminated','Not accreditated', 'No longer a customer', 'New application pending'))
                                       										AND IATACode__c != null AND Location_Type__c != 'SA'
                                               ORDER BY Location_Type__c,Name, IATACode__c
                                      ];

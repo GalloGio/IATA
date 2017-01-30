@@ -46,8 +46,8 @@ global class WSSidraLite {
         Case cse = [
             Select Id, RecordtypeId, Decision__c, Suspension_Date__c, Region__c, BSPCountry__c, AccountId, Bank_Guarantee_deadline__c, Reason1__c, ContactId,
                 Account.Id, Account.Type, Account.Accumulated_Irregularities__c, Account.Status__c, Account_Billing_Country__c, Comments__c,
-                OSCAR__r.Id, OSCAR__r.RPM_Approval__c, OSCAR__r.Step11__c, OSCAR__r.Step12__c, OSCAR__r.Step13__c, OSCAR__r.Step14__c,
-                (Select Id, CaseNumber from Cases where RecordtypeId = :SidraLiteManager.RECORDTYPE_SIDRA_LITE )
+                OSCAR__r.Id, OSCAR__r.RPM_Approval__c, OSCAR__r.Step6__c, OSCAR__r.Step9__c, OSCAR__r.Step11__c, OSCAR__r.Step12__c, OSCAR__r.Step13__c, OSCAR__r.Step14__c,
+                (Select Id, CaseNumber, SIDRA_Lite_Reason__c from Cases where RecordtypeId = :SidraLiteManager.RECORDTYPE_SIDRA_LITE )
             from Case
             where id = :caseId];
 

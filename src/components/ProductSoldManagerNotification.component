@@ -86,6 +86,14 @@
                 {!order.BillToContact_Email__c}
             </td>
         </tr>
+        <tr>
+            <td width="125">
+                Payment Method
+            </td>
+            <td>
+                {!order.Payment_Type__c}
+            </td>
+        </tr>
     </table>
     <br />
 
