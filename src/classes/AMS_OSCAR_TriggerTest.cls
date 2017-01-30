@@ -1,7 +1,7 @@
 @isTest class AMS_OSCAR_TriggerTest {
     
     @testSetup static void setup(){
-		AMS_OSCAR_TestDataFactory.createOSCARwithInspectionsTestData();
+        AMS_OSCAR_TestDataFactory.createOSCARwithInspectionsTestData();
     }
 
     @isTest static void insertOSCARTest() {
@@ -113,7 +113,7 @@
     }
 
     @isTest static void updateOSCARTestOKSecondStep() {
-		Account a = [SELECT id from Account where Name = 'Test1 Agency' LIMIT 1];
+        Account a = [SELECT id from Account where Name = 'Test1 Agency' LIMIT 1];
 
         Test.startTest();
         
@@ -288,9 +288,9 @@
         Test.startTest();
         
         Account a = [SELECT id from Account where Name = 'Test1 Agency' LIMIT 1];
-		update a;
-		Contact c = [select id from Contact where AccountId = :a.Id];
-		
+        update a;
+        Contact c = [select id from Contact where AccountId = :a.Id];
+        
         AMS_OSCAR__c oscar = [SELECT id, Status__c, OwnerId, (SELECT Id FROM Cases__r) from AMS_OSCAR__c where Process__c = :AMS_Utils.new_HO limit 1];
 
 
@@ -436,8 +436,8 @@
         Test.startTest();
         
         // List<Group> queues = [ select Id, DeveloperName from Group where  Type = 'Queue' and DeveloperName in ('Africa_ME_OSCAR','Americas_OSCAR','Asia_Pacific_OSCAR','China_N_Asia_OSCAR','Europe_OSCAR')];
-		List<Group> queues = [ select Id, DeveloperName from Group where  Type = 'Queue' and DeveloperName in ('AgencyManagementAP','AgencyManagementAfricaME','AgencyManagementAmericas','AgencyManagementChinaNAsia','CasesACCEuropeOffOnshore')];
-		
+        List<Group> queues = [ select Id, DeveloperName from Group where  Type = 'Queue' and DeveloperName in ('AgencyManagementAP','AgencyManagementAfricaME','AgencyManagementAmericas','AgencyManagementChinaNAsia','CasesACCEuropeOffOnshore')];
+        
         String americas = null;
         String europe = null;
         String china = null;
@@ -452,7 +452,7 @@
             else if(q.DeveloperName.contains('China'))
                 china = q.id;
             else if(q.DeveloperName.contains('Africa'))
-            	africa = q.id;
+                africa = q.id;
             else if(q.DeveloperName.contains('AgencyManagementAP'))
                 asia = q.id;
         }
@@ -517,8 +517,8 @@
         ctry.Region__c = 'China & North Asia';
         update ctry;
 
-		a = [SELECT id from Account where Name = 'Test1 Agency' LIMIT 1];
-		
+        a = [SELECT id from Account where Name = 'Test1 Agency' LIMIT 1];
+        
         oscar = new AMS_OSCAR__c(Account__c = a.id, OwnerId = UserInfo.getUserId(), Invoice_number__c='4');
         insert oscar;
 
@@ -860,11 +860,11 @@
 
         update oscar;
 
-        oscar.STEP32__c = AMS_Utils.PASSED;
+        oscar.STEP31__c = AMS_Utils.PASSED;
 
         update oscar;
-
-        oscar.STEP31__c = AMS_Utils.PASSED;
+        
+        oscar.STEP32__c = AMS_Utils.PASSED;
 
         update oscar;
 
