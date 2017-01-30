@@ -127,8 +127,8 @@
                         </apex:form>
                     </div>
                 </div>
-            </div>
             <c:ISSP_CustomFooter communityName="{!communityName}"/>
+            </div>
         </body>
     </html>
 </apex:page>
