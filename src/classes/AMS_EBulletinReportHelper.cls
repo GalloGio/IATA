@@ -27,6 +27,9 @@ public without sharing class AMS_EBulletinReportHelper {
 	public static final String LEGALSTATUS		= 	'5-Legal Status';
 	public static final String LOCATIONCLASS	= 	'6-Program';
 	
+	public static final String HIERARCHY	= 	'7-Hierarchy';
+
+
 	public static final String STATUS			= 	'17-Status';
 	public static final String REASON			= 	'21-Reason';
 
@@ -42,6 +45,8 @@ public without sharing class AMS_EBulletinReportHelper {
 	public static final Integer OWNERPOS 			=	8;
 	public static final Integer NEWOWNERPOS 		=	12;
 
+	public static final String NEWHIERARCHY	= 	'43-New Hierarchy';
+	
 	public static final String NEWSTATE 	    =	'46-New Country or State';
 	public static final String NEWCOUNTRY 		= 	'47-New Country or State';
 
@@ -266,7 +271,7 @@ public without sharing class AMS_EBulletinReportHelper {
 		String filter2 		 = ' and Published_on_EBulletin__c = TRUE'; 
 		String filter3 		 = ' and Account__r.IATA_ISO_Country__r.ISO_Code__c IN :countriesFilter';		
 		String filter4 		 = ' and Account__r.Location_Class__c IN :locClsList';
-		String filter5 		 = ' and Created_Date_To_Show__c >= :fromDate  and Created_Date_To_Show__c < :toDate';		
+		String filter5 		 = ' and Created_Date_To_Show__c >= :fromDate  and Created_Date_To_Show__c < :toDate';
 		String orderByFilter = ' order by Account__r.IATA_ISO_Country__r.Name,Created_Date_To_Show__c';		
 
 		String filterCC  = filter1 + 
@@ -659,6 +664,8 @@ public without sharing class AMS_EBulletinReportHelper {
 				
 				else if(fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(LOCATIONCLASS)) strVal = AMS_Utils.getLocationClassDescr(strVal);
 
+				else if(fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(HIERARCHY) || fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(NEWHIERARCHY)) strVal = '=""' + strVal + '""';
+
 				recordsList.add(strVal);
 			}
 			else if(cc.change_code__c == NEWCHANGECODE && fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(IATACODE)){
@@ -677,8 +684,10 @@ public without sharing class AMS_EBulletinReportHelper {
 				else if(fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(LEGALSTATUS)) strVal = AMS_Utils.transformLegalStatus(strVal);
 				
 				else if(fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(LOCATIONCLASS)) strVal = AMS_Utils.getLocationClassDescr(strVal);
-				
+
 				else if(fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(STATUS)) strVal = AMS_Utils.getIATANumericStatus(strVal) + '/' + strVal;
+
+				else if(fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(IATACODE) || fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(HIERARCHY)) strVal = '=""' + strVal + '""';
 
 				recordsList.add(strVal);
 			}
