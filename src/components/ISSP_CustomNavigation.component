@@ -523,7 +523,7 @@ background-color:#428bca;
     function tarnsferSearchQuery() {
         //createCookie("searchInput", document.getElementById("searchInput").value, 1);
         //alert(document.cookie);
-        window.top.location.replace("/ISSP_SearchResult?q=" + document.getElementById("searchInput").value); 
+        window.top.location.replace("/ISSP_SearchResult?q=" + document.getElementById("searchInput").value + "{!if(communityName=='CNS','&CommunityName='+communityName,'')}"); 
     }
 
     function enterKey(evt) {
