@@ -118,7 +118,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
                                Contact.Email, Contact.HasOptedOutOfEmail, Contact.Instant_Survey_opt_out__c, Account.Name, Account.Status__c,
                                Contact.Instant_Survey_Last_feedback_received__c, Contact.Instant_Survey_Last_survey_sent__c,
                                WhoClosedCase__r.UserRole.Name, Contact.Account.IATA_ISO_Country__r.Case_BSP_Country__c,
-							   WhoClosedCase__r.Profile.Name
+                               WhoClosedCase__r.Profile.Name
                                FROM Case
                                WHERE ClosedDate > :startd AND ClosedDate < :endd
                                AND ContactId <> NULL AND Contact.Email <> NULL
@@ -130,6 +130,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
     CasesPart1 = new Set<Id>();
     for (Case c : casesToBeProcessed)
       CasesPart1.add(c.Id);
+
 
 
 
@@ -270,7 +271,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
     UtilityCS__c sender = UtilityCS__c.getInstance('SurveyEmailSender');
     if (!Test.isRunningTest() && sender != null)  email.setOrgWideEmailAddressId(sender.value__c);
     email.setBccAddresses(new list<string> {'guerreirom@iata.org', 'rovedaa@iata.org'});
-    email.setPlainTextBody(log);
+    email.setPlainTextBody(log);  
     email.setSubject('Instant survey email batch');
     Messaging.sendEmail(new list<Messaging.SingleEmailMessage> {email});
     system.debug(LoggingLevel.error, '################### MANDO ' + (errors + success) + ' email');
@@ -850,8 +851,13 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
           else     countersMap.put(c.Region__c, --n);
         }
 
-
-      }
+        //start INC292755 recordType = Airline Coding Application
+      }else if(c.RecordType.id == '012w0000000YbvuAAC' &&
+                       c.Status == 'Closed' &&
+                       !c.Contact.Email.contains('@iata.org') &&
+                       !c.Contact.Email.contains('@salesforce.com')){
+        template = templates.get('Clicktools_Contact_Email_CX_CODING_EN');    
+      } //end INC292755
 
       /****** Preparing the email *****/
       if (template != null) {
@@ -970,7 +976,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
         if(RoleName.contains('Distribution - Airline Coding & MITA'))
             c.OwnerId = Label.SurveyCustomerRecoveriesAnnFARRELL;
         else
-        	c.OwnerId = mapComplaintQueuesPerName.get(mapComplaintQueueNamePerRegion.get(c.Region__c));
+            c.OwnerId = mapComplaintQueuesPerName.get(mapComplaintQueueNamePerRegion.get(c.Region__c));
 
         lstCasesToUpdate.add(c);
       }
