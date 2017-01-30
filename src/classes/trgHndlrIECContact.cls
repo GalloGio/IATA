@@ -37,7 +37,7 @@ public with sharing class trgHndlrIECContact {
 		if(toContactSync.isEmpty() && toAccountSync.isEmpty()) return;
 
 		Map<Id, Zuora__CustomerAccount__c> mapContactIdToBillingAccount = IECZuoraHelper.getBillingAccountByContactId(newRecordsMap.keySet());
-		if(mapContactIdToBillingAccount.isEmpty()) return;
+		if(mapContactIdToBillingAccount == null || mapContactIdToBillingAccount.isEmpty()) return;
 
 		
 		//		List<String> lstAddressIds = new List<String>();
