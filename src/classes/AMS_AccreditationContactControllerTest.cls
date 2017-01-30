@@ -212,6 +212,61 @@ private class AMS_AccreditationContactControllerTest
             AMS_AccreditationContactLookUpController lookupCtrl = new AMS_AccreditationContactLookUpController();
         	
         	System.assertEquals(2, lookupCtrl.accWrapper.size());
+            System.assertEquals(null, lookupCtrl.accWrapper[0].registrationNumber);
+        Test.stopTest();
+    }
+    
+    static testMethod void testPopUpControllerWithPersonSearch()
+    {
+        setup();
+        
+        AMS_Person__c p1 = new AMS_Person__c(Name='c1ObsoleteName', LastName__c='c1LastName', First_Name__c='c1ObsoleteName', Email__c='test@test.com');
+        insert p1;
+        
+        Test.startTest();
+            PageReference pageRef = Page.AMSAccreditationContactLookup;
+            pageRef.getParameters().put('object', 'contact');
+            pageRef.getParameters().put('fieldId', 'fake:fieldId');
+            pageRef.getParameters().put('firstName', 'c1ObsoleteName');
+            pageRef.getParameters().put('lastName', 'c1LastName');
+            pageRef.getParameters().put('email', 'test@test.com');
+            pageRef.getParameters().put('legalName', '');
+            Test.setCurrentPage(pageRef);
+            
+            AMS_AccreditationContactLookUpController lookupCtrl = new AMS_AccreditationContactLookUpController();
+            
+            System.assertEquals(1, lookupCtrl.wrapper.size());
+        Test.stopTest();
+    }
+
+    static testMethod void testPopUpControllerErrors() {
+        setup();
+        
+        Test.startTest();
+            PageReference pageRef = Page.AMSAccreditationContactLookup;
+            pageRef.getParameters().put('fieldId', 'fake:fieldId');
+            Test.setCurrentPage(pageRef);
+
+            ApexPages.currentPage().getParameters().put('object', 'error');
+            AMS_AccreditationContactLookUpController noObject = new AMS_AccreditationContactLookUpController();
+
+            ApexPages.currentPage().getParameters().put('object', 'account');
+            ApexPages.currentPage().getParameters().put('legalName', '');
+            AMS_AccreditationContactLookUpController noLegalName = new AMS_AccreditationContactLookUpController();
+
+            pageRef.getParameters().put('legalName', 'ErrorLegalName');
+            AMS_AccreditationContactLookUpController noAccount = new AMS_AccreditationContactLookUpController();
+
+            ApexPages.currentPage().getParameters().put('object', 'contact');
+            ApexPages.currentPage().getParameters().put('email', '');
+            ApexPages.currentPage().getParameters().put('lastName', '');
+            AMS_AccreditationContactLookUpController noContactName = new AMS_AccreditationContactLookUpController();
+
+            ApexPages.currentPage().getParameters().put('email', 'errortest@test.com');
+            ApexPages.currentPage().getParameters().put('lastName', 'errorName');
+            pageRef.getParameters().put('firstName', 'errorName');
+            AMS_AccreditationContactLookUpController noValues = new AMS_AccreditationContactLookUpController();
+            
         Test.stopTest();
     }
 

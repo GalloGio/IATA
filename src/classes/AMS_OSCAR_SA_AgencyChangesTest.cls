@@ -1872,19 +1872,33 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
 
         System.assertEquals(HO1.Id, con.mainAccount.Id);
         System.assertEquals(HO1.Id, con.oscar.Account__c);
-        System.assertEquals(7,con.hierarchyValues.size());
         System.assertEquals('Change of ownership to IATA will move all the agencies selected under the target agency', con.noteList[0]);
+
+        System.assertEquals(1, con.totalPages);
+        System.assertEquals(0, con.currentPage);
+        System.assertEquals(7,con.hierarchyValues.size());
+        System.assertEquals(7,con.hierarchyValuesForDisplay[0].size());
 
         System.assert(con.editable);
         System.assert(con.showTopPanel);
         System.assert(con.showTargetAgency);
+        System.assert(con.getDisableNext());
+        System.assert(con.getDisablePrevious());
         System.assert(!con.showLocationTypeBehavior);
         System.assert(!con.oscarFieldList.isEmpty());
+
+        oscar.Type_of_change__c = null;
+        System.assert(!con.showTargetAgency);
+
+        oscar.Type_of_change__c = AMS_Utils.LOCATION_TYPE;
+        System.assert(con.showLocationTypeBehavior);
+
+        oscar.Type_of_change__c = AMS_Utils.OWNERSHIP_IATA;
 
         con.hierarchyValues[2].main = true;
 
         //emulate js
-        con.hierarchyValues[2].selected  = true;
+        con.hierarchyValues[0].selected  = true;
         con.hierarchyValues[0].main = false;
         // /emulate js
 
@@ -1900,6 +1914,11 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
         System.assert(!con.isPartialHierarchy(con.hierarchyValues[2]));
         
         con.save();
+
+        con.beginning();
+        con.previous();
+        con.next();
+        con.end();
 
         Test.stopTest();
     }
