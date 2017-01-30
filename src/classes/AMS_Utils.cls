@@ -771,14 +771,17 @@ public without sharing class AMS_Utils {
             C-Cargo
             D-Domestic
             E-External Registrars
-            G-General Sales Agents
+            G-General Sales Agent
+            I = Imports
             K-CATO
             M-Members & Airlines Sales Offices
             N-NISI
             O-SATO
             P-Passenger
             S-SSI
+            R = CassAssociate
             T-TIDS
+            Q = Courier
             V-Travel Service Intermediaries-TSI (USA Only) 
             X-Handling Agents and Shipping Lines
             J-Joint Vent
@@ -811,6 +814,12 @@ public without sharing class AMS_Utils {
             return 'Handling Agents and Shipping Lines';
         else if (endorsmentCode == 'J')
             return 'Joint Vent';
+        else if (endorsmentCode == 'I')
+            return 'Import';
+        else if (endorsmentCode == 'Q')
+            return 'Courier';
+        else if (endorsmentCode == 'R')
+            return 'CassAssociate';
 
         return '';
     }
