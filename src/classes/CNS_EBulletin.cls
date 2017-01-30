@@ -1,4 +1,4 @@
-public with sharing class ISSP_AMS_EBulletin {
+public with sharing class CNS_EBulletin {
 
     private static String DAILY_RECORD_TYPE_ID = Schema.SObjectType.AMS_eBulletin_Profile__c.RecordTypeInfosByName.get('Daily').RecordTypeId;
     private static String WEEKLY_RECORD_TYPE_ID = Schema.SObjectType.AMS_eBulletin_Profile__c.RecordTypeInfosByName.get('Weekly').RecordTypeId;
@@ -24,15 +24,22 @@ public with sharing class ISSP_AMS_EBulletin {
     public String pWeekStart { get; set; }
     public String pWeekEnd { get; set; }
     
-
     //Start date for weekly data.
     public String eBulletin_StartDate { get; set; }
     public String eBulletin_StartDate_year { get; set; }
     public String eBulletin_StartDate_month { get; set; }
     public String eBulletin_StartDate_day { get; set; }
 
-    public AMS_eBulletin_Profile__c newFormDaily {get; set;}
-    public AMS_eBulletin_Profile__c newFormWeekly {get; set;}
+    public AMS_eBulletin_Profile__c newFormDaily {get {
+        
+        return this.newFormDaily;
+        
+    } set;}
+    public AMS_eBulletin_Profile__c newFormWeekly {get {
+        
+        return this.newFormWeekly;
+        
+    } set;}
     public Contact con {get; set;}
     public String displayLanguage {get; set;}
     public String displayLanguageDatePicker {get; set;}
@@ -59,9 +66,8 @@ public with sharing class ISSP_AMS_EBulletin {
     public List<SelectOption> weeklyCountrySelected {get; set;}
     public List <ISSP_PDF_Per_Region__c> pdfUserGuide {get; set;}
     
-    public IATA_ISO_Country__c isocountry {get; set;}
-    
-    public ISSP_AMS_EBulletin() {
+
+    public CNS_EBulletin() {
 
         applyLanguage = UserInfo.getLanguage();
         displayLanguage = UserInfo.getLanguage();
@@ -76,20 +82,22 @@ public with sharing class ISSP_AMS_EBulletin {
         newFormDaily = new AMS_eBulletin_Profile__c();
         newFormWeekly = new AMS_eBulletin_Profile__c();
 
-        //mark "FirstTime" as true, below if we get records for this user we mark it as "false"
-        isFirstTime = true;
+        //for CNS 1st time is always false!
+        isFirstTime = false;
 
         dailyCountrySelectAll = false;
         weeklyCountrySelectAll = false;
 
         if(newFormDaily.RecordTypeId == null){
             newFormDaily.RecordTypeId = DAILY_RECORD_TYPE_ID;
-            newFormDaily.User__c = Userinfo.getuserid();
+            //For CNS we don't need a user
+            //newFormDaily.User__c = Userinfo.getuserid();
         }
 
         if(newFormWeekly.RecordTypeId == null){
             newFormWeekly.RecordTypeId = WEEKLY_RECORD_TYPE_ID;
-            newFormWeekly.User__c = Userinfo.getuserid();
+            //For CNS we don't need a user
+            //newFormWeekly.User__c = Userinfo.getuserid();
         }
 
         eBulletin_StartDate = ISSP_CS__c.getValues('eBulletin_StartDate').Value__c;
@@ -98,9 +106,6 @@ public with sharing class ISSP_AMS_EBulletin {
         eBulletin_StartDate_day = eBulletin_StartDate.split('/').get(0);
 
         fetchAMSProcessForm();
-        
-        popContact();  //Get the contact details of currently logged in user
-        isocountry = fetchISOCountry(con.Account.IATA_ISO_Country__r.ISO_Code__c);
 
         fillMapCountries();
 
@@ -114,7 +119,6 @@ public with sharing class ISSP_AMS_EBulletin {
         dailyCountrySelected = populateSelectedCountries(dailyCountry);
         weeklyCountrySelected = populateSelectedCountries(weeklyCountry);
 
-
         //Checks if timezone is empty, if so fill in with the user timezone
         TimeZone tz = UserInfo.getTimeZone();
         if(newFormDaily.TimeZone__c == null){
@@ -123,10 +127,6 @@ public with sharing class ISSP_AMS_EBulletin {
         if(newFormWeekly.TimeZone__c == null){
             newFormWeekly.TimeZone__c = tz.toString();
         }
-
-
-        //system.debug('dailyCountry: ' + dailyCountry);
-        //system.debug('weeklyCountry: ' + weeklyCountry);
 
         if (ApexPages.currentPage().getParameters().containsKey('step')){
             stepNumber = ApexPages.currentPage().getParameters().get('step');
@@ -158,54 +158,17 @@ public with sharing class ISSP_AMS_EBulletin {
         }else{
             //No Parameter area, when loading 1st time it passes here!
 
-            System.debug('1st time');
-            System.debug('newFormDaily: ' + newFormDaily);
-            System.debug('newFormWeekly: ' + newFormWeekly);
-
+            // FOR CNS - entry point is always step2
             //Check if is "firstTime", this will lead the user for 1st step or 2nd step
-            if(isFirstTime){
-                isStep1_1 = true;   
-                newFormDaily.Opt_in__c = newFormDaily.Opt_in__c == null? true : newFormDaily.Opt_in__c;
-                newFormWeekly.Opt_in__c = newFormWeekly.Opt_in__c == null? true : newFormWeekly.Opt_in__c;
-            }else{
+            //if(isFirstTime){
+            //    isStep1_1 = true;   
+            //    newFormDaily.Opt_in__c = newFormDaily.Opt_in__c == null? true : newFormDaily.Opt_in__c;
+            //    newFormWeekly.Opt_in__c = newFormWeekly.Opt_in__c == null? true : newFormWeekly.Opt_in__c;
+            //}else{
                 isStep2 = true;     
-            }
-
-            ////Checks if Subscription is suspended or not
-            //if(newFormDaily.Suspend_Subscription__c){
-            //  onOff = false;
-            //  dailyOnOff = false;
-            //}else{
-            //  //Checks if Daily is Opt out
-            //  if(newFormDaily.Opt_out_Bulletin__c){
-            //      onOff = false;
-            //      dailyOnOff = false;
-            //  }else{
-            //      onOff = true;
-            //      dailyOnOff = true;
-            //  }
             //}
-
-            //if(newFormWeekly.Suspend_Subscription__c){
-            //  onOff = false;
-            //  weeklyOnOff = false;
-            //}else{
-            //  //Checks if Weekly is Opt out
-            //  if(newFormWeekly.Opt_out_Bulletin__c){
-            //      onOff = false;
-            //      weeklyOnOff = false;
-            //  }else{
-            //      onOff = true;
-            //      weeklyOnOff = true;
-            //  }
-            //}
-
         }    
-
-        System.debug('isStep1: ' + isStep1);
-        System.debug('isStep2: ' + isStep2);
-        System.debug('isStep3: ' + isStep3);
-
+        
         //Set Selected value for the "day" field in the Daily selection
         daysOfWeek = Datetime.now().format('dd/MM/yyyy');
         todayOption = daysOfWeek;
@@ -229,6 +192,8 @@ public with sharing class ISSP_AMS_EBulletin {
             weekDay = dtWeekEnd.format('EEEE');
         }
         week = dtWeekStart.format('dd/MM/yyyy')+ '-' +dtWeekEnd.format('dd/MM/yyyy');
+
+        //popContact();  //Get the contact details of currently logged in user
     }
 
     public PageReference checkRedirect(){
@@ -255,7 +220,6 @@ public with sharing class ISSP_AMS_EBulletin {
         pdfUserGuide = [SELECT Name, Address__c, Link_To_PDF__c FROM ISSP_PDF_Per_Region__c
                                            WHERE Name Like :paramString ];
 
-System.debug('getUserGuideFileLink pdfUserGuide: ' + pdfUserGuide);
         //If we get result we go thru the records to find the one with the choosen lang 
         if(pdfUserGuide.size() > 0){
         
@@ -270,12 +234,8 @@ System.debug('getUserGuideFileLink pdfUserGuide: ' + pdfUserGuide);
                         sRet = pdf.Link_To_PDF__c;
                     }
                 }
-
-            }
-
-            
+            }   
         }
-System.debug('getUserGuideFileLink sRet: ' + sRet);
         return sRet;
     }
 
@@ -295,12 +255,6 @@ System.debug('getUserGuideFileLink sRet: ' + sRet);
         Datetime dtToday = Datetime.now();
         String weekDay = dtToday.format('EEEE');
 
-        
-        //while(!weekDay.equalsIgnoreCase('Saturday')){
-        //  dtToday = dtToday.addDays(-1);
-        //  weekDay = dtToday.format('EEEE');
-        //}
-
         List<SelectOption> options = new List<SelectOption>(); 
         options.add(new SelectOption(dtToday.format('dd/MM/yyyy'),' ' + dtToday.format(' EEEE, d MMMM, yyyy'),dtToday > Datetime.now()?true:false));
         options.add(new SelectOption(dtToday.addDays(-1).format('dd/MM/yyyy'),' ' + dtToday.addDays(-1).format(' EEEE, d MMMM, yyyy'),dtToday.addDays(-1) > Datetime.now()?true:false));
@@ -312,11 +266,6 @@ System.debug('getUserGuideFileLink sRet: ' + sRet);
 
         //Sets today Option for validation on the VFP in order to present the period (midnight or last execution)
         todayOption = options.get(0).getValue();
-        //for(SelectOption so: options){
-        //  if(!so.getDisabled()){
-        //      todayOption = so.getValue();
-        //  }
-        //}
 
         return options; 
     }
@@ -363,8 +312,7 @@ System.debug('getUserGuideFileLink sRet: ' + sRet);
         Datetime startDate = Datetime.newInstance(Integer.valueOf(splitDate.get(2)), Integer.valueOf(splitDate.get(1)), Integer.valueOf(splitDate.get(0)));
         
         //Integer iDays = dtToday.g - startDate;
-        integer iDays = Integer.valueOf((dtToday.getTime() - startDate.getTime())/(1000*60*60*24));
-system.debug('iDays: ' + iDays);   
+        integer iDays = Integer.valueOf((dtToday.getTime() - startDate.getTime())/(1000*60*60*24));   
 
         //check if the start date is bigger than a year, if so we set the limit to 365 days instead of the calculated days 
         if(iDays > 365){
@@ -386,7 +334,7 @@ system.debug('iDays: ' + iDays);
 
             //Checks if "Select All" is checked or not
             if(!dailyCountrySelectAll){
-				
+
                 //Remove Select values from the "Selected" list that doens't exist anymore on the "to select" list
                 for(Integer i=dailyCountrySelected.size()-1; i >= 0 ; i--){
                     Boolean bExist = false;
@@ -399,11 +347,6 @@ system.debug('iDays: ' + iDays);
                         dailyCountrySelected.remove(i);
                     }
                 }
-                
-
-                //system.debug('Initial auxListSO.size(): ' + auxListSO.size());
-                //system.debug('Initial auxListSO_clone.size(): ' + auxListSO_clone.size());
-
 
                 //Remove Selected Values from the "to select" list
                 for(Integer i=auxListSO_clone.size()-1; i >= 0 ; i--){
@@ -415,7 +358,6 @@ system.debug('iDays: ' + iDays);
                             break;
                         }
                     }
-
                 }
             }else{
                 dailyCountrySelected.clear();
@@ -449,13 +391,9 @@ system.debug('iDays: ' + iDays);
                     }
                 }
 
-                //system.debug('Weekly Initial auxListSO.size(): ' + auxListSO.size());
-                //system.debug('Weekly Initial auxListSO_clone.size(): ' + auxListSO_clone.size());
-
-                
                 //Remove Selected Values from the "to select" list
                 for(Integer i=auxListSO_clone.size()-1; i >= 0 ; i--){
-                    //system.debug('Weekly i: ' + i + ' || auxListSO.size(): ' + auxListSO.size());
+
                     Boolean bExist = false;
                     for(SelectOption auxSO2 : weeklyCountrySelected){
                         if(auxListSO.get(i) != null && auxSO2.getValue() != null && auxListSO.get(i).getValue() == auxSO2.getValue()){
@@ -463,7 +401,6 @@ system.debug('iDays: ' + iDays);
                             break;
                         }
                     }
-
                 }
             }else{
                 weeklyCountrySelected.clear();
@@ -472,7 +409,6 @@ system.debug('iDays: ' + iDays);
             }
 
             return auxListSO;
-            
         }
         set;
     }
@@ -507,12 +443,10 @@ system.debug('iDays: ' + iDays);
 
         for(String aux : lSelectedCountries){
             
-            System.debug('populateSelectedCountries - mCountries:' + mCountries);
             if(!mCountries.containsKey(aux)){
                 continue;
             }
             
-
             IATA_ISO_Country__c iso = mCountries.get(aux);
 
             if (applyLanguage == 'es') {
@@ -536,19 +470,11 @@ system.debug('iDays: ' + iDays);
 
         List<String> auxSO = new List<String>();
 
-        //System.debug('getCountryName - lCountries: ' + lCountries);
-        //System.debug('getCountryName - lCountries.size(): ' + lCountries.size());
-        //System.debug('getCountryName - lCountries.isEmpty(): ' + lCountries.isEmpty());
-
         for(String aux : lCountries){
-            
-            //System.debug('getCountryName - mCountries: ' + mCountries);
-            //System.debug('getCountryName - aux: ' + aux);
 
             IATA_ISO_Country__c iso = mCountries.get(aux);
 
             if(iso != null){
-                //System.debug('getCountryName - IATA_ISO_Country__c - iso: ' + iso);
 
                 if (applyLanguage == 'es') {
                     if (iso.IATA_Country_SP__c != null)
@@ -594,7 +520,6 @@ system.debug('iDays: ' + iDays);
             sRegion.add('Asia & Pacific');
         }
 
-
         if(sRegion.size() > 0){
             list<IATA_ISO_Country__c> isoList;
             if (applyLanguage == 'es') {
@@ -605,7 +530,6 @@ system.debug('iDays: ' + iDays);
                 WHERE Case_BSP_Country__c != null
                 AND Case_BSP_Country__c != ''
                 AND Region__c in :sRegion
-                AND Sub_Region__c not in ('USA')
                 ORDER BY IATA_Country_SP__c];
             } else if (applyLanguage == 'fr') {
                 isoList = [SELECT Name, Id, IATA_Contry_KR__c, IATA_COUNTRY_EN__c, ISO_Code__c, AMS_Pilot_Country__c,
@@ -615,7 +539,6 @@ system.debug('iDays: ' + iDays);
                 WHERE Case_BSP_Country__c != null
                 AND Case_BSP_Country__c != ''
                 AND Region__c in :sRegion
-                AND Sub_Region__c not in ('USA')
                 ORDER BY IATA_Country_FR__c];
             } else {
                 isoList = [SELECT Name, Id, IATA_Contry_KR__c, IATA_COUNTRY_EN__c, ISO_Code__c, AMS_Pilot_Country__c,
@@ -625,7 +548,6 @@ system.debug('iDays: ' + iDays);
                 WHERE Case_BSP_Country__c != null
                 AND Case_BSP_Country__c != ''
                 AND Region__c in :sRegion
-                AND Sub_Region__c not in ('USA')
                 ORDER BY Name];
             }
 
@@ -652,10 +574,7 @@ system.debug('iDays: ' + iDays);
         }
 
         return options;
-
     }
-
-
 
     public void fillMapCountries() {
 
@@ -670,31 +589,30 @@ system.debug('iDays: ' + iDays);
                 FROM IATA_ISO_Country__c
                 WHERE Case_BSP_Country__c != null
                 AND Case_BSP_Country__c != ''
-                AND Sub_Region__c not in ('USA')
                 ORDER BY Name];
             
             for (IATA_ISO_Country__c iso : isoList) {
                 mCountries.put(iso.ISO_Code__c , iso);
             }
         }
-
     }
 
-
-   
     public void fetchAMSProcessForm() {
+        
+        System.debug('fetchAMSProcessForm - begin');
+        
         List <AMS_eBulletin_Profile__c> newForms = [
                     SELECT Agency_Info_Agency_Changes__c,Agency_Info_Defaults__c,Agency_Info_Irregularities__c,Agency_Info_New_Aplication_Processes__c,
                         Agency_Info_Reviews__c,Agency_Info_Termination_Closures__c,Area_1__c,Area_2__c,Area_3__c,CountriesList__c,CreatedDate,Daily_Frequency__c,
                         Id,LastModifiedDate,Name,Opt_out_Bulletin__c,Program_Cargo__c,Program_CASS_Associates__c,Program_Passage__c,Program_Domestic__c,Suspend_Subscription__c,
                         RecordTypeId,User__c, TimeZone__c,Opt_in__c,StatusDisplay__c
                     FROM AMS_eBulletin_Profile__c
-                    WHERE User__c = :Userinfo.getuserid()
+                    WHERE CNS__c = true
                     LIMIT 2
                 ];
 
-        system.debug('fetchAMSProcessForm newForms: ' + newForms);
-
+        System.debug('fetchAMSProcessForm - newForms.size(): ' + newForms.size());
+        
         if (newForms.size() > 0) {
 
             //Since we got records we mark "firstTime" as false
@@ -707,27 +625,89 @@ system.debug('iDays: ' + iDays);
                 if(aux.RecordTypeId == WEEKLY_RECORD_TYPE_ID){
                     newFormWeekly = aux;    
                 }
+                
+                System.debug('fetchAMSProcessForm - newFormDaily: ' + newFormDaily);
+                System.debug('fetchAMSProcessForm - newFormWeekly: ' + newFormWeekly);
             }
+        }else{
+            //No records returned - 1st time we create the Daily and Weekly records for CNS
+            isFirstTime = true;
+            
+            //Fetch country list for CNS
+            //
+            List<IATA_ISO_Country__c> isoList;
+            String sCountryList = '';
+            
+            isoList = [SELECT Name, Id, ISO_Code__c
+                FROM IATA_ISO_Country__c
+                WHERE CNS_Country__c = True
+                ORDER BY Name];
+            
+            Boolean Start = true;
+        
+            for (IATA_ISO_Country__c iso : isoList) {
+                if(Start) {
+                    sCountryList = iso.ISO_Code__c;
+                    Start = false;
+                } else {               
+                    sCountryList = sCountryList + ';' + iso.ISO_Code__c;
+                }
+            }
+            System.debug('sCountryList: ' + sCountryList);
+            
+            //Daily
+            newFormDaily.RecordTypeId = DAILY_RECORD_TYPE_ID;
+            newFormDaily.Program_Cargo__c = true;
+            newFormDaily.Program_CASS_Associates__c = true;
+            newFormDaily.Program_Domestic__c = true;
+            newFormDaily.Program_Passage__c = true;
+            newFormDaily.Agency_Info_Irregularities__c = true;
+            newFormDaily.Agency_Info_Defaults__c = true;
+            newFormDaily.Agency_Info_Termination_Closures__c = true;
+            newFormDaily.Agency_Info_Reviews__c = true;
+            newFormDaily.CountriesList__c = sCountryList;
+            newFormDaily.Opt_in__c = true;
+            newFormDaily.Opt_out_Bulletin__c = true;
+            newFormDaily.CNS__c = true;
+                    
+            //Weekly
+            newFormWeekly.RecordTypeId = WEEKLY_RECORD_TYPE_ID;    
+            newFormWeekly.Program_Cargo__c = true;
+            newFormWeekly.Program_CASS_Associates__c = true;
+            newFormWeekly.Program_Domestic__c = true;
+            newFormWeekly.Program_Passage__c = true;
+            newFormWeekly.Agency_Info_Agency_Changes__c = true;
+            newFormWeekly.Agency_Info_Defaults__c = true;
+            newFormWeekly.Agency_Info_Irregularities__c = true;
+            newFormWeekly.Agency_Info_New_Aplication_Processes__c = true;
+            newFormWeekly.Agency_Info_Reviews__c = true;
+            newFormWeekly.Agency_Info_Termination_Closures__c = true;
+            newFormWeekly.CountriesList__c = sCountryList;
+            newFormWeekly.Opt_in__c = true;
+            newFormWeekly.Opt_out_Bulletin__c = true;
+            newFormWeekly.CNS__c = true;
+            
         }
     }
 
-
-    private void popContact() {
+    /*private void popContact() {
         User user = DAL_ISSP.getUser(Userinfo.getUserId());
-        system.debug('user.ContactId ' + user.ContactId);
-        con = DAL_ISSP.getContact(user.ContactId);
-
-        if (con.User_Portal_Status__c == 'Administrator' || con.User_Portal_Status__c == 'Approved Admin' || con.User_Portal_Status__c == 'Regional Administrator' || con.User_Portal_Status__c == 'R. Administrator' )
-            bIsAdmin = true;
-    }
+        if(user.ContactId != null){
+            system.debug('user.ContactId ' + user.ContactId);
+            con = DAL_ISSP.getContact(user.ContactId);
+    
+            if (con.User_Portal_Status__c == 'Administrator' || con.User_Portal_Status__c == 'Approved Admin' || con.User_Portal_Status__c == 'Regional Administrator' || con.User_Portal_Status__c == 'R. Administrator' )
+                bIsAdmin = true;
+        }else{
+            //TODO CNS ### check if admin?
+            //bIsAdmin = true;
+        }
+    }*/
 
     public Pagereference securityCheck() {
 
-        
-
         return null;
     }
-
 
     public String getMultiSelectToSave(List<String> vals) {
         String res = '';
@@ -767,9 +747,7 @@ system.debug('iDays: ' + iDays);
 
     public Pagereference saveAMSFormAndStay() {
         try {
-            system.debug('Salesforce saveAMSFormAndStay: start ' + newFormDaily);
             boolean bRes = saveAMSForm();
-            system.debug('Salesforce saveAMSFormAndStay bRes: ' + bRes);
 
             if (!validateCharactersInForm())
                 return null;
@@ -786,58 +764,39 @@ system.debug('iDays: ' + iDays);
         return null;
     }
 
-
     public boolean saveAMSForm() {
-
+    
         boolean bRes = true;
 
+        //only saves records on the 1st time
+        if(isFirstTime){
         
-        system.debug('Salesforce saveAMSForm newFormDaily: ' + newFormDaily);
-        system.debug('Salesforce saveAMSForm newFormWeekly: ' + newFormWeekly);
-
-        system.debug('Salesforce saveAMSForm dailyCountry: ' + dailyCountry);
-        system.debug('Salesforce saveAMSForm weeklyCountry: ' + weeklyCountry);
-        
-        //newFormDaily.CountriesList__c = getMultiSelectToSave(dailyCountry);
-        //newFormWeekly.CountriesList__c = getMultiSelectToSave(weeklyCountry);
-        newFormDaily.CountriesList__c = getMultiSelectOptionsToSave(dailyCountrySelected);
-        newFormWeekly.CountriesList__c = getMultiSelectOptionsToSave(weeklyCountrySelected);
-
-        system.debug('Salesforce saveAMSForm newFormDaily: ' + newFormDaily);
-        system.debug('Salesforce saveAMSForm newFormWeekly: ' + newFormWeekly);
-
-
-        //Since on the form the timezone is set to the Daily form we just give the same value to the WEEKLY one
-        newFormWeekly.TimeZone__c = newFormDaily.TimeZone__c;
-
-        try {
-
-            upsert newFormDaily;
-            upsert newFormWeekly;
-
+            //newFormDaily.CountriesList__c = getMultiSelectOptionsToSave(dailyCountrySelected);
+            //newFormWeekly.CountriesList__c = getMultiSelectOptionsToSave(weeklyCountrySelected);
+    
+            //Since on the form the timezone is set to the Daily form we just give the same value to the WEEKLY one
+            newFormWeekly.TimeZone__c = newFormDaily.TimeZone__c;
+    
+            try {
+    
+                upsert newFormDaily;
+                upsert newFormWeekly;
+            } catch (DmlException ex) {
+                ApexPages.addMessages(ex);
+                bRes = false;
            
-        } catch (DmlException ex) {
-            ApexPages.addMessages(ex);
-            system.debug('Salesforce saveAMSForm ex: ' + ex);
-            bRes = false;
-       
-        } catch (Exception ex) {
-            ApexPages.addMessages(ex);
-            system.debug('Salesforce saveAMSForm ex: ' + ex);
-            bRes = false;
-       
+            } catch (Exception ex) {
+                ApexPages.addMessages(ex);
+                bRes = false;
+            }
         }
         return bRes;
     }
 
-
     public Pagereference saveAMSFormAndGoBack() {
 
         try {
-            //system.debug('kerensen Zohar goToFinalStep newForm: ' + newForm);
-            //system.debug('kerensen Zohar goToFinalStep newCase: ' + newCase);
 
-            //newForm.Validation_ERRORS__c = FALSE;
             boolean bRes = saveAMSForm();
             
             if (!validateCharactersInForm())
@@ -858,10 +817,7 @@ system.debug('iDays: ' + iDays);
     public Pagereference saveAMSFormAndGoForward() {
 
         try {
-            //system.debug('kerensen Zohar goToFinalStep newForm: ' + newForm);
-            //system.debug('kerensen Zohar goToFinalStep newCase: ' + newCase);
 
-            //newForm.Validation_ERRORS__c = FALSE;
             boolean bRes = saveAMSForm();
             
             if (!validateCharactersInForm())
@@ -886,50 +842,10 @@ system.debug('iDays: ' + iDays);
         return null;
     }
 
-    public Pagereference saveAMSFormAndGoSideways() {
-
-        try {
-            //system.debug('kerensen Zohar goToFinalStep newForm: ' + newForm);
-            //system.debug('kerensen Zohar goToFinalStep newCase: ' + newCase);
-
-            //newForm.Validation_ERRORS__c = FALSE;
-            Boolean bToSave = false;
-            if(isStep1_1 && newFormDaily.Opt_in__c ){
-                bToSave = true;
-            }
-
-            if(isStep1_2 && newFormWeekly.Opt_in__c){
-                bToSave = true;
-            }
-
-            boolean bRes = true;
-
-            //only saves if the "Opt-in" is checked
-            if(bToSave){
-                bRes = saveAMSForm();
-            }
-
-            if (!validateCharactersInForm())
-                return null;
-            
-            if(bRes && isStep1_1)
-                return goToStep1_2();
-
-            if(bRes && isStep1_2)
-                return goToStep1_1();
-
-        } catch (DmlException ex) {
-            ApexPages.addMessages(ex);
-        }
-        return null;
-    }
-
-
     public Pagereference suspendSubscription() {
 
         ApexPages.Message myMsg;
-        
-
+       
         if(newFormDaily.Suspend_Subscription__c){
             newFormDaily.Suspend_Subscription__c = false;
             newFormWeekly.Suspend_Subscription__c = false;
@@ -943,17 +859,8 @@ system.debug('iDays: ' + iDays);
         try {
             boolean bRes = saveAMSForm();
 
-            system.debug('suspendSubscription - newFormDaily.CountriesList__c: ' + newFormDaily.CountriesList__c);
-            system.debug('suspendSubscription - newFormWeekly.CountriesList__c: ' + newFormWeekly.CountriesList__c);
-
-            system.debug('suspendSubscription - before - dailyCountry: ' + dailyCountry);
-            system.debug('suspendSubscription - before - weeklyCountry: ' + weeklyCountry);
-
             dailyCountry = newFormDaily.CountriesList__c == null ? new List<String>() : newFormDaily.CountriesList__c.split(';');
             weeklyCountry = newFormWeekly.CountriesList__c == null ? new List<String>() : newFormWeekly.CountriesList__c.split(';');
-
-            system.debug('suspendSubscription - after - dailyCountry: ' + dailyCountry);
-            system.debug('suspendSubscription - after - weeklyCountry: ' + weeklyCountry);
 
             dailyCountryName = getCountryName(dailyCountry);
             weeklyCountryName = getCountryName(weeklyCountry);
@@ -964,7 +871,6 @@ system.debug('iDays: ' + iDays);
             ApexPages.addMessages(ex);
         }
         
-        //return new Pagereference('/ISSP_AMS_EBulletin');
         return null;
         
     }
@@ -973,89 +879,61 @@ system.debug('iDays: ' + iDays);
         boolean errorFound = false;
         Pattern p = Pattern.compile(ISO_8859_1_regEx);
 
-        //if (newForm.ISSP_AMS_where_incorporated__c != null && !p.matcher(newForm.ISSP_AMS_where_incorporated__c).matches()) {
-        //    newForm.ISSP_AMS_where_incorporated__c.addError(Label.ISSP_EnterValidString);
-        //    errorFound = true;
-        //}
-        
-       
-        //String allowedUrlRegEx = ISSP_CS__c.getValues('ISSP AMS ALLOWED AGENCY URL').Value__c;
-
-        //Pattern validUrl = Pattern.compile(allowedUrlRegEx);
-
-        //if (newForm.ISSP_AMS_Online_Agency_URL__c != null && !validUrl.matcher(newForm.ISSP_AMS_Online_Agency_URL__c.toLowerCase()).matches()) {
-        //    newForm.ISSP_AMS_Online_Agency_URL__c.addError(Label.ISSP_AMS_Valid_URL);
-        //    errorFound = true;
-        //}
-        
-
         if (errorFound)
             return false;
 
         return true;
     }
-
-    public Pagereference goToStepHome() {
-        //return new Pagereference('/ISSP_AMS_EBulletin?dailyId=' + newFormDaily.Id + '&weeklyId=' + newFormWeekly.Id + '&step=2');
-        return new Pagereference('/ISSP_EBulletin_Home?step=home');
-    }
  
     public Pagereference goToStep1() {
-        //return new Pagereference('/ISSP_AMS_EBulletin?dailyId=' + newFormDaily.Id + '&weeklyId=' + newFormWeekly.Id + '&step=2');
-        return new Pagereference('/ISSP_AMS_EBulletin?step=1');
+        Pagereference pageRef = Page.CNS_EBulletin;
+        pageref.getParameters().put('step','1');
+        pageref.setRedirect(true);
+        return pageref;
     }
 
      public Pagereference goToStep1_1() {
-        //return new Pagereference('/ISSP_AMS_EBulletin?dailyId=' + newFormDaily.Id + '&weeklyId=' + newFormWeekly.Id + '&step=2');
-        return new Pagereference('/ISSP_AMS_EBulletin?step=1_1');
+        Pagereference pageRef = Page.CNS_EBulletin;
+        pageref.getParameters().put('step','1_1');
+        pageref.setRedirect(true);
+        return pageref;
     }
 
      public Pagereference goToStep1_2() {
-        //return new Pagereference('/ISSP_AMS_EBulletin?dailyId=' + newFormDaily.Id + '&weeklyId=' + newFormWeekly.Id + '&step=2');
-        return new Pagereference('/ISSP_AMS_EBulletin?step=1_2');
+        Pagereference pageRef = Page.CNS_EBulletin;
+        pageref.getParameters().put('step','1_2');
+        pageref.setRedirect(true);
+        return pageref;
     }
 
     public Pagereference goToStep2() {
-        //return new Pagereference('/ISSP_AMS_EBulletin?dailyId=' + newFormDaily.Id + '&weeklyId=' + newFormWeekly.Id + '&step=2');
-        return new Pagereference('/ISSP_AMS_EBulletin?step=2');
+        Pagereference pageRef = Page.CNS_EBulletin;
+        pageref.getParameters().put('step','2');
+        pageref.setRedirect(true);
+        return pageref;
     }
 
     public Pagereference goToStep3() {
-        //return new Pagereference('/ISSP_AMS_EBulletin?dailyId=' + newFormDaily.Id + '&weeklyId=' + newFormWeekly.Id + '&step=2');
-        return new Pagereference('/ISSP_AMS_EBulletin?step=3');
+        Pagereference pageRef = Page.CNS_EBulletin;
+        pageref.getParameters().put('step','3');
+        pageref.setRedirect(true);
+        return pageref;
     }
 
     public Pagereference dailyReportDownload() {
-        System.debug('dailyReportDownload');
-
-
-        System.debug('pDateStart - ' + pDateStart);
-
-        System.debug('daysOfWeek - ' + daysOfWeek);
-        System.debug('todayPeriod - ' + todayPeriod);
-        System.debug('Salesforce saveAMSForm newFormDaily: ' + newFormDaily.Id);
 
         //'dd/MM/yyyy'
         List<String> splitDate = pDateStart.split('/');
-        System.debug('splitDate - ' + splitDate);
-
-        //Datetime dtOrgStatusAttained = Datetime.newInstance(auxAgAppChangeCode.CreatedDate.year(), auxAgAppChangeCode.CreatedDate.month(),auxAgAppChangeCode.CreatedDate.day());
                             
         Datetime startDate = Datetime.newInstance(Integer.valueOf(splitDate.get(2)), Integer.valueOf(splitDate.get(1)), Integer.valueOf(splitDate.get(0)));
         Datetime endDate;
         String period = todayPeriod == null?'':todayPeriod;
 
-        System.debug('startDate - ' + startDate);
-        System.debug('period - ' + period);
-         
-
         Id res;
         try{
             res = callGenerateEBulletinReportWS( newFormDaily, startDate, startDate.addDays(1), period);
         }catch(Exception e){
-            System.debug('dailyFileDownload Exception - ' + e);
-            System.debug('dailyFileDownload Exception - ' + e.getTypeName());
-            //AMS_EBulletinReportHelper.AMS_EBulletinException
+            
             if(e.getTypeName().contains('AMS_EBulletinException')){
 
                 string labelValue = '';
@@ -1068,13 +946,8 @@ system.debug('iDays: ' + iDays);
                     labelValue = Label.ISSP_AMS_eBulletin_ErrorMsg_00;
                 }                
 
-                System.debug('dailyFileDownload Exception addMessages - entrei');
-                //ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, e.getMessage());
                 ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, labelValue);
-                 
                 ApexPages.addMessage(myMsg);
-                //ApexPages.addMessages(e);
-
             }
         }
 
@@ -1084,47 +957,25 @@ system.debug('iDays: ' + iDays);
             dailyFileDownload = '/servlet/servlet.FileDownload?file=' + res;
         }
 
-        System.debug('dailyFileDownload - ' + dailyFileDownload);
-
-        //return new Pagereference(dailyFileDownload);
         return null;
     }
     
+    
+
     public Pagereference weeklyReportDownload() {
 
-        
-
-        System.debug('weeklyReportDownload');
-
-        System.debug('week - ' + week);
-        System.debug('Salesforce saveAMSForm newFormWeekly: ' + newFormWeekly.Id);
-        System.debug('Salesforce saveAMSForm pWeekStart: ' + pWeekStart);
-        System.debug('Salesforce saveAMSForm pWeekEnd: ' + pWeekEnd);
-
-        //dtWeekStart.format('dd/MM/yyyy')+ '-' +dtWeekEnd.format('dd/MM/yyyy')
-        //List<String> splitDate = week.split('-');
-        //List<String> splitStartDate = splitDate.get(0).split('/');
-        //List<String> splitEndDate = splitDate.get(1).split('/');
         List<String> splitStartDate = pWeekStart.split('/');
         List<String> splitEndDate = pWeekEnd.split('/');
-        //System.debug('splitDate - ' + splitDate);
-        //System.debug('splitStartDate - ' + splitStartDate);
-        //System.debug('splitEndDate - ' + splitEndDate);
-
+   
         Datetime startDate = Datetime.newInstance(Integer.valueOf(splitStartDate.get(2)), Integer.valueOf(splitStartDate.get(1)), Integer.valueOf(splitStartDate.get(0)));
         Datetime endDate = Datetime.newInstance(Integer.valueOf(splitEndDate.get(2)), Integer.valueOf(splitEndDate.get(1)), Integer.valueOf(splitEndDate.get(0)));
         String period = '';
-
-        //System.debug('startDate - ' + startDate);
-        //System.debug('endDate - ' + endDate);
 
         Id res;
         try{
             res = callGenerateEBulletinReportWS( newFormWeekly , startDate, endDate, period);
         }catch(Exception e){
-            System.debug('weeklyReportDownload Exception - ' + e);
-            System.debug('weeklyReportDownload Exception - ' + e.getTypeName());
-            //AMS_EBulletinReportHelper.AMS_EBulletinException
+    
             if(e.getTypeName().contains('AMS_EBulletinException')){
                 string labelValue = '';
 
@@ -1136,12 +987,8 @@ system.debug('iDays: ' + iDays);
                     labelValue = Label.ISSP_AMS_eBulletin_ErrorMsg_00;
                 }                
 
-                //ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, e.getMessage());
-                System.debug('weeklyReportDownload Exception addMessages - entrei');
                 ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, labelValue);
                 ApexPages.addMessage(myMsg);
-                //ApexPages.addMessages(e);
-
             }
         }
 
@@ -1151,9 +998,6 @@ system.debug('iDays: ' + iDays);
             weeklyFileDownload = '/servlet/servlet.FileDownload?file=' + res;
         }         
 
-        System.debug('weeklyFileDownload - ' + weeklyFileDownload);
-
-        //return new Pagereference(weeklyFileDownload);
         return null;
     }
 
@@ -1164,21 +1008,4 @@ system.debug('iDays: ' + iDays);
         
         return res;
     }
-    
-    public IATA_ISO_Country__c fetchISOCountry(string isocode) {
-
-        IATA_ISO_Country__c isocountry = [
-                                             SELECT Id, Name, CurrencyIsoCode, EU_Country__c, AMS_Pilot_Country__c, Case_BSP_Country__c, IATA_Country_FR__c, IATA_Country_SP__c, IATA_COUNTRY_EN__c,
-                                             IATA_Contry_KR__c, IATA_Country_IT__c, IATA_Country_JP__c, IATA_Country_PT__c, IATA_Country_ZH__c, Tax_Number_label__c, Tax_number_format__c, Branches_abroad_not_allowed__c,
-                                             Tax_number_help_text__c, Hide_Tax_Number_VAT__c, ISO_Code__c, EACP_Country__c, OSCAR_enabled__c, CASS_Import__c, CASS_Country_free_text__c, Region__c, Disable_non_IATA_Cargo_Agents__c,
-                                             original_bank_details_not_required__c, Local_language_Agency_details_required__c, Prevent_Portal_Trade_Name_Change__c, Enable_Notice_of_Change__c, SAAM_enable_non_IATA_Cargo_Agents__c,
-                                             Enable_Minor_Changes_from_Portal__c,EBulletin_enabled__c
-                                             FROM IATA_ISO_Country__c
-                                             WHERE ISO_Code__c = :isocode
-                                             AND Sub_Region__c not in ('USA')
-                                         ];
-
-        return isocountry;
-    }
-
 }
