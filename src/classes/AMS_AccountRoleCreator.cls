@@ -1118,7 +1118,10 @@ public with sharing class AMS_AccountRoleCreator
             for (AMS_Accreditation_Contact__c accrtContact : accreditationContactsToProcess)
             {
                 if(accrtContact.Agency_owner__c) 
-                    newOwnersList.add(new OwnerFieldsEntity (accrtContact.Name, String.valueOf(accrtContact.Financial_interest__c)));
+                {
+                    String name = (accrtContact.First_Name__c == null ? '' : accrtContact.First_Name__c  ) + (accrtContact.Last_Name__c == null ? '' : ( ' ' + accrtContact.Last_Name__c));
+                    newOwnersList.add(new OwnerFieldsEntity (name, String.valueOf(accrtContact.Financial_interest__c)));
+                }
             }
             
             OwnersByAccountWrapper newOwnersWrapper = new OwnersByAccountWrapper(acctId , newOwnersList);
