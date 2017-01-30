@@ -84,7 +84,7 @@
     <fields>
         <fullName>AccountNewStatus__c</fullName>
         <externalId>false</externalId>
-        <label>AccountNewStatus</label>
+        <label>Accoun Status</label>
         <picklist>
             <picklistValues>
                 <fullName>Approved</fullName>
@@ -130,7 +130,7 @@
                 <fullName>Under review</fullName>
                 <default>false</default>
             </picklistValues>
-            <sorted>true</sorted>
+            <sorted>false</sorted>
         </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -468,36 +468,36 @@
         <trackTrending>false</trackTrending>
         <type>DateTime</type>
     </fields>
-	<fields>
-        <fullName>DEF_Non_Payment__c</fullName>
-        <defaultValue>false</defaultValue>
-        <externalId>false</externalId>
-        <label>DEF Non-Payment</label>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Checkbox</type>
-    </fields>
     <fields>
         <fullName>DEF_Non_Payment2__c</fullName>
         <externalId>false</externalId>
         <formula>IF(
 AND(
  OR(TEXT(Change_Code__c) =&apos;DEF&apos;, TEXT(Change_Code__c) =&apos;DFE&apos;),
- OR(Reason_Description__c = &apos;DEFAULT - IMM. REMITTANCE&apos;,
-    Reason_Description__c = &apos;DEFAULT - OVERDUE REMITTANCE&apos;,
-    Reason_Description__c = &apos;DEFAULT MONIES DUE&apos;,
-    Reason_Description__c = &apos;DEFAULT NON SETTLEMENT&apos;,
-    Reason_Description__c = &apos;DEFAULT NON-SETTLEMENT&apos;,
-    Reason_Description__c = &apos;DEFAULT-MONIES DUE&apos;,
-    Reason_Description__c = &apos;DEFAULT-OVERDUE REMITTANCE&apos;,
-    Reason_Description__c = &apos;NON-PAYMENT ANNUAL FEE&apos;,
-    Reason_Description__c = &apos;DEFAULT-NON PAYMENT&apos;,
-    Reason_Description__c = &apos;CROSS DEFAULT ACTION&apos;
+ OR(TEXT(Reason_Description__c) = &apos;DEFAULT - IMM. REMITTANCE&apos;,
+    TEXT(Reason_Description__c) = &apos;DEFAULT - OVERDUE REMITTANCE&apos;,
+    TEXT(Reason_Description__c) = &apos;DEFAULT MONIES DUE&apos;,
+    TEXT(Reason_Description__c) = &apos;DEFAULT NON SETTLEMENT&apos;,
+    TEXT(Reason_Description__c) = &apos;DEFAULT NON-SETTLEMENT&apos;,
+    TEXT(Reason_Description__c) = &apos;DEFAULT-MONIES DUE&apos;,
+    TEXT(Reason_Description__c) = &apos;DEFAULT-OVERDUE REMITTANCE&apos;,
+    TEXT(Reason_Description__c) = &apos;NON-PAYMENT ANNUAL FEE&apos;,
+    TEXT(Reason_Description__c) = &apos;DEFAULT-NON PAYMENT&apos;,
+    TEXT(Reason_Description__c) = &apos;CROSS DEFAULT ACTION&apos;
     )
 )
 ,true
 ,false)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>DEF Non-Payment</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>DEF_Non_Payment__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
         <label>DEF Non-Payment</label>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -610,8 +610,8 @@ AND(
     <fields>
         <fullName>Irregularity_Type_Description__c</fullName>
         <externalId>false</externalId>
-        <formula>IF(ISBLANK( Irregularity_Type__c ), &quot;&quot;, 
-	  CASE( Irregularity_Type__c , 
+        <formula>IF(ISBLANK(TEXT(Irregularity_Type__c) ), &quot;&quot;, 
+	  CASE( TEXT(Irregularity_Type__c) , 
 	    &quot;1PT&quot;,&quot;CARGO NON COMPLIANCE&quot;,
 	    &quot;2PT&quot;,&quot;NON-COMPLIANCE TO CRITERIA&quot;,
 	    &quot;FC1&quot;,&quot;NON SUBMIS. DOCS-FIN. RVW&quot;,
@@ -636,12 +636,57 @@ AND(
         <fullName>Irregularity_Type__c</fullName>
         <externalId>false</externalId>
         <label>Irregularity Type</label>
-        <length>10</length>
+        <picklist>
+            <picklistValues>
+                <fullName>1PT</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>2PT</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>FC1</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>FC2</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>NPA</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>OV1</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>OV2</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SC1</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SC2</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>WD1</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>WD2</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>true</sorted>
+        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
+        <type>Picklist</type>
     </fields>
     <fields>
         <fullName>OSCAR__c</fullName>
@@ -661,6 +706,7 @@ AND(
         <fullName>Operation__c</fullName>
         <description>A = ADD, W = WITHDRAWN, D = ??</description>
         <externalId>false</externalId>
+        <inlineHelpText>A = Add Irregularity. W = Withdraw Irregularity</inlineHelpText>
         <label>Operation</label>
         <length>5</length>
         <required>false</required>
@@ -696,231 +742,115 @@ AND(
         <label>Reason Code</label>
         <picklist>
             <picklistValues>
-                <fullName>Communication</fullName>
+                <fullName>00</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Minor change of shareholding</fullName>
+                <fullName>01</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Non compliance due to Change of name</fullName>
+                <fullName>02</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Non compliance due to change of name and location</fullName>
+                <fullName>03</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Non compliance due to change of ownership</fullName>
+                <fullName>11</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Non compliance due to Change of Shareholding</fullName>
+                <fullName>21</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Administrative Change</fullName>
+                <fullName>31</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Change data</fullName>
+                <fullName>32</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Change of Legal Status</fullName>
+                <fullName>43</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Change of Location</fullName>
+                <fullName>40</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Change of Name</fullName>
+                <fullName>50</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Change of name and location</fullName>
+                <fullName>51</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Change of Ownership</fullName>
+                <fullName>52</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Change of Shareholding</fullName>
+                <fullName>53</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Correction</fullName>
+                <fullName>54</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Miscellaneous Change</fullName>
+                <fullName>60</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Change of Location with Invest.</fullName>
+                <fullName>61</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Change of Ownership of Branches</fullName>
+                <fullName>62</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Change of Ownership to IATA Agent</fullName>
+                <fullName>63</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Voluntary Relinquishment</fullName>
+                <fullName>64</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Accumulated Irregularities - Non Payment of Annual fee</fullName>
+                <fullName>65</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Accumulated Irregularities - Non Payment Related</fullName>
+                <fullName>66</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Accumulated Irregularities - Payment Related</fullName>
+                <fullName>67</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Non compliance due to Change of Location</fullName>
+                <fullName>71</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Non compliance to Credit Card Rules</fullName>
+                <fullName>72</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Non Payment</fullName>
+                <fullName>81</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Partial Payment</fullName>
+                <fullName>91</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Administrative Error</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Billing Dispute</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Bona fide bank error</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Commissioner Decision</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Accounting Irregularities</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Late/absence of Change of Location</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Non payment of annual fees</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Non submission of financial security</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Non submission of financial statement</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Sanity Check failure of financial statement</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>New Application - BR</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>New application - HO</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>New Application Change</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>New Application Initiated</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>New Code Assigned</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Territory Change</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Agent under Bankrupt/Liquidation/Administration</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Disapproval of Major Change</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Non submission of additional financial security</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Certificate</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Annual Fee payment received</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Compliance to Agency Res</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Financial Security submitted</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Financial Statement submitted</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Reinstatement after Default</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Repayment Plan Agreed</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Prejudiced Collection of Funds</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>New Request</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Termination</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>VMFR Request</fullName>
+                <fullName>93</fullName>
                 <default>false</default>
             </picklistValues>
             <sorted>false</sorted>
@@ -934,12 +864,148 @@ AND(
         <fullName>Reason_Description__c</fullName>
         <externalId>false</externalId>
         <label>Reason Description</label>
-        <length>255</length>
+        <picklist>
+            <controllingField>AccountNewStatus__c</controllingField>
+            <picklistValues>
+                <fullName>ACCREDITED - MEETS CRITERIA</fullName>
+                <default>false</default>
+                <controllingFieldValues>Approved</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>ADMINISTRATIVE OFFICES</fullName>
+                <default>false</default>
+                <controllingFieldValues>Listed</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>APPLICATION WITHDRAWN</fullName>
+                <default>false</default>
+                <controllingFieldValues>Not accreditated</controllingFieldValues>
+                <controllingFieldValues>Terminated</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>BANKRUPTCY/LIQUIDATION</fullName>
+                <default>false</default>
+                <controllingFieldValues>Cash basis/with commission</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>BSP PARTICIPATIION - REVIEW IN PROGRESS</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>BSP PARTICIPATION - REVIEW IN PROGRESS</fullName>
+                <default>false</default>
+                <controllingFieldValues>Cash basis/with commission</controllingFieldValues>
+                <controllingFieldValues>No longer a customer</controllingFieldValues>
+                <controllingFieldValues>Not in operation</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>BY AGENCY ADMINISTRATOR</fullName>
+                <default>false</default>
+                <controllingFieldValues>Under review</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>BY COMMISSIONER</fullName>
+                <default>false</default>
+                <controllingFieldValues>Under review</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>CASS PARTICIPATION - REVIEW IN PROGRESS</fullName>
+                <default>false</default>
+                <controllingFieldValues>Cash basis/with commission</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>CHANGE IN PROCESS</fullName>
+                <default>false</default>
+                <controllingFieldValues>Changes processed</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>CODE ASSIGNED</fullName>
+                <default>false</default>
+                <controllingFieldValues>Approved</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>CODE ASSIGNMENT ONLY</fullName>
+                <default>false</default>
+                <controllingFieldValues>No longer a customer</controllingFieldValues>
+                <controllingFieldValues>Not in operation</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>CROSS DEFAULT ACTION</fullName>
+                <default>false</default>
+                <controllingFieldValues>Cash basis/no commission</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>DEFAULT ACCUM. IRR. - NON COMPLIANCE</fullName>
+                <default>false</default>
+                <controllingFieldValues>Cash basis/no commission</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>DEFAULT ACCUM. IRR. - PAYMENT RELATED</fullName>
+                <default>false</default>
+                <controllingFieldValues>Cash basis/no commission</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>DEFAULT - NON PAYMENT</fullName>
+                <default>false</default>
+                <controllingFieldValues>Cash basis/no commission</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>DEFAULT NON-SETTLEMENT</fullName>
+                <default>false</default>
+                <controllingFieldValues>Terminated</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>DEFAULT - UNDER REPAYMENT PLAN</fullName>
+                <default>false</default>
+                <controllingFieldValues>Cash basis/no commission</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>NEW APPLICATION</fullName>
+                <default>false</default>
+                <controllingFieldValues>New application pending</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>NON COMPLIANCE TO ACCREDITATION CRITERIA</fullName>
+                <default>false</default>
+                <controllingFieldValues>Cash basis/with commission</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>NON COMPLIANCE TO CRITERIA</fullName>
+                <default>false</default>
+                <controllingFieldValues>Terminated</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>NON COMPLIANCE TO FINANCIAL CRITERIA</fullName>
+                <default>false</default>
+                <controllingFieldValues>Cash basis/with commission</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>NOTICE OF TERMINATION DUE TO NON PAYMENT</fullName>
+                <default>false</default>
+                <controllingFieldValues>Cash basis/with commission</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>PREJUDICED COLLECTION OF FUNDS</fullName>
+                <default>false</default>
+                <controllingFieldValues>Cash basis/with commission</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>RELINQUISHMENT IN PROCESS</fullName>
+                <default>false</default>
+                <controllingFieldValues>Cash basis/with commission</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>VOLUNTARY RELINQUISHMENT</fullName>
+                <default>false</default>
+                <controllingFieldValues>Listed</controllingFieldValues>
+                <controllingFieldValues>Terminated</controllingFieldValues>
+            </picklistValues>
+            <sorted>true</sorted>
+        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
+        <type>Picklist</type>
     </fields>
     <fields>
         <fullName>Related_Irregularity__c</fullName>
@@ -1061,7 +1127,7 @@ AND(
     <label>Agency Applied Change code</label>
     <nameField>
         <displayFormat>AACC-{000000}</displayFormat>
-        <label>Agency Applied Change code Name</label>
+        <label>Change code details</label>
         <trackHistory>false</trackHistory>
         <type>AutoNumber</type>
     </nameField>
@@ -1169,110 +1235,6 @@ AND(
         <picklistValues>
             <picklist>Change_Code__c</picklist>
             <values>
-                <fullName>CAD</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>CAS</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>CCF</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>CHC</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>CHF</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>CHG</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>CHI</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>CHJ</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>CHL</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>CHM</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>CHN</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>CHO</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>CHS</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>CLF</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>CLI</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>CLO</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>CMF</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>CNF</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>COR</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>CSF</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>CWD</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>DEF</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>DIS</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>DWD</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>FIN</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>FPY</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>IRR</fullName>
                 <default>false</default>
             </values>
@@ -1284,291 +1246,273 @@ AND(
                 <fullName>IRW</fullName>
                 <default>false</default>
             </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Irregularity_Type__c</picklist>
             <values>
-                <fullName>MCH</fullName>
+                <fullName>1PT</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>NAC</fullName>
+                <fullName>2PT</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>NCA</fullName>
+                <fullName>FC1</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>NEP</fullName>
+                <fullName>FC2</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>NEW</fullName>
+                <fullName>NPA</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>NOT</fullName>
+                <fullName>OV1</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>NWD</fullName>
+                <fullName>OV2</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>RCR</fullName>
+                <fullName>SC1</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>REC</fullName>
+                <fullName>SC2</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>RPY</fullName>
+                <fullName>WD1</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>RVW</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>TAP</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>TCH</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>TER</fullName>
+                <fullName>WD2</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
         <picklistValues>
             <picklist>Reason_Code__c</picklist>
             <values>
-                <fullName>Accounting Irregularities</fullName>
+                <fullName>00</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Accumulated Irregularities - Non Payment Related</fullName>
+                <fullName>01</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Accumulated Irregularities - Non Payment of Annual fee</fullName>
+                <fullName>02</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Accumulated Irregularities - Payment Related</fullName>
+                <fullName>03</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Administrative Change</fullName>
+                <fullName>11</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Administrative Error</fullName>
+                <fullName>21</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Agent under Bankrupt%2FLiquidation%2FAdministration</fullName>
+                <fullName>31</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Annual Fee payment received</fullName>
+                <fullName>32</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Billing Dispute</fullName>
+                <fullName>40</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Bona fide bank error</fullName>
+                <fullName>43</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Certificate</fullName>
+                <fullName>50</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Change data</fullName>
+                <fullName>51</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Change of Legal Status</fullName>
+                <fullName>52</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Change of Location</fullName>
+                <fullName>53</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Change of Location with Invest%2E</fullName>
+                <fullName>54</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Change of Name</fullName>
+                <fullName>60</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Change of Ownership</fullName>
+                <fullName>61</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Change of Ownership of Branches</fullName>
+                <fullName>62</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Change of Ownership to IATA Agent</fullName>
+                <fullName>63</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Change of Shareholding</fullName>
+                <fullName>64</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Change of name and location</fullName>
+                <fullName>65</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Commissioner Decision</fullName>
+                <fullName>66</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Communication</fullName>
+                <fullName>67</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Compliance to Agency Res</fullName>
+                <fullName>71</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Correction</fullName>
+                <fullName>72</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Disapproval of Major Change</fullName>
+                <fullName>81</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Financial Security submitted</fullName>
+                <fullName>91</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Financial Statement submitted</fullName>
+                <fullName>93</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Reason_Description__c</picklist>
+            <values>
+                <fullName>ACCREDITED - MEETS CRITERIA</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Late%2Fabsence of Change of Location</fullName>
+                <fullName>ADMINISTRATIVE OFFICES</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Minor change of shareholding</fullName>
+                <fullName>APPLICATION WITHDRAWN</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Miscellaneous Change</fullName>
+                <fullName>BANKRUPTCY%2FLIQUIDATION</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>New Application - BR</fullName>
+                <fullName>BSP PARTICIPATIION - REVIEW IN PROGRESS</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>New Application Change</fullName>
+                <fullName>BSP PARTICIPATION - REVIEW IN PROGRESS</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>New Application Initiated</fullName>
+                <fullName>BY AGENCY ADMINISTRATOR</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>New Code Assigned</fullName>
+                <fullName>BY COMMISSIONER</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>New Request</fullName>
+                <fullName>CASS PARTICIPATION - REVIEW IN PROGRESS</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>New application - HO</fullName>
+                <fullName>CHANGE IN PROCESS</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Non Payment</fullName>
+                <fullName>CODE ASSIGNED</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Non compliance due to Change of Location</fullName>
+                <fullName>CODE ASSIGNMENT ONLY</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Non compliance due to Change of Shareholding</fullName>
+                <fullName>CROSS DEFAULT ACTION</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Non compliance due to Change of name</fullName>
+                <fullName>DEFAULT - NON PAYMENT</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Non compliance due to change of name and location</fullName>
+                <fullName>DEFAULT - UNDER REPAYMENT PLAN</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Non compliance due to change of ownership</fullName>
+                <fullName>DEFAULT ACCUM%2E IRR%2E - NON COMPLIANCE</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Non compliance to Credit Card Rules</fullName>
+                <fullName>DEFAULT ACCUM%2E IRR%2E - PAYMENT RELATED</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Non payment of annual fees</fullName>
+                <fullName>DEFAULT NON-SETTLEMENT</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Non submission of additional financial security</fullName>
+                <fullName>NEW APPLICATION</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Non submission of financial security</fullName>
+                <fullName>NON COMPLIANCE TO ACCREDITATION CRITERIA</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Non submission of financial statement</fullName>
+                <fullName>NON COMPLIANCE TO CRITERIA</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Partial Payment</fullName>
+                <fullName>NON COMPLIANCE TO FINANCIAL CRITERIA</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Prejudiced Collection of Funds</fullName>
+                <fullName>NOTICE OF TERMINATION DUE TO NON PAYMENT</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Reinstatement after Default</fullName>
+                <fullName>PREJUDICED COLLECTION OF FUNDS</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Repayment Plan Agreed</fullName>
+                <fullName>RELINQUISHMENT IN PROCESS</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Sanity Check failure of financial statement</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Termination</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Territory Change</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>VMFR Request</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Voluntary Relinquishment</fullName>
+                <fullName>VOLUNTARY RELINQUISHMENT</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1779,18 +1723,6 @@ AND(
                 <default>false</default>
             </values>
             <values>
-                <fullName>IRR</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>IRS</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>IRW</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>MCH</fullName>
                 <default>false</default>
             </values>
@@ -1848,233 +1780,271 @@ AND(
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Irregularity_Type__c</picklist>
+            <values>
+                <fullName>1PT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2PT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FC1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FC2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NPA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>OV1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>OV2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SC1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SC2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>WD1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>WD2</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Reason_Code__c</picklist>
             <values>
-                <fullName>Accounting Irregularities</fullName>
+                <fullName>00</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Accumulated Irregularities - Non Payment Related</fullName>
+                <fullName>01</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Accumulated Irregularities - Non Payment of Annual fee</fullName>
+                <fullName>02</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Accumulated Irregularities - Payment Related</fullName>
+                <fullName>03</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Administrative Change</fullName>
+                <fullName>11</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Administrative Error</fullName>
+                <fullName>21</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Agent under Bankrupt%2FLiquidation%2FAdministration</fullName>
+                <fullName>31</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Annual Fee payment received</fullName>
+                <fullName>32</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Billing Dispute</fullName>
+                <fullName>40</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Bona fide bank error</fullName>
+                <fullName>43</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Certificate</fullName>
+                <fullName>50</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Change data</fullName>
+                <fullName>51</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Change of Legal Status</fullName>
+                <fullName>52</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Change of Location</fullName>
+                <fullName>53</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Change of Location with Invest%2E</fullName>
+                <fullName>54</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Change of Name</fullName>
+                <fullName>60</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Change of Ownership</fullName>
+                <fullName>61</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Change of Ownership of Branches</fullName>
+                <fullName>62</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Change of Ownership to IATA Agent</fullName>
+                <fullName>63</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Change of Shareholding</fullName>
+                <fullName>64</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Change of name and location</fullName>
+                <fullName>65</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Commissioner Decision</fullName>
+                <fullName>66</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Communication</fullName>
+                <fullName>67</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Compliance to Agency Res</fullName>
+                <fullName>71</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Correction</fullName>
+                <fullName>72</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Disapproval of Major Change</fullName>
+                <fullName>81</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Financial Security submitted</fullName>
+                <fullName>91</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Financial Statement submitted</fullName>
+                <fullName>93</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Reason_Description__c</picklist>
+            <values>
+                <fullName>ACCREDITED - MEETS CRITERIA</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Late%2Fabsence of Change of Location</fullName>
+                <fullName>ADMINISTRATIVE OFFICES</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Minor change of shareholding</fullName>
+                <fullName>APPLICATION WITHDRAWN</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Miscellaneous Change</fullName>
+                <fullName>BANKRUPTCY%2FLIQUIDATION</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>New Application - BR</fullName>
+                <fullName>BSP PARTICIPATIION - REVIEW IN PROGRESS</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>New Application Change</fullName>
+                <fullName>BSP PARTICIPATION - REVIEW IN PROGRESS</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>New Application Initiated</fullName>
+                <fullName>BY AGENCY ADMINISTRATOR</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>New Code Assigned</fullName>
+                <fullName>BY COMMISSIONER</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>New Request</fullName>
+                <fullName>CASS PARTICIPATION - REVIEW IN PROGRESS</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>New application - HO</fullName>
+                <fullName>CHANGE IN PROCESS</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Non Payment</fullName>
+                <fullName>CODE ASSIGNED</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Non compliance due to Change of Location</fullName>
+                <fullName>CODE ASSIGNMENT ONLY</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Non compliance due to Change of Shareholding</fullName>
+                <fullName>CROSS DEFAULT ACTION</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Non compliance due to Change of name</fullName>
+                <fullName>DEFAULT - NON PAYMENT</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Non compliance due to change of name and location</fullName>
+                <fullName>DEFAULT - UNDER REPAYMENT PLAN</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Non compliance due to change of ownership</fullName>
+                <fullName>DEFAULT ACCUM%2E IRR%2E - NON COMPLIANCE</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Non compliance to Credit Card Rules</fullName>
+                <fullName>DEFAULT ACCUM%2E IRR%2E - PAYMENT RELATED</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Non payment of annual fees</fullName>
+                <fullName>DEFAULT NON-SETTLEMENT</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Non submission of additional financial security</fullName>
+                <fullName>NEW APPLICATION</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Non submission of financial security</fullName>
+                <fullName>NON COMPLIANCE TO ACCREDITATION CRITERIA</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Non submission of financial statement</fullName>
+                <fullName>NON COMPLIANCE TO CRITERIA</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Partial Payment</fullName>
+                <fullName>NON COMPLIANCE TO FINANCIAL CRITERIA</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Prejudiced Collection of Funds</fullName>
+                <fullName>NOTICE OF TERMINATION DUE TO NON PAYMENT</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Reinstatement after Default</fullName>
+                <fullName>PREJUDICED COLLECTION OF FUNDS</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Repayment Plan Agreed</fullName>
+                <fullName>RELINQUISHMENT IN PROCESS</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Sanity Check failure of financial statement</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Termination</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Territory Change</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>VMFR Request</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Voluntary Relinquishment</fullName>
+                <fullName>VOLUNTARY RELINQUISHMENT</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

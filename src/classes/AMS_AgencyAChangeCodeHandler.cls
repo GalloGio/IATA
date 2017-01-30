@@ -27,22 +27,31 @@ public class AMS_AgencyAChangeCodeHandler {
         //FM 22-09-2016 - Create "Agency Update" records
         AMS_AgencyUpdateHelper.agencyUpdate( (List<SObject>) aacc);
     }
+    
+    public static void handleBeforeUpdate(List<Agency_Applied_Change_code__c> aacc){
+    	UpdateReasonCode(aacc, true);
+    }
 
     public static void handleAfterUpdate(List<Agency_Applied_Change_code__c> aacc) {
         verifyActiveAACCuniqueness(aacc);
+        set<id> setIdAACC = new set<id>();
         Id irregRtId = AMS_Utils.getId('Agency_Applied_Change_code__c', 'Irregularities');
         List<Agency_Applied_Change_code__c> aaccToBeProcessed = new List<Agency_Applied_Change_code__c>();
         for(Agency_Applied_Change_Code__c aaccRecord : aacc)
         {
+        	setIdAACC.add(aaccRecord.id);
             if(aaccRecord.RecordTypeId == irregRtId)
             {
                 aaccToBeProcessed.add(aaccRecord);
             }
         }
         AMS_Irregularities_Utils.CalculateAccumulatedIrregularitiesFromChangeCode(aaccToBeProcessed);
+        
+        updateAccountReason(setIdAACC);
     }
 
     public static void handleBeforeInsert(List<Agency_Applied_Change_code__c> aacc){
+    	UpdateReasonCode(aacc, false);
         migrateFieldsFromStagingToAccount(aacc);
     }
     
@@ -155,7 +164,37 @@ public class AMS_AgencyAChangeCodeHandler {
 
     }
 
-
+	public static void UpdateReasonCode(List<Agency_Applied_Change_code__c> aacc, boolean bIsUpdate){
+		map<string, map<string,string>> mapStatusReason = new map<string, map<string, string>>();
+		
+		for(AMS_Status_Reason__c lsr:[select Status_Description__c, Reason_Code__c, Reason_Description__c from AMS_Status_Reason__c]){
+			map<string, string> mapReason;
+			if(mapStatusReason.containsKey(lsr.Status_Description__c))
+				mapReason = mapStatusReason.get(lsr.Status_Description__c);
+			else
+				mapReason = new map<string, string>();
+			
+			mapReason.put(lsr.Reason_Description__c, lsr.Reason_Code__c);
+			mapStatusReason.put(lsr.Status_Description__c, mapReason);
+		}
+		if(!mapStatusReason.isEmpty()){
+			for(Agency_Applied_Change_code__c ac:aacc){
+				if(ac.Reason_Code__c==null || ac.Reason_Code__c == '' || bIsUpdate){
+					string sStatus = ac.AccountNewStatus__c;
+					string sReasDesc = ac.Reason_Description__c;
+					string sReasonCode = 'xx';
+					if(sStatus!=null && sStatus!='' && sReasDesc != '' && sReasDesc!=null){
+						if(mapStatusReason.containsKey(sStatus)){
+							if(mapStatusReason.get(sStatus).containsKey(sReasDesc))
+								ac.Reason_Code__c = mapStatusReason.get(sStatus).get(sReasDesc);
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	
     public static void migrateFieldsFromStagingToAccount(List<Agency_Applied_Change_code__c> aacc){
 
         // this method aaplies only to change codes that have an OSCAR filled. That OSCAR must be of record type NEW and have process of type AMS_Utils.oscarAMSProcesses
