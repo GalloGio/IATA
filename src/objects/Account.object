@@ -4591,6 +4591,16 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>CNS_Account__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>[CNS Portal CRM] used to identify the accounts belonging to CNS. (used for all kind of accounts, agencies, airlines, GSSAs...)</description>
+        <externalId>false</externalId>
+        <label>CNS Account</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>CNS_Agency__c</fullName>
         <externalId>false</externalId>
         <formula>AND( 

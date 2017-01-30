@@ -117,6 +117,10 @@
                 <behavior>Readonly</behavior>
                 <field>CNS_Agency__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>CNS_Account__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
