@@ -119,6 +119,10 @@
                 <behavior>Edit</behavior>
                 <field>Non_Members_Sub_Category__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>CNS_Account__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
