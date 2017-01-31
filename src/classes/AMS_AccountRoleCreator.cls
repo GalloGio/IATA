@@ -23,6 +23,9 @@ public with sharing class AMS_AccountRoleCreator
     
     public static final Map<String,String> personDeveloperName = new Map<String,String>{'Person' => 'Person','Current_Owner' => 'Current_Owner'};
     public static final Map<String,String> companyDeveloperName = new Map<String,String>{'Company' => 'Company','Current_Company_Owner' => 'Current_Company_Owner'};
+
+    public static final Set<String> processesBlockedToMigrateOwners = new Set<String>{'NEW.BR' ,'NEW.BR.ABROAD','NEW.TIDS.1.0','NEW.MSO.1.0','NEW.GSA.1.0','NEW.GSSA.1.0','NEW.AHA.1.0','NEW.SA.1.0','NEW.AHA.1.0.BSP','NEW.GSA.1.0.BSP'};
+
     
     // This funny looking method is a workaround to be able to use a variable (Set<Id>) in a dynamic query
     public static List<AMS_Accreditation_Contact__c> retrieveACsDynamically(String soqlString, String setName)
@@ -306,14 +309,16 @@ public with sharing class AMS_AccountRoleCreator
     */
     public static Map<Id,OldAndNewOwners> runRoleCreatorForOnlineAccreditations(Map<Id,Set<Id>> aoMap, boolean isCorrectionProcess){
 
-        System.debug('Starting to ajust the Owners in the selected hierarchies.');
-        
+        System.debug('Starting to ajust the Owners in the selected hierarchies. isCorrectionProcess variable value is '+ isCorrectionProcess);
+
         // First, lets get all the data we need from Accreditation Contacts and AMS Account Roles
+
+        Set<Account> accountsToFillOwners = new Set<Account>();
 
         Set<Id> accreditationAreaIds = aoMap.keyset();
         List<Id> accreditationAreaIdsLst= new List<Id>(accreditationAreaIds);
 
-        List<AMS_Oscar__c> oscars = [SELECT Id, RecordType.DeveloperName,Account__c, AMS_Online_Accreditation__c, Process__c from AMS_Oscar__c where AMS_Online_Accreditation__c in :accreditationAreaIdsLst];
+        List<AMS_Oscar__c> oscars = [SELECT Id, STEP10__c, STEP6__c, RecordType.DeveloperName,Account__c,Account__r.Top_Parent__r.Id, AMS_Online_Accreditation__c, AMS_Online_Accreditation__r.Id, Process__c from AMS_Oscar__c where AMS_Online_Accreditation__c in :accreditationAreaIdsLst];
 
         Map<Id,String> accreditationAndOscars = new Map<Id,String>();
 
@@ -321,9 +326,22 @@ public with sharing class AMS_AccountRoleCreator
         Id accountId;   // this is a hack to get the Account from the Oscar. As we are supposed to only work one
                         // OSCAR at a time, let's "assume" that there is only one Account involved.
         for(AMS_Oscar__c oscar: oscars){
-            accreditationAndOscars.put(oscar.AMS_Online_Accreditation__c, oscar.RecordType.DeveloperName);
-            accountId = oscar.Account__c;
-            oscarProcess = oscar.Process__c;
+
+            if(processesBlockedToMigrateOwners.contains(oscar.Process__c)){
+
+
+                accreditationAreaIdsLst = removeFromList(accreditationAreaIdsLst,oscar.AMS_Online_Accreditation__r.Id);
+
+                if(isCorrectionProcess && oscar.STEP10__c == 'Passed' && oscar.STEP6__c == 'Passed'){ // it's the last process to move the owners, so let's select the oscar's account to process.
+                    System.debug('Adding the oscar ' + oscar + ' to the list to do migration.');
+                    accountsToFillOwners.add(oscar.Account__r);
+                }
+
+            }else{
+                accreditationAndOscars.put(oscar.AMS_Online_Accreditation__c, oscar.RecordType.DeveloperName);
+                accountId = oscar.Account__c;
+                oscarProcess = oscar.Process__c;
+            }
         }
 
         //Map by accreditation Id
@@ -511,10 +529,97 @@ public with sharing class AMS_AccountRoleCreator
 
         }
 
+        if(!accountsToFillOwners.isEmpty()){
+            System.debug('Cloning Roles from parent using this accounts:' + accountsToFillOwners);
+            cloneOwnersFromHo(accountsToFillOwners);
+
+        }
+
         return oldAndNewOwnersMap;
 
     }
 
+    public static void cloneOwnersFromHo(Set<Account> accounts){
+
+        Map<Id,List<AMS_Account_role__c>> rolesInAccounts = new Map<Id,List<AMS_Account_role__c>>();
+
+        Set<Id> topParents = new Set<Id>();
+
+        for(Account acct : accounts){
+
+            if(acct.Top_Parent__c != null)
+                topParents.add(acct.Top_Parent__r.Id);
+
+        }
+
+         List<AMS_Account_role__c> allRoles =  Database.query(AMS_QueryUtils.getAllFieldQuery('AMS_Account_role__c',null, + 'Account__c in:topParents', false) );
+
+         for(AMS_Account_Role__c role: allRoles){
+
+            if(!role.Active__c)
+                continue;
+                
+            if(rolesInAccounts.containsKey(role.Account__c)){
+
+                rolesInAccounts.get(role.Account__c).add(role);
+
+            }
+            else{
+
+                rolesInAccounts.put(role.Account__c, new List<AMS_Account_Role__c>{role});
+            }
+
+         }
+
+        List<AMS_Account_Role__c> rolesToInsert = new List<AMS_Account_role__c>();
+
+        List<AMS_Account_role__c> rolesToDeactivate = new List<AMS_Account_role__c>();
+
+        List<AMS_Account_role__c> oldRoles =  Database.query(AMS_QueryUtils.getAllFieldQuery('AMS_Account_role__c',null, + 'Account__c in:accounts', false) );
+
+        for(AMS_Account_Role__c role: oldRoles){
+            if(role.Active__c){
+                role.Termination_Date__c = Date.Today();
+                rolesToDeactivate.add(role);
+            }
+        }
+
+        for(Account acct : accounts){
+
+            rolesToInsert.addAll(assignOwners(acct.Id,rolesInAccounts.get(acct.Top_Parent__c)));
+
+        }
+
+        if(!rolesToDeactivate.isEmpty()){
+            System.debug('Roles to deactivate:'+rolesToDeactivate);
+            update rolestoDeactivate;
+        }
+
+        if(!rolesToInsert.isEmpty()){
+            System.debug('Roles to insert:'+rolesToInsert);
+            insert rolesToInsert;
+        }
+
+        
+    }
+
+
+    public static List<AMS_Account_Role__c> assignOwners(Id accountId, List<AMS_Account_role__c> rolesToClone){
+
+        System.debug('Assigning roles '+ rolesToClone+' to new account ' + accountId);
+
+        List<AMS_Account_role__c> toReturn = new List<AMS_Account_role__c>();
+
+        for(AMS_Account_Role__c role: rolesToClone){
+
+            AMS_Account_Role__c newRole = role.clone(false,true,false,false);
+            newRole.Account__c = accountId;
+            toReturn.add(newRole);
+        }
+
+        return toReturn;
+
+    }
 
     //when we have an accreditation contact without any link to a contact but with a link to a person
     //then we create the contact and delete the person but before deleting the person we should check:
@@ -1118,7 +1223,10 @@ public with sharing class AMS_AccountRoleCreator
             for (AMS_Accreditation_Contact__c accrtContact : accreditationContactsToProcess)
             {
                 if(accrtContact.Agency_owner__c) 
-                    newOwnersList.add(new OwnerFieldsEntity (accrtContact.Name, String.valueOf(accrtContact.Financial_interest__c)));
+                {
+                    String name = (accrtContact.First_Name__c == null ? '' : accrtContact.First_Name__c  ) + (accrtContact.Last_Name__c == null ? '' : ( ' ' + accrtContact.Last_Name__c));
+                    newOwnersList.add(new OwnerFieldsEntity (name, String.valueOf(accrtContact.Financial_interest__c)));
+                }
             }
             
             OwnersByAccountWrapper newOwnersWrapper = new OwnersByAccountWrapper(acctId , newOwnersList);
@@ -1133,6 +1241,22 @@ public with sharing class AMS_AccountRoleCreator
         return new OldAndNewOwners(oldOwnersWrapperList,newOwnersWrapperList);
                 
 
+    }
+
+    public static List<Id> removeFromList(List<Id> listToRemove, Id form ){
+
+        Integer index = -1;
+
+        for(Integer i = 0; i < listToRemove.size() ; i++ ){
+
+            if(listToRemove.get(i) == form)
+                index = i;
+        }
+
+        if(index != -1 )
+            listToRemove.remove(index);
+
+            return listToRemove;
     }
 
 /**
@@ -1251,5 +1375,7 @@ Groups the Owners by account (in the accont the owners are in the object AMS_Acc
         }
     
     }
+
+
     
 }
