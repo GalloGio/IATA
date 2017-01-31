@@ -537,28 +537,42 @@ public class AMS_OscarCase_RiskMgmt {
 		}else if(cc.Account_status_change__c.toUpperCase()=='PREV'){
 			AACC.AccountNewStatus__c = sPrevStatus;
 			AACC.AccountPreviousStatus__c = sCurrStatus;
-			accnt.Status__c = sPrevStatus;
-			accnt.PreviousStatus__c= sCurrStatus;
-			bAccntToUpd = true;
+			//accnt.Status__c = sPrevStatus;
+			//accnt.PreviousStatus__c= sCurrStatus;
+			//bAccntToUpd = true;
 		}else{
 			AACC.AccountNewStatus__c = AMS_Utils.getIATAReadableStatus(cc.Account_status_change__c);
 			AACC.AccountPreviousStatus__c = sCurrStatus;
-			accnt.Status__c = AMS_Utils.getIATAReadableStatus(cc.Account_status_change__c);
-			accnt.PreviousStatus__c= sCurrStatus;
-			bAccntToUpd = true;
+			//accnt.Status__c = AMS_Utils.getIATAReadableStatus(cc.Account_status_change__c);
+			//accnt.PreviousStatus__c= sCurrStatus;
+			//bAccntToUpd = true;
 		}
+		
+		string[] SplittedReason;
+		string sReasonDesc = '';
 		
 		if(cc.Reason_Code__c == null || cc.Reason_Code__c.toUpperCase()=='CURRENT'){
 			if(sCurrReason!=null && sCurrReason!='-'){
-				AACC.Reason_Code__c = sCurrReason.split('-').get(0);
-				AACC.Reason_Description__c = sCurrReason.split('-').get(1);
+				if(sCurrReason.IndexOf('-')>0){
+					SplittedReason = sCurrReason.split('-');
+					//AACC.Reason_Code__c = sCurrReason.split('-').get(0);
+					AACC.Reason_Code__c = SplittedReason.get(0);
+					//AACC.Reason_Description__c = sCurrReason.split('-').get(1);
+					AACC.Reason_Description__c = sGetReasonDescriptionFromSplit(SplittedReason);
+				}else
+					AACC.Reason_Code__c = sCurrReason;
 			}
 			AACC.PreviousReason__c = sPrevReason;
 		}else if(cc.Reason_Code__c.toUpperCase()=='PREV'){
 			if(sPrevReason != null && sPrevReason!=''){
-				AACC.Reason_Code__c = sPrevReason.split('-').get(0);
-				AACC.Reason_Description__c = sPrevReason.split('-').get(1);
-				AACC.PreviousReason__c = sCurrReason;
+				if(sPrevReason.IndexOf('-')>0){
+					SplittedReason = sPrevReason.split('-');
+					//AACC.Reason_Code__c = sPrevReason.split('-').get(0);
+					AACC.Reason_Code__c = SplittedReason.get(0);
+					AACC.Reason_Description__c = sGetReasonDescriptionFromSplit(SplittedReason);
+					//AACC.Reason_Description__c = sPrevReason.split('-').get(1);
+					AACC.PreviousReason__c = sCurrReason;
+				}
 			}
 		}else{
 			AACC.Reason_Code__c = cc.Reason_Code__c;
@@ -573,6 +587,19 @@ public class AMS_OscarCase_RiskMgmt {
 			mapAccntToUpdate.put(AccountId, accnt);
 			
 		return AACC;
+	}
+	
+	
+	private static string sGetReasonDescriptionFromSplit(string[] SplittedReason){
+		string sReasonDesc = '';
+		if(SplittedReason==null || SplittedReason.isEmpty())	return '';
+		for(integer i = 1;i<SplittedReason.size();i++){
+			if(SplittedReason.size()-i==1)
+				sReasonDesc = sReasonDesc + SplittedReason.get(i);
+			else
+				sReasonDesc = sReasonDesc + SplittedReason.get(i) +'-';
+		}
+		return sReasonDesc;
 	}
 	
 	//Method set to expired all irregularities, if the change code foresee this.
