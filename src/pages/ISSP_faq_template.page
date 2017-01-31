@@ -105,8 +105,8 @@
                         </div>
                     </div>
                </div>
+               <div style="clear: both;"><c:ISSP_CustomFooter communityName="{!communityName}"/></div>
          </div><!-- end container-->
-      <c:ISSP_CustomFooter communityName="{!communityName}"/>
 
   </body>
     

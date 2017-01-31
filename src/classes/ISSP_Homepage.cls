@@ -188,6 +188,10 @@ public with sharing class ISSP_Homepage {
                 return newPR;
             }
         }
+        Boolean isCNS = [SELECT Id, Contact.Account.CNS_Agency__c FROM User WHERE Id =:UserInfo.getUserId()].Contact.Account.CNS_Agency__c;
+        if(isCNS) {
+            ApexPages.currentPage().getParameters().put('communityName','CNS');
+        }
         return null;
     }
     
