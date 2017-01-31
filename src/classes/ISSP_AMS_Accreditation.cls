@@ -6139,10 +6139,10 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
        **/
 
         //FM 30-01-2017 - OSCAR Integration - do not create OSCAR when there's a existing case with "Open - EDMC" status and an OSCAR Record already assigned to the case
-        Case checkCase = [Select id,OSCAR__c  from case where id = :caseid AND OSCAR__c <> null AND status = 'Open - EDMC' limit 1];
+        List<Case> checkCase = [Select id,OSCAR__c  from case where id = :caseid AND OSCAR__c <> null AND status = 'Open - EDMC'];
 
         // USE Static Method
-        if(checkCase == null){
+        if(checkCase == null || checkCase.size() == 0 ){
             AMS_RecordCreatorWebservice.createAccreditation(accountId, accreditationId, typeOfProcess, caseId);
         }
          
