@@ -344,6 +344,10 @@
         }
     }
     
+
+    var weekInitialStartDate;
+    var weekInitialEndDate;
+
     function getWeeklyMaxDay(){
         dayOfWeek = new Date().getDay();
         dayOfMonth = new Date().getDate();
@@ -365,6 +369,11 @@
             maxDay = dayOfMonth-1;
         } 
         // alert('maxDay: '+maxDay);
+
+        //Initial values for the selected week
+        weekInitialStartDate=maxDay-6;
+        weekInitialEndDate=maxDay;
+        
         return maxDay;
     }
 
@@ -412,12 +421,14 @@
         // if(bIsStep3){
             //Ser current week as selected
             var date = $(this).datepicker('getDate');
-            startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay()-7);
-            endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay() -1);
+            startDate = new Date(date.getFullYear(), date.getMonth(), weekInitialStartDate);
+            endDate = new Date(date.getFullYear(), date.getMonth(), weekInitialEndDate);
+            // alert('startDate-'+startDate);
+            // alert('endDate-'+endDate);
             var dateFormat = $.datepicker._defaults.dateFormat;
 
-            startDate.setDate(startDate.getDate() - 2);
-            endDate.setDate(endDate.getDate() -2);
+            // startDate.setDate(startDate.getDate() - 2);
+            // endDate.setDate(endDate.getDate() -2);
 
             jQuery('[id$=pWeekStart]').val($.datepicker.formatDate('dd/mm/yy', startDate));
             jQuery('[id$=pWeekEnd]').val($.datepicker.formatDate('dd/mm/yy', endDate));
@@ -758,7 +769,7 @@
                                             </apex:facet>
                                             
                                             <div class="alert alert-warning"  role="alert">
-                                                {!$Label.ISSP_AMS_eBulletin_AgencyInformation_disclaimer}
+                                                {!$Label.ISSP_AMS_eBulletin_AgencyInformation_disclaimer_Daily}
                                             </div>
 
 
@@ -1026,7 +1037,7 @@
                                             </apex:facet>
                                             
                                             <div class="alert alert-warning"  role="alert">
-                                                {!$Label.ISSP_AMS_eBulletin_AgencyInformation_disclaimer}
+                                                {!$Label.ISSP_AMS_eBulletin_AgencyInformation_disclaimer_Weekly}
                                             </div>
 
                                             <apex:pageBlockSection columns="1" rendered="{!IF(NOT(newFormWeekly.Opt_in__c) ,'false','true')}">
