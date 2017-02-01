@@ -18,7 +18,7 @@
         //$('#ModalShowSurvey').modal({show:true})
            window.open('{!SurveyLink}', "mywindow", "location=1,status=1,scrollbars=1,height=350,width=400");
       }else{
-            window.open('/secur/logout.jsp?retUrl={!$Site.BaseUrl}/ISSP_Homepage{!if(communityName=='CNS','?CommunityName='+communityName,'')}','_self');
+            window.open('/secur/logout.jsp?retUrl={!$Site.BaseUrl}/ISSP_Homepage{!if(communityName=='CNS','&CommunityName='+communityName,'')}','_self');
       }
     }
  </script><!-- end jquery initialisation -->

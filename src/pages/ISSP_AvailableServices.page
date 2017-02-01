@@ -148,7 +148,7 @@
                 <apex:outputPanel rendered="{!!item.recordService.Cannot_be_managed_by_portal_admin__c}">
                 
                 
-                <apex:outputLink styleClass="btn btn_iata_primary" value="/ISSP_EditPortalServiceAccess?Id={!item.recordService.Id}&op=Edit&PSId={!item.recordService.Id}&PSname={!item.recordService.name}" target="_self">{!$Label.ISSP_Add_User_to_this_service}</apex:outputLink>
+                <apex:outputLink styleClass="btn btn_iata_primary" value="/ISSP_EditPortalServiceAccess?Id={!item.recordService.Id}&op=Edit&PSId={!item.recordService.Id}&PSname={!item.recordService.name}{!if(communityName=='CNS','&CommunityName='+communityName,'')}" target="_self">{!$Label.ISSP_Add_User_to_this_service}</apex:outputLink>
            
                     </apex:outputPanel>
                 </apex:column>
