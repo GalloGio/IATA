@@ -19,7 +19,7 @@ trigger AMS_AgencyAChangeCode on Agency_Applied_Change_code__c (before insert, a
     
         if(Trigger.isAfter) {
             if(Trigger.isUpdate)
-                AMS_AgencyAChangeCodeHandler.handleAfterUpdate(Trigger.new);
+                AMS_AgencyAChangeCodeHandler.handleAfterUpdate(Trigger.new, trigger.OldMap);
             if(Trigger.isInsert)
                 AMS_AgencyAChangeCodeHandler.handleAfterInsert(Trigger.new);
         }
