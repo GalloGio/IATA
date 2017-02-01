@@ -11,6 +11,10 @@ trigger AMS_AgencyAChangeCode on Agency_Applied_Change_code__c (before insert, a
                 AMS_AgencyAChangeCodeHandler.handleBeforeInsert(Trigger.new);
                 System.debug('Finished handleBeforeInsert');
             }
+            
+            if(Trigger.isUpdate){
+                AMS_AgencyAChangeCodeHandler.handleBeforeUpdate(Trigger.new);
+            }
         }
     
         if(Trigger.isAfter) {
