@@ -192,6 +192,10 @@ public without sharing class ISSP_AMS_Accreditation {
     //public List<AMS_Accreditation_Contact__c> trainedStaffList{get;set;}
     public Id trainedStaffId {get; set;}
 
+    //CNS
+    public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
+    public String commParam { get { if(communityName=='CNS'){ return '&CommunityName='+ communityName;} return ''; } set;}
+
     public ISSP_AMS_Accreditation() {
         system.debug('kerensen ISSP_AMS_Accreditation ctor');
         isNewCase = true;
@@ -1003,7 +1007,7 @@ public without sharing class ISSP_AMS_Accreditation {
         system.debug('in cancel');
         string retURL = ApexPages.currentPage().getParameters().get('retURL');
         if (retURL == null) {
-            return new Pagereference('/ISSP_Homepage?mid=M0S1');
+            return new Pagereference('/ISSP_Homepage?mid=M0S1' +commParam);
         } else {
             return new Pagereference(retURL);
         }
@@ -1948,15 +1952,15 @@ public without sharing class ISSP_AMS_Accreditation {
 
     public Pagereference securityCheck() {
         if(con.Account.Sector__c != 'Travel Agent' && con.Account.Sector__c != 'Cargo Agent') {
-            return new Pagereference('/ISSP_Homepage?mid=M0S1');
+            return new Pagereference('/ISSP_Homepage?mid=M0S1' + commParam);
         }
 
         if (newCase.Id != null && newCase.Status != 'Draft' && newCase.Status != 'Open - EDMC' && !createListOfClosedStatuses().contains(newCase.Status) && !isFinalStep) {
-            return new Pagereference('/ISSP_Case?caseId=' + newCase.Id + '&mid=M1S2');
+            return new Pagereference('/ISSP_Case?caseId=' + newCase.Id + '&mid=M1S2' + commParam);
         } else if ((newCase.Id != null && newCase.Status != 'Draft' && newCase.Status != 'Open - EDMC' && createListOfClosedStatuses().contains(newCase.Status) && !isFinalStep) || (isNoticeOfChange && !isEligableForChange)) {
             string retURL = ApexPages.currentPage().getParameters().get('retURL');
             if (retURL == null) {
-                return new Pagereference('/ISSP_Homepage?mid=M0S1');
+                return new Pagereference('/ISSP_Homepage?mid=M0S1' +commParam);
             } else {
                 return new Pagereference(retURL);
             }
