@@ -32,14 +32,18 @@ public class AMS_AgencyAChangeCodeHandler {
     	UpdateReasonCode(aacc, true);
     }
 
-    public static void handleAfterUpdate(List<Agency_Applied_Change_code__c> aacc) {
+    public static void handleAfterUpdate(List<Agency_Applied_Change_code__c> aacc, map<Id, Agency_Applied_Change_code__c> triggerOldMap) {
         verifyActiveAACCuniqueness(aacc);
         set<id> setIdAACC = new set<id>();
         Id irregRtId = AMS_Utils.getId('Agency_Applied_Change_code__c', 'Irregularities');
         List<Agency_Applied_Change_code__c> aaccToBeProcessed = new List<Agency_Applied_Change_code__c>();
         for(Agency_Applied_Change_Code__c aaccRecord : aacc)
         {
-        	setIdAACC.add(aaccRecord.id);
+        	system.debug('DTULLO 42 --> NewValue: ' + aaccRecord.Sent_to_external_system__c +  ' - OldaValue: ' + triggerOldMap.get(aaccRecord.Id).Sent_to_external_system__c);
+        	if(aaccRecord.Sent_to_external_system__c == triggerOldMap.get(aaccRecord.Id).Sent_to_external_system__c){
+        		setIdAACC.add(aaccRecord.id);
+        	}
+            
             if(aaccRecord.RecordTypeId == irregRtId)
             {
                 aaccToBeProcessed.add(aaccRecord);
@@ -47,7 +51,9 @@ public class AMS_AgencyAChangeCodeHandler {
         }
         AMS_Irregularities_Utils.CalculateAccumulatedIrregularitiesFromChangeCode(aaccToBeProcessed);
         
-        updateAccountReason(setIdAACC);
+        if(!setIdAACC.isEmpty()){
+	        updateAccountReason(setIdAACC);
+        }
     }
 
     public static void handleBeforeInsert(List<Agency_Applied_Change_code__c> aacc){
