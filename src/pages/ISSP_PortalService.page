@@ -44,10 +44,10 @@
                 
                    <apex:pageBlockTable value="{!appsGrantedList}" var="o" >
                         <apex:column style="text-align: center;" >
-                            <apex:outputLink value="/ISSP_EditPortalServiceAccess?Id={!o.Id}&op=Edit&retURL=ISSP_PortalService?id={!o.Portal_Application__c}" target="_self">{!$Label.ISSP_Edit}</apex:outputLink>
+                            <apex:outputLink value="/ISSP_EditPortalServiceAccess?Id={!o.Id}&op=Edit&retURL=ISSP_PortalService?id={!o.Portal_Application__c}{!if(communityName=='CNS','&CommunityName='+communityName,'')}" target="_self">{!$Label.ISSP_Edit}</apex:outputLink>
                         </apex:column>  
                         <apex:column headerValue="Account Name" style="text-align: center;" >
-                            <apex:outputLink value="/apex/ISSP_Account?id={!o.Contact__r.AccountId}"  >{!o.Contact__r.Account.Name}</apex:outputLink>
+                            <apex:outputLink value="/apex/ISSP_Account?id={!o.Contact__r.AccountId}{!if(communityName=='CNS','&CommunityName='+communityName,'')}"  >{!o.Contact__r.Account.Name}</apex:outputLink>
                         </apex:column>
                         <apex:column value="{!o.Contact__r.FirstName}" style="text-align: center;" />
                         <apex:column value="{!o.Contact__r.LastName}" style="text-align: center;" />
