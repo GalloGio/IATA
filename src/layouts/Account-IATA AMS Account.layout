@@ -267,10 +267,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>Reason__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
                 <field>Accreditation_date__c</field>
             </layoutItems>
             <layoutItems>
