@@ -5853,15 +5853,15 @@ and
         <name>ISSP_AMS_download_of</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_AgencyChanges --></label>
+        <label>การเปลี่ยนหน่วยงานตัวแทน</label>
         <name>ISSP_AMS_eBulletin_AgencyChanges</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS eBulletin AgencyChanges HelpText --></label>
+        <label>ข้อความช่วยเหลือเกี่ยวกับการเปลี่ยนหน่วยงานตัวแทน กรอกที่นี่...</label>
         <name>ISSP_AMS_eBulletin_AgencyChanges_HelpText</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_AgencyInformation --></label>
+        <label>ข้อมูลหน่วยงานตัวแทน</label>
         <name>ISSP_AMS_eBulletin_AgencyInformation</name>
     </customLabels>
     <customLabels>
@@ -5869,211 +5869,219 @@ and
         <name>ISSP_AMS_eBulletin_AgencyInformation_disclaimer</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_Area1 --></label>
+        <label><!-- ISSP_AMS_eBulletin_AgencyInformation_disclaimer_Daily --></label>
+        <name>ISSP_AMS_eBulletin_AgencyInformation_disclaimer_Daily</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_eBulletin_AgencyInformation_disclaimer_Weekly --></label>
+        <name>ISSP_AMS_eBulletin_AgencyInformation_disclaimer_Weekly</name>
+    </customLabels>
+    <customLabels>
+        <label>เขต 1 - อเมริกาเหนือ อเมริกากลาง อเมริกาใต้ &amp; บริเวณโดยรอบ</label>
         <name>ISSP_AMS_eBulletin_Area1</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_Area2 --></label>
+        <label>เขต 2 - ยุโรป ตะวันออกกลาง &amp; แอฟริกา</label>
         <name>ISSP_AMS_eBulletin_Area2</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_Area3 --></label>
+        <label>เขต 3 - ตะวันออกไกล ออสเตรเลีย นิวซีแลนด์ &amp; หมู่เกาะแปซิฟิก</label>
         <name>ISSP_AMS_eBulletin_Area3</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_AvailableCountries --></label>
+        <label>ประเทศที่ให้บริการ</label>
         <name>ISSP_AMS_eBulletin_AvailableCountries</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_CASS --></label>
+        <label>พันธมิตร CASS ฝ่ายนำเข้า ตัวแทนการขนส่ง</label>
         <name>ISSP_AMS_eBulletin_CASS</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_Cargo --></label>
+        <label>คลังสินค้า</label>
         <name>ISSP_AMS_eBulletin_Cargo</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_Countries --></label>
+        <label>ประเทศ</label>
         <name>ISSP_AMS_eBulletin_Countries</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_CountrySelection --></label>
+        <label>การเลือกประเทศ</label>
         <name>ISSP_AMS_eBulletin_CountrySelection</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_Country_SelectAll --></label>
+        <label>เลือกทั้งหมด</label>
         <name>ISSP_AMS_eBulletin_Country_SelectAll</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_DAILY_Bulletin --></label>
+        <label>จดหมายข่าวอิเล็กทรอนิกส์รายวัน</label>
         <name>ISSP_AMS_eBulletin_DAILY_Bulletin</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_DAILY_Bulletin_Enable --></label>
+        <label>ใช้งานจดหมายข่าวอิเล็กทรอนิกส์รายวัน</label>
         <name>ISSP_AMS_eBulletin_DAILY_Bulletin_Enable</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS eBulletin DAILY Setup --></label>
+        <label>บันทึก &amp; ตั้งค่าประจำวัน</label>
         <name>ISSP_AMS_eBulletin_DAILY_Setup</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_DailyFrequency --></label>
+        <label>ความถี่ประจำวัน</label>
         <name>ISSP_AMS_eBulletin_DailyFrequency</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_Defaults --></label>
+        <label>ค่าเริ่มต้น</label>
         <name>ISSP_AMS_eBulletin_Defaults</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS eBulletin Defaults HelpText --></label>
+        <label>ข้อมูลค่าเริ่มต้น รวมถึงการคืนสถานะหลังปรับสู่ค่าเริ่มต้น</label>
         <name>ISSP_AMS_eBulletin_Defaults_HelpText</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_Description --></label>
+        <label>ช่วยในการสร้างรายงานประจำวัน &amp; รายงานประจำสัปดาห์สำหรับการเปลี่ยนแปลงที่เกี่ยวข้องกับหน่วยงานตัวแทน</label>
         <name>ISSP_AMS_eBulletin_Description</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_Disabled --></label>
+        <label>ไม่มีการใช้งาน</label>
         <name>ISSP_AMS_eBulletin_Disabled</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_Domestic --></label>
+        <label>ภายในประเทศ (เฉพาะอินโดนีเซีย &amp; จีน)</label>
         <name>ISSP_AMS_eBulletin_Domestic</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_Enabled --></label>
+        <label>ใช้งานในปัจจุบัน</label>
         <name>ISSP_AMS_eBulletin_Enabled</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_ErrorMsg_00 --></label>
+        <label>เกิดข้อผิดพลาด! กรุณาลองอีกครั้งในภายหลัง</label>
         <name>ISSP_AMS_eBulletin_ErrorMsg_00</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_ErrorMsg_01 --></label>
+        <label>ไม่มีข้อมูลรหัสการเปลี่ยนแปลงเพื่อคัดย่อข้อความในระยะเวลาที่กำหนด!</label>
         <name>ISSP_AMS_eBulletin_ErrorMsg_01</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_FilterOptionsDaily --></label>
+        <label>ตัวเลือกการคัดกรอง (ประจำวัน)</label>
         <name>ISSP_AMS_eBulletin_FilterOptionsDaily</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_FilterOptionsWeekly --></label>
+        <label>ตัวเลือกการคัดกรอง (ประจำสัปดาห์)</label>
         <name>ISSP_AMS_eBulletin_FilterOptionsWeekly</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_Filter_Geographic_Area --></label>
+        <label>คัดกรองตามพื้นที่ภูมิศาสตร์</label>
         <name>ISSP_AMS_eBulletin_Filter_Geographic_Area</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_GeographicArea --></label>
+        <label>พื้นที่ภูมิศาสตร์</label>
         <name>ISSP_AMS_eBulletin_GeographicArea</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_Instructions --></label>
+        <label>คำแนะนำ</label>
         <name>ISSP_AMS_eBulletin_Instructions</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_Irregularities --></label>
+        <label>การไม่ปฏิบัติตามระเบียบ</label>
         <name>ISSP_AMS_eBulletin_Irregularities</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS eBulletin Irregularities HelpText --></label>
+        <label>ข้อมูลการไม่ปฏิบัติตามระเบียบ กรอกที่นี่...</label>
         <name>ISSP_AMS_eBulletin_Irregularities_HelpText</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_NewApplicationProcesses --></label>
+        <label>ขั้นตอนการสมัครใหม่</label>
         <name>ISSP_AMS_eBulletin_NewApplicationProcesses</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS eBulletin NewApplications HelpText --></label>
+        <label>ข้อความช่วยเหลือเกี่ยวกับการสมัครใหม่ กรอกที่นี่</label>
         <name>ISSP_AMS_eBulletin_NewApplications_HelpText</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_OptOut_Daily_Notifications --></label>
+        <label>ยกเลิกการแจ้งเตือนรายวันทางอีเมล</label>
         <name>ISSP_AMS_eBulletin_OptOut_Daily_Notifications</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_OptOut_Weekly_Notifications --></label>
+        <label>ยกเลิกการแจ้งเตือนรายสัปดาห์ทางอีเมล</label>
         <name>ISSP_AMS_eBulletin_OptOut_Weekly_Notifications</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_Passenger --></label>
+        <label>ผู้โดยสาร</label>
         <name>ISSP_AMS_eBulletin_Passenger</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_Processing_eBulletin --></label>
+        <label>กำลังประมวลผลจดหมายข่าวอิเล็กทรอนิกส์...</label>
         <name>ISSP_AMS_eBulletin_Processing_eBulletin</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_Program --></label>
+        <label>โปรแกรม</label>
         <name>ISSP_AMS_eBulletin_Program</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_ProgramSelection --></label>
+        <label>การเลือกโปรแกรม</label>
         <name>ISSP_AMS_eBulletin_ProgramSelection</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_Receive_eBulletin_TimeZone --></label>
+        <label>รับจดหมายข่าวอิเล็กทรอนิกส์ตามเขตเวลา</label>
         <name>ISSP_AMS_eBulletin_Receive_eBulletin_TimeZone</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_Reviews --></label>
+        <label>การประเมิน</label>
         <name>ISSP_AMS_eBulletin_Reviews</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS eBulletin Reviews HelpText --></label>
+        <label>ซึ่งรวมถึงการแจ้งเตือนการยุติ</label>
         <name>ISSP_AMS_eBulletin_Reviews_HelpText</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_RunReport --></label>
+        <label>เรียกใช้รายงาน</label>
         <name>ISSP_AMS_eBulletin_RunReport</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_RunReport_opt_LastExecution --></label>
+        <label>ตั้งแต่ดาวน์โหลดครั้งล่าสุดในวันนี้</label>
         <name>ISSP_AMS_eBulletin_RunReport_opt_LastExecution</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_RunReport_opt_Today --></label>
+        <label>เต็มวัน</label>
         <name>ISSP_AMS_eBulletin_RunReport_opt_Today</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_SelectWeek --></label>
+        <label>เลือกสัปดาห์</label>
         <name>ISSP_AMS_eBulletin_SelectWeek</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_SelectedCountries --></label>
+        <label>ประเทศที่เลือก</label>
         <name>ISSP_AMS_eBulletin_SelectedCountries</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_Selection_Criteria --></label>
+        <label>เกณฑ์การเลือก</label>
         <name>ISSP_AMS_eBulletin_Selection_Criteria</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_Selection_Download --></label>
+        <label>เกณฑ์การเลือก/ดาวน์โหลดรายงาน</label>
         <name>ISSP_AMS_eBulletin_Selection_Download</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_Status --></label>
+        <label>สถานะ</label>
         <name>ISSP_AMS_eBulletin_Status</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_SubscriptionInformation --></label>
+        <label>ข้อมูลคำอธิบาย</label>
         <name>ISSP_AMS_eBulletin_SubscriptionInformation</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_Termination_Closures --></label>
+        <label>การยุติ &amp; การสิ้นสุด</label>
         <name>ISSP_AMS_eBulletin_Termination_Closures</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS eBulletin Termination HelpText --></label>
+        <label>ซึ่งรวมถึงการคืนสถานะภายหลังการยุติ และการยกเลิกโดยสมัครใจ</label>
         <name>ISSP_AMS_eBulletin_Termination_HelpText</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_TimeZone_Selection --></label>
+        <label>การเลือกเขตเวลา</label>
         <name>ISSP_AMS_eBulletin_TimeZone_Selection</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_Title --></label>
+        <label>จดหมายข่าวออนไลน์ AIRS/CAIRS</label>
         <name>ISSP_AMS_eBulletin_Title</name>
     </customLabels>
     <customLabels>
@@ -6081,71 +6089,71 @@ and
         <name>ISSP_AMS_eBulletin_Unavailable</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_WEEKLY_Bulletin --></label>
+        <label>จดหมายข่าวอิเล็กทรอนิกส์รายสัปดาห์</label>
         <name>ISSP_AMS_eBulletin_WEEKLY_Bulletin</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_WEEKLY_Bulletin Enable --></label>
+        <label>ใช้งานจดหมายข่าวอิเล็กทรอนิกส์รายสัปดาห์</label>
         <name>ISSP_AMS_eBulletin_WEEKLY_Bulletin_Enable</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS eBulletin WEEKLY Setup --></label>
+        <label>บันทึก &amp; ตั้งค่ารายสัปดาห์</label>
         <name>ISSP_AMS_eBulletin_WEEKLY_Setup</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_btn_DownloadDailyReport --></label>
+        <label>ดาวน์โหลดรายงานประจำวัน</label>
         <name>ISSP_AMS_eBulletin_btn_DownloadDailyReport</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_btn_DownloadWeeklyReport --></label>
+        <label>ดาวน์โหลดรายงานประจำสัปดาห์</label>
         <name>ISSP_AMS_eBulletin_btn_DownloadWeeklyReport</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_btn_EditSelectionCriteria --></label>
+        <label>แก้ไขเกณฑ์การเลือก</label>
         <name>ISSP_AMS_eBulletin_btn_EditSelectionCriteria</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_btn_SaveGenerateReport --></label>
+        <label>บันทึก &amp; สร้างรายงาน</label>
         <name>ISSP_AMS_eBulletin_btn_SaveGenerateReport</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_eBulletin_UserGuide --></label>
+        <label>คู่มือผู้ใช้งานจดหมายข่าวอิเล็กทรอนิกส์</label>
         <name>ISSP_AMS_eBulletin_eBulletin_UserGuide</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_home_btn --></label>
+        <label>ดำเนินการต่อไปยังจดหมายข่าวอิเล็กทรอนิกส์</label>
         <name>ISSP_AMS_eBulletin_home_btn</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_home_lbl1 --></label>
+        <label>กรุณาค้นหาข้อมูลใน</label>
         <name>ISSP_AMS_eBulletin_home_lbl1</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_home_lbl2 --></label>
+        <label>คู่มือการใช้งาน</label>
         <name>ISSP_AMS_eBulletin_home_lbl2</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_home_lbl3 --></label>
+        <label>จัดการเกณฑ์การเลือกและสร้างรายงาน</label>
         <name>ISSP_AMS_eBulletin_home_lbl3</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_home_lbl4 --></label>
+        <label>หากต้องการความช่วยเหลือเกี่ยวกับการใช้งาน</label>
         <name>ISSP_AMS_eBulletin_home_lbl4</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_info_1 --></label>
+        <label>กรุณาดาวน์โหลดรายงานประจำสัปดาห์ หากประสงค์รายงานเกี่ยวกับรายการประจำวันก่อนช่วง 7 วันที่ผ่านมา</label>
         <name>ISSP_AMS_eBulletin_info_1</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_info_2 --></label>
+        <label>(คุณอาจจำเป็นต้องปรับตัวเลือกการคัดกรองประจำสัปดาห์ไว้ล่วงหน้า)</label>
         <name>ISSP_AMS_eBulletin_info_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_info_Daily_available_days --></label>
+        <label>ประกาศประจำวันที่ให้บริการในช่วง 7 วันที่ผ่านมา</label>
         <name>ISSP_AMS_eBulletin_info_Daily_available_days</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_lbl_Enable --></label>
+        <label>เปิดใช้งาน</label>
         <name>ISSP_AMS_eBulletin_lbl_Enable</name>
     </customLabels>
     <customLabels>
@@ -9600,19 +9608,19 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>Message</name>
     </customLabels>
     <customLabels>
-        <label><!-- MultiselectPicklist_Add --></label>
+        <label>เพิ่ม</label>
         <name>MultiselectPicklist_Add</name>
     </customLabels>
     <customLabels>
-        <label><!-- MultiselectPicklist_Down --></label>
+        <label>ลง</label>
         <name>MultiselectPicklist_Down</name>
     </customLabels>
     <customLabels>
-        <label><!-- MultiselectPicklist_Remove --></label>
+        <label>ลบ</label>
         <name>MultiselectPicklist_Remove</name>
     </customLabels>
     <customLabels>
-        <label><!-- MultiselectPicklist_Up --></label>
+        <label>ขึ้น</label>
         <name>MultiselectPicklist_Up</name>
     </customLabels>
     <customLabels>
@@ -11408,371 +11416,6 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>Welcome</name>
     </customTabs>
     <globalPicklists>
-        <name>Sector</name>
-        <picklistValues>
-            <masterLabel>Accommodation</masterLabel>
-            <translation><!-- Accommodation --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Airline</masterLabel>
-            <translation><!-- Airline --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Airline Supplier</masterLabel>
-            <translation><!-- Airline Supplier --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Association</masterLabel>
-            <translation><!-- Association --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Cargo Agent</masterLabel>
-            <translation><!-- Cargo Agent --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Education</masterLabel>
-            <translation><!-- Education --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Equipment Manufacturer</masterLabel>
-            <translation><!-- Equipment Manufacturer --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Financial Institution</masterLabel>
-            <translation><!-- Financial Institution --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>General Sales Agent</masterLabel>
-            <translation><!-- General Sales Agent --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Governmental Institution</masterLabel>
-            <translation><!-- Governmental Institution --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Holding Company</masterLabel>
-            <translation><!-- Holding Company --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>IATA</masterLabel>
-            <translation><!-- IATA --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Infrastructure Partner</masterLabel>
-            <translation><!-- Infrastructure Partner --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Media</masterLabel>
-            <translation><!-- Media --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Non-Airline Transportation</masterLabel>
-            <translation><!-- Non-Airline Transportation --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Recreational</masterLabel>
-            <translation><!-- Recreational --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Travel Agent</masterLabel>
-            <translation><!-- Travel Agent --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
-        <name>Category</name>
-        <picklistValues>
-            <masterLabel>ANSP</masterLabel>
-            <translation><!-- ANSP --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Academic/Research Body</masterLabel>
-            <translation><!-- Academic/Research Body --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Agency Holding Company</masterLabel>
-            <translation><!-- Agency Holding Company --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Aircraft Manufacturer</masterLabel>
-            <translation><!-- Aircraft Manufacturer --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Airline Global Card Acquirer</masterLabel>
-            <translation><!-- Airline Global Card Acquirer --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Airline Holding Company</masterLabel>
-            <translation><!-- Airline Holding Company --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Airline Point of Sale</masterLabel>
-            <translation><!-- Airline Point of Sale --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Airport Authority</masterLabel>
-            <translation><!-- Airport Authority --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Airport Concessionaire</masterLabel>
-            <translation><!-- Airport Concessionaire --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Apartment &amp; Villa Rental</masterLabel>
-            <translation><!-- Apartment &amp; Villa Rental --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Banking Service</masterLabel>
-            <translation><!-- Banking Service --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Bus Line</masterLabel>
-            <translation><!-- Bus Line --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>CASS Associate</masterLabel>
-            <translation><!-- CASS Associate --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Car Rental</masterLabel>
-            <translation><!-- Car Rental --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Card Brand</masterLabel>
-            <translation><!-- Card Brand --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Cargo Agency Association</masterLabel>
-            <translation><!-- Cargo Agency Association --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Cargo only</masterLabel>
-            <translation><!-- Cargo only --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Casino</masterLabel>
-            <translation><!-- Casino --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Caterer</masterLabel>
-            <translation><!-- Caterer --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Consultancy Firm</masterLabel>
-            <translation><!-- Consultancy Firm --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Courier</masterLabel>
-            <translation><!-- Courier --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Cruise Line</masterLabel>
-            <translation><!-- Cruise Line --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Domestic Agent</masterLabel>
-            <translation><!-- Domestic Agent --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>ERSP Agent</masterLabel>
-            <translation><!-- ERSP Agent --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Engine Manufacturer</masterLabel>
-            <translation><!-- Engine Manufacturer --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Fuel Supplier</masterLabel>
-            <translation><!-- Fuel Supplier --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>GSA General Sales Agent</masterLabel>
-            <translation><!-- GSA General Sales Agent --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>GSSA Cargo</masterLabel>
-            <translation><!-- GSSA Cargo --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Global Distribution System</masterLabel>
-            <translation><!-- Global Distribution System --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Ground Handler</masterLabel>
-            <translation><!-- Ground Handler --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Handling Agent</masterLabel>
-            <translation><!-- Handling Agent --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Hotel</masterLabel>
-            <translation><!-- Hotel --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>IATA Cargo Agent</masterLabel>
-            <translation><!-- IATA Cargo Agent --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>IATA Head Office</masterLabel>
-            <translation><!-- IATA Head Office --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>IATA Local office</masterLabel>
-            <translation><!-- IATA Local office --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>IATA Passenger Sales Agent</masterLabel>
-            <translation><!-- IATA Passenger Sales Agent --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>IATA Regional Office</masterLabel>
-            <translation><!-- IATA Regional Office --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>IBCS consolidator</masterLabel>
-            <translation><!-- IBCS consolidator --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Import Agent</masterLabel>
-            <translation><!-- Import Agent --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Individual Government</masterLabel>
-            <translation><!-- Individual Government --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Inter-Governmental Body</masterLabel>
-            <translation><!-- Inter-Governmental Body --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Landmark</masterLabel>
-            <translation><!-- Landmark --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Large Component OEM</masterLabel>
-            <translation><!-- Large Component OEM --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Lessor</masterLabel>
-            <translation><!-- Lessor --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>MSO Member Sales Office</masterLabel>
-            <translation><!-- MSO Member Sales Office --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Maintenance, Repair, Overhaul</masterLabel>
-            <translation><!-- Maintenance, Repair, Overhaul --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Museum</masterLabel>
-            <translation><!-- Museum --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Non Governmental Organization</masterLabel>
-            <translation><!-- Non Governmental Organization --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Non-IATA Cargo Agent</masterLabel>
-            <translation><!-- Non-IATA Cargo Agent --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Non-IATA Passenger Agent</masterLabel>
-            <translation><!-- Non-IATA Passenger Agent --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Non-IATA Travel Agent</masterLabel>
-            <translation><!-- Non-IATA Travel Agent --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Other</masterLabel>
-            <translation><!-- Other --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Other Equipment Manufacturer</masterLabel>
-            <translation><!-- Other Equipment Manufacturer --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Other Private Sector Association</masterLabel>
-            <translation><!-- Other Private Sector Association --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Park</masterLabel>
-            <translation><!-- Park --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Passenger and Cargo</masterLabel>
-            <translation><!-- Passenger and Cargo --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Passenger only</masterLabel>
-            <translation><!-- Passenger only --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Processor</masterLabel>
-            <translation><!-- Processor --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Publishing</masterLabel>
-            <translation><!-- Publishing --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Railway Line</masterLabel>
-            <translation><!-- Railway Line --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Resort</masterLabel>
-            <translation><!-- Resort --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Security</masterLabel>
-            <translation><!-- Security --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>System Solutions Provider</masterLabel>
-            <translation><!-- System Solutions Provider --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>TIDS Agent</masterLabel>
-            <translation><!-- TIDS Agent --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Tour Operator</masterLabel>
-            <translation><!-- Tour Operator --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Training Centre</masterLabel>
-            <translation><!-- Training Centre --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Travel Agency Association</masterLabel>
-            <translation><!-- Travel Agency Association --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
-        <name>EF_Manager_Approval</name>
-        <picklistValues>
-            <masterLabel>Approved</masterLabel>
-            <translation><!-- Approved --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>In Progress</masterLabel>
-            <translation><!-- In Progress --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Not Started</masterLabel>
-            <translation><!-- Not Started --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Recalled</masterLabel>
-            <translation><!-- Recalled --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Rejected</masterLabel>
-            <translation><!-- Rejected --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
         <name>EF_Currency</name>
         <picklistValues>
             <masterLabel>AED</masterLabel>
@@ -12515,6 +12158,417 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
+        <name>Category</name>
+        <picklistValues>
+            <masterLabel>ANSP</masterLabel>
+            <translation><!-- ANSP --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Academic/Research Body</masterLabel>
+            <translation><!-- Academic/Research Body --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Agency Holding Company</masterLabel>
+            <translation><!-- Agency Holding Company --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Aircraft Manufacturer</masterLabel>
+            <translation><!-- Aircraft Manufacturer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Airline Global Card Acquirer</masterLabel>
+            <translation><!-- Airline Global Card Acquirer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Airline Holding Company</masterLabel>
+            <translation><!-- Airline Holding Company --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Airline Point of Sale</masterLabel>
+            <translation><!-- Airline Point of Sale --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Airport Authority</masterLabel>
+            <translation><!-- Airport Authority --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Airport Concessionaire</masterLabel>
+            <translation><!-- Airport Concessionaire --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Apartment &amp; Villa Rental</masterLabel>
+            <translation><!-- Apartment &amp; Villa Rental --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Banking Service</masterLabel>
+            <translation><!-- Banking Service --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Bus Line</masterLabel>
+            <translation><!-- Bus Line --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CASS Associate</masterLabel>
+            <translation><!-- CASS Associate --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Car Rental</masterLabel>
+            <translation><!-- Car Rental --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Card Brand</masterLabel>
+            <translation><!-- Card Brand --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cargo Agency Association</masterLabel>
+            <translation><!-- Cargo Agency Association --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cargo only</masterLabel>
+            <translation><!-- Cargo only --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Casino</masterLabel>
+            <translation><!-- Casino --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Caterer</masterLabel>
+            <translation><!-- Caterer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Consultancy Firm</masterLabel>
+            <translation><!-- Consultancy Firm --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Courier</masterLabel>
+            <translation><!-- Courier --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cruise Line</masterLabel>
+            <translation><!-- Cruise Line --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Domestic Agent</masterLabel>
+            <translation><!-- Domestic Agent --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ERSP Agent</masterLabel>
+            <translation><!-- ERSP Agent --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Engine Manufacturer</masterLabel>
+            <translation><!-- Engine Manufacturer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Fuel Supplier</masterLabel>
+            <translation><!-- Fuel Supplier --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>GSA General Sales Agent</masterLabel>
+            <translation><!-- GSA General Sales Agent --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>GSSA Cargo</masterLabel>
+            <translation><!-- GSSA Cargo --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Global Distribution System</masterLabel>
+            <translation><!-- Global Distribution System --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ground Handler</masterLabel>
+            <translation><!-- Ground Handler --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Handling Agent</masterLabel>
+            <translation><!-- Handling Agent --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Hotel</masterLabel>
+            <translation><!-- Hotel --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IATA Cargo Agent</masterLabel>
+            <translation><!-- IATA Cargo Agent --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IATA Head Office</masterLabel>
+            <translation><!-- IATA Head Office --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IATA Local office</masterLabel>
+            <translation><!-- IATA Local office --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IATA Passenger Sales Agent</masterLabel>
+            <translation><!-- IATA Passenger Sales Agent --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IATA Regional Office</masterLabel>
+            <translation><!-- IATA Regional Office --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IBCS consolidator</masterLabel>
+            <translation><!-- IBCS consolidator --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Import Agent</masterLabel>
+            <translation><!-- Import Agent --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Individual Government</masterLabel>
+            <translation><!-- Individual Government --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inter-Governmental Body</masterLabel>
+            <translation><!-- Inter-Governmental Body --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Landmark</masterLabel>
+            <translation><!-- Landmark --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Large Component OEM</masterLabel>
+            <translation><!-- Large Component OEM --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Lessor</masterLabel>
+            <translation><!-- Lessor --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MSO Member Sales Office</masterLabel>
+            <translation><!-- MSO Member Sales Office --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Maintenance, Repair, Overhaul</masterLabel>
+            <translation><!-- Maintenance, Repair, Overhaul --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Museum</masterLabel>
+            <translation><!-- Museum --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Non Governmental Organization</masterLabel>
+            <translation><!-- Non Governmental Organization --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Non-IATA Cargo Agent</masterLabel>
+            <translation><!-- Non-IATA Cargo Agent --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Non-IATA Passenger Agent</masterLabel>
+            <translation><!-- Non-IATA Passenger Agent --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Non-IATA Travel Agent</masterLabel>
+            <translation><!-- Non-IATA Travel Agent --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Other</masterLabel>
+            <translation><!-- Other --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Other Equipment Manufacturer</masterLabel>
+            <translation><!-- Other Equipment Manufacturer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Other Private Sector Association</masterLabel>
+            <translation><!-- Other Private Sector Association --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Park</masterLabel>
+            <translation><!-- Park --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Passenger and Cargo</masterLabel>
+            <translation><!-- Passenger and Cargo --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Passenger only</masterLabel>
+            <translation><!-- Passenger only --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Processor</masterLabel>
+            <translation><!-- Processor --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Publishing</masterLabel>
+            <translation><!-- Publishing --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Railway Line</masterLabel>
+            <translation><!-- Railway Line --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Resort</masterLabel>
+            <translation><!-- Resort --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Security</masterLabel>
+            <translation><!-- Security --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>System Solutions Provider</masterLabel>
+            <translation><!-- System Solutions Provider --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TIDS Agent</masterLabel>
+            <translation><!-- TIDS Agent --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Tour Operator</masterLabel>
+            <translation><!-- Tour Operator --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Training Centre</masterLabel>
+            <translation><!-- Training Centre --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Travel Agency Association</masterLabel>
+            <translation><!-- Travel Agency Association --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
+        <name>EF_Payment_Method</name>
+        <picklistValues>
+            <masterLabel>Bank transfer</masterLabel>
+            <translation><!-- Bank transfer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Credit Card</masterLabel>
+            <translation><!-- Credit Card --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ICCS payments</masterLabel>
+            <translation><!-- ICCS payments --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ICH</masterLabel>
+            <translation><!-- ICH --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IRIS</masterLabel>
+            <translation><!-- IRIS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SPCR / SPDR</masterLabel>
+            <translation><!-- SPCR / SPDR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Virtual Account Payment</masterLabel>
+            <translation><!-- Virtual Account Payment --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
+        <name>EF_Allow_Billing_Agreements</name>
+        <picklistValues>
+            <masterLabel>Allowed</masterLabel>
+            <translation><!-- Allowed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Allowed with Approval</masterLabel>
+            <translation><!-- Allowed with Approval --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not Allowed</masterLabel>
+            <translation><!-- Not Allowed --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
+        <name>EF_Manager_Approval</name>
+        <picklistValues>
+            <masterLabel>Approved</masterLabel>
+            <translation><!-- Approved --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>In Progress</masterLabel>
+            <translation><!-- In Progress --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not Started</masterLabel>
+            <translation><!-- Not Started --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Recalled</masterLabel>
+            <translation><!-- Recalled --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Rejected</masterLabel>
+            <translation><!-- Rejected --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
+        <name>Sector</name>
+        <picklistValues>
+            <masterLabel>Accommodation</masterLabel>
+            <translation><!-- Accommodation --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Airline</masterLabel>
+            <translation><!-- Airline --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Airline Supplier</masterLabel>
+            <translation><!-- Airline Supplier --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Association</masterLabel>
+            <translation><!-- Association --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cargo Agent</masterLabel>
+            <translation><!-- Cargo Agent --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Education</masterLabel>
+            <translation><!-- Education --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Equipment Manufacturer</masterLabel>
+            <translation><!-- Equipment Manufacturer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Financial Institution</masterLabel>
+            <translation><!-- Financial Institution --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>General Sales Agent</masterLabel>
+            <translation><!-- General Sales Agent --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Governmental Institution</masterLabel>
+            <translation><!-- Governmental Institution --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Holding Company</masterLabel>
+            <translation><!-- Holding Company --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IATA</masterLabel>
+            <translation><!-- IATA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Infrastructure Partner</masterLabel>
+            <translation><!-- Infrastructure Partner --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Media</masterLabel>
+            <translation><!-- Media --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Non-Airline Transportation</masterLabel>
+            <translation><!-- Non-Airline Transportation --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Recreational</masterLabel>
+            <translation><!-- Recreational --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Travel Agent</masterLabel>
+            <translation><!-- Travel Agent --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
         <name>EF_Invoice_Distribution</name>
         <picklistValues>
             <masterLabel>Electronic Via Email</masterLabel>
@@ -12531,29 +12585,6 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <picklistValues>
             <masterLabel>Paper</masterLabel>
             <translation><!-- Paper --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
-        <name>EF_Frequency</name>
-        <picklistValues>
-            <masterLabel>2x/Week</masterLabel>
-            <translation><!-- 2x/Week --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>4x/Month</masterLabel>
-            <translation><!-- 4x/Month --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Fortnightly</masterLabel>
-            <translation><!-- Fortnightly --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Monthly</masterLabel>
-            <translation><!-- Monthly --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Weekly</masterLabel>
-            <translation><!-- Weekly --></translation>
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
@@ -12627,6 +12658,29 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
+        <name>EF_Frequency</name>
+        <picklistValues>
+            <masterLabel>2x/Week</masterLabel>
+            <translation><!-- 2x/Week --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>4x/Month</masterLabel>
+            <translation><!-- 4x/Month --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Fortnightly</masterLabel>
+            <translation><!-- Fortnightly --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Monthly</masterLabel>
+            <translation><!-- Monthly --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Weekly</masterLabel>
+            <translation><!-- Weekly --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
         <name>EF_User_Role</name>
         <picklistValues>
             <masterLabel>Airline Services Specialists</masterLabel>
@@ -12655,52 +12709,6 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <picklistValues>
             <masterLabel>Manager, Invoicing &amp; Accounting &amp; Data Transformation</masterLabel>
             <translation><!-- Manager, Invoicing &amp; Accounting &amp; Data Transformation --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
-        <name>EF_Payment_Method</name>
-        <picklistValues>
-            <masterLabel>Bank transfer</masterLabel>
-            <translation><!-- Bank transfer --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Credit Card</masterLabel>
-            <translation><!-- Credit Card --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>ICCS payments</masterLabel>
-            <translation><!-- ICCS payments --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>ICH</masterLabel>
-            <translation><!-- ICH --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>IRIS</masterLabel>
-            <translation><!-- IRIS --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>SPCR / SPDR</masterLabel>
-            <translation><!-- SPCR / SPDR --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Virtual Account Payment</masterLabel>
-            <translation><!-- Virtual Account Payment --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
-        <name>EF_Allow_Billing_Agreements</name>
-        <picklistValues>
-            <masterLabel>Allowed</masterLabel>
-            <translation><!-- Allowed --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Allowed with Approval</masterLabel>
-            <translation><!-- Allowed with Approval --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Not Allowed</masterLabel>
-            <translation><!-- Not Allowed --></translation>
         </picklistValues>
     </globalPicklists>
 </Translations>
