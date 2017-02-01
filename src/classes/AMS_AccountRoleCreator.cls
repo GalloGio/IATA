@@ -586,7 +586,8 @@ public with sharing class AMS_AccountRoleCreator
 
         for(Account acct : accounts){
 
-            rolesToInsert.addAll(assignOwners(acct.Id,rolesInAccounts.get(acct.Top_Parent__c)));
+            if(rolesInAccounts.get(acct.Top_Parent__c) != null)
+                rolesToInsert.addAll(assignOwners(acct.Id,rolesInAccounts.get(acct.Top_Parent__c)));
 
         }
 
