@@ -78,7 +78,7 @@ public without sharing class vfIECUpdateSecurity extends IECPageController {
 		
 		lLoginHistory = new List<LoginHistoryInstance>();
 		
-		List<LoginHistory> historyList = [Select Status, SourceIp, LoginTime, Id, Platform, Browser From LoginHistory Where UserId =: Userinfo.getUserId() order by LoginTime desc];
+		List<LoginHistory> historyList = [Select Status, SourceIp, LoginTime, Id, Platform, Browser From LoginHistory Where UserId =: Userinfo.getUserId() order by LoginTime desc limit 50];
 		
 		for (LoginHistory lh : historyList) {
 			LoginHistoryInstance newLH = new LoginHistoryInstance();
