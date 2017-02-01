@@ -925,6 +925,7 @@ public without sharing class ISSP_Registration {
             // for CNS automatically check the checkbox
             if(communityName == 'CNS') {
                 acc.CNS_Account__c = true;
+                acc.Location_Class__c = 'C';
                 con.CNS_Contact__c = true;
             }
 
