@@ -73,6 +73,7 @@ public class AccountHandler{
 		Update some account fields which value depends on child contacts
 	**/
 	public static void updateParentAccountFields(list<Id> listAccountId) {
+		if (listAccountId.isEmpty()) return;
 		list<Account> listAccount = [
 			SELECT Id, Has_a_Financial_Assessment_Contact_Sum__c, Has_an_Administrator_User_Portal_Sum__c,
 			(Select Has_a_Financial_Assessment_Contact_Formu__c, Has_an_Administrator_User_Portal_Formula__c from childAccounts)
