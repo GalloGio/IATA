@@ -20,15 +20,17 @@ private class ISSP_TC_Accept_Test {
 	                            timezonesidkey = 'Asia/Dubai',
 	                            username = contact.email+'dfgdf',
 	                            PortalRole = 'Manager',
-	                            CommunityNickname = contact.email.substring(0, contact.email.indexOf('@'))+Datetime.now().formatLong().substring(10,15),
+                                CommunityNickname = contact.email.substring(0, contact.email.indexOf('@'))+Datetime.now().formatLong().substring(10,15),
 	                            ProfileId = profileId,
-	                            IsActive = true);
+                                IsActive = true);
     	insert newUser;
 		
     	ISSP_CS__c issc = new ISSP_CS__c(name = 'PasswordResetPeriod', value__c = '90');
     	insert issc;
     	
     	system.runAs(newUser){
+            system.setPassword(newUser.id, 'testpassword1');
+
         	ISSP_TC_Accept cttr = new ISSP_TC_Accept();
         	cttr.accept = false;
         	cttr.redirectChangePassword();
@@ -36,6 +38,14 @@ private class ISSP_TC_Accept_Test {
         	cttr.docontinue();
         	cttr.accept = true;
         	cttr.docontinue();
+
+            PageReference pageRef = Page.ISSP_TC_Accept;
+            Test.setCurrentPage(pageRef);
+            PageReference pr1 = cttr.pageLoad();
+            Boolean bget = cttr.getCountryRequirementPermission();
+
+            cttr.searchText ='test';
+            List<SelectOption> lsoLanguages = cttr.languages;
     	}
     }
     
@@ -85,6 +95,10 @@ private class ISSP_TC_Accept_Test {
         	cttr.accept = true;
         	cttr.redirectChangePassword();
         	cttr.redirectTC_Accept();
+
+            PageReference pageRef = Page.ISSP_TC_Accept;
+            Test.setCurrentPage(pageRef);
+            PageReference pr1 = cttr.pageLoad();
     	}
     }
     
