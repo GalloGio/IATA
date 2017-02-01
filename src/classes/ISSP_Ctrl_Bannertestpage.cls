@@ -133,12 +133,12 @@ public class ISSP_Ctrl_Bannertestpage {
 		set<ISSP_Banner__c> tmpBanner_set = new set<ISSP_Banner__c>();
 		system.debug('SFIIcountry  UserPortalCountry '+UserPortalCountry);
 		system.debug('SFIIcountry  UserPortalRegion '+UserPortalRegion);
-        for(ISSP_Banner__c ban : unFilteredBanner_List ){
-		system.debug('SFIIcountry  ban.Country__c '+ban.Country__c);
-
         User u = [SELECT Id, Contact.Account.CNS_Agency__c,  Contact.Account.CNS_Account__c FROM User WHERE Id =:UserInfo.getUserId()];
         Boolean isCNS = false;
         if(u.Contact.Account.CNS_Agency__c || u.Contact.Account.CNS_Account__c) { isCNS = true;}
+        for(ISSP_Banner__c ban : unFilteredBanner_List ){
+		system.debug('SFIIcountry  ban.Country__c '+ban.Country__c);
+
         if(isCNS) {
                 if(ban.Country__c != null && ban.Country__c.contains('All - CNS')) {
                     tmpBanner_set.add(ban);
