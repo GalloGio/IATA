@@ -2444,6 +2444,62 @@
         <unique>true</unique>
     </fields>
     <fields>
+        <fullName>AMS_PWC_INT_DEFNONPAY__c</fullName>
+        <externalId>false</externalId>
+        <label>AMS PWC INT DEFNONPAY</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AMS_PWC_INT_DEF__c</fullName>
+        <externalId>false</externalId>
+        <label>AMS PWC INT DEF</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AMS_PWC_INT_IRRS__c</fullName>
+        <externalId>false</externalId>
+        <label>AMS PWC INT IRRS</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AMS_PWC_INT_OWNSHA_CHANGE__c</fullName>
+        <externalId>false</externalId>
+        <label>AMS PWC INT OWNSHA CHANGE</label>
+        <length>1</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AMS_PWC_INT_OWNSHA_LASTDATE__c</fullName>
+        <externalId>false</externalId>
+        <label>AMS PWC INT OWNSHA LASTDATE</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>DateTime</type>
+    </fields>
+    <fields>
         <fullName>AM_Account_Manager__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <description>This link to the user playing the role of Account Manager for the account. Used to define the account managers for Airline Headquarters for the Account Management project.</description>
@@ -4613,6 +4669,15 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>CNS_Country__c</fullName>
+        <externalId>false</externalId>
+        <formula>IATA_ISO_Country__r.CNS_Country__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>CNS Country</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>C_Code__c</fullName>
         <externalId>false</externalId>
         <label>C Code</label>
@@ -5905,6 +5970,15 @@ V - Co-operative</inlineHelpText>
         <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Country_OSCAR_Enabled__c</fullName>
+        <externalId>false</externalId>
+        <formula>IATA_ISO_Country__r.OSCAR_enabled__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Country OSCAR Enabled</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>CurrencyIsoCode</fullName>
@@ -7574,12 +7648,10 @@ Controlling picklist of E&amp;F Sub-Status Account</description>
             <picklistValues>
                 <fullName>Chapter 7</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
             </picklistValues>
             <picklistValues>
                 <fullName>None</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
             </picklistValues>
             <restrictedPicklist>true</restrictedPicklist>
             <sorted>false</sorted>
@@ -10257,7 +10329,7 @@ J-Joint Vent</inlineHelpText>
         <length>4</length>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>Text</type>
         <unique>false</unique>
     </fields>
@@ -27258,6 +27330,17 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Is_your_firm_handling_Dangerous_Goods__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Location_Type__c</picklist>
             <values>
                 <fullName>BR</fullName>
@@ -32244,6 +32327,17 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Is_your_firm_handling_Dangerous_Goods__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Level_of_risk__c</picklist>
             <values>
                 <fullName>High</fullName>
@@ -33393,6 +33487,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
+                <fullName>Cash basis%2Fwith commission</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Changes processed</fullName>
                 <default>false</default>
             </values>
@@ -33401,7 +33499,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>No longer a customer</fullName>
+                <fullName>Not accreditated</fullName>
                 <default>false</default>
             </values>
             <values>

@@ -52,6 +52,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
                 , AMS_Pax_Accreditation_Form__c.Solicitation_Flag__c
                 , AMS_Pax_Accreditation_Form__c.VAT_Number_2__c 
                 , AMS_Pax_Accreditation_Form__c.Link_agent_name__c
+                , AMS_Pax_Accreditation_Form__c.Is_your_firm_handling_Dangerous_Goods__c
             };
         }
     }
@@ -89,6 +90,12 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
         return editableFields.contains(fieldName);
     }
 
+    private Boolean isRendered(String fieldName){
+        if(fieldName == 'Is_your_firm_handling_Dangerous_Goods__c') return isCargoAgency;
+
+        return true;
+    }
+
     public Boolean isAgencyChanges{
         get{
             if(oscarObj != null && oscarObj.Process__c == AMS_Utils.AGENCYCHANGES) return true;
@@ -100,7 +107,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
     public List<FormField> accreditationFields{
         get{
             accreditationFields = new List<FormField>();
-            for(String fieldName : accreditationFieldNames) accreditationFields.add(new FormField(fieldName, isEditable(fieldName)));
+            for(String fieldName : accreditationFieldNames) accreditationFields.add(new FormField(fieldName, isEditable(fieldName), isRendered(fieldName)));
             return accreditationFields;
         }
         private set;
@@ -126,9 +133,9 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
         this.oscarObj = fetchOscarFields(objectId, isObjectCase(objectId));
 
         if(this.oscarObj != null && this.oscarObj.AMS_Online_Accreditation__c != null){
-            this.isCargoAgency = oscarObj.Account__r.Sector__c == AMS_Utils.SECTOR_CARGO;
-            this.isCertificationOSCAR = oscarObj.Process__c == AMS_Utils.CERTIFICATION ? true : false;
             this.accreditationObj = fetchAccreditationFields(this.oscarObj.AMS_Online_Accreditation__c);
+            this.isCargoAgency = AMS_Utils.LocationClassDGR.contains(accreditationObj.Location_Class__c);
+            this.isCertificationOSCAR = oscarObj.Process__c == AMS_Utils.CERTIFICATION;
         }else{
             System.debug('Could not fetch any Oscar or does not have an accreditation object');
         }
@@ -147,7 +154,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
                 from AMS_Pax_Accreditation_Form__c where Id = :accreditationId];*/
 
         //query is done using the same fields that will appear on the page
-        List<AMS_Pax_Accreditation_Form__c> accreditationLst = Database.query('SELECT Id, Is_your_firm_handling_Dangerous_Goods__c, '+String.join(accreditationFieldNames, ', ')+' FROM AMS_Pax_Accreditation_Form__c WHERE Id = :accreditationId');
+        List<AMS_Pax_Accreditation_Form__c> accreditationLst = Database.query('SELECT Id, '+String.join(accreditationFieldNames, ', ')+' FROM AMS_Pax_Accreditation_Form__c WHERE Id = :accreditationId');
 
         if(accreditationLst.size() > 0){
             return accreditationLst.get(0);
@@ -247,10 +254,12 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
         public String styleClass { get; set; }
         public String event { get; set; }
         public Boolean inlineEdit { get; set; }
+        public Boolean rendered { get; set; }
 
-        public FormField(String name, Boolean inlineEdit){
+        public FormField(String name, Boolean inlineEdit, Boolean rendered){
             this.name = name;
             this.inlineEdit = inlineEdit;
+            this.rendered = rendered;
 
             System.debug(loggingLevel.FINEST, '____ [cls AMS_OSCAR_Case_Detail_Controller - new FormField] name - ' + name);
             System.debug(loggingLevel.FINEST, '____ [cls AMS_OSCAR_Case_Detail_Controller - new FormField] inlineEdit - ' + inlineEdit);

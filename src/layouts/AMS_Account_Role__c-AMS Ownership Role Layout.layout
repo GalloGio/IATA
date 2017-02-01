@@ -69,6 +69,10 @@
                 <field>Legacy_System__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Owner_Sequence__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Last_synchronization__c</field>
             </layoutItems>

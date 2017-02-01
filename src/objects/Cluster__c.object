@@ -106,10 +106,6 @@
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>EACP JC</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
                 <fullName>ICAP</fullName>
                 <default>false</default>
             </picklistValues>

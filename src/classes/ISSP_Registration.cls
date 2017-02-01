@@ -512,7 +512,7 @@ public without sharing class ISSP_Registration {
                 whereStr += ' AND Airline_designator__c=\'' + searchDesignatorCode + '\'';
             }
             if (searchIATACode != '' && searchIATACode != null){
-                whereStr += ' AND IATACode__c=\'' + searchIATACode + '\'';
+                whereStr += ' AND (IATACode__c=\'' + searchIATACode + '\'OR Airline_Prefix__c=\'' + searchIATACode + '\')';
             }
             if (searchCountry != '' && searchCountry != null){
                 whereStr += ' AND IATA_ISO_Country__c=\'' + searchCountry + '\'';
@@ -531,7 +531,7 @@ public without sharing class ISSP_Registration {
             whereStr = 'Name like \'%' + searchCompanyName + '%\' and IATA_ISO_Country__c=\'' + searchCountry + '\'';
         }
         else if (isAgency) {
-            whereStr = 'IATACode__c=\'' + searchIATACode + '\'';// and RecordType.DeveloperName = \'IATA_Agency\'';
+            whereStr = '(IATACode__c=\'' + searchIATACode + '\' OR Airline_Prefix__c=\'' + searchIATACode + '\')';// and RecordType.DeveloperName = \'IATA_Agency\'';
         }
         else if (isNotIATA || isOther) {
             whereStr = 'Name like \'%' + searchCompanyName + '%\' and IATA_ISO_Country__c=\'' + searchCountry + '\' AND Sector__c != \'General Public\'';
@@ -614,7 +614,7 @@ public without sharing class ISSP_Registration {
                         whereStr += ' AND Airline_designator__c=\'' + searchDesignatorCode + '\'';
                     }
                     if (searchIATACode != '' && searchIATACode != null){
-                        whereStr += ' AND IATACode__c=\'' + searchIATACode + '\'';
+                        whereStr += ' AND (IATACode__c=\'' + searchIATACode + '\' OR Airline_Prefix__c=\'' + searchIATACode + '\')';
                     }
                     queryStr = 'select Id,IATACode__c,Field_Head_Office__c,Name,BillingStreet,BillingCity,BillingCountry, IATA_ISO_Country__r.Name, Top_Parent__c, Top_Parent__r.Name, Sector__c, Category__c, RecordType.Name, Airline_designator__c from Account where '
                              + whereStr + ' and RecordType.DeveloperName = \'IATA_Airline\'';

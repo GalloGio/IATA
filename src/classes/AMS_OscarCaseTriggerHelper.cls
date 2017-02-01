@@ -107,14 +107,14 @@ public class AMS_OscarCaseTriggerHelper {
         }
     }
 
-    public static void renameOSCAR(list<Case> triggerNew){
+    public static void populateOscarFields(list<Case> triggerNew){
 
-        System.debug('Renaming OSCAR');
+        System.debug('Populating OSCAR fields');
 
         Set<Id> oscarIds = new Set<Id>();
         List<Case> oscarCases = new List<Case>();
 
-         for(Case c: triggerNew){
+         for(Case c : triggerNew){
             if(c.OSCAR__c != null && c.RecordTypeID == OSCARCaseRecordTypeID &&  c.ParentId == null){
                 //need to verify just for the first case on the trigger, since the second one will throw an error
                 if(oscarIds.add(c.Oscar__c)) oscarCases.add(c);
@@ -124,17 +124,27 @@ public class AMS_OscarCaseTriggerHelper {
         if(oscarCases.isEmpty()) return;
 
         List<AMS_OSCAR__c> oscarsToUpdate = new List<AMS_OSCAR__c>();
-        Map<Id, AMS_OSCAR__c> oscars = new Map<Id, AMS_OSCAR__c> ([SELECT Id,Name FROM AMS_OSCAR__c where Id = :oscarIds]);
+        Map<Id, AMS_OSCAR__c> oscars = new Map<Id, AMS_OSCAR__c> ([SELECT Id,Name,BusinessHours__c FROM AMS_OSCAR__c where Id = :oscarIds]);
 
-        for(Case c: oscarCases){
+        for(Case c : oscarCases){
+            if(!oscars.containsKey(c.Oscar__c)) continue;
+
+            Boolean changed = false;
             AMS_OSCAR__c oscar = oscars.get(c.OSCAR__c);
-            if(oscar!= null && oscar.Name != c.CaseNumber){
-
-                System.debug('Renaming OSCAR with ID ' + oscar.Id);
+            
+            if(oscar.Name != c.CaseNumber){
+                System.debug(loggingLevel.FINE, '____ [cls AMS_OscarCaseTriggerHelper - populateOscarFields] Renaming OSCAR - ' + oscar.Id + '('+c.CaseNumber+')');
                 
                 oscar.Name = c.CaseNumber;
-                oscarsToUpdate.add(oscar);
+                changed = true;
             }
+
+            if(oscar.BusinessHours__c != c.BusinessHoursId){
+                oscar.BusinessHours__c = c.BusinessHoursId;
+                changed = true;
+            }
+
+            if(changed) oscarsToUpdate.add(oscar);
         }
 
         if(!oscarsToUpdate.isEmpty()) update oscarsToUpdate;
@@ -252,11 +262,12 @@ public class AMS_OscarCaseTriggerHelper {
         List<Case> triggerNew = (List<Case>)Trigger.new;
 
         Id sidraRecTypeId = Schema.Case.sObjectType.getDescribe().getRecordTypeInfosByName().get('SIDRA').getRecordTypeId();
+        Id sidraLiteRecTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('SIDRA_Lite');
 
         List<Case> newSidraCases = new List<Case>();
         Map<Id, Account> accounts = new Map<Id, Account>();
         for(Case c : triggerNew){
-            if(c.RecordTypeId == sidraRecTypeId){
+            if(c.RecordTypeId == sidraRecTypeId || c.RecordTypeId == sidraLiteRecTypeId){
                 newSidraCases.add(c);
                 accounts.put(c.AccountId, null);
             }
@@ -278,7 +289,7 @@ public class AMS_OscarCaseTriggerHelper {
                                                                 , Threshold__c
                                                                 , Location_Class__c
                                                             FROM AMS_Country_Specific_Attributes__r
-                                                            WHERE RecordType.Name = 'Irregularity Threshold'
+                                                            WHERE RecordType.DeveloperName = 'Irregularity_Threshold'
                                                             AND Threshold__c != null
                                                             AND Location_Class__c != null)
                                                     FROM IATA_ISO_Country__c
@@ -292,7 +303,10 @@ public class AMS_OscarCaseTriggerHelper {
 
         for(Case c : newSidraCases){
             Account a = accounts.get(c.AccountId);
-            if(a != null) c.Acc_IRR_leading_to_DEF__c = thresholds.get(''+a.IATA_ISO_Country__c+a.Location_Class__c);
+            if(a != null){
+                 c.Acc_IRR_leading_to_DEF__c = thresholds.get(''+a.IATA_ISO_Country__c+a.Location_Class__c);
+                 system.debug(logginglevel.error, 'DTULLO 301 --> ' +  thresholds.get(''+a.IATA_ISO_Country__c+a.Location_Class__c));
+            }
         }
     }
     

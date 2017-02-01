@@ -61,9 +61,16 @@ public class AMS_OSCAR_HightlightsPanelController {
     }
 
     public void saveStatus(){
-        this.saveAction = true;
-        update theOscar;
-        return;
+        try {
+            update theOscar;
+            this.saveAction = true;
+        } catch(Exception e) {
+            //DML Exceptions are sometimes displayed on the page
+            if(e.getTypeName() != 'System.DmlException' || !ApexPages.hasMessages()) ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, 'Couldn\'t save changes '+ e.getMessage()));
+            System.debug(loggingLevel.ERROR, '____ [cls AMS_OSCAR_HightlightsPanelController - saveStatus] error - ' + e.getMessage());
+            
+            this.theOSCAR = fetchOscarFields(this.oscarId);
+        }
     }
 
     public void cancelStatus(){

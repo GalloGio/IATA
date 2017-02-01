@@ -224,7 +224,7 @@ public without sharing class vfISSP_FAQ2Case
     public Set<String>topicsToShowButton {
         get{
             if (topicsToShowButton == null){
-                List<ISSP_FAQ2CaseLiveAgentTopics__c> topics = [SELECT name, value__c FROM ISSP_FAQ2CaseLiveAgentTopics__c];
+                List<ISSP_FAQ2CaseLiveAgentTopics__c> topics = [SELECT value__c FROM ISSP_FAQ2CaseLiveAgentTopics__c];
                 topicsToShowButton = new Set<String>();
                 for (ISSP_FAQ2CaseLiveAgentTopics__c topic :topics){
                     topicsToShowButton.add(topic.value__c);
@@ -236,10 +236,8 @@ public without sharing class vfISSP_FAQ2Case
     }
     public Boolean showButton {
         get{
-            if(topicsToShowButton.contains(subtopic)){
-                return true;
-            }
-            return false;
+            //in the future if more chat buttons are required we need a dynamic way to pass the button name - for the moment we don't know the rules
+            return topicsToShowButton.contains(subtopic) && isAllowedCode('AirlineEnglish') && isAllowedSector('AirlineEnglish');
         }
         set;
     }
@@ -292,6 +290,28 @@ public without sharing class vfISSP_FAQ2Case
             newCase.Description = '\n\n' + newCase.Description+'\n' +'-COMPLIMENT-';
         }
         // end compliment
+    }
+	    public Boolean isAllowedCode(String btnName) {
+
+        List<LiveAgent_Countries_Per_Button__c> aCountries = [SELECT Iso_Code__c FROM LiveAgent_Countries_Per_Button__c WHERE Button_Name__c = :btnName];
+        Set<String> aCodes = new Set<String>();
+        for (LiveAgent_Countries_Per_Button__c aCountry :aCountries){
+            aCodes.add(aCountry.Iso_Code__c);
+        }
+        return aCodes.contains(newCase.IFAP_Country_ISO__c);
+    }
+
+    public Boolean isAllowedSector(string btnName) {
+
+        LiveAgentButtonSettings__c labs = new LiveAgentButtonSettings__c();
+        try{
+            labs = LiveAgentButtonSettings__c.getAll().get(btnName);
+        }catch(Exception e){
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'{!$Label.LiveAgentCustomSettingNotFound} '+e));
+            return false;
+        }
+        Set<String> aSectors =  new Set<String>(labs.sectors__c.split(','));
+        return aSectors.contains(sector);
     }
 
     /*
