@@ -2065,6 +2065,10 @@ SIS Charge Code Type.</description>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>Publications Online</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>Reservations Services Manual</fullName>
                 <default>false</default>
             </picklistValues>
@@ -6728,6 +6732,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Publications Online</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Reservations Services Manual</fullName>
                 <default>false</default>
             </values>
@@ -9696,6 +9704,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Perishable Cargo Regulations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Publications Online</fullName>
                 <default>false</default>
             </values>
             <values>
