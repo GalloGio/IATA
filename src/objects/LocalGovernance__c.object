@@ -773,21 +773,6 @@ Record Type + Group Type + ISO_Country_Name</description>
     </fields>
     <label>Industry Group</label>
     <listViews>
-        <fullName>All</fullName>
-        <columns>NAME</columns>
-        <columns>IATA_Office__c</columns>
-        <columns>Region__c</columns>
-        <columns>Resolution__c</columns>
-        <columns>CREATED_DATE</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>RECORDTYPE</field>
-            <operation>equals</operation>
-        </filters>
-        <label>All Local Governance</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
         <fullName>AllAmericasAPJC</fullName>
         <columns>NAME</columns>
         <columns>IATA_Office__c</columns>

@@ -752,7 +752,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AirlineSuspensionEmailGDS</shortDescription>
-        <value> ncedmstkt@amadeus.com, gregory.tarrusson@amadeus.com, rsamson@amadeus.com, palexandre@amadeus.com, ncedmsgcd@amadeus.com, system.support@sabre.com, tim.powell@sabre.com, gabriel.licio@sabre.com, admbsp@kiusys.com, producto@kiusys.com, customer.support@der.de, christian.pohlig@der.net, HelpDesk@farelogix.com, pricing@farelogix.com, nmoore@farelogix.com, iata@ml.axess.co.jp, axset@ml.axess.co.jp, travelportairlinesupport@travelport.com, mike.walker@travelport.com, emyoon@topas.net, byyeom@topas.net,  e-tkt@topas.net, cscall@topas.net, accreditation@ttinteractive.com, Hanao@elal.co.il, Shmuelp@elal.co.il, zpyu@travelsky.com, net_ncc@travelsky.com, net_mor@travelsky.com, jiajia@travelsky.com, iReq@abacus.com.sg,  support@abacus.com.sg, sowfung_leong@abacus.com.sg, julio.delarosa@e-sav.net, iataprocesosaerolineas@e-sav.net, pasajetkt@iberia.es, resiberteam@iberia.es , pk@infini-trvl.co.jp, eisen@infini-trvl.co.jp, alvarengam@iata.org, szajkod@iata.org</value>
+        <value> ncedmstkt@amadeus.com,gregory.tarrusson@amadeus.com,rsamson@amadeus.com,palexandre@amadeus.com,ncedmsgcd@amadeus.com,system.support@sabre.com,tim.powell@sabre.com,gabriel.licio@sabre.com,admbsp@kiusys.com,producto@kiusys.com,customer.support@der.de,christian.pohlig@der.net,HelpDesk@farelogix.com,pricing@farelogix.com,nmoore@farelogix.com,iata@ml.axess.co.jp,axset@ml.axess.co.jp,travelportairlinesupport@travelport.com,mike.walker@travelport.com,emyoon@topas.net,byyeom@topas.net,e-tkt@topas.net,cscall@topas.net,accreditation@ttinteractive.com,Hanao@elal.co.il,Shmuelp@elal.co.il,zpyu@travelsky.com,net_ncc@travelsky.com,net_mor@travelsky.com,jiajia@travelsky.com,iReq@abacus.com.sg,support@abacus.com.sg,sowfung_leong@abacus.com.sg,julio.delarosa@e-sav.net,iataprocesosaerolineas@e-sav.net,pasajetkt@iberia.es,resiberteam@iberia.es,pk@infini-trvl.co.jp,eisen@infini-trvl.co.jp,alvarengam@iata.org,szajkod@iata.org</value>
     </labels>
     <labels>
         <fullName>AirlineSuspensionEmailRecipientsAfricaMiddleEast</fullName>
@@ -10728,21 +10728,6 @@ Select at least one Authorized Signatory, and choose the Financial Assessment Co
         <protected>false</protected>
         <shortDescription>ISSP_AMS_eBulletin_AgencyInformation_disclaimer</shortDescription>
         <value>Pilot Phase: please note that only Changes and New processes related codes are currently available everywhere. The rest of Agency Information is only available for the following Countries:…</value>
-    </labels>
-
-    <labels>
-        <fullName>ISSP_AMS_eBulletin_AgencyInformation_disclaimer_Daily</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_AMS_eBulletin_AgencyInformation_disclaimer_Daily</shortDescription>
-        <value>Pilot phase: please note that the Agency Information is only available for the following Pilot Countries: Brazil, Chile, Colombia, Hong Kong, Kenya, Indonesia, Malaysia, Philippines, Romania, Turkey, Ukraine and Saudi Arabia</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_AMS_eBulletin_AgencyInformation_disclaimer_Weekly</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_AMS_eBulletin_AgencyInformation_disclaimer_Weekly</shortDescription>
-        <value>Pilot phase: please note that only "Changes" and "New Processes" related information are available worldwide. The rest of the Agency Information is only available for the following Pilot Countries: Brazil, Chile, Colombia, Hong Kong, Kenya, Indonesia, Malaysia, Philippines, Romania, Turkey, Ukraine and Saudi Arabia</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_eBulletin_AgencyInformation_disclaimer_Daily</fullName>
