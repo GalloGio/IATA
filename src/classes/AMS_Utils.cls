@@ -766,27 +766,86 @@ public without sharing class AMS_Utils {
     }
     */
 
+ public static String getLocationClassDescr(String endorsmentCode) {
+
+        /*
+            C-Cargo
+            D-Domestic
+            E-External Registrars
+            G-General Sales Agent
+            I = Imports
+            K-CATO
+            M-Members & Airlines Sales Offices
+            N-NISI
+            O-SATO
+            P-Passenger
+            S-SSI
+            R = CassAssociate
+            T-TIDS
+            Q = Courier
+            V-Travel Service Intermediaries-TSI (USA Only) 
+            X-Handling Agents and Shipping Lines
+            J-Joint Vent
+         */
+        if (endorsmentCode == 'P')
+            return 'Passenger';
+        else if (endorsmentCode == 'C')
+            return 'Cargo';
+        else if (endorsmentCode == 'D')
+            return 'Domestic';
+        else if (endorsmentCode == 'E')
+            return 'External Registrars';
+        else if (endorsmentCode == 'G')
+            return 'General Sales Agents';
+        else if (endorsmentCode == 'K')
+            return 'CATO';
+        else if (endorsmentCode == 'M')
+            return 'Members & Airlines Sales Offices';
+        else if (endorsmentCode == 'N')
+            return 'NISI';
+        else if (endorsmentCode == 'O')
+            return 'SATO';
+        else if (endorsmentCode == 'S')
+            return 'SSI';
+        else if (endorsmentCode == 'T')
+            return 'TIDS';
+        else if (endorsmentCode == 'V')
+            return 'Travel Service Intermediaries-TSI (USA Only)';
+        else if (endorsmentCode == 'X')
+            return 'Handling Agents and Shipping Lines';
+        else if (endorsmentCode == 'J')
+            return 'Joint Vent';
+        else if (endorsmentCode == 'I')
+            return 'Import';
+        else if (endorsmentCode == 'Q')
+            return 'Courier';
+        else if (endorsmentCode == 'R')
+            return 'CassAssociate';
+
+        return '';
+    }
+
     public static String getIATAReadableStatus(String endorsmentCode) {
 
         if (endorsmentCode == '0')
             return ACC_S0_TERMINATED;
-        if (endorsmentCode == '1')
+        else if (endorsmentCode == '1')
             return ACC_S1_NOTACCREDITED;
-        if (endorsmentCode == '2')
+        else if (endorsmentCode == '2')
             return ACC_S2_NEWAPPLICATIONPENDING;
-        if (endorsmentCode == '3')
+        else if (endorsmentCode == '3')
             return ACC_S3_NOTINOPERATION;
-        if (endorsmentCode == '4')
+        else if (endorsmentCode == '4')
             return ACC_S4_LISTED;
-        if (endorsmentCode ==  '5')
+        else if (endorsmentCode ==  '5')
             return ACC_S5_CASHNOCOMMISSION;
-        if (endorsmentCode == '6')
+        else if (endorsmentCode == '6')
             return ACC_S6_CASHWITHCOMMISSION;
-        if (endorsmentCode == '7')
+        else if (endorsmentCode == '7')
             return ACC_S7_UNDERREVIEW;
-        if (endorsmentCode == '8')
+        else if (endorsmentCode == '8')
             return ACC_S8_CHANGESPROCESSED;
-        if (endorsmentCode == '9')
+        else if (endorsmentCode == '9')
             return ACC_S9_APPROVED;
 
         return null;
@@ -796,23 +855,23 @@ public without sharing class AMS_Utils {
 
         if (statusDesc == ACC_S0_TERMINATED)
             return '0';
-        if (statusDesc == ACC_S1_NOTACCREDITED)
+        else if (statusDesc == ACC_S1_NOTACCREDITED)
             return '1';
-        if (statusDesc == ACC_S2_NEWAPPLICATIONPENDING)
+        else if (statusDesc == ACC_S2_NEWAPPLICATIONPENDING)
             return '2';
-        if (statusDesc == ACC_S3_NOTINOPERATION)
+        else if (statusDesc == ACC_S3_NOTINOPERATION)
             return '3';
-        if (statusDesc == ACC_S4_LISTED)
+        else if (statusDesc == ACC_S4_LISTED)
             return '4';
-        if (statusDesc == ACC_S5_CASHNOCOMMISSION)
+        else if (statusDesc == ACC_S5_CASHNOCOMMISSION)
             return '5';
-        if (statusDesc == ACC_S6_CASHWITHCOMMISSION)
+        else if (statusDesc == ACC_S6_CASHWITHCOMMISSION)
             return '6';
-        if (statusDesc == ACC_S7_UNDERREVIEW)
+        else if (statusDesc == ACC_S7_UNDERREVIEW)
             return '7';
-        if (statusDesc == ACC_S8_CHANGESPROCESSED)
+        else if (statusDesc == ACC_S8_CHANGESPROCESSED)
             return '8';
-        if (statusDesc == ACC_S9_APPROVED)
+        else if (statusDesc == ACC_S9_APPROVED)
             return '9';
 
         return null;
@@ -1350,7 +1409,40 @@ public without sharing class AMS_Utils {
     }
 
 
+/**
+    Method to help the transformation between Company Type (Acccount) and Specify Legal Status (AMS Online Accreditation) 
+    */
+public static String transformLegalStatus(String companyType) {
 
+    if (companyType == null)
+        return null;
+
+    if (companyType.equalsIgnoreCase('A'))
+        return 'Association';
+    if (companyType.equalsIgnoreCase('C'))
+        return 'Corporation';
+    if (companyType.equalsIgnoreCase('E'))
+        return 'State Owned Enterprise';
+    if (companyType.equalsIgnoreCase('J'))
+        return 'Joint Venture';
+    if (companyType.equalsIgnoreCase('L'))
+        return 'Limited Company';
+    if (companyType.equalsIgnoreCase('O'))
+        return 'Other';
+    if (companyType.equalsIgnoreCase('P'))
+        return 'Partnership';
+    if (companyType.equalsIgnoreCase('R'))
+        return 'Limited Partnership';
+    if (companyType.equalsIgnoreCase('S'))
+        return 'Sole Proprietorship';
+    if (companyType.equalsIgnoreCase('T'))
+        return 'Trust Company';
+    if (companyType.equalsIgnoreCase('V'))
+        return 'Co-operative';
+
+    return '';
+
+}
 
 /**
     Method to help the transformation between Specify Legal Status (AMS Online Accreditation) and Company Type (Acccount)

@@ -317,16 +317,22 @@ public class ISSP_Ctrl_BuyCertificate {
         try 
         {      
             //Assign RecordType
-            //Id CaseSAAMId = Schema.SObjectType.Case.getRecordTypeInfosByName().get('SAAM').getRecordTypeId();
-            Id CaseSAAMId = Schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
-            newCase.RecordTypeId = CaseSAAMId ;
-
+            Id CaseSAAMId = Schema.SObjectType.Case.getRecordTypeInfosByName().get('SAAM').getRecordTypeId();
+            Id CaseOSCARid = Schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
+            
             //Assign Account_Concerned__c
-            List <Account> accountList = [SELECT Id, Name, IATA_ISO_Country__r.Name, Site, Sector__c, IATACode__c, Field_Head_Office__c ,Region_formula__c
+            List <Account> accountList = [SELECT Id, Name, IATA_ISO_Country__r.Name,IATA_ISO_Country__r.OSCAR_enabled__c, Site, Sector__c, IATACode__c, Field_Head_Office__c ,Region_formula__c
                                      FROM Account
                                      WHERE IATACode__c =: newCase.IATACodeProduct__c
                                      ORDER BY IATACode__c
                                      ];
+
+            if(accountList[0].IATA_ISO_Country__r.OSCAR_enabled__c){
+                newCase.RecordTypeId = CaseOSCARid ;
+            }else{
+                newCase.RecordTypeId = CaseSAAMId ;
+            }
+
 
             system.debug('XXX accountList: ' +accountList);
             newCase.Account_Concerned__c    = accountList[0].Id ;
@@ -362,7 +368,9 @@ public class ISSP_Ctrl_BuyCertificate {
             insert newCase ;
             
             //Call OSCAR integration WS
-            AMS_RecordCreatorWebservice.createAccreditation(con.AccountId, AMS_RecordCreatorWebservice.EMPTYACCREDITATIONID, 'CER.1.0', newCase.Id);
+            if(accountList[0].IATA_ISO_Country__r.OSCAR_enabled__c){
+                AMS_RecordCreatorWebservice.createAccreditation(con.AccountId, AMS_RecordCreatorWebservice.EMPTYACCREDITATIONID, 'CER.1.0', newCase.Id);
+            }
             
             PageReference p = new PageReference('/ISSP_Case?caseId='+newCase.Id);
             p.setRedirect(true);
