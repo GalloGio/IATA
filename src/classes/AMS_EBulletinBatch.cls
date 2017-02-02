@@ -8,7 +8,7 @@ global class AMS_EBulletinBatch implements Database.Batchable<sObject> {
 	global AMS_EBulletinBatch(String typeEBulletin) {
 		this.typeEBulletin = typeEBulletin;
 
-		//String fieldsToRecover  = 'id,Last_Run__c,User__r.email,RecordTypeId,Name,CountriesList__c,RecordType.Name,Area_1__c,Area_2__c,Area_3__c,Program_Cargo__c,Program_CASS_Associates__c,Program_Passage__c';
+		//String fieldsToRecover  = 'id,Last_NotificationBatch_Run__c,User__r.email,RecordTypeId,Name,CountriesList__c,RecordType.Name,Area_1__c,Area_2__c,Area_3__c,Program_Cargo__c,Program_CASS_Associates__c,Program_Passage__c';
 		
 		//String filters = 'where recordType.name = :typeEBulletin and Opt_out_Bulletin__c = FALSE and Opt_in__c = TRUE ';
 
@@ -44,11 +44,15 @@ global class AMS_EBulletinBatch implements Database.Batchable<sObject> {
 
 		system.debug('scope: ' + scope);
 
+		List<AMS_eBulletin_Profile__c> profileUpdateDates = new List<AMS_eBulletin_Profile__c>();
+
 		for(AMS_eBulletin_Profile__c eBprof : scope){
 			
 			AMS_EBulletinReportWebservice.recordTypeName =Schema.SObjectType.AMS_eBulletin_Profile__c.RecordTypeInfosById.get(eBprof.RecordTypeId).Name;
 
-			AMS_EBulletinReportWebservice.AMSEBulletinFilters filters = new AMS_EBulletinReportWebservice.AMSEBulletinFilters(eBprof, eBprof.Last_Run__c , system.now() );
+			if(eBprof.Last_NotificationBatch_Run__c == null) eBprof.Last_NotificationBatch_Run__c = Date.today();
+
+			AMS_EBulletinReportWebservice.AMSEBulletinFilters filters = new AMS_EBulletinReportWebservice.AMSEBulletinFilters(eBprof, eBprof.Last_NotificationBatch_Run__c , system.now() );
 
 
 			//Recover Ebulletin Sections
@@ -77,8 +81,9 @@ global class AMS_EBulletinBatch implements Database.Batchable<sObject> {
 				String filtersPublished = 'and Published_on_EBulletin__c = TRUE ';
 				String filtersCountries = 'and Account__r.IATA_ISO_Country__r.ISO_Code__c IN :countriesToRecover ';
 				String filtersLC 		= 'and Account__r.Location_Class__c IN :programsToRecover ';
-				String filtersDates		= 'and Created_Date_To_Show__c > ' + (filters.fromCCDate != null ? filters.fromCCDate.format('yyyy-MM-dd\'T\'hh:mm:ss\'Z\'') : filters.toCCDate.format('yyyy-MM-dd\'T\'hh:mm:ss\'Z\'')) + ' and Created_Date_To_Show__c < ' + filters.toCCDate.format('yyyy-MM-dd\'T\'hh:mm:ss\'Z\'');
+				String filtersDates		= 'and Created_Date_To_Show__c > ' + filters.fromCCDate.format('yyyy-MM-dd\'T\'HH:mm:ss\'Z\'')  + ' and Created_Date_To_Show__c < ' + filters.toCCDate.format('yyyy-MM-dd\'T\'HH:mm:ss\'Z\'');
 				
+
 				count = Database.countQuery(baseq + filtersCC + filtersPublished + filtersCountries + filtersLC + filtersDates) ;
 
 				system.debug('Count Query: ' + baseq + filtersCC + filtersPublished + filtersCountries + filtersLC + filtersDates);
@@ -91,9 +96,15 @@ global class AMS_EBulletinBatch implements Database.Batchable<sObject> {
 			system.debug('Change Codes count: ' + count);
 
 			if(count > 0) mailsToSend.add(setEmailContents(eBprof));
+
+			// Update Dates and Times
+			eBprof.Last_NotificationBatch_Run__c = system.now();
+			profileUpdateDates.add(eBprof);
 		}
 
 		if(!Test.isRunningTest())  Messaging.sendEmail(mailsToSend);
+
+		update profileUpdateDates;
 
 	}
 	

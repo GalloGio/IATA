@@ -5865,15 +5865,15 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_AMS_download_of</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_AgencyChanges --></label>
+        <label>Perubahan Agensi</label>
         <name>ISSP_AMS_eBulletin_AgencyChanges</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS eBulletin AgencyChanges HelpText --></label>
+        <label>Teks bantuan perubahan agensi ditulis di sini...</label>
         <name>ISSP_AMS_eBulletin_AgencyChanges_HelpText</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_AgencyInformation --></label>
+        <label>Informasi Agensi</label>
         <name>ISSP_AMS_eBulletin_AgencyInformation</name>
     </customLabels>
     <customLabels>
@@ -5881,139 +5881,147 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_AMS_eBulletin_AgencyInformation_disclaimer</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_Area1 --></label>
+        <label><!-- ISSP_AMS_eBulletin_AgencyInformation_disclaimer_Daily --></label>
+        <name>ISSP_AMS_eBulletin_AgencyInformation_disclaimer_Daily</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_eBulletin_AgencyInformation_disclaimer_Weekly --></label>
+        <name>ISSP_AMS_eBulletin_AgencyInformation_disclaimer_Weekly</name>
+    </customLabels>
+    <customLabels>
+        <label>Area 1 - Amerika Utara, Tengah, Selatan &amp; Sekitarnya</label>
         <name>ISSP_AMS_eBulletin_Area1</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_Area2 --></label>
+        <label>Area 2 - Eropa, Timur Tengah &amp; Afrika</label>
         <name>ISSP_AMS_eBulletin_Area2</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_Area3 --></label>
+        <label>Area 3 - Timur Jauh, Australia, Selandia Baru &amp; Kepulauan Pasifik</label>
         <name>ISSP_AMS_eBulletin_Area3</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_AvailableCountries --></label>
+        <label>Negara yang Tersedia</label>
         <name>ISSP_AMS_eBulletin_AvailableCountries</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_CASS --></label>
+        <label>Rekanan CASS, Impor, Agen Kurir</label>
         <name>ISSP_AMS_eBulletin_CASS</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_Cargo --></label>
+        <label>Kargo</label>
         <name>ISSP_AMS_eBulletin_Cargo</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_Countries --></label>
+        <label>Negara</label>
         <name>ISSP_AMS_eBulletin_Countries</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_CountrySelection --></label>
+        <label>Pemilihan Negara</label>
         <name>ISSP_AMS_eBulletin_CountrySelection</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_Country_SelectAll --></label>
+        <label>Pilih Semua</label>
         <name>ISSP_AMS_eBulletin_Country_SelectAll</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_DAILY_Bulletin --></label>
+        <label>eBuletin HARIAN</label>
         <name>ISSP_AMS_eBulletin_DAILY_Bulletin</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_DAILY_Bulletin_Enable --></label>
+        <label>Aktifkan eBuletin HARIAN</label>
         <name>ISSP_AMS_eBulletin_DAILY_Bulletin_Enable</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS eBulletin DAILY Setup --></label>
+        <label>Simpan &amp; Atur HARIAN</label>
         <name>ISSP_AMS_eBulletin_DAILY_Setup</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_DailyFrequency --></label>
+        <label>Frekuensi Harian</label>
         <name>ISSP_AMS_eBulletin_DailyFrequency</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_Defaults --></label>
+        <label>Default</label>
         <name>ISSP_AMS_eBulletin_Defaults</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS eBulletin Defaults HelpText --></label>
+        <label>Informasi Default, termasuk Pengaktifan Kembali setelah Default</label>
         <name>ISSP_AMS_eBulletin_Defaults_HelpText</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_Description --></label>
+        <label>Izinkan pembuatan Laporan HARIAN &amp; MINGGUAN untuk perubahan terkait Agensi.</label>
         <name>ISSP_AMS_eBulletin_Description</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_Disabled --></label>
+        <label>Nonaktif</label>
         <name>ISSP_AMS_eBulletin_Disabled</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_Domestic --></label>
+        <label>Domestik (Hanya Indonesia &amp; Tiongkok)</label>
         <name>ISSP_AMS_eBulletin_Domestic</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_Enabled --></label>
+        <label>Aktif</label>
         <name>ISSP_AMS_eBulletin_Enabled</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_ErrorMsg_00 --></label>
+        <label>Terjadi kesalahan! Coba lagi nanti.</label>
         <name>ISSP_AMS_eBulletin_ErrorMsg_00</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_ErrorMsg_01 --></label>
+        <label>Tidak ada Informasi Kode Perubahan untuk diekstrak untuk periode yang ditetapkan!</label>
         <name>ISSP_AMS_eBulletin_ErrorMsg_01</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_FilterOptionsDaily --></label>
+        <label>Saring Opsi (HARIAN)</label>
         <name>ISSP_AMS_eBulletin_FilterOptionsDaily</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_FilterOptionsWeekly --></label>
+        <label>Saring Opsi (MINGGUAN)</label>
         <name>ISSP_AMS_eBulletin_FilterOptionsWeekly</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_Filter_Geographic_Area --></label>
+        <label>Saring Menurut Area Geografis</label>
         <name>ISSP_AMS_eBulletin_Filter_Geographic_Area</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_GeographicArea --></label>
+        <label>Area Geografis</label>
         <name>ISSP_AMS_eBulletin_GeographicArea</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_Instructions --></label>
+        <label>Instruksi</label>
         <name>ISSP_AMS_eBulletin_Instructions</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_Irregularities --></label>
+        <label>Ketidaksesuaian</label>
         <name>ISSP_AMS_eBulletin_Irregularities</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS eBulletin Irregularities HelpText --></label>
+        <label>Info ketidaksesuaian buka di sini...</label>
         <name>ISSP_AMS_eBulletin_Irregularities_HelpText</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_NewApplicationProcesses --></label>
+        <label>Proses Permohonan Baru</label>
         <name>ISSP_AMS_eBulletin_NewApplicationProcesses</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS eBulletin NewApplications HelpText --></label>
+        <label>Teks bantuan aplikasi baru lihat di sini...</label>
         <name>ISSP_AMS_eBulletin_NewApplications_HelpText</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_OptOut_Daily_Notifications --></label>
+        <label>Keluar dari Pemberitahuan eMail Harian</label>
         <name>ISSP_AMS_eBulletin_OptOut_Daily_Notifications</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_OptOut_Weekly_Notifications --></label>
+        <label>Keluar dari Pemberitahuan eMail Mingguan</label>
         <name>ISSP_AMS_eBulletin_OptOut_Weekly_Notifications</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_Passenger --></label>
+        <label>Penumpang</label>
         <name>ISSP_AMS_eBulletin_Passenger</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_Processing_eBulletin --></label>
+        <label>Memproses eBuletin...</label>
         <name>ISSP_AMS_eBulletin_Processing_eBulletin</name>
     </customLabels>
     <customLabels>
@@ -6021,47 +6029,47 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_AMS_eBulletin_Program</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_ProgramSelection --></label>
+        <label>Pemilihan Program</label>
         <name>ISSP_AMS_eBulletin_ProgramSelection</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_Receive_eBulletin_TimeZone --></label>
+        <label>Terima E-Buletin untuk Zona Waktu</label>
         <name>ISSP_AMS_eBulletin_Receive_eBulletin_TimeZone</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_Reviews --></label>
+        <label>Tinjauan</label>
         <name>ISSP_AMS_eBulletin_Reviews</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS eBulletin Reviews HelpText --></label>
+        <label>Mencakup Pemberitahuan Pengakhiran</label>
         <name>ISSP_AMS_eBulletin_Reviews_HelpText</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_RunReport --></label>
+        <label>Jalankan laporan:</label>
         <name>ISSP_AMS_eBulletin_RunReport</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_RunReport_opt_LastExecution --></label>
+        <label>Sejak unduhan terakhir hari ini</label>
         <name>ISSP_AMS_eBulletin_RunReport_opt_LastExecution</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_RunReport_opt_Today --></label>
+        <label>Sehari penuh</label>
         <name>ISSP_AMS_eBulletin_RunReport_opt_Today</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_SelectWeek --></label>
+        <label>Pilih minggu:</label>
         <name>ISSP_AMS_eBulletin_SelectWeek</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_SelectedCountries --></label>
+        <label>Negara yang Dipilih</label>
         <name>ISSP_AMS_eBulletin_SelectedCountries</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_Selection_Criteria --></label>
+        <label>Kriteria Pemilihan</label>
         <name>ISSP_AMS_eBulletin_Selection_Criteria</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_Selection_Download --></label>
+        <label>Kriteria Pemilihan/Laporan Unduhan</label>
         <name>ISSP_AMS_eBulletin_Selection_Download</name>
     </customLabels>
     <customLabels>
@@ -6069,23 +6077,23 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_AMS_eBulletin_Status</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_SubscriptionInformation --></label>
+        <label>Informasi Langganan</label>
         <name>ISSP_AMS_eBulletin_SubscriptionInformation</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_Termination_Closures --></label>
+        <label>Pengakhiran &amp; Penutupan</label>
         <name>ISSP_AMS_eBulletin_Termination_Closures</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS eBulletin Termination HelpText --></label>
+        <label>Mencakup Pengaktifan Kembali setelah Pengakhiran dan Pengunduran Diri</label>
         <name>ISSP_AMS_eBulletin_Termination_HelpText</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_TimeZone_Selection --></label>
+        <label>Pemilihan Zona Waktu</label>
         <name>ISSP_AMS_eBulletin_TimeZone_Selection</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_Title --></label>
+        <label>Buletin Online AIRS/CAIRS</label>
         <name>ISSP_AMS_eBulletin_Title</name>
     </customLabels>
     <customLabels>
@@ -6093,71 +6101,71 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_AMS_eBulletin_Unavailable</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_WEEKLY_Bulletin --></label>
+        <label>eBuletin MINGGUAN</label>
         <name>ISSP_AMS_eBulletin_WEEKLY_Bulletin</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_WEEKLY_Bulletin Enable --></label>
+        <label>Aktifkan eBuletin MINGGUAN</label>
         <name>ISSP_AMS_eBulletin_WEEKLY_Bulletin_Enable</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS eBulletin WEEKLY Setup --></label>
+        <label>Simpan &amp; Atur MINGGUAN</label>
         <name>ISSP_AMS_eBulletin_WEEKLY_Setup</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_btn_DownloadDailyReport --></label>
+        <label>Unduh Laporan Harian</label>
         <name>ISSP_AMS_eBulletin_btn_DownloadDailyReport</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_btn_DownloadWeeklyReport --></label>
+        <label>Unduh Laporan Mingguan</label>
         <name>ISSP_AMS_eBulletin_btn_DownloadWeeklyReport</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_btn_EditSelectionCriteria --></label>
+        <label>Edit Kriteria Pemilihan</label>
         <name>ISSP_AMS_eBulletin_btn_EditSelectionCriteria</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_btn_SaveGenerateReport --></label>
+        <label>Simpan &amp; Buat Laporan</label>
         <name>ISSP_AMS_eBulletin_btn_SaveGenerateReport</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_eBulletin_UserGuide --></label>
+        <label>Panduan Pengguna e-Buletin</label>
         <name>ISSP_AMS_eBulletin_eBulletin_UserGuide</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_home_btn --></label>
+        <label>Lanjutkan ke E-Buletin</label>
         <name>ISSP_AMS_eBulletin_home_btn</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_home_lbl1 --></label>
+        <label>Lalu mohon lihat</label>
         <name>ISSP_AMS_eBulletin_home_lbl1</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_home_lbl2 --></label>
+        <label>Panduan Pengguna</label>
         <name>ISSP_AMS_eBulletin_home_lbl2</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_home_lbl3 --></label>
+        <label>Kelola kriteria pemilihan Anda dan buat laporan.</label>
         <name>ISSP_AMS_eBulletin_home_lbl3</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_home_lbl4 --></label>
+        <label>Perlu bantuan memakai</label>
         <name>ISSP_AMS_eBulletin_home_lbl4</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_info_1 --></label>
+        <label>Silakan unduh laporan MINGGUAN jika Anda ingin melaporkan item HARIAN untuk 7 hari ke belakang.</label>
         <name>ISSP_AMS_eBulletin_info_1</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_info_2 --></label>
+        <label>(Anda mungkin harus menyesuaikan opsi penyaring MINGGUAN sebelumnya)</label>
         <name>ISSP_AMS_eBulletin_info_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_info_Daily_available_days --></label>
+        <label>Buletin HARIAN tersedia untuk 7 hari ke belakang:</label>
         <name>ISSP_AMS_eBulletin_info_Daily_available_days</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_lbl_Enable --></label>
+        <label>Aktifkan:</label>
         <name>ISSP_AMS_eBulletin_lbl_Enable</name>
     </customLabels>
     <customLabels>
@@ -9607,19 +9615,19 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>Message</name>
     </customLabels>
     <customLabels>
-        <label><!-- MultiselectPicklist_Add --></label>
+        <label>Tambahkan</label>
         <name>MultiselectPicklist_Add</name>
     </customLabels>
     <customLabels>
-        <label><!-- MultiselectPicklist_Down --></label>
+        <label>Bawah</label>
         <name>MultiselectPicklist_Down</name>
     </customLabels>
     <customLabels>
-        <label><!-- MultiselectPicklist_Remove --></label>
+        <label>Hapus</label>
         <name>MultiselectPicklist_Remove</name>
     </customLabels>
     <customLabels>
-        <label><!-- MultiselectPicklist_Up --></label>
+        <label>Atas</label>
         <name>MultiselectPicklist_Up</name>
     </customLabels>
     <customLabels>
@@ -11415,6 +11423,122 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>Welcome</name>
     </customTabs>
     <globalPicklists>
+        <name>EF_Manager_Approval</name>
+        <picklistValues>
+            <masterLabel>Approved</masterLabel>
+            <translation><!-- Approved --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>In Progress</masterLabel>
+            <translation><!-- In Progress --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not Started</masterLabel>
+            <translation><!-- Not Started --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Recalled</masterLabel>
+            <translation><!-- Recalled --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Rejected</masterLabel>
+            <translation><!-- Rejected --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
+        <name>EF_Invoice_Distribution</name>
+        <picklistValues>
+            <masterLabel>Electronic Via Email</masterLabel>
+            <translation><!-- Electronic Via Email --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Electronic Via Platform</masterLabel>
+            <translation><!-- Electronic Via Platform --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No Invoice</masterLabel>
+            <translation><!-- No Invoice --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Paper</masterLabel>
+            <translation><!-- Paper --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
+        <name>EF_Allow_Billing_Agreements</name>
+        <picklistValues>
+            <masterLabel>Allowed</masterLabel>
+            <translation><!-- Allowed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Allowed with Approval</masterLabel>
+            <translation><!-- Allowed with Approval --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not Allowed</masterLabel>
+            <translation><!-- Not Allowed --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
+        <name>EF_Role</name>
+        <picklistValues>
+            <masterLabel>Account Manager</masterLabel>
+            <translation><!-- Account Manager --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Accounts Payable</masterLabel>
+            <translation><!-- Accounts Payable --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Accounts Receivable</masterLabel>
+            <translation><!-- Accounts Receivable --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Debt Management</masterLabel>
+            <translation><!-- Debt Management --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Dispute Management</masterLabel>
+            <translation><!-- Dispute Management --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Finance (Other)</masterLabel>
+            <translation><!-- Finance (Other) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>General Management</masterLabel>
+            <translation><!-- General Management --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Invoicing</masterLabel>
+            <translation><!-- Invoicing --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Operations</masterLabel>
+            <translation><!-- Operations --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Other</masterLabel>
+            <translation><!-- Other --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Reporting</masterLabel>
+            <translation><!-- Reporting --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Revenue Accounting</masterLabel>
+            <translation><!-- Revenue Accounting --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sales &amp; Marketing</masterLabel>
+            <translation><!-- Sales &amp; Marketing --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Technical Support</masterLabel>
+            <translation><!-- Technical Support --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
         <name>EF_Currency</name>
         <picklistValues>
             <masterLabel>AED</masterLabel>
@@ -12161,153 +12285,6 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
-        <name>EF_Allow_Billing_Agreements</name>
-        <picklistValues>
-            <masterLabel>Allowed</masterLabel>
-            <translation><!-- Allowed --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Allowed with Approval</masterLabel>
-            <translation><!-- Allowed with Approval --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Not Allowed</masterLabel>
-            <translation><!-- Not Allowed --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
-        <name>EF_Invoice_Distribution</name>
-        <picklistValues>
-            <masterLabel>Electronic Via Email</masterLabel>
-            <translation><!-- Electronic Via Email --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Electronic Via Platform</masterLabel>
-            <translation><!-- Electronic Via Platform --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>No Invoice</masterLabel>
-            <translation><!-- No Invoice --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Paper</masterLabel>
-            <translation><!-- Paper --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
-        <name>EF_Manager_Approval</name>
-        <picklistValues>
-            <masterLabel>Approved</masterLabel>
-            <translation><!-- Approved --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>In Progress</masterLabel>
-            <translation><!-- In Progress --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Not Started</masterLabel>
-            <translation><!-- Not Started --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Recalled</masterLabel>
-            <translation><!-- Recalled --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Rejected</masterLabel>
-            <translation><!-- Rejected --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
-        <name>EF_Role</name>
-        <picklistValues>
-            <masterLabel>Account Manager</masterLabel>
-            <translation><!-- Account Manager --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Accounts Payable</masterLabel>
-            <translation><!-- Accounts Payable --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Accounts Receivable</masterLabel>
-            <translation><!-- Accounts Receivable --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Debt Management</masterLabel>
-            <translation><!-- Debt Management --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Dispute Management</masterLabel>
-            <translation><!-- Dispute Management --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Finance (Other)</masterLabel>
-            <translation><!-- Finance (Other) --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>General Management</masterLabel>
-            <translation><!-- General Management --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Invoicing</masterLabel>
-            <translation><!-- Invoicing --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Operations</masterLabel>
-            <translation><!-- Operations --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Other</masterLabel>
-            <translation><!-- Other --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Reporting</masterLabel>
-            <translation><!-- Reporting --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Revenue Accounting</masterLabel>
-            <translation><!-- Revenue Accounting --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Sales &amp; Marketing</masterLabel>
-            <translation><!-- Sales &amp; Marketing --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Technical Support</masterLabel>
-            <translation><!-- Technical Support --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
-        <name>EF_User_Role</name>
-        <picklistValues>
-            <masterLabel>Airline Services Specialists</masterLabel>
-            <translation><!-- Airline Services Specialists --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Client Services Specialists</masterLabel>
-            <translation><!-- Client Services Specialists --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>E&amp;F General Access</masterLabel>
-            <translation><!-- E&amp;F General Access --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Head, Client Services</masterLabel>
-            <translation><!-- Head, Client Services --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Manager, Airline Services &amp; Head, Business Delivery</masterLabel>
-            <translation><!-- Manager, Airline Services &amp; Head, Business Delivery --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Manager, Business Development</masterLabel>
-            <translation><!-- Manager, Business Development --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Manager, Invoicing &amp; Accounting &amp; Data Transformation</masterLabel>
-            <translation><!-- Manager, Invoicing &amp; Accounting &amp; Data Transformation --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
         <name>Sector</name>
         <picklistValues>
             <masterLabel>Accommodation</masterLabel>
@@ -12406,6 +12383,37 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
+        <name>EF_User_Role</name>
+        <picklistValues>
+            <masterLabel>Airline Services Specialists</masterLabel>
+            <translation><!-- Airline Services Specialists --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Client Services Specialists</masterLabel>
+            <translation><!-- Client Services Specialists --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>E&amp;F General Access</masterLabel>
+            <translation><!-- E&amp;F General Access --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Head, Client Services</masterLabel>
+            <translation><!-- Head, Client Services --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Manager, Airline Services &amp; Head, Business Delivery</masterLabel>
+            <translation><!-- Manager, Airline Services &amp; Head, Business Delivery --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Manager, Business Development</masterLabel>
+            <translation><!-- Manager, Business Development --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Manager, Invoicing &amp; Accounting &amp; Data Transformation</masterLabel>
+            <translation><!-- Manager, Invoicing &amp; Accounting &amp; Data Transformation --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
         <name>EF_Status</name>
         <picklistValues>
             <masterLabel>Active</masterLabel>
@@ -12414,6 +12422,29 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <picklistValues>
             <masterLabel>Inactive</masterLabel>
             <translation><!-- Inactive --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
+        <name>EF_Frequency</name>
+        <picklistValues>
+            <masterLabel>2x/Week</masterLabel>
+            <translation><!-- 2x/Week --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>4x/Month</masterLabel>
+            <translation><!-- 4x/Month --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Fortnightly</masterLabel>
+            <translation><!-- Fortnightly --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Monthly</masterLabel>
+            <translation><!-- Monthly --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Weekly</masterLabel>
+            <translation><!-- Weekly --></translation>
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
@@ -12685,29 +12716,6 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <picklistValues>
             <masterLabel>Travel Agency Association</masterLabel>
             <translation><!-- Travel Agency Association --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
-        <name>EF_Frequency</name>
-        <picklistValues>
-            <masterLabel>2x/Week</masterLabel>
-            <translation><!-- 2x/Week --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>4x/Month</masterLabel>
-            <translation><!-- 4x/Month --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Fortnightly</masterLabel>
-            <translation><!-- Fortnightly --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Monthly</masterLabel>
-            <translation><!-- Monthly --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Weekly</masterLabel>
-            <translation><!-- Weekly --></translation>
         </picklistValues>
     </globalPicklists>
 </Translations>

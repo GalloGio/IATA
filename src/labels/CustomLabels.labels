@@ -10729,6 +10729,35 @@ Select at least one Authorized Signatory, and choose the Financial Assessment Co
         <shortDescription>ISSP_AMS_eBulletin_AgencyInformation_disclaimer</shortDescription>
         <value>Pilot Phase: please note that only Changes and New processes related codes are currently available everywhere. The rest of Agency Information is only available for the following Countries:…</value>
     </labels>
+
+    <labels>
+        <fullName>ISSP_AMS_eBulletin_AgencyInformation_disclaimer_Daily</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_eBulletin_AgencyInformation_disclaimer_Daily</shortDescription>
+        <value>Pilot phase: please note that the Agency Information is only available for the following Pilot Countries: Brazil, Chile, Colombia, Hong Kong, Kenya, Indonesia, Malaysia, Philippines, Romania, Turkey, Ukraine and Saudi Arabia</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_eBulletin_AgencyInformation_disclaimer_Weekly</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_eBulletin_AgencyInformation_disclaimer_Weekly</shortDescription>
+        <value>Pilot phase: please note that only "Changes" and "New Processes" related information are available worldwide. The rest of the Agency Information is only available for the following Pilot Countries: Brazil, Chile, Colombia, Hong Kong, Kenya, Indonesia, Malaysia, Philippines, Romania, Turkey, Ukraine and Saudi Arabia</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_eBulletin_AgencyInformation_disclaimer_Daily</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_eBulletin_AgencyInformation_disclaimer_Daily</shortDescription>
+        <value>Pilot phase: please note that the Agency Information is only available for the following Pilot Countries: Brazil, Chile, Colombia, Hong Kong, Kenya, Indonesia, Malaysia, Philippines, Romania, Turkey, Ukraine and Saudi Arabia</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_eBulletin_AgencyInformation_disclaimer_Weekly</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_eBulletin_AgencyInformation_disclaimer_Weekly</shortDescription>
+        <value>Pilot phase: please note that only &quot;Changes&quot; and &quot;New Processes&quot; related information are available worldwide. The rest of the Agency Information is only available for the following Pilot Countries: Brazil, Chile, Colombia, Hong Kong, Kenya, Indonesia, Malaysia, Philippines, Romania, Turkey, Ukraine and Saudi Arabia</value>
+    </labels>
     <labels>
         <fullName>ISSP_AMS_eBulletin_Area1</fullName>
         <language>en_US</language>
@@ -10877,7 +10906,7 @@ Select at least one Authorized Signatory, and choose the Financial Assessment Co
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_eBulletin_ErrorMsg_01</shortDescription>
-        <value>There are no Change Codes Information to extract for the specified period!</value>
+        <value>No occurrences were found, based on your criteria, for the specific period!</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_eBulletin_FilterOptionsDaily</fullName>
