@@ -864,8 +864,7 @@ AND(
         <fullName>Reason_Description__c</fullName>
         <externalId>false</externalId>
         <label>Reason Description</label>
-        <picklist>
-            <controllingField>AccountNewStatus__c</controllingField>
+        <picklist>            
             <picklistValues>
                 <fullName>ACCREDITED - MEETS CRITERIA</fullName>
                 <default>false</default>

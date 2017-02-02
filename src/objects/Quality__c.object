@@ -3484,252 +3484,202 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
             <picklistValues>
                 <fullName>KC01 - Settlement Model Rules</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC02 - Cross Border Transfer Rule</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC03 - Proration Rules</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC04 - Documentation of Changes</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC05 - Over-Rem Settled in Next Cycle</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC06 - Claw-back Thru Adj Transaction</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC07 - HAR Oerformed by IATA Staff</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC08 - Approval of Set by 2 Signatories</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC09 - Seg of Duties Rule Followed</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC10 - Sanity Check on Billing File</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC11 - Suspended Agents/Airlines Flagged</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC12 - Approval of Updated Billing File</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC13 - VMFR Based on DPC Billing</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC14 - Subledger Implemented</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC15 - Direct Debit File Approval</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC16 - Adjustments to Billing File</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC17 - Extrxn of Flggd Def AG w/ -ve Rem</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC18 - Settlement Calculation Review</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC19 - Holding of Bank Account Details</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC20 - Changes to AL Bank Accnt Details</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC21 - Rvw: AL Accnt Chnges on Set File</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC22 - Manager Audit of Settlement File</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC23 - Set File Review by Signatories</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC24 - Set File Approval by Signatories</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC25 - Settlement Reports Produced</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC26 - Review of Settlement Reports</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC27 - Bank Transactions Reports Review</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC28 - Cash/Cheques Received in Office</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC29 - Agent Guarantees in Cash Deposits</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC30 - Bank Transaction Report Review</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC31 - Matching</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC32 - Exception Report Prep &amp; Review</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC33 - Over Remittance</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC34 - Short Remittance Review</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC35 - Negative Settlement Report Review</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC36 - Late Remittance Review</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC37 - Proration Adjustment File Review</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC38 - Validation of AG Defaults Action</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC39 - HAR Preparation</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC40 - R&amp;S Manager HAR Review</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC41 - Amounts Entered in Acct Records</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC42 - CM/HUB Leader HAR Review</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC43 - Collection Method Rules</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC44 - IATA Agent Code Identifier Rule</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC45 - Weblink Sales Treatment</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC46 - Weblink Sales Review</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC47 - 3rd Party Services Treatment</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC48 - 3rd Party Sales Review</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC49 - Extrxn of WEBL &amp; 3rd-P Transaxns</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC50 - WEBL-non Air Discrepancy Report</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC01</fullName>
@@ -3754,7 +3704,6 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>New ISS Deployment (NID)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
-                <controllingFieldValues>Remittance &amp; Settlement Automated (RS-A)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC01A</fullName>
@@ -3775,7 +3724,6 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
                 <controllingFieldValues>ISS Lifecycle Mgmt</controllingFieldValues>
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
-                <controllingFieldValues>Remittance &amp; Settlement Automated (RS-A)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC02</fullName>
@@ -3800,7 +3748,6 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>New ISS Deployment (NID)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
-                <controllingFieldValues>Remittance &amp; Settlement Automated (RS-A)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC03</fullName>
@@ -3825,7 +3772,6 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>New ISS Deployment (NID)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
-                <controllingFieldValues>Remittance &amp; Settlement Automated (RS-A)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC04</fullName>
@@ -3849,7 +3795,6 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>New ISS Deployment (NID)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
-                <controllingFieldValues>Remittance &amp; Settlement Automated (RS-A)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC05</fullName>
@@ -3874,7 +3819,6 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>New ISS Deployment (NID)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
-                <controllingFieldValues>Remittance &amp; Settlement Automated (RS-A)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC06</fullName>
@@ -3896,7 +3840,6 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
                 <controllingFieldValues>ISS Lifecycle Mgmt</controllingFieldValues>
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
-                <controllingFieldValues>Remittance &amp; Settlement Automated (RS-A)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC07</fullName>
@@ -3918,7 +3861,6 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
                 <controllingFieldValues>ISS Lifecycle Mgmt</controllingFieldValues>
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
-                <controllingFieldValues>Remittance &amp; Settlement Automated (RS-A)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC08</fullName>
@@ -3940,7 +3882,6 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
                 <controllingFieldValues>ISS Lifecycle Mgmt</controllingFieldValues>
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
-                <controllingFieldValues>Remittance &amp; Settlement Automated (RS-A)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC09</fullName>
@@ -3962,7 +3903,6 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
                 <controllingFieldValues>ISS Lifecycle Mgmt</controllingFieldValues>
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
-                <controllingFieldValues>Remittance &amp; Settlement Automated (RS-A)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC10</fullName>
@@ -3983,7 +3923,6 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
                 <controllingFieldValues>ISS Lifecycle Mgmt</controllingFieldValues>
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
-                <controllingFieldValues>Remittance &amp; Settlement Automated (RS-A)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC11</fullName>
@@ -4004,7 +3943,6 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
                 <controllingFieldValues>ISS Lifecycle Mgmt</controllingFieldValues>
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
-                <controllingFieldValues>Remittance &amp; Settlement Automated (RS-A)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC12</fullName>
@@ -4025,7 +3963,6 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
                 <controllingFieldValues>ISS Lifecycle Mgmt</controllingFieldValues>
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
-                <controllingFieldValues>Remittance &amp; Settlement Automated (RS-A)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC13</fullName>
@@ -4046,7 +3983,6 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
                 <controllingFieldValues>ISS Lifecycle Mgmt</controllingFieldValues>
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
-                <controllingFieldValues>Remittance &amp; Settlement Automated (RS-A)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC14</fullName>
@@ -4067,7 +4003,6 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
                 <controllingFieldValues>ISS Lifecycle Mgmt</controllingFieldValues>
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
-                <controllingFieldValues>Remittance &amp; Settlement Automated (RS-A)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC15</fullName>
@@ -4088,7 +4023,6 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
                 <controllingFieldValues>ISS Lifecycle Mgmt</controllingFieldValues>
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
-                <controllingFieldValues>Remittance &amp; Settlement Automated (RS-A)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC16</fullName>
@@ -4109,7 +4043,6 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
                 <controllingFieldValues>ISS Lifecycle Mgmt</controllingFieldValues>
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
-                <controllingFieldValues>Remittance &amp; Settlement Automated (RS-A)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC17</fullName>
@@ -4130,7 +4063,6 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
                 <controllingFieldValues>ISS Lifecycle Mgmt</controllingFieldValues>
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
-                <controllingFieldValues>Remittance &amp; Settlement Automated (RS-A)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC18</fullName>
@@ -4151,7 +4083,6 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
                 <controllingFieldValues>ISS Lifecycle Mgmt</controllingFieldValues>
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
-                <controllingFieldValues>Remittance &amp; Settlement Automated (RS-A)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC19</fullName>
@@ -4172,7 +4103,6 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
                 <controllingFieldValues>ISS Lifecycle Mgmt</controllingFieldValues>
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
-                <controllingFieldValues>Remittance &amp; Settlement Automated (RS-A)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC20</fullName>
@@ -4193,7 +4123,6 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
                 <controllingFieldValues>ISS Lifecycle Mgmt</controllingFieldValues>
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
-                <controllingFieldValues>Remittance &amp; Settlement Automated (RS-A)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC21</fullName>
@@ -4214,7 +4143,6 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
                 <controllingFieldValues>ISS Lifecycle Mgmt</controllingFieldValues>
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
-                <controllingFieldValues>Remittance &amp; Settlement Automated (RS-A)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC22</fullName>
@@ -4235,7 +4163,6 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
                 <controllingFieldValues>ISS Lifecycle Mgmt</controllingFieldValues>
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
-                <controllingFieldValues>Remittance &amp; Settlement Automated (RS-A)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC23</fullName>
@@ -4256,7 +4183,6 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
                 <controllingFieldValues>ISS Lifecycle Mgmt</controllingFieldValues>
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
-                <controllingFieldValues>Remittance &amp; Settlement Automated (RS-A)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC24</fullName>
@@ -4277,7 +4203,6 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
                 <controllingFieldValues>ISS Lifecycle Mgmt</controllingFieldValues>
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
-                <controllingFieldValues>Remittance &amp; Settlement Automated (RS-A)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC25</fullName>
@@ -4298,7 +4223,6 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
                 <controllingFieldValues>ISS Lifecycle Mgmt</controllingFieldValues>
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
-                <controllingFieldValues>Remittance &amp; Settlement Automated (RS-A)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC26</fullName>
@@ -4319,7 +4243,6 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
                 <controllingFieldValues>ISS Lifecycle Mgmt</controllingFieldValues>
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
-                <controllingFieldValues>Remittance &amp; Settlement Automated (RS-A)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC27</fullName>
@@ -4340,7 +4263,6 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
                 <controllingFieldValues>ISS Lifecycle Mgmt</controllingFieldValues>
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
-                <controllingFieldValues>Remittance &amp; Settlement Automated (RS-A)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC28</fullName>
@@ -4361,7 +4283,6 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
                 <controllingFieldValues>ISS Lifecycle Mgmt</controllingFieldValues>
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
-                <controllingFieldValues>Remittance &amp; Settlement Automated (RS-A)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC29</fullName>
@@ -4382,7 +4303,6 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
                 <controllingFieldValues>ISS Lifecycle Mgmt</controllingFieldValues>
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
-                <controllingFieldValues>Remittance &amp; Settlement Automated (RS-A)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC30</fullName>
@@ -4403,7 +4323,6 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
                 <controllingFieldValues>ISS Lifecycle Mgmt</controllingFieldValues>
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
-                <controllingFieldValues>Remittance &amp; Settlement Automated (RS-A)</controllingFieldValues>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
@@ -8707,14 +8626,6 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Remittance &amp; Settlement Automated (RS-A)</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Remittance &amp; Settlement Manual (RS-M)</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
                 <fullName>Airline &amp; Location Coding and MITA/BIETA</fullName>
                 <default>false</default>
             </picklistValues>
@@ -8748,6 +8659,10 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
             </picklistValues>
             <picklistValues>
                 <fullName>International Airlines Travel Agent Network (IATAN)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Remittance &amp; Settlement (RS)</fullName>
                 <default>false</default>
             </picklistValues>
             <sorted>false</sorted>
@@ -8997,7 +8912,6 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
             <picklistValues>
                 <fullName>Ad-hoc R&amp;S Processes</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Automated (RS-A)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Agency Changes</fullName>
@@ -9092,8 +9006,6 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
             <picklistValues>
                 <fullName>Discrepancy Follow-up</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Automated (RS-A)</controllingFieldValues>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>DPC Management</fullName>
@@ -9133,7 +9045,6 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
             <picklistValues>
                 <fullName>Hinge Account Reconciliation</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Automated (RS-A)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Implementation and Appointment</fullName>
@@ -9266,13 +9177,10 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
             <picklistValues>
                 <fullName>Master Data Management</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Automated (RS-A)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Matching</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Automated (RS-A)</controllingFieldValues>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Negative Remittance / Over Payment</fullName>
@@ -9311,8 +9219,7 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>New ISS Deployment (NID)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
-                <controllingFieldValues>Remittance &amp; Settlement Automated (RS-A)</controllingFieldValues>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
+                <controllingFieldValues>Remittance &amp; Settlement (RS)</controllingFieldValues>
                 <controllingFieldValues>Simplified Interline Settlement (SIS)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
@@ -9338,8 +9245,6 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
             <picklistValues>
                 <fullName>Proration and Adjustment</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Automated (RS-A)</controllingFieldValues>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Publications</fullName>
@@ -9350,7 +9255,6 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
             <picklistValues>
                 <fullName>Reconciliation</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Recovery Service</fullName>
@@ -9360,8 +9264,6 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
             <picklistValues>
                 <fullName>Remittance</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Automated (RS-A)</controllingFieldValues>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Remittance &amp; Settlement</fullName>
@@ -9381,8 +9283,6 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
             <picklistValues>
                 <fullName>Settlement</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Automated (RS-A)</controllingFieldValues>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Systems and Products Lifecycle Management</fullName>
@@ -16128,14 +16028,6 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
                 <default>false</default>
             </values>
             <values>
-                <fullName>Remittance %26 Settlement Automated %28RS-A%29</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Remittance %26 Settlement Manual %28RS-M%29</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Simplified Interline Settlement %28SIS%29</fullName>
                 <default>false</default>
             </values>
@@ -21619,11 +21511,7 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
                 <default>false</default>
             </values>
             <values>
-                <fullName>Remittance %26 Settlement Automated %28RS-A%29</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Remittance %26 Settlement Manual %28RS-M%29</fullName>
+                <fullName>Remittance %26 Settlement %28RS%29</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -27154,11 +27042,7 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
                 <default>false</default>
             </values>
             <values>
-                <fullName>Remittance %26 Settlement Automated %28RS-A%29</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Remittance %26 Settlement Manual %28RS-M%29</fullName>
+                <fullName>Remittance %26 Settlement %28RS%29</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -32554,11 +32438,7 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
                 <default>false</default>
             </values>
             <values>
-                <fullName>Remittance %26 Settlement Automated %28RS-A%29</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Remittance %26 Settlement Manual %28RS-M%29</fullName>
+                <fullName>Remittance %26 Settlement %28RS%29</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -37905,11 +37785,7 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
                 <default>false</default>
             </values>
             <values>
-                <fullName>Remittance %26 Settlement Automated %28RS-A%29</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Remittance %26 Settlement Manual %28RS-M%29</fullName>
+                <fullName>Remittance %26 Settlement %28RS%29</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -43437,11 +43313,7 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
                 <default>false</default>
             </values>
             <values>
-                <fullName>Remittance %26 Settlement Automated %28RS-A%29</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Remittance %26 Settlement Manual %28RS-M%29</fullName>
+                <fullName>Remittance %26 Settlement %28RS%29</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -48928,11 +48800,7 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
                 <default>false</default>
             </values>
             <values>
-                <fullName>Remittance %26 Settlement Automated %28RS-A%29</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Remittance %26 Settlement Manual %28RS-M%29</fullName>
+                <fullName>Remittance %26 Settlement %28RS%29</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -54463,11 +54331,7 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
                 <default>false</default>
             </values>
             <values>
-                <fullName>Remittance %26 Settlement Automated %28RS-A%29</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Remittance %26 Settlement Manual %28RS-M%29</fullName>
+                <fullName>Remittance %26 Settlement %28RS%29</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -59967,11 +59831,7 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
                 <default>false</default>
             </values>
             <values>
-                <fullName>Remittance %26 Settlement Automated %28RS-A%29</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Remittance %26 Settlement Manual %28RS-M%29</fullName>
+                <fullName>Remittance %26 Settlement %28RS%29</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -65426,11 +65286,7 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
                 <default>false</default>
             </values>
             <values>
-                <fullName>Remittance %26 Settlement Automated %28RS-A%29</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Remittance %26 Settlement Manual %28RS-M%29</fullName>
+                <fullName>Remittance %26 Settlement %28RS%29</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -70929,11 +70785,7 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
                 <default>false</default>
             </values>
             <values>
-                <fullName>Remittance %26 Settlement Automated %28RS-A%29</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Remittance %26 Settlement Manual %28RS-M%29</fullName>
+                <fullName>Remittance %26 Settlement %28RS%29</fullName>
                 <default>false</default>
             </values>
             <values>
