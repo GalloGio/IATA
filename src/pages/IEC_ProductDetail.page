@@ -50,7 +50,14 @@
 							<!-- breadcrumb -->
 							<ol class="list breadcrumb">
 								<li><a href="{!$Site.BaseUrl}">{!$Label.Home}</a></li>
-								<!-- <li><a href="{!$Site.BaseUrl}/IEC_ProductList?category={!selected_mega_menu}">{!mega_menus[ecomProduct.megaMenu]}</a></li> -->
+								<li>
+									<a style="{! IF(selectedCategory.value == '', 'display:none', '')}" href="{!$Site.BaseUrl}/IEC_ProductList?category={!selectedCategory.value}">{!selectedCategory.label}</a>
+									<apex:outputText value="" rendered="{! selectedCategory.value == ''}" />
+								</li>
+								<li>
+									<a style="{! IF(selectedCategory.value == '' || selectedTopic == null || selectedTopic == '', 'display:none', '')}" href="{!$Site.BaseUrl}/IEC_ProductList?category={!selectedCategory.value}&topic={!selectedTopic}">{!selectedTopicLabel}</a>
+									<apex:outputText value="" rendered="{! selectedCategory.value == '' || selectedTopic == null || selectedTopic == ''}" />
+								</li>
 								<li>{!ecomProduct.ProductName}</li>
 							</ol>
 							<section class="product-details global-system-solutions">
@@ -70,13 +77,13 @@
 					                </div>
 					            </div>
 					            <!-- Overview -->
-								<section class="section-container overview" id="overview" style="min-height:270px;">
+								<section class="section-container overview" id="overview" style="min-height:270px;background-image:url({!URLFOR($Resource.IECStyles,'img/') + sProductIcon});background-size:275px 210px">
 					                <h2 class="section-title">Overview</h2>
 					                <apex:outputText value="{!ecomProduct.ProductDesc}" escape="false" />
 					            </section>
 
 					            <!-- Features -->
-					            <section class="section-container features" id="features">
+					            <section class="section-container features" id="features" style="padding-top:0">
 					                <h2 class="section-title">Features</h2>
 					                <ul class="list dot">
 			                            <apex:variable value="{!$User}" var="u" rendered="{!bFeature1Show}">
@@ -129,9 +136,9 @@
 										
 						                <apex:outputPanel layout="block" rendered="{!loggedCustomer == null}">
 						                	<p class="light">
-						                		Iata member Airline get preferential pricing. 
+						                		IATA Member Airlines get preferential pricing.<br/>Sign in to view applicable pricing 
 						                		<a href="{!$Site.BaseUrl}/IEC_Login?returl=/IEC_ProductDetail?id={!ecomProduct.productNumber}" class="text-link"></a>
-						                		or 
+						                		or&nbsp;
 						                		<apex:commandLink styleClass="text-link" action="{!register}" value="create an account" />
 					                		</p>
 						                </apex:outputPanel>
@@ -190,7 +197,7 @@
 					            </section>
 
 					            <!-- Resources -->
-					            <section class="section-container resources" id="resources">
+					            <section class="section-container resources" id="resources" style="{! IF(bSection6Show == true, '', 'display:none')}">
 					                <h2 class="section-title">Resources</h2>
 					                <ul class="list download">
 					                	<!-- for CAC Comparison page only -->
@@ -222,6 +229,13 @@
 
 					                </ul>
 					            </section>
+
+								<!-- Interactive Maps -->
+								<section class="section-container resources" id="interactiveMap">
+									<h2 class="section-title">Interactive Statistics</h2>
+									<p class="light">IATA agencies on maps and charts</p>
+									<a class="button" href="{!$Site.BaseUrl}/IECGADMaps">View now</a>
+								</section>
 							</section>
 						</div>
 					</main>

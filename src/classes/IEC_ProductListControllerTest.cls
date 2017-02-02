@@ -8,11 +8,15 @@ private class IEC_ProductListControllerTest {
 		IEC_ProductListController ctrl = new IEC_ProductListController();
 
 		//-- Load Page 
+		ApexPages.currentPage().getParameters().put('topic', 'Cargo');
+		ApexPages.currentPage().getParameters().put('customer_type', 'Airline Member');
 		ctrl.onLoadAction();
 
 		//-- Select Topic & Customer type 
 		ctrl.selectedTopic = 'Cargo';
 		ctrl.selectedCustomerType = 'Airline Member'; 
+		ApexPages.currentPage().getParameters().remove('topic');
+		ApexPages.currentPage().getParameters().remove('customer_type');
 		ctrl.onLoadAction(); 
 
 		//--Sort product 
